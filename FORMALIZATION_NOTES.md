@@ -206,3 +206,106 @@ star |-> Theta(R_{<= -2h + epsilon}) in ThetaR.
 That will let us distinguish three things in Lean: labeled simultaneous
 assignments, forced unlabeled identification, and comparison through an explicit
 transport or indeterminacy relation.
+
+## Milestone 3: The IUT III Toy Model
+
+Lean file: `Iut/Stage1/ToyModel.lean`
+
+### Source Check
+
+This milestone is tied directly to IUT III, Remark 3.12.2, especially the
+subparagraphs `(atoy)` through `(ftoy)`. Mochizuki describes two distinct labeled
+copies `qR` and `ThetaR`, an abstract symbol `*`, and assignments
+
+```text
+lambda_q     : * |-> q(-h)        in qR
+lambda_Theta : * |-> Theta(-2h)   in ThetaR.
+```
+
+He then says that if the labels `q` and `Theta` are forgotten, the assignments
+become incompatible because `-h != -2h` for `h > 0`. He replaces the second
+assignment by an indeterminacy version
+
+```text
+lambda_Theta^Ind : * |-> Theta(R_{<= -2h + epsilon})
+```
+
+and concludes formally that membership of `-h` in this region gives
+`-h <= -2h + epsilon`, hence `h <= epsilon`.
+
+This is also responsive to Scholze-Stix, who emphasize that all identifications
+between the ordered one-dimensional real vector spaces must be spelled out. The
+toy model is where we can spell out the smallest possible version of that issue.
+
+### Lean Declarations
+
+`ToyModel.qLine` and `ToyModel.thetaLine` are the two labeled copies.
+
+`ToyModel.qAssignment h` is the point with coordinate `-h` in `qLine`.
+
+`ToyModel.thetaAssignment h` is the point with coordinate `-2h` in `thetaLine`.
+
+`ToyModel.ForcedUnlabeledEquality h` is the proposition obtained by forgetting
+the two labels and asserting equality of the resulting coordinates in one
+ambient copy of `Real`.
+
+The theorem
+
+```text
+forcedUnlabeledEquality_iff_eq_zero
+```
+
+proves that this forced equality is equivalent to `h = 0`. The theorem
+
+```text
+forcedUnlabeledEquality_contradicts_positive
+```
+
+packages the expected contradiction for `h > 0`.
+
+`ToyModel.thetaIndeterminacyRegion h epsilon x` is the coordinate predicate
+`x <= -2h + epsilon`.
+
+`ToyModel.QInThetaIndeterminacyAfterForgetting h epsilon` says that the
+q-coordinate `-h` lies in this region after labels are forgotten.
+
+The theorem
+
+```text
+qInThetaIndeterminacy_iff_bound
+```
+
+proves the exact arithmetic equivalence:
+
+```text
+-h in R_{<= -2h + epsilon}  iff  h <= epsilon.
+```
+
+### What This Tests
+
+This milestone tests both sides of the toy-model passage.
+
+First, the naive forced identification of the exact assignments is impossible
+for positive `h`. This matches Mochizuki's own warning in `(atoy)` and the
+Scholze-Stix insistence that identifications of real-line copies must be
+tracked.
+
+Second, the indeterminacy-region replacement has the advertised arithmetic
+effect: once one has justified membership of `-h` in `R_{<= -2h + epsilon}`,
+Lean confirms that the formal bound `h <= epsilon` follows.
+
+### Design Trap Avoided
+
+The trap would be to make the indeterminacy step a field such as
+`bound : h <= epsilon`. We do not do that. We define the region membership
+predicate and prove that the bound is equivalent to membership. The hard future
+mathematics is therefore isolated: one must justify the membership, not the
+bound directly.
+
+### Next Step
+
+The next milestone should connect this toy model back to explicit transports:
+instead of "forgetting labels" by immediately reading both coordinates in `Real`,
+we should express comparison through a named transport from `qLine` to
+`thetaLine`. This will let us ask whether a proposed comparison path is exact,
+scalar-rescaled, or indeterminacy-valued.

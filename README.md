@@ -143,6 +143,8 @@ Current modules:
   the scalar insertion obstruction.
 * `Iut.Stage1.PilotComparison`: first neutral interface for the Corollary 3.12
   target shape.
+* `Iut.Stage1.ToyModel`: Lean tests for Mochizuki's real-valued toy model from
+  IUT III, Remark 3.12.2.
 
 Useful commands:
 
