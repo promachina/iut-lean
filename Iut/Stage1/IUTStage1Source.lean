@@ -1625,6 +1625,81 @@ theorem localTensor_capsule_totalLogVolume_eq_sum
         (choice.local_tensor_state.capsuleFamily.capsule i).logVolume :=
   choice.local_tensor_state.capsule_totalLogVolume_eq_sum
 
+/--
+Packet-aware `(Ind2)` step.
+
+The local tensor representative may change, but the procession, coric data,
+upper-semi data, and packet-level log-volume quantities are preserved.
+-/
+structure LocalTensorPacketSymmetryStep
+    (choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind) :
+    Prop where
+  column_eq : choice₁.column = choice₂.column
+  row_eq : choice₁.row = choice₂.row
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+  local_object_eq :
+    choice₁.local_tensor_state.localObject =
+      choice₂.local_tensor_state.localObject
+  capsule_count_eq :
+    choice₁.local_tensor_state.capsuleFamily.capsuleCount =
+      choice₂.local_tensor_state.capsuleFamily.capsuleCount
+  capsule_totalLogVolume_eq :
+    choice₁.local_tensor_state.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.capsuleFamily.totalLogVolume
+  capsule_normalizedLogVolume_eq :
+    choice₁.local_tensor_state.capsuleFamily.normalizedLogVolume =
+      choice₂.local_tensor_state.capsuleFamily.normalizedLogVolume
+
+theorem ind2_preserves_directSummandCount
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorPacketSymmetryStep choice₁ choice₂) :
+    choice₁.local_tensor_state.tensorState.directSummandCount =
+      choice₂.local_tensor_state.tensorState.directSummandCount := by
+  calc
+    choice₁.local_tensor_state.tensorState.directSummandCount =
+        choice₁.local_tensor_state.capsuleFamily.capsuleCount :=
+      choice₁.local_tensor_state.directSummandCount_eq_capsuleCount
+    _ = choice₂.local_tensor_state.capsuleFamily.capsuleCount :=
+      hstep.capsule_count_eq
+    _ = choice₂.local_tensor_state.tensorState.directSummandCount :=
+      (choice₂.local_tensor_state.directSummandCount_eq_capsuleCount).symm
+
+theorem ind2_preserves_localObject
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorPacketSymmetryStep choice₁ choice₂) :
+    choice₁.local_tensor_state.localObject =
+      choice₂.local_tensor_state.localObject :=
+  hstep.local_object_eq
+
+theorem ind2_preserves_capsuleTotalLogVolume
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorPacketSymmetryStep choice₁ choice₂) :
+    choice₁.local_tensor_state.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.capsuleFamily.totalLogVolume :=
+  hstep.capsule_totalLogVolume_eq
+
+theorem ind2_preserves_capsuleNormalizedLogVolume
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorPacketSymmetryStep choice₁ choice₂) :
+    choice₁.local_tensor_state.capsuleFamily.normalizedLogVolume =
+      choice₂.local_tensor_state.capsuleFamily.normalizedLogVolume :=
+  hstep.capsule_normalizedLogVolume_eq
+
+def toStructuredLocalTensorSymmetryStep
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorPacketSymmetryStep choice₁ choice₂) :
+    IUTStage1StructuredTheorem311Choice.LocalTensorSymmetryStep
+      choice₁.forgetPacket choice₂.forgetPacket :=
+  { column_eq := hstep.column_eq,
+    row_eq := hstep.row_eq,
+    coric_eq := hstep.coric_eq,
+    procession_eq := hstep.procession_eq,
+    direct_summand_count_eq :=
+      ind2_preserves_directSummandCount hstep,
+    upper_semi_eq := hstep.upper_semi_eq }
+
 end IUTStage1TensorPacketTheorem311Choice
 
 /--

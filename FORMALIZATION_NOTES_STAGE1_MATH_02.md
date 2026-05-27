@@ -123,3 +123,88 @@ The local tensor packet itself is not yet built from Hodge-theater or Frobenioid
 objects.  The next useful refinement is a packet-aware `(Ind2)` step relation:
 it should allow representative changes while preserving the capsule/log-volume
 obligations needed for later upper-semi comparison.
+
+## 2. Packet-Aware `(Ind2)` Step
+
+### Goal
+
+We refined the local tensor-factor symmetry relation so that it acts on the
+packet-enhanced Theorem 3.11 choice, not only on the older untyped local tensor
+state.
+
+### Source Check
+
+In IUT III, Theorem 3.11, `(Ind2)` is described as the indeterminacy induced by
+actions on the direct summands of the tensor product used to define the local
+`IQ(S...)` objects.  The same theorem keeps procession automorphisms as
+`(Ind1)` and upper semi-compatibility across the log-link column as `(Ind3)`.
+
+The Lean move therefore does not let `(Ind2)` modify the procession, coric
+data, or upper-semi state.  It also does not identify all local objects by
+definition.  Instead, it records the packet-level preservation needed for later
+log-volume comparison as explicit fields.
+
+### Lean/API Check
+
+The new step relation is:
+
+```text
+IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketSymmetryStep
+```
+
+It may change the local tensor representative but preserves:
+
+```text
+column
+row
+coric
+procession_state
+upper_semi_state
+localObject
+capsuleCount
+totalLogVolume
+normalizedLogVolume
+```
+
+From the packet equality
+
+```text
+tensorState.directSummandCount = capsuleFamily.capsuleCount
+```
+
+and preservation of `capsuleCount`, Lean proves:
+
+```text
+ind2_preserves_directSummandCount
+```
+
+The packet-aware step also converts to the older structured `(Ind2)` step by
+forgetting packet data:
+
+```text
+toStructuredLocalTensorSymmetryStep
+```
+
+### Trap Avoided
+
+A tempting but unsafe shortcut would be to require equality of the entire
+packet state across `(Ind2)`.  That would make the proof easy but would suppress
+the point of `(Ind2)`: representatives may change.  The current relation keeps
+only the invariants that downstream log-volume comparison is allowed to use.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+tensorPacketTheorem311_ind2_preserves_directSummandCount_example
+tensorPacketTheorem311_ind2_preserves_totalLogVolume_example
+tensorPacketTheorem311_ind2_to_structured_example
+```
+
+### Remaining Gap
+
+The step relation still assumes preservation of packet log-volumes as fields.
+The next deeper mathematical task is to replace these fields by a formal action
+on indexed capsule/direct-summand data and then prove the total and normalized
+log-volume preservation from invariance of the summands.

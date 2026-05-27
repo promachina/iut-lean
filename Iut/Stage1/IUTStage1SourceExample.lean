@@ -497,6 +497,39 @@ theorem tensorPacketTheorem311_directSummandCount_eq_capsuleCount_example
       choice.local_tensor_state.capsuleFamily.capsuleCount :=
   choice.localTensor_directSummandCount_eq_capsuleCount
 
+theorem tensorPacketTheorem311_ind2_preserves_directSummandCount_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketSymmetryStep
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.tensorState.directSummandCount =
+      choice₂.local_tensor_state.tensorState.directSummandCount :=
+  IUTStage1TensorPacketTheorem311Choice.ind2_preserves_directSummandCount
+    hstep
+
+theorem tensorPacketTheorem311_ind2_preserves_totalLogVolume_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketSymmetryStep
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.capsuleFamily.totalLogVolume :=
+  IUTStage1TensorPacketTheorem311Choice.ind2_preserves_capsuleTotalLogVolume
+    hstep
+
+def tensorPacketTheorem311_ind2_to_structured_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketSymmetryStep
+        choice₁ choice₂) :
+    IUTStage1StructuredTheorem311Choice.LocalTensorSymmetryStep
+      choice₁.forgetPacket choice₂.forgetPacket :=
+  IUTStage1TensorPacketTheorem311Choice.toStructuredLocalTensorSymmetryStep
+    hstep
+
 theorem upperSemi_logVolumeCompatibility_upperBound_example
     (data : IUTStage1LogVolumeCompatibilityData) :
     data.sourceLogVolume <= data.targetLogVolume :=
