@@ -190,6 +190,15 @@ def ofUnionHull (operator : HullOperator line) (family : RegionFamily line index
       Region.subset_trans (family.choice_subset_union choice)
         (operator.extensive family.union) }
 
+def ofUnionSubset (family : RegionFamily line index) (hull : Region line)
+    (hsubset : Region.Subset family.union hull) : CommonHull family :=
+  { hull := hull,
+    contains_each := RegionFamily.union_subset_iff.mp hsubset }
+
+theorem union_subset_hull (commonHull : CommonHull family) :
+    Region.Subset family.union commonHull.hull :=
+  RegionFamily.union_subset_iff.mpr commonHull.contains_each
+
 theorem contains_of_choice (commonHull : CommonHull family)
     {choice : index} {x : Point line} (hx : (family.region choice).Contains x) :
     commonHull.hull.Contains x :=
@@ -313,6 +322,13 @@ def commonTargetHullOfUnionHull
     (family : RegionComparisonFamily source target index) :
     family.CommonTargetHull :=
   RegionFamily.CommonHull.ofUnionHull operator family.targetRegions
+
+def commonTargetHullOfUnionSubset
+    (family : RegionComparisonFamily source target index)
+    (hull : Region target)
+    (hsubset : Region.Subset family.targetUnion hull) :
+    family.CommonTargetHull :=
+  RegionFamily.CommonHull.ofUnionSubset family.targetRegions hull hsubset
 
 theorem holds_commonTargetHull_of_choice {family : RegionComparisonFamily source target index}
     (commonHull : family.CommonTargetHull)

@@ -98,6 +98,16 @@ def commonTargetHullBoundOfUnionHull
   { commonHull := family.commonTargetHullOfUnionHull operator,
     volume_bound := hvolume }
 
+def commonTargetHullBoundOfUnionSubset
+    (measure : RegionMeasure target)
+    (family : RegionComparisonFamily source target index)
+    (hull : Region target) {bound : Real}
+    (hsubset : Region.Subset family.targetUnion hull)
+    (hvolume : RegionMeasure.HasVolumeAtMost measure hull bound) :
+    CommonTargetHullBound measure family bound :=
+  { commonHull := family.commonTargetHullOfUnionSubset hull hsubset,
+    volume_bound := hvolume }
+
 def upperRayFamily_commonTargetHullBound
     (measure : RegionMeasure target)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

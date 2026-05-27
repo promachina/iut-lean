@@ -15653,3 +15653,105 @@ To make them mathematical the next step is either to define a concrete
 composition interface for `HyperbolicOrbicurveAutomorphismOverData`, or to
 replace the placeholder orbicurve model with a category-theoretic model where
 automorphism composition is already available.
+
+## Stage 1 Math Milestone 104: Common Hulls from Union Containment
+
+Lean files:
+
+* `Iut/Foundations/IndeterminacyRelation.lean`
+* `Iut/Foundations/CommonTargetBound.lean`
+* `Iut/Stage1/ToyFamilyBounds.lean`
+
+### Source Check
+
+IUT III describes the Theta-side quantity in Corollary 3.12 as the log-volume
+of a holomorphic hull of the union of possible images of the Theta-pilot object,
+with those possible images subject to the indeterminacies `(Ind1)`, `(Ind2)`,
+and `(Ind3)`. This is also the point isolated in the Scholze-Stix discussion:
+one has to know exactly which concrete/abstract pilot images are being compared
+and which real-line identifications are in force.
+
+The previous formal layer had a `targetUnion`, but the toy common hull was
+still built by direct family-wise containment. This milestone makes the union
+route primary.
+
+### Lean/API Check
+
+The region-family layer now defines:
+
+```text
+RegionFamily.CommonHull.ofUnionSubset
+RegionFamily.CommonHull.union_subset_hull
+```
+
+The comparison-family layer now defines:
+
+```text
+RegionComparisonFamily.commonTargetHullOfUnionSubset
+```
+
+The measured-bound layer now defines:
+
+```text
+RegionComparisonFamily.commonTargetHullBoundOfUnionSubset
+```
+
+The toy Theta family now constructs:
+
+```text
+thetaIndeterminacyCommonTargetHull
+thetaIndeterminacyCommonTargetHullBound
+```
+
+from:
+
+```text
+thetaIndeterminacyFamily_targetUnion_subset_commonTarget
+```
+
+instead of constructing the common hull directly from the choice-wise family.
+
+### Lean Decisions
+
+The new constructor is deliberately weaker than a global `HullOperator`.
+It needs only:
+
+```text
+Region.Subset family.union hull
+```
+
+This is closer to the current IUT target: the formal object we need next is a
+specific holomorphic hull of the union of possible Theta images, not yet a
+globally defined hull operator on every region of every real-line copy.
+
+### What This Tests
+
+Lean verifies:
+
+```text
+family.union <= hull
+```
+
+implies:
+
+```text
+choice target region <= hull
+```
+
+and that a measured bound on this same hull gives a
+`CommonTargetHullBound`. The toy Theta common-hull bound now follows this
+route, and the focused build for `Iut.Stage1.ToyFamilyBounds` passes.
+
+### Design Trap Avoided
+
+The trap would be to introduce the phrase "union of possible images" but leave
+the actual common-hull construction dependent only on unrelated choice-wise
+containment. The new Lean route makes the union containment the source of the
+common hull.
+
+### Remaining Gap
+
+The union is still a family of toy upper-ray target regions. The next
+mathematical replacement is a non-toy family of possible Theta-pilot images,
+together with a holomorphic-hull datum and a determinant/log-volume bound for
+that datum.

@@ -59,13 +59,9 @@ def thetaIndeterminacyCommonTargetHull
     {epsilon : index -> Real} {epsilonBound : Real}
     (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
     (thetaIndeterminacyFamily f h epsilon).CommonTargetHull :=
-  by
-    unfold thetaIndeterminacyFamily
-    exact RegionComparisonFamily.upperRayFamily_commonTargetHull
-      (fun _ => f) (fun choice => -(2 * h) + epsilon choice)
-      (commonBound := -(2 * h) + epsilonBound) (by
-        intro choice
-        linarith [hbound choice])
+  (thetaIndeterminacyFamily f h epsilon).commonTargetHullOfUnionSubset
+    (thetaIndeterminacyCommonTarget h epsilonBound)
+    (thetaIndeterminacyFamily_targetUnion_subset_commonTarget f h hbound)
 
 theorem thetaIndeterminacyFamily_targetUnion_subset_commonHull
     (f : Transport qLine thetaLine) (h : Real)
@@ -74,8 +70,7 @@ theorem thetaIndeterminacyFamily_targetUnion_subset_commonHull
     Region.Subset
       (thetaIndeterminacyFamily f h epsilon).targetUnion
       (thetaIndeterminacyCommonTargetHull f h hbound).hull :=
-  RegionFamily.union_subset_iff.mpr
-    (thetaIndeterminacyCommonTargetHull f h hbound).contains_each
+  (thetaIndeterminacyCommonTargetHull f h hbound).union_subset_hull
 
 def thetaIndeterminacyCommonTargetHullBound
     (measure : RegionMeasure thetaLine)
@@ -85,13 +80,13 @@ def thetaIndeterminacyCommonTargetHullBound
     (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
     RegionComparisonFamily.CommonTargetHullBound measure
       (thetaIndeterminacyFamily f h epsilon) (-(2 * h) + epsilonBound) :=
-  by
-    unfold thetaIndeterminacyFamily
-    exact RegionComparisonFamily.upperRayFamily_commonTargetHullBound
-      measure hnormalized (fun _ => f) (fun choice => -(2 * h) + epsilon choice)
-      (commonBound := -(2 * h) + epsilonBound) (by
-        intro choice
-        linarith [hbound choice])
+  RegionComparisonFamily.commonTargetHullBoundOfUnionSubset
+    measure (thetaIndeterminacyFamily f h epsilon)
+    (thetaIndeterminacyCommonTarget h epsilonBound)
+    (thetaIndeterminacyFamily_targetUnion_subset_commonTarget f h hbound)
+    (by
+      unfold thetaIndeterminacyCommonTarget RegionMeasure.HasVolumeAtMost
+      rw [RegionMeasure.upperRay_volume_eq_of_normalized measure hnormalized])
 
 def thetaIndeterminacyCommonTargetBound
     (measure : RegionMeasure thetaLine)
