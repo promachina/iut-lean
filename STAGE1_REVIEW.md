@@ -357,3 +357,78 @@ Next useful directions:
 The invariant remains unchanged: no theorem may convert SHE/HDD/common
 container names into a Corollary 3.12 endpoint unless the relevant histories,
 transports, charts, and bounds are explicit in the statement.
+
+## Periodic Review: Chart Transport and History Discipline
+
+Date: 2026-05-27
+
+This checkpoint reviews the recent work on the final real-line-copy comparison
+layer.
+
+### Current Lean Chain
+
+The chart side of the Stage 1 route now contains:
+
+```text
+RealComparisonChartData
+-> RealComparisonChartData.TransportDiscipline
+-> AuditedSignedPayloadBoundary chart facts
+-> AuditedPublicAudit chart facts
+-> AuditedChartHistoryDiscipline
+-> AuditedAllowedChartTransport
+```
+
+The chart discipline records two permitted readings:
+
+* the q-to-target chart transport preserves coordinate order;
+* the Theta-to-target transport is explicitly trivial.
+
+The source audit then pairs those permitted chart readings with the forbidden
+domain/codomain Hodge-history identification.
+
+### Positive Alignment
+
+This is directly relevant to the Scholze-Stix/Mochizuki disagreement. The code
+now distinguishes:
+
+* transport through a named real-comparison chart;
+* equality of charted q/Theta real readings;
+* matching of the common container with the structured SHE context;
+* non-identification of the two Hodge-theater histories.
+
+The q-side chart permission has gained mathematical content: it follows from
+positive scaling and states order preservation. This is exactly the sort of
+property needed for inequalities, while remaining far weaker than identifying
+underlying ring or scheme histories.
+
+### Remaining Gaps
+
+The chart model is still a positive scaling between labeled real-line copies.
+That is useful for guarding comparisons, but it is not yet Mochizuki's full
+log-volume apparatus.
+
+The main remaining gaps at this layer are:
+
+* the chart transports are not yet connected to actual log-volume maps;
+* the q-side reading is order-preserving, but not yet tied to a concrete
+  q-pilot log-volume construction;
+* the Theta-side triviality is explicit, but its source in the Hodge-theater
+  construction is still abstract;
+* the chart/history discipline is an audit object, not a proof of Corollary
+  3.12 from the IUT papers.
+
+### Global 3.12 Check
+
+The recent milestones reduce one important collapse risk: final real-number
+comparison can no longer be read in isolation from charting and history
+separation. However, this does not settle the dispute. It prepares the type
+surface for the eventual question: whether the actual IUT Hodge-theater data
+can supply these charted comparisons without illegitimate history
+identification.
+
+Next useful directions:
+
+* connect q-side chart readings to the q-pilot log-volume side condition;
+* refine Theta-side chart triviality into a named construction source;
+* make the final public audit expose both allowed chart transport and
+  forbidden history identification as a compact checklist.
