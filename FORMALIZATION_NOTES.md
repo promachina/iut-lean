@@ -6519,3 +6519,103 @@ The next milestone should introduce the first named placeholder interface for
 IUT-specific Stage 1 input/output data, separating labels such as IPL, SHE,
 multiradial output, and charted log-volume data before any attempt to construct
 a full `SourceObligationLedger`.
+
+## Milestone 76: IUT Stage 1 Pre-Ledger Data
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Data.lean`
+* `Iut/Basic.lean`
+
+### Source Check
+
+IUT III, Step `(xi-d)`, uses multiradial output data, IPL/SHE linkage, and
+log-volume comparisons before arriving at the final Corollary 3.12 inequality.
+Mochizuki's formalization progress report also emphasizes that Lean should make
+the logical structure communicable, not merely verify a final endpoint.
+
+This milestone therefore introduces a pre-ledger layer. It records named
+source-side data before asserting that all obligations needed for a
+`SourceObligationLedger` have been discharged.
+
+### Purpose
+
+This milestone adds inert identifiers:
+
+```text
+Stage1InputId
+MultiradialOutputId
+LogVolumeComparisonId
+```
+
+and the pre-ledger structure:
+
+```text
+IUTStage1PreLedgerData
+```
+
+The structure separates:
+
+```text
+input label
+multiradial output label
+log-volume comparison label
+algorithmic output
+measure, signed q/Theta reals, normalization proposition
+structured IPL/SHE/APT certificate
+charted common container
+charted q and Theta values
+chosen output and target volume
+membership data
+```
+
+### Lean Declarations
+
+In `IUTStage1Data.lean`:
+
+```text
+Stage1InputId
+MultiradialOutputId
+LogVolumeComparisonId
+IUTStage1PreLedgerData
+IUTStage1PreLedgerData.hasStructuredIPL
+IUTStage1PreLedgerData.hasStructuredSHE
+IUTStage1PreLedgerData.hasStructuredAPT
+IUTStage1PreLedgerData.thetaChartTrivial
+IUTStage1PreLedgerData.qSigned_eq_chartedQ
+IUTStage1PreLedgerData.thetaSigned_eq_chartedTheta
+IUTStage1PreLedgerData.chosenComparisonHoldsQ
+IUTStage1PreLedgerData.qSigned_le_targetSigned
+IUTStage1PreLedgerData.targetSigned_eq_choiceTargetVolume
+IUTStage1PreLedgerData.choiceTargetVolume_le_thetaSigned
+IUTStage1PreLedgerData.targetSigned_le_thetaSigned
+IUTStage1PreLedgerData.Audit
+IUTStage1PreLedgerData.audit
+```
+
+### What This Tests
+
+The pre-ledger layer can already audit structured family-level IPL/SHE/APT
+witnesses, charted q/Theta readings, chosen membership, and the two numerical
+legs available from the charted container. But it does not claim to be a
+`SourceObligationLedger`.
+
+Lean forced an important distinction here: a
+`QualitativeData.StructuredCertificate output.family` gives structured witnesses
+for the transported family; it does not automatically prove the opaque
+propositions `output.HasIPL`, `output.HasSHE`, or `output.HasAPT`. We keep the
+pre-ledger audit at the structured-family level.
+
+### Design Trap Avoided
+
+The trap would be to identify structured witness data with the opaque
+algorithmic-output certification propositions without an explicit bridge. This
+would hide a source-specific obligation. The new pre-ledger layer keeps that
+gap visible.
+
+### Next Step
+
+The next milestone should add a controlled promotion interface from
+`IUTStage1PreLedgerData` to `SourceObligationLedger`, listing exactly the
+remaining obligations: opaque output certification alignment, SHE/certificate
+alignment, q-positivity, and normalization evidence.
