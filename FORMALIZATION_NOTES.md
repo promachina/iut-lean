@@ -10164,3 +10164,106 @@ remains a separate source obligation.
 The next milestone should push this payload interface upward into the
 source-package audit layer, so the public Stage 1 endpoint can expose the
 comparison data record directly alongside the existing audit witness.
+
+## Milestone 128: Source-Package Comparison Data Endpoint
+
+Lean files:
+
+* `Iut/Stage1/IUTSourceScaffold.lean`
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The source check is the same boundary as Milestone 127, now moved one layer
+upward. Mochizuki's formalization report separates the final `3.11.5 => 3.12`
+comparison from the earlier source construction. Scholze-Stix's critique asks
+whether the comparison of the relevant pilot-object data has really been
+justified. Therefore the source-facing public endpoint should expose not only
+the final signed inequality, but also the exact comparison payload that the
+endpoint consumed.
+
+This milestone still does not prove that genuine IUT data supplies the payload.
+It only ensures that, once the source obligations have been promoted to a
+ledger, the public source package can name and audit the resulting
+`Corollary312ComparisonData`.
+
+### Purpose
+
+Milestone 127 introduced `Corollary312ComparisonData` at the ledger and toy
+layers. This milestone exposes it through the non-toy source-package API.
+
+The new source-package endpoint records:
+
+* a source audit witness;
+* the exact `Corollary312ComparisonData` produced by the promoted provider;
+* the equality identifying that data with the package-level comparison data;
+* the signed inequality, Corollary-3.12-shaped statement, and recovery theorem
+  obtained from the data itself.
+
+This gives future formalization work a narrower target: prove the source
+obligations, then inspect the resulting comparison payload at the package
+boundary.
+
+### Lean Declarations
+
+In `IUTSourceScaffold.lean`:
+
+```text
+IUTSourceObligationProvider.comparisonData
+IUTSourceObligationProvider.comparisonData_corollary312_eq
+IUTSourceObligationProvider.comparisonData_stage1Comparison_eq
+```
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.comparisonData
+IUTStage1SourcePackage.comparisonData_thetaSigned
+IUTStage1SourcePackage.comparisonData_qSigned
+IUTStage1SourcePackage.comparisonData_stage1Comparison_eq
+IUTStage1SourcePackage.comparisonData_corollary312_eq
+IUTStage1SourcePackage.ComparisonDataEndpoint
+IUTStage1SourcePackage.auditedComparisonDataEndpoint
+IUTStage1SourcePackage.auditedComparisonDataEndpointOfGap
+IUTStage1SourcePackage.auditedComparisonDataEndpointOfParts
+IUTStage1SourcePackage.auditedComparisonDataEndpointOfHypotheses
+IUTStage1SourcePackage.auditedComparisonDataEndpointOfStructuredInputs
+IUTStage1SourcePackage.auditedComparisonDataEndpointOfStructuredHypotheses
+IUTStage1SourcePackage.Audit.comparisonData
+IUTStage1SourcePackage.Audit.comparisonDataStage1Comparison
+IUTStage1SourcePackage.Audit.comparisonDataCorollary312
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_auditedComparisonDataEndpoint_example
+unitThetaToy_source_structured_hypotheses_auditedComparisonDataEndpoint_example
+```
+
+### What This Tests
+
+The toy source example verifies that the package-level source endpoint can now
+return the comparison-data endpoint directly. The structured-hypotheses example
+checks the same route after the Theorem 3.11 subclaims and side-condition
+hypotheses are assembled through the structured source interface.
+
+### Design Trap Avoided
+
+The trap would be to keep the new comparison-data record only at the toy or
+ledger layer. Then the public source package would still expose only the old
+triple of final facts, and future readers would have to reconstruct which
+payload generated those facts.
+
+This milestone keeps the endpoint honest: the source package names the data,
+the data proves its own public audit, and the source audit witness remains
+separate from the data. This separation is important for the Corollary 3.12
+debate because the existence of an audit witness is not the same assertion as
+the mathematical legitimacy of the source construction that produced it.
+
+### Next Step
+
+The next milestone should add projection theorems for the comparison-data
+endpoint itself, so consumers can recover the audit witness, the data object,
+and the three data-level public facts without unpacking the existential by hand.

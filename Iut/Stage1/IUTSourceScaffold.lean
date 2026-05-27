@@ -56,10 +56,25 @@ theorem corollary312 (provider :
       (signedPilotLogVolume PilotSide.q qSigned) :=
   provider.ledger.corollary312
 
+def comparisonData (provider :
+    IUTSourceObligationProvider output measure thetaSigned qSigned normalization) :
+    Corollary312ComparisonData :=
+  provider.ledger.comparisonData
+
+theorem comparisonData_corollary312_eq (provider :
+    IUTSourceObligationProvider output measure thetaSigned qSigned normalization) :
+    provider.comparisonData.corollary312 = provider.corollary312 :=
+  rfl
+
 def stage1Comparison (provider :
     IUTSourceObligationProvider output measure thetaSigned qSigned normalization) :
     Stage1Comparison :=
   provider.ledger.stage1Comparison
+
+theorem comparisonData_stage1Comparison_eq (provider :
+    IUTSourceObligationProvider output measure thetaSigned qSigned normalization) :
+    provider.comparisonData.stage1Comparison = provider.stage1Comparison :=
+  rfl
 
 theorem publicAudit (provider :
     IUTSourceObligationProvider output measure thetaSigned qSigned normalization) :

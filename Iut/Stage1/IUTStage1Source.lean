@@ -884,6 +884,40 @@ theorem promotedProvider_ledger
       package.promotedLedger obligations :=
   package.preLedger.promotedProvider_ledger obligations.toLedgerPromotionObligations
 
+def comparisonData
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    Corollary312ComparisonData :=
+  (package.promotedProvider obligations).comparisonData
+
+theorem comparisonData_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    (package.comparisonData obligations).thetaSigned =
+      package.preLedger.thetaSigned :=
+  rfl
+
+theorem comparisonData_qSigned
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    (package.comparisonData obligations).qSigned =
+      package.preLedger.qSigned :=
+  rfl
+
+theorem comparisonData_stage1Comparison_eq
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    (package.comparisonData obligations).stage1Comparison =
+      (package.promotedProvider obligations).stage1Comparison :=
+  rfl
+
+theorem comparisonData_corollary312_eq
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    (package.comparisonData obligations).corollary312 =
+      (package.promotedProvider obligations).corollary312 :=
+  rfl
+
 theorem publicAudit
     (package : IUTStage1SourcePackage source target index)
     (obligations : IUTStage1SourceObligations package) :
@@ -1282,6 +1316,24 @@ theorem audit
         obligations,
     stage_recovers_corollary312 :=
       package.stage1Comparison_recovers_corollary312 obligations }
+
+def ComparisonDataEndpoint
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) : Prop :=
+  ∃ _sourceAudit : Audit package obligations,
+    ∃ data : Corollary312ComparisonData,
+      data = package.comparisonData obligations ∧
+        data.qSigned <= data.thetaSigned ∧
+        Corollary312Inequality data.thetaPilot data.qPilot ∧
+        corollary312_from_stage1_comparison data.stage1Comparison =
+          corollary312_of_signed_le data.qSigned_le_thetaSigned
+
+theorem auditedComparisonDataEndpoint
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    package.ComparisonDataEndpoint obligations :=
+  ⟨package.audit obligations, package.comparisonData obligations, rfl,
+    (package.comparisonData obligations).publicAudit⟩
 
 theorem auditOfParts
     (package : IUTStage1SourcePackage source target index)
@@ -1704,6 +1756,87 @@ theorem auditedPublicEndpointOfStructuredHypotheses_eq_hypotheses
         inputs.theorem311Subclaims hypotheses :=
   Subsingleton.elim _ _
 
+theorem auditedComparisonDataEndpointOfGap
+    (package : IUTStage1SourcePackage source target index)
+    (gap : IUTStage1SourceObligationGap package) :
+    package.ComparisonDataEndpoint gap.toSourceObligations :=
+  package.auditedComparisonDataEndpoint gap.toSourceObligations
+
+theorem auditedComparisonDataEndpointOfParts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.ComparisonDataEndpoint
+      (package.obligationsFromParts subclaims sideConditions) :=
+  package.auditedComparisonDataEndpoint
+    (package.obligationsFromParts subclaims sideConditions)
+
+theorem auditedComparisonDataEndpointOfHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.ComparisonDataEndpoint
+      (package.obligationsFromHypotheses subclaims hypotheses) :=
+  package.auditedComparisonDataEndpoint
+    (package.obligationsFromHypotheses subclaims hypotheses)
+
+theorem auditedComparisonDataEndpointOfHypotheses_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.auditedComparisonDataEndpointOfHypotheses subclaims hypotheses =
+      package.auditedComparisonDataEndpointOfParts
+        subclaims hypotheses.toSideConditions :=
+  Subsingleton.elim _ _
+
+theorem auditedComparisonDataEndpointOfStructuredInputs
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.ComparisonDataEndpoint
+      (package.obligationsFromStructuredInputs inputs sideConditions) :=
+  package.auditedComparisonDataEndpoint
+    (package.obligationsFromStructuredInputs inputs sideConditions)
+
+theorem auditedComparisonDataEndpointOfStructuredHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.ComparisonDataEndpoint
+      (package.obligationsFromStructuredHypotheses inputs hypotheses) :=
+  package.auditedComparisonDataEndpoint
+    (package.obligationsFromStructuredHypotheses inputs hypotheses)
+
+theorem auditedComparisonDataEndpointOfStructuredInputs_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.auditedComparisonDataEndpointOfStructuredInputs
+        inputs sideConditions =
+      package.auditedComparisonDataEndpointOfParts
+        inputs.theorem311Subclaims sideConditions :=
+  Subsingleton.elim _ _
+
+theorem auditedComparisonDataEndpointOfStructuredHypotheses_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.auditedComparisonDataEndpointOfStructuredHypotheses
+        inputs hypotheses =
+      package.auditedComparisonDataEndpointOfStructuredInputs
+        inputs hypotheses.toSideConditions :=
+  Subsingleton.elim _ _
+
+theorem auditedComparisonDataEndpointOfStructuredHypotheses_eq_hypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.auditedComparisonDataEndpointOfStructuredHypotheses
+        inputs hypotheses =
+      package.auditedComparisonDataEndpointOfHypotheses
+        inputs.theorem311Subclaims hypotheses :=
+  Subsingleton.elim _ _
+
 namespace Audit
 
 variable {package : IUTStage1SourcePackage source target index}
@@ -1780,6 +1913,28 @@ theorem promotedProviderLedger
     (package.promotedProvider obligations).ledger =
       package.promotedLedger obligations :=
   sourceAudit.promoted_provider_ledger
+
+def comparisonData
+    (_sourceAudit : Audit package obligations) :
+    Corollary312ComparisonData :=
+  package.comparisonData obligations
+
+theorem comparisonDataEqPackage
+    (sourceAudit : Audit package obligations) :
+    sourceAudit.comparisonData = package.comparisonData obligations :=
+  rfl
+
+theorem comparisonDataStage1Comparison
+    (sourceAudit : Audit package obligations) :
+    sourceAudit.comparisonData.stage1Comparison =
+      (package.promotedProvider obligations).stage1Comparison :=
+  package.comparisonData_stage1Comparison_eq obligations
+
+theorem comparisonDataCorollary312
+    (sourceAudit : Audit package obligations) :
+    sourceAudit.comparisonData.corollary312 =
+      (package.promotedProvider obligations).corollary312 :=
+  package.comparisonData_corollary312_eq obligations
 
 theorem qSignedLeThetaSigned
     (sourceAudit : Audit package obligations) :
