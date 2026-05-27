@@ -938,6 +938,66 @@ theorem refinedDirectSummandPacketMultiradialThetaImages_union_eq_example
       package.preLedger.output.comparisons.targetUnion :=
   data.union_eq_targetUnion
 
+def refinedThetaImagesDependOnlyOnCoric_to_multiradial_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind)}
+    (dependence : IUTStage1RefinedThetaImagesDependOnlyOnCoric package) :
+    IUTStage1RefinedDirectSummandPacketMultiradialThetaImages package :=
+  dependence.toRefinedMultiradialThetaImages
+
+theorem refinedThetaImagesDependOnlyOnCoric_profile_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind)}
+    (dependence : IUTStage1RefinedThetaImagesDependOnlyOnCoric package) :
+    dependence.toRefinedMultiradialThetaImages.refinedImages.quotient.profile =
+      theorem311IndeterminacyProfile :=
+  dependence.quotientProfile
+
+theorem refinedThetaImagesDependOnlyOnCoric_union_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind)}
+    (dependence : IUTStage1RefinedThetaImagesDependOnlyOnCoric package) :
+    dependence.toRefinedMultiradialThetaImages.possibleImages.union =
+      package.preLedger.output.comparisons.targetUnion :=
+  dependence.union_eq_targetUnion
+
+def theorem311RefinedMultiradialSubclaim_to_dependence_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind)}
+    (subclaim :
+      IUTStage1Theorem311RefinedMultiradialSubclaim package) :
+    IUTStage1RefinedThetaImagesDependOnlyOnCoric package :=
+  subclaim.toRefinedThetaImagesDependOnlyOnCoric
+
+def theorem311RefinedMultiradialSubclaim_to_multiradial_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind)}
+    (subclaim :
+      IUTStage1Theorem311RefinedMultiradialSubclaim package) :
+    IUTStage1RefinedDirectSummandPacketMultiradialThetaImages package :=
+  subclaim.toRefinedMultiradialThetaImages
+
+theorem theorem311RefinedMultiradialSubclaim_profile_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind)}
+    (subclaim :
+      IUTStage1Theorem311RefinedMultiradialSubclaim package) :
+    subclaim.toRefinedMultiradialThetaImages.refinedImages.quotient.profile =
+      theorem311IndeterminacyProfile :=
+  subclaim.quotientProfile
+
 theorem upperSemi_logVolumeCompatibility_upperBound_example
     (data : IUTStage1LogVolumeCompatibilityData) :
     data.sourceLogVolume <= data.targetLogVolume :=

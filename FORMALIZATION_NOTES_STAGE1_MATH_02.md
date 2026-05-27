@@ -988,3 +988,94 @@ refinedDirectSummandPacketMultiradialThetaImages_union_eq_example
 This bridge still requires coric dependence as an external hypothesis.  The next
 task is to identify which Theorem 3.11 source subclaims should produce that
 coric-dependence hypothesis for the refined choice type.
+
+## 13. Refined Coric-Dependence Subclaim
+
+### Goal
+
+We turned the external coric-dependence hypothesis for refined multiradial
+Theta-pilot images into a named source-facing Theorem 3.11 subclaim.
+
+### Source Check
+
+IUT III, Theorem 3.11 states the multiradial representation after quotienting
+by the procession and local tensor-factor indeterminacies and then tracking
+upper semi-compatibility.  In the refined Lean layer, this becomes the
+obligation that possible images indexed by direct-summand packet choices depend
+only on the coric coordinate after the refined `(Ind1)/(Ind2)/(Ind3)` quotient.
+
+This is still a source obligation, not a constructed proof from Hodge theaters.
+That is intentional: the formalization should expose this as a named claim that
+the eventual proof of Theorem 3.11 must supply.
+
+### Lean/API Check
+
+The new refined dependence record is:
+
+```text
+IUTStage1RefinedThetaImagesDependOnlyOnCoric
+```
+
+It states:
+
+```text
+choice₁.coric = choice₂.coric ->
+  possibleImages.region choice₁ = possibleImages.region choice₂
+```
+
+for packages indexed by:
+
+```text
+IUTStage1DirectSummandPacketTheorem311Choice coric kind
+```
+
+The named Theorem 3.11 subclaim is:
+
+```text
+IUTStage1Theorem311RefinedMultiradialSubclaim
+```
+
+It contains the refined coric-dependence obligation and produces:
+
+```text
+toRefinedMultiradialThetaImages
+imageInvariant
+quotientProfile
+union_eq_targetUnion
+```
+
+### Trap Avoided
+
+We did not add this field to the older generic `IUTStage1Theorem311Subclaims`,
+which is indexed by arbitrary source packages and used for downstream endpoint
+promotion.  The refined subclaim is specialized to the refined direct-summand
+packet choice type, preventing accidental reuse where the refined quotient is
+not present.
+
+### Scholze-Stix Relevance
+
+This subclaim is one of the places where the formalization must not hide the
+dispute.  It does not identify all histories or all local tensor
+representatives.  It says exactly what must be proved for the refined possible
+images: invariance under the coric coordinate after explicitly modeled
+indeterminacies.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+refinedThetaImagesDependOnlyOnCoric_to_multiradial_example
+refinedThetaImagesDependOnlyOnCoric_profile_example
+refinedThetaImagesDependOnlyOnCoric_union_eq_example
+theorem311RefinedMultiradialSubclaim_to_dependence_example
+theorem311RefinedMultiradialSubclaim_to_multiradial_example
+theorem311RefinedMultiradialSubclaim_profile_example
+```
+
+### Remaining Gap
+
+The refined subclaim is still an assumption.  The next mathematical refinement
+should decompose it into source-specific ingredients: algorithmic construction
+of the refined representation, functoriality under procession isomorphisms, and
+compatibility of direct-summand actions with the refined possible-image family.

@@ -2621,6 +2621,133 @@ theorem union_eq_targetUnion
 end IUTStage1RefinedDirectSummandPacketMultiradialThetaImages
 
 /--
+Refined obligation that source-package Theta-pilot possible images depend only
+on the coric coordinate of direct-summand packet choices.
+
+This is the refined Theorem 3.11 multiradiality obligation: it is stated for the
+choice type whose `(Ind2)` coordinate carries direct summands, capsules, and
+log-volume data.
+-/
+structure IUTStage1RefinedThetaImagesDependOnlyOnCoric
+    {source target : Copy} {coric : Type u}
+    {kind : IUTStage1PlaceKind}
+    (package :
+      IUTStage1SourcePackage source target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind)) :
+    Prop where
+  region_eq_of_coric_eq :
+    ∀ choice₁ choice₂,
+      choice₁.coric = choice₂.coric ->
+        (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+            choice₁ =
+          (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+            choice₂
+
+namespace IUTStage1RefinedThetaImagesDependOnlyOnCoric
+
+variable {source target : Copy} {coric : Type u}
+variable {kind : IUTStage1PlaceKind}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1DirectSummandPacketTheorem311Choice coric kind)}
+
+def toRefinedMultiradialThetaImages
+    (dependence : IUTStage1RefinedThetaImagesDependOnlyOnCoric package) :
+    IUTStage1RefinedDirectSummandPacketMultiradialThetaImages package :=
+  IUTStage1RefinedDirectSummandPacketMultiradialThetaImages.ofPackageWithCoricInvariant
+    package dependence.region_eq_of_coric_eq
+
+theorem imageInvariant
+    (dependence : IUTStage1RefinedThetaImagesDependOnlyOnCoric package)
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hrel :
+      dependence.toRefinedMultiradialThetaImages.refinedImages.quotient.relation
+        choice₁ choice₂) :
+    (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+        choice₁ =
+      (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+        choice₂ :=
+  dependence.toRefinedMultiradialThetaImages.region_eq_of_related hrel
+
+theorem quotientProfile
+    (dependence : IUTStage1RefinedThetaImagesDependOnlyOnCoric package) :
+    dependence.toRefinedMultiradialThetaImages.refinedImages.quotient.profile =
+      theorem311IndeterminacyProfile :=
+  dependence.toRefinedMultiradialThetaImages.quotient_profile
+
+theorem union_eq_targetUnion
+    (dependence : IUTStage1RefinedThetaImagesDependOnlyOnCoric package) :
+    dependence.toRefinedMultiradialThetaImages.possibleImages.union =
+      package.preLedger.output.comparisons.targetUnion :=
+  dependence.toRefinedMultiradialThetaImages.union_eq_targetUnion
+
+end IUTStage1RefinedThetaImagesDependOnlyOnCoric
+
+/--
+Named source subclaim for the refined Theorem 3.11 multiradial representation.
+
+The field is intentionally just the refined coric-dependence obligation.  It
+does not assert the Corollary 3.12 inequality or collapse the refined
+indeterminacy relation into equality of all representatives.
+-/
+structure IUTStage1Theorem311RefinedMultiradialSubclaim
+    {source target : Copy} {coric : Type u}
+    {kind : IUTStage1PlaceKind}
+    (package :
+      IUTStage1SourcePackage source target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind)) :
+    Prop where
+  theta_images_depend_only_on_coric :
+    IUTStage1RefinedThetaImagesDependOnlyOnCoric package
+
+namespace IUTStage1Theorem311RefinedMultiradialSubclaim
+
+variable {source target : Copy} {coric : Type u}
+variable {kind : IUTStage1PlaceKind}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1DirectSummandPacketTheorem311Choice coric kind)}
+
+def toRefinedThetaImagesDependOnlyOnCoric
+    (subclaim : IUTStage1Theorem311RefinedMultiradialSubclaim package) :
+    IUTStage1RefinedThetaImagesDependOnlyOnCoric package :=
+  subclaim.theta_images_depend_only_on_coric
+
+def toRefinedMultiradialThetaImages
+    (subclaim : IUTStage1Theorem311RefinedMultiradialSubclaim package) :
+    IUTStage1RefinedDirectSummandPacketMultiradialThetaImages package :=
+  subclaim.toRefinedThetaImagesDependOnlyOnCoric.toRefinedMultiradialThetaImages
+
+theorem imageInvariant
+    (subclaim : IUTStage1Theorem311RefinedMultiradialSubclaim package)
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hrel : subclaim.toRefinedMultiradialThetaImages.refinedImages.quotient.relation
+      choice₁ choice₂) :
+    (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+        choice₁ =
+      (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+        choice₂ :=
+  subclaim.toRefinedMultiradialThetaImages.region_eq_of_related hrel
+
+theorem quotientProfile
+    (subclaim : IUTStage1Theorem311RefinedMultiradialSubclaim package) :
+    subclaim.toRefinedMultiradialThetaImages.refinedImages.quotient.profile =
+      theorem311IndeterminacyProfile :=
+  subclaim.toRefinedMultiradialThetaImages.quotient_profile
+
+theorem union_eq_targetUnion
+    (subclaim : IUTStage1Theorem311RefinedMultiradialSubclaim package) :
+    subclaim.toRefinedMultiradialThetaImages.possibleImages.union =
+      package.preLedger.output.comparisons.targetUnion :=
+  subclaim.toRefinedMultiradialThetaImages.union_eq_targetUnion
+
+end IUTStage1Theorem311RefinedMultiradialSubclaim
+
+/--
 Multiradial possible images of the Theta-pilot, recorded together with the
 indeterminacy quotient on choices.
 
