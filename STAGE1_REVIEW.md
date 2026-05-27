@@ -274,3 +274,86 @@ Therefore the next mathematical milestones should either:
 In either direction, a theorem must not infer a comparison endpoint from a
 mere name such as `Galois`, `SHE`, `APT`, or `reconstructed`. The required
 transport and identification data must remain visible in the type.
+
+## Periodic Review: Structured SHE Layer
+
+Date: 2026-05-27
+
+This checkpoint reviews the recent return to the IUT III Theorem 3.11 to
+Corollary 3.12 layer.
+
+### Current Lean Chain
+
+The source route now contains a non-inert SHE stack:
+
+```text
+StructuredSHEContext
+-> IUTStage1Theorem311StructuredSHE
+-> IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+-> IUTStage1Theorem311StructuredInputsWithSHE
+-> audited HDD-after-SHE / common-container / signed-payload route
+```
+
+The SHE context now records:
+
+```text
+domainStructure
+codomainStructure
+commonLanguage
+qPilotStructure
+thetaPilotStructure
+q-pilot in codomain
+Theta-pilot in domain
+structured local simultaneous-expression validity
+domain/codomain histories not identified
+```
+
+The compatibility object used at the common-container checkpoint carries the
+pilot placements, simultaneous validity, and history separation alongside the
+SHE-arrow and common-context equalities.
+
+### Positive Alignment
+
+This is now directly relevant to the 3.11/3.12 dispute. The formalization does
+not merely say "SHE holds"; it keeps track of which pilot datum is attached to
+which Hodge-theater side, which shared context is being used, and that the two
+Hodge-theater histories are not being identified.
+
+This is also consistent with the impartial goal of the project. The current
+Lean code does not assert that Mochizuki's comparison is correct, nor that the
+Scholze-Stix collapse occurs. It makes the disputed information visible enough
+that later formal steps must say exactly what they transport and identify.
+
+### Remaining Gaps
+
+The validity fields remain abstract propositions. In particular:
+
+* `domain_expression_valid` and `codomain_expression_valid` do not yet encode
+  concrete arithmetic holomorphic structures.
+* `q_pilot_expression_valid` and `theta_pilot_expression_valid` do not yet
+  contain actual q-pilot or Theta/HDD data.
+* `simultaneous_valid` is structured now, but still not a theorem derived from
+  a formalized Hodge-theater construction.
+* the HDD-after-SHE bridge still uses measured common-target data supplied at
+  the algorithmic bridge layer.
+
+These are the right gaps to have at this stage: they are visible and localized.
+
+### Global 3.12 Check
+
+The current code is closer to the disputed transition than the cover/deck
+reconstruction layer, but it still does not prove Corollary 3.12 from the IUT
+papers. The next risk is to let the HDD-after-SHE bridge consume the structured
+SHE context without checking the real-line-copy chart and the target bound
+construction at the same time.
+
+Next useful directions:
+
+* make the HDD-after-SHE bridge explicitly record the SHE validity it consumes;
+* refine one local SHE validity component into a more concrete record;
+* audit the final signed payload route to ensure q-side and Theta-side real
+  readings are always charted before comparison.
+
+The invariant remains unchanged: no theorem may convert SHE/HDD/common
+container names into a Corollary 3.12 endpoint unless the relevant histories,
+transports, charts, and bounds are explicit in the statement.
