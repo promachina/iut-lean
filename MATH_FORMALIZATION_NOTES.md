@@ -7084,3 +7084,102 @@ settle the Hodge-theater common-container issue in IUT III Corollary 3.12.
 The next global step should either continue replacing supplied reconstruction
 interfaces with typed constructions, or return to the SHE/HDD comparison layer
 with the same explicit-history discipline.
+
+## Math Milestone 71: Pilot Placement in Structured SHE Compatibility
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Theorem 3.11 to Corollary 3.12 is not just an endpoint inequality. The debated
+part of the route uses simultaneous holomorphic expressibility to place data
+from distinct Hodge-theater histories into a common expression setting. The
+formal model therefore must remember not only that a SHE datum exists, but also
+which side each pilot datum belongs to and that the simultaneous expression
+claim is actually present.
+
+The existing `StructuredSHEContext` already had these fields:
+
+```text
+q_pilot_in_codomain
+theta_pilot_in_domain
+simultaneous_valid
+histories_not_identified
+```
+
+Before this milestone, the common-container compatibility checklist retained
+the history-separation field but did not carry the q-pilot placement,
+Theta-pilot placement, or simultaneous-validity witness.
+
+### Lean/API Check
+
+The record:
+
+```text
+IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+```
+
+now includes:
+
+```text
+q_pilot_in_codomain
+theta_pilot_in_domain
+simultaneous_valid
+```
+
+in addition to the existing SHE-arrow equality, certificate equality,
+common-container context equality, and history-separation proof.
+
+The constructor:
+
+```text
+IUTStage1Theorem311StructuredSHECommonContainerCompatibility.ofStructuredSHE
+```
+
+fills these fields directly from the structured SHE context. The namespace now
+exposes:
+
+```text
+qPilotTheater_eq_codomain
+thetaPilotTheater_eq_domain
+simultaneousValid
+```
+
+### Lean Decisions
+
+This is not a new way to prove Corollary 3.12. It is a stronger audit object
+for the SHE/common-container portion of the route. The purpose is to prevent a
+future proof from treating SHE as a single inert equality between the common
+container arrow and the certificate.
+
+The q-pilot and Theta-pilot placements remain equalities internal to the SHE
+context. They are not equalities between the domain and codomain Hodge-theater
+histories. The existing `histories_not_identified` guard remains part of the
+same compatibility object.
+
+### What This Tests
+
+The source example checks that the toy structured SHE input supplies:
+
+* q-pilot placement in the codomain holomorphic structure;
+* Theta-pilot placement in the domain holomorphic structure;
+* simultaneous-validity evidence;
+* the existing common-container context match.
+
+### Design Trap Avoided
+
+The trap would be to let the common-container route remember only a final
+shared context and forget which pilot data were valid on which side. This
+milestone keeps the source/codomain placement and simultaneous-validity witness
+available at the same point where the common-container comparison is audited.
+
+### Remaining Gap
+
+The predicate `simultaneous_valid` is still an abstract proposition. To get
+closer to Mochizuki's actual Stage 1 mathematics, later milestones must refine
+what counts as simultaneous expression, and must connect that refinement to
+the HDD-after-SHE comparison without hiding real-line-copy or history
+identifications.

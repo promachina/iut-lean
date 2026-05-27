@@ -730,6 +730,59 @@ theorem unitThetaToy_source_theorem311_structured_she_common_context_example
   (unitThetaToy_source_theorem311_structured_she_input_example
     measure hnormalized hh hbound hholds).commonContainerContextMatches
 
+theorem unitThetaToy_source_theorem311_structured_she_q_pilot_context_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let structuredSHE :=
+      unitThetaToy_source_theorem311_structured_she_input_example
+        measure hnormalized hh hbound hholds
+    structuredSHE.context.qPilotStructure.theater =
+      structuredSHE.context.codomainStructure.theater :=
+  (IUTStage1Theorem311StructuredSHECommonContainerCompatibility.ofStructuredSHE
+    (unitThetaToy_source_theorem311_structured_she_input_example
+      measure hnormalized hh hbound hholds)).qPilotTheater_eq_codomain
+
+theorem unitThetaToy_source_theorem311_structured_she_theta_pilot_context_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let structuredSHE :=
+      unitThetaToy_source_theorem311_structured_she_input_example
+        measure hnormalized hh hbound hholds
+    structuredSHE.context.thetaPilotStructure.theater =
+      structuredSHE.context.domainStructure.theater :=
+  (IUTStage1Theorem311StructuredSHECommonContainerCompatibility.ofStructuredSHE
+    (unitThetaToy_source_theorem311_structured_she_input_example
+      measure hnormalized hh hbound hholds)).thetaPilotTheater_eq_domain
+
+theorem unitThetaToy_source_theorem311_structured_she_simultaneous_valid_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let structuredSHE :=
+      unitThetaToy_source_theorem311_structured_she_input_example
+        measure hnormalized hh hbound hholds
+    structuredSHE.context.simultaneous_valid :=
+  (IUTStage1Theorem311StructuredSHECommonContainerCompatibility.ofStructuredSHE
+    (unitThetaToy_source_theorem311_structured_she_input_example
+      measure hnormalized hh hbound hholds)).simultaneousValid
+
 def unitThetaToy_source_theorem311_structured_inputs_with_she_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

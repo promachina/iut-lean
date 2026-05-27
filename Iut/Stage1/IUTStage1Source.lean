@@ -354,6 +354,13 @@ structure IUTStage1Theorem311StructuredSHECommonContainerCompatibility
   common_container_context_matches :
     package.preLedger.chartedContainer.commonContainer.context =
       structuredSHE.context.sharedContext
+  q_pilot_in_codomain :
+    structuredSHE.context.qPilotStructure.theater =
+      structuredSHE.context.codomainStructure.theater
+  theta_pilot_in_domain :
+    structuredSHE.context.thetaPilotStructure.theater =
+      structuredSHE.context.domainStructure.theater
+  simultaneous_valid : structuredSHE.context.simultaneous_valid
   histories_not_identified :
     structuredSHE.context.domainStructure.theater.side ≠
       structuredSHE.context.codomainStructure.theater.side
@@ -372,6 +379,9 @@ theorem ofStructuredSHE
     she_datum_matches_certificate := structuredSHE.sheDatumMatchesCertificate,
     common_container_context_matches :=
       structuredSHE.commonContainerContextMatches,
+    q_pilot_in_codomain := structuredSHE.context.qPilotTheater_eq_codomain,
+    theta_pilot_in_domain := structuredSHE.context.thetaPilotTheater_eq_domain,
+    simultaneous_valid := structuredSHE.context.simultaneousValid,
     histories_not_identified :=
       structuredSHE.domainHistory_ne_codomainHistory }
 
@@ -397,6 +407,29 @@ theorem commonContainerContextMatches
     package.preLedger.chartedContainer.commonContainer.context =
       structuredSHE.context.sharedContext :=
   compatibility.common_container_context_matches
+
+theorem qPilotTheater_eq_codomain
+    (compatibility :
+      IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+        package structuredSHE) :
+    structuredSHE.context.qPilotStructure.theater =
+      structuredSHE.context.codomainStructure.theater :=
+  compatibility.q_pilot_in_codomain
+
+theorem thetaPilotTheater_eq_domain
+    (compatibility :
+      IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+        package structuredSHE) :
+    structuredSHE.context.thetaPilotStructure.theater =
+      structuredSHE.context.domainStructure.theater :=
+  compatibility.theta_pilot_in_domain
+
+theorem simultaneousValid
+    (compatibility :
+      IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+        package structuredSHE) :
+    structuredSHE.context.simultaneous_valid :=
+  compatibility.simultaneous_valid
 
 theorem domainHistory_ne_codomainHistory
     (compatibility :
