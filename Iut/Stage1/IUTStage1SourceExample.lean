@@ -844,6 +844,26 @@ theorem directSummandPacketTheorem311_generated_preserves_totalLogVolume_example
   IUTStage1DirectSummandPacketTheorem311Choice.generated_preserves_capsuleTotalLogVolume
     hrel
 
+theorem directSummandPacketTheorem311_image_invariant_of_coric_example
+    {target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    (images :
+      RegionFamily target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind))
+    (hcoric :
+      ∀ choice₁ choice₂,
+        choice₁.coric = choice₂.coric ->
+          images.region choice₁ = images.region choice₂)
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1DirectSummandPacketTheorem311Choice.indeterminacySourceData
+          (coric := coric) (kind := kind)).generators
+        choice₁ choice₂) :
+    images.region choice₁ = images.region choice₂ :=
+  IUTStage1DirectSummandPacketTheorem311Choice.image_invariant_of_coric
+    images hcoric hrel
+
 theorem upperSemi_logVolumeCompatibility_upperBound_example
     (data : IUTStage1LogVolumeCompatibilityData) :
     data.sourceLogVolume <= data.targetLogVolume :=

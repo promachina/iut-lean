@@ -804,3 +804,51 @@ The next refinement should connect this generated direct-summand packet
 indeterminacy relation to multiradial possible-image invariance, paralleling
 the older `image_invariant_of_coric` interface but now with the refined
 Theorem 3.11 choice type.
+
+## 10. Refined Multiradial Image Invariance
+
+### Goal
+
+We connected the generated direct-summand packet indeterminacy relation to the
+multiradial possible-image pattern.
+
+### Lean/API Check
+
+The new theorem is:
+
+```text
+IUTStage1DirectSummandPacketTheorem311Choice.image_invariant_of_coric
+```
+
+It states that for region-valued possible images indexed by refined
+direct-summand packet choices, if the regions depend only on the coric
+coordinate, then any two choices related by the generated `(Ind1)/(Ind2)/(Ind3)`
+relation have the same region.
+
+The proof uses:
+
+```text
+generated_preserves_coric
+```
+
+from the refined relation.
+
+### Mathematical Point
+
+This is the refined version of the multiradiality checkpoint: local tensor
+symmetry, including the direct-summand/capsule/log-volume refinement, is now
+part of the generated relation that possible images must be invariant under.
+
+### Toy Check
+
+The source example now checks:
+
+```text
+directSummandPacketTheorem311_image_invariant_of_coric_example
+```
+
+### Remaining Gap
+
+The next step is to package this as a refined multiradial theta-image object,
+so the Stage 1 source package can ask for the stronger refined quotient rather
+than only the older generic quotient.

@@ -2454,6 +2454,24 @@ theorem generated_preserves_capsuleTotalLogVolume
   | trans _ _ ih₁₂ ih₂₃ =>
       exact ih₁₂.trans ih₂₃
 
+theorem image_invariant_of_coric
+    {target : Copy}
+    (images :
+      RegionFamily target
+        (IUTStage1DirectSummandPacketTheorem311Choice coric kind))
+    (hcoric :
+      ∀ choice₁ choice₂,
+        choice₁.coric = choice₂.coric ->
+          images.region choice₁ = images.region choice₂) :
+    ∀ {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind},
+      IUTStage1GeneratedIndeterminacyRelation
+        (indeterminacySourceData (coric := coric) (kind := kind)).generators
+        choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂ := by
+  intro choice₁ choice₂ hrel
+  exact hcoric choice₁ choice₂ (generated_preserves_coric hrel)
+
 end IUTStage1DirectSummandPacketTheorem311Choice
 
 /--
