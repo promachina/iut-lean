@@ -235,6 +235,63 @@ theorem stage1Comparison_recovers_corollary312
       (package.promotedProvider obligations).ledger.corollary312 :=
   (package.promotedProvider obligations).stage1Comparison_recovers_corollary312
 
+/-- Compact audit checklist for a source-facing Stage 1 package. -/
+structure Audit
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) : Prop where
+  input_matches_labels : package.input = package.labels.input
+  multiradialOutput_matches_labels :
+    package.multiradialOutput = package.labels.multiradialOutput
+  logVolumeComparison_matches_labels :
+    package.logVolumeComparison = package.labels.logVolumeComparison
+  algorithm_certified : package.preLedger.output.Certified
+  she_arrow_matches_certificate :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she
+  q_pilot_positive : 0 < -package.preLedger.qSigned
+  normalization : package.preLedger.normalization
+  promoted_provider_ledger :
+    (package.promotedProvider obligations).ledger =
+      package.promotedLedger obligations
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+  corollary312 :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned)
+  stage_recovers_qSigned_le_thetaSigned :
+    corollary312_from_stage1_comparison
+        (package.promotedProvider obligations).stage1Comparison =
+      corollary312_of_signed_le
+        (package.promotedProvider obligations).ledger.qSigned_le_thetaSigned
+  stage_recovers_corollary312 :
+    corollary312_from_stage1_comparison
+        (package.promotedProvider obligations).stage1Comparison =
+      (package.promotedProvider obligations).ledger.corollary312
+
+theorem audit
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    Audit package obligations :=
+  { input_matches_labels := package.input_matches_labels,
+    multiradialOutput_matches_labels :=
+      package.multiradialOutput_matches_labels,
+    logVolumeComparison_matches_labels :=
+      package.logVolumeComparison_matches_labels,
+    algorithm_certified := obligations.algorithmCertified,
+    she_arrow_matches_certificate := obligations.sheArrowMatchesCertificate,
+    q_pilot_positive := obligations.qPilotPositive,
+    normalization := obligations.sourceNormalization,
+    promoted_provider_ledger := package.promotedProvider_ledger obligations,
+    qSigned_le_thetaSigned :=
+      package.publicAudit_qSigned_le_thetaSigned obligations,
+    corollary312 := package.publicAudit_corollary312 obligations,
+    stage_recovers_qSigned_le_thetaSigned :=
+      package.publicAudit_stage1Comparison_recovers_qSigned_le_thetaSigned
+        obligations,
+    stage_recovers_corollary312 :=
+      package.stage1Comparison_recovers_corollary312 obligations }
+
 end IUTStage1SourcePackage
 
 end Stage1

@@ -121,6 +121,25 @@ theorem unitThetaToy_source_stage_recovers_corollary_example
       (unitThetaToyIUTStage1SourceObligations
         measure hnormalized hh hbound hholds)
 
+theorem unitThetaToy_source_audit_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1SourcePackage.Audit
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds)
+      (unitThetaToyIUTStage1SourceObligations
+        measure hnormalized hh hbound hholds) :=
+  (unitThetaToyIUTStage1SourcePackage
+    measure hnormalized hh hbound hholds).audit
+      (unitThetaToyIUTStage1SourceObligations
+        measure hnormalized hh hbound hholds)
+
 end ToyModel
 end Stage1
 end Iut

@@ -7481,3 +7481,84 @@ toy data separate from the actual IUT source problem.
 The next milestone should add a compact source-package audit theorem collecting
 the source labels, source obligations, promoted-provider consistency, and public
 endpoint projections into one human-readable checklist.
+
+## Milestone 89: Source Package Audit Checklist
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The local IUT III Step `(xi-b)` through `(xi-d)` source check decomposes the
+Stage 1 passage into named qualitative output data, IPL/SHE/APT-style
+requirements, hull/determinant/log-volume comparison, and finally the signed
+Corollary 3.12-shaped endpoint.
+
+The source-facing API now has all of these as separate named projections. This
+milestone collects the currently formalized boundary into one audit object so
+future readers can inspect the package without searching across separate
+theorems.
+
+### Purpose
+
+This milestone adds a compact audit record:
+
+```text
+IUTStage1SourcePackage.Audit
+```
+
+and a theorem:
+
+```text
+IUTStage1SourcePackage.audit
+```
+
+The audit checklist records:
+
+```text
+source label alignment
+algorithm certification
+SHE arrow/certificate alignment
+q-pilot positivity
+normalization
+promoted provider/ledger consistency
+qSigned <= thetaSigned
+Corollary312Inequality
+Stage1Comparison recovery to qSigned_le_thetaSigned
+Stage1Comparison recovery to promoted ledger.corollary312
+```
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.Audit
+IUTStage1SourcePackage.audit
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_audit_example
+```
+
+### What This Tests
+
+The toy example verifies that the source-facing audit theorem can be consumed
+through a concrete promoted path while keeping the source obligations explicit.
+
+### Design Trap Avoided
+
+The trap would be to make the source package appear simpler by hiding the
+remaining source obligations behind the public endpoint. The audit theorem does
+the opposite: it puts the labels, obligations, promoted object consistency, and
+public endpoint projections in one visible record.
+
+### Next Step
+
+The next milestone should expose named projections from
+`IUTStage1SourcePackage.Audit`, so downstream modules can cite audit fields
+without relying on record-field layout.
