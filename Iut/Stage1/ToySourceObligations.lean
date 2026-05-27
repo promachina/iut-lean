@@ -129,6 +129,36 @@ theorem unitThetaToy_membership_holds_from_sourceObligations
           using hholds) :=
   rfl
 
+theorem unitThetaToy_theta_commonBound_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let ledger := unitThetaToySourceObligationLedger
+      measure hnormalized hh hbound hholds
+    ledger.theta_commonBound =
+      ledger.chartedContainer.apply ledger.certificate :=
+  rfl
+
+theorem unitThetaToy_thetaCommonBound_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let ledger := unitThetaToySourceObligationLedger
+      measure hnormalized hh hbound hholds
+    ledger.thetaCommonBound =
+      ledger.chartedContainer.apply ledger.certificate :=
+  rfl
+
 theorem unitThetaToy_threeTerm_q_le_target_from_sourceObligations
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

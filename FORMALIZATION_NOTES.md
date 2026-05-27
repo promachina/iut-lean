@@ -4970,3 +4970,78 @@ The next milestone should audit the common-container bridge/accessor layer:
 `theta_commonBound` should be shown to come from applying the charted common
 container to the structured certificate in source-specific ledgers, starting
 with the toy ledger.
+
+## Milestone 55: Toy Common-Bound Source Projection
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+The April 2026 formalization report describes the final `3.11.5 => 3.12`
+comparison as taking place in a common container for the `Theta`- and
+`q`-pilot data. IUT IV describes the `Theta` side through containers for
+possible images and upper bounds. In the current Lean interface, the source of
+such a bound is:
+
+```text
+ChartedCommonContainerData.apply certificate
+```
+
+The general source ledger stores `theta_commonBound` as an obligation. A
+source-specific ledger should show how that obligation is produced.
+
+### Purpose
+
+This milestone adds toy-level projections showing that the toy ledger's
+`theta_commonBound` field and public `thetaCommonBound` accessor are exactly
+the charted common container applied to the toy structured certificate:
+
+```text
+ledger.theta_commonBound
+  = ledger.chartedContainer.apply ledger.certificate
+
+ledger.thetaCommonBound
+  = ledger.chartedContainer.apply ledger.certificate
+```
+
+### Lean Declarations
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToy_theta_commonBound_from_sourceObligations
+unitThetaToy_thetaCommonBound_from_sourceObligations
+```
+
+Both proofs are `rfl`. Lean verifies that the toy source ledger discharges the
+common `Theta` bound by the named toy charted common container and toy
+structured certificate, not by an unrelated proof term.
+
+### What This Tests
+
+The toy right-side chain now has a source audit:
+
+```text
+thetaToyStructuredCertificate
+thetaToyChartedCommonContainerData
+chartedContainer.apply certificate
+theta_commonBound
+targetSigned <= thetaSigned
+```
+
+This is the first source-specific check underneath the general
+`theta_commonBound` field.
+
+### Design Trap Avoided
+
+The trap would be to let the toy ledger fill `theta_commonBound` with an opaque
+term while the general ledger only records that some common bound exists. This
+projection keeps the toy witness visibly tied to the charted common container.
+
+### Next Step
+
+The next milestone should add analogous toy projections for the certificate and
+charted common container fields themselves, confirming they are exactly the
+named toy constructors.
