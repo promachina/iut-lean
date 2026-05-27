@@ -17088,3 +17088,85 @@ The next mathematical step is to define actual choice records rich enough to
 state these three source mechanisms nontrivially. In particular, Ind1 needs
 procession data, Ind2 needs local tensor-factor symmetry data, and Ind3 needs
 variation in the `m` coordinate together with upper-semi-compatibility evidence.
+
+## 120. Theorem 3.11-Shaped Choice Records
+
+### Goal
+
+We introduced a source-shaped choice record for Theorem 3.11. This is more
+specific than the earlier generic coordinate-choice model.
+
+### Lean/API Check
+
+The source layer now defines:
+
+```text
+IUTStage1Theorem311Choice
+IUTStage1Theorem311Choice.ProcessionAutomorphismStep
+IUTStage1Theorem311Choice.LocalTensorSymmetryStep
+IUTStage1Theorem311Choice.UpperSemiCompatibilityStep
+IUTStage1Theorem311Choice.indeterminacySourceData
+IUTStage1Theorem311Choice.generated_coric_eq
+IUTStage1Theorem311Choice.generated_column_eq
+IUTStage1Theorem311Choice.image_invariant_of_coric
+```
+
+The choice fields are:
+
+```text
+column : Int
+row : Int
+coric
+procession_state
+local_tensor_state
+upper_semi_state
+```
+
+The generator permissions are:
+
+```text
+Ind1: may change procession_state; preserves column, row, coric, local tensor, upper-semi state
+Ind2: may change local_tensor_state; preserves column, row, coric, procession, upper-semi state
+Ind3: may change row and upper_semi_state; preserves column, coric, procession, local tensor state
+```
+
+Lean proves that the generated relation preserves:
+
+```text
+column
+coric
+```
+
+and therefore possible-image families depending only on coric data are
+invariant under the Theorem 3.11-shaped generated relation.
+
+### Source Check
+
+This follows the statement of IUT III Theorem 3.11:
+
+```text
+Ind1: automorphisms of the procession of D-prime-strips
+Ind2: local tensor-factor symmetries
+Ind3: upper semi-compatibility as m varies
+```
+
+The model is still schematic, but the allowed coordinate changes now mirror the
+roles of the three indeterminacies in the statement.
+
+### Toy Check
+
+The source example now checks:
+
+```text
+theorem311Choice_generated_coric_eq_example
+theorem311Choice_generated_column_eq_example
+theorem311Choice_image_invariant_of_coric_example
+```
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The state coordinates are still abstract. To become non-toy, these must be
+replaced by records for processions of D-prime-strips, local tensor packet
+symmetry data, and upper-semi-compatible Kummer/log-link data.

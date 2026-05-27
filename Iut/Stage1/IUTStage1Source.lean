@@ -691,6 +691,151 @@ theorem quotient_profile
 end IUTStage1Theorem311IndeterminacySourceData
 
 /--
+Source-shaped choice data for Theorem 3.11.
+
+The integer coordinates model the log-theta-lattice column `n` and row `m`.
+The remaining coordinates separate the coric data from the representative data
+affected by `(Ind1)`, `(Ind2)`, `(Ind3)`.
+-/
+structure IUTStage1Theorem311Choice
+    (coric processionState localTensorState upperSemiState : Type u) where
+  column : Int
+  row : Int
+  coric : coric
+  procession_state : processionState
+  local_tensor_state : localTensorState
+  upper_semi_state : upperSemiState
+
+namespace IUTStage1Theorem311Choice
+
+variable {coric processionState localTensorState upperSemiState : Type u}
+
+abbrev Choice :=
+  IUTStage1Theorem311Choice
+    coric processionState localTensorState upperSemiState
+
+/-- `(Ind1)` changes procession representatives and preserves the other coordinates. -/
+structure ProcessionAutomorphismStep
+    (choice₁ choice₂ : Choice
+      (coric := coric) (processionState := processionState)
+      (localTensorState := localTensorState)
+      (upperSemiState := upperSemiState)) : Prop where
+  column_eq : choice₁.column = choice₂.column
+  row_eq : choice₁.row = choice₂.row
+  coric_eq : choice₁.coric = choice₂.coric
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+
+/-- `(Ind2)` changes local tensor representatives and preserves the other coordinates. -/
+structure LocalTensorSymmetryStep
+    (choice₁ choice₂ : Choice
+      (coric := coric) (processionState := processionState)
+      (localTensorState := localTensorState)
+      (upperSemiState := upperSemiState)) : Prop where
+  column_eq : choice₁.column = choice₂.column
+  row_eq : choice₁.row = choice₂.row
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+
+/--
+`(Ind3)` records upper semi-compatibility as the row `m` varies. It preserves
+the column and coric data but may change the row and upper-semi representative.
+-/
+structure UpperSemiCompatibilityStep
+    (choice₁ choice₂ : Choice
+      (coric := coric) (processionState := processionState)
+      (localTensorState := localTensorState)
+      (upperSemiState := upperSemiState)) : Prop where
+  column_eq : choice₁.column = choice₂.column
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+
+def indeterminacySourceData :
+    IUTStage1Theorem311IndeterminacySourceData
+      (Choice
+        (coric := coric) (processionState := processionState)
+        (localTensorState := localTensorState)
+        (upperSemiState := upperSemiState)) :=
+  { procession_automorphism_step := ProcessionAutomorphismStep,
+    local_tensor_symmetry_step := LocalTensorSymmetryStep,
+    upper_semi_compatibility_step := UpperSemiCompatibilityStep }
+
+theorem generated_coric_eq
+    {choice₁ choice₂ :
+      Choice
+        (coric := coric) (processionState := processionState)
+        (localTensorState := localTensorState)
+        (upperSemiState := upperSemiState)}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        indeterminacySourceData.generators choice₁ choice₂) :
+    choice₁.coric = choice₂.coric := by
+  induction hrel with
+  | refl choice =>
+      rfl
+  | ind1 hstep =>
+      exact hstep.coric_eq
+  | ind2 hstep =>
+      exact hstep.coric_eq
+  | ind3 hstep =>
+      exact hstep.coric_eq
+  | symm _ ih =>
+      exact ih.symm
+  | trans _ _ ih₁₂ ih₂₃ =>
+      exact ih₁₂.trans ih₂₃
+
+theorem generated_column_eq
+    {choice₁ choice₂ :
+      Choice
+        (coric := coric) (processionState := processionState)
+        (localTensorState := localTensorState)
+        (upperSemiState := upperSemiState)}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        indeterminacySourceData.generators choice₁ choice₂) :
+    choice₁.column = choice₂.column := by
+  induction hrel with
+  | refl choice =>
+      rfl
+  | ind1 hstep =>
+      exact hstep.column_eq
+  | ind2 hstep =>
+      exact hstep.column_eq
+  | ind3 hstep =>
+      exact hstep.column_eq
+  | symm _ ih =>
+      exact ih.symm
+  | trans _ _ ih₁₂ ih₂₃ =>
+      exact ih₁₂.trans ih₂₃
+
+theorem image_invariant_of_coric
+    {target : Copy}
+    (images :
+      RegionFamily target
+        (Choice
+          (coric := coric) (processionState := processionState)
+          (localTensorState := localTensorState)
+          (upperSemiState := upperSemiState)))
+    (hcoric :
+      ∀ choice₁ choice₂,
+        choice₁.coric = choice₂.coric ->
+          images.region choice₁ = images.region choice₂) :
+    ∀ {choice₁ choice₂ :
+      Choice
+        (coric := coric) (processionState := processionState)
+        (localTensorState := localTensorState)
+        (upperSemiState := upperSemiState)},
+      IUTStage1GeneratedIndeterminacyRelation
+        indeterminacySourceData.generators choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂ := by
+  intro choice₁ choice₂ hrel
+  exact hcoric choice₁ choice₂ (generated_coric_eq hrel)
+
+end IUTStage1Theorem311Choice
+
+/--
 Multiradial possible images of the Theta-pilot, recorded together with the
 indeterminacy quotient on choices.
 

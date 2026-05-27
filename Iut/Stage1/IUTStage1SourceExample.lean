@@ -222,6 +222,59 @@ theorem unitThetaToyTheorem311IndeterminacySourceData_profile_example :
   IUTStage1Theorem311IndeterminacySourceData.quotient_profile
     (unitThetaToyTheorem311IndeterminacySourceData (index := index))
 
+theorem theorem311Choice_generated_coric_eq_example
+    {coric processionState localTensorState upperSemiState : Type u}
+    {choice₁ choice₂ :
+      IUTStage1Theorem311Choice
+        coric processionState localTensorState upperSemiState}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1Theorem311Choice.indeterminacySourceData
+          (coric := coric) (processionState := processionState)
+          (localTensorState := localTensorState)
+          (upperSemiState := upperSemiState)).generators
+        choice₁ choice₂) :
+    choice₁.coric = choice₂.coric :=
+  IUTStage1Theorem311Choice.generated_coric_eq hrel
+
+theorem theorem311Choice_generated_column_eq_example
+    {coric processionState localTensorState upperSemiState : Type u}
+    {choice₁ choice₂ :
+      IUTStage1Theorem311Choice
+        coric processionState localTensorState upperSemiState}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1Theorem311Choice.indeterminacySourceData
+          (coric := coric) (processionState := processionState)
+          (localTensorState := localTensorState)
+          (upperSemiState := upperSemiState)).generators
+        choice₁ choice₂) :
+    choice₁.column = choice₂.column :=
+  IUTStage1Theorem311Choice.generated_column_eq hrel
+
+theorem theorem311Choice_image_invariant_of_coric_example
+    {coric processionState localTensorState upperSemiState : Type u}
+    (images :
+      RegionFamily thetaLine
+        (IUTStage1Theorem311Choice
+          coric processionState localTensorState upperSemiState))
+    (hcoric :
+      ∀ choice₁ choice₂,
+        choice₁.coric = choice₂.coric ->
+          images.region choice₁ = images.region choice₂)
+    {choice₁ choice₂ :
+      IUTStage1Theorem311Choice
+        coric processionState localTensorState upperSemiState}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1Theorem311Choice.indeterminacySourceData
+          (coric := coric) (processionState := processionState)
+          (localTensorState := localTensorState)
+          (upperSemiState := upperSemiState)).generators
+        choice₁ choice₂) :
+    images.region choice₁ = images.region choice₂ :=
+  IUTStage1Theorem311Choice.image_invariant_of_coric images hcoric hrel
+
 theorem coordinateIndeterminacy_generated_coric_eq_example
     {coric ind1State ind2State ind3State : Type u}
     {choice₁ choice₂ :
