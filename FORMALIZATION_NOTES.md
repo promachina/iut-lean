@@ -2493,3 +2493,124 @@ The next milestone should make the "single ring structure/common container"
 language explicit by adding an inert common-container record that ties together
 the SHE common holomorphic context, the HDD-after-SHE composite, and the
 target-side measure used for the final real comparison.
+
+## Milestone 25: Common Container Data
+
+Lean files:
+
+* `Iut/Foundations/AlgorithmicBridge.lean`
+* `Iut/Stage1/ToyBridge.lean`
+* `Iut/Stage1/SourceObligations.lean`
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+Mochizuki's April 2026 report describes the skeletal Stage 1 Lean work as the
+fourth triangle: simultaneous comparison relative to a single ring structure,
+or "common container", between the Theta-pilot corresponding to HDD and the
+q-pilot corresponding to SHE. Earlier in the same report, the toy description
+of IUT emphasizes common multiplicative monoid and abstract group data, but not
+common ring structures, as the input for an algorithm that constructs a common
+container for distinct arithmetic holomorphic structures.
+
+IUT III also uses this language: in the discussion around Theorem 3.11, a
+reconstructed Frobenioid is described as a common container in which distinct
+pilot choices and their associated data may be compared. This is consistent
+with Step `(xi-d)` of Corollary 3.12, where the q- and Theta-side quantities
+become comparable only after the holomorphic-hull, determinant, and normalized
+log-volume operations place them in the appropriate shared comparison setting.
+
+Scholze-Stix's criticism again supplies the guardrail: if the formalization says
+two real-valued objects are compared in a common setting, then the identity of
+that setting must be explicit rather than hidden in prose or in an overloaded
+bridge.
+
+### Purpose
+
+Milestone 24 named the restricted composite `(HDD) o (SHE)`. This milestone
+adds the common-container layer:
+
+```text
+CommonContainerId
+CommonContainerData
+```
+
+`CommonContainerData` stores an inert container identifier, the shared
+holomorphic context supplied by SHE, and the HDD-after-SHE composite. The target
+measure appears as a type parameter of the record, so the final real-valued
+comparison remains attached to the same target-side measuring apparatus.
+
+### Lean Declarations
+
+In `AlgorithmicBridge.lean`:
+
+```text
+CommonContainerId.label
+CommonContainerData.container
+CommonContainerData.context
+CommonContainerData.hddShe
+CommonContainerData.she_context_matches
+CommonContainerData.structuredBridge
+CommonContainerData.apply
+CommonContainerData.choice_targetVolume_le
+CommonContainerData.allTargetsAtMost
+```
+
+In `ToyBridge.lean`:
+
+```text
+thetaToyCommonContainer
+thetaToyCommonContainerData
+thetaToyCommonContainer_choice_targetVolume_le_bound
+thetaToyCommonContainer_allTargetsAtMost
+```
+
+In `SourceObligations.lean`, the ledger field
+
+```text
+hddShe : output.HDDSHECompositeData measure thetaSigned
+```
+
+was replaced by:
+
+```text
+commonContainer : output.CommonContainerData measure thetaSigned
+```
+
+The ledger still records:
+
+```text
+she_matches_certificate :
+  commonContainer.hddShe.sheArrow.datum = certificate.she
+```
+
+and now also proves:
+
+```text
+commonContextMatchesCertificate
+```
+
+which states that the common-container context agrees with the SHE shared
+context in the structured certificate.
+
+### What This Tests
+
+The toy source-obligation endpoint still proves the signed Stage 1 inequality
+after the final ledger is strengthened from HDD-after-SHE data to common
+container data. The proof of `commonContextMatchesCertificate` checks that the
+container's shared context, the SHE arrow datum, and the certificate's SHE datum
+are aligned by explicit Lean equalities.
+
+### Design Trap Avoided
+
+The trap would be to describe a "common container" only in comments while the
+actual Lean theorem continues to compare numbers through an anonymous bridge.
+This milestone makes the container a formal input to the source ledger without
+pretending to have constructed the real IUT common container.
+
+### Next Step
+
+The next milestone should make the real-line comparison discipline sharper by
+recording an inert `RealComparisonChart` for the common container, so the final
+q- and Theta-side signed reals are explicitly associated with the same target
+real-line copy and measure context.

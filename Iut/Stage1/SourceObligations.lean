@@ -31,8 +31,9 @@ structure SourceObligationLedger
     (measure : RegionMeasure target) (thetaSigned qSigned : Real)
     (normalization : Prop) where
   certificate : QualitativeData.StructuredCertificate output.family
-  hddShe : output.HDDSHECompositeData measure thetaSigned
-  she_matches_certificate : hddShe.sheArrow.datum = certificate.she
+  commonContainer : output.CommonContainerData measure thetaSigned
+  she_matches_certificate :
+    commonContainer.hddShe.sheArrow.datum = certificate.she
   choice : index
   q_le_choice :
     qSigned <= RegionMeasure.targetVolume measure (output.comparison choice)
@@ -53,20 +54,26 @@ theorem corollary312 (ledger :
       (signedPilotLogVolume PilotSide.theta thetaSigned)
       (signedPilotLogVolume PilotSide.q qSigned) :=
   corollary312_from_structured_bridge
-    ledger.hddShe.structuredBridge ledger.certificate ledger.choice
+    ledger.commonContainer.structuredBridge ledger.certificate ledger.choice
     ledger.q_le_choice
 
 def stage1Comparison (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     Stage1Comparison :=
   stage1Comparison_from_structured_bridge
-    ledger.hddShe.structuredBridge ledger.certificate ledger.choice
+    ledger.commonContainer.structuredBridge ledger.certificate ledger.choice
     ledger.q_positive ledger.q_le_choice
 
 theorem sheMatchesCertificate (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
-    ledger.hddShe.sheArrow.datum = ledger.certificate.she :=
+    ledger.commonContainer.hddShe.sheArrow.datum = ledger.certificate.she :=
   ledger.she_matches_certificate
+
+theorem commonContextMatchesCertificate (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.commonContainer.context = ledger.certificate.she.sharedContext := by
+  rw [← ledger.commonContainer.she_context_matches]
+  rw [ledger.she_matches_certificate]
 
 theorem hasNormalization (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :

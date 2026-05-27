@@ -134,6 +134,10 @@ structure DescentOperationId where
 structure SHEArrowId where
   label : String
 
+/-- Inert identifier for a common container/common ring-structure context. -/
+structure CommonContainerId where
+  label : String
+
 /--
 A named hull+det operation together with the structured bridge it supplies.
 
@@ -267,6 +271,50 @@ theorem allTargetsAtMost
   data.hdd.allTargetsAtMost certificate
 
 end HDDSHECompositeData
+
+/--
+A named common container for the final simultaneous comparison.
+
+The container records the shared holomorphic context supplied by SHE, the final
+`HDD o SHE` composite, and the target-side measure appearing in the type.
+-/
+structure CommonContainerData
+    (output : AlgorithmicOutput source target index)
+    (measure : RegionMeasure target) (bound : Real) where
+  container : CommonContainerId
+  context : QualitativeData.SharedHolomorphicContext
+  hddShe : output.HDDSHECompositeData measure bound
+  she_context_matches : hddShe.sheArrow.datum.sharedContext = context
+
+namespace CommonContainerData
+
+variable {measure : RegionMeasure target}
+variable {output : AlgorithmicOutput source target index}
+variable {bound : Real}
+
+def structuredBridge (data : CommonContainerData output measure bound) :
+    output.StructuredCommonTargetBoundBridge measure bound :=
+  data.hddShe.structuredBridge
+
+def apply (data : CommonContainerData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    output.CommonTargetBound measure bound :=
+  data.hddShe.apply certificate
+
+theorem choice_targetVolume_le
+    (data : CommonContainerData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family)
+    (choice : index) :
+    RegionMeasure.targetVolume measure (output.comparison choice) <= bound :=
+  data.hddShe.choice_targetVolume_le certificate choice
+
+theorem allTargetsAtMost
+    (data : CommonContainerData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound :=
+  data.hddShe.allTargetsAtMost certificate
+
+end CommonContainerData
 
 end AlgorithmicOutput
 
