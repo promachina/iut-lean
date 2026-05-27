@@ -1738,3 +1738,92 @@ The next target should refine one of the valuation obligations: either connect
 `residueCharacteristic` to the maximal ideal/residue field attached to a
 finite place, or add the `CK`/`CF` base-change relation from Definition 3.1(d)
 so the local bad-reduction and cusp conditions have the right geometric target.
+
+## Math Milestone 18: Orbicurve Cover Data for Definition 3.1(d)
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(d) says that `C_K` is a hyperbolic orbicurve of type
+`(1,l-tors)^±` over `K`, with `K`-core given by the base-change
+`C_F x_F K`. It further says that `C_K` determines, up to `K`-isomorphism, a
+hyperbolic orbicurve `X_K` of type `(1,l-tors)` and finite etale covering
+diagrams, together with corresponding open immersions of profinite groups.
+
+Before this milestone, `C_K` was an independent field of `InitialThetaData`.
+That was too weak: the source relates it directly to the earlier `C_F`.
+
+### Lean Decisions
+
+The new bundle is:
+
+```text
+ThetaOrbicurveCoverData Fmod F K curveModuli
+```
+
+It contains:
+
+```text
+cK : HyperbolicOrbicurveModel K
+xK : HyperbolicOrbicurveModel K
+cK_has_type_l_tors_pm : Prop
+cK_core_is_baseChange_cF : Prop
+cK_determined_by_cF : Prop
+xK_has_type_l_tors : Prop
+finiteEtaleCoveringDiagrams : Prop
+profiniteGroupOpenImmersions : Prop
+```
+
+The parameter `curveModuli : ThetaCurveModuliData Fmod F` is intentional. It
+forces the `C_K` data to be attached to the specific `C_F` produced from
+`X_F`, instead of merely sharing the same ambient field names.
+
+The individual geometric conditions remain explicit propositions, since we
+still do not have formal hyperbolic orbicurve categories, stack-theoretic
+quotients, or profinite fundamental group diagrams in place.
+
+### Lean Declarations
+
+```text
+ThetaOrbicurveCoverData
+ThetaOrbicurveCoverData.cKType
+ThetaOrbicurveCoverData.cKCoreBaseChange
+ThetaOrbicurveCoverData.cKDeterminedByCF
+ThetaOrbicurveCoverData.xKType
+ThetaOrbicurveCoverData.finiteEtaleDiagrams
+ThetaOrbicurveCoverData.openImmersions
+InitialThetaData.cKType
+InitialThetaData.cKCoreBaseChange
+InitialThetaData.cKDeterminedByCF
+InitialThetaData.xKType
+InitialThetaData.finiteEtaleCoveringDiagrams
+InitialThetaData.profiniteGroupOpenImmersions
+```
+
+### What This Tests
+
+The example file now verifies:
+
+* construction of the `C_K`/`X_K` cover bundle over the existing curve/moduli
+  data;
+* construction of `InitialThetaData` using the cover bundle;
+* projection of the type, base-change, determination, finite-etale diagram,
+  and open-immersion obligations.
+
+### Design Trap Avoided
+
+The trap would be to treat `C_K` as just another independent label. The new
+record forces the formal data to remember that `C_K` is supposed to be built
+from `C_F` by base change and then used to recover `X_K` and the covering
+diagrams. This gives later local and cusp conditions the correct geometric
+target.
+
+### Next Step
+
+The next Definition 3.1 step should refine the local valuation clauses in
+(e): base-changing curves to `K_v`, separating `Vnon`, `Varc`, `Vgood`, and
+`Vbad`, and recording the bad-local type `(1, Z/lZ)^±` for `C_v`.

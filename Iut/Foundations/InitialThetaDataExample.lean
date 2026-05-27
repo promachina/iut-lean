@@ -98,6 +98,35 @@ noncomputable def abstractThetaCurveModuliData
   torsion23RationalOverF := torsion23RationalOverF
   torsion23RationalOverF_holds := hTorsion
 
+/-- A constructor smoke test for the `C_K`/`X_K` cover data. -/
+def abstractThetaOrbicurveCoverData
+    (curveModuli : ThetaCurveModuliData Fmod F)
+    (cK xK : HyperbolicOrbicurveModel K)
+    (cK_has_type_l_tors_pm cK_core_is_baseChange_cF cK_determined_by_cF
+      xK_has_type_l_tors finiteEtaleCoveringDiagrams
+      profiniteGroupOpenImmersions : Prop)
+    (hCKType : cK_has_type_l_tors_pm)
+    (hCore : cK_core_is_baseChange_cF)
+    (hDetermined : cK_determined_by_cF)
+    (hXKType : xK_has_type_l_tors)
+    (hEtale : finiteEtaleCoveringDiagrams)
+    (hOpen : profiniteGroupOpenImmersions) :
+    ThetaOrbicurveCoverData Fmod F K curveModuli where
+  cK := cK
+  xK := xK
+  cK_has_type_l_tors_pm := cK_has_type_l_tors_pm
+  cK_has_type_l_tors_pm_holds := hCKType
+  cK_core_is_baseChange_cF := cK_core_is_baseChange_cF
+  cK_core_is_baseChange_cF_holds := hCore
+  cK_determined_by_cF := cK_determined_by_cF
+  cK_determined_by_cF_holds := hDetermined
+  xK_has_type_l_tors := xK_has_type_l_tors
+  xK_has_type_l_tors_holds := hXKType
+  finiteEtaleCoveringDiagrams := finiteEtaleCoveringDiagrams
+  finiteEtaleCoveringDiagrams_holds := hEtale
+  profiniteGroupOpenImmersions := profiniteGroupOpenImmersions
+  profiniteGroupOpenImmersions_holds := hOpen
+
 /--
 A constructor smoke test for full initial theta data under the exact field
 hypotheses required by the record.
@@ -105,9 +134,9 @@ hypotheses required by the record.
 noncomputable def abstractInitialThetaData
     (fieldTower : ThetaFieldTower primeFive Fmod F K)
     (curveModuli : ThetaCurveModuliData Fmod F)
+    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
     (valuations : ThetaValuationData primeFive Fmod K)
-    (cK : HyperbolicOrbicurveModel K)
-    (epsilon : CuspData cK)
+    (epsilon : CuspData coverData.cK)
     (k_is_lTorsionKernelField lTorsionImageContainsSL2 qParameterOrdersPrimeToL : Prop)
     (hK : k_is_lTorsionKernelField)
     (hImage : lTorsionImageContainsSL2)
@@ -116,7 +145,7 @@ noncomputable def abstractInitialThetaData
   l := primeFive
   fieldTower := fieldTower
   curveModuli := curveModuli
-  cK := cK
+  coverData := coverData
   k_is_lTorsionKernelField := k_is_lTorsionKernelField
   k_is_lTorsionKernelField_holds := hK
   valuations := valuations
@@ -155,6 +184,24 @@ example : theta.curveModuli.stableReductionOverNonarchimedean :=
 
 example : theta.curveModuli.torsion23RationalOverF :=
   theta.torsion23RationalOverF
+
+example : theta.coverData.cK_has_type_l_tors_pm :=
+  theta.cKType
+
+example : theta.coverData.cK_core_is_baseChange_cF :=
+  theta.cKCoreBaseChange
+
+example : theta.coverData.cK_determined_by_cF :=
+  theta.cKDeterminedByCF
+
+example : theta.coverData.xK_has_type_l_tors :=
+  theta.xKType
+
+example : theta.coverData.finiteEtaleCoveringDiagrams :=
+  theta.finiteEtaleCoveringDiagrams
+
+example : theta.coverData.profiniteGroupOpenImmersions :=
+  theta.profiniteGroupOpenImmersions
 
 example : theta.k_is_lTorsionKernelField :=
   theta.kIsLTorsionKernelField

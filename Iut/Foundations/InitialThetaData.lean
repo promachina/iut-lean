@@ -304,6 +304,67 @@ theorem torsion23Rational :
 
 end ThetaCurveModuliData
 
+/--
+The `C_K`/`X_K` covering data from IUT I, Definition 3.1(d).
+
+This bundle ties `C_K` to the previously defined `C_F`: its `K`-core is the
+base-change `C_F x_F K`, and it determines the corresponding `X_K` cover and
+the finite etale/profinite group diagrams mentioned in the source.
+-/
+structure ThetaOrbicurveCoverData
+    (Fmod F K : Type u)
+    [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+    [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K]
+    (curveModuli : ThetaCurveModuliData Fmod F) where
+  cK : HyperbolicOrbicurveModel K
+  xK : HyperbolicOrbicurveModel K
+  cK_has_type_l_tors_pm : Prop
+  cK_has_type_l_tors_pm_holds : cK_has_type_l_tors_pm
+  cK_core_is_baseChange_cF : Prop
+  cK_core_is_baseChange_cF_holds : cK_core_is_baseChange_cF
+  cK_determined_by_cF : Prop
+  cK_determined_by_cF_holds : cK_determined_by_cF
+  xK_has_type_l_tors : Prop
+  xK_has_type_l_tors_holds : xK_has_type_l_tors
+  finiteEtaleCoveringDiagrams : Prop
+  finiteEtaleCoveringDiagrams_holds : finiteEtaleCoveringDiagrams
+  profiniteGroupOpenImmersions : Prop
+  profiniteGroupOpenImmersions_holds : profiniteGroupOpenImmersions
+
+namespace ThetaOrbicurveCoverData
+
+variable {Fmod F K : Type u}
+variable [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+variable [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K]
+variable {curveModuli : ThetaCurveModuliData Fmod F}
+variable (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+
+theorem cKType :
+    coverData.cK_has_type_l_tors_pm :=
+  coverData.cK_has_type_l_tors_pm_holds
+
+theorem cKCoreBaseChange :
+    coverData.cK_core_is_baseChange_cF :=
+  coverData.cK_core_is_baseChange_cF_holds
+
+theorem cKDeterminedByCF :
+    coverData.cK_determined_by_cF :=
+  coverData.cK_determined_by_cF_holds
+
+theorem xKType :
+    coverData.xK_has_type_l_tors :=
+  coverData.xK_has_type_l_tors_holds
+
+theorem finiteEtaleDiagrams :
+    coverData.finiteEtaleCoveringDiagrams :=
+  coverData.finiteEtaleCoveringDiagrams_holds
+
+theorem openImmersions :
+    coverData.profiniteGroupOpenImmersions :=
+  coverData.profiniteGroupOpenImmersions_holds
+
+end ThetaOrbicurveCoverData
+
 /-- The cusp `epsilon` of `C_K` from IUT I, Definition 3.1(f). -/
 structure CuspData {F : Type u} [Field F] (C : HyperbolicOrbicurveModel F) where
   label : String
@@ -334,11 +395,11 @@ structure InitialThetaData
   l : PrimeGeFive
   fieldTower : ThetaFieldTower l Fmod F K
   curveModuli : ThetaCurveModuliData Fmod F
-  cK : HyperbolicOrbicurveModel K
+  coverData : ThetaOrbicurveCoverData Fmod F K curveModuli
   k_is_lTorsionKernelField : Prop
   k_is_lTorsionKernelField_holds : k_is_lTorsionKernelField
   valuations : ThetaValuationData l Fmod K
-  epsilon : CuspData cK
+  epsilon : CuspData coverData.cK
   lTorsionImageContainsSL2 : Prop
   lTorsionImageContainsSL2_holds : lTorsionImageContainsSL2
   qParameterOrdersPrimeToL : Prop
@@ -426,6 +487,30 @@ theorem stableReductionOverNonarchimedean :
 theorem torsion23RationalOverF :
     theta.curveModuli.torsion23RationalOverF :=
   theta.curveModuli.torsion23Rational
+
+theorem cKType :
+    theta.coverData.cK_has_type_l_tors_pm :=
+  theta.coverData.cKType
+
+theorem cKCoreBaseChange :
+    theta.coverData.cK_core_is_baseChange_cF :=
+  theta.coverData.cKCoreBaseChange
+
+theorem cKDeterminedByCF :
+    theta.coverData.cK_determined_by_cF :=
+  theta.coverData.cKDeterminedByCF
+
+theorem xKType :
+    theta.coverData.xK_has_type_l_tors :=
+  theta.coverData.xKType
+
+theorem finiteEtaleCoveringDiagrams :
+    theta.coverData.finiteEtaleCoveringDiagrams :=
+  theta.coverData.finiteEtaleDiagrams
+
+theorem profiniteGroupOpenImmersions :
+    theta.coverData.profiniteGroupOpenImmersions :=
+  theta.coverData.openImmersions
 
 theorem kIsLTorsionKernelField :
     theta.k_is_lTorsionKernelField :=
