@@ -257,6 +257,38 @@ theorem audit (data : IUTStage1PreLedgerData source target index) :
     q_le_target := data.qSigned_le_targetSigned,
     target_le_theta := data.targetSigned_le_thetaSigned }
 
+namespace Audit
+
+variable {data : IUTStage1PreLedgerData source target index}
+
+def comparisonPayloadInputs
+    (audit : Audit data) :
+    data.ComparisonPayloadInputs :=
+  { theta_chart_trivial := audit.theta_chart_trivial,
+    q_charted := audit.q_charted,
+    theta_charted := audit.theta_charted,
+    chosen_holds := audit.chosen_holds,
+    q_le_target := audit.q_le_target,
+    target_le_theta := audit.target_le_theta }
+
+theorem comparisonPayloadInputs_eq_data
+    (audit : Audit data) :
+    audit.comparisonPayloadInputs = data.comparisonPayloadInputs :=
+  Subsingleton.elim _ _
+
+theorem comparisonPayloadInputs_qSignedLeThetaSigned
+    (audit : Audit data) :
+    audit.comparisonPayloadInputs.qSignedLeThetaSigned =
+      data.comparisonPayloadInputs.qSignedLeThetaSigned :=
+  Subsingleton.elim _ _
+
+theorem qSignedLeThetaSigned
+    (audit : Audit data) :
+    data.qSigned <= data.thetaSigned :=
+  audit.comparisonPayloadInputs.qSignedLeThetaSigned
+
+end Audit
+
 /--
 Remaining obligations required to promote pre-ledger data to a full source
 ledger.

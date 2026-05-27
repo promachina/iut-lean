@@ -10620,3 +10620,67 @@ not add q-positivity or collapse the result into the final
 The next milestone should relate `ComparisonPayloadInputs` to the older
 `IUTStage1PreLedgerData.Audit`, showing explicitly that the pre-ledger audit
 contains the same chart/membership comparison facts.
+
+## Milestone 133: Pre-Ledger Audit to Payload Inputs
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Data.lean`
+* `Iut/Stage1/IUTStage1DataExample.lean`
+
+### Source Check
+
+This milestone continues the source-side bookkeeping around the final
+`3.11.5 => 3.12` comparison. The local source model now distinguishes the
+pre-ledger audit, the source-side comparison payload inputs, and the final
+signed comparison payload. The Scholze-Stix concern about hidden comparison
+steps motivates making these relationships explicit.
+
+### Purpose
+
+`IUTStage1PreLedgerData.Audit` predates `ComparisonPayloadInputs`. It already
+contains the charting, selected-output, q-membership, and target-bound facts
+needed for the q-to-Theta comparison. This milestone adds explicit bridges from
+the older audit to the newer source-side payload-input record.
+
+### Lean Declarations
+
+In `IUTStage1Data.lean`:
+
+```text
+IUTStage1PreLedgerData.Audit.comparisonPayloadInputs
+IUTStage1PreLedgerData.Audit.comparisonPayloadInputs_eq_data
+IUTStage1PreLedgerData.Audit.comparisonPayloadInputs_qSignedLeThetaSigned
+IUTStage1PreLedgerData.Audit.qSignedLeThetaSigned
+```
+
+In `IUTStage1DataExample.lean`:
+
+```text
+unitThetaToy_preLedgerAudit_comparisonPayloadInputs_eq_example
+unitThetaToy_preLedgerAudit_q_le_theta_example
+```
+
+### What This Tests
+
+The toy examples verify that the canonical pre-ledger audit yields the same
+payload-input record as `data.comparisonPayloadInputs`, and that the q-to-Theta
+comparison can be recovered through the audit-to-payload bridge.
+
+### Design Trap Avoided
+
+The trap would be to maintain two independent sources of the same chart and
+membership facts: the older pre-ledger audit and the newer payload-input record.
+This milestone ties them together, so the payload-input route is visibly a
+projection of the already-audited pre-ledger data.
+
+This still does not add q-positivity or source normalization. Those remain
+promotion obligations, preserving the separation between source-side comparison
+inputs and the final signed payload.
+
+### Next Step
+
+The next milestone should lift the audit-to-payload bridge to the
+`IUTStage1SourcePackage` level, so source-package audits can recover the
+comparison payload inputs without going back through `preLedger.audit`
+manually.
