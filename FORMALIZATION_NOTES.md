@@ -309,3 +309,102 @@ instead of "forgetting labels" by immediately reading both coordinates in `Real`
 we should express comparison through a named transport from `qLine` to
 `thetaLine`. This will let us ask whether a proposed comparison path is exact,
 scalar-rescaled, or indeterminacy-valued.
+
+## Milestone 4: Toy Model Through Named Transports
+
+Lean file: `Iut/Stage1/ToyModel.lean`
+
+### Source Check
+
+This milestone continues the same source check as Milestone 3. The relevant
+mathematical tension is:
+
+* Mochizuki's toy model begins with distinct labeled copies `qR` and `ThetaR`.
+* Forgetting the labels directly makes the exact assignments `-h` and `-2h`
+  incompatible when `h > 0`.
+* Scholze-Stix stress that every identification between ordered one-dimensional
+  real vector spaces must be made explicit.
+
+Milestone 4 implements the explicit-identification version: instead of simply
+forgetting labels, we compare the q-assignment to the Theta-assignment through a
+named positive-scale transport from `qLine` to `thetaLine`.
+
+### Lean Declarations
+
+`ToyModel.TransportedExactEquality f h` says that applying the named transport
+`f : Transport qLine thetaLine` to the q-point `q(-h)` gives the exact Theta
+point `Theta(-2h)`.
+
+The theorem
+
+```text
+transportedExactEquality_iff_scale_eq_two
+```
+
+proves that, for `h != 0`, exact transported equality is equivalent to the
+transport scale being `2`.
+
+This is a useful normalization check. In the raw coordinate-forgetting model,
+equality of `-h` and `-2h` forced `h = 0`. Once a named transport is allowed,
+exact equality can be recovered, but only by making the transport carry the
+nontrivial scale `2`.
+
+`ToyModel.unitQToTheta` is the unit-scale transport from the q-line to the
+Theta-line. The theorem
+
+```text
+unitQToTheta_not_transportedExactEquality
+```
+
+shows that this unit comparison cannot send `q(-h)` to `Theta(-2h)` when
+`h > 0`.
+
+The more general theorem
+
+```text
+transportedUnitEquality_contradicts_positive
+```
+
+says the same thing for any transport whose scale is `1`.
+
+`ToyModel.TransportedQInThetaIndeterminacy f h epsilon` is the
+transport-sensitive version of the indeterminacy-region membership. It says that
+the transported q-coordinate lies in the Theta-side region
+`R_{<= -2h + epsilon}`.
+
+The theorem
+
+```text
+unitTransportedQInThetaIndeterminacy_iff_bound
+```
+
+checks that the unit-transport version recovers the arithmetic equivalence from
+Milestone 3: membership is equivalent to `h <= epsilon`.
+
+### What This Tests
+
+The milestone separates three notions that must remain distinct in later work:
+
+1. Raw label-forgetting.
+2. Exact comparison through a named transport.
+3. Indeterminacy-region comparison through a named transport.
+
+This matters because a proof may legitimately compare two labeled copies only
+after specifying the comparison map. The formal result here says that the
+comparison map itself carries mathematical content: exact comparison of the toy
+assignments forces a nontrivial scale.
+
+### Design Trap Avoided
+
+The trap would be to say "identify qR and ThetaR" without recording whether the
+identification has scale `1`, scale `2`, scale `j^2`, or is not an exact
+identification at all but an indeterminacy-valued relation. This milestone
+forces that choice into Lean data.
+
+### Next Step
+
+The next milestone should stop treating indeterminacy as just a predicate on
+coordinates and introduce a small abstract interface for indeterminacy-valued
+relations between labeled real-line copies. The immediate goal is to distinguish
+"pointwise equality" from "membership in a hull/region after transport" at the
+type level.
