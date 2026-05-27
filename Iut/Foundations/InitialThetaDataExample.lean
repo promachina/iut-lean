@@ -639,6 +639,38 @@ noncomputable example
     (thetaApproach : ThetaApproachQuotientData)
     {B L : Type} [Field B] [Field L] [Algebra B L]
     [FiniteDimensional B L] [IsGalois B L]
+    (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
+    (g : thetaApproach.piCK.carrier) (x : L) :
+    cover.toThetaApproachFunctionFieldData.piCKRingAut g x =
+      cover.toThetaApproachFunctionFieldData.deckRingAut
+        (ThetaApproachQuotientData.quotientHom thetaApproach g) x :=
+  cover.piCKRingAut_apply_eq_deckRingAut g x
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
+    (g : thetaApproach.piCK.carrier) (x : L) :
+    cover.toThetaApproachFunctionFieldData.piCKRingAut g x =
+      cover.quotientEquivAlgAut
+        (ThetaApproachQuotientData.quotientHom thetaApproach g) x :=
+  cover.piCKRingAut_apply_eq_quotientAction g x
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L) :
+    cover.toThetaApproachFunctionFieldData.piCKRingAutHom =
+      cover.toThetaApproachFunctionFieldData.deckRingAutHom.comp
+        (ThetaApproachQuotientData.quotientHom thetaApproach) :=
+  cover.piCKRingAutHom_eq_deckRingAutHom_comp
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
     (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L) :
     (cover.toThetaApproachFunctionFieldData.piCKRingAutHom).ker =
       thetaApproach.piXK_to_piCK.openEmbedding.imageSubgroup :=

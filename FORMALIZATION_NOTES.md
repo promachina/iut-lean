@@ -15204,3 +15204,93 @@ to expose a named theorem at the finite-Galois cover level showing that the
 induced `Pi_CK` action factors through the stored quotient action, then use that
 as the formal bridge toward deriving the compatibility from concrete
 fundamental-group and cover data.
+
+## Math Milestone 64: Finite-Cover-Level `Pi_CK` Action Factorization
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, says the theta approach reconstructs the function field of
+`X_K` with the natural action of
+`Gal(X_K/C_K) = Pi_CK/Pi_XK`. This means the `Pi_CK` action on the reconstructed
+function field should factor through the quotient map
+
+```text
+Pi_CK -> Pi_CK / Pi_XK.
+```
+
+The reconstruction discussion around Corollary 1.2 also uses quotient
+descriptions such as `Gal(X/C) = Pi_C/Pi_X`. Scholze-Stix's summary stresses
+that, in the essential anabelian situation, the fundamental-group and
+finite-etale geometric pictures are equivalent. The factorization theorem is a
+formal way to keep that quotient dependence visible.
+
+### Lean/API Check
+
+The finite-Galois cover namespace now exposes:
+
+```text
+ThetaFiniteGaloisFunctionFieldCoverData.piCKRingAut_apply_eq_deckRingAut
+```
+
+which states pointwise that the `Pi_CK` automorphism of the reconstructed
+function field is the deck automorphism indexed by
+`ThetaApproachQuotientData.quotientHom thetaApproach g`.
+
+It also exposes:
+
+```text
+ThetaFiniteGaloisFunctionFieldCoverData.piCKRingAut_apply_eq_quotientAction
+```
+
+which rewrites the same action through the stored quotient-action equivalence
+to algebra automorphisms, and:
+
+```text
+ThetaFiniteGaloisFunctionFieldCoverData.piCKRingAutHom_eq_deckRingAutHom_comp
+```
+
+which states the hom-level factorization:
+
+```text
+piCKRingAutHom =
+  deckRingAutHom.comp (ThetaApproachQuotientData.quotientHom thetaApproach)
+```
+
+### Lean Decisions
+
+This milestone does not add new assumptions. It packages an already available
+theorem from `ThetaApproachFunctionFieldData` at the finite-Galois cover level,
+where the cover certificate, function-field extension, quotient action, and
+compatibility data are all present.
+
+The pointwise theorem and hom-level theorem are both useful. The pointwise form
+is easier to read in later arithmetic statements, while the hom-level form is
+the cleaner categorical/group-action statement.
+
+### What This Tests
+
+The example file checks:
+
+* pointwise `Pi_CK` action equals deck action after applying `quotientHom`;
+* pointwise `Pi_CK` action equals the stored quotient-action equivalence;
+* the monoid hom from `Pi_CK` to field automorphisms factors as deck action
+  composed with `quotientHom`;
+* all previous kernel and fixed-field consequences still compile.
+
+### Design Trap Avoided
+
+The trap would be to keep using the exact-kernel theorem without a named
+factorization theorem at the cover level. The kernel theorem is stronger in one
+direction, but it hides the basic mechanism: `Pi_CK` acts by first passing to
+`Pi_CK/Pi_XK`. This milestone makes the mechanism explicit.
+
+### Remaining Gap
+
+The factorization is proved for the current algebraic action model. We still
+need to derive the quotient-action equivalence itself from concrete
+finite-etale deck transformations of the orbicurve cover.

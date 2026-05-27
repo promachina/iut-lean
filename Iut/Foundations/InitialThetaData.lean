@@ -2543,6 +2543,31 @@ theorem fixed_iff_in_base (x : L) :
     cover.reconstructedFunctionFieldOfXK_proof cover.deckActionMatchesGalQuotient
     cover.deckActionMatchesGalQuotient_proof x
 
+theorem piCKRingAut_apply_eq_deckRingAut
+    (g : thetaApproach.piCK.carrier) (x : L) :
+    cover.toThetaApproachFunctionFieldData.piCKRingAut g x =
+      cover.toThetaApproachFunctionFieldData.deckRingAut
+        (ThetaApproachQuotientData.quotientHom thetaApproach g) x := by
+  rw [ThetaApproachFunctionFieldData.piCKRingAut_apply]
+  rw [ThetaApproachFunctionFieldData.deckRingAut_apply]
+  exact cover.toThetaApproachFunctionFieldData.piCK_smul_eq_deck_smul g x
+
+theorem piCKRingAut_apply_eq_quotientAction
+    (g : thetaApproach.piCK.carrier) (x : L) :
+    cover.toThetaApproachFunctionFieldData.piCKRingAut g x =
+      cover.quotientEquivAlgAut
+        (ThetaApproachQuotientData.quotientHom thetaApproach g) x := by
+  rw [cover.piCKRingAut_apply_eq_deckRingAut g x]
+  exact cover.deckRingAut_apply
+    (ThetaApproachQuotientData.quotientHom thetaApproach g) x
+
+theorem piCKRingAutHom_eq_deckRingAutHom_comp :
+    cover.toThetaApproachFunctionFieldData.piCKRingAutHom =
+      cover.toThetaApproachFunctionFieldData.deckRingAutHom.comp
+        (ThetaApproachQuotientData.quotientHom thetaApproach) := by
+  ext g x
+  exact cover.piCKRingAut_apply_eq_deckRingAut g x
+
 theorem piCKRingAutHom_ker :
     (cover.toThetaApproachFunctionFieldData.piCKRingAutHom).ker =
       thetaApproach.piXK_to_piCK.openEmbedding.imageSubgroup :=
