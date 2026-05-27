@@ -8133,3 +8133,91 @@ The charted comparison is still derived from abstract pre-ledger chart data.
 The next mathematical work should begin replacing those abstract chart inputs
 with more specific q-pilot and Theta/HDD constructions, or at least isolate the
 next pre-ledger object that must become less abstract.
+
+## Math Milestone 84: Pre-Ledger Charted Comparison Chain
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Data.lean`
+* `Iut/Stage1/IUTStage1DataExample.lean`
+
+### Source Check
+
+The final charted q-to-Theta comparison comes from a more local chain:
+
+```text
+charted q <= chosen target volume <= charted Theta.
+```
+
+This is the point where membership of the q-side point in the chosen output,
+the target-volume measurement, and the common-container Theta bound meet.
+Keeping this chain explicit is closer to the mathematical route than storing
+only the final q-to-Theta inequality.
+
+### Lean/API Check
+
+The pre-ledger record now has:
+
+```text
+IUTStage1PreLedgerData.ChartedComparisonChain
+```
+
+It stores:
+
+```text
+q_charted
+theta_charted
+q_charted_le_target
+target_le_theta_charted
+charted_q_le_charted_theta
+```
+
+The constructor:
+
+```text
+IUTStage1PreLedgerData.chartedComparisonChain
+```
+
+derives the charted endpoint inequalities by rewriting the existing
+`qSigned` and `thetaSigned` endpoint equations.
+
+### Lean Decisions
+
+This milestone does not change the final comparison data. It names the local
+pre-ledger chain from which the later audited charted comparison is derived.
+
+The middle term remains:
+
+```text
+data.targetVolume.targetSigned
+```
+
+so the current abstraction boundary is now explicit: q and Theta are charted
+endpoints, while the target-volume middle term is still a measured real value
+attached to the chosen output.
+
+### What This Tests
+
+The toy pre-ledger examples construct the chain and separately extract:
+
+```text
+charted q <= targetSigned
+targetSigned <= charted Theta
+charted q <= charted Theta
+```
+
+The focused pre-ledger example build passes.
+
+### Design Trap Avoided
+
+The trap would be to present the charted q-to-Theta inequality as if it were a
+primitive comparison. The new chain records the intermediate measured target
+volume and keeps the membership/measurement step visible.
+
+### Remaining Gap
+
+The target-volume middle term is not yet a charted point or a detailed
+log-volume construction. Later work should decide whether this middle term
+needs its own charted data structure, or whether the correct next refinement is
+to replace the abstract membership-to-volume inequality with a more concrete
+upper-ray/log-volume lemma.

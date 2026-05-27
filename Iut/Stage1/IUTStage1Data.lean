@@ -121,6 +121,87 @@ theorem targetSigned_le_thetaSigned
   exact data.choiceTargetVolume_le_thetaSigned
 
 /--
+Pre-ledger comparison chain stated with charted q and Theta endpoints.
+
+This is the local source of the later charted q-to-Theta comparison. The
+middle term is still the measured target volume of the chosen output.
+-/
+structure ChartedComparisonChain
+    (data : IUTStage1PreLedgerData source target index) : Prop where
+  q_charted :
+    (Transport.map data.chartedContainer.chart.qToTarget
+      data.qValue.qPoint).coord = data.qSigned
+  theta_charted :
+    (Transport.map data.chartedContainer.chart.thetaToTarget
+      data.thetaBound.thetaPoint).coord = data.thetaSigned
+  q_charted_le_target :
+    (Transport.map data.chartedContainer.chart.qToTarget
+      data.qValue.qPoint).coord <= data.targetVolume.targetSigned
+  target_le_theta_charted :
+    data.targetVolume.targetSigned <=
+      (Transport.map data.chartedContainer.chart.thetaToTarget
+        data.thetaBound.thetaPoint).coord
+  charted_q_le_charted_theta :
+    (Transport.map data.chartedContainer.chart.qToTarget
+      data.qValue.qPoint).coord <=
+      (Transport.map data.chartedContainer.chart.thetaToTarget
+        data.thetaBound.thetaPoint).coord
+
+theorem chartedComparisonChain
+    (data : IUTStage1PreLedgerData source target index) :
+    data.ChartedComparisonChain :=
+  { q_charted := data.qSigned_eq_chartedQ,
+    theta_charted := data.thetaSigned_eq_chartedTheta,
+    q_charted_le_target := by
+      rw [data.qSigned_eq_chartedQ]
+      exact data.qSigned_le_targetSigned,
+    target_le_theta_charted := by
+      rw [data.thetaSigned_eq_chartedTheta]
+      exact data.targetSigned_le_thetaSigned,
+    charted_q_le_charted_theta := by
+      rw [data.qSigned_eq_chartedQ, data.thetaSigned_eq_chartedTheta]
+      exact le_trans data.qSigned_le_targetSigned data.targetSigned_le_thetaSigned }
+
+namespace ChartedComparisonChain
+
+variable {data : IUTStage1PreLedgerData source target index}
+
+theorem qCharted
+    (chain : data.ChartedComparisonChain) :
+    (Transport.map data.chartedContainer.chart.qToTarget
+      data.qValue.qPoint).coord = data.qSigned :=
+  chain.q_charted
+
+theorem thetaCharted
+    (chain : data.ChartedComparisonChain) :
+    (Transport.map data.chartedContainer.chart.thetaToTarget
+      data.thetaBound.thetaPoint).coord = data.thetaSigned :=
+  chain.theta_charted
+
+theorem qCharted_le_targetSigned
+    (chain : data.ChartedComparisonChain) :
+    (Transport.map data.chartedContainer.chart.qToTarget
+      data.qValue.qPoint).coord <= data.targetVolume.targetSigned :=
+  chain.q_charted_le_target
+
+theorem targetSigned_le_thetaCharted
+    (chain : data.ChartedComparisonChain) :
+    data.targetVolume.targetSigned <=
+      (Transport.map data.chartedContainer.chart.thetaToTarget
+        data.thetaBound.thetaPoint).coord :=
+  chain.target_le_theta_charted
+
+theorem chartedQ_le_chartedTheta
+    (chain : data.ChartedComparisonChain) :
+    (Transport.map data.chartedContainer.chart.qToTarget
+      data.qValue.qPoint).coord <=
+      (Transport.map data.chartedContainer.chart.thetaToTarget
+        data.thetaBound.thetaPoint).coord :=
+  chain.charted_q_le_charted_theta
+
+end ChartedComparisonChain
+
+/--
 Source-side inputs that determine the signed q-to-Theta comparison payload.
 
 This record deliberately stops before q-positivity and source normalization.

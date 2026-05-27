@@ -199,6 +199,68 @@ theorem unitThetaToy_comparisonPayloadInputs_q_le_theta_example
   (unitThetaToyComparisonPayloadInputs
     measure hnormalized hh hbound hholds).qSignedLeThetaSigned
 
+theorem unitThetaToy_preLedger_chartedComparisonChain_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyPreLedgerData
+      measure hnormalized hh hbound hholds).ChartedComparisonChain :=
+  (unitThetaToyPreLedgerData
+    measure hnormalized hh hbound hholds).chartedComparisonChain
+
+theorem unitThetaToy_preLedger_charted_q_le_target_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let data := unitThetaToyPreLedgerData measure hnormalized hh hbound hholds
+    (Transport.map data.chartedContainer.chart.qToTarget
+      data.qValue.qPoint).coord <= data.targetVolume.targetSigned :=
+  (unitThetaToy_preLedger_chartedComparisonChain_example
+    measure hnormalized hh hbound hholds).qCharted_le_targetSigned
+
+theorem unitThetaToy_preLedger_target_le_charted_theta_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let data := unitThetaToyPreLedgerData measure hnormalized hh hbound hholds
+    data.targetVolume.targetSigned <=
+      (Transport.map data.chartedContainer.chart.thetaToTarget
+        data.thetaBound.thetaPoint).coord :=
+  (unitThetaToy_preLedger_chartedComparisonChain_example
+    measure hnormalized hh hbound hholds).targetSigned_le_thetaCharted
+
+theorem unitThetaToy_preLedger_charted_q_le_charted_theta_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let data := unitThetaToyPreLedgerData measure hnormalized hh hbound hholds
+    (Transport.map data.chartedContainer.chart.qToTarget
+      data.qValue.qPoint).coord <=
+      (Transport.map data.chartedContainer.chart.thetaToTarget
+        data.thetaBound.thetaPoint).coord :=
+  (unitThetaToy_preLedger_chartedComparisonChain_example
+    measure hnormalized hh hbound hholds).chartedQ_le_chartedTheta
+
 theorem unitThetaToy_comparisonPayloadInputs_corollary_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
