@@ -820,3 +820,65 @@ cleaner audit boundary: a serious non-toy proof must provide source-facing
 split hull+det data, including containment of the union of possible Theta
 images in the constructed hull and a determinant/log-volume bound for that
 same hull.
+
+## Periodic Review: Strengthened Hull+Det Obligations
+
+Date: 2026-05-28
+
+This checkpoint reviews the strengthened source-obligation route.
+
+### Current Lean Chain
+
+The source-facing route now has two obligation levels:
+
+```text
+IUTStage1SourceObligations
+IUTStage1SourceHullDetObligations
+```
+
+The strengthened hull+det obligations contain:
+
+```text
+sourceObligations : IUTStage1SourceObligations package
+hullDetData       : IUTStage1SourceHullDetData package
+```
+
+They project to the old endpoint through:
+
+```text
+toSourceObligations
+comparisonDataOfHullDetObligations
+publicAuditOfHullDetObligations
+```
+
+and still expose:
+
+```text
+targetUnion <= constructed hull
+measure constructed hull <= thetaSigned
+```
+
+### Positive Alignment
+
+This moves the code closer to the intended IUT III route. The final comparison
+can now be requested through obligations that explicitly include the split
+hull+det provenance. This makes the source-facing boundary less permissive for
+future non-toy work: a source proof can no longer be considered fully audited
+unless it supplies both the old promotion obligations and the hull/determinant
+evidence.
+
+### Remaining Gaps
+
+The old `IUTStage1SourceObligations` route remains available and is still used
+by many existing endpoint constructors. The strengthened route is parallel,
+not mandatory. Also, the toy source still supplies an upper-ray hull and
+upper-ray-normalized measure, not the holomorphic hull and determinant/log-
+volume calculation from IUT III/IV.
+
+### Global 3.12 Check
+
+The formalization still has not reached the real Mochizuki mathematical
+construction. The immediate next target should be an audited endpoint object
+that packages both the public Corollary-3.12-shaped comparison and the
+source-facing hull provenance, so users cannot inspect one without seeing the
+other.
