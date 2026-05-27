@@ -16284,3 +16284,96 @@ The new endpoint object puts these facts together at the same boundary.
 The endpoint still uses the toy upper-ray hull. The next non-toy step should
 begin replacing the toy possible-image family with a source-level
 Theta-pilot-image family indexed by indeterminacy choices.
+
+## Stage 1 Math Milestone 111: Source-Level Theta-Pilot Possible Images
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+IUT III describes the Theta-side quantity as the log-volume of the holomorphic
+hull of the union of possible images of the Theta-pilot object, subject to
+indeterminacies. The previous formal endpoint exposed `targetUnion`, but this
+was still named generically as a comparison-family union.
+
+This milestone introduces a source-level object that reads the pre-ledger
+target-region family as the family of possible Theta-pilot images indexed by
+the current indeterminacy choices.
+
+### Lean/API Check
+
+The source layer now defines:
+
+```text
+IUTStage1ThetaPilotPossibleImages
+```
+
+with fields:
+
+```text
+thetaPilot
+indeterminacies
+images
+theta_pilot_eq
+indeterminacies_eq
+images_eq_targetRegions
+```
+
+The namespace exposes:
+
+```text
+ofPackage
+union
+union_eq_targetUnion
+choice_region_eq_targetRegion
+union_subset_target
+thetaPilotMatchesPackage
+indeterminaciesMatchPackage
+```
+
+The toy source example now checks:
+
+```text
+unitThetaToyThetaPilotPossibleImages
+unitThetaToy_thetaPilotPossibleImages_union_eq_targetUnion_example
+unitThetaToy_thetaPilotPossibleImages_choice_region_eq_example
+unitThetaToy_thetaPilotPossibleImages_union_subset_hull_example
+```
+
+### Lean Decisions
+
+The possible-image family is defined as a source-facing wrapper around:
+
+```text
+package.preLedger.output.comparisons.targetRegions
+```
+
+This is conservative. It does not assert a new construction of Theta-pilot
+images. Instead, it records the intended source interpretation of the existing
+comparison-family targets and proves that its union is the `targetUnion` used
+by the hull endpoint.
+
+### What This Tests
+
+Lean verifies that the source-level possible-image union is definitionally the
+target union used by the hull+det endpoint, and that the already-audited hull
+containment applies to this possible-image union.
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Design Trap Avoided
+
+The trap would be to keep speaking about "possible Theta images" in prose while
+the Lean code only contains anonymous target regions. The new wrapper ties the
+target-region family to the source labels for the Theta pilot and the
+indeterminacy profile.
+
+### Remaining Gap
+
+The source-level possible images still come from the toy upper-ray comparison
+family. The next replacement should define non-toy possible Theta-pilot images
+from multiradial/indeterminacy data rather than merely wrapping the existing
+target regions.

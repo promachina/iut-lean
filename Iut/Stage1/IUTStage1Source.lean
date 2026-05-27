@@ -186,6 +186,78 @@ theorem indeterminacies_matches_labels
 end IUTStage1SourcePackage
 
 /--
+Source-facing family of possible Theta-pilot images.
+
+The family records that the target regions in the pre-ledger output are being
+read as the possible images of the Theta-pilot object, indexed by the current
+indeterminacy choices.
+-/
+structure IUTStage1ThetaPilotPossibleImages
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) where
+  thetaPilot : PilotObjectId
+  indeterminacies : IndeterminacyProfileId
+  images : RegionFamily target index
+  theta_pilot_eq : thetaPilot = package.thetaPilot
+  indeterminacies_eq : indeterminacies = package.indeterminacies
+  images_eq_targetRegions :
+    images = package.preLedger.output.comparisons.targetRegions
+
+namespace IUTStage1ThetaPilotPossibleImages
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+def ofPackage
+    (package : IUTStage1SourcePackage source target index) :
+    IUTStage1ThetaPilotPossibleImages package :=
+  { thetaPilot := package.thetaPilot,
+    indeterminacies := package.indeterminacies,
+    images := package.preLedger.output.comparisons.targetRegions,
+    theta_pilot_eq := rfl,
+    indeterminacies_eq := rfl,
+    images_eq_targetRegions := rfl }
+
+def union (images : IUTStage1ThetaPilotPossibleImages package) :
+    Region target :=
+  images.images.union
+
+theorem union_eq_targetUnion
+    (images : IUTStage1ThetaPilotPossibleImages package) :
+    images.union = package.preLedger.output.comparisons.targetUnion := by
+  unfold union RegionComparisonFamily.targetUnion
+  rw [images.images_eq_targetRegions]
+
+theorem choice_region_eq_targetRegion
+    (images : IUTStage1ThetaPilotPossibleImages package) (choice : index) :
+    images.images.region choice =
+      (package.preLedger.output.comparison choice).targetRegion := by
+  rw [images.images_eq_targetRegions]
+  rfl
+
+theorem union_subset_target
+    (images : IUTStage1ThetaPilotPossibleImages package)
+    {targetRegion : Region target}
+    (hsubset :
+      Region.Subset package.preLedger.output.comparisons.targetUnion
+        targetRegion) :
+    Region.Subset images.union targetRegion := by
+  rw [images.union_eq_targetUnion]
+  exact hsubset
+
+theorem thetaPilotMatchesPackage
+    (images : IUTStage1ThetaPilotPossibleImages package) :
+    images.thetaPilot = package.thetaPilot :=
+  images.theta_pilot_eq
+
+theorem indeterminaciesMatchPackage
+    (images : IUTStage1ThetaPilotPossibleImages package) :
+    images.indeterminacies = package.indeterminacies :=
+  images.indeterminacies_eq
+
+end IUTStage1ThetaPilotPossibleImages
+
+/--
 Source-facing statement of the obligations still needed to promote an IUT Stage
 1 source package to the public Stage 1 endpoint.
 

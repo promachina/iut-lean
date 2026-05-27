@@ -61,6 +61,78 @@ def unitThetaToyIUTStage1SourceHullDetData
       unitThetaToyPreLedgerHullDetSourceData
         measure hnormalized hh hbound hholds }
 
+def unitThetaToyThetaPilotPossibleImages
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1ThetaPilotPossibleImages
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds) :=
+  IUTStage1ThetaPilotPossibleImages.ofPackage
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_thetaPilotPossibleImages_union_eq_targetUnion_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyThetaPilotPossibleImages
+      measure hnormalized hh hbound hholds).union =
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds).preLedger.output.comparisons.targetUnion :=
+  (unitThetaToyThetaPilotPossibleImages
+    measure hnormalized hh hbound hholds).union_eq_targetUnion
+
+theorem unitThetaToy_thetaPilotPossibleImages_choice_region_eq_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyThetaPilotPossibleImages
+      measure hnormalized hh hbound hholds).images.region choice =
+      ((unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds).preLedger.output.comparison
+          choice).targetRegion :=
+  (unitThetaToyThetaPilotPossibleImages
+    measure hnormalized hh hbound hholds).choice_region_eq_targetRegion choice
+
+theorem unitThetaToy_thetaPilotPossibleImages_union_subset_hull_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    Region.Subset
+      (unitThetaToyThetaPilotPossibleImages
+        measure hnormalized hh hbound hholds).union
+      ((unitThetaToyIUTStage1SourceHullDetData
+        measure hnormalized hh hbound hholds).sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull :=
+  (unitThetaToyThetaPilotPossibleImages
+    measure hnormalized hh hbound hholds).union_subset_target
+      (unitThetaToyIUTStage1SourceHullDetData
+        measure hnormalized hh hbound hholds).targetUnion_subset_hull
+
 theorem unitThetaToy_source_hullDet_targetUnion_subset_hull_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
