@@ -1348,7 +1348,10 @@ available:
 
 ```text
 NumberField F
+NumberField Fmod
 AlgebraicClosure F
+FiniteDimensional Fmod F
+IsGalois Fmod F
 FiniteDimensional F K
 IsGalois F K
 Nat.Prime l.value
@@ -1380,6 +1383,8 @@ without changing the outer shape of initial theta data.
 ```text
 PrimeGeFive
 SqrtMinusOneData
+ThetaFieldTower
+ThetaFieldTower.degreePrimeToL
 PuncturedEllipticCurve
 PuncturedEllipticCurve.jInvariant
 PuncturedEllipticCurve.ofJ
@@ -1394,11 +1399,16 @@ HyperbolicOrbicurveModel
 CuspData
 InitialThetaData
 InitialThetaData.algebraicClosure_isAlgClosure
+InitialThetaData.moduli_extension_is_finiteDimensional
+InitialThetaData.moduli_extension_is_galois
+InitialThetaData.degree_F_over_Fmod_prime_to_l
 InitialThetaData.prime_is_prime
 InitialThetaData.prime_ge_five
 InitialThetaData.badValuations_nonempty
 InitialThetaData.badValuation_has_multiplicative_reduction
 InitialThetaData.sqrtMinusOne_square
+InitialThetaData.fmodFieldOfModuli
+InitialThetaData.kIsLTorsionKernelField
 InitialThetaData.cusp_arisesFromNonzeroQuotientElement
 ```
 
@@ -1430,3 +1440,104 @@ adding more audit infrastructure. The most natural target is the field condition
 `sqrt(-1) in F`, either by constructing concrete examples via a cyclotomic or
 Gaussian number field, or by defining the field-of-moduli/extension layer that
 will later support `Fmod`, `F`, and `K`.
+
+## Math Milestone 15: Field Tower for Initial Theta Data
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+This milestone tightens the field portion of IUT I, Definition 3.1(b),(c). The
+source introduces `Fmod ⊆ F` as the field of moduli of `X_F`, assumes that
+`F/Fmod` is Galois of degree prime to `l`, and then defines `K ⊆ Fbar` as the
+finite Galois extension of `F` determined by the kernel of the `l`-torsion
+outer representation.
+
+The previous Lean layer had `F` and `K`, but not `Fmod`. That was too weak for
+the actual definition, since the bad valuation set lives over `Fmod` and the
+prime-to-`l` degree condition concerns `F/Fmod`, not `K/F`.
+
+### Lean Decisions
+
+The formalization now has a separate field-tower record:
+
+```text
+ThetaFieldTower l Fmod F K
+```
+
+It requires the following mathlib typeclass hypotheses:
+
+```text
+NumberField Fmod
+NumberField F
+NumberField K
+Algebra Fmod F
+Algebra F K
+Algebra Fmod K
+IsScalarTower Fmod F K
+FiniteDimensional Fmod F
+IsGalois Fmod F
+FiniteDimensional F K
+IsGalois F K
+```
+
+The condition that `F/Fmod` has degree prime to `l` is recorded as:
+
+```text
+Nat.Coprime (Module.finrank Fmod F) l.value
+```
+
+This uses mathlib's `Module.finrank` for finite-dimensional field extensions,
+which is the right Lean-level replacement for extension degree at this stage.
+
+The facts that `Fmod` is the field of moduli of `X_F` and that `K` is the
+kernel field of the `l`-torsion representation remain explicit obligations in
+`InitialThetaData`; they depend on elliptic-curve/moduli and Galois
+representation definitions that we have not yet formalized.
+
+### Lean Declarations
+
+```text
+ThetaFieldTower
+ThetaFieldTower.sqrtMinusOne_square
+ThetaFieldTower.degreePrimeToL
+ThetaFieldTower.f_over_fmod_is_finiteDimensional
+ThetaFieldTower.f_over_fmod_is_galois
+ThetaFieldTower.k_over_f_is_finiteDimensional
+ThetaFieldTower.k_over_f_is_galois
+InitialThetaData.moduli_extension_is_finiteDimensional
+InitialThetaData.moduli_extension_is_galois
+InitialThetaData.degree_F_over_Fmod_prime_to_l
+InitialThetaData.fmodFieldOfModuli
+InitialThetaData.kIsLTorsionKernelField
+```
+
+### What This Tests
+
+The example file now verifies:
+
+* construction of a `ThetaFieldTower` from a square root of `-1` and a
+  prime-to-`l` degree proof;
+* construction of `InitialThetaData Fmod F K` rather than only
+  `InitialThetaData F K`;
+* projection of the `F/Fmod` prime-to-`l` condition;
+* projection of the field-of-moduli and `l`-torsion-kernel-field obligations.
+
+### Design Trap Avoided
+
+The trap would be to continue treating `Fmod` as implicit prose. That would
+make the valuation data look formally well typed while hiding the field over
+which `Vbad_mod` is supposed to live. The Lean record now exposes the three
+fields and the two extension layers, so future valuation and moduli definitions
+must attach to the correct field.
+
+### Next Step
+
+The next math milestone should continue with Definition 3.1 itself. A good
+target is to replace the field-of-moduli obligation with a more structured
+record relating `X_F`, its quotient `C_F`, and `Fmod`, or to replace the current
+valuation index placeholders with mathlib finite places of `Fmod` and `K` if
+the available API is strong enough.

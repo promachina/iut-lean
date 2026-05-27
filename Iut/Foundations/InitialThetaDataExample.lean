@@ -73,29 +73,48 @@ section AbstractConstructor
 
 universe u
 
-variable {F K : Type u} [Field F] [NumberField F] [Field K] [NumberField K]
-variable [Algebra F K] [FiniteDimensional F K] [IsGalois F K]
+variable {Fmod F K : Type u}
+variable [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+variable [Field K] [NumberField K]
+variable [Algebra Fmod F] [Algebra F K] [Algebra Fmod K] [IsScalarTower Fmod F K]
+variable [FiniteDimensional Fmod F] [IsGalois Fmod F]
+variable [FiniteDimensional F K] [IsGalois F K]
 variable [DecidableEq F]
+
+/-- A constructor smoke test for the field tower part of initial theta data. -/
+def abstractThetaFieldTower
+    (sqrtMinusOne : SqrtMinusOneData F)
+    (hDegree : Nat.Coprime (Module.finrank Fmod F) primeFive.value) :
+    ThetaFieldTower primeFive Fmod F K where
+  sqrtMinusOne := sqrtMinusOne
+  degreePrimeToL_holds := hDegree
 
 /--
 A constructor smoke test for full initial theta data under the exact field
 hypotheses required by the record.
 -/
 noncomputable def abstractInitialThetaData
-    (sqrtMinusOne : SqrtMinusOneData F)
+    (fieldTower : ThetaFieldTower primeFive Fmod F K)
     (cK : HyperbolicOrbicurveModel K)
     (epsilon : CuspData cK)
-    (stableReductionOverNonarchimedean torsion23RationalOverF
+    (fmod_is_fieldOfModuli k_is_lTorsionKernelField
+      stableReductionOverNonarchimedean torsion23RationalOverF
       lTorsionImageContainsSL2 qParameterOrdersPrimeToL : Prop)
+    (hFmod : fmod_is_fieldOfModuli)
+    (hK : k_is_lTorsionKernelField)
     (hStable : stableReductionOverNonarchimedean)
     (hTorsion : torsion23RationalOverF)
     (hImage : lTorsionImageContainsSL2)
     (hQ : qParameterOrdersPrimeToL) :
-    InitialThetaData F K Bool Bool where
-  sqrtMinusOne := sqrtMinusOne
-  xF := PuncturedEllipticCurve.ofJ F (37 : F)
+    InitialThetaData Fmod F K Bool Bool where
   l := primeFive
+  fieldTower := fieldTower
+  xF := PuncturedEllipticCurve.ofJ F (37 : F)
+  fmod_is_fieldOfModuli := fmod_is_fieldOfModuli
+  fmod_is_fieldOfModuli_holds := hFmod
   cK := cK
+  k_is_lTorsionKernelField := k_is_lTorsionKernelField
+  k_is_lTorsionKernelField_holds := hK
   valuations := boolThetaValuationData
   epsilon := epsilon
   stableReductionOverNonarchimedean := stableReductionOverNonarchimedean
@@ -107,7 +126,7 @@ noncomputable def abstractInitialThetaData
   qParameterOrdersPrimeToL := qParameterOrdersPrimeToL
   qParameterOrdersPrimeToL_holds := hQ
 
-variable (theta : InitialThetaData F K Bool Bool)
+variable (theta : InitialThetaData Fmod F K Bool Bool)
 
 example : Nat.Prime theta.l.value :=
   theta.prime_is_prime
@@ -118,9 +137,18 @@ example : 5 ≤ theta.l.value :=
 example : ∃ v, v ∈ theta.valuations.bad :=
   theta.badValuations_nonempty
 
+example : Nat.Coprime (Module.finrank Fmod F) theta.l.value :=
+  theta.degree_F_over_Fmod_prime_to_l
+
 example :
-    theta.sqrtMinusOne.element ^ 2 = (-1 : F) :=
+    theta.fieldTower.sqrtMinusOne.element ^ 2 = (-1 : F) :=
   theta.sqrtMinusOne_square
+
+example : theta.fmod_is_fieldOfModuli :=
+  theta.fmodFieldOfModuli
+
+example : theta.k_is_lTorsionKernelField :=
+  theta.kIsLTorsionKernelField
 
 example (j : F) :
     (PuncturedEllipticCurve.ofJ F j).jInvariant = j :=

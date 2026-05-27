@@ -53,6 +53,69 @@ structure SqrtMinusOneData (F : Type u) [Field F] where
   square_eq_neg_one : element ^ 2 = -1
 
 /--
+The field tower `Fmod ⊆ F ⊆ K` appearing in IUT I, Definition 3.1(b),(c).
+
+The source requires `F/Fmod` to be Galois of degree prime to `l`, and `K/F` to
+be a finite Galois extension.  The finite-dimensional and Galois parts are
+typeclass hypotheses; the prime-to-`l` degree condition is a field of the
+record because it depends on the chosen prime.
+-/
+structure ThetaFieldTower
+    (l : PrimeGeFive) (Fmod F K : Type u)
+    [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K] [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K] where
+  sqrtMinusOne : SqrtMinusOneData F
+  degreePrimeToL_holds :
+    Nat.Coprime (Module.finrank Fmod F) l.value
+
+namespace ThetaFieldTower
+
+variable {l : PrimeGeFive}
+variable {Fmod F K : Type u}
+variable [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+variable [Field K] [NumberField K]
+variable [Algebra Fmod F] [Algebra F K] [Algebra Fmod K] [IsScalarTower Fmod F K]
+variable [FiniteDimensional Fmod F] [IsGalois Fmod F]
+variable [FiniteDimensional F K] [IsGalois F K]
+variable (tower : ThetaFieldTower l Fmod F K)
+
+theorem sqrtMinusOne_square :
+    tower.sqrtMinusOne.element ^ 2 = (-1 : F) :=
+  tower.sqrtMinusOne.square_eq_neg_one
+
+theorem degreePrimeToL (tower : ThetaFieldTower l Fmod F K) :
+    Nat.Coprime (Module.finrank Fmod F) l.value :=
+  ThetaFieldTower.degreePrimeToL_holds tower
+
+omit [NumberField Fmod] [NumberField F] [NumberField K] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K] [IsGalois Fmod F] [FiniteDimensional F K] [IsGalois F K] in
+theorem f_over_fmod_is_finiteDimensional : FiniteDimensional Fmod F :=
+  inferInstance
+
+omit [NumberField Fmod] [NumberField F] [NumberField K] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K] [FiniteDimensional Fmod F] [FiniteDimensional F K]
+    [IsGalois F K] in
+theorem f_over_fmod_is_galois : IsGalois Fmod F :=
+  inferInstance
+
+omit [NumberField Fmod] [NumberField F] [NumberField K] [Algebra Fmod F] [Algebra Fmod K]
+    [IsScalarTower Fmod F K] [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [IsGalois F K] in
+theorem k_over_f_is_finiteDimensional : FiniteDimensional F K :=
+  inferInstance
+
+omit [NumberField Fmod] [NumberField F] [NumberField K] [Algebra Fmod F] [Algebra Fmod K]
+    [IsScalarTower Fmod F K] [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] in
+theorem k_over_f_is_galois : IsGalois F K :=
+  inferInstance
+
+end ThetaFieldTower
+
+/--
 A once-punctured elliptic curve represented by its ambient Weierstrass elliptic
 curve and a label for the removed point.
 
@@ -179,19 +242,28 @@ This record captures the currently formalized core:
 * `Fbar` is mathlib's algebraic closure `AlgebraicClosure F`;
 * `X_F` is represented by a punctured Weierstrass elliptic curve over `F`;
 * `l` is a prime at least five;
-* `K/F` is a finite Galois number-field extension via typeclass hypotheses;
+* `Fmod/F/K` is a number-field tower with the source Galois and degree
+  prime-to-`l` conditions;
 * `V -> Vmod` is a bijective valuation section with a nonempty bad moduli set;
 * `C_K` and `epsilon` are explicit typed objects;
 * not-yet-expanded source hypotheses remain named proof obligations.
 -/
 structure InitialThetaData
-    (F K : Type u) [Field F] [NumberField F] [Field K] [NumberField K]
-    [Algebra F K] [FiniteDimensional F K] [IsGalois F K]
+    (Fmod F K : Type u)
+    [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K] [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
     (Valuation ModValuation : Type v) where
-  sqrtMinusOne : SqrtMinusOneData F
-  xF : PuncturedEllipticCurve F
   l : PrimeGeFive
+  fieldTower : ThetaFieldTower l Fmod F K
+  xF : PuncturedEllipticCurve F
+  fmod_is_fieldOfModuli : Prop
+  fmod_is_fieldOfModuli_holds : fmod_is_fieldOfModuli
   cK : HyperbolicOrbicurveModel K
+  k_is_lTorsionKernelField : Prop
+  k_is_lTorsionKernelField_holds : k_is_lTorsionKernelField
   valuations : ThetaValuationData l Valuation ModValuation
   epsilon : CuspData cK
   stableReductionOverNonarchimedean : Prop
@@ -205,10 +277,14 @@ structure InitialThetaData
 
 namespace InitialThetaData
 
-variable {F K : Type u} [Field F] [NumberField F] [Field K] [NumberField K]
-variable [Algebra F K] [FiniteDimensional F K] [IsGalois F K]
+variable {Fmod F K : Type u}
+variable [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+variable [Field K] [NumberField K]
+variable [Algebra Fmod F] [Algebra F K] [Algebra Fmod K] [IsScalarTower Fmod F K]
+variable [FiniteDimensional Fmod F] [IsGalois Fmod F]
+variable [FiniteDimensional F K] [IsGalois F K]
 variable {Valuation ModValuation : Type v}
-variable (theta : InitialThetaData F K Valuation ModValuation)
+variable (theta : InitialThetaData Fmod F K Valuation ModValuation)
 
 /-- The algebraic closure `Fbar` from Definition 3.1(a), using mathlib's construction. -/
 abbrev algebraicClosure : Type u :=
@@ -233,6 +309,21 @@ omit [NumberField F] [NumberField K] [FiniteDimensional F K] in
 theorem extension_is_galois : IsGalois F K :=
   inferInstance
 
+omit [NumberField Fmod] [NumberField F] [NumberField K] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K] [IsGalois Fmod F] [FiniteDimensional F K] [IsGalois F K] in
+theorem moduli_extension_is_finiteDimensional : FiniteDimensional Fmod F :=
+  inferInstance
+
+omit [NumberField Fmod] [NumberField F] [NumberField K] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K] [FiniteDimensional Fmod F] [FiniteDimensional F K]
+    [IsGalois F K] in
+theorem moduli_extension_is_galois : IsGalois Fmod F :=
+  inferInstance
+
+theorem degree_F_over_Fmod_prime_to_l :
+    Nat.Coprime (Module.finrank Fmod F) theta.l.value :=
+  ThetaFieldTower.degreePrimeToL theta.fieldTower
+
 theorem prime_is_prime : Nat.Prime theta.l.value :=
   theta.l.prime
 
@@ -249,8 +340,16 @@ theorem badValuation_has_multiplicative_reduction
   theta.valuations.badLift_has_multiplicative_reduction hv
 
 theorem sqrtMinusOne_square :
-    theta.sqrtMinusOne.element ^ 2 = (-1 : F) :=
-  theta.sqrtMinusOne.square_eq_neg_one
+    theta.fieldTower.sqrtMinusOne.element ^ 2 = (-1 : F) :=
+  theta.fieldTower.sqrtMinusOne_square
+
+theorem fmodFieldOfModuli :
+    theta.fmod_is_fieldOfModuli :=
+  theta.fmod_is_fieldOfModuli_holds
+
+theorem kIsLTorsionKernelField :
+    theta.k_is_lTorsionKernelField :=
+  theta.k_is_lTorsionKernelField_holds
 
 theorem cusp_arisesFromNonzeroQuotientElement :
     theta.epsilon.arisesFromNonzeroQuotientElement :=
