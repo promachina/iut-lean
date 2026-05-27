@@ -10684,3 +10684,70 @@ The next milestone should lift the audit-to-payload bridge to the
 `IUTStage1SourcePackage` level, so source-package audits can recover the
 comparison payload inputs without going back through `preLedger.audit`
 manually.
+
+## Milestone 134: Source Audit to Payload Inputs
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The source-facing package audit is the public checklist for the local Stage 1
+scaffold. Since the contested `3.11.5 => 3.12` endpoint depends on the
+source-side comparison route, the source audit should be able to point directly
+to the comparison payload inputs, not only to the final signed endpoint.
+
+This follows the same source-pressure from the formalization report and the
+Scholze-Stix critique: the comparison payload must remain connected to the
+charting, chosen-output, and membership facts that produce it.
+
+### Purpose
+
+Milestone 133 related the pre-ledger audit to `ComparisonPayloadInputs`. This
+milestone lifts that bridge to `IUTStage1SourcePackage.Audit`, which is the
+source-package audit object used by the public source endpoints.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.Audit.comparisonPayloadInputs
+IUTStage1SourcePackage.Audit.comparisonPayloadInputsEqPackage
+IUTStage1SourcePackage.Audit.comparisonPayloadInputsQSignedLeThetaSigned
+IUTStage1SourcePackage.Audit.comparisonPayloadInputsEqPreLedgerAudit
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_audit_comparisonPayloadInputs_eq_package_example
+unitThetaToy_source_audit_comparisonPayloadInputs_eq_preLedgerAudit_example
+```
+
+### What This Tests
+
+The toy source examples verify that a source-package audit recovers the same
+payload-input record as the package accessor and as the underlying pre-ledger
+audit. Thus, the package audit, package accessor, and pre-ledger audit all
+agree about the source-side facts behind the q-to-Theta comparison.
+
+### Design Trap Avoided
+
+The trap would be to make source-package audits talk only about final endpoint
+facts while the source-side payload-input route lives elsewhere. That would
+make it easier for later code to use the endpoint without showing how the
+comparison route was audited.
+
+This milestone keeps the audit path explicit: source audit to payload inputs,
+payload inputs to signed comparison, and signed comparison to the public
+Corollary-3.12-shaped endpoint.
+
+### Next Step
+
+The next milestone should relate `comparisonDataFromPayloadInputs` to the
+promoted ledger's `comparisonData`, showing explicitly where the payload built
+from source-side inputs meets the payload exported by the promoted source
+ledger.

@@ -2088,6 +2088,29 @@ theorem promotedProviderLedger
       package.promotedLedger obligations :=
   sourceAudit.promoted_provider_ledger
 
+def comparisonPayloadInputs
+    (_sourceAudit : Audit package obligations) :
+    package.preLedger.ComparisonPayloadInputs :=
+  package.comparisonPayloadInputs
+
+theorem comparisonPayloadInputsEqPackage
+    (sourceAudit : Audit package obligations) :
+    sourceAudit.comparisonPayloadInputs =
+      package.comparisonPayloadInputs :=
+  Subsingleton.elim _ _
+
+theorem comparisonPayloadInputsQSignedLeThetaSigned
+    (sourceAudit : Audit package obligations) :
+    sourceAudit.comparisonPayloadInputs.qSignedLeThetaSigned =
+      package.comparisonPayloadInputs.qSignedLeThetaSigned :=
+  Subsingleton.elim _ _
+
+theorem comparisonPayloadInputsEqPreLedgerAudit
+    (sourceAudit : Audit package obligations) :
+    sourceAudit.comparisonPayloadInputs =
+      package.preLedger.audit.comparisonPayloadInputs :=
+  Subsingleton.elim _ _
+
 def comparisonData
     (_sourceAudit : Audit package obligations) :
     Corollary312ComparisonData :=

@@ -2503,6 +2503,46 @@ theorem unitThetaToy_source_audit_q_le_theta_projection_example
   (unitThetaToy_source_audit_example
     measure hnormalized hh hbound hholds).qSignedLeThetaSigned
 
+theorem unitThetaToy_source_audit_comparisonPayloadInputs_eq_package_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    (unitThetaToy_source_audit_example
+      measure hnormalized hh hbound hholds).comparisonPayloadInputs =
+      package.comparisonPayloadInputs :=
+  let sourceAudit :=
+    unitThetaToy_source_audit_example
+      measure hnormalized hh hbound hholds
+  sourceAudit.comparisonPayloadInputsEqPackage
+
+theorem unitThetaToy_source_audit_comparisonPayloadInputs_eq_preLedgerAudit_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    (unitThetaToy_source_audit_example
+      measure hnormalized hh hbound hholds).comparisonPayloadInputs =
+      package.preLedger.audit.comparisonPayloadInputs :=
+  let sourceAudit :=
+    unitThetaToy_source_audit_example
+      measure hnormalized hh hbound hholds
+  sourceAudit.comparisonPayloadInputsEqPreLedgerAudit
+
 theorem unitThetaToy_source_audit_corollary_projection_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
