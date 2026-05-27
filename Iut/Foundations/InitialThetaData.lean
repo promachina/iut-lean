@@ -1181,9 +1181,25 @@ instance quotientGroupGroup : Group normalEmbedding.quotientGroup := by
 def quotientMap : target.carrier → normalEmbedding.quotientGroup :=
   QuotientGroup.mk
 
+def quotientHom : target.carrier →* normalEmbedding.quotientGroup := by
+  letI : (normalEmbedding.openEmbedding.imageSubgroup).Normal :=
+    normalEmbedding.imageNormal
+  exact QuotientGroup.mk' normalEmbedding.openEmbedding.imageSubgroup
+
 theorem quotientMap_surjective :
     Function.Surjective (NormalOpenEmbeddingData.quotientMap normalEmbedding) :=
   QuotientGroup.mk_surjective
+
+theorem quotientHom_surjective :
+    Function.Surjective (NormalOpenEmbeddingData.quotientHom normalEmbedding) :=
+  letI : (normalEmbedding.openEmbedding.imageSubgroup).Normal :=
+    normalEmbedding.imageNormal
+  QuotientGroup.mk'_surjective normalEmbedding.openEmbedding.imageSubgroup
+
+theorem quotientHom_apply (x : target.carrier) :
+    NormalOpenEmbeddingData.quotientHom normalEmbedding x =
+      NormalOpenEmbeddingData.quotientMap normalEmbedding x :=
+  rfl
 
 theorem openImage :
     normalEmbedding.openEmbedding.isOpenImage :=
@@ -1463,9 +1479,23 @@ def quotientMap :
     thetaApproach.piCK.carrier → ThetaApproachQuotientData.deckQuotient thetaApproach :=
   NormalOpenEmbeddingData.quotientMap thetaApproach.piXK_to_piCK
 
+def quotientHom :
+    thetaApproach.piCK.carrier →*
+      ThetaApproachQuotientData.deckQuotient thetaApproach :=
+  NormalOpenEmbeddingData.quotientHom thetaApproach.piXK_to_piCK
+
 theorem quotientMap_surjective :
     Function.Surjective (ThetaApproachQuotientData.quotientMap thetaApproach) :=
   NormalOpenEmbeddingData.quotientMap_surjective thetaApproach.piXK_to_piCK
+
+theorem quotientHom_surjective :
+    Function.Surjective (ThetaApproachQuotientData.quotientHom thetaApproach) :=
+  NormalOpenEmbeddingData.quotientHom_surjective thetaApproach.piXK_to_piCK
+
+theorem quotientHom_apply (g : thetaApproach.piCK.carrier) :
+    ThetaApproachQuotientData.quotientHom thetaApproach g =
+      ThetaApproachQuotientData.quotientMap thetaApproach g :=
+  rfl
 
 theorem piXKOpenInPiCK :
     thetaApproach.piXK_to_piCK.openEmbedding.isOpenImage :=
@@ -1579,6 +1609,26 @@ def deckRingHom (g : ThetaApproachQuotientData.deckQuotient thetaApproach) :
     functionFieldData.functionField →+* functionFieldData.functionField :=
   functionFieldData.reconstructedFunctionField.deckRingHom g
 
+instance piCKAction :
+    MulSemiringAction thetaApproach.piCK.carrier functionFieldData.functionField :=
+  MulSemiringAction.compHom
+    (M := ThetaApproachQuotientData.deckQuotient thetaApproach)
+    (N := thetaApproach.piCK.carrier)
+    (R := functionFieldData.functionField)
+    (ThetaApproachQuotientData.quotientHom thetaApproach)
+
+def piCKRingHom (g : thetaApproach.piCK.carrier) :
+    functionFieldData.functionField →+* functionFieldData.functionField :=
+  MulSemiringAction.toRingHom thetaApproach.piCK.carrier
+    functionFieldData.functionField g
+
+theorem piCK_smul_eq_deck_smul
+    (g : thetaApproach.piCK.carrier) (x : functionFieldData.functionField) :
+    g • x = (ThetaApproachQuotientData.quotientHom thetaApproach g) • x :=
+  show (ThetaApproachQuotientData.quotientHom thetaApproach g) • x =
+    (ThetaApproachQuotientData.quotientHom thetaApproach g) • x from
+  rfl
+
 theorem deck_one_smul
     (x : ThetaApproachFunctionFieldData.functionField functionFieldData) :
     (1 : ThetaApproachQuotientData.deckQuotient thetaApproach) • x = x :=
@@ -1607,6 +1657,20 @@ theorem deck_smul_add
 theorem deck_smul_mul
     (g : ThetaApproachQuotientData.deckQuotient thetaApproach)
     (x y : functionFieldData.functionField) :
+    g • (x * y) = g • x * g • y :=
+  MulSemiringAction.smul_mul g x y
+
+theorem piCK_smul_one (g : thetaApproach.piCK.carrier) :
+    g • (1 : functionFieldData.functionField) = 1 :=
+  smul_one g
+
+theorem piCK_smul_add
+    (g : thetaApproach.piCK.carrier) (x y : functionFieldData.functionField) :
+    g • (x + y) = g • x + g • y :=
+  smul_add g x y
+
+theorem piCK_smul_mul
+    (g : thetaApproach.piCK.carrier) (x y : functionFieldData.functionField) :
     g • (x * y) = g • x * g • y :=
   MulSemiringAction.smul_mul g x y
 
@@ -1680,6 +1744,11 @@ theorem thetaApproachQuotientMapSurjective :
     Function.Surjective
       (ThetaApproachQuotientData.quotientMap coverData.thetaApproachQuotient) :=
   ThetaApproachQuotientData.quotientMap_surjective coverData.thetaApproachQuotient
+
+theorem thetaApproachQuotientHomSurjective :
+    Function.Surjective
+      (ThetaApproachQuotientData.quotientHom coverData.thetaApproachQuotient) :=
+  ThetaApproachQuotientData.quotientHom_surjective coverData.thetaApproachQuotient
 
 theorem thetaApproachGalQuotientIdentification :
     coverData.thetaApproachQuotient.galXKCK_identifiedWithQuotient :=
@@ -2417,6 +2486,11 @@ theorem thetaApproachQuotientMapSurjective :
     Function.Surjective
       (ThetaApproachQuotientData.quotientMap theta.coverData.thetaApproachQuotient) :=
   theta.coverData.thetaApproachQuotientMapSurjective
+
+theorem thetaApproachQuotientHomSurjective :
+    Function.Surjective
+      (ThetaApproachQuotientData.quotientHom theta.coverData.thetaApproachQuotient) :=
+  theta.coverData.thetaApproachQuotientHomSurjective
 
 theorem thetaApproachGalQuotientIdentification :
     theta.coverData.thetaApproachQuotient.galXKCK_identifiedWithQuotient :=

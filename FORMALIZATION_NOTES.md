@@ -13399,3 +13399,117 @@ been built. `MulSemiringAction` is the right intermediate layer.
 The reconstructed function field is still abstract. Later milestones should
 replace the abstract carrier with a real function-field object and then bundle
 the deck action as a homomorphism into the relevant automorphism group.
+
+## Math Milestone 46: Quotient Hom and Induced `Pi_CK` Action
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, identifies the deck/Galois group acting on the
+reconstructed function field with the quotient
+
+```text
+Gal(X_K/C_K) ~= Pi_CK / Pi_XK
+```
+
+Once the quotient action has been made algebraic, the canonical map
+
+```text
+Pi_CK -> Pi_CK / Pi_XK
+```
+
+should itself be a group homomorphism, not just a function. Pulling the
+quotient action back along this homomorphism gives the corresponding
+`Pi_CK`-action that factors through the quotient.
+
+This still does not enter the Corollary 3.12/Hodge-theater comparison. It is
+part of the reconstruction substrate needed before the later pilot-object and
+realified-monoid comparisons can be stated.
+
+### Lean/API Check
+
+`NormalOpenEmbeddingData` now exposes:
+
+```text
+quotientHom : target.carrier ->* quotientGroup
+quotientHom_surjective
+quotientHom_apply
+```
+
+`ThetaApproachQuotientData` exposes the corresponding global version:
+
+```text
+quotientHom : Pi_CK ->* Pi_CK / Pi_XK
+quotientHom_surjective
+quotientHom_apply
+```
+
+`ThetaApproachFunctionFieldData` now defines an induced algebraic action of
+`Pi_CK` on the reconstructed function field by composing the deck action with
+the quotient hom:
+
+```text
+piCKAction : MulSemiringAction Pi_CK functionField
+```
+
+and proves that this action is the pullback of the deck action.
+
+### Lean Decisions
+
+The quotient map is now represented twice:
+
+* `quotientMap`, a plain function kept for compatibility with the earlier API;
+* `quotientHom`, the mathematically stronger group homomorphism used by new
+  code.
+
+We did not yet keep a kernel theorem in the public API. Lean can construct the
+homomorphism and prove surjectivity cleanly, but the dependent universe setup
+around the abstract quotient currently makes the kernel theorem noisy. Since
+the source need for this milestone is the induced action through the quotient,
+the kernel theorem is deferred rather than forced into an unstable shape.
+
+### Lean Declarations
+
+```text
+NormalOpenEmbeddingData.quotientHom
+NormalOpenEmbeddingData.quotientHom_surjective
+NormalOpenEmbeddingData.quotientHom_apply
+ThetaApproachQuotientData.quotientHom
+ThetaApproachQuotientData.quotientHom_surjective
+ThetaApproachQuotientData.quotientHom_apply
+ThetaApproachFunctionFieldData.piCKAction
+ThetaApproachFunctionFieldData.piCKRingHom
+ThetaApproachFunctionFieldData.piCK_smul_eq_deck_smul
+ThetaApproachFunctionFieldData.piCK_smul_one
+ThetaApproachFunctionFieldData.piCK_smul_add
+ThetaApproachFunctionFieldData.piCK_smul_mul
+ThetaOrbicurveCoverData.thetaApproachQuotientHomSurjective
+InitialThetaData.thetaApproachQuotientHomSurjective
+```
+
+### What This Tests
+
+The example file now checks:
+
+* surjectivity of the canonical quotient hom;
+* that the induced `Pi_CK` action agrees with the quotient/deck action;
+* that the induced `Pi_CK` action preserves multiplication on the reconstructed
+  function field.
+
+### Design Trap Avoided
+
+The trap would be to let the deck action float independently of `Pi_CK`. This
+milestone records that the `Pi_CK` action factors through the quotient hom, so
+the Lean object follows the source phrase `Pi_CK / Pi_XK` rather than merely
+naming a quotient in prose.
+
+### Remaining Gap
+
+The kernel of the quotient hom should eventually be exposed as exactly the
+image subgroup of `Pi_XK`. That is mathematically standard for quotient groups,
+but it should be added when the dependent quotient interface is stable enough
+to keep the theorem readable.
