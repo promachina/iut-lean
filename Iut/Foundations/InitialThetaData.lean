@@ -7,6 +7,7 @@ import Mathlib.AlgebraicGeometry.EllipticCurve.ModelsWithJ
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Mathlib.NumberTheory.NumberField.Basic
+import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.Data.Set.Basic
 import Mathlib.Tactic
 
@@ -23,7 +24,7 @@ records with named proof obligations.
 
 namespace Iut
 
-universe u v
+universe u
 
 /-- A prime number `l` satisfying the IUT lower bound `5 <= l`. -/
 structure PrimeGeFive where
@@ -157,69 +158,97 @@ end PuncturedEllipticCurve
 The valuation data `V`, `Vbad_mod`, and the section `V -> Vmod` from
 Definition 3.1(b),(e).
 
-The record separates the moduli-level bad set from its chosen section in `V`.
-This matters later because the paper distinguishes valuations of `Fmod`,
-valuations above them, and the chosen subset `V` of valuations of `K`.
+The moduli-level and extension-level valuation types are now mathlib finite
+places of the corresponding number fields.  The map from places of `K` to
+places of `Fmod`, together with a chosen section, remains explicit data.
 -/
 structure ThetaValuationData
-    (l : PrimeGeFive) (Valuation ModValuation : Type v) where
-  toModuli : Valuation -> ModValuation
-  toModuli_bijective : Function.Bijective toModuli
-  residueCharacteristic : ModValuation -> ℕ
-  isNonarchimedean : ModValuation -> Prop
-  badMod : Set ModValuation
+    (l : PrimeGeFive) (Fmod K : Type u)
+    [Field Fmod] [NumberField Fmod] [Field K] [NumberField K]
+    [Algebra Fmod K] where
+  toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod
+  chosenLift : NumberField.FinitePlace Fmod -> NumberField.FinitePlace K
+  toModuli_chosenLift : ∀ w, toModuli (chosenLift w) = w
+  residueCharacteristic : NumberField.FinitePlace Fmod -> ℕ
+  badMod : Set (NumberField.FinitePlace Fmod)
   badMod_nonempty : ∃ w, w ∈ badMod
-  badMod_nonarchimedean : ∀ w, w ∈ badMod -> isNonarchimedean w
   badMod_oddResidueCharacteristic :
     ∀ w, w ∈ badMod -> Odd (residueCharacteristic w)
   badMod_residueCharacteristic_prime :
     ∀ w, w ∈ badMod -> Nat.Prime (residueCharacteristic w)
   badMod_residueCharacteristic_coprime_l :
     ∀ w, w ∈ badMod -> Nat.Coprime (residueCharacteristic w) l.value
-  multiplicativeBadReductionAtLift : Valuation -> Prop
+  multiplicativeBadReductionAtLift : NumberField.FinitePlace K -> Prop
   bad_lifts_have_multiplicative_reduction :
-    ∀ v, toModuli v ∈ badMod -> multiplicativeBadReductionAtLift v
+    ∀ v, v ∈ Set.range chosenLift -> toModuli v ∈ badMod ->
+      multiplicativeBadReductionAtLift v
 
 namespace ThetaValuationData
 
-variable {l : PrimeGeFive} {Valuation ModValuation : Type v}
+variable {l : PrimeGeFive} {Fmod K : Type u}
+variable [Field Fmod] [NumberField Fmod] [Field K] [NumberField K]
+variable [Algebra Fmod K]
 
-/-- The bad valuations in the chosen section `V`. -/
-def bad (data : ThetaValuationData l Valuation ModValuation) :
-    Set Valuation :=
-  {v | data.toModuli v ∈ data.badMod}
+/-- The selected subset `V ⊆ V(K)` supplied by the section. -/
+def selected (data : ThetaValuationData l Fmod K) :
+    Set (NumberField.FinitePlace K) :=
+  Set.range data.chosenLift
 
 /-- The good valuations at the moduli level, i.e. the complement of `Vbad_mod`. -/
-def goodMod (data : ThetaValuationData l Valuation ModValuation) :
-    Set ModValuation :=
+def goodMod (data : ThetaValuationData l Fmod K) :
+    Set (NumberField.FinitePlace Fmod) :=
   data.badModᶜ
 
+/-- The bad valuations in the chosen section `V`. -/
+def bad (data : ThetaValuationData l Fmod K) :
+    Set (NumberField.FinitePlace K) :=
+  {v | v ∈ data.selected ∧ data.toModuli v ∈ data.badMod}
+
 /-- The good valuations in the chosen section `V`. -/
-def good (data : ThetaValuationData l Valuation ModValuation) :
-    Set Valuation :=
-  {v | data.toModuli v ∈ data.goodMod}
+def good (data : ThetaValuationData l Fmod K) :
+    Set (NumberField.FinitePlace K) :=
+  {v | v ∈ data.selected ∧ data.toModuli v ∈ data.goodMod}
 
-theorem mem_bad_iff (data : ThetaValuationData l Valuation ModValuation)
-    (v : Valuation) :
-    v ∈ data.bad ↔ data.toModuli v ∈ data.badMod :=
+theorem mem_selected_iff (data : ThetaValuationData l Fmod K)
+    (v : NumberField.FinitePlace K) :
+    v ∈ data.selected ↔ ∃ w, data.chosenLift w = v :=
   Iff.rfl
 
-theorem mem_good_iff (data : ThetaValuationData l Valuation ModValuation)
-    (v : Valuation) :
-    v ∈ data.good ↔ data.toModuli v ∉ data.badMod :=
+theorem chosenLift_mem_selected (data : ThetaValuationData l Fmod K)
+    (w : NumberField.FinitePlace Fmod) :
+    data.chosenLift w ∈ data.selected :=
+  ⟨w, rfl⟩
+
+theorem toModuli_chosenLift_eq (data : ThetaValuationData l Fmod K)
+    (w : NumberField.FinitePlace Fmod) :
+    data.toModuli (data.chosenLift w) = w :=
+  data.toModuli_chosenLift w
+
+theorem mem_bad_iff (data : ThetaValuationData l Fmod K)
+    (v : NumberField.FinitePlace K) :
+    v ∈ data.bad ↔ v ∈ data.selected ∧ data.toModuli v ∈ data.badMod :=
   Iff.rfl
 
-theorem bad_nonempty (data : ThetaValuationData l Valuation ModValuation) :
+theorem mem_good_iff (data : ThetaValuationData l Fmod K)
+    (v : NumberField.FinitePlace K) :
+    v ∈ data.good ↔ v ∈ data.selected ∧ data.toModuli v ∉ data.badMod :=
+  Iff.rfl
+
+theorem chosenLift_mem_bad_iff (data : ThetaValuationData l Fmod K)
+    (w : NumberField.FinitePlace Fmod) :
+    data.chosenLift w ∈ data.bad ↔ w ∈ data.badMod := by
+  simp [bad, selected, data.toModuli_chosenLift_eq]
+
+theorem bad_nonempty (data : ThetaValuationData l Fmod K) :
     ∃ v, v ∈ data.bad := by
   rcases data.badMod_nonempty with ⟨w, hw⟩
-  rcases data.toModuli_bijective.2 w with ⟨v, hv⟩
-  exact ⟨v, by simpa [bad, hv] using hw⟩
+  exact ⟨data.chosenLift w, (data.chosenLift_mem_bad_iff w).mpr hw⟩
 
 theorem badLift_has_multiplicative_reduction
-    (data : ThetaValuationData l Valuation ModValuation)
-    {v : Valuation} (hv : v ∈ data.bad) :
+    (data : ThetaValuationData l Fmod K)
+    {v : NumberField.FinitePlace K} (hv : v ∈ data.bad) :
     data.multiplicativeBadReductionAtLift v :=
-  data.bad_lifts_have_multiplicative_reduction v hv
+  data.bad_lifts_have_multiplicative_reduction v hv.1 hv.2
 
 end ThetaValuationData
 
@@ -301,15 +330,14 @@ structure InitialThetaData
     [Field K] [NumberField K]
     [Algebra Fmod F] [Algebra F K] [Algebra Fmod K] [IsScalarTower Fmod F K]
     [FiniteDimensional Fmod F] [IsGalois Fmod F]
-    [FiniteDimensional F K] [IsGalois F K]
-    (Valuation ModValuation : Type v) where
+    [FiniteDimensional F K] [IsGalois F K] where
   l : PrimeGeFive
   fieldTower : ThetaFieldTower l Fmod F K
   curveModuli : ThetaCurveModuliData Fmod F
   cK : HyperbolicOrbicurveModel K
   k_is_lTorsionKernelField : Prop
   k_is_lTorsionKernelField_holds : k_is_lTorsionKernelField
-  valuations : ThetaValuationData l Valuation ModValuation
+  valuations : ThetaValuationData l Fmod K
   epsilon : CuspData cK
   lTorsionImageContainsSL2 : Prop
   lTorsionImageContainsSL2_holds : lTorsionImageContainsSL2
@@ -324,8 +352,7 @@ variable [Field K] [NumberField K]
 variable [Algebra Fmod F] [Algebra F K] [Algebra Fmod K] [IsScalarTower Fmod F K]
 variable [FiniteDimensional Fmod F] [IsGalois Fmod F]
 variable [FiniteDimensional F K] [IsGalois F K]
-variable {Valuation ModValuation : Type v}
-variable (theta : InitialThetaData Fmod F K Valuation ModValuation)
+variable (theta : InitialThetaData Fmod F K)
 
 /-- The algebraic closure `Fbar` from Definition 3.1(a), using mathlib's construction. -/
 abbrev algebraicClosure : Type u :=
@@ -376,7 +403,7 @@ theorem badValuations_nonempty :
   theta.valuations.bad_nonempty
 
 theorem badValuation_has_multiplicative_reduction
-    {v : Valuation} (hv : v ∈ theta.valuations.bad) :
+    {v : NumberField.FinitePlace K} (hv : v ∈ theta.valuations.bad) :
     theta.valuations.multiplicativeBadReductionAtLift v :=
   theta.valuations.badLift_has_multiplicative_reduction hv
 

@@ -1625,3 +1625,116 @@ The next Definition 3.1 target should be the valuation layer: `Vmod = V(Fmod)`,
 sets and good valuation sets. We should first inspect mathlib's finite-place API
 for number fields and decide how much of the current placeholder
 `ThetaValuationData` can be replaced by actual place types.
+
+## Math Milestone 17: Finite-Place Valuation Layer
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(b),(e) uses `Vmod = V(Fmod)`, a nonempty set
+`Vbad_mod` of nonarchimedean valuations of `Fmod`, and a subset
+`V ⊆ V(K)` inducing a bijection `V -> Vmod`, i.e. a section of the natural
+surjection from valuations of `K` to valuations of `Fmod`. It then defines
+bad and good parts by pulling back the bad and good moduli-level sets.
+
+The source also assumes that the residue characteristics of elements of
+`Vbad_mod` are odd and prime to `l`, and that `X_F` has bad/multiplicative
+reduction at valuations over `Vbad_mod`.
+
+### Lean/API Check
+
+Mathlib has:
+
+```text
+NumberField.FinitePlace K
+NumberField.FinitePlace.maximalIdeal
+NumberField.FinitePlace.add_le
+NonarchimedeanHomClass (NumberField.FinitePlace K) K R
+```
+
+The finite-place API represents finite places as absolute values associated to
+height-one spectra of `𝓞 K`. It gives a real nonarchimedean finite-place type,
+so our old arbitrary valuation index types were too weak.
+
+I did not find a ready-made canonical restriction map
+`FinitePlace K -> FinitePlace Fmod` with the exact section data needed by IUT
+Definition 3.1(e). Therefore the map and section remain explicit fields.
+
+### Lean Decisions
+
+`ThetaValuationData` now has the shape:
+
+```text
+ThetaValuationData l Fmod K
+```
+
+and uses actual mathlib finite places:
+
+```text
+toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod
+chosenLift : NumberField.FinitePlace Fmod -> NumberField.FinitePlace K
+toModuli_chosenLift : forall w, toModuli (chosenLift w) = w
+badMod : Set (NumberField.FinitePlace Fmod)
+```
+
+The selected set `V ⊆ V(K)` is represented as:
+
+```text
+ThetaValuationData.selected = Set.range chosenLift
+```
+
+The bad and good selected valuations are:
+
+```text
+bad  = {v | v in selected and toModuli v in badMod}
+good = {v | v in selected and toModuli v notin badMod}
+```
+
+Residue characteristic is still a function
+`NumberField.FinitePlace Fmod -> Nat`. We record the source obligations that it
+is prime, odd, and coprime to `l` on the bad moduli set. A later milestone can
+try to derive this from maximal ideals/residue fields.
+
+### Lean Declarations
+
+```text
+ThetaValuationData
+ThetaValuationData.selected
+ThetaValuationData.goodMod
+ThetaValuationData.bad
+ThetaValuationData.good
+ThetaValuationData.chosenLift_mem_selected
+ThetaValuationData.toModuli_chosenLift_eq
+ThetaValuationData.chosenLift_mem_bad_iff
+ThetaValuationData.bad_nonempty
+ThetaValuationData.badLift_has_multiplicative_reduction
+InitialThetaData.badValuations_nonempty
+InitialThetaData.badValuation_has_multiplicative_reduction
+```
+
+### What This Tests
+
+The example file now constructs valuation data abstractly over number fields
+using `NumberField.FinitePlace Fmod` and `NumberField.FinitePlace K`. It also
+verifies that initial theta data consumes this finite-place valuation bundle,
+not arbitrary placeholder types.
+
+### Design Trap Avoided
+
+The trap would be to keep proving facts about a polymorphic `Valuation` type
+that had no connection to number fields. This milestone forces the valuation
+layer to use finite places of the actual fields in the initial theta-data
+tower. The remaining explicit map/section fields are not drift: they correspond
+to the source's section `V -> Vmod` and to API that is not yet provided by
+mathlib in the exact form needed here.
+
+### Next Step
+
+The next target should refine one of the valuation obligations: either connect
+`residueCharacteristic` to the maximal ideal/residue field attached to a
+finite place, or add the `CK`/`CF` base-change relation from Definition 3.1(d)
+so the local bad-reduction and cusp conditions have the right geometric target.

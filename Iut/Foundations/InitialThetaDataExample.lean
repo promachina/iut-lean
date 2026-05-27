@@ -29,46 +29,6 @@ example : Nat.Prime primeFive.value :=
 example : 5 ≤ primeFive.value :=
   primeFive.ge_five
 
-/--
-A two-point valuation toy model.  This is only an example of the formal shape
-`V -> Vmod`; it is not asserted to arise from a number field.
--/
-def boolThetaValuationData : ThetaValuationData primeFive Bool Bool where
-  toModuli := id
-  toModuli_bijective := by
-    constructor
-    · intro a b h
-      simpa using h
-    · intro b
-      exact ⟨b, rfl⟩
-  residueCharacteristic := fun _ => 3
-  isNonarchimedean := fun _ => True
-  badMod := {w | w = true}
-  badMod_nonempty := ⟨true, rfl⟩
-  badMod_nonarchimedean := by
-    intro _ _
-    trivial
-  badMod_oddResidueCharacteristic := by
-    intro _ _
-    norm_num [Odd]
-  badMod_residueCharacteristic_prime := by
-    intro _ _
-    norm_num
-  badMod_residueCharacteristic_coprime_l := by
-    intro _ _
-    norm_num [primeFive]
-  multiplicativeBadReductionAtLift := fun v => v = true
-  bad_lifts_have_multiplicative_reduction := by
-    intro v hv
-    simpa using hv
-
-example : ∃ v, v ∈ boolThetaValuationData.bad :=
-  boolThetaValuationData.bad_nonempty
-
-example {v : Bool} (hv : v ∈ boolThetaValuationData.bad) :
-    boolThetaValuationData.multiplicativeBadReductionAtLift v :=
-  boolThetaValuationData.badLift_has_multiplicative_reduction hv
-
 section AbstractConstructor
 
 universe u
@@ -80,6 +40,34 @@ variable [Algebra Fmod F] [Algebra F K] [Algebra Fmod K] [IsScalarTower Fmod F K
 variable [FiniteDimensional Fmod F] [IsGalois Fmod F]
 variable [FiniteDimensional F K] [IsGalois F K]
 variable [DecidableEq F]
+
+/-- A constructor smoke test for the finite-place valuation section. -/
+def abstractThetaValuationData
+    (toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod)
+    (chosenLift : NumberField.FinitePlace Fmod -> NumberField.FinitePlace K)
+    (hSection : ∀ w, toModuli (chosenLift w) = w)
+    (residueCharacteristic : NumberField.FinitePlace Fmod -> ℕ)
+    (badMod : Set (NumberField.FinitePlace Fmod))
+    (hBad : ∃ w, w ∈ badMod)
+    (hOdd : ∀ w, w ∈ badMod -> Odd (residueCharacteristic w))
+    (hPrime : ∀ w, w ∈ badMod -> Nat.Prime (residueCharacteristic w))
+    (hCoprime : ∀ w, w ∈ badMod ->
+      Nat.Coprime (residueCharacteristic w) primeFive.value)
+    (multiplicativeBadReductionAtLift : NumberField.FinitePlace K -> Prop)
+    (hMult : ∀ v, v ∈ Set.range chosenLift -> toModuli v ∈ badMod ->
+      multiplicativeBadReductionAtLift v) :
+    ThetaValuationData primeFive Fmod K where
+  toModuli := toModuli
+  chosenLift := chosenLift
+  toModuli_chosenLift := hSection
+  residueCharacteristic := residueCharacteristic
+  badMod := badMod
+  badMod_nonempty := hBad
+  badMod_oddResidueCharacteristic := hOdd
+  badMod_residueCharacteristic_prime := hPrime
+  badMod_residueCharacteristic_coprime_l := hCoprime
+  multiplicativeBadReductionAtLift := multiplicativeBadReductionAtLift
+  bad_lifts_have_multiplicative_reduction := hMult
 
 /-- A constructor smoke test for the field tower part of initial theta data. -/
 def abstractThetaFieldTower
@@ -117,27 +105,28 @@ hypotheses required by the record.
 noncomputable def abstractInitialThetaData
     (fieldTower : ThetaFieldTower primeFive Fmod F K)
     (curveModuli : ThetaCurveModuliData Fmod F)
+    (valuations : ThetaValuationData primeFive Fmod K)
     (cK : HyperbolicOrbicurveModel K)
     (epsilon : CuspData cK)
     (k_is_lTorsionKernelField lTorsionImageContainsSL2 qParameterOrdersPrimeToL : Prop)
     (hK : k_is_lTorsionKernelField)
     (hImage : lTorsionImageContainsSL2)
     (hQ : qParameterOrdersPrimeToL) :
-    InitialThetaData Fmod F K Bool Bool where
+    InitialThetaData Fmod F K where
   l := primeFive
   fieldTower := fieldTower
   curveModuli := curveModuli
   cK := cK
   k_is_lTorsionKernelField := k_is_lTorsionKernelField
   k_is_lTorsionKernelField_holds := hK
-  valuations := boolThetaValuationData
+  valuations := valuations
   epsilon := epsilon
   lTorsionImageContainsSL2 := lTorsionImageContainsSL2
   lTorsionImageContainsSL2_holds := hImage
   qParameterOrdersPrimeToL := qParameterOrdersPrimeToL
   qParameterOrdersPrimeToL_holds := hQ
 
-variable (theta : InitialThetaData Fmod F K Bool Bool)
+variable (theta : InitialThetaData Fmod F K)
 
 example : Nat.Prime theta.l.value :=
   theta.prime_is_prime
