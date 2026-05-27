@@ -9647,3 +9647,60 @@ The formal hull operator is still abstract. The next real mathematical task is
 to specialize this interface toward a holomorphic-hull operator for the
 Theta-pilot possible-image family and then connect its measured bound to the
 determinant/log-volume step.
+
+## Math Milestone 103: Toy Theta Union Bound Made Explicit
+
+Lean file:
+
+* `Iut/Stage1/ToyFamilyBounds.lean`
+
+### Source Check
+
+After introducing `targetUnion`, the toy Theta family should expose what its
+upper-ray cap is actually doing: it bounds the union of all possible target
+regions arising from the epsilon choices. This mirrors the IUT III phrasing
+that the Theta quantity comes from the hull of the union of possible images.
+
+### Lean/API Check
+
+The toy layer now proves:
+
+```text
+thetaIndeterminacyFamily_targetUnion_subset_commonTarget
+thetaIndeterminacyFamily_targetUnion_subset_commonHull
+```
+
+The first theorem says that the union of all toy possible Theta target regions
+is contained in the common upper-ray target determined by the epsilon cap.
+The second says the same union is contained in the common-hull witness used by
+the measured hull-bound route.
+
+### Lean Decisions
+
+Both proofs use the generic equivalence:
+
+```text
+RegionFamily.union_subset_iff
+```
+
+Thus, no ad hoc elementwise proof is hidden in the toy layer. The toy
+epsilon-cap containment is exactly the family-wise containment needed to bound
+the union.
+
+### What This Tests
+
+Lean verifies that the already-existing common-target and common-hull
+containment facts imply the new union containment statements. The focused
+build for `Iut.Stage1.ToyFamilyBounds` passes.
+
+### Design Trap Avoided
+
+The trap would be to introduce a union-of-possible-images interface but never
+connect it to the Stage 1 Theta family. This milestone ties the toy Theta
+family to the same union language that a future holomorphic-hull construction
+must use.
+
+### Remaining Gap
+
+The toy common hull is still the upper-ray cap. We have not yet built a
+nontrivial holomorphic hull operator or determinant/log-volume estimate.

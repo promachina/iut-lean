@@ -44,6 +44,16 @@ theorem thetaIndeterminacyFamily_commonTarget
   intro choice
   linarith [hbound choice]
 
+theorem thetaIndeterminacyFamily_targetUnion_subset_commonTarget
+    (f : Transport qLine thetaLine) (h : Real)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
+    Region.Subset
+      (thetaIndeterminacyFamily f h epsilon).targetUnion
+      (thetaIndeterminacyCommonTarget h epsilonBound) :=
+  RegionFamily.union_subset_iff.mpr
+    (thetaIndeterminacyFamily_commonTarget f h hbound)
+
 def thetaIndeterminacyCommonTargetHull
     (f : Transport qLine thetaLine) (h : Real)
     {epsilon : index -> Real} {epsilonBound : Real}
@@ -56,6 +66,16 @@ def thetaIndeterminacyCommonTargetHull
       (commonBound := -(2 * h) + epsilonBound) (by
         intro choice
         linarith [hbound choice])
+
+theorem thetaIndeterminacyFamily_targetUnion_subset_commonHull
+    (f : Transport qLine thetaLine) (h : Real)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
+    Region.Subset
+      (thetaIndeterminacyFamily f h epsilon).targetUnion
+      (thetaIndeterminacyCommonTargetHull f h hbound).hull :=
+  RegionFamily.union_subset_iff.mpr
+    (thetaIndeterminacyCommonTargetHull f h hbound).contains_each
 
 def thetaIndeterminacyCommonTargetHullBound
     (measure : RegionMeasure thetaLine)
