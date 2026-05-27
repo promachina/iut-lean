@@ -6374,3 +6374,83 @@ use.
 The next milestone should begin the first non-toy source-ledger scaffold: a
 named placeholder interface for future IUT-specific data that can eventually
 produce a `SourceObligationLedger` without changing the Stage 1 public API.
+
+## Milestone 74: Non-Toy IUT Source Provider Scaffold
+
+Lean files:
+
+* `Iut/Stage1/IUTSourceScaffold.lean`
+* `Iut/Basic.lean`
+
+### Source Check
+
+Mochizuki's formalization progress report describes Stage 1 as the passage from
+IUT III, Theorem 3.11 to Corollary 3.12, with skeletal Lean code intended to
+clarify the logical structure. IUT III, Step `(xi-d)`, points to the same
+ingredients we have been auditing: multiradial output data, IPL/SHE linkage,
+log-volume comparison, and signed Corollary 3.12 packaging.
+
+The non-toy scaffold must therefore avoid pretending that these ingredients have
+already been formalized. It should only state the interface future IUT-specific
+modules must satisfy.
+
+### Purpose
+
+This milestone introduces:
+
+```text
+IUTSourceObligationProvider
+```
+
+The provider has one substantive field:
+
+```text
+ledger : SourceObligationLedger ...
+```
+
+From that ledger, the module exposes:
+
+```text
+audit
+qSigned_le_thetaSigned
+corollary312
+stage1Comparison
+publicAudit
+stage1Comparison_recovers_corollary312
+hasNormalization
+```
+
+### Lean Declarations
+
+In `IUTSourceScaffold.lean`:
+
+```text
+IUTSourceObligationProvider
+IUTSourceObligationProvider.audit
+IUTSourceObligationProvider.qSigned_le_thetaSigned
+IUTSourceObligationProvider.corollary312
+IUTSourceObligationProvider.stage1Comparison
+IUTSourceObligationProvider.publicAudit
+IUTSourceObligationProvider.stage1Comparison_recovers_corollary312
+IUTSourceObligationProvider.hasNormalization
+```
+
+The root module imports this scaffold.
+
+### What This Tests
+
+The first non-toy interface is now in place without adding any unproved IUT
+claim. A future IUT-specific construction must produce the same
+`SourceObligationLedger` that the toy model produces, and then receives only the
+general audited endpoint.
+
+### Design Trap Avoided
+
+The trap would be to introduce a named "IUT provider" that directly asserts
+Corollary 3.12. This scaffold instead makes the ledger the sole proof boundary.
+
+### Next Step
+
+The next milestone should add regression examples for
+`IUTSourceObligationProvider` using the toy ledger as an instance, verifying that
+the non-toy scaffold consumes a ledger through the same public audit API.

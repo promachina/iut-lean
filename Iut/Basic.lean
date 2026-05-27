@@ -23,6 +23,7 @@ import Iut.Stage1.ToyBridge
 import Iut.Stage1.CorollarySchema
 import Iut.Stage1.ToyCorollarySchema
 import Iut.Stage1.SourceObligations
+import Iut.Stage1.IUTSourceScaffold
 import Iut.Stage1.ToySourceObligations
 import Iut.Stage1.ToyPublicAuditExample
 
