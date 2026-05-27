@@ -10826,3 +10826,59 @@ source-side comparison route is the payload exported at the public endpoint.
 The next milestone should expose this equality through
 `IUTStage1SourcePackage.Audit`, so source audits can recover not only the
 payload inputs and final comparison data, but also the bridge between them.
+
+## Milestone 136: Source Audit Payload-to-Data Bridge
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The local Stage 1 source scaffold now has a named bridge between the source-side
+payload inputs and the promoted ledger comparison data. This milestone exposes
+that bridge through the source audit object itself. That matches the project
+discipline around the Scholze-Stix/Mochizuki disagreement: an audit should not
+only certify the final endpoint, but also show how the source-side comparison
+route reaches that endpoint.
+
+### Purpose
+
+Milestone 135 added package-level equality between
+`comparisonDataFromPayloadInputs` and `comparisonData`. This milestone adds the
+same bridge as an `IUTStage1SourcePackage.Audit` projection.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.Audit.comparisonDataFromPayloadInputsEqComparisonData
+IUTStage1SourcePackage.Audit.comparisonDataFromPayloadInputsStage1ComparisonEq
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_audit_payloadData_eq_comparisonData_example
+unitThetaToy_source_audit_payloadStage_eq_comparisonStage_example
+```
+
+### What This Tests
+
+The toy source-audit examples verify that the audit object can recover the
+equality between the source-built payload and the final comparison data, and
+also the equality after packaging both sides as `Stage1Comparison`.
+
+### Design Trap Avoided
+
+The trap would be to make the audit expose payload inputs and final data as two
+unrelated facts. The new audit projections show that the source-side payload
+route and promoted-ledger route meet at the same comparison data object.
+
+### Next Step
+
+The next milestone should add a compact source audit summary for the complete
+payload route: source payload inputs, payload-to-data equality, final
+comparison data, and public endpoint recovery.

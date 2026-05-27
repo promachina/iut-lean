@@ -2144,6 +2144,18 @@ theorem comparisonDataEqPackage
     sourceAudit.comparisonData = package.comparisonData obligations :=
   rfl
 
+theorem comparisonDataFromPayloadInputsEqComparisonData
+    (sourceAudit : Audit package obligations) :
+    package.comparisonDataFromPayloadInputs obligations =
+      sourceAudit.comparisonData :=
+  package.comparisonDataFromPayloadInputs_eq_comparisonData obligations
+
+theorem comparisonDataFromPayloadInputsStage1ComparisonEq
+    (sourceAudit : Audit package obligations) :
+    (package.comparisonDataFromPayloadInputs obligations).stage1Comparison =
+      sourceAudit.comparisonData.stage1Comparison :=
+  package.comparisonDataFromPayloadInputs_stage1Comparison_eq obligations
+
 theorem comparisonDataStage1Comparison
     (sourceAudit : Audit package obligations) :
     sourceAudit.comparisonData.stage1Comparison =
