@@ -365,6 +365,86 @@ theorem openImmersions :
 
 end ThetaOrbicurveCoverData
 
+/--
+The bad local finite-place data from IUT I, Definition 3.1(e).
+
+For each selected finite place `v` of `K`, the source base-changes the
+orbicurves to `K_v`.  At bad places it further requires a local type
+`(1, Z/lZ)^±` condition for `C_v`, the theta-root local models, and the
+corresponding open subgroup inclusions.  This structure records those local
+obligations over mathlib's `v`-adic completion.
+-/
+structure ThetaBadLocalData
+    (l : PrimeGeFive) (Fmod F K : Type u)
+    [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+    [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    (curveModuli : ThetaCurveModuliData Fmod F)
+    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+    (valuations : ThetaValuationData l Fmod K) where
+  localX :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.selected ->
+      HyperbolicOrbicurveModel (v.maximalIdeal.adicCompletion K)
+  localC :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.selected ->
+      HyperbolicOrbicurveModel (v.maximalIdeal.adicCompletion K)
+  localBaseChangeDiagrams :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.selected -> Prop
+  localBaseChangeDiagrams_holds :
+    ∀ v hv, localBaseChangeDiagrams v hv
+  decompositionGroupOuterSurjection :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.selected -> Prop
+  decompositionGroupOuterSurjection_holds :
+    ∀ v hv, decompositionGroupOuterSurjection v hv
+  badLocalType :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
+  badLocalType_holds :
+    ∀ v hv, badLocalType v hv
+  thetaRootLocalModels :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
+  thetaRootLocalModels_holds :
+    ∀ v hv, thetaRootLocalModels v hv
+  badLocalOpenSubgroups :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
+  badLocalOpenSubgroups_holds :
+    ∀ v hv, badLocalOpenSubgroups v hv
+
+namespace ThetaBadLocalData
+
+variable {l : PrimeGeFive} {Fmod F K : Type u}
+variable [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+variable [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+variable {curveModuli : ThetaCurveModuliData Fmod F}
+variable {coverData : ThetaOrbicurveCoverData Fmod F K curveModuli}
+variable {valuations : ThetaValuationData l Fmod K}
+variable (localData : ThetaBadLocalData l Fmod F K curveModuli coverData valuations)
+
+theorem baseChangeDiagrams
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.selected) :
+    localData.localBaseChangeDiagrams v hv :=
+  localData.localBaseChangeDiagrams_holds v hv
+
+theorem decompositionSurjection
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.selected) :
+    localData.decompositionGroupOuterSurjection v hv :=
+  localData.decompositionGroupOuterSurjection_holds v hv
+
+theorem badType
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    localData.badLocalType v hv :=
+  localData.badLocalType_holds v hv
+
+theorem thetaRootModels
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    localData.thetaRootLocalModels v hv :=
+  localData.thetaRootLocalModels_holds v hv
+
+theorem openSubgroups
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    localData.badLocalOpenSubgroups v hv :=
+  localData.badLocalOpenSubgroups_holds v hv
+
+end ThetaBadLocalData
+
 /-- The cusp `epsilon` of `C_K` from IUT I, Definition 3.1(f). -/
 structure CuspData {F : Type u} [Field F] (C : HyperbolicOrbicurveModel F) where
   label : String
@@ -399,6 +479,7 @@ structure InitialThetaData
   k_is_lTorsionKernelField : Prop
   k_is_lTorsionKernelField_holds : k_is_lTorsionKernelField
   valuations : ThetaValuationData l Fmod K
+  badLocalData : ThetaBadLocalData l Fmod F K curveModuli coverData valuations
   epsilon : CuspData coverData.cK
   lTorsionImageContainsSL2 : Prop
   lTorsionImageContainsSL2_holds : lTorsionImageContainsSL2
@@ -467,6 +548,31 @@ theorem badValuation_has_multiplicative_reduction
     {v : NumberField.FinitePlace K} (hv : v ∈ theta.valuations.bad) :
     theta.valuations.multiplicativeBadReductionAtLift v :=
   theta.valuations.badLift_has_multiplicative_reduction hv
+
+theorem localBaseChangeDiagrams
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
+    theta.badLocalData.localBaseChangeDiagrams v hv :=
+  theta.badLocalData.baseChangeDiagrams v hv
+
+theorem decompositionGroupOuterSurjection
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
+    theta.badLocalData.decompositionGroupOuterSurjection v hv :=
+  theta.badLocalData.decompositionSurjection v hv
+
+theorem badLocalType
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    theta.badLocalData.badLocalType v hv :=
+  theta.badLocalData.badType v hv
+
+theorem thetaRootLocalModels
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    theta.badLocalData.thetaRootLocalModels v hv :=
+  theta.badLocalData.thetaRootModels v hv
+
+theorem badLocalOpenSubgroups
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    theta.badLocalData.badLocalOpenSubgroups v hv :=
+  theta.badLocalData.openSubgroups v hv
 
 theorem sqrtMinusOne_square :
     theta.fieldTower.sqrtMinusOne.element ^ 2 = (-1 : F) :=

@@ -1827,3 +1827,111 @@ target.
 The next Definition 3.1 step should refine the local valuation clauses in
 (e): base-changing curves to `K_v`, separating `Vnon`, `Varc`, `Vgood`, and
 `Vbad`, and recording the bad-local type `(1, Z/lZ)^±` for `C_v`.
+
+## Math Milestone 19: Bad Local Finite-Place Data
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(e) says that for each `v ∈ V(K)` one base-changes the
+orbicurves over `F` or `K` to `K_v`. It then records local cartesian diagrams,
+outer surjections to decomposition groups, and, at `v ∈ Vbad`, the condition
+that `C_v` has type `(1, Z/lZ)^±`. For bad places it also says that extracting
+an `l`-th root of the theta function gives local models over `K_v` of types
+`(1,(Z/lZ)_Theta)` and `(1,(Z/lZ)_Theta)^±`, with corresponding open subgroup
+inclusions.
+
+### Lean/API Check
+
+For finite places, mathlib gives an actual local completion:
+
+```text
+v.maximalIdeal.adicCompletion K
+```
+
+for `v : NumberField.FinitePlace K`, and Lean can synthesize a field instance
+for this completion. This lets the local curve placeholders be typed over the
+correct local field rather than over an arbitrary label.
+
+Definition 3.1(e) also distinguishes `Varc`. That requires archimedean places,
+and mathlib has `NumberField.InfinitePlace`. This milestone does not yet build
+the finite-or-infinite union type for all of `V(K)`; it formalizes the bad
+nonarchimedean part, which is the part directly used by `Vbad`.
+
+### Lean Decisions
+
+The new record is:
+
+```text
+ThetaBadLocalData l Fmod F K curveModuli coverData valuations
+```
+
+It contains local `X` and `C` placeholders over the actual adic completion:
+
+```text
+localX :
+  (v : NumberField.FinitePlace K) -> v in valuations.selected ->
+    HyperbolicOrbicurveModel (v.maximalIdeal.adicCompletion K)
+
+localC :
+  (v : NumberField.FinitePlace K) -> v in valuations.selected ->
+    HyperbolicOrbicurveModel (v.maximalIdeal.adicCompletion K)
+```
+
+It also records the source obligations:
+
+```text
+localBaseChangeDiagrams
+decompositionGroupOuterSurjection
+badLocalType
+thetaRootLocalModels
+badLocalOpenSubgroups
+```
+
+`InitialThetaData` now includes this bad-local bundle, so bad local statements
+are no longer detached from the chosen finite-place section.
+
+### Lean Declarations
+
+```text
+ThetaBadLocalData
+ThetaBadLocalData.baseChangeDiagrams
+ThetaBadLocalData.decompositionSurjection
+ThetaBadLocalData.badType
+ThetaBadLocalData.thetaRootModels
+ThetaBadLocalData.openSubgroups
+InitialThetaData.localBaseChangeDiagrams
+InitialThetaData.decompositionGroupOuterSurjection
+InitialThetaData.badLocalType
+InitialThetaData.thetaRootLocalModels
+InitialThetaData.badLocalOpenSubgroups
+```
+
+### What This Tests
+
+The example file now verifies:
+
+* construction of local data over `v.maximalIdeal.adicCompletion K`;
+* construction of initial theta data using the bad-local bundle;
+* projection of local base-change diagrams, decomposition group surjections,
+  bad local type, theta-root local models, and bad local open subgroup
+  obligations.
+
+### Design Trap Avoided
+
+The trap would be to state local `K_v` facts without a local field in the type.
+The local placeholders now live over mathlib's completion attached to the
+finite place `v`. This is still not a full construction of the local
+orbicurves, but it prevents a later proof from silently using data over the
+wrong field.
+
+### Next Step
+
+The next local milestone should add the archimedean side explicitly by defining
+a controlled finite/infinite place wrapper for selected places, using
+`NumberField.FinitePlace` and `NumberField.InfinitePlace`, and then recovering
+`Vnon`, `Varc`, `Vgood`, and `Vbad` as typed subsets.

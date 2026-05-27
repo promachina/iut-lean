@@ -127,6 +127,41 @@ def abstractThetaOrbicurveCoverData
   profiniteGroupOpenImmersions := profiniteGroupOpenImmersions
   profiniteGroupOpenImmersions_holds := hOpen
 
+/-- A constructor smoke test for bad local finite-place data. -/
+def abstractThetaBadLocalData
+    (curveModuli : ThetaCurveModuliData Fmod F)
+    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+    (valuations : ThetaValuationData primeFive Fmod K)
+    (localX :
+      (v : NumberField.FinitePlace K) -> v ∈ valuations.selected ->
+        HyperbolicOrbicurveModel (v.maximalIdeal.adicCompletion K))
+    (localC :
+      (v : NumberField.FinitePlace K) -> v ∈ valuations.selected ->
+        HyperbolicOrbicurveModel (v.maximalIdeal.adicCompletion K))
+    (localBaseChangeDiagrams
+      decompositionGroupOuterSurjection :
+      (v : NumberField.FinitePlace K) -> v ∈ valuations.selected -> Prop)
+    (badLocalType thetaRootLocalModels badLocalOpenSubgroups :
+      (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop)
+    (hBaseChange : ∀ v hv, localBaseChangeDiagrams v hv)
+    (hDecomp : ∀ v hv, decompositionGroupOuterSurjection v hv)
+    (hBadType : ∀ v hv, badLocalType v hv)
+    (hThetaRoot : ∀ v hv, thetaRootLocalModels v hv)
+    (hOpen : ∀ v hv, badLocalOpenSubgroups v hv) :
+    ThetaBadLocalData primeFive Fmod F K curveModuli coverData valuations where
+  localX := localX
+  localC := localC
+  localBaseChangeDiagrams := localBaseChangeDiagrams
+  localBaseChangeDiagrams_holds := hBaseChange
+  decompositionGroupOuterSurjection := decompositionGroupOuterSurjection
+  decompositionGroupOuterSurjection_holds := hDecomp
+  badLocalType := badLocalType
+  badLocalType_holds := hBadType
+  thetaRootLocalModels := thetaRootLocalModels
+  thetaRootLocalModels_holds := hThetaRoot
+  badLocalOpenSubgroups := badLocalOpenSubgroups
+  badLocalOpenSubgroups_holds := hOpen
+
 /--
 A constructor smoke test for full initial theta data under the exact field
 hypotheses required by the record.
@@ -136,6 +171,7 @@ noncomputable def abstractInitialThetaData
     (curveModuli : ThetaCurveModuliData Fmod F)
     (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
     (valuations : ThetaValuationData primeFive Fmod K)
+    (badLocalData : ThetaBadLocalData primeFive Fmod F K curveModuli coverData valuations)
     (epsilon : CuspData coverData.cK)
     (k_is_lTorsionKernelField lTorsionImageContainsSL2 qParameterOrdersPrimeToL : Prop)
     (hK : k_is_lTorsionKernelField)
@@ -149,6 +185,7 @@ noncomputable def abstractInitialThetaData
   k_is_lTorsionKernelField := k_is_lTorsionKernelField
   k_is_lTorsionKernelField_holds := hK
   valuations := valuations
+  badLocalData := badLocalData
   epsilon := epsilon
   lTorsionImageContainsSL2 := lTorsionImageContainsSL2
   lTorsionImageContainsSL2_holds := hImage
@@ -165,6 +202,26 @@ example : 5 ≤ theta.l.value :=
 
 example : ∃ v, v ∈ theta.valuations.bad :=
   theta.badValuations_nonempty
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
+    theta.badLocalData.localBaseChangeDiagrams v hv :=
+  theta.localBaseChangeDiagrams v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
+    theta.badLocalData.decompositionGroupOuterSurjection v hv :=
+  theta.decompositionGroupOuterSurjection v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    theta.badLocalData.badLocalType v hv :=
+  theta.badLocalType v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    theta.badLocalData.thetaRootLocalModels v hv :=
+  theta.thetaRootLocalModels v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    theta.badLocalData.badLocalOpenSubgroups v hv :=
+  theta.badLocalOpenSubgroups v hv
 
 example : Nat.Coprime (Module.finrank Fmod F) theta.l.value :=
   theta.degree_F_over_Fmod_prime_to_l
