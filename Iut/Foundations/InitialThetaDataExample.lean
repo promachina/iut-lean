@@ -457,6 +457,15 @@ def abstractThetaCuspLocalData
     (badLocalCanonicalGenerator :
       (v : NumberField.FinitePlace K) -> v ∈ valuations.bad ->
         CanonicalGeneratorUpToSignElement)
+    (badLocalLabCuspModel :
+      (v : NumberField.FinitePlace K) -> v ∈ valuations.bad ->
+        LocalLabCuspModel primeFive)
+    (hBadQuotient :
+      ∀ v hv, (localCusp v hv.1).quotientOrigin =
+        (badLocalLabCuspModel v hv).canonicalNonzeroQuotientElement)
+    (hBadCanonical :
+      ∀ v hv, badLocalCanonicalGenerator v hv =
+        (badLocalLabCuspModel v hv).canonicalGeneratorUpToSignElement)
     (hDetermined : ∀ v hv, localCusp_determinedByGlobal v hv) :
     ThetaCuspLocalData primeFive Fmod F K curveModuli coverData valuations
       badLocalData epsilon where
@@ -464,6 +473,9 @@ def abstractThetaCuspLocalData
   localCusp_determinedByGlobal := localCusp_determinedByGlobal
   localCusp_determinedByGlobal_holds := hDetermined
   badLocalCanonicalGenerator := badLocalCanonicalGenerator
+  badLocalLabCuspModel := badLocalLabCuspModel
+  badLocalCusp_quotientOrigin_eq_model := hBadQuotient
+  badLocalCanonicalGenerator_eq_model := hBadCanonical
 
 /--
 A constructor smoke test for full initial theta data under the exact field
@@ -549,6 +561,20 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     (theta.cuspLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
   theta.badLocalCusp_arisesFromCanonicalGenerator v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    LocalLabCuspModel theta.l :=
+  theta.badLocalLabCuspModel v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    (theta.badLocalCusp v hv).quotientOrigin =
+      (theta.badLocalLabCuspModel v hv).canonicalNonzeroQuotientElement :=
+  theta.badLocalCusp_quotientOrigin_eq_model v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    theta.cuspLocalData.badLocalCanonicalGenerator v hv =
+      (theta.badLocalLabCuspModel v hv).canonicalGeneratorUpToSignElement :=
+  theta.badLocalCanonicalGenerator_eq_model v hv
 
 example (v : NumberField.FinitePlace K) :
     ThetaPlace.finite v ∈ theta.valuations.vnon ↔

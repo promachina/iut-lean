@@ -11970,3 +11970,89 @@ global declarations.
 places. The next step should add an optional or direct bad-place local label
 model field and prove that the old nonzero/canonical-generator projections are
 recovered from it.
+
+## Math Milestone 32: Bad-Place Cusp Data Uses `LabCusp` Models
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(f), imposes the bad-place condition that the local cusp
+arises from the canonical generator, up to sign, of the local quotient `Z`.
+Definition 4.1(ii) and Definition 6.1(iii) describe the corresponding label
+class structure, including the `F_l`-torsor and `±`-label quotient data.
+
+The previous milestone packaged this label structure as `LocalLabCuspModel`.
+This milestone connects that package to the already existing local cusp record.
+
+### Lean/API Check
+
+The old `ThetaCuspLocalData` API exposed:
+
+```text
+badLocalCanonicalGenerator
+localCusp
+```
+
+The new fields are added compatibly rather than replacing those fields outright.
+Lean then checks equalities saying the old witnesses are recovered from the new
+packaged model.
+
+### Lean Decisions
+
+`ThetaCuspLocalData` now stores, at every bad place:
+
+```text
+badLocalLabCuspModel :
+  (v : NumberField.FinitePlace K) -> v in valuations.bad ->
+    LocalLabCuspModel l
+```
+
+and two compatibility fields:
+
+```text
+badLocalCusp_quotientOrigin_eq_model
+badLocalCanonicalGenerator_eq_model
+```
+
+The first says that the local cusp's nonzero quotient origin is exactly the one
+supplied by the local label model. The second says that the bad local
+canonical-generator witness is exactly the one supplied by the same model.
+
+### Lean Declarations
+
+```text
+ThetaCuspLocalData.badLocalLabelModel
+ThetaCuspLocalData.badLocalCuspQuotientOriginEqModel
+ThetaCuspLocalData.badLocalCanonicalGeneratorEqModel
+ThetaCuspLocalData.badLocalModelCanonicalGeneratorUpToSign
+InitialThetaData.badLocalLabCuspModel
+InitialThetaData.badLocalCusp_quotientOrigin_eq_model
+InitialThetaData.badLocalCanonicalGenerator_eq_model
+```
+
+### What This Tests
+
+The example file now checks:
+
+* construction of `ThetaCuspLocalData` with a bad-place label model;
+* projection of a bad-place `LocalLabCuspModel` from full initial theta data;
+* equality of the bad local cusp origin with the model's nonzero quotient
+  element;
+* equality of the bad local canonical-generator witness with the model witness.
+
+### Design Trap Avoided
+
+The trap would be to introduce `LocalLabCuspModel` but leave it detached from
+the actual bad-place local cusp data. This milestone makes the attachment part
+of the record, so future local-cusp arguments can cite the packaged label model
+instead of reassembling quotient, sign, and torsor facts manually.
+
+### Remaining Gap
+
+The field is still a supplied model at each bad place, not a reconstruction
+algorithm from the local orbicurve or fundamental group. A later milestone must
+replace this supplied model by data derived from the EtTh type conditions.
