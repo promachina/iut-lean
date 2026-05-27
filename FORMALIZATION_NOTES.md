@@ -8867,3 +8867,65 @@ IUT-specific modules can prove without changing the public audit route.
 The next milestone should allow source obligations to be built directly from
 Theorem 3.11 subclaims and side-condition hypotheses by composing through
 `toSideConditions`.
+
+## Milestone 109: Obligations from Side-Condition Hypotheses
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The source-facing side-condition hypotheses introduced in Milestone 108 are
+closer to the way future source modules should state the q-pilot sign and
+normalization assumptions. The source-obligation constructor still consumes the
+more compact `IUTStage1SourceSideConditions` record.
+
+This milestone connects those layers without changing the public endpoint. The
+route is:
+
+```text
+Theorem 3.11 subclaims
+side-condition hypotheses
+  -> side conditions
+  -> source obligations
+```
+
+### Purpose
+
+This milestone adds a source-obligation constructor that accepts side-condition
+hypotheses directly, while definitionally factoring through
+`IUTStage1SourceSideConditionHypotheses.toSideConditions`.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourceObligations.ofSubclaimsAndSideConditionHypotheses
+IUTStage1SourceObligations.ofSubclaimsAndSideConditionHypotheses_eq_sideConditions
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_obligations_from_hypotheses_example
+```
+
+### What This Tests
+
+The toy example verifies that obligations built from source-facing hypotheses
+recover the same toy obligations as the older route through side conditions.
+
+### Design Trap Avoided
+
+The trap would be to create a second unrelated way to build source obligations.
+This milestone makes the new source-facing hypothesis route explicitly compose
+through the existing side-condition constructor.
+
+### Next Step
+
+The next milestone should add `IUTStage1SourcePackage` helpers that use
+side-condition hypotheses at the package audit/public-audit boundary, again
+factoring through the existing side-condition route.

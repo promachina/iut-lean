@@ -345,6 +345,19 @@ def ofSubclaimsAndSideConditions
     q_pilot_positive := sideConditions.qPilotPositive,
     normalization := sideConditions.sourceNormalization }
 
+def ofSubclaimsAndSideConditionHypotheses
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    IUTStage1SourceObligations package :=
+  ofSubclaimsAndSideConditions subclaims hypotheses.toSideConditions
+
+theorem ofSubclaimsAndSideConditionHypotheses_eq_sideConditions
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    ofSubclaimsAndSideConditionHypotheses subclaims hypotheses =
+      ofSubclaimsAndSideConditions subclaims hypotheses.toSideConditions :=
+  rfl
+
 end IUTStage1SourceObligations
 
 /--
