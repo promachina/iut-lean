@@ -2568,6 +2568,29 @@ theorem piCKRingAutHom_eq_deckRingAutHom_comp :
   ext g x
   exact cover.piCKRingAut_apply_eq_deckRingAut g x
 
+theorem piXK_smul_trivial
+    (g : thetaApproach.piXK.carrier)
+    (x : cover.toThetaApproachFunctionFieldData.functionField) :
+    thetaApproach.piXK_to_piCK.openEmbedding.hom g • x = x :=
+  ThetaApproachFunctionFieldData.piXK_smul_trivial
+    cover.toThetaApproachFunctionFieldData g x
+
+theorem piXKRingAut_apply
+    (g : thetaApproach.piXK.carrier) (x : L) :
+    cover.toThetaApproachFunctionFieldData.piCKRingAut
+      (thetaApproach.piXK_to_piCK.openEmbedding.hom g) x = x := by
+  rw [cover.piCKRingAut_apply_eq_quotientAction]
+  rw [ThetaApproachQuotientData.quotientHom_piXK_eq_one]
+  simp
+
+theorem piXK_to_piCK_mem_piCKRingAutHom_ker
+    (g : thetaApproach.piXK.carrier) :
+    thetaApproach.piXK_to_piCK.openEmbedding.hom g ∈
+      (cover.toThetaApproachFunctionFieldData.piCKRingAutHom).ker := by
+  rw [ThetaApproachFunctionFieldData.piCKRingAutHom_ker
+    cover.toThetaApproachFunctionFieldData]
+  exact ⟨g, rfl⟩
+
 theorem piCKRingAutHom_ker :
     (cover.toThetaApproachFunctionFieldData.piCKRingAutHom).ker =
       thetaApproach.piXK_to_piCK.openEmbedding.imageSubgroup :=

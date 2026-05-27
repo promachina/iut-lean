@@ -15294,3 +15294,81 @@ direction, but it hides the basic mechanism: `Pi_CK` acts by first passing to
 The factorization is proved for the current algebraic action model. We still
 need to derive the quotient-action equivalence itself from concrete
 finite-etale deck transformations of the orbicurve cover.
+
+## Math Milestone 65: Finite-Cover-Level `Pi_XK` Triviality
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, identifies the natural action on the reconstructed
+function field as the action of
+
+```text
+Gal(X_K/C_K) = Pi_CK/Pi_XK.
+```
+
+Thus elements coming from the open subgroup `Pi_XK <= Pi_CK` should act
+trivially after passing to the quotient action. Definition 3.1(d) keeps the
+open subgroup/finite-etale covering picture in the same setup, and the
+Corollary 1.2 reconstruction discussion also uses quotient descriptions such as
+`Gal(X/C) = Pi_C/Pi_X`.
+
+### Lean/API Check
+
+The finite-Galois cover namespace now exposes:
+
+```text
+ThetaFiniteGaloisFunctionFieldCoverData.piXK_smul_trivial
+```
+
+for the raw induced action on the reconstructed function-field type,
+
+```text
+ThetaFiniteGaloisFunctionFieldCoverData.piXKRingAut_apply
+```
+
+for the corresponding ring-automorphism action on the concrete field `L`, and
+
+```text
+ThetaFiniteGaloisFunctionFieldCoverData.piXK_to_piCK_mem_piCKRingAutHom_ker
+```
+
+for the kernel membership of every embedded `Pi_XK` element.
+
+### Lean Decisions
+
+The smul theorem is stated over
+
+```text
+cover.toThetaApproachFunctionFieldData.functionField
+```
+
+rather than directly over `L`, because Lean's typeclass search needs the
+reconstructed action instance in scope. The ring-automorphism theorem is stated
+over `L`, which is the convenient form for later field calculations.
+
+### What This Tests
+
+The example file checks:
+
+* embedded `Pi_XK` elements act trivially by smul;
+* embedded `Pi_XK` elements act trivially by the induced ring automorphism;
+* embedded `Pi_XK` elements lie in the kernel of the `Pi_CK` automorphism hom;
+* the existing exact-kernel theorem still compiles.
+
+### Design Trap Avoided
+
+The trap would be to rely only on the abstract kernel equality and never expose
+the elementwise consequence needed in later calculations. This milestone gives
+both the elementwise action statement and the kernel-membership statement.
+
+### Remaining Gap
+
+These theorems still use the current algebraic action model. The next deeper
+step is to connect the finite-etale cover certificate to a typed deck
+transformation group of the cover itself, so the quotient action can eventually
+be derived rather than supplied.

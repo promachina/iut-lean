@@ -671,6 +671,36 @@ noncomputable example
     (thetaApproach : ThetaApproachQuotientData)
     {B L : Type} [Field B] [Field L] [Algebra B L]
     [FiniteDimensional B L] [IsGalois B L]
+    (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
+    (g : thetaApproach.piXK.carrier)
+    (x : cover.toThetaApproachFunctionFieldData.functionField) :
+    thetaApproach.piXK_to_piCK.openEmbedding.hom g • x = x :=
+  cover.piXK_smul_trivial g x
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
+    (g : thetaApproach.piXK.carrier) (x : L) :
+    cover.toThetaApproachFunctionFieldData.piCKRingAut
+      (thetaApproach.piXK_to_piCK.openEmbedding.hom g) x = x :=
+  cover.piXKRingAut_apply g x
+
+example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
+    (g : thetaApproach.piXK.carrier) :
+    thetaApproach.piXK_to_piCK.openEmbedding.hom g ∈
+      (cover.toThetaApproachFunctionFieldData.piCKRingAutHom).ker :=
+  cover.piXK_to_piCK_mem_piCKRingAutHom_ker g
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
     (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L) :
     (cover.toThetaApproachFunctionFieldData.piCKRingAutHom).ker =
       thetaApproach.piXK_to_piCK.openEmbedding.imageSubgroup :=
