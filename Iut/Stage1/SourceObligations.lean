@@ -255,11 +255,35 @@ theorem qSigned_eq_chartedQ (ledger :
       ledger.qValue.qPoint).coord = qSigned :=
   ledger.qValue.qSigned_eq
 
+theorem qSigned_eq_chartedQ_eq_field (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.qSigned_eq_chartedQ = ledger.qValue.qSigned_eq :=
+  rfl
+
+theorem qSigned_eq_chartedQCoord (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    qSigned =
+      (Transport.map ledger.chartedContainer.chart.qToTarget
+        ledger.qValue.qPoint).coord :=
+  ledger.qValue.qSigned_eq.symm
+
 theorem thetaSigned_eq_chartedTheta (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     (Transport.map ledger.chartedContainer.chart.thetaToTarget
       ledger.thetaBound.thetaPoint).coord = thetaSigned :=
   ledger.thetaBound.thetaSigned_eq
+
+theorem thetaSigned_eq_chartedTheta_eq_field (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.thetaSigned_eq_chartedTheta = ledger.thetaBound.thetaSigned_eq :=
+  rfl
+
+theorem thetaSigned_eq_chartedThetaCoord (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    thetaSigned =
+      (Transport.map ledger.chartedContainer.chart.thetaToTarget
+        ledger.thetaBound.thetaPoint).coord :=
+  ledger.thetaBound.thetaSigned_eq.symm
 
 def thetaCommonBound (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :

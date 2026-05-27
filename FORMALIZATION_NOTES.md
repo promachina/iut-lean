@@ -4067,3 +4067,84 @@ The next milestone should step back from final packaging and add source-ledger
 projection theorems for the charted `q` and `Theta` numeric values, connecting
 `qSigned` and `thetaSigned` back to the transported chart data that supplies the
 real-line coordinates.
+
+## Milestone 43: Charted Signed-Coordinate Projections
+
+Lean file:
+
+* `Iut/Stage1/SourceObligations.lean`
+
+### Source Check
+
+IUT III, Corollary 3.12, Step `(xi-d)`, says that completely comparable objects
+are obtained only after the relevant log-volume constructions land in `R`.
+Scholze-Stix's critique focuses on exactly this kind of issue: several ordered
+one-dimensional real vector spaces occur, and the identifications among them
+must be explicit before a numerical inequality is meaningful.
+
+Our `ChartedQValueData` and `ChartedThetaBoundData` records encode this by
+requiring explicit transports into the real-comparison chart:
+
+```text
+(Transport.map chart.qToTarget qPoint).coord = qSigned
+(Transport.map chart.thetaToTarget thetaPoint).coord = thetaSigned
+```
+
+### Purpose
+
+The source ledger already exposed these equalities. This milestone adds two
+audit improvements:
+
+```text
+ledger.qSigned_eq_chartedQ = ledger.qValue.qSigned_eq
+ledger.thetaSigned_eq_chartedTheta = ledger.thetaBound.thetaSigned_eq
+```
+
+and reverse-orientation forms:
+
+```text
+qSigned = transported q coordinate
+thetaSigned = transported Theta coordinate
+```
+
+The reverse orientation is often easier to read when auditing how the signed
+real numbers used in the final inequality arise from chart data.
+
+### Lean Declarations
+
+In `SourceObligations.lean`:
+
+```text
+SourceObligationLedger.qSigned_eq_chartedQ_eq_field
+SourceObligationLedger.qSigned_eq_chartedQCoord
+SourceObligationLedger.thetaSigned_eq_chartedTheta_eq_field
+SourceObligationLedger.thetaSigned_eq_chartedThetaCoord
+```
+
+The field-origin projections are `rfl`; the reverse-orientation projections are
+the symmetric forms of the stored chart equalities.
+
+### What This Tests
+
+The ledger now has named audit hooks for the real-coordinate inputs to the
+final comparison:
+
+```text
+q point transported through qToTarget -> qSigned
+Theta point transported through thetaToTarget -> thetaSigned
+```
+
+This is the beginning of the source-side real-line audit, as opposed to the
+final packaging audit completed in the previous milestones.
+
+### Design Trap Avoided
+
+The trap would be to let `qSigned` and `thetaSigned` appear as free real
+parameters detached from their chart origins. These projections keep the signed
+numbers tied to the explicit transports recorded in the ledger.
+
+### Next Step
+
+The next milestone should add analogous field-origin projections for the
+selected target-volume equality, connecting `targetVolume.targetSigned` to the
+measured target volume of the chosen output.
