@@ -584,11 +584,75 @@ theorem openSubgroups
 
 end ThetaBadLocalData
 
-/-- The cusp `epsilon` of `C_K` from IUT I, Definition 3.1(f). -/
+/-- A global or local cusp of a hyperbolic orbicurve. -/
 structure CuspData {F : Type u} [Field F] (C : HyperbolicOrbicurveModel F) where
   label : String
   arisesFromNonzeroQuotientElement : Prop
   arisesFromNonzeroQuotientElement_holds : arisesFromNonzeroQuotientElement
+
+/--
+The local cusp data from IUT I, Definition 3.1(f).
+
+For each selected finite place, the global cusp `epsilon` determines a local
+cusp of `C_v`.  At bad places, the source imposes the stronger condition that
+this local cusp comes from the canonical generator, up to sign, of the local
+quotient that appears in the type `(1, Z/lZ)^±` model.
+-/
+structure ThetaCuspLocalData
+    (l : PrimeGeFive) (Fmod F K : Type u)
+    [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+    [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    (curveModuli : ThetaCurveModuliData Fmod F)
+    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+    (valuations : ThetaValuationData l Fmod K)
+    (badLocalData : ThetaBadLocalData l Fmod F K curveModuli coverData valuations)
+    (epsilon : CuspData coverData.cK) where
+  localCusp :
+    (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.selected) ->
+      CuspData (badLocalData.localC v hv)
+  localCusp_determinedByGlobal :
+    (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.selected) -> Prop
+  localCusp_determinedByGlobal_holds :
+    ∀ v hv, localCusp_determinedByGlobal v hv
+  badLocalCuspCanonicalGenerator :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
+  badLocalCuspCanonicalGenerator_holds :
+    ∀ v hv, badLocalCuspCanonicalGenerator v hv
+
+namespace ThetaCuspLocalData
+
+variable {l : PrimeGeFive} {Fmod F K : Type u}
+variable [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+variable [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+variable {curveModuli : ThetaCurveModuliData Fmod F}
+variable {coverData : ThetaOrbicurveCoverData Fmod F K curveModuli}
+variable {valuations : ThetaValuationData l Fmod K}
+variable {badLocalData : ThetaBadLocalData l Fmod F K curveModuli coverData valuations}
+variable {epsilon : CuspData coverData.cK}
+variable (cuspLocalData :
+  ThetaCuspLocalData l Fmod F K curveModuli coverData valuations badLocalData epsilon)
+
+/-- The local bad-place cusp `epsilon_v`, using the selected-place proof from `v ∈ Vbad`. -/
+def badLocalCusp (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    CuspData (badLocalData.localC v hv.1) :=
+  cuspLocalData.localCusp v hv.1
+
+theorem localCuspDeterminedByGlobal
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.selected) :
+    cuspLocalData.localCusp_determinedByGlobal v hv :=
+  cuspLocalData.localCusp_determinedByGlobal_holds v hv
+
+theorem localCuspArisesFromNonzeroQuotientElement
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.selected) :
+    (cuspLocalData.localCusp v hv).arisesFromNonzeroQuotientElement :=
+  (cuspLocalData.localCusp v hv).arisesFromNonzeroQuotientElement_holds
+
+theorem badLocalCuspArisesFromCanonicalGenerator
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    cuspLocalData.badLocalCuspCanonicalGenerator v hv :=
+  cuspLocalData.badLocalCuspCanonicalGenerator_holds v hv
+
+end ThetaCuspLocalData
 
 /--
 Initial theta data in the sense of IUT I, Definition 3.1.
@@ -620,6 +684,8 @@ structure InitialThetaData
   valuations : ThetaValuationData l Fmod K
   badLocalData : ThetaBadLocalData l Fmod F K curveModuli coverData valuations
   epsilon : CuspData coverData.cK
+  cuspLocalData :
+    ThetaCuspLocalData l Fmod F K curveModuli coverData valuations badLocalData epsilon
   lTorsionImageContainsSL2 : Prop
   lTorsionImageContainsSL2_holds : lTorsionImageContainsSL2
   qParameterOrdersPrimeToL : Prop
@@ -732,6 +798,33 @@ theorem badLocalOpenSubgroups
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     theta.badLocalData.badLocalOpenSubgroups v hv :=
   theta.badLocalData.openSubgroups v hv
+
+/-- The local cusp `epsilon_v` attached to a selected finite place. -/
+def localCusp
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
+    CuspData (theta.badLocalData.localC v hv) :=
+  theta.cuspLocalData.localCusp v hv
+
+/-- The local cusp `epsilon_v` at a bad finite place. -/
+def badLocalCusp
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    CuspData (theta.badLocalData.localC v hv.1) :=
+  theta.cuspLocalData.badLocalCusp v hv
+
+theorem localCuspDeterminedByGlobal
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
+    theta.cuspLocalData.localCusp_determinedByGlobal v hv :=
+  theta.cuspLocalData.localCuspDeterminedByGlobal v hv
+
+theorem localCusp_arisesFromNonzeroQuotientElement
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
+    (theta.localCusp v hv).arisesFromNonzeroQuotientElement :=
+  theta.cuspLocalData.localCuspArisesFromNonzeroQuotientElement v hv
+
+theorem badLocalCusp_arisesFromCanonicalGenerator
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    theta.cuspLocalData.badLocalCuspCanonicalGenerator v hv :=
+  theta.cuspLocalData.badLocalCuspArisesFromCanonicalGenerator v hv
 
 theorem sqrtMinusOne_square :
     theta.fieldTower.sqrtMinusOne.element ^ 2 = (-1 : F) :=

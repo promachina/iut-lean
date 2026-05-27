@@ -2054,3 +2054,102 @@ place APIs.
 This does not yet construct archimedean local analytic objects. It only gives
 the formal selected-place split needed before the later prime-strip and
 Frobenioid layers can distinguish `Vnon` from `Varc`.
+
+## Math Milestone 21: Local Cusp Data at Bad Places
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(f) says that `epsilon` is a cusp of `C_K` arising from a
+nonzero element of the quotient `Q` in the definition of a hyperbolic
+orbicurve of type `(1, l-tors)^±`. It then defines, for `v ∈ V`, a local cusp
+`epsilon_v` of `C_v` determined by `epsilon`. At `v ∈ Vbad`, it imposes the
+stronger condition that `epsilon_v` arises from the canonical generator, up to
+sign, of the local quotient `Z` in the type `(1, Z/lZ)^±` model.
+
+### Lean/API Check
+
+There is no mathlib API for Mochizuki's EtTh quotient `Q`, the local quotient
+`Z`, or hyperbolic orbicurves of types `(1, l-tors)^±` and `(1, Z/lZ)^±`.
+Therefore the correct current move is not to invent these objects. We keep
+the quotient-origin and canonical-generator clauses as named propositions,
+but attach them to the already typed global and local orbicurve placeholders.
+
+### Lean Decisions
+
+The existing `CuspData` now represents either a global or local cusp of a
+specific `HyperbolicOrbicurveModel`. The new record is:
+
+```text
+ThetaCuspLocalData
+```
+
+It depends on the actual cover data, valuation data, bad-local data, and
+global cusp:
+
+```text
+coverData
+valuations
+badLocalData
+epsilon
+```
+
+It provides:
+
+```text
+localCusp :
+  (v : NumberField.FinitePlace K) -> v in valuations.selected ->
+    CuspData (badLocalData.localC v hv)
+
+badLocalCuspCanonicalGenerator :
+  (v : NumberField.FinitePlace K) -> v in valuations.bad -> Prop
+```
+
+This means the local cusp `epsilon_v` is attached to the local curve `C_v`
+over the actual finite-place completion, and the bad-place canonical-generator
+condition can only be stated at a proof of `v ∈ Vbad`.
+
+### Lean Declarations
+
+```text
+ThetaCuspLocalData
+ThetaCuspLocalData.badLocalCusp
+ThetaCuspLocalData.localCuspDeterminedByGlobal
+ThetaCuspLocalData.localCuspArisesFromNonzeroQuotientElement
+ThetaCuspLocalData.badLocalCuspArisesFromCanonicalGenerator
+InitialThetaData.cuspLocalData
+InitialThetaData.localCusp
+InitialThetaData.badLocalCusp
+InitialThetaData.localCuspDeterminedByGlobal
+InitialThetaData.localCusp_arisesFromNonzeroQuotientElement
+InitialThetaData.badLocalCusp_arisesFromCanonicalGenerator
+```
+
+### What This Tests
+
+The example file now checks:
+
+* construction of `ThetaCuspLocalData`;
+* projection of the local-cusp-is-determined-by-global-cusp obligation;
+* projection that each selected finite local cusp arises from a nonzero
+  quotient element;
+* projection of the bad-place canonical-generator-up-to-sign condition.
+
+### Design Trap Avoided
+
+The trap would be to keep only a global cusp and later talk about local cusps
+informally. The new record forces every local cusp statement to pass through
+the selected finite place and the already constructed `C_v`. It also prevents
+the bad-place canonical-generator condition from being applied without a proof
+that the place is in `Vbad`.
+
+### Remaining Gap
+
+This still treats the EtTh quotient objects as named obligations. A later
+milestone should introduce a typed skeleton for the relevant orbicurve type
+data and quotient labels so that "nonzero quotient element" and "canonical
+generator up to sign" become structured data rather than opaque propositions.

@@ -170,6 +170,31 @@ def abstractThetaBadLocalData
   badLocalOpenSubgroups := badLocalOpenSubgroups
   badLocalOpenSubgroups_holds := hOpen
 
+/-- A constructor smoke test for the local cusp data of Definition 3.1(f). -/
+def abstractThetaCuspLocalData
+    (curveModuli : ThetaCurveModuliData Fmod F)
+    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+    (valuations : ThetaValuationData primeFive Fmod K)
+    (badLocalData :
+      ThetaBadLocalData primeFive Fmod F K curveModuli coverData valuations)
+    (epsilon : CuspData coverData.cK)
+    (localCusp :
+      (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.selected) ->
+        CuspData (badLocalData.localC v hv))
+    (localCusp_determinedByGlobal :
+      (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.selected) -> Prop)
+    (badLocalCuspCanonicalGenerator :
+      (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop)
+    (hDetermined : ∀ v hv, localCusp_determinedByGlobal v hv)
+    (hCanonical : ∀ v hv, badLocalCuspCanonicalGenerator v hv) :
+    ThetaCuspLocalData primeFive Fmod F K curveModuli coverData valuations
+      badLocalData epsilon where
+  localCusp := localCusp
+  localCusp_determinedByGlobal := localCusp_determinedByGlobal
+  localCusp_determinedByGlobal_holds := hDetermined
+  badLocalCuspCanonicalGenerator := badLocalCuspCanonicalGenerator
+  badLocalCuspCanonicalGenerator_holds := hCanonical
+
 /--
 A constructor smoke test for full initial theta data under the exact field
 hypotheses required by the record.
@@ -181,6 +206,9 @@ noncomputable def abstractInitialThetaData
     (valuations : ThetaValuationData primeFive Fmod K)
     (badLocalData : ThetaBadLocalData primeFive Fmod F K curveModuli coverData valuations)
     (epsilon : CuspData coverData.cK)
+    (cuspLocalData :
+      ThetaCuspLocalData primeFive Fmod F K curveModuli coverData valuations
+        badLocalData epsilon)
     (k_is_lTorsionKernelField lTorsionImageContainsSL2 qParameterOrdersPrimeToL : Prop)
     (hK : k_is_lTorsionKernelField)
     (hImage : lTorsionImageContainsSL2)
@@ -195,6 +223,7 @@ noncomputable def abstractInitialThetaData
   valuations := valuations
   badLocalData := badLocalData
   epsilon := epsilon
+  cuspLocalData := cuspLocalData
   lTorsionImageContainsSL2 := lTorsionImageContainsSL2
   lTorsionImageContainsSL2_holds := hImage
   qParameterOrdersPrimeToL := qParameterOrdersPrimeToL
@@ -230,6 +259,18 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     theta.badLocalData.badLocalOpenSubgroups v hv :=
   theta.badLocalOpenSubgroups v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
+    theta.cuspLocalData.localCusp_determinedByGlobal v hv :=
+  theta.localCuspDeterminedByGlobal v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
+    (theta.localCusp v hv).arisesFromNonzeroQuotientElement :=
+  theta.localCusp_arisesFromNonzeroQuotientElement v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    theta.cuspLocalData.badLocalCuspCanonicalGenerator v hv :=
+  theta.badLocalCusp_arisesFromCanonicalGenerator v hv
 
 example (v : NumberField.FinitePlace K) :
     ThetaPlace.finite v ∈ theta.valuations.vnon ↔
