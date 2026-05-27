@@ -427,22 +427,76 @@ theorem holds : typeData.hasType :=
 
 end OrbicurveTypeData
 
+/-- A pointed quotient such as the EtTh quotients `Q` and `Z`. -/
+structure PointedEtaleQuotient where
+  carrier : Type u
+  zero : carrier
+
+/--
+The action on nonzero quotient elements alluded to in IUT I when `LabCusp`
+inherits an `F_l`-torsor structure from the `F_l^×`-action on the quotient `Q`.
+-/
+structure QuotientUnitActionData (Q : PointedEtaleQuotient.{u}) where
+  units : Type u
+  smul : units -> Q.carrier -> Q.carrier
+  smul_nonzero :
+    ∀ a x, x ≠ Q.zero -> smul a x ≠ Q.zero
+
+/-- A sign action on a pointed quotient. -/
+structure QuotientSignAction (Q : PointedEtaleQuotient.{u}) where
+  neg : Q.carrier -> Q.carrier
+  neg_zero : neg Q.zero = Q.zero
+  neg_involutive : ∀ x, neg (neg x) = x
+
+namespace QuotientSignAction
+
+variable {Q : PointedEtaleQuotient.{u}}
+variable (signAction : QuotientSignAction Q)
+
+/-- Membership in the `{±1}`-orbit of a quotient element. -/
+def InSignOrbit (x generator : Q.carrier) : Prop :=
+  x = generator ∨ x = signAction.neg generator
+
+theorem generator_mem_signOrbit (generator : Q.carrier) :
+    signAction.InSignOrbit generator generator :=
+  Or.inl rfl
+
+theorem neg_generator_mem_signOrbit (generator : Q.carrier) :
+    signAction.InSignOrbit (signAction.neg generator) generator :=
+  Or.inr rfl
+
+end QuotientSignAction
+
 /-- A witness that a cusp arises from a nonzero element of an EtTh quotient. -/
 structure NonzeroQuotientElement where
-  quotient : Type u
-  zero : quotient
-  element : quotient
-  element_ne_zero : element ≠ zero
+  quotient : PointedEtaleQuotient.{u}
+  unitAction : QuotientUnitActionData quotient
+  element : quotient.carrier
+  element_ne_zero : element ≠ quotient.zero
 
 /--
 A witness for the local condition that a cusp comes from the canonical generator,
 up to sign, of the quotient `Z` in the type `(1, Z/lZ)^±` model.
 -/
 structure CanonicalGeneratorUpToSignElement where
-  quotient : Type u
-  element : quotient
-  canonicalGeneratorUpToSign : Prop
-  canonicalGeneratorUpToSign_holds : canonicalGeneratorUpToSign
+  quotient : PointedEtaleQuotient.{u}
+  signAction : QuotientSignAction quotient
+  canonicalGenerator : quotient.carrier
+  element : quotient.carrier
+  element_in_signOrbit : signAction.InSignOrbit element canonicalGenerator
+
+namespace CanonicalGeneratorUpToSignElement
+
+variable (generatorData : CanonicalGeneratorUpToSignElement.{u})
+
+def canonicalGeneratorUpToSign : Prop :=
+  generatorData.signAction.InSignOrbit generatorData.element generatorData.canonicalGenerator
+
+theorem canonicalGeneratorUpToSign_holds :
+    generatorData.canonicalGeneratorUpToSign :=
+  generatorData.element_in_signOrbit
+
+end CanonicalGeneratorUpToSignElement
 
 /--
 The curve/moduli portion of IUT I, Definition 3.1(b).
@@ -657,7 +711,7 @@ variable {F : Type u} [Field F] {C : HyperbolicOrbicurveModel F}
 variable (epsilon : CuspData C)
 
 def arisesFromNonzeroQuotientElement : Prop :=
-  epsilon.quotientOrigin.element ≠ epsilon.quotientOrigin.zero
+  epsilon.quotientOrigin.element ≠ epsilon.quotientOrigin.quotient.zero
 
 theorem arisesFromNonzeroQuotientElement_holds :
     epsilon.arisesFromNonzeroQuotientElement :=

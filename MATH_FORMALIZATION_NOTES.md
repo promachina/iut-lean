@@ -2273,3 +2273,111 @@ The skeleton does not yet define hyperbolic orbicurves, quotient `Q`, quotient
 `Z`, or the group action/sign orbit behind "up to sign". A later milestone
 should refine `NonzeroQuotientElement` and `CanonicalGeneratorUpToSignElement`
 into quotient structures with the relevant torsor and sign-action data.
+
+## Math Milestone 23: Pointed Quotients and Sign-Orbit Data
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(f) distinguishes two quotient-origin statements:
+
+```text
+epsilon arises from a nonzero element of the quotient Q
+epsilon_v at v in Vbad arises from the canonical generator up to sign of Z
+```
+
+Later in IUT I, in the discussion of label classes of cusps, the nonzero cusp
+condition is again described as arising from a nonzero element of the quotient
+`Q`, and the resulting `LabCusp` set is said to carry a natural `F_l`-torsor
+structure arising from the `F_l^×`-action on `Q`.
+
+IUT III also warns that canonical generators can be available only up to a
+unit indeterminacy. This is not the same statement as Definition 3.1(f), but it
+supports a conservative design principle: "canonical generator up to sign"
+should not be collapsed to ordinary equality with a chosen generator.
+
+### Lean Decisions
+
+The previous milestone had quotient witnesses, but the local bad-place
+condition still stored "canonical generator up to sign" as an opaque
+proposition inside the witness. This milestone refines that into explicit
+quotient/action data.
+
+The shared quotient skeleton is:
+
+```text
+PointedEtaleQuotient
+```
+
+with a carrier and a distinguished zero element. The global nonzero quotient
+witness now uses:
+
+```text
+QuotientUnitActionData
+NonzeroQuotientElement
+```
+
+`QuotientUnitActionData` records an abstract unit type, an action on the
+quotient carrier, and preservation of nonzero elements. This is intentionally
+weaker than a full `F_l^×` group action, but it is strong enough to keep the
+source distinction between zero and nonzero quotient elements and to reserve
+space for the later `F_l`-torsor layer.
+
+The local bad-place sign condition now uses:
+
+```text
+QuotientSignAction
+QuotientSignAction.InSignOrbit
+CanonicalGeneratorUpToSignElement
+```
+
+`InSignOrbit x generator` means `x = generator` or `x = -generator` for the
+chosen sign action. Thus the Lean code no longer treats "up to sign" as a
+name for an arbitrary proposition.
+
+### Lean Declarations
+
+```text
+PointedEtaleQuotient
+QuotientUnitActionData
+QuotientSignAction
+QuotientSignAction.InSignOrbit
+QuotientSignAction.generator_mem_signOrbit
+QuotientSignAction.neg_generator_mem_signOrbit
+NonzeroQuotientElement.quotient
+NonzeroQuotientElement.unitAction
+CanonicalGeneratorUpToSignElement.quotient
+CanonicalGeneratorUpToSignElement.signAction
+CanonicalGeneratorUpToSignElement.canonicalGenerator
+CanonicalGeneratorUpToSignElement.element_in_signOrbit
+CanonicalGeneratorUpToSignElement.canonicalGeneratorUpToSign
+CanonicalGeneratorUpToSignElement.canonicalGeneratorUpToSign_holds
+```
+
+### What This Tests
+
+The example file now checks:
+
+* construction of a pointed quotient;
+* construction of unit-action data preserving nonzero quotient elements;
+* construction of a nonzero quotient element using that action data;
+* construction of a sign action with involution law;
+* direct membership of a generator and its negative in the sign orbit;
+* construction and projection of a canonical-generator-up-to-sign witness.
+
+### Design Trap Avoided
+
+The trap would be to encode "up to sign" as a bare proposition and later use it
+as if it were equality. The new `InSignOrbit` predicate makes the indeterminacy
+visible in the type of the local canonical-generator witness.
+
+### Remaining Gap
+
+The unit action is not yet a full formal `F_l^×` action, and the sign action is
+not yet proved to arise from the subgroup `{±1} ⊆ F_l^×`. A later milestone
+should connect the prime `l`, finite-field units, and the sign subgroup using
+mathlib's finite-field/group-action APIs.

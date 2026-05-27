@@ -54,12 +54,30 @@ example (C : HyperbolicOrbicurveModel F) (kind : OrbicurveTypeKind)
     (abstractOrbicurveTypeData C kind hasType hType).hasType :=
   (abstractOrbicurveTypeData C kind hasType hType).holds
 
+/-- A constructor smoke test for a pointed EtTh quotient. -/
+def abstractPointedEtaleQuotient (Q : Type u) (zero : Q) :
+    PointedEtaleQuotient where
+  carrier := Q
+  zero := zero
+
+/-- A constructor smoke test for the unit action on a quotient. -/
+def abstractQuotientUnitActionData
+    (Q : PointedEtaleQuotient)
+    (units : Type u) (smul : units -> Q.carrier -> Q.carrier)
+    (hNonzero : ∀ a x, x ≠ Q.zero -> smul a x ≠ Q.zero) :
+    QuotientUnitActionData Q where
+  units := units
+  smul := smul
+  smul_nonzero := hNonzero
+
 /-- A constructor smoke test for a nonzero quotient element. -/
 def abstractNonzeroQuotientElement
-    (Q : Type u) (zero element : Q) (hNe : element ≠ zero) :
+    (Q : PointedEtaleQuotient)
+    (unitAction : QuotientUnitActionData Q)
+    (element : Q.carrier) (hNe : element ≠ Q.zero) :
     NonzeroQuotientElement where
   quotient := Q
-  zero := zero
+  unitAction := unitAction
   element := element
   element_ne_zero := hNe
 
@@ -74,24 +92,48 @@ example (C : HyperbolicOrbicurveModel F) (origin : NonzeroQuotientElement) :
     (abstractCuspData C origin).arisesFromNonzeroQuotientElement :=
   (abstractCuspData C origin).arisesFromNonzeroQuotientElement_holds
 
+/-- A constructor smoke test for a sign action on a quotient. -/
+def abstractQuotientSignAction
+    (Q : PointedEtaleQuotient)
+    (neg : Q.carrier -> Q.carrier)
+    (hZero : neg Q.zero = Q.zero)
+    (hInvolutive : ∀ x, neg (neg x) = x) :
+    QuotientSignAction Q where
+  neg := neg
+  neg_zero := hZero
+  neg_involutive := hInvolutive
+
+example (Q : PointedEtaleQuotient)
+    (signAction : QuotientSignAction Q) (generator : Q.carrier) :
+    signAction.InSignOrbit generator generator :=
+  signAction.generator_mem_signOrbit generator
+
+example (Q : PointedEtaleQuotient)
+    (signAction : QuotientSignAction Q) (generator : Q.carrier) :
+    signAction.InSignOrbit (signAction.neg generator) generator :=
+  signAction.neg_generator_mem_signOrbit generator
+
 /-- A constructor smoke test for a canonical-generator-up-to-sign witness. -/
 def abstractCanonicalGeneratorUpToSignElement
-    (Z : Type u) (element : Z)
-    (canonicalGeneratorUpToSign : Prop)
-    (hCanonical : canonicalGeneratorUpToSign) :
+    (Z : PointedEtaleQuotient)
+    (signAction : QuotientSignAction Z)
+    (canonicalGenerator element : Z.carrier)
+    (hOrbit : signAction.InSignOrbit element canonicalGenerator) :
     CanonicalGeneratorUpToSignElement where
   quotient := Z
+  signAction := signAction
+  canonicalGenerator := canonicalGenerator
   element := element
-  canonicalGeneratorUpToSign := canonicalGeneratorUpToSign
-  canonicalGeneratorUpToSign_holds := hCanonical
+  element_in_signOrbit := hOrbit
 
-example (Z : Type u) (element : Z)
-    (canonicalGeneratorUpToSign : Prop)
-    (hCanonical : canonicalGeneratorUpToSign) :
-    (abstractCanonicalGeneratorUpToSignElement Z element
-      canonicalGeneratorUpToSign hCanonical).canonicalGeneratorUpToSign :=
-  (abstractCanonicalGeneratorUpToSignElement Z element
-    canonicalGeneratorUpToSign hCanonical).canonicalGeneratorUpToSign_holds
+example (Z : PointedEtaleQuotient)
+    (signAction : QuotientSignAction Z)
+    (canonicalGenerator element : Z.carrier)
+    (hOrbit : signAction.InSignOrbit element canonicalGenerator) :
+    (abstractCanonicalGeneratorUpToSignElement Z signAction
+      canonicalGenerator element hOrbit).canonicalGeneratorUpToSign :=
+  (abstractCanonicalGeneratorUpToSignElement Z signAction
+    canonicalGenerator element hOrbit).canonicalGeneratorUpToSign_holds
 
 /-- A constructor smoke test for the finite-place valuation section. -/
 def abstractThetaValuationData
