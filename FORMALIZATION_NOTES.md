@@ -8065,3 +8065,66 @@ audited boundary.
 The next milestone should add named source-gap projections to the source audit
 story, beginning with examples that recover algorithm certification and SHE
 alignment from the toy gap.
+
+## Milestone 97: Source Gap Projection Examples
+
+Lean file:
+
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Milestone 95 introduced source-facing names for the remaining proof tasks under
+`IUTStage1SourceObligations`. Those names should be directly consumable by
+future source modules, especially for Theorem 3.11 algorithm certification and
+SHE alignment.
+
+This milestone tests the projection API on the toy-backed gap record. It does
+not add new mathematical source content.
+
+### Purpose
+
+This milestone adds toy examples for all four named gap projections:
+
+```text
+Theorem 3.11 algorithm certification
+SHE alignment
+q-pilot positivity
+source normalization
+```
+
+### Lean Declarations
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_gap_algorithm_certified_example
+unitThetaToy_source_gap_she_alignment_example
+unitThetaToy_source_gap_qPilot_positive_example
+unitThetaToy_source_gap_normalization_example
+```
+
+### What This Tests
+
+The examples verify that consumers can use:
+
+```text
+IUTStage1SourceObligationGap.theorem311AlgorithmCertified
+IUTStage1SourceObligationGap.sheAlignment
+IUTStage1SourceObligationGap.qPilotPositive
+IUTStage1SourceObligationGap.sourceNormalization
+```
+
+without unpacking the gap record.
+
+### Design Trap Avoided
+
+The trap would be to name the gap fields but never exercise them directly. These
+examples keep the gap layer readable and ready for future non-toy source modules
+that must prove the same fields from IUT mathematics.
+
+### Next Step
+
+The next milestone should add a compact gap audit record collecting these four
+gap projections, parallel to the source package audit but intentionally stopping
+before the public endpoint.
