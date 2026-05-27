@@ -1295,6 +1295,41 @@ theorem unitThetaToy_source_theorem311_audited_payload_normalization_example
   (unitThetaToy_source_theorem311_audited_signed_payload_boundary_example
     measure hnormalized hh hbound hholds).sourceNormalization
 
+theorem unitThetaToy_source_theorem311_audited_payload_q_charted_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord = package.preLedger.qSigned :=
+  (unitThetaToy_source_theorem311_audited_signed_payload_boundary_example
+    measure hnormalized hh hbound hholds).qCharted
+
+theorem unitThetaToy_source_theorem311_audited_payload_theta_charted_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned :=
+  (unitThetaToy_source_theorem311_audited_signed_payload_boundary_example
+    measure hnormalized hh hbound hholds).thetaCharted
+
 theorem unitThetaToy_source_theorem311_audited_comparison_data_eq_payload_inputs_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

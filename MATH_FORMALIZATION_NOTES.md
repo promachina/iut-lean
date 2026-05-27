@@ -7365,3 +7365,82 @@ The common-target bound itself is still supplied by the bridge layer. Future
 work should make the bridge state more explicitly which SHE-validity component
 it consumes, or refine one local validity component so it is no longer an
 abstract proposition.
+
+## Math Milestone 74: Charted Readings at the Signed Payload Boundary
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The final Corollary 3.12-style payload compares signed q-side and Theta-side
+real numbers. For the disputed transition, it is essential that these reals
+remain tied to explicit real-line-copy charts. Otherwise a proof could compare
+raw real numbers while silently forgetting how the q-side and Theta-side copies
+were read in the common target.
+
+The pre-ledger already stored the charted q and Theta readings. This milestone
+makes the final signed payload boundary carry them too.
+
+### Lean/API Check
+
+The record:
+
+```text
+IUTStage1Theorem311AuditedSignedPayloadBoundary
+```
+
+now stores:
+
+```text
+theta_chart_trivial
+q_charted
+theta_charted
+```
+
+beside the raw inequality, q-positivity, source normalization, and history
+separation fields.
+
+The namespace exposes:
+
+```text
+thetaChartTrivial
+qCharted
+thetaCharted
+```
+
+The constructor from a raw inequality and side conditions fills these chart
+facts from the same pre-ledger data that supplies the final signed reals.
+
+### Lean Decisions
+
+This milestone does not change the numerical comparison. It changes the audit
+surface of the final payload boundary. Any use of the signed payload can now
+recover:
+
+* the q-side point read through the q-to-target chart;
+* the Theta-side point read through the Theta-to-target chart;
+* the triviality of the Theta chart.
+
+This keeps the real-line-copy discipline visible at the last step before the
+public Corollary 3.12-shaped comparison data is formed.
+
+### What This Tests
+
+The source example proves that the toy audited signed payload boundary exposes
+the q-charted and Theta-charted equations. The larger source example still
+builds through the public-audit route.
+
+### Design Trap Avoided
+
+The trap would be to produce `qSigned <= thetaSigned` at the boundary while
+forgetting that these signs came from charted q and Theta readings. This
+milestone makes that forgetting impossible at the audited boundary type.
+
+### Remaining Gap
+
+The chart data are still abstract transports. Later work should refine the
+chart conditions, especially any real-line-copy identifications that are
+allowed or forbidden in the common-container comparison.

@@ -1223,6 +1223,16 @@ structure IUTStage1Theorem311AuditedSignedPayloadBoundary
     IUTStage1Theorem311AuditedRawInequality package bundle
   q_pilot_positive : 0 < -package.preLedger.qSigned
   source_normalization : package.preLedger.normalization
+  theta_chart_trivial :
+    Transport.TrivialMonodromy
+      package.preLedger.chartedContainer.chart.thetaToTarget
+  q_charted :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord = package.preLedger.qSigned
+  theta_charted :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned
   q_signed_le_theta :
     package.preLedger.qSigned <= package.preLedger.thetaSigned
   histories_not_identified :
@@ -1244,6 +1254,9 @@ theorem ofRawInequality
   { raw_inequality := raw,
     q_pilot_positive := sideConditions.qPilotPositive,
     source_normalization := sideConditions.sourceNormalization,
+    theta_chart_trivial := package.preLedger.thetaChartTrivial,
+    q_charted := package.preLedger.qSigned_eq_chartedQ,
+    theta_charted := package.preLedger.thetaSigned_eq_chartedTheta,
     q_signed_le_theta := raw.qSigned_le_thetaSigned,
     histories_not_identified := raw.domainHistory_ne_codomainHistory }
 
@@ -1274,6 +1287,31 @@ theorem sourceNormalization
         package bundle sideConditions) :
     package.preLedger.normalization :=
   boundary.source_normalization
+
+theorem thetaChartTrivial
+    (boundary :
+      IUTStage1Theorem311AuditedSignedPayloadBoundary
+        package bundle sideConditions) :
+    Transport.TrivialMonodromy
+      package.preLedger.chartedContainer.chart.thetaToTarget :=
+  boundary.theta_chart_trivial
+
+theorem qCharted
+    (boundary :
+      IUTStage1Theorem311AuditedSignedPayloadBoundary
+        package bundle sideConditions) :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord = package.preLedger.qSigned :=
+  boundary.q_charted
+
+theorem thetaCharted
+    (boundary :
+      IUTStage1Theorem311AuditedSignedPayloadBoundary
+        package bundle sideConditions) :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned :=
+  boundary.theta_charted
 
 theorem qSigned_le_thetaSigned
     (boundary :
