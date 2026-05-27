@@ -12596,3 +12596,108 @@ formalization has concrete fields to refine.
 the bad local type witness reconstruct the quotient-`Z` package from a more
 faithful encoding of [EtTh], Definition 2.5(i), including the theta-root local
 models from IUT I, Definition 3.1(e).
+
+## Math Milestone 39: Theta-Root Data Sources the Bad Quotient `Z`
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(e), says that when `v in Vbad`, extracting an `l`-th root
+of the theta function gives natural models of types `(1,(Z/lZ)_Theta)` and
+`(1,(Z/lZ)_Theta)^pm`, and that these models determine the relevant open
+subgroups. Definition 3.1(f) then uses the quotient `Z` from the
+`(1,Z/lZ)^pm` type to state the canonical-generator condition. This milestone
+records the theta-root local type witnesses and the quotient-`Z` package in one
+typed object.
+
+The Corollary 3.12/Scholze-Stix guardrail is still active: this is a local
+initial-theta-data refinement. It does not identify Hodge theaters, compare
+real-line copies, or prove any log-volume estimate.
+
+### Lean/API Check
+
+The new structure is:
+
+```text
+BadLocalThetaRootData l X C
+```
+
+It stores:
+
+```text
+thetaRootXType : OrbicurveTypeData l X OrbicurveTypeKind.oneZModLTheta
+thetaRootCType : OrbicurveTypeData l C OrbicurveTypeKind.oneZModLThetaPM
+quotientZData : BadLocalQuotientZData l
+quotientZData_constructedFromThetaRoot : Prop
+```
+
+`BadLocalOrbicurveTypeData` now stores this `thetaRootData` instead of a bare
+`quotientZData`. The old fields
+
+```text
+ThetaBadLocalData.thetaRootLocalXType
+ThetaBadLocalData.thetaRootLocalCType
+ThetaBadLocalData.thetaRootLocalModels
+```
+
+are no longer independent record fields; they are derived projections from
+`badLocalCType`.
+
+### Lean Decisions
+
+This keeps the data flow aligned with the source:
+
+```text
+(1,Z/lZ)^pm bad local type
+  -> theta-root local models
+  -> quotient Z package
+  -> LabCusp model
+  -> modeled bad local cusp
+```
+
+The proposition `quotientZData_constructedFromThetaRoot` remains a placeholder
+for the eventual EtTh reconstruction theorem, but it is now located at the
+precise interface where that theorem belongs.
+
+### Lean Declarations
+
+```text
+BadLocalThetaRootData
+BadLocalThetaRootData.thetaRootXType_holds
+BadLocalThetaRootData.thetaRootCType_holds
+BadLocalThetaRootData.quotientZDataSource
+BadLocalOrbicurveTypeData.thetaRootData
+BadLocalOrbicurveTypeData.thetaRootXType_holds
+BadLocalOrbicurveTypeData.thetaRootCType_holds
+BadLocalOrbicurveTypeData.quotientZDataSource
+ThetaBadLocalData.thetaRootLocalXType
+ThetaBadLocalData.thetaRootLocalCType
+ThetaBadLocalData.thetaRootLocalModels
+```
+
+### What This Tests
+
+The example file continues to check that:
+
+* full initial theta data exposes the theta-root `X` and `C` type witnesses;
+* the theta-root construction proposition is available through
+  `theta.thetaRootLocalModels`;
+* the bad-local `LabCusp` model unfolds to the quotient-`Z` package carried by
+  the theta-root data.
+
+### Design Trap Avoided
+
+The trap would be to keep the theta-root witnesses, the quotient `Z`, and the
+bad-local cusp model as parallel fields. This milestone makes the quotient and
+the model downstream of the theta-root package.
+
+### Remaining Gap
+
+`quotientZData_constructedFromThetaRoot` is still an assumed proposition. A later
+milestone should replace this with a more concrete reconstruction statement,
+probably by expanding `BadLocalQuotientZData` to include the open subgroup data
+`Pi_Xbar_v <= Pi_Cbar_v <= Pi_C_v` mentioned in Definition 3.1(e).

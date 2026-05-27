@@ -449,18 +449,11 @@ def abstractThetaBadLocalData
       (v : NumberField.FinitePlace K) -> v ∈ valuations.selected -> Prop)
     (badLocalCType :
       (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
-        BadLocalOrbicurveTypeData primeFive (localC v hv.1))
-    (thetaRootLocalXType :
-      (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
-        OrbicurveTypeData primeFive (localX v hv.1) OrbicurveTypeKind.oneZModLTheta)
-    (thetaRootLocalCType :
-      (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
-        OrbicurveTypeData primeFive (localC v hv.1) OrbicurveTypeKind.oneZModLThetaPM)
-    (thetaRootLocalModels badLocalOpenSubgroups :
+        BadLocalOrbicurveTypeData primeFive (localX v hv.1) (localC v hv.1))
+    (badLocalOpenSubgroups :
       (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop)
     (hBaseChange : ∀ v hv, localBaseChangeDiagrams v hv)
     (hDecomp : ∀ v hv, decompositionGroupOuterSurjection v hv)
-    (hThetaRoot : ∀ v hv, thetaRootLocalModels v hv)
     (hOpen : ∀ v hv, badLocalOpenSubgroups v hv) :
     ThetaBadLocalData primeFive Fmod F K curveModuli coverData valuations where
   localX := localX
@@ -470,10 +463,6 @@ def abstractThetaBadLocalData
   decompositionGroupOuterSurjection := decompositionGroupOuterSurjection
   decompositionGroupOuterSurjection_holds := hDecomp
   badLocalCType := badLocalCType
-  thetaRootLocalXType := thetaRootLocalXType
-  thetaRootLocalCType := thetaRootLocalCType
-  thetaRootLocalModels := thetaRootLocalModels
-  thetaRootLocalModels_holds := hThetaRoot
   badLocalOpenSubgroups := badLocalOpenSubgroups
   badLocalOpenSubgroups_holds := hOpen
 
@@ -560,7 +549,8 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
 
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     theta.badLocalData.badLocalLabCuspModel v hv =
-      (theta.badLocalData.badLocalCType v hv).quotientZData.toLocalLabCuspModel :=
+      BadLocalQuotientZData.toLocalLabCuspModel
+        ((theta.badLocalData.badLocalCType v hv).thetaRootData.quotientZData) :=
   theta.badLocalLabCuspModelSource v hv
 
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :

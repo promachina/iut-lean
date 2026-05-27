@@ -1063,6 +1063,43 @@ def zmodBadLocalQuotientZData (l : PrimeGeFive) :
   canonicalSignLabelZ_eq := rfl
 
 /--
+The theta-root local models at a bad place.
+
+IUT I, Definition 3.1(e), says these models have types
+`(1,(Z/lZ)_Theta)` and `(1,(Z/lZ)_Theta)^±`; the quotient-`Z` package is the
+piece of this local situation used by Definition 3.1(f).
+-/
+structure BadLocalThetaRootData
+    (l : PrimeGeFive) {F : Type u} [Field F]
+    (X C : HyperbolicOrbicurveModel F) where
+  thetaRootXType : OrbicurveTypeData l X OrbicurveTypeKind.oneZModLTheta
+  thetaRootCType : OrbicurveTypeData l C OrbicurveTypeKind.oneZModLThetaPM
+  quotientZData : BadLocalQuotientZData l
+  quotientZData_constructedFromThetaRoot : Prop
+  quotientZData_constructedFromThetaRoot_holds :
+    quotientZData_constructedFromThetaRoot
+
+namespace BadLocalThetaRootData
+
+variable {l : PrimeGeFive} {F : Type u} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+variable (thetaRootData : BadLocalThetaRootData l X C)
+
+theorem thetaRootXType_holds :
+    thetaRootData.thetaRootXType.hasType :=
+  thetaRootData.thetaRootXType.holds
+
+theorem thetaRootCType_holds :
+    thetaRootData.thetaRootCType.hasType :=
+  thetaRootData.thetaRootCType.holds
+
+theorem quotientZDataSource :
+    thetaRootData.quotientZData_constructedFromThetaRoot :=
+  thetaRootData.quotientZData_constructedFromThetaRoot_holds
+
+end BadLocalThetaRootData
+
+/--
 The bad local orbicurve type witness together with the local `LabCusp` model
 extracted from that witness.
 
@@ -1072,28 +1109,41 @@ are now derived from this quotient package.
 -/
 structure BadLocalOrbicurveTypeData
     (l : PrimeGeFive) {F : Type u} [Field F]
-    (C : HyperbolicOrbicurveModel F) where
+    (X C : HyperbolicOrbicurveModel F) where
   typeData : OrbicurveTypeData l C OrbicurveTypeKind.oneZModLPM
-  quotientZData : BadLocalQuotientZData l
+  thetaRootData : BadLocalThetaRootData l X C
   canonicalGenerator : CanonicalGeneratorUpToSignElement
   canonicalGenerator_eq_model :
-    canonicalGenerator = quotientZData.canonicalGeneratorUpToSignElement
+    canonicalGenerator = thetaRootData.quotientZData.canonicalGeneratorUpToSignElement
 
 namespace BadLocalOrbicurveTypeData
 
 variable {l : PrimeGeFive} {F : Type u} [Field F]
-variable {C : HyperbolicOrbicurveModel F}
-variable (typeData : BadLocalOrbicurveTypeData l C)
+variable {X C : HyperbolicOrbicurveModel F}
+variable (typeData : BadLocalOrbicurveTypeData l X C)
 
 theorem holds : typeData.typeData.hasType :=
   typeData.typeData.holds
 
 def labCuspModel : LocalLabCuspModel l :=
-  typeData.quotientZData.toLocalLabCuspModel
+  typeData.thetaRootData.quotientZData.toLocalLabCuspModel
 
 theorem labCuspModelSource :
-    typeData.labCuspModel = typeData.quotientZData.toLocalLabCuspModel :=
+    typeData.labCuspModel =
+      typeData.thetaRootData.quotientZData.toLocalLabCuspModel :=
   rfl
+
+theorem thetaRootXType_holds :
+    typeData.thetaRootData.thetaRootXType.hasType :=
+  typeData.thetaRootData.thetaRootXType_holds
+
+theorem thetaRootCType_holds :
+    typeData.thetaRootData.thetaRootCType.hasType :=
+  typeData.thetaRootData.thetaRootCType_holds
+
+theorem quotientZDataSource :
+    typeData.thetaRootData.quotientZData_constructedFromThetaRoot :=
+  typeData.thetaRootData.quotientZDataSource
 
 theorem canonicalGeneratorEqModel :
     typeData.canonicalGenerator =
@@ -1245,17 +1295,7 @@ structure ThetaBadLocalData
     ∀ v hv, decompositionGroupOuterSurjection v hv
   badLocalCType :
     (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
-      BadLocalOrbicurveTypeData l (localC v hv.1)
-  thetaRootLocalXType :
-    (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
-      OrbicurveTypeData l (localX v hv.1) OrbicurveTypeKind.oneZModLTheta
-  thetaRootLocalCType :
-    (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
-      OrbicurveTypeData l (localC v hv.1) OrbicurveTypeKind.oneZModLThetaPM
-  thetaRootLocalModels :
-    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
-  thetaRootLocalModels_holds :
-    ∀ v hv, thetaRootLocalModels v hv
+      BadLocalOrbicurveTypeData l (localX v hv.1) (localC v hv.1)
   badLocalOpenSubgroups :
     (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
   badLocalOpenSubgroups_holds :
@@ -1310,23 +1350,38 @@ theorem badLocalCanonicalGeneratorUpToSign
 theorem badLocalLabCuspModelSource
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
     localData.badLocalLabCuspModel v hv =
-      (localData.badLocalCType v hv).quotientZData.toLocalLabCuspModel :=
+      BadLocalQuotientZData.toLocalLabCuspModel
+        ((localData.badLocalCType v hv).thetaRootData.quotientZData) :=
   (localData.badLocalCType v hv).labCuspModelSource
+
+def thetaRootLocalXType
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    OrbicurveTypeData l (localData.localX v hv.1) OrbicurveTypeKind.oneZModLTheta :=
+  (localData.badLocalCType v hv).thetaRootData.thetaRootXType
+
+def thetaRootLocalCType
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    OrbicurveTypeData l (localData.localC v hv.1) OrbicurveTypeKind.oneZModLThetaPM :=
+  (localData.badLocalCType v hv).thetaRootData.thetaRootCType
+
+def thetaRootLocalModels
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) : Prop :=
+  (localData.badLocalCType v hv).thetaRootData.quotientZData_constructedFromThetaRoot
 
 theorem thetaRootXType
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
     (localData.thetaRootLocalXType v hv).hasType :=
-  (localData.thetaRootLocalXType v hv).holds
+  (localData.badLocalCType v hv).thetaRootXType_holds
 
 theorem thetaRootCType
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
     (localData.thetaRootLocalCType v hv).hasType :=
-  (localData.thetaRootLocalCType v hv).holds
+  (localData.badLocalCType v hv).thetaRootCType_holds
 
 theorem thetaRootModels
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
     localData.thetaRootLocalModels v hv :=
-  localData.thetaRootLocalModels_holds v hv
+  (localData.badLocalCType v hv).quotientZDataSource
 
 theorem openSubgroups
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
@@ -1713,7 +1768,8 @@ theorem badLocalType
 theorem badLocalLabCuspModelSource
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     theta.badLocalData.badLocalLabCuspModel v hv =
-      (theta.badLocalData.badLocalCType v hv).quotientZData.toLocalLabCuspModel :=
+      BadLocalQuotientZData.toLocalLabCuspModel
+        ((theta.badLocalData.badLocalCType v hv).thetaRootData.quotientZData) :=
   ThetaBadLocalData.badLocalLabCuspModelSource theta.badLocalData v hv
 
 theorem thetaRootLocalXType
