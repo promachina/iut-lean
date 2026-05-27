@@ -723,16 +723,67 @@ structure IUTStage1LocalObjectId (kind : IUTStage1PlaceKind) where
   place : IUTStage1PlaceId kind
   label : String
 
+/-- Normalization used for local log-volume data in Proposition 3.9. -/
+inductive IUTStage1LogVolumeNormalization where
+  | packet
+  | procession
+  | global
+deriving DecidableEq, Repr
+
+/--
+Typed local log-shell/tensor-packet object with a log-volume.
+
+This is still a source-facing interface: it records the object, place,
+normalization, and resulting real log-volume without constructing the analytic
+set `M(IQ(-))` internally.
+-/
+structure IUTStage1LocalLogVolumeObject
+    (kind : IUTStage1PlaceKind) where
+  object : IUTStage1LocalObjectId kind
+  normalization : IUTStage1LogVolumeNormalization
+  logVolume : Real
+
+/-- A local object whose log-volume is finite and explicitly named. -/
+structure IUTStage1FiniteLocalLogVolumeObject
+    (kind : IUTStage1PlaceKind) where
+  localObject : IUTStage1LocalLogVolumeObject kind
+  finiteLogVolume : Real
+  finite_log_volume_eq : localObject.logVolume = finiteLogVolume
+
+namespace IUTStage1FiniteLocalLogVolumeObject
+
+variable {kind : IUTStage1PlaceKind}
+
+theorem logVolume_eq
+    (data : IUTStage1FiniteLocalLogVolumeObject kind) :
+    data.localObject.logVolume = data.finiteLogVolume :=
+  data.finite_log_volume_eq
+
+def place
+    (data : IUTStage1FiniteLocalLogVolumeObject kind) :
+    IUTStage1PlaceId kind :=
+  data.localObject.object.place
+
+end IUTStage1FiniteLocalLogVolumeObject
+
 /-- Local nonarchimedean inclusion datum from the upper-semi-compatibility step. -/
 structure IUTStage1NonarchimedeanInclusionData where
   place : IUTStage1PlaceId IUTStage1PlaceKind.nonarchimedean
   sourceObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
   targetObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  sourceLogVolume :
+    IUTStage1FiniteLocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean
+  targetLogVolume :
+    IUTStage1FiniteLocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean
   placeLabel : String
   sourceLabel : String
   targetLabel : String
   source_place_eq : sourceObject.place = place
   target_place_eq : targetObject.place = place
+  source_log_volume_object_eq : sourceLogVolume.localObject.object = sourceObject
+  target_log_volume_object_eq : targetLogVolume.localObject.object = targetObject
+  source_logVolume_le_target_logVolume :
+    sourceLogVolume.finiteLogVolume <= targetLogVolume.finiteLogVolume
   inclusionValid : Prop
   inclusion_valid : inclusionValid
 
@@ -741,11 +792,19 @@ structure IUTStage1ArchimedeanSurjectionData where
   place : IUTStage1PlaceId IUTStage1PlaceKind.archimedean
   sourceObject : IUTStage1LocalObjectId IUTStage1PlaceKind.archimedean
   targetObject : IUTStage1LocalObjectId IUTStage1PlaceKind.archimedean
+  sourceLogVolume :
+    IUTStage1FiniteLocalLogVolumeObject IUTStage1PlaceKind.archimedean
+  targetLogVolume :
+    IUTStage1FiniteLocalLogVolumeObject IUTStage1PlaceKind.archimedean
   placeLabel : String
   sourceLabel : String
   targetLabel : String
   source_place_eq : sourceObject.place = place
   target_place_eq : targetObject.place = place
+  source_log_volume_object_eq : sourceLogVolume.localObject.object = sourceObject
+  target_log_volume_object_eq : targetLogVolume.localObject.object = targetObject
+  target_logVolume_le_source_logVolume :
+    targetLogVolume.finiteLogVolume <= sourceLogVolume.finiteLogVolume
   surjectionValid : Prop
   surjection_valid : surjectionValid
 
@@ -813,6 +872,22 @@ theorem targetPlaceMatches
     data.targetObject.place = data.place :=
   data.target_place_eq
 
+theorem sourceLogVolumeObjectMatches
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.sourceLogVolume.localObject.object = data.sourceObject :=
+  data.source_log_volume_object_eq
+
+theorem targetLogVolumeObjectMatches
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.targetLogVolume.localObject.object = data.targetObject :=
+  data.target_log_volume_object_eq
+
+theorem logVolume_le
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.sourceLogVolume.finiteLogVolume <=
+      data.targetLogVolume.finiteLogVolume :=
+  data.source_logVolume_le_target_logVolume
+
 theorem valid (data : IUTStage1NonarchimedeanInclusionData) :
     data.inclusionValid :=
   data.inclusion_valid
@@ -830,6 +905,22 @@ theorem targetPlaceMatches
     (data : IUTStage1ArchimedeanSurjectionData) :
     data.targetObject.place = data.place :=
   data.target_place_eq
+
+theorem sourceLogVolumeObjectMatches
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.sourceLogVolume.localObject.object = data.sourceObject :=
+  data.source_log_volume_object_eq
+
+theorem targetLogVolumeObjectMatches
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.targetLogVolume.localObject.object = data.targetObject :=
+  data.target_log_volume_object_eq
+
+theorem logVolume_le
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.targetLogVolume.finiteLogVolume <=
+      data.sourceLogVolume.finiteLogVolume :=
+  data.target_logVolume_le_source_logVolume
 
 theorem valid (data : IUTStage1ArchimedeanSurjectionData) :
     data.surjectionValid :=

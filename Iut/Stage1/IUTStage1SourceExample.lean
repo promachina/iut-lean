@@ -322,6 +322,22 @@ theorem upperSemi_nonarchimedeanInclusion_target_place_example
     data.targetObject.place = data.place :=
   data.targetPlaceMatches
 
+theorem upperSemi_nonarchimedeanInclusion_source_logVolume_object_example
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.sourceLogVolume.localObject.object = data.sourceObject :=
+  data.sourceLogVolumeObjectMatches
+
+theorem upperSemi_nonarchimedeanInclusion_target_logVolume_object_example
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.targetLogVolume.localObject.object = data.targetObject :=
+  data.targetLogVolumeObjectMatches
+
+theorem upperSemi_nonarchimedeanInclusion_logVolume_le_example
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.sourceLogVolume.finiteLogVolume <=
+      data.targetLogVolume.finiteLogVolume :=
+  data.logVolume_le
+
 theorem upperSemi_archimedeanSurjection_valid_example
     (data : IUTStage1ArchimedeanSurjectionData) :
     data.surjectionValid :=
@@ -336,6 +352,28 @@ theorem upperSemi_archimedeanSurjection_target_place_example
     (data : IUTStage1ArchimedeanSurjectionData) :
     data.targetObject.place = data.place :=
   data.targetPlaceMatches
+
+theorem upperSemi_archimedeanSurjection_source_logVolume_object_example
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.sourceLogVolume.localObject.object = data.sourceObject :=
+  data.sourceLogVolumeObjectMatches
+
+theorem upperSemi_archimedeanSurjection_target_logVolume_object_example
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.targetLogVolume.localObject.object = data.targetObject :=
+  data.targetLogVolumeObjectMatches
+
+theorem upperSemi_archimedeanSurjection_logVolume_le_example
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.targetLogVolume.finiteLogVolume <=
+      data.sourceLogVolume.finiteLogVolume :=
+  data.logVolume_le
+
+theorem upperSemi_finiteLocalLogVolume_eq_example
+    {kind : IUTStage1PlaceKind}
+    (data : IUTStage1FiniteLocalLogVolumeObject kind) :
+    data.localObject.logVolume = data.finiteLogVolume :=
+  data.logVolume_eq
 
 theorem upperSemi_logVolumeCompatibility_upperBound_example
     (data : IUTStage1LogVolumeCompatibilityData) :

@@ -17448,3 +17448,97 @@ The typed local objects are still identifiers, not the actual tensor packets or
 log-shells. The next refinement should introduce a local log-shell/tensor-packet
 object interface with a log-volume map, so the compatibility datum can refer to
 actual local objects rather than standalone real numbers.
+
+## 124. Local Log-Volume Objects
+
+### Goal
+
+We introduced a source-facing interface for local log-shell/tensor-packet
+objects equipped with log-volumes. This moves upper-semi compatibility one step
+closer to Proposition 3.9: the local inclusion/surjection data now refers to
+typed local objects with finite log-volumes instead of only labels and isolated
+real numbers.
+
+### Source Check
+
+IUT III Proposition 3.9 defines packet-normalized and procession-normalized
+log-volumes for local holomorphic packets, mono-analytic log-shells, and
+processions. Remark 3.9.6 emphasizes that log-link compatibility concerns
+log-volumes of certain sufficiently small regions rather than arbitrary regions.
+
+This milestone does not construct those analytic regions. It records the
+interface that future local objects must satisfy: a typed place, a local object,
+a normalization, and a real log-volume.
+
+### Lean/API Check
+
+The source layer now defines:
+
+```text
+IUTStage1LogVolumeNormalization
+IUTStage1LocalLogVolumeObject
+IUTStage1FiniteLocalLogVolumeObject
+```
+
+with normalizations:
+
+```text
+packet
+procession
+global
+```
+
+The nonarchimedean inclusion data now carries:
+
+```text
+sourceLogVolume
+targetLogVolume
+source_log_volume_object_eq
+target_log_volume_object_eq
+source_logVolume_le_target_logVolume
+```
+
+The archimedean surjection data now carries:
+
+```text
+sourceLogVolume
+targetLogVolume
+source_log_volume_object_eq
+target_log_volume_object_eq
+target_logVolume_le_source_logVolume
+```
+
+### Lean Decisions
+
+The inequalities are oriented to match the current source-facing role:
+
+```text
+nonarchimedean inclusion: source volume <= target volume
+archimedean surjection: target volume <= source volume
+```
+
+This is a conservative one-sided interface. It does not assume equality of
+log-volumes except where a later source theorem provides it.
+
+### Toy Check
+
+The source example now checks:
+
+```text
+upperSemi_nonarchimedeanInclusion_source_logVolume_object_example
+upperSemi_nonarchimedeanInclusion_target_logVolume_object_example
+upperSemi_nonarchimedeanInclusion_logVolume_le_example
+upperSemi_archimedeanSurjection_source_logVolume_object_example
+upperSemi_archimedeanSurjection_target_logVolume_object_example
+upperSemi_archimedeanSurjection_logVolume_le_example
+upperSemi_finiteLocalLogVolume_eq_example
+```
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The analytic construction of local objects is still absent. The next refinement
+should separate packet-normalized and procession-normalized log-volume data
+more explicitly, especially the averaging over capsules/processions described
+in Proposition 3.9.
