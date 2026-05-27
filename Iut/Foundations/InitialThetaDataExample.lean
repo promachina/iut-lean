@@ -171,6 +171,50 @@ noncomputable example
       quotientEquivAlgAut :=
   rfl
 
+/--
+A constructor smoke test for reconstruction/action compatibility attached to a
+fixed quotient action.
+-/
+def abstractThetaFunctionFieldActionCompatibilityData
+    (thetaApproach : ThetaApproachQuotientData)
+    {source target : HyperbolicOrbicurveModel F}
+    {morphism : HyperbolicOrbicurveMorphismData source target}
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    {functionFieldExtension :
+      FunctionFieldExtensionOfOrbicurveCoverData morphism B L}
+    (quotientAction :
+      DeckQuotientFunctionFieldActionData thetaApproach functionFieldExtension)
+    (reconstructedFunctionFieldOfXK deckActionMatchesGalQuotient : Prop)
+    (hReconstructed : reconstructedFunctionFieldOfXK)
+    (hDeck : deckActionMatchesGalQuotient) :
+    ThetaFunctionFieldActionCompatibilityData quotientAction where
+  reconstructedFunctionFieldOfXK := reconstructedFunctionFieldOfXK
+  reconstructedFunctionFieldOfXK_holds := hReconstructed
+  deckActionMatchesGalQuotient := deckActionMatchesGalQuotient
+  deckActionMatchesGalQuotient_holds := hDeck
+
+example
+    (thetaApproach : ThetaApproachQuotientData)
+    {source target : HyperbolicOrbicurveModel F}
+    {morphism : HyperbolicOrbicurveMorphismData source target}
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    {functionFieldExtension :
+      FunctionFieldExtensionOfOrbicurveCoverData morphism B L}
+    (quotientAction :
+      DeckQuotientFunctionFieldActionData thetaApproach functionFieldExtension)
+    (reconstructedFunctionFieldOfXK deckActionMatchesGalQuotient : Prop)
+    (hReconstructed : reconstructedFunctionFieldOfXK)
+    (hDeck : deckActionMatchesGalQuotient) :
+    let compatibility :=
+      abstractThetaFunctionFieldActionCompatibilityData
+        thetaApproach quotientAction reconstructedFunctionFieldOfXK
+        deckActionMatchesGalQuotient hReconstructed hDeck
+    compatibility.reconstructedFunctionFieldOfXK ∧
+      compatibility.deckActionMatchesGalQuotient :=
+  ⟨hReconstructed, hDeck⟩
+
 /-- A constructor smoke test for a pointed EtTh quotient. -/
 def abstractPointedEtaleQuotient (Q : Type u) (zero : Q) :
     PointedEtaleQuotient where
@@ -524,16 +568,11 @@ noncomputable def abstractThetaFiniteGaloisFunctionFieldCoverData
     {B L : Type} [Field B] [Field L] [Algebra B L]
     [FiniteDimensional B L] [IsGalois B L]
     (coverCertificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L)
-    (reconstructedFunctionFieldOfXK
-      deckActionMatchesGalQuotient : Prop)
-    (hReconstructed : reconstructedFunctionFieldOfXK)
-    (hDeck : deckActionMatchesGalQuotient) :
+    (actionCompatibility :
+      ThetaFunctionFieldActionCompatibilityData coverCertificate.quotientAction) :
     ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L where
   coverCertificate := coverCertificate
-  reconstructedFunctionFieldOfXK := reconstructedFunctionFieldOfXK
-  reconstructedFunctionFieldOfXK_holds := hReconstructed
-  deckActionMatchesGalQuotient := deckActionMatchesGalQuotient
-  deckActionMatchesGalQuotient_holds := hDeck
+  actionCompatibility := actionCompatibility
 
 example
     (thetaApproach : ThetaApproachQuotientData)

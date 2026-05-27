@@ -15102,3 +15102,105 @@ cover. A later milestone should express the compatibility between this quotient
 action and the already formalized `Pi_CK` action through the quotient hom, then
 work toward deriving the equivalence from concrete cover/deck transformation
 data.
+
+## Math Milestone 63: Reconstruction Compatibility Indexed by the Quotient Action
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, presents the theta approach as reconstructing the function
+field of `X_K` from `Pi_XK <= Pi_CK`, equipped with the natural
+`Gal(X_K/C_K) = Pi_CK/Pi_XK` action. Thus the two claims
+
+```text
+the reconstructed field is the function field of X_K
+the deck action is the natural Gal(X_K/C_K) action
+```
+
+belong to the same quotient-action package. Definition 3.1(d) also keeps the
+finite-etale covering diagrams and open immersions of profinite groups together.
+
+Scholze-Stix stress that Mochizuki's anabelian theorem identifies the relevant
+finite-etale geometry with fundamental-group data in the essential situation.
+For us this is a guardrail: the formal model should not let reconstruction and
+quotient-action claims float independently of the chosen quotient action.
+
+### Lean/API Check
+
+The new record is:
+
+```text
+ThetaFunctionFieldActionCompatibilityData quotientAction
+```
+
+where:
+
+```text
+quotientAction :
+  DeckQuotientFunctionFieldActionData thetaApproach functionFieldExtension
+```
+
+It contains:
+
+```text
+reconstructedFunctionFieldOfXK : Prop
+reconstructedFunctionFieldOfXK_holds : reconstructedFunctionFieldOfXK
+deckActionMatchesGalQuotient : Prop
+deckActionMatchesGalQuotient_holds : deckActionMatchesGalQuotient
+```
+
+and exposes:
+
+```text
+reconstructedFromXK
+deckActionMatchesQuotient
+```
+
+The finite-Galois cover package now stores:
+
+```text
+actionCompatibility :
+  ThetaFunctionFieldActionCompatibilityData coverCertificate.quotientAction
+```
+
+instead of storing `reconstructedFunctionFieldOfXK` and
+`deckActionMatchesGalQuotient` as independent fields.
+
+### Lean Decisions
+
+This is another dependency-tightening move. The two assertions remain abstract
+propositions, but they are now indexed by the exact quotient action certificate
+that is already indexed by the function-field extension and cover morphism.
+
+The previous public names remain available as derived definitions/proofs on
+`ThetaFiniteGaloisFunctionFieldCoverData`, so downstream function-field
+constructions and fixed-field theorems continue to compile unchanged.
+
+### What This Tests
+
+The example file checks:
+
+* construction of compatibility data for a fixed quotient action;
+* extraction of both reconstruction and deck-action claims;
+* construction of the finite-Galois cover package from this compatibility data;
+* all downstream consequences: theta function-field package extraction,
+  deck-ring action, fixed-field theorem, and exact `Pi_CK` kernel.
+
+### Design Trap Avoided
+
+The trap would be to package a quotient action indexed by one function-field
+extension, but then separately assert reconstruction/action compatibility for a
+different or unnamed object. Indexing the compatibility record by
+`quotientAction` prevents this mismatch.
+
+### Remaining Gap
+
+The compatibility claims are still supplied as propositions. The next step is
+to expose a named theorem at the finite-Galois cover level showing that the
+induced `Pi_CK` action factors through the stored quotient action, then use that
+as the formal bridge toward deriving the compatibility from concrete
+fundamental-group and cover data.

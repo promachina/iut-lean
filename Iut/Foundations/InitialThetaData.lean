@@ -2341,6 +2341,55 @@ def toAlgAutEquiv :
 end DeckQuotientFunctionFieldActionData
 
 /--
+Compatibility data saying that an indexed quotient action is the natural
+`Gal(X_K/C_K)` action on the reconstructed function field of `X_K`.
+
+The assertions are still abstract propositions.  The important point at this
+stage is that both assertions are indexed by the quotient action certificate
+that is already tied to the cover morphism and function-field extension.
+-/
+structure ThetaFunctionFieldActionCompatibilityData
+    {thetaApproach : ThetaApproachQuotientData}
+    {F : Type u} [Field F]
+    {source target : HyperbolicOrbicurveModel F}
+    {morphism : HyperbolicOrbicurveMorphismData source target}
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    {functionFieldExtension :
+      FunctionFieldExtensionOfOrbicurveCoverData morphism B L}
+    (quotientAction :
+      DeckQuotientFunctionFieldActionData thetaApproach functionFieldExtension) where
+  reconstructedFunctionFieldOfXK : Prop
+  reconstructedFunctionFieldOfXK_holds : reconstructedFunctionFieldOfXK
+  deckActionMatchesGalQuotient : Prop
+  deckActionMatchesGalQuotient_holds : deckActionMatchesGalQuotient
+
+namespace ThetaFunctionFieldActionCompatibilityData
+
+variable {thetaApproach : ThetaApproachQuotientData}
+variable {F : Type u} [Field F]
+variable {source target : HyperbolicOrbicurveModel F}
+variable {morphism : HyperbolicOrbicurveMorphismData source target}
+variable {B L : Type} [Field B] [Field L] [Algebra B L]
+variable [FiniteDimensional B L] [IsGalois B L]
+variable {functionFieldExtension :
+  FunctionFieldExtensionOfOrbicurveCoverData morphism B L}
+variable {quotientAction :
+  DeckQuotientFunctionFieldActionData thetaApproach functionFieldExtension}
+variable (compatibility :
+  ThetaFunctionFieldActionCompatibilityData quotientAction)
+
+theorem reconstructedFromXK :
+    compatibility.reconstructedFunctionFieldOfXK :=
+  compatibility.reconstructedFunctionFieldOfXK_holds
+
+theorem deckActionMatchesQuotient :
+    compatibility.deckActionMatchesGalQuotient :=
+  compatibility.deckActionMatchesGalQuotient_holds
+
+end ThetaFunctionFieldActionCompatibilityData
+
+/--
 A typed certificate for the finite etale Galois cover that underlies a
 theta-approach function-field extension.
 
@@ -2429,10 +2478,8 @@ structure ThetaFiniteGaloisFunctionFieldCoverData
     (B L : Type) [Field B] [Field L] [Algebra B L]
     [FiniteDimensional B L] [IsGalois B L] where
   coverCertificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L
-  reconstructedFunctionFieldOfXK : Prop
-  reconstructedFunctionFieldOfXK_holds : reconstructedFunctionFieldOfXK
-  deckActionMatchesGalQuotient : Prop
-  deckActionMatchesGalQuotient_holds : deckActionMatchesGalQuotient
+  actionCompatibility :
+    ThetaFunctionFieldActionCompatibilityData coverCertificate.quotientAction
 
 namespace ThetaFiniteGaloisFunctionFieldCoverData
 
@@ -2444,6 +2491,20 @@ variable (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
 def quotientEquivAlgAut :
     ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L) :=
   cover.coverCertificate.quotientEquivAlgAut
+
+def reconstructedFunctionFieldOfXK : Prop :=
+  cover.actionCompatibility.reconstructedFunctionFieldOfXK
+
+theorem reconstructedFunctionFieldOfXK_proof :
+    cover.reconstructedFunctionFieldOfXK :=
+  cover.actionCompatibility.reconstructedFromXK
+
+def deckActionMatchesGalQuotient : Prop :=
+  cover.actionCompatibility.deckActionMatchesGalQuotient
+
+theorem deckActionMatchesGalQuotient_proof :
+    cover.deckActionMatchesGalQuotient :=
+  cover.actionCompatibility.deckActionMatchesQuotient
 
 def finiteEtaleGaloisCover : Prop :=
   cover.coverCertificate.finiteEtaleCover ∧ cover.coverCertificate.galoisCover
@@ -2461,8 +2522,8 @@ noncomputable def toThetaApproachFunctionFieldData :
     ThetaApproachFunctionFieldData thetaApproach :=
   ThetaApproachFunctionFieldData.ofFiniteGaloisAlgAutEquiv
     cover.quotientEquivAlgAut cover.reconstructedFunctionFieldOfXK
-    cover.reconstructedFunctionFieldOfXK_holds cover.deckActionMatchesGalQuotient
-    cover.deckActionMatchesGalQuotient_holds
+    cover.reconstructedFunctionFieldOfXK_proof cover.deckActionMatchesGalQuotient
+    cover.deckActionMatchesGalQuotient_proof
 
 theorem deckRingAut_apply
     (q : ThetaApproachQuotientData.deckQuotient thetaApproach) (x : L) :
@@ -2470,8 +2531,8 @@ theorem deckRingAut_apply
       cover.quotientEquivAlgAut q x :=
   ThetaApproachFunctionFieldData.ofFiniteGaloisAlgAutEquiv_deckRingAut_apply
     cover.quotientEquivAlgAut cover.reconstructedFunctionFieldOfXK
-    cover.reconstructedFunctionFieldOfXK_holds cover.deckActionMatchesGalQuotient
-    cover.deckActionMatchesGalQuotient_holds q x
+    cover.reconstructedFunctionFieldOfXK_proof cover.deckActionMatchesGalQuotient
+    cover.deckActionMatchesGalQuotient_proof q x
 
 theorem fixed_iff_in_base (x : L) :
     (∀ q : ThetaApproachQuotientData.deckQuotient thetaApproach,
@@ -2479,8 +2540,8 @@ theorem fixed_iff_in_base (x : L) :
       ∃ b : B, algebraMap B L b = x :=
   ThetaApproachFunctionFieldData.ofFiniteGaloisAlgAutEquiv_fixed_iff_in_base
     cover.quotientEquivAlgAut cover.reconstructedFunctionFieldOfXK
-    cover.reconstructedFunctionFieldOfXK_holds cover.deckActionMatchesGalQuotient
-    cover.deckActionMatchesGalQuotient_holds x
+    cover.reconstructedFunctionFieldOfXK_proof cover.deckActionMatchesGalQuotient
+    cover.deckActionMatchesGalQuotient_proof x
 
 theorem piCKRingAutHom_ker :
     (cover.toThetaApproachFunctionFieldData.piCKRingAutHom).ker =
