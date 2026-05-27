@@ -466,6 +466,39 @@ theorem finiteEtaleAndGalois : properties.finiteEtale ∧ properties.galois :=
 end FiniteEtaleGaloisOrbicurveMorphismData
 
 /--
+A typed assertion that a finite Galois field extension is the function-field
+extension induced by a fixed orbicurve cover morphism.
+
+This still abstracts away the actual construction of function fields of
+orbicurves.  It does, however, bind the proposition to the same cover morphism
+and the same `B -> L` extension used by the theta finite-Galois package.
+-/
+structure FunctionFieldExtensionOfOrbicurveCoverData
+    {F : Type u} [Field F]
+    {source target : HyperbolicOrbicurveModel F}
+    (morphism : HyperbolicOrbicurveMorphismData source target)
+    (B L : Type) [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L] where
+  extensionOfCover : Prop
+  extensionOfCover_holds : extensionOfCover
+
+namespace FunctionFieldExtensionOfOrbicurveCoverData
+
+variable {F : Type u} [Field F]
+variable {source target : HyperbolicOrbicurveModel F}
+variable {morphism : HyperbolicOrbicurveMorphismData source target}
+variable {B L : Type} [Field B] [Field L] [Algebra B L]
+variable [FiniteDimensional B L] [IsGalois B L]
+variable (functionFieldExtension :
+  FunctionFieldExtensionOfOrbicurveCoverData morphism B L)
+
+theorem extensionOfCover_proof :
+    functionFieldExtension.extensionOfCover :=
+  functionFieldExtension.extensionOfCover_holds
+
+end FunctionFieldExtensionOfOrbicurveCoverData
+
+/--
 An assertion that a placeholder orbicurve has one of the specific EtTh type
 labels used by Definition 3.1.
 -/
@@ -2291,8 +2324,10 @@ structure ThetaFiniteEtaleGaloisCoverCertificate
   coverProperties :
     @FiniteEtaleGaloisOrbicurveMorphismData baseField baseFieldField
       sourceOrbicurve targetOrbicurve coverMorphism
-  functionFieldExtensionOfCover : Prop
-  functionFieldExtensionOfCover_holds : functionFieldExtensionOfCover
+  functionFieldExtension :
+    @FunctionFieldExtensionOfOrbicurveCoverData baseField baseFieldField
+      sourceOrbicurve targetOrbicurve coverMorphism
+      B L _ _ _ _ _
   quotientEquivAlgAut :
     ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L)
 
@@ -2321,9 +2356,12 @@ theorem galoisCover_proof :
     certificate.galoisCover :=
   certificate.coverProperties.galois_proof
 
+def functionFieldExtensionOfCover : Prop :=
+  certificate.functionFieldExtension.extensionOfCover
+
 theorem functionFieldExtensionOfCover_proof :
     certificate.functionFieldExtensionOfCover :=
-  certificate.functionFieldExtensionOfCover_holds
+  certificate.functionFieldExtension.extensionOfCover_proof
 
 theorem coverMorphismExists :
     certificate.coverMorphism.morphismExists :=

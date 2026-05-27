@@ -6130,3 +6130,107 @@ interface. The next mathematical step is to bind the function-field extension
 claim to the same morphism and the same `B -> L` field extension, then later
 replace these propositions with mathlib-backed finite-etale and Galois-cover
 notions once the orbicurve category is made concrete.
+
+## Math Milestone 61: Function-Field Extension Indexed by the Cover Morphism
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, says that in the theta approach one applies the
+reconstruction algorithm to `Pi_XK <= Pi_CK` to reconstruct the function field
+of `X_K`, equipped with its natural `Gal(X_K/C_K) = Pi_CK/Pi_XK` action. This
+means the function-field extension should be attached to the same cover/open
+subgroup data as the finite-etale/Galois cover claim.
+
+Definition 3.1(d) also frames the setup in terms of finite-etale coverings of
+hyperbolic orbicurves and the corresponding open immersions of profinite groups.
+Scholze-Stix's simplification notes that many IUT covers are omitted from their
+discussion. For our formalization, this reinforces the need to keep the cover,
+function field, and Galois action dependencies explicit.
+
+### Lean/API Check
+
+The new record is:
+
+```text
+FunctionFieldExtensionOfOrbicurveCoverData morphism B L
+```
+
+with typeclass assumptions:
+
+```text
+[Field B] [Field L] [Algebra B L]
+[FiniteDimensional B L] [IsGalois B L]
+```
+
+It contains:
+
+```text
+extensionOfCover : Prop
+extensionOfCover_holds : extensionOfCover
+```
+
+and exposes:
+
+```text
+extensionOfCover_proof
+```
+
+The cover certificate now stores:
+
+```text
+functionFieldExtension :
+  FunctionFieldExtensionOfOrbicurveCoverData coverMorphism B L
+```
+
+instead of storing independent fields:
+
+```text
+functionFieldExtensionOfCover : Prop
+functionFieldExtensionOfCover_holds : functionFieldExtensionOfCover
+```
+
+The public accessor remains as a derived certificate definition:
+
+```text
+ThetaFiniteEtaleGaloisCoverCertificate.functionFieldExtensionOfCover
+```
+
+### Lean Decisions
+
+This is still not a construction of function fields of orbicurves. It is an
+indexed certificate: the claim that `B -> L` is the function-field extension of
+the cover is now parameterized by the cover morphism and by the same finite
+Galois field extension used by the algebraic deck-action package.
+
+This keeps the current API usable while eliminating another free-floating
+geometric proposition from the certificate.
+
+### What This Tests
+
+The example file checks:
+
+* construction of a function-field extension certificate for a fixed cover
+  morphism and a fixed finite Galois extension `B -> L`;
+* extraction of the extension proof from that certificate;
+* construction of the theta cover certificate using the indexed
+  function-field extension certificate;
+* all downstream finite-Galois function-field cover consequences still compile.
+
+### Design Trap Avoided
+
+The trap would be to let the geometric cover and the algebraic extension remain
+parallel, unlinked assumptions. The new record forces the proposition
+`extensionOfCover` to mention exactly which cover morphism and which field
+extension it concerns.
+
+### Remaining Gap
+
+The record still accepts `extensionOfCover` as a supplied proposition. The next
+step is to bind the deck quotient/automorphism equivalence to the same
+function-field extension certificate, so the quotient action can no longer be
+attached to an unrelated `B -> L` model.

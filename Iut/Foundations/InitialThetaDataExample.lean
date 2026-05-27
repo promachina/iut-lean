@@ -115,6 +115,30 @@ example {source target : HyperbolicOrbicurveModel F}
   (abstractFiniteEtaleGaloisOrbicurveMorphismData
     morphism finiteEtale galois hFiniteEtale hGalois).finiteEtaleAndGalois
 
+/--
+A constructor smoke test for a function-field extension attached to a fixed
+orbicurve cover morphism.
+-/
+def abstractFunctionFieldExtensionOfOrbicurveCoverData
+    {source target : HyperbolicOrbicurveModel F}
+    (morphism : HyperbolicOrbicurveMorphismData source target)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (extensionOfCover : Prop) (hExtension : extensionOfCover) :
+    FunctionFieldExtensionOfOrbicurveCoverData morphism B L where
+  extensionOfCover := extensionOfCover
+  extensionOfCover_holds := hExtension
+
+example {source target : HyperbolicOrbicurveModel F}
+    (morphism : HyperbolicOrbicurveMorphismData source target)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (extensionOfCover : Prop) (hExtension : extensionOfCover) :
+    (abstractFunctionFieldExtensionOfOrbicurveCoverData
+      (B := B) (L := L) morphism extensionOfCover hExtension).extensionOfCover :=
+  (abstractFunctionFieldExtensionOfOrbicurveCoverData
+    (B := B) (L := L) morphism extensionOfCover hExtension).extensionOfCover_proof
+
 /-- A constructor smoke test for a pointed EtTh quotient. -/
 def abstractPointedEtaleQuotient (Q : Type u) (zero : Q) :
     PointedEtaleQuotient where
@@ -448,8 +472,8 @@ noncomputable def abstractThetaFiniteEtaleGaloisCoverCertificate
       HyperbolicOrbicurveMorphismData sourceOrbicurve targetOrbicurve)
     (coverProperties :
       FiniteEtaleGaloisOrbicurveMorphismData coverMorphism)
-    (functionFieldExtensionOfCover : Prop)
-    (hFunctionField : functionFieldExtensionOfCover)
+    (functionFieldExtension :
+      FunctionFieldExtensionOfOrbicurveCoverData coverMorphism B L)
     (quotientEquivAlgAut :
       ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L)) :
     ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L where
@@ -459,8 +483,7 @@ noncomputable def abstractThetaFiniteEtaleGaloisCoverCertificate
   targetOrbicurve := targetOrbicurve
   coverMorphism := coverMorphism
   coverProperties := coverProperties
-  functionFieldExtensionOfCover := functionFieldExtensionOfCover
-  functionFieldExtensionOfCover_holds := hFunctionField
+  functionFieldExtension := functionFieldExtension
   quotientEquivAlgAut := quotientEquivAlgAut
 
 /-- A constructor smoke test for a typed finite Galois theta function-field cover. -/
