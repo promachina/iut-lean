@@ -1063,6 +1063,41 @@ def zmodBadLocalQuotientZData (l : PrimeGeFive) :
   canonicalSignLabelZ_eq := rfl
 
 /--
+The chain of open subgroups produced by the bad local theta-root models.
+
+The actual groups are placeholders until the relevant profinite/tempered
+fundamental groups are formalized. The inclusion propositions record the source
+shape `Pi_Xbar_v <= Pi_Cbar_v <= Pi_C_v` from IUT I, Definition 3.1(e).
+-/
+structure BadLocalOpenSubgroupData where
+  piXbar : Type u
+  piCbar : Type u
+  piCv : Type u
+  piXbar_to_piCbar : piXbar -> piCbar
+  piCbar_to_piCv : piCbar -> piCv
+  piXbar_open_in_piCbar : Prop
+  piXbar_open_in_piCbar_holds : piXbar_open_in_piCbar
+  piCbar_open_in_piCv : Prop
+  piCbar_open_in_piCv_holds : piCbar_open_in_piCv
+
+namespace BadLocalOpenSubgroupData
+
+variable (openData : BadLocalOpenSubgroupData)
+
+def piXbar_to_piCv : openData.piXbar -> openData.piCv :=
+  openData.piCbar_to_piCv ∘ openData.piXbar_to_piCbar
+
+theorem piXbarOpenInPiCbar :
+    openData.piXbar_open_in_piCbar :=
+  openData.piXbar_open_in_piCbar_holds
+
+theorem piCbarOpenInPiCv :
+    openData.piCbar_open_in_piCv :=
+  openData.piCbar_open_in_piCv_holds
+
+end BadLocalOpenSubgroupData
+
+/--
 The theta-root local models at a bad place.
 
 IUT I, Definition 3.1(e), says these models have types
@@ -1074,6 +1109,7 @@ structure BadLocalThetaRootData
     (X C : HyperbolicOrbicurveModel F) where
   thetaRootXType : OrbicurveTypeData l X OrbicurveTypeKind.oneZModLTheta
   thetaRootCType : OrbicurveTypeData l C OrbicurveTypeKind.oneZModLThetaPM
+  openSubgroups : BadLocalOpenSubgroupData
   quotientZData : BadLocalQuotientZData l
   quotientZData_constructedFromThetaRoot : Prop
   quotientZData_constructedFromThetaRoot_holds :
@@ -1092,6 +1128,14 @@ theorem thetaRootXType_holds :
 theorem thetaRootCType_holds :
     thetaRootData.thetaRootCType.hasType :=
   thetaRootData.thetaRootCType.holds
+
+theorem piXbarOpenInPiCbar :
+    thetaRootData.openSubgroups.piXbar_open_in_piCbar :=
+  thetaRootData.openSubgroups.piXbarOpenInPiCbar
+
+theorem piCbarOpenInPiCv :
+    thetaRootData.openSubgroups.piCbar_open_in_piCv :=
+  thetaRootData.openSubgroups.piCbarOpenInPiCv
 
 theorem quotientZDataSource :
     thetaRootData.quotientZData_constructedFromThetaRoot :=
@@ -1144,6 +1188,17 @@ theorem thetaRootCType_holds :
 theorem quotientZDataSource :
     typeData.thetaRootData.quotientZData_constructedFromThetaRoot :=
   typeData.thetaRootData.quotientZDataSource
+
+def openSubgroups : BadLocalOpenSubgroupData :=
+  typeData.thetaRootData.openSubgroups
+
+theorem piXbarOpenInPiCbar :
+    typeData.openSubgroups.piXbar_open_in_piCbar :=
+  typeData.thetaRootData.piXbarOpenInPiCbar
+
+theorem piCbarOpenInPiCv :
+    typeData.openSubgroups.piCbar_open_in_piCv :=
+  typeData.thetaRootData.piCbarOpenInPiCv
 
 theorem canonicalGeneratorEqModel :
     typeData.canonicalGenerator =
@@ -1296,10 +1351,6 @@ structure ThetaBadLocalData
   badLocalCType :
     (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
       BadLocalOrbicurveTypeData l (localX v hv.1) (localC v hv.1)
-  badLocalOpenSubgroups :
-    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
-  badLocalOpenSubgroups_holds :
-    ∀ v hv, badLocalOpenSubgroups v hv
 
 namespace ThetaBadLocalData
 
@@ -1383,10 +1434,20 @@ theorem thetaRootModels
     localData.thetaRootLocalModels v hv :=
   (localData.badLocalCType v hv).quotientZDataSource
 
-theorem openSubgroups
+noncomputable def badLocalOpenSubgroups
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
-    localData.badLocalOpenSubgroups v hv :=
-  localData.badLocalOpenSubgroups_holds v hv
+    BadLocalOpenSubgroupData :=
+  (localData.badLocalCType v hv).openSubgroups
+
+theorem badLocalPiXbarOpenInPiCbar
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    (localData.badLocalOpenSubgroups v hv).piXbar_open_in_piCbar :=
+  (localData.badLocalCType v hv).piXbarOpenInPiCbar
+
+theorem badLocalPiCbarOpenInPiCv
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    (localData.badLocalOpenSubgroups v hv).piCbar_open_in_piCv :=
+  (localData.badLocalCType v hv).piCbarOpenInPiCv
 
 end ThetaBadLocalData
 
@@ -1787,10 +1848,20 @@ theorem thetaRootLocalModels
     theta.badLocalData.thetaRootLocalModels v hv :=
   theta.badLocalData.thetaRootModels v hv
 
-theorem badLocalOpenSubgroups
+noncomputable def badLocalOpenSubgroups
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    theta.badLocalData.badLocalOpenSubgroups v hv :=
-  theta.badLocalData.openSubgroups v hv
+    BadLocalOpenSubgroupData :=
+  theta.badLocalData.badLocalOpenSubgroups v hv
+
+theorem badLocalPiXbarOpenInPiCbar
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    (theta.badLocalOpenSubgroups v hv).piXbar_open_in_piCbar :=
+  theta.badLocalData.badLocalPiXbarOpenInPiCbar v hv
+
+theorem badLocalPiCbarOpenInPiCv
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    (theta.badLocalOpenSubgroups v hv).piCbar_open_in_piCv :=
+  theta.badLocalData.badLocalPiCbarOpenInPiCv v hv
 
 /-- The local cusp `epsilon_v` attached to a selected finite place. -/
 def localCusp

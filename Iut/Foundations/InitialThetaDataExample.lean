@@ -450,11 +450,8 @@ def abstractThetaBadLocalData
     (badLocalCType :
       (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
         BadLocalOrbicurveTypeData primeFive (localX v hv.1) (localC v hv.1))
-    (badLocalOpenSubgroups :
-      (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop)
     (hBaseChange : ∀ v hv, localBaseChangeDiagrams v hv)
-    (hDecomp : ∀ v hv, decompositionGroupOuterSurjection v hv)
-    (hOpen : ∀ v hv, badLocalOpenSubgroups v hv) :
+    (hDecomp : ∀ v hv, decompositionGroupOuterSurjection v hv) :
     ThetaBadLocalData primeFive Fmod F K curveModuli coverData valuations where
   localX := localX
   localC := localC
@@ -463,8 +460,6 @@ def abstractThetaBadLocalData
   decompositionGroupOuterSurjection := decompositionGroupOuterSurjection
   decompositionGroupOuterSurjection_holds := hDecomp
   badLocalCType := badLocalCType
-  badLocalOpenSubgroups := badLocalOpenSubgroups
-  badLocalOpenSubgroups_holds := hOpen
 
 /-- A constructor smoke test for the local cusp data of Definition 3.1(f). -/
 def abstractThetaCuspLocalData
@@ -565,9 +560,17 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     theta.badLocalData.thetaRootLocalModels v hv :=
   theta.thetaRootLocalModels v hv
 
-example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    theta.badLocalData.badLocalOpenSubgroups v hv :=
+noncomputable example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    BadLocalOpenSubgroupData :=
   theta.badLocalOpenSubgroups v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    (theta.badLocalOpenSubgroups v hv).piXbar_open_in_piCbar :=
+  theta.badLocalPiXbarOpenInPiCbar v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    (theta.badLocalOpenSubgroups v hv).piCbar_open_in_piCv :=
+  theta.badLocalPiCbarOpenInPiCv v hv
 
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
     theta.cuspLocalData.localCusp_determinedByGlobal v hv :=

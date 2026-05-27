@@ -12701,3 +12701,104 @@ the model downstream of the theta-root package.
 milestone should replace this with a more concrete reconstruction statement,
 probably by expanding `BadLocalQuotientZData` to include the open subgroup data
 `Pi_Xbar_v <= Pi_Cbar_v <= Pi_C_v` mentioned in Definition 3.1(e).
+
+## Math Milestone 40: Bad Local Open Subgroup Chain
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(e), says that for `v in Vbad`, extracting an `l`-th root
+of the theta function produces local models `Xbar_v`, `Cbar_v` of types
+`(1,(Z/lZ)_Theta)` and `(1,(Z/lZ)_Theta)^pm`. The same sentence says that
+these models determine open subgroups:
+
+```text
+Pi_Xbar_v <= Pi_Cbar_v <= Pi_C_v
+```
+
+Remark 3.1.2 then emphasizes the reconstruction role of such open subgroups in
+the `Theta`-approach to applying anabelian reconstruction. This milestone makes
+the subgroup chain a structured part of the theta-root local data.
+
+This remains local initial-theta data. It does not touch the later Corollary
+3.12 comparison, so it must not be read as a Hodge-theater identification or as
+a log-volume estimate.
+
+### Lean/API Check
+
+The new structure is:
+
+```text
+BadLocalOpenSubgroupData
+```
+
+It stores placeholder group carriers for `Pi_Xbar_v`, `Pi_Cbar_v`, and `Pi_C_v`,
+maps for the two inclusions, and proof fields for the two open-subgroup
+assertions. The carriers remain abstract because the actual tempered/profinite
+fundamental groups have not yet been formalized.
+
+`BadLocalThetaRootData` now stores:
+
+```text
+openSubgroups : BadLocalOpenSubgroupData
+```
+
+The old independent field `ThetaBadLocalData.badLocalOpenSubgroups` has been
+removed. The public API still exposes a derived projection with the same name.
+
+### Lean Decisions
+
+The previous setup had a free proposition:
+
+```text
+badLocalOpenSubgroups : v in Vbad -> Prop
+```
+
+This was too weak: it did not say that there are three groups, nor that the
+source shape is a two-step open subgroup chain. The new data records the shape
+while leaving the group theory abstract.
+
+### Lean Declarations
+
+```text
+BadLocalOpenSubgroupData
+BadLocalOpenSubgroupData.piXbar_to_piCv
+BadLocalOpenSubgroupData.piXbarOpenInPiCbar
+BadLocalOpenSubgroupData.piCbarOpenInPiCv
+BadLocalThetaRootData.openSubgroups
+BadLocalThetaRootData.piXbarOpenInPiCbar
+BadLocalThetaRootData.piCbarOpenInPiCv
+BadLocalOrbicurveTypeData.openSubgroups
+ThetaBadLocalData.badLocalOpenSubgroups
+ThetaBadLocalData.badLocalPiXbarOpenInPiCbar
+ThetaBadLocalData.badLocalPiCbarOpenInPiCv
+InitialThetaData.badLocalOpenSubgroups
+InitialThetaData.badLocalPiXbarOpenInPiCbar
+InitialThetaData.badLocalPiCbarOpenInPiCv
+```
+
+### What This Tests
+
+The example file now checks:
+
+* full initial theta data exposes a `BadLocalOpenSubgroupData` package at bad
+  places;
+* the first inclusion is recorded as open;
+* the second inclusion is recorded as open.
+
+### Design Trap Avoided
+
+The trap would be to keep saying "there are open subgroups" as a single opaque
+proposition. That would not distinguish the `Xbar -> Cbar -> C` chain needed
+later for reconstruction. The new structure names the chain directly.
+
+### Remaining Gap
+
+The three group carriers and the two maps are still abstract placeholders. A
+later milestone should replace these carriers with actual profinite/tempered
+fundamental group objects, or at least a reusable typed interface for such
+groups and open embeddings.
