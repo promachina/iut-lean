@@ -7713,3 +7713,76 @@ mathematically inert.
 The next milestone should add source audit fields for these four source-facing
 labels, so the compact source audit checklist records both the pre-ledger label
 alignment and the source-facing pilot/log-Kummer/indeterminacy labels.
+
+## Milestone 92: Source Audit Label Fields
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Milestone 91 added source-package projections for the Theta-pilot, q-pilot,
+log-Kummer, and indeterminacy labels. Since the compact source audit is meant
+to be the human-readable checklist for the Stage 1 boundary, it should record
+these label facts as well.
+
+This remains label bookkeeping. It does not make any claim about the analytic
+content of the pilot objects or indeterminacies.
+
+### Purpose
+
+This milestone extends:
+
+```text
+IUTStage1SourcePackage.Audit
+```
+
+with fields for:
+
+```text
+thetaPilot_matches_labels
+qPilot_matches_labels
+logKummer_matches_labels
+indeterminacies_matches_labels
+```
+
+and adds named audit projections for them.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.Audit.thetaPilotMatchesLabels
+IUTStage1SourcePackage.Audit.qPilotMatchesLabels
+IUTStage1SourcePackage.Audit.logKummerMatchesLabels
+IUTStage1SourcePackage.Audit.indeterminaciesMatchesLabels
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_audit_thetaPilot_label_projection_example
+unitThetaToy_source_audit_qPilot_label_projection_example
+unitThetaToy_source_audit_logKummer_label_projection_example
+unitThetaToy_source_audit_indeterminacies_label_projection_example
+```
+
+### What This Tests
+
+The toy examples verify that source-facing label facts can be consumed through
+the compact audit record, not only through direct package projections.
+
+### Design Trap Avoided
+
+The trap would be to let the audit checklist cover only the public endpoint and
+forget the source-facing labels that explain what is being promoted. The audit
+now records both the named source objects and the endpoint facts.
+
+### Next Step
+
+The next milestone should add a source-facing theorem stating that the compact
+audit's public endpoint fields agree with `IUTStage1SourcePackage.publicAudit`,
+so the audit cannot drift from the public endpoint theorem.

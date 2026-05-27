@@ -280,6 +280,11 @@ structure Audit
     package.multiradialOutput = package.labels.multiradialOutput
   logVolumeComparison_matches_labels :
     package.logVolumeComparison = package.labels.logVolumeComparison
+  thetaPilot_matches_labels : package.thetaPilot = package.labels.thetaPilot
+  qPilot_matches_labels : package.qPilot = package.labels.qPilot
+  logKummer_matches_labels : package.logKummer = package.labels.logKummer
+  indeterminacies_matches_labels :
+    package.indeterminacies = package.labels.indeterminacies
   algorithm_certified : package.preLedger.output.Certified
   she_arrow_matches_certificate :
     package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
@@ -314,6 +319,11 @@ theorem audit
       package.multiradialOutput_matches_labels,
     logVolumeComparison_matches_labels :=
       package.logVolumeComparison_matches_labels,
+    thetaPilot_matches_labels := package.thetaPilot_matches_labels,
+    qPilot_matches_labels := package.qPilot_matches_labels,
+    logKummer_matches_labels := package.logKummer_matches_labels,
+    indeterminacies_matches_labels :=
+      package.indeterminacies_matches_labels,
     algorithm_certified := obligations.algorithmCertified,
     she_arrow_matches_certificate := obligations.sheArrowMatchesCertificate,
     q_pilot_positive := obligations.qPilotPositive,
@@ -347,6 +357,26 @@ theorem logVolumeComparisonMatchesLabels
     (sourceAudit : Audit package obligations) :
     package.logVolumeComparison = package.labels.logVolumeComparison :=
   sourceAudit.logVolumeComparison_matches_labels
+
+theorem thetaPilotMatchesLabels
+    (sourceAudit : Audit package obligations) :
+    package.thetaPilot = package.labels.thetaPilot :=
+  sourceAudit.thetaPilot_matches_labels
+
+theorem qPilotMatchesLabels
+    (sourceAudit : Audit package obligations) :
+    package.qPilot = package.labels.qPilot :=
+  sourceAudit.qPilot_matches_labels
+
+theorem logKummerMatchesLabels
+    (sourceAudit : Audit package obligations) :
+    package.logKummer = package.labels.logKummer :=
+  sourceAudit.logKummer_matches_labels
+
+theorem indeterminaciesMatchesLabels
+    (sourceAudit : Audit package obligations) :
+    package.indeterminacies = package.labels.indeterminacies :=
+  sourceAudit.indeterminacies_matches_labels
 
 theorem algorithmCertified
     (sourceAudit : Audit package obligations) :

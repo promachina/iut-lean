@@ -247,6 +247,66 @@ theorem unitThetaToy_source_audit_recovery_projection_example
   (unitThetaToy_source_audit_example
     measure hnormalized hh hbound hholds).stageRecoversCorollary312
 
+theorem unitThetaToy_source_audit_thetaPilot_label_projection_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds).thetaPilot =
+      unitThetaToyIUTStage1SourceLabels.thetaPilot :=
+  (unitThetaToy_source_audit_example
+    measure hnormalized hh hbound hholds).thetaPilotMatchesLabels
+
+theorem unitThetaToy_source_audit_qPilot_label_projection_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds).qPilot =
+      unitThetaToyIUTStage1SourceLabels.qPilot :=
+  (unitThetaToy_source_audit_example
+    measure hnormalized hh hbound hholds).qPilotMatchesLabels
+
+theorem unitThetaToy_source_audit_logKummer_label_projection_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds).logKummer =
+      unitThetaToyIUTStage1SourceLabels.logKummer :=
+  (unitThetaToy_source_audit_example
+    measure hnormalized hh hbound hholds).logKummerMatchesLabels
+
+theorem unitThetaToy_source_audit_indeterminacies_label_projection_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds).indeterminacies =
+      unitThetaToyIUTStage1SourceLabels.indeterminacies :=
+  (unitThetaToy_source_audit_example
+    measure hnormalized hh hbound hholds).indeterminaciesMatchesLabels
+
 end ToyModel
 end Stage1
 end Iut
