@@ -26,6 +26,7 @@ import Iut.Stage1.SourceObligations
 import Iut.Stage1.IUTSourceScaffold
 import Iut.Stage1.ToySourceObligations
 import Iut.Stage1.ToyPublicAuditExample
+import Iut.Stage1.IUTSourceScaffoldExample
 
 /-!
 Root module for the IUT formalization scaffold.

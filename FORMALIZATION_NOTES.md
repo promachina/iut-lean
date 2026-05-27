@@ -6454,3 +6454,68 @@ Corollary 3.12. This scaffold instead makes the ledger the sole proof boundary.
 The next milestone should add regression examples for
 `IUTSourceObligationProvider` using the toy ledger as an instance, verifying that
 the non-toy scaffold consumes a ledger through the same public audit API.
+
+## Milestone 75: IUT Source Provider Regression Examples
+
+Lean files:
+
+* `Iut/Stage1/IUTSourceScaffoldExample.lean`
+* `Iut/Basic.lean`
+
+### Source Check
+
+The provider scaffold is intentionally source-agnostic. Before moving toward
+more IUT-specific data, we need a regression check showing that an existing
+ledger can be wrapped as a provider and consumed only through the provider API.
+
+The toy ledger is a convenient sample because it already supplies all source
+obligations without asserting any non-toy IUT mathematics.
+
+### Purpose
+
+This milestone introduces:
+
+```text
+unitThetaToyIUTSourceProvider
+```
+
+which wraps the toy source-obligation ledger as an
+`IUTSourceObligationProvider`. It then proves examples through the provider API:
+
+```text
+qSigned <= thetaSigned
+Corollary312Inequality
+Stage1Comparison recovers ledger.corollary312
+```
+
+### Lean Declarations
+
+In `IUTSourceScaffoldExample.lean`:
+
+```text
+unitThetaToyIUTSourceProvider
+unitThetaToy_provider_publicAudit_q_le_theta_example
+unitThetaToy_provider_publicAudit_corollary_example
+unitThetaToy_provider_stage_recovers_corollary_example
+```
+
+The root module imports the example.
+
+### What This Tests
+
+The non-toy scaffold can consume a completed ledger through the same public
+audit API as future source-specific providers. The examples do not inspect the
+toy audit record directly.
+
+### Design Trap Avoided
+
+The trap would be to create a provider interface that is not exercised anywhere.
+These examples make the provider API concrete while keeping the toy ledger as
+sample data, not as a substitute for future IUT source obligations.
+
+### Next Step
+
+The next milestone should introduce the first named placeholder interface for
+IUT-specific Stage 1 input/output data, separating labels such as IPL, SHE,
+multiradial output, and charted log-volume data before any attempt to construct
+a full `SourceObligationLedger`.
