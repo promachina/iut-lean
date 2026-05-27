@@ -89,38 +89,49 @@ def abstractThetaFieldTower
   sqrtMinusOne := sqrtMinusOne
   degreePrimeToL_holds := hDegree
 
+/-- A constructor smoke test for the curve/moduli part of initial theta data. -/
+noncomputable def abstractThetaCurveModuliData
+    (cF : HyperbolicOrbicurveModel F)
+    (cF_is_quotient_by_neg_one fmod_is_fieldOfModuli
+      stableReductionOverNonarchimedean torsion23RationalOverF : Prop)
+    (hQuotient : cF_is_quotient_by_neg_one)
+    (hFmod : fmod_is_fieldOfModuli)
+    (hStable : stableReductionOverNonarchimedean)
+    (hTorsion : torsion23RationalOverF) :
+    ThetaCurveModuliData Fmod F where
+  xF := PuncturedEllipticCurve.ofJ F (37 : F)
+  cF := cF
+  cF_is_quotient_by_neg_one := cF_is_quotient_by_neg_one
+  cF_is_quotient_by_neg_one_holds := hQuotient
+  fmod_is_fieldOfModuli := fmod_is_fieldOfModuli
+  fmod_is_fieldOfModuli_holds := hFmod
+  stableReductionOverNonarchimedean := stableReductionOverNonarchimedean
+  stableReductionOverNonarchimedean_holds := hStable
+  torsion23RationalOverF := torsion23RationalOverF
+  torsion23RationalOverF_holds := hTorsion
+
 /--
 A constructor smoke test for full initial theta data under the exact field
 hypotheses required by the record.
 -/
 noncomputable def abstractInitialThetaData
     (fieldTower : ThetaFieldTower primeFive Fmod F K)
+    (curveModuli : ThetaCurveModuliData Fmod F)
     (cK : HyperbolicOrbicurveModel K)
     (epsilon : CuspData cK)
-    (fmod_is_fieldOfModuli k_is_lTorsionKernelField
-      stableReductionOverNonarchimedean torsion23RationalOverF
-      lTorsionImageContainsSL2 qParameterOrdersPrimeToL : Prop)
-    (hFmod : fmod_is_fieldOfModuli)
+    (k_is_lTorsionKernelField lTorsionImageContainsSL2 qParameterOrdersPrimeToL : Prop)
     (hK : k_is_lTorsionKernelField)
-    (hStable : stableReductionOverNonarchimedean)
-    (hTorsion : torsion23RationalOverF)
     (hImage : lTorsionImageContainsSL2)
     (hQ : qParameterOrdersPrimeToL) :
     InitialThetaData Fmod F K Bool Bool where
   l := primeFive
   fieldTower := fieldTower
-  xF := PuncturedEllipticCurve.ofJ F (37 : F)
-  fmod_is_fieldOfModuli := fmod_is_fieldOfModuli
-  fmod_is_fieldOfModuli_holds := hFmod
+  curveModuli := curveModuli
   cK := cK
   k_is_lTorsionKernelField := k_is_lTorsionKernelField
   k_is_lTorsionKernelField_holds := hK
   valuations := boolThetaValuationData
   epsilon := epsilon
-  stableReductionOverNonarchimedean := stableReductionOverNonarchimedean
-  stableReductionOverNonarchimedean_holds := hStable
-  torsion23RationalOverF := torsion23RationalOverF
-  torsion23RationalOverF_holds := hTorsion
   lTorsionImageContainsSL2 := lTorsionImageContainsSL2
   lTorsionImageContainsSL2_holds := hImage
   qParameterOrdersPrimeToL := qParameterOrdersPrimeToL
@@ -144,8 +155,17 @@ example :
     theta.fieldTower.sqrtMinusOne.element ^ 2 = (-1 : F) :=
   theta.sqrtMinusOne_square
 
-example : theta.fmod_is_fieldOfModuli :=
+example : theta.curveModuli.cF_is_quotient_by_neg_one :=
+  theta.quotientByNegOne
+
+example : theta.curveModuli.fmod_is_fieldOfModuli :=
   theta.fmodFieldOfModuli
+
+example : theta.curveModuli.stableReductionOverNonarchimedean :=
+  theta.stableReductionOverNonarchimedean
+
+example : theta.curveModuli.torsion23RationalOverF :=
+  theta.torsion23RationalOverF
 
 example : theta.k_is_lTorsionKernelField :=
   theta.kIsLTorsionKernelField

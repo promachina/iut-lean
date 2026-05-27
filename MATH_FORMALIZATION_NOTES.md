@@ -1541,3 +1541,87 @@ target is to replace the field-of-moduli obligation with a more structured
 record relating `X_F`, its quotient `C_F`, and `Fmod`, or to replace the current
 valuation index placeholders with mathlib finite places of `Fmod` and `K` if
 the available API is strong enough.
+
+## Math Milestone 16: Curve and Moduli Data for Definition 3.1(b)
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(b) starts with a once-punctured elliptic curve `X_F`
+over `F`, writes `E_F` for the elliptic curve determined by `X_F`, forms the
+hyperbolic orbicurve `C_F` as the quotient of `X_F` by the unique order-two
+involution `-1`, and then introduces `Fmod` as the field of moduli of `X_F`.
+The same clause assumes stable reduction over nonarchimedean valuations and
+rationality over `F` of the `2 * 3` torsion points of `E_F`.
+
+### Lean Decisions
+
+These clauses now live in:
+
+```text
+ThetaCurveModuliData Fmod F
+```
+
+The record contains:
+
+```text
+xF : PuncturedEllipticCurve F
+cF : HyperbolicOrbicurveModel F
+cF_is_quotient_by_neg_one : Prop
+fmod_is_fieldOfModuli : Prop
+stableReductionOverNonarchimedean : Prop
+torsion23RationalOverF : Prop
+```
+
+The quotient, field-of-moduli, stable-reduction, and torsion-rationality
+clauses remain explicit propositions with proofs. This is intentional: mathlib
+does not yet provide the exact IUT objects for hyperbolic orbicurves and their
+stack-theoretic quotients, so the formalization records the source obligations
+without pretending they are already derived.
+
+`InitialThetaData` now contains `curveModuli : ThetaCurveModuliData Fmod F`
+instead of carrying those obligations as unrelated fields. This makes the
+dependency on `X_F` and `Fmod` visible to later definitions.
+
+### Lean Declarations
+
+```text
+ThetaCurveModuliData
+ThetaCurveModuliData.quotientByNegOne
+ThetaCurveModuliData.fmodFieldOfModuli
+ThetaCurveModuliData.stableReduction
+ThetaCurveModuliData.torsion23Rational
+InitialThetaData.quotientByNegOne
+InitialThetaData.stableReductionOverNonarchimedean
+InitialThetaData.torsion23RationalOverF
+```
+
+### What This Tests
+
+The example file now verifies:
+
+* construction of the curve/moduli data from `X_F`, `C_F`, and the four named
+  source obligations;
+* construction of initial theta data using the curve/moduli bundle;
+* projection of the quotient-by-`-1`, field-of-moduli, stable-reduction, and
+  `2 * 3` torsion-rationality obligations.
+
+### Design Trap Avoided
+
+The trap would be to let the field-of-moduli condition float as an unstructured
+field of the final initial-theta record. The new bundle ties that condition to
+the specific `X_F` and `C_F` data it is about. This does not solve the moduli
+problem yet, but it prevents the next layers from using a moduli assertion that
+is detached from the curve.
+
+### Next Step
+
+The next Definition 3.1 target should be the valuation layer: `Vmod = V(Fmod)`,
+`V ⊆ V(K)`, the section `V -> Vmod`, and the distinction between bad valuation
+sets and good valuation sets. We should first inspect mathlib's finite-place API
+for number fields and decide how much of the current placeholder
+`ThetaValuationData` can be replaced by actual place types.

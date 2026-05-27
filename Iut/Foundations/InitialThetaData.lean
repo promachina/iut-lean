@@ -228,6 +228,53 @@ structure HyperbolicOrbicurveModel (F : Type u) [Field F] where
   label : String
   typeLabel : String
 
+/--
+The curve/moduli portion of IUT I, Definition 3.1(b).
+
+This records the once-punctured elliptic curve `X_F`, the quotient orbicurve
+`C_F`, the assertion that `C_F` is obtained by quotienting by the unique
+order-two involution `-1`, the field-of-moduli assertion for `Fmod`, stable
+reduction over nonarchimedean valuations, and rationality of the `2 * 3`
+torsion points of the ambient elliptic curve.
+-/
+structure ThetaCurveModuliData
+    (Fmod F : Type u) [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+    [Algebra Fmod F] where
+  xF : PuncturedEllipticCurve F
+  cF : HyperbolicOrbicurveModel F
+  cF_is_quotient_by_neg_one : Prop
+  cF_is_quotient_by_neg_one_holds : cF_is_quotient_by_neg_one
+  fmod_is_fieldOfModuli : Prop
+  fmod_is_fieldOfModuli_holds : fmod_is_fieldOfModuli
+  stableReductionOverNonarchimedean : Prop
+  stableReductionOverNonarchimedean_holds : stableReductionOverNonarchimedean
+  torsion23RationalOverF : Prop
+  torsion23RationalOverF_holds : torsion23RationalOverF
+
+namespace ThetaCurveModuliData
+
+variable {Fmod F : Type u} [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
+variable [Algebra Fmod F]
+variable (curveData : ThetaCurveModuliData Fmod F)
+
+theorem quotientByNegOne :
+    curveData.cF_is_quotient_by_neg_one :=
+  curveData.cF_is_quotient_by_neg_one_holds
+
+theorem fmodFieldOfModuli :
+    curveData.fmod_is_fieldOfModuli :=
+  curveData.fmod_is_fieldOfModuli_holds
+
+theorem stableReduction :
+    curveData.stableReductionOverNonarchimedean :=
+  curveData.stableReductionOverNonarchimedean_holds
+
+theorem torsion23Rational :
+    curveData.torsion23RationalOverF :=
+  curveData.torsion23RationalOverF_holds
+
+end ThetaCurveModuliData
+
 /-- The cusp `epsilon` of `C_K` from IUT I, Definition 3.1(f). -/
 structure CuspData {F : Type u} [Field F] (C : HyperbolicOrbicurveModel F) where
   label : String
@@ -258,18 +305,12 @@ structure InitialThetaData
     (Valuation ModValuation : Type v) where
   l : PrimeGeFive
   fieldTower : ThetaFieldTower l Fmod F K
-  xF : PuncturedEllipticCurve F
-  fmod_is_fieldOfModuli : Prop
-  fmod_is_fieldOfModuli_holds : fmod_is_fieldOfModuli
+  curveModuli : ThetaCurveModuliData Fmod F
   cK : HyperbolicOrbicurveModel K
   k_is_lTorsionKernelField : Prop
   k_is_lTorsionKernelField_holds : k_is_lTorsionKernelField
   valuations : ThetaValuationData l Valuation ModValuation
   epsilon : CuspData cK
-  stableReductionOverNonarchimedean : Prop
-  stableReductionOverNonarchimedean_holds : stableReductionOverNonarchimedean
-  torsion23RationalOverF : Prop
-  torsion23RationalOverF_holds : torsion23RationalOverF
   lTorsionImageContainsSL2 : Prop
   lTorsionImageContainsSL2_holds : lTorsionImageContainsSL2
   qParameterOrdersPrimeToL : Prop
@@ -344,8 +385,20 @@ theorem sqrtMinusOne_square :
   theta.fieldTower.sqrtMinusOne_square
 
 theorem fmodFieldOfModuli :
-    theta.fmod_is_fieldOfModuli :=
-  theta.fmod_is_fieldOfModuli_holds
+    theta.curveModuli.fmod_is_fieldOfModuli :=
+  theta.curveModuli.fmodFieldOfModuli
+
+theorem quotientByNegOne :
+    theta.curveModuli.cF_is_quotient_by_neg_one :=
+  theta.curveModuli.quotientByNegOne
+
+theorem stableReductionOverNonarchimedean :
+    theta.curveModuli.stableReductionOverNonarchimedean :=
+  theta.curveModuli.stableReduction
+
+theorem torsion23RationalOverF :
+    theta.curveModuli.torsion23RationalOverF :=
+  theta.curveModuli.torsion23Rational
 
 theorem kIsLTorsionKernelField :
     theta.k_is_lTorsionKernelField :=
