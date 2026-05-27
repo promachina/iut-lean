@@ -2214,21 +2214,74 @@ theorem piXK_smul_trivial
 end ThetaApproachFunctionFieldData
 
 /--
+A typed certificate for the finite etale Galois cover that underlies a
+theta-approach function-field extension.
+
+The source and target orbicurves are recorded explicitly.  The construction of
+the cover map is still represented by named propositions, but the quotient
+identification now lives with the cover certificate rather than as a loose
+argument.
+-/
+structure ThetaFiniteEtaleGaloisCoverCertificate
+    (thetaApproach : ThetaApproachQuotientData)
+    (B L : Type) [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L] where
+  baseField : Type
+  baseFieldField : Field baseField
+  sourceOrbicurve : @HyperbolicOrbicurveModel baseField baseFieldField
+  targetOrbicurve : @HyperbolicOrbicurveModel baseField baseFieldField
+  coverMapLabel : String
+  finiteEtaleCover : Prop
+  finiteEtaleCover_holds : finiteEtaleCover
+  galoisCover : Prop
+  galoisCover_holds : galoisCover
+  functionFieldExtensionOfCover : Prop
+  functionFieldExtensionOfCover_holds : functionFieldExtensionOfCover
+  quotientEquivAlgAut :
+    ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L)
+
+namespace ThetaFiniteEtaleGaloisCoverCertificate
+
+variable {thetaApproach : ThetaApproachQuotientData}
+variable {B L : Type} [Field B] [Field L] [Algebra B L]
+variable [FiniteDimensional B L] [IsGalois B L]
+variable (certificate :
+  ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L)
+
+instance baseFieldInst : Field certificate.baseField :=
+  certificate.baseFieldField
+
+theorem finiteEtaleCover_proof :
+    certificate.finiteEtaleCover :=
+  certificate.finiteEtaleCover_holds
+
+theorem galoisCover_proof :
+    certificate.galoisCover :=
+  certificate.galoisCover_holds
+
+theorem functionFieldExtensionOfCover_proof :
+    certificate.functionFieldExtensionOfCover :=
+  certificate.functionFieldExtensionOfCover_holds
+
+theorem finiteEtaleAndGalois :
+    certificate.finiteEtaleCover ∧ certificate.galoisCover :=
+  ⟨certificate.finiteEtaleCover_holds, certificate.galoisCover_holds⟩
+
+end ThetaFiniteEtaleGaloisCoverCertificate
+
+/--
 A typed finite Galois function-field cover for the `Theta`-approach.
 
-This packages the finite Galois extension together with the still-supplied
-identification between the theta deck quotient and the algebra automorphism
-group.  It is a stricter interface than a bare equivalence, but it still does not
-claim to construct the geometric finite etale cover itself.
+This packages the finite Galois extension together with a typed finite-etale
+cover certificate.  The certificate still supplies the quotient-to-automorphism
+identification, but it is now attached to source/target orbicurve data and
+finite-etale/Galois proof obligations.
 -/
 structure ThetaFiniteGaloisFunctionFieldCoverData
     (thetaApproach : ThetaApproachQuotientData)
     (B L : Type) [Field B] [Field L] [Algebra B L]
     [FiniteDimensional B L] [IsGalois B L] where
-  quotientEquivAlgAut :
-    ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L)
-  finiteEtaleGaloisCover : Prop
-  finiteEtaleGaloisCover_holds : finiteEtaleGaloisCover
+  coverCertificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L
   reconstructedFunctionFieldOfXK : Prop
   reconstructedFunctionFieldOfXK_holds : reconstructedFunctionFieldOfXK
   deckActionMatchesGalQuotient : Prop
@@ -2241,9 +2294,16 @@ variable {B L : Type} [Field B] [Field L] [Algebra B L]
 variable [FiniteDimensional B L] [IsGalois B L]
 variable (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
 
+def quotientEquivAlgAut :
+    ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L) :=
+  cover.coverCertificate.quotientEquivAlgAut
+
+def finiteEtaleGaloisCover : Prop :=
+  cover.coverCertificate.finiteEtaleCover ∧ cover.coverCertificate.galoisCover
+
 theorem finiteEtaleGaloisCover_proof :
     cover.finiteEtaleGaloisCover :=
-  cover.finiteEtaleGaloisCover_holds
+  cover.coverCertificate.finiteEtaleAndGalois
 
 noncomputable def toAlgebraicDeckFunctionFieldData :
     AlgebraicDeckFunctionFieldData

@@ -5853,3 +5853,100 @@ The next milestone should start replacing `finiteEtaleGaloisCover : Prop` with
 typed finite-cover data: source/target orbicurves, a cover map, a deck group, and
 a theorem that the associated quotient gives the automorphism group of the
 function-field extension.
+
+## Math Milestone 58: Typed Finite Etale Cover Certificate
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+This milestone refines the interface introduced in Milestone 57. IUT I, Remark
+3.1.2, treats `Pi_XK <= Pi_CK` as the subgroup used to reconstruct the function
+field of `X_K` together with the action
+
+```text
+Gal(X_K / C_K) ~= Pi_CK / Pi_XK.
+```
+
+The later IUT I discussion of automorphism groups of `X_K` describes such
+groups as reconstructible from the relevant orbicurve/categorical data. We still
+do not construct that geometry, but the formal interface now names the geometric
+slots rather than hiding them in one proposition.
+
+### Lean/API Check
+
+The new certificate is:
+
+```text
+ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L
+```
+
+It records:
+
+```text
+baseField
+sourceOrbicurve
+targetOrbicurve
+coverMapLabel
+finiteEtaleCover
+galoisCover
+functionFieldExtensionOfCover
+quotientEquivAlgAut
+```
+
+The existing package
+
+```text
+ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L
+```
+
+now contains:
+
+```text
+coverCertificate :
+  ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L
+```
+
+instead of a single `finiteEtaleGaloisCover : Prop` plus a loose quotient
+equivalence. The previous `finiteEtaleGaloisCover` is now derived as
+`finiteEtaleCover and galoisCover`.
+
+### Lean Decisions
+
+The certificate still uses proposition fields for the actual finite-etale and
+Galois-cover assertions. This is deliberate: the goal is to make the missing
+geometry visible without pretending to have already formalized finite etale
+orbicurve morphisms.
+
+The quotient-to-automorphism equivalence is now attached to a cover certificate
+with source and target orbicurves. This moves one step closer to deriving it
+from geometry later.
+
+### What This Tests
+
+The example file checks:
+
+* construction of an abstract finite etale Galois cover certificate;
+* extraction of finite-etale and Galois proof fields as a conjunction;
+* extraction of the function-field-extension proof field;
+* construction of the theta finite Galois function-field package from the
+  certificate;
+* all previous derived consequences: theta package extraction, transported deck
+  action, fixed-field theorem, and exact `Pi_CK` kernel.
+
+### Design Trap Avoided
+
+The trap would be to keep a single opaque `finiteEtaleGaloisCover` proposition.
+That hides whether the source/target orbicurves, cover map, Galois condition,
+function-field extension, and quotient identification are coherently attached to
+the same object. The certificate now keeps these pieces together.
+
+### Remaining Gap
+
+The next step is to replace `coverMapLabel : String` and the proposition fields
+with actual morphism data for finite etale covers of hyperbolic orbicurves, then
+prove that the cover induces the recorded function-field extension and deck
+automorphism group.

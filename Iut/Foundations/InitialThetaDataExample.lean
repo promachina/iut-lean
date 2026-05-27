@@ -398,26 +398,66 @@ noncomputable example
       deckActionMatchesGalQuotient hDeck
   exact functionFieldData.piCKRingAutHom_ker
 
+/-- A constructor smoke test for a typed finite etale Galois cover certificate. -/
+noncomputable def abstractThetaFiniteEtaleGaloisCoverCertificate
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (baseField : Type) [Field baseField]
+    (sourceOrbicurve targetOrbicurve : HyperbolicOrbicurveModel baseField)
+    (coverMapLabel : String)
+    (finiteEtaleCover galoisCover functionFieldExtensionOfCover : Prop)
+    (hFiniteEtale : finiteEtaleCover)
+    (hGalois : galoisCover)
+    (hFunctionField : functionFieldExtensionOfCover)
+    (quotientEquivAlgAut :
+      ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L)) :
+    ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L where
+  baseField := baseField
+  baseFieldField := inferInstance
+  sourceOrbicurve := sourceOrbicurve
+  targetOrbicurve := targetOrbicurve
+  coverMapLabel := coverMapLabel
+  finiteEtaleCover := finiteEtaleCover
+  finiteEtaleCover_holds := hFiniteEtale
+  galoisCover := galoisCover
+  galoisCover_holds := hGalois
+  functionFieldExtensionOfCover := functionFieldExtensionOfCover
+  functionFieldExtensionOfCover_holds := hFunctionField
+  quotientEquivAlgAut := quotientEquivAlgAut
+
 /-- A constructor smoke test for a typed finite Galois theta function-field cover. -/
 noncomputable def abstractThetaFiniteGaloisFunctionFieldCoverData
     (thetaApproach : ThetaApproachQuotientData)
     {B L : Type} [Field B] [Field L] [Algebra B L]
     [FiniteDimensional B L] [IsGalois B L]
-    (quotientEquivAlgAut :
-      ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L))
-    (finiteEtaleGaloisCover reconstructedFunctionFieldOfXK
+    (coverCertificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L)
+    (reconstructedFunctionFieldOfXK
       deckActionMatchesGalQuotient : Prop)
-    (hCover : finiteEtaleGaloisCover)
     (hReconstructed : reconstructedFunctionFieldOfXK)
     (hDeck : deckActionMatchesGalQuotient) :
     ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L where
-  quotientEquivAlgAut := quotientEquivAlgAut
-  finiteEtaleGaloisCover := finiteEtaleGaloisCover
-  finiteEtaleGaloisCover_holds := hCover
+  coverCertificate := coverCertificate
   reconstructedFunctionFieldOfXK := reconstructedFunctionFieldOfXK
   reconstructedFunctionFieldOfXK_holds := hReconstructed
   deckActionMatchesGalQuotient := deckActionMatchesGalQuotient
   deckActionMatchesGalQuotient_holds := hDeck
+
+example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (certificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L) :
+    certificate.finiteEtaleCover ∧ certificate.galoisCover :=
+  certificate.finiteEtaleAndGalois
+
+example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (certificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L) :
+    certificate.functionFieldExtensionOfCover :=
+  certificate.functionFieldExtensionOfCover_proof
 
 noncomputable example
     (thetaApproach : ThetaApproachQuotientData)
