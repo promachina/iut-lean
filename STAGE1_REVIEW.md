@@ -432,3 +432,69 @@ Next useful directions:
 * refine Theta-side chart triviality into a named construction source;
 * make the final public audit expose both allowed chart transport and
   forbidden history identification as a compact checklist.
+
+## Periodic Review: Charted Boundary Provenance
+
+Date: 2026-05-27
+
+This checkpoint reviews the recent work around the final charted comparison
+and its pre-ledger source.
+
+### Current Lean Chain
+
+The current chain is:
+
+```text
+IUTStage1PreLedgerData.ChartedComparisonChain
+-> AuditedChartedComparisonBoundary
+-> AuditedStructuredSHERouteSummary
+-> AuditedTheorem311ToCorollary312Checkpoints
+```
+
+The pre-ledger chain states:
+
+```text
+charted q <= targetSigned <= charted Theta
+```
+
+The audited charted boundary now stores that pre-ledger chain and uses it as
+the source of the final charted q-to-Theta inequality.
+
+### Positive Alignment
+
+This is aligned with the 3.11/3.12 dispute because the final comparison is no
+longer just a raw inequality between stored reals. A human reader can now ask
+where the charted inequality came from and immediately find the local chain
+where the chosen output, membership fact, measured target volume, and
+Theta-bound endpoint are connected.
+
+This also limits a possible formalization drift: a later theorem cannot easily
+present the charted q-to-Theta inequality while bypassing the target-volume
+middle term, because the audited boundary exposes the pre-ledger chain as
+provenance.
+
+### Remaining Gaps
+
+The biggest gap is now localized:
+
+* `q_charted_le_target` still comes from an abstract pre-ledger membership
+  inequality.
+* `target_le_theta_charted` still comes from the common-container bound after
+  rewriting the Theta chart equation.
+* the target-volume middle term is a measured real value, not yet a charted
+  geometric/log-volume object of its own.
+
+These gaps are acceptable only as temporary abstraction boundaries. They are
+exactly where the next mathematical work should happen.
+
+### Global 3.12 Check
+
+The recent work is not merely infrastructure. It touches the actual formal
+route of the disputed comparison by pinning down the public charted inequality
+to its local pre-ledger chain. It still does not decide whether IUT proves ABC
+or whether the Scholze-Stix objection is correct.
+
+The next useful direction is to refine the abstract membership-to-volume
+inequality. The toy upper-ray model already proves a concrete instance of this
+step; the formalization should inspect that proof and extract a reusable
+lemma or interface that can later be replaced by genuine IUT log-volume data.
