@@ -6911,3 +6911,81 @@ that example coverage gap.
 The next milestone should move from examples back to the interface itself:
 add named projections for `IUTStage1PreLedgerData.publicAudit`, so users do not
 need to destruct nested conjunctions manually.
+
+## Milestone 81: Named Pre-Ledger Public Audit Projections
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Data.lean`
+* `Iut/Stage1/IUTStage1DataExample.lean`
+
+### Source Check
+
+The Stage 1 scaffold is still only a formal interface for the source-obligation
+path into the Corollary 3.12-shaped endpoint. The source pressure remains the
+same as in the previous milestones: comparisons should be passed through
+explicit named obligations, so that no hidden real-line identification or
+informal simplification enters through API convenience.
+
+This milestone is therefore an interface refinement, not a new mathematical
+assertion.
+
+### Purpose
+
+Milestone 80 showed that all three components of the pre-ledger public audit
+can be consumed by destructing the nested conjunction returned by:
+
+```text
+IUTStage1PreLedgerData.publicAudit
+```
+
+This milestone gives those components names at the pre-ledger boundary:
+
+```text
+qSigned <= thetaSigned
+Corollary312Inequality
+Stage1Comparison recovery equality
+```
+
+The goal is readability for future source-specific modules. A human reader
+should see which endpoint is being used without decoding tuple projections such
+as `.1`, `.2.1`, or `.2.2`.
+
+### Lean Declarations
+
+In `IUTStage1Data.lean`:
+
+```text
+IUTStage1PreLedgerData.publicAudit_qSigned_le_thetaSigned
+IUTStage1PreLedgerData.publicAudit_corollary312
+IUTStage1PreLedgerData.publicAudit_stage1Comparison_recovers_qSigned_le_thetaSigned
+```
+
+In `IUTStage1DataExample.lean`, the three toy pre-ledger public audit examples
+now use these named projections instead of destructing the public theorem
+directly.
+
+### What This Tests
+
+The examples verify that the named projections have the same usable endpoint
+types as the previous tuple destructors:
+
+```text
+unitThetaToy_preLedger_publicAudit_q_le_theta_example
+unitThetaToy_preLedger_publicAudit_corollary_example
+unitThetaToy_preLedger_publicAudit_recovery_example
+```
+
+### Design Trap Avoided
+
+The trap would be to let downstream source-specific code depend on the exact
+nesting shape of a conjunction. That is brittle and makes the formal argument
+harder to read. Named projections keep the API stable while preserving the fact
+that all three endpoints are still derived from the same explicit promotion
+obligations.
+
+### Next Step
+
+The next milestone should introduce a named pre-ledger recovery theorem whose
+right-hand side is the promoted ledger's `corollary312` field itself, parallel
+to `IUTSourceObligationProvider.stage1Comparison_recovers_corollary312`.

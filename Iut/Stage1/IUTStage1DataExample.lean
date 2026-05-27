@@ -136,8 +136,9 @@ theorem unitThetaToy_preLedger_publicAudit_q_le_theta_example
       (qAssignment h)) :
     (Transport.map unitQToTheta (qAssignment h)).coord <=
       -(2 * h) + epsilonBound :=
-  ((unitThetaToyPreLedgerData measure hnormalized hh hbound hholds).publicAudit
-    (unitThetaToyPromotionObligations measure hnormalized hh hbound hholds)).1
+  (unitThetaToyPreLedgerData
+    measure hnormalized hh hbound hholds).publicAudit_qSigned_le_thetaSigned
+      (unitThetaToyPromotionObligations measure hnormalized hh hbound hholds)
 
 theorem unitThetaToy_promotedProvider_publicAudit_corollary_example
     (measure : RegionMeasure thetaLine)
@@ -167,8 +168,9 @@ theorem unitThetaToy_preLedger_publicAudit_corollary_example
       (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
       (signedPilotLogVolume PilotSide.q
         (Transport.map unitQToTheta (qAssignment h)).coord) :=
-  ((unitThetaToyPreLedgerData measure hnormalized hh hbound hholds).publicAudit
-    (unitThetaToyPromotionObligations measure hnormalized hh hbound hholds)).2.1
+  (unitThetaToyPreLedgerData
+    measure hnormalized hh hbound hholds).publicAudit_corollary312
+      (unitThetaToyPromotionObligations measure hnormalized hh hbound hholds)
 
 theorem unitThetaToy_promotedProvider_recovers_corollary_example
     (measure : RegionMeasure thetaLine)
@@ -204,8 +206,9 @@ theorem unitThetaToy_preLedger_publicAudit_recovery_example
         ((unitThetaToyPreLedgerData measure hnormalized hh hbound hholds).toSourceObligationProvider
           (unitThetaToyPromotionObligations
             measure hnormalized hh hbound hholds)).ledger.qSigned_le_thetaSigned :=
-  ((unitThetaToyPreLedgerData measure hnormalized hh hbound hholds).publicAudit
-    (unitThetaToyPromotionObligations measure hnormalized hh hbound hholds)).2.2
+  IUTStage1PreLedgerData.publicAudit_stage1Comparison_recovers_qSigned_le_thetaSigned
+    (unitThetaToyPreLedgerData measure hnormalized hh hbound hholds)
+    (unitThetaToyPromotionObligations measure hnormalized hh hbound hholds)
 
 end ToyModel
 end Stage1
