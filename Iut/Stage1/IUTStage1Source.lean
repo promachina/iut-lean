@@ -408,6 +408,25 @@ theorem auditedPublicEndpoint
         package.publicAudit obligations :=
   ⟨package.audit obligations, Subsingleton.elim _ _⟩
 
+theorem auditedPublicEndpointOfGap
+    (package : IUTStage1SourcePackage source target index)
+    (gap : IUTStage1SourceObligationGap package) :
+    ∃ sourceAudit : Audit package gap.toSourceObligations,
+      (⟨sourceAudit.qSigned_le_thetaSigned,
+          sourceAudit.corollary312,
+          sourceAudit.stage_recovers_qSigned_le_thetaSigned⟩ :
+        package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+          Corollary312Inequality
+            (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+            (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+          (corollary312_from_stage1_comparison
+              (package.promotedProvider gap.toSourceObligations).stage1Comparison =
+            corollary312_of_signed_le
+              (package.promotedProvider
+                gap.toSourceObligations).ledger.qSigned_le_thetaSigned)) =
+        package.publicAudit gap.toSourceObligations :=
+  package.auditedPublicEndpoint gap.toSourceObligations
+
 namespace Audit
 
 variable {package : IUTStage1SourcePackage source target index}

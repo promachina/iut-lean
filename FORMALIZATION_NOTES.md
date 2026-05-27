@@ -7995,3 +7995,73 @@ module.
 The next milestone should add a theorem that derives the audited public endpoint
 directly from `IUTStage1SourceObligationGap`, via
 `IUTStage1SourceObligationGap.toSourceObligations`.
+
+## Milestone 96: Audited Endpoint from Source Gap
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Milestone 95 named the source-level gap below `IUTStage1SourceObligations`.
+The next check is that this gap really composes with the existing source-package
+endpoint theorem, and does so only through the explicit conversion to source
+obligations.
+
+This matches the intended formalization discipline: the source gap is not a new
+shortcut to Corollary 3.12. It is a named prerequisite package that must be
+converted into the previously audited obligation layer.
+
+### Purpose
+
+This milestone adds:
+
+```text
+IUTStage1SourcePackage.auditedPublicEndpointOfGap
+```
+
+It derives the audited public endpoint from:
+
+```text
+IUTStage1SourceObligationGap.toSourceObligations
+```
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.auditedPublicEndpointOfGap
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_gap_auditedPublicEndpoint_example
+```
+
+### What This Tests
+
+The toy example verifies the route:
+
+```text
+source gap
+  -> source obligations
+  -> source audited public endpoint
+```
+
+with no additional proof path.
+
+### Design Trap Avoided
+
+The trap would be to let the source gap produce public endpoint fields directly.
+This theorem factors through `toSourceObligations`, preserving the previously
+audited boundary.
+
+### Next Step
+
+The next milestone should add named source-gap projections to the source audit
+story, beginning with examples that recover algorithm certification and SHE
+alignment from the toy gap.
