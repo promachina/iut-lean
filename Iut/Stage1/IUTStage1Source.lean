@@ -1335,6 +1335,74 @@ theorem auditedComparisonDataEndpoint
   ⟨package.audit obligations, package.comparisonData obligations, rfl,
     (package.comparisonData obligations).publicAudit⟩
 
+namespace ComparisonDataEndpoint
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {obligations : IUTStage1SourceObligations package}
+
+theorem sourceAuditExists
+    (endpoint : package.ComparisonDataEndpoint obligations) :
+    ∃ _sourceAudit : Audit package obligations, True := by
+  rcases endpoint with ⟨sourceAudit, _data, _hdata, _hle, _hcorollary, _hrecovers⟩
+  exact ⟨sourceAudit, trivial⟩
+
+theorem comparisonDataExists
+    (endpoint : package.ComparisonDataEndpoint obligations) :
+    ∃ data : Corollary312ComparisonData,
+      data = package.comparisonData obligations := by
+  rcases endpoint with ⟨_sourceAudit, data, hdata, _hle, _hcorollary, _hrecovers⟩
+  exact ⟨data, hdata⟩
+
+theorem qSignedLeThetaSigned
+    (endpoint : package.ComparisonDataEndpoint obligations) :
+    (package.comparisonData obligations).qSigned <=
+      (package.comparisonData obligations).thetaSigned := by
+  rcases endpoint with ⟨_sourceAudit, data, hdata, hle, _hcorollary, _hrecovers⟩
+  cases hdata
+  exact hle
+
+theorem corollary312Endpoint
+    (endpoint : package.ComparisonDataEndpoint obligations) :
+    Corollary312Inequality
+      (package.comparisonData obligations).thetaPilot
+      (package.comparisonData obligations).qPilot := by
+  rcases endpoint with ⟨_sourceAudit, data, hdata, _hle, hcorollary, _hrecovers⟩
+  cases hdata
+  exact hcorollary
+
+theorem stageRecoversQSignedLeThetaSigned
+    (endpoint : package.ComparisonDataEndpoint obligations) :
+    corollary312_from_stage1_comparison
+        (package.comparisonData obligations).stage1Comparison =
+      corollary312_of_signed_le
+        (package.comparisonData obligations).qSigned_le_thetaSigned := by
+  rcases endpoint with ⟨_sourceAudit, data, hdata, _hle, _hcorollary, hrecovers⟩
+  cases hdata
+  exact hrecovers
+
+theorem publicAudit
+    (endpoint : package.ComparisonDataEndpoint obligations) :
+    (package.comparisonData obligations).qSigned <=
+        (package.comparisonData obligations).thetaSigned ∧
+      Corollary312Inequality
+        (package.comparisonData obligations).thetaPilot
+        (package.comparisonData obligations).qPilot ∧
+      corollary312_from_stage1_comparison
+          (package.comparisonData obligations).stage1Comparison =
+        corollary312_of_signed_le
+          (package.comparisonData obligations).qSigned_le_thetaSigned :=
+  ⟨endpoint.qSignedLeThetaSigned,
+    endpoint.corollary312Endpoint,
+    endpoint.stageRecoversQSignedLeThetaSigned⟩
+
+theorem publicAudit_eq_comparisonData_publicAudit
+    (endpoint : package.ComparisonDataEndpoint obligations) :
+    endpoint.publicAudit =
+      (package.comparisonData obligations).publicAudit :=
+  Subsingleton.elim _ _
+
+end ComparisonDataEndpoint
+
 theorem auditOfParts
     (package : IUTStage1SourcePackage source target index)
     (subclaims : IUTStage1Theorem311Subclaims package)

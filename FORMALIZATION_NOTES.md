@@ -10267,3 +10267,89 @@ the mathematical legitimacy of the source construction that produced it.
 The next milestone should add projection theorems for the comparison-data
 endpoint itself, so consumers can recover the audit witness, the data object,
 and the three data-level public facts without unpacking the existential by hand.
+
+## Milestone 129: Comparison Data Endpoint Projections
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Mochizuki's formalization report treats the final `3.11.5 => 3.12` portion as
+the comparison of the q-pilot and Theta-pilot data after the preceding source
+construction has supplied the needed common-container information. The
+Scholze-Stix critique stresses that this comparison is exactly where hidden
+identifications or untracked pilot-object transitions would matter.
+
+The previous milestone exposed the comparison-data endpoint. This milestone
+does not add new mathematical content. It makes the endpoint readable by adding
+projection theorems, so future reviewers can inspect the source audit witness,
+the comparison data object, and the data-level public facts without manually
+destructing nested existential proofs.
+
+### Purpose
+
+`ComparisonDataEndpoint` is a proposition. That is intentional: it is an
+audited theorem-level package, not computational data extracted from a proof.
+Because proof-level existential data is awkward to consume directly, this
+milestone adds a namespace of projection theorems.
+
+The projections recover:
+
+* the existence of the source audit witness;
+* the existence of the comparison data object and its equality to the package
+  comparison data;
+* the signed q-to-Theta inequality;
+* the Corollary-3.12-shaped endpoint;
+* the Stage 1 recovery equality;
+* equality with the comparison data's own public audit.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.ComparisonDataEndpoint.sourceAuditExists
+IUTStage1SourcePackage.ComparisonDataEndpoint.comparisonDataExists
+IUTStage1SourcePackage.ComparisonDataEndpoint.qSignedLeThetaSigned
+IUTStage1SourcePackage.ComparisonDataEndpoint.corollary312Endpoint
+IUTStage1SourcePackage.ComparisonDataEndpoint.stageRecoversQSignedLeThetaSigned
+IUTStage1SourcePackage.ComparisonDataEndpoint.publicAudit
+IUTStage1SourcePackage.ComparisonDataEndpoint.publicAudit_eq_comparisonData_publicAudit
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_comparisonDataEndpoint_q_le_theta_example
+unitThetaToy_source_comparisonDataEndpoint_corollary_example
+unitThetaToy_source_structured_hypotheses_comparisonDataEndpoint_publicAudit_example
+```
+
+### What This Tests
+
+The toy examples verify that the projections work both for the direct source
+obligation route and for the structured-hypotheses route. In particular, the
+examples recover the q-to-Theta comparison, the Corollary-3.12-shaped statement,
+and the equality to the comparison data's own public audit.
+
+### Design Trap Avoided
+
+The trap would be to make `ComparisonDataEndpoint` opaque in practice. If every
+consumer must manually unpack nested existentials, reviewers will have a harder
+time seeing whether a later proof uses the source audit, the data payload, or
+the final inequality. The projection theorems keep those roles visible.
+
+The other trap would be to turn the endpoint into computational data extracted
+from a proposition. We avoid that. The projections are theorem-level facts, so
+they preserve the distinction between audited proof packaging and genuine
+mathematical construction of the source comparison data.
+
+### Next Step
+
+The next milestone should connect these comparison-data endpoint projections
+back to the older public endpoint, showing explicitly that the old public audit
+triple and the new comparison-data endpoint present the same final
+Corollary-3.12-shaped information.
