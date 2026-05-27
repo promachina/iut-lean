@@ -1801,3 +1801,91 @@ placeAuditedDirectSummandPacketChoice_image_invariant_of_coric_example
 
 The next refinement should package audited multiradial images in the same way
 as the unaudited refined source packages.
+
+## 24. Audited Multiradial Image Packages
+
+### Goal
+
+We packaged the audited generated relation into region-valued multiradial image
+data, and then into the source-package theta-pilot interface.
+
+### Lean/API Check
+
+The new audited image package is:
+
+```text
+IUTStage1PlaceAuditedMultiradialImages
+```
+
+It carries:
+
+```text
+possibleImages
+quotient
+quotient_eq_generated
+image_invariant
+```
+
+The source-package wrapper is:
+
+```text
+IUTStage1PlaceAuditedMultiradialThetaImages
+```
+
+The main constructors and theorems are:
+
+```text
+IUTStage1PlaceAuditedMultiradialImages.ofCoricInvariant
+IUTStage1PlaceAuditedMultiradialImages.region_eq_of_related
+IUTStage1PlaceAuditedMultiradialImages.quotient_profile
+IUTStage1PlaceAuditedMultiradialThetaImages.ofPackageWithCoricInvariant
+IUTStage1PlaceAuditedMultiradialThetaImages.region_eq_of_related
+IUTStage1PlaceAuditedMultiradialThetaImages.quotient_profile
+IUTStage1PlaceAuditedMultiradialThetaImages.union_eq_targetUnion
+```
+
+### Mathematical Point
+
+This is the audited analogue of the refined multiradial package built earlier.
+The important point is that the image-invariance statement is now indexed by
+choices that still carry the place-family compatibility audit.  Thus the path
+from Theorem 3.11-style generated indeterminacies to possible theta-pilot
+images no longer drops the audit data before reaching the multiradial image
+surface.
+
+This matches the part of IUT III, Theorem 3.11 where the `(Ind2)` action is
+described at the level of direct summands attached to the places above the
+base place, while `(Ind3)` remains tied to the upper semi-compatible
+structure.  The formal package still abstracts the genuine arithmetic content,
+but it now keeps the correct bookkeeping pressure on the place-indexed
+summand layer.
+
+### Trap Avoided
+
+The constructor only produces an audited image package from an explicit
+coric-dependence hypothesis for audited choices.  It does not claim that every
+source package is automatically multiradial, nor does it identify an unaudited
+choice with an audited one.  This is deliberate: the disputed 3.11-to-3.12
+step is exactly where an unjustified loss of history or index data would be
+dangerous.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+placeAuditedMultiradialImages_of_coric_example
+placeAuditedMultiradialImages_region_eq_example
+placeAuditedMultiradialImages_profile_example
+placeAuditedMultiradialThetaImages_of_package_example
+placeAuditedMultiradialThetaImages_region_eq_example
+placeAuditedMultiradialThetaImages_union_eq_example
+```
+
+### Remaining Gap
+
+The next step should make the audited package less monolithic by exposing
+generator-wise image invariance for the audited `(Ind1)/(Ind2)/(Ind3)` steps.
+That will make it easier to inspect exactly which generator is responsible for
+which part of the possible-image invariance, and it will help us later isolate
+the specific `(Ind2)`/direct-summand issue relevant to Corollary 3.12.

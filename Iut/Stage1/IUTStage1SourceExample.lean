@@ -1186,6 +1186,79 @@ theorem placeAuditedDirectSummandPacketChoice_image_invariant_of_coric_example
   IUTStage1PlaceAuditedDirectSummandPacketChoice.image_invariant_of_coric
     images hcoric hrel
 
+def placeAuditedMultiradialImages_of_coric_example
+    {target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    (images :
+      RegionFamily target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind))
+    (hcoric :
+      ∀ audited₁ audited₂,
+        audited₁.choice.coric = audited₂.choice.coric ->
+          images.region audited₁ = images.region audited₂) :
+    IUTStage1PlaceAuditedMultiradialImages
+      (target := target) coric kind :=
+  IUTStage1PlaceAuditedMultiradialImages.ofCoricInvariant
+    images hcoric
+
+theorem placeAuditedMultiradialImages_region_eq_example
+    {target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric kind)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hrel : data.quotient.relation audited₁ audited₂) :
+    data.possibleImages.region audited₁ =
+      data.possibleImages.region audited₂ :=
+  data.region_eq_of_related hrel
+
+theorem placeAuditedMultiradialImages_profile_example
+    {target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric kind) :
+    data.quotient.profile = theorem311IndeterminacyProfile :=
+  data.quotient_profile
+
+def placeAuditedMultiradialThetaImages_of_package_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    (package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind))
+    (hcoric :
+      ∀ audited₁ audited₂,
+        audited₁.choice.coric = audited₂.choice.coric ->
+          (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+            audited₁ =
+          (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+            audited₂) :
+    IUTStage1PlaceAuditedMultiradialThetaImages package :=
+  IUTStage1PlaceAuditedMultiradialThetaImages.ofPackageWithCoricInvariant
+    package hcoric
+
+theorem placeAuditedMultiradialThetaImages_region_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hrel : data.auditedImages.quotient.relation audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+      data.possibleImages.images.region audited₂ :=
+  data.region_eq_of_related hrel
+
+theorem placeAuditedMultiradialThetaImages_union_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package) :
+    data.possibleImages.union =
+      package.preLedger.output.comparisons.targetUnion :=
+  data.union_eq_targetUnion
+
 def refinedThetaImagesDependOnlyOnCoric_to_multiradial_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
