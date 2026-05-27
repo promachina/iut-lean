@@ -1557,3 +1557,70 @@ The next refinement should connect this compatibility record to refined
 Theorem 3.11 choices, so a choice can carry or reference a place-family
 compatibility audit rather than only independent local tensor and upper-semi
 states.
+
+## 20. Place-Audited Refined Choices
+
+### Goal
+
+We attached the `(Ind2)`/`(Ind3)` place-family compatibility audit to refined
+direct-summand packet Theorem 3.11 choices.
+
+### Lean/API Check
+
+The new wrapper is:
+
+```text
+IUTStage1PlaceAuditedDirectSummandPacketChoice
+```
+
+It carries:
+
+```text
+choice : IUTStage1DirectSummandPacketTheorem311Choice coric kind
+placeFamilyCompatibility :
+  IUTStage1Ind2UpperSemiPlaceFamilyCompatibility
+upper_semi_state_eq :
+  placeFamilyCompatibility.upperSemiState = choice.upper_semi_state
+```
+
+The wrapper exposes:
+
+```text
+toDirectSummandPacketTheorem311Choice
+upperSemi_logVolumeCompatible
+upperSemi_logVolumeUpperBound
+nonarchimedeanPlaces_eq
+archimedeanPlaces_eq
+```
+
+### Mathematical Point
+
+This does not change the existing refined choice type.  Instead, it provides an
+audited wrapper for situations where a proof wants to remember that the choice's
+upper-semi state is linked to the place-family action data.  This keeps the
+base choice lightweight but makes the stronger place-family compatibility
+available explicitly.
+
+### Trap Avoided
+
+The audit wrapper does not merge `(Ind2)` and `(Ind3)`.  It only proves that
+their place lists align for this choice.  Local tensor action data and
+upper-semi inclusion/surjection data remain separate fields.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+placeAuditedDirectSummandPacketChoice_forget_example
+placeAuditedDirectSummandPacketChoice_logVolumeCompatible_example
+placeAuditedDirectSummandPacketChoice_upperBound_example
+placeAuditedDirectSummandPacketChoice_nonarchPlaces_example
+placeAuditedDirectSummandPacketChoice_archPlaces_example
+```
+
+### Remaining Gap
+
+The next step should define how these place-audited choices behave under the
+refined indeterminacy steps, especially whether `(Ind2)` and `(Ind3)` preserve
+or update the place-family compatibility audit.

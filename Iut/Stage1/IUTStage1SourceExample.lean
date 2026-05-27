@@ -1038,6 +1038,46 @@ theorem refinedDirectSummandPacketMultiradialThetaImages_union_eq_example
       package.preLedger.output.comparisons.targetUnion :=
   data.union_eq_targetUnion
 
+def placeAuditedDirectSummandPacketChoice_forget_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1DirectSummandPacketTheorem311Choice coric kind :=
+  audited.toDirectSummandPacketTheorem311Choice
+
+theorem placeAuditedDirectSummandPacketChoice_logVolumeCompatible_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    audited.choice.upper_semi_state.logVolumeCompatible :=
+  audited.upperSemi_logVolumeCompatible
+
+theorem placeAuditedDirectSummandPacketChoice_upperBound_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume <=
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+  audited.upperSemi_logVolumeUpperBound
+
+theorem placeAuditedDirectSummandPacketChoice_nonarchPlaces_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    audited.placeFamilyCompatibility.ind2Actions.nonarchimedeanPlaces =
+      audited.choice.upper_semi_state.nonarchimedeanInclusions.map fun entry =>
+        entry.place :=
+  audited.nonarchimedeanPlaces_eq
+
+theorem placeAuditedDirectSummandPacketChoice_archPlaces_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    audited.placeFamilyCompatibility.ind2Actions.archimedeanPlaces =
+      audited.choice.upper_semi_state.archimedeanSurjections.map fun entry =>
+        entry.place :=
+  audited.archimedeanPlaces_eq
+
 def refinedThetaImagesDependOnlyOnCoric_to_multiradial_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

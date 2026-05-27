@@ -2894,6 +2894,70 @@ theorem union_eq_targetUnion
 end IUTStage1RefinedDirectSummandPacketMultiradialThetaImages
 
 /--
+Refined direct-summand packet choice together with a place-family compatibility
+audit linking its upper-semi state to `(Ind2)` action-family data.
+-/
+structure IUTStage1PlaceAuditedDirectSummandPacketChoice
+    (coric : Type u) (kind : IUTStage1PlaceKind) where
+  choice : IUTStage1DirectSummandPacketTheorem311Choice coric kind
+  placeFamilyCompatibility :
+    IUTStage1Ind2UpperSemiPlaceFamilyCompatibility
+  upper_semi_state_eq :
+    placeFamilyCompatibility.upperSemiState = choice.upper_semi_state
+
+namespace IUTStage1PlaceAuditedDirectSummandPacketChoice
+
+variable {coric : Type u} {kind : IUTStage1PlaceKind}
+
+def toDirectSummandPacketTheorem311Choice
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1DirectSummandPacketTheorem311Choice coric kind :=
+  audited.choice
+
+theorem upperSemiState_eq
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    audited.placeFamilyCompatibility.upperSemiState =
+      audited.choice.upper_semi_state :=
+  audited.upper_semi_state_eq
+
+theorem upperSemi_logVolumeCompatible
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    audited.choice.upper_semi_state.logVolumeCompatible := by
+  rw [← audited.upperSemiState_eq]
+  exact audited.placeFamilyCompatibility.logVolumeCompatible
+
+theorem upperSemi_logVolumeUpperBound
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume <=
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  rw [← audited.upperSemiState_eq]
+  exact audited.placeFamilyCompatibility.logVolumeUpperBound
+
+theorem nonarchimedeanPlaces_eq
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    audited.placeFamilyCompatibility.ind2Actions.nonarchimedeanPlaces =
+      audited.choice.upper_semi_state.nonarchimedeanInclusions.map fun entry =>
+        entry.place := by
+  rw [← audited.upperSemiState_eq]
+  exact audited.placeFamilyCompatibility.nonarchimedeanPlaces_eq
+
+theorem archimedeanPlaces_eq
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    audited.placeFamilyCompatibility.ind2Actions.archimedeanPlaces =
+      audited.choice.upper_semi_state.archimedeanSurjections.map fun entry =>
+        entry.place := by
+  rw [← audited.upperSemiState_eq]
+  exact audited.placeFamilyCompatibility.archimedeanPlaces_eq
+
+end IUTStage1PlaceAuditedDirectSummandPacketChoice
+
+/--
 Refined obligation that source-package Theta-pilot possible images depend only
 on the coric coordinate of direct-summand packet choices.
 
