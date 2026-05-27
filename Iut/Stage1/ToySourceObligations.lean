@@ -98,6 +98,35 @@ def unitThetaToyStage1Comparison_from_sourceObligations
     Stage1Comparison :=
   (unitThetaToySourceObligationLedger measure hnormalized hh hbound hholds).stage1Comparison
 
+theorem unitThetaToy_certificate_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToySourceObligationLedger
+      measure hnormalized hh hbound hholds).certificate =
+      thetaToyStructuredCertificate unitQToTheta h epsilon :=
+  rfl
+
+theorem unitThetaToy_chartedContainer_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToySourceObligationLedger
+      measure hnormalized hh hbound hholds).chartedContainer =
+      thetaToyChartedCommonContainerData
+        measure hnormalized unitQToTheta h hbound :=
+  rfl
+
 theorem unitThetaToy_membership_q_le_target_from_sourceObligations
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

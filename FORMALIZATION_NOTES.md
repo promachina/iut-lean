@@ -5045,3 +5045,76 @@ projection keeps the toy witness visibly tied to the charted common container.
 The next milestone should add analogous toy projections for the certificate and
 charted common container fields themselves, confirming they are exactly the
 named toy constructors.
+
+## Milestone 56: Toy Certificate and Container Source Projections
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+The April 2026 formalization report describes the final comparison as involving
+a common container for the `Theta`- and `q`-pilot data and emphasizes the
+relationship between input data, multiradial output data, and the final
+comparison. In the toy model, those qualitative inputs are represented by named
+constructors:
+
+```text
+thetaToyStructuredCertificate
+thetaToyChartedCommonContainerData
+```
+
+Milestone 55 showed that the toy common bound is obtained by applying the
+charted common container to the certificate. This milestone records where those
+two inputs come from.
+
+### Purpose
+
+This milestone adds toy-level field-origin projections:
+
+```text
+ledger.certificate
+  = thetaToyStructuredCertificate unitQToTheta h epsilon
+
+ledger.chartedContainer
+  = thetaToyChartedCommonContainerData
+      measure hnormalized unitQToTheta h hbound
+```
+
+### Lean Declarations
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToy_certificate_from_sourceObligations
+unitThetaToy_chartedContainer_from_sourceObligations
+```
+
+Both proofs are `rfl`, confirming that the toy source ledger uses the named toy
+certificate and named toy charted common container directly.
+
+### What This Tests
+
+The toy common-bound source path now starts from named constructors:
+
+```text
+thetaToyStructuredCertificate
+thetaToyChartedCommonContainerData
+chartedContainer.apply certificate
+theta_commonBound
+```
+
+This makes the toy source ledger easier to audit before replacing toy data with
+genuine IUT constructions.
+
+### Design Trap Avoided
+
+The trap would be to expose the common-bound application while leaving the
+certificate and container inputs opaque. These projections make the inputs
+themselves transparent.
+
+### Next Step
+
+The next milestone should continue one level down and expose toy projections
+for the charted container's `commonContainer` and `chart` subfields.
