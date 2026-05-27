@@ -1213,3 +1213,105 @@ The next milestone should start separating this audited route into a smaller
 module if the source file becomes unwieldy, or else add source-facing naming for
 which checkpoint corresponds to the debated Theorem 3.11 to Corollary 3.12
 transition.
+
+## Math Milestone 13: Named Theorem 3.11 to Corollary 3.12 Checkpoints
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Mochizuki's formalization report names the final reorganized portion as
+`3.11.5 => 3.12` and identifies the fourth triangle as the composite
+`(HDD) o (SHE)`. The same passage says this triangle concerns simultaneous
+comparison inside a common container. IUT III, Remark 3.11.1 also stresses that
+SHE and APT are not ordinary set-theoretic transport, and that later comparison
+work remains necessary.
+
+This milestone adds source-facing names for the checkpoints we have formalized,
+so a reviewer can see which proof object corresponds to which part of that
+discussion.
+
+### Purpose
+
+This milestone adds inert checkpoint identifiers:
+
+```text
+TransitionCheckpointId
+fourthTriangleHDDSHECheckpoint
+simultaneousComparisonCheckpoint
+theorem3115ToCorollary312Checkpoint
+```
+
+It also adds:
+
+```text
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints
+```
+
+The checkpoint record ties together:
+
+* the audited structured-SHE route summary;
+* the source input label;
+* the Corollary 3.12 comparison label;
+* the fourth-triangle `HDD o SHE` bound;
+* the simultaneous common-container compatibility proof;
+* the raw target-volume chain;
+* the signed-payload boundary;
+* the audited public audit;
+* history separation.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+TransitionCheckpointId
+fourthTriangleHDDSHECheckpoint
+simultaneousComparisonCheckpoint
+theorem3115ToCorollary312Checkpoint
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.ofStructuredInputsWithSHE
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.routeSummary
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.theorem311InputLabel
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.corollary312ComparisonLabel
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.fourthTriangleHDDSHE
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.simultaneousCommonContainer
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.targetVolumeChain
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.signedPayloadBoundary
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.publicAudit
+IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints.domainHistory_ne_codomainHistory
+IUTStage1SourcePackage.auditedTheorem311ToCorollary312Checkpoints
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_theorem311_transition_checkpoints_example
+unitThetaToy_source_theorem311_transition_checkpoints_input_label_example
+unitThetaToy_source_theorem311_transition_checkpoints_hdd_she_example
+unitThetaToy_source_theorem311_transition_checkpoints_common_container_example
+unitThetaToy_source_theorem311_transition_checkpoints_history_example
+```
+
+### What This Tests
+
+The toy model verifies that the named checkpoint record can be instantiated and
+that it exposes the input label, the fourth-triangle `HDD o SHE` checkpoint, the
+simultaneous common-container checkpoint, and history separation.
+
+### Design Trap Avoided
+
+The trap would be to name the entire route "Corollary 3.12" and thereby obscure
+which part of the proof corresponds to which mathematical claim. The new record
+keeps the checkpoints separate. In particular, the `HDD o SHE` bound, the
+common-container compatibility, the raw inequality, and the signed-payload
+boundary remain distinct fields.
+
+### Next Step
+
+The source file is now large. The next milestone should split the audited
+Theorem 3.11 to Corollary 3.12 route into a dedicated module, preserving public
+imports and avoiding any change to theorem statements.

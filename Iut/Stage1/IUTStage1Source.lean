@@ -39,6 +39,10 @@ structure QPilotLogVolumeId where
 structure SourceNormalizationId where
   label : String
 
+/-- Inert identifier for a named checkpoint in the Theorem 3.11 to Corollary 3.12 route. -/
+structure TransitionCheckpointId where
+  label : String
+
 /--
 Source-facing labels for the IUT III Theorem 3.11 to Corollary 3.12 boundary.
 
@@ -67,6 +71,15 @@ def theorem311ToCorollary312Labels : IUTStage1SourceLabels :=
     indeterminacies := { label := "Ind1-Ind2-Ind3 profile" },
     qPilotLogVolume := { label := "q-pilot log-volume sign datum" },
     sourceNormalization := { label := "source normalization datum" } }
+
+def fourthTriangleHDDSHECheckpoint : TransitionCheckpointId :=
+  { label := "fourth triangle HDD after SHE" }
+
+def simultaneousComparisonCheckpoint : TransitionCheckpointId :=
+  { label := "simultaneous common-container comparison" }
+
+def theorem3115ToCorollary312Checkpoint : TransitionCheckpointId :=
+  { label := "3.11.5 to Corollary 3.12 final comparison" }
 
 /--
 Non-toy source package for future IUT Stage 1 data.
@@ -2100,6 +2113,138 @@ theorem auditedStructuredSHERouteSummary
     (sideConditions : IUTStage1SourceSideConditions package) :
     AuditedStructuredSHERouteSummary package bundle sideConditions :=
   AuditedStructuredSHERouteSummary.ofStructuredInputsWithSHE
+    bundle sideConditions
+
+/--
+Named checkpoints for the audited Theorem 3.11 to Corollary 3.12 route.
+
+This record connects the proof-level audit route to the source-facing names used
+for the debated transition: the fourth-triangle `HDD o SHE` step, the
+simultaneous common-container comparison, and the final signed payload boundary.
+-/
+structure AuditedTheorem311ToCorollary312Checkpoints
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) : Prop where
+  route_summary :
+    AuditedStructuredSHERouteSummary package bundle sideConditions
+  theorem311_input_label : package.input = package.labels.input
+  corollary312_comparison_label :
+    package.logVolumeComparison = package.labels.logVolumeComparison
+  fourth_triangle_hdd_she :
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle
+  simultaneous_common_container :
+    IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+      package bundle.structuredSHE
+  target_volume_chain :
+    IUTStage1Theorem311AuditedRawInequality package bundle
+  signed_payload_boundary :
+    IUTStage1Theorem311AuditedSignedPayloadBoundary
+      package bundle sideConditions
+  public_audit : AuditedPublicAudit package bundle sideConditions
+  histories_not_identified :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side
+
+namespace AuditedTheorem311ToCorollary312Checkpoints
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+variable {sideConditions : IUTStage1SourceSideConditions package}
+
+theorem ofStructuredInputsWithSHE
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    AuditedTheorem311ToCorollary312Checkpoints
+      package bundle sideConditions :=
+  { route_summary :=
+      package.auditedStructuredSHERouteSummary bundle sideConditions,
+    theorem311_input_label := package.input_matches_labels,
+    corollary312_comparison_label :=
+      package.logVolumeComparison_matches_labels,
+    fourth_triangle_hdd_she := bundle.auditedHDDSHEBound,
+    simultaneous_common_container := bundle.commonContainerCompatibility,
+    target_volume_chain := bundle.auditedRawInequality,
+    signed_payload_boundary :=
+      bundle.auditedSignedPayloadBoundary sideConditions,
+    public_audit := package.auditedPublicAudit bundle sideConditions,
+    histories_not_identified := bundle.domainHistory_ne_codomainHistory }
+
+theorem routeSummary
+    (checkpoints :
+      AuditedTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    AuditedStructuredSHERouteSummary package bundle sideConditions :=
+  checkpoints.route_summary
+
+theorem theorem311InputLabel
+    (checkpoints :
+      AuditedTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    package.input = package.labels.input :=
+  checkpoints.theorem311_input_label
+
+theorem corollary312ComparisonLabel
+    (checkpoints :
+      AuditedTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    package.logVolumeComparison = package.labels.logVolumeComparison :=
+  checkpoints.corollary312_comparison_label
+
+theorem fourthTriangleHDDSHE
+    (checkpoints :
+      AuditedTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle :=
+  checkpoints.fourth_triangle_hdd_she
+
+theorem simultaneousCommonContainer
+    (checkpoints :
+      AuditedTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+      package bundle.structuredSHE :=
+  checkpoints.simultaneous_common_container
+
+theorem targetVolumeChain
+    (checkpoints :
+      AuditedTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    IUTStage1Theorem311AuditedRawInequality package bundle :=
+  checkpoints.target_volume_chain
+
+theorem signedPayloadBoundary
+    (checkpoints :
+      AuditedTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    IUTStage1Theorem311AuditedSignedPayloadBoundary
+      package bundle sideConditions :=
+  checkpoints.signed_payload_boundary
+
+theorem publicAudit
+    (checkpoints :
+      AuditedTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    AuditedPublicAudit package bundle sideConditions :=
+  checkpoints.public_audit
+
+theorem domainHistory_ne_codomainHistory
+    (checkpoints :
+      AuditedTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side :=
+  checkpoints.histories_not_identified
+
+end AuditedTheorem311ToCorollary312Checkpoints
+
+theorem auditedTheorem311ToCorollary312Checkpoints
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    AuditedTheorem311ToCorollary312Checkpoints
+      package bundle sideConditions :=
+  AuditedTheorem311ToCorollary312Checkpoints.ofStructuredInputsWithSHE
     bundle sideConditions
 
 theorem comparisonData_thetaSigned

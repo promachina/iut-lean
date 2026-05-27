@@ -1477,6 +1477,107 @@ theorem unitThetaToy_source_theorem311_audited_route_summary_q_le_theta_example
   (unitThetaToy_source_theorem311_audited_route_summary_example
     measure hnormalized hh hbound hholds).qSigned_le_thetaSigned
 
+theorem unitThetaToy_source_theorem311_transition_checkpoints_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let bundle :=
+      unitThetaToy_source_theorem311_structured_inputs_with_she_example
+        measure hnormalized hh hbound hholds
+    let sideConditions :=
+      unitThetaToy_source_side_conditions_example
+        measure hnormalized hh hbound hholds
+    IUTStage1SourcePackage.AuditedTheorem311ToCorollary312Checkpoints
+      package bundle sideConditions :=
+  let package :=
+    unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds
+  package.auditedTheorem311ToCorollary312Checkpoints
+    (unitThetaToy_source_theorem311_structured_inputs_with_she_example
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_side_conditions_example
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_theorem311_transition_checkpoints_input_label_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    package.input = package.labels.input :=
+  (unitThetaToy_source_theorem311_transition_checkpoints_example
+    measure hnormalized hh hbound hholds).theorem311InputLabel
+
+theorem unitThetaToy_source_theorem311_transition_checkpoints_hdd_she_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let bundle :=
+      unitThetaToy_source_theorem311_structured_inputs_with_she_example
+        measure hnormalized hh hbound hholds
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle :=
+  (unitThetaToy_source_theorem311_transition_checkpoints_example
+    measure hnormalized hh hbound hholds).fourthTriangleHDDSHE
+
+theorem unitThetaToy_source_theorem311_transition_checkpoints_common_container_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let bundle :=
+      unitThetaToy_source_theorem311_structured_inputs_with_she_example
+        measure hnormalized hh hbound hholds
+    IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+      package bundle.structuredSHE :=
+  (unitThetaToy_source_theorem311_transition_checkpoints_example
+    measure hnormalized hh hbound hholds).simultaneousCommonContainer
+
+theorem unitThetaToy_source_theorem311_transition_checkpoints_history_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let bundle :=
+      unitThetaToy_source_theorem311_structured_inputs_with_she_example
+        measure hnormalized hh hbound hholds
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side :=
+  (unitThetaToy_source_theorem311_transition_checkpoints_example
+    measure hnormalized hh hbound hholds).domainHistory_ne_codomainHistory
+
 theorem unitThetaToy_source_side_condition_hypotheses_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
