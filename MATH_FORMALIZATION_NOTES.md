@@ -7773,3 +7773,74 @@ The q-side allowed-reading predicate is still minimal. Later milestones should
 make it more informative, for example by recording preservation properties
 that are appropriate for real-line-copy readings but still do not identify
 Hodge-theater histories.
+
+## Math Milestone 79: Order Preservation for q-Side Chart Readings
+
+Lean files:
+
+* `Iut/Foundations/RealLineCopy.lean`
+* `Iut/Foundations/AlgorithmicBridge.lean`
+
+### Source Check
+
+A real-line-copy chart transport should preserve the order structure used in
+the final inequality. This is much weaker than identifying Hodge-theater
+histories, but stronger than treating the q-side chart as a mere named map.
+
+The existing `Transport` model uses positive scaling factors. Positivity is
+exactly the property needed to prove order preservation of coordinates.
+
+### Lean/API Check
+
+The new transport theorem is:
+
+```text
+Transport.map_coord_le_map_coord
+```
+
+It states that if `x.coord <= y.coord`, then the transported coordinates also
+satisfy the same order inequality.
+
+The chart-level predicate:
+
+```text
+RealComparisonChartData.QToTargetAllowedReading
+```
+
+now means this order-preservation property for the chart's q-to-target
+transport:
+
+```text
+forall x y, x.coord <= y.coord ->
+  (Transport.map qToTarget x).coord <= (Transport.map qToTarget y).coord
+```
+
+The canonical chart `transportDiscipline` proves this using positivity of the
+transport scale.
+
+### Lean Decisions
+
+This is a better local meaning for "allowed q-to-target reading" than a
+tautological self-equality. It remains safely below history identification:
+only order on real-line coordinates is transported.
+
+The Theta-side discipline remains the explicit trivial-monodromy condition
+already present in the chart data.
+
+### What This Tests
+
+The foundational chart bridge builds after the change, so downstream Stage 1
+objects can continue to use `chart.TransportDiscipline` with the stronger
+q-side interpretation.
+
+### Design Trap Avoided
+
+The trap would be to make allowed q-side chart transport mathematically empty.
+This milestone gives it exactly the amount of structure needed for inequalities
+while avoiding any claim about ring/scheme-history identification.
+
+### Remaining Gap
+
+The transport model is still only positive scaling between labeled real-line
+copies. Later work should decide whether additional chart properties are
+needed for the IUT log-volume comparison.

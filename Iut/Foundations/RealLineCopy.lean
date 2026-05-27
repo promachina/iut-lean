@@ -100,6 +100,12 @@ theorem map_coord (f : Transport source target) (x : Point source) :
     (map f x).coord = f.scale.val * x.coord :=
   rfl
 
+theorem map_coord_le_map_coord
+    (f : Transport source target) {x y : Point source}
+    (hxy : x.coord <= y.coord) :
+    (map f x).coord <= (map f y).coord := by
+  exact mul_le_mul_of_nonneg_left hxy (le_of_lt f.scale.pos)
+
 @[simp]
 theorem id_map_coord (line : Copy) (x : Point line) :
     (map (id line) x).coord = x.coord := by

@@ -343,7 +343,9 @@ variable {output : AlgorithmicOutput source target index}
 /-- The q-to-target map is being used as a chart reading, not as a history map. -/
 def QToTargetAllowedReading
     (chartData : RealComparisonChartData output measure) : Prop :=
-  Transport.PointwiseEqual chartData.qToTarget chartData.qToTarget
+  ∀ x y : Point source, x.coord <= y.coord ->
+    (Transport.map chartData.qToTarget x).coord <=
+      (Transport.map chartData.qToTarget y).coord
 
 /--
 The Theta-side target transport is allowed as a chart reading only together
@@ -368,7 +370,9 @@ structure TransportDiscipline
 def transportDiscipline
     (chartData : RealComparisonChartData output measure) :
     chartData.TransportDiscipline :=
-  { q_to_target_allowed := Transport.pointwiseEqual_of_scale_eq rfl,
+  { q_to_target_allowed := by
+      intro x y hxy
+      exact Transport.map_coord_le_map_coord chartData.qToTarget hxy,
     theta_to_target_allowed := chartData.theta_trivial }
 
 theorem qToTargetAllowedReading
