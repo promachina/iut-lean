@@ -208,3 +208,98 @@ The step relation still assumes preservation of packet log-volumes as fields.
 The next deeper mathematical task is to replace these fields by a formal action
 on indexed capsule/direct-summand data and then prove the total and normalized
 log-volume preservation from invariance of the summands.
+
+## 3. Indexed Capsule Actions
+
+### Goal
+
+We replaced part of the packet-level preservation assumption by an explicit
+action on indexed capsule representatives.
+
+### Lean/API Check
+
+The new action record is:
+
+```text
+IUTStage1TypedCapsuleFamilyLogVolumeAction
+```
+
+It is attached to a typed capsule family and supplies a new capsule
+representative at every index:
+
+```text
+capsule : Fin data.capsuleCount -> IUTStage1CapsuleLogVolumeObject kind
+```
+
+with proof fields:
+
+```text
+capsule_local_object_eq
+logVolume_eq
+```
+
+The transformed family keeps the same finite index type, local object, total
+log-volume, and normalized log-volume.  The nontrivial Lean check is the total
+sum equation: Lean proves that the transformed total is still the finite sum
+over transformed capsules by pointwise equality of capsule log-volumes.
+
+### Packet `(Ind2)` Refinement
+
+We added:
+
+```text
+LocalTensorPacketActionStep
+```
+
+for `IUTStage1TensorPacketTheorem311Choice`.  This step carries a capsule action
+on the source packet existentially and a proof that the target capsule family is
+the transformed family.  The existential packaging matters: the step remains a
+`Prop`, suitable for an indeterminacy relation, rather than a data-valued
+structure.  From this, Lean derives:
+
+```text
+actionStep_preserves_capsuleCount
+actionStep_preserves_capsuleTotalLogVolume
+actionStep_preserves_capsuleNormalizedLogVolume
+actionStep_preserves_directSummandCount
+```
+
+and converts the action step to the previous packet symmetry step:
+
+```text
+actionStep_toPacketSymmetryStep
+```
+
+### Source Alignment
+
+This matches the local Theorem 3.11 `(Ind2)` direction more closely than the
+previous milestone: the formal object is now an action on the finite indexed
+capsule/direct-summand surface, and log-volume preservation is a theorem from
+pointwise preservation rather than merely a field in the step relation.
+
+### Trap Avoided
+
+We still do not model the actual `Ism` copies or order-two automorphisms from
+Theorem 3.11.  The action is intentionally weaker and more abstract.  It only
+asserts what the current log-volume layer can responsibly consume: unchanged
+per-capsule log-volume values over the same finite index type.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+upperSemi_capsuleFamilyAction_transformed_example
+upperSemi_capsuleFamilyAction_totalLogVolume_example
+upperSemi_capsuleFamilyAction_total_eq_sum_example
+tensorPacketTheorem311_actionStep_preserves_totalLogVolume_example
+tensorPacketTheorem311_actionStep_to_packetStep_example
+tensorPacketTheorem311_actionStep_preserves_directSummandCount_example
+```
+
+### Remaining Gap
+
+The next refinement should type the actual direct summands separately from the
+capsules, then relate the summand action to the capsule action.  This is where
+the formalization should eventually introduce the `Ism`/order-two symmetry
+surface mentioned in Theorem 3.11.

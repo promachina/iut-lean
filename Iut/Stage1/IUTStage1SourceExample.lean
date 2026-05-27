@@ -452,6 +452,29 @@ def upperSemi_typedCapsuleFamily_to_capsuleFamily_example
     IUTStage1CapsuleFamilyLogVolume kind :=
   data.toCapsuleFamilyLogVolume
 
+def upperSemi_capsuleFamilyAction_transformed_example
+    {kind : IUTStage1PlaceKind}
+    {data : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    (action : IUTStage1TypedCapsuleFamilyLogVolumeAction data) :
+    IUTStage1TypedCapsuleFamilyLogVolume kind :=
+  action.transformedFamily
+
+theorem upperSemi_capsuleFamilyAction_totalLogVolume_example
+    {kind : IUTStage1PlaceKind}
+    {data : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    (action : IUTStage1TypedCapsuleFamilyLogVolumeAction data) :
+    action.transformedFamily.totalLogVolume = data.totalLogVolume :=
+  action.transformedFamily_totalLogVolume
+
+theorem upperSemi_capsuleFamilyAction_total_eq_sum_example
+    {kind : IUTStage1PlaceKind}
+    {data : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    (action : IUTStage1TypedCapsuleFamilyLogVolumeAction data) :
+    action.transformedFamily.totalLogVolume =
+      Finset.univ.sum fun i =>
+        (action.transformedFamily.capsule i).logVolume :=
+  action.transformedFamily_total_eq_sum
+
 def localTensorPacket_to_localTensorState_example
     {kind : IUTStage1PlaceKind}
     (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
@@ -528,6 +551,39 @@ def tensorPacketTheorem311_ind2_to_structured_example
     IUTStage1StructuredTheorem311Choice.LocalTensorSymmetryStep
       choice₁.forgetPacket choice₂.forgetPacket :=
   IUTStage1TensorPacketTheorem311Choice.toStructuredLocalTensorSymmetryStep
+    hstep
+
+theorem tensorPacketTheorem311_actionStep_preserves_totalLogVolume_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketActionStep
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.capsuleFamily.totalLogVolume :=
+  IUTStage1TensorPacketTheorem311Choice.actionStep_preserves_capsuleTotalLogVolume
+    hstep
+
+def tensorPacketTheorem311_actionStep_to_packetStep_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketActionStep
+        choice₁ choice₂) :
+    IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketSymmetryStep
+      choice₁ choice₂ :=
+  IUTStage1TensorPacketTheorem311Choice.actionStep_toPacketSymmetryStep
+    hstep
+
+theorem tensorPacketTheorem311_actionStep_preserves_directSummandCount_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketActionStep
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.tensorState.directSummandCount =
+      choice₂.local_tensor_state.tensorState.directSummandCount :=
+  IUTStage1TensorPacketTheorem311Choice.actionStep_preserves_directSummandCount
     hstep
 
 theorem upperSemi_logVolumeCompatibility_upperBound_example
