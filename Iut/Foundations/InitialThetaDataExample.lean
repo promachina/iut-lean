@@ -124,6 +124,45 @@ example {source target : HyperbolicOrbicurveModel F}
     coverMorphism label automorphismExists inverseExists overTarget
     hAutomorphism hInverse hOverTarget).overTarget_holds
 
+/--
+A constructor smoke test for supplied composition operations on over-target
+orbicurve automorphisms.
+-/
+def abstractHyperbolicOrbicurveAutomorphismCompositionData
+    {source target : HyperbolicOrbicurveModel F}
+    (coverMorphism : HyperbolicOrbicurveMorphismData source target)
+    (identityAutomorphism :
+      HyperbolicOrbicurveAutomorphismOverData coverMorphism)
+    (composeAutomorphism :
+      HyperbolicOrbicurveAutomorphismOverData coverMorphism →
+        HyperbolicOrbicurveAutomorphismOverData coverMorphism →
+        HyperbolicOrbicurveAutomorphismOverData coverMorphism)
+    (inverseAutomorphism :
+      HyperbolicOrbicurveAutomorphismOverData coverMorphism →
+        HyperbolicOrbicurveAutomorphismOverData coverMorphism) :
+    HyperbolicOrbicurveAutomorphismCompositionData coverMorphism where
+  identityAutomorphism := identityAutomorphism
+  composeAutomorphism := composeAutomorphism
+  inverseAutomorphism := inverseAutomorphism
+
+example {source target : HyperbolicOrbicurveModel F}
+    (coverMorphism : HyperbolicOrbicurveMorphismData source target)
+    (identityAutomorphism :
+      HyperbolicOrbicurveAutomorphismOverData coverMorphism)
+    (composeAutomorphism :
+      HyperbolicOrbicurveAutomorphismOverData coverMorphism →
+        HyperbolicOrbicurveAutomorphismOverData coverMorphism →
+        HyperbolicOrbicurveAutomorphismOverData coverMorphism)
+    (inverseAutomorphism :
+      HyperbolicOrbicurveAutomorphismOverData coverMorphism →
+        HyperbolicOrbicurveAutomorphismOverData coverMorphism) :
+    (abstractHyperbolicOrbicurveAutomorphismCompositionData
+      coverMorphism identityAutomorphism composeAutomorphism
+      inverseAutomorphism).identityAutomorphism.overTarget :=
+  (abstractHyperbolicOrbicurveAutomorphismCompositionData
+    coverMorphism identityAutomorphism composeAutomorphism
+    inverseAutomorphism).identity_overTarget
+
 /-- A constructor smoke test for finite-etale/Galois properties of a fixed morphism. -/
 def abstractFiniteEtaleGaloisOrbicurveMorphismData
     {source target : HyperbolicOrbicurveModel F}
@@ -247,6 +286,55 @@ example {source target : HyperbolicOrbicurveModel F}
   (abstractOrbicurveCoverDeckAutomorphismGroupLawData
     realization identityCompatible multiplicationCompatible
     hIdentity hMultiplication).compatible
+
+/--
+A constructor smoke test for actual equation-level compatibility between deck
+group multiplication and supplied over-target automorphism composition.
+-/
+def abstractOrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+    {source target : HyperbolicOrbicurveModel F}
+    {morphism : HyperbolicOrbicurveMorphismData source target}
+    {coverProperties : FiniteEtaleGaloisOrbicurveMorphismData morphism}
+    {deckData : OrbicurveCoverDeckTransformationData coverProperties}
+    (realization : OrbicurveCoverDeckAutomorphismRealizationData deckData)
+    (composition : HyperbolicOrbicurveAutomorphismCompositionData morphism)
+    (deckIdentityCompatible :
+      realization.deckAutomorphism (1 : deckData.deckGroup) =
+        composition.identityAutomorphism)
+    (deckMultiplicationCompatible :
+      ∀ g h : deckData.deckGroup,
+        realization.deckAutomorphism (g * h) =
+          composition.composeAutomorphism
+            (realization.deckAutomorphism g)
+            (realization.deckAutomorphism h)) :
+    OrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+      realization composition where
+  deckIdentityCompatible := deckIdentityCompatible
+  deckMultiplicationCompatible := deckMultiplicationCompatible
+
+example {source target : HyperbolicOrbicurveModel F}
+    {morphism : HyperbolicOrbicurveMorphismData source target}
+    {coverProperties : FiniteEtaleGaloisOrbicurveMorphismData morphism}
+    {deckData : OrbicurveCoverDeckTransformationData coverProperties}
+    (realization : OrbicurveCoverDeckAutomorphismRealizationData deckData)
+    (composition : HyperbolicOrbicurveAutomorphismCompositionData morphism)
+    (deckIdentityCompatible :
+      realization.deckAutomorphism (1 : deckData.deckGroup) =
+        composition.identityAutomorphism)
+    (deckMultiplicationCompatible :
+      ∀ g h : deckData.deckGroup,
+        realization.deckAutomorphism (g * h) =
+          composition.composeAutomorphism
+            (realization.deckAutomorphism g)
+            (realization.deckAutomorphism h))
+    (g h : deckData.deckGroup) :
+    realization.deckAutomorphism (g * h) =
+      composition.composeAutomorphism
+        (realization.deckAutomorphism g)
+        (realization.deckAutomorphism h) :=
+  (abstractOrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+    realization composition deckIdentityCompatible
+    deckMultiplicationCompatible).deckMultiplication g h
 
 /--
 A constructor smoke test for a function-field extension attached to a fixed
@@ -722,6 +810,11 @@ noncomputable def abstractThetaFiniteEtaleGaloisCoverCertificate
       OrbicurveCoverDeckAutomorphismRealizationData coverDeckTransformations)
     (coverDeckAutomorphismGroupLaw :
       OrbicurveCoverDeckAutomorphismGroupLawData coverDeckAutomorphisms)
+    (coverAutomorphismComposition :
+      HyperbolicOrbicurveAutomorphismCompositionData coverMorphism)
+    (coverDeckAutomorphismCompositionCompatibility :
+      OrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+        coverDeckAutomorphisms coverAutomorphismComposition)
     (coverDeckQuotient :
       OrbicurveCoverDeckQuotientData thetaApproach coverDeckTransformations)
     (functionFieldExtension :
@@ -738,6 +831,9 @@ noncomputable def abstractThetaFiniteEtaleGaloisCoverCertificate
   coverDeckTransformations := coverDeckTransformations
   coverDeckAutomorphisms := coverDeckAutomorphisms
   coverDeckAutomorphismGroupLaw := coverDeckAutomorphismGroupLaw
+  coverAutomorphismComposition := coverAutomorphismComposition
+  coverDeckAutomorphismCompositionCompatibility :=
+    coverDeckAutomorphismCompositionCompatibility
   coverDeckQuotient := coverDeckQuotient
   functionFieldExtension := functionFieldExtension
   quotientAction := quotientAction
@@ -820,6 +916,27 @@ example
     certificate.coverDeckAutomorphismGroupLaw.identityCompatible ∧
       certificate.coverDeckAutomorphismGroupLaw.multiplicationCompatible :=
   certificate.coverDeckAutomorphism_groupLawCompatible
+
+example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (certificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L) :
+    certificate.coverDeckAutomorphism (1 : certificate.coverDeckGroup) =
+      certificate.coverAutomorphismComposition.identityAutomorphism :=
+  certificate.coverDeckAutomorphism_identity_eq
+
+example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (certificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L)
+    (g h : certificate.coverDeckGroup) :
+    certificate.coverDeckAutomorphism (g * h) =
+      certificate.coverAutomorphismComposition.composeAutomorphism
+        (certificate.coverDeckAutomorphism g)
+        (certificate.coverDeckAutomorphism h) :=
+  certificate.coverDeckAutomorphism_mul_eq_comp g h
 
 noncomputable example
     (thetaApproach : ThetaApproachQuotientData)

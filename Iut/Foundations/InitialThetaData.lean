@@ -469,6 +469,53 @@ theorem overTarget_proof : automorphism.overTarget :=
 end HyperbolicOrbicurveAutomorphismOverData
 
 /--
+A supplied composition interface for automorphisms of the source orbicurve over
+a fixed cover morphism.
+
+This is not yet a construction from a category of orbicurves.  It records the
+identity, composition, and inverse operations that a later concrete category
+should provide, while keeping every operation indexed by the same target cover
+morphism.
+-/
+structure HyperbolicOrbicurveAutomorphismCompositionData
+    {F : Type u} [Field F]
+    {source target : HyperbolicOrbicurveModel F}
+    (coverMorphism : HyperbolicOrbicurveMorphismData source target) where
+  identityAutomorphism :
+    HyperbolicOrbicurveAutomorphismOverData coverMorphism
+  composeAutomorphism :
+    HyperbolicOrbicurveAutomorphismOverData coverMorphism →
+      HyperbolicOrbicurveAutomorphismOverData coverMorphism →
+      HyperbolicOrbicurveAutomorphismOverData coverMorphism
+  inverseAutomorphism :
+    HyperbolicOrbicurveAutomorphismOverData coverMorphism →
+      HyperbolicOrbicurveAutomorphismOverData coverMorphism
+
+namespace HyperbolicOrbicurveAutomorphismCompositionData
+
+variable {F : Type u} [Field F]
+variable {source target : HyperbolicOrbicurveModel F}
+variable {coverMorphism : HyperbolicOrbicurveMorphismData source target}
+variable (composition :
+  HyperbolicOrbicurveAutomorphismCompositionData coverMorphism)
+
+theorem identity_overTarget :
+    composition.identityAutomorphism.overTarget :=
+  composition.identityAutomorphism.overTarget_proof
+
+theorem compose_overTarget
+    (f g : HyperbolicOrbicurveAutomorphismOverData coverMorphism) :
+    (composition.composeAutomorphism f g).overTarget :=
+  (composition.composeAutomorphism f g).overTarget_proof
+
+theorem inverse_overTarget
+    (f : HyperbolicOrbicurveAutomorphismOverData coverMorphism) :
+    (composition.inverseAutomorphism f).overTarget :=
+  (composition.inverseAutomorphism f).overTarget_proof
+
+end HyperbolicOrbicurveAutomorphismCompositionData
+
+/--
 A typed property package saying that a fixed orbicurve morphism is the finite
 etale Galois cover relevant to the theta approach.
 
@@ -626,6 +673,66 @@ theorem compatible :
   ⟨groupLaw.identityCompatible_holds, groupLaw.multiplicationCompatible_holds⟩
 
 end OrbicurveCoverDeckAutomorphismGroupLawData
+
+/--
+Concrete compatibility between deck-group multiplication and the supplied
+composition interface for over-target automorphisms.
+
+Unlike `OrbicurveCoverDeckAutomorphismGroupLawData`, these fields are actual
+equalities against named identity and composition operations.  This is still
+abstract, but it removes one layer of opacity from the deck-realization stack.
+-/
+structure OrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+    {F : Type u} [Field F]
+    {source target : HyperbolicOrbicurveModel F}
+    {morphism : HyperbolicOrbicurveMorphismData source target}
+    {coverProperties : FiniteEtaleGaloisOrbicurveMorphismData morphism}
+    {deckData : OrbicurveCoverDeckTransformationData coverProperties}
+    (realization : OrbicurveCoverDeckAutomorphismRealizationData deckData)
+    (composition :
+      HyperbolicOrbicurveAutomorphismCompositionData morphism) where
+  deckIdentityCompatible :
+    realization.deckAutomorphism (1 : deckData.deckGroup) =
+      composition.identityAutomorphism
+  deckMultiplicationCompatible :
+    ∀ g h : deckData.deckGroup,
+      realization.deckAutomorphism (g * h) =
+        composition.composeAutomorphism
+          (realization.deckAutomorphism g)
+          (realization.deckAutomorphism h)
+
+namespace OrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+
+variable {F : Type u} [Field F]
+variable {source target : HyperbolicOrbicurveModel F}
+variable {morphism : HyperbolicOrbicurveMorphismData source target}
+variable {coverProperties : FiniteEtaleGaloisOrbicurveMorphismData morphism}
+variable {deckData : OrbicurveCoverDeckTransformationData coverProperties}
+variable {realization : OrbicurveCoverDeckAutomorphismRealizationData deckData}
+variable {composition : HyperbolicOrbicurveAutomorphismCompositionData morphism}
+
+theorem deckIdentity
+    (compatibility :
+      OrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+        realization composition) :
+    realization.deckAutomorphism (1 : deckData.deckGroup) =
+      composition.identityAutomorphism :=
+  match compatibility with
+  | ⟨hIdentity, _⟩ => hIdentity
+
+theorem deckMultiplication
+    (compatibility :
+      OrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+        realization composition)
+    (g h : deckData.deckGroup) :
+    realization.deckAutomorphism (g * h) =
+      composition.composeAutomorphism
+        (realization.deckAutomorphism g)
+        (realization.deckAutomorphism h) :=
+  match compatibility with
+  | ⟨_, hMultiplication⟩ => hMultiplication g h
+
+end OrbicurveCoverDeckAutomorphismCompositionCompatibilityData
 
 /--
 A typed assertion that a finite Galois field extension is the function-field
@@ -2628,6 +2735,14 @@ structure ThetaFiniteEtaleGaloisCoverCertificate
     @OrbicurveCoverDeckAutomorphismGroupLawData baseField baseFieldField
       sourceOrbicurve targetOrbicurve coverMorphism coverProperties
       coverDeckTransformations coverDeckAutomorphisms
+  coverAutomorphismComposition :
+    @HyperbolicOrbicurveAutomorphismCompositionData baseField baseFieldField
+      sourceOrbicurve targetOrbicurve coverMorphism
+  coverDeckAutomorphismCompositionCompatibility :
+    @OrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+      baseField baseFieldField sourceOrbicurve targetOrbicurve
+      coverMorphism coverProperties coverDeckTransformations
+      coverDeckAutomorphisms coverAutomorphismComposition
   coverDeckQuotient :
     OrbicurveCoverDeckQuotientData thetaApproach coverDeckTransformations
   functionFieldExtension :
@@ -2715,6 +2830,21 @@ theorem coverDeckAutomorphism_groupLawCompatible :
     certificate.coverDeckAutomorphismGroupLaw.identityCompatible ∧
       certificate.coverDeckAutomorphismGroupLaw.multiplicationCompatible :=
   certificate.coverDeckAutomorphismGroupLaw.compatible
+
+theorem coverDeckAutomorphism_identity_eq :
+    certificate.coverDeckAutomorphism (1 : certificate.coverDeckGroup) =
+      certificate.coverAutomorphismComposition.identityAutomorphism :=
+  OrbicurveCoverDeckAutomorphismCompositionCompatibilityData.deckIdentity
+    certificate.coverDeckAutomorphismCompositionCompatibility
+
+theorem coverDeckAutomorphism_mul_eq_comp
+    (g h : certificate.coverDeckGroup) :
+    certificate.coverDeckAutomorphism (g * h) =
+      certificate.coverAutomorphismComposition.composeAutomorphism
+        (certificate.coverDeckAutomorphism g)
+        (certificate.coverDeckAutomorphism h) :=
+  OrbicurveCoverDeckAutomorphismCompositionCompatibilityData.deckMultiplication
+    certificate.coverDeckAutomorphismCompositionCompatibility g h
 
 def coverDeckEquivThetaQuotient :
     certificate.coverDeckGroup ≃*

@@ -6981,3 +6981,106 @@ mathematical improvement should either reduce opacity in the orbicurve
 automorphism layer by adding a real composition interface, or return to the
 Stage 1 SHE/HDD common-container layer where the Corollary 3.12 dispute
 directly lives.
+
+## Math Milestone 70: Composition Compatibility for Deck Automorphisms
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+The deck transformations of a Galois cover are not merely a set of maps. They
+form a group under composition of automorphisms of the source over the target.
+IUT I uses this kind of group language when it identifies the deck/Galois
+quotient with the action on the reconstructed function field.
+
+The previous milestone recorded group-law compatibility only as named
+propositions. That was honest but still too opaque. This milestone introduces
+an explicit interface for identity, composition, and inverse operations on
+over-target orbicurve automorphisms, and then states deck identity and deck
+multiplication compatibility as actual equalities against that interface.
+
+### Lean/API Check
+
+The new operation interface is:
+
+```text
+HyperbolicOrbicurveAutomorphismCompositionData coverMorphism
+```
+
+with fields:
+
+```text
+identityAutomorphism
+composeAutomorphism
+inverseAutomorphism
+```
+
+All three operations are indexed by the same cover morphism. The API exposes
+that the resulting identity, composite, and inverse automorphisms still lie
+over the target.
+
+The equation-level compatibility record is:
+
+```text
+OrbicurveCoverDeckAutomorphismCompositionCompatibilityData
+  realization composition
+```
+
+with the core statements:
+
+```text
+realization.deckAutomorphism 1 = composition.identityAutomorphism
+
+realization.deckAutomorphism (g * h) =
+  composition.composeAutomorphism
+    (realization.deckAutomorphism g)
+    (realization.deckAutomorphism h)
+```
+
+The cover certificate now stores both the composition interface and this
+compatibility witness, and exposes:
+
+```text
+coverDeckAutomorphism_identity_eq
+coverDeckAutomorphism_mul_eq_comp
+```
+
+### Lean Decisions
+
+The interface is still supplied data because we have not yet formalized the
+category of hyperbolic orbicurves and morphisms. The important improvement is
+that the group-law compatibility is no longer an inert proposition. It now
+mentions concrete operations and concrete equalities.
+
+This is a middle layer: later, a true category-theoretic or algebraic-geometric
+model should replace the supplied operations with actual identity,
+composition, and inverse constructions.
+
+### What This Tests
+
+The example file checks:
+
+* construction of the over-target automorphism composition interface;
+* extraction that the identity automorphism is over the target;
+* construction of deck-composition compatibility;
+* recovery of the multiplication compatibility equality for deck elements;
+* certificate-level recovery of the deck identity and deck multiplication
+  equalities.
+
+### Design Trap Avoided
+
+The trap would be to leave "respects multiplication" as a phrase-like field
+forever. This milestone forces the statement to name the composition operation
+and the exact equality it satisfies.
+
+### Remaining Gap
+
+The composition operation itself is not yet derived from a category of
+orbicurves. Also, this is still reconstruction-layer mathematics: it does not
+settle the Hodge-theater common-container issue in IUT III Corollary 3.12.
+The next global step should either continue replacing supplied reconstruction
+interfaces with typed constructions, or return to the SHE/HDD comparison layer
+with the same explicit-history discipline.
