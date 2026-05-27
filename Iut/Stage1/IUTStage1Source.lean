@@ -681,6 +681,15 @@ theorem obligationsFromHypotheses_eq_parts
       package.obligationsFromParts subclaims hypotheses.toSideConditions :=
   rfl
 
+theorem obligationsFromHypotheses_eq_ofHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.obligationsFromHypotheses subclaims hypotheses =
+      IUTStage1SourceObligations.ofSubclaimsAndSideConditionHypotheses
+        subclaims hypotheses :=
+  rfl
+
 theorem publicAuditOfParts
     (package : IUTStage1SourcePackage source target index)
     (subclaims : IUTStage1Theorem311Subclaims package)
@@ -763,6 +772,14 @@ theorem publicAuditOfHypotheses_corollary312
       (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
       (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
   (package.publicAuditOfHypotheses subclaims hypotheses).2.1
+
+theorem publicAuditOfHypotheses_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.publicAuditOfHypotheses subclaims hypotheses =
+      package.publicAuditOfParts subclaims hypotheses.toSideConditions :=
+  rfl
 
 theorem stage1Comparison_recovers_corollary312
     (package : IUTStage1SourcePackage source target index)
@@ -853,6 +870,14 @@ theorem auditOfHypotheses
     Audit package (package.obligationsFromHypotheses subclaims hypotheses) :=
   package.audit (package.obligationsFromHypotheses subclaims hypotheses)
 
+theorem auditOfHypotheses_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.auditOfHypotheses subclaims hypotheses =
+      package.auditOfParts subclaims hypotheses.toSideConditions :=
+  rfl
+
 theorem auditedPublicEndpoint
     (package : IUTStage1SourcePackage source target index)
     (obligations : IUTStage1SourceObligations package) :
@@ -939,6 +964,15 @@ theorem auditedPublicEndpointOfHypotheses
         package.publicAuditOfHypotheses subclaims hypotheses :=
   package.auditedPublicEndpoint
     (package.obligationsFromHypotheses subclaims hypotheses)
+
+theorem auditedPublicEndpointOfHypotheses_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.auditedPublicEndpointOfHypotheses subclaims hypotheses =
+      package.auditedPublicEndpointOfParts
+        subclaims hypotheses.toSideConditions :=
+  Subsingleton.elim _ _
 
 namespace Audit
 

@@ -9104,3 +9104,61 @@ uses `obligationsFromHypotheses`, so the promotion boundary remains explicit.
 The next milestone should add compatibility lemmas showing that the
 hypothesis-based audited endpoint agrees with the parts-based endpoint after
 converting hypotheses to side conditions.
+
+## Milestone 113: Hypotheses-to-Parts Compatibility
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The hypothesis-based API is intended to be notation for source-facing
+side-condition assumptions, not a new mathematical route. It should therefore
+agree with the parts-based API after applying `toSideConditions`.
+
+This milestone records that compatibility explicitly at the obligations,
+public-audit, compact-audit, and audited-endpoint levels.
+
+### Purpose
+
+This milestone adds compatibility lemmas showing that the hypothesis route is a
+wrapper around the side-condition route.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.obligationsFromHypotheses_eq_ofHypotheses
+IUTStage1SourcePackage.publicAuditOfHypotheses_eq_parts
+IUTStage1SourcePackage.auditOfHypotheses_eq_parts
+IUTStage1SourcePackage.auditedPublicEndpointOfHypotheses_eq_parts
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_obligations_from_hypotheses_eq_parts_example
+unitThetaToy_source_publicAudit_from_hypotheses_eq_parts_example
+unitThetaToy_source_audit_from_hypotheses_eq_parts_example
+unitThetaToy_source_hypotheses_auditedPublicEndpoint_eq_parts_example
+```
+
+### What This Tests
+
+The toy examples verify that replacing side-condition hypotheses by their
+`toSideConditions` image leaves the obligation, audit, public audit, and audited
+endpoint routes unchanged.
+
+### Design Trap Avoided
+
+The trap would be to let the hypothesis route drift into a second proof path.
+These compatibility lemmas make the wrapping relationship machine-checkable.
+
+### Next Step
+
+The next milestone should introduce source-facing names for the q-pilot
+log-volume and normalization objects themselves, so later non-toy hypotheses can
+refer to named source labels rather than only pre-ledger fields.
