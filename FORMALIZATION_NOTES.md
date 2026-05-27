@@ -5882,3 +5882,73 @@ projections keep the dependency visible.
 The next milestone should expose the toy final comparison's recovered
 Corollary 3.12 statement via `corollary312_from_stage1_comparison`, confirming
 that unpacking the final record returns the same corollary proof.
+
+## Milestone 67: Toy Stage1Comparison Corollary Recovery
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+The `Stage1Comparison` record is a packaging of the signed pilot data and the
+Corollary 3.12 comparison. The recovery theorem
+
+```text
+corollary312_from_stage1_comparison
+```
+
+only projects the record's `comparison` field. For the source-obligation path,
+we therefore want to verify that unpacking the final toy record recovers exactly
+the same corollary proof already produced from the q-to-Theta chain.
+
+### Purpose
+
+This milestone exposes the final unpacking step:
+
+```text
+corollary312_from_stage1_comparison
+  unitThetaToyStage1Comparison_from_sourceObligations
+```
+
+and proves that it is definitionally the same as:
+
+```text
+ledger.corollary312
+corollary312_of_signed_le qSigned_le_thetaSigned
+corollary312_of_signed_le threeTermComparison.q_le_theta
+```
+
+### Lean Declarations
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToyStage1Comparison_recovers_corollary312
+unitThetaToyStage1Comparison_recovers_qThetaChain
+unitThetaToyStage1Comparison_recovers_threeTermChain
+```
+
+### What This Tests
+
+The final public theorem can be read in either direction:
+
+```text
+source obligations -> Stage1Comparison -> recovered Corollary312Inequality
+source obligations -> q-to-Theta chain -> Corollary312Inequality
+```
+
+Both paths are definitionally aligned in the toy model.
+
+### Design Trap Avoided
+
+The trap would be to let a final record-unpacking function obscure a different
+or stronger proof than the one audited earlier. These projections show that
+unpacking the record simply returns the existing comparison field.
+
+### Next Step
+
+The next milestone should start consolidating the toy source-obligation audit
+into a named end-to-end theorem that states the complete dependency chain from
+certificate, chart, membership, common bound, and signed packaging to the final
+Stage 1 comparison.

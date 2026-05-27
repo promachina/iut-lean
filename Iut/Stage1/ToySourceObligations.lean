@@ -762,6 +762,56 @@ theorem unitThetaToyStage1Comparison_comparison_eq_qThetaChain
           measure hnormalized hh hbound hholds) :=
   rfl
 
+theorem unitThetaToyStage1Comparison_recovers_corollary312
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    corollary312_from_stage1_comparison
+      (unitThetaToyStage1Comparison_from_sourceObligations
+        measure hnormalized hh hbound hholds) =
+      (unitThetaToySourceObligationLedger
+        measure hnormalized hh hbound hholds).corollary312 :=
+  rfl
+
+theorem unitThetaToyStage1Comparison_recovers_qThetaChain
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    corollary312_from_stage1_comparison
+      (unitThetaToyStage1Comparison_from_sourceObligations
+        measure hnormalized hh hbound hholds) =
+      corollary312_of_signed_le
+        (unitThetaToy_qSigned_le_thetaSigned_from_sourceObligations
+          measure hnormalized hh hbound hholds) :=
+  rfl
+
+theorem unitThetaToyStage1Comparison_recovers_threeTermChain
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    corollary312_from_stage1_comparison
+      (unitThetaToyStage1Comparison_from_sourceObligations
+        measure hnormalized hh hbound hholds) =
+      corollary312_of_signed_le
+        (unitThetaToy_qSigned_le_thetaSigned_from_threeTerm
+          measure hnormalized hh hbound hholds) :=
+  rfl
+
 theorem unitThetaToy_theta_commonBound_from_sourceObligations
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
