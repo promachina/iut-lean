@@ -137,6 +137,18 @@ theorem chosenComparison_eq_outputComparison (ledger :
       output.comparison ledger.chosenOutput.choice :=
   ledger.chosenOutput.comparison_eq
 
+theorem chosenComparison_eq_outputComparison_eq_field (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.chosenComparison_eq_outputComparison =
+      ledger.chosenOutput.comparison_eq :=
+  rfl
+
+theorem outputComparison_eq_chosenComparison (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    output.comparison ledger.chosenOutput.choice =
+      ledger.chosenOutput.comparison :=
+  ledger.chosenOutput.comparison_eq.symm
+
 theorem targetSigned_eq_chosenComparisonVolume (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     ledger.targetVolume.targetSigned =

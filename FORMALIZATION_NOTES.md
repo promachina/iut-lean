@@ -4230,3 +4230,76 @@ keep the middle term anchored to the selected target volume.
 The next milestone should expose field-origin projections for the chosen output
 itself, namely that `chosenOutput.comparison` is exactly
 `output.comparison chosenOutput.choice`.
+
+## Milestone 45: Chosen-Output Comparison Projections
+
+Lean file:
+
+* `Iut/Stage1/SourceObligations.lean`
+
+### Source Check
+
+Mochizuki's April 2026 report identifies the input-prime-strip-link aspect as
+the relationship between input data and the output of the multiradial algorithm
+in the final `3.11.5 => 3.12` comparison. At our current abstraction level, the
+selected output is represented by `ChosenOutputData`: a choice index, the
+comparison object selected by that index, and the equality identifying it with
+the corresponding member of `output.comparison`.
+
+IUT III, Step `(xi-d)`, then uses the resulting output data only after it has
+been converted into comparable real log-volume data. Scholze-Stix's critique
+requires the path from selected abstract output to real numerical comparison to
+remain explicit.
+
+### Purpose
+
+This milestone exposes the chosen-output equality itself:
+
+```text
+ledger.chosenComparison_eq_outputComparison
+  = ledger.chosenOutput.comparison_eq
+
+output.comparison ledger.chosenOutput.choice
+  = ledger.chosenOutput.comparison
+```
+
+The second theorem is the reverse orientation, useful when starting from the
+algorithmic output family and rewriting toward the named chosen comparison.
+
+### Lean Declarations
+
+In `SourceObligations.lean`:
+
+```text
+SourceObligationLedger.chosenComparison_eq_outputComparison_eq_field
+SourceObligationLedger.outputComparison_eq_chosenComparison
+```
+
+The field-origin projection is `rfl`; the reverse-orientation theorem is the
+symmetric form of the stored chosen-output equality.
+
+### What This Tests
+
+The selected comparison object is now explicitly connected to the indexed
+algorithmic output family in both orientations:
+
+```text
+chosenOutput.comparison -> output.comparison choice
+output.comparison choice -> chosenOutput.comparison
+```
+
+This closes a small gap in the source-side audit chain from algorithmic output
+to measured target volume.
+
+### Design Trap Avoided
+
+The trap would be to let the chosen comparison become a standalone object whose
+relationship to the algorithmic output family is only visible by unfolding the
+ledger. These projections keep the selected output anchored to its index.
+
+### Next Step
+
+The next milestone should expose field-origin projections for the membership
+witness in the general source ledger: `chosenComparisonHoldsQ` should be exactly
+`membership.holds`, and `qSigned_le_targetSigned` should be exactly
+`membership.q_le_target`.
