@@ -3207,3 +3207,101 @@ the passage from possible outputs to a selected comparison explicit.
 The next milestone should connect the selected comparison to the q-side point by
 storing a charted membership witness: the chosen comparison holds for the
 charted q-point, and this membership is the source of `q_le_choice`.
+
+## Milestone 32: Charted Membership Witness
+
+Lean files:
+
+* `Iut/Foundations/AlgorithmicBridge.lean`
+* `Iut/Stage1/SourceObligations.lean`
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+IUT III, Corollary 3.12, Step `(xi-d)` describes the q-pilot representation as
+a region in the same common setting in which the Theta-side output regions are
+measured. The final inequality uses the fact that the q-pilot data is related
+to a selected output possibility before taking the measured target-volume
+middle term.
+
+Scholze-Stix emphasize that the comparison of concrete q- and Theta-pilot
+objects must not hide the identifications of the real-line copies involved. In
+our current interface, that means the q-point, the selected comparison, and the
+target-volume inequality should be connected in one explicit witness.
+
+### Purpose
+
+Milestone 31 named the selected output comparison. This milestone adds:
+
+```text
+ChartedMembershipData
+```
+
+It stores:
+
+```text
+holds :
+  chosenOutput.comparison.Holds qValue.qPoint
+q_le_target :
+  qSigned <= targetVolume.targetSigned
+```
+
+The second field is still explicit because the general abstraction does not
+know that all selected regions are normalized upper rays. In the toy model,
+this inequality is proved from membership and upper-ray normalization by
+`unitThetaToy_qSigned_le_choiceTargetVolume`.
+
+### Lean Declarations
+
+In `AlgorithmicBridge.lean`:
+
+```text
+ChartedMembershipData.holds
+ChartedMembershipData.q_le_target
+```
+
+In `SourceObligations.lean`, the ledger replaces:
+
+```text
+q_le_choice : qSigned <= targetVolume.targetSigned
+```
+
+with:
+
+```text
+membership :
+  output.ChartedMembershipData measure chartedContainer.chart
+    qValue chosenOutput targetVolume
+```
+
+and proves:
+
+```text
+chosenComparisonHoldsQ
+qSigned_le_targetSigned
+qSigned_le_thetaSigned
+```
+
+In `ToySourceObligations.lean`, the toy ledger obtains `holds` from the
+existing `hholds` assumption and supplies `q_le_target` using the existing toy
+membership-to-volume theorem.
+
+### What This Tests
+
+The toy source-obligation endpoint still proves the signed Stage 1 inequality
+after the raw q-to-target inequality is moved into a membership witness. This
+checks that the final proof chain now records: q-point, chosen comparison
+membership, chosen target volume, and Theta upper bound.
+
+### Design Trap Avoided
+
+The trap would be to carry `qSigned <= targetSigned` as an isolated inequality
+after formalizing the q-point and chosen output. This milestone keeps the
+membership relation visible at the same boundary where the inequality enters.
+
+### Next Step
+
+The next milestone should refine this by adding a toy theorem showing
+`membership.q_le_target` is definitionally the same inequality as the old
+`unitThetaToy_qSigned_le_choiceTargetVolume`, so that future source modules can
+replace it with domain-specific membership-to-volume lemmas.

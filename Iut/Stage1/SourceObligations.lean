@@ -42,8 +42,9 @@ structure SourceObligationLedger
   chosenOutput : output.ChosenOutputData
   targetVolume :
     output.ChartedTargetVolumeData measure chartedContainer.chart chosenOutput.choice
-  q_le_choice :
-    qSigned <= targetVolume.targetSigned
+  membership :
+    output.ChartedMembershipData measure chartedContainer.chart
+      qValue chosenOutput targetVolume
   q_positive : 0 < -qSigned
   normalization_proof : normalization
 
@@ -58,11 +59,21 @@ variable {normalization : Prop}
 theorem qSigned_le_thetaSigned (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     qSigned <= thetaSigned :=
-  le_trans ledger.q_le_choice
+  le_trans ledger.membership.q_le_target
     (by
       rw [ledger.targetVolume.targetSigned_eq]
       exact TransportedRegionFamily.choice_targetVolume_le_of_commonBound
         ledger.theta_commonBound ledger.chosenOutput.choice)
+
+theorem chosenComparisonHoldsQ (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.chosenOutput.comparison.Holds ledger.qValue.qPoint :=
+  ledger.membership.holds
+
+theorem qSigned_le_targetSigned (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    qSigned <= ledger.targetVolume.targetSigned :=
+  ledger.membership.q_le_target
 
 theorem targetSigned_eq_choiceTargetVolume (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :

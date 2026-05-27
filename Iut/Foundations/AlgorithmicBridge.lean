@@ -391,6 +391,25 @@ structure ChartedTargetVolumeData
     targetSigned = RegionMeasure.targetVolume measure (output.comparison choice)
 
 /--
+Membership of the charted q-point in the selected output comparison.
+
+The inequality field records the current abstraction boundary: in concrete
+upper-ray models this follows from membership and normalization, while the
+general source-obligation ledger still stores it explicitly.
+-/
+structure ChartedMembershipData
+    (output : AlgorithmicOutput source target index)
+    (measure : RegionMeasure target)
+    (chart : output.RealComparisonChartData measure)
+    {qSigned : Real}
+    (qValue : output.ChartedQValueData measure chart qSigned)
+    (chosenOutput : output.ChosenOutputData)
+    (targetVolume :
+      output.ChartedTargetVolumeData measure chart chosenOutput.choice) where
+  holds : chosenOutput.comparison.Holds qValue.qPoint
+  q_le_target : qSigned <= targetVolume.targetSigned
+
+/--
 A common container together with the real-line comparison chart used to read its
 final q- and Theta-side real numbers in the target copy.
 -/

@@ -59,8 +59,13 @@ def unitThetaToySourceObligationLedger
           RegionMeasure.targetVolume measure
             ((thetaToyAlgorithmOutput unitQToTheta h epsilon).comparison choice),
         targetSigned_eq := rfl },
-    q_le_choice :=
-      unitThetaToy_qSigned_le_choiceTargetVolume measure hnormalized h epsilon choice hholds,
+    membership :=
+      { holds := by
+          simpa [AlgorithmicOutput.Holds, TransportedRegionFamily.Holds]
+            using hholds,
+        q_le_target :=
+          unitThetaToy_qSigned_le_choiceTargetVolume
+            measure hnormalized h epsilon choice hholds },
     q_positive := by
       unfold qAssignment unitQToTheta Transport.map point PositiveScale.one
       linarith,
