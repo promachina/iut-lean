@@ -666,6 +666,21 @@ def obligationsFromParts
   IUTStage1SourceObligations.ofSubclaimsAndSideConditions
     subclaims sideConditions
 
+def obligationsFromHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    IUTStage1SourceObligations package :=
+  package.obligationsFromParts subclaims hypotheses.toSideConditions
+
+theorem obligationsFromHypotheses_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.obligationsFromHypotheses subclaims hypotheses =
+      package.obligationsFromParts subclaims hypotheses.toSideConditions :=
+  rfl
+
 theorem publicAuditOfParts
     (package : IUTStage1SourcePackage source target index)
     (subclaims : IUTStage1Theorem311Subclaims package)
@@ -709,10 +724,45 @@ theorem publicAuditOfParts_stage1Comparison_recovers_qSigned_le_thetaSigned
           (package.obligationsFromParts
             subclaims sideConditions)).stage1Comparison =
       corollary312_of_signed_le
-        (package.promotedProvider
-          (package.obligationsFromParts
-            subclaims sideConditions)).ledger.qSigned_le_thetaSigned :=
+      (package.promotedProvider
+        (package.obligationsFromParts
+          subclaims sideConditions)).ledger.qSigned_le_thetaSigned :=
   (package.publicAuditOfParts subclaims sideConditions).2.2
+
+theorem publicAuditOfHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+        (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+      (corollary312_from_stage1_comparison
+          (package.promotedProvider
+            (package.obligationsFromHypotheses
+              subclaims hypotheses)).stage1Comparison =
+        corollary312_of_signed_le
+          (package.promotedProvider
+            (package.obligationsFromHypotheses
+              subclaims hypotheses)).ledger.qSigned_le_thetaSigned) :=
+  package.publicAudit
+    (package.obligationsFromHypotheses subclaims hypotheses)
+
+theorem publicAuditOfHypotheses_qSigned_le_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  (package.publicAuditOfHypotheses subclaims hypotheses).1
+
+theorem publicAuditOfHypotheses_corollary312
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  (package.publicAuditOfHypotheses subclaims hypotheses).2.1
 
 theorem stage1Comparison_recovers_corollary312
     (package : IUTStage1SourcePackage source target index)
@@ -795,6 +845,13 @@ theorem auditOfParts
     (sideConditions : IUTStage1SourceSideConditions package) :
     Audit package (package.obligationsFromParts subclaims sideConditions) :=
   package.audit (package.obligationsFromParts subclaims sideConditions)
+
+theorem auditOfHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    Audit package (package.obligationsFromHypotheses subclaims hypotheses) :=
+  package.audit (package.obligationsFromHypotheses subclaims hypotheses)
 
 theorem auditedPublicEndpoint
     (package : IUTStage1SourcePackage source target index)

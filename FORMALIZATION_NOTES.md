@@ -8929,3 +8929,73 @@ through the existing side-condition constructor.
 The next milestone should add `IUTStage1SourcePackage` helpers that use
 side-condition hypotheses at the package audit/public-audit boundary, again
 factoring through the existing side-condition route.
+
+## Milestone 110: Package Audit Helpers from Hypotheses
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Milestone 109 allowed source obligations to be built from side-condition
+hypotheses by composing through `toSideConditions`. This milestone lifts that
+route to the package audit boundary.
+
+The route remains explicit:
+
+```text
+Theorem 3.11 subclaims
+side-condition hypotheses
+  -> side conditions
+  -> source obligations
+  -> source public audit / compact source audit
+```
+
+No direct path is introduced from side-condition hypotheses or Theorem 3.11
+subclaims alone to Corollary 3.12.
+
+### Purpose
+
+This milestone adds package-level helpers that accept side-condition hypotheses
+and reuse the existing parts-based public/audit machinery.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.obligationsFromHypotheses
+IUTStage1SourcePackage.obligationsFromHypotheses_eq_parts
+IUTStage1SourcePackage.publicAuditOfHypotheses
+IUTStage1SourcePackage.publicAuditOfHypotheses_qSigned_le_thetaSigned
+IUTStage1SourcePackage.publicAuditOfHypotheses_corollary312
+IUTStage1SourcePackage.auditOfHypotheses
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_publicAudit_from_hypotheses_q_le_theta_example
+unitThetaToy_source_publicAudit_from_hypotheses_corollary_example
+unitThetaToy_source_audit_from_hypotheses_example
+unitThetaToy_source_audit_from_hypotheses_q_le_theta_projection_example
+```
+
+### What This Tests
+
+The toy examples verify that the hypothesis-based route reaches the same public
+q-bound and Corollary-shaped endpoint, and that it also produces the compact
+source audit.
+
+### Design Trap Avoided
+
+The trap would be to make hypothesis names function as endpoint assumptions.
+This milestone keeps hypotheses below source obligations and makes the
+conversion through `toSideConditions` part of the API.
+
+### Next Step
+
+The next milestone should add recovery and label projections for the
+hypothesis-based source audit, mirroring the parts-based audit coverage.
