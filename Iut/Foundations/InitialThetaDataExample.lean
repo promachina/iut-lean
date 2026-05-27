@@ -217,6 +217,24 @@ example (G : Type u) [Group G]
     g • (x * y) = g • x * g • y :=
   functionField.smul_mul_element g x y
 
+example (G : Type u) [Group G]
+    (functionField : ReconstructedFunctionFieldData G) :
+    Function.Injective functionField.baseToFunctionField :=
+  functionField.baseToFunctionField_injective_holds
+
+example (G : Type u) [Group G]
+    (functionField : ReconstructedFunctionFieldData G)
+    (g : G) (b : functionField.baseCarrier) :
+    g • functionField.baseToFunctionField b = functionField.baseToFunctionField b :=
+  functionField.deck_smul_base g b
+
+example (G : Type u) [Group G]
+    (functionField : ReconstructedFunctionFieldData G)
+    (g : G) (b : functionField.baseCarrier) :
+    functionField.deckRingAut g (functionField.baseToFunctionField b) =
+      functionField.baseToFunctionField b :=
+  functionField.deckRingAut_fixesBase g b
+
 example :
     (zmodOneNonzeroQuotientElement primeFive).element ≠
       (zmodPointedQuotient primeFive).zero :=
@@ -808,6 +826,55 @@ example (g : theta.coverData.thetaApproachQuotient.piCK.carrier) :
       InitialThetaData.thetaApproachGalRingAutHom theta galData
         (InitialThetaData.thetaApproachGalPiCKHom theta galData g) :=
   theta.thetaApproachPiCKRingAut_eq_galRingAut galData g
+
+example :
+    Function.Injective (InitialThetaData.thetaApproachBaseToFunctionField theta) :=
+  theta.thetaApproachBaseToFunctionFieldInjective
+
+example
+    (g : ThetaApproachQuotientData.deckQuotient theta.coverData.thetaApproachQuotient)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    g • InitialThetaData.thetaApproachBaseToFunctionField theta b =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  theta.thetaApproachDeck_smul_base g b
+
+example
+    (g : theta.coverData.thetaApproachQuotient.piCK.carrier)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    g • InitialThetaData.thetaApproachBaseToFunctionField theta b =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  theta.thetaApproachPiCK_smul_base g b
+
+example
+    (γ : galData.galXKCK)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    γ • InitialThetaData.thetaApproachBaseToFunctionField theta b =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  theta.thetaApproachGal_smul_base galData γ b
+
+example
+    (g : ThetaApproachQuotientData.deckQuotient theta.coverData.thetaApproachQuotient)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    InitialThetaData.thetaApproachDeckRingAutHom theta g
+        (InitialThetaData.thetaApproachBaseToFunctionField theta b) =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  theta.thetaApproachDeckRingAut_fixesBase g b
+
+example
+    (g : theta.coverData.thetaApproachQuotient.piCK.carrier)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    InitialThetaData.thetaApproachPiCKRingAutHom theta g
+        (InitialThetaData.thetaApproachBaseToFunctionField theta b) =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  theta.thetaApproachPiCKRingAut_fixesBase g b
+
+example
+    (γ : galData.galXKCK)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    InitialThetaData.thetaApproachGalRingAutHom theta galData γ
+        (InitialThetaData.thetaApproachBaseToFunctionField theta b) =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  theta.thetaApproachGalRingAut_fixesBase galData γ b
 
 example :
     theta.coverData.thetaApproachQuotient.galXKCK_identifiedWithQuotient :=

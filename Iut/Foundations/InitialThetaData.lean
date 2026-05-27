@@ -1642,7 +1642,13 @@ preserves `0`, `1`, addition, and multiplication on the field carrier.
 structure ReconstructedFunctionFieldData (deckGroup : Type u) [Group deckGroup] where
   carrier : Type u
   field : Field carrier
+  baseCarrier : Type u
+  baseField : Field baseCarrier
+  baseToFunctionField : baseCarrier →+* carrier
+  baseToFunctionField_injective : Function.Injective baseToFunctionField
   deckAction : MulSemiringAction deckGroup carrier
+  deckActionFixesBase :
+    ∀ (g : deckGroup) (b : baseCarrier), g • baseToFunctionField b = baseToFunctionField b
 
 namespace ReconstructedFunctionFieldData
 
@@ -1652,8 +1658,19 @@ variable (functionField : ReconstructedFunctionFieldData deckGroup)
 instance : Field functionField.carrier :=
   functionField.field
 
+instance : Field functionField.baseCarrier :=
+  functionField.baseField
+
 instance : MulSemiringAction deckGroup functionField.carrier :=
   functionField.deckAction
+
+theorem baseToFunctionField_injective_holds :
+    Function.Injective functionField.baseToFunctionField :=
+  functionField.baseToFunctionField_injective
+
+theorem deck_smul_base (g : deckGroup) (b : functionField.baseCarrier) :
+    g • functionField.baseToFunctionField b = functionField.baseToFunctionField b :=
+  functionField.deckActionFixesBase g b
 
 def deckRingHom (g : deckGroup) : functionField.carrier →+* functionField.carrier :=
   MulSemiringAction.toRingHom deckGroup functionField.carrier g
@@ -1667,6 +1684,11 @@ def deckRingAut (g : deckGroup) : RingAut functionField.carrier :=
 theorem deckRingAut_apply (g : deckGroup) (x : functionField.carrier) :
     functionField.deckRingAut g x = g • x :=
   rfl
+
+theorem deckRingAut_fixesBase (g : deckGroup) (b : functionField.baseCarrier) :
+    functionField.deckRingAut g (functionField.baseToFunctionField b) =
+      functionField.baseToFunctionField b :=
+  functionField.deck_smul_base g b
 
 theorem one_smul_element (x : functionField.carrier) :
     (1 : deckGroup) • x = x :=
@@ -1717,8 +1739,14 @@ variable (functionFieldData : ThetaApproachFunctionFieldData thetaApproach)
 def functionField : Type _ :=
   functionFieldData.reconstructedFunctionField.carrier
 
+def baseFunctionField : Type _ :=
+  functionFieldData.reconstructedFunctionField.baseCarrier
+
 instance : Field (ThetaApproachFunctionFieldData.functionField functionFieldData) :=
   functionFieldData.reconstructedFunctionField.field
+
+instance : Field (ThetaApproachFunctionFieldData.baseFunctionField functionFieldData) :=
+  functionFieldData.reconstructedFunctionField.baseField
 
 instance :
     MulSemiringAction (ThetaApproachQuotientData.deckQuotient thetaApproach)
@@ -1732,6 +1760,14 @@ theorem reconstructedFromXK :
 theorem deckActionMatchesQuotient :
     functionFieldData.deckActionMatchesGalQuotient :=
   functionFieldData.deckActionMatchesGalQuotient_holds
+
+def baseToFunctionField :
+    functionFieldData.baseFunctionField →+* functionFieldData.functionField :=
+  functionFieldData.reconstructedFunctionField.baseToFunctionField
+
+theorem baseToFunctionField_injective :
+    Function.Injective functionFieldData.baseToFunctionField :=
+  functionFieldData.reconstructedFunctionField.baseToFunctionField_injective_holds
 
 def deckRingHom (g : ThetaApproachQuotientData.deckQuotient thetaApproach) :
     functionFieldData.functionField →+* functionFieldData.functionField :=
@@ -1812,6 +1848,20 @@ theorem deckRingAut_apply
     functionFieldData.deckRingAut g x = g • x :=
   rfl
 
+theorem deck_smul_base
+    (g : ThetaApproachQuotientData.deckQuotient thetaApproach)
+    (b : functionFieldData.baseFunctionField) :
+    g • functionFieldData.baseToFunctionField b =
+      functionFieldData.baseToFunctionField b :=
+  functionFieldData.reconstructedFunctionField.deck_smul_base g b
+
+theorem deckRingAut_fixesBase
+    (g : ThetaApproachQuotientData.deckQuotient thetaApproach)
+    (b : functionFieldData.baseFunctionField) :
+    functionFieldData.deckRingAut g (functionFieldData.baseToFunctionField b) =
+      functionFieldData.baseToFunctionField b :=
+  functionFieldData.reconstructedFunctionField.deckRingAut_fixesBase g b
+
 theorem piCK_smul_one (g : thetaApproach.piCK.carrier) :
     g • (1 : functionFieldData.functionField) = 1 :=
   smul_one g
@@ -1830,6 +1880,22 @@ theorem piCKRingAut_apply
     (g : thetaApproach.piCK.carrier) (x : functionFieldData.functionField) :
     functionFieldData.piCKRingAut g x = g • x :=
   rfl
+
+theorem piCK_smul_base
+    (g : thetaApproach.piCK.carrier)
+    (b : functionFieldData.baseFunctionField) :
+    g • functionFieldData.baseToFunctionField b =
+      functionFieldData.baseToFunctionField b := by
+  rw [functionFieldData.piCK_smul_eq_deck_smul]
+  exact functionFieldData.deck_smul_base
+    (ThetaApproachQuotientData.quotientHom thetaApproach g) b
+
+theorem piCKRingAut_fixesBase
+    (g : thetaApproach.piCK.carrier)
+    (b : functionFieldData.baseFunctionField) :
+    functionFieldData.piCKRingAut g (functionFieldData.baseToFunctionField b) =
+      functionFieldData.baseToFunctionField b :=
+  functionFieldData.piCK_smul_base g b
 
 theorem piXK_smul_trivial
     (g : thetaApproach.piXK.carrier) (x : functionFieldData.functionField) :
@@ -1870,6 +1936,23 @@ theorem galRingAut_apply
     ThetaApproachGaloisQuotientData.galRingAut galData functionFieldData γ x =
       γ • x :=
   rfl
+
+theorem gal_smul_base
+    (γ : galData.galXKCK)
+    (b : functionFieldData.baseFunctionField) :
+    γ • functionFieldData.baseToFunctionField b =
+      functionFieldData.baseToFunctionField b := by
+  rw [ThetaApproachGaloisQuotientData.gal_smul_eq_deck_smul]
+  exact functionFieldData.deck_smul_base
+    (ThetaApproachGaloisQuotientData.toDeckHom galData γ) b
+
+theorem galRingAut_fixesBase
+    (γ : galData.galXKCK)
+    (b : functionFieldData.baseFunctionField) :
+    ThetaApproachGaloisQuotientData.galRingAut galData functionFieldData γ
+        (functionFieldData.baseToFunctionField b) =
+      functionFieldData.baseToFunctionField b :=
+  ThetaApproachGaloisQuotientData.gal_smul_base galData functionFieldData γ b
 
 theorem piCK_smul_eq_gal_smul
     (g : thetaApproach.piCK.carrier) (x : functionFieldData.functionField) :
@@ -2023,6 +2106,17 @@ theorem thetaApproachReconstruction :
 def thetaApproachFunctionFieldCarrier : Type _ :=
   ThetaApproachFunctionFieldData.functionField coverData.thetaApproachFunctionField
 
+instance thetaApproachFunctionFieldCarrierField :
+    Field coverData.thetaApproachFunctionFieldCarrier :=
+  coverData.thetaApproachFunctionField.reconstructedFunctionField.field
+
+def thetaApproachBaseFunctionFieldCarrier : Type _ :=
+  ThetaApproachFunctionFieldData.baseFunctionField coverData.thetaApproachFunctionField
+
+instance thetaApproachBaseFunctionFieldCarrierField :
+    Field coverData.thetaApproachBaseFunctionFieldCarrier :=
+  coverData.thetaApproachFunctionField.reconstructedFunctionField.baseField
+
 theorem thetaApproachFunctionFieldOfXK :
     coverData.thetaApproachFunctionField.reconstructedFunctionFieldOfXK :=
   coverData.thetaApproachFunctionField.reconstructedFromXK
@@ -2030,6 +2124,16 @@ theorem thetaApproachFunctionFieldOfXK :
 theorem thetaApproachDeckActionMatchesQuotient :
     coverData.thetaApproachFunctionField.deckActionMatchesGalQuotient :=
   coverData.thetaApproachFunctionField.deckActionMatchesQuotient
+
+def thetaApproachBaseToFunctionField :
+    coverData.thetaApproachBaseFunctionFieldCarrier →+*
+      coverData.thetaApproachFunctionField.functionField :=
+  ThetaApproachFunctionFieldData.baseToFunctionField coverData.thetaApproachFunctionField
+
+theorem thetaApproachBaseToFunctionFieldInjective :
+    Function.Injective
+      (ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData) :=
+  coverData.thetaApproachFunctionField.reconstructedFunctionField.baseToFunctionField_injective
 
 def thetaApproachDeckRingAutHom :
     ThetaApproachQuotientData.deckQuotient coverData.thetaApproachQuotient →*
@@ -2077,6 +2181,61 @@ theorem thetaApproachPiCKRingAut_eq_galRingAut
         (ThetaOrbicurveCoverData.thetaApproachGalPiCKHom coverData galData g) :=
   ThetaApproachGaloisQuotientData.piCKRingAut_eq_galRingAut galData
     coverData.thetaApproachFunctionField g
+
+theorem thetaApproachDeck_smul_base
+    (g : ThetaApproachQuotientData.deckQuotient coverData.thetaApproachQuotient)
+    (b : coverData.thetaApproachBaseFunctionFieldCarrier) :
+    g • ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b =
+      ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b :=
+  ThetaApproachFunctionFieldData.deck_smul_base
+    coverData.thetaApproachFunctionField g b
+
+theorem thetaApproachPiCK_smul_base
+    (g : coverData.thetaApproachQuotient.piCK.carrier)
+    (b : coverData.thetaApproachBaseFunctionFieldCarrier) :
+    g • ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b =
+      ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b :=
+  ThetaApproachFunctionFieldData.piCK_smul_base
+    coverData.thetaApproachFunctionField g b
+
+theorem thetaApproachGal_smul_base
+    (galData :
+      ThetaApproachGaloisQuotientData coverData.thetaApproachQuotient)
+    (γ : galData.galXKCK)
+    (b : coverData.thetaApproachBaseFunctionFieldCarrier) :
+    γ • ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b =
+      ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b :=
+  ThetaApproachGaloisQuotientData.gal_smul_base galData
+    coverData.thetaApproachFunctionField γ b
+
+theorem thetaApproachDeckRingAut_fixesBase
+    (g : ThetaApproachQuotientData.deckQuotient coverData.thetaApproachQuotient)
+    (b : coverData.thetaApproachBaseFunctionFieldCarrier) :
+    ThetaOrbicurveCoverData.thetaApproachDeckRingAutHom coverData g
+        (ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b) =
+      ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b :=
+  ThetaApproachFunctionFieldData.deckRingAut_fixesBase
+    coverData.thetaApproachFunctionField g b
+
+theorem thetaApproachPiCKRingAut_fixesBase
+    (g : coverData.thetaApproachQuotient.piCK.carrier)
+    (b : coverData.thetaApproachBaseFunctionFieldCarrier) :
+    ThetaOrbicurveCoverData.thetaApproachPiCKRingAutHom coverData g
+        (ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b) =
+      ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b :=
+  ThetaApproachFunctionFieldData.piCKRingAut_fixesBase
+    coverData.thetaApproachFunctionField g b
+
+theorem thetaApproachGalRingAut_fixesBase
+    (galData :
+      ThetaApproachGaloisQuotientData coverData.thetaApproachQuotient)
+    (γ : galData.galXKCK)
+    (b : coverData.thetaApproachBaseFunctionFieldCarrier) :
+    ThetaOrbicurveCoverData.thetaApproachGalRingAutHom coverData galData γ
+        (ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b) =
+      ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField coverData b :=
+  ThetaApproachGaloisQuotientData.galRingAut_fixesBase galData
+    coverData.thetaApproachFunctionField γ b
 
 theorem thetaApproachPiXK_smul_trivial
     (g : coverData.thetaApproachQuotient.piXK.carrier)
@@ -2857,6 +3016,17 @@ theorem thetaApproachReconstruction :
 def thetaApproachFunctionFieldCarrier : Type _ :=
   theta.coverData.thetaApproachFunctionFieldCarrier
 
+instance thetaApproachFunctionFieldCarrierField :
+    Field theta.thetaApproachFunctionFieldCarrier :=
+  ThetaOrbicurveCoverData.thetaApproachFunctionFieldCarrierField theta.coverData
+
+def thetaApproachBaseFunctionFieldCarrier : Type _ :=
+  ThetaOrbicurveCoverData.thetaApproachBaseFunctionFieldCarrier theta.coverData
+
+instance thetaApproachBaseFunctionFieldCarrierField :
+    Field theta.thetaApproachBaseFunctionFieldCarrier :=
+  theta.coverData.thetaApproachBaseFunctionFieldCarrierField
+
 theorem thetaApproachFunctionFieldOfXK :
     theta.coverData.thetaApproachFunctionField.reconstructedFunctionFieldOfXK :=
   theta.coverData.thetaApproachFunctionFieldOfXK
@@ -2864,6 +3034,15 @@ theorem thetaApproachFunctionFieldOfXK :
 theorem thetaApproachDeckActionMatchesQuotient :
     theta.coverData.thetaApproachFunctionField.deckActionMatchesGalQuotient :=
   theta.coverData.thetaApproachDeckActionMatchesQuotient
+
+def thetaApproachBaseToFunctionField :
+    theta.thetaApproachBaseFunctionFieldCarrier →+*
+      theta.coverData.thetaApproachFunctionField.functionField :=
+  ThetaOrbicurveCoverData.thetaApproachBaseToFunctionField theta.coverData
+
+theorem thetaApproachBaseToFunctionFieldInjective :
+    Function.Injective (InitialThetaData.thetaApproachBaseToFunctionField theta) :=
+  ThetaOrbicurveCoverData.thetaApproachBaseToFunctionFieldInjective theta.coverData
 
 def thetaApproachDeckRingAutHom :
     ThetaApproachQuotientData.deckQuotient theta.coverData.thetaApproachQuotient →*
@@ -2909,6 +3088,55 @@ theorem thetaApproachPiCKRingAut_eq_galRingAut
       InitialThetaData.thetaApproachGalRingAutHom theta galData
         (InitialThetaData.thetaApproachGalPiCKHom theta galData g) :=
   theta.coverData.thetaApproachPiCKRingAut_eq_galRingAut galData g
+
+theorem thetaApproachDeck_smul_base
+    (g : ThetaApproachQuotientData.deckQuotient theta.coverData.thetaApproachQuotient)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    g • InitialThetaData.thetaApproachBaseToFunctionField theta b =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  ThetaOrbicurveCoverData.thetaApproachDeck_smul_base theta.coverData g b
+
+theorem thetaApproachPiCK_smul_base
+    (g : theta.coverData.thetaApproachQuotient.piCK.carrier)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    g • InitialThetaData.thetaApproachBaseToFunctionField theta b =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  ThetaOrbicurveCoverData.thetaApproachPiCK_smul_base theta.coverData g b
+
+theorem thetaApproachGal_smul_base
+    (galData :
+      ThetaApproachGaloisQuotientData theta.coverData.thetaApproachQuotient)
+    (γ : galData.galXKCK)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    γ • InitialThetaData.thetaApproachBaseToFunctionField theta b =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  ThetaOrbicurveCoverData.thetaApproachGal_smul_base theta.coverData galData γ b
+
+theorem thetaApproachDeckRingAut_fixesBase
+    (g : ThetaApproachQuotientData.deckQuotient theta.coverData.thetaApproachQuotient)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    InitialThetaData.thetaApproachDeckRingAutHom theta g
+        (InitialThetaData.thetaApproachBaseToFunctionField theta b) =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  ThetaOrbicurveCoverData.thetaApproachDeckRingAut_fixesBase theta.coverData g b
+
+theorem thetaApproachPiCKRingAut_fixesBase
+    (g : theta.coverData.thetaApproachQuotient.piCK.carrier)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    InitialThetaData.thetaApproachPiCKRingAutHom theta g
+        (InitialThetaData.thetaApproachBaseToFunctionField theta b) =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  ThetaOrbicurveCoverData.thetaApproachPiCKRingAut_fixesBase theta.coverData g b
+
+theorem thetaApproachGalRingAut_fixesBase
+    (galData :
+      ThetaApproachGaloisQuotientData theta.coverData.thetaApproachQuotient)
+    (γ : galData.galXKCK)
+    (b : theta.thetaApproachBaseFunctionFieldCarrier) :
+    InitialThetaData.thetaApproachGalRingAutHom theta galData γ
+        (InitialThetaData.thetaApproachBaseToFunctionField theta b) =
+      InitialThetaData.thetaApproachBaseToFunctionField theta b :=
+  ThetaOrbicurveCoverData.thetaApproachGalRingAut_fixesBase theta.coverData galData γ b
 
 theorem thetaApproachPiXK_smul_trivial
     (g : theta.coverData.thetaApproachQuotient.piXK.carrier)

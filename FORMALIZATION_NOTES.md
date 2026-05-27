@@ -13900,3 +13900,116 @@ The reconstructed function field is still abstract. Later milestones should
 connect the `RingAut` action to an actual field-extension automorphism group or
 finite etale cover/deck transformation construction, rather than supplying the
 deck action as an abstract field action.
+
+## Math Milestone 51: Base Function Field Fixed by Deck/Galois Actions
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, says that the `Theta`-approach reconstructs the function
+field of `X_K` equipped with its natural
+
+```text
+Gal(X_K/C_K) ~= Pi_CK / Pi_XK
+```
+
+action. The notation `Gal(X_K/C_K)` is not just an arbitrary automorphism
+group: it is the automorphism group over the base object `C_K`. On the function
+field side, this means the action should fix the image of the function field of
+`C_K` inside the function field of `X_K`.
+
+This milestone does not construct the actual scheme-theoretic cover. It records
+the over-base condition needed for such a cover interpretation. It remains below
+the Hodge-theater comparison and below the Corollary 3.12 dispute.
+
+### Lean/API Check
+
+`ReconstructedFunctionFieldData` now includes:
+
+```text
+baseCarrier : Type
+baseField : Field baseCarrier
+baseToFunctionField : baseCarrier ->+* carrier
+baseToFunctionField_injective : Function.Injective baseToFunctionField
+deckActionFixesBase :
+  forall g b, g • baseToFunctionField b = baseToFunctionField b
+```
+
+The generic reconstructed field package exposes:
+
+```text
+baseToFunctionField_injective_holds
+deck_smul_base
+deckRingAut_fixesBase
+```
+
+The theta function-field package exposes:
+
+```text
+baseFunctionField
+baseToFunctionField
+baseToFunctionField_injective
+deck_smul_base
+deckRingAut_fixesBase
+piCK_smul_base
+piCKRingAut_fixesBase
+```
+
+The Galois quotient interface exposes:
+
+```text
+ThetaApproachGaloisQuotientData.gal_smul_base
+ThetaApproachGaloisQuotientData.galRingAut_fixesBase
+```
+
+The cover and initial-theta layers expose corresponding projections:
+
+```text
+thetaApproachBaseFunctionFieldCarrier
+thetaApproachBaseToFunctionField
+thetaApproachBaseToFunctionFieldInjective
+thetaApproachDeck_smul_base
+thetaApproachPiCK_smul_base
+thetaApproachGal_smul_base
+thetaApproachDeckRingAut_fixesBase
+thetaApproachPiCKRingAut_fixesBase
+thetaApproachGalRingAut_fixesBase
+```
+
+### Lean Decisions
+
+We modeled the base `C_K` function field as a field equipped with an injective
+ring hom into the reconstructed `X_K` function field, rather than immediately
+using a full `Algebra`/scheme morphism formalization. This is a conservative
+interface: it captures the fixed-base content of a Galois cover while avoiding a
+premature commitment to a particular scheme or finite-etale API.
+
+The `Pi_CK` fixed-base theorem is derived from the quotient action, and the
+Galois fixed-base theorem is derived by transporting through the quotient/Galois
+equivalence.
+
+### What This Tests
+
+The example file now checks:
+
+* the base-to-function-field map is injective;
+* deck quotient elements fix the embedded base field;
+* `Pi_CK` elements fix the embedded base field;
+* Galois elements fix the embedded base field;
+* the corresponding `RingAut` maps also fix the embedded base field.
+
+### Design Trap Avoided
+
+The trap would be to call an action "Galois over `C_K`" while only formalizing
+arbitrary automorphisms of the function field of `X_K`. This milestone adds the
+explicit invariant subfield interface Lean can check.
+
+### Remaining Gap
+
+The base field and embedding are still supplied as structured data. Later
+milestones should construct them from the formalized `C_K`/`X_K` covering and
+relate the fixed subfield of the deck action to the embedded base field.
