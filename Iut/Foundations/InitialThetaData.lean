@@ -1745,6 +1745,116 @@ theorem smul_mul_element (g : deckGroup) (x y : functionField.carrier) :
 end ReconstructedFunctionFieldData
 
 /--
+An algebraic source for a reconstructed function field.
+
+The deck group is not merely supplied with an arbitrary action on the function
+field.  Instead, it is identified with the standard mathlib algebra-automorphism
+group `L ≃ₐ[B] L`; the action, base-field fixation, and faithfulness are then
+derived from this identification.
+-/
+structure AlgebraicDeckFunctionFieldData
+    (deckGroup B L : Type u) [Group deckGroup] [Field B] [Field L] [Algebra B L] where
+  deckEquivAlgAut : deckGroup ≃* (L ≃ₐ[B] L)
+  fixedElementsFromBase :
+    ∀ (x : L), (∀ σ : L ≃ₐ[B] L, σ x = x) →
+      ∃ b : B, algebraMap B L b = x
+
+namespace AlgebraicDeckFunctionFieldData
+
+variable {deckGroup B L : Type u} [Group deckGroup] [Field B] [Field L] [Algebra B L]
+variable (data : AlgebraicDeckFunctionFieldData deckGroup B L)
+
+/-- The deck action transported from the tautological action of algebra automorphisms. -/
+@[reducible]
+def deckAction : MulSemiringAction deckGroup L :=
+  MulSemiringAction.compHom
+    (M := L ≃ₐ[B] L)
+    (N := deckGroup)
+    (R := L)
+    data.deckEquivAlgAut.toMonoidHom
+
+theorem deck_smul_eq_algAut (g : deckGroup) (x : L) :
+    haveI := data.deckAction
+    g • x = data.deckEquivAlgAut g x :=
+  rfl
+
+/-- Faithfulness follows from faithfulness of the tautological `AlgEquiv` action. -/
+@[reducible]
+def deckActionFaithful :
+    letI := data.deckAction
+    FaithfulSMul deckGroup L := by
+  letI := data.deckAction
+  exact {
+    eq_of_smul_eq_smul := by
+      intro g h hgh
+      apply data.deckEquivAlgAut.injective
+      apply FaithfulSMul.eq_of_smul_eq_smul (α := L)
+      intro x
+      exact hgh x }
+
+/--
+Build the generic reconstructed-function-field package from an algebraic
+automorphism model.
+-/
+noncomputable def toReconstructedFunctionFieldData :
+    ReconstructedFunctionFieldData deckGroup where
+  carrier := L
+  field := inferInstance
+  baseCarrier := B
+  baseField := inferInstance
+  baseToFunctionField := algebraMap B L
+  baseToFunctionField_injective := (algebraMap B L).injective
+  deckAction := data.deckAction
+  deckActionFaithful := data.deckActionFaithful
+  deckActionFixesBase := by
+    intro g b
+    exact (data.deckEquivAlgAut g).commutes b
+  fixedElementsFromBase := by
+    intro x hfixed
+    exact data.fixedElementsFromBase x (by
+      intro σ
+      rcases data.deckEquivAlgAut.surjective σ with ⟨g, rfl⟩
+      exact hfixed g)
+
+theorem toReconstructed_baseToFunctionField :
+    data.toReconstructedFunctionFieldData.baseToFunctionField =
+      algebraMap B L :=
+  rfl
+
+theorem toReconstructed_deckRingAut_apply
+    (g : deckGroup) (x : data.toReconstructedFunctionFieldData.carrier) :
+    data.toReconstructedFunctionFieldData.deckRingAut g x =
+      data.deckEquivAlgAut g x :=
+  rfl
+
+theorem toReconstructed_deckRingAutHom_injective :
+    Function.Injective data.toReconstructedFunctionFieldData.deckRingAutHom :=
+  data.toReconstructedFunctionFieldData.deckRingAutHom_injective
+
+theorem toReconstructed_fixed_iff_in_base (x : L) :
+    (∀ g : deckGroup,
+        data.toReconstructedFunctionFieldData.deckRingAut g x = x) ↔
+      ∃ b : B, algebraMap B L b = x := by
+  constructor
+  · intro hfixed
+    exact data.fixedElementsFromBase x (by
+      intro σ
+      rcases data.deckEquivAlgAut.surjective σ with ⟨g, rfl⟩
+      simpa [data.toReconstructed_deckRingAut_apply] using hfixed g)
+  · rintro ⟨b, rfl⟩ g
+    exact (data.deckEquivAlgAut g).commutes b
+
+/-- The tautological algebra-automorphism model for the trivial base extension. -/
+noncomputable def identity (B : Type u) [Field B] :
+    AlgebraicDeckFunctionFieldData (B ≃ₐ[B] B) B B where
+  deckEquivAlgAut := MulEquiv.refl (B ≃ₐ[B] B)
+  fixedElementsFromBase := by
+    intro x _hfixed
+    exact ⟨x, by simp⟩
+
+end AlgebraicDeckFunctionFieldData
+
+/--
 The function-field target reconstructed in the `Theta`-approach.
 
 IUT I, Remark 3.1.2, says the reconstruction yields the function field of
@@ -1793,6 +1903,21 @@ theorem reconstructedFromXK :
 theorem deckActionMatchesQuotient :
     functionFieldData.deckActionMatchesGalQuotient :=
   functionFieldData.deckActionMatchesGalQuotient_holds
+
+noncomputable def ofAlgebraicDeckFunctionField
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    (data : AlgebraicDeckFunctionFieldData
+      (ThetaApproachQuotientData.deckQuotient thetaApproach) B L)
+    (reconstructedFunctionFieldOfXK : Prop)
+    (hReconstructed : reconstructedFunctionFieldOfXK)
+    (deckActionMatchesGalQuotient : Prop)
+    (hDeck : deckActionMatchesGalQuotient) :
+    ThetaApproachFunctionFieldData thetaApproach where
+  reconstructedFunctionField := data.toReconstructedFunctionFieldData
+  reconstructedFunctionFieldOfXK := reconstructedFunctionFieldOfXK
+  reconstructedFunctionFieldOfXK_holds := hReconstructed
+  deckActionMatchesGalQuotient := deckActionMatchesGalQuotient
+  deckActionMatchesGalQuotient_holds := hDeck
 
 def baseToFunctionField :
     functionFieldData.baseFunctionField →+* functionFieldData.functionField :=

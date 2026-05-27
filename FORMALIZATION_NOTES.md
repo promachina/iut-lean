@@ -14223,3 +14223,100 @@ field but allow nontrivial deck elements to act trivially. That would weaken the
 Faithfulness is still supplied as part of the reconstructed data. Later
 milestones should derive it from a concrete finite etale cover or Galois
 extension formalization.
+
+## Math Milestone 54: Algebra-Automorphism Source for Deck Actions
+
+### Source Check
+
+IUT I, Remark 3.1.2, says that the `Theta`-approach reconstructs the function
+field of `X_K` equipped with the natural action
+
+```text
+Gal(X_K / C_K) ~= Pi_CK / Pi_XK.
+```
+
+IUT III, around the discussion of the log-wall, also reminds us that Galois
+groups may be viewed as automorphism groups of fields/rings, while warning that
+this ring-structure interpretation is precisely what cannot be transported
+naively across the log-link.
+
+This milestone stays on the reconstruction side, before any log-link or
+Hodge-theater transport. It strengthens the local source of the deck action:
+when the deck group is identified with an algebra-automorphism group, Lean now
+derives the action and faithfulness from that identification.
+
+### Lean Move
+
+The new record is:
+
+```text
+AlgebraicDeckFunctionFieldData deckGroup B L
+```
+
+It contains:
+
+```text
+deckEquivAlgAut : deckGroup ~= (L equiv_alg[B] L)
+fixedElementsFromBase :
+  fixed by all B-algebra automorphisms -> comes from B
+```
+
+From this data, Lean constructs:
+
+```text
+AlgebraicDeckFunctionFieldData.toReconstructedFunctionFieldData
+```
+
+which is a `ReconstructedFunctionFieldData deckGroup`.
+
+The action is transported from mathlib's tautological action of
+`L ≃ₐ[B] L` on `L`; the faithfulness proof is derived from mathlib's
+`AlgEquiv.apply_faithfulSMul`.
+
+The theta layer now has:
+
+```text
+ThetaApproachFunctionFieldData.ofAlgebraicDeckFunctionField
+```
+
+which builds a theta function-field package from an algebraic deck model.
+
+### Lean Decisions
+
+We did not replace the existing abstract reconstruction interface. Instead, we
+added a stricter constructor into it. This lets later milestones continue to use
+abstract reconstruction data where the geometry is not yet formalized, while
+allowing concrete Galois/function-field models to avoid arbitrary action fields.
+
+The fixed-field converse remains a field of `AlgebraicDeckFunctionFieldData`.
+This is deliberate: proving that the fixed field of the full automorphism group
+is exactly the base field requires the relevant finite Galois extension theorem
+or a concrete finite etale cover construction. The new milestone removes the
+faithfulness assumption, not the full fixed-field theorem.
+
+### What This Tests
+
+The example file checks:
+
+* the constructed base embedding is `algebraMap B L`;
+* the induced deck automorphism is exactly the supplied algebra automorphism;
+* the deck automorphism homomorphism is injective;
+* fixed elements of the constructed action are precisely the supplied base
+  elements;
+* the trivial extension `B/B` gives a concrete algebraic deck model;
+* the theta function-field package can be constructed from the algebraic deck
+  model and still exposes injectivity.
+
+### Design Trap Avoided
+
+The trap would be to keep accepting an arbitrary group action as if it were a
+Galois action. This milestone creates a path where the action is forced to come
+from algebra automorphisms. At the same time, it does not use this
+ring-automorphism model across the log-wall or claim any Corollary 3.12
+transport.
+
+### Remaining Gap
+
+The deck group is still supplied together with an equivalence to
+`L ≃ₐ[B] L`. Later milestones should derive this equivalence from a concrete
+finite etale or finite Galois cover associated to `X_K -> C_K`.

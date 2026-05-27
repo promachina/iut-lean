@@ -242,6 +242,67 @@ example (G : Type u) [Group G]
       ∃ b : functionField.baseCarrier, functionField.baseToFunctionField b = x :=
   functionField.deck_fixed_iff_in_base x
 
+example (G : Type u) [Group G]
+    (data : AlgebraicDeckFunctionFieldData G F K) :
+    data.toReconstructedFunctionFieldData.baseToFunctionField =
+      algebraMap F K :=
+  data.toReconstructed_baseToFunctionField
+
+example (G : Type u) [Group G]
+    (data : AlgebraicDeckFunctionFieldData G F K) :
+    Function.Injective data.toReconstructedFunctionFieldData.deckRingAutHom :=
+  data.toReconstructed_deckRingAutHom_injective
+
+example (G : Type u) [Group G]
+    (data : AlgebraicDeckFunctionFieldData G F K)
+    (g : G) (x : K) :
+    data.toReconstructedFunctionFieldData.deckRingAut g x =
+      data.deckEquivAlgAut g x :=
+  data.toReconstructed_deckRingAut_apply g x
+
+example (G : Type u) [Group G]
+    (data : AlgebraicDeckFunctionFieldData G F K)
+    (x : K) :
+    (∀ g : G, data.toReconstructedFunctionFieldData.deckRingAut g x = x) ↔
+      ∃ b : F, algebraMap F K b = x :=
+  data.toReconstructed_fixed_iff_in_base x
+
+noncomputable example :
+    AlgebraicDeckFunctionFieldData (F ≃ₐ[F] F) F F :=
+  AlgebraicDeckFunctionFieldData.identity F
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    (data :
+      AlgebraicDeckFunctionFieldData
+        (ThetaApproachQuotientData.deckQuotient thetaApproach) B L)
+    (reconstructedFunctionFieldOfXK deckActionMatchesGalQuotient : Prop)
+    (hReconstructed : reconstructedFunctionFieldOfXK)
+    (hDeck : deckActionMatchesGalQuotient) :
+    ThetaApproachFunctionFieldData thetaApproach :=
+  ThetaApproachFunctionFieldData.ofAlgebraicDeckFunctionField
+    data reconstructedFunctionFieldOfXK hReconstructed
+    deckActionMatchesGalQuotient hDeck
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    (data :
+      AlgebraicDeckFunctionFieldData
+        (ThetaApproachQuotientData.deckQuotient thetaApproach) B L)
+    (reconstructedFunctionFieldOfXK deckActionMatchesGalQuotient : Prop)
+    (hReconstructed : reconstructedFunctionFieldOfXK)
+    (hDeck : deckActionMatchesGalQuotient) :
+    Function.Injective
+      (ThetaApproachFunctionFieldData.deckRingAutHom
+        (ThetaApproachFunctionFieldData.ofAlgebraicDeckFunctionField
+          data reconstructedFunctionFieldOfXK hReconstructed
+          deckActionMatchesGalQuotient hDeck)) :=
+  (ThetaApproachFunctionFieldData.ofAlgebraicDeckFunctionField
+    data reconstructedFunctionFieldOfXK hReconstructed
+    deckActionMatchesGalQuotient hDeck).deckRingAutHom_injective
+
 example :
     (zmodOneNonzeroQuotientElement primeFive).element ≠
       (zmodPointedQuotient primeFive).zero :=
