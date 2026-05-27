@@ -571,6 +571,49 @@ theorem archimedeanOrderTwoAction_totalLogVolume_example
       capsuleFamily.totalLogVolume :=
   data.capsuleTotalLogVolume_eq
 
+def nonarchimedeanIsmActionEntry_place_example
+    (entry : IUTStage1NonarchimedeanIsmActionEntry) :
+    IUTStage1PlaceId IUTStage1PlaceKind.nonarchimedean :=
+  entry.place
+
+theorem nonarchimedeanIsmActionEntry_totalLogVolume_example
+    (entry : IUTStage1NonarchimedeanIsmActionEntry) :
+    entry.toDirectSummandAction.toCapsuleAction.transformedFamily.totalLogVolume =
+      entry.capsuleFamily.totalLogVolume :=
+  entry.capsuleTotalLogVolume_eq
+
+def archimedeanOrderTwoActionEntry_place_example
+    (entry : IUTStage1ArchimedeanOrderTwoActionEntry) :
+    IUTStage1PlaceId IUTStage1PlaceKind.archimedean :=
+  entry.place
+
+theorem archimedeanOrderTwoActionEntry_totalLogVolume_example
+    (entry : IUTStage1ArchimedeanOrderTwoActionEntry) :
+    entry.toDirectSummandAction.toCapsuleAction.transformedFamily.totalLogVolume =
+      entry.capsuleFamily.totalLogVolume :=
+  entry.capsuleTotalLogVolume_eq
+
+def ind2PlaceFamily_totalActionCount_example
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    Nat :=
+  data.totalActionCount
+
+theorem ind2PlaceFamily_totalActionCount_eq_example
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    data.totalActionCount =
+      data.nonarchimedeanActions.length + data.archimedeanActions.length :=
+  data.totalActionCount_eq
+
+def ind2PlaceFamily_nonarchimedeanPlaces_example
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    List (IUTStage1PlaceId IUTStage1PlaceKind.nonarchimedean) :=
+  data.nonarchimedeanPlaces
+
+def ind2PlaceFamily_archimedeanPlaces_example
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    List (IUTStage1PlaceId IUTStage1PlaceKind.archimedean) :=
+  data.archimedeanPlaces
+
 def localTensorPacket_to_localTensorState_example
     {kind : IUTStage1PlaceKind}
     (state : IUTStage1LocalTensorPacketLogVolumeState kind) :

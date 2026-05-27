@@ -1227,6 +1227,118 @@ theorem capsuleTotalLogVolume_eq
 
 end IUTStage1ArchimedeanOrderTwoDirectSummandAction
 
+/-- A nonarchimedean `Ism` action entry in a place-family collection. -/
+structure IUTStage1NonarchimedeanIsmActionEntry where
+  capsuleFamily :
+    IUTStage1TypedCapsuleFamilyLogVolume
+      IUTStage1PlaceKind.nonarchimedean
+  family : IUTStage1TensorDirectSummandFamily capsuleFamily
+  action : IUTStage1NonarchimedeanIsmDirectSummandAction family
+
+/-- An archimedean order-two action entry in a place-family collection. -/
+structure IUTStage1ArchimedeanOrderTwoActionEntry where
+  capsuleFamily :
+    IUTStage1TypedCapsuleFamilyLogVolume IUTStage1PlaceKind.archimedean
+  family : IUTStage1TensorDirectSummandFamily capsuleFamily
+  action : IUTStage1ArchimedeanOrderTwoDirectSummandAction family
+
+namespace IUTStage1NonarchimedeanIsmActionEntry
+
+def place
+    (entry : IUTStage1NonarchimedeanIsmActionEntry) :
+    IUTStage1PlaceId IUTStage1PlaceKind.nonarchimedean :=
+  entry.action.place
+
+def toDirectSummandAction
+    (entry : IUTStage1NonarchimedeanIsmActionEntry) :
+    IUTStage1TensorDirectSummandFamilyAction entry.family :=
+  entry.action.toDirectSummandAction
+
+theorem symmetryKind_eq
+    (entry : IUTStage1NonarchimedeanIsmActionEntry) :
+    entry.family.symmetryKind =
+      IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm :=
+  entry.action.symmetryKind_eq
+
+theorem capsuleTotalLogVolume_eq
+    (entry : IUTStage1NonarchimedeanIsmActionEntry) :
+    entry.toDirectSummandAction.toCapsuleAction.transformedFamily.totalLogVolume =
+      entry.capsuleFamily.totalLogVolume :=
+  entry.action.capsuleTotalLogVolume_eq
+
+end IUTStage1NonarchimedeanIsmActionEntry
+
+namespace IUTStage1ArchimedeanOrderTwoActionEntry
+
+def place
+    (entry : IUTStage1ArchimedeanOrderTwoActionEntry) :
+    IUTStage1PlaceId IUTStage1PlaceKind.archimedean :=
+  entry.action.place
+
+def toDirectSummandAction
+    (entry : IUTStage1ArchimedeanOrderTwoActionEntry) :
+    IUTStage1TensorDirectSummandFamilyAction entry.family :=
+  entry.action.toDirectSummandAction
+
+theorem symmetryKind_eq
+    (entry : IUTStage1ArchimedeanOrderTwoActionEntry) :
+    entry.family.symmetryKind =
+      IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo :=
+  entry.action.symmetryKind_eq
+
+theorem capsuleTotalLogVolume_eq
+    (entry : IUTStage1ArchimedeanOrderTwoActionEntry) :
+    entry.toDirectSummandAction.toCapsuleAction.transformedFamily.totalLogVolume =
+      entry.capsuleFamily.totalLogVolume :=
+  entry.action.capsuleTotalLogVolume_eq
+
+end IUTStage1ArchimedeanOrderTwoActionEntry
+
+/--
+Collection of `(Ind2)` local tensor-factor action data over the two place
+families distinguished in Theorem 3.11.
+-/
+structure IUTStage1Ind2PlaceFamilyActionData where
+  nonarchimedeanActions : List IUTStage1NonarchimedeanIsmActionEntry
+  archimedeanActions : List IUTStage1ArchimedeanOrderTwoActionEntry
+
+namespace IUTStage1Ind2PlaceFamilyActionData
+
+def nonarchimedeanCount
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    Nat :=
+  data.nonarchimedeanActions.length
+
+def archimedeanCount
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    Nat :=
+  data.archimedeanActions.length
+
+def totalActionCount
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    Nat :=
+  data.nonarchimedeanCount + data.archimedeanCount
+
+theorem totalActionCount_eq
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    data.totalActionCount =
+      data.nonarchimedeanActions.length + data.archimedeanActions.length :=
+  rfl
+
+def nonarchimedeanPlaces
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    List (IUTStage1PlaceId IUTStage1PlaceKind.nonarchimedean) :=
+  data.nonarchimedeanActions.map
+    IUTStage1NonarchimedeanIsmActionEntry.place
+
+def archimedeanPlaces
+    (data : IUTStage1Ind2PlaceFamilyActionData) :
+    List (IUTStage1PlaceId IUTStage1PlaceKind.archimedean) :=
+  data.archimedeanActions.map
+    IUTStage1ArchimedeanOrderTwoActionEntry.place
+
+end IUTStage1Ind2PlaceFamilyActionData
+
 /-- Local nonarchimedean inclusion datum from the upper-semi-compatibility step. -/
 structure IUTStage1NonarchimedeanInclusionData where
   place : IUTStage1PlaceId IUTStage1PlaceKind.nonarchimedean

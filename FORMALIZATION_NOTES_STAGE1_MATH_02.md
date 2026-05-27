@@ -1387,3 +1387,101 @@ The source-specific packages are not yet tied into a combined place-family
 package.  The next mathematical step should aggregate nonarchimedean and
 archimedean local data across the relevant places rather than treating each
 place kind as a separate one-kind package.
+
+## 18. `(Ind2)` Place-Family Action Data
+
+### Goal
+
+We introduced the first place-family aggregation layer for the two local
+tensor-factor action kinds in Theorem 3.11 `(Ind2)`.
+
+### Lean/API Check
+
+The new entry wrappers are:
+
+```text
+IUTStage1NonarchimedeanIsmActionEntry
+IUTStage1ArchimedeanOrderTwoActionEntry
+```
+
+Each entry carries:
+
+```text
+capsuleFamily
+family
+action
+```
+
+and exposes:
+
+```text
+place
+toDirectSummandAction
+symmetryKind_eq
+capsuleTotalLogVolume_eq
+```
+
+The aggregate record is:
+
+```text
+IUTStage1Ind2PlaceFamilyActionData
+```
+
+with fields:
+
+```text
+nonarchimedeanActions
+archimedeanActions
+```
+
+and accessors:
+
+```text
+nonarchimedeanCount
+archimedeanCount
+totalActionCount
+nonarchimedeanPlaces
+archimedeanPlaces
+```
+
+### Mathematical Point
+
+This begins to model the paper's distinction between the two families of
+places:
+
+```text
+Vnon_Q
+Varc_Q
+```
+
+without yet constructing the actual local tensor product actions.  It is a
+bookkeeping layer that lets later source proofs talk about a collection of
+nonarchimedean `Ism` actions and a collection of archimedean order-two actions.
+
+### Trap Avoided
+
+We did not merge the two place families into a single list of untyped actions.
+The Lean types keep nonarchimedean and archimedean entries separate, so an
+archimedean order-two action cannot be used where an `Ism` action is expected.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+nonarchimedeanIsmActionEntry_place_example
+nonarchimedeanIsmActionEntry_totalLogVolume_example
+archimedeanOrderTwoActionEntry_place_example
+archimedeanOrderTwoActionEntry_totalLogVolume_example
+ind2PlaceFamily_totalActionCount_example
+ind2PlaceFamily_totalActionCount_eq_example
+ind2PlaceFamily_nonarchimedeanPlaces_example
+ind2PlaceFamily_archimedeanPlaces_example
+```
+
+### Remaining Gap
+
+This aggregation is still only for action data.  The next step should connect
+the place-family action data to upper-semi place-family data, because Theorem
+3.11 combines `(Ind2)` local tensor-factor behavior with `(Ind3)` upper
+semi-compatibility across nonarchimedean inclusions and archimedean surjections.
