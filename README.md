@@ -191,6 +191,8 @@ Current modules:
   under IUT Stage 1 names.
 * `Iut.Stage1.ToySourceObligations`: toy completion of that ledger using
   upper-ray normalization and epsilon-cap bounds.
+* `Iut.Stage1.IUTStage1SourceExample`: toy-backed regression examples for the
+  source-facing package API, without treating the toy data as genuine IUT data.
 
 Useful commands:
 

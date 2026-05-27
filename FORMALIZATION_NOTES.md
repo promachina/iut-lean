@@ -7410,3 +7410,74 @@ The next milestone should add a small source-package example module that
 specializes the generic source package to the existing toy pre-ledger data, so
 the non-toy source-facing API is regression-tested against a concrete promoted
 path without claiming toy data is genuine IUT data.
+
+## Milestone 88: Toy-Backed Source Package Regression Examples
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+* `Iut/Basic.lean`
+* `README.md`
+
+### Source Check
+
+The non-toy source package from Milestones 84-87 is intentionally abstract. To
+avoid mistaking that abstraction for mathematical progress on IUT itself, this
+milestone tests the API using the existing toy pre-ledger data only as a
+regression source.
+
+This follows the project discipline used throughout the Stage 1 scaffold:
+examples may verify API shape, but they must not be described as evidence that
+the IUT source mathematics has been formalized.
+
+### Purpose
+
+This milestone adds a small example module:
+
+```text
+Iut.Stage1.IUTStage1SourceExample
+```
+
+It packages the existing toy pre-ledger data as an `IUTStage1SourcePackage`,
+converts the toy promotion obligations into `IUTStage1SourceObligations`, and
+then consumes the source-facing public/recovery API.
+
+### Lean Declarations
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToyIUTStage1SourceLabels
+unitThetaToyIUTStage1SourcePackage
+unitThetaToyIUTStage1SourceObligations
+unitThetaToy_source_publicAudit_q_le_theta_example
+unitThetaToy_source_publicAudit_corollary_example
+unitThetaToy_source_stage_recovers_corollary_example
+```
+
+The root module imports the example module, and the README records it in the
+module list.
+
+### What This Tests
+
+The source-facing API can be exercised through a concrete promoted path:
+
+```text
+toy pre-ledger data
+  -> toy promotion obligations
+  -> source package obligations
+  -> source public audit projections
+  -> source stage-recovery theorem
+```
+
+### Design Trap Avoided
+
+The trap would be to leave the new non-toy source API untested until genuine IUT
+source data exists. This example tests the API mechanics while clearly keeping
+toy data separate from the actual IUT source problem.
+
+### Next Step
+
+The next milestone should add a compact source-package audit theorem collecting
+the source labels, source obligations, promoted-provider consistency, and public
+endpoint projections into one human-readable checklist.
