@@ -1473,6 +1473,41 @@ theorem unitThetaToy_source_theorem311_audited_public_audit_route_example
   (unitThetaToy_source_theorem311_audited_public_audit_example
     measure hnormalized hh hbound hholds).comparisonDataEqPayloadInputs
 
+theorem unitThetaToy_source_theorem311_audited_public_audit_q_charted_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord = package.preLedger.qSigned :=
+  (unitThetaToy_source_theorem311_audited_public_audit_example
+    measure hnormalized hh hbound hholds).qCharted
+
+theorem unitThetaToy_source_theorem311_audited_public_audit_theta_charted_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned :=
+  (unitThetaToy_source_theorem311_audited_public_audit_example
+    measure hnormalized hh hbound hholds).thetaCharted
+
 theorem unitThetaToy_source_theorem311_audited_public_audit_history_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

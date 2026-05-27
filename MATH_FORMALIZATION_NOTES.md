@@ -7444,3 +7444,80 @@ milestone makes that forgetting impossible at the audited boundary type.
 The chart data are still abstract transports. Later work should refine the
 chart conditions, especially any real-line-copy identifications that are
 allowed or forbidden in the common-container comparison.
+
+## Math Milestone 75: Charted Readings in the Public Audit
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The public audit is the most visible checkpoint for the current Stage 1 route.
+If it exposes a Corollary 3.12-shaped comparison while hiding the charted q and
+Theta readings inside an internal signed-payload boundary, then a later reader
+has to chase definitions to verify that the real-line-copy discipline has been
+preserved.
+
+This milestone promotes the chart evidence to the public audit itself.
+
+### Lean/API Check
+
+The record:
+
+```text
+IUTStage1SourcePackage.AuditedPublicAudit
+```
+
+now stores:
+
+```text
+theta_chart_trivial
+q_charted
+theta_charted
+```
+
+and exposes:
+
+```text
+thetaChartTrivial
+qCharted
+thetaCharted
+```
+
+These fields are copied from the audited signed payload boundary. No new
+comparison data or endpoint is introduced.
+
+### Lean Decisions
+
+This is intentionally redundant with the signed-payload boundary. The public
+audit is the object a later endpoint audit is likely to quote, so the chart
+facts should be recoverable there without unfolding the boundary.
+
+The comparison remains the same:
+
+```text
+qSigned <= thetaSigned
+```
+
+but the public audit now also remembers how `qSigned` and `thetaSigned` were
+read from their charted q-side and Theta-side points.
+
+### What This Tests
+
+The source example proves that the toy public audit exposes the q-charted and
+Theta-charted equations. The full build verifies the downstream audit summaries
+still compile.
+
+### Design Trap Avoided
+
+The trap would be an externally visible audit that shows only the final
+inequality and Corollary-shaped statement. This milestone keeps the real-line
+copy bookkeeping visible at that same public layer.
+
+### Remaining Gap
+
+The next refinement should state more explicitly which chart identifications
+are allowed at the common-container level and which remain forbidden history
+identifications.

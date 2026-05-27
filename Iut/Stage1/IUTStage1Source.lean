@@ -1998,6 +1998,16 @@ structure AuditedPublicAudit
       (package.comparisonDataFromPayloadInputs
         (package.auditedComparisonSourceObligations
           bundle sideConditions)).stage1Comparison
+  theta_chart_trivial :
+    Transport.TrivialMonodromy
+      package.preLedger.chartedContainer.chart.thetaToTarget
+  q_charted :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord = package.preLedger.qSigned
+  theta_charted :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned
   source_normalization : package.preLedger.normalization
   histories_not_identified :
     bundle.structuredSHE.context.domainStructure.theater.side ≠
@@ -2027,6 +2037,12 @@ theorem ofStructuredInputsWithSHE
     stage_comparison_eq_payload_inputs :=
       package.auditedComparisonData_stage1Comparison_eq_payloadInputs
         bundle sideConditions,
+    theta_chart_trivial :=
+      (bundle.auditedSignedPayloadBoundary sideConditions).thetaChartTrivial,
+    q_charted :=
+      (bundle.auditedSignedPayloadBoundary sideConditions).qCharted,
+    theta_charted :=
+      (bundle.auditedSignedPayloadBoundary sideConditions).thetaCharted,
     source_normalization :=
       (bundle.auditedSignedPayloadBoundary sideConditions).sourceNormalization,
     histories_not_identified :=
@@ -2072,6 +2088,25 @@ theorem sourceNormalization
     (audit : AuditedPublicAudit package bundle sideConditions) :
     package.preLedger.normalization :=
   audit.source_normalization
+
+theorem thetaChartTrivial
+    (audit : AuditedPublicAudit package bundle sideConditions) :
+    Transport.TrivialMonodromy
+      package.preLedger.chartedContainer.chart.thetaToTarget :=
+  audit.theta_chart_trivial
+
+theorem qCharted
+    (audit : AuditedPublicAudit package bundle sideConditions) :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord = package.preLedger.qSigned :=
+  audit.q_charted
+
+theorem thetaCharted
+    (audit : AuditedPublicAudit package bundle sideConditions) :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned :=
+  audit.theta_charted
 
 theorem domainHistory_ne_codomainHistory
     (audit : AuditedPublicAudit package bundle sideConditions) :
