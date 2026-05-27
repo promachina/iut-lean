@@ -970,3 +970,101 @@ family, a chosen common hull/determinant target, and a proof that applying a
 normalized measure to that target yields a usable upper bound for every possible
 output. This should still be abstract; no IUT-specific determinant construction
 should be asserted before its source hypotheses are identified.
+
+## Milestone 10: Measured Common-Target Bounds
+
+Lean file: `Iut/Foundations/CommonTargetBound.lean`
+
+### Source Check
+
+This milestone follows the same Step (xi) portion of IUT III, Corollary 3.12
+used in the previous milestone, but now records the family-level shape. The
+source passage says that the multiradial construction, followed by formation of
+the holomorphic hull, yields a collection of possible output data, and that only
+after forming a suitable determinant and applying normalized log-volume do the
+Theta-side region and the q-pilot log-volume become comparable real objects.
+
+The introduction to IUT III describes this as the log-volume of the holomorphic
+hull of the union of possible images of the Theta-pilot object, computed in
+terms of the q-pilot object. Mochizuki's recent formalization progress report
+describes a reorganization in which the "hull+det" operation is moved into an
+intermediate "3.11.5" stage, leaving the final "3.11.5 => 3.12" step as a
+simultaneous comparison in a common container. Scholze-Stix, in their critique,
+stress the same danger from the opposite direction: a real inequality is only
+meaningful after the relevant copies of real ordered one-dimensional spaces and
+their identifications have been made explicit.
+
+### Purpose
+
+The existing `RegionComparisonFamily.CommonTargetHull` says only that every
+possible target region is contained in a common hull. The existing
+`RegionMeasure` says only that volume is monotone under containment. This
+milestone packages the exact additional data needed to pass from those two
+facts to a family-wide upper bound:
+
+```text
+common target contains every possible target
+volume(common target) <= bound
+```
+
+No construction of the common target is included. In IUT terms, the future
+formalization of APT/IPL/SHE plus hull+det must produce this package.
+
+### Lean Declarations
+
+`RegionComparisonFamily.AllTargetsAtMost measure family bound` is the direct
+conclusion:
+
+```text
+forall choice, targetVolume(choice) <= bound
+```
+
+`RegionComparisonFamily.CommonTargetBound measure family bound` stores:
+
+```text
+common        : Region target
+contains_each : family.CommonTarget common
+volume_bound  : HasVolumeAtMost measure common bound
+```
+
+`RegionComparisonFamily.CommonTargetHullBound measure family bound` is the same
+package specialized to an existing `family.CommonTargetHull`.
+
+For both packages, Lean proves:
+
+```text
+choice_targetVolume_le
+allTargetsAtMost
+choice_region_atMost
+weakenBound
+```
+
+The common-target package also proves `holds_common_of_choice`; the hull package
+proves `holds_commonHull_of_choice`. These keep membership transport separate
+from the numerical estimate.
+
+### What This Tests
+
+This milestone tests the intended proof dependency:
+
+1. A chosen possible output lies in its target region.
+2. The common target/hull contains every possible target region.
+3. A measure bound is known for the common target/hull.
+4. Therefore every chosen target has volume at most the same bound.
+
+Lean enforces that the fourth item cannot be obtained from the name "hull" or
+"determinant" alone. It needs the containment and measured-bound fields.
+
+### Design Trap Avoided
+
+The trap would be to introduce a theorem named after Corollary 3.12 that simply
+assumes the final inequality. This module does not mention q-pilots, Theta-
+pilots, or ABC. It only records the common-target upper-bound mechanism that a
+future IUT-specific construction must instantiate.
+
+### Next Step
+
+The next milestone should instantiate this common-target package for a toy
+family of upper-ray comparisons. That will give a concrete Lean test that a
+single common upper-ray bound controls all choices in a family, while still
+requiring explicit containment proofs for each possible output.

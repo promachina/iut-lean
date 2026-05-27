@@ -145,6 +145,8 @@ Current modules:
   separating exact equality from indeterminacy membership.
 * `Iut.Foundations.RegionMeasure`: abstract monotone real-valued measures for
   log-volume-shaped estimates.
+* `Iut.Foundations.CommonTargetBound`: measured common-target packages for
+  comparison families, modeling the post-hull upper-bound interface.
 * `Iut.Stage1.PilotComparison`: first neutral interface for the Corollary 3.12
   target shape.
 * `Iut.Stage1.ToyModel`: Lean tests for Mochizuki's real-valued toy model from
