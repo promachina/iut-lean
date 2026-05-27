@@ -159,6 +159,40 @@ structure IUTStage1SourceObligations
   normalization : package.preLedger.normalization
 
 /--
+Source-facing subclaims for the Theorem 3.11 algorithmic certificate used in
+Stage 1.
+
+This record separates the opaque algorithmic output certificate from the
+Hodge-theater/SHE alignment datum needed to connect the common-container SHE
+arrow to the structured certificate stored in the pre-ledger data.
+-/
+structure IUTStage1Theorem311Subclaims
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) : Prop where
+  algorithm_output_certified : package.preLedger.output.Certified
+  hodge_theater_she_alignment :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she
+
+namespace IUTStage1Theorem311Subclaims
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+theorem algorithmOutputCertified
+    (subclaims : IUTStage1Theorem311Subclaims package) :
+    package.preLedger.output.Certified :=
+  subclaims.algorithm_output_certified
+
+theorem hodgeTheaterSHEAlignment
+    (subclaims : IUTStage1Theorem311Subclaims package) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she :=
+  subclaims.hodge_theater_she_alignment
+
+end IUTStage1Theorem311Subclaims
+
+/--
 Named source-level gap below `IUTStage1SourceObligations`.
 
 The fields use source-facing names for the mathematical work still needed to
@@ -199,6 +233,12 @@ theorem sourceNormalization
     (gap : IUTStage1SourceObligationGap package) :
     package.preLedger.normalization :=
   gap.source_normalization
+
+def theorem311Subclaims
+    (gap : IUTStage1SourceObligationGap package) :
+    IUTStage1Theorem311Subclaims package :=
+  { algorithm_output_certified := gap.theorem311AlgorithmCertified,
+    hodge_theater_she_alignment := gap.sheAlignment }
 
 def toSourceObligations
     (gap : IUTStage1SourceObligationGap package) :
@@ -255,6 +295,12 @@ theorem sourceNormalization
     (gapAudit : Audit gap) :
     package.preLedger.normalization :=
   gapAudit.source_normalization
+
+def theorem311Subclaims
+    (gapAudit : Audit gap) :
+    IUTStage1Theorem311Subclaims package :=
+  { algorithm_output_certified := gapAudit.theorem311AlgorithmCertified,
+    hodge_theater_she_alignment := gapAudit.sheAlignment }
 
 def toSourceObligations
     (gapAudit : Audit gap) :

@@ -8271,3 +8271,76 @@ The next milestone should begin replacing the monolithic
 `theorem311_algorithm_certified` placeholder with a structured source-facing
 record of subclaims, beginning with separate names for the algorithmic output
 certificate and the Hodge-theater/SHE alignment input it depends on.
+
+## Milestone 100: Theorem 3.11 Source Subclaims
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Mochizuki's formalization progress report describes Stage 1 as the implication
+from IUT III, Theorem 3.11 to Corollary 3.12, with the fourth triangle focusing
+on the simultaneous comparison of the Theta-pilot and q-pilot relative to a
+single common container. The same discussion separates the multiradial
+algorithm, descent, `hull+det`, SHE, IPL, and APT aspects.
+
+Scholze-Stix locate their objection near the end of Step (xi) of Corollary 3.12,
+where they argue that the relevant identifications of real-number copies and
+pilot objects must be made explicit. This milestone therefore only names the
+subclaims feeding the Stage 1 source obligations. It does not identify pilots or
+derive any new numerical inequality.
+
+### Purpose
+
+This milestone starts splitting the monolithic
+`theorem311_algorithm_certified` gap field into a structured source-facing
+record. The first split separates:
+
+```text
+algorithmic output certification
+Hodge-theater/SHE alignment with the structured pre-ledger certificate
+```
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1Theorem311Subclaims
+IUTStage1Theorem311Subclaims.algorithmOutputCertified
+IUTStage1Theorem311Subclaims.hodgeTheaterSHEAlignment
+IUTStage1SourceObligationGap.theorem311Subclaims
+IUTStage1SourceObligationGap.Audit.theorem311Subclaims
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_theorem311_subclaims_example
+unitThetaToy_source_theorem311_algorithm_output_example
+unitThetaToy_source_theorem311_she_alignment_example
+unitThetaToy_source_gap_audit_theorem311_subclaims_example
+```
+
+### What This Tests
+
+The toy examples verify that downstream modules can request the Theorem 3.11
+subclaim record from either a source gap or a source-gap audit, then project the
+algorithmic output certificate and SHE alignment separately.
+
+### Design Trap Avoided
+
+The trap would be to treat Theorem 3.11 as a single opaque token all the way down
+to the disputed Corollary 3.12 comparison. This milestone keeps the token
+opaque mathematically, but gives it internal named structure so future work can
+replace each part with real source mathematics one at a time.
+
+### Next Step
+
+The next milestone should connect these subclaims to the already existing
+structured IPL/SHE/APT certificates in `IUTStage1PreLedgerData.Audit`, without
+allowing structured IPL/SHE/APT names alone to produce common-target bounds or
+Corollary 3.12.
