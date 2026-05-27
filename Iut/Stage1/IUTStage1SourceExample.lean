@@ -315,6 +315,121 @@ theorem unitThetaToy_source_theorem311_subclaims_from_algorithmic_output_eq_exam
     (unitThetaToy_source_theorem311_subclaims_example
       measure hnormalized hh hbound hholds).hodgeTheaterSHEAlignment
 
+theorem unitThetaToy_source_theorem311_she_alignment_component_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1Theorem311SHEAlignment
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds) :=
+  (unitThetaToy_source_theorem311_subclaims_example
+    measure hnormalized hh hbound hholds).sheAlignment
+
+theorem unitThetaToy_source_theorem311_she_alignment_component_alignment_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she :=
+  (unitThetaToy_source_theorem311_she_alignment_component_example
+    measure hnormalized hh hbound hholds).hodgeTheaterSHEAlignment
+
+theorem unitThetaToy_source_theorem311_she_alignment_eq_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let subclaims :=
+      unitThetaToy_source_theorem311_subclaims_example
+        measure hnormalized hh hbound hholds
+    subclaims.sheAlignment.hodgeTheaterSHEAlignment =
+      subclaims.hodgeTheaterSHEAlignment :=
+  (unitThetaToy_source_theorem311_subclaims_example
+    measure hnormalized hh hbound hholds).sheAlignment_hodgeTheaterSHEAlignment_eq
+
+theorem unitThetaToy_source_theorem311_subclaims_from_components_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1Theorem311Subclaims
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds) :=
+  IUTStage1Theorem311Subclaims.ofComponents
+    (unitThetaToy_source_theorem311_algorithmic_output_component_example
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_theorem311_she_alignment_component_example
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_theorem311_subclaims_from_components_algorithmic_eq_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let algorithmicOutput :=
+      unitThetaToy_source_theorem311_algorithmic_output_component_example
+        measure hnormalized hh hbound hholds
+    let sheAlignment :=
+      unitThetaToy_source_theorem311_she_alignment_component_example
+        measure hnormalized hh hbound hholds
+    (IUTStage1Theorem311Subclaims.ofComponents
+      algorithmicOutput sheAlignment).algorithmicOutput =
+      algorithmicOutput :=
+  IUTStage1Theorem311Subclaims.ofComponents_algorithmicOutput_eq
+    (unitThetaToy_source_theorem311_algorithmic_output_component_example
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_theorem311_she_alignment_component_example
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_theorem311_subclaims_from_components_she_eq_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let algorithmicOutput :=
+      unitThetaToy_source_theorem311_algorithmic_output_component_example
+        measure hnormalized hh hbound hholds
+    let sheAlignment :=
+      unitThetaToy_source_theorem311_she_alignment_component_example
+        measure hnormalized hh hbound hholds
+    (IUTStage1Theorem311Subclaims.ofComponents
+      algorithmicOutput sheAlignment).sheAlignment =
+      sheAlignment :=
+  IUTStage1Theorem311Subclaims.ofComponents_sheAlignment_eq
+    (unitThetaToy_source_theorem311_algorithmic_output_component_example
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_theorem311_she_alignment_component_example
+      measure hnormalized hh hbound hholds)
+
 theorem unitThetaToy_source_theorem311_algorithm_output_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

@@ -213,6 +213,32 @@ theorem algorithmOutputCertified
 end IUTStage1Theorem311AlgorithmicOutput
 
 /--
+Hodge-theater/SHE-alignment component of the Theorem 3.11 source subclaims.
+
+This isolates the datum that connects the common-container SHE arrow to the
+structured SHE certificate stored in the pre-ledger data.
+-/
+structure IUTStage1Theorem311SHEAlignment
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) : Prop where
+  alignment :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she
+
+namespace IUTStage1Theorem311SHEAlignment
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+theorem hodgeTheaterSHEAlignment
+    (sheAlignment : IUTStage1Theorem311SHEAlignment package) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she :=
+  sheAlignment.alignment
+
+end IUTStage1Theorem311SHEAlignment
+
+/--
 Source-facing subclaims for the Theorem 3.11 algorithmic certificate used in
 Stage 1.
 
@@ -249,6 +275,11 @@ theorem hodgeTheaterSHEAlignment
       package.preLedger.certificate.she :=
   subclaims.hodge_theater_she_alignment
 
+def sheAlignment
+    (subclaims : IUTStage1Theorem311Subclaims package) :
+    IUTStage1Theorem311SHEAlignment package :=
+  { alignment := subclaims.hodgeTheaterSHEAlignment }
+
 def ofAlgorithmicOutputAndSHEAlignment
     (algorithmicOutput : IUTStage1Theorem311AlgorithmicOutput package)
     (sheAlignment :
@@ -259,10 +290,23 @@ def ofAlgorithmicOutputAndSHEAlignment
       algorithmicOutput.algorithmOutputCertified,
     hodge_theater_she_alignment := sheAlignment }
 
+def ofComponents
+    (algorithmicOutput : IUTStage1Theorem311AlgorithmicOutput package)
+    (sheAlignment : IUTStage1Theorem311SHEAlignment package) :
+    IUTStage1Theorem311Subclaims package :=
+  ofAlgorithmicOutputAndSHEAlignment
+    algorithmicOutput sheAlignment.hodgeTheaterSHEAlignment
+
 theorem algorithmicOutput_certified_eq
     (subclaims : IUTStage1Theorem311Subclaims package) :
     subclaims.algorithmicOutput.algorithmOutputCertified =
       subclaims.algorithmOutputCertified :=
+  rfl
+
+theorem sheAlignment_hodgeTheaterSHEAlignment_eq
+    (subclaims : IUTStage1Theorem311Subclaims package) :
+    subclaims.sheAlignment.hodgeTheaterSHEAlignment =
+      subclaims.hodgeTheaterSHEAlignment :=
   rfl
 
 theorem ofAlgorithmicOutputAndSHEAlignment_algorithmicOutput_eq
@@ -273,6 +317,20 @@ theorem ofAlgorithmicOutputAndSHEAlignment_algorithmicOutput_eq
     (ofAlgorithmicOutputAndSHEAlignment
       algorithmicOutput sheAlignment).algorithmicOutput =
       algorithmicOutput :=
+  Subsingleton.elim _ _
+
+theorem ofComponents_algorithmicOutput_eq
+    (algorithmicOutput : IUTStage1Theorem311AlgorithmicOutput package)
+    (sheAlignment : IUTStage1Theorem311SHEAlignment package) :
+    (ofComponents algorithmicOutput sheAlignment).algorithmicOutput =
+      algorithmicOutput :=
+  Subsingleton.elim _ _
+
+theorem ofComponents_sheAlignment_eq
+    (algorithmicOutput : IUTStage1Theorem311AlgorithmicOutput package)
+    (sheAlignment : IUTStage1Theorem311SHEAlignment package) :
+    (ofComponents algorithmicOutput sheAlignment).sheAlignment =
+      sheAlignment :=
   Subsingleton.elim _ _
 
 end IUTStage1Theorem311Subclaims

@@ -9500,3 +9500,78 @@ obligations can be assembled.
 The next milestone should isolate the Hodge-theater/SHE-alignment datum as a
 second small Theorem 3.11 component, then rebuild the subclaim bundle from the
 two named components.
+
+## Milestone 119: Theorem 3.11 SHE-Alignment Component
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Milestone 118 isolated the algorithmic-output certificate. This milestone
+isolates the second field of the Theorem 3.11 subclaim bundle: the
+Hodge-theater/SHE alignment datum connecting the common-container SHE arrow to
+the structured SHE certificate in the pre-ledger.
+
+This is only a naming and packaging step. It does not assert that the alignment
+is available in a non-toy source theory, and it does not promote the alignment
+to Corollary 3.12.
+
+### Purpose
+
+This milestone gives the Theorem 3.11 route two named components:
+
+* algorithmic-output certification;
+* Hodge-theater/SHE alignment.
+
+The existing subclaim bundle can now be rebuilt from these two components.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1Theorem311SHEAlignment
+IUTStage1Theorem311SHEAlignment.hodgeTheaterSHEAlignment
+IUTStage1Theorem311Subclaims.sheAlignment
+IUTStage1Theorem311Subclaims.ofComponents
+IUTStage1Theorem311Subclaims.sheAlignment_hodgeTheaterSHEAlignment_eq
+IUTStage1Theorem311Subclaims.ofComponents_algorithmicOutput_eq
+IUTStage1Theorem311Subclaims.ofComponents_sheAlignment_eq
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_theorem311_she_alignment_component_example
+unitThetaToy_source_theorem311_she_alignment_component_alignment_example
+unitThetaToy_source_theorem311_she_alignment_eq_example
+unitThetaToy_source_theorem311_subclaims_from_components_example
+unitThetaToy_source_theorem311_subclaims_from_components_algorithmic_eq_example
+unitThetaToy_source_theorem311_subclaims_from_components_she_eq_example
+```
+
+### What This Tests
+
+The toy examples verify that:
+
+* a Theorem 3.11 subclaim bundle exposes its SHE-alignment component;
+* the SHE-alignment component recovers the same alignment proof;
+* the full subclaim bundle can be rebuilt from the algorithmic-output component
+  and the SHE-alignment component;
+* both components can be recovered from that rebuilt bundle.
+
+### Design Trap Avoided
+
+The trap would be to use the phrase "Hodge theater" as an opaque license to
+derive downstream inequalities. In Lean, this milestone only records a precise
+alignment equality. It is not a transport principle, not a reconstruction
+principle, and not a Corollary 3.12 proof.
+
+### Next Step
+
+The next milestone should thread the two named Theorem 3.11 components into
+`IUTStage1Theorem311StructuredInputs`, so structured inputs expose the same
+component-level API as raw subclaim bundles.
