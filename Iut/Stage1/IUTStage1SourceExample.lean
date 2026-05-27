@@ -61,6 +61,56 @@ def unitThetaToyIUTStage1SourceHullDetData
       unitThetaToyPreLedgerHullDetSourceData
         measure hnormalized hh hbound hholds }
 
+def unitThetaToyIUTStage1CoricData
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1CoricData
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds) :=
+  IUTStage1CoricData.ofPackage
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_coricData_commonLanguage_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyIUTStage1CoricData
+      measure hnormalized hh hbound hholds).commonLanguage =
+      (unitThetaToyIUTStage1CoricData
+        measure hnormalized hh hbound hholds).sharedContext.commonLanguage :=
+  (unitThetaToyIUTStage1CoricData
+    measure hnormalized hh hbound hholds).commonLanguageMatchesSharedContext
+
+theorem unitThetaToy_coricData_hdd_matches_package_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    (unitThetaToyIUTStage1CoricData
+      measure hnormalized hh hbound hholds).hdd =
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd :=
+  (unitThetaToyIUTStage1CoricData
+    measure hnormalized hh hbound hholds).hddMatchesPackage
+
 def unitThetaToyThetaPilotPossibleImages
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

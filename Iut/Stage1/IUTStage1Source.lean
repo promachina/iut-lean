@@ -186,6 +186,85 @@ theorem indeterminacies_matches_labels
 end IUTStage1SourcePackage
 
 /--
+Source-facing coric data visible at the Stage 1 boundary.
+
+This packages the common-container/SHE/HDD data that is intended to survive the
+erasure of representative-dependent indeterminacy coordinates.
+-/
+structure IUTStage1CoricData
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) where
+  multiradialOutput : MultiradialOutputId
+  commonContainer : AlgorithmicOutput.CommonContainerId
+  sharedContext : QualitativeData.SharedHolomorphicContext
+  commonLanguage : QualitativeData.CommonLanguageId
+  hdd :
+    package.preLedger.output.HDDCompositeData
+      package.preLedger.measure package.preLedger.thetaSigned
+  multiradial_output_eq : multiradialOutput = package.multiradialOutput
+  common_container_eq :
+    commonContainer =
+      package.preLedger.chartedContainer.commonContainer.container
+  shared_context_eq :
+    sharedContext =
+      package.preLedger.chartedContainer.commonContainer.context
+  common_language_eq : commonLanguage = sharedContext.commonLanguage
+  hdd_eq :
+    hdd = package.preLedger.chartedContainer.commonContainer.hddShe.hdd
+
+namespace IUTStage1CoricData
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+def ofPackage
+    (package : IUTStage1SourcePackage source target index) :
+    IUTStage1CoricData package :=
+  { multiradialOutput := package.multiradialOutput,
+    commonContainer :=
+      package.preLedger.chartedContainer.commonContainer.container,
+    sharedContext :=
+      package.preLedger.chartedContainer.commonContainer.context,
+    commonLanguage :=
+      package.preLedger.chartedContainer.commonContainer.context.commonLanguage,
+    hdd := package.preLedger.chartedContainer.commonContainer.hddShe.hdd,
+    multiradial_output_eq := rfl,
+    common_container_eq := rfl,
+    shared_context_eq := rfl,
+    common_language_eq := rfl,
+    hdd_eq := rfl }
+
+theorem multiradialOutputMatchesPackage
+    (coricData : IUTStage1CoricData package) :
+    coricData.multiradialOutput = package.multiradialOutput :=
+  coricData.multiradial_output_eq
+
+theorem commonContainerMatchesPackage
+    (coricData : IUTStage1CoricData package) :
+    coricData.commonContainer =
+      package.preLedger.chartedContainer.commonContainer.container :=
+  coricData.common_container_eq
+
+theorem sharedContextMatchesPackage
+    (coricData : IUTStage1CoricData package) :
+    coricData.sharedContext =
+      package.preLedger.chartedContainer.commonContainer.context :=
+  coricData.shared_context_eq
+
+theorem commonLanguageMatchesSharedContext
+    (coricData : IUTStage1CoricData package) :
+    coricData.commonLanguage = coricData.sharedContext.commonLanguage :=
+  coricData.common_language_eq
+
+theorem hddMatchesPackage
+    (coricData : IUTStage1CoricData package) :
+    coricData.hdd =
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd :=
+  coricData.hdd_eq
+
+end IUTStage1CoricData
+
+/--
 Source-facing family of possible Theta-pilot images.
 
 The family records that the target regions in the pre-ledger output are being

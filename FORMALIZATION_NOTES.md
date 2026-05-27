@@ -16859,3 +16859,86 @@ The `coric` coordinate is still abstract. The next step should identify which
 existing source records correspond to coric data in our Stage 1 package:
 likely the common-container/SHE/HDD labels and the parts of the multiradial
 output that are supposed to survive the erasure of ring/scheme history.
+
+## 117. Source-Facing Coric Data
+
+### Goal
+
+We connected the abstract `coric` coordinate to existing Stage 1 source
+records. The new wrapper extracts the common-container/SHE/HDD data that is
+visible at the Theorem 3.11 to Corollary 3.12 boundary.
+
+### Lean/API Check
+
+The source layer now defines:
+
+```text
+IUTStage1CoricData
+IUTStage1CoricData.ofPackage
+```
+
+with fields:
+
+```text
+multiradialOutput
+commonContainer
+sharedContext
+commonLanguage
+hdd
+multiradial_output_eq
+common_container_eq
+shared_context_eq
+common_language_eq
+hdd_eq
+```
+
+The accessors expose that this data is exactly the package's common-container
+and HDD/SHE data:
+
+```text
+multiradialOutputMatchesPackage
+commonContainerMatchesPackage
+sharedContextMatchesPackage
+commonLanguageMatchesSharedContext
+hddMatchesPackage
+```
+
+### Lean Decisions
+
+This is a wrapper around existing records, not a new construction. That is
+intentional. We should not invent a separate coric object disconnected from the
+actual package route. The next non-toy quotient should use this wrapper, or a
+refinement of it, as the coric coordinate in `IUTStage1IndeterminacyChoice`.
+
+### Source Check
+
+The formalization report stresses common containers and the route through
+`(HDD) o (SHE)`. The existing Lean package already has:
+
+```text
+commonContainer.context
+commonContainer.hddShe
+commonContainer.hddShe.hdd
+```
+
+This milestone records those components as the current formal approximation to
+the coric data that survives indeterminacy-coordinate erasure.
+
+### Toy Check
+
+The toy source example now checks:
+
+```text
+unitThetaToyIUTStage1CoricData
+unitThetaToy_coricData_commonLanguage_example
+unitThetaToy_coricData_hdd_matches_package_example
+```
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The wrapper still does not prove that the possible-image construction depends
+only on this coric data. That dependency is the next mathematical obligation:
+if two choices have the same `IUTStage1CoricData`, their Theta-pilot
+possible-image regions should agree.
