@@ -9843,3 +9843,67 @@ public audits.
 
 The next milestone should add compact package audits for the structured routes,
 parallel to `auditOfParts` and `auditOfHypotheses`.
+
+## Milestone 124: Structured Route Compact Audits
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Milestone 123 exposed public audits for the structured routes. This milestone
+adds compact source-package audits for the same routes, parallel to the existing
+`auditOfParts` and `auditOfHypotheses` APIs.
+
+The compact audit still packages source labels, source obligations, promoted
+provider data, and the public comparison endpoint. It does not supply new
+mathematical content beyond the assembled source obligations.
+
+### Purpose
+
+This milestone lets downstream code request the full package audit along the
+structured-input route without manually rewriting through the older subclaim
+route.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.auditOfStructuredInputs
+IUTStage1SourcePackage.auditOfStructuredHypotheses
+IUTStage1SourcePackage.auditOfStructuredInputs_eq_parts
+IUTStage1SourcePackage.auditOfStructuredHypotheses_eq_parts
+IUTStage1SourcePackage.auditOfStructuredHypotheses_eq_hypotheses
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_audit_from_structured_inputs_example
+unitThetaToy_source_audit_from_structured_hypotheses_example
+unitThetaToy_source_audit_from_structured_inputs_q_le_theta_projection_example
+unitThetaToy_source_audit_from_structured_hypotheses_q_le_theta_projection_example
+unitThetaToy_source_audit_from_structured_inputs_eq_parts_example
+unitThetaToy_source_audit_from_structured_hypotheses_eq_parts_example
+unitThetaToy_source_audit_from_structured_hypotheses_eq_hypotheses_example
+```
+
+### What This Tests
+
+The toy examples verify that structured route audits expose the same q/theta
+signed comparison and reduce definitionally to the existing source audits.
+
+### Design Trap Avoided
+
+The trap would be to create an apparently independent audit path for structured
+inputs. The equality lemmas keep the structured audits tied to the already
+audited subclaim and hypothesis routes.
+
+### Next Step
+
+The next milestone should extend the combined hypothesis-route audit so that it
+can also carry structured inputs while still separating side-condition audit
+data from source-package audit data.

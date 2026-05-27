@@ -1297,6 +1297,24 @@ theorem auditOfHypotheses
     Audit package (package.obligationsFromHypotheses subclaims hypotheses) :=
   package.audit (package.obligationsFromHypotheses subclaims hypotheses)
 
+theorem auditOfStructuredInputs
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    Audit package
+      (package.obligationsFromStructuredInputs inputs sideConditions) :=
+  package.audit
+    (package.obligationsFromStructuredInputs inputs sideConditions)
+
+theorem auditOfStructuredHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    Audit package
+      (package.obligationsFromStructuredHypotheses inputs hypotheses) :=
+  package.audit
+    (package.obligationsFromStructuredHypotheses inputs hypotheses)
+
 theorem sideConditionAuditOfHypotheses
     (package : IUTStage1SourcePackage source target index)
     (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
@@ -1378,6 +1396,30 @@ theorem auditOfHypotheses_eq_parts
     (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
     package.auditOfHypotheses subclaims hypotheses =
       package.auditOfParts subclaims hypotheses.toSideConditions :=
+  rfl
+
+theorem auditOfStructuredInputs_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.auditOfStructuredInputs inputs sideConditions =
+      package.auditOfParts inputs.theorem311Subclaims sideConditions :=
+  rfl
+
+theorem auditOfStructuredHypotheses_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.auditOfStructuredHypotheses inputs hypotheses =
+      package.auditOfStructuredInputs inputs hypotheses.toSideConditions :=
+  rfl
+
+theorem auditOfStructuredHypotheses_eq_hypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.auditOfStructuredHypotheses inputs hypotheses =
+      package.auditOfHypotheses inputs.theorem311Subclaims hypotheses :=
   rfl
 
 theorem auditedPublicEndpoint
