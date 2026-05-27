@@ -575,6 +575,90 @@ theorem unitThetaToy_qSigned_le_thetaBound_via_thetaTargetVolume
     (unitThetaToy_thetaTargetVolume_le_thetaBound_from_sourceObligations
       measure hnormalized hh hbound hholds)
 
+theorem unitThetaToyCorollary312_from_qThetaChain
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+      (signedPilotLogVolume PilotSide.q
+        (Transport.map unitQToTheta (qAssignment h)).coord) :=
+  corollary312_of_signed_le
+    (unitThetaToy_qSigned_le_thetaSigned_from_sourceObligations
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToyCorollary312_from_threeTermChain
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+      (signedPilotLogVolume PilotSide.q
+        (Transport.map unitQToTheta (qAssignment h)).coord) :=
+  corollary312_of_signed_le
+    (unitThetaToy_qSigned_le_thetaSigned_from_threeTerm
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToyCorollary312_from_targetSignedChain
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+      (signedPilotLogVolume PilotSide.q
+        (Transport.map unitQToTheta (qAssignment h)).coord) :=
+  corollary312_of_signed_le
+    (unitThetaToy_qSigned_le_thetaSigned_via_targetSigned
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToyCorollary312_from_thetaTargetVolumeChain
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+      (signedPilotLogVolume PilotSide.q
+        (Transport.map unitQToTheta (qAssignment h)).coord) :=
+  corollary312_of_signed_le
+    (unitThetaToy_qSigned_le_thetaBound_via_thetaTargetVolume
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToyCorollary312_eq_qThetaChain_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToySourceObligationLedger
+      measure hnormalized hh hbound hholds).corollary312 =
+      corollary312_of_signed_le
+        (unitThetaToy_qSigned_le_thetaSigned_from_sourceObligations
+          measure hnormalized hh hbound hholds) :=
+  rfl
+
 theorem unitThetaToy_theta_commonBound_from_sourceObligations
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

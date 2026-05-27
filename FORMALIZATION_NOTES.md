@@ -5731,3 +5731,82 @@ and to the two earlier audited legs.
 
 The next milestone should expose the toy Corollary 3.12 proof itself as the
 signed-pilot packaging of this transitive q-to-Theta chain.
+
+## Milestone 65: Toy Corollary Packaging from the Q-to-Theta Chain
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+The signed form of Corollary 3.12 compares tagged q- and Theta-side
+log-volume quantities. In our schema, this final step is deliberately separated
+from the construction of the numerical inequality:
+
+```text
+corollary312_of_signed_le : qSigned <= thetaSigned -> Corollary312Inequality ...
+```
+
+This separation matters for the IUT/Scholze-Stix disagreement. The packaging
+into signed pilot log-volumes should not hide where the inequality came from;
+it should only tag the already-audited q- and Theta-side real numbers.
+
+### Purpose
+
+This milestone exposes the toy Corollary 3.12 proof as packaging of the
+q-to-Theta chain:
+
+```text
+corollary312_of_signed_le qSigned_le_thetaSigned
+```
+
+and repeats the packaging for the three visible forms of the same chain:
+
+```text
+threeTermComparison.q_le_theta
+le_trans qSigned_le_targetSigned targetSigned_le_thetaSigned
+le_trans qSigned_le_thetaTargetVolume thetaTargetVolume_le_thetaBound
+```
+
+It also records that the source-ledger corollary field is definitionally the
+same packaging of the ledger's q-to-Theta inequality.
+
+### Lean Declarations
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToyCorollary312_from_qThetaChain
+unitThetaToyCorollary312_from_threeTermChain
+unitThetaToyCorollary312_from_targetSignedChain
+unitThetaToyCorollary312_from_thetaTargetVolumeChain
+unitThetaToyCorollary312_eq_qThetaChain_from_sourceObligations
+```
+
+### What This Tests
+
+The toy final Corollary 3.12 statement is now auditable as:
+
+```text
+explicit source obligations
+  -> q <= target <= theta
+  -> q <= theta
+  -> signed-pilot Corollary312Inequality
+```
+
+This keeps the sign conversion and pilot-side tagging separate from the
+mathematical construction of the real inequality.
+
+### Design Trap Avoided
+
+The trap would be to let `Corollary312Inequality` become a black-box endpoint.
+This milestone shows that, in the toy source-obligation path, the corollary
+proof is only `corollary312_of_signed_le` applied to the previously audited
+chain.
+
+### Next Step
+
+The next milestone should expose the toy `Stage1Comparison` record as the same
+signed-pilot packaging plus the q-positivity proof, again keeping the
+comparison field tied to the q-to-Theta chain.
