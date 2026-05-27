@@ -16580,3 +16580,96 @@ the genuine Theta-pilot construction. This is one of the places where vague or
 choice-sensitive source definitions must be handled carefully: if the relation
 is too coarse, Lean will demand impossible equalities; if it is too fine, the
 formalization will fail to capture the intended quotient.
+
+## 114. Multiradial Theta Images at the Hull Endpoint
+
+### Goal
+
+The previous milestone introduced multiradial Theta images with an explicit
+Ind1/2/3 quotient-invariance obligation. This milestone connects that object to
+the hull+det endpoint.
+
+The resulting endpoint keeps the following data together:
+
+```text
+multiradial images
+Ind1/2/3 quotient relation
+possible-image union
+hull containment
+determinant/log-volume bound
+Corollary 3.12 signed pilot inequality
+```
+
+### Lean/API Check
+
+The source package now defines:
+
+```text
+IUTStage1SourcePackage.MultiradialThetaHullEndpoint
+IUTStage1SourcePackage.auditedMultiradialThetaHullEndpoint
+```
+
+The endpoint fields are:
+
+```text
+multiradial_images
+theta_hull_endpoint
+multiradial_union_eq_endpoint_union
+multiradial_union_subset_hull
+```
+
+The accessor namespace exposes:
+
+```text
+MultiradialThetaHullEndpoint.corollary312Endpoint
+MultiradialThetaHullEndpoint.multiradialUnion_subset_hull
+MultiradialThetaHullEndpoint.multiradialUnion_eq_possibleImagesUnion
+MultiradialThetaHullEndpoint.determinantVolumeBound
+MultiradialThetaHullEndpoint.region_eq_of_related
+MultiradialThetaHullEndpoint.multiradialOutputMatchesPackage
+```
+
+### Lean Decisions
+
+The constructor takes an already supplied `IUTStage1MultiradialThetaImages`
+object. It does not construct the multiradial representation itself.
+
+This separation is important. The hull+det endpoint should be reusable once the
+actual Ind1/2/3-generated quotient and image construction are available. For
+now it verifies that any object satisfying the multiradial image interface has
+the same union as the endpoint possible images and hence inherits the audited
+hull containment.
+
+### Source Check
+
+This matches the formalization report's decomposition:
+
+```text
+(HDD) := (hull+det) o (dsc)
+```
+
+and then the final Stage 1 comparison after applying `(SHE)`. The new endpoint
+does not identify source histories or ring structures. It only says that, after
+the multiradial representation has been supplied up to Ind1/2/3, the hull+det
+bound applies to the resulting union.
+
+### Toy Check
+
+The toy source example now checks:
+
+```text
+unitThetaToy_source_multiradialThetaHullEndpoint_example
+unitThetaToy_source_multiradialThetaHullEndpoint_corollary_example
+unitThetaToy_source_multiradialThetaHullEndpoint_union_subset_hull_example
+unitThetaToy_source_multiradialThetaHullEndpoint_region_eq_related_example
+```
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The endpoint is now ready for genuine mathematical content, but the current toy
+image object still uses the discrete quotient. The next target is to model
+Ind1/2/3 as generated transformations/actions on choices, then build the
+quotient relation from those generators and prove image invariance from
+generator invariance.

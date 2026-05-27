@@ -4189,6 +4189,92 @@ theorem indeterminaciesMatchPackage
 
 end ThetaPilotHullEndpoint
 
+/--
+Hull+det endpoint stated for multiradial Theta-pilot images.
+
+This is the source-facing endpoint that keeps the indeterminacy quotient,
+possible-image union, hull containment, determinant bound, and final signed
+comparison in one inspectable object.
+-/
+structure MultiradialThetaHullEndpoint
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceHullDetObligations package) where
+  multiradial_images : IUTStage1MultiradialThetaImages package
+  theta_hull_endpoint : package.ThetaPilotHullEndpoint obligations
+  multiradial_union_eq_endpoint_union :
+    multiradial_images.union = theta_hull_endpoint.possible_images.union
+  multiradial_union_subset_hull :
+    Region.Subset multiradial_images.union
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull
+
+def auditedMultiradialThetaHullEndpoint
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceHullDetObligations package)
+    (images : IUTStage1MultiradialThetaImages package) :
+    package.MultiradialThetaHullEndpoint obligations :=
+  let endpoint := package.auditedThetaPilotHullEndpoint obligations
+  { multiradial_images := images,
+    theta_hull_endpoint := endpoint,
+    multiradial_union_eq_endpoint_union := by
+      calc
+        images.union = package.preLedger.output.comparisons.targetUnion :=
+          images.union_eq_targetUnion
+        _ = endpoint.possible_images.union :=
+          endpoint.possibleImagesUnion_eq_targetUnion.symm,
+    multiradial_union_subset_hull := by
+      rw [images.union_eq_targetUnion]
+      exact obligations.targetUnion_subset_hull }
+
+namespace MultiradialThetaHullEndpoint
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {obligations : IUTStage1SourceHullDetObligations package}
+
+theorem corollary312Endpoint
+    (endpoint : package.MultiradialThetaHullEndpoint obligations) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  endpoint.theta_hull_endpoint.corollary312Endpoint
+
+theorem multiradialUnion_subset_hull
+    (endpoint : package.MultiradialThetaHullEndpoint obligations) :
+    Region.Subset endpoint.multiradial_images.union
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull :=
+  endpoint.multiradial_union_subset_hull
+
+theorem multiradialUnion_eq_possibleImagesUnion
+    (endpoint : package.MultiradialThetaHullEndpoint obligations) :
+    endpoint.multiradial_images.union =
+      endpoint.theta_hull_endpoint.possible_images.union :=
+  endpoint.multiradial_union_eq_endpoint_union
+
+theorem determinantVolumeBound
+    (endpoint : package.MultiradialThetaHullEndpoint obligations) :
+    RegionMeasure.HasVolumeAtMost package.preLedger.measure
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull
+      package.preLedger.thetaSigned :=
+  endpoint.theta_hull_endpoint.determinantVolumeBound
+
+theorem region_eq_of_related
+    (endpoint : package.MultiradialThetaHullEndpoint obligations)
+    {choice₁ choice₂ : index}
+    (hrel : endpoint.multiradial_images.quotient.relation choice₁ choice₂) :
+    endpoint.multiradial_images.possibleImages.images.region choice₁ =
+      endpoint.multiradial_images.possibleImages.images.region choice₂ :=
+  endpoint.multiradial_images.region_eq_of_related hrel
+
+theorem multiradialOutputMatchesPackage
+    (endpoint : package.MultiradialThetaHullEndpoint obligations) :
+    endpoint.multiradial_images.multiradialOutput =
+      package.multiradialOutput :=
+  endpoint.multiradial_images.multiradialOutputMatchesPackage
+
+end MultiradialThetaHullEndpoint
+
 theorem auditOfParts
     (package : IUTStage1SourcePackage source target index)
     (subclaims : IUTStage1Theorem311Subclaims package)

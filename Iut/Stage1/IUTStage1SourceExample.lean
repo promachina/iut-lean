@@ -634,6 +634,92 @@ theorem unitThetaToy_source_thetaPilotHullEndpoint_union_eq_targetUnion_example
   (unitThetaToy_source_thetaPilotHullEndpoint_example
     measure hnormalized hh hbound hholds).possibleImagesUnion_eq_targetUnion
 
+def unitThetaToy_source_multiradialThetaHullEndpoint_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    package.MultiradialThetaHullEndpoint
+      (unitThetaToyIUTStage1SourceHullDetObligations
+        measure hnormalized hh hbound hholds) :=
+  (unitThetaToyIUTStage1SourcePackage
+    measure hnormalized hh hbound hholds).auditedMultiradialThetaHullEndpoint
+      (unitThetaToyIUTStage1SourceHullDetObligations
+        measure hnormalized hh hbound hholds)
+      (unitThetaToyMultiradialThetaImages
+        measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_multiradialThetaHullEndpoint_corollary_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  (unitThetaToy_source_multiradialThetaHullEndpoint_example
+    measure hnormalized hh hbound hholds).corollary312Endpoint
+
+theorem unitThetaToy_source_multiradialThetaHullEndpoint_union_subset_hull_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let endpoint :=
+      unitThetaToy_source_multiradialThetaHullEndpoint_example
+        measure hnormalized hh hbound hholds
+    let obligations :=
+      unitThetaToyIUTStage1SourceHullDetObligations
+        measure hnormalized hh hbound hholds
+    Region.Subset endpoint.multiradial_images.union
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull :=
+  (unitThetaToy_source_multiradialThetaHullEndpoint_example
+    measure hnormalized hh hbound hholds).multiradialUnion_subset_hull
+
+theorem unitThetaToy_source_multiradialThetaHullEndpoint_region_eq_related_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h))
+    {choice₁ choice₂ : index}
+    (hrel :
+      (unitThetaToy_source_multiradialThetaHullEndpoint_example
+        measure hnormalized hh hbound hholds).multiradial_images.quotient.relation
+          choice₁ choice₂) :
+    let endpoint :=
+      unitThetaToy_source_multiradialThetaHullEndpoint_example
+        measure hnormalized hh hbound hholds
+    endpoint.multiradial_images.possibleImages.images.region choice₁ =
+      endpoint.multiradial_images.possibleImages.images.region choice₂ :=
+  (unitThetaToy_source_multiradialThetaHullEndpoint_example
+    measure hnormalized hh hbound hholds).region_eq_of_related hrel
+
 def unitThetaToyIUTStage1SourceObligationGap
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
