@@ -8554,3 +8554,66 @@ The common-container bound itself is still abstract at this point in the
 pre-ledger. Later work should refine where `choice_target_volume_le_theta`
 comes from: the HDD-after-SHE/common-container construction and the structured
 SHE context that is supposed to control it.
+
+## Math Milestone 89: Chain Provenance Exposed at the Charted Boundary
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The audited charted comparison boundary is the object later summaries expose
+for the 3.11-to-3.12 transition. Since it already carries the pre-ledger
+charted comparison chain, it should also expose the main provenance fields
+from that chain.
+
+### Lean/API Check
+
+The namespace:
+
+```text
+IUTStage1SourcePackage.AuditedChartedComparisonBoundary
+```
+
+now exposes:
+
+```text
+qChartTransport_eq_comparisonTransport
+membershipVolumeControl
+targetSigned_eq_choiceTargetVolume
+choiceTargetVolume_le_thetaSigned
+```
+
+These are projections from the carried pre-ledger chain.
+
+### Lean Decisions
+
+No new proof route is introduced. The boundary still derives its final charted
+q-to-Theta inequality from:
+
+```text
+package.preLedger.chartedComparisonChain
+```
+
+This milestone only makes the chain's proof ingredients inspectable at the
+audited boundary layer.
+
+### What This Tests
+
+The toy source examples extract all four provenance facts from the audited
+charted comparison boundary. The focused Stage 1 source example build and the
+full project build both pass.
+
+### Design Trap Avoided
+
+The trap would be for the audited charted boundary to expose the final
+inequality while hiding the transport compatibility, membership-to-volume
+control, target-volume definition, and common-container bound that produce it.
+
+### Remaining Gap
+
+The common-container/HDD-after-SHE source of `choiceTargetVolume_le_thetaSigned`
+is still only visible one layer lower. A later refinement should expose that
+HDD-after-SHE provenance at this same boundary or in a sibling audit object.

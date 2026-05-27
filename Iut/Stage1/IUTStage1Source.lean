@@ -2572,6 +2572,38 @@ theorem preLedgerChartedChain
     package.preLedger.ChartedComparisonChain :=
   boundary.preledger_charted_chain
 
+theorem qChartTransport_eq_comparisonTransport
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    package.preLedger.chartedContainer.chart.qToTarget =
+      package.preLedger.chosenOutput.comparison.transport :=
+  boundary.preledger_charted_chain.qChartTransport_eq_comparisonTransport
+
+theorem membershipVolumeControl
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    package.preLedger.chosenOutput.comparison.MembershipControlsTargetVolume
+      package.preLedger.measure :=
+  boundary.preledger_charted_chain.membershipVolumeControl
+
+theorem targetSigned_eq_choiceTargetVolume
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    package.preLedger.targetVolume.targetSigned =
+      RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) :=
+  boundary.preledger_charted_chain.targetSigned_eq_choiceTargetVolume
+
+theorem choiceTargetVolume_le_thetaSigned
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      package.preLedger.thetaSigned :=
+  boundary.preledger_charted_chain.choiceTargetVolume_le_thetaSigned
+
 theorem qSigned_le_thetaSigned
     (boundary :
       AuditedChartedComparisonBoundary package bundle sideConditions) :
