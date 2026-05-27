@@ -804,6 +804,46 @@ theorem archimedeanOrderTwoInd2_preserves_totalLogVolume_example
   IUTStage1DirectSummandPacketTheorem311Choice.archimedeanOrderTwo_preserves_capsuleTotalLogVolume
     hstep
 
+theorem directSummandPacketTheorem311_generated_preserves_coric_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1DirectSummandPacketTheorem311Choice.indeterminacySourceData
+          (coric := coric) (kind := kind)).generators
+        choice₁ choice₂) :
+    choice₁.coric = choice₂.coric :=
+  IUTStage1DirectSummandPacketTheorem311Choice.generated_preserves_coric
+    hrel
+
+theorem directSummandPacketTheorem311_generated_preserves_column_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1DirectSummandPacketTheorem311Choice.indeterminacySourceData
+          (coric := coric) (kind := kind)).generators
+        choice₁ choice₂) :
+    choice₁.column = choice₂.column :=
+  IUTStage1DirectSummandPacketTheorem311Choice.generated_preserves_column
+    hrel
+
+theorem directSummandPacketTheorem311_generated_preserves_totalLogVolume_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1DirectSummandPacketTheorem311Choice.indeterminacySourceData
+          (coric := coric) (kind := kind)).generators
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  IUTStage1DirectSummandPacketTheorem311Choice.generated_preserves_capsuleTotalLogVolume
+    hrel
+
 theorem upperSemi_logVolumeCompatibility_upperBound_example
     (data : IUTStage1LogVolumeCompatibilityData) :
     data.sourceLogVolume <= data.targetLogVolume :=

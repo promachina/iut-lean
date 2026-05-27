@@ -2314,6 +2314,146 @@ theorem archimedeanOrderTwo_preserves_capsuleTotalLogVolume
   ind2_preserves_capsuleTotalLogVolume
     (archimedeanOrderTwo_toDirectSummandActionStep hstep)
 
+/-- Refined `(Ind1)` step for direct-summand packet choices. -/
+structure ProcessionAutomorphismStep
+    (choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind) :
+    Prop where
+  column_eq : choice₁.column = choice₂.column
+  row_eq : choice₁.row = choice₂.row
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq :
+    choice₁.procession_state.procession =
+      choice₂.procession_state.procession
+  procession_column_eq :
+    choice₁.procession_state.column = choice₂.procession_state.column
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+
+/-- Refined `(Ind3)` step for direct-summand packet choices. -/
+structure UpperSemiCompatibilityStep
+    (choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind) :
+    Prop where
+  column_eq : choice₁.column = choice₂.column
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+  logThetaColumn_eq :
+    choice₁.upper_semi_state.logThetaColumn =
+      choice₂.upper_semi_state.logThetaColumn
+  nonarchimedean_inclusions_eq :
+    choice₁.upper_semi_state.nonarchimedeanInclusions =
+      choice₂.upper_semi_state.nonarchimedeanInclusions
+  archimedean_surjections_eq :
+    choice₁.upper_semi_state.archimedeanSurjections =
+      choice₂.upper_semi_state.archimedeanSurjections
+  log_volume_compatibility_eq :
+    choice₁.upper_semi_state.logVolumeCompatibility =
+      choice₂.upper_semi_state.logVolumeCompatibility
+  has_nonarchimedean_inclusions_eq :
+    choice₁.upper_semi_state.hasNonarchimedeanInclusions =
+      choice₂.upper_semi_state.hasNonarchimedeanInclusions
+  has_archimedean_surjections_eq :
+    choice₁.upper_semi_state.hasArchimedeanSurjections =
+      choice₂.upper_semi_state.hasArchimedeanSurjections
+
+def indeterminacySourceData :
+    IUTStage1Theorem311IndeterminacySourceData
+      (IUTStage1DirectSummandPacketTheorem311Choice coric kind) :=
+  { procession_automorphism_step := ProcessionAutomorphismStep,
+    local_tensor_symmetry_step := LocalTensorDirectSummandActionStep,
+    upper_semi_compatibility_step := UpperSemiCompatibilityStep }
+
+theorem ind1_preserves_capsuleTotalLogVolume
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep : ProcessionAutomorphismStep choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  congrArg
+    (fun state =>
+      state.packetState.capsuleFamily.totalLogVolume)
+    hstep.local_tensor_eq
+
+theorem ind3_preserves_capsuleTotalLogVolume
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep : UpperSemiCompatibilityStep choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  congrArg
+    (fun state =>
+      state.packetState.capsuleFamily.totalLogVolume)
+    hstep.local_tensor_eq
+
+theorem generated_preserves_coric
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (indeterminacySourceData (coric := coric) (kind := kind)).generators
+        choice₁ choice₂) :
+    choice₁.coric = choice₂.coric := by
+  induction hrel with
+  | refl choice =>
+      rfl
+  | ind1 hstep =>
+      exact hstep.coric_eq
+  | ind2 hstep =>
+      exact hstep.coric_eq
+  | ind3 hstep =>
+      exact hstep.coric_eq
+  | symm _ ih =>
+      exact ih.symm
+  | trans _ _ ih₁₂ ih₂₃ =>
+      exact ih₁₂.trans ih₂₃
+
+theorem generated_preserves_column
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (indeterminacySourceData (coric := coric) (kind := kind)).generators
+        choice₁ choice₂) :
+    choice₁.column = choice₂.column := by
+  induction hrel with
+  | refl choice =>
+      rfl
+  | ind1 hstep =>
+      exact hstep.column_eq
+  | ind2 hstep =>
+      exact hstep.column_eq
+  | ind3 hstep =>
+      exact hstep.column_eq
+  | symm _ ih =>
+      exact ih.symm
+  | trans _ _ ih₁₂ ih₂₃ =>
+      exact ih₁₂.trans ih₂₃
+
+theorem generated_preserves_capsuleTotalLogVolume
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (indeterminacySourceData (coric := coric) (kind := kind)).generators
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume := by
+  induction hrel with
+  | refl choice =>
+      rfl
+  | ind1 hstep =>
+      exact ind1_preserves_capsuleTotalLogVolume hstep
+  | ind2 hstep =>
+      exact ind2_preserves_capsuleTotalLogVolume hstep
+  | ind3 hstep =>
+      exact ind3_preserves_capsuleTotalLogVolume hstep
+  | symm _ ih =>
+      exact ih.symm
+  | trans _ _ ih₁₂ ih₂₃ =>
+      exact ih₁₂.trans ih₂₃
+
 end IUTStage1DirectSummandPacketTheorem311Choice
 
 /--

@@ -727,3 +727,80 @@ archimedeanOrderTwoInd2_preserves_totalLogVolume_example
 We still need to connect these source-specific `(Ind2)` steps into a generated
 indeterminacy relation for the refined direct-summand packet choice, analogous
 to the earlier structured Theorem 3.11 relation.
+
+## 9. Generated Indeterminacy for Direct-Summand Packet Choices
+
+### Goal
+
+We connected the refined direct-summand packet choice to a generated
+`(Ind1)/(Ind2)/(Ind3)` indeterminacy relation.
+
+### Lean/API Check
+
+Inside:
+
+```text
+IUTStage1DirectSummandPacketTheorem311Choice
+```
+
+we added:
+
+```text
+ProcessionAutomorphismStep
+UpperSemiCompatibilityStep
+indeterminacySourceData
+```
+
+The local tensor step used by `indeterminacySourceData` is the generic
+direct-summand action step:
+
+```text
+LocalTensorDirectSummandActionStep
+```
+
+The generated relation now proves:
+
+```text
+generated_preserves_coric
+generated_preserves_column
+generated_preserves_capsuleTotalLogVolume
+```
+
+### Mathematical Point
+
+This is the first generated indeterminacy relation at the refined direct
+summand/capsule/log-volume level.  It says that after closing under reflexivity,
+symmetry, and transitivity of `(Ind1)`, `(Ind2)`, and `(Ind3)`, the coric data,
+the log-theta column, and the packet capsule total log-volume remain invariant.
+
+The total log-volume invariant uses different reasons in each case:
+
+```text
+Ind1: local tensor state equality
+Ind2: direct-summand action -> capsule action -> finite-sum preservation
+Ind3: local tensor state equality
+```
+
+### Trap Avoided
+
+The generated relation does not yet include the source-specific nonarchimedean
+and archimedean `(Ind2)` steps directly.  Those steps descend to the generic
+direct-summand action step.  This keeps the generated relation small while
+preserving the source-specific entry points.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+directSummandPacketTheorem311_generated_preserves_coric_example
+directSummandPacketTheorem311_generated_preserves_column_example
+directSummandPacketTheorem311_generated_preserves_totalLogVolume_example
+```
+
+### Remaining Gap
+
+The next refinement should connect this generated direct-summand packet
+indeterminacy relation to multiradial possible-image invariance, paralleling
+the older `image_invariant_of_coric` interface but now with the refined
+Theorem 3.11 choice type.
