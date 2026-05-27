@@ -2468,6 +2468,11 @@ theorem allowedChartTransport
     AuditedAllowedChartTransport package bundle sideConditions :=
   audit.allowed_chart_transport
 
+theorem hddSHEBound
+    (audit : AuditedThetaChartBound package bundle sideConditions) :
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle :=
+  audit.hdd_she_bound
+
 theorem thetaCharted
     (audit : AuditedThetaChartBound package bundle sideConditions) :
     (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
@@ -2565,6 +2570,34 @@ theorem thetaChartBound
       AuditedChartedComparisonBoundary package bundle sideConditions) :
     AuditedThetaChartBound package bundle sideConditions :=
   boundary.theta_chart_bound
+
+theorem hddSHEBound
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle :=
+  boundary.theta_chart_bound.hddSHEBound
+
+theorem hddSHECommonContainerCompatibility
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+      package bundle.structuredSHE :=
+  boundary.hddSHEBound.commonContainerCompatibility
+
+theorem hddSHELocalExpressionValid
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    bundle.structuredSHE.context.simultaneousExpression.AllLocalValid :=
+  boundary.hddSHEBound.localExpressionValid
+
+theorem hddSHEChosenTargetVolume_le_theta
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      package.preLedger.thetaSigned :=
+  boundary.hddSHEBound.chosenTargetVolume_le_theta
 
 theorem preLedgerChartedChain
     (boundary :

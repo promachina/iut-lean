@@ -8617,3 +8617,67 @@ control, target-volume definition, and common-container bound that produce it.
 The common-container/HDD-after-SHE source of `choiceTargetVolume_le_thetaSigned`
 is still only visible one layer lower. A later refinement should expose that
 HDD-after-SHE provenance at this same boundary or in a sibling audit object.
+
+## Math Milestone 90: HDD-after-SHE Provenance at the Charted Boundary
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The right side of the charted comparison ultimately depends on the
+HDD-after-SHE/common-container bound. The audited charted boundary should
+therefore expose not only the pre-ledger target-volume inequality, but also
+the audited HDD-after-SHE object that supplies it.
+
+### Lean/API Check
+
+The Theta chart-bound audit now exposes:
+
+```text
+hddSHEBound
+```
+
+The charted comparison boundary now exposes:
+
+```text
+hddSHEBound
+hddSHECommonContainerCompatibility
+hddSHELocalExpressionValid
+hddSHEChosenTargetVolume_le_theta
+```
+
+These are projections from the existing audited HDD-after-SHE bound.
+
+### Lean Decisions
+
+This milestone does not claim that SHE alone proves the numerical bound. The
+existing audited HDD-after-SHE object still records the explicit target-volume
+bound and carries the structured-SHE/common-container compatibility and local
+SHE validity data alongside it.
+
+The purpose is to make the provenance visible at the final charted comparison
+boundary.
+
+### What This Tests
+
+The toy source examples extract the HDD-after-SHE audit object, local SHE
+validity, and chosen target-volume bound from the audited charted comparison
+boundary. The focused Stage 1 source example build and the full project build
+both pass.
+
+### Design Trap Avoided
+
+The trap would be to expose `targetSigned <= charted Theta` while hiding the
+HDD-after-SHE/common-container proof object that supplies the Theta-side
+target bound. This milestone keeps the final charted boundary attached to the
+fourth-triangle audit.
+
+### Remaining Gap
+
+The HDD-after-SHE bound itself still uses an explicit common-container bridge
+as data. Future work should refine that bridge, especially the relation
+between structured SHE validity, the common container, and the measured
+target-volume estimate.

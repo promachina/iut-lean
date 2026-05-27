@@ -1865,6 +1865,60 @@ theorem unitThetaToy_source_theorem311_charted_boundary_choice_volume_le_theta_e
   (unitThetaToy_source_theorem311_charted_comparison_boundary_example
     measure hnormalized hh hbound hholds).choiceTargetVolume_le_thetaSigned
 
+theorem unitThetaToy_source_theorem311_charted_boundary_hdd_she_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let bundle :=
+      unitThetaToy_source_theorem311_structured_inputs_with_she_example
+        measure hnormalized hh hbound hholds
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle :=
+  (unitThetaToy_source_theorem311_charted_comparison_boundary_example
+    measure hnormalized hh hbound hholds).hddSHEBound
+
+theorem unitThetaToy_source_theorem311_charted_boundary_hdd_she_local_valid_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let bundle :=
+      unitThetaToy_source_theorem311_structured_inputs_with_she_example
+        measure hnormalized hh hbound hholds
+    bundle.structuredSHE.context.simultaneousExpression.AllLocalValid :=
+  (unitThetaToy_source_theorem311_charted_comparison_boundary_example
+    measure hnormalized hh hbound hholds).hddSHELocalExpressionValid
+
+theorem unitThetaToy_source_theorem311_charted_boundary_hdd_she_target_bound_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      package.preLedger.thetaSigned :=
+  (unitThetaToy_source_theorem311_charted_comparison_boundary_example
+    measure hnormalized hh hbound hholds).hddSHEChosenTargetVolume_le_theta
+
 theorem unitThetaToy_source_theorem311_audited_route_summary_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
