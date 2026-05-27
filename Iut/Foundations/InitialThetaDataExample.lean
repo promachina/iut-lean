@@ -311,6 +311,22 @@ example (C : HyperbolicOrbicurveModel F) :
   CuspData.arisesFromNonzeroQuotientElement_holds
     ((zmodLocalLabCuspModel primeFive).toCuspData C "epsilon")
 
+example :
+    (zmodCanonicalCuspLabelClassData primeFive).labelClass =
+      (zmodSignAction primeFive).toSignLabelQuotient
+        (zmodLocalLabCuspModel primeFive).canonicalNonzeroLabel :=
+  (zmodCanonicalCuspLabelClassData primeFive).labelClass_eq_model_quotient
+
+example (C : HyperbolicOrbicurveModel F) :
+    ((zmodModeledCuspData C "epsilon" primeFive).cusp).arisesFromNonzeroQuotientElement :=
+  (zmodModeledCuspData C "epsilon" primeFive).cusp_arisesFromNonzeroQuotientElement
+
+example (C : HyperbolicOrbicurveModel F) :
+    (zmodModeledCuspData C "epsilon" primeFive).cusp.quotientOrigin =
+      LocalLabCuspModel.canonicalNonzeroQuotientElement
+        ((zmodModeledCuspData C "epsilon" primeFive).labelClassData.model) :=
+  (zmodModeledCuspData C "epsilon" primeFive).cusp_quotientOrigin_eq_model
+
 /-- A constructor smoke test for the finite-place valuation section. -/
 def abstractThetaValuationData
     (toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod)

@@ -3335,3 +3335,85 @@ model-derived ones.
 The label string is still bookkeeping, not a mathematically reconstructed cusp
 label. The next refinement should reduce reliance on string labels by replacing
 or supplementing them with structured label-class data.
+
+## Math Milestone 34: Structured Cusp Label Classes
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 4.1(ii), defines `LabCusp(D_v)` as a set of label classes
+over the nonzero cusp associated to the quotient `Q`, equipped with the natural
+`F_l`-torsor structure and a canonical element determined by `epsilon_v`.
+IUT I, Definition 6.1(iii), later passes through `LabCusp^pm`, removes the zero
+element, and quotients by `{pm 1}` to obtain the sign-insensitive cusp label
+class. This milestone records that label class as explicit typed data rather
+than letting the string label carry mathematical content.
+
+### Lean/API Check
+
+The preceding milestone already had a `LocalLabCuspModel` with a canonical
+nonzero label and its sign-label quotient. The remaining API issue was that
+`CuspData` still exposed a `String` as the only visible label. We keep the
+string for human-readable bookkeeping, but attach a structured label-class
+record whenever the cusp is meant to come from the local label model.
+
+### Lean Decisions
+
+The new record
+
+```text
+CuspLabelClassData
+```
+
+packages a local `LabCusp` model, a sign-label class, and the proof that the
+class is the model's canonical sign label.
+
+The new record
+
+```text
+ModeledCuspData
+```
+
+packages the old `CuspData` together with `CuspLabelClassData` and a proof that
+the cusp is exactly the one built from the model. Its theorem
+`cusp_quotientOrigin_eq_model` is the operational bridge: the visible cusp
+origin is the model's canonical nonzero quotient element.
+
+### Lean Declarations
+
+```text
+CuspLabelClassData
+CuspLabelClassData.labelClass_eq_model_quotient
+zmodCanonicalCuspLabelClassData
+ModeledCuspData
+ModeledCuspData.cusp_arisesFromNonzeroQuotientElement
+ModeledCuspData.cusp_quotientOrigin_eq_model
+zmodModeledCuspData
+```
+
+### What This Tests
+
+The example file now checks:
+
+* the concrete `ZMod l` canonical cusp-label class is the quotient of the
+  canonical nonzero label;
+* a modeled cusp still satisfies the nonzero-quotient origin property;
+* the modeled cusp's stored quotient origin agrees with the local model.
+
+### Design Trap Avoided
+
+The trap would be to let the string `"epsilon"` become a stand-in for
+Mochizuki's cusp-label class. The new structure makes the string explicitly
+secondary: the mathematical label is the sign-label quotient attached to a
+local `LabCusp` model.
+
+### Remaining Gap
+
+`ModeledCuspData` is not yet threaded back into `ThetaCuspLocalData`; it is a
+separate refinement layer. The next step should replace or supplement the
+bad-local `CuspData` field with this modeled version, so every bad local cusp
+points directly to its structured label class.

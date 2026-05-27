@@ -1247,6 +1247,68 @@ theorem toCuspData_arisesFromNonzeroQuotientElement (label : String) :
 
 end LocalLabCuspModel
 
+/-- Structured label-class data for a cusp, replacing the bare string as math content. -/
+structure CuspLabelClassData (l : PrimeGeFive) where
+  model : LocalLabCuspModel l
+  labelClass : model.signAction.SignLabelQuotient
+  labelClass_eq_canonical : labelClass = model.canonicalSignLabel
+
+namespace CuspLabelClassData
+
+variable {l : PrimeGeFive} (labelData : CuspLabelClassData l)
+
+theorem labelClass_eq_model_quotient :
+    labelData.labelClass =
+      labelData.model.signAction.toSignLabelQuotient
+        labelData.model.canonicalNonzeroLabel := by
+  rw [labelData.labelClass_eq_canonical]
+  exact labelData.model.canonicalSignLabelEq
+
+end CuspLabelClassData
+
+/-- The canonical structured cusp-label class in the concrete `ZMod l` model. -/
+def zmodCanonicalCuspLabelClassData (l : PrimeGeFive) :
+    CuspLabelClassData l where
+  model := zmodLocalLabCuspModel l
+  labelClass := (zmodLocalLabCuspModel l).canonicalSignLabel
+  labelClass_eq_canonical := rfl
+
+/-- A cusp together with structured label-class data explaining its origin. -/
+structure ModeledCuspData {F : Type u} [Field F]
+    (C : HyperbolicOrbicurveModel F) (l : PrimeGeFive) where
+  labelText : String
+  labelClassData : CuspLabelClassData l
+  cusp : CuspData C
+  cusp_eq_model : cusp = labelClassData.model.toCuspData C labelText
+
+namespace ModeledCuspData
+
+variable {F : Type u} [Field F] {C : HyperbolicOrbicurveModel F} {l : PrimeGeFive}
+variable (modeled : ModeledCuspData C l)
+
+theorem cusp_arisesFromNonzeroQuotientElement :
+    modeled.cusp.arisesFromNonzeroQuotientElement := by
+  rw [modeled.cusp_eq_model]
+  exact modeled.labelClassData.model.toCuspData_arisesFromNonzeroQuotientElement
+    C modeled.labelText
+
+theorem cusp_quotientOrigin_eq_model :
+    modeled.cusp.quotientOrigin =
+      modeled.labelClassData.model.canonicalNonzeroQuotientElement := by
+  rw [modeled.cusp_eq_model]
+  rfl
+
+end ModeledCuspData
+
+/-- A modeled cusp from the concrete `ZMod l` local label model. -/
+def zmodModeledCuspData {F : Type u} [Field F]
+    (C : HyperbolicOrbicurveModel F) (labelText : String) (l : PrimeGeFive) :
+    ModeledCuspData C l where
+  labelText := labelText
+  labelClassData := zmodCanonicalCuspLabelClassData l
+  cusp := (zmodLocalLabCuspModel l).toCuspData C labelText
+  cusp_eq_model := rfl
+
 /--
 The local cusp data from IUT I, Definition 3.1(f).
 
