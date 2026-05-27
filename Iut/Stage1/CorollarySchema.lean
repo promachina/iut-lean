@@ -46,15 +46,96 @@ theorem corollary312_of_signed_le {thetaSigned qSigned : Real}
   unfold Corollary312Inequality signedPilotLogVolume
   linarith
 
+/--
+Abstract signed comparison payload for the Corollary 3.12 endpoint.
+
+This record isolates the real-valued comparison data from any particular toy
+model, bridge construction, or source-obligation ledger.
+-/
+structure Corollary312ComparisonData where
+  thetaSigned : Real
+  qSigned : Real
+  q_positive : 0 < -qSigned
+  qSigned_le_thetaSigned : qSigned <= thetaSigned
+
+namespace Corollary312ComparisonData
+
+def thetaPilot (data : Corollary312ComparisonData) : PilotLogVolume :=
+  signedPilotLogVolume PilotSide.theta data.thetaSigned
+
+def qPilot (data : Corollary312ComparisonData) : PilotLogVolume :=
+  signedPilotLogVolume PilotSide.q data.qSigned
+
+theorem thetaPilot_side (data : Corollary312ComparisonData) :
+    data.thetaPilot.side = PilotSide.theta :=
+  rfl
+
+theorem qPilot_side (data : Corollary312ComparisonData) :
+    data.qPilot.side = PilotSide.q :=
+  rfl
+
+theorem qPilot_positive (data : Corollary312ComparisonData) :
+    0 < data.qPilot.value := by
+  simpa [qPilot, signedPilotLogVolume] using data.q_positive
+
+theorem corollary312 (data : Corollary312ComparisonData) :
+    Corollary312Inequality data.thetaPilot data.qPilot :=
+  corollary312_of_signed_le data.qSigned_le_thetaSigned
+
+def stage1Comparison (data : Corollary312ComparisonData) :
+    Stage1Comparison :=
+  { theta := data.thetaPilot,
+    q := data.qPilot,
+    theta_side := data.thetaPilot_side,
+    q_side := data.qPilot_side,
+    q_positive := data.qPilot_positive,
+    comparison := data.corollary312 }
+
+theorem stage1Comparison_comparison_eq_corollary312
+    (data : Corollary312ComparisonData) :
+    data.stage1Comparison.comparison = data.corollary312 :=
+  rfl
+
+theorem stage1Comparison_recovers_corollary312
+    (data : Corollary312ComparisonData) :
+    corollary312_from_stage1_comparison data.stage1Comparison =
+      data.corollary312 :=
+  rfl
+
+def publicAudit (data : Corollary312ComparisonData) :
+    data.qSigned <= data.thetaSigned ∧
+      Corollary312Inequality data.thetaPilot data.qPilot ∧
+      corollary312_from_stage1_comparison data.stage1Comparison =
+        corollary312_of_signed_le data.qSigned_le_thetaSigned :=
+  ⟨data.qSigned_le_thetaSigned, data.corollary312, rfl⟩
+
+theorem publicAudit_qSigned_le_thetaSigned
+    (data : Corollary312ComparisonData) :
+    data.qSigned <= data.thetaSigned :=
+  data.publicAudit.1
+
+theorem publicAudit_corollary312
+    (data : Corollary312ComparisonData) :
+    Corollary312Inequality data.thetaPilot data.qPilot :=
+  data.publicAudit.2.1
+
+theorem publicAudit_stage1Comparison_recovers
+    (data : Corollary312ComparisonData) :
+    corollary312_from_stage1_comparison data.stage1Comparison =
+      corollary312_of_signed_le data.qSigned_le_thetaSigned :=
+  data.publicAudit.2.2
+
+end Corollary312ComparisonData
+
 def stage1Comparison_of_signed_le {thetaSigned qSigned : Real}
     (hq_positive : 0 < -qSigned) (hle : qSigned <= thetaSigned) :
     Stage1Comparison :=
-  { theta := signedPilotLogVolume PilotSide.theta thetaSigned,
-    q := signedPilotLogVolume PilotSide.q qSigned,
-    theta_side := rfl,
-    q_side := rfl,
-    q_positive := hq_positive,
-    comparison := corollary312_of_signed_le hle }
+  let data : Corollary312ComparisonData :=
+    { thetaSigned := thetaSigned,
+      qSigned := qSigned,
+      q_positive := hq_positive,
+      qSigned_le_thetaSigned := hle }
+  data.stage1Comparison
 
 theorem corollary312_from_bridge
     {source target : Copy} {index : Type u}

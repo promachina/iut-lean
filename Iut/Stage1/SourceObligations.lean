@@ -233,10 +233,54 @@ theorem corollary312_eq_membership_commonBound (ledger :
               ledger.theta_commonBound ledger.chosenOutput.choice)) :=
   rfl
 
+def comparisonData (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    Corollary312ComparisonData :=
+  { thetaSigned := thetaSigned,
+    qSigned := qSigned,
+    q_positive := ledger.q_positive,
+    qSigned_le_thetaSigned := ledger.qSigned_le_thetaSigned }
+
+theorem comparisonData_thetaSigned (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.comparisonData.thetaSigned = thetaSigned :=
+  rfl
+
+theorem comparisonData_qSigned (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.comparisonData.qSigned = qSigned :=
+  rfl
+
+theorem comparisonData_corollary312_eq (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.comparisonData.corollary312 = ledger.corollary312 :=
+  rfl
+
 def stage1Comparison (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     Stage1Comparison :=
-  stage1Comparison_of_signed_le ledger.q_positive ledger.qSigned_le_thetaSigned
+  ledger.comparisonData.stage1Comparison
+
+theorem comparisonData_stage1Comparison_eq (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.comparisonData.stage1Comparison = ledger.stage1Comparison :=
+  rfl
+
+theorem comparisonData_publicAudit_eq (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.comparisonData.publicAudit =
+      (⟨ledger.qSigned_le_thetaSigned,
+          ledger.corollary312,
+          (rfl :
+            corollary312_from_stage1_comparison ledger.stage1Comparison =
+              corollary312_of_signed_le ledger.qSigned_le_thetaSigned)⟩ :
+        qSigned <= thetaSigned ∧
+          Corollary312Inequality
+            (signedPilotLogVolume PilotSide.theta thetaSigned)
+            (signedPilotLogVolume PilotSide.q qSigned) ∧
+          corollary312_from_stage1_comparison ledger.stage1Comparison =
+            corollary312_of_signed_le ledger.qSigned_le_thetaSigned) :=
+  rfl
 
 theorem stage1Comparison_theta_eq_signed (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :

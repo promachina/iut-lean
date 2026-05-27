@@ -10048,3 +10048,119 @@ older routes.
 The next milestone should start replacing the toy-only q/theta comparison
 payload with a more explicit abstract interface for the Corollary 3.12
 comparison data, so the debated endpoint can be isolated from the toy model.
+
+## Milestone 127: Abstract Corollary 3.12 Comparison Data
+
+Lean files:
+
+* `Iut/Stage1/CorollarySchema.lean`
+* `Iut/Stage1/SourceObligations.lean`
+* `Iut/Stage1/ToyCorollarySchema.lean`
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+Mochizuki's formalization report isolates Stage 1 as the implication from
+IUT III, Theorem 3.11, to Corollary 3.12, and then further separates the final
+`3.11.5 => 3.12` comparison. The same report describes this final comparison
+as a simultaneous comparison of the `Theta`-pilot and `q`-pilot data in a
+common container.
+
+IUT III, Corollary 3.12, Step `(xi-d)`, is the source passage behind the signed
+real comparison currently modeled here: after the relevant determinant and
+log-volume operations, the endpoint is a signed real inequality comparing the
+Theta-side upper bound with the q-side pilot quantity.
+
+Scholze-Stix's critique focuses on whether the passage from abstract pilot data
+to concrete pilot-object log-volumes is legitimate, especially when the
+different Hodge-theater histories and real-line identifications are made
+explicit. This milestone therefore does not claim that the comparison data has
+been produced by IUT. It only names the data that the final endpoint consumes.
+
+### Purpose
+
+The previous toy endpoint mixed two roles:
+
+* computing the toy q-side and Theta-side signed real values;
+* packaging those values into the Corollary-3.12-shaped endpoint.
+
+This milestone separates those roles. The new `Corollary312ComparisonData`
+record is an abstract payload for the final Stage 1 endpoint. It stores the
+Theta-side signed real, the q-side signed real, q-pilot positivity, and the
+signed inequality `qSigned <= thetaSigned`. From this record, Lean constructs
+the tagged pilot log-volumes, the `Stage1Comparison`, the Corollary 3.12-shaped
+inequality, and a small public audit.
+
+This is a deliberate boundary. Future source-facing modules should prove that
+their own obligations produce `Corollary312ComparisonData`; they should not
+rebuild the final endpoint from toy-specific arithmetic.
+
+### Lean Declarations
+
+In `CorollarySchema.lean`:
+
+```text
+Corollary312ComparisonData
+Corollary312ComparisonData.thetaPilot
+Corollary312ComparisonData.qPilot
+Corollary312ComparisonData.qPilot_positive
+Corollary312ComparisonData.corollary312
+Corollary312ComparisonData.stage1Comparison
+Corollary312ComparisonData.publicAudit
+Corollary312ComparisonData.publicAudit_qSigned_le_thetaSigned
+Corollary312ComparisonData.publicAudit_corollary312
+Corollary312ComparisonData.publicAudit_stage1Comparison_recovers
+```
+
+In `SourceObligations.lean`:
+
+```text
+SourceObligationLedger.comparisonData
+SourceObligationLedger.comparisonData_thetaSigned
+SourceObligationLedger.comparisonData_qSigned
+SourceObligationLedger.comparisonData_corollary312_eq
+SourceObligationLedger.comparisonData_stage1Comparison_eq
+SourceObligationLedger.comparisonData_publicAudit_eq
+```
+
+In `ToyCorollarySchema.lean`:
+
+```text
+unitThetaToyComparisonData
+unitThetaToyComparisonData_corollary312
+unitThetaToyStage1Comparison_eq_comparisonData
+unitThetaToyStructuredStage1Comparison_eq_comparisonData
+```
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToyComparisonData_from_sourceObligations
+unitThetaToyComparisonData_corollary312_from_sourceObligations
+unitThetaToyComparisonData_stage1Comparison_eq_sourceObligations
+```
+
+### What This Tests
+
+Lean now verifies that an abstract comparison payload alone is enough to recover
+the signed Corollary 3.12 statement and the `Stage1Comparison` package. The toy
+code verifies that the existing toy bridge and the source-obligation ledger both
+factor through this same payload interface.
+
+### Design Trap Avoided
+
+The trap would be to make the final Corollary 3.12 endpoint look like a theorem
+about the toy model itself. That would make it too easy to hide the disputed
+transition inside the toy arithmetic or inside a generic source ledger.
+
+This milestone keeps the final comparison payload small and explicit. It also
+does not identify any Hodge theaters, real-line copies, or concrete pilot
+objects. The only mathematical content of the payload is the signed real
+comparison plus q-positivity. Producing that payload from genuine IUT data
+remains a separate source obligation.
+
+### Next Step
+
+The next milestone should push this payload interface upward into the
+source-package audit layer, so the public Stage 1 endpoint can expose the
+comparison data record directly alongside the existing audit witness.

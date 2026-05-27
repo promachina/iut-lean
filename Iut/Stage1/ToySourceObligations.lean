@@ -98,6 +98,49 @@ def unitThetaToyStage1Comparison_from_sourceObligations
     Stage1Comparison :=
   (unitThetaToySourceObligationLedger measure hnormalized hh hbound hholds).stage1Comparison
 
+def unitThetaToyComparisonData_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312ComparisonData :=
+  (unitThetaToySourceObligationLedger measure hnormalized hh hbound hholds).comparisonData
+
+theorem unitThetaToyComparisonData_corollary312_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+      (signedPilotLogVolume PilotSide.q
+        (Transport.map unitQToTheta (qAssignment h)).coord) :=
+  (unitThetaToyComparisonData_from_sourceObligations
+    measure hnormalized hh hbound hholds).corollary312
+
+theorem unitThetaToyComparisonData_stage1Comparison_eq_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyComparisonData_from_sourceObligations
+        measure hnormalized hh hbound hholds).stage1Comparison =
+      unitThetaToyStage1Comparison_from_sourceObligations
+        measure hnormalized hh hbound hholds :=
+  rfl
+
 theorem unitThetaToy_certificate_from_sourceObligations
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
