@@ -6097,3 +6097,75 @@ new theorem is only a small view of the detailed audit object.
 The next milestone should extend the audit-summary pattern to the general
 `SourceObligationLedger`, so non-toy source ledgers can expose the same
 dependency checkpoints without relying on toy-specific names.
+
+## Milestone 70: General Source-Obligation Audit Summary
+
+Lean file:
+
+* `Iut/Stage1/SourceObligations.lean`
+
+### Source Check
+
+The toy audit summary should not remain toy-only. The central methodological
+point is source-independent: a completed source-obligation ledger must expose
+the charted q and Theta readings, the selected membership proof, both inequality
+legs, the transitive q-to-Theta inequality, signed Corollary 3.12 packaging, and
+the final `Stage1Comparison` recovery step.
+
+This is also aligned with the Scholze-Stix pressure point: the ledger should
+make real-line identifications and comparison dependencies inspectable before
+any source-specific interpretation is accepted.
+
+### Purpose
+
+This milestone introduces the general audit summary:
+
+```text
+SourceObligationLedger.Audit
+SourceObligationLedger.audit
+```
+
+The audit records:
+
+```text
+SHE datum matches certificate
+common context matches certificate context
+Theta chart is trivial
+q and Theta signed values match charted source data
+chosen comparison holds the q source point
+q <= target
+target <= theta
+q <= theta
+Corollary312Inequality packaging
+Stage1Comparison comparison/recovery
+normalization witness
+```
+
+### Lean Declarations
+
+In `SourceObligations.lean`:
+
+```text
+SourceObligationLedger.Audit
+SourceObligationLedger.audit
+```
+
+### What This Tests
+
+Any future source-specific ledger can now expose the same dependency checklist
+without adding a bespoke audit structure first. The toy audit remains richer
+because it names toy-specific sources, but this general summary captures the
+shared proof obligations.
+
+### Design Trap Avoided
+
+The trap would be to leave only toy-specific audit summaries and then let future
+source-specific ledgers bypass the same bookkeeping. The general audit record
+makes the expected checkpoints explicit at the common abstraction boundary.
+
+### Next Step
+
+The next milestone should add a compact general public-audit theorem analogous
+to the toy public theorem, returning the q-to-Theta inequality, the signed
+Corollary 3.12 statement, and the Stage1Comparison recovery equality from any
+`SourceObligationLedger`.

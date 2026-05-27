@@ -432,6 +432,60 @@ theorem thetaCommonBound_eq_field (ledger :
     ledger.thetaCommonBound = ledger.theta_commonBound :=
   rfl
 
+/-- Source-agnostic audit summary for a completed source-obligation ledger. -/
+structure Audit (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) : Prop where
+  she_matches_certificate :
+    ledger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      ledger.certificate.she
+  common_context_matches :
+    ledger.chartedContainer.commonContainer.context =
+      ledger.certificate.she.sharedContext
+  theta_chart_trivial :
+    Transport.TrivialMonodromy ledger.chartedContainer.chart.thetaToTarget
+  q_charted :
+    (Transport.map ledger.chartedContainer.chart.qToTarget
+      ledger.qValue.qPoint).coord = qSigned
+  theta_charted :
+    (Transport.map ledger.chartedContainer.chart.thetaToTarget
+      ledger.thetaBound.thetaPoint).coord = thetaSigned
+  chosen_holds :
+    ledger.chosenOutput.comparison.Holds ledger.qValue.qPoint
+  q_le_target :
+    qSigned <= ledger.targetVolume.targetSigned
+  target_le_theta :
+    ledger.targetVolume.targetSigned <= thetaSigned
+  q_le_theta :
+    qSigned <= thetaSigned
+  corollary_packaging :
+    ledger.corollary312 =
+      corollary312_of_signed_le ledger.qSigned_le_thetaSigned
+  stage_comparison_packaging :
+    ledger.stage1Comparison.comparison = ledger.corollary312
+  stage_recovers_corollary :
+    corollary312_from_stage1_comparison ledger.stage1Comparison =
+      ledger.corollary312
+  normalization_witness :
+    normalization
+
+theorem audit (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    Audit ledger :=
+  { she_matches_certificate := ledger.sheMatchesCertificate,
+    common_context_matches := ledger.commonContextMatchesCertificate,
+    theta_chart_trivial := ledger.thetaChartTrivial,
+    q_charted := ledger.qSigned_eq_chartedQ,
+    theta_charted := ledger.thetaSigned_eq_chartedTheta,
+    chosen_holds := ledger.chosenComparisonHoldsQ,
+    q_le_target := ledger.qSigned_le_targetSigned,
+    target_le_theta := ledger.targetSigned_le_thetaSigned,
+    q_le_theta := ledger.qSigned_le_thetaSigned,
+    corollary_packaging := rfl,
+    stage_comparison_packaging :=
+      ledger.stage1Comparison_comparison_eq_corollary312,
+    stage_recovers_corollary := ledger.stage1Comparison_recovers_corollary312,
+    normalization_witness := ledger.normalization_proof }
+
 theorem hasNormalization (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     normalization :=
