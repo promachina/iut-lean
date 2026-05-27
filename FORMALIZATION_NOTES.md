@@ -5184,3 +5184,71 @@ subfields separately.
 
 The next milestone should expose the toy real-comparison chart's q-transport
 and Theta trivial transport fields, matching the general real-line audit hooks.
+
+## Milestone 58: Toy Real-Comparison Chart Transport Projections
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+Scholze-Stix's critique emphasizes that all ordered real-line identifications
+must be explicit before the final numerical comparison is meaningful. Our
+general `RealComparisonChartData` records the q-side transport into the target
+real line, the Theta-side transport, and a proof that the Theta-side transport
+is trivial.
+
+The toy chart instantiates this as:
+
+```text
+qToTarget := unitQToTheta
+thetaToTarget := Transport.id thetaLine
+theta_trivial := by rw [Transport.trivialMonodromy_iff_scale_eq_one]; rfl
+```
+
+### Purpose
+
+This milestone exposes those toy chart fields through the source ledger:
+
+```text
+ledger.chartedContainer.chart.qToTarget = unitQToTheta
+ledger.chartedContainer.chart.thetaToTarget = Transport.id thetaLine
+ledger.chartedContainer.chart.theta_trivial = explicit identity proof
+```
+
+### Lean Declarations
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToy_qToTarget_from_sourceObligations
+unitThetaToy_thetaToTarget_from_sourceObligations
+unitThetaToy_theta_trivial_from_sourceObligations
+```
+
+All three proofs are `rfl`.
+
+### What This Tests
+
+The toy real-line chart is now auditable through the ledger:
+
+```text
+q transport: unitQToTheta
+Theta transport: identity
+Theta triviality proof: identity-scale proof
+```
+
+This matches the general ledger's chart-triviality audit while also exposing
+the concrete toy q-side transport.
+
+### Design Trap Avoided
+
+The trap would be to let the toy model inherit the general chart interface while
+hiding the actual transport choices. These projections make the toy
+identifications explicit.
+
+### Next Step
+
+The next milestone should expose the toy q-value and Theta-bound fields as
+coming from the named toy q assignment and Theta endpoint.
