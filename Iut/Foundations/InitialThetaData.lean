@@ -410,6 +410,25 @@ inductive OrbicurveTypeKind where
 structure HyperbolicOrbicurveModel (F : Type u) [Field F] where
   label : String
 
+/-- A typed placeholder for a morphism of hyperbolic orbicurve models. -/
+structure HyperbolicOrbicurveMorphismData
+    {F : Type u} [Field F]
+    (source target : HyperbolicOrbicurveModel F) where
+  label : String
+  morphismExists : Prop
+  morphismExists_holds : morphismExists
+
+namespace HyperbolicOrbicurveMorphismData
+
+variable {F : Type u} [Field F]
+variable {source target : HyperbolicOrbicurveModel F}
+variable (morphism : HyperbolicOrbicurveMorphismData source target)
+
+theorem exists_holds : morphism.morphismExists :=
+  morphism.morphismExists_holds
+
+end HyperbolicOrbicurveMorphismData
+
 /--
 An assertion that a placeholder orbicurve has one of the specific EtTh type
 labels used by Definition 3.1.
@@ -2230,7 +2249,9 @@ structure ThetaFiniteEtaleGaloisCoverCertificate
   baseFieldField : Field baseField
   sourceOrbicurve : @HyperbolicOrbicurveModel baseField baseFieldField
   targetOrbicurve : @HyperbolicOrbicurveModel baseField baseFieldField
-  coverMapLabel : String
+  coverMorphism :
+    @HyperbolicOrbicurveMorphismData baseField baseFieldField
+      sourceOrbicurve targetOrbicurve
   finiteEtaleCover : Prop
   finiteEtaleCover_holds : finiteEtaleCover
   galoisCover : Prop
@@ -2262,6 +2283,10 @@ theorem galoisCover_proof :
 theorem functionFieldExtensionOfCover_proof :
     certificate.functionFieldExtensionOfCover :=
   certificate.functionFieldExtensionOfCover_holds
+
+theorem coverMorphismExists :
+    certificate.coverMorphism.morphismExists :=
+  certificate.coverMorphism.exists_holds
 
 theorem finiteEtaleAndGalois :
     certificate.finiteEtaleCover ∧ certificate.galoisCover :=

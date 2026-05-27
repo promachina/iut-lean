@@ -76,6 +76,22 @@ example (C : HyperbolicOrbicurveModel F) (kind : OrbicurveTypeKind)
     (abstractOrbicurveTypeData C kind hasType hType).hasType :=
   (abstractOrbicurveTypeData C kind hasType hType).holds
 
+/-- A constructor smoke test for a typed orbicurve morphism placeholder. -/
+def abstractHyperbolicOrbicurveMorphismData
+    (source target : HyperbolicOrbicurveModel F)
+    (label : String) (morphismExists : Prop) (hMorphism : morphismExists) :
+    HyperbolicOrbicurveMorphismData source target where
+  label := label
+  morphismExists := morphismExists
+  morphismExists_holds := hMorphism
+
+example (source target : HyperbolicOrbicurveModel F)
+    (label : String) (morphismExists : Prop) (hMorphism : morphismExists) :
+    (abstractHyperbolicOrbicurveMorphismData source target
+      label morphismExists hMorphism).morphismExists :=
+  (abstractHyperbolicOrbicurveMorphismData source target
+    label morphismExists hMorphism).exists_holds
+
 /-- A constructor smoke test for a pointed EtTh quotient. -/
 def abstractPointedEtaleQuotient (Q : Type u) (zero : Q) :
     PointedEtaleQuotient where
@@ -405,7 +421,8 @@ noncomputable def abstractThetaFiniteEtaleGaloisCoverCertificate
     [FiniteDimensional B L] [IsGalois B L]
     (baseField : Type) [Field baseField]
     (sourceOrbicurve targetOrbicurve : HyperbolicOrbicurveModel baseField)
-    (coverMapLabel : String)
+    (coverMorphism :
+      HyperbolicOrbicurveMorphismData sourceOrbicurve targetOrbicurve)
     (finiteEtaleCover galoisCover functionFieldExtensionOfCover : Prop)
     (hFiniteEtale : finiteEtaleCover)
     (hGalois : galoisCover)
@@ -417,7 +434,7 @@ noncomputable def abstractThetaFiniteEtaleGaloisCoverCertificate
   baseFieldField := inferInstance
   sourceOrbicurve := sourceOrbicurve
   targetOrbicurve := targetOrbicurve
-  coverMapLabel := coverMapLabel
+  coverMorphism := coverMorphism
   finiteEtaleCover := finiteEtaleCover
   finiteEtaleCover_holds := hFiniteEtale
   galoisCover := galoisCover
@@ -458,6 +475,14 @@ example
     (certificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L) :
     certificate.functionFieldExtensionOfCover :=
   certificate.functionFieldExtensionOfCover_proof
+
+example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (certificate : ThetaFiniteEtaleGaloisCoverCertificate thetaApproach B L) :
+    certificate.coverMorphism.morphismExists :=
+  certificate.coverMorphismExists
 
 noncomputable example
     (thetaApproach : ThetaApproachQuotientData)

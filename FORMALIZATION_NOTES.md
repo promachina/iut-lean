@@ -14723,3 +14723,82 @@ The next step is to replace `coverMapLabel : String` and the proposition fields
 with actual morphism data for finite etale covers of hyperbolic orbicurves, then
 prove that the cover induces the recorded function-field extension and deck
 automorphism group.
+
+## Math Milestone 59: Typed Orbicurve Cover Morphism
+
+### Source Check
+
+IUT I, Remark 3.1.2, frames the theta reconstruction around the inclusion
+`Pi_XK <= Pi_CK` and the corresponding cover relation between `X_K` and `C_K`.
+The formal model should therefore remember not only labels for `X_K` and `C_K`,
+but also the morphism connecting the source and target orbicurves.
+
+This milestone is still below the actual construction of finite etale morphisms
+in algebraic geometry. It replaces an untyped string slot with a typed morphism
+placeholder whose source and target are fixed by Lean.
+
+### Lean Move
+
+The new morphism record is:
+
+```text
+HyperbolicOrbicurveMorphismData source target
+```
+
+It contains:
+
+```text
+label : String
+morphismExists : Prop
+morphismExists_holds : morphismExists
+```
+
+The finite etale Galois cover certificate now stores:
+
+```text
+coverMorphism :
+  HyperbolicOrbicurveMorphismData sourceOrbicurve targetOrbicurve
+```
+
+instead of:
+
+```text
+coverMapLabel : String
+```
+
+The certificate namespace exposes:
+
+```text
+coverMorphismExists
+```
+
+### Lean Decisions
+
+This is another small replacement of a loose placeholder by typed data. The
+morphism is still not a mathlib algebraic-geometry morphism; it is a typed
+placeholder because our current `HyperbolicOrbicurveModel` is itself a typed
+placeholder. But Lean now enforces that the cover morphism has the same source
+and target orbicurves as the cover certificate.
+
+### What This Tests
+
+The example file checks:
+
+* construction of a typed orbicurve morphism placeholder;
+* extraction of its existence proof;
+* construction of a finite etale Galois cover certificate using the morphism;
+* extraction of the cover morphism existence proof from the certificate;
+* all downstream theta function-field consequences still compile.
+
+### Design Trap Avoided
+
+The trap would be to let `coverMapLabel : String` stand in for geometry. A label
+cannot enforce source and target. The typed morphism placeholder is still
+abstract, but it pins the morphism to the intended orbicurves.
+
+### Remaining Gap
+
+The next step is to replace `morphismExists`, `finiteEtaleCover`, and
+`galoisCover` with typed morphism properties, then eventually connect those
+properties to mathlib's finite etale morphism APIs when the orbicurve model is
+made concrete.
