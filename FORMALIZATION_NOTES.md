@@ -16942,3 +16942,72 @@ The wrapper still does not prove that the possible-image construction depends
 only on this coric data. That dependency is the next mathematical obligation:
 if two choices have the same `IUTStage1CoricData`, their Theta-pilot
 possible-image regions should agree.
+
+## 118. Coric Dependence Obligation for Theta Images
+
+### Goal
+
+We isolated the exact obligation needed to turn coordinate choices into
+multiradial Theta-pilot images:
+
+```text
+same coric coordinate -> same possible-image region
+```
+
+Once this is proved, Lean constructs the multiradial image object with the
+generated Ind1/2/3 quotient.
+
+### Lean/API Check
+
+The source layer now defines:
+
+```text
+IUTStage1ThetaImagesDependOnlyOnCoric
+IUTStage1ThetaImagesDependOnlyOnCoric.toMultiradialThetaImages
+IUTStage1ThetaImagesDependOnlyOnCoric.imageInvariant
+IUTStage1ThetaImagesDependOnlyOnCoric.union_eq_targetUnion
+```
+
+The core field is:
+
+```text
+region_eq_of_coric_eq :
+  ∀ choice₁ choice₂,
+    choice₁.coric = choice₂.coric ->
+      image choice₁ = image choice₂
+```
+
+### Lean Decisions
+
+This obligation is a `Prop`, not data. It should be supplied by the actual
+multiradial construction once the source definitions are refined. The
+constructor from this obligation to `IUTStage1MultiradialThetaImages` is data,
+because it produces the actual image object carrying the generated quotient.
+
+### Source Check
+
+This matches the intended use of multiradiality: the expression of the
+Theta-pilot image must be meaningful from the common/coric viewpoint, hence
+must not depend on the representative-dependent indeterminacy coordinates.
+
+This is directly relevant to the 3.11 -> 3.12 dispute. If this obligation is
+too weak or cannot be supplied from the official definitions, the formal route
+to Corollary 3.12 gets stuck before the hull+det endpoint.
+
+### Toy Check
+
+The source example now checks:
+
+```text
+thetaImagesDependOnlyOnCoric_to_multiradial_example
+thetaImagesDependOnlyOnCoric_union_eq_targetUnion_example
+```
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The project still has not supplied a real proof of coric dependence for IUT
+Theta images. The next useful step is to connect `IUTStage1CoricData` to the
+coordinate-choice `coric` field in a source-package-level choice type, then
+state the non-toy source obligation against that choice type.

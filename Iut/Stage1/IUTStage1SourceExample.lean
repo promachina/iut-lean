@@ -242,6 +242,27 @@ theorem coordinateIndeterminacy_image_invariant_of_coric_example
     images.region choice₁ = images.region choice₂ :=
   IUTStage1IndeterminacyChoice.image_invariant_of_coric images hcoric hrel
 
+def thetaImagesDependOnlyOnCoric_to_multiradial_example
+    {source target : Copy}
+    {coric ind1State ind2State ind3State : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1IndeterminacyChoice coric ind1State ind2State ind3State)}
+    (dependence : IUTStage1ThetaImagesDependOnlyOnCoric package) :
+    IUTStage1MultiradialThetaImages package :=
+  dependence.toMultiradialThetaImages
+
+theorem thetaImagesDependOnlyOnCoric_union_eq_targetUnion_example
+    {source target : Copy}
+    {coric ind1State ind2State ind3State : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1IndeterminacyChoice coric ind1State ind2State ind3State)}
+    (dependence : IUTStage1ThetaImagesDependOnlyOnCoric package) :
+    dependence.toMultiradialThetaImages.union =
+      package.preLedger.output.comparisons.targetUnion :=
+  dependence.union_eq_targetUnion
+
 def unitThetaToyMultiradialThetaImages
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

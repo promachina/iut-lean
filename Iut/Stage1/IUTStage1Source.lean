@@ -767,6 +767,66 @@ theorem indeterminaciesMatchPackage
 end IUTStage1MultiradialThetaImages
 
 /--
+Obligation that Theta-pilot possible images depend only on the coric coordinate
+of a coordinate choice.
+
+This is the source-facing form of the multiradiality requirement needed by the
+generated Ind1/2/3 quotient interface.
+-/
+structure IUTStage1ThetaImagesDependOnlyOnCoric
+    {source target : Copy}
+    {coric ind1State ind2State ind3State : Type u}
+    (package :
+      IUTStage1SourcePackage source target
+        (IUTStage1IndeterminacyChoice coric ind1State ind2State ind3State)) :
+    Prop where
+  region_eq_of_coric_eq :
+    ∀ choice₁ choice₂,
+      choice₁.coric = choice₂.coric ->
+        (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+            choice₁ =
+          (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+            choice₂
+
+namespace IUTStage1ThetaImagesDependOnlyOnCoric
+
+variable {source target : Copy}
+variable {coric ind1State ind2State ind3State : Type u}
+variable {package :
+  IUTStage1SourcePackage source target
+    (IUTStage1IndeterminacyChoice coric ind1State ind2State ind3State)}
+
+def toMultiradialThetaImages
+    (dependence : IUTStage1ThetaImagesDependOnlyOnCoric package) :
+    IUTStage1MultiradialThetaImages package :=
+  IUTStage1MultiradialThetaImages.ofPackageWithCoordinateQuotient
+    package dependence.region_eq_of_coric_eq
+
+theorem imageInvariant
+    (dependence : IUTStage1ThetaImagesDependOnlyOnCoric package)
+    {choice₁ choice₂ :
+      IUTStage1IndeterminacyChoice coric ind1State ind2State ind3State}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1IndeterminacyChoice.coordinateGenerators
+          (coric := coric) (ind1State := ind1State)
+          (ind2State := ind2State) (ind3State := ind3State))
+        choice₁ choice₂) :
+    (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+        choice₁ =
+      (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region
+        choice₂ :=
+  (dependence.toMultiradialThetaImages).region_eq_of_related hrel
+
+theorem union_eq_targetUnion
+    (dependence : IUTStage1ThetaImagesDependOnlyOnCoric package) :
+    dependence.toMultiradialThetaImages.union =
+      package.preLedger.output.comparisons.targetUnion :=
+  dependence.toMultiradialThetaImages.union_eq_targetUnion
+
+end IUTStage1ThetaImagesDependOnlyOnCoric
+
+/--
 Source-facing statement of the obligations still needed to promote an IUT Stage
 1 source package to the public Stage 1 endpoint.
 
