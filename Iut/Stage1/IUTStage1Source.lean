@@ -1401,6 +1401,11 @@ theorem publicAudit_eq_comparisonData_publicAudit
       (package.comparisonData obligations).publicAudit :=
   Subsingleton.elim _ _
 
+theorem publicAudit_eq_package_publicAudit
+    (endpoint : package.ComparisonDataEndpoint obligations) :
+    endpoint.publicAudit = package.publicAudit obligations :=
+  Subsingleton.elim _ _
+
 end ComparisonDataEndpoint
 
 theorem auditOfParts
@@ -1663,6 +1668,30 @@ theorem auditedPublicEndpoint
               (package.promotedProvider obligations).ledger.qSigned_le_thetaSigned)) =
         package.publicAudit obligations :=
   ⟨package.audit obligations, Subsingleton.elim _ _⟩
+
+namespace ComparisonDataEndpoint
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {obligations : IUTStage1SourceObligations package}
+
+theorem auditedPublicEndpoint
+    (_endpoint : package.ComparisonDataEndpoint obligations) :
+    ∃ sourceAudit : Audit package obligations,
+      (⟨sourceAudit.qSigned_le_thetaSigned,
+          sourceAudit.corollary312,
+          sourceAudit.stage_recovers_qSigned_le_thetaSigned⟩ :
+        package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+          Corollary312Inequality
+            (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+            (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+          (corollary312_from_stage1_comparison
+              (package.promotedProvider obligations).stage1Comparison =
+            corollary312_of_signed_le
+              (package.promotedProvider obligations).ledger.qSigned_le_thetaSigned)) =
+        package.publicAudit obligations :=
+  package.auditedPublicEndpoint obligations
+
+end ComparisonDataEndpoint
 
 theorem auditedPublicEndpointOfGap
     (package : IUTStage1SourcePackage source target index)

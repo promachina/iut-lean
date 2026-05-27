@@ -10353,3 +10353,75 @@ The next milestone should connect these comparison-data endpoint projections
 back to the older public endpoint, showing explicitly that the old public audit
 triple and the new comparison-data endpoint present the same final
 Corollary-3.12-shaped information.
+
+## Milestone 130: Comparison Endpoint to Public Audit Bridge
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The local source checks for Milestones 127-129 remain controlling here. The
+formalization report identifies the final Stage 1 target as the `3.11.5 =>
+3.12` comparison, while the Scholze-Stix critique asks whether the final
+pilot-object comparison has been justified rather than merely restated.
+
+This milestone is bookkeeping at that boundary. It verifies that the older
+public audit triple and the newer comparison-data endpoint are two presentations
+of the same package-level endpoint, not two independent endpoint notions.
+
+### Purpose
+
+After adding `ComparisonDataEndpoint`, there are now two public views of the
+same final Stage 1 information:
+
+* `package.publicAudit obligations`, the older triple of q-to-Theta inequality,
+  Corollary-3.12-shaped statement, and Stage 1 recovery equality;
+* `package.ComparisonDataEndpoint obligations`, the newer audited package that
+  also names the comparison-data payload.
+
+This milestone adds theorem-level bridges from the newer endpoint back to the
+older public audit and audited-public-endpoint existential.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.ComparisonDataEndpoint.publicAudit_eq_package_publicAudit
+IUTStage1SourcePackage.ComparisonDataEndpoint.auditedPublicEndpoint
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_comparisonDataEndpoint_publicAudit_eq_publicAudit_example
+unitThetaToy_source_comparisonDataEndpoint_auditedPublicEndpoint_example
+```
+
+### What This Tests
+
+The toy examples verify that a comparison-data endpoint can be projected back
+to the older public audit equality and to the older audited public endpoint
+existential. This gives downstream consumers permission to use either public
+view without changing the final Corollary-3.12-shaped statement.
+
+### Design Trap Avoided
+
+The trap would be to let `ComparisonDataEndpoint` become a parallel endpoint
+with subtly different meaning. That would be especially bad in the Corollary
+3.12 setting, where hidden changes of comparison target are exactly what we are
+trying to avoid.
+
+The bridge theorems make the relationship explicit: the comparison-data endpoint
+adds a named payload, but it does not change the public audit's mathematical
+content.
+
+### Next Step
+
+The next milestone should start naming the source-side comparison payload
+inputs more explicitly, so future work can distinguish the signed real payload
+from the pre-ledger chart, selected output, and q-membership data that produce
+it.
