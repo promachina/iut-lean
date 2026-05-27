@@ -1646,3 +1646,93 @@ certificates with structured but still abstract records: for example, a named
 input link datum for IPL and a named common-ring/holomorphic-structure datum for
 SHE. These records should remain inert until a separate bridge theorem consumes
 them.
+
+## Milestone 16: Structured Qualitative Data
+
+Lean files:
+
+* `Iut/Foundations/QualitativeData.lean`
+* `Iut/Stage1/ToyQualitativeOutput.lean`
+
+### Source Check
+
+This milestone follows IUT III, Remark 3.11.1. There, IPL is described as
+linking output data to the input q-pilot prime-strip via poly-isomorphisms,
+SHE is described as simultaneous validity relative to the domain and codomain
+arithmetic holomorphic structures, and APT is described as a construction
+algorithm rather than set-theoretic transport of a region. Step (xi) of
+Corollary 3.12 then says that, for the qualitative logical part of the argument,
+one may regard Theorem 3.11 as an algorithm producing output data satisfying
+IPL and SHE.
+
+Scholze-Stix's criticism again supports making the bookkeeping explicit: hidden
+identifications of real lines or concrete pilot objects should not be smuggled
+through labels such as IPL, SHE, or APT.
+
+### Purpose
+
+Previously the toy qualitative output used `True` for IPL/SHE/APT. That was
+useful as a placeholder but too featureless for the next milestones. We now add
+structured records that are still mathematically inert:
+
+```text
+QualitativeData.IPLDatum
+QualitativeData.SHEDatum
+QualitativeData.APTDatum
+```
+
+These records contain labels and, for APT, an explicitly named output family
+equal to the family under discussion. They do not imply common-target
+containment, hull formation, determinant formation, or any volume estimate.
+
+### Lean Declarations
+
+In `QualitativeData.lean`:
+
+```text
+IPLDatum
+HolomorphicStructure
+SHEDatum
+APTDatum
+HasStructuredIPL
+HasStructuredSHE
+HasStructuredAPT
+apt_output_eq_family
+```
+
+The `HasStructured...` predicates are `Nonempty` wrappers around the data. This
+keeps them as propositions suitable for `AlgorithmicOutput`, while preserving a
+structured witness for documentation and later refinement.
+
+In `ToyQualitativeOutput.lean`, the toy output now uses:
+
+```text
+QualitativeData.HasStructuredIPL (thetaAPTOutput f h epsilon)
+QualitativeData.HasStructuredSHE (thetaAPTOutput f h epsilon)
+QualitativeData.HasStructuredAPT (thetaAPTOutput f h epsilon)
+```
+
+instead of `True`. The existing bridge and Corollary schema continue to work
+unchanged, which confirms that these qualitative witnesses remain separate from
+the common-target bound.
+
+### What This Tests
+
+This milestone tests that richer qualitative data can be threaded through the
+formalization without accidentally gaining mathematical force. The target-volume
+and Corollary-style inequalities still require the bridge and the explicit
+common-target-bound construction.
+
+### Design Trap Avoided
+
+The trap would be to give `APTDatum` a theorem that immediately produces a
+common target or volume bound. We only record that a named output family is the
+family under discussion. Any actual bridge from APT/IPL/SHE data to hull+det
+data remains a future theorem.
+
+### Next Step
+
+The next milestone should refine the bridge schema so that its constructor
+explicitly consumes the structured qualitative data, rather than the generic
+`Certified` wrapper alone. It should still return a common-target-bound only as
+an explicitly supplied source-specific construction.

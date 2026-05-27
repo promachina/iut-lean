@@ -10,6 +10,7 @@ import Iut.Foundations.IndeterminacyRelation
 import Iut.Foundations.RegionMeasure
 import Iut.Foundations.CommonTargetBound
 import Iut.Foundations.TransportedRegionFamily
+import Iut.Foundations.QualitativeData
 import Iut.Foundations.AlgorithmicOutput
 import Iut.Foundations.AlgorithmicBridge
 import Iut.Stage1.PilotComparison

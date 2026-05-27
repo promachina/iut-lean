@@ -4,12 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.AlgorithmicOutput
+import Iut.Foundations.QualitativeData
 import Iut.Stage1.ToyAPTTransport
 
 /-!
 Toy qualitative algorithmic output.
 
-The toy output records IPL/SHE/APT as trivial named propositions so that the
+The toy output records IPL/SHE/APT as structured but inert data so that the
 formal interface can be tested. The numerical bound still requires the explicit
 common-target bound data from the previous milestones.
 -/
@@ -22,24 +23,52 @@ open RealLineCopy
 
 variable {index : Type u}
 
+def thetaToyIPLD (datumLabel : String) (epsilon : index -> Real)
+    (f : Transport qLine thetaLine) (h : Real) :
+    QualitativeData.IPLDatum (thetaAPTOutput f h epsilon) :=
+  { inputLabel := datumLabel,
+    outputLabel := "theta-upper-ray-output",
+    choiceLabel := fun _ => "epsilon-choice" }
+
+def thetaToySHED (f : Transport qLine thetaLine) (h : Real)
+    (epsilon : index -> Real) :
+    QualitativeData.SHEDatum (thetaAPTOutput f h epsilon) :=
+  { domainStructure := { label := "theta-domain" },
+    codomainStructure := { label := "q-codomain" },
+    commonLanguage := "toy-common-real-line" }
+
+def thetaToyAPTD (f : Transport qLine thetaLine) (h : Real)
+    (epsilon : index -> Real) :
+    QualitativeData.APTDatum (thetaAPTOutput f h epsilon) :=
+  { mechanismLabel := "toy-explicit-transport",
+    outputFamily := thetaAPTOutput f h epsilon,
+    output_eq_family := rfl }
+
 /--
 Toy algorithmic output for the Theta upper-ray family.
 
-The qualitative properties are `True` in this toy model; this keeps the test
-focused on dependency plumbing rather than on pretending to formalize real IPL,
-SHE, or APT.
+The qualitative properties are witnessed by inert records in this toy model.
+This keeps the test focused on dependency plumbing rather than on pretending to
+formalize real IPL, SHE, or APT.
 -/
 def thetaToyAlgorithmOutput (f : Transport qLine thetaLine) (h : Real)
     (epsilon : index -> Real) : AlgorithmicOutput qLine thetaLine index :=
   { family := thetaAPTOutput f h epsilon,
-    ipl := True,
-    she := True,
-    apt := True }
+    ipl := QualitativeData.HasStructuredIPL (thetaAPTOutput f h epsilon),
+    she := QualitativeData.HasStructuredSHE (thetaAPTOutput f h epsilon),
+    apt := QualitativeData.HasStructuredAPT (thetaAPTOutput f h epsilon) }
 
 theorem thetaToyAlgorithmOutput_certified
     (f : Transport qLine thetaLine) (h : Real) (epsilon : index -> Real) :
     (thetaToyAlgorithmOutput f h epsilon).Certified :=
-  { ipl := trivial, she := trivial, apt := trivial }
+  { ipl := ⟨thetaToyIPLD "toy-input-link" epsilon f h⟩,
+    she := ⟨thetaToySHED f h epsilon⟩,
+    apt := ⟨thetaToyAPTD f h epsilon⟩ }
+
+theorem thetaToyAlgorithmOutput_has_structured_apt
+    (f : Transport qLine thetaLine) (h : Real) (epsilon : index -> Real) :
+    QualitativeData.HasStructuredAPT (thetaAPTOutput f h epsilon) :=
+  (thetaToyAlgorithmOutput_certified f h epsilon).apt
 
 @[simp]
 theorem thetaToyAlgorithmOutput_comparison

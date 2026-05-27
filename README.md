@@ -149,6 +149,8 @@ Current modules:
   comparison families, modeling the post-hull upper-bound interface.
 * `Iut.Foundations.TransportedRegionFamily`: comparison-family presentation with
   explicit choice-dependent transports and target regions.
+* `Iut.Foundations.QualitativeData`: structured inert IPL/SHE/APT data records
+  for algorithmic output bookkeeping.
 * `Iut.Foundations.AlgorithmicOutput`: opaque IPL/SHE/APT qualitative-property
   interface for transported algorithmic outputs.
 * `Iut.Foundations.AlgorithmicBridge`: explicit bridge schema from certified
@@ -163,8 +165,8 @@ Current modules:
   controlled by an explicit common epsilon bound.
 * `Iut.Stage1.ToyAPTTransport`: toy APT-style transported output data before
   passage to common targets and measured bounds.
-* `Iut.Stage1.ToyQualitativeOutput`: toy algorithmic output with explicit
-  IPL/SHE/APT certificates plus separate common-target bound data.
+* `Iut.Stage1.ToyQualitativeOutput`: toy algorithmic output with structured
+  inert IPL/SHE/APT certificates plus separate common-target bound data.
 * `Iut.Stage1.ToyBridge`: toy bridge from qualitative certification to
   common-target bounds via the epsilon-cap construction.
 * `Iut.Stage1.CorollarySchema`: signed-real schema for producing the
