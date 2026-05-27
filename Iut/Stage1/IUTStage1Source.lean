@@ -960,6 +960,65 @@ theorem auditOfHypotheses
     Audit package (package.obligationsFromHypotheses subclaims hypotheses) :=
   package.audit (package.obligationsFromHypotheses subclaims hypotheses)
 
+theorem sideConditionAuditOfHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    IUTStage1SourceSideConditionHypotheses.Audit hypotheses :=
+  hypotheses.audit
+
+/--
+Combined audit for the hypothesis-based package route.
+
+The record keeps the side-condition-hypothesis audit separate from the source
+package audit while making both available to downstream consumers.
+-/
+structure HypothesisRouteAudit
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    Prop where
+  side_condition_audit :
+    IUTStage1SourceSideConditionHypotheses.Audit hypotheses
+  source_audit :
+    Audit package (package.obligationsFromHypotheses subclaims hypotheses)
+
+theorem hypothesisRouteAudit
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    HypothesisRouteAudit package subclaims hypotheses :=
+  { side_condition_audit :=
+      package.sideConditionAuditOfHypotheses hypotheses,
+    source_audit := package.auditOfHypotheses subclaims hypotheses }
+
+namespace HypothesisRouteAudit
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {subclaims : IUTStage1Theorem311Subclaims package}
+variable {hypotheses : IUTStage1SourceSideConditionHypotheses package}
+
+theorem sideConditionAudit
+    (audit : HypothesisRouteAudit package subclaims hypotheses) :
+    IUTStage1SourceSideConditionHypotheses.Audit hypotheses :=
+  audit.side_condition_audit
+
+theorem sourceAudit
+    (audit : HypothesisRouteAudit package subclaims hypotheses) :
+    Audit package (package.obligationsFromHypotheses subclaims hypotheses) :=
+  audit.source_audit
+
+theorem qPilotLogVolumePositive
+    (audit : HypothesisRouteAudit package subclaims hypotheses) :
+    0 < -package.preLedger.qSigned :=
+  audit.sideConditionAudit.qPilotLogVolumePositive
+
+theorem qSignedLeThetaSigned
+    (audit : HypothesisRouteAudit package subclaims hypotheses) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  audit.sourceAudit.qSigned_le_thetaSigned
+
+end HypothesisRouteAudit
+
 theorem auditOfHypotheses_eq_parts
     (package : IUTStage1SourcePackage source target index)
     (subclaims : IUTStage1Theorem311Subclaims package)

@@ -9295,3 +9295,79 @@ labels into proof-producing objects.
 The next milestone should thread this side-condition hypothesis audit into the
 package-level hypothesis route, so consumers can recover it next to the public
 audit data.
+
+## Milestone 116: Hypothesis Route Combined Audit
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The previous milestone made the side-condition hypothesis audit label-aware.
+The package-level hypothesis route already builds source obligations from
+Theorem 3.11-style subclaims plus side-condition hypotheses.
+
+This milestone connects those two pieces without identifying them. The
+side-condition audit still concerns the labeled q-pilot log-volume positivity
+and source normalization hypotheses. The source package audit still concerns
+the promoted public comparison data and the resulting Corollary 3.12 endpoint.
+
+### Purpose
+
+This milestone adds a combined audit for the hypothesis-based package route.
+Consumers can now recover both the side-condition audit and the package/source
+audit from one route object.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.sideConditionAuditOfHypotheses
+IUTStage1SourcePackage.HypothesisRouteAudit
+IUTStage1SourcePackage.hypothesisRouteAudit
+IUTStage1SourcePackage.HypothesisRouteAudit.sideConditionAudit
+IUTStage1SourcePackage.HypothesisRouteAudit.sourceAudit
+IUTStage1SourcePackage.HypothesisRouteAudit.qPilotLogVolumePositive
+IUTStage1SourcePackage.HypothesisRouteAudit.qSignedLeThetaSigned
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_hypothesis_route_audit_example
+unitThetaToy_source_hypothesis_route_side_condition_audit_example
+unitThetaToy_source_hypothesis_route_source_audit_example
+unitThetaToy_source_hypothesis_route_q_positive_example
+unitThetaToy_source_hypothesis_route_q_le_theta_example
+```
+
+### What This Tests
+
+The toy examples verify that the hypothesis route can expose:
+
+* the side-condition hypothesis audit;
+* the source package audit for obligations built from those hypotheses;
+* q-pilot log-volume positivity from the side-condition side;
+* the q/theta signed comparison from the source package side.
+
+### Design Trap Avoided
+
+The trap would be to merge side-condition evidence into the source comparison
+audit and thereby hide which assumptions power which conclusion. The combined
+audit is deliberately a product-like record: one field for side conditions, one
+field for the source audit.
+
+This keeps us from turning labels or side-condition hypotheses into an
+unexamined proof of Corollary 3.12. The controversial endpoint remains only in
+the source audit path already present in the Stage 1 skeleton.
+
+### Next Step
+
+The next milestone should add compatibility lemmas showing that the combined
+route projections agree definitionally with the standalone side-condition audit
+and the existing source audit from hypotheses. After that, we can begin
+splitting the Theorem 3.11 subclaims into more explicit algorithmic-output and
+SHE-input components.
