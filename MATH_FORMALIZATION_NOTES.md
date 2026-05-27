@@ -3604,3 +3604,84 @@ the cusp layer cannot choose a separate model by accident.
 derived from a formalized EtTh Definition 2.5(i). A later milestone should
 expand the type witness so the quotient `Z`, its sign ambiguity, and the
 canonical generator are reconstructed rather than supplied.
+
+## Math Milestone 37: Canonical Generators Sourced from Bad Local Type Data
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(f), specifically says that for `v in Vbad`, `epsilon_v`
+arises from the canonical generator, up to sign, of the quotient `Z` appearing
+in the definition of a hyperbolic orbicurve of type `(1,Z/lZ)^pm`. Therefore the
+canonical-generator witness should be attached to the same bad-local type data
+that supplies the quotient/label model.
+
+This is still below the level of the debated IUT III Corollary 3.12 transition.
+The Scholze-Stix concern about illicitly identifying histories is not touched by
+this local packaging step.
+
+### Lean/API Check
+
+Milestone 36 moved the `LabCusp` model into `BadLocalOrbicurveTypeData`.
+This milestone moves the canonical-generator-up-to-sign witness there as well:
+
+```text
+canonicalGenerator : CanonicalGeneratorUpToSignElement
+canonicalGenerator_eq_model :
+  canonicalGenerator = labCuspModel.canonicalGeneratorUpToSignElement
+```
+
+The cusp-local layer now records only the local cusp and its equality with the
+model-sourced nonzero quotient origin. It no longer owns a separate canonical
+generator field.
+
+### Lean Decisions
+
+The public initial-theta API still exposes:
+
+```text
+InitialThetaData.badLocalCanonicalGenerator
+InitialThetaData.badLocalCanonicalGenerator_eq_model
+InitialThetaData.badLocalCusp_arisesFromCanonicalGenerator
+```
+
+but these are now projections through `theta.badLocalData`, not independent
+fields of `theta.cuspLocalData`.
+
+### Lean Declarations
+
+```text
+BadLocalOrbicurveTypeData.canonicalGenerator
+BadLocalOrbicurveTypeData.canonicalGeneratorEqModel
+BadLocalOrbicurveTypeData.canonicalGeneratorUpToSign
+ThetaBadLocalData.badLocalCanonicalGenerator
+ThetaBadLocalData.badLocalCanonicalGeneratorEqModel
+ThetaBadLocalData.badLocalCanonicalGeneratorUpToSign
+InitialThetaData.badLocalCanonicalGenerator
+```
+
+### What This Tests
+
+The example file now checks:
+
+* the bad-local canonical generator is available from full initial theta data;
+* it satisfies `canonicalGeneratorUpToSign`;
+* it agrees with the canonical-generator witness of the bad local `LabCusp`
+  model.
+
+### Design Trap Avoided
+
+The trap would be to prove that two separately supplied canonical-generator
+witnesses happen to agree. The new API has only one source: the bad local type
+package.
+
+### Remaining Gap
+
+The bad local type package still supplies the quotient/model/generator data.
+The next refinement should split the current opaque `labCuspModel_constructedFromType`
+obligation into explicit quotient-`Z`, sign-action, and canonical-generator
+components matching [EtTh], Definition 2.5(i).

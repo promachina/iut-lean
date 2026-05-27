@@ -1008,6 +1008,9 @@ structure BadLocalOrbicurveTypeData
     (C : HyperbolicOrbicurveModel F) where
   typeData : OrbicurveTypeData l C OrbicurveTypeKind.oneZModLPM
   labCuspModel : LocalLabCuspModel l
+  canonicalGenerator : CanonicalGeneratorUpToSignElement
+  canonicalGenerator_eq_model :
+    canonicalGenerator = labCuspModel.canonicalGeneratorUpToSignElement
   labCuspModel_constructedFromType : Prop
   labCuspModel_constructedFromType_holds : labCuspModel_constructedFromType
 
@@ -1023,6 +1026,15 @@ theorem holds : typeData.typeData.hasType :=
 theorem labCuspModelSource :
     typeData.labCuspModel_constructedFromType :=
   typeData.labCuspModel_constructedFromType_holds
+
+theorem canonicalGeneratorEqModel :
+    typeData.canonicalGenerator =
+      typeData.labCuspModel.canonicalGeneratorUpToSignElement :=
+  typeData.canonicalGenerator_eq_model
+
+theorem canonicalGeneratorUpToSign :
+    typeData.canonicalGenerator.canonicalGeneratorUpToSign :=
+  typeData.canonicalGenerator.canonicalGeneratorUpToSign_holds
 
 end BadLocalOrbicurveTypeData
 
@@ -1211,6 +1223,22 @@ def badLocalLabCuspModel
     LocalLabCuspModel l :=
   (localData.badLocalCType v hv).labCuspModel
 
+def badLocalCanonicalGenerator
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    CanonicalGeneratorUpToSignElement :=
+  (localData.badLocalCType v hv).canonicalGenerator
+
+theorem badLocalCanonicalGeneratorEqModel
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    localData.badLocalCanonicalGenerator v hv =
+      (localData.badLocalLabCuspModel v hv).canonicalGeneratorUpToSignElement :=
+  (localData.badLocalCType v hv).canonicalGeneratorEqModel
+
+theorem badLocalCanonicalGeneratorUpToSign
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    (localData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
+  (localData.badLocalCType v hv).canonicalGeneratorUpToSign
+
 theorem badLocalLabCuspModelSource
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
     (localData.badLocalCType v hv).labCuspModel_constructedFromType :=
@@ -1378,15 +1406,9 @@ structure ThetaCuspLocalData
     (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.selected) -> Prop
   localCusp_determinedByGlobal_holds :
     ∀ v hv, localCusp_determinedByGlobal v hv
-  badLocalCanonicalGenerator :
-    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad ->
-      CanonicalGeneratorUpToSignElement
   badLocalCusp_quotientOrigin_eq_model :
     ∀ v hv, (localCusp v hv.1).quotientOrigin =
       (badLocalData.badLocalLabCuspModel v hv).canonicalNonzeroQuotientElement
-  badLocalCanonicalGenerator_eq_model :
-    ∀ v hv, badLocalCanonicalGenerator v hv =
-      (badLocalData.badLocalLabCuspModel v hv).canonicalGeneratorUpToSignElement
 
 namespace ThetaCuspLocalData
 
@@ -1418,8 +1440,8 @@ theorem localCuspArisesFromNonzeroQuotientElement
 
 theorem badLocalCuspArisesFromCanonicalGenerator
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
-    (cuspLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
-  (cuspLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign_holds
+    (badLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
+  badLocalData.badLocalCanonicalGeneratorUpToSign v hv
 
 def badLocalLabelModel
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
@@ -1472,9 +1494,9 @@ theorem badLocalModeledCusp_labelClass_eq_model_quotient
 
 theorem badLocalCanonicalGeneratorEqModel
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
-    cuspLocalData.badLocalCanonicalGenerator v hv =
+    badLocalData.badLocalCanonicalGenerator v hv =
       (badLocalData.badLocalLabCuspModel v hv).canonicalGeneratorUpToSignElement :=
-  cuspLocalData.badLocalCanonicalGenerator_eq_model v hv
+  badLocalData.badLocalCanonicalGeneratorEqModel v hv
 
 theorem badLocalModelCanonicalGeneratorUpToSign
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
@@ -1668,8 +1690,13 @@ theorem localCusp_arisesFromNonzeroQuotientElement
 
 theorem badLocalCusp_arisesFromCanonicalGenerator
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    (theta.cuspLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
-  theta.cuspLocalData.badLocalCuspArisesFromCanonicalGenerator v hv
+    (theta.badLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
+  theta.badLocalData.badLocalCanonicalGeneratorUpToSign v hv
+
+def badLocalCanonicalGenerator
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    CanonicalGeneratorUpToSignElement :=
+  theta.badLocalData.badLocalCanonicalGenerator v hv
 
 def badLocalLabCuspModel
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
@@ -1716,9 +1743,9 @@ theorem badLocalModeledCusp_labelClass_eq_model_quotient
 
 theorem badLocalCanonicalGenerator_eq_model
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    theta.cuspLocalData.badLocalCanonicalGenerator v hv =
+    theta.badLocalCanonicalGenerator v hv =
       (theta.badLocalLabCuspModel v hv).canonicalGeneratorUpToSignElement :=
-  theta.cuspLocalData.badLocalCanonicalGeneratorEqModel v hv
+  theta.badLocalData.badLocalCanonicalGeneratorEqModel v hv
 
 theorem sqrtMinusOne_square :
     theta.fieldTower.sqrtMinusOne.element ^ 2 = (-1 : F) :=
