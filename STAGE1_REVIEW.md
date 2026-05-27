@@ -754,3 +754,69 @@ now better localized: a genuine proof must fill in an unmeasured holomorphic
 hull construction and a determinant/log-volume bound for that exact hull,
 while preserving the common-container/charted comparison audits already in
 place.
+
+## Periodic Review: Union-Hull Provenance at the Source Boundary
+
+Date: 2026-05-27
+
+This checkpoint reviews the recent milestones that carried the
+union-of-possible-images hull route up to the source package.
+
+### Current Lean Chain
+
+The strengthened route now has the following visible path:
+
+```text
+RegionComparisonFamily.targetUnion
+-> CommonHull.ofUnionSubset
+-> CommonTargetHullBound
+-> HullDetHullBridgeData.HullAudit
+-> StructuredHullDetBridgeData.StepAudit
+-> IUTStage1PreLedgerData.HullDetSourceData
+-> IUTStage1SourceHullDetData
+```
+
+For the toy source package, Lean checks both:
+
+```text
+targetUnion <= constructed hull
+measure constructed hull <= thetaSigned
+```
+
+at the source-facing boundary.
+
+### Positive Alignment
+
+This is aligned with the local source text. IUT III describes the Theta-side
+quantity in Corollary 3.12 as the log-volume of the holomorphic hull of the
+union of possible images of the Theta-pilot object. Mochizuki's formalization
+report separates the final route into SHE, HDD, descent, and hull+det pieces.
+The Lean code now mirrors that split more faithfully than the earlier
+common-target-only route.
+
+This is also useful relative to the Scholze-Stix critique: the formalization is
+not allowed to jump from a chosen comparison to a final real inequality without
+exposing the family of possible target images, their union, the hull containing
+that union, and the measurement of that hull.
+
+### Remaining Gaps
+
+The current implementation is still a toy upper-ray model:
+
+* `targetUnion` is a union of upper-ray target regions, not a family of genuine
+  Theta-pilot images in a multiradial representation.
+* The hull is still an upper-ray cap, not the holomorphic hull of IUT III,
+  Remark 3.9.5 and Corollary 3.12.
+* The determinant/log-volume bound is still supplied by upper-ray
+  normalization, not by the determinant/module/log-volume argument described
+  in the IUT papers.
+* `IUTStage1SourceHullDetData` is optional source evidence, not yet a required
+  field of the source obligations used to produce the older public endpoint.
+
+### Global 3.12 Check
+
+The project has not proven Mochizuki's Corollary 3.12. What it now has is a
+cleaner audit boundary: a serious non-toy proof must provide source-facing
+split hull+det data, including containment of the union of possible Theta
+images in the constructed hull and a determinant/log-volume bound for that
+same hull.
