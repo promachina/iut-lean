@@ -272,3 +272,89 @@ requirements explicitly.
 The next milestone should expose a structured SHE input through
 `IUTStage1Theorem311StructuredInputs`, so the strengthened SHE context can be
 carried alongside the existing algorithmic-output and side-condition routes.
+
+## Math Milestone 3: Structured Inputs with Strengthened SHE
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Milestones 1 and 2 introduced a stronger SHE context and connected it to the
+existing source-facing SHE alignment. The next issue is routing: strengthened
+SHE should be available alongside `IUTStage1Theorem311StructuredInputs`, but it
+should not replace or redefine the older structured-input route.
+
+This follows the same source discipline as IUT III, Remark 3.11.1: SHE is one
+ingredient in the Theorem 3.11 package, not a standalone proof of the final
+Corollary 3.12 comparison.
+
+### Purpose
+
+This milestone adds:
+
+```text
+IUTStage1Theorem311StructuredInputsWithSHE
+```
+
+The bundle contains:
+
+* the existing `IUTStage1Theorem311StructuredInputs`;
+* a strengthened `IUTStage1Theorem311StructuredSHE`.
+
+It exposes both routes and proves their SHE-alignment components agree by proof
+irrelevance. It also exposes the history-separation guard from the strengthened
+SHE context.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1Theorem311StructuredInputsWithSHE
+IUTStage1Theorem311StructuredInputsWithSHE.theorem311StructuredInputs
+IUTStage1Theorem311StructuredInputsWithSHE.structuredSHE
+IUTStage1Theorem311StructuredInputsWithSHE.hasStructuredIPL
+IUTStage1Theorem311StructuredInputsWithSHE.hasStructuredSHE
+IUTStage1Theorem311StructuredInputsWithSHE.hasStructuredSHE_from_context
+IUTStage1Theorem311StructuredInputsWithSHE.hasStructuredAPT
+IUTStage1Theorem311StructuredInputsWithSHE.algorithmOutputCertified
+IUTStage1Theorem311StructuredInputsWithSHE.hodgeTheaterSHEAlignment
+IUTStage1Theorem311StructuredInputsWithSHE.hodgeTheaterSHEAlignment_from_context
+IUTStage1Theorem311StructuredInputsWithSHE.sheAlignment_eq_context_sheAlignment
+IUTStage1Theorem311StructuredInputsWithSHE.domainHistory_ne_codomainHistory
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_theorem311_structured_inputs_with_she_example
+unitThetaToy_source_theorem311_structured_inputs_with_she_hasSHE_example
+unitThetaToy_source_theorem311_structured_inputs_with_she_alignment_eq_example
+unitThetaToy_source_theorem311_structured_inputs_with_she_history_example
+```
+
+### What This Tests
+
+The toy source package now carries both the older structured-input route and the
+strengthened SHE route in one bundle. The examples check:
+
+* the bundle recovers `HasStructuredSHE` from the strengthened context;
+* the old and strengthened SHE-alignment components agree;
+* the domain/codomain history separation remains visible.
+
+### Design Trap Avoided
+
+The trap would be to mutate `IUTStage1Theorem311StructuredInputs` itself and
+silently strengthen every old theorem. Instead, this milestone introduces an
+explicit stronger bundle. Downstream code must opt in to the stronger SHE
+context, which makes the new assumption visible in theorem statements.
+
+### Next Step
+
+The next milestone should define the first small SHE-to-common-container
+compatibility checklist: it should mention the SHE context, the common
+container's shared context, and the certificate SHE datum, but still avoid any
+real-valued endpoint conclusion.

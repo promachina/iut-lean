@@ -493,6 +493,84 @@ theorem components_rebuild_subclaims
 end IUTStage1Theorem311StructuredInputs
 
 /--
+Structured Theorem 3.11 inputs equipped with the strengthened SHE context.
+
+This is a conservative extension of `IUTStage1Theorem311StructuredInputs`; it
+does not replace the older route, and it does not produce an endpoint.
+-/
+structure IUTStage1Theorem311StructuredInputsWithSHE
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) where
+  inputs : IUTStage1Theorem311StructuredInputs package
+  structured_she : IUTStage1Theorem311StructuredSHE package
+
+namespace IUTStage1Theorem311StructuredInputsWithSHE
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+theorem theorem311StructuredInputs
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    IUTStage1Theorem311StructuredInputs package :=
+  bundle.inputs
+
+def structuredSHE
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    IUTStage1Theorem311StructuredSHE package :=
+  bundle.structured_she
+
+theorem hasStructuredIPL
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family :=
+  bundle.inputs.hasStructuredIPL
+
+theorem hasStructuredSHE
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family :=
+  bundle.inputs.hasStructuredSHE
+
+theorem hasStructuredSHE_from_context
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family :=
+  bundle.structuredSHE.hasStructuredSHE
+
+theorem hasStructuredAPT
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    QualitativeData.HasStructuredAPT package.preLedger.output.family :=
+  bundle.inputs.hasStructuredAPT
+
+theorem algorithmOutputCertified
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    package.preLedger.output.Certified :=
+  bundle.inputs.algorithmOutputCertified
+
+theorem hodgeTheaterSHEAlignment
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she :=
+  bundle.inputs.hodgeTheaterSHEAlignment
+
+theorem hodgeTheaterSHEAlignment_from_context
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she :=
+  bundle.structuredSHE.hodgeTheaterSHEAlignment
+
+theorem sheAlignment_eq_context_sheAlignment
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    bundle.inputs.sheAlignment =
+      bundle.structuredSHE.sheAlignment :=
+  Subsingleton.elim _ _
+
+theorem domainHistory_ne_codomainHistory
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side :=
+  bundle.structuredSHE.domainHistory_ne_codomainHistory
+
+end IUTStage1Theorem311StructuredInputsWithSHE
+
+/--
 Source-facing side conditions needed for Stage 1 ledger promotion.
 
 These conditions are intentionally separate from the Theorem 3.11 subclaims:
