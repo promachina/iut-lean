@@ -1068,3 +1068,132 @@ The next milestone should instantiate this common-target package for a toy
 family of upper-ray comparisons. That will give a concrete Lean test that a
 single common upper-ray bound controls all choices in a family, while still
 requiring explicit containment proofs for each possible output.
+
+## Milestone 11: Toy Family Bounds
+
+Lean file: `Iut/Stage1/ToyFamilyBounds.lean`
+
+### Source Check
+
+This milestone is a toy instantiation of the family-level pattern in IUT III,
+Corollary 3.12, Step (xi). The relevant source language is that Theorem 3.11,
+followed by formation of the holomorphic hull, yields a collection of possible
+output data; only after determinant formation and normalized log-volume are the
+resulting Theta-side region and the q-pilot log-volume comparable as real
+objects.
+
+Mochizuki's formalization progress report describes the same region of the
+argument as the move from APT/IPL/SHE plus "hull+det" to the final simultaneous
+comparison. Scholze-Stix emphasize that the real comparison must not hide
+identifications of copies of ordered real vector spaces. Our toy family therefore
+uses one fixed labeled target line `thetaLine`, one explicit transport, and an
+explicit cap on all possible epsilon values.
+
+### Purpose
+
+The previous milestone introduced the abstract package:
+
+```text
+CommonTargetBound = common target + containment + measured upper bound
+```
+
+This milestone verifies that the package behaves as intended in the toy
+upper-ray setting. A family of possible outputs is represented by a function
+
+```text
+epsilon : index -> Real
+```
+
+and each choice gives the target region
+
+```text
+R_{<= -2h + epsilon choice}
+```
+
+A single cap `epsilonBound`, together with the hypothesis
+
+```text
+forall choice, epsilon choice <= epsilonBound
+```
+
+produces the common target
+
+```text
+R_{<= -2h + epsilonBound}
+```
+
+### Lean Declarations
+
+`thetaIndeterminacyFamily f h epsilon` is a `RegionComparisonFamily` whose
+chosen comparison is `thetaIndeterminacyComparison f h (epsilon choice)`.
+
+`thetaIndeterminacyCommonTarget h epsilonBound` is the common upper ray with
+bound `-2h + epsilonBound`.
+
+The theorem
+
+```text
+thetaIndeterminacyFamily_commonTarget
+```
+
+turns the pointwise epsilon cap into a proof that the family is contained in the
+common target.
+
+The definition
+
+```text
+thetaIndeterminacyCommonTargetBound
+```
+
+builds a `RegionComparisonFamily.CommonTargetBound` under the explicit
+upper-ray normalization hypothesis on the measure.
+
+The theorems
+
+```text
+thetaIndeterminacyFamily_allTargetsAtMost
+thetaIndeterminacyFamily_choice_targetVolume_le_bound
+thetaIndeterminacyFamily_choice_holds_common
+```
+
+extract the family-wide bound, the chosen target-volume bound, and the chosen
+membership transfer into the common target.
+
+Finally,
+
+```text
+unitThetaIndeterminacyFamily_choice_holds_iff_bound
+unitThetaIndeterminacyFamily_bound_of_choice_holds
+```
+
+show that, for the unit transport toy case, membership in a chosen possible
+target gives `h <= epsilon choice`, and the common cap gives `h <= epsilonBound`.
+
+### What This Tests
+
+This is the first end-to-end family test:
+
+1. Possible outputs remain indexed by an explicit choice type.
+2. A common target is available only from a pointwise cap proof.
+3. A measured family bound is available only after adding upper-ray
+   normalization.
+4. The arithmetic conclusion for the unit toy transport factors through the
+   chosen output and then through the common cap.
+
+This matches the project discipline for the Corollary 3.12 debate: the Lean code
+must reveal exactly where choices, common containers, and real-valued
+comparisons enter.
+
+### Design Trap Avoided
+
+The trap would be to replace the whole family by the largest epsilon value
+without proving that such a value bounds every choice. This module takes the cap
+as a hypothesis and makes Lean use it exactly where containment is needed.
+
+### Next Step
+
+The next milestone should start separating the roles that are currently bundled
+inside "common target": a toy APT-style transport record should specify how a
+chosen output is carried through a named transport before it is compared with a
+common target. This keeps the future APT/IPL/SHE decomposition visible instead
+of compressing it into one containment hypothesis.

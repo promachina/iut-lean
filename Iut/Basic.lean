@@ -12,6 +12,7 @@ import Iut.Foundations.CommonTargetBound
 import Iut.Stage1.PilotComparison
 import Iut.Stage1.ToyModel
 import Iut.Stage1.ToyMeasuredComparison
+import Iut.Stage1.ToyFamilyBounds
 
 /-!
 Root module for the IUT formalization scaffold.

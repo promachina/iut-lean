@@ -153,6 +153,8 @@ Current modules:
   IUT III, Remark 3.12.2.
 * `Iut.Stage1.ToyMeasuredComparison`: measured upper-ray version of the toy
   model, keeping containment, calibration, and arithmetic bounds separate.
+* `Iut.Stage1.ToyFamilyBounds`: toy indexed families of upper-ray comparisons
+  controlled by an explicit common epsilon bound.
 
 Useful commands:
 
