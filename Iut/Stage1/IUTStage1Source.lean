@@ -19,6 +19,8 @@ namespace Stage1
 
 open RealLineCopy
 
+universe u v w x
+
 /-- Inert identifier for a pilot object in the source-facing Stage 1 package. -/
 structure PilotObjectId where
   label : String
@@ -690,6 +692,112 @@ theorem quotient_profile
 
 end IUTStage1Theorem311IndeterminacySourceData
 
+/-- Inert identifier for a procession of D-prime-strips in Theorem 3.11. -/
+structure ProcessionPrimeStripId where
+  label : String
+
+/-- Inert identifier for local tensor-packet symmetry data in Theorem 3.11. -/
+structure LocalTensorSymmetryId where
+  label : String
+
+/-- Inert identifier for a log-link column used by upper semi-compatibility. -/
+structure LogThetaColumnId where
+  label : String
+
+/-- Inert identifier for local upper-semi-compatibility data. -/
+structure UpperSemiCompatibilityId where
+  label : String
+
+/--
+Procession state used by the Theorem 3.11 `(Ind1)` model.
+
+Automorphisms of the procession may change representative data, but the
+procession label and column are the invariants retained by the current
+formalization layer.
+-/
+structure IUTStage1ProcessionState where
+  procession : ProcessionPrimeStripId
+  column : Int
+  representative : String
+
+/--
+Local tensor-packet state used by the Theorem 3.11 `(Ind2)` model.
+
+The current layer records the symmetry orbit and the number of direct summands
+without formalizing the local tensor packet itself.
+-/
+structure IUTStage1LocalTensorState where
+  symmetry : LocalTensorSymmetryId
+  directSummandCount : Nat
+  representative : String
+
+/--
+Upper semi-compatibility state used by the Theorem 3.11 `(Ind3)` model.
+
+The booleans record whether the local comparison is modeled by the two source
+features singled out in the statement of Theorem 3.11: natural inclusions at
+nonarchimedean places and natural surjections at archimedean places.
+-/
+structure IUTStage1UpperSemiCompatibilityState where
+  logThetaColumn : LogThetaColumnId
+  compatibility : UpperSemiCompatibilityId
+  hasNonarchimedeanInclusions : Bool
+  hasArchimedeanSurjections : Bool
+  logVolumeCompatible : Prop
+  log_volume_compatible : logVolumeCompatible
+
+namespace IUTStage1ProcessionState
+
+theorem same_procession_of_eq
+    {state₁ state₂ : IUTStage1ProcessionState}
+    (h : state₁ = state₂) :
+    state₁.procession = state₂.procession := by
+  cases h
+  rfl
+
+theorem same_column_of_eq
+    {state₁ state₂ : IUTStage1ProcessionState}
+    (h : state₁ = state₂) :
+    state₁.column = state₂.column := by
+  cases h
+  rfl
+
+end IUTStage1ProcessionState
+
+namespace IUTStage1LocalTensorState
+
+theorem same_summand_count_of_eq
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (h : state₁ = state₂) :
+    state₁.directSummandCount = state₂.directSummandCount := by
+  cases h
+  rfl
+
+end IUTStage1LocalTensorState
+
+namespace IUTStage1UpperSemiCompatibilityState
+
+theorem logVolumeCompatibleProof
+    (state : IUTStage1UpperSemiCompatibilityState) :
+    state.logVolumeCompatible :=
+  state.log_volume_compatible
+
+theorem same_logThetaColumn_of_eq
+    {state₁ state₂ : IUTStage1UpperSemiCompatibilityState}
+    (h : state₁ = state₂) :
+    state₁.logThetaColumn = state₂.logThetaColumn := by
+  cases h
+  rfl
+
+theorem same_compatibility_of_eq
+    {state₁ state₂ : IUTStage1UpperSemiCompatibilityState}
+    (h : state₁ = state₂) :
+    state₁.compatibility = state₂.compatibility := by
+  cases h
+  rfl
+
+end IUTStage1UpperSemiCompatibilityState
+
 /--
 Source-shaped choice data for Theorem 3.11.
 
@@ -698,7 +806,8 @@ The remaining coordinates separate the coric data from the representative data
 affected by `(Ind1)`, `(Ind2)`, `(Ind3)`.
 -/
 structure IUTStage1Theorem311Choice
-    (coric processionState localTensorState upperSemiState : Type u) where
+    (coric : Type u) (processionState : Type v)
+    (localTensorState : Type w) (upperSemiState : Type x) where
   column : Int
   row : Int
   coric : coric
@@ -708,7 +817,8 @@ structure IUTStage1Theorem311Choice
 
 namespace IUTStage1Theorem311Choice
 
-variable {coric processionState localTensorState upperSemiState : Type u}
+variable {coric : Type u} {processionState : Type v}
+variable {localTensorState : Type w} {upperSemiState : Type x}
 
 abbrev Choice :=
   IUTStage1Theorem311Choice
@@ -834,6 +944,148 @@ theorem image_invariant_of_coric
   exact hcoric choice₁ choice₂ (generated_coric_eq hrel)
 
 end IUTStage1Theorem311Choice
+
+/--
+Theorem 3.11 choice specialized to the state records currently modeled in this
+file.
+-/
+abbrev IUTStage1StructuredTheorem311Choice (coric : Type u) :=
+  IUTStage1Theorem311Choice
+    coric
+    IUTStage1ProcessionState
+    IUTStage1LocalTensorState
+    IUTStage1UpperSemiCompatibilityState
+
+namespace IUTStage1StructuredTheorem311Choice
+
+variable {coric : Type u}
+
+/-- Structured `(Ind1)` step: procession representative may change. -/
+structure ProcessionAutomorphismStep
+    (choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric) : Prop where
+  column_eq : choice₁.column = choice₂.column
+  row_eq : choice₁.row = choice₂.row
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq :
+    choice₁.procession_state.procession =
+      choice₂.procession_state.procession
+  procession_column_eq :
+    choice₁.procession_state.column = choice₂.procession_state.column
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+
+/-- Structured `(Ind2)` step: local tensor representative may change. -/
+structure LocalTensorSymmetryStep
+    (choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric) : Prop where
+  column_eq : choice₁.column = choice₂.column
+  row_eq : choice₁.row = choice₂.row
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  direct_summand_count_eq :
+    choice₁.local_tensor_state.directSummandCount =
+      choice₂.local_tensor_state.directSummandCount
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+
+/--
+Structured `(Ind3)` step: row and upper-semi representative may vary, but the
+log-theta column and the local comparison shape are preserved.
+-/
+structure UpperSemiCompatibilityStep
+    (choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric) : Prop where
+  column_eq : choice₁.column = choice₂.column
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+  logThetaColumn_eq :
+    choice₁.upper_semi_state.logThetaColumn =
+      choice₂.upper_semi_state.logThetaColumn
+  nonarchimedean_inclusions_eq :
+    choice₁.upper_semi_state.hasNonarchimedeanInclusions =
+      choice₂.upper_semi_state.hasNonarchimedeanInclusions
+  archimedean_surjections_eq :
+    choice₁.upper_semi_state.hasArchimedeanSurjections =
+      choice₂.upper_semi_state.hasArchimedeanSurjections
+
+def indeterminacySourceData :
+    IUTStage1Theorem311IndeterminacySourceData
+      (IUTStage1StructuredTheorem311Choice coric) :=
+  { procession_automorphism_step := ProcessionAutomorphismStep,
+    local_tensor_symmetry_step := LocalTensorSymmetryStep,
+    upper_semi_compatibility_step := UpperSemiCompatibilityStep }
+
+theorem ind1_preserves_procession_column
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      ProcessionAutomorphismStep choice₁ choice₂) :
+    choice₁.procession_state.column = choice₂.procession_state.column := by
+  exact hstep.procession_column_eq
+
+theorem ind2_preserves_directSummandCount
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      LocalTensorSymmetryStep choice₁ choice₂) :
+    choice₁.local_tensor_state.directSummandCount =
+      choice₂.local_tensor_state.directSummandCount := by
+  exact hstep.direct_summand_count_eq
+
+theorem ind3_preserves_logThetaColumn
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      UpperSemiCompatibilityStep choice₁ choice₂) :
+    choice₁.upper_semi_state.logThetaColumn =
+      choice₂.upper_semi_state.logThetaColumn := by
+  exact hstep.logThetaColumn_eq
+
+theorem ind3_target_logVolumeCompatible
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (_hstep :
+      UpperSemiCompatibilityStep choice₁ choice₂) :
+    choice₂.upper_semi_state.logVolumeCompatible := by
+  exact choice₂.upper_semi_state.logVolumeCompatibleProof
+
+theorem generated_preserves_coric
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (indeterminacySourceData (coric := coric)).generators
+        choice₁ choice₂) :
+    choice₁.coric = choice₂.coric := by
+  induction hrel with
+  | refl choice =>
+      rfl
+  | ind1 hstep =>
+      exact hstep.coric_eq
+  | ind2 hstep =>
+      exact hstep.coric_eq
+  | ind3 hstep =>
+      exact hstep.coric_eq
+  | symm _ ih =>
+      exact ih.symm
+  | trans _ _ ih₁₂ ih₂₃ =>
+      exact ih₁₂.trans ih₂₃
+
+theorem generated_preserves_column
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (indeterminacySourceData (coric := coric)).generators
+        choice₁ choice₂) :
+    choice₁.column = choice₂.column := by
+  induction hrel with
+  | refl choice =>
+      rfl
+  | ind1 hstep =>
+      exact hstep.column_eq
+  | ind2 hstep =>
+      exact hstep.column_eq
+  | ind3 hstep =>
+      exact hstep.column_eq
+  | symm _ ih =>
+      exact ih.symm
+  | trans _ _ ih₁₂ ih₂₃ =>
+      exact ih₁₂.trans ih₂₃
+
+end IUTStage1StructuredTheorem311Choice
 
 /--
 Multiradial possible images of the Theta-pilot, recorded together with the

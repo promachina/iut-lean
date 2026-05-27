@@ -275,6 +275,60 @@ theorem theorem311Choice_image_invariant_of_coric_example
     images.region choice₁ = images.region choice₂ :=
   IUTStage1Theorem311Choice.image_invariant_of_coric images hcoric hrel
 
+theorem structuredTheorem311_ind1_preserves_procession_column_example
+    {coric : Type u}
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      IUTStage1StructuredTheorem311Choice.ProcessionAutomorphismStep
+        choice₁ choice₂) :
+    choice₁.procession_state.column = choice₂.procession_state.column :=
+  IUTStage1StructuredTheorem311Choice.ind1_preserves_procession_column
+    hstep
+
+theorem structuredTheorem311_ind2_preserves_directSummandCount_example
+    {coric : Type u}
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      IUTStage1StructuredTheorem311Choice.LocalTensorSymmetryStep
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.directSummandCount =
+      choice₂.local_tensor_state.directSummandCount :=
+  IUTStage1StructuredTheorem311Choice.ind2_preserves_directSummandCount
+    hstep
+
+theorem structuredTheorem311_ind3_preserves_logThetaColumn_example
+    {coric : Type u}
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      IUTStage1StructuredTheorem311Choice.UpperSemiCompatibilityStep
+        choice₁ choice₂) :
+    choice₁.upper_semi_state.logThetaColumn =
+      choice₂.upper_semi_state.logThetaColumn :=
+  IUTStage1StructuredTheorem311Choice.ind3_preserves_logThetaColumn
+    hstep
+
+theorem structuredTheorem311_generated_preserves_coric_example
+    {coric : Type u}
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1StructuredTheorem311Choice.indeterminacySourceData
+          (coric := coric)).generators
+        choice₁ choice₂) :
+    choice₁.coric = choice₂.coric :=
+  IUTStage1StructuredTheorem311Choice.generated_preserves_coric hrel
+
+theorem structuredTheorem311_generated_preserves_column_example
+    {coric : Type u}
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hrel :
+      IUTStage1GeneratedIndeterminacyRelation
+        (IUTStage1StructuredTheorem311Choice.indeterminacySourceData
+          (coric := coric)).generators
+        choice₁ choice₂) :
+    choice₁.column = choice₂.column :=
+  IUTStage1StructuredTheorem311Choice.generated_preserves_column hrel
+
 theorem coordinateIndeterminacy_generated_coric_eq_example
     {coric ind1State ind2State ind3State : Type u}
     {choice₁ choice₂ :

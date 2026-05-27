@@ -17170,3 +17170,103 @@ The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
 The state coordinates are still abstract. To become non-toy, these must be
 replaced by records for processions of D-prime-strips, local tensor packet
 symmetry data, and upper-semi-compatible Kummer/log-link data.
+
+## 121. Typed Theorem 3.11 State Records
+
+### Goal
+
+We replaced the fully abstract state coordinates of the Theorem 3.11 choice
+model by named records for the three source mechanisms that appear in the
+statement of Theorem 3.11.
+
+### Source Check
+
+The relevant Theorem 3.11 text describes:
+
+```text
+Ind1: automorphisms of the procession of D-prime-strips
+Ind2: independent local tensor-factor symmetries
+Ind3: upper semi-compatibility as m varies, involving inclusions at nonarchimedean places,
+      surjections at archimedean places, and log-volume compatibility
+```
+
+The new records are deliberately still skeletal, but they name these three
+pieces directly.
+
+### Lean/API Check
+
+The source layer now defines:
+
+```text
+ProcessionPrimeStripId
+LocalTensorSymmetryId
+LogThetaColumnId
+UpperSemiCompatibilityId
+IUTStage1ProcessionState
+IUTStage1LocalTensorState
+IUTStage1UpperSemiCompatibilityState
+IUTStage1StructuredTheorem311Choice
+```
+
+The typed state records expose:
+
+```text
+procession label and column
+local tensor symmetry label and direct-summand count
+log-theta column, upper-semi compatibility label,
+nonarchimedean-inclusion flag, archimedean-surjection flag,
+and log-volume compatibility proof
+```
+
+The structured choice namespace defines source-shaped generator relations:
+
+```text
+IUTStage1StructuredTheorem311Choice.ProcessionAutomorphismStep
+IUTStage1StructuredTheorem311Choice.LocalTensorSymmetryStep
+IUTStage1StructuredTheorem311Choice.UpperSemiCompatibilityStep
+IUTStage1StructuredTheorem311Choice.indeterminacySourceData
+```
+
+Lean now checks:
+
+```text
+Ind1 preserves the procession column
+Ind2 preserves the local direct-summand count
+Ind3 preserves the log-theta column
+the generated relation preserves the choice column and coric coordinate
+```
+
+### Lean Decisions
+
+The structured generator relations are separate from the older generic
+`IUTStage1Theorem311Choice` generators. This avoids over-constraining the
+generic interface. For example, a generic upper-semi state is opaque, so it
+would be wrong to force equality of the whole state just to prove preservation
+of a log-theta column. The structured relation can state exactly the partial
+invariants we currently know how to name.
+
+The `logVolumeCompatible` field remains a proposition carried by the
+upper-semi state. This records that log-volume compatibility is a required
+source datum, not something the current skeletal record proves internally.
+
+### Toy Check
+
+The source example now checks:
+
+```text
+structuredTheorem311_ind1_preserves_procession_column_example
+structuredTheorem311_ind2_preserves_directSummandCount_example
+structuredTheorem311_ind3_preserves_logThetaColumn_example
+structuredTheorem311_generated_preserves_coric_example
+structuredTheorem311_generated_preserves_column_example
+```
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The records are still identifiers plus invariant fields. The next mathematical
+step should refine `IUTStage1UpperSemiCompatibilityState`, because this is the
+part closest to Corollary 3.12: it should eventually carry typed local data for
+the nonarchimedean inclusions, archimedean surjections, and compatibility of
+the relevant log-volumes under the log-link.
