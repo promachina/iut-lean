@@ -8813,3 +8813,79 @@ The family-level bound is still supplied by the bridge. The next refinement
 should inspect the bridge object itself and decide which part can be replaced
 by a less abstract construction first: the common target, the hull+det step,
 or the descent/HDD bookkeeping.
+
+## Math Milestone 93: Common-Container Bound Audit Object
+
+Lean files:
+
+* `Iut/Foundations/AlgorithmicBridge.lean`
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The previous milestones exposed the HDD-after-SHE bound from the final
+charted boundary, but the common-container bridge application itself was still
+only visible through separate projection theorems. This milestone names that
+bridge application as an audit object.
+
+### Lean/API Check
+
+The generic bridge layer now defines:
+
+```text
+AlgorithmicOutput.CommonContainerData.BoundAudit
+```
+
+For a common container and structured certificate, it stores:
+
+```text
+she_context_matches
+all_targets_at_most
+choice_target_volume_le
+```
+
+The constructor:
+
+```text
+CommonContainerData.boundAudit
+```
+
+builds this object from the existing common-container data.
+
+The audited HDD-after-SHE bound now stores:
+
+```text
+common_container_bound_audit
+```
+
+and the charted comparison boundary exposes it as:
+
+```text
+hddSHECommonContainerBoundAudit
+```
+
+### Lean Decisions
+
+This remains an audit of supplied bridge data. It does not derive the common
+target from SHE or from a hull+det construction. Its purpose is to localize
+the exact bridge output that future work must replace with less abstract
+mathematics.
+
+### What This Tests
+
+The toy source example extracts the common-container bound audit from the
+charted comparison boundary. The focused Stage 1 source example build and the
+full project build both pass.
+
+### Design Trap Avoided
+
+The trap would be to talk about the common-container bridge while only exposing
+its chosen target-volume inequality. This milestone records the SHE context
+match and family-level target-volume bound as part of one named audit object.
+
+### Remaining Gap
+
+The audit object still receives its bound from the generic bridge. The next
+step should expose the internal HDD decomposition around this bridge:
+SHE arrow, descent, hull+det bridge, and common container.

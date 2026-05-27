@@ -738,6 +738,9 @@ structure IUTStage1Theorem311AuditedHDDSHEBound
   compatibility :
     IUTStage1Theorem311StructuredSHECommonContainerCompatibility
       package bundle.structuredSHE
+  common_container_bound_audit :
+    package.preLedger.chartedContainer.commonContainer.BoundAudit
+      package.preLedger.certificate
   local_expression_valid :
     bundle.structuredSHE.context.simultaneousExpression.AllLocalValid
   chosen_target_volume_le_theta :
@@ -762,6 +765,9 @@ theorem ofStructuredInputsWithSHE
     (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
     IUTStage1Theorem311AuditedHDDSHEBound package bundle :=
   { compatibility := bundle.commonContainerCompatibility,
+    common_container_bound_audit :=
+      package.preLedger.chartedContainer.commonContainer.boundAudit
+        package.preLedger.certificate,
     local_expression_valid :=
       bundle.structuredSHE.context.allLocalExpressionValid,
     chosen_target_volume_le_theta :=
@@ -777,6 +783,12 @@ theorem commonContainerCompatibility
     IUTStage1Theorem311StructuredSHECommonContainerCompatibility
       package bundle.structuredSHE :=
   audited.compatibility
+
+theorem commonContainerBoundAudit
+    (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
+    package.preLedger.chartedContainer.commonContainer.BoundAudit
+      package.preLedger.certificate :=
+  audited.common_container_bound_audit
 
 theorem sheArrowMatchesContext
     (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
@@ -2613,6 +2625,13 @@ theorem hddSHECommonContainerCompatibility
     IUTStage1Theorem311StructuredSHECommonContainerCompatibility
       package bundle.structuredSHE :=
   boundary.hddSHEBound.commonContainerCompatibility
+
+theorem hddSHECommonContainerBoundAudit
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    package.preLedger.chartedContainer.commonContainer.BoundAudit
+      package.preLedger.certificate :=
+  boundary.hddSHEBound.commonContainerBoundAudit
 
 theorem hddSHESHEArrowMatchesContext
     (boundary :

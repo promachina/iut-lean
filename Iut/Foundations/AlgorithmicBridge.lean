@@ -318,6 +318,54 @@ theorem allTargetsAtMost
     RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound :=
   data.hddShe.allTargetsAtMost certificate
 
+/--
+Audit view of the common-container bound obtained after applying the
+`HDD o SHE` bridge to a structured certificate.
+-/
+structure BoundAudit
+    (data : CommonContainerData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) : Prop where
+  she_context_matches :
+    data.hddShe.sheArrow.datum.sharedContext = data.context
+  all_targets_at_most :
+    RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound
+  choice_target_volume_le :
+    ∀ choice : index,
+      RegionMeasure.targetVolume measure (output.comparison choice) <= bound
+
+theorem boundAudit
+    (data : CommonContainerData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    data.BoundAudit certificate :=
+  { she_context_matches := data.she_context_matches,
+    all_targets_at_most := data.allTargetsAtMost certificate,
+    choice_target_volume_le := data.choice_targetVolume_le certificate }
+
+namespace BoundAudit
+
+variable {measure : RegionMeasure target}
+variable {output : AlgorithmicOutput source target index}
+variable {bound : Real}
+variable {data : CommonContainerData output measure bound}
+variable {certificate : QualitativeData.StructuredCertificate output.family}
+
+theorem sheContextMatches
+    (audit : data.BoundAudit certificate) :
+    data.hddShe.sheArrow.datum.sharedContext = data.context :=
+  audit.she_context_matches
+
+theorem allTargetsAtMost
+    (audit : data.BoundAudit certificate) :
+    RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound :=
+  audit.all_targets_at_most
+
+theorem choiceTargetVolume_le
+    (audit : data.BoundAudit certificate) (choice : index) :
+    RegionMeasure.targetVolume measure (output.comparison choice) <= bound :=
+  audit.choice_target_volume_le choice
+
+end BoundAudit
+
 end CommonContainerData
 
 /--

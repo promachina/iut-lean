@@ -1884,6 +1884,23 @@ theorem unitThetaToy_source_theorem311_charted_boundary_hdd_she_example
   (unitThetaToy_source_theorem311_charted_comparison_boundary_example
     measure hnormalized hh hbound hholds).hddSHEBound
 
+theorem unitThetaToy_source_theorem311_charted_boundary_common_container_bound_audit_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    package.preLedger.chartedContainer.commonContainer.BoundAudit
+      package.preLedger.certificate :=
+  (unitThetaToy_source_theorem311_charted_comparison_boundary_example
+    measure hnormalized hh hbound hholds).hddSHECommonContainerBoundAudit
+
 theorem unitThetaToy_source_theorem311_charted_boundary_hdd_she_local_valid_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
