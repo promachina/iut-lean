@@ -2220,6 +2220,100 @@ theorem ind2_preserves_capsuleTotalLogVolume
   IUTStage1TensorPacketTheorem311Choice.actionStep_preserves_capsuleTotalLogVolume
     (toTensorPacketActionStep hstep)
 
+/-- Nonarchimedean `Ism` instance of the direct-summand `(Ind2)` step. -/
+structure NonarchimedeanIsmInd2Step
+    (choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.nonarchimedean) :
+    Prop where
+  column_eq : choice₁.column = choice₂.column
+  row_eq : choice₁.row = choice₂.row
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+  local_object_eq :
+    choice₁.local_tensor_state.packetState.localObject =
+      choice₂.local_tensor_state.packetState.localObject
+  ism_action_exists :
+    ∃ action :
+      IUTStage1NonarchimedeanIsmDirectSummandAction
+        choice₁.local_tensor_state.summandFamily,
+      choice₂.local_tensor_state.packetState.capsuleFamily =
+        action.toDirectSummandAction.toCapsuleAction.transformedFamily
+
+/-- Archimedean order-two instance of the direct-summand `(Ind2)` step. -/
+structure ArchimedeanOrderTwoInd2Step
+    (choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.archimedean) :
+    Prop where
+  column_eq : choice₁.column = choice₂.column
+  row_eq : choice₁.row = choice₂.row
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+  local_object_eq :
+    choice₁.local_tensor_state.packetState.localObject =
+      choice₂.local_tensor_state.packetState.localObject
+  order_two_action_exists :
+    ∃ action :
+      IUTStage1ArchimedeanOrderTwoDirectSummandAction
+        choice₁.local_tensor_state.summandFamily,
+      choice₂.local_tensor_state.packetState.capsuleFamily =
+        action.toDirectSummandAction.toCapsuleAction.transformedFamily
+
+def nonarchimedeanIsm_toDirectSummandActionStep
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmInd2Step choice₁ choice₂) :
+    LocalTensorDirectSummandActionStep choice₁ choice₂ :=
+  { column_eq := hstep.column_eq,
+    row_eq := hstep.row_eq,
+    coric_eq := hstep.coric_eq,
+    procession_eq := hstep.procession_eq,
+    upper_semi_eq := hstep.upper_semi_eq,
+    local_object_eq := hstep.local_object_eq,
+    summand_action_exists := by
+      rcases hstep.ism_action_exists with ⟨action, htarget⟩
+      exact ⟨action.toDirectSummandAction, htarget⟩ }
+
+def archimedeanOrderTwo_toDirectSummandActionStep
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoInd2Step choice₁ choice₂) :
+    LocalTensorDirectSummandActionStep choice₁ choice₂ :=
+  { column_eq := hstep.column_eq,
+    row_eq := hstep.row_eq,
+    coric_eq := hstep.coric_eq,
+    procession_eq := hstep.procession_eq,
+    upper_semi_eq := hstep.upper_semi_eq,
+    local_object_eq := hstep.local_object_eq,
+    summand_action_exists := by
+      rcases hstep.order_two_action_exists with ⟨action, htarget⟩
+      exact ⟨action.toDirectSummandAction, htarget⟩ }
+
+theorem nonarchimedeanIsm_preserves_capsuleTotalLogVolume
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmInd2Step choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  ind2_preserves_capsuleTotalLogVolume
+    (nonarchimedeanIsm_toDirectSummandActionStep hstep)
+
+theorem archimedeanOrderTwo_preserves_capsuleTotalLogVolume
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoInd2Step choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  ind2_preserves_capsuleTotalLogVolume
+    (archimedeanOrderTwo_toDirectSummandActionStep hstep)
+
 end IUTStage1DirectSummandPacketTheorem311Choice
 
 /--

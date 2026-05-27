@@ -752,6 +752,58 @@ theorem directSummandPacketTheorem311_ind2_preserves_totalLogVolume_example
   IUTStage1DirectSummandPacketTheorem311Choice.ind2_preserves_capsuleTotalLogVolume
     hstep
 
+def nonarchimedeanIsmInd2_to_directSummandActionStep_example
+    {coric : Type u}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.NonarchimedeanIsmInd2Step
+        choice₁ choice₂) :
+    IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+      choice₁ choice₂ :=
+  IUTStage1DirectSummandPacketTheorem311Choice.nonarchimedeanIsm_toDirectSummandActionStep
+    hstep
+
+theorem nonarchimedeanIsmInd2_preserves_totalLogVolume_example
+    {coric : Type u}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.NonarchimedeanIsmInd2Step
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  IUTStage1DirectSummandPacketTheorem311Choice.nonarchimedeanIsm_preserves_capsuleTotalLogVolume
+    hstep
+
+def archimedeanOrderTwoInd2_to_directSummandActionStep_example
+    {coric : Type u}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.ArchimedeanOrderTwoInd2Step
+        choice₁ choice₂) :
+    IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+      choice₁ choice₂ :=
+  IUTStage1DirectSummandPacketTheorem311Choice.archimedeanOrderTwo_toDirectSummandActionStep
+    hstep
+
+theorem archimedeanOrderTwoInd2_preserves_totalLogVolume_example
+    {coric : Type u}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.ArchimedeanOrderTwoInd2Step
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  IUTStage1DirectSummandPacketTheorem311Choice.archimedeanOrderTwo_preserves_capsuleTotalLogVolume
+    hstep
+
 theorem upperSemi_logVolumeCompatibility_upperBound_example
     (data : IUTStage1LogVolumeCompatibilityData) :
     data.sourceLogVolume <= data.targetLogVolume :=

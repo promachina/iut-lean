@@ -650,3 +650,80 @@ archimedeanOrderTwoAction_totalLogVolume_example
 The next step should use these two source-specific action records to build
 source-specific direct-summand packet `(Ind2)` steps, then compare them with the
 generic direct-summand step.
+
+## 8. Source-Specific `(Ind2)` Steps
+
+### Goal
+
+We promoted the nonarchimedean and archimedean action surfaces into actual
+source-specific `(Ind2)` step relations for refined Theorem 3.11 choices.
+
+### Lean/API Check
+
+The new step relations are:
+
+```text
+NonarchimedeanIsmInd2Step
+ArchimedeanOrderTwoInd2Step
+```
+
+inside the namespace:
+
+```text
+IUTStage1DirectSummandPacketTheorem311Choice
+```
+
+Each one preserves the non-local-tensor coordinates:
+
+```text
+column
+row
+coric
+procession_state
+upper_semi_state
+localObject
+```
+
+and contains an existential source-specific action whose induced capsule action
+constructs the target capsule family.
+
+### Descending Maps
+
+Lean checks:
+
+```text
+nonarchimedeanIsm_toDirectSummandActionStep
+archimedeanOrderTwo_toDirectSummandActionStep
+```
+
+so both source-specific steps descend to the generic direct-summand action
+step.  Consequently, both inherit:
+
+```text
+*_preserves_capsuleTotalLogVolume
+```
+
+### Mathematical Point
+
+This keeps the two source cases of Theorem 3.11 `(Ind2)` separate while still
+using the same downstream finite-sum preservation theorem.  That is the
+intended abstraction boundary: the future construction of `Ism` and order-two
+automorphisms should differ, but once they produce a valid direct-summand
+action, the log-volume bookkeeping is common.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+nonarchimedeanIsmInd2_to_directSummandActionStep_example
+nonarchimedeanIsmInd2_preserves_totalLogVolume_example
+archimedeanOrderTwoInd2_to_directSummandActionStep_example
+archimedeanOrderTwoInd2_preserves_totalLogVolume_example
+```
+
+### Remaining Gap
+
+We still need to connect these source-specific `(Ind2)` steps into a generated
+indeterminacy relation for the refined direct-summand packet choice, analogous
+to the earlier structured Theorem 3.11 relation.
