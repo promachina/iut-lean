@@ -2217,6 +2217,96 @@ theorem auditedChartHistoryDiscipline
   AuditedChartHistoryDiscipline.ofStructuredInputsWithSHE bundle sideConditions
 
 /--
+Semantic wrapper for the allowed chart readings and the forbidden
+Hodge-history identification.
+
+The allowed operations are the q- and Theta-side readings through the named
+real-comparison chart. The forbidden operation is identifying the domain and
+codomain Hodge-theater histories. This record is derived from
+`AuditedChartHistoryDiscipline`; it does not add new assumptions.
+-/
+structure AuditedAllowedChartTransport
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) : Prop where
+  chart_history_discipline :
+    AuditedChartHistoryDiscipline package bundle sideConditions
+  allowed_q_to_target_reading :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord = package.preLedger.qSigned
+  allowed_theta_to_target_reading :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned
+  theta_target_transport_trivial :
+    Transport.TrivialMonodromy
+      package.preLedger.chartedContainer.chart.thetaToTarget
+  forbidden_history_identification :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side
+
+namespace AuditedAllowedChartTransport
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+variable {sideConditions : IUTStage1SourceSideConditions package}
+
+theorem ofChartHistoryDiscipline
+    (discipline :
+      AuditedChartHistoryDiscipline package bundle sideConditions) :
+    AuditedAllowedChartTransport package bundle sideConditions :=
+  { chart_history_discipline := discipline,
+    allowed_q_to_target_reading := discipline.qCharted,
+    allowed_theta_to_target_reading := discipline.thetaCharted,
+    theta_target_transport_trivial := discipline.publicAudit.thetaChartTrivial,
+    forbidden_history_identification :=
+      discipline.domainHistory_ne_codomainHistory }
+
+theorem ofStructuredInputsWithSHE
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    AuditedAllowedChartTransport package bundle sideConditions :=
+  ofChartHistoryDiscipline
+    (package.auditedChartHistoryDiscipline bundle sideConditions)
+
+theorem chartHistoryDiscipline
+    (transport :
+      AuditedAllowedChartTransport package bundle sideConditions) :
+    AuditedChartHistoryDiscipline package bundle sideConditions :=
+  transport.chart_history_discipline
+
+theorem allowedQToTargetReading
+    (transport :
+      AuditedAllowedChartTransport package bundle sideConditions) :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord = package.preLedger.qSigned :=
+  transport.allowed_q_to_target_reading
+
+theorem allowedThetaToTargetReading
+    (transport :
+      AuditedAllowedChartTransport package bundle sideConditions) :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned :=
+  transport.allowed_theta_to_target_reading
+
+theorem forbiddenHistoryIdentification
+    (transport :
+      AuditedAllowedChartTransport package bundle sideConditions) :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side :=
+  transport.forbidden_history_identification
+
+end AuditedAllowedChartTransport
+
+theorem auditedAllowedChartTransport
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    AuditedAllowedChartTransport package bundle sideConditions :=
+  AuditedAllowedChartTransport.ofStructuredInputsWithSHE bundle sideConditions
+
+/--
 Compact checkpoint summary for the audited structured-SHE route.
 
 The summary is proof-only: it does not create a new endpoint or hide any

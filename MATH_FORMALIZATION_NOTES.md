@@ -7599,3 +7599,83 @@ The chart/history discipline is still an audit record. The next mathematical
 step should refine the chart data itself: which transports are allowed, what
 triviality means, and why these chart readings do not amount to ring- or
 scheme-history identification.
+
+## Math Milestone 77: Allowed Chart Transport Versus Forbidden History Identification
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The Corollary 3.12 dispute forces a distinction between two kinds of
+operation:
+
+* reading q-side and Theta-side quantities through an explicitly named
+  real-comparison chart;
+* identifying the underlying Hodge-theater histories.
+
+The former is part of the formal comparison interface. The latter is precisely
+what must remain forbidden unless justified by explicit data. This milestone
+names that distinction in Lean.
+
+### Lean/API Check
+
+The new record is:
+
+```text
+IUTStage1SourcePackage.AuditedAllowedChartTransport
+```
+
+It is derived from:
+
+```text
+AuditedChartHistoryDiscipline
+```
+
+and stores:
+
+```text
+allowed_q_to_target_reading
+allowed_theta_to_target_reading
+theta_target_transport_trivial
+forbidden_history_identification
+```
+
+The namespace exposes:
+
+```text
+allowedQToTargetReading
+allowedThetaToTargetReading
+forbiddenHistoryIdentification
+```
+
+### Lean Decisions
+
+This is a semantic wrapper, not a new proof route. It does not assert any new
+bound or endpoint. It repackages already-audited facts under names that match
+the mathematical issue: chart transport is allowed as a reading operation, but
+domain/codomain Hodge-theater history identification remains forbidden.
+
+The constructor from structured inputs passes through the existing
+chart/history discipline checkpoint, so this object cannot be supplied with an
+unrelated chart or unrelated history guard.
+
+### What This Tests
+
+The source example constructs the allowed-chart-transport checkpoint and
+extracts the forbidden-history-identification proof. The targeted source
+example build passes.
+
+### Design Trap Avoided
+
+The trap would be to use chart transport language and history-identification
+language interchangeably. This milestone gives the two roles separate names in
+the type API.
+
+### Remaining Gap
+
+The allowed chart readings are still equations involving abstract transports.
+Future milestones should refine `Transport` and `RealComparisonChartData` so
+that the allowed transformations themselves have more mathematical content.
