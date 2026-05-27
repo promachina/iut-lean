@@ -475,6 +475,46 @@ theorem upperSemi_capsuleFamilyAction_total_eq_sum_example
         (action.transformedFamily.capsule i).logVolume :=
   action.transformedFamily_total_eq_sum
 
+theorem tensorDirectSummandObject_logVolume_eq_capsule_example
+    {kind : IUTStage1PlaceKind}
+    (summand : IUTStage1TensorDirectSummandObject kind) :
+    summand.capsule.logVolume = summand.localObject.finiteLogVolume :=
+  summand.logVolume_eq_capsule
+
+theorem tensorDirectSummandFamily_capsule_eq_example
+    {kind : IUTStage1PlaceKind}
+    {capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    (family : IUTStage1TensorDirectSummandFamily capsuleFamily)
+    (i : Fin capsuleFamily.capsuleCount) :
+    (family.summand i).capsule = capsuleFamily.capsule i :=
+  family.summandCapsule_eq i
+
+theorem tensorDirectSummandFamily_logVolume_eq_example
+    {kind : IUTStage1PlaceKind}
+    {capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    (family : IUTStage1TensorDirectSummandFamily capsuleFamily)
+    (i : Fin capsuleFamily.capsuleCount) :
+    (family.summand i).capsule.logVolume =
+      (capsuleFamily.capsule i).logVolume :=
+  family.summandCapsuleLogVolume_eq i
+
+def tensorDirectSummandAction_to_capsuleAction_example
+    {kind : IUTStage1PlaceKind}
+    {capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    {family : IUTStage1TensorDirectSummandFamily capsuleFamily}
+    (action : IUTStage1TensorDirectSummandFamilyAction family) :
+    IUTStage1TypedCapsuleFamilyLogVolumeAction capsuleFamily :=
+  action.toCapsuleAction
+
+theorem tensorDirectSummandAction_totalLogVolume_example
+    {kind : IUTStage1PlaceKind}
+    {capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    {family : IUTStage1TensorDirectSummandFamily capsuleFamily}
+    (action : IUTStage1TensorDirectSummandFamilyAction family) :
+    action.toCapsuleAction.transformedFamily.totalLogVolume =
+      capsuleFamily.totalLogVolume :=
+  action.toCapsuleAction_totalLogVolume
+
 def localTensorPacket_to_localTensorState_example
     {kind : IUTStage1PlaceKind}
     (state : IUTStage1LocalTensorPacketLogVolumeState kind) :

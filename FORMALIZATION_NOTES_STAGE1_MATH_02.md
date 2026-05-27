@@ -303,3 +303,112 @@ The next refinement should type the actual direct summands separately from the
 capsules, then relate the summand action to the capsule action.  This is where
 the formalization should eventually introduce the `Ism`/order-two symmetry
 surface mentioned in Theorem 3.11.
+
+## 4. Direct Summand Surface
+
+### Goal
+
+We introduced a separate typed surface for the direct summands mentioned in
+Theorem 3.11 `(Ind2)`, while keeping it tied to the already formalized typed
+capsule family.
+
+### Source Check
+
+Theorem 3.11 `(Ind2)` distinguishes two symmetry sources:
+
+```text
+nonarchimedean places: independent copies of Ism
+archimedean places: order-two automorphisms
+```
+
+The new Lean inductive type records this distinction as:
+
+```text
+IUTStage1TensorSummandSymmetryKind
+```
+
+with constructors:
+
+```text
+nonarchimedeanIsm
+archimedeanOrderTwo
+```
+
+### Lean/API Check
+
+The new direct summand records are:
+
+```text
+IUTStage1TensorDirectSummandObject
+IUTStage1TensorDirectSummandFamily
+IUTStage1TensorDirectSummandFamilyAction
+```
+
+A direct summand object carries a local object and a capsule object, with proof
+that the capsule belongs to the same local object.
+
+The family is indexed by:
+
+```text
+Fin capsuleFamily.capsuleCount
+```
+
+This is an intentional design choice.  We do not separately introduce an
+unrelated finite type for direct summands and then assert that it has the same
+cardinality.  At the current layer, the same finite index type is the cleanest
+way to record the invariant already exposed by the packet state:
+
+```text
+directSummandCount = capsuleCount
+```
+
+The family proves:
+
+```text
+(family.summand i).capsule = capsuleFamily.capsule i
+```
+
+and hence:
+
+```text
+(family.summand i).capsule.logVolume =
+  (capsuleFamily.capsule i).logVolume
+```
+
+### Action Link
+
+A direct summand action supplies transformed direct summand representatives and
+proves that their capsules preserve local object and log-volume data.  From
+this, Lean constructs:
+
+```text
+toCapsuleAction :
+  IUTStage1TypedCapsuleFamilyLogVolumeAction capsuleFamily
+```
+
+Thus the older capsule-action finite-sum preservation theorem can now be fed by
+a direct-summand action.
+
+### Trap Avoided
+
+We did not yet claim to have formalized `Ism` or the order-two automorphism
+groups themselves.  The current formalization records their source distinction
+and the action surface that their eventual formal versions must inhabit.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+tensorDirectSummandObject_logVolume_eq_capsule_example
+tensorDirectSummandFamily_capsule_eq_example
+tensorDirectSummandFamily_logVolume_eq_example
+tensorDirectSummandAction_to_capsuleAction_example
+tensorDirectSummandAction_totalLogVolume_example
+```
+
+### Remaining Gap
+
+The next step should thread `IUTStage1TensorDirectSummandFamily` into the local
+tensor packet state, so a packet choice can carry not only a capsule family but
+also the direct-summand family whose action induces the capsule action.

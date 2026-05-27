@@ -1007,6 +1007,139 @@ theorem transformedFamily_total_eq_sum
 
 end IUTStage1TypedCapsuleFamilyLogVolumeAction
 
+/--
+The two local tensor symmetry sources singled out in Theorem 3.11 `(Ind2)`.
+-/
+inductive IUTStage1TensorSummandSymmetryKind where
+  | nonarchimedeanIsm
+  | archimedeanOrderTwo
+deriving DecidableEq, Repr
+
+/-- A direct summand representative tied to a capsule log-volume object. -/
+structure IUTStage1TensorDirectSummandObject
+    (kind : IUTStage1PlaceKind) where
+  summandLabel : String
+  localObject : IUTStage1FiniteLocalLogVolumeObject kind
+  capsule : IUTStage1CapsuleLogVolumeObject kind
+  capsule_local_object_eq : capsule.localObject = localObject
+
+/--
+Direct summand data indexed by the same finite type as a typed capsule family.
+
+The shared index type is intentional: it records the current formalization
+invariant that local tensor direct summands and capsule entries are counted
+together, while avoiding an unsafe identification of independently supplied
+finite sets.
+-/
+structure IUTStage1TensorDirectSummandFamily
+    {kind : IUTStage1PlaceKind}
+    (capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind) where
+  symmetryKind : IUTStage1TensorSummandSymmetryKind
+  summand :
+    Fin capsuleFamily.capsuleCount ->
+      IUTStage1TensorDirectSummandObject kind
+  summand_local_object_eq :
+    ∀ i : Fin capsuleFamily.capsuleCount,
+      (summand i).localObject = capsuleFamily.localObject
+  summand_capsule_eq :
+    ∀ i : Fin capsuleFamily.capsuleCount,
+      (summand i).capsule = capsuleFamily.capsule i
+
+namespace IUTStage1TensorDirectSummandObject
+
+variable {kind : IUTStage1PlaceKind}
+
+theorem capsuleLocalObject_eq
+    (summand : IUTStage1TensorDirectSummandObject kind) :
+    summand.capsule.localObject = summand.localObject :=
+  summand.capsule_local_object_eq
+
+theorem logVolume_eq_capsule
+    (summand : IUTStage1TensorDirectSummandObject kind) :
+    summand.capsule.logVolume = summand.localObject.finiteLogVolume := by
+  calc
+    summand.capsule.logVolume =
+        summand.capsule.localObject.finiteLogVolume :=
+      summand.capsule.logVolume_eq
+    _ = summand.localObject.finiteLogVolume := by
+      rw [summand.capsuleLocalObject_eq]
+
+end IUTStage1TensorDirectSummandObject
+
+namespace IUTStage1TensorDirectSummandFamily
+
+variable {kind : IUTStage1PlaceKind}
+variable {capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind}
+
+theorem summandLocalObject_eq
+    (family : IUTStage1TensorDirectSummandFamily capsuleFamily)
+    (i : Fin capsuleFamily.capsuleCount) :
+    (family.summand i).localObject = capsuleFamily.localObject :=
+  family.summand_local_object_eq i
+
+theorem summandCapsule_eq
+    (family : IUTStage1TensorDirectSummandFamily capsuleFamily)
+    (i : Fin capsuleFamily.capsuleCount) :
+    (family.summand i).capsule = capsuleFamily.capsule i :=
+  family.summand_capsule_eq i
+
+theorem summandCapsuleLogVolume_eq
+    (family : IUTStage1TensorDirectSummandFamily capsuleFamily)
+    (i : Fin capsuleFamily.capsuleCount) :
+    (family.summand i).capsule.logVolume =
+      (capsuleFamily.capsule i).logVolume := by
+  rw [family.summandCapsule_eq i]
+
+end IUTStage1TensorDirectSummandFamily
+
+/--
+Action on direct summand representatives that induces an action on capsule
+representatives.
+-/
+structure IUTStage1TensorDirectSummandFamilyAction
+    {kind : IUTStage1PlaceKind}
+    {capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    (family : IUTStage1TensorDirectSummandFamily capsuleFamily) where
+  transformedSummand :
+    Fin capsuleFamily.capsuleCount ->
+      IUTStage1TensorDirectSummandObject kind
+  transformed_capsule_local_object_eq :
+    ∀ i : Fin capsuleFamily.capsuleCount,
+      (transformedSummand i).capsule.localObject = capsuleFamily.localObject
+  transformed_capsule_logVolume_eq :
+    ∀ i : Fin capsuleFamily.capsuleCount,
+      (transformedSummand i).capsule.logVolume =
+        (capsuleFamily.capsule i).logVolume
+
+namespace IUTStage1TensorDirectSummandFamilyAction
+
+variable {kind : IUTStage1PlaceKind}
+variable {capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind}
+variable {family : IUTStage1TensorDirectSummandFamily capsuleFamily}
+
+def toCapsuleAction
+    (action : IUTStage1TensorDirectSummandFamilyAction family) :
+    IUTStage1TypedCapsuleFamilyLogVolumeAction capsuleFamily :=
+  { capsule := fun i => (action.transformedSummand i).capsule,
+    capsule_local_object_eq :=
+      action.transformed_capsule_local_object_eq,
+    logVolume_eq :=
+      action.transformed_capsule_logVolume_eq }
+
+theorem toCapsuleAction_totalLogVolume
+    (action : IUTStage1TensorDirectSummandFamilyAction family) :
+    action.toCapsuleAction.transformedFamily.totalLogVolume =
+      capsuleFamily.totalLogVolume :=
+  action.toCapsuleAction.transformedFamily_totalLogVolume
+
+theorem toCapsuleAction_normalizedLogVolume
+    (action : IUTStage1TensorDirectSummandFamilyAction family) :
+    action.toCapsuleAction.transformedFamily.normalizedLogVolume =
+      capsuleFamily.normalizedLogVolume :=
+  action.toCapsuleAction.transformedFamily_normalizedLogVolume
+
+end IUTStage1TensorDirectSummandFamilyAction
+
 /-- Local nonarchimedean inclusion datum from the upper-semi-compatibility step. -/
 structure IUTStage1NonarchimedeanInclusionData where
   place : IUTStage1PlaceId IUTStage1PlaceKind.nonarchimedean
