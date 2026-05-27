@@ -7232,3 +7232,64 @@ alignment, q-pilot positivity, and normalization.
 The next milestone should add source-facing named projections for the four
 obligation fields, so future formalization notes can refer to these obligations
 without unpacking the source-obligation structure manually.
+
+## Milestone 85: Source-Facing Obligation Projections
+
+Lean file:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+
+### Source Check
+
+Milestone 84 introduced a non-toy source package, but the package still becomes
+mathematically useful only after four explicit promotion obligations are
+supplied. These obligations correspond to the formal boundary between the
+qualitative Theorem 3.11 data and the completed source-obligation ledger used
+for the Corollary 3.12 endpoint.
+
+The source discipline is unchanged: the final comparison should not be available
+merely because the source labels have been named.
+
+### Purpose
+
+This milestone adds named projection theorems for the four source-facing
+obligations:
+
+```text
+algorithm certification
+SHE arrow/certificate alignment
+q-pilot positivity
+normalization
+```
+
+The conversion to `IUTStage1PreLedgerData.LedgerPromotionObligations` now uses
+these named projections, making the source-facing dependency list explicit.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourceObligations.algorithmCertified
+IUTStage1SourceObligations.sheArrowMatchesCertificate
+IUTStage1SourceObligations.qPilotPositive
+IUTStage1SourceObligations.sourceNormalization
+```
+
+### What This Tests
+
+Lean verifies that the source-facing obligation record projects exactly the
+fields needed by the pre-ledger promotion API. No projection constructs new
+mathematical content; each is a named view of an explicitly supplied field.
+
+### Design Trap Avoided
+
+The trap would be to hide the obligation conversion inside a record constructor.
+By naming the projections, later source modules can cite the exact remaining
+proof tasks without relying on positional structure fields.
+
+### Next Step
+
+The next milestone should add source-facing public-audit projection theorems
+parallel to the pre-ledger public-audit projections, using
+`IUTStage1SourcePackage.publicAudit` as the only route to the endpoint.

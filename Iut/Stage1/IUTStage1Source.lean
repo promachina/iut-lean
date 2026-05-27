@@ -127,13 +127,34 @@ namespace IUTStage1SourceObligations
 variable {source target : Copy} {index : Type u}
 variable {package : IUTStage1SourcePackage source target index}
 
+theorem algorithmCertified
+    (obligations : IUTStage1SourceObligations package) :
+    package.preLedger.output.Certified :=
+  obligations.algorithm_certified
+
+theorem sheArrowMatchesCertificate
+    (obligations : IUTStage1SourceObligations package) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she :=
+  obligations.she_arrow_matches_certificate
+
+theorem qPilotPositive
+    (obligations : IUTStage1SourceObligations package) :
+    0 < -package.preLedger.qSigned :=
+  obligations.q_pilot_positive
+
+theorem sourceNormalization
+    (obligations : IUTStage1SourceObligations package) :
+    package.preLedger.normalization :=
+  obligations.normalization
+
 def toLedgerPromotionObligations
     (obligations : IUTStage1SourceObligations package) :
     package.preLedger.LedgerPromotionObligations :=
-  { certified := obligations.algorithm_certified,
-    she_matches_certificate := obligations.she_arrow_matches_certificate,
-    q_positive := obligations.q_pilot_positive,
-    normalization_proof := obligations.normalization }
+  { certified := obligations.algorithmCertified,
+    she_matches_certificate := obligations.sheArrowMatchesCertificate,
+    q_positive := obligations.qPilotPositive,
+    normalization_proof := obligations.sourceNormalization }
 
 end IUTStage1SourceObligations
 
