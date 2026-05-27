@@ -17,6 +17,22 @@ namespace Stage1
 
 open RealLineCopy
 
+/-- A named three-term real comparison `q <= target <= theta`. -/
+structure ThreeTermComparison (qSigned targetSigned thetaSigned : Real) where
+  q_le_target : qSigned <= targetSigned
+  target_le_theta : targetSigned <= thetaSigned
+
+namespace ThreeTermComparison
+
+variable {qSigned targetSigned thetaSigned : Real}
+
+theorem q_le_theta
+    (chain : ThreeTermComparison qSigned targetSigned thetaSigned) :
+    qSigned <= thetaSigned :=
+  le_trans chain.q_le_target chain.target_le_theta
+
+end ThreeTermComparison
+
 /--
 Completed source obligations for a structured Stage 1 comparison.
 
@@ -56,14 +72,14 @@ variable {measure : RegionMeasure target}
 variable {thetaSigned qSigned : Real}
 variable {normalization : Prop}
 
-theorem qSigned_le_thetaSigned (ledger :
+def threeTermComparison (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
-    qSigned <= thetaSigned :=
-  le_trans ledger.membership.q_le_target
-    (by
+    ThreeTermComparison qSigned ledger.targetVolume.targetSigned thetaSigned :=
+  { q_le_target := ledger.membership.q_le_target,
+    target_le_theta := by
       rw [ledger.targetVolume.targetSigned_eq]
       exact TransportedRegionFamily.choice_targetVolume_le_of_commonBound
-        ledger.theta_commonBound ledger.chosenOutput.choice)
+        ledger.theta_commonBound ledger.chosenOutput.choice }
 
 theorem chosenComparisonHoldsQ (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
@@ -85,9 +101,7 @@ theorem targetSigned_eq_choiceTargetVolume (ledger :
 theorem targetSigned_le_thetaSigned (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     ledger.targetVolume.targetSigned <= thetaSigned := by
-  rw [ledger.targetVolume.targetSigned_eq]
-  exact TransportedRegionFamily.choice_targetVolume_le_of_commonBound
-    ledger.theta_commonBound ledger.chosenOutput.choice
+  exact ledger.threeTermComparison.target_le_theta
 
 theorem chosenComparison_eq_outputComparison (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
@@ -101,6 +115,11 @@ theorem targetSigned_eq_chosenComparisonVolume (ledger :
       RegionMeasure.targetVolume measure ledger.chosenOutput.comparison := by
   rw [ledger.chosenOutput.comparison_eq]
   exact ledger.targetVolume.targetSigned_eq
+
+theorem qSigned_le_thetaSigned (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    qSigned <= thetaSigned :=
+  ledger.threeTermComparison.q_le_theta
 
 theorem corollary312 (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :

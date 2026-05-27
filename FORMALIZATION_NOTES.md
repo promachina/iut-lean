@@ -3453,3 +3453,75 @@ qSigned <= targetVolume.targetSigned <= thetaSigned
 
 so the final Corollary-3.12 inequality can be audited through a single
 intermediate comparison object.
+
+## Milestone 35: Three-Term Comparison Chain
+
+Lean file:
+
+* `Iut/Stage1/SourceObligations.lean`
+
+### Source Check
+
+IUT III, Corollary 3.12, Step `(xi-d)` presents the final real comparison in a
+common real setting: the q-pilot log-volume value is compared with the
+Theta-side upper ray obtained from the holomorphic-hull log-volume. The proof
+path in our interface passes through a selected measured output target.
+
+The April 2026 report describes this as the final simultaneous comparison in a
+single common container. Scholze-Stix's critique requires that such real-number
+comparisons keep the relevant real-line identifications explicit. A named
+three-term chain is the current minimal audit object for that final step.
+
+### Purpose
+
+Milestones 30-32 named the chosen output, the selected target volume, and the
+membership witness. This milestone packages the final numeric chain:
+
+```text
+qSigned <= targetVolume.targetSigned <= thetaSigned
+```
+
+as:
+
+```text
+ThreeTermComparison
+```
+
+### Lean Declarations
+
+In `SourceObligations.lean`:
+
+```text
+ThreeTermComparison
+ThreeTermComparison.q_le_theta
+SourceObligationLedger.threeTermComparison
+```
+
+`SourceObligationLedger.qSigned_le_thetaSigned` now derives the final
+two-term inequality from:
+
+```text
+ledger.threeTermComparison.q_le_theta
+```
+
+rather than rebuilding the transitivity proof inline.
+
+### What This Tests
+
+The toy source-obligation endpoint still proves the same signed Stage 1
+inequality after the final chain is reified as a named record. The
+Corollary-3.12-shaped theorem now consumes a separately auditable chain object.
+
+### Design Trap Avoided
+
+The trap would be to keep compressing the last comparison into a single
+`le_trans` expression after making all intermediate data explicit. This
+milestone preserves the middle target-volume term as part of the final proof
+artifact.
+
+### Next Step
+
+The next milestone should add a toy projection theorem showing that
+`threeTermComparison.q_le_target` is the same proof as the ledger's packaged
+membership inequality, and `threeTermComparison.target_le_theta` is the common
+bound applied to the chosen output.
