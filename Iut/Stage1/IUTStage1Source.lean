@@ -676,6 +676,113 @@ theorem commonContainerContextMatches
 end IUTStage1Theorem311StructuredInputsWithSHE
 
 /--
+Audited entry from the strengthened SHE route into the existing `HDD o SHE`
+boundedness API.
+
+This record keeps the SHE/common-container compatibility proof next to the
+boundedness facts obtained by applying the charted common container to the
+pre-ledger certificate. It deliberately stops at target-volume bounds; the
+q-side membership step and the final signed Corollary 3.12 packaging remain
+separate.
+-/
+structure IUTStage1Theorem311AuditedHDDSHEBound
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) : Prop where
+  compatibility :
+    IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+      package bundle.structuredSHE
+  chosen_target_volume_le_theta :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      package.preLedger.thetaSigned
+  all_targets_at_most_theta :
+    RegionComparisonFamily.AllTargetsAtMost package.preLedger.measure
+      package.preLedger.output.comparisons package.preLedger.thetaSigned
+  histories_not_identified :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side
+
+namespace IUTStage1Theorem311AuditedHDDSHEBound
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+
+theorem ofStructuredInputsWithSHE
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle :=
+  { compatibility := bundle.commonContainerCompatibility,
+    chosen_target_volume_le_theta :=
+      package.preLedger.chartedContainer.choice_targetVolume_le
+        package.preLedger.certificate package.preLedger.chosenOutput.choice,
+    all_targets_at_most_theta :=
+      package.preLedger.chartedContainer.allTargetsAtMost
+        package.preLedger.certificate,
+    histories_not_identified := bundle.domainHistory_ne_codomainHistory }
+
+theorem commonContainerCompatibility
+    (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
+    IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+      package bundle.structuredSHE :=
+  audited.compatibility
+
+theorem commonContainerContextMatches
+    (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
+    package.preLedger.chartedContainer.commonContainer.context =
+      bundle.structuredSHE.context.sharedContext :=
+  audited.compatibility.commonContainerContextMatches
+
+theorem chosenTargetVolume_le_theta
+    (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      package.preLedger.thetaSigned :=
+  audited.chosen_target_volume_le_theta
+
+theorem allTargetsAtMost_theta
+    (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
+    RegionComparisonFamily.AllTargetsAtMost package.preLedger.measure
+      package.preLedger.output.comparisons package.preLedger.thetaSigned :=
+  audited.all_targets_at_most_theta
+
+theorem domainHistory_ne_codomainHistory
+    (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side :=
+  audited.histories_not_identified
+
+end IUTStage1Theorem311AuditedHDDSHEBound
+
+namespace IUTStage1Theorem311StructuredInputsWithSHE
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+theorem auditedHDDSHEBound
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle :=
+  IUTStage1Theorem311AuditedHDDSHEBound.ofStructuredInputsWithSHE bundle
+
+theorem auditedHDDSHE_chosenTargetVolume_le_theta
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      package.preLedger.thetaSigned :=
+  bundle.auditedHDDSHEBound.chosenTargetVolume_le_theta
+
+theorem auditedHDDSHE_allTargetsAtMost_theta
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    RegionComparisonFamily.AllTargetsAtMost package.preLedger.measure
+      package.preLedger.output.comparisons package.preLedger.thetaSigned :=
+  bundle.auditedHDDSHEBound.allTargetsAtMost_theta
+
+end IUTStage1Theorem311StructuredInputsWithSHE
+
+/--
 Source-facing side conditions needed for Stage 1 ledger promotion.
 
 These conditions are intentionally separate from the Theorem 3.11 subclaims:

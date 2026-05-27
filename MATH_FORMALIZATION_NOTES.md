@@ -456,3 +456,109 @@ compatibility checklist into the existing `HDD o SHE` boundedness machinery.
 That step should remain proof-level and should explicitly state which
 certificate and common-container object are being used before any bound is
 transported.
+
+## Math Milestone 5: Audited HDD-after-SHE Bound Entry
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The formalization report isolates the fourth triangle as `(HDD) o (SHE)`: HDD is
+restricted to the case where its input data is obtained via the SHE arrow. The
+previous milestone checked that our strengthened SHE context is the same context
+seen by the common container. The present milestone asks the next narrower
+question: once that audit is present, what target-volume bound is already
+available from the existing `HDD o SHE` machinery?
+
+This is also where the Scholze-Stix caution remains relevant. Producing a
+target-volume upper bound is not yet the Corollary 3.12 comparison. The q-side
+membership inequality, chart readings, positivity, normalization, and final
+signed packaging are still separate pieces of the formal route.
+
+### Purpose
+
+This milestone adds:
+
+```text
+IUTStage1Theorem311AuditedHDDSHEBound
+```
+
+The record packages:
+
+* the SHE/common-container compatibility checklist from Milestone 4;
+* the chosen output target-volume bound obtained from the charted common
+  container applied to the pre-ledger certificate;
+* the all-targets version of the same common-container bound;
+* the history-separation guard from the strengthened SHE context.
+
+The chosen bound has the form:
+
+```text
+RegionMeasure.targetVolume package.preLedger.measure
+    (package.preLedger.output.comparison
+      package.preLedger.chosenOutput.choice)
+  <= package.preLedger.thetaSigned
+```
+
+It is proved by:
+
+```text
+package.preLedger.chartedContainer.choice_targetVolume_le
+  package.preLedger.certificate
+  package.preLedger.chosenOutput.choice
+```
+
+Thus the certificate and common-container object are explicit in the proof term.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1Theorem311AuditedHDDSHEBound
+IUTStage1Theorem311AuditedHDDSHEBound.ofStructuredInputsWithSHE
+IUTStage1Theorem311AuditedHDDSHEBound.commonContainerCompatibility
+IUTStage1Theorem311AuditedHDDSHEBound.commonContainerContextMatches
+IUTStage1Theorem311AuditedHDDSHEBound.chosenTargetVolume_le_theta
+IUTStage1Theorem311AuditedHDDSHEBound.allTargetsAtMost_theta
+IUTStage1Theorem311AuditedHDDSHEBound.domainHistory_ne_codomainHistory
+IUTStage1Theorem311StructuredInputsWithSHE.auditedHDDSHEBound
+IUTStage1Theorem311StructuredInputsWithSHE.auditedHDDSHE_chosenTargetVolume_le_theta
+IUTStage1Theorem311StructuredInputsWithSHE.auditedHDDSHE_allTargetsAtMost_theta
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_theorem311_audited_hdd_she_bound_example
+unitThetaToy_source_theorem311_audited_hdd_she_choice_bound_example
+unitThetaToy_source_theorem311_audited_hdd_she_all_targets_example
+```
+
+### What This Tests
+
+The toy model verifies that the audited route can recover:
+
+* the selected target-volume bound for the chosen output;
+* the all-targets upper bound for the transported output family.
+
+Both are obtained through the common-container API. The examples do not use
+q-side membership and do not conclude the signed q-to-Theta inequality.
+
+### Design Trap Avoided
+
+The dangerous shortcut would be to identify this upper bound with Corollary 3.12
+itself. We did not do that. The new record is an entry into the boundedness
+machinery, not an endpoint theorem. In particular, it does not mention
+`Corollary312Inequality`, `ComparisonPayloadInputs`, or q-positivity.
+
+### Next Step
+
+The next milestone should relate this audited `HDD o SHE` bound to the existing
+charted target-volume middle term. That bridge should state only that the
+target-volume field used in the final comparison is the same chosen target
+volume bounded here; it should still keep q-side membership and final
+Corollary 3.12 packaging separate.
