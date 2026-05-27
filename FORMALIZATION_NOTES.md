@@ -3305,3 +3305,71 @@ The next milestone should refine this by adding a toy theorem showing
 `membership.q_le_target` is definitionally the same inequality as the old
 `unitThetaToy_qSigned_le_choiceTargetVolume`, so that future source modules can
 replace it with domain-specific membership-to-volume lemmas.
+
+## Milestone 33: Toy Membership Inequality Projection
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+IUT III, Corollary 3.12, Step `(xi-d)` passes from q-pilot representation data
+inside the common comparison setting to real log-volume inequalities. In the toy
+model, this is represented by the upper-ray theorem
+`unitThetaToy_qSigned_le_choiceTargetVolume`.
+
+This milestone does not add new mathematical content. It records, in Lean, that
+the source-obligation ledger's new membership field stores exactly that
+membership-to-volume proof in the toy case.
+
+### Purpose
+
+Milestone 32 moved the q-to-target inequality into:
+
+```text
+membership.q_le_target
+```
+
+This milestone adds a theorem exposing the toy implementation:
+
+```text
+unitThetaToy_membership_q_le_target_from_sourceObligations
+```
+
+The theorem states that the packaged membership inequality is definitionally the
+old theorem:
+
+```text
+unitThetaToy_qSigned_le_choiceTargetVolume
+```
+
+### Lean Declaration
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToy_membership_q_le_target_from_sourceObligations
+```
+
+The proof is `rfl`, which is intentionally strong: it confirms that no new
+hidden conversion was inserted between the toy membership-to-volume lemma and
+the source ledger field.
+
+### What This Tests
+
+The toy endpoint still builds, and the new theorem verifies that the source
+ledger is merely packaging the old upper-ray membership-to-volume argument.
+
+### Design Trap Avoided
+
+The trap would be to hide the origin of `membership.q_le_target` after moving
+the inequality into a structured witness. This theorem gives future source
+modules a concrete pattern: prove a domain-specific membership-to-volume lemma,
+then store it directly in the membership witness.
+
+### Next Step
+
+The next milestone should add an analogous projection for the membership
+predicate itself, exposing that the ledger's `membership.holds` is exactly the
+chosen-output form of the original `hholds` assumption.

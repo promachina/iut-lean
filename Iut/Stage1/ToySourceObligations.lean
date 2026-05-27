@@ -98,6 +98,21 @@ def unitThetaToyStage1Comparison_from_sourceObligations
     Stage1Comparison :=
   (unitThetaToySourceObligationLedger measure hnormalized hh hbound hholds).stage1Comparison
 
+theorem unitThetaToy_membership_q_le_target_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToySourceObligationLedger
+      measure hnormalized hh hbound hholds).membership.q_le_target =
+      unitThetaToy_qSigned_le_choiceTargetVolume
+        measure hnormalized h epsilon choice hholds :=
+  rfl
+
 end ToyModel
 end Stage1
 end Iut
