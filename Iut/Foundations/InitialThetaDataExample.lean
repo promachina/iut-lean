@@ -291,6 +291,21 @@ example :
   rfl
 
 example :
+    (zmodBadLocalQuotientZData primeFive).canonicalCoordinateZ =
+      (1 : ZMod primeFive.value) :=
+  rfl
+
+example :
+    (zmodBadLocalQuotientZData primeFive).toLocalLabCuspModel =
+      zmodLocalLabCuspModel primeFive :=
+  rfl
+
+example :
+    (BadLocalQuotientZData.canonicalGeneratorUpToSignElement
+      (zmodBadLocalQuotientZData primeFive)).canonicalGeneratorUpToSign :=
+  (zmodBadLocalQuotientZData primeFive).canonicalGeneratorUpToSign
+
+example :
     (zmodLocalLabCuspModel primeFive).canonicalNonzeroQuotientElement.element ≠
       (zmodLocalLabCuspModel primeFive).labelQuotient.zero :=
   (zmodLocalLabCuspModel primeFive).canonicalNonzeroQuotientElement_ne_zero
@@ -544,7 +559,8 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
   theta.badLocalType v hv
 
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    (theta.badLocalData.badLocalCType v hv).labCuspModel_constructedFromType :=
+    theta.badLocalData.badLocalLabCuspModel v hv =
+      (theta.badLocalData.badLocalCType v hv).quotientZData.toLocalLabCuspModel :=
   theta.badLocalLabCuspModelSource v hv
 
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
@@ -575,7 +591,7 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     (theta.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
   theta.badLocalCusp_arisesFromCanonicalGenerator v hv
 
-example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+noncomputable example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     LocalLabCuspModel theta.l :=
   theta.badLocalLabCuspModel v hv
 
@@ -590,7 +606,7 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
         (theta.badLocalData.localC v hv.1) (theta.badLocalCusp v hv).label :=
   theta.badLocalCusp_eq_modelCusp v hv
 
-example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+noncomputable example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     ModeledCuspData (theta.badLocalData.localC v hv.1) theta.l :=
   theta.badLocalModeledCusp v hv
 

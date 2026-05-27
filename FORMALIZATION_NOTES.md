@@ -12487,3 +12487,112 @@ The bad local type package still supplies the quotient/model/generator data.
 The next refinement should split the current opaque `labCuspModel_constructedFromType`
 obligation into explicit quotient-`Z`, sign-action, and canonical-generator
 components matching [EtTh], Definition 2.5(i).
+
+## Math Milestone 38: Explicit Bad Local Quotient `Z` Package
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(e), says that for `v in Vbad`, `C_v` is of type
+`(1,Z/lZ)^pm`, citing [EtTh], Definition 2.5(i). Definition 3.1(f) then says
+that `epsilon_v` arises from the canonical generator, up to sign, of the quotient
+`Z` appearing in that definition. IUT I, Definition 4.1(ii), later describes
+`LabCusp(D_v)` as label classes over nonzero cusps arising from the relevant
+quotient data.
+
+I also checked Mochizuki's external paper *The Etale Theta Function and its
+Frobenioid-theoretic Manifestations*, since IUT I explicitly cites it as
+`[EtTh]` for Definition 2.5(i).
+
+### Lean/API Check
+
+The previous milestone still had one opaque field:
+
+```text
+labCuspModel_constructedFromType : Prop
+```
+
+This has been replaced by an explicit package:
+
+```text
+BadLocalQuotientZData l
+```
+
+with fields for:
+
+```text
+quotientZ
+unitActionZ
+signActionZ
+signUnitCompatibilityZ
+additiveTorsorZ
+canonicalCoordinateZ
+canonicalNonzeroLabelZ
+canonicalSignLabelZ
+```
+
+The bad-local `LabCusp` model is now definitionally derived from this package by
+`BadLocalQuotientZData.toLocalLabCuspModel`.
+
+### Lean Decisions
+
+`BadLocalOrbicurveTypeData` now stores:
+
+```text
+typeData : OrbicurveTypeData l C OrbicurveTypeKind.oneZModLPM
+quotientZData : BadLocalQuotientZData l
+canonicalGenerator : CanonicalGeneratorUpToSignElement
+canonicalGenerator_eq_model :
+  canonicalGenerator = quotientZData.canonicalGeneratorUpToSignElement
+```
+
+The old source proposition is replaced by the theorem:
+
+```text
+BadLocalOrbicurveTypeData.labCuspModelSource :
+  labCuspModel = quotientZData.toLocalLabCuspModel
+```
+
+This is stronger than the former opaque proposition because Lean can unfold the
+bad local `LabCusp` model back to named quotient-`Z` components.
+
+### Lean Declarations
+
+```text
+BadLocalQuotientZData
+BadLocalQuotientZData.toLocalLabCuspModel
+BadLocalQuotientZData.canonicalGeneratorUpToSignElement
+BadLocalQuotientZData.canonicalGeneratorUpToSign
+zmodBadLocalQuotientZData
+BadLocalOrbicurveTypeData.quotientZData
+BadLocalOrbicurveTypeData.labCuspModelSource
+```
+
+### What This Tests
+
+The example file now checks:
+
+* the concrete `ZMod l` quotient-`Z` package has canonical coordinate `1`;
+* the concrete quotient-`Z` package builds the same local `LabCusp` model as
+  `zmodLocalLabCuspModel`;
+* the quotient-`Z` package provides a canonical-generator-up-to-sign witness;
+* the full initial-theta bad local type still exposes a model sourced from its
+  quotient-`Z` package.
+
+### Design Trap Avoided
+
+The trap would be to keep a black-box proposition that says the model came from
+the bad local type without saying which pieces were extracted. This milestone
+names the quotient, sign action, torsor, and canonical label data, so later
+formalization has concrete fields to refine.
+
+### Remaining Gap
+
+`BadLocalQuotientZData` is still supplied data. The next refinement should make
+the bad local type witness reconstruct the quotient-`Z` package from a more
+faithful encoding of [EtTh], Definition 2.5(i), including the theta-root local
+models from IUT I, Definition 3.1(e).

@@ -996,23 +996,88 @@ def zmodLocalLabCuspModel (l : PrimeGeFive) : LocalLabCuspModel l where
   canonicalSignLabel_eq := rfl
 
 /--
+The quotient `Z` package attached to a bad local orbicurve of type
+`(1, Z/lZ)^±`.
+
+This is the local quotient/sign/torsor data from which the corresponding
+`LabCusp` model is built.  It is still an abstract package, but its fields are
+the specific pieces that the later EtTh reconstruction should provide.
+-/
+structure BadLocalQuotientZData (l : PrimeGeFive) where
+  quotientZ : PointedEtaleQuotient
+  unitActionZ : QuotientUnitActionData quotientZ
+  signActionZ : QuotientSignAction quotientZ
+  signUnitCompatibilityZ :
+    QuotientSignUnitCompatibility quotientZ unitActionZ signActionZ
+  additiveTorsorZ : AdditiveTorsorData (ZMod l.value) quotientZ.carrier
+  canonicalCoordinateZ : ZMod l.value
+  canonicalCoordinateZ_ne_zero : canonicalCoordinateZ ≠ 0
+  canonicalNonzeroLabelZ : quotientZ.NonzeroCarrier
+  canonicalLabelZ_eq_translate :
+    canonicalNonzeroLabelZ.1 =
+      additiveTorsorZ.vadd canonicalCoordinateZ quotientZ.zero
+  canonicalSignLabelZ : signActionZ.SignLabelQuotient
+  canonicalSignLabelZ_eq :
+    canonicalSignLabelZ = signActionZ.toSignLabelQuotient canonicalNonzeroLabelZ
+
+namespace BadLocalQuotientZData
+
+variable {l : PrimeGeFive} (zData : BadLocalQuotientZData l)
+
+def toLocalLabCuspModel : LocalLabCuspModel l where
+  labelQuotient := zData.quotientZ
+  unitAction := zData.unitActionZ
+  signAction := zData.signActionZ
+  signUnitCompatibility := zData.signUnitCompatibilityZ
+  additiveTorsor := zData.additiveTorsorZ
+  canonicalCoordinate := zData.canonicalCoordinateZ
+  canonicalCoordinate_ne_zero := zData.canonicalCoordinateZ_ne_zero
+  canonicalNonzeroLabel := zData.canonicalNonzeroLabelZ
+  canonicalLabel_eq_translate := zData.canonicalLabelZ_eq_translate
+  canonicalSignLabel := zData.canonicalSignLabelZ
+  canonicalSignLabel_eq := zData.canonicalSignLabelZ_eq
+
+def canonicalGeneratorUpToSignElement : CanonicalGeneratorUpToSignElement :=
+  zData.toLocalLabCuspModel.canonicalGeneratorUpToSignElement
+
+theorem canonicalGeneratorUpToSign :
+    zData.canonicalGeneratorUpToSignElement.canonicalGeneratorUpToSign :=
+  zData.toLocalLabCuspModel.canonicalGeneratorUpToSign
+
+end BadLocalQuotientZData
+
+/-- The concrete `ZMod l` quotient-`Z` package. -/
+def zmodBadLocalQuotientZData (l : PrimeGeFive) :
+    BadLocalQuotientZData l where
+  quotientZ := zmodPointedQuotient l
+  unitActionZ := zmodUnitActionData l
+  signActionZ := zmodSignAction l
+  signUnitCompatibilityZ := zmodSignUnitCompatibility l
+  additiveTorsorZ := zmodLabelAdditiveTorsorData l
+  canonicalCoordinateZ := 1
+  canonicalCoordinateZ_ne_zero := (zmodOneNonzeroLabel l).2
+  canonicalNonzeroLabelZ := zmodOneNonzeroLabel l
+  canonicalLabelZ_eq_translate := by
+    simp [zmodOneNonzeroLabel, zmodLabelAdditiveTorsorData]
+  canonicalSignLabelZ := zmodCanonicalSignLabelQuotient l
+  canonicalSignLabelZ_eq := rfl
+
+/--
 The bad local orbicurve type witness together with the local `LabCusp` model
 extracted from that witness.
 
-The final field remains a named proof obligation until the EtTh reconstruction
-algorithm is formalized. It prevents the label model from being treated as
-unrelated extra data.
+The quotient-`Z` data is still supplied abstractly until the EtTh reconstruction
+algorithm is formalized, but the local `LabCusp` model and canonical generator
+are now derived from this quotient package.
 -/
 structure BadLocalOrbicurveTypeData
     (l : PrimeGeFive) {F : Type u} [Field F]
     (C : HyperbolicOrbicurveModel F) where
   typeData : OrbicurveTypeData l C OrbicurveTypeKind.oneZModLPM
-  labCuspModel : LocalLabCuspModel l
+  quotientZData : BadLocalQuotientZData l
   canonicalGenerator : CanonicalGeneratorUpToSignElement
   canonicalGenerator_eq_model :
-    canonicalGenerator = labCuspModel.canonicalGeneratorUpToSignElement
-  labCuspModel_constructedFromType : Prop
-  labCuspModel_constructedFromType_holds : labCuspModel_constructedFromType
+    canonicalGenerator = quotientZData.canonicalGeneratorUpToSignElement
 
 namespace BadLocalOrbicurveTypeData
 
@@ -1023,9 +1088,12 @@ variable (typeData : BadLocalOrbicurveTypeData l C)
 theorem holds : typeData.typeData.hasType :=
   typeData.typeData.holds
 
+def labCuspModel : LocalLabCuspModel l :=
+  typeData.quotientZData.toLocalLabCuspModel
+
 theorem labCuspModelSource :
-    typeData.labCuspModel_constructedFromType :=
-  typeData.labCuspModel_constructedFromType_holds
+    typeData.labCuspModel = typeData.quotientZData.toLocalLabCuspModel :=
+  rfl
 
 theorem canonicalGeneratorEqModel :
     typeData.canonicalGenerator =
@@ -1218,7 +1286,7 @@ theorem badType
     (localData.badLocalCType v hv).typeData.hasType :=
   (localData.badLocalCType v hv).holds
 
-def badLocalLabCuspModel
+noncomputable def badLocalLabCuspModel
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
     LocalLabCuspModel l :=
   (localData.badLocalCType v hv).labCuspModel
@@ -1241,7 +1309,8 @@ theorem badLocalCanonicalGeneratorUpToSign
 
 theorem badLocalLabCuspModelSource
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
-    (localData.badLocalCType v hv).labCuspModel_constructedFromType :=
+    localData.badLocalLabCuspModel v hv =
+      (localData.badLocalCType v hv).quotientZData.toLocalLabCuspModel :=
   (localData.badLocalCType v hv).labCuspModelSource
 
 theorem thetaRootXType
@@ -1443,7 +1512,7 @@ theorem badLocalCuspArisesFromCanonicalGenerator
     (badLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
   badLocalData.badLocalCanonicalGeneratorUpToSign v hv
 
-def badLocalLabelModel
+noncomputable def badLocalLabelModel
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
     LocalLabCuspModel l :=
   badLocalData.badLocalLabCuspModel v hv
@@ -1462,12 +1531,12 @@ theorem badLocalCuspEqModelCusp
   apply CuspData.eq_of_quotientOrigin_eq
   exact cuspLocalData.badLocalCuspQuotientOriginEqModel v hv
 
-def badLocalCuspLabelClassData
+noncomputable def badLocalCuspLabelClassData
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
     CuspLabelClassData l :=
   CuspLabelClassData.canonical (badLocalData.badLocalLabCuspModel v hv)
 
-def badLocalModeledCusp
+noncomputable def badLocalModeledCusp
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
     ModeledCuspData (badLocalData.localC v hv.1) l where
   labelText := (cuspLocalData.badLocalCusp v hv).label
@@ -1643,8 +1712,9 @@ theorem badLocalType
 
 theorem badLocalLabCuspModelSource
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    (theta.badLocalData.badLocalCType v hv).labCuspModel_constructedFromType :=
-  theta.badLocalData.badLocalLabCuspModelSource v hv
+    theta.badLocalData.badLocalLabCuspModel v hv =
+      (theta.badLocalData.badLocalCType v hv).quotientZData.toLocalLabCuspModel :=
+  ThetaBadLocalData.badLocalLabCuspModelSource theta.badLocalData v hv
 
 theorem thetaRootLocalXType
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
@@ -1698,7 +1768,7 @@ def badLocalCanonicalGenerator
     CanonicalGeneratorUpToSignElement :=
   theta.badLocalData.badLocalCanonicalGenerator v hv
 
-def badLocalLabCuspModel
+noncomputable def badLocalLabCuspModel
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     LocalLabCuspModel theta.l :=
   theta.badLocalData.badLocalLabCuspModel v hv
@@ -1716,12 +1786,12 @@ theorem badLocalCusp_eq_modelCusp
         (theta.badLocalData.localC v hv.1) (theta.badLocalCusp v hv).label :=
   theta.cuspLocalData.badLocalCuspEqModelCusp v hv
 
-def badLocalCuspLabelClassData
+noncomputable def badLocalCuspLabelClassData
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     CuspLabelClassData theta.l :=
   CuspLabelClassData.canonical (theta.badLocalLabCuspModel v hv)
 
-def badLocalModeledCusp
+noncomputable def badLocalModeledCusp
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     ModeledCuspData (theta.badLocalData.localC v hv.1) theta.l :=
   theta.cuspLocalData.badLocalModeledCusp v hv
