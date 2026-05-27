@@ -6850,3 +6850,64 @@ obligations.
 The next milestone should expose additional toy examples for the pre-ledger
 public theorem's Corollary 3.12 and recovery components, so all three public
 endpoint projections are covered at the pre-ledger layer.
+
+## Milestone 80: Complete Toy Pre-Ledger Public Audit Examples
+
+Lean file:
+
+* `Iut/Stage1/IUTStage1DataExample.lean`
+
+### Source Check
+
+Milestone 79 added the compact pre-ledger public audit theorem and one toy
+example for the q-to-Theta inequality. The public theorem has three endpoint
+components, so the example layer should cover all three.
+
+This is a regression concern rather than a new mathematical claim.
+
+### Purpose
+
+This milestone adds toy examples for the remaining two pre-ledger public audit
+components:
+
+```text
+Corollary312Inequality
+Stage1Comparison recovery equality
+```
+
+### Lean Declarations
+
+In `IUTStage1DataExample.lean`:
+
+```text
+unitThetaToy_preLedger_publicAudit_corollary_example
+unitThetaToy_preLedger_publicAudit_recovery_example
+```
+
+### What This Tests
+
+All three projections of
+
+```text
+IUTStage1PreLedgerData.publicAudit
+```
+
+are now exercised by toy examples:
+
+```text
+qSigned <= thetaSigned
+Corollary312Inequality
+Stage1Comparison recovery equality
+```
+
+### Design Trap Avoided
+
+The trap would be to test only the first projection of a nested public theorem,
+leaving the Corollary and recovery fields unexercised. This milestone closes
+that example coverage gap.
+
+### Next Step
+
+The next milestone should move from examples back to the interface itself:
+add named projections for `IUTStage1PreLedgerData.publicAudit`, so users do not
+need to destruct nested conjunctions manually.

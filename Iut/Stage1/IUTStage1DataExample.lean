@@ -154,6 +154,22 @@ theorem unitThetaToy_promotedProvider_publicAudit_corollary_example
         (Transport.map unitQToTheta (qAssignment h)).coord) :=
   (unitThetaToyPromotedProvider measure hnormalized hh hbound hholds).publicAudit.2.1
 
+theorem unitThetaToy_preLedger_publicAudit_corollary_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+      (signedPilotLogVolume PilotSide.q
+        (Transport.map unitQToTheta (qAssignment h)).coord) :=
+  ((unitThetaToyPreLedgerData measure hnormalized hh hbound hholds).publicAudit
+    (unitThetaToyPromotionObligations measure hnormalized hh hbound hholds)).2.1
+
 theorem unitThetaToy_promotedProvider_recovers_corollary_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
@@ -170,6 +186,26 @@ theorem unitThetaToy_promotedProvider_recovers_corollary_example
         measure hnormalized hh hbound hholds).ledger.corollary312 :=
   (unitThetaToyPromotedProvider
     measure hnormalized hh hbound hholds).stage1Comparison_recovers_corollary312
+
+theorem unitThetaToy_preLedger_publicAudit_recovery_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    corollary312_from_stage1_comparison
+      ((unitThetaToyPreLedgerData measure hnormalized hh hbound hholds).toSourceObligationProvider
+        (unitThetaToyPromotionObligations
+          measure hnormalized hh hbound hholds)).stage1Comparison =
+      corollary312_of_signed_le
+        ((unitThetaToyPreLedgerData measure hnormalized hh hbound hholds).toSourceObligationProvider
+          (unitThetaToyPromotionObligations
+            measure hnormalized hh hbound hholds)).ledger.qSigned_le_thetaSigned :=
+  ((unitThetaToyPreLedgerData measure hnormalized hh hbound hholds).publicAudit
+    (unitThetaToyPromotionObligations measure hnormalized hh hbound hholds)).2.2
 
 end ToyModel
 end Stage1
