@@ -7640,3 +7640,76 @@ The next milestone should start separating source-package labels for the
 Theta-pilot and q-pilot objects into named projection theorems, so future
 source-specific work can cite those labels before the analytic content is
 formalized.
+
+## Milestone 91: Source Pilot and Indeterminacy Label Projections
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+IUT III, Corollary 3.12 distinguishes the Theta-pilot object, the q-pilot
+object, the relevant log-Kummer correspondence, and the indeterminacies
+`(Ind1)`, `(Ind2)`, `(Ind3)`. These names occur before the current
+formalization has any analytic model of the corresponding objects.
+
+This milestone therefore adds label projections only. It does not assign
+mathematical content to the labels and does not assert any new comparison.
+
+### Purpose
+
+This milestone exposes source-package accessors for:
+
+```text
+Theta-pilot label
+q-pilot label
+log-Kummer correspondence label
+indeterminacy profile label
+```
+
+These are stable hooks for later source-specific formalization.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.thetaPilot
+IUTStage1SourcePackage.qPilot
+IUTStage1SourcePackage.logKummer
+IUTStage1SourcePackage.indeterminacies
+IUTStage1SourcePackage.thetaPilot_matches_labels
+IUTStage1SourcePackage.qPilot_matches_labels
+IUTStage1SourcePackage.logKummer_matches_labels
+IUTStage1SourcePackage.indeterminacies_matches_labels
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_thetaPilot_label_example
+unitThetaToy_source_qPilot_label_example
+unitThetaToy_source_logKummer_label_example
+unitThetaToy_source_indeterminacies_label_example
+```
+
+### What This Tests
+
+The toy examples verify that a source package can override the generic
+pre-ledger labels while retaining the default inert source-facing pilot,
+log-Kummer, and indeterminacy labels.
+
+### Design Trap Avoided
+
+The trap would be to wait until the analytic content is formalized before naming
+these source-facing objects. That would make later APIs harder to read and could
+encourage overloading generic labels. Here the labels are available, but still
+mathematically inert.
+
+### Next Step
+
+The next milestone should add source audit fields for these four source-facing
+labels, so the compact source audit checklist records both the pre-ledger label
+alignment and the source-facing pilot/log-Kummer/indeterminacy labels.

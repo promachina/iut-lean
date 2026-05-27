@@ -88,6 +88,22 @@ def logVolumeComparison
     LogVolumeComparisonId :=
   package.preLedger.logVolumeComparison
 
+def thetaPilot (package : IUTStage1SourcePackage source target index) :
+    PilotObjectId :=
+  package.labels.thetaPilot
+
+def qPilot (package : IUTStage1SourcePackage source target index) :
+    PilotObjectId :=
+  package.labels.qPilot
+
+def logKummer (package : IUTStage1SourcePackage source target index) :
+    LogKummerCorrespondenceId :=
+  package.labels.logKummer
+
+def indeterminacies (package : IUTStage1SourcePackage source target index) :
+    IndeterminacyProfileId :=
+  package.labels.indeterminacies
+
 theorem input_matches_labels
     (package : IUTStage1SourcePackage source target index) :
     package.input = package.labels.input :=
@@ -102,6 +118,26 @@ theorem logVolumeComparison_matches_labels
     (package : IUTStage1SourcePackage source target index) :
     package.logVolumeComparison = package.labels.logVolumeComparison :=
   package.logVolumeComparison_eq
+
+theorem thetaPilot_matches_labels
+    (package : IUTStage1SourcePackage source target index) :
+    package.thetaPilot = package.labels.thetaPilot :=
+  rfl
+
+theorem qPilot_matches_labels
+    (package : IUTStage1SourcePackage source target index) :
+    package.qPilot = package.labels.qPilot :=
+  rfl
+
+theorem logKummer_matches_labels
+    (package : IUTStage1SourcePackage source target index) :
+    package.logKummer = package.labels.logKummer :=
+  rfl
+
+theorem indeterminacies_matches_labels
+    (package : IUTStage1SourcePackage source target index) :
+    package.indeterminacies = package.labels.indeterminacies :=
+  rfl
 
 end IUTStage1SourcePackage
 
