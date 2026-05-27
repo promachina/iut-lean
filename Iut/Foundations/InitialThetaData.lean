@@ -2729,6 +2729,17 @@ def quotientEquivAlgAut :
     ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L) :=
   certificate.quotientAction.toAlgAutEquiv
 
+noncomputable def coverDeckEquivAlgAut :
+    certificate.coverDeckGroup ≃* (L ≃ₐ[B] L) :=
+  certificate.coverDeckEquivThetaQuotient.trans certificate.quotientEquivAlgAut
+
+theorem coverDeckAlgAut_apply
+    (g : certificate.coverDeckGroup) (x : L) :
+    certificate.coverDeckEquivAlgAut g x =
+      certificate.quotientEquivAlgAut
+        (certificate.coverDeckEquivThetaQuotient g) x := by
+  rfl
+
 theorem coverMorphismExists :
     certificate.coverMorphism.morphismExists :=
   certificate.coverMorphism.exists_holds
@@ -2765,6 +2776,10 @@ variable (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
 def quotientEquivAlgAut :
     ThetaApproachQuotientData.deckQuotient thetaApproach ≃* (L ≃ₐ[B] L) :=
   cover.coverCertificate.quotientEquivAlgAut
+
+noncomputable def coverDeckEquivAlgAut :
+    cover.coverCertificate.coverDeckGroup ≃* (L ≃ₐ[B] L) :=
+  cover.coverCertificate.coverDeckEquivAlgAut
 
 def reconstructedFunctionFieldOfXK : Prop :=
   cover.actionCompatibility.reconstructedFunctionFieldOfXK
@@ -2808,6 +2823,21 @@ theorem deckRingAut_apply
     cover.reconstructedFunctionFieldOfXK_proof cover.deckActionMatchesGalQuotient
     cover.deckActionMatchesGalQuotient_proof q x
 
+theorem coverDeckAlgAut_apply
+    (g : cover.coverCertificate.coverDeckGroup) (x : L) :
+    cover.coverDeckEquivAlgAut g x =
+      cover.quotientEquivAlgAut
+        (cover.coverCertificate.coverDeckEquivThetaQuotient g) x :=
+  cover.coverCertificate.coverDeckAlgAut_apply g x
+
+theorem coverDeckRingAut_apply_eq_coverDeckAlgAut
+    (g : cover.coverCertificate.coverDeckGroup) (x : L) :
+    cover.toThetaApproachFunctionFieldData.reconstructedFunctionField.deckRingAut
+        (cover.coverCertificate.coverDeckEquivThetaQuotient g) x =
+      cover.coverDeckEquivAlgAut g x := by
+  rw [cover.deckRingAut_apply]
+  exact (cover.coverDeckAlgAut_apply g x).symm
+
 theorem fixed_iff_in_base (x : L) :
     (∀ q : ThetaApproachQuotientData.deckQuotient thetaApproach,
         cover.toThetaApproachFunctionFieldData.reconstructedFunctionField.deckRingAut q x = x) ↔
@@ -2816,6 +2846,22 @@ theorem fixed_iff_in_base (x : L) :
     cover.quotientEquivAlgAut cover.reconstructedFunctionFieldOfXK
     cover.reconstructedFunctionFieldOfXK_proof cover.deckActionMatchesGalQuotient
     cover.deckActionMatchesGalQuotient_proof x
+
+theorem coverDeck_fixed_iff_in_base (x : L) :
+    (∀ g : cover.coverCertificate.coverDeckGroup,
+        cover.toThetaApproachFunctionFieldData.reconstructedFunctionField.deckRingAut
+          (cover.coverCertificate.coverDeckEquivThetaQuotient g) x = x) ↔
+      ∃ b : B, algebraMap B L b = x := by
+  constructor
+  · intro hfixed
+    exact (cover.fixed_iff_in_base x).mp (by
+      intro q
+      rcases cover.coverCertificate.coverDeckEquivThetaQuotient.surjective q with
+        ⟨g, rfl⟩
+      exact hfixed g)
+  · intro hbase g
+    exact (cover.fixed_iff_in_base x).mpr hbase
+      (cover.coverCertificate.coverDeckEquivThetaQuotient g)
 
 theorem piCKRingAut_apply_eq_deckRingAut
     (g : thetaApproach.piCK.carrier) (x : L) :

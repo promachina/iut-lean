@@ -852,11 +852,45 @@ noncomputable example
     {B L : Type} [Field B] [Field L] [Algebra B L]
     [FiniteDimensional B L] [IsGalois B L]
     (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
+    (g : cover.coverCertificate.coverDeckGroup) (x : L) :
+    cover.coverDeckEquivAlgAut g x =
+      cover.quotientEquivAlgAut
+        (cover.coverCertificate.coverDeckEquivThetaQuotient g) x :=
+  cover.coverDeckAlgAut_apply g x
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
+    (g : cover.coverCertificate.coverDeckGroup) (x : L) :
+    cover.toThetaApproachFunctionFieldData.reconstructedFunctionField.deckRingAut
+        (cover.coverCertificate.coverDeckEquivThetaQuotient g) x =
+      cover.coverDeckEquivAlgAut g x :=
+  cover.coverDeckRingAut_apply_eq_coverDeckAlgAut g x
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
     (x : L) :
     (∀ q : ThetaApproachQuotientData.deckQuotient thetaApproach,
         cover.toThetaApproachFunctionFieldData.reconstructedFunctionField.deckRingAut q x = x) ↔
       ∃ b : B, algebraMap B L b = x :=
   cover.fixed_iff_in_base x
+
+noncomputable example
+    (thetaApproach : ThetaApproachQuotientData)
+    {B L : Type} [Field B] [Field L] [Algebra B L]
+    [FiniteDimensional B L] [IsGalois B L]
+    (cover : ThetaFiniteGaloisFunctionFieldCoverData thetaApproach B L)
+    (x : L) :
+    (∀ g : cover.coverCertificate.coverDeckGroup,
+        cover.toThetaApproachFunctionFieldData.reconstructedFunctionField.deckRingAut
+          (cover.coverCertificate.coverDeckEquivThetaQuotient g) x = x) ↔
+      ∃ b : B, algebraMap B L b = x :=
+  cover.coverDeck_fixed_iff_in_base x
 
 noncomputable example
     (thetaApproach : ThetaApproachQuotientData)

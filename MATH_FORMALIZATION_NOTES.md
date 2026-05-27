@@ -6885,3 +6885,99 @@ To make them mathematical the next step is either to define a concrete
 composition interface for `HyperbolicOrbicurveAutomorphismOverData`, or to
 replace the placeholder orbicurve model with a category-theoretic model where
 automorphism composition is already available.
+
+## Math Milestone 69: Composite Cover-Deck Action on the Reconstructed Field
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, describes the theta approach as reconstructing the
+function field of `X_K` together with the natural
+`Gal(X_K/C_K) = Pi_CK/Pi_XK` action. The preceding milestones had separated
+two parts of this assertion:
+
+* the deck group of the finite etale Galois cover is compared with the theta
+  quotient;
+* the theta quotient acts on the reconstructed function field by
+  `B`-algebra automorphisms.
+
+This milestone composes these two already-visible maps. It does not add a new
+axiom or a new identification.
+
+### Lean/API Check
+
+The cover certificate now exposes:
+
+```text
+ThetaFiniteEtaleGaloisCoverCertificate.coverDeckEquivAlgAut
+```
+
+with type:
+
+```text
+certificate.coverDeckGroup ≃* (L ≃ₐ[B] L)
+```
+
+It is definitionally the composite:
+
+```text
+coverDeckEquivThetaQuotient.trans quotientEquivAlgAut
+```
+
+The function-field cover wrapper exposes the same composite as:
+
+```text
+ThetaFiniteGaloisFunctionFieldCoverData.coverDeckEquivAlgAut
+```
+
+and proves:
+
+```text
+coverDeckAlgAut_apply
+coverDeckRingAut_apply_eq_coverDeckAlgAut
+coverDeck_fixed_iff_in_base
+```
+
+The last theorem restates the fixed-field criterion using actual cover-deck
+group elements, transported through the explicit equivalence with the theta
+quotient.
+
+### Lean Decisions
+
+This was implemented as a derived definition rather than a new field. That is
+important: a user cannot supply an arbitrary cover-deck action on the field.
+Lean forces the action to pass through the existing quotient comparison and
+the existing quotient-to-automorphism equivalence.
+
+The fixed-field theorem over cover-deck elements is also derived from the
+theta-quotient fixed-field theorem by surjectivity of the deck quotient
+equivalence. This keeps the proof honest about the exact bridge being used.
+
+### What This Tests
+
+The example file checks:
+
+* the composite cover-deck algebra automorphism is the quotient action after
+  applying `coverDeckEquivThetaQuotient`;
+* the reconstructed deck-ring automorphism attached to the corresponding
+  theta quotient agrees with the composite cover-deck automorphism;
+* the fixed-field characterization can be phrased over the cover deck group.
+
+### Design Trap Avoided
+
+The trap would be to introduce a second action of the cover deck group on the
+reconstructed field and merely assert that it is compatible. This milestone
+instead uses composition of already-indexed equivalences, so there is one
+visible path from cover geometry to field automorphisms.
+
+### Remaining Gap
+
+This still relies on supplied quotient and action equivalences. The next
+mathematical improvement should either reduce opacity in the orbicurve
+automorphism layer by adding a real composition interface, or return to the
+Stage 1 SHE/HDD common-container layer where the Corollary 3.12 dispute
+directly lives.
