@@ -8889,3 +8889,74 @@ match and family-level target-volume bound as part of one named audit object.
 The audit object still receives its bound from the generic bridge. The next
 step should expose the internal HDD decomposition around this bridge:
 SHE arrow, descent, hull+det bridge, and common container.
+
+## Math Milestone 94: HDD-after-SHE Decomposition Audit
+
+Lean files:
+
+* `Iut/Foundations/AlgorithmicBridge.lean`
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The common-container bound is obtained by applying the `(HDD) o (SHE)` bridge.
+The bridge itself decomposes through the named HDD composite and then through
+the hull+det bridge. This decomposition should be visible as an audit object,
+not only as reducible definitions.
+
+### Lean/API Check
+
+The generic bridge layer now defines:
+
+```text
+AlgorithmicOutput.HDDSHECompositeData.DecompositionAudit
+```
+
+It stores:
+
+```text
+structured_bridge_eq_hull_det
+apply_eq_hull_det
+choice_target_volume_le
+all_targets_at_most
+```
+
+The common-container bound audit now carries:
+
+```text
+hdd_she_decomposition
+```
+
+and the Stage 1 charted boundary exposes it as:
+
+```text
+hddSHEDecompositionAudit
+```
+
+### Lean Decisions
+
+The decomposition equalities are definitional in the current bridge model.
+Naming them is still useful: it records exactly where the generic bridge
+passes from `(HDD) o (SHE)` to HDD and then to the hull+det bridge.
+
+This does not formalize the actual hull+det mathematics yet. It isolates the
+interface where that future work must replace the current explicit bridge.
+
+### What This Tests
+
+The toy source example extracts the HDD-after-SHE decomposition audit from the
+charted comparison boundary. The focused Stage 1 source example build and the
+full project build both pass.
+
+### Design Trap Avoided
+
+The trap would be to leave the common-container bound as an opaque application
+with no named path through SHE, HDD, and hull+det. This milestone names that
+path while keeping the remaining abstraction explicit.
+
+### Remaining Gap
+
+The hull+det bridge itself is still supplied as data. The next refinement
+should expose the hull+det bridge audit separately and then decide which
+mathematical content belongs there first.

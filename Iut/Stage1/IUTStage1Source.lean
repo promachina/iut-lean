@@ -790,6 +790,12 @@ theorem commonContainerBoundAudit
       package.preLedger.certificate :=
   audited.common_container_bound_audit
 
+theorem hddSHEDecompositionAudit
+    (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.DecompositionAudit
+      package.preLedger.certificate :=
+  audited.commonContainerBoundAudit.hddSHEDecomposition
+
 theorem sheArrowMatchesContext
     (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
     package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
@@ -2632,6 +2638,13 @@ theorem hddSHECommonContainerBoundAudit
     package.preLedger.chartedContainer.commonContainer.BoundAudit
       package.preLedger.certificate :=
   boundary.hddSHEBound.commonContainerBoundAudit
+
+theorem hddSHEDecompositionAudit
+    (boundary :
+      AuditedChartedComparisonBoundary package bundle sideConditions) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.DecompositionAudit
+      package.preLedger.certificate :=
+  boundary.hddSHEBound.hddSHEDecompositionAudit
 
 theorem hddSHESHEArrowMatchesContext
     (boundary :
