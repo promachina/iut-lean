@@ -3958,6 +3958,81 @@ theorem comparisonEndpointCorollary312
 
 end HullDetComparisonEndpoint
 
+/--
+Hull+det endpoint stated in terms of source-level Theta-pilot possible images.
+
+This keeps the source interpretation of `targetUnion` attached to the final
+audited comparison endpoint.
+-/
+structure ThetaPilotHullEndpoint
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceHullDetObligations package) where
+  possible_images : IUTStage1ThetaPilotPossibleImages package
+  hull_endpoint : package.HullDetComparisonEndpoint obligations
+  possible_images_union_subset_hull :
+    Region.Subset possible_images.union
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull
+  possible_images_union_eq_targetUnion :
+    possible_images.union = package.preLedger.output.comparisons.targetUnion
+
+def auditedThetaPilotHullEndpoint
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceHullDetObligations package) :
+    package.ThetaPilotHullEndpoint obligations :=
+  let possibleImages := IUTStage1ThetaPilotPossibleImages.ofPackage package
+  { possible_images := possibleImages,
+    hull_endpoint := package.auditedHullDetComparisonEndpoint obligations,
+    possible_images_union_subset_hull :=
+      possibleImages.union_subset_target obligations.targetUnion_subset_hull,
+    possible_images_union_eq_targetUnion :=
+      possibleImages.union_eq_targetUnion }
+
+namespace ThetaPilotHullEndpoint
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {obligations : IUTStage1SourceHullDetObligations package}
+
+theorem corollary312Endpoint
+    (endpoint : package.ThetaPilotHullEndpoint obligations) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  endpoint.hull_endpoint.corollary312Endpoint
+
+theorem possibleImagesUnion_subset_hull
+    (endpoint : package.ThetaPilotHullEndpoint obligations) :
+    Region.Subset endpoint.possible_images.union
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull :=
+  endpoint.possible_images_union_subset_hull
+
+theorem possibleImagesUnion_eq_targetUnion
+    (endpoint : package.ThetaPilotHullEndpoint obligations) :
+    endpoint.possible_images.union =
+      package.preLedger.output.comparisons.targetUnion :=
+  endpoint.possible_images_union_eq_targetUnion
+
+theorem determinantVolumeBound
+    (endpoint : package.ThetaPilotHullEndpoint obligations) :
+    RegionMeasure.HasVolumeAtMost package.preLedger.measure
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull
+      package.preLedger.thetaSigned :=
+  endpoint.hull_endpoint.determinantVolumeBound
+
+theorem thetaPilotMatchesPackage
+    (endpoint : package.ThetaPilotHullEndpoint obligations) :
+    endpoint.possible_images.thetaPilot = package.thetaPilot :=
+  endpoint.possible_images.thetaPilotMatchesPackage
+
+theorem indeterminaciesMatchPackage
+    (endpoint : package.ThetaPilotHullEndpoint obligations) :
+    endpoint.possible_images.indeterminacies = package.indeterminacies :=
+  endpoint.possible_images.indeterminaciesMatchPackage
+
+end ThetaPilotHullEndpoint
+
 theorem auditOfParts
     (package : IUTStage1SourcePackage source target index)
     (subclaims : IUTStage1Theorem311Subclaims package)

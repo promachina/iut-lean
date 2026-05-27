@@ -16377,3 +16377,88 @@ The source-level possible images still come from the toy upper-ray comparison
 family. The next replacement should define non-toy possible Theta-pilot images
 from multiradial/indeterminacy data rather than merely wrapping the existing
 target regions.
+
+## 112. Theta-Pilot Possible Images at the Hull Endpoint
+
+### Goal
+
+The previous milestone gave the source package a named family of Theta-pilot
+possible images. This milestone attaches that family directly to the final
+hull+det comparison endpoint.
+
+The point is to make the endpoint say the mathematically relevant thing:
+the holomorphic hull contains the union of possible images of the Theta-pilot
+object, not merely an anonymous `targetUnion`.
+
+### Lean/API Check
+
+The source package now defines:
+
+```text
+IUTStage1SourcePackage.ThetaPilotHullEndpoint
+IUTStage1SourcePackage.auditedThetaPilotHullEndpoint
+```
+
+The endpoint contains:
+
+```text
+possible_images
+hull_endpoint
+possible_images_union_subset_hull
+possible_images_union_eq_targetUnion
+```
+
+The accessor namespace exposes:
+
+```text
+ThetaPilotHullEndpoint.corollary312Endpoint
+ThetaPilotHullEndpoint.possibleImagesUnion_subset_hull
+ThetaPilotHullEndpoint.possibleImagesUnion_eq_targetUnion
+ThetaPilotHullEndpoint.determinantVolumeBound
+ThetaPilotHullEndpoint.thetaPilotMatchesPackage
+ThetaPilotHullEndpoint.indeterminaciesMatchPackage
+```
+
+The toy source example now checks:
+
+```text
+unitThetaToy_source_thetaPilotHullEndpoint_example
+unitThetaToy_source_thetaPilotHullEndpoint_corollary_example
+unitThetaToy_source_thetaPilotHullEndpoint_possibleImages_union_subset_hull_example
+unitThetaToy_source_thetaPilotHullEndpoint_union_eq_targetUnion_example
+```
+
+### Lean Decisions
+
+`ThetaPilotHullEndpoint` is a data-bearing structure, not a `Prop`.
+
+Lean forced this distinction: the endpoint stores
+`IUTStage1ThetaPilotPossibleImages package`, which is mathematical data, not a
+proof. A `Prop`-valued structure can only have proof fields. This is the right
+modeling pressure for the formalization: the source-level possible-image
+family must be an explicit object available for inspection, while the hull
+containment and endpoint inequalities remain proof fields.
+
+### Source Check
+
+This follows the formulation of IUT III Corollary 3.12 / Theorem B in terms of
+the log-volume of the holomorphic hull of the union of possible images of the
+Theta-pilot object. It also follows the formalization report's decomposition of
+the route through the hull+det step before the final `3.11.5 => 3.12`
+transition.
+
+### What This Tests
+
+Lean verifies that the possible-image union is equal to the comparison
+`targetUnion`, that this union is contained in the audited hull, and that the
+same endpoint still yields the Corollary 3.12 signed pilot inequality.
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The possible-image family is still source-level wrapping over the current
+target-region family. The next substantive mathematical step is to replace
+that wrapper by an actual multiradial/indeterminacy construction of the
+Theta-pilot possible images, then prove that its union is the comparison union
+used by the hull+det bridge.
