@@ -719,6 +719,13 @@ theorem audit
     stage_recovers_corollary312 :=
       package.stage1Comparison_recovers_corollary312 obligations }
 
+theorem auditOfParts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    Audit package (package.obligationsFromParts subclaims sideConditions) :=
+  package.audit (package.obligationsFromParts subclaims sideConditions)
+
 theorem auditedPublicEndpoint
     (package : IUTStage1SourcePackage source target index)
     (obligations : IUTStage1SourceObligations package) :
@@ -755,6 +762,31 @@ theorem auditedPublicEndpointOfGap
                 gap.toSourceObligations).ledger.qSigned_le_thetaSigned)) =
         package.publicAudit gap.toSourceObligations :=
   package.auditedPublicEndpoint gap.toSourceObligations
+
+theorem auditedPublicEndpointOfParts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    ∃ sourceAudit :
+        Audit package (package.obligationsFromParts subclaims sideConditions),
+      (⟨sourceAudit.qSigned_le_thetaSigned,
+          sourceAudit.corollary312,
+          sourceAudit.stage_recovers_qSigned_le_thetaSigned⟩ :
+        package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+          Corollary312Inequality
+            (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+            (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+          (corollary312_from_stage1_comparison
+              (package.promotedProvider
+                (package.obligationsFromParts
+                  subclaims sideConditions)).stage1Comparison =
+            corollary312_of_signed_le
+              (package.promotedProvider
+                (package.obligationsFromParts
+                  subclaims sideConditions)).ledger.qSigned_le_thetaSigned)) =
+        package.publicAuditOfParts subclaims sideConditions :=
+  package.auditedPublicEndpoint
+    (package.obligationsFromParts subclaims sideConditions)
 
 namespace Audit
 

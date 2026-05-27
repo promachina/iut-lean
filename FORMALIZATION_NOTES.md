@@ -8681,3 +8681,66 @@ side-condition record, and the implementation visibly factors through
 
 The next milestone should add source-audit examples from separated inputs, so
 that the compact audit record and public projection route are tested together.
+
+## Milestone 106: Source Audit from Separated Inputs
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The separated-input route now has:
+
+```text
+Theorem 3.11 subclaims
+source side conditions
+source obligations
+public audit projections
+```
+
+This milestone adds the compact source audit to that route. The formal path
+still factors through `IUTStage1SourceObligations`; it does not bypass the
+promotion boundary or make Theorem 3.11 subclaims alone imply Corollary 3.12.
+
+### Purpose
+
+This milestone adds an audit endpoint for separated inputs, then tests audit
+projections in the toy model.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.auditOfParts
+IUTStage1SourcePackage.auditedPublicEndpointOfParts
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_audit_from_parts_example
+unitThetaToy_source_audit_from_parts_q_le_theta_projection_example
+unitThetaToy_source_audit_from_parts_corollary_projection_example
+```
+
+### What This Tests
+
+The toy examples verify that separated inputs can produce the compact source
+audit and that the audit projections recover the q-bound and Corollary
+3.12-shaped endpoint.
+
+### Design Trap Avoided
+
+The trap would be to duplicate public endpoint logic in a separate
+parts-specific proof. The implementation reuses the existing source audit and
+public endpoint machinery after constructing source obligations from the named
+parts.
+
+### Next Step
+
+The next milestone should expose label and recovery projections from the
+parts-based audit, then start replacing toy-only side-condition proofs with
+source-facing hypotheses closer to the IUT III notation.
