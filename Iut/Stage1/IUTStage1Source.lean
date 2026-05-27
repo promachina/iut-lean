@@ -783,6 +783,120 @@ theorem auditedHDDSHE_allTargetsAtMost_theta
 end IUTStage1Theorem311StructuredInputsWithSHE
 
 /--
+Audited connection from the `HDD o SHE` bound to the charted target-volume
+middle term used later in the signed comparison.
+
+This is still not the q-to-Theta comparison. It only states that the named
+middle term in the pre-ledger is the chosen target volume bounded by the
+audited `HDD o SHE` route.
+-/
+structure IUTStage1Theorem311AuditedTargetVolumeMiddle
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) : Prop where
+  audited_hdd_she_bound :
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle
+  target_signed_eq_chosen_volume :
+    package.preLedger.targetVolume.targetSigned =
+      RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice)
+  target_signed_le_theta :
+    package.preLedger.targetVolume.targetSigned <=
+      package.preLedger.thetaSigned
+  histories_not_identified :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side
+
+namespace IUTStage1Theorem311AuditedTargetVolumeMiddle
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+
+theorem ofAuditedHDDSHEBound
+    (audited : IUTStage1Theorem311AuditedHDDSHEBound package bundle) :
+    IUTStage1Theorem311AuditedTargetVolumeMiddle package bundle :=
+  { audited_hdd_she_bound := audited,
+    target_signed_eq_chosen_volume :=
+      package.preLedger.targetSigned_eq_choiceTargetVolume,
+    target_signed_le_theta := by
+      rw [package.preLedger.targetSigned_eq_choiceTargetVolume]
+      exact audited.chosenTargetVolume_le_theta,
+    histories_not_identified := audited.domainHistory_ne_codomainHistory }
+
+theorem ofStructuredInputsWithSHE
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    IUTStage1Theorem311AuditedTargetVolumeMiddle package bundle :=
+  ofAuditedHDDSHEBound bundle.auditedHDDSHEBound
+
+theorem auditedHDDSHEBound
+    (middle :
+      IUTStage1Theorem311AuditedTargetVolumeMiddle package bundle) :
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle :=
+  middle.audited_hdd_she_bound
+
+theorem targetSigned_eq_chosenTargetVolume
+    (middle :
+      IUTStage1Theorem311AuditedTargetVolumeMiddle package bundle) :
+    package.preLedger.targetVolume.targetSigned =
+      RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) :=
+  middle.target_signed_eq_chosen_volume
+
+theorem chosenTargetVolume_eq_targetSigned
+    (middle :
+      IUTStage1Theorem311AuditedTargetVolumeMiddle package bundle) :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) =
+      package.preLedger.targetVolume.targetSigned :=
+  middle.targetSigned_eq_chosenTargetVolume.symm
+
+theorem targetSigned_le_theta
+    (middle :
+      IUTStage1Theorem311AuditedTargetVolumeMiddle package bundle) :
+    package.preLedger.targetVolume.targetSigned <=
+      package.preLedger.thetaSigned :=
+  middle.target_signed_le_theta
+
+theorem domainHistory_ne_codomainHistory
+    (middle :
+      IUTStage1Theorem311AuditedTargetVolumeMiddle package bundle) :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side :=
+  middle.histories_not_identified
+
+end IUTStage1Theorem311AuditedTargetVolumeMiddle
+
+namespace IUTStage1Theorem311StructuredInputsWithSHE
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+theorem auditedTargetVolumeMiddle
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    IUTStage1Theorem311AuditedTargetVolumeMiddle package bundle :=
+  IUTStage1Theorem311AuditedTargetVolumeMiddle.ofStructuredInputsWithSHE bundle
+
+theorem auditedTargetSigned_eq_chosenTargetVolume
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    package.preLedger.targetVolume.targetSigned =
+      RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) :=
+  bundle.auditedTargetVolumeMiddle.targetSigned_eq_chosenTargetVolume
+
+theorem auditedTargetSigned_le_theta
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    package.preLedger.targetVolume.targetSigned <=
+      package.preLedger.thetaSigned :=
+  bundle.auditedTargetVolumeMiddle.targetSigned_le_theta
+
+end IUTStage1Theorem311StructuredInputsWithSHE
+
+/--
 Source-facing side conditions needed for Stage 1 ledger promotion.
 
 These conditions are intentionally separate from the Theorem 3.11 subclaims:

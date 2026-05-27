@@ -562,3 +562,105 @@ charted target-volume middle term. That bridge should state only that the
 target-volume field used in the final comparison is the same chosen target
 volume bounded here; it should still keep q-side membership and final
 Corollary 3.12 packaging separate.
+
+## Math Milestone 6: Audited Target-Volume Middle Term
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The proof of Corollary 3.12 ultimately uses a middle real-valued target-volume
+term between the q-side quantity and the Theta-side bound. The previous
+milestone recovered the upper bound on the chosen target volume from the
+audited `HDD o SHE` route. This milestone connects that chosen target volume to
+the named charted target-volume field in the pre-ledger.
+
+This remains below the disputed endpoint. It does not assert that the q-side
+quantity lies below the target-volume middle term, and it does not package the
+signed q-to-Theta inequality.
+
+### Purpose
+
+This milestone adds:
+
+```text
+IUTStage1Theorem311AuditedTargetVolumeMiddle
+```
+
+The record packages:
+
+* the audited `HDD o SHE` bound from Milestone 5;
+* the equality identifying `targetVolume.targetSigned` with the chosen target
+  volume;
+* the resulting upper bound `targetVolume.targetSigned <= thetaSigned`;
+* the history-separation guard.
+
+The key proof is:
+
+```text
+rw [package.preLedger.targetSigned_eq_choiceTargetVolume]
+exact audited.chosenTargetVolume_le_theta
+```
+
+So the middle-term inequality is not independent data. It is derived from the
+existing pre-ledger equality and the audited `HDD o SHE` target-volume bound.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1Theorem311AuditedTargetVolumeMiddle
+IUTStage1Theorem311AuditedTargetVolumeMiddle.ofAuditedHDDSHEBound
+IUTStage1Theorem311AuditedTargetVolumeMiddle.ofStructuredInputsWithSHE
+IUTStage1Theorem311AuditedTargetVolumeMiddle.auditedHDDSHEBound
+IUTStage1Theorem311AuditedTargetVolumeMiddle.targetSigned_eq_chosenTargetVolume
+IUTStage1Theorem311AuditedTargetVolumeMiddle.chosenTargetVolume_eq_targetSigned
+IUTStage1Theorem311AuditedTargetVolumeMiddle.targetSigned_le_theta
+IUTStage1Theorem311AuditedTargetVolumeMiddle.domainHistory_ne_codomainHistory
+IUTStage1Theorem311StructuredInputsWithSHE.auditedTargetVolumeMiddle
+IUTStage1Theorem311StructuredInputsWithSHE.auditedTargetSigned_eq_chosenTargetVolume
+IUTStage1Theorem311StructuredInputsWithSHE.auditedTargetSigned_le_theta
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_theorem311_audited_target_middle_example
+unitThetaToy_source_theorem311_audited_target_middle_eq_example
+unitThetaToy_source_theorem311_audited_target_middle_le_theta_example
+```
+
+### What This Tests
+
+The toy model verifies that the charted middle term is definitionally the target
+volume of the chosen output comparison and inherits the audited upper bound.
+The proof goes through the same source-facing API as the non-toy scaffold.
+
+### Design Trap Avoided
+
+The trap would be to combine this with q-side membership immediately and present
+the result as the Corollary 3.12 inequality. We did not do that. The record only
+covers the upper half of the eventual chain:
+
+```text
+targetSigned <= thetaSigned
+```
+
+The lower half,
+
+```text
+qSigned <= targetSigned
+```
+
+is still a separate membership/charting obligation.
+
+### Next Step
+
+The next milestone should add an audited lower-middle bridge for
+`qSigned <= targetSigned`, explicitly sourced from the charted membership datum.
+Only after both middle bridges are present should we consider a separate
+packaging theorem that assembles the signed q-to-Theta inequality.
