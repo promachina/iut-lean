@@ -882,3 +882,75 @@ construction. The immediate next target should be an audited endpoint object
 that packages both the public Corollary-3.12-shaped comparison and the
 source-facing hull provenance, so users cannot inspect one without seeing the
 other.
+
+## Periodic Review: Multiradial Images and Indeterminacy Quotient
+
+Date: 2026-05-28
+
+This checkpoint reviews the new possible-image, quotient, and multiradial hull
+endpoint layers.
+
+### Current Lean Chain
+
+The source-facing route now exposes:
+
+```text
+IUTStage1ThetaPilotPossibleImages
+-> IUTStage1IndeterminacyQuotient
+-> IUTStage1MultiradialThetaImages
+-> ThetaPilotHullEndpoint
+-> MultiradialThetaHullEndpoint
+```
+
+The endpoint proves:
+
+```text
+multiradial image union = possible-image endpoint union
+multiradial image union <= constructed hull
+measure constructed hull <= thetaSigned
+Corollary312Inequality theta q
+```
+
+It also keeps the quotient invariant available:
+
+```text
+related choices -> same possible-image region
+```
+
+### Positive Alignment
+
+This is aligned with the source description of the multiradial representation
+as data constructed up to `(Ind1)`, `(Ind2)`, `(Ind3)`, and with the formalized
+route through descent and hull+det before the final Corollary 3.12 comparison.
+
+The code now prevents a common drift: treating possible images as anonymous
+target regions while speaking in prose about the Theta-pilot. The source label,
+possible-image family, quotient relation, hull containment, determinant bound,
+and final signed inequality are all connected by Lean terms.
+
+### Risks Found
+
+The named `theorem311Ind1`, `theorem311Ind2`, and `theorem311Ind3` records are
+still placeholders. Their boolean fields are not used by downstream proofs, and
+they must not be interpreted as a complete formal definition of the three IUT
+indeterminacies.
+
+The quotient relation is still supplied abstractly. The toy model uses the
+discrete relation, so it tests the interface only. It does not test the real
+content of quotienting by nontrivial indeterminacy actions.
+
+### Global 3.12 Check
+
+This remains on track for the 3.11 -> 3.12 dispute because the new interface
+forces the exact place where the contested nontrivial content must land:
+
+```text
+construct the multiradial Theta images
+define the Ind1/2/3-generated quotient relation
+prove possible-image invariance under that relation
+prove the hull+det bound for the resulting union
+```
+
+The next implementation should not add more endpoint packaging. It should move
+one level lower by modeling generated indeterminacy steps/actions and deriving
+an equivalence relation from them.
