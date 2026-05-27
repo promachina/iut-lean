@@ -113,6 +113,19 @@ theorem targetSigned_eq_choiceTargetVolume (ledger :
         (output.comparison ledger.chosenOutput.choice) :=
   ledger.targetVolume.targetSigned_eq
 
+theorem targetSigned_eq_choiceTargetVolume_eq_field (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.targetSigned_eq_choiceTargetVolume =
+      ledger.targetVolume.targetSigned_eq :=
+  rfl
+
+theorem choiceTargetVolume_eq_targetSigned (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    RegionMeasure.targetVolume measure
+        (output.comparison ledger.chosenOutput.choice) =
+      ledger.targetVolume.targetSigned :=
+  ledger.targetVolume.targetSigned_eq.symm
+
 theorem targetSigned_le_thetaSigned (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     ledger.targetVolume.targetSigned <= thetaSigned := by
@@ -130,6 +143,13 @@ theorem targetSigned_eq_chosenComparisonVolume (ledger :
       RegionMeasure.targetVolume measure ledger.chosenOutput.comparison := by
   rw [ledger.chosenOutput.comparison_eq]
   exact ledger.targetVolume.targetSigned_eq
+
+theorem chosenComparisonVolume_eq_targetSigned (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    RegionMeasure.targetVolume measure ledger.chosenOutput.comparison =
+      ledger.targetVolume.targetSigned := by
+  rw [ledger.chosenOutput.comparison_eq]
+  exact ledger.targetVolume.targetSigned_eq.symm
 
 theorem qSigned_le_thetaSigned (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :

@@ -4148,3 +4148,85 @@ numbers tied to the explicit transports recorded in the ledger.
 The next milestone should add analogous field-origin projections for the
 selected target-volume equality, connecting `targetVolume.targetSigned` to the
 measured target volume of the chosen output.
+
+## Milestone 44: Target-Volume Coordinate Projections
+
+Lean file:
+
+* `Iut/Stage1/SourceObligations.lean`
+
+### Source Check
+
+The final Stage 1 comparison uses a middle target-volume term between the
+`q`-side signed value and the `Theta`-side bound. IUT III, Step `(xi-d)`, treats
+the relevant `q` and `Theta` objects as comparable only after log-volume
+interpretation in a common real setting. IUT IV describes the `Theta` side in
+terms of containers for possible images and upper bounds. Scholze-Stix's
+critique again makes the audit point: the real number being compared must be
+explicitly identified.
+
+In the ledger, the middle term is:
+
+```text
+ledger.targetVolume.targetSigned
+```
+
+and `ChartedTargetVolumeData` ties it to:
+
+```text
+RegionMeasure.targetVolume measure (output.comparison choice)
+```
+
+### Purpose
+
+This milestone adds source-ledger projections for the target-volume coordinate:
+
+```text
+ledger.targetSigned_eq_choiceTargetVolume
+  = ledger.targetVolume.targetSigned_eq
+
+RegionMeasure.targetVolume measure (output.comparison choice)
+  = ledger.targetVolume.targetSigned
+
+RegionMeasure.targetVolume measure ledger.chosenOutput.comparison
+  = ledger.targetVolume.targetSigned
+```
+
+### Lean Declarations
+
+In `SourceObligations.lean`:
+
+```text
+SourceObligationLedger.targetSigned_eq_choiceTargetVolume_eq_field
+SourceObligationLedger.choiceTargetVolume_eq_targetSigned
+SourceObligationLedger.chosenComparisonVolume_eq_targetSigned
+```
+
+The field-origin projection is `rfl`. The two reverse-orientation forms are the
+symmetric target-volume equality, once directly for `output.comparison choice`
+and once after rewriting by the chosen comparison equality.
+
+### What This Tests
+
+The three-term comparison's middle term is now tied to the selected output's
+measured target volume in both useful orientations:
+
+```text
+targetSigned -> measured chosen target volume
+measured chosen target volume -> targetSigned
+```
+
+This makes the middle term of `qSigned <= targetSigned <= thetaSigned`
+auditable without unfolding the ledger constructor.
+
+### Design Trap Avoided
+
+The trap would be to give the three-term comparison a named middle real number
+without keeping it visibly connected to the chosen output. These projections
+keep the middle term anchored to the selected target volume.
+
+### Next Step
+
+The next milestone should expose field-origin projections for the chosen output
+itself, namely that `chosenOutput.comparison` is exactly
+`output.comparison chosenOutput.choice`.
