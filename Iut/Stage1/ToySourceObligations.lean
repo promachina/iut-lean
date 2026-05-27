@@ -943,13 +943,11 @@ theorem unitThetaToy_publicAudit_from_sourceObligations
         corollary312_of_signed_le
           (unitThetaToy_qSigned_le_thetaSigned_from_sourceObligations
             measure hnormalized hh hbound hholds) := by
-  let audit :=
-    unitThetaToy_endToEndAudit_from_sourceObligations
-      measure hnormalized hh hbound hholds
-  exact ⟨audit.q_le_thetaBound_from_chain,
-    audit.corollary_from_chain,
-    unitThetaToyStage1Comparison_recovers_qThetaChain
-      measure hnormalized hh hbound hholds⟩
+  simpa [unitThetaToyStage1Comparison_from_sourceObligations,
+    unitThetaToy_qSigned_le_thetaSigned_from_sourceObligations]
+    using
+      (unitThetaToySourceObligationLedger
+        measure hnormalized hh hbound hholds).publicAudit
 
 theorem unitThetaToy_theta_commonBound_from_sourceObligations
     (measure : RegionMeasure thetaLine)

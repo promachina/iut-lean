@@ -6238,3 +6238,69 @@ shared public endpoint once at the ledger abstraction boundary.
 The next milestone should update the toy public audit theorem, if useful, to
 factor through the new general `SourceObligationLedger.publicAudit` theorem, so
 the toy and general public endpoints stay aligned.
+
+## Milestone 72: Toy Public Audit via the General Ledger Theorem
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+After introducing `SourceObligationLedger.publicAudit`, the toy public audit
+should not remain an independent proof of the same endpoint. The toy theorem
+should be a specialization of the general ledger theorem, with only the
+toy-specific names unfolded.
+
+This keeps the toy model useful as a concrete example while ensuring it tests
+the same public abstraction that future non-toy source ledgers will use.
+
+### Purpose
+
+This milestone refactors:
+
+```text
+unitThetaToy_publicAudit_from_sourceObligations
+```
+
+so that its proof is obtained from:
+
+```text
+(unitThetaToySourceObligationLedger ...).publicAudit
+```
+
+with only definitional unfolding of:
+
+```text
+unitThetaToyStage1Comparison_from_sourceObligations
+unitThetaToy_qSigned_le_thetaSigned_from_sourceObligations
+```
+
+### Lean Declarations
+
+No new declaration is introduced. The existing theorem
+
+```text
+unitThetaToy_publicAudit_from_sourceObligations
+```
+
+now factors through the general source-ledger public audit.
+
+### What This Tests
+
+The toy public theorem and the source-agnostic public theorem now have the same
+proof path. The toy layer no longer carries a separate public-audit proof that
+could drift from the general abstraction.
+
+### Design Trap Avoided
+
+The trap would be to maintain two parallel public endpoints: one toy-specific
+and one general. This refactor makes the toy endpoint a regression test for the
+general API.
+
+### Next Step
+
+The next milestone should look for the next abstraction boundary above Stage 1:
+either a small example module that imports the public toy theorem as a
+regression test, or the first non-toy scaffold that will eventually supply a
+real source-specific `SourceObligationLedger`.
