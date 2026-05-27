@@ -3643,6 +3643,79 @@ theorem unitThetaToy_source_structured_route_comparisonData_recovers_example
     package.structuredHypothesisRouteAudit inputs hypotheses
   routeAudit.comparisonDataRecovers
 
+theorem unitThetaToy_source_structured_endpoint_payloadData_eq_comparisonData_exists_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let inputs :=
+      unitThetaToy_source_theorem311_structured_inputs_example
+        measure hnormalized hh hbound hholds
+    let hypotheses :=
+      unitThetaToy_source_side_condition_hypotheses_example
+        measure hnormalized hh hbound hholds
+    ∃ sourceAudit :
+        IUTStage1SourcePackage.Audit package
+          (package.obligationsFromStructuredHypotheses inputs hypotheses),
+      package.comparisonDataFromPayloadInputs
+          (package.obligationsFromStructuredHypotheses inputs hypotheses) =
+        sourceAudit.comparisonData :=
+  let package :=
+    unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds
+  let inputs :=
+    unitThetaToy_source_theorem311_structured_inputs_example
+      measure hnormalized hh hbound hholds
+  let hypotheses :=
+    unitThetaToy_source_side_condition_hypotheses_example
+      measure hnormalized hh hbound hholds
+  package.structuredEndpointPayloadDataEqComparisonDataExists
+    inputs hypotheses
+
+theorem unitThetaToy_source_structured_endpoint_comparisonData_recovers_exists_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let inputs :=
+      unitThetaToy_source_theorem311_structured_inputs_example
+        measure hnormalized hh hbound hholds
+    let hypotheses :=
+      unitThetaToy_source_side_condition_hypotheses_example
+        measure hnormalized hh hbound hholds
+    ∃ sourceAudit :
+        IUTStage1SourcePackage.Audit package
+          (package.obligationsFromStructuredHypotheses inputs hypotheses),
+      corollary312_from_stage1_comparison
+          sourceAudit.comparisonData.stage1Comparison =
+        corollary312_of_signed_le
+          sourceAudit.comparisonData.qSigned_le_thetaSigned :=
+  let package :=
+    unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds
+  let inputs :=
+    unitThetaToy_source_theorem311_structured_inputs_example
+      measure hnormalized hh hbound hholds
+  let hypotheses :=
+    unitThetaToy_source_side_condition_hypotheses_example
+      measure hnormalized hh hbound hholds
+  package.structuredEndpointComparisonDataRecoversExists
+    inputs hypotheses
+
 theorem unitThetaToy_source_structured_route_auditedPublicEndpoint_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

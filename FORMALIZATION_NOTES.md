@@ -11198,3 +11198,66 @@ the caller starts from the public endpoint.
 The next milestone should connect the structured route and endpoint projection
 layers by proving that the structured endpoint exposes the same existential
 payload facts as the ordinary comparison endpoint.
+
+## Milestone 142: Structured Endpoint Payload Projection Bridges
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The structured-hypothesis endpoint is the formal route from structured
+Theorem 3.11 inputs and source side conditions to the current
+Corollary-3.12-shaped comparison endpoint. IUT III, Corollary 3.12, Step
+`(xi)`, treats the Theorem 3.11 output as the source of the final comparison,
+while the Scholze-Stix critique asks whether the comparison endpoint hides an
+identification of real-line copies. This milestone keeps the structured endpoint
+from becoming a parallel endpoint notion: its payload facts are explicitly
+obtained by applying the ordinary `ComparisonDataEndpoint` projections to
+`auditedComparisonDataEndpointOfStructuredHypotheses`.
+
+### Purpose
+
+Milestone 141 added existential payload projections for arbitrary comparison
+data endpoints. This milestone adds structured-endpoint bridge theorems that
+specialize those projections to the structured-hypothesis route.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.structuredEndpointPayloadInputsEqPackageExists
+IUTStage1SourcePackage.structuredEndpointPayloadDataEqComparisonDataExists
+IUTStage1SourcePackage.structuredEndpointComparisonDataEqPackageExists
+IUTStage1SourcePackage.structuredEndpointStage1ComparisonEqProviderExists
+IUTStage1SourcePackage.structuredEndpointCorollary312EqProviderExists
+IUTStage1SourcePackage.structuredEndpointComparisonDataRecoversExists
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_structured_endpoint_payloadData_eq_comparisonData_exists_example
+unitThetaToy_source_structured_endpoint_comparisonData_recovers_exists_example
+```
+
+### What This Tests
+
+The toy examples verify that the structured endpoint can recover the same
+existential payload-built-data equality and comparison-data recovery facts as
+the ordinary comparison endpoint.
+
+### Design Trap Avoided
+
+The trap would be to duplicate endpoint reasoning for structured hypotheses and
+accidentally create two subtly different endpoint APIs. The bridge theorems
+avoid that: they are thin specializations of the ordinary endpoint projections.
+
+### Next Step
+
+The next milestone should add a compact structured endpoint audit summary that
+packages these existential endpoint projections with the equality to
+`publicAuditOfStructuredHypotheses`.

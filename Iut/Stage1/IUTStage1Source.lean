@@ -2402,6 +2402,86 @@ theorem comparisonDataRecovers
 
 end StructuredHypothesisRouteAudit
 
+theorem structuredEndpointPayloadInputsEqPackageExists
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    ∃ sourceAudit :
+        Audit package
+          (package.obligationsFromStructuredHypotheses inputs hypotheses),
+      sourceAudit.comparisonPayloadInputs =
+        package.comparisonPayloadInputs :=
+  (package.auditedComparisonDataEndpointOfStructuredHypotheses
+    inputs hypotheses).payloadInputsEqPackageExists
+
+theorem structuredEndpointPayloadDataEqComparisonDataExists
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    ∃ sourceAudit :
+        Audit package
+          (package.obligationsFromStructuredHypotheses inputs hypotheses),
+      package.comparisonDataFromPayloadInputs
+          (package.obligationsFromStructuredHypotheses inputs hypotheses) =
+        sourceAudit.comparisonData :=
+  (package.auditedComparisonDataEndpointOfStructuredHypotheses
+    inputs hypotheses).payloadDataEqComparisonDataExists
+
+theorem structuredEndpointComparisonDataEqPackageExists
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    ∃ sourceAudit :
+        Audit package
+          (package.obligationsFromStructuredHypotheses inputs hypotheses),
+      sourceAudit.comparisonData =
+        package.comparisonData
+          (package.obligationsFromStructuredHypotheses inputs hypotheses) :=
+  (package.auditedComparisonDataEndpointOfStructuredHypotheses
+    inputs hypotheses).comparisonDataEqPackageExists
+
+theorem structuredEndpointStage1ComparisonEqProviderExists
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    ∃ sourceAudit :
+        Audit package
+          (package.obligationsFromStructuredHypotheses inputs hypotheses),
+      sourceAudit.comparisonData.stage1Comparison =
+        (package.promotedProvider
+          (package.obligationsFromStructuredHypotheses
+            inputs hypotheses)).stage1Comparison :=
+  (package.auditedComparisonDataEndpointOfStructuredHypotheses
+    inputs hypotheses).stage1ComparisonEqProviderExists
+
+theorem structuredEndpointCorollary312EqProviderExists
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    ∃ sourceAudit :
+        Audit package
+          (package.obligationsFromStructuredHypotheses inputs hypotheses),
+      sourceAudit.comparisonData.corollary312 =
+        (package.promotedProvider
+          (package.obligationsFromStructuredHypotheses
+            inputs hypotheses)).corollary312 :=
+  (package.auditedComparisonDataEndpointOfStructuredHypotheses
+    inputs hypotheses).corollary312EqProviderExists
+
+theorem structuredEndpointComparisonDataRecoversExists
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    ∃ sourceAudit :
+        Audit package
+          (package.obligationsFromStructuredHypotheses inputs hypotheses),
+      corollary312_from_stage1_comparison
+          sourceAudit.comparisonData.stage1Comparison =
+        corollary312_of_signed_le
+          sourceAudit.comparisonData.qSigned_le_thetaSigned :=
+  (package.auditedComparisonDataEndpointOfStructuredHypotheses
+    inputs hypotheses).comparisonDataRecoversExists
+
 end IUTStage1SourcePackage
 
 end Stage1
