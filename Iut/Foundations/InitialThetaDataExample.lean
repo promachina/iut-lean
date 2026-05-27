@@ -187,6 +187,18 @@ example (Z : PointedEtaleQuotient)
   (abstractCanonicalGeneratorUpToSignElement Z signAction
     canonicalGenerator element hOrbit).canonicalGeneratorUpToSign_holds
 
+example (G : Type u) [Group G]
+    (functionField : ReconstructedFunctionFieldData G)
+    (x : functionField.carrier) :
+    (1 : G) • x = x :=
+  functionField.one_smul_element x
+
+example (G : Type u) [Group G]
+    (functionField : ReconstructedFunctionFieldData G)
+    (g h : G) (x : functionField.carrier) :
+    (g * h) • x = g • h • x :=
+  functionField.mul_smul_element g h x
+
 example :
     (zmodOneNonzeroQuotientElement primeFive).element ≠
       (zmodPointedQuotient primeFive).zero :=
@@ -414,6 +426,8 @@ def abstractThetaOrbicurveCoverData
     (cK_type : OrbicurveTypeData primeFive cK OrbicurveTypeKind.oneLTorsPM)
     (xK_type : OrbicurveTypeData primeFive xK OrbicurveTypeKind.oneLTors)
     (thetaApproachQuotient : ThetaApproachQuotientData)
+    (thetaApproachFunctionField :
+      ThetaApproachFunctionFieldData thetaApproachQuotient)
     (cK_core_is_baseChange_cF cK_determined_by_cF finiteEtaleCoveringDiagrams
       profiniteGroupOpenImmersions : Prop)
     (hCore : cK_core_is_baseChange_cF)
@@ -425,6 +439,7 @@ def abstractThetaOrbicurveCoverData
   xK := xK
   cK_type := cK_type
   thetaApproachQuotient := thetaApproachQuotient
+  thetaApproachFunctionField := thetaApproachFunctionField
   cK_core_is_baseChange_cF := cK_core_is_baseChange_cF
   cK_core_is_baseChange_cF_holds := hCore
   cK_determined_by_cF := cK_determined_by_cF
@@ -705,6 +720,19 @@ example :
 example :
     theta.coverData.thetaApproachQuotient.thetaApproachReconstruction :=
   theta.thetaApproachReconstruction
+
+example :
+    theta.coverData.thetaApproachFunctionField.reconstructedFunctionFieldOfXK :=
+  theta.coverData.thetaApproachFunctionFieldOfXK
+
+example :
+    ReconstructedFunctionFieldData.actionByFieldAutomorphisms
+      theta.coverData.thetaApproachFunctionField.reconstructedFunctionField :=
+  theta.coverData.thetaApproachDeckActionByFieldAutomorphisms
+
+example :
+    theta.coverData.thetaApproachFunctionField.deckActionMatchesGalQuotient :=
+  theta.coverData.thetaApproachDeckActionMatchesQuotient
 
 example : theta.coverData.finiteEtaleCoveringDiagrams :=
   theta.finiteEtaleCoveringDiagrams

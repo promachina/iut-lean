@@ -4366,3 +4366,130 @@ The `Gal(X_K/C_K)` object and its action are still represented by propositions,
 not by an actual group equivalence or group action. A later milestone should
 formalize the deck transformation/Galois action once the covering and function
 field reconstruction APIs are mature enough.
+
+## Math Milestone 44: Theta-Approach Function-Field Action
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, says that the `Theta`-approach applies the anabelian
+reconstruction algorithm to the open subgroup `Pi_XK <= Pi_CK` in order to
+reconstruct the function field of `X_K`, equipped with its natural
+
+```text
+Gal(X_K/C_K) ~= Pi_CK / Pi_XK
+```
+
+action. The previous milestone encoded the normal-open quotient. This milestone
+adds the action target: a reconstructed function field carrying an action of
+that quotient group.
+
+IUT II's discussion of the global `F_l` symmetries warns that `Pi_CK` and
+`Pi_XK` may be subject to conjugacy and poly-action indeterminacies, and that
+one must not simply quotient away these symmetries because of label-crushing.
+The present Lean move respects that warning: it records a quotient action on
+the reconstructed field, but it does not identify labels, Hodge theaters, or
+pilot objects.
+
+Scholze-Stix's critique of Corollary 3.12 emphasizes exactly those later
+identification issues between abstract and concrete pilot objects. This
+milestone is earlier and narrower: it prepares the reconstruction/action
+language needed before such later comparisons can be stated.
+
+### Lean/API Check
+
+The new structure
+
+```text
+ReconstructedFunctionFieldData
+```
+
+stores:
+
+```text
+carrier : Type
+field : Field carrier
+deckAction : MulAction deckGroup carrier
+actionByFieldAutomorphisms : Prop
+```
+
+The action is a real Lean `MulAction`, so Lean proves the identity and
+composition action laws. The stronger assertion that the action is by field
+automorphisms is kept as a proposition for now, because we have not yet
+formalized the appropriate function-field automorphism object.
+
+The new structure
+
+```text
+ThetaApproachFunctionFieldData
+```
+
+connects this reconstructed function field to a specific
+`ThetaApproachQuotientData`. It records that the field is the reconstructed
+function field of `X_K` and that the deck action matches the
+`Gal(X_K/C_K) ~= Pi_CK / Pi_XK` quotient action.
+
+### Lean Decisions
+
+The main design choice is to encode the quotient action as an actual group
+action immediately, but to postpone the claim that each group element acts as a
+field automorphism. This gives Lean useful structure now without fabricating a
+function-field automorphism theory prematurely.
+
+This also keeps the Scholze-Stix guardrail visible: the action target is tied
+to the `Theta`-approach quotient, but there is no cross-Hodge-theater
+identification or collapse of concrete labels.
+
+### Lean Declarations
+
+```text
+ReconstructedFunctionFieldData
+ReconstructedFunctionFieldData.deckActionByFieldAutomorphisms
+ReconstructedFunctionFieldData.one_smul_element
+ReconstructedFunctionFieldData.mul_smul_element
+ThetaApproachFunctionFieldData
+ThetaApproachFunctionFieldData.functionField
+ThetaApproachFunctionFieldData.reconstructedFromXK
+ThetaApproachFunctionFieldData.deckActionByFieldAutomorphisms
+ThetaApproachFunctionFieldData.deckActionMatchesQuotient
+ThetaApproachFunctionFieldData.deck_one_smul
+ThetaApproachFunctionFieldData.deck_mul_smul
+ThetaOrbicurveCoverData.thetaApproachFunctionField
+ThetaOrbicurveCoverData.thetaApproachFunctionFieldCarrier
+ThetaOrbicurveCoverData.thetaApproachFunctionFieldOfXK
+ThetaOrbicurveCoverData.thetaApproachDeckActionByFieldAutomorphisms
+ThetaOrbicurveCoverData.thetaApproachDeckActionMatchesQuotient
+InitialThetaData.thetaApproachFunctionFieldCarrier
+InitialThetaData.thetaApproachFunctionFieldOfXK
+InitialThetaData.thetaApproachDeckActionByFieldAutomorphisms
+InitialThetaData.thetaApproachDeckActionMatchesQuotient
+```
+
+### What This Tests
+
+The example file now checks that full initial theta data exposes:
+
+* the reconstructed function-field-of-`X_K` proposition;
+* the proposition that the quotient action is by field automorphisms;
+* the proposition that the deck action matches the quotient/Galois action.
+
+The core Lean file also proves the `1 • x = x` and `(g * h) • x = g • h • x`
+laws for the action, directly from `MulAction`.
+
+### Design Trap Avoided
+
+The trap would be to represent the phrase "equipped with its natural action" as
+only another proposition. We now require an actual group action. The opposite
+trap would be to overreach by declaring concrete field automorphisms before the
+function-field API exists. That claim remains explicit and auditable.
+
+### Remaining Gap
+
+The function field is still abstract, and the field-automorphism condition is
+not yet a bundled map into `Aut` or `AlgEquiv`. A later milestone should replace
+`actionByFieldAutomorphisms : Prop` with a concrete homomorphism from the deck
+quotient into the automorphism group of the reconstructed function field.

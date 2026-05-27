@@ -1454,6 +1454,10 @@ variable (thetaApproach : ThetaApproachQuotientData)
 def deckQuotient : Type _ :=
   NormalOpenEmbeddingData.quotientGroup thetaApproach.piXK_to_piCK
 
+instance deckQuotientGroup :
+    Group (ThetaApproachQuotientData.deckQuotient thetaApproach) :=
+  NormalOpenEmbeddingData.quotientGroupGroup thetaApproach.piXK_to_piCK
+
 def quotientMap :
     thetaApproach.piCK.carrier → ThetaApproachQuotientData.deckQuotient thetaApproach :=
   NormalOpenEmbeddingData.quotientMap thetaApproach.piXK_to_piCK
@@ -1481,6 +1485,101 @@ theorem reconstructionViaThetaApproach :
 end ThetaApproachQuotientData
 
 /--
+A reconstructed function field equipped with a deck-group action.
+
+The action is recorded as an actual group action on the carrier.  The stronger
+claim that the action is by field automorphisms is kept as a named proposition
+until the relevant function-field and automorphism APIs are formalized.
+-/
+structure ReconstructedFunctionFieldData (deckGroup : Type u) [Group deckGroup] where
+  carrier : Type u
+  field : Field carrier
+  deckAction : MulAction deckGroup carrier
+  actionByFieldAutomorphisms : Prop
+  actionByFieldAutomorphisms_holds : actionByFieldAutomorphisms
+
+namespace ReconstructedFunctionFieldData
+
+variable {deckGroup : Type u} [Group deckGroup]
+variable (functionField : ReconstructedFunctionFieldData deckGroup)
+
+instance : Field functionField.carrier :=
+  functionField.field
+
+instance : MulAction deckGroup functionField.carrier :=
+  functionField.deckAction
+
+theorem deckActionByFieldAutomorphisms :
+    functionField.actionByFieldAutomorphisms :=
+  functionField.actionByFieldAutomorphisms_holds
+
+theorem one_smul_element (x : functionField.carrier) :
+    (1 : deckGroup) • x = x :=
+  one_smul deckGroup x
+
+theorem mul_smul_element (g h : deckGroup) (x : functionField.carrier) :
+    (g * h) • x = g • h • x :=
+  mul_smul g h x
+
+end ReconstructedFunctionFieldData
+
+/--
+The function-field target reconstructed in the `Theta`-approach.
+
+IUT I, Remark 3.1.2, says the reconstruction yields the function field of
+`X_K` equipped with the natural `Gal(X_K/C_K) ~= Pi_CK / Pi_XK` action.
+-/
+structure ThetaApproachFunctionFieldData
+    (thetaApproach : ThetaApproachQuotientData) where
+  reconstructedFunctionField :
+    ReconstructedFunctionFieldData (ThetaApproachQuotientData.deckQuotient thetaApproach)
+  reconstructedFunctionFieldOfXK : Prop
+  reconstructedFunctionFieldOfXK_holds : reconstructedFunctionFieldOfXK
+  deckActionMatchesGalQuotient : Prop
+  deckActionMatchesGalQuotient_holds : deckActionMatchesGalQuotient
+
+namespace ThetaApproachFunctionFieldData
+
+variable {thetaApproach : ThetaApproachQuotientData}
+variable (functionFieldData : ThetaApproachFunctionFieldData thetaApproach)
+
+def functionField : Type _ :=
+  functionFieldData.reconstructedFunctionField.carrier
+
+instance : Field (ThetaApproachFunctionFieldData.functionField functionFieldData) :=
+  functionFieldData.reconstructedFunctionField.field
+
+instance :
+    MulAction (ThetaApproachQuotientData.deckQuotient thetaApproach)
+      (ThetaApproachFunctionFieldData.functionField functionFieldData) :=
+  functionFieldData.reconstructedFunctionField.deckAction
+
+theorem reconstructedFromXK :
+    functionFieldData.reconstructedFunctionFieldOfXK :=
+  functionFieldData.reconstructedFunctionFieldOfXK_holds
+
+theorem deckActionByFieldAutomorphisms :
+    functionFieldData.reconstructedFunctionField.actionByFieldAutomorphisms :=
+  functionFieldData.reconstructedFunctionField.deckActionByFieldAutomorphisms
+
+theorem deckActionMatchesQuotient :
+    functionFieldData.deckActionMatchesGalQuotient :=
+  functionFieldData.deckActionMatchesGalQuotient_holds
+
+theorem deck_one_smul
+    (x : ThetaApproachFunctionFieldData.functionField functionFieldData) :
+    (1 : ThetaApproachQuotientData.deckQuotient thetaApproach) • x = x :=
+  one_smul (ThetaApproachQuotientData.deckQuotient thetaApproach) x
+
+theorem deck_mul_smul
+    (g h : ThetaApproachQuotientData.deckQuotient thetaApproach)
+    (x : ThetaApproachFunctionFieldData.functionField functionFieldData) :
+    (g * h) • x = g • h • x :=
+  mul_smul g h x
+
+end ThetaApproachFunctionFieldData
+
+/--
 The `C_K`/`X_K` covering data from IUT I, Definition 3.1(d).
 
 This bundle ties `C_K` to the previously defined `C_F`: its `K`-core is the
@@ -1497,6 +1596,7 @@ structure ThetaOrbicurveCoverData
   xK : HyperbolicOrbicurveModel K
   cK_type : OrbicurveTypeData l cK OrbicurveTypeKind.oneLTorsPM
   thetaApproachQuotient : ThetaApproachQuotientData
+  thetaApproachFunctionField : ThetaApproachFunctionFieldData thetaApproachQuotient
   cK_core_is_baseChange_cF : Prop
   cK_core_is_baseChange_cF_holds : cK_core_is_baseChange_cF
   cK_determined_by_cF : Prop
@@ -1555,6 +1655,21 @@ theorem thetaApproachGalQuotientIdentification :
 theorem thetaApproachReconstruction :
     coverData.thetaApproachQuotient.thetaApproachReconstruction :=
   coverData.thetaApproachQuotient.reconstructionViaThetaApproach
+
+def thetaApproachFunctionFieldCarrier : Type _ :=
+  ThetaApproachFunctionFieldData.functionField coverData.thetaApproachFunctionField
+
+theorem thetaApproachFunctionFieldOfXK :
+    coverData.thetaApproachFunctionField.reconstructedFunctionFieldOfXK :=
+  coverData.thetaApproachFunctionField.reconstructedFromXK
+
+theorem thetaApproachDeckActionByFieldAutomorphisms :
+    coverData.thetaApproachFunctionField.reconstructedFunctionField.actionByFieldAutomorphisms :=
+  coverData.thetaApproachFunctionField.deckActionByFieldAutomorphisms
+
+theorem thetaApproachDeckActionMatchesQuotient :
+    coverData.thetaApproachFunctionField.deckActionMatchesGalQuotient :=
+  coverData.thetaApproachFunctionField.deckActionMatchesQuotient
 
 theorem finiteEtaleDiagrams :
     coverData.finiteEtaleCoveringDiagrams :=
@@ -2281,6 +2396,22 @@ theorem thetaApproachGalQuotientIdentification :
 theorem thetaApproachReconstruction :
     theta.coverData.thetaApproachQuotient.thetaApproachReconstruction :=
   theta.coverData.thetaApproachReconstruction
+
+def thetaApproachFunctionFieldCarrier : Type _ :=
+  theta.coverData.thetaApproachFunctionFieldCarrier
+
+theorem thetaApproachFunctionFieldOfXK :
+    theta.coverData.thetaApproachFunctionField.reconstructedFunctionFieldOfXK :=
+  theta.coverData.thetaApproachFunctionFieldOfXK
+
+theorem thetaApproachDeckActionByFieldAutomorphisms :
+    ReconstructedFunctionFieldData.actionByFieldAutomorphisms
+      theta.coverData.thetaApproachFunctionField.reconstructedFunctionField :=
+  ThetaOrbicurveCoverData.thetaApproachDeckActionByFieldAutomorphisms theta.coverData
+
+theorem thetaApproachDeckActionMatchesQuotient :
+    theta.coverData.thetaApproachFunctionField.deckActionMatchesGalQuotient :=
+  theta.coverData.thetaApproachDeckActionMatchesQuotient
 
 theorem finiteEtaleCoveringDiagrams :
     theta.coverData.finiteEtaleCoveringDiagrams :=
