@@ -53,21 +53,24 @@ variable {measure : RegionMeasure target}
 variable {thetaSigned qSigned : Real}
 variable {normalization : Prop}
 
+theorem qSigned_le_thetaSigned (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    qSigned <= thetaSigned :=
+  le_trans ledger.q_le_choice
+    (TransportedRegionFamily.choice_targetVolume_le_of_commonBound
+      ledger.theta_commonBound ledger.choice)
+
 theorem corollary312 (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     Corollary312Inequality
       (signedPilotLogVolume PilotSide.theta thetaSigned)
       (signedPilotLogVolume PilotSide.q qSigned) :=
-  corollary312_from_structured_bridge
-    ledger.chartedContainer.structuredBridge ledger.certificate ledger.choice
-    ledger.q_le_choice
+  corollary312_of_signed_le ledger.qSigned_le_thetaSigned
 
 def stage1Comparison (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     Stage1Comparison :=
-  stage1Comparison_from_structured_bridge
-    ledger.chartedContainer.structuredBridge ledger.certificate ledger.choice
-    ledger.q_positive ledger.q_le_choice
+  stage1Comparison_of_signed_le ledger.q_positive ledger.qSigned_le_thetaSigned
 
 theorem sheMatchesCertificate (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :

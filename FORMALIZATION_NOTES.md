@@ -2926,3 +2926,89 @@ coordinate and the bound of a common-target-bound witness.
 The next milestone should use the new `theta_commonBound` field directly in the
 source ledger's derivation of `qSigned <= thetaSigned`, replacing the current
 route through `chartedContainer.structuredBridge` where possible.
+
+## Milestone 29: Direct Common-Bound Final Step
+
+Lean file:
+
+* `Iut/Stage1/SourceObligations.lean`
+
+### Source Check
+
+IUT III, Corollary 3.12, Step `(xi-d)` presents the final real comparison as
+membership of the q-side real value in the Theta-side upper ray
+`R <= -|log(Theta)|`. In the current Lean interface, this corresponds to a
+chosen target volume being bounded by the stored common-target bound
+`thetaSigned`.
+
+This also matches the decomposition in Mochizuki's 2026 report: the earlier
+HDD/SHE/common-container machinery supplies the comparable Theta-side output,
+and the final Stage 1 step consumes that output as an upper bound.
+
+### Purpose
+
+Milestone 28 added:
+
+```text
+theta_commonBound : output.CommonTargetBound measure thetaSigned
+```
+
+The final source-ledger theorem still re-entered through
+`chartedContainer.structuredBridge`. This milestone changes the final derivation
+to use the stored common-target-bound witness directly.
+
+### Lean Declarations
+
+In `SourceObligations.lean`:
+
+```text
+qSigned_le_thetaSigned
+```
+
+is now the central final inequality:
+
+```text
+qSigned <= thetaSigned
+```
+
+It is proved by composing:
+
+```text
+q_le_choice :
+  qSigned <= targetVolume(comparison choice)
+
+TransportedRegionFamily.choice_targetVolume_le_of_commonBound
+  theta_commonBound choice :
+  targetVolume(comparison choice) <= thetaSigned
+```
+
+The existing final outputs:
+
+```text
+corollary312
+stage1Comparison
+```
+
+now call `corollary312_of_signed_le` and `stage1Comparison_of_signed_le`
+directly on `qSigned_le_thetaSigned`.
+
+### What This Tests
+
+The toy source-obligation endpoint still proves the same signed Stage 1
+inequality. The final proof no longer reconstructs the common bound from the
+structured bridge; it consumes the common-bound data already recorded in the
+ledger.
+
+### Design Trap Avoided
+
+The trap would be to keep the final theorem dependent on a hidden bridge
+application after introducing explicit charted Theta-bound and common-bound
+fields. This milestone makes the last real inequality depend on the stored
+upper-bound witness.
+
+### Next Step
+
+The next milestone should make the chosen target volume itself explicit as
+charted data: store the chosen output comparison, its target-volume real, and
+the equality connecting that real to the middle term in
+`qSigned <= targetVolume <= thetaSigned`.
