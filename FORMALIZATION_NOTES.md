@@ -3610,3 +3610,80 @@ transparent and ready to be replaced later by source-level IUT lemmas.
 The next milestone should promote the same field-origin projections from the
 toy endpoint to general source-ledger theorems, so every future source module
 gets the same audit hooks without having to reprove them.
+
+## Milestone 37: General Three-Term Chain Projections
+
+Lean file:
+
+* `Iut/Stage1/SourceObligations.lean`
+
+### Source Check
+
+The April 2026 formalization report describes the final portion of
+`Theorem 3.11 => Corollary 3.12` as the simultaneous comparison of `q`- and
+`Theta`-pilot objects in a common container. IUT III, Step `(xi-d)` describes the
+same comparison as landing in completely comparable log-volume objects in `R`.
+IUT IV repeatedly describes the `Theta` side as a container for possible images
+whose upper bound absorbs the indeterminacies.
+
+Scholze-Stix's criticism is again directly relevant: a meaningful real
+inequality requires all identifications of the ordered one-dimensional real
+spaces to be explicit. The ledger should therefore expose not just the final
+inequality, but the exact field origins of the final three-term comparison.
+
+### Purpose
+
+Milestone 36 added toy-only projection lemmas. This milestone promotes the same
+audit hooks to the general `SourceObligationLedger`, so they are available to
+every later source module:
+
+```text
+ledger.threeTermComparison.q_le_target
+  = ledger.membership.q_le_target
+
+ledger.threeTermComparison.target_le_theta
+  = common target bound applied to ledger.chosenOutput.choice
+```
+
+### Lean Declarations
+
+In `SourceObligations.lean`:
+
+```text
+SourceObligationLedger.threeTerm_q_le_target_eq_membership
+SourceObligationLedger.threeTerm_target_le_theta_eq_commonBound
+```
+
+Both proofs are `rfl`. The point is definitional transparency: the chain object
+does not contain a hidden comparison theorem. Its left field is the membership
+inequality, and its right field is the common-bound theorem transported through
+the selected charted target-volume equality.
+
+### What This Tests
+
+The general ledger now has reusable field-origin theorems before any toy data
+is supplied. Future source files can cite these theorems to audit the path:
+
+```text
+chosen output
+charted target volume
+membership inequality
+common target bound
+three-term comparison
+final q <= theta inequality
+```
+
+### Design Trap Avoided
+
+The trap would be to let each source model invent its own explanation of how
+the final chain was assembled. That would make it too easy for two source
+modules to satisfy the final API in subtly different ways. These general
+projection lemmas keep the source-obligation interface itself responsible for
+the audit trail.
+
+### Next Step
+
+The next milestone should connect the final two-term inequality
+`qSigned <= thetaSigned` back to the named three-term comparison with a general
+projection theorem, then expose the same path for the packaged
+`Corollary312Inequality`.

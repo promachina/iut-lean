@@ -81,6 +81,21 @@ def threeTermComparison (ledger :
       exact TransportedRegionFamily.choice_targetVolume_le_of_commonBound
         ledger.theta_commonBound ledger.chosenOutput.choice }
 
+theorem threeTerm_q_le_target_eq_membership (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.threeTermComparison.q_le_target =
+      ledger.membership.q_le_target :=
+  rfl
+
+theorem threeTerm_target_le_theta_eq_commonBound (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.threeTermComparison.target_le_theta =
+      (by
+        rw [ledger.targetVolume.targetSigned_eq]
+        exact TransportedRegionFamily.choice_targetVolume_le_of_commonBound
+          ledger.theta_commonBound ledger.chosenOutput.choice) :=
+  rfl
+
 theorem chosenComparisonHoldsQ (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     ledger.chosenOutput.comparison.Holds ledger.qValue.qPoint :=
