@@ -5412,3 +5412,82 @@ must stay explicit when comparing q-side and Theta-side quantities.
 The next milestone should expose the toy membership fields in terms of the
 selected Theta indeterminacy comparison, not only through the already available
 generic output comparison.
+
+## Milestone 61: Toy Membership as Concrete Theta Indeterminacy
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+IUT III, Step `(xi-d)`, passes from possible output data to log-volume
+comparison by measuring regions associated to those possible outputs. In the toy
+model, the relevant possible output is the Theta indeterminacy upper ray
+
+```text
+thetaIndeterminacyComparison unitQToTheta h (epsilon choice)
+```
+
+rather than an unnamed target-side region. Scholze-Stix's objection to
+Corollary 3.12 focuses on whether the identifications and comparisons of real
+copies have been made explicitly enough. For this toy layer, the membership
+proof must therefore be visible both as membership in the chosen comparison and
+as the underlying coordinate inequality.
+
+### Purpose
+
+This milestone exposes the toy membership field at the concrete comparison
+level:
+
+```text
+(thetaIndeterminacyComparison unitQToTheta h (epsilon choice)).Holds
+  (qAssignment h)
+```
+
+and then unfolds that comparison to the coordinate condition:
+
+```text
+(Transport.map unitQToTheta (qAssignment h)).coord <=
+  -(2 * h) + epsilon choice
+```
+
+### Lean Declarations
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToy_membership_holds_thetaComparison_from_sourceObligations
+unitThetaToy_membership_coord_le_choiceBound_from_sourceObligations
+```
+
+The first theorem projects the ledger membership proof into the concrete toy
+Theta comparison. The second theorem uses that projection to expose the
+upper-ray inequality directly.
+
+### What This Tests
+
+The ledger's membership field is now auditable at three levels:
+
+```text
+generic algorithmic output
+selected thetaIndeterminacyComparison
+transported q-coordinate <= selected upper-ray bound
+```
+
+This is deliberately redundant. The redundancy makes it harder for later code
+to accidentally replace the concrete toy comparison by an unrelated measured
+region.
+
+### Design Trap Avoided
+
+The trap would be to treat `membership.holds` as a proof of some abstract
+membership proposition without checking which region it references. This
+milestone ties it back to the selected Theta indeterminacy upper ray and the
+actual transported q-coordinate.
+
+### Next Step
+
+The next milestone should expose the toy q-to-target inequality as both the
+stored membership field and the elementary upper-ray/target-volume comparison
+used to form the first leg of the three-term chain.

@@ -371,6 +371,35 @@ theorem unitThetaToy_membership_holds_from_sourceObligations
           using hholds) :=
   rfl
 
+theorem unitThetaToy_membership_holds_thetaComparison_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (thetaIndeterminacyComparison unitQToTheta h (epsilon choice)).Holds
+      (qAssignment h) :=
+  (unitThetaToySourceObligationLedger
+    measure hnormalized hh hbound hholds).membership.holds
+
+theorem unitThetaToy_membership_coord_le_choiceBound_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (Transport.map unitQToTheta (qAssignment h)).coord <=
+      -(2 * h) + epsilon choice := by
+  exact
+    unitThetaToy_membership_holds_thetaComparison_from_sourceObligations
+      measure hnormalized hh hbound hholds
+
 theorem unitThetaToy_theta_commonBound_from_sourceObligations
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
