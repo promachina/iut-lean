@@ -135,6 +135,24 @@ example (Z : PointedEtaleQuotient)
   (abstractCanonicalGeneratorUpToSignElement Z signAction
     canonicalGenerator element hOrbit).canonicalGeneratorUpToSign_holds
 
+example :
+    (zmodOneNonzeroQuotientElement primeFive).element ≠
+      (zmodPointedQuotient primeFive).zero :=
+  (zmodOneNonzeroQuotientElement primeFive).element_ne_zero
+
+example (a : (ZMod primeFive.value)ˣ) (x : ZMod primeFive.value) (hx : x ≠ 0) :
+    (zmodUnitActionData primeFive).smul a x ≠ (zmodPointedQuotient primeFive).zero :=
+  (zmodUnitActionData primeFive).smul_nonzero a x hx
+
+example :
+    (zmodSignAction primeFive).InSignOrbit
+      (-(1 : ZMod primeFive.value)) (1 : ZMod primeFive.value) :=
+  (zmodSignAction primeFive).neg_generator_mem_signOrbit (1 : ZMod primeFive.value)
+
+example :
+    (zmodCanonicalGeneratorUpToSignElement primeFive).canonicalGeneratorUpToSign :=
+  (zmodCanonicalGeneratorUpToSignElement primeFive).canonicalGeneratorUpToSign_holds
+
 /-- A constructor smoke test for the finite-place valuation section. -/
 def abstractThetaValuationData
     (toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod)

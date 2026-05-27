@@ -9,6 +9,7 @@ import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Tactic
 
@@ -467,6 +468,34 @@ theorem neg_generator_mem_signOrbit (generator : Q.carrier) :
 
 end QuotientSignAction
 
+/-- The pointed quotient with carrier `ZMod l`, used as the current `F_l` model. -/
+abbrev zmodPointedQuotient (l : PrimeGeFive) : PointedEtaleQuotient where
+  carrier := ZMod l.value
+  zero := 0
+
+/-- The action of `(ZMod l)^x` on the pointed quotient `ZMod l` by multiplication. -/
+def zmodUnitActionData (l : PrimeGeFive) :
+    QuotientUnitActionData (zmodPointedQuotient l) where
+  units := (ZMod l.value)ˣ
+  smul := fun a x => (a : ZMod l.value) * x
+  smul_nonzero := by
+    intro a x hx hzero
+    have h := congrArg
+      (fun y : ZMod l.value => ((a⁻¹ : (ZMod l.value)ˣ) : ZMod l.value) * y)
+      hzero
+    have hx0 : x = 0 := by
+      simpa [mul_assoc] using h
+    exact hx hx0
+
+/-- The sign action on `ZMod l` by additive negation. -/
+def zmodSignAction (l : PrimeGeFive) :
+    QuotientSignAction (zmodPointedQuotient l) where
+  neg := fun x => -x
+  neg_zero := by simp
+  neg_involutive := by
+    intro x
+    simp
+
 /-- A witness that a cusp arises from a nonzero element of an EtTh quotient. -/
 structure NonzeroQuotientElement where
   quotient : PointedEtaleQuotient.{u}
@@ -497,6 +526,27 @@ theorem canonicalGeneratorUpToSign_holds :
   generatorData.element_in_signOrbit
 
 end CanonicalGeneratorUpToSignElement
+
+/-- The nonzero quotient element `1 ∈ ZMod l`, using `l >= 5`. -/
+def zmodOneNonzeroQuotientElement (l : PrimeGeFive) :
+    NonzeroQuotientElement where
+  quotient := zmodPointedQuotient l
+  unitAction := zmodUnitActionData l
+  element := (1 : ZMod l.value)
+  element_ne_zero := by
+    haveI : Fact (1 < l.value) :=
+      ⟨lt_of_lt_of_le (by norm_num) l.ge_five⟩
+    exact one_ne_zero
+
+/-- The canonical generator `1 ∈ ZMod l`, viewed modulo the sign action. -/
+def zmodCanonicalGeneratorUpToSignElement (l : PrimeGeFive) :
+    CanonicalGeneratorUpToSignElement where
+  quotient := zmodPointedQuotient l
+  signAction := zmodSignAction l
+  canonicalGenerator := (1 : ZMod l.value)
+  element := (1 : ZMod l.value)
+  element_in_signOrbit :=
+    (zmodSignAction l).generator_mem_signOrbit (1 : ZMod l.value)
 
 /--
 The curve/moduli portion of IUT I, Definition 3.1(b).

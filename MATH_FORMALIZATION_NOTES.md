@@ -2381,3 +2381,108 @@ The unit action is not yet a full formal `F_l^×` action, and the sign action is
 not yet proved to arise from the subgroup `{±1} ⊆ F_l^×`. A later milestone
 should connect the prime `l`, finite-field units, and the sign subgroup using
 mathlib's finite-field/group-action APIs.
+
+## Math Milestone 24: The `ZMod l` Unit-Action Bridge
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(f) uses the quotient `Q` from the EtTh definition of a
+hyperbolic orbicurve of type `(1,l-tors)^±`, and the local quotient `Z` from
+the type `(1,Z/lZ)^±` model at bad places. Later in IUT I, the label classes
+of cusps are said to have a natural `F_l`-torsor structure arising from the
+natural action of `F_l^×` on the quotient `Q`.
+
+This milestone addresses that `F_l^×` phrase directly at the Lean level.
+
+### Lean/API Check
+
+Mathlib provides:
+
+```text
+ZMod n
+(ZMod n)^x
+```
+
+where `(ZMod n)^x` is the bundled unit group of the commutative ring
+`ZMod n`. We use `ZMod l.value` as the current formal model of `F_l`. The
+fact that `l >= 5` gives `1 < l.value`, which supplies the nontriviality
+needed to prove that `1 : ZMod l.value` is nonzero.
+
+### Lean Decisions
+
+The new pointed quotient is:
+
+```text
+zmodPointedQuotient l
+```
+
+with carrier `ZMod l.value` and zero `0`.
+
+The new unit action is:
+
+```text
+zmodUnitActionData l
+```
+
+whose units are `(ZMod l.value)^x`, acting by multiplication on
+`ZMod l.value`. The action preserves nonzero elements by multiplying a
+zero equation by the inverse unit.
+
+The sign action is:
+
+```text
+zmodSignAction l
+```
+
+defined by additive negation on `ZMod l.value`, with involutivity checked by
+Lean.
+
+Finally, two concrete quotient witnesses are available:
+
+```text
+zmodOneNonzeroQuotientElement l
+zmodCanonicalGeneratorUpToSignElement l
+```
+
+The first packages `1 : ZMod l.value` as a nonzero quotient element. The
+second packages `1 : ZMod l.value` as the canonical generator modulo the
+sign orbit.
+
+### Lean Declarations
+
+```text
+zmodPointedQuotient
+zmodUnitActionData
+zmodSignAction
+zmodOneNonzeroQuotientElement
+zmodCanonicalGeneratorUpToSignElement
+```
+
+### What This Tests
+
+The example file now checks:
+
+* `1 : ZMod 5` is nonzero via `PrimeGeFive`;
+* multiplication by a unit of `ZMod 5` preserves nonzero elements;
+* `-1` lies in the sign orbit of `1`;
+* the concrete `ZMod 5` canonical-generator witness proves
+  `canonicalGeneratorUpToSign`.
+
+### Design Trap Avoided
+
+The trap would be to keep saying "`F_l^×` action" while the formal code only
+uses an arbitrary type of units. This milestone does not yet build all the
+torsor theory, but it pins the unit group to the actual mathlib object
+`(ZMod l.value)^x`.
+
+### Remaining Gap
+
+The sign action is still a separate `QuotientSignAction`; it is not yet
+constructed as the restriction of the `(ZMod l.value)^x` action along the
+subgroup `{±1}`. The next refinement should introduce that compatibility
+between unit action and sign action.
