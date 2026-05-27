@@ -2407,6 +2407,101 @@ theorem auditedQPilotChartSign
   AuditedQPilotChartSign.ofStructuredInputsWithSHE bundle sideConditions
 
 /--
+Audit object tying the Theta-side target bound to the charted Theta reading.
+
+The HDD-after-SHE route bounds the chosen target volume by `thetaSigned`; this
+record keeps the proof that `thetaSigned` is the real obtained from the
+Theta-side charted point.
+-/
+structure AuditedThetaChartBound
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) : Prop where
+  allowed_chart_transport :
+    AuditedAllowedChartTransport package bundle sideConditions
+  hdd_she_bound :
+    IUTStage1Theorem311AuditedHDDSHEBound package bundle
+  theta_charted :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned
+  chosen_target_volume_le_theta :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      package.preLedger.thetaSigned
+  chosen_target_volume_le_charted_theta :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord
+
+namespace AuditedThetaChartBound
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+variable {sideConditions : IUTStage1SourceSideConditions package}
+
+theorem ofAllowedChartTransport
+    (transport :
+      AuditedAllowedChartTransport package bundle sideConditions) :
+    AuditedThetaChartBound package bundle sideConditions :=
+  { allowed_chart_transport := transport,
+    hdd_she_bound := bundle.auditedHDDSHEBound,
+    theta_charted := transport.allowedThetaToTargetReading,
+    chosen_target_volume_le_theta :=
+      bundle.auditedHDDSHEBound.chosenTargetVolume_le_theta,
+    chosen_target_volume_le_charted_theta := by
+      rw [transport.allowedThetaToTargetReading]
+      exact bundle.auditedHDDSHEBound.chosenTargetVolume_le_theta }
+
+theorem ofStructuredInputsWithSHE
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    AuditedThetaChartBound package bundle sideConditions :=
+  ofAllowedChartTransport
+    (package.auditedAllowedChartTransport bundle sideConditions)
+
+theorem allowedChartTransport
+    (audit : AuditedThetaChartBound package bundle sideConditions) :
+    AuditedAllowedChartTransport package bundle sideConditions :=
+  audit.allowed_chart_transport
+
+theorem thetaCharted
+    (audit : AuditedThetaChartBound package bundle sideConditions) :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned :=
+  audit.theta_charted
+
+theorem chosenTargetVolume_le_theta
+    (audit : AuditedThetaChartBound package bundle sideConditions) :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      package.preLedger.thetaSigned :=
+  audit.chosen_target_volume_le_theta
+
+theorem chosenTargetVolume_le_chartedTheta
+    (audit : AuditedThetaChartBound package bundle sideConditions) :
+    RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) <=
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord :=
+  audit.chosen_target_volume_le_charted_theta
+
+end AuditedThetaChartBound
+
+theorem auditedThetaChartBound
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    AuditedThetaChartBound package bundle sideConditions :=
+  AuditedThetaChartBound.ofStructuredInputsWithSHE bundle sideConditions
+
+/--
 Compact checkpoint summary for the audited structured-SHE route.
 
 The summary is proof-only: it does not create a new endpoint or hide any

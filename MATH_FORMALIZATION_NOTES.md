@@ -7912,3 +7912,71 @@ facts to meet in a single checkpoint.
 
 The q-side point is still part of the toy/pre-ledger chart model. Later work
 should connect this point to a more concrete q-pilot log-volume construction.
+
+## Math Milestone 81: Theta Bound Tied to the Charted Theta Reading
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The HDD-after-SHE route bounds the chosen target volume by `thetaSigned`. As
+with the q-side sign condition, this bound should remain visibly tied to the
+Theta-side charted point. Otherwise `thetaSigned` could be read as a free
+standing real number detached from the chart discipline.
+
+### Lean/API Check
+
+The new audit object is:
+
+```text
+IUTStage1SourcePackage.AuditedThetaChartBound
+```
+
+It stores:
+
+```text
+allowed_chart_transport
+hdd_she_bound
+theta_charted
+chosen_target_volume_le_theta
+chosen_target_volume_le_charted_theta
+```
+
+The last field states the target-volume bound directly against the coordinate
+of the charted Theta-side point:
+
+```text
+targetVolume <= (Transport.map thetaToTarget thetaPoint).coord
+```
+
+The proof rewrites the charted Theta coordinate by the audited Theta-chart
+equation and then applies the HDD-after-SHE target bound.
+
+### Lean Decisions
+
+This mirrors the q-side chart/sign audit. The q-side audit ties q-positivity to
+the charted q reading; this milestone ties the Theta-side bound to the charted
+Theta reading.
+
+The object is derived from the existing allowed chart transport and
+HDD-after-SHE bound, so it does not add a new comparison route.
+
+### What This Tests
+
+The source example constructs the Theta chart/bound audit and extracts the
+target-volume bound against the charted Theta coordinate. The source example
+build passes.
+
+### Design Trap Avoided
+
+The trap would be to bound by a raw `thetaSigned` while separately maintaining
+that this number comes from a chart. This milestone packages those facts
+together at the Theta-side checkpoint.
+
+### Remaining Gap
+
+The Theta-side charted point is still abstract. Later milestones should connect
+it to a more concrete Theta/HDD or log-volume construction.
