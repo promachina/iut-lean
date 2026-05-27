@@ -6169,3 +6169,72 @@ The next milestone should add a compact general public-audit theorem analogous
 to the toy public theorem, returning the q-to-Theta inequality, the signed
 Corollary 3.12 statement, and the Stage1Comparison recovery equality from any
 `SourceObligationLedger`.
+
+## Milestone 71: General Public Audit Theorem
+
+Lean file:
+
+* `Iut/Stage1/SourceObligations.lean`
+
+### Source Check
+
+The general audit summary records many fields, but future source-specific
+formalizations also need a compact target theorem analogous to the toy public
+audit. The public theorem should expose exactly the common endpoint data:
+
+```text
+qSigned <= thetaSigned
+Corollary312Inequality
+Stage1Comparison recovers the same corollary packaging
+```
+
+This keeps the final theorem small enough for examples while still tying it to
+the audited source-obligation ledger.
+
+### Purpose
+
+This milestone introduces:
+
+```text
+SourceObligationLedger.publicAudit
+```
+
+For any completed ledger it returns:
+
+```text
+qSigned <= thetaSigned
+
+Corollary312Inequality
+  (signedPilotLogVolume PilotSide.theta thetaSigned)
+  (signedPilotLogVolume PilotSide.q qSigned)
+
+corollary312_from_stage1_comparison ledger.stage1Comparison
+  =
+corollary312_of_signed_le ledger.qSigned_le_thetaSigned
+```
+
+### Lean Declarations
+
+In `SourceObligations.lean`:
+
+```text
+SourceObligationLedger.publicAudit
+```
+
+### What This Tests
+
+The compact theorem is a small view over `SourceObligationLedger.audit`: it uses
+the audited q-to-Theta inequality, the ledger's signed Corollary 3.12 proof, and
+the definitional recovery of the same proof from the final `Stage1Comparison`.
+
+### Design Trap Avoided
+
+The trap would be to make each future source formalization invent its own final
+public theorem, risking slightly different endpoints. This theorem fixes the
+shared public endpoint once at the ledger abstraction boundary.
+
+### Next Step
+
+The next milestone should update the toy public audit theorem, if useful, to
+factor through the new general `SourceObligationLedger.publicAudit` theorem, so
+the toy and general public endpoints stay aligned.

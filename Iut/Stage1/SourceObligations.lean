@@ -486,6 +486,19 @@ theorem audit (ledger :
     stage_recovers_corollary := ledger.stage1Comparison_recovers_corollary312,
     normalization_witness := ledger.normalization_proof }
 
+theorem publicAudit (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    qSigned <= thetaSigned ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta thetaSigned)
+        (signedPilotLogVolume PilotSide.q qSigned) ∧
+      corollary312_from_stage1_comparison ledger.stage1Comparison =
+        corollary312_of_signed_le ledger.qSigned_le_thetaSigned := by
+  let audit := ledger.audit
+  exact ⟨audit.q_le_theta,
+    ledger.corollary312,
+    rfl⟩
+
 theorem hasNormalization (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     normalization :=
