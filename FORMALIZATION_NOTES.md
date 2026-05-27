@@ -521,3 +521,120 @@ of regions. This is the first abstraction needed for "passing to a hull":
 if a point lies in a region and the region is contained in a larger region, then
 the point lies in the larger region. This should remain purely order-theoretic
 and should not yet attempt to formalize holomorphic hulls.
+
+## Milestone 6: Region Enlargement and Abstract Hulls
+
+Lean file: `Iut/Foundations/IndeterminacyRelation.lean`
+
+### Source Check
+
+This milestone follows IUT III, Remark 3.9.5, especially the formal properties
+listed for the hull map `phi : P -> H`:
+
+```text
+(P1) phi(H) = H for hulls H,
+(P2) P subset phi(P),
+(P3) P1 subset P2 implies phi(P1) subset phi(P2).
+```
+
+The immediate formal need for our project is only `(P2)` and `(P3)`: hulls
+enlarge regions and are monotone with respect to inclusion. The same remark says
+that compatibility with the preorder structure given by inclusion plays an
+important role in log-volume estimates. Later parts of Remark 3.9.5 explain that
+passing to hulls eliminates or absorbs certain indeterminacies of possible
+regions.
+
+The April 2026 formalization report also says that Stage 1 moves the
+`hull+det` operation into the intermediate `3.11.5` package. That supports
+formalizing the hull-facing interface before we attempt any real Frobenioid or
+determinant content.
+
+### Purpose
+
+The goal is to capture the order-theoretic core of "passing to a hull" without
+pretending to have formalized holomorphic hulls. We only need enough structure
+to say:
+
+```text
+if a comparison lands in a region, then it also lands in any larger region;
+if a hull operation is extensive, then a comparison lands in the hull
+whenever it lands in the original region.
+```
+
+This is the next safe abstraction after Milestone 5's region-valued comparisons.
+
+### Lean Declarations
+
+`Region.Subset small large` is pointwise containment of regions.
+
+`Region.ExtEq left right` is extensional equality of regions by pointwise
+logical equivalence.
+
+The basic lemmas are:
+
+```text
+Region.subset_refl
+Region.subset_trans
+Region.contains_of_subset
+Region.extEq_of_subset_of_subset
+```
+
+`Region.singleton_subset_iff` says that a singleton region is contained in a
+region iff the singleton's point belongs to that region. The proof is a small
+sanity check on our representation of points: since regions are predicates on
+points, not just on raw coordinates, Lean must reconstruct equality of points
+from equality of their only coordinate.
+
+`Region.upperRay_subset_upperRay` proves that upper rays are monotone in their
+bound. The iff version,
+
+```text
+Region.upperRay_subset_upperRay_iff
+```
+
+shows that this condition is exact.
+
+`HullOperator line` is an abstract hull operation with two fields:
+
+```text
+extensive : region subset hull(region)
+monotone  : small subset large -> hull(small) subset hull(large)
+```
+
+This deliberately omits IUT's actual holomorphic definition. It records only the
+part of Remark 3.9.5 that we can use without importing analytic or Frobenioid
+machinery.
+
+`RegionComparison.enlargeTarget` replaces the target region of a comparison by
+a larger one.
+
+`RegionComparison.holds_of_target_subset` proves that region comparison survives
+target enlargement.
+
+`RegionComparison.hullTarget` replaces the target region by its abstract hull.
+
+`RegionComparison.holds_hullTarget` proves that a comparison into a region also
+holds after replacing that target by its hull.
+
+### What This Tests
+
+This milestone tests the exact proof obligation created by "passing to a hull":
+membership must be transported along an explicit inclusion. We now have a Lean
+place to put future claims that a holomorphic hull contains the original possible
+image region.
+
+### Design Trap Avoided
+
+The trap would be to introduce a function named `hull` and use it as if it
+automatically preserved every comparison. Here a hull operation has to provide
+the `extensive` field. If an alleged hull construction does not prove that the
+original region is contained in the hull, Lean will not let us transfer
+membership.
+
+### Next Step
+
+The next milestone should introduce bounded families of possible regions, still
+abstractly. Remark 3.9.5 uses a hull associated to a bounded collection of
+possible regions to remove dependence on a particular possible output of the
+multiradial algorithm. A first Lean model should represent a family
+`beta |-> P_beta` and a common target region that contains every `P_beta`.
