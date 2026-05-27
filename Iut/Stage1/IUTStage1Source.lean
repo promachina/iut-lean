@@ -227,6 +227,14 @@ theorem publicAudit_stage1Comparison_recovers_qSigned_le_thetaSigned
         (package.promotedProvider obligations).ledger.qSigned_le_thetaSigned :=
   (package.publicAudit obligations).2.2
 
+theorem stage1Comparison_recovers_corollary312
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    corollary312_from_stage1_comparison
+        (package.promotedProvider obligations).stage1Comparison =
+      (package.promotedProvider obligations).ledger.corollary312 :=
+  (package.promotedProvider obligations).stage1Comparison_recovers_corollary312
+
 end IUTStage1SourcePackage
 
 end Stage1

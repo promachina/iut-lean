@@ -7353,3 +7353,60 @@ route.
 The next milestone should add a source-facing recovery theorem to the promoted
 ledger's `corollary312` field, parallel to the pre-ledger and provider recovery
 theorems.
+
+## Milestone 87: Source-Facing Recovery to Promoted Corollary Field
+
+Lean file:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+
+### Source Check
+
+Milestone 86 exposed the public audit endpoints for a source package after the
+source obligations are supplied. The provider and pre-ledger layers also expose
+a structural recovery theorem saying that the `Stage1Comparison` projection
+recovers the promoted ledger's named `corollary312` field.
+
+This milestone adds the same shape at the source-facing package boundary. It is
+not a new source proof; it is the same promoted-provider recovery theorem viewed
+through the source package.
+
+### Purpose
+
+This milestone gives future source modules a readable theorem for the structural
+recovery statement:
+
+```text
+corollary312_from_stage1_comparison promoted.stage1Comparison
+  = promoted.ledger.corollary312
+```
+
+The theorem still requires explicit `IUTStage1SourceObligations`.
+
+### Lean Declaration
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.stage1Comparison_recovers_corollary312
+```
+
+### What This Tests
+
+Lean verifies that the source-facing package can use the same recovery theorem
+as the promoted provider, with no alternate proof path and no implicit discharge
+of the source obligations.
+
+### Design Trap Avoided
+
+The trap would be to discuss the promoted ledger's `corollary312` field in
+source-facing prose while the Lean API only exposed the normalized public-audit
+equality to `corollary312_of_signed_le`. This theorem keeps both views available
+and obligation-gated.
+
+### Next Step
+
+The next milestone should add a small source-package example module that
+specializes the generic source package to the existing toy pre-ledger data, so
+the non-toy source-facing API is regression-tested against a concrete promoted
+path without claiming toy data is genuine IUT data.
