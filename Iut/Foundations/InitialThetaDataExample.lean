@@ -46,6 +46,11 @@ def abstractThetaValuationData
     (toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod)
     (chosenLift : NumberField.FinitePlace Fmod -> NumberField.FinitePlace K)
     (hSection : ∀ w, toModuli (chosenLift w) = w)
+    (toModuliInfinite : NumberField.InfinitePlace K -> NumberField.InfinitePlace Fmod)
+    (chosenInfiniteLift :
+      NumberField.InfinitePlace Fmod -> NumberField.InfinitePlace K)
+    (hInfiniteSection :
+      ∀ w, toModuliInfinite (chosenInfiniteLift w) = w)
     (residueCharacteristic : NumberField.FinitePlace Fmod -> ℕ)
     (badMod : Set (NumberField.FinitePlace Fmod))
     (hBad : ∃ w, w ∈ badMod)
@@ -60,6 +65,9 @@ def abstractThetaValuationData
   toModuli := toModuli
   chosenLift := chosenLift
   toModuli_chosenLift := hSection
+  toModuliInfinite := toModuliInfinite
+  chosenInfiniteLift := chosenInfiniteLift
+  toModuliInfinite_chosenLift := hInfiniteSection
   residueCharacteristic := residueCharacteristic
   badMod := badMod
   badMod_nonempty := hBad
@@ -222,6 +230,26 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     theta.badLocalData.badLocalOpenSubgroups v hv :=
   theta.badLocalOpenSubgroups v hv
+
+example (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ theta.valuations.vnon ↔
+      v ∈ theta.valuations.selected :=
+  theta.finitePlace_mem_vnon_iff v
+
+example (v : NumberField.InfinitePlace K) :
+    ThetaPlace.infinite v ∈ theta.valuations.varc ↔
+      v ∈ theta.valuations.selectedInfinite :=
+  theta.infinitePlace_mem_varc_iff v
+
+example (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ theta.valuations.vbad ↔
+      v ∈ theta.valuations.bad :=
+  theta.finitePlace_mem_vbad_iff v
+
+example (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ theta.valuations.vgood ↔
+      v ∈ theta.valuations.good :=
+  theta.finitePlace_mem_vgood_iff v
 
 example : Nat.Coprime (Module.finrank Fmod F) theta.l.value :=
   theta.degree_F_over_Fmod_prime_to_l

@@ -8,6 +8,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Tactic
 
@@ -154,13 +155,54 @@ theorem jInvariant_ofJ (F : Type u) [Field F] [DecidableEq F] (j : F) :
 
 end PuncturedEllipticCurve
 
+/-- A finite or infinite place of a number field. -/
+inductive ThetaPlace (K : Type u) [Field K] [NumberField K] where
+  | finite : NumberField.FinitePlace K -> ThetaPlace K
+  | infinite : NumberField.InfinitePlace K -> ThetaPlace K
+
+namespace ThetaPlace
+
+variable {K : Type u} [Field K] [NumberField K]
+
+/-- A place is finite if it comes from `NumberField.FinitePlace`. -/
+def IsFinite : ThetaPlace K -> Prop
+  | finite _ => True
+  | infinite _ => False
+
+/-- A place is infinite if it comes from `NumberField.InfinitePlace`. -/
+def IsInfinite : ThetaPlace K -> Prop
+  | finite _ => False
+  | infinite _ => True
+
+@[simp]
+theorem isFinite_finite (v : NumberField.FinitePlace K) :
+    IsFinite (finite v) :=
+  trivial
+
+@[simp]
+theorem not_isFinite_infinite (v : NumberField.InfinitePlace K) :
+    ¬ IsFinite (infinite v) :=
+  id
+
+@[simp]
+theorem isInfinite_infinite (v : NumberField.InfinitePlace K) :
+    IsInfinite (infinite v) :=
+  trivial
+
+@[simp]
+theorem not_isInfinite_finite (v : NumberField.FinitePlace K) :
+    ¬ IsInfinite (finite v) :=
+  id
+
+end ThetaPlace
+
 /--
 The valuation data `V`, `Vbad_mod`, and the section `V -> Vmod` from
 Definition 3.1(b),(e).
 
-The moduli-level and extension-level valuation types are now mathlib finite
-places of the corresponding number fields.  The map from places of `K` to
-places of `Fmod`, together with a chosen section, remains explicit data.
+The finite and infinite place types come from mathlib.  The source's natural
+surjection from places of `K` to places of `Fmod`, together with a chosen
+section, remains explicit data.
 -/
 structure ThetaValuationData
     (l : PrimeGeFive) (Fmod K : Type u)
@@ -169,6 +211,10 @@ structure ThetaValuationData
   toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod
   chosenLift : NumberField.FinitePlace Fmod -> NumberField.FinitePlace K
   toModuli_chosenLift : ∀ w, toModuli (chosenLift w) = w
+  toModuliInfinite : NumberField.InfinitePlace K -> NumberField.InfinitePlace Fmod
+  chosenInfiniteLift : NumberField.InfinitePlace Fmod -> NumberField.InfinitePlace K
+  toModuliInfinite_chosenLift :
+    ∀ w, toModuliInfinite (chosenInfiniteLift w) = w
   residueCharacteristic : NumberField.FinitePlace Fmod -> ℕ
   badMod : Set (NumberField.FinitePlace Fmod)
   badMod_nonempty : ∃ w, w ∈ badMod
@@ -189,10 +235,21 @@ variable {l : PrimeGeFive} {Fmod K : Type u}
 variable [Field Fmod] [NumberField Fmod] [Field K] [NumberField K]
 variable [Algebra Fmod K]
 
-/-- The selected subset `V ⊆ V(K)` supplied by the section. -/
+/-- The selected finite subset of `V(K)` supplied by the section. -/
 def selected (data : ThetaValuationData l Fmod K) :
     Set (NumberField.FinitePlace K) :=
   Set.range data.chosenLift
+
+/-- The selected infinite subset of `V(K)` supplied by the section. -/
+def selectedInfinite (data : ThetaValuationData l Fmod K) :
+    Set (NumberField.InfinitePlace K) :=
+  Set.range data.chosenInfiniteLift
+
+/-- The selected finite-or-infinite subset `V ⊆ V(K)`. -/
+def selectedPlaces (data : ThetaValuationData l Fmod K) :
+    Set (ThetaPlace K)
+  | ThetaPlace.finite v => v ∈ data.selected
+  | ThetaPlace.infinite v => v ∈ data.selectedInfinite
 
 /-- The good valuations at the moduli level, i.e. the complement of `Vbad_mod`. -/
 def goodMod (data : ThetaValuationData l Fmod K) :
@@ -209,6 +266,26 @@ def good (data : ThetaValuationData l Fmod K) :
     Set (NumberField.FinitePlace K) :=
   {v | v ∈ data.selected ∧ data.toModuli v ∈ data.goodMod}
 
+/-- The nonarchimedean part of the selected set `V`. -/
+def vnon (data : ThetaValuationData l Fmod K) :
+    Set (ThetaPlace K) :=
+  {p | ∃ v, v ∈ data.selected ∧ p = ThetaPlace.finite v}
+
+/-- The archimedean part of the selected set `V`. -/
+def varc (data : ThetaValuationData l Fmod K) :
+    Set (ThetaPlace K) :=
+  {p | ∃ v, v ∈ data.selectedInfinite ∧ p = ThetaPlace.infinite v}
+
+/-- The bad part of the selected set `V`. -/
+def vbad (data : ThetaValuationData l Fmod K) :
+    Set (ThetaPlace K) :=
+  {p | ∃ v, v ∈ data.bad ∧ p = ThetaPlace.finite v}
+
+/-- The good finite part of the selected set `V`. -/
+def vgood (data : ThetaValuationData l Fmod K) :
+    Set (ThetaPlace K) :=
+  {p | ∃ v, v ∈ data.good ∧ p = ThetaPlace.finite v}
+
 theorem mem_selected_iff (data : ThetaValuationData l Fmod K)
     (v : NumberField.FinitePlace K) :
     v ∈ data.selected ↔ ∃ w, data.chosenLift w = v :=
@@ -219,10 +296,22 @@ theorem chosenLift_mem_selected (data : ThetaValuationData l Fmod K)
     data.chosenLift w ∈ data.selected :=
   ⟨w, rfl⟩
 
+theorem chosenInfiniteLift_mem_selectedInfinite
+    (data : ThetaValuationData l Fmod K)
+    (w : NumberField.InfinitePlace Fmod) :
+    data.chosenInfiniteLift w ∈ data.selectedInfinite :=
+  ⟨w, rfl⟩
+
 theorem toModuli_chosenLift_eq (data : ThetaValuationData l Fmod K)
     (w : NumberField.FinitePlace Fmod) :
     data.toModuli (data.chosenLift w) = w :=
   data.toModuli_chosenLift w
+
+theorem toModuliInfinite_chosenLift_eq
+    (data : ThetaValuationData l Fmod K)
+    (w : NumberField.InfinitePlace Fmod) :
+    data.toModuliInfinite (data.chosenInfiniteLift w) = w :=
+  data.toModuliInfinite_chosenLift w
 
 theorem mem_bad_iff (data : ThetaValuationData l Fmod K)
     (v : NumberField.FinitePlace K) :
@@ -238,6 +327,56 @@ theorem chosenLift_mem_bad_iff (data : ThetaValuationData l Fmod K)
     (w : NumberField.FinitePlace Fmod) :
     data.chosenLift w ∈ data.bad ↔ w ∈ data.badMod := by
   simp [bad, selected, data.toModuli_chosenLift_eq]
+
+theorem finite_mem_selectedPlaces_iff (data : ThetaValuationData l Fmod K)
+    (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ data.selectedPlaces ↔ v ∈ data.selected :=
+  Iff.rfl
+
+theorem infinite_mem_selectedPlaces_iff (data : ThetaValuationData l Fmod K)
+    (v : NumberField.InfinitePlace K) :
+    ThetaPlace.infinite v ∈ data.selectedPlaces ↔ v ∈ data.selectedInfinite :=
+  Iff.rfl
+
+theorem finite_mem_vnon_iff (data : ThetaValuationData l Fmod K)
+    (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ data.vnon ↔ v ∈ data.selected := by
+  constructor
+  · rintro ⟨w, hw, h⟩
+    cases h
+    exact hw
+  · intro hv
+    exact ⟨v, hv, rfl⟩
+
+theorem infinite_mem_varc_iff (data : ThetaValuationData l Fmod K)
+    (v : NumberField.InfinitePlace K) :
+    ThetaPlace.infinite v ∈ data.varc ↔ v ∈ data.selectedInfinite := by
+  constructor
+  · rintro ⟨w, hw, h⟩
+    cases h
+    exact hw
+  · intro hv
+    exact ⟨v, hv, rfl⟩
+
+theorem finite_mem_vbad_iff (data : ThetaValuationData l Fmod K)
+    (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ data.vbad ↔ v ∈ data.bad := by
+  constructor
+  · rintro ⟨w, hw, h⟩
+    cases h
+    exact hw
+  · intro hv
+    exact ⟨v, hv, rfl⟩
+
+theorem finite_mem_vgood_iff (data : ThetaValuationData l Fmod K)
+    (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ data.vgood ↔ v ∈ data.good := by
+  constructor
+  · rintro ⟨w, hw, h⟩
+    cases h
+    exact hw
+  · intro hv
+    exact ⟨v, hv, rfl⟩
 
 theorem bad_nonempty (data : ThetaValuationData l Fmod K) :
     ∃ v, v ∈ data.bad := by
@@ -548,6 +687,26 @@ theorem badValuation_has_multiplicative_reduction
     {v : NumberField.FinitePlace K} (hv : v ∈ theta.valuations.bad) :
     theta.valuations.multiplicativeBadReductionAtLift v :=
   theta.valuations.badLift_has_multiplicative_reduction hv
+
+theorem finitePlace_mem_vnon_iff (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ theta.valuations.vnon ↔
+      v ∈ theta.valuations.selected :=
+  theta.valuations.finite_mem_vnon_iff v
+
+theorem infinitePlace_mem_varc_iff (v : NumberField.InfinitePlace K) :
+    ThetaPlace.infinite v ∈ theta.valuations.varc ↔
+      v ∈ theta.valuations.selectedInfinite :=
+  theta.valuations.infinite_mem_varc_iff v
+
+theorem finitePlace_mem_vbad_iff (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ theta.valuations.vbad ↔
+      v ∈ theta.valuations.bad :=
+  theta.valuations.finite_mem_vbad_iff v
+
+theorem finitePlace_mem_vgood_iff (v : NumberField.FinitePlace K) :
+    ThetaPlace.finite v ∈ theta.valuations.vgood ↔
+      v ∈ theta.valuations.good :=
+  theta.valuations.finite_mem_vgood_iff v
 
 theorem localBaseChangeDiagrams
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :

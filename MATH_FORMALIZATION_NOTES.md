@@ -1935,3 +1935,122 @@ The next local milestone should add the archimedean side explicitly by defining
 a controlled finite/infinite place wrapper for selected places, using
 `NumberField.FinitePlace` and `NumberField.InfinitePlace`, and then recovering
 `Vnon`, `Varc`, `Vgood`, and `Vbad` as typed subsets.
+
+## Math Milestone 20: Finite and Infinite Selected Places
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(e) says that `V ⊆ V(K)` induces a natural bijection
+`V -> Vmod`, equivalently a section of the natural surjection from places of
+`K` to `Vmod`. It then introduces the four derived pieces:
+
+```text
+Vnon, Varc, Vgood, Vbad
+```
+
+The source also says that the subscript `v` denotes base-change to `K_v`.
+This is why the previous milestone used finite-place completions for the local
+nonarchimedean side, while this milestone first makes the finite/archimedean
+split visible at the level of selected places.
+
+### Lean/API Check
+
+Mathlib supplies separate APIs for the two classes of places:
+
+```text
+NumberField.FinitePlace K
+NumberField.InfinitePlace K
+```
+
+The finite-place API also supplies the local completion used in the previous
+milestone:
+
+```text
+v.maximalIdeal.adicCompletion K
+```
+
+The infinite-place API includes predicates such as `IsReal` and `IsComplex`.
+We do not use those predicates yet, but importing the API now means the
+archimedean branch is represented by actual mathlib infinite places rather
+than by a string or an untyped label.
+
+### Lean Decisions
+
+The formalization now introduces:
+
+```text
+ThetaPlace K
+```
+
+with constructors:
+
+```text
+ThetaPlace.finite   : NumberField.FinitePlace K -> ThetaPlace K
+ThetaPlace.infinite : NumberField.InfinitePlace K -> ThetaPlace K
+```
+
+`ThetaValuationData` now has both a finite and an infinite chosen section:
+
+```text
+chosenLift         : NumberField.FinitePlace Fmod -> NumberField.FinitePlace K
+chosenInfiniteLift : NumberField.InfinitePlace Fmod -> NumberField.InfinitePlace K
+```
+
+and corresponding maps back down to `Fmod`, with section identities. This
+matches the source requirement that the selected set `V` maps bijectively to
+the moduli-level places, while keeping finite and infinite places separate
+enough that Lean cannot confuse bad finite places with archimedean places.
+
+### Lean Declarations
+
+```text
+ThetaPlace
+ThetaPlace.IsFinite
+ThetaPlace.IsInfinite
+ThetaValuationData.selectedInfinite
+ThetaValuationData.selectedPlaces
+ThetaValuationData.vnon
+ThetaValuationData.varc
+ThetaValuationData.vbad
+ThetaValuationData.vgood
+ThetaValuationData.finite_mem_vnon_iff
+ThetaValuationData.infinite_mem_varc_iff
+ThetaValuationData.finite_mem_vbad_iff
+ThetaValuationData.finite_mem_vgood_iff
+InitialThetaData.finitePlace_mem_vnon_iff
+InitialThetaData.infinitePlace_mem_varc_iff
+InitialThetaData.finitePlace_mem_vbad_iff
+InitialThetaData.finitePlace_mem_vgood_iff
+```
+
+### What This Tests
+
+The example file now checks that:
+
+* valuation data can be constructed with both finite and infinite sections;
+* a finite selected place belongs to `Vnon` exactly when it belongs to the
+  selected finite section;
+* an infinite selected place belongs to `Varc` exactly when it belongs to the
+  selected infinite section;
+* `Vbad` and `Vgood` are finite-place subsets, as required by the use of
+  bad/good nonarchimedean reduction.
+
+### Design Trap Avoided
+
+The trap would be to model all places as a single opaque type and then add
+predicates for "finite", "infinite", "bad", and "good" afterward. That would
+make it easy to accidentally state a bad-reduction condition at an
+archimedean place. The sum type `ThetaPlace` keeps the source notation
+`V ⊆ V(K)` available while preserving Lean's separate finite and infinite
+place APIs.
+
+### Remaining Gap
+
+This does not yet construct archimedean local analytic objects. It only gives
+the formal selected-place split needed before the later prime-strip and
+Frobenioid layers can distinguish `Vnon` from `Varc`.
