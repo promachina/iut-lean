@@ -285,6 +285,27 @@ example :
     (zmodCanonicalGeneratorUpToSignElement primeFive).canonicalGeneratorUpToSign :=
   (zmodCanonicalGeneratorUpToSignElement primeFive).canonicalGeneratorUpToSign_holds
 
+example :
+    (zmodLocalLabCuspModel primeFive).canonicalCoordinate =
+      (1 : ZMod primeFive.value) :=
+  rfl
+
+example :
+    (zmodLocalLabCuspModel primeFive).canonicalNonzeroQuotientElement.element ≠
+      (zmodLocalLabCuspModel primeFive).labelQuotient.zero :=
+  (zmodLocalLabCuspModel primeFive).canonicalNonzeroQuotientElement_ne_zero
+
+example :
+    CanonicalGeneratorUpToSignElement.canonicalGeneratorUpToSign
+      (zmodLocalLabCuspModel primeFive).canonicalGeneratorUpToSignElement :=
+  (zmodLocalLabCuspModel primeFive).canonicalGeneratorUpToSign
+
+example :
+    (zmodLocalLabCuspModel primeFive).canonicalSignLabel =
+      (zmodSignAction primeFive).toSignLabelQuotient
+        (zmodLocalLabCuspModel primeFive).canonicalNonzeroLabel :=
+  (zmodLocalLabCuspModel primeFive).canonicalSignLabelEq
+
 /-- A constructor smoke test for the finite-place valuation section. -/
 def abstractThetaValuationData
     (toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod)

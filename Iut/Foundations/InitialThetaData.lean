@@ -919,6 +919,83 @@ def zmodCanonicalGeneratorUpToSignElement (l : PrimeGeFive) :
     (zmodSignAction l).generator_mem_signOrbit (1 : ZMod l.value)
 
 /--
+A local model of the label-class data around `LabCusp`.
+
+It packages the pointed quotient, unit action, sign action, additive `F_l`
+torsor, and distinguished canonical coordinate into one object.  This is still a
+finite-label model, not a reconstruction of cusps from orbicurves.
+-/
+structure LocalLabCuspModel (l : PrimeGeFive) where
+  labelQuotient : PointedEtaleQuotient
+  unitAction : QuotientUnitActionData labelQuotient
+  signAction : QuotientSignAction labelQuotient
+  signUnitCompatibility :
+    QuotientSignUnitCompatibility labelQuotient unitAction signAction
+  additiveTorsor : AdditiveTorsorData (ZMod l.value) labelQuotient.carrier
+  canonicalCoordinate : ZMod l.value
+  canonicalCoordinate_ne_zero : canonicalCoordinate ≠ 0
+  canonicalNonzeroLabel : labelQuotient.NonzeroCarrier
+  canonicalLabel_eq_translate :
+    canonicalNonzeroLabel.1 =
+      additiveTorsor.vadd canonicalCoordinate labelQuotient.zero
+  canonicalSignLabel : signAction.SignLabelQuotient
+  canonicalSignLabel_eq :
+    canonicalSignLabel = signAction.toSignLabelQuotient canonicalNonzeroLabel
+
+namespace LocalLabCuspModel
+
+variable {l : PrimeGeFive} (model : LocalLabCuspModel l)
+
+def canonicalNonzeroQuotientElement : NonzeroQuotientElement where
+  quotient := model.labelQuotient
+  unitAction := model.unitAction
+  element := model.canonicalNonzeroLabel.1
+  element_ne_zero := model.canonicalNonzeroLabel.2
+
+theorem canonicalNonzeroQuotientElement_ne_zero :
+    model.canonicalNonzeroQuotientElement.element ≠ model.labelQuotient.zero :=
+  model.canonicalNonzeroLabel.2
+
+def canonicalGeneratorUpToSignElement : CanonicalGeneratorUpToSignElement where
+  quotient := model.labelQuotient
+  signAction := model.signAction
+  canonicalGenerator := model.canonicalNonzeroLabel.1
+  element := model.canonicalNonzeroLabel.1
+  element_in_signOrbit :=
+    model.signAction.generator_mem_signOrbit model.canonicalNonzeroLabel.1
+
+theorem canonicalGeneratorUpToSign :
+    model.canonicalGeneratorUpToSignElement.canonicalGeneratorUpToSign :=
+  model.canonicalGeneratorUpToSignElement.canonicalGeneratorUpToSign_holds
+
+theorem canonicalLabelTranslate :
+    model.canonicalNonzeroLabel.1 =
+      model.additiveTorsor.vadd model.canonicalCoordinate model.labelQuotient.zero :=
+  model.canonicalLabel_eq_translate
+
+theorem canonicalSignLabelEq :
+    model.canonicalSignLabel =
+      model.signAction.toSignLabelQuotient model.canonicalNonzeroLabel :=
+  model.canonicalSignLabel_eq
+
+end LocalLabCuspModel
+
+/-- The concrete `ZMod l` local label model. -/
+def zmodLocalLabCuspModel (l : PrimeGeFive) : LocalLabCuspModel l where
+  labelQuotient := zmodPointedQuotient l
+  unitAction := zmodUnitActionData l
+  signAction := zmodSignAction l
+  signUnitCompatibility := zmodSignUnitCompatibility l
+  additiveTorsor := zmodLabelAdditiveTorsorData l
+  canonicalCoordinate := 1
+  canonicalCoordinate_ne_zero := (zmodOneNonzeroLabel l).2
+  canonicalNonzeroLabel := zmodOneNonzeroLabel l
+  canonicalLabel_eq_translate := by
+    simp [zmodOneNonzeroLabel, zmodLabelAdditiveTorsorData]
+  canonicalSignLabel := zmodCanonicalSignLabelQuotient l
+  canonicalSignLabel_eq := rfl
+
+/--
 The curve/moduli portion of IUT I, Definition 3.1(b).
 
 This records the once-punctured elliptic curve `X_F`, the quotient orbicurve

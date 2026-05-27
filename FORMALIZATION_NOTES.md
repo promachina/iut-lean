@@ -11872,3 +11872,101 @@ The bridge is still concrete and local to `ZMod l`. The next step should package
 the ordinary label coordinate, sign-label class, unit action, and additive
 torsor as one local `LabCusp` model so that bad-place cusp data can refer to a
 single structured object instead of separate helper declarations.
+
+## Math Milestone 31: Local `LabCusp` Model Package
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 4.1(ii), treats `LabCusp` as a structured label-class object:
+it has a canonical element, an `F_l`-torsor structure, and arises from the
+quotient `Q`. Definition 3.1(f) and Definition 6.1(iii) add the nonzero quotient
+origin and the canonical-generator-up-to-sign condition.
+
+The previous milestones built these ingredients separately. This milestone
+packages them so later local cusp data can point to one object instead of a
+loose collection of helper declarations.
+
+### Lean/API Check
+
+The package is a dependent record whose later fields refer to earlier fields:
+the sign-label quotient depends on the selected sign action, and the canonical
+nonzero label depends on the selected pointed quotient. Lean handles this
+directly with ordinary structure fields.
+
+### Lean Decisions
+
+The new record is:
+
+```text
+LocalLabCuspModel l
+```
+
+It contains:
+
+* the pointed label quotient;
+* the unit action;
+* the sign action and sign/unit compatibility;
+* the additive `ZMod l` torsor;
+* a canonical coordinate;
+* a canonical nonzero label;
+* the corresponding sign-label class.
+
+It also provides two conversion functions:
+
+```text
+LocalLabCuspModel.canonicalNonzeroQuotientElement
+LocalLabCuspModel.canonicalGeneratorUpToSignElement
+```
+
+These are exactly the witness types already used by `CuspData` and
+`ThetaCuspLocalData`.
+
+The concrete finite model is:
+
+```text
+zmodLocalLabCuspModel l
+```
+
+with canonical coordinate `1`.
+
+### Lean Declarations
+
+```text
+LocalLabCuspModel
+LocalLabCuspModel.canonicalNonzeroQuotientElement
+LocalLabCuspModel.canonicalNonzeroQuotientElement_ne_zero
+LocalLabCuspModel.canonicalGeneratorUpToSignElement
+LocalLabCuspModel.canonicalGeneratorUpToSign
+LocalLabCuspModel.canonicalLabelTranslate
+LocalLabCuspModel.canonicalSignLabelEq
+zmodLocalLabCuspModel
+```
+
+### What This Tests
+
+The example file now checks:
+
+* the concrete model has canonical coordinate `1`;
+* it produces a nonzero quotient element;
+* it produces a canonical-generator-up-to-sign witness;
+* its canonical sign-label class is the quotient class of its canonical nonzero
+  label.
+
+### Design Trap Avoided
+
+The trap would be to keep adding facts about labels without an object that can
+be passed into the local cusp layer. The package makes the boundary explicit:
+later IUT records can depend on `LocalLabCuspModel` rather than on unrelated
+global declarations.
+
+### Remaining Gap
+
+`ThetaCuspLocalData` has not yet been upgraded to store this package at bad
+places. The next step should add an optional or direct bad-place local label
+model field and prove that the old nonzero/canonical-generator projections are
+recovered from it.
