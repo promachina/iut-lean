@@ -4493,3 +4493,107 @@ The function field is still abstract, and the field-automorphism condition is
 not yet a bundled map into `Aut` or `AlgEquiv`. A later milestone should replace
 `actionByFieldAutomorphisms : Prop` with a concrete homomorphism from the deck
 quotient into the automorphism group of the reconstructed function field.
+
+## Math Milestone 45: Algebraic Deck Action
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+The same sentence of IUT I, Remark 3.1.2, is the source for this refinement:
+the reconstructed function field of `X_K` is equipped with its natural
+
+```text
+Gal(X_K/C_K) ~= Pi_CK / Pi_XK
+```
+
+action. Since this is an action on a function field, the action should preserve
+the field operations. Mathlib's `MulSemiringAction` is the appropriate available
+structure: its documentation explicitly gives a Galois group acting on a field
+as a typical use case, and its axioms express preservation of `0`, `1`,
+addition, and multiplication.
+
+The Scholze-Stix boundary remains unchanged. We have formalized an algebraic
+action attached to the early `Theta`-approach quotient. We have not identified
+Hodge theaters, pilot objects, or copies of realified monoids.
+
+### Lean/API Check
+
+`ReconstructedFunctionFieldData` now stores:
+
+```text
+deckAction : MulSemiringAction deckGroup carrier
+```
+
+instead of:
+
+```text
+deckAction : MulAction deckGroup carrier
+actionByFieldAutomorphisms : Prop
+```
+
+This is a real strengthening. Lean now knows that the deck action preserves
+the semiring structure of the field carrier. The structure exposes the
+associated ring endomorphism:
+
+```text
+deckRingHom : deckGroup -> carrier ->+* carrier
+```
+
+and proves preservation of `0`, `1`, addition, and multiplication.
+
+### Lean Decisions
+
+We used `MulSemiringAction` rather than immediately constructing an explicit
+map into a group of field automorphisms. This matches what mathlib already
+supports cleanly while still making the action algebraic. Since the acting
+object is a group, the action maps are invertible at the action level; later we
+can bundle these maps as `RingEquiv`/`AlgEquiv` once the function-field API is
+less abstract.
+
+### Lean Declarations
+
+```text
+ReconstructedFunctionFieldData.deckRingHom
+ReconstructedFunctionFieldData.smul_zero_element
+ReconstructedFunctionFieldData.smul_one_element
+ReconstructedFunctionFieldData.smul_add_element
+ReconstructedFunctionFieldData.smul_mul_element
+ThetaApproachFunctionFieldData.deckRingHom
+ThetaApproachFunctionFieldData.deck_smul_zero
+ThetaApproachFunctionFieldData.deck_smul_one
+ThetaApproachFunctionFieldData.deck_smul_add
+ThetaApproachFunctionFieldData.deck_smul_mul
+```
+
+The previous proposition `actionByFieldAutomorphisms` has been removed from the
+current API.
+
+### What This Tests
+
+The example file now checks:
+
+* the deck action identity law;
+* the deck action multiplication law;
+* preservation of `1`;
+* preservation of addition;
+* preservation of multiplication;
+* the remaining source-level statement that this algebraic action matches the
+  intended quotient/Galois action.
+
+### Design Trap Avoided
+
+The trap would be to leave "acts by automorphisms" as an inert proposition
+after mathlib already provides a usable algebraic action class. The opposite
+trap would be to overfit the current abstraction to a specific concrete
+function-field automorphism group before the reconstructed function field has
+been built. `MulSemiringAction` is the right intermediate layer.
+
+### Remaining Gap
+
+The reconstructed function field is still abstract. Later milestones should
+replace the abstract carrier with a real function-field object and then bundle
+the deck action as a homomorphism into the relevant automorphism group.

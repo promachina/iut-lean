@@ -10,6 +10,7 @@ import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.GroupTheory.QuotientGroup.Defs
+import Mathlib.Algebra.Ring.Action.Basic
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Topology.Algebra.Group.Basic
@@ -1487,16 +1488,13 @@ end ThetaApproachQuotientData
 /--
 A reconstructed function field equipped with a deck-group action.
 
-The action is recorded as an actual group action on the carrier.  The stronger
-claim that the action is by field automorphisms is kept as a named proposition
-until the relevant function-field and automorphism APIs are formalized.
+The action is recorded as a `MulSemiringAction`, so each deck-group element
+preserves `0`, `1`, addition, and multiplication on the field carrier.
 -/
 structure ReconstructedFunctionFieldData (deckGroup : Type u) [Group deckGroup] where
   carrier : Type u
   field : Field carrier
-  deckAction : MulAction deckGroup carrier
-  actionByFieldAutomorphisms : Prop
-  actionByFieldAutomorphisms_holds : actionByFieldAutomorphisms
+  deckAction : MulSemiringAction deckGroup carrier
 
 namespace ReconstructedFunctionFieldData
 
@@ -1506,12 +1504,11 @@ variable (functionField : ReconstructedFunctionFieldData deckGroup)
 instance : Field functionField.carrier :=
   functionField.field
 
-instance : MulAction deckGroup functionField.carrier :=
+instance : MulSemiringAction deckGroup functionField.carrier :=
   functionField.deckAction
 
-theorem deckActionByFieldAutomorphisms :
-    functionField.actionByFieldAutomorphisms :=
-  functionField.actionByFieldAutomorphisms_holds
+def deckRingHom (g : deckGroup) : functionField.carrier →+* functionField.carrier :=
+  MulSemiringAction.toRingHom deckGroup functionField.carrier g
 
 theorem one_smul_element (x : functionField.carrier) :
     (1 : deckGroup) • x = x :=
@@ -1520,6 +1517,22 @@ theorem one_smul_element (x : functionField.carrier) :
 theorem mul_smul_element (g h : deckGroup) (x : functionField.carrier) :
     (g * h) • x = g • h • x :=
   mul_smul g h x
+
+theorem smul_zero_element (g : deckGroup) :
+    g • (0 : functionField.carrier) = 0 :=
+  smul_zero g
+
+theorem smul_one_element (g : deckGroup) :
+    g • (1 : functionField.carrier) = 1 :=
+  smul_one g
+
+theorem smul_add_element (g : deckGroup) (x y : functionField.carrier) :
+    g • (x + y) = g • x + g • y :=
+  smul_add g x y
+
+theorem smul_mul_element (g : deckGroup) (x y : functionField.carrier) :
+    g • (x * y) = g • x * g • y :=
+  MulSemiringAction.smul_mul g x y
 
 end ReconstructedFunctionFieldData
 
@@ -1550,7 +1563,7 @@ instance : Field (ThetaApproachFunctionFieldData.functionField functionFieldData
   functionFieldData.reconstructedFunctionField.field
 
 instance :
-    MulAction (ThetaApproachQuotientData.deckQuotient thetaApproach)
+    MulSemiringAction (ThetaApproachQuotientData.deckQuotient thetaApproach)
       (ThetaApproachFunctionFieldData.functionField functionFieldData) :=
   functionFieldData.reconstructedFunctionField.deckAction
 
@@ -1558,13 +1571,13 @@ theorem reconstructedFromXK :
     functionFieldData.reconstructedFunctionFieldOfXK :=
   functionFieldData.reconstructedFunctionFieldOfXK_holds
 
-theorem deckActionByFieldAutomorphisms :
-    functionFieldData.reconstructedFunctionField.actionByFieldAutomorphisms :=
-  functionFieldData.reconstructedFunctionField.deckActionByFieldAutomorphisms
-
 theorem deckActionMatchesQuotient :
     functionFieldData.deckActionMatchesGalQuotient :=
   functionFieldData.deckActionMatchesGalQuotient_holds
+
+def deckRingHom (g : ThetaApproachQuotientData.deckQuotient thetaApproach) :
+    functionFieldData.functionField →+* functionFieldData.functionField :=
+  functionFieldData.reconstructedFunctionField.deckRingHom g
 
 theorem deck_one_smul
     (x : ThetaApproachFunctionFieldData.functionField functionFieldData) :
@@ -1576,6 +1589,26 @@ theorem deck_mul_smul
     (x : ThetaApproachFunctionFieldData.functionField functionFieldData) :
     (g * h) • x = g • h • x :=
   mul_smul g h x
+
+theorem deck_smul_zero (g : ThetaApproachQuotientData.deckQuotient thetaApproach) :
+    g • (0 : functionFieldData.functionField) = 0 :=
+  smul_zero g
+
+theorem deck_smul_one (g : ThetaApproachQuotientData.deckQuotient thetaApproach) :
+    g • (1 : functionFieldData.functionField) = 1 :=
+  smul_one g
+
+theorem deck_smul_add
+    (g : ThetaApproachQuotientData.deckQuotient thetaApproach)
+    (x y : functionFieldData.functionField) :
+    g • (x + y) = g • x + g • y :=
+  smul_add g x y
+
+theorem deck_smul_mul
+    (g : ThetaApproachQuotientData.deckQuotient thetaApproach)
+    (x y : functionFieldData.functionField) :
+    g • (x * y) = g • x * g • y :=
+  MulSemiringAction.smul_mul g x y
 
 end ThetaApproachFunctionFieldData
 
@@ -1662,10 +1695,6 @@ def thetaApproachFunctionFieldCarrier : Type _ :=
 theorem thetaApproachFunctionFieldOfXK :
     coverData.thetaApproachFunctionField.reconstructedFunctionFieldOfXK :=
   coverData.thetaApproachFunctionField.reconstructedFromXK
-
-theorem thetaApproachDeckActionByFieldAutomorphisms :
-    coverData.thetaApproachFunctionField.reconstructedFunctionField.actionByFieldAutomorphisms :=
-  coverData.thetaApproachFunctionField.deckActionByFieldAutomorphisms
 
 theorem thetaApproachDeckActionMatchesQuotient :
     coverData.thetaApproachFunctionField.deckActionMatchesGalQuotient :=
@@ -2403,11 +2432,6 @@ def thetaApproachFunctionFieldCarrier : Type _ :=
 theorem thetaApproachFunctionFieldOfXK :
     theta.coverData.thetaApproachFunctionField.reconstructedFunctionFieldOfXK :=
   theta.coverData.thetaApproachFunctionFieldOfXK
-
-theorem thetaApproachDeckActionByFieldAutomorphisms :
-    ReconstructedFunctionFieldData.actionByFieldAutomorphisms
-      theta.coverData.thetaApproachFunctionField.reconstructedFunctionField :=
-  ThetaOrbicurveCoverData.thetaApproachDeckActionByFieldAutomorphisms theta.coverData
 
 theorem thetaApproachDeckActionMatchesQuotient :
     theta.coverData.thetaApproachFunctionField.deckActionMatchesGalQuotient :=

@@ -199,6 +199,24 @@ example (G : Type u) [Group G]
     (g * h) • x = g • h • x :=
   functionField.mul_smul_element g h x
 
+example (G : Type u) [Group G]
+    (functionField : ReconstructedFunctionFieldData G)
+    (g : G) :
+    g • (1 : functionField.carrier) = 1 :=
+  functionField.smul_one_element g
+
+example (G : Type u) [Group G]
+    (functionField : ReconstructedFunctionFieldData G)
+    (g : G) (x y : functionField.carrier) :
+    g • (x + y) = g • x + g • y :=
+  functionField.smul_add_element g x y
+
+example (G : Type u) [Group G]
+    (functionField : ReconstructedFunctionFieldData G)
+    (g : G) (x y : functionField.carrier) :
+    g • (x * y) = g • x * g • y :=
+  functionField.smul_mul_element g x y
+
 example :
     (zmodOneNonzeroQuotientElement primeFive).element ≠
       (zmodPointedQuotient primeFive).zero :=
@@ -724,11 +742,6 @@ example :
 example :
     theta.coverData.thetaApproachFunctionField.reconstructedFunctionFieldOfXK :=
   theta.coverData.thetaApproachFunctionFieldOfXK
-
-example :
-    ReconstructedFunctionFieldData.actionByFieldAutomorphisms
-      theta.coverData.thetaApproachFunctionField.reconstructedFunctionField :=
-  theta.coverData.thetaApproachDeckActionByFieldAutomorphisms
 
 example :
     theta.coverData.thetaApproachFunctionField.deckActionMatchesGalQuotient :=
