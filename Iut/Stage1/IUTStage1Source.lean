@@ -2074,6 +2074,65 @@ theorem localTensor_summandCapsuleLogVolume_eq
       (choice.local_tensor_state.packetState.capsuleFamily.capsule i).logVolume :=
   choice.local_tensor_state.summandCapsuleLogVolume_eq i
 
+/--
+Direct-summand-level `(Ind2)` step for the refined packet choice.
+
+The step records an action on the source direct summand family whose induced
+capsule action gives the target capsule family.
+-/
+structure LocalTensorDirectSummandActionStep
+    (choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind) :
+    Prop where
+  column_eq : choice₁.column = choice₂.column
+  row_eq : choice₁.row = choice₂.row
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+  local_object_eq :
+    choice₁.local_tensor_state.packetState.localObject =
+      choice₂.local_tensor_state.packetState.localObject
+  summand_action_exists :
+    ∃ action :
+      IUTStage1TensorDirectSummandFamilyAction
+        choice₁.local_tensor_state.summandFamily,
+      choice₂.local_tensor_state.packetState.capsuleFamily =
+        action.toCapsuleAction.transformedFamily
+
+def toTensorPacketActionStep
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorDirectSummandActionStep choice₁ choice₂) :
+    IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketActionStep
+      choice₁.forgetDirectSummands choice₂.forgetDirectSummands :=
+  { column_eq := hstep.column_eq,
+    row_eq := hstep.row_eq,
+    coric_eq := hstep.coric_eq,
+    procession_eq := hstep.procession_eq,
+    upper_semi_eq := hstep.upper_semi_eq,
+    local_object_eq := hstep.local_object_eq,
+    capsule_action_exists := by
+      rcases hstep.summand_action_exists with ⟨action, htarget⟩
+      exact ⟨action.toCapsuleAction, htarget⟩ }
+
+theorem ind2_preserves_directSummandCount
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorDirectSummandActionStep choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.tensorState.directSummandCount =
+      choice₂.local_tensor_state.packetState.tensorState.directSummandCount :=
+  IUTStage1TensorPacketTheorem311Choice.actionStep_preserves_directSummandCount
+    (toTensorPacketActionStep hstep)
+
+theorem ind2_preserves_capsuleTotalLogVolume
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorDirectSummandActionStep choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  IUTStage1TensorPacketTheorem311Choice.actionStep_preserves_capsuleTotalLogVolume
+    (toTensorPacketActionStep hstep)
+
 end IUTStage1DirectSummandPacketTheorem311Choice
 
 /--

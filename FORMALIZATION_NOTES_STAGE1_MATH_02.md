@@ -490,3 +490,90 @@ directSummandPacketTheorem311_logVolume_eq_example
 The next step should define an `(Ind2)` action step directly on
 `IUTStage1DirectSummandPacketTheorem311Choice`, then derive the existing
 packet-action step by applying `toCapsuleAction` to the direct summand action.
+
+## 6. Direct-Summand `(Ind2)` Step Descends to Packet `(Ind2)`
+
+### Goal
+
+We defined the `(Ind2)` step at the direct-summand packet level and proved that
+it descends to the packet-action step from the previous layer.
+
+### Lean/API Check
+
+The new relation is:
+
+```text
+IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+```
+
+It preserves:
+
+```text
+column
+row
+coric
+procession_state
+upper_semi_state
+localObject
+```
+
+and contains an existential direct-summand action:
+
+```text
+∃ action : IUTStage1TensorDirectSummandFamilyAction source.summandFamily,
+  target.packetState.capsuleFamily =
+    action.toCapsuleAction.transformedFamily
+```
+
+The existential packaging again keeps the step proof-valued.
+
+### Descending Map
+
+Lean now checks:
+
+```text
+toTensorPacketActionStep
+```
+
+which converts the direct-summand step into:
+
+```text
+IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketActionStep
+```
+
+Consequently, the direct-summand step inherits the already proved packet-level
+invariants:
+
+```text
+ind2_preserves_directSummandCount
+ind2_preserves_capsuleTotalLogVolume
+```
+
+### Mathematical Point
+
+This is the cleanest formal version so far of the intended `(Ind2)` dependency
+chain:
+
+```text
+direct summand symmetry
+  -> induced capsule action
+  -> finite-sum log-volume preservation
+  -> local tensor direct-summand count preservation
+```
+
+### Toy Check
+
+The source examples now check:
+
+```text
+directSummandPacketTheorem311_ind2_to_packetAction_example
+directSummandPacketTheorem311_ind2_preserves_directSummandCount_example
+directSummandPacketTheorem311_ind2_preserves_totalLogVolume_example
+```
+
+### Remaining Gap
+
+The direct-summand action itself is still an abstract source-facing action. The
+next serious mathematical refinement is to replace this action by typed
+nonarchimedean `Ism` actions and archimedean order-two actions, or at least by
+separate records for those two cases.

@@ -661,6 +661,42 @@ theorem directSummandPacketTheorem311_logVolume_eq_example
       (choice.local_tensor_state.packetState.capsuleFamily.capsule i).logVolume :=
   choice.localTensor_summandCapsuleLogVolume_eq i
 
+def directSummandPacketTheorem311_ind2_to_packetAction_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+        choice₁ choice₂) :
+    IUTStage1TensorPacketTheorem311Choice.LocalTensorPacketActionStep
+      choice₁.forgetDirectSummands choice₂.forgetDirectSummands :=
+  IUTStage1DirectSummandPacketTheorem311Choice.toTensorPacketActionStep
+    hstep
+
+theorem directSummandPacketTheorem311_ind2_preserves_directSummandCount_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.tensorState.directSummandCount =
+      choice₂.local_tensor_state.packetState.tensorState.directSummandCount :=
+  IUTStage1DirectSummandPacketTheorem311Choice.ind2_preserves_directSummandCount
+    hstep
+
+theorem directSummandPacketTheorem311_ind2_preserves_totalLogVolume_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+        choice₁ choice₂) :
+    choice₁.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      choice₂.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  IUTStage1DirectSummandPacketTheorem311Choice.ind2_preserves_capsuleTotalLogVolume
+    hstep
+
 theorem upperSemi_logVolumeCompatibility_upperBound_example
     (data : IUTStage1LogVolumeCompatibilityData) :
     data.sourceLogVolume <= data.targetLogVolume :=
