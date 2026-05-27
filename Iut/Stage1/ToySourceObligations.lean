@@ -922,6 +922,35 @@ theorem unitThetaToy_endToEndAudit_from_sourceObligations
       unitThetaToyStage1Comparison_recovers_corollary312
         measure hnormalized hh hbound hholds }
 
+theorem unitThetaToy_publicAudit_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (Transport.map unitQToTheta (qAssignment h)).coord <=
+        -(2 * h) + epsilonBound ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+        (signedPilotLogVolume PilotSide.q
+          (Transport.map unitQToTheta (qAssignment h)).coord) ∧
+      corollary312_from_stage1_comparison
+        (unitThetaToyStage1Comparison_from_sourceObligations
+          measure hnormalized hh hbound hholds) =
+        corollary312_of_signed_le
+          (unitThetaToy_qSigned_le_thetaSigned_from_sourceObligations
+            measure hnormalized hh hbound hholds) := by
+  let audit :=
+    unitThetaToy_endToEndAudit_from_sourceObligations
+      measure hnormalized hh hbound hholds
+  exact ⟨audit.q_le_thetaBound_from_chain,
+    audit.corollary_from_chain,
+    unitThetaToyStage1Comparison_recovers_qThetaChain
+      measure hnormalized hh hbound hholds⟩
+
 theorem unitThetaToy_theta_commonBound_from_sourceObligations
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

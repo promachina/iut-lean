@@ -6027,3 +6027,73 @@ The next milestone should decide whether to extend this audit-summary pattern
 back to the general `SourceObligationLedger`, or to continue toy-side work by
 exposing the same audit in a shorter public theorem suitable for examples and
 future regression tests.
+
+## Milestone 69: Toy Public Audit Theorem
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+The detailed audit record from Milestone 68 is useful for human inspection, but
+examples and regression tests also need a compact public theorem. The public
+statement should still keep the three essential checkpoints visible:
+
+```text
+qSigned <= thetaSigned
+Corollary312Inequality
+Stage1Comparison recovers the same corollary packaging
+```
+
+This matches the formal strategy of keeping the final Corollary 3.12-shaped
+output tied to the explicit q-to-target-to-Theta chain.
+
+### Purpose
+
+This milestone introduces:
+
+```text
+unitThetaToy_publicAudit_from_sourceObligations
+```
+
+It returns the compact conjunction:
+
+```text
+(Transport.map unitQToTheta (qAssignment h)).coord
+  <= -(2 * h) + epsilonBound
+
+Corollary312Inequality ...
+
+corollary312_from_stage1_comparison
+  unitThetaToyStage1Comparison_from_sourceObligations
+  =
+corollary312_of_signed_le
+  unitThetaToy_qSigned_le_thetaSigned_from_sourceObligations
+```
+
+### Lean Declarations
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToy_publicAudit_from_sourceObligations
+```
+
+### What This Tests
+
+The theorem packages the practical end-to-end checks future examples will need
+without hiding their source. Its proof pulls the q-to-Theta inequality and
+corollary proof from `UnitThetaToySourceObligationAudit`, then uses the existing
+Stage1Comparison recovery projection.
+
+### Design Trap Avoided
+
+The trap would be to make the public theorem a fresh direct proof. Instead, the
+new theorem is only a small view of the detailed audit object.
+
+### Next Step
+
+The next milestone should extend the audit-summary pattern to the general
+`SourceObligationLedger`, so non-toy source ledgers can expose the same
+dependency checkpoints without relying on toy-specific names.
