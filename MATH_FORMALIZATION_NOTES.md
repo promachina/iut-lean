@@ -100,3 +100,87 @@ No theorem in this phase may turn IPL, SHE, APT, HIS, or any single qualitative
 name into the endpoint unless every required transport, comparison target,
 real-line-copy identification, and Hodge-theater history condition appears in
 the theorem statement or an explicit dependency.
+
+## Math Milestone 1: Conservative Structured SHE Context
+
+Lean files:
+
+* `Iut/Foundations/QualitativeData.lean`
+* `Iut/Stage1/ToyQualitativeOutput.lean`
+
+### Source Check
+
+IUT III, Remark 3.11.1 describes SHE as simultaneous holomorphic
+expressibility: the relevant construction and output data should be expressed in
+terms that are valid relative to both the domain and codomain arithmetic
+holomorphic structures. Mochizuki's 2026 report identifies `(HDD) o (SHE)` as
+the final Stage 1 comparison focus. Scholze-Stix's criticism remains the
+guardrail: simultaneous expression must not silently become identification of
+the two histories or of their real-line copies.
+
+### Purpose
+
+The existing `SHEDatum` only stored a shared context. This milestone introduces
+a first stronger SHE object, `QualitativeData.StructuredSHEContext`, without
+making SHE prove any comparison endpoint.
+
+The new context records:
+
+* domain and codomain holomorphic structures;
+* a common language;
+* q-pilot and Theta-pilot holomorphic structures;
+* explicit placement of the q-pilot in the codomain theater;
+* explicit placement of the Theta-pilot in the domain theater;
+* a proposition witnessing simultaneous validity;
+* an explicit proof that the domain and codomain Hodge-theater sides are not
+  identified.
+
+### Lean Declarations
+
+In `QualitativeData.lean`:
+
+```text
+QualitativeData.StructuredSHEContext
+QualitativeData.StructuredSHEContext.sharedContext
+QualitativeData.StructuredSHEContext.sheDatum
+QualitativeData.StructuredSHEContext.hasStructuredSHE
+QualitativeData.StructuredSHEContext.qPilotTheater_eq_codomain
+QualitativeData.StructuredSHEContext.thetaPilotTheater_eq_domain
+QualitativeData.StructuredSHEContext.simultaneousValid
+QualitativeData.StructuredSHEContext.domainHistory_ne_codomainHistory
+QualitativeData.StructuredSHEContext.sheDatum_sharedContext
+```
+
+In `ToyQualitativeOutput.lean`:
+
+```text
+thetaToyStructuredSHEContext
+thetaToyStructuredSHEContext_sheDatum
+thetaToyStructuredSHEContext_hasStructuredSHE
+thetaToyStructuredSHEContext_histories_not_identified
+```
+
+### What This Tests
+
+The toy example satisfies the stronger SHE context while proving only the
+conservative projections:
+
+* it recovers the old inert `SHEDatum`;
+* it recovers `HasStructuredSHE`;
+* it records that the toy domain and codomain histories are not identified.
+
+It does not prove a common-target bound, payload route, public audit, or
+Corollary-3.12-shaped endpoint.
+
+### Design Trap Avoided
+
+The trap would be to let "SHE" become a magic theorem producing the comparison
+payload. This milestone does the opposite: it strengthens the data shape while
+only projecting back to existing inert evidence. The extra fields make future
+bridges state exactly what simultaneous validity and history separation mean.
+
+### Next Step
+
+The next milestone should connect `StructuredSHEContext` to the source-facing
+`IUTStage1Theorem311SHEAlignment` field, again as a conservative projection
+rather than as an endpoint theorem.

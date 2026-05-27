@@ -72,6 +72,80 @@ structure SharedHolomorphicContext where
 structure SHEDatum (family : TransportedRegionFamily source target index) where
   sharedContext : SharedHolomorphicContext
 
+def HasStructuredSHE (family : TransportedRegionFamily source target index) : Prop :=
+  Nonempty (SHEDatum family)
+
+/--
+First non-inert local context for simultaneous holomorphic expressibility.
+
+This still does not produce a comparison bound or an endpoint. It records the
+two holomorphic structures, the common expression language, the q- and
+Theta-side pilot structures, a validity proposition for simultaneous expression,
+and an explicit guard that the two Hodge-theater histories are not being
+identified.
+-/
+structure StructuredSHEContext
+    (family : TransportedRegionFamily source target index) where
+  domainStructure : HolomorphicStructure
+  codomainStructure : HolomorphicStructure
+  commonLanguage : CommonLanguageId
+  qPilotStructure : HolomorphicStructure
+  thetaPilotStructure : HolomorphicStructure
+  q_pilot_in_codomain :
+    qPilotStructure.theater = codomainStructure.theater
+  theta_pilot_in_domain :
+    thetaPilotStructure.theater = domainStructure.theater
+  simultaneous_valid : Prop
+  simultaneous_valid_holds : simultaneous_valid
+  histories_not_identified :
+    domainStructure.theater.side ≠ codomainStructure.theater.side
+
+namespace StructuredSHEContext
+
+variable {family : TransportedRegionFamily source target index}
+
+def sharedContext (context : StructuredSHEContext family) :
+    SharedHolomorphicContext :=
+  { domainStructure := context.domainStructure,
+    codomainStructure := context.codomainStructure,
+    commonLanguage := context.commonLanguage }
+
+def sheDatum (context : StructuredSHEContext family) : SHEDatum family :=
+  { sharedContext := context.sharedContext }
+
+theorem hasStructuredSHE (context : StructuredSHEContext family) :
+    HasStructuredSHE family :=
+  ⟨context.sheDatum⟩
+
+theorem qPilotTheater_eq_codomain
+    (context : StructuredSHEContext family) :
+    context.qPilotStructure.theater =
+      context.codomainStructure.theater :=
+  context.q_pilot_in_codomain
+
+theorem thetaPilotTheater_eq_domain
+    (context : StructuredSHEContext family) :
+    context.thetaPilotStructure.theater =
+      context.domainStructure.theater :=
+  context.theta_pilot_in_domain
+
+theorem simultaneousValid (context : StructuredSHEContext family) :
+    context.simultaneous_valid :=
+  context.simultaneous_valid_holds
+
+theorem domainHistory_ne_codomainHistory
+    (context : StructuredSHEContext family) :
+    context.domainStructure.theater.side ≠
+      context.codomainStructure.theater.side :=
+  context.histories_not_identified
+
+theorem sheDatum_sharedContext
+    (context : StructuredSHEContext family) :
+    context.sheDatum.sharedContext = context.sharedContext :=
+  rfl
+
+end StructuredSHEContext
+
 /-- Inert record for algorithmic-parallel-transport style data. -/
 structure APTDatum (family : TransportedRegionFamily source target index) where
   mechanism : TransportMechanismId
@@ -80,9 +154,6 @@ structure APTDatum (family : TransportedRegionFamily source target index) where
 
 def HasStructuredIPL (family : TransportedRegionFamily source target index) : Prop :=
   Nonempty (IPLDatum family)
-
-def HasStructuredSHE (family : TransportedRegionFamily source target index) : Prop :=
-  Nonempty (SHEDatum family)
 
 def HasStructuredAPT (family : TransportedRegionFamily source target index) : Prop :=
   Nonempty (APTDatum family)

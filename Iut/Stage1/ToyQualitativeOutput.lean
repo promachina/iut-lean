@@ -69,6 +69,42 @@ def thetaToySHED (f : Transport qLine thetaLine) (h : Real)
     QualitativeData.SHEDatum (thetaAPTOutput f h epsilon) :=
   { sharedContext := thetaToySharedHolomorphicContext }
 
+def thetaToyStructuredSHEContext (f : Transport qLine thetaLine) (h : Real)
+    (epsilon : index -> Real) :
+    QualitativeData.StructuredSHEContext (thetaAPTOutput f h epsilon) :=
+  { domainStructure := thetaToyDomainStructure,
+    codomainStructure := thetaToyCodomainStructure,
+    commonLanguage := thetaToySharedHolomorphicContext.commonLanguage,
+    qPilotStructure := thetaToyCodomainStructure,
+    thetaPilotStructure := thetaToyDomainStructure,
+    q_pilot_in_codomain := rfl,
+    theta_pilot_in_domain := rfl,
+    simultaneous_valid := True,
+    simultaneous_valid_holds := trivial,
+    histories_not_identified := by
+      intro hside
+      cases hside }
+
+theorem thetaToyStructuredSHEContext_sheDatum
+    (f : Transport qLine thetaLine) (h : Real)
+    (epsilon : index -> Real) :
+    (thetaToyStructuredSHEContext f h epsilon).sheDatum =
+      thetaToySHED f h epsilon :=
+  rfl
+
+theorem thetaToyStructuredSHEContext_hasStructuredSHE
+    (f : Transport qLine thetaLine) (h : Real)
+    (epsilon : index -> Real) :
+    QualitativeData.HasStructuredSHE (thetaAPTOutput f h epsilon) :=
+  (thetaToyStructuredSHEContext f h epsilon).hasStructuredSHE
+
+theorem thetaToyStructuredSHEContext_histories_not_identified
+    (f : Transport qLine thetaLine) (h : Real)
+    (epsilon : index -> Real) :
+    (thetaToyStructuredSHEContext f h epsilon).domainStructure.theater.side ≠
+      (thetaToyStructuredSHEContext f h epsilon).codomainStructure.theater.side :=
+  (thetaToyStructuredSHEContext f h epsilon).domainHistory_ne_codomainHistory
+
 def thetaToyAPTD (f : Transport qLine thetaLine) (h : Real)
     (epsilon : index -> Real) :
     QualitativeData.APTDatum (thetaAPTOutput f h epsilon) :=
