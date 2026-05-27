@@ -5572,3 +5572,83 @@ comparison.
 The next milestone should expose the second leg of the toy three-term chain:
 the target volume of the selected output is bounded by the common Theta bound
 coming from the charted common container.
+
+## Milestone 63: Toy Target-to-Theta Second Leg
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+IUT III, Step `(xi-d)`, forms comparable real quantities by applying log-volume
+to the possible output data and comparing those values with the common
+Theta-side bound. In the toy formalization, the common bound is supplied by the
+charted common container:
+
+```text
+thetaToyChartedCommonContainerData ...
+```
+
+and its choice-volume theorem says that the target volume of every selected
+output is bounded by
+
+```text
+-(2 * h) + epsilonBound
+```
+
+This is the toy version of the second inequality in the three-term chain.
+
+### Purpose
+
+This milestone exposes the second leg of the toy source ledger:
+
+```text
+ledger.targetVolume.targetSigned <= -(2 * h) + epsilonBound
+```
+
+It also records that the same result is obtained directly from the charted
+common container, and then unfolds the selected output to the concrete toy
+comparison:
+
+```text
+RegionMeasure.targetVolume measure
+  (thetaIndeterminacyComparison unitQToTheta h (epsilon choice))
+  <= -(2 * h) + epsilonBound
+```
+
+### Lean Declarations
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToy_targetSigned_le_thetaSigned_from_sourceObligations
+unitThetaToy_targetSigned_le_thetaSigned_from_chartedContainer
+unitThetaToy_choiceTargetVolume_le_thetaBound_from_sourceObligations
+unitThetaToy_thetaTargetVolume_le_thetaBound_from_sourceObligations
+```
+
+### What This Tests
+
+The toy ledger now exposes the second numerical comparison in three compatible
+forms:
+
+```text
+targetSigned <= thetaSigned
+choice target volume <= thetaSigned
+selected thetaIndeterminacyComparison volume <= thetaSigned
+```
+
+The charted-container theorem makes the source of the upper bound explicit
+instead of treating `target_le_theta` as an isolated arithmetic fact.
+
+### Design Trap Avoided
+
+The trap would be to let the second leg of the inequality appear as a free
+assumption. This milestone ties it back to the charted common container and to
+the concrete selected output region.
+
+### Next Step
+
+The next milestone should expose the composed toy q-to-Theta inequality as a
+named transitive chain through the target-volume middle term.

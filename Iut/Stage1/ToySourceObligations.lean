@@ -448,6 +448,71 @@ theorem unitThetaToy_qSigned_le_thetaTargetVolume_from_membership
     (unitThetaToy_membership_holds_thetaComparison_from_sourceObligations
       measure hnormalized hh hbound hholds)
 
+theorem unitThetaToy_targetSigned_le_thetaSigned_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToySourceObligationLedger
+      measure hnormalized hh hbound hholds).targetVolume.targetSigned <=
+      -(2 * h) + epsilonBound :=
+  (unitThetaToySourceObligationLedger
+    measure hnormalized hh hbound hholds).targetSigned_le_thetaSigned
+
+theorem unitThetaToy_targetSigned_le_thetaSigned_from_chartedContainer
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToySourceObligationLedger
+      measure hnormalized hh hbound hholds).targetVolume.targetSigned <=
+      -(2 * h) + epsilonBound := by
+  let ledger := unitThetaToySourceObligationLedger
+    measure hnormalized hh hbound hholds
+  rw [ledger.targetVolume.targetSigned_eq]
+  exact ledger.chartedContainer.choice_targetVolume_le
+    ledger.certificate ledger.chosenOutput.choice
+
+theorem unitThetaToy_choiceTargetVolume_le_thetaBound_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    RegionMeasure.targetVolume measure
+        ((thetaToyAlgorithmOutput unitQToTheta h epsilon).comparison choice) <=
+      -(2 * h) + epsilonBound := by
+  simpa using
+    unitThetaToy_targetSigned_le_thetaSigned_from_sourceObligations
+      measure hnormalized hh hbound hholds
+
+theorem unitThetaToy_thetaTargetVolume_le_thetaBound_from_sourceObligations
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    RegionMeasure.targetVolume measure
+        (thetaIndeterminacyComparison unitQToTheta h (epsilon choice)) <=
+      -(2 * h) + epsilonBound := by
+  simpa using
+    unitThetaToy_choiceTargetVolume_le_thetaBound_from_sourceObligations
+      measure hnormalized hh hbound hholds
+
 theorem unitThetaToy_theta_commonBound_from_sourceObligations
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
