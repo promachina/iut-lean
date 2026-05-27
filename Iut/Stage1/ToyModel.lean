@@ -3,7 +3,7 @@ Copyright (c) 2026 IUT Lean formalization contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
-import Iut.Foundations.TransportDiagram
+import Iut.Foundations.IndeterminacyRelation
 import Mathlib.Tactic
 
 /-!
@@ -165,6 +165,31 @@ theorem unitTransportedQInThetaIndeterminacy_iff_bound (h epsilon : Real) :
     linarith
   · intro hbound
     linarith
+
+/-- The exact Theta target recast as a singleton region comparison. -/
+def exactThetaComparison (f : Transport qLine thetaLine) (h : Real) :
+    RegionComparison qLine thetaLine :=
+  RegionComparison.exact f (thetaAssignment h)
+
+theorem exactThetaComparison_holds_iff (f : Transport qLine thetaLine) (h : Real) :
+    (exactThetaComparison f h).Holds (qAssignment h) ↔ TransportedExactEquality f h :=
+  Iff.rfl
+
+/-- The toy Theta indeterminacy target recast as an upper-ray region comparison. -/
+def thetaIndeterminacyComparison (f : Transport qLine thetaLine) (h epsilon : Real) :
+    RegionComparison qLine thetaLine :=
+  RegionComparison.upperRay f (-(2 * h) + epsilon)
+
+theorem thetaIndeterminacyComparison_holds_iff
+    (f : Transport qLine thetaLine) (h epsilon : Real) :
+    (thetaIndeterminacyComparison f h epsilon).Holds (qAssignment h) ↔
+      TransportedQInThetaIndeterminacy f h epsilon :=
+  Iff.rfl
+
+theorem unitThetaIndeterminacyComparison_holds_iff_bound (h epsilon : Real) :
+    (thetaIndeterminacyComparison unitQToTheta h epsilon).Holds (qAssignment h) ↔
+      h <= epsilon :=
+  unitTransportedQInThetaIndeterminacy_iff_bound h epsilon
 
 end ToyModel
 end Stage1

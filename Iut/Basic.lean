@@ -6,6 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.Species
 import Iut.Foundations.RealLineCopy
 import Iut.Foundations.TransportDiagram
+import Iut.Foundations.IndeterminacyRelation
 import Iut.Stage1.PilotComparison
 import Iut.Stage1.ToyModel
 

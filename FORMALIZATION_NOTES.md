@@ -408,3 +408,116 @@ coordinates and introduce a small abstract interface for indeterminacy-valued
 relations between labeled real-line copies. The immediate goal is to distinguish
 "pointwise equality" from "membership in a hull/region after transport" at the
 type level.
+
+## Milestone 5: Region-Valued Comparison Interface
+
+Lean files:
+
+* `Iut/Foundations/IndeterminacyRelation.lean`
+* `Iut/Stage1/ToyModel.lean`
+
+### Source Check
+
+The source texts repeatedly distinguish exact comparison from comparison up to
+regions, hulls, and indeterminacies.
+
+In IUT III, Remark 3.9.5, Mochizuki introduces holomorphic hulls of regions and
+explains that passing to hulls is used to handle indeterminacies of possible
+regions. In the proof of Corollary 3.12 and Remark 3.12.2, he describes the
+Theta-pilot side as being represented only up to suitable indeterminacies. In
+the toy model, this appears as replacing the exact assignment
+`Theta(-2h)` by the region-valued assignment `Theta(R_{<= -2h + epsilon})`.
+
+Scholze-Stix likewise focus on whether the claimed "blurring" by
+indeterminacies is large enough to make the relevant diagrams commute. That
+critique only makes sense if exact equality and indeterminacy-valued comparison
+are kept separate.
+
+### Purpose
+
+The purpose of this milestone is to move the word "indeterminacy" out of
+informal comments and into a small Lean interface. We still do not define IUT
+hulls, Frobenioid objects, or log-volume hull-approximants. Instead, we define
+the weakest useful target:
+
+```text
+a comparison sends a source point, through a named transport,
+into a target-side region.
+```
+
+Exact equality is represented as the special case where the target region is a
+singleton.
+
+### Lean Declarations
+
+`RealLineCopy.Region line` is a predicate on points of a labeled real-line copy.
+
+`Region.singleton x` is the exact one-point region.
+
+`Region.upperRay line bound` is the region of points whose coordinate is at most
+`bound`. This is the concrete shape used by the toy model
+`R_{<= -2h + epsilon}`.
+
+`RegionComparison source target` packages a named transport from `source` to
+`target` and a target-side region.
+
+`RegionComparison.Holds comparison x` says that the transported image of `x`
+lies in the target region.
+
+`RegionComparison.exact transport targetPoint` is exact comparison as a
+singleton-region comparison.
+
+`RegionComparison.upperRay transport bound` is upper-ray comparison after a
+named transport.
+
+The foundational lemmas
+
+```text
+RegionComparison.exact_holds_iff
+RegionComparison.upperRay_holds_iff
+```
+
+unfold the two cases to ordinary coordinate statements. These are intentionally
+simple lemmas: they make it clear that the interface is not hiding extra
+mathematics.
+
+In the toy model, we added:
+
+```text
+exactThetaComparison
+thetaIndeterminacyComparison
+```
+
+and checked that the new interface recovers the previous toy-model statements.
+In particular:
+
+```text
+unitThetaIndeterminacyComparison_holds_iff_bound
+```
+
+still proves that the unit-transported q-point belongs to the Theta upper-ray
+region if and only if `h <= epsilon`.
+
+### What This Tests
+
+This milestone tests that "exact equality" and "membership in a target region"
+are different Lean objects. This matters for the central dispute: a future proof
+cannot silently replace exact equality by a hull/indeterminacy comparison unless
+it explicitly changes the target from a singleton region to a larger region and
+then proves membership in that larger region.
+
+### Design Trap Avoided
+
+The trap would be to encode indeterminacy as an unstructured proposition such as
+`blurred_commutes : Prop`, then use it as if it were equality. Here the target
+side is visibly a `Region`, and equality is only the singleton-region special
+case. If a later theorem needs a hull, it must say which region/hull is being
+used.
+
+### Next Step
+
+The next milestone should introduce a minimal notion of monotonic enlargement
+of regions. This is the first abstraction needed for "passing to a hull":
+if a point lies in a region and the region is contained in a larger region, then
+the point lies in the larger region. This should remain purely order-theoretic
+and should not yet attempt to formalize holomorphic hulls.
