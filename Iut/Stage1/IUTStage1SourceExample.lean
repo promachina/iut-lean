@@ -140,6 +140,57 @@ theorem unitThetaToy_source_audit_example
       (unitThetaToyIUTStage1SourceObligations
         measure hnormalized hh hbound hholds)
 
+theorem unitThetaToy_source_audit_q_le_theta_projection_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (Transport.map unitQToTheta (qAssignment h)).coord <=
+      -(2 * h) + epsilonBound :=
+  (unitThetaToy_source_audit_example
+    measure hnormalized hh hbound hholds).qSignedLeThetaSigned
+
+theorem unitThetaToy_source_audit_corollary_projection_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+      (signedPilotLogVolume PilotSide.q
+        (Transport.map unitQToTheta (qAssignment h)).coord) :=
+  (unitThetaToy_source_audit_example
+    measure hnormalized hh hbound hholds).corollary312Endpoint
+
+theorem unitThetaToy_source_audit_recovery_projection_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    corollary312_from_stage1_comparison
+      ((unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds).promotedProvider
+          (unitThetaToyIUTStage1SourceObligations
+            measure hnormalized hh hbound hholds)).stage1Comparison =
+      ((unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds).promotedProvider
+          (unitThetaToyIUTStage1SourceObligations
+            measure hnormalized hh hbound hholds)).ledger.corollary312 :=
+  (unitThetaToy_source_audit_example
+    measure hnormalized hh hbound hholds).stageRecoversCorollary312
+
 end ToyModel
 end Stage1
 end Iut

@@ -7562,3 +7562,81 @@ public endpoint projections in one visible record.
 The next milestone should expose named projections from
 `IUTStage1SourcePackage.Audit`, so downstream modules can cite audit fields
 without relying on record-field layout.
+
+## Milestone 90: Source Package Audit Projections
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+Milestone 89 made the source-facing Stage 1 boundary inspectable as one audit
+record. The next readability step is to give the audit fields stable theorem
+names, so later source modules and notes can cite the exact dependency they use.
+
+This remains bookkeeping around the Theorem 3.11 to Corollary 3.12 interface. It
+does not add a new source proof or weaken any obligation.
+
+### Purpose
+
+This milestone adds named projections from:
+
+```text
+IUTStage1SourcePackage.Audit
+```
+
+They cover the label-alignment fields, source-obligation fields,
+promoted-provider consistency, and public endpoint fields.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.Audit.inputMatchesLabels
+IUTStage1SourcePackage.Audit.multiradialOutputMatchesLabels
+IUTStage1SourcePackage.Audit.logVolumeComparisonMatchesLabels
+IUTStage1SourcePackage.Audit.algorithmCertified
+IUTStage1SourcePackage.Audit.sheArrowMatchesCertificate
+IUTStage1SourcePackage.Audit.qPilotPositive
+IUTStage1SourcePackage.Audit.sourceNormalization
+IUTStage1SourcePackage.Audit.promotedProviderLedger
+IUTStage1SourcePackage.Audit.qSignedLeThetaSigned
+IUTStage1SourcePackage.Audit.corollary312Endpoint
+IUTStage1SourcePackage.Audit.stageRecoversQSignedLeThetaSigned
+IUTStage1SourcePackage.Audit.stageRecoversCorollary312
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_audit_q_le_theta_projection_example
+unitThetaToy_source_audit_corollary_projection_example
+unitThetaToy_source_audit_recovery_projection_example
+```
+
+### What This Tests
+
+The toy examples verify that downstream users can consume the source-facing
+public endpoint through:
+
+```text
+source package audit theorem -> named audit projection
+```
+
+rather than rebuilding the public audit theorem directly.
+
+### Design Trap Avoided
+
+The trap would be to make the audit record useful only by knowing its field
+layout. The named projections make each dependency explicit and stable while
+still deriving everything from the obligation-gated audit theorem.
+
+### Next Step
+
+The next milestone should start separating source-package labels for the
+Theta-pilot and q-pilot objects into named projection theorems, so future
+source-specific work can cite those labels before the analytic content is
+formalized.

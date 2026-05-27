@@ -292,6 +292,82 @@ theorem audit
     stage_recovers_corollary312 :=
       package.stage1Comparison_recovers_corollary312 obligations }
 
+namespace Audit
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {obligations : IUTStage1SourceObligations package}
+
+theorem inputMatchesLabels
+    (sourceAudit : Audit package obligations) :
+    package.input = package.labels.input :=
+  sourceAudit.input_matches_labels
+
+theorem multiradialOutputMatchesLabels
+    (sourceAudit : Audit package obligations) :
+    package.multiradialOutput = package.labels.multiradialOutput :=
+  sourceAudit.multiradialOutput_matches_labels
+
+theorem logVolumeComparisonMatchesLabels
+    (sourceAudit : Audit package obligations) :
+    package.logVolumeComparison = package.labels.logVolumeComparison :=
+  sourceAudit.logVolumeComparison_matches_labels
+
+theorem algorithmCertified
+    (sourceAudit : Audit package obligations) :
+    package.preLedger.output.Certified :=
+  sourceAudit.algorithm_certified
+
+theorem sheArrowMatchesCertificate
+    (sourceAudit : Audit package obligations) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she :=
+  sourceAudit.she_arrow_matches_certificate
+
+theorem qPilotPositive
+    (sourceAudit : Audit package obligations) :
+    0 < -package.preLedger.qSigned :=
+  sourceAudit.q_pilot_positive
+
+theorem sourceNormalization
+    (sourceAudit : Audit package obligations) :
+    package.preLedger.normalization :=
+  sourceAudit.normalization
+
+theorem promotedProviderLedger
+    (sourceAudit : Audit package obligations) :
+    (package.promotedProvider obligations).ledger =
+      package.promotedLedger obligations :=
+  sourceAudit.promoted_provider_ledger
+
+theorem qSignedLeThetaSigned
+    (sourceAudit : Audit package obligations) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceAudit.qSigned_le_thetaSigned
+
+theorem corollary312Endpoint
+    (sourceAudit : Audit package obligations) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  sourceAudit.corollary312
+
+theorem stageRecoversQSignedLeThetaSigned
+    (sourceAudit : Audit package obligations) :
+    corollary312_from_stage1_comparison
+        (package.promotedProvider obligations).stage1Comparison =
+      corollary312_of_signed_le
+        (package.promotedProvider obligations).ledger.qSigned_le_thetaSigned :=
+  sourceAudit.stage_recovers_qSigned_le_thetaSigned
+
+theorem stageRecoversCorollary312
+    (sourceAudit : Audit package obligations) :
+    corollary312_from_stage1_comparison
+        (package.promotedProvider obligations).stage1Comparison =
+      (package.promotedProvider obligations).ledger.corollary312 :=
+  sourceAudit.stage_recovers_corollary312
+
+end Audit
+
 end IUTStage1SourcePackage
 
 end Stage1
