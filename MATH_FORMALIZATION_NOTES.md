@@ -4231,3 +4231,138 @@ This still does not construct actual profinite or tempered fundamental groups.
 milestone should replace the `abstract` objects at concrete source points with
 mathlib-compatible profinite groups, and then add the tempered-fundamental-group
 interface needed for the bad-place conjugation operations discussed in IUT II.
+
+## Math Milestone 43: Theta-Approach Normal Quotient
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, says that the open subgroup
+
+```text
+Pi_XK <= Pi_CK
+```
+
+may be constructed group-theoretically from the topological group `Pi_CK`.
+The same remark then states that the reconstruction is applied to `Pi_XK`
+to recover the function field of `X_K` equipped with its natural
+
+```text
+Gal(X_K/C_K) ~= Pi_CK / Pi_XK
+```
+
+action. This is stronger than the local open subgroup chain of Definition
+3.1(e): it uses a quotient by the subgroup `Pi_XK`.
+
+The source support is intentionally narrow. Definition 3.1(e) states the
+bad-local chain
+
+```text
+Pi_Xbar_v <= Pi_Cbar_v <= Pi_C_v
+```
+
+as open subgroups, but the text checked here does not justify declaring every
+arrow in that local chain to be normal. Therefore this milestone adds normal
+quotient data for the global `Theta`-approach quotient, not as a blanket change
+to `BadLocalOpenSubgroupData`.
+
+Scholze-Stix's criticism concerns the later Corollary 3.12 use of Hodge
+theaters and pilot objects. This milestone remains in the earlier reconstruction
+setup: it only records the quotient shape needed before later comparisons can
+even be stated.
+
+### Lean/API Check
+
+The new reusable structure is:
+
+```text
+NormalOpenEmbeddingData
+```
+
+It contains an `OpenEmbeddingData` and a proof that its image subgroup is
+normal. From this Lean defines:
+
+```text
+quotientGroup
+quotientMap
+quotientMap_surjective
+```
+
+The quotient map is currently the canonical map of the underlying quotient
+type. The group instance on the quotient is supplied from the normality proof.
+
+The global cover data now stores:
+
+```text
+thetaApproachQuotient : ThetaApproachQuotientData
+```
+
+This record contains abstract topological groups `Pi_XK`, `Pi_CK`, a normal
+open embedding `Pi_XK -> Pi_CK`, the quotient group `Pi_CK / Pi_XK`, and two
+source-level propositions: the identification with `Gal(X_K/C_K)` and the
+use of this data in the `Theta`-approach reconstruction.
+
+### Lean Decisions
+
+The important design choice is separating two notions:
+
+* `OpenEmbeddingData` for source statements that only assert open subgroup
+  inclusions;
+* `NormalOpenEmbeddingData` for source statements that form a quotient group.
+
+This avoids silently importing normality into the bad-local chain. The quotient
+is attached to `ThetaOrbicurveCoverData`, which is where the global `C_K`/`X_K`
+covering data from Definition 3.1(d) already lives.
+
+### Lean Declarations
+
+```text
+NormalOpenEmbeddingData
+NormalOpenEmbeddingData.quotientGroup
+NormalOpenEmbeddingData.quotientGroupGroup
+NormalOpenEmbeddingData.quotientMap
+NormalOpenEmbeddingData.quotientMap_surjective
+ThetaApproachQuotientData
+ThetaApproachQuotientData.deckQuotient
+ThetaApproachQuotientData.quotientMap
+ThetaApproachQuotientData.quotientMap_surjective
+ThetaApproachQuotientData.piXKOpenInPiCK
+ThetaApproachQuotientData.piXKNormalInPiCK
+ThetaApproachQuotientData.galQuotientIdentification
+ThetaApproachQuotientData.reconstructionViaThetaApproach
+ThetaOrbicurveCoverData.thetaApproachQuotient
+InitialThetaData.thetaApproachDeckQuotient
+InitialThetaData.thetaApproachPiXKOpenInPiCK
+InitialThetaData.thetaApproachPiXKNormalInPiCK
+InitialThetaData.thetaApproachQuotientMapSurjective
+InitialThetaData.thetaApproachGalQuotientIdentification
+InitialThetaData.thetaApproachReconstruction
+```
+
+### What This Tests
+
+The example file now checks that full initial theta data exposes:
+
+* the global `Theta`-approach open image `Pi_XK -> Pi_CK`;
+* normality of the image subgroup;
+* surjectivity of the canonical quotient map;
+* the source-level `Gal(X_K/C_K) ~= Pi_CK / Pi_XK` identification proposition;
+* the source-level reconstruction proposition.
+
+### Design Trap Avoided
+
+The trap would be to treat every open subgroup as a normal quotient subgroup.
+That would make later quotient notation easy, but it would encode more than the
+source says for the bad-local chain. This milestone only introduces normality
+where the source explicitly uses a quotient.
+
+### Remaining Gap
+
+The `Gal(X_K/C_K)` object and its action are still represented by propositions,
+not by an actual group equivalence or group action. A later milestone should
+formalize the deck transformation/Galois action once the covering and function
+field reconstruction APIs are mature enough.

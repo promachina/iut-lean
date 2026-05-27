@@ -413,6 +413,7 @@ def abstractThetaOrbicurveCoverData
     (cK xK : HyperbolicOrbicurveModel K)
     (cK_type : OrbicurveTypeData primeFive cK OrbicurveTypeKind.oneLTorsPM)
     (xK_type : OrbicurveTypeData primeFive xK OrbicurveTypeKind.oneLTors)
+    (thetaApproachQuotient : ThetaApproachQuotientData)
     (cK_core_is_baseChange_cF cK_determined_by_cF finiteEtaleCoveringDiagrams
       profiniteGroupOpenImmersions : Prop)
     (hCore : cK_core_is_baseChange_cF)
@@ -423,6 +424,7 @@ def abstractThetaOrbicurveCoverData
   cK := cK
   xK := xK
   cK_type := cK_type
+  thetaApproachQuotient := thetaApproachQuotient
   cK_core_is_baseChange_cF := cK_core_is_baseChange_cF
   cK_core_is_baseChange_cF_holds := hCore
   cK_determined_by_cF := cK_determined_by_cF
@@ -682,6 +684,27 @@ example : theta.coverData.cK_determined_by_cF :=
 
 example : theta.coverData.xK_type.hasType :=
   theta.xKType
+
+example :
+    theta.coverData.thetaApproachQuotient.piXK_to_piCK.openEmbedding.isOpenImage :=
+  theta.thetaApproachPiXKOpenInPiCK
+
+example :
+    theta.coverData.thetaApproachQuotient.piXK_to_piCK.openEmbedding.imageSubgroup.Normal :=
+  theta.thetaApproachPiXKNormalInPiCK
+
+example :
+    Function.Surjective
+      (ThetaApproachQuotientData.quotientMap theta.coverData.thetaApproachQuotient) :=
+  theta.thetaApproachQuotientMapSurjective
+
+example :
+    theta.coverData.thetaApproachQuotient.galXKCK_identifiedWithQuotient :=
+  theta.thetaApproachGalQuotientIdentification
+
+example :
+    theta.coverData.thetaApproachQuotient.thetaApproachReconstruction :=
+  theta.thetaApproachReconstruction
 
 example : theta.coverData.finiteEtaleCoveringDiagrams :=
   theta.finiteEtaleCoveringDiagrams

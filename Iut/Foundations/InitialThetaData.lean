@@ -9,6 +9,7 @@ import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+import Mathlib.GroupTheory.QuotientGroup.Defs
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Topology.Algebra.Group.Basic
@@ -1149,6 +1150,53 @@ def comp {middle : AbstractFundamentalGroup}
 end OpenEmbeddingData
 
 /--
+A normal open embedding of abstract fundamental group objects.
+
+This is the form needed when the source treats an open subgroup as giving a
+quotient group, e.g. `Pi_CK / Pi_XK` in IUT I, Remark 3.1.2.
+-/
+structure NormalOpenEmbeddingData (source target : AbstractFundamentalGroup) where
+  openEmbedding : OpenEmbeddingData source target
+  imageNormal : openEmbedding.imageSubgroup.Normal
+
+namespace NormalOpenEmbeddingData
+
+variable {source target : AbstractFundamentalGroup}
+variable (normalEmbedding : NormalOpenEmbeddingData source target)
+
+instance imageSubgroupNormal :
+    normalEmbedding.openEmbedding.imageSubgroup.Normal :=
+  normalEmbedding.imageNormal
+
+def quotientGroup : Type _ :=
+  target.carrier ⧸ normalEmbedding.openEmbedding.imageSubgroup
+
+instance quotientGroupGroup : Group normalEmbedding.quotientGroup := by
+  letI : (normalEmbedding.openEmbedding.imageSubgroup).Normal :=
+    normalEmbedding.imageNormal
+  change Group (target.carrier ⧸ normalEmbedding.openEmbedding.imageSubgroup)
+  infer_instance
+
+def quotientMap : target.carrier → normalEmbedding.quotientGroup :=
+  QuotientGroup.mk
+
+theorem quotientMap_surjective :
+    Function.Surjective (NormalOpenEmbeddingData.quotientMap normalEmbedding) :=
+  QuotientGroup.mk_surjective
+
+theorem openImage :
+    normalEmbedding.openEmbedding.isOpenImage :=
+  normalEmbedding.openEmbedding.openImage
+
+theorem imageSubgroup_open :
+    IsOpen
+      ((normalEmbedding.openEmbedding.imageSubgroup : Subgroup target.carrier) :
+        Set target.carrier) :=
+  normalEmbedding.openEmbedding.imageSubgroup_open
+
+end NormalOpenEmbeddingData
+
+/--
 The chain of open subgroups produced by the bad local theta-root models.
 
 The actual groups are abstract until the relevant profinite/tempered
@@ -1380,11 +1428,65 @@ theorem torsion23Rational :
 end ThetaCurveModuliData
 
 /--
+The normal open subgroup quotient used by the `Theta`-approach of IUT I,
+Remark 3.1.2.
+
+The source describes `Pi_XK <= Pi_CK` as an open subgroup used to reconstruct
+`X_K` together with its natural `Gal(X_K/C_K) ~= Pi_CK / Pi_XK` action.  We
+record the normal open subgroup and the quotient group, but leave the actual
+Galois-action comparison as a named proposition until the reconstruction
+algorithm is formalized.
+-/
+structure ThetaApproachQuotientData where
+  piXK : AbstractFundamentalGroup
+  piCK : AbstractFundamentalGroup
+  piXK_to_piCK : NormalOpenEmbeddingData piXK piCK
+  galXKCK_identifiedWithQuotient : Prop
+  galXKCK_identifiedWithQuotient_holds :
+    galXKCK_identifiedWithQuotient
+  thetaApproachReconstruction : Prop
+  thetaApproachReconstruction_holds : thetaApproachReconstruction
+
+namespace ThetaApproachQuotientData
+
+variable (thetaApproach : ThetaApproachQuotientData)
+
+def deckQuotient : Type _ :=
+  NormalOpenEmbeddingData.quotientGroup thetaApproach.piXK_to_piCK
+
+def quotientMap :
+    thetaApproach.piCK.carrier → ThetaApproachQuotientData.deckQuotient thetaApproach :=
+  NormalOpenEmbeddingData.quotientMap thetaApproach.piXK_to_piCK
+
+theorem quotientMap_surjective :
+    Function.Surjective (ThetaApproachQuotientData.quotientMap thetaApproach) :=
+  NormalOpenEmbeddingData.quotientMap_surjective thetaApproach.piXK_to_piCK
+
+theorem piXKOpenInPiCK :
+    thetaApproach.piXK_to_piCK.openEmbedding.isOpenImage :=
+  thetaApproach.piXK_to_piCK.openImage
+
+theorem piXKNormalInPiCK :
+    thetaApproach.piXK_to_piCK.openEmbedding.imageSubgroup.Normal :=
+  thetaApproach.piXK_to_piCK.imageNormal
+
+theorem galQuotientIdentification :
+    thetaApproach.galXKCK_identifiedWithQuotient :=
+  thetaApproach.galXKCK_identifiedWithQuotient_holds
+
+theorem reconstructionViaThetaApproach :
+    thetaApproach.thetaApproachReconstruction :=
+  thetaApproach.thetaApproachReconstruction_holds
+
+end ThetaApproachQuotientData
+
+/--
 The `C_K`/`X_K` covering data from IUT I, Definition 3.1(d).
 
 This bundle ties `C_K` to the previously defined `C_F`: its `K`-core is the
 base-change `C_F x_F K`, and it determines the corresponding `X_K` cover and
-the finite etale/profinite group diagrams mentioned in the source.
+the finite etale/profinite group diagrams mentioned in the source.  It also
+records the normal-open quotient used in the `Theta`-approach of Remark 3.1.2.
 -/
 structure ThetaOrbicurveCoverData
     (l : PrimeGeFive) (Fmod F K : Type u)
@@ -1394,6 +1496,7 @@ structure ThetaOrbicurveCoverData
   cK : HyperbolicOrbicurveModel K
   xK : HyperbolicOrbicurveModel K
   cK_type : OrbicurveTypeData l cK OrbicurveTypeKind.oneLTorsPM
+  thetaApproachQuotient : ThetaApproachQuotientData
   cK_core_is_baseChange_cF : Prop
   cK_core_is_baseChange_cF_holds : cK_core_is_baseChange_cF
   cK_determined_by_cF : Prop
@@ -1428,6 +1531,30 @@ theorem cKDeterminedByCF :
 theorem xKType :
     coverData.xK_type.hasType :=
   coverData.xK_type.holds
+
+def deckQuotient : Type _ :=
+  ThetaApproachQuotientData.deckQuotient coverData.thetaApproachQuotient
+
+theorem thetaApproachPiXKOpenInPiCK :
+    coverData.thetaApproachQuotient.piXK_to_piCK.openEmbedding.isOpenImage :=
+  coverData.thetaApproachQuotient.piXKOpenInPiCK
+
+theorem thetaApproachPiXKNormalInPiCK :
+    coverData.thetaApproachQuotient.piXK_to_piCK.openEmbedding.imageSubgroup.Normal :=
+  coverData.thetaApproachQuotient.piXKNormalInPiCK
+
+theorem thetaApproachQuotientMapSurjective :
+    Function.Surjective
+      (ThetaApproachQuotientData.quotientMap coverData.thetaApproachQuotient) :=
+  ThetaApproachQuotientData.quotientMap_surjective coverData.thetaApproachQuotient
+
+theorem thetaApproachGalQuotientIdentification :
+    coverData.thetaApproachQuotient.galXKCK_identifiedWithQuotient :=
+  coverData.thetaApproachQuotient.galQuotientIdentification
+
+theorem thetaApproachReconstruction :
+    coverData.thetaApproachQuotient.thetaApproachReconstruction :=
+  coverData.thetaApproachQuotient.reconstructionViaThetaApproach
 
 theorem finiteEtaleDiagrams :
     coverData.finiteEtaleCoveringDiagrams :=
@@ -2130,6 +2257,30 @@ theorem cKDeterminedByCF :
 theorem xKType :
     theta.coverData.xK_type.hasType :=
   theta.coverData.xKType
+
+def thetaApproachDeckQuotient : Type _ :=
+  theta.coverData.deckQuotient
+
+theorem thetaApproachPiXKOpenInPiCK :
+    theta.coverData.thetaApproachQuotient.piXK_to_piCK.openEmbedding.isOpenImage :=
+  theta.coverData.thetaApproachPiXKOpenInPiCK
+
+theorem thetaApproachPiXKNormalInPiCK :
+    theta.coverData.thetaApproachQuotient.piXK_to_piCK.openEmbedding.imageSubgroup.Normal :=
+  theta.coverData.thetaApproachPiXKNormalInPiCK
+
+theorem thetaApproachQuotientMapSurjective :
+    Function.Surjective
+      (ThetaApproachQuotientData.quotientMap theta.coverData.thetaApproachQuotient) :=
+  theta.coverData.thetaApproachQuotientMapSurjective
+
+theorem thetaApproachGalQuotientIdentification :
+    theta.coverData.thetaApproachQuotient.galXKCK_identifiedWithQuotient :=
+  theta.coverData.thetaApproachGalQuotientIdentification
+
+theorem thetaApproachReconstruction :
+    theta.coverData.thetaApproachQuotient.thetaApproachReconstruction :=
+  theta.coverData.thetaApproachReconstruction
 
 theorem finiteEtaleCoveringDiagrams :
     theta.coverData.finiteEtaleCoveringDiagrams :=
