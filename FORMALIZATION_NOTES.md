@@ -2167,3 +2167,116 @@ future source-specific module must refine.
 The next milestone should introduce similarly inert identifiers for the
 hull+det stage: a `HullDetOperationId` and a record linking it to the structured
 bridge obligation.
+
+## Milestone 22: Hull+Det Bridge Data
+
+Lean files:
+
+* `Iut/Foundations/AlgorithmicBridge.lean`
+* `Iut/Stage1/ToyBridge.lean`
+* `Iut/Stage1/SourceObligations.lean`
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+Mochizuki's April 2026 formalization report decomposes the route toward
+Corollary 3.12 into triangles and explicitly describes an arrow
+
+```text
+(HDD) := (hull+det) o (dsc)
+```
+
+where `hull+det` is obtained by taking a determinant after passing through the
+holomorphic-hull form of the multiradial output. The same passage says that
+moving `hull+det` into the `3.11.5` side lets the final `3.11.5 => 3.12`
+portion focus on the simultaneous comparison.
+
+IUT III, Corollary 3.12, Step `(xi-d)` is the matching source passage. It says
+that the multiradial construction, followed by holomorphic hull formation, gives
+output data linked to the q-pilot by IPL and expressed in the relevant
+holomorphic structure by SHE; then one forms a determinant and applies a
+normalized log-volume to obtain comparable real objects.
+
+Scholze-Stix emphasize the opposing diagnostic requirement: when real
+comparisons are extracted, all identifications between real-line copies must be
+spelled out. Thus this milestone names the hull+det bridge explicitly instead
+of letting it disappear inside the final inequality ledger.
+
+### Purpose
+
+The previous bridge record already turned structured qualitative data into a
+measured common-target bound. That was too anonymous for the next stage: the
+source literature treats the determinant/log-volume passage as a specific proof
+step.
+
+This milestone adds a named, inert wrapper:
+
+```text
+HullDetOperationId
+HullDetBridgeData
+```
+
+`HullDetBridgeData` stores both the name of the hull+det operation and the
+structured bridge that produces the common-target bound. It does not prove that
+the operation is valid, and it does not derive the bridge from the name.
+
+### Lean Declarations
+
+In `AlgorithmicBridge.lean`:
+
+```text
+HullDetOperationId.label
+HullDetBridgeData.operation
+HullDetBridgeData.bridge
+HullDetBridgeData.apply
+HullDetBridgeData.choice_targetVolume_le
+HullDetBridgeData.allTargetsAtMost
+```
+
+In `ToyBridge.lean`:
+
+```text
+thetaToyHullDetOperation
+thetaToyHullDetBridgeData
+thetaToyHullDet_choice_targetVolume_le_bound
+thetaToyHullDet_allTargetsAtMost
+```
+
+In `SourceObligations.lean`, the ledger field
+
+```text
+bridge : output.StructuredCommonTargetBoundBridge measure thetaSigned
+```
+
+was replaced by:
+
+```text
+hullDetBridge : output.HullDetBridgeData measure thetaSigned
+```
+
+The final signed inequality still uses the underlying structured bridge, but it
+now reaches that bridge through the named hull+det obligation.
+
+### What This Tests
+
+The toy Stage 1 path still proves the same target-volume bound and signed
+Corollary-3.12-shaped inequality after the source ledger is strengthened to
+require named hull+det bridge data.
+
+This confirms that the new record is bookkeeping only: it makes a future proof
+obligation visible without changing the real-valued arithmetic currently proved
+by the toy upper-ray model.
+
+### Design Trap Avoided
+
+The trap would be to model `HullDetOperationId` as if it already performed the
+holomorphic hull, determinant, and normalized log-volume construction. That
+would silently assume a major part of the contested source proof. We instead
+store an inert identifier and continue to require the bridge as explicit data.
+
+### Next Step
+
+The next milestone should split the current hull+det bridge name into the
+composition emphasized in Mochizuki's report: introduce a descent-operation
+identifier, a hull+det-operation identifier, and an inert `HDD` composite record
+that links descent plus hull+det to the structured bridge obligation.

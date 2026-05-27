@@ -31,7 +31,7 @@ structure SourceObligationLedger
     (measure : RegionMeasure target) (thetaSigned qSigned : Real)
     (normalization : Prop) where
   certificate : QualitativeData.StructuredCertificate output.family
-  bridge : output.StructuredCommonTargetBoundBridge measure thetaSigned
+  hullDetBridge : output.HullDetBridgeData measure thetaSigned
   choice : index
   q_le_choice :
     qSigned <= RegionMeasure.targetVolume measure (output.comparison choice)
@@ -51,13 +51,15 @@ theorem corollary312 (ledger :
     Corollary312Inequality
       (signedPilotLogVolume PilotSide.theta thetaSigned)
       (signedPilotLogVolume PilotSide.q qSigned) :=
-  corollary312_from_structured_bridge ledger.bridge ledger.certificate ledger.choice
+  corollary312_from_structured_bridge
+    ledger.hullDetBridge.bridge ledger.certificate ledger.choice
     ledger.q_le_choice
 
 def stage1Comparison (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     Stage1Comparison :=
-  stage1Comparison_from_structured_bridge ledger.bridge ledger.certificate ledger.choice
+  stage1Comparison_from_structured_bridge
+    ledger.hullDetBridge.bridge ledger.certificate ledger.choice
     ledger.q_positive ledger.q_le_choice
 
 theorem hasNormalization (ledger :

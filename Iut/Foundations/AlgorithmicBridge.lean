@@ -113,6 +113,55 @@ theorem allTargetsAtMost
 
 end StructuredCommonTargetBoundBridge
 
+/--
+Inert identifier for the hull+det operation used in the source-specific bridge.
+
+This name carries no mathematical content by itself. It only prevents the
+eventual determinant/log-volume passage from being hidden inside an unnamed
+bridge.
+-/
+structure HullDetOperationId where
+  label : String
+
+/--
+A named hull+det operation together with the structured bridge it supplies.
+
+The bridge remains explicit data: this record does not derive a bound from the
+identifier. Future milestones should refine the identifier into actual descent,
+holomorphic-hull, determinant, and log-volume constructions.
+-/
+structure HullDetBridgeData
+    (output : AlgorithmicOutput source target index)
+    (measure : RegionMeasure target) (bound : Real) where
+  operation : HullDetOperationId
+  bridge : output.StructuredCommonTargetBoundBridge measure bound
+
+namespace HullDetBridgeData
+
+variable {measure : RegionMeasure target}
+variable {output : AlgorithmicOutput source target index}
+variable {bound : Real}
+
+def apply (data : HullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    output.CommonTargetBound measure bound :=
+  data.bridge.apply certificate
+
+theorem choice_targetVolume_le
+    (data : HullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family)
+    (choice : index) :
+    RegionMeasure.targetVolume measure (output.comparison choice) <= bound :=
+  data.bridge.choice_targetVolume_le certificate choice
+
+theorem allTargetsAtMost
+    (data : HullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound :=
+  data.bridge.allTargetsAtMost certificate
+
+end HullDetBridgeData
+
 end AlgorithmicOutput
 
 end RealLineCopy
