@@ -17011,3 +17011,80 @@ The project still has not supplied a real proof of coric dependence for IUT
 Theta images. The next useful step is to connect `IUTStage1CoricData` to the
 coordinate-choice `coric` field in a source-package-level choice type, then
 state the non-toy source obligation against that choice type.
+
+## 119. Theorem 3.11 Indeterminacy Source Names
+
+### Goal
+
+We refined the generic Ind1/2/3 generator interface with the source names used
+in IUT III Theorem 3.11.
+
+### Source Check
+
+In the statement of Theorem 3.11:
+
+```text
+Ind1: automorphisms of the procession of D-prime-strips
+Ind2: independent local tensor-factor / order-two symmetries
+Ind3: upper semi-compatibility as m varies in the log-theta lattice
+```
+
+This milestone maps those three named source descriptions into the existing
+generator slots.
+
+### Lean/API Check
+
+The source layer now defines:
+
+```text
+IUTStage1Theorem311IndeterminacySourceData
+IUTStage1Theorem311IndeterminacySourceData.generators
+IUTStage1Theorem311IndeterminacySourceData.quotient
+IUTStage1MultiradialThetaImages.ofPackageWithTheorem311Indeterminacies
+```
+
+The source-data fields are:
+
+```text
+procession_automorphism_step
+local_tensor_symmetry_step
+upper_semi_compatibility_step
+```
+
+and Lean checks that they feed:
+
+```text
+Ind1 -> procession_automorphism_step
+Ind2 -> local_tensor_symmetry_step
+Ind3 -> upper_semi_compatibility_step
+```
+
+### Lean Decisions
+
+This is still an interface, not the real construction of those relations. The
+important improvement is that future proofs can no longer hide the three
+indeterminacies behind anonymous fields named only `ind1_step`, `ind2_step`,
+and `ind3_step`. They must now say which Theorem 3.11 source mechanism they
+are implementing.
+
+### Toy Check
+
+The toy source example uses empty relations for all three source mechanisms:
+
+```text
+unitThetaToyTheorem311IndeterminacySourceData
+unitThetaToyTheorem311MultiradialThetaImages
+unitThetaToy_theorem311MultiradialThetaImages_union_eq_targetUnion_example
+```
+
+This checks the API without pretending the toy model contains procession
+automorphisms, tensor-factor symmetries, or upper semi-compatibility data.
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The next mathematical step is to define actual choice records rich enough to
+state these three source mechanisms nontrivially. In particular, Ind1 needs
+procession data, Ind2 needs local tensor-factor symmetry data, and Ind3 needs
+variation in the `m` coordinate together with upper-semi-compatibility evidence.

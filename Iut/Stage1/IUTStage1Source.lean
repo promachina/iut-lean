@@ -640,6 +640,57 @@ theorem generated_profile (steps : IUTStage1IndeterminacyGenerators index) :
 end IUTStage1IndeterminacyQuotient
 
 /--
+Theorem 3.11 source names for the three indeterminacy generator relations.
+
+This record specializes the generic `ind1_step`, `ind2_step`, `ind3_step`
+interface to the descriptions in Theorem 3.11:
+procession automorphisms, local tensor-factor symmetries, and upper
+semi-compatibility.
+-/
+structure IUTStage1Theorem311IndeterminacySourceData (index : Type u) where
+  procession_automorphism_step : index -> index -> Prop
+  local_tensor_symmetry_step : index -> index -> Prop
+  upper_semi_compatibility_step : index -> index -> Prop
+
+namespace IUTStage1Theorem311IndeterminacySourceData
+
+variable {index : Type u}
+
+def generators
+    (data : IUTStage1Theorem311IndeterminacySourceData index) :
+    IUTStage1IndeterminacyGenerators index :=
+  { ind1_step := data.procession_automorphism_step,
+    ind2_step := data.local_tensor_symmetry_step,
+    ind3_step := data.upper_semi_compatibility_step }
+
+def quotient
+    (data : IUTStage1Theorem311IndeterminacySourceData index) :
+    IUTStage1IndeterminacyQuotient index :=
+  IUTStage1IndeterminacyQuotient.generated data.generators
+
+theorem ind1_step_eq
+    (data : IUTStage1Theorem311IndeterminacySourceData index) :
+    data.generators.ind1_step = data.procession_automorphism_step :=
+  rfl
+
+theorem ind2_step_eq
+    (data : IUTStage1Theorem311IndeterminacySourceData index) :
+    data.generators.ind2_step = data.local_tensor_symmetry_step :=
+  rfl
+
+theorem ind3_step_eq
+    (data : IUTStage1Theorem311IndeterminacySourceData index) :
+    data.generators.ind3_step = data.upper_semi_compatibility_step :=
+  rfl
+
+theorem quotient_profile
+    (data : IUTStage1Theorem311IndeterminacySourceData index) :
+    data.quotient.profile = theorem311IndeterminacyProfile :=
+  IUTStage1IndeterminacyQuotient.generated_profile data.generators
+
+end IUTStage1Theorem311IndeterminacySourceData
+
+/--
 Multiradial possible images of the Theta-pilot, recorded together with the
 indeterminacy quotient on choices.
 
@@ -731,6 +782,29 @@ def ofPackageWithCoordinateQuotient
     (by
       intro choice₁ choice₂ hstep
       exact hcoric choice₁ choice₂ hstep.1)
+
+def ofPackageWithTheorem311Indeterminacies
+    (package : IUTStage1SourcePackage source target index)
+    (indeterminacyData :
+      IUTStage1Theorem311IndeterminacySourceData index)
+    (hInd1 :
+      ∀ {choice₁ choice₂ : index},
+        indeterminacyData.procession_automorphism_step choice₁ choice₂ ->
+          (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region choice₁ =
+            (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region choice₂)
+    (hInd2 :
+      ∀ {choice₁ choice₂ : index},
+        indeterminacyData.local_tensor_symmetry_step choice₁ choice₂ ->
+          (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region choice₁ =
+            (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region choice₂)
+    (hInd3 :
+      ∀ {choice₁ choice₂ : index},
+        indeterminacyData.upper_semi_compatibility_step choice₁ choice₂ ->
+          (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region choice₁ =
+            (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region choice₂) :
+    IUTStage1MultiradialThetaImages package :=
+  ofPackageWithGeneratedQuotient package indeterminacyData.generators
+    hInd1 hInd2 hInd3
 
 def union (images : IUTStage1MultiradialThetaImages package) :
     Region target :=

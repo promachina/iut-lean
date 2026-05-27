@@ -209,6 +209,19 @@ theorem unitThetaToyGeneratedIndeterminacyQuotient_profile_example :
   IUTStage1IndeterminacyQuotient.generated_profile
     (unitThetaToyIndeterminacyGenerators (index := index))
 
+def unitThetaToyTheorem311IndeterminacySourceData :
+    IUTStage1Theorem311IndeterminacySourceData index :=
+  { procession_automorphism_step := fun _ _ => False,
+    local_tensor_symmetry_step := fun _ _ => False,
+    upper_semi_compatibility_step := fun _ _ => False }
+
+theorem unitThetaToyTheorem311IndeterminacySourceData_profile_example :
+    (unitThetaToyTheorem311IndeterminacySourceData
+      (index := index)).quotient.profile =
+      theorem311IndeterminacyProfile :=
+  IUTStage1Theorem311IndeterminacySourceData.quotient_profile
+    (unitThetaToyTheorem311IndeterminacySourceData (index := index))
+
 theorem coordinateIndeterminacy_generated_coric_eq_example
     {coric ind1State ind2State ind3State : Type u}
     {choice₁ choice₂ :
@@ -399,6 +412,48 @@ theorem unitThetaToy_generatedMultiradialThetaImages_region_eq_of_generated_exam
         measure hnormalized hh hbound hholds).possibleImages.images.region choice₂ :=
   (unitThetaToyGeneratedMultiradialThetaImages
     measure hnormalized hh hbound hholds).region_eq_of_related hrel
+
+def unitThetaToyTheorem311MultiradialThetaImages
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1MultiradialThetaImages
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds) :=
+  IUTStage1MultiradialThetaImages.ofPackageWithTheorem311Indeterminacies
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds)
+    (unitThetaToyTheorem311IndeterminacySourceData (index := index))
+    (by
+      intro choice₁ choice₂ hstep
+      cases hstep)
+    (by
+      intro choice₁ choice₂ hstep
+      cases hstep)
+    (by
+      intro choice₁ choice₂ hstep
+      cases hstep)
+
+theorem unitThetaToy_theorem311MultiradialThetaImages_union_eq_targetUnion_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyTheorem311MultiradialThetaImages
+      measure hnormalized hh hbound hholds).union =
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds).preLedger.output.comparisons.targetUnion :=
+  (unitThetaToyTheorem311MultiradialThetaImages
+    measure hnormalized hh hbound hholds).union_eq_targetUnion
 
 theorem unitThetaToy_source_hullDet_targetUnion_subset_hull_example
     (measure : RegionMeasure thetaLine)
