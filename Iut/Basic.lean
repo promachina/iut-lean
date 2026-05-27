@@ -11,12 +11,14 @@ import Iut.Foundations.RegionMeasure
 import Iut.Foundations.CommonTargetBound
 import Iut.Foundations.TransportedRegionFamily
 import Iut.Foundations.AlgorithmicOutput
+import Iut.Foundations.AlgorithmicBridge
 import Iut.Stage1.PilotComparison
 import Iut.Stage1.ToyModel
 import Iut.Stage1.ToyMeasuredComparison
 import Iut.Stage1.ToyFamilyBounds
 import Iut.Stage1.ToyAPTTransport
 import Iut.Stage1.ToyQualitativeOutput
+import Iut.Stage1.ToyBridge
 
 /-!
 Root module for the IUT formalization scaffold.

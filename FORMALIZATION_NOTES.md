@@ -1428,3 +1428,104 @@ abstract: if a certified algorithmic output is accompanied by an explicit
 common-target-bound constructor, then the chosen target-volume bound follows.
 This will make the future "3.11 => 3.11.5" obligation visible as a separate
 function/hypothesis rather than as an implicit consequence of APT.
+
+## Milestone 14: Algorithmic Bridge Schema
+
+Lean files:
+
+* `Iut/Foundations/AlgorithmicBridge.lean`
+* `Iut/Stage1/ToyBridge.lean`
+
+### Source Check
+
+This milestone follows Mochizuki's formalization progress report, where the
+reorganized proof separates the second/third triangles from the final
+`3.11.5 => 3.12` comparison. The report says that the operation
+`(HDD) := (hull+det) o (dsc)` is moved into the intermediate stage and that the
+central issue in the second/third triangles is APT: how gluings up to
+indeterminacies plus hull are expressed.
+
+The same separation appears in IUT III, Corollary 3.12, Step (xi): first one
+regards Theorem 3.11 qualitatively as an algorithm producing output satisfying
+IPL/SHE/APT; then the construction is enlarged by holomorphic hulls, determinant
+formation, and normalized log-volume before comparable real objects appear.
+Scholze-Stix's critique again motivates this separation because their objection
+concerns precisely the passage from qualitative identifications to a real
+inequality.
+
+### Purpose
+
+The previous milestone gave names to IPL, SHE, and APT but did not let them
+prove anything. This milestone adds the first bridge-shaped schema:
+
+```text
+CommonTargetBoundBridge output measure bound
+```
+
+It is a structure with one field:
+
+```text
+build : output.Certified -> output.CommonTargetBound measure bound
+```
+
+This is the formal slot for a future source-specific proof of the
+`3.11 => 3.11.5` obligation. The bridge is explicit data; it is not derived from
+`HasAPT`, `HasSHE`, or `HasIPL`.
+
+### Lean Declarations
+
+In `AlgorithmicBridge.lean`:
+
+```text
+AlgorithmicOutput.CommonTargetBoundBridge
+AlgorithmicOutput.CommonTargetBoundBridge.apply
+AlgorithmicOutput.CommonTargetBoundBridge.choice_targetVolume_le
+AlgorithmicOutput.CommonTargetBoundBridge.allTargetsAtMost
+AlgorithmicOutput.CommonTargetBoundBridge.preserves_hasIPL
+AlgorithmicOutput.CommonTargetBoundBridge.preserves_hasSHE
+AlgorithmicOutput.CommonTargetBoundBridge.preserves_hasAPT
+```
+
+The first two declarations build a `CertifiedCommonTargetBound` from a
+certificate and an explicit bridge. The volume theorems use the common-target
+bound produced by `build`.
+
+In `ToyBridge.lean`:
+
+```text
+thetaToyCommonTargetBoundBridge
+thetaToyCertifiedBridgeBound
+thetaToyBridge_choice_targetVolume_le_bound
+thetaToyBridge_allTargetsAtMost
+thetaToyBridge_hasAPT
+```
+
+The toy bridge ignores the trivial certificate and constructs the common-target
+bound from the explicit epsilon cap plus upper-ray normalization.
+
+### What This Tests
+
+The proof dependency is now:
+
+1. A qualitative output is certified.
+2. A separate bridge constructor is supplied.
+3. The bridge produces common-target-bound data.
+4. Only then do target-volume bounds follow.
+
+This is the shape we want before any real IUT-specific theorem is attempted.
+Lean will not permit us to get from the names IPL/SHE/APT to volume estimates
+unless we also provide the bridge.
+
+### Design Trap Avoided
+
+The trap would be to encode APT itself as a theorem that returns the target
+bound. This module keeps the bridge as an independent hypothesis, so future
+work must explain and prove the bridge rather than hiding it in a name.
+
+### Next Step
+
+The next milestone should introduce an explicit Stage 1 statement that consumes
+a certified output, a bridge, and a measured q-pilot value to produce a
+Corollary-3.12-shaped real inequality. This should still be a theorem schema:
+the nontrivial work remains in the bridge and in the real-line/log-volume
+identifications supplied to it.

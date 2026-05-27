@@ -151,6 +151,8 @@ Current modules:
   explicit choice-dependent transports and target regions.
 * `Iut.Foundations.AlgorithmicOutput`: opaque IPL/SHE/APT qualitative-property
   interface for transported algorithmic outputs.
+* `Iut.Foundations.AlgorithmicBridge`: explicit bridge schema from certified
+  algorithmic output to measured common-target-bound data.
 * `Iut.Stage1.PilotComparison`: first neutral interface for the Corollary 3.12
   target shape.
 * `Iut.Stage1.ToyModel`: Lean tests for Mochizuki's real-valued toy model from
@@ -163,6 +165,8 @@ Current modules:
   passage to common targets and measured bounds.
 * `Iut.Stage1.ToyQualitativeOutput`: toy algorithmic output with explicit
   IPL/SHE/APT certificates plus separate common-target bound data.
+* `Iut.Stage1.ToyBridge`: toy bridge from qualitative certification to
+  common-target bounds via the epsilon-cap construction.
 
 Useful commands:
 
