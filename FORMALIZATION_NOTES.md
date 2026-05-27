@@ -858,3 +858,115 @@ upper-ray bound itself is the measured value. That will provide a small
 end-to-end test: upper-ray enlargement corresponds to numerical inequality, and
 the `h <= epsilon` bound can be read as a region membership statement rather
 than as an assumed conclusion.
+
+## Milestone 9: Measured Toy Upper Rays
+
+Lean files:
+
+* `Iut/Foundations/RegionMeasure.lean`
+* `Iut/Stage1/ToyMeasuredComparison.lean`
+
+### Source Check
+
+This milestone follows the end of Step (xi) in the proof of IUT III, Corollary
+3.12. In that passage, after applying the multiradial construction and passing
+to the holomorphic hull, Mochizuki writes the comparison in terms of a real
+upper-ray region of the form
+
+```text
+R_{<= -|log(Theta)|}
+```
+
+together with the real number `-|log(q)|`. The same passage emphasizes that the
+log-volume is applied only after the region/hull and determinant operations have
+made the objects comparable.
+
+This is also aligned with the Scholze-Stix criticism: their discussion of
+Corollary 3.12 stresses that one must spell out which copies of the real line are
+being identified before deriving a real inequality. Our toy module therefore
+keeps the labeled transport, target region, target volume, and final real
+arithmetic inequality as separate Lean statements.
+
+Mochizuki's recent formalization progress report describes the current RIMS
+focus as the "3.11.5 => 3.12" simultaneous comparison relative to a common ring
+structure, after moving the "hull+det" operation into the preceding stage. The
+present milestone remains below that level: it only verifies the real upper-ray
+and volume-calibration shape that such a later stage would have to feed.
+
+### Purpose
+
+The previous milestone introduced an abstract monotone `RegionMeasure`. This
+milestone adds an explicit calibration property:
+
+```text
+RegionMeasure.NormalizesUpperRays measure
+```
+
+meaning that the measure of `Region.upperRay line bound` is exactly `bound`.
+This is intentionally not part of the definition of a measure. It is a hypothesis
+that must be supplied when a source-specific log-volume construction has been
+proved to have this normalization.
+
+### Lean Declarations
+
+In `RegionMeasure.lean`:
+
+```text
+RegionMeasure.NormalizesUpperRays
+RegionMeasure.upperRay_volume_eq_of_normalized
+RegionMeasure.upperRay_volume_le_iff_of_normalized
+RegionMeasure.upperRay_atMost_iff_of_normalized
+```
+
+These lemmas say that, under explicit upper-ray normalization, volume comparison
+of upper rays is exactly comparison of their displayed bounds.
+
+In `ToyMeasuredComparison.lean`:
+
+```text
+thetaIndeterminacy_target_subset_iff_epsilon_le
+thetaIndeterminacy_targetVolume_eq_bound
+thetaIndeterminacy_targetVolume_le_of_epsilon_le
+thetaIndeterminacy_targetVolume_le_iff_epsilon_le
+thetaIndeterminacy_holds_iff_coord_le_targetVolume
+unitThetaIndeterminacy_coord_le_targetVolume_iff_bound
+```
+
+The first theorem says that enlarging the toy target region by increasing
+`epsilon` is exactly region inclusion. The next two target-volume theorems say
+that monotonicity gives one direction for arbitrary measures, and that the
+converse is available only under the explicit upper-ray normalization. The final
+two theorems connect target-region membership to the measured target bound and,
+for the unit transport, recover the arithmetic statement `h <= epsilon`.
+
+### What This Tests
+
+The important test is the dependency structure:
+
+1. Region inclusion follows from upper-ray arithmetic.
+2. Volume inequality follows from region inclusion and measure monotonicity.
+3. The reverse reading of volume inequality as an upper-ray bound requires the
+   extra normalization hypothesis.
+4. The toy `h <= epsilon` statement is recovered from target membership, not
+   assumed as an input.
+
+This is the kind of bookkeeping that Lean is useful for in the Corollary 3.12
+discussion: if a later proof silently forgets a real-line identification,
+normalization, or containment hypothesis, the theorem statement should stop
+typechecking.
+
+### Design Trap Avoided
+
+The trap would be to define "log-volume of an upper ray" globally as its bound
+and then use that as if it were already Mochizuki's analytic log-volume. Instead
+we added only a named calibration hypothesis. The formalization now records
+where the calibration is used.
+
+### Next Step
+
+The next milestone should introduce a small abstract interface for the
+"hull+det" stage mentioned in Mochizuki's formalization report: an input region
+family, a chosen common hull/determinant target, and a proof that applying a
+normalized measure to that target yields a usable upper bound for every possible
+output. This should still be abstract; no IUT-specific determinant construction
+should be asserted before its source hypotheses are identified.

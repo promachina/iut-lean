@@ -53,12 +53,41 @@ def HasVolumeAtMost (measure : RegionMeasure line) (region : Region line)
     (bound : Real) : Prop :=
   measure.volume region <= bound
 
+/--
+A measure is normalized on upper rays when it assigns the upper-ray bound as
+the numerical value of that upper ray.
+
+This is a calibration property for toy models and later comparison statements;
+it is not part of the definition of an arbitrary region measure.
+-/
+def NormalizesUpperRays (measure : RegionMeasure line) : Prop :=
+  ∀ bound : Real, measure.volume (Region.upperRay line bound) = bound
+
 theorem atMost_of_subset_of_atMost (measure : RegionMeasure line)
     {small large : Region line} {bound : Real}
     (hsubset : Region.Subset small large)
     (hlarge : HasVolumeAtMost measure large bound) :
     HasVolumeAtMost measure small bound :=
   le_trans (measure.monotone hsubset) hlarge
+
+theorem upperRay_volume_eq_of_normalized (measure : RegionMeasure line)
+    (hnormalized : NormalizesUpperRays measure) (bound : Real) :
+    measure.volume (Region.upperRay line bound) = bound :=
+  hnormalized bound
+
+theorem upperRay_volume_le_iff_of_normalized (measure : RegionMeasure line)
+    (hnormalized : NormalizesUpperRays measure) (smallBound largeBound : Real) :
+    measure.volume (Region.upperRay line smallBound) <=
+        measure.volume (Region.upperRay line largeBound) ↔
+      smallBound <= largeBound := by
+  rw [upperRay_volume_eq_of_normalized measure hnormalized smallBound,
+    upperRay_volume_eq_of_normalized measure hnormalized largeBound]
+
+theorem upperRay_atMost_iff_of_normalized (measure : RegionMeasure line)
+    (hnormalized : NormalizesUpperRays measure) (regionBound volumeBound : Real) :
+    HasVolumeAtMost measure (Region.upperRay line regionBound) volumeBound ↔
+      regionBound <= volumeBound := by
+  rw [HasVolumeAtMost, upperRay_volume_eq_of_normalized measure hnormalized regionBound]
 
 theorem choice_atMost_of_common_atMost (measure : RegionMeasure line)
     {family : RegionFamily line index} {common : Region line} {bound : Real}

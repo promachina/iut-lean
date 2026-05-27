@@ -149,6 +149,8 @@ Current modules:
   target shape.
 * `Iut.Stage1.ToyModel`: Lean tests for Mochizuki's real-valued toy model from
   IUT III, Remark 3.12.2.
+* `Iut.Stage1.ToyMeasuredComparison`: measured upper-ray version of the toy
+  model, keeping containment, calibration, and arithmetic bounds separate.
 
 Useful commands:
 

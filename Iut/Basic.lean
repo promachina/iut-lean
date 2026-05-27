@@ -10,6 +10,7 @@ import Iut.Foundations.IndeterminacyRelation
 import Iut.Foundations.RegionMeasure
 import Iut.Stage1.PilotComparison
 import Iut.Stage1.ToyModel
+import Iut.Stage1.ToyMeasuredComparison
 
 /-!
 Root module for the IUT formalization scaffold.
