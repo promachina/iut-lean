@@ -8618,3 +8618,66 @@ combine them.
 The next milestone should add public projection examples that pass through this
 constructor into the existing source audit/public endpoint, while still avoiding
 any direct route from Theorem 3.11 subclaims alone to Corollary 3.12.
+
+## Milestone 105: Public Audit from Separated Inputs
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The previous milestone made source-obligation construction explicit from:
+
+```text
+Theorem 3.11 subclaims
+source side conditions
+```
+
+This milestone routes that constructed obligation record through the existing
+source package public audit. It does not create a direct theorem from Theorem
+3.11 subclaims alone to Corollary 3.12.
+
+### Purpose
+
+This milestone adds a source-package API for using separated inputs at the
+public audit boundary. The implementation first constructs
+`IUTStage1SourceObligations`, then calls the existing `publicAudit` route.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.obligationsFromParts
+IUTStage1SourcePackage.publicAuditOfParts
+IUTStage1SourcePackage.publicAuditOfParts_qSigned_le_thetaSigned
+IUTStage1SourcePackage.publicAuditOfParts_corollary312
+IUTStage1SourcePackage.publicAuditOfParts_stage1Comparison_recovers_qSigned_le_thetaSigned
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_publicAudit_from_parts_q_le_theta_example
+unitThetaToy_source_publicAudit_from_parts_corollary_example
+unitThetaToy_source_publicAudit_from_parts_recovery_example
+```
+
+### What This Tests
+
+The toy examples verify that separated inputs can be used to obtain the same
+public audit projections as the older direct source-obligation examples.
+
+### Design Trap Avoided
+
+The trap would be to add a convenient public endpoint that consumes only the
+Theorem 3.11 subclaim record. This milestone requires both the subclaims and the
+side-condition record, and the implementation visibly factors through
+`IUTStage1SourceObligations`.
+
+### Next Step
+
+The next milestone should add source-audit examples from separated inputs, so
+that the compact audit record and public projection route are tested together.

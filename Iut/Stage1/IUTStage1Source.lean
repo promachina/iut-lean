@@ -588,6 +588,62 @@ theorem publicAudit_stage1Comparison_recovers_qSigned_le_thetaSigned
         (package.promotedProvider obligations).ledger.qSigned_le_thetaSigned :=
   (package.publicAudit obligations).2.2
 
+def obligationsFromParts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    IUTStage1SourceObligations package :=
+  IUTStage1SourceObligations.ofSubclaimsAndSideConditions
+    subclaims sideConditions
+
+theorem publicAuditOfParts
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+        (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+      (corollary312_from_stage1_comparison
+          (package.promotedProvider
+            (package.obligationsFromParts
+              subclaims sideConditions)).stage1Comparison =
+        corollary312_of_signed_le
+          (package.promotedProvider
+            (package.obligationsFromParts
+              subclaims sideConditions)).ledger.qSigned_le_thetaSigned) :=
+  package.publicAudit (package.obligationsFromParts subclaims sideConditions)
+
+theorem publicAuditOfParts_qSigned_le_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  (package.publicAuditOfParts subclaims sideConditions).1
+
+theorem publicAuditOfParts_corollary312
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  (package.publicAuditOfParts subclaims sideConditions).2.1
+
+theorem publicAuditOfParts_stage1Comparison_recovers_qSigned_le_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (subclaims : IUTStage1Theorem311Subclaims package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    corollary312_from_stage1_comparison
+        (package.promotedProvider
+          (package.obligationsFromParts
+            subclaims sideConditions)).stage1Comparison =
+      corollary312_of_signed_le
+        (package.promotedProvider
+          (package.obligationsFromParts
+            subclaims sideConditions)).ledger.qSigned_le_thetaSigned :=
+  (package.publicAuditOfParts subclaims sideConditions).2.2
+
 theorem stage1Comparison_recovers_corollary312
     (package : IUTStage1SourcePackage source target index)
     (obligations : IUTStage1SourceObligations package) :
