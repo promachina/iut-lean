@@ -125,6 +125,20 @@ theorem unitThetaToy_promotedProvider_publicAudit_q_le_theta_example
       -(2 * h) + epsilonBound :=
   (unitThetaToyPromotedProvider measure hnormalized hh hbound hholds).publicAudit.1
 
+theorem unitThetaToy_preLedger_publicAudit_q_le_theta_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (Transport.map unitQToTheta (qAssignment h)).coord <=
+      -(2 * h) + epsilonBound :=
+  ((unitThetaToyPreLedgerData measure hnormalized hh hbound hholds).publicAudit
+    (unitThetaToyPromotionObligations measure hnormalized hh hbound hholds)).1
+
 theorem unitThetaToy_promotedProvider_publicAudit_corollary_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

@@ -213,6 +213,19 @@ theorem toSourceObligationProvider_publicAudit
           (data.toSourceObligationProvider obligations).ledger.qSigned_le_thetaSigned) :=
   (data.toSourceObligationProvider obligations).publicAudit
 
+theorem publicAudit
+    (data : IUTStage1PreLedgerData source target index)
+    (obligations : LedgerPromotionObligations data) :
+    data.qSigned <= data.thetaSigned ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta data.thetaSigned)
+        (signedPilotLogVolume PilotSide.q data.qSigned) ∧
+      (corollary312_from_stage1_comparison
+          (data.toSourceObligationProvider obligations).stage1Comparison =
+        corollary312_of_signed_le
+          (data.toSourceObligationProvider obligations).ledger.qSigned_le_thetaSigned) :=
+  data.toSourceObligationProvider_publicAudit obligations
+
 end IUTStage1PreLedgerData
 
 end Stage1

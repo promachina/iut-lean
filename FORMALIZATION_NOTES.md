@@ -6777,3 +6777,76 @@ usable and that the explicit obligations are sufficient.
 The next milestone should add a short public regression theorem over the
 pre-ledger promotion path itself, analogous to the provider public audit theorem,
 so future source-specific pre-ledger data can target one compact endpoint.
+
+## Milestone 79: Pre-Ledger Public Audit Theorem
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Data.lean`
+* `Iut/Stage1/IUTStage1DataExample.lean`
+
+### Source Check
+
+The pre-ledger promotion path should expose a compact endpoint of its own. A
+future source-specific module should be able to construct pre-ledger data, supply
+promotion obligations, and then target a single public theorem, without manually
+unfolding the promoted provider.
+
+This keeps the same proof discipline as the provider layer: compact public
+endpoints are views over explicit obligations, not independent proof shortcuts.
+
+### Purpose
+
+This milestone adds:
+
+```text
+IUTStage1PreLedgerData.publicAudit
+```
+
+It returns the same compact endpoint as the provider public audit:
+
+```text
+qSigned <= thetaSigned
+Corollary312Inequality
+Stage1Comparison recovery equality
+```
+
+for any pre-ledger data and explicit promotion obligations.
+
+### Lean Declarations
+
+In `IUTStage1Data.lean`:
+
+```text
+IUTStage1PreLedgerData.publicAudit
+```
+
+In `IUTStage1DataExample.lean`:
+
+```text
+unitThetaToy_preLedger_publicAudit_q_le_theta_example
+```
+
+### What This Tests
+
+The theorem is a direct view over:
+
+```text
+IUTStage1PreLedgerData.toSourceObligationProvider_publicAudit
+```
+
+The toy regression example proves that downstream users can consume pre-ledger
+data through this compact theorem.
+
+### Design Trap Avoided
+
+The trap would be to require source-specific modules to manually navigate
+promotion to the provider every time they want the public endpoint. This theorem
+fixes the pre-ledger public API while preserving the explicit promotion
+obligations.
+
+### Next Step
+
+The next milestone should expose additional toy examples for the pre-ledger
+public theorem's Corollary 3.12 and recovery components, so all three public
+endpoint projections are covered at the pre-ledger layer.
