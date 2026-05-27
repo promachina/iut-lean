@@ -674,6 +674,84 @@ theorem zmodCanonicalSignLabelQuotient_neg_one_eq (l : PrimeGeFive) :
       zmodCanonicalSignLabelQuotient l :=
   (zmodSignAction l).toSignLabelQuotient_neg_eq (zmodOneNonzeroLabel l)
 
+/-- Multiplication by a unit sends nonzero `ZMod l` labels to nonzero labels. -/
+def zmodUnitSmulNonzeroLabel (l : PrimeGeFive)
+    (a : (ZMod l.value)ˣ)
+    (x : (zmodPointedQuotient l).NonzeroCarrier) :
+    (zmodPointedQuotient l).NonzeroCarrier where
+  val := (zmodUnitActionData l).smul a x.1
+  property := (zmodUnitActionData l).smul_nonzero a x.1 x.2
+
+theorem zmodUnitSmulNonzeroLabel_respects_sign
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ)
+    {x y : (zmodPointedQuotient l).NonzeroCarrier}
+    (h : (zmodSignAction l).NonzeroSignRel x y) :
+    (zmodSignAction l).NonzeroSignRel
+      (zmodUnitSmulNonzeroLabel l a x)
+      (zmodUnitSmulNonzeroLabel l a y) := by
+  rcases h with h | h
+  · left
+    simp [zmodUnitSmulNonzeroLabel, zmodUnitActionData, h]
+  · right
+    simp [zmodUnitSmulNonzeroLabel, zmodUnitActionData, zmodSignAction, h, mul_neg]
+
+/-- The descended `(ZMod l)^x` action on nonzero labels modulo sign. -/
+def zmodUnitActionOnSignLabelQuotient (l : PrimeGeFive)
+    (a : (ZMod l.value)ˣ) :
+    (zmodSignAction l).SignLabelQuotient ->
+      (zmodSignAction l).SignLabelQuotient :=
+  Quotient.map (zmodUnitSmulNonzeroLabel l a) (by
+    intro x y h
+    exact zmodUnitSmulNonzeroLabel_respects_sign l a h)
+
+theorem zmodUnitActionOnSignLabelQuotient_apply
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ)
+    (x : (zmodPointedQuotient l).NonzeroCarrier) :
+    zmodUnitActionOnSignLabelQuotient l a
+        ((zmodSignAction l).toSignLabelQuotient x) =
+      (zmodSignAction l).toSignLabelQuotient
+        (zmodUnitSmulNonzeroLabel l a x) :=
+  rfl
+
+theorem zmodUnitActionOnSignLabelQuotient_one
+    (l : PrimeGeFive) (x : (zmodSignAction l).SignLabelQuotient) :
+    zmodUnitActionOnSignLabelQuotient l 1 x = x := by
+  refine Quotient.inductionOn x ?_
+  intro y
+  apply Quotient.sound
+  left
+  simp [zmodUnitSmulNonzeroLabel, zmodUnitActionData]
+
+theorem zmodUnitActionOnSignLabelQuotient_mul
+    (l : PrimeGeFive) (a b : (ZMod l.value)ˣ)
+    (x : (zmodSignAction l).SignLabelQuotient) :
+    zmodUnitActionOnSignLabelQuotient l (a * b) x =
+      zmodUnitActionOnSignLabelQuotient l a
+        (zmodUnitActionOnSignLabelQuotient l b x) := by
+  refine Quotient.inductionOn x ?_
+  intro y
+  apply Quotient.sound
+  left
+  simp [zmodUnitSmulNonzeroLabel, zmodUnitActionData, mul_assoc]
+
+theorem zmodUnitActionOnSignLabelQuotient_neg_one
+    (l : PrimeGeFive) (x : (zmodSignAction l).SignLabelQuotient) :
+    zmodUnitActionOnSignLabelQuotient l (-1 : (ZMod l.value)ˣ) x = x := by
+  refine Quotient.inductionOn x ?_
+  intro y
+  apply Quotient.sound
+  right
+  simp [zmodUnitSmulNonzeroLabel, zmodUnitActionData, zmodSignAction]
+
+theorem zmodSignUnitSubgroup_action_trivial_on_signLabelQuotient
+    (l : PrimeGeFive) {a : (ZMod l.value)ˣ}
+    (ha : a ∈ zmodSignUnitSubgroup l)
+    (x : (zmodSignAction l).SignLabelQuotient) :
+    zmodUnitActionOnSignLabelQuotient l a x = x := by
+  rcases ha with rfl | rfl
+  · exact zmodUnitActionOnSignLabelQuotient_one l x
+  · exact zmodUnitActionOnSignLabelQuotient_neg_one l x
+
 /-- A witness that a cusp arises from a nonzero element of an EtTh quotient. -/
 structure NonzeroQuotientElement where
   quotient : PointedEtaleQuotient.{u}

@@ -11578,3 +11578,104 @@ that ambiguity. The Lean quotient preserves the ambiguity instead of erasing it.
 This still does not construct the full `F_l`-torsor or `F_l^×`-action on actual
 cusp labels. It gives the quotient-theoretic target needed for that construction:
 nonzero `±` labels can now be projected to sign classes without choosing a sign.
+
+## Math Milestone 28: Unit Action Descends to Sign Labels
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 4.1(ii), says that `LabCusp` carries a natural `F_l`-torsor
+structure arising from the natural action of `F_l^×` on the quotient `Q`.
+The `LabCusp±` passage in Definition 6.1(iii) says that `LabCusp±` admits a
+natural action by `F_l^×`, while the comparison to ordinary `LabCusp` passes
+through the quotient of nonzero `±`-labels by `{±1}`.
+
+The formal question at this stage is therefore: does the concrete unit action on
+`ZMod l` respect the sign relation strongly enough to descend to the sign-label
+quotient? Lean now checks that it does.
+
+### Lean/API Check
+
+Lean's `Quotient.map` is the right tool for descending an operation to a
+quotient. It requires exactly the well-definedness proof we want:
+
+```text
+x ~ y -> a*x ~ a*y
+```
+
+For `ZMod l`, this follows by cases on the sign relation and by the ring identity
+`a * (-y) = -(a * y)`.
+
+### Lean Decisions
+
+The nonzero unit action is:
+
+```text
+zmodUnitSmulNonzeroLabel
+```
+
+It sends a nonzero label to another nonzero label using the existing proof that
+unit multiplication preserves nonzero elements.
+
+The descended action on sign-label quotients is:
+
+```text
+zmodUnitActionOnSignLabelQuotient
+```
+
+Its action laws are exposed as named theorems:
+
+```text
+zmodUnitActionOnSignLabelQuotient_one
+zmodUnitActionOnSignLabelQuotient_mul
+```
+
+Finally, since the quotient already identifies `x` with `-x`, Lean proves:
+
+```text
+zmodUnitActionOnSignLabelQuotient_neg_one
+zmodSignUnitSubgroup_action_trivial_on_signLabelQuotient
+```
+
+So the `{1,-1}` subgroup acts trivially after passing to ordinary sign-label
+classes.
+
+### Lean Declarations
+
+```text
+zmodUnitSmulNonzeroLabel
+zmodUnitSmulNonzeroLabel_respects_sign
+zmodUnitActionOnSignLabelQuotient
+zmodUnitActionOnSignLabelQuotient_apply
+zmodUnitActionOnSignLabelQuotient_one
+zmodUnitActionOnSignLabelQuotient_mul
+zmodUnitActionOnSignLabelQuotient_neg_one
+zmodSignUnitSubgroup_action_trivial_on_signLabelQuotient
+```
+
+### What This Tests
+
+The example file now checks:
+
+* application of the descended unit action to a representative;
+* the identity and multiplication laws for the descended action;
+* multiplication by `-1` is trivial on the sign quotient;
+* every element of the `{1,-1}` subgroup acts trivially on the sign quotient.
+
+### Design Trap Avoided
+
+The trap would be to assume that an action on representatives automatically
+defines an action on quotient labels. It only does so after proving compatibility
+with the quotient relation. This milestone makes that compatibility an explicit
+Lean theorem.
+
+### Remaining Gap
+
+We now have the `F_l^×`-style action on sign-label quotients, but not the
+additive `F_l`-torsor structure of `LabCusp`. The next step should add the
+concrete simply transitive translation model on `ZMod l` labels, then relate its
+nonzero/sign quotient to the current multiplicative-unit action.

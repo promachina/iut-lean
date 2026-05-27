@@ -213,6 +213,36 @@ example :
       zmodCanonicalSignLabelQuotient primeFive :=
   zmodCanonicalSignLabelQuotient_neg_one_eq primeFive
 
+example (a : (ZMod primeFive.value)ˣ)
+    (x : (zmodPointedQuotient primeFive).NonzeroCarrier) :
+    zmodUnitActionOnSignLabelQuotient primeFive a
+        ((zmodSignAction primeFive).toSignLabelQuotient x) =
+      (zmodSignAction primeFive).toSignLabelQuotient
+        (zmodUnitSmulNonzeroLabel primeFive a x) :=
+  zmodUnitActionOnSignLabelQuotient_apply primeFive a x
+
+example (x : (zmodSignAction primeFive).SignLabelQuotient) :
+    zmodUnitActionOnSignLabelQuotient primeFive 1 x = x :=
+  zmodUnitActionOnSignLabelQuotient_one primeFive x
+
+example (a b : (ZMod primeFive.value)ˣ)
+    (x : (zmodSignAction primeFive).SignLabelQuotient) :
+    zmodUnitActionOnSignLabelQuotient primeFive (a * b) x =
+      zmodUnitActionOnSignLabelQuotient primeFive a
+        (zmodUnitActionOnSignLabelQuotient primeFive b x) :=
+  zmodUnitActionOnSignLabelQuotient_mul primeFive a b x
+
+example (x : (zmodSignAction primeFive).SignLabelQuotient) :
+    zmodUnitActionOnSignLabelQuotient primeFive
+      (-1 : (ZMod primeFive.value)ˣ) x = x :=
+  zmodUnitActionOnSignLabelQuotient_neg_one primeFive x
+
+example {a : (ZMod primeFive.value)ˣ}
+    (ha : a ∈ zmodSignUnitSubgroup primeFive)
+    (x : (zmodSignAction primeFive).SignLabelQuotient) :
+    zmodUnitActionOnSignLabelQuotient primeFive a x = x :=
+  zmodSignUnitSubgroup_action_trivial_on_signLabelQuotient primeFive ha x
+
 example :
     (zmodCanonicalGeneratorUpToSignElement primeFive).canonicalGeneratorUpToSign :=
   (zmodCanonicalGeneratorUpToSignElement primeFive).canonicalGeneratorUpToSign_holds
