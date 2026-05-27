@@ -133,6 +133,89 @@ theorem unitThetaToy_thetaPilotPossibleImages_union_subset_hull_example
       (unitThetaToyIUTStage1SourceHullDetData
         measure hnormalized hh hbound hholds).targetUnion_subset_hull
 
+def unitThetaToyIndeterminacyQuotient :
+    IUTStage1IndeterminacyQuotient index :=
+  IUTStage1IndeterminacyQuotient.discrete index
+
+theorem unitThetaToyIndeterminacyQuotient_profile_example :
+    unitThetaToyIndeterminacyQuotient (index := index).profile =
+      theorem311IndeterminacyProfile :=
+  IUTStage1IndeterminacyQuotient.discrete_profile index
+
+def unitThetaToyMultiradialThetaImages
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1MultiradialThetaImages
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds) :=
+  IUTStage1MultiradialThetaImages.ofPackageWithQuotient
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds)
+    (unitThetaToyIndeterminacyQuotient (index := index))
+    (by
+      intro choice₁ choice₂ hrel
+      cases hrel
+      rfl)
+
+theorem unitThetaToy_multiradialThetaImages_union_eq_targetUnion_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyMultiradialThetaImages
+      measure hnormalized hh hbound hholds).union =
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds).preLedger.output.comparisons.targetUnion :=
+  (unitThetaToyMultiradialThetaImages
+    measure hnormalized hh hbound hholds).union_eq_targetUnion
+
+theorem unitThetaToy_multiradialThetaImages_region_eq_of_related_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h))
+    {choice₁ choice₂ : index}
+    (hrel :
+      (unitThetaToyMultiradialThetaImages
+        measure hnormalized hh hbound hholds).quotient.relation
+          choice₁ choice₂) :
+    (unitThetaToyMultiradialThetaImages
+      measure hnormalized hh hbound hholds).possibleImages.images.region choice₁ =
+      (unitThetaToyMultiradialThetaImages
+        measure hnormalized hh hbound hholds).possibleImages.images.region choice₂ :=
+  (unitThetaToyMultiradialThetaImages
+    measure hnormalized hh hbound hholds).region_eq_of_related hrel
+
+theorem unitThetaToy_multiradialThetaImages_output_matches_package_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyMultiradialThetaImages
+      measure hnormalized hh hbound hholds).multiradialOutput =
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds).multiradialOutput :=
+  (unitThetaToyMultiradialThetaImages
+    measure hnormalized hh hbound hholds).multiradialOutputMatchesPackage
+
 theorem unitThetaToy_source_hullDet_targetUnion_subset_hull_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

@@ -257,6 +257,162 @@ theorem indeterminaciesMatchPackage
 
 end IUTStage1ThetaPilotPossibleImages
 
+/-- Source-facing placeholder for the `(Ind1)` indeterminacy in Theorem 3.11. -/
+def theorem311Ind1 : Indeterminacy :=
+  { name := "Ind1",
+    actsOnLogShells := true,
+    absorbedByHull := true }
+
+/-- Source-facing placeholder for the `(Ind2)` indeterminacy in Theorem 3.11. -/
+def theorem311Ind2 : Indeterminacy :=
+  { name := "Ind2",
+    actsOnLogShells := true,
+    absorbedByHull := true }
+
+/-- Source-facing placeholder for the `(Ind3)` indeterminacy in Theorem 3.11. -/
+def theorem311Ind3 : Indeterminacy :=
+  { name := "Ind3",
+    actsOnLogShells := true,
+    absorbedByHull := true }
+
+/-- The named `(Ind1)`, `(Ind2)`, `(Ind3)` profile used at the Stage 1 boundary. -/
+def theorem311IndeterminacyProfile : IndeterminacyProfile :=
+  [theorem311Ind1, theorem311Ind2, theorem311Ind3]
+
+/--
+Indeterminacy quotient for the possible-image index set.
+
+The relation records when two choices determine the same multiradial
+Theta-pilot image after quotienting by `(Ind1)`, `(Ind2)`, `(Ind3)`.
+-/
+structure IUTStage1IndeterminacyQuotient (index : Type u) where
+  ind1 : Indeterminacy
+  ind2 : Indeterminacy
+  ind3 : Indeterminacy
+  relation : index -> index -> Prop
+  is_equivalence : Equivalence relation
+  ind1_name : ind1.name = "Ind1"
+  ind2_name : ind2.name = "Ind2"
+  ind3_name : ind3.name = "Ind3"
+
+namespace IUTStage1IndeterminacyQuotient
+
+variable {index : Type u}
+
+def profile (quotient : IUTStage1IndeterminacyQuotient index) :
+    IndeterminacyProfile :=
+  [quotient.ind1, quotient.ind2, quotient.ind3]
+
+theorem refl (quotient : IUTStage1IndeterminacyQuotient index)
+    (choice : index) :
+    quotient.relation choice choice :=
+  quotient.is_equivalence.refl choice
+
+theorem symm (quotient : IUTStage1IndeterminacyQuotient index)
+    {choice₁ choice₂ : index}
+    (hrel : quotient.relation choice₁ choice₂) :
+    quotient.relation choice₂ choice₁ :=
+  quotient.is_equivalence.symm hrel
+
+theorem trans (quotient : IUTStage1IndeterminacyQuotient index)
+    {choice₁ choice₂ choice₃ : index}
+    (h₁₂ : quotient.relation choice₁ choice₂)
+    (h₂₃ : quotient.relation choice₂ choice₃) :
+    quotient.relation choice₁ choice₃ :=
+  quotient.is_equivalence.trans h₁₂ h₂₃
+
+/-- The discrete quotient is the no-extra-identification baseline. -/
+def discrete (index : Type u) : IUTStage1IndeterminacyQuotient index :=
+  { ind1 := theorem311Ind1,
+    ind2 := theorem311Ind2,
+    ind3 := theorem311Ind3,
+    relation := Eq,
+    is_equivalence := eq_equivalence,
+    ind1_name := rfl,
+    ind2_name := rfl,
+    ind3_name := rfl }
+
+theorem discrete_profile (index : Type u) :
+    (discrete index).profile = theorem311IndeterminacyProfile :=
+  rfl
+
+end IUTStage1IndeterminacyQuotient
+
+/--
+Multiradial possible images of the Theta-pilot, recorded together with the
+indeterminacy quotient on choices.
+
+The key field is `image_invariant`: related choices give the same target
+region. This is the first formal place where "quotient by `(Ind1)`, `(Ind2)`,
+`(Ind3)`" becomes a Lean obligation instead of prose.
+-/
+structure IUTStage1MultiradialThetaImages
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) where
+  multiradialOutput : MultiradialOutputId
+  possibleImages : IUTStage1ThetaPilotPossibleImages package
+  quotient : IUTStage1IndeterminacyQuotient index
+  multiradial_output_eq : multiradialOutput = package.multiradialOutput
+  image_invariant :
+    ∀ {choice₁ choice₂ : index},
+      quotient.relation choice₁ choice₂ ->
+        possibleImages.images.region choice₁ =
+          possibleImages.images.region choice₂
+
+namespace IUTStage1MultiradialThetaImages
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+def ofPackageWithQuotient
+    (package : IUTStage1SourcePackage source target index)
+    (quotient : IUTStage1IndeterminacyQuotient index)
+    (hinvariant :
+      ∀ {choice₁ choice₂ : index},
+        quotient.relation choice₁ choice₂ ->
+          (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region choice₁ =
+            (IUTStage1ThetaPilotPossibleImages.ofPackage package).images.region choice₂) :
+    IUTStage1MultiradialThetaImages package :=
+  { multiradialOutput := package.multiradialOutput,
+    possibleImages := IUTStage1ThetaPilotPossibleImages.ofPackage package,
+    quotient := quotient,
+    multiradial_output_eq := rfl,
+    image_invariant := hinvariant }
+
+def union (images : IUTStage1MultiradialThetaImages package) :
+    Region target :=
+  images.possibleImages.union
+
+theorem union_eq_targetUnion
+    (images : IUTStage1MultiradialThetaImages package) :
+    images.union = package.preLedger.output.comparisons.targetUnion :=
+  images.possibleImages.union_eq_targetUnion
+
+theorem region_eq_of_related
+    (images : IUTStage1MultiradialThetaImages package)
+    {choice₁ choice₂ : index}
+    (hrel : images.quotient.relation choice₁ choice₂) :
+    images.possibleImages.images.region choice₁ =
+      images.possibleImages.images.region choice₂ :=
+  images.image_invariant hrel
+
+theorem multiradialOutputMatchesPackage
+    (images : IUTStage1MultiradialThetaImages package) :
+    images.multiradialOutput = package.multiradialOutput :=
+  images.multiradial_output_eq
+
+theorem thetaPilotMatchesPackage
+    (images : IUTStage1MultiradialThetaImages package) :
+    images.possibleImages.thetaPilot = package.thetaPilot :=
+  images.possibleImages.thetaPilotMatchesPackage
+
+theorem indeterminaciesMatchPackage
+    (images : IUTStage1MultiradialThetaImages package) :
+    images.possibleImages.indeterminacies = package.indeterminacies :=
+  images.possibleImages.indeterminaciesMatchPackage
+
+end IUTStage1MultiradialThetaImages
+
 /--
 Source-facing statement of the obligations still needed to promote an IUT Stage
 1 source package to the public Stage 1 endpoint.
