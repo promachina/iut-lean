@@ -9907,3 +9907,77 @@ audited subclaim and hypothesis routes.
 The next milestone should extend the combined hypothesis-route audit so that it
 can also carry structured inputs while still separating side-condition audit
 data from source-package audit data.
+
+## Milestone 125: Structured Hypothesis Route Audit
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The previous milestone added compact audits for structured routes. This
+milestone mirrors the earlier combined hypothesis-route audit, but uses
+structured Theorem 3.11 inputs instead of raw subclaims.
+
+The source-side separation remains unchanged: side-condition hypotheses are
+audited separately from the source-package audit.
+
+### Purpose
+
+This milestone gives downstream code a single audit object for the structured
+hypothesis route while preserving the two distinct audit components:
+
+```text
+side-condition hypothesis audit
+source-package audit from structured inputs and hypotheses
+```
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.StructuredHypothesisRouteAudit
+IUTStage1SourcePackage.structuredHypothesisRouteAudit
+IUTStage1SourcePackage.StructuredHypothesisRouteAudit.sideConditionAudit
+IUTStage1SourcePackage.StructuredHypothesisRouteAudit.sourceAudit
+IUTStage1SourcePackage.StructuredHypothesisRouteAudit.qPilotLogVolumePositive
+IUTStage1SourcePackage.StructuredHypothesisRouteAudit.qSignedLeThetaSigned
+IUTStage1SourcePackage.structuredHypothesisRouteAudit_sideConditionAudit_eq
+IUTStage1SourcePackage.structuredHypothesisRouteAudit_sourceAudit_eq
+IUTStage1SourcePackage.structuredHypothesisRouteAudit_sourceAudit_eq_hypothesisRoute
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_structured_hypothesis_route_audit_example
+unitThetaToy_source_structured_hypothesis_route_side_condition_audit_example
+unitThetaToy_source_structured_hypothesis_route_source_audit_example
+unitThetaToy_source_structured_hypothesis_route_side_condition_audit_eq_example
+unitThetaToy_source_structured_hypothesis_route_source_audit_eq_example
+unitThetaToy_source_structured_hypothesis_route_source_audit_eq_hypothesis_route_example
+unitThetaToy_source_structured_hypothesis_route_q_positive_example
+unitThetaToy_source_structured_hypothesis_route_q_le_theta_example
+```
+
+### What This Tests
+
+The toy examples verify that the structured combined route exposes the same
+side-condition audit, source audit, q-pilot positivity, and q/theta signed
+comparison as the corresponding standalone routes.
+
+### Design Trap Avoided
+
+The trap would be to hide the side-condition hypotheses inside structured
+Theorem 3.11 inputs. This audit object keeps them separate. It also records that
+the structured route source audit is definitionally the same source audit as the
+older hypothesis route once the structured inputs are viewed through their
+underlying subclaims.
+
+### Next Step
+
+The next milestone should expose the structured combined route as an audited
+public endpoint, still reusing the existing source-package endpoint machinery.

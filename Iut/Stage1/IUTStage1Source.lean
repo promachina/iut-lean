@@ -1374,6 +1374,61 @@ theorem qSignedLeThetaSigned
 
 end HypothesisRouteAudit
 
+/--
+Structured-input analogue of `HypothesisRouteAudit`.
+
+The side-condition audit remains separate from the source-package audit; the
+only difference is that the Theorem 3.11 data is supplied via structured inputs.
+-/
+structure StructuredHypothesisRouteAudit
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    Prop where
+  side_condition_audit :
+    IUTStage1SourceSideConditionHypotheses.Audit hypotheses
+  source_audit :
+    Audit package
+      (package.obligationsFromStructuredHypotheses inputs hypotheses)
+
+theorem structuredHypothesisRouteAudit
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    StructuredHypothesisRouteAudit package inputs hypotheses :=
+  { side_condition_audit :=
+      package.sideConditionAuditOfHypotheses hypotheses,
+    source_audit := package.auditOfStructuredHypotheses inputs hypotheses }
+
+namespace StructuredHypothesisRouteAudit
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {inputs : IUTStage1Theorem311StructuredInputs package}
+variable {hypotheses : IUTStage1SourceSideConditionHypotheses package}
+
+theorem sideConditionAudit
+    (audit : StructuredHypothesisRouteAudit package inputs hypotheses) :
+    IUTStage1SourceSideConditionHypotheses.Audit hypotheses :=
+  audit.side_condition_audit
+
+theorem sourceAudit
+    (audit : StructuredHypothesisRouteAudit package inputs hypotheses) :
+    Audit package
+      (package.obligationsFromStructuredHypotheses inputs hypotheses) :=
+  audit.source_audit
+
+theorem qPilotLogVolumePositive
+    (audit : StructuredHypothesisRouteAudit package inputs hypotheses) :
+    0 < -package.preLedger.qSigned :=
+  audit.sideConditionAudit.qPilotLogVolumePositive
+
+theorem qSignedLeThetaSigned
+    (audit : StructuredHypothesisRouteAudit package inputs hypotheses) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  audit.sourceAudit.qSigned_le_thetaSigned
+
+end StructuredHypothesisRouteAudit
+
 theorem hypothesisRouteAudit_sideConditionAudit_eq
     (package : IUTStage1SourcePackage source target index)
     (subclaims : IUTStage1Theorem311Subclaims package)
@@ -1420,6 +1475,32 @@ theorem auditOfStructuredHypotheses_eq_hypotheses
     (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
     package.auditOfStructuredHypotheses inputs hypotheses =
       package.auditOfHypotheses inputs.theorem311Subclaims hypotheses :=
+  rfl
+
+theorem structuredHypothesisRouteAudit_sideConditionAudit_eq
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    (package.structuredHypothesisRouteAudit
+      inputs hypotheses).sideConditionAudit =
+      package.sideConditionAuditOfHypotheses hypotheses :=
+  rfl
+
+theorem structuredHypothesisRouteAudit_sourceAudit_eq
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    (package.structuredHypothesisRouteAudit inputs hypotheses).sourceAudit =
+      package.auditOfStructuredHypotheses inputs hypotheses :=
+  rfl
+
+theorem structuredHypothesisRouteAudit_sourceAudit_eq_hypothesisRoute
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    (package.structuredHypothesisRouteAudit inputs hypotheses).sourceAudit =
+      (package.hypothesisRouteAudit
+        inputs.theorem311Subclaims hypotheses).sourceAudit :=
   rfl
 
 theorem auditedPublicEndpoint
