@@ -916,6 +916,11 @@ theorem normalized_eq
       data.totalLogVolume / (data.capsuleCount : Real) :=
   data.normalized_eq_average
 
+theorem capsuleCount_pos
+    (data : IUTStage1TypedCapsuleFamilyLogVolume kind) :
+    0 < data.capsuleCount :=
+  data.positive_capsule_count
+
 def toCapsuleFamilyLogVolume
     (data : IUTStage1TypedCapsuleFamilyLogVolume kind) :
     IUTStage1CapsuleFamilyLogVolume kind :=
@@ -1011,6 +1016,25 @@ structure IUTStage1LocalTensorState where
   symmetry : LocalTensorSymmetryId
   directSummandCount : Nat
   representative : String
+
+/--
+Local tensor-packet state equipped with typed capsule log-volume data.
+
+This is the first source-facing connection between the `(Ind2)` local
+tensor-factor coordinate and the Proposition 3.9 capsule/log-volume
+normalization.  The equality of direct summands and capsule count is recorded
+as data because the underlying tensor-packet construction is not yet
+formalized.
+-/
+structure IUTStage1LocalTensorPacketLogVolumeState
+    (kind : IUTStage1PlaceKind) where
+  tensorState : IUTStage1LocalTensorState
+  localObject : IUTStage1FiniteLocalLogVolumeObject kind
+  capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind
+  direct_summand_count_eq_capsuleCount :
+    tensorState.directSummandCount = capsuleFamily.capsuleCount
+  capsule_family_localObject_eq :
+    capsuleFamily.localObject = localObject
 
 /--
 Upper semi-compatibility state used by the Theorem 3.11 `(Ind3)` model.
@@ -1134,6 +1158,52 @@ theorem same_summand_count_of_eq
   rfl
 
 end IUTStage1LocalTensorState
+
+namespace IUTStage1LocalTensorPacketLogVolumeState
+
+variable {kind : IUTStage1PlaceKind}
+
+def toLocalTensorState
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    IUTStage1LocalTensorState :=
+  state.tensorState
+
+def toTypedCapsuleFamilyLogVolume
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    IUTStage1TypedCapsuleFamilyLogVolume kind :=
+  state.capsuleFamily
+
+theorem directSummandCount_eq_capsuleCount
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    state.tensorState.directSummandCount =
+      state.capsuleFamily.capsuleCount :=
+  state.direct_summand_count_eq_capsuleCount
+
+theorem directSummandCount_pos
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    0 < state.tensorState.directSummandCount := by
+  rw [state.direct_summand_count_eq_capsuleCount]
+  exact state.capsuleFamily.capsuleCount_pos
+
+theorem capsuleFamilyLocalObject_eq
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    state.capsuleFamily.localObject = state.localObject :=
+  state.capsule_family_localObject_eq
+
+theorem capsule_totalLogVolume_eq_sum
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    state.capsuleFamily.totalLogVolume =
+      Finset.univ.sum fun i => (state.capsuleFamily.capsule i).logVolume :=
+  state.capsuleFamily.total_eq
+
+theorem capsule_normalizedLogVolume_eq
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    state.capsuleFamily.normalizedLogVolume =
+      state.capsuleFamily.totalLogVolume /
+        (state.capsuleFamily.capsuleCount : Real) :=
+  state.capsuleFamily.normalized_eq
+
+end IUTStage1LocalTensorPacketLogVolumeState
 
 namespace IUTStage1UpperSemiCompatibilityState
 
@@ -1493,6 +1563,69 @@ theorem generated_preserves_column
       exact ih₁₂.trans ih₂₃
 
 end IUTStage1StructuredTheorem311Choice
+
+/--
+Theorem 3.11 choice whose local tensor coordinate already carries typed
+capsule/log-volume data.
+-/
+abbrev IUTStage1TensorPacketTheorem311Choice
+    (coric : Type u) (kind : IUTStage1PlaceKind) :=
+  IUTStage1Theorem311Choice
+    coric
+    IUTStage1ProcessionState
+    (IUTStage1LocalTensorPacketLogVolumeState kind)
+    IUTStage1UpperSemiCompatibilityState
+
+namespace IUTStage1TensorPacketTheorem311Choice
+
+variable {coric : Type u} {kind : IUTStage1PlaceKind}
+
+/--
+Forget the typed capsule/log-volume refinement of the local tensor coordinate.
+
+This is deliberately one-way: later refined steps must prove that the extra
+packet/log-volume fields are preserved or transformed correctly before they can
+descend to the older structured interface.
+-/
+def forgetPacket
+    (choice : IUTStage1TensorPacketTheorem311Choice coric kind) :
+    IUTStage1StructuredTheorem311Choice coric :=
+  { column := choice.column,
+    row := choice.row,
+    coric := choice.coric,
+    procession_state := choice.procession_state,
+    local_tensor_state := choice.local_tensor_state.toLocalTensorState,
+    upper_semi_state := choice.upper_semi_state }
+
+theorem forgetPacket_column
+    (choice : IUTStage1TensorPacketTheorem311Choice coric kind) :
+    choice.forgetPacket.column = choice.column :=
+  rfl
+
+theorem forgetPacket_row
+    (choice : IUTStage1TensorPacketTheorem311Choice coric kind) :
+    choice.forgetPacket.row = choice.row :=
+  rfl
+
+theorem localTensor_directSummandCount_eq_capsuleCount
+    (choice : IUTStage1TensorPacketTheorem311Choice coric kind) :
+    choice.local_tensor_state.tensorState.directSummandCount =
+      choice.local_tensor_state.capsuleFamily.capsuleCount :=
+  choice.local_tensor_state.directSummandCount_eq_capsuleCount
+
+theorem localTensor_directSummandCount_pos
+    (choice : IUTStage1TensorPacketTheorem311Choice coric kind) :
+    0 < choice.local_tensor_state.tensorState.directSummandCount :=
+  choice.local_tensor_state.directSummandCount_pos
+
+theorem localTensor_capsule_totalLogVolume_eq_sum
+    (choice : IUTStage1TensorPacketTheorem311Choice coric kind) :
+    choice.local_tensor_state.capsuleFamily.totalLogVolume =
+      Finset.univ.sum fun i =>
+        (choice.local_tensor_state.capsuleFamily.capsule i).logVolume :=
+  choice.local_tensor_state.capsule_totalLogVolume_eq_sum
+
+end IUTStage1TensorPacketTheorem311Choice
 
 /--
 Multiradial possible images of the Theta-pilot, recorded together with the

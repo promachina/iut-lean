@@ -1086,3 +1086,55 @@ calculation as a bare real number.
 The next mathematical target should connect capsule objects to the local tensor
 packet/log-shell state in `IUTStage1Theorem311Choice`, then later replace the
 log-volume fields by actual maps on typed local regions.
+
+## Periodic Review: Tensor Packet Capsule Link
+
+Date: 2026-05-28
+
+This checkpoint reviews the first connection between the local tensor-factor
+state and typed capsule log-volumes.
+
+### Current Lean Chain
+
+The new chain is:
+
+```text
+IUTStage1LocalTensorState
+IUTStage1TypedCapsuleFamilyLogVolume
+IUTStage1LocalTensorPacketLogVolumeState
+IUTStage1TensorPacketTheorem311Choice
+```
+
+The important proof obligation is:
+
+```text
+tensorState.directSummandCount = capsuleFamily.capsuleCount
+```
+
+Together with positivity of the capsule count, this gives positivity of the
+local tensor direct summand count.
+
+### Source Alignment
+
+This is still only source-facing structure, but it is aligned with the stated
+division of roles in IUT III: Proposition 3.9 supplies packet/procession
+log-volume structure, while Theorem 3.11 treats `(Ind2)` as local tensor-factor
+symmetry. The Lean code now records an explicit bridge rather than letting
+`(Ind2)` remain a label disconnected from log-volume normalization.
+
+### Risks Found
+
+The equality between direct summands and capsule count is currently assumed as
+record data. This is appropriate for the current layer, but it is not yet a
+constructed theorem from Hodge-theater or Frobenioid definitions.
+
+The forgetful map to `IUTStage1StructuredTheorem311Choice` is one-way. We must
+not later use it to pretend that arbitrary structured choices can be lifted
+back to packet choices without extra obligations.
+
+### Global 3.12 Check
+
+This helps the Corollary 3.12 investigation because it prevents the local
+tensor coordinate and the log-volume/capsule coordinate from drifting apart.
+The next step should introduce a packet-aware `(Ind2)` step relation and prove
+exactly which packet/log-volume fields it preserves.

@@ -440,11 +440,62 @@ theorem upperSemi_typedCapsuleFamily_total_eq_sum_example
       Finset.univ.sum fun i => (data.capsule i).logVolume :=
   data.total_eq
 
+theorem upperSemi_typedCapsuleFamily_capsuleCount_pos_example
+    {kind : IUTStage1PlaceKind}
+    (data : IUTStage1TypedCapsuleFamilyLogVolume kind) :
+    0 < data.capsuleCount :=
+  data.capsuleCount_pos
+
 def upperSemi_typedCapsuleFamily_to_capsuleFamily_example
     {kind : IUTStage1PlaceKind}
     (data : IUTStage1TypedCapsuleFamilyLogVolume kind) :
     IUTStage1CapsuleFamilyLogVolume kind :=
   data.toCapsuleFamilyLogVolume
+
+def localTensorPacket_to_localTensorState_example
+    {kind : IUTStage1PlaceKind}
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    IUTStage1LocalTensorState :=
+  state.toLocalTensorState
+
+theorem localTensorPacket_directSummandCount_eq_capsuleCount_example
+    {kind : IUTStage1PlaceKind}
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    state.tensorState.directSummandCount =
+      state.capsuleFamily.capsuleCount :=
+  state.directSummandCount_eq_capsuleCount
+
+theorem localTensorPacket_directSummandCount_pos_example
+    {kind : IUTStage1PlaceKind}
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    0 < state.tensorState.directSummandCount :=
+  state.directSummandCount_pos
+
+theorem localTensorPacket_localObject_eq_example
+    {kind : IUTStage1PlaceKind}
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    state.capsuleFamily.localObject = state.localObject :=
+  state.capsuleFamilyLocalObject_eq
+
+theorem localTensorPacket_totalLogVolume_eq_sum_example
+    {kind : IUTStage1PlaceKind}
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) :
+    state.capsuleFamily.totalLogVolume =
+      Finset.univ.sum fun i => (state.capsuleFamily.capsule i).logVolume :=
+  state.capsule_totalLogVolume_eq_sum
+
+def tensorPacketTheorem311_forgetPacket_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    (choice : IUTStage1TensorPacketTheorem311Choice coric kind) :
+    IUTStage1StructuredTheorem311Choice coric :=
+  choice.forgetPacket
+
+theorem tensorPacketTheorem311_directSummandCount_eq_capsuleCount_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    (choice : IUTStage1TensorPacketTheorem311Choice coric kind) :
+    choice.local_tensor_state.tensorState.directSummandCount =
+      choice.local_tensor_state.capsuleFamily.capsuleCount :=
+  choice.localTensor_directSummandCount_eq_capsuleCount
 
 theorem upperSemi_logVolumeCompatibility_upperBound_example
     (data : IUTStage1LogVolumeCompatibilityData) :
