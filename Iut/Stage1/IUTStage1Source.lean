@@ -1103,6 +1103,103 @@ theorem publicAuditOfHypotheses_eq_parts
       package.publicAuditOfParts subclaims hypotheses.toSideConditions :=
   rfl
 
+theorem publicAuditOfStructuredInputs
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+        (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+      (corollary312_from_stage1_comparison
+          (package.promotedProvider
+            (package.obligationsFromStructuredInputs
+              inputs sideConditions)).stage1Comparison =
+        corollary312_of_signed_le
+          (package.promotedProvider
+            (package.obligationsFromStructuredInputs
+              inputs sideConditions)).ledger.qSigned_le_thetaSigned) :=
+  package.publicAudit
+    (package.obligationsFromStructuredInputs inputs sideConditions)
+
+theorem publicAuditOfStructuredInputs_qSigned_le_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  (package.publicAuditOfStructuredInputs inputs sideConditions).1
+
+theorem publicAuditOfStructuredInputs_corollary312
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  (package.publicAuditOfStructuredInputs inputs sideConditions).2.1
+
+theorem publicAuditOfStructuredInputs_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.publicAuditOfStructuredInputs inputs sideConditions =
+      package.publicAuditOfParts
+        inputs.theorem311Subclaims sideConditions :=
+  rfl
+
+theorem publicAuditOfStructuredHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+        (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+      (corollary312_from_stage1_comparison
+          (package.promotedProvider
+            (package.obligationsFromStructuredHypotheses
+              inputs hypotheses)).stage1Comparison =
+        corollary312_of_signed_le
+          (package.promotedProvider
+            (package.obligationsFromStructuredHypotheses
+              inputs hypotheses)).ledger.qSigned_le_thetaSigned) :=
+  package.publicAudit
+    (package.obligationsFromStructuredHypotheses inputs hypotheses)
+
+theorem publicAuditOfStructuredHypotheses_qSigned_le_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  (package.publicAuditOfStructuredHypotheses inputs hypotheses).1
+
+theorem publicAuditOfStructuredHypotheses_corollary312
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  (package.publicAuditOfStructuredHypotheses inputs hypotheses).2.1
+
+theorem publicAuditOfStructuredHypotheses_eq_parts
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.publicAuditOfStructuredHypotheses inputs hypotheses =
+      package.publicAuditOfStructuredInputs
+        inputs hypotheses.toSideConditions :=
+  rfl
+
+theorem publicAuditOfStructuredHypotheses_eq_hypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.publicAuditOfStructuredHypotheses inputs hypotheses =
+      package.publicAuditOfHypotheses
+        inputs.theorem311Subclaims hypotheses :=
+  rfl
+
 theorem stage1Comparison_recovers_corollary312
     (package : IUTStage1SourcePackage source target index)
     (obligations : IUTStage1SourceObligations package) :

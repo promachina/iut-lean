@@ -9774,3 +9774,72 @@ existing obligation constructors.
 The next milestone should add package-level public audits for the structured
 routes, still keeping them definitionally tied to the existing public audits
 from parts and hypotheses.
+
+## Milestone 123: Structured Route Public Audits
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The package-level structured route introduced in Milestone 122 assembles source
+obligations. Existing package public audits then expose the public Stage 1
+comparison and Corollary 3.12 endpoint associated to any assembled source
+obligations.
+
+This milestone adds public-audit accessors for the structured routes, while
+proving that they are definitionally tied to the older public audits from parts
+and hypotheses.
+
+### Purpose
+
+This milestone lets downstream code request the public audit along the
+structured-input route without rewriting through the subclaim route manually.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.publicAuditOfStructuredInputs
+IUTStage1SourcePackage.publicAuditOfStructuredInputs_qSigned_le_thetaSigned
+IUTStage1SourcePackage.publicAuditOfStructuredInputs_corollary312
+IUTStage1SourcePackage.publicAuditOfStructuredInputs_eq_parts
+IUTStage1SourcePackage.publicAuditOfStructuredHypotheses
+IUTStage1SourcePackage.publicAuditOfStructuredHypotheses_qSigned_le_thetaSigned
+IUTStage1SourcePackage.publicAuditOfStructuredHypotheses_corollary312
+IUTStage1SourcePackage.publicAuditOfStructuredHypotheses_eq_parts
+IUTStage1SourcePackage.publicAuditOfStructuredHypotheses_eq_hypotheses
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_publicAudit_from_structured_inputs_q_le_theta_example
+unitThetaToy_source_publicAudit_from_structured_inputs_corollary_example
+unitThetaToy_source_publicAudit_from_structured_inputs_eq_parts_example
+unitThetaToy_source_publicAudit_from_structured_hypotheses_q_le_theta_example
+unitThetaToy_source_publicAudit_from_structured_hypotheses_corollary_example
+unitThetaToy_source_publicAudit_from_structured_hypotheses_eq_parts_example
+unitThetaToy_source_publicAudit_from_structured_hypotheses_eq_hypotheses_example
+```
+
+### What This Tests
+
+The toy examples verify that the structured public audit route exposes the same
+q/theta signed comparison and Corollary 3.12 inequality already available from
+the existing public audit route.
+
+### Design Trap Avoided
+
+The trap would be to make the structured route appear to justify the public
+endpoint independently. The equality lemmas make the opposite explicit: the
+structured public audits are just named wrappers around the previously existing
+public audits.
+
+### Next Step
+
+The next milestone should add compact package audits for the structured routes,
+parallel to `auditOfParts` and `auditOfHypotheses`.

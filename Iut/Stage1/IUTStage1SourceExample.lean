@@ -1500,6 +1500,170 @@ theorem unitThetaToy_source_publicAudit_from_hypotheses_eq_parts_example
       (unitThetaToy_source_side_condition_hypotheses_example
         measure hnormalized hh hbound hholds)
 
+theorem unitThetaToy_source_publicAudit_from_structured_inputs_q_le_theta_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (Transport.map unitQToTheta (qAssignment h)).coord <=
+      -(2 * h) + epsilonBound :=
+  IUTStage1SourcePackage.publicAuditOfStructuredInputs_qSigned_le_thetaSigned
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_theorem311_structured_inputs_example
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_side_conditions_example
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_publicAudit_from_structured_inputs_corollary_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+      (signedPilotLogVolume PilotSide.q
+        (Transport.map unitQToTheta (qAssignment h)).coord) :=
+  IUTStage1SourcePackage.publicAuditOfStructuredInputs_corollary312
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_theorem311_structured_inputs_example
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_side_conditions_example
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_publicAudit_from_structured_inputs_eq_parts_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let inputs :=
+      unitThetaToy_source_theorem311_structured_inputs_example
+        measure hnormalized hh hbound hholds
+    let sideConditions :=
+      unitThetaToy_source_side_conditions_example
+        measure hnormalized hh hbound hholds
+    package.publicAuditOfStructuredInputs inputs sideConditions =
+      package.publicAuditOfParts
+        inputs.theorem311Subclaims sideConditions :=
+  (unitThetaToyIUTStage1SourcePackage
+    measure hnormalized hh hbound hholds).publicAuditOfStructuredInputs_eq_parts
+      (unitThetaToy_source_theorem311_structured_inputs_example
+        measure hnormalized hh hbound hholds)
+      (unitThetaToy_source_side_conditions_example
+        measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_publicAudit_from_structured_hypotheses_q_le_theta_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (Transport.map unitQToTheta (qAssignment h)).coord <=
+      -(2 * h) + epsilonBound :=
+  IUTStage1SourcePackage.publicAuditOfStructuredHypotheses_qSigned_le_thetaSigned
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_theorem311_structured_inputs_example
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_side_condition_hypotheses_example
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_publicAudit_from_structured_hypotheses_corollary_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta (-(2 * h) + epsilonBound))
+      (signedPilotLogVolume PilotSide.q
+        (Transport.map unitQToTheta (qAssignment h)).coord) :=
+  IUTStage1SourcePackage.publicAuditOfStructuredHypotheses_corollary312
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_theorem311_structured_inputs_example
+      measure hnormalized hh hbound hholds)
+    (unitThetaToy_source_side_condition_hypotheses_example
+      measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_publicAudit_from_structured_hypotheses_eq_parts_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let inputs :=
+      unitThetaToy_source_theorem311_structured_inputs_example
+        measure hnormalized hh hbound hholds
+    let hypotheses :=
+      unitThetaToy_source_side_condition_hypotheses_example
+        measure hnormalized hh hbound hholds
+    package.publicAuditOfStructuredHypotheses inputs hypotheses =
+      package.publicAuditOfStructuredInputs
+        inputs hypotheses.toSideConditions :=
+  (unitThetaToyIUTStage1SourcePackage
+    measure hnormalized hh hbound hholds).publicAuditOfStructuredHypotheses_eq_parts
+      (unitThetaToy_source_theorem311_structured_inputs_example
+        measure hnormalized hh hbound hholds)
+      (unitThetaToy_source_side_condition_hypotheses_example
+        measure hnormalized hh hbound hholds)
+
+theorem unitThetaToy_source_publicAudit_from_structured_hypotheses_eq_hypotheses_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let inputs :=
+      unitThetaToy_source_theorem311_structured_inputs_example
+        measure hnormalized hh hbound hholds
+    let hypotheses :=
+      unitThetaToy_source_side_condition_hypotheses_example
+        measure hnormalized hh hbound hholds
+    package.publicAuditOfStructuredHypotheses inputs hypotheses =
+      package.publicAuditOfHypotheses
+        inputs.theorem311Subclaims hypotheses :=
+  (unitThetaToyIUTStage1SourcePackage
+    measure hnormalized hh hbound hholds).publicAuditOfStructuredHypotheses_eq_hypotheses
+      (unitThetaToy_source_theorem311_structured_inputs_example
+        measure hnormalized hh hbound hholds)
+      (unitThetaToy_source_side_condition_hypotheses_example
+        measure hnormalized hh hbound hholds)
+
 theorem unitThetaToy_source_publicAudit_from_parts_recovery_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
