@@ -708,19 +708,44 @@ structure LogThetaColumnId where
 structure UpperSemiCompatibilityId where
   label : String
 
+/-- The two place kinds separated in the upper-semi-compatibility discussion. -/
+inductive IUTStage1PlaceKind where
+  | nonarchimedean
+  | archimedean
+deriving DecidableEq, Repr
+
+/-- Typed identifier for a place of a fixed kind. -/
+structure IUTStage1PlaceId (kind : IUTStage1PlaceKind) where
+  label : String
+
+/-- Typed identifier for a local object over a place of a fixed kind. -/
+structure IUTStage1LocalObjectId (kind : IUTStage1PlaceKind) where
+  place : IUTStage1PlaceId kind
+  label : String
+
 /-- Local nonarchimedean inclusion datum from the upper-semi-compatibility step. -/
 structure IUTStage1NonarchimedeanInclusionData where
+  place : IUTStage1PlaceId IUTStage1PlaceKind.nonarchimedean
+  sourceObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  targetObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
   placeLabel : String
   sourceLabel : String
   targetLabel : String
+  source_place_eq : sourceObject.place = place
+  target_place_eq : targetObject.place = place
   inclusionValid : Prop
   inclusion_valid : inclusionValid
 
 /-- Local archimedean surjection datum from the upper-semi-compatibility step. -/
 structure IUTStage1ArchimedeanSurjectionData where
+  place : IUTStage1PlaceId IUTStage1PlaceKind.archimedean
+  sourceObject : IUTStage1LocalObjectId IUTStage1PlaceKind.archimedean
+  targetObject : IUTStage1LocalObjectId IUTStage1PlaceKind.archimedean
   placeLabel : String
   sourceLabel : String
   targetLabel : String
+  source_place_eq : sourceObject.place = place
+  target_place_eq : targetObject.place = place
   surjectionValid : Prop
   surjection_valid : surjectionValid
 
@@ -778,6 +803,16 @@ structure IUTStage1UpperSemiCompatibilityState where
 
 namespace IUTStage1NonarchimedeanInclusionData
 
+theorem sourcePlaceMatches
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.sourceObject.place = data.place :=
+  data.source_place_eq
+
+theorem targetPlaceMatches
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.targetObject.place = data.place :=
+  data.target_place_eq
+
 theorem valid (data : IUTStage1NonarchimedeanInclusionData) :
     data.inclusionValid :=
   data.inclusion_valid
@@ -785,6 +820,16 @@ theorem valid (data : IUTStage1NonarchimedeanInclusionData) :
 end IUTStage1NonarchimedeanInclusionData
 
 namespace IUTStage1ArchimedeanSurjectionData
+
+theorem sourcePlaceMatches
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.sourceObject.place = data.place :=
+  data.source_place_eq
+
+theorem targetPlaceMatches
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.targetObject.place = data.place :=
+  data.target_place_eq
 
 theorem valid (data : IUTStage1ArchimedeanSurjectionData) :
     data.surjectionValid :=

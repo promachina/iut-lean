@@ -312,10 +312,30 @@ theorem upperSemi_nonarchimedeanInclusion_valid_example
     data.inclusionValid :=
   data.valid
 
+theorem upperSemi_nonarchimedeanInclusion_source_place_example
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.sourceObject.place = data.place :=
+  data.sourcePlaceMatches
+
+theorem upperSemi_nonarchimedeanInclusion_target_place_example
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.targetObject.place = data.place :=
+  data.targetPlaceMatches
+
 theorem upperSemi_archimedeanSurjection_valid_example
     (data : IUTStage1ArchimedeanSurjectionData) :
     data.surjectionValid :=
   data.valid
+
+theorem upperSemi_archimedeanSurjection_source_place_example
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.sourceObject.place = data.place :=
+  data.sourcePlaceMatches
+
+theorem upperSemi_archimedeanSurjection_target_place_example
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.targetObject.place = data.place :=
+  data.targetPlaceMatches
 
 theorem upperSemi_logVolumeCompatibility_upperBound_example
     (data : IUTStage1LogVolumeCompatibilityData) :

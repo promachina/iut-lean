@@ -17375,3 +17375,76 @@ places over `vQ`, local tensor packets/log-shells, the concrete inclusion and
 surjection maps, and the log-volume maps of Proposition 3.9. This should be the
 next source-facing refinement before attempting a stronger Corollary 3.12
 endpoint.
+
+## 123. Typed Places for Upper-Semi Local Data
+
+### Goal
+
+We refined the local upper-semi data so that the nonarchimedean/archimedean
+distinction is enforced by Lean types.
+
+### Lean/API Check
+
+The source layer now defines:
+
+```text
+IUTStage1PlaceKind
+IUTStage1PlaceId
+IUTStage1LocalObjectId
+```
+
+with two place kinds:
+
+```text
+nonarchimedean
+archimedean
+```
+
+The local upper-semi records now carry typed places and typed local objects:
+
+```text
+IUTStage1NonarchimedeanInclusionData.place :
+  IUTStage1PlaceId nonarchimedean
+
+IUTStage1ArchimedeanSurjectionData.place :
+  IUTStage1PlaceId archimedean
+```
+
+The source and target local objects are required to lie over the same typed
+place:
+
+```text
+source_place_eq
+target_place_eq
+```
+
+### Lean Decisions
+
+We retained the older string labels as human-readable names, but the
+mathematical split is now type-level. This prevents accidentally using an
+archimedean surjection datum where a nonarchimedean inclusion datum is expected.
+
+### Source Check
+
+This follows the Theorem 3.11 `(Ind3)` wording that separates natural
+inclusions at `vQ ∈ Vnon_Q` from natural surjections at `vQ ∈ Varc_Q`.
+
+### Toy Check
+
+The source example now checks:
+
+```text
+upperSemi_nonarchimedeanInclusion_source_place_example
+upperSemi_nonarchimedeanInclusion_target_place_example
+upperSemi_archimedeanSurjection_source_place_example
+upperSemi_archimedeanSurjection_target_place_example
+```
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The typed local objects are still identifiers, not the actual tensor packets or
+log-shells. The next refinement should introduce a local log-shell/tensor-packet
+object interface with a log-volume map, so the compatibility datum can refer to
+actual local objects rather than standalone real numbers.
