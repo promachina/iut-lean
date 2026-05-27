@@ -185,6 +185,10 @@ structure BoundAudit
     (certificate : QualitativeData.StructuredCertificate output.family) : Prop where
   apply_eq_bridge_apply :
     data.apply certificate = data.bridge.apply certificate
+  common_target_contains_each :
+    output.comparisons.CommonTarget (data.apply certificate).common
+  common_target_volume_bound :
+    RegionMeasure.HasVolumeAtMost measure (data.apply certificate).common bound
   choice_target_volume_le :
     ∀ choice : index,
       RegionMeasure.targetVolume measure (output.comparison choice) <= bound
@@ -196,6 +200,8 @@ theorem boundAudit
     (certificate : QualitativeData.StructuredCertificate output.family) :
     data.BoundAudit certificate :=
   { apply_eq_bridge_apply := rfl,
+    common_target_contains_each := (data.apply certificate).contains_each,
+    common_target_volume_bound := (data.apply certificate).volume_bound,
     choice_target_volume_le := data.choice_targetVolume_le certificate,
     all_targets_at_most := data.allTargetsAtMost certificate }
 
@@ -211,6 +217,16 @@ theorem apply_eq_bridgeApply
     (audit : data.BoundAudit certificate) :
     data.apply certificate = data.bridge.apply certificate :=
   audit.apply_eq_bridge_apply
+
+theorem commonTargetContainsEach
+    (audit : data.BoundAudit certificate) :
+    output.comparisons.CommonTarget (data.apply certificate).common :=
+  audit.common_target_contains_each
+
+theorem commonTargetVolumeBound
+    (audit : data.BoundAudit certificate) :
+    RegionMeasure.HasVolumeAtMost measure (data.apply certificate).common bound :=
+  audit.common_target_volume_bound
 
 theorem choiceTargetVolume_le
     (audit : data.BoundAudit certificate) (choice : index) :

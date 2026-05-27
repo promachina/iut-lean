@@ -9035,3 +9035,72 @@ The hull+det bridge audit still records supplied target-volume bounds. The
 next mathematical target is to identify a first nontrivial construction inside
 that bridge: likely a named common target or hull operation before determinant
 or log-volume estimates are attempted.
+
+## Math Milestone 96: Common Target Data Inside the Hull+Det Audit
+
+Lean files:
+
+* `Iut/Foundations/AlgorithmicBridge.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The hull+det bridge audit should not expose only target-volume inequalities.
+The underlying bridge returns a common target bound: a common target region
+containing every target region in the family, together with a measured upper
+bound on that common target. These are the first concrete common-target facts
+inside the bridge.
+
+### Lean/API Check
+
+The audit:
+
+```text
+AlgorithmicOutput.HullDetBridgeData.BoundAudit
+```
+
+now stores:
+
+```text
+common_target_contains_each
+common_target_volume_bound
+```
+
+and exposes:
+
+```text
+commonTargetContainsEach
+commonTargetVolumeBound
+```
+
+The existing chosen-target and all-targets bounds remain in the audit.
+
+### Lean Decisions
+
+This does not construct the common target from IUT geometry. It exposes the
+common target already returned by the supplied bridge:
+
+```text
+(data.apply certificate).common
+```
+
+The point is to make the shape of the bridge output explicit before replacing
+the bridge internals with more mathematical content.
+
+### What This Tests
+
+The toy source examples extract common-target containment and the measured
+common-target volume bound from the final charted boundary's hull+det audit.
+The focused Stage 1 source example build and the full project build both pass.
+
+### Design Trap Avoided
+
+The trap would be to reduce the hull+det bridge to an inequality-producing
+black box. This milestone exposes the common target and its measured bound as
+separate auditable facts.
+
+### Remaining Gap
+
+The common target is still supplied by the bridge. Future work should refine
+how that common target is produced, likely by threading an explicit hull
+operation or common-hull object before determinant/log-volume estimates.
