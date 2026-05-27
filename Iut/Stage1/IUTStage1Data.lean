@@ -413,6 +413,62 @@ theorem qSignedLeThetaSigned
 end Audit
 
 /--
+Optional source-side evidence that the pre-ledger's named hull+det bridge comes
+from split hull and determinant/log-volume data.
+
+This is not required for the older public endpoint, but it is the stronger audit
+shape needed to keep the union-of-possible-images hull visible.
+-/
+structure HullDetSourceData
+    (data : IUTStage1PreLedgerData source target index) where
+  structuredHullDet :
+    data.output.StructuredHullDetBridgeData data.measure data.thetaSigned
+  hull_det_bridge_eq :
+    data.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      structuredHullDet.toHullDetHullBridgeData.toHullDetBridgeData
+
+namespace HullDetSourceData
+
+variable {data : IUTStage1PreLedgerData source target index}
+
+def stepAudit (sourceData : HullDetSourceData data) :
+    sourceData.structuredHullDet.StepAudit data.certificate :=
+  sourceData.structuredHullDet.stepAudit data.certificate
+
+theorem targetUnion_subset_hull
+    (sourceData : HullDetSourceData data) :
+    Region.Subset data.output.comparisons.targetUnion
+      (sourceData.structuredHullDet.applyHull data.certificate).hull :=
+  sourceData.stepAudit.targetUnion_subset_hull
+
+theorem determinantVolumeBound
+    (sourceData : HullDetSourceData data) :
+    RegionMeasure.HasVolumeAtMost data.measure
+      (sourceData.structuredHullDet.applyHull data.certificate).hull
+      data.thetaSigned :=
+  sourceData.stepAudit.determinantVolumeBound
+
+theorem hullDetBridge_eq
+    (sourceData : HullDetSourceData data) :
+    data.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.structuredHullDet.toHullDetHullBridgeData.toHullDetBridgeData :=
+  sourceData.hull_det_bridge_eq
+
+theorem choiceTargetVolume_le_thetaSigned
+    (sourceData : HullDetSourceData data) (choice : index) :
+    RegionMeasure.targetVolume data.measure (data.output.comparison choice) <=
+      data.thetaSigned :=
+  sourceData.stepAudit.choiceTargetVolume_le choice
+
+theorem allTargetsAtMost
+    (sourceData : HullDetSourceData data) :
+    RegionComparisonFamily.AllTargetsAtMost data.measure data.output.comparisons
+      data.thetaSigned :=
+  sourceData.stepAudit.allTargetsAtMost
+
+end HullDetSourceData
+
+/--
 Remaining obligations required to promote pre-ledger data to a full source
 ledger.
 

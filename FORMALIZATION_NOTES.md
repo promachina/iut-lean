@@ -15837,3 +15837,108 @@ downstream, so the hull-specific audit is available through the hull bridge
 data but not yet part of every final charted source package. A future milestone
 should decide whether to store the split hull+det data in the Stage 1
 pre-ledger, or keep it as a separately audited source obligation.
+
+## Stage 1 Math Milestone 106: Split Hull+Det Evidence at the Pre-Ledger Boundary
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Data.lean`
+* `Iut/Stage1/IUTStage1DataExample.lean`
+
+### Source Check
+
+The final Stage 1 pre-ledger already contains the common-container, HDD/SHE
+composite, selected output, membership data, and charted q-to-Theta comparison
+data. But the stronger split hull+det bridge was still external to this
+pre-ledger boundary.
+
+The IUT III/Scholze-Stix dispute requires exactly this boundary to be auditable:
+one must know whether the final charted comparison is backed by a measured hull
+of the union of possible Theta images, or only by a terminal common-target
+bound.
+
+### Lean/API Check
+
+The pre-ledger layer now defines:
+
+```text
+IUTStage1PreLedgerData.HullDetSourceData
+```
+
+with fields:
+
+```text
+structuredHullDet
+hull_det_bridge_eq
+```
+
+The equality states that the pre-ledger's downstream named hull+det bridge is
+the bridge obtained by forgetting the supplied split hull+det data:
+
+```text
+data.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+  structuredHullDet.toHullDetHullBridgeData.toHullDetBridgeData
+```
+
+The namespace exposes:
+
+```text
+stepAudit
+targetUnion_subset_hull
+determinantVolumeBound
+hullDetBridge_eq
+choiceTargetVolume_le_thetaSigned
+allTargetsAtMost
+```
+
+The toy example now defines:
+
+```text
+unitThetaToyPreLedgerHullDetSourceData
+```
+
+and checks:
+
+```text
+unitThetaToy_preLedgerHullDet_targetUnion_subset_hull_example
+unitThetaToy_preLedgerHullDet_determinantVolumeBound_example
+```
+
+### Lean Decisions
+
+This data is optional and separate from the core `IUTStage1PreLedgerData`
+record. That is deliberate. Existing public endpoint code still accepts older
+pre-ledger data, but a stronger source proof can now provide a split hull+det
+audit and prove that it matches the bridge actually used downstream.
+
+### What This Tests
+
+Lean verifies that the toy pre-ledger's existing common-container route is
+definitionally backed by:
+
+```text
+thetaToyStructuredHullDetBridgeData
+```
+
+and that this data provides:
+
+```text
+targetUnion <= constructed hull
+measure constructed hull <= thetaSigned
+```
+
+The focused build for `Iut.Stage1.IUTStage1DataExample` passes.
+
+### Design Trap Avoided
+
+The trap would be to keep the split hull+det data as a standalone toy theorem
+while the actual pre-ledger used by the final comparison still routes through
+an opaque common-target bridge. This milestone gives the pre-ledger a formal
+place to record the stronger provenance.
+
+### Remaining Gap
+
+The pre-ledger does not yet require `HullDetSourceData`; it only permits it.
+A future source-specific proof of the IUT route should supply such data as one
+of its obligations, with a non-toy holomorphic hull and determinant/log-volume
+bound.

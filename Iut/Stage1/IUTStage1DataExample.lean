@@ -97,6 +97,56 @@ def unitThetaToyPromotionObligations
       linarith,
     normalization_proof := hnormalized }
 
+def unitThetaToyPreLedgerHullDetSourceData
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyPreLedgerData
+      measure hnormalized hh hbound hholds).HullDetSourceData :=
+  { structuredHullDet :=
+      thetaToyStructuredHullDetBridgeData
+        measure hnormalized unitQToTheta h hbound,
+    hull_det_bridge_eq := rfl }
+
+theorem unitThetaToy_preLedgerHullDet_targetUnion_subset_hull_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    Region.Subset
+      (thetaToyAlgorithmOutput unitQToTheta h epsilon).comparisons.targetUnion
+      ((thetaToyStructuredHullDetBridgeData
+        measure hnormalized unitQToTheta h hbound).applyHull
+          (thetaToyStructuredCertificate unitQToTheta h epsilon)).hull :=
+  (unitThetaToyPreLedgerHullDetSourceData
+    measure hnormalized hh hbound hholds).targetUnion_subset_hull
+
+theorem unitThetaToy_preLedgerHullDet_determinantVolumeBound_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    RegionMeasure.HasVolumeAtMost measure
+      ((thetaToyStructuredHullDetBridgeData
+        measure hnormalized unitQToTheta h hbound).applyHull
+          (thetaToyStructuredCertificate unitQToTheta h epsilon)).hull
+      (-(2 * h) + epsilonBound) :=
+  (unitThetaToyPreLedgerHullDetSourceData
+    measure hnormalized hh hbound hholds).determinantVolumeBound
+
 def unitThetaToyComparisonPayloadInputs
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
