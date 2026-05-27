@@ -2153,3 +2153,123 @@ This still treats the EtTh quotient objects as named obligations. A later
 milestone should introduce a typed skeleton for the relevant orbicurve type
 data and quotient labels so that "nonzero quotient element" and "canonical
 generator up to sign" become structured data rather than opaque propositions.
+
+## Math Milestone 22: Orbicurve Type and Quotient Witness Skeleton
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Definition 3.1(d) says that `C_K` is a hyperbolic orbicurve of type
+`(1,l-tors)^±`, that it determines `X_K` of type `(1,l-tors)`, and that the
+associated covering diagrams and open immersions come from this setup. The
+same definition, in (e), says that for `v ∈ Vbad`, `C_v` has type
+`(1,Z/lZ)^±`, and that extracting an `l`-th root of the theta function gives
+local models of types `(1,(Z/lZ)_Theta)` and `(1,(Z/lZ)_Theta)^±`.
+
+Definition 3.1(f) says that the global cusp `epsilon` arises from a nonzero
+element of the quotient `Q` in the EtTh type `(1,l-tors)^±`, and that at bad
+places `epsilon_v` arises from the canonical generator, up to sign, of the
+local quotient `Z` in the type `(1,Z/lZ)^±`.
+
+I also downloaded Mochizuki's official EtTh PDF from the Kyoto page to check
+the referenced definitions directly, but local extraction via `pdftotext`
+failed because the installed binary is linked against a missing `libzstd`
+library. For this milestone, the formal move is therefore based on the
+explicit quotations of EtTh Definition 2.1 and Definition 2.5 inside IUT I,
+Definition 3.1(d)-(f), not on an independently extracted EtTh passage.
+
+### Lean/API Check
+
+Mathlib does not have hyperbolic orbicurves, EtTh quotient `Q`, local quotient
+`Z`, or the specific orbicurve type labels used here. We therefore introduce a
+typed skeleton that keeps these labels and witnesses explicit without
+asserting a construction that is not yet formalized.
+
+### Lean Decisions
+
+The new type label enumeration is:
+
+```text
+OrbicurveTypeKind.oneLTors
+OrbicurveTypeKind.oneLTorsPM
+OrbicurveTypeKind.oneLTorsTheta
+OrbicurveTypeKind.oneLTorsThetaPM
+OrbicurveTypeKind.oneZModLPM
+OrbicurveTypeKind.oneZModLTheta
+OrbicurveTypeKind.oneZModLThetaPM
+```
+
+The formal type assertion is:
+
+```text
+OrbicurveTypeData l C kind
+```
+
+This still contains a named proposition, but it is no longer an untyped field
+such as `cK_has_type_l_tors_pm`; the expected EtTh type label is now part of
+the Lean type.
+
+The quotient-origin records are:
+
+```text
+NonzeroQuotientElement
+CanonicalGeneratorUpToSignElement
+```
+
+`CuspData` now contains an actual `NonzeroQuotientElement` witness. The local
+bad-place cusp data now contains a `CanonicalGeneratorUpToSignElement`
+witness instead of a bare proposition.
+
+### Lean Declarations
+
+```text
+OrbicurveTypeKind
+OrbicurveTypeData
+OrbicurveTypeData.holds
+NonzeroQuotientElement
+CanonicalGeneratorUpToSignElement
+CuspData.quotientOrigin
+CuspData.arisesFromNonzeroQuotientElement
+CuspData.arisesFromNonzeroQuotientElement_holds
+ThetaOrbicurveCoverData.cK_type
+ThetaOrbicurveCoverData.xK_type
+ThetaBadLocalData.badLocalCType
+ThetaBadLocalData.thetaRootLocalXType
+ThetaBadLocalData.thetaRootLocalCType
+ThetaBadLocalData.thetaRootXType
+ThetaBadLocalData.thetaRootCType
+ThetaCuspLocalData.badLocalCanonicalGenerator
+```
+
+### What This Tests
+
+The example file now checks:
+
+* construction and projection of `OrbicurveTypeData`;
+* construction and projection of nonzero quotient witnesses;
+* construction and projection of canonical-generator-up-to-sign witnesses;
+* construction of cover data whose `C_K` and `X_K` type labels are encoded in
+  the Lean type;
+* construction of bad local data whose bad local `C_v` and theta-root local
+  models carry the expected EtTh type labels;
+* projection of the global and local cusp quotient conditions.
+
+### Design Trap Avoided
+
+The trap would be to leave source phrases such as `(1,l-tors)^±` and
+`(1,Z/lZ)^±` as English embedded in proposition names. The current encoding
+still postpones the full EtTh construction, but the source type labels now
+constrain the Lean objects. For example, the theorem for `C_K` proves the
+type-data field with kind `oneLTorsPM`, while the local bad-place theorem for
+`C_v` proves the type-data field with kind `oneZModLPM`.
+
+### Remaining Gap
+
+The skeleton does not yet define hyperbolic orbicurves, quotient `Q`, quotient
+`Z`, or the group action/sign orbit behind "up to sign". A later milestone
+should refine `NonzeroQuotientElement` and `CanonicalGeneratorUpToSignElement`
+into quotient structures with the relevant torsor and sign-action data.

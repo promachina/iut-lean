@@ -391,10 +391,58 @@ theorem badLift_has_multiplicative_reduction
 
 end ThetaValuationData
 
+/-- The orbicurve type labels from the parts of EtTh used in IUT I, Definition 3.1. -/
+inductive OrbicurveTypeKind where
+  | oneLTors
+  | oneLTorsPM
+  | oneLTorsTheta
+  | oneLTorsThetaPM
+  | oneZModLPM
+  | oneZModLTheta
+  | oneZModLThetaPM
+  deriving DecidableEq
+
 /-- A typed placeholder for the hyperbolic orbicurves `C_F`, `C_K`, etc. -/
 structure HyperbolicOrbicurveModel (F : Type u) [Field F] where
   label : String
-  typeLabel : String
+
+/--
+An assertion that a placeholder orbicurve has one of the specific EtTh type
+labels used by Definition 3.1.
+-/
+structure OrbicurveTypeData
+    (l : PrimeGeFive) {F : Type u} [Field F]
+    (C : HyperbolicOrbicurveModel F) (kind : OrbicurveTypeKind) where
+  hasType : Prop
+  hasType_holds : hasType
+
+namespace OrbicurveTypeData
+
+variable {l : PrimeGeFive} {F : Type u} [Field F]
+variable {C : HyperbolicOrbicurveModel F} {kind : OrbicurveTypeKind}
+variable (typeData : OrbicurveTypeData l C kind)
+
+theorem holds : typeData.hasType :=
+  typeData.hasType_holds
+
+end OrbicurveTypeData
+
+/-- A witness that a cusp arises from a nonzero element of an EtTh quotient. -/
+structure NonzeroQuotientElement where
+  quotient : Type u
+  zero : quotient
+  element : quotient
+  element_ne_zero : element ≠ zero
+
+/--
+A witness for the local condition that a cusp comes from the canonical generator,
+up to sign, of the quotient `Z` in the type `(1, Z/lZ)^±` model.
+-/
+structure CanonicalGeneratorUpToSignElement where
+  quotient : Type u
+  element : quotient
+  canonicalGeneratorUpToSign : Prop
+  canonicalGeneratorUpToSign_holds : canonicalGeneratorUpToSign
 
 /--
 The curve/moduli portion of IUT I, Definition 3.1(b).
@@ -451,20 +499,18 @@ base-change `C_F x_F K`, and it determines the corresponding `X_K` cover and
 the finite etale/profinite group diagrams mentioned in the source.
 -/
 structure ThetaOrbicurveCoverData
-    (Fmod F K : Type u)
+    (l : PrimeGeFive) (Fmod F K : Type u)
     [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
     [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K]
     (curveModuli : ThetaCurveModuliData Fmod F) where
   cK : HyperbolicOrbicurveModel K
   xK : HyperbolicOrbicurveModel K
-  cK_has_type_l_tors_pm : Prop
-  cK_has_type_l_tors_pm_holds : cK_has_type_l_tors_pm
+  cK_type : OrbicurveTypeData l cK OrbicurveTypeKind.oneLTorsPM
   cK_core_is_baseChange_cF : Prop
   cK_core_is_baseChange_cF_holds : cK_core_is_baseChange_cF
   cK_determined_by_cF : Prop
   cK_determined_by_cF_holds : cK_determined_by_cF
-  xK_has_type_l_tors : Prop
-  xK_has_type_l_tors_holds : xK_has_type_l_tors
+  xK_type : OrbicurveTypeData l xK OrbicurveTypeKind.oneLTors
   finiteEtaleCoveringDiagrams : Prop
   finiteEtaleCoveringDiagrams_holds : finiteEtaleCoveringDiagrams
   profiniteGroupOpenImmersions : Prop
@@ -472,15 +518,16 @@ structure ThetaOrbicurveCoverData
 
 namespace ThetaOrbicurveCoverData
 
+variable {l : PrimeGeFive}
 variable {Fmod F K : Type u}
 variable [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
 variable [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K]
 variable {curveModuli : ThetaCurveModuliData Fmod F}
-variable (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+variable (coverData : ThetaOrbicurveCoverData l Fmod F K curveModuli)
 
 theorem cKType :
-    coverData.cK_has_type_l_tors_pm :=
-  coverData.cK_has_type_l_tors_pm_holds
+    coverData.cK_type.hasType :=
+  coverData.cK_type.holds
 
 theorem cKCoreBaseChange :
     coverData.cK_core_is_baseChange_cF :=
@@ -491,8 +538,8 @@ theorem cKDeterminedByCF :
   coverData.cK_determined_by_cF_holds
 
 theorem xKType :
-    coverData.xK_has_type_l_tors :=
-  coverData.xK_has_type_l_tors_holds
+    coverData.xK_type.hasType :=
+  coverData.xK_type.holds
 
 theorem finiteEtaleDiagrams :
     coverData.finiteEtaleCoveringDiagrams :=
@@ -518,7 +565,7 @@ structure ThetaBadLocalData
     [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
     [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
     (curveModuli : ThetaCurveModuliData Fmod F)
-    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+    (coverData : ThetaOrbicurveCoverData l Fmod F K curveModuli)
     (valuations : ThetaValuationData l Fmod K) where
   localX :
     (v : NumberField.FinitePlace K) -> v ∈ valuations.selected ->
@@ -534,10 +581,15 @@ structure ThetaBadLocalData
     (v : NumberField.FinitePlace K) -> v ∈ valuations.selected -> Prop
   decompositionGroupOuterSurjection_holds :
     ∀ v hv, decompositionGroupOuterSurjection v hv
-  badLocalType :
-    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
-  badLocalType_holds :
-    ∀ v hv, badLocalType v hv
+  badLocalCType :
+    (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
+      OrbicurveTypeData l (localC v hv.1) OrbicurveTypeKind.oneZModLPM
+  thetaRootLocalXType :
+    (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
+      OrbicurveTypeData l (localX v hv.1) OrbicurveTypeKind.oneZModLTheta
+  thetaRootLocalCType :
+    (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
+      OrbicurveTypeData l (localC v hv.1) OrbicurveTypeKind.oneZModLThetaPM
   thetaRootLocalModels :
     (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
   thetaRootLocalModels_holds :
@@ -553,7 +605,7 @@ variable {l : PrimeGeFive} {Fmod F K : Type u}
 variable [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
 variable [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
 variable {curveModuli : ThetaCurveModuliData Fmod F}
-variable {coverData : ThetaOrbicurveCoverData Fmod F K curveModuli}
+variable {coverData : ThetaOrbicurveCoverData l Fmod F K curveModuli}
 variable {valuations : ThetaValuationData l Fmod K}
 variable (localData : ThetaBadLocalData l Fmod F K curveModuli coverData valuations)
 
@@ -569,8 +621,18 @@ theorem decompositionSurjection
 
 theorem badType
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
-    localData.badLocalType v hv :=
-  localData.badLocalType_holds v hv
+    (localData.badLocalCType v hv).hasType :=
+  (localData.badLocalCType v hv).holds
+
+theorem thetaRootXType
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    (localData.thetaRootLocalXType v hv).hasType :=
+  (localData.thetaRootLocalXType v hv).holds
+
+theorem thetaRootCType
+    (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
+    (localData.thetaRootLocalCType v hv).hasType :=
+  (localData.thetaRootLocalCType v hv).holds
 
 theorem thetaRootModels
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
@@ -587,8 +649,21 @@ end ThetaBadLocalData
 /-- A global or local cusp of a hyperbolic orbicurve. -/
 structure CuspData {F : Type u} [Field F] (C : HyperbolicOrbicurveModel F) where
   label : String
-  arisesFromNonzeroQuotientElement : Prop
-  arisesFromNonzeroQuotientElement_holds : arisesFromNonzeroQuotientElement
+  quotientOrigin : NonzeroQuotientElement
+
+namespace CuspData
+
+variable {F : Type u} [Field F] {C : HyperbolicOrbicurveModel F}
+variable (epsilon : CuspData C)
+
+def arisesFromNonzeroQuotientElement : Prop :=
+  epsilon.quotientOrigin.element ≠ epsilon.quotientOrigin.zero
+
+theorem arisesFromNonzeroQuotientElement_holds :
+    epsilon.arisesFromNonzeroQuotientElement :=
+  epsilon.quotientOrigin.element_ne_zero
+
+end CuspData
 
 /--
 The local cusp data from IUT I, Definition 3.1(f).
@@ -603,7 +678,7 @@ structure ThetaCuspLocalData
     [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
     [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
     (curveModuli : ThetaCurveModuliData Fmod F)
-    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+    (coverData : ThetaOrbicurveCoverData l Fmod F K curveModuli)
     (valuations : ThetaValuationData l Fmod K)
     (badLocalData : ThetaBadLocalData l Fmod F K curveModuli coverData valuations)
     (epsilon : CuspData coverData.cK) where
@@ -614,10 +689,9 @@ structure ThetaCuspLocalData
     (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.selected) -> Prop
   localCusp_determinedByGlobal_holds :
     ∀ v hv, localCusp_determinedByGlobal v hv
-  badLocalCuspCanonicalGenerator :
-    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop
-  badLocalCuspCanonicalGenerator_holds :
-    ∀ v hv, badLocalCuspCanonicalGenerator v hv
+  badLocalCanonicalGenerator :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad ->
+      CanonicalGeneratorUpToSignElement.{u}
 
 namespace ThetaCuspLocalData
 
@@ -625,7 +699,7 @@ variable {l : PrimeGeFive} {Fmod F K : Type u}
 variable [Field Fmod] [NumberField Fmod] [Field F] [NumberField F]
 variable [Field K] [NumberField K] [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
 variable {curveModuli : ThetaCurveModuliData Fmod F}
-variable {coverData : ThetaOrbicurveCoverData Fmod F K curveModuli}
+variable {coverData : ThetaOrbicurveCoverData l Fmod F K curveModuli}
 variable {valuations : ThetaValuationData l Fmod K}
 variable {badLocalData : ThetaBadLocalData l Fmod F K curveModuli coverData valuations}
 variable {epsilon : CuspData coverData.cK}
@@ -649,8 +723,8 @@ theorem localCuspArisesFromNonzeroQuotientElement
 
 theorem badLocalCuspArisesFromCanonicalGenerator
     (v : NumberField.FinitePlace K) (hv : v ∈ valuations.bad) :
-    cuspLocalData.badLocalCuspCanonicalGenerator v hv :=
-  cuspLocalData.badLocalCuspCanonicalGenerator_holds v hv
+    (cuspLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
+  (cuspLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign_holds
 
 end ThetaCuspLocalData
 
@@ -678,7 +752,7 @@ structure InitialThetaData
   l : PrimeGeFive
   fieldTower : ThetaFieldTower l Fmod F K
   curveModuli : ThetaCurveModuliData Fmod F
-  coverData : ThetaOrbicurveCoverData Fmod F K curveModuli
+  coverData : ThetaOrbicurveCoverData l Fmod F K curveModuli
   k_is_lTorsionKernelField : Prop
   k_is_lTorsionKernelField_holds : k_is_lTorsionKernelField
   valuations : ThetaValuationData l Fmod K
@@ -786,8 +860,18 @@ theorem decompositionGroupOuterSurjection
 
 theorem badLocalType
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    theta.badLocalData.badLocalType v hv :=
+    (theta.badLocalData.badLocalCType v hv).hasType :=
   theta.badLocalData.badType v hv
+
+theorem thetaRootLocalXType
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    (theta.badLocalData.thetaRootLocalXType v hv).hasType :=
+  theta.badLocalData.thetaRootXType v hv
+
+theorem thetaRootLocalCType
+    (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    (theta.badLocalData.thetaRootLocalCType v hv).hasType :=
+  theta.badLocalData.thetaRootCType v hv
 
 theorem thetaRootLocalModels
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
@@ -823,7 +907,7 @@ theorem localCusp_arisesFromNonzeroQuotientElement
 
 theorem badLocalCusp_arisesFromCanonicalGenerator
     (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    theta.cuspLocalData.badLocalCuspCanonicalGenerator v hv :=
+    (theta.cuspLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
   theta.cuspLocalData.badLocalCuspArisesFromCanonicalGenerator v hv
 
 theorem sqrtMinusOne_square :
@@ -847,7 +931,7 @@ theorem torsion23RationalOverF :
   theta.curveModuli.torsion23Rational
 
 theorem cKType :
-    theta.coverData.cK_has_type_l_tors_pm :=
+    theta.coverData.cK_type.hasType :=
   theta.coverData.cKType
 
 theorem cKCoreBaseChange :
@@ -859,7 +943,7 @@ theorem cKDeterminedByCF :
   theta.coverData.cKDeterminedByCF
 
 theorem xKType :
-    theta.coverData.xK_has_type_l_tors :=
+    theta.coverData.xK_type.hasType :=
   theta.coverData.xKType
 
 theorem finiteEtaleCoveringDiagrams :

@@ -41,6 +41,58 @@ variable [FiniteDimensional Fmod F] [IsGalois Fmod F]
 variable [FiniteDimensional F K] [IsGalois F K]
 variable [DecidableEq F]
 
+/-- A constructor smoke test for EtTh orbicurve type assertions. -/
+def abstractOrbicurveTypeData
+    (C : HyperbolicOrbicurveModel F) (kind : OrbicurveTypeKind)
+    (hasType : Prop) (hType : hasType) :
+    OrbicurveTypeData primeFive C kind where
+  hasType := hasType
+  hasType_holds := hType
+
+example (C : HyperbolicOrbicurveModel F) (kind : OrbicurveTypeKind)
+    (hasType : Prop) (hType : hasType) :
+    (abstractOrbicurveTypeData C kind hasType hType).hasType :=
+  (abstractOrbicurveTypeData C kind hasType hType).holds
+
+/-- A constructor smoke test for a nonzero quotient element. -/
+def abstractNonzeroQuotientElement
+    (Q : Type u) (zero element : Q) (hNe : element ≠ zero) :
+    NonzeroQuotientElement where
+  quotient := Q
+  zero := zero
+  element := element
+  element_ne_zero := hNe
+
+/-- A constructor smoke test for a cusp arising from a nonzero quotient element. -/
+def abstractCuspData
+    (C : HyperbolicOrbicurveModel F) (origin : NonzeroQuotientElement) :
+    CuspData C where
+  label := "abstract-cusp"
+  quotientOrigin := origin
+
+example (C : HyperbolicOrbicurveModel F) (origin : NonzeroQuotientElement) :
+    (abstractCuspData C origin).arisesFromNonzeroQuotientElement :=
+  (abstractCuspData C origin).arisesFromNonzeroQuotientElement_holds
+
+/-- A constructor smoke test for a canonical-generator-up-to-sign witness. -/
+def abstractCanonicalGeneratorUpToSignElement
+    (Z : Type u) (element : Z)
+    (canonicalGeneratorUpToSign : Prop)
+    (hCanonical : canonicalGeneratorUpToSign) :
+    CanonicalGeneratorUpToSignElement where
+  quotient := Z
+  element := element
+  canonicalGeneratorUpToSign := canonicalGeneratorUpToSign
+  canonicalGeneratorUpToSign_holds := hCanonical
+
+example (Z : Type u) (element : Z)
+    (canonicalGeneratorUpToSign : Prop)
+    (hCanonical : canonicalGeneratorUpToSign) :
+    (abstractCanonicalGeneratorUpToSignElement Z element
+      canonicalGeneratorUpToSign hCanonical).canonicalGeneratorUpToSign :=
+  (abstractCanonicalGeneratorUpToSignElement Z element
+    canonicalGeneratorUpToSign hCanonical).canonicalGeneratorUpToSign_holds
+
 /-- A constructor smoke test for the finite-place valuation section. -/
 def abstractThetaValuationData
     (toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod)
@@ -110,26 +162,23 @@ noncomputable def abstractThetaCurveModuliData
 def abstractThetaOrbicurveCoverData
     (curveModuli : ThetaCurveModuliData Fmod F)
     (cK xK : HyperbolicOrbicurveModel K)
-    (cK_has_type_l_tors_pm cK_core_is_baseChange_cF cK_determined_by_cF
-      xK_has_type_l_tors finiteEtaleCoveringDiagrams
+    (cK_type : OrbicurveTypeData primeFive cK OrbicurveTypeKind.oneLTorsPM)
+    (xK_type : OrbicurveTypeData primeFive xK OrbicurveTypeKind.oneLTors)
+    (cK_core_is_baseChange_cF cK_determined_by_cF finiteEtaleCoveringDiagrams
       profiniteGroupOpenImmersions : Prop)
-    (hCKType : cK_has_type_l_tors_pm)
     (hCore : cK_core_is_baseChange_cF)
     (hDetermined : cK_determined_by_cF)
-    (hXKType : xK_has_type_l_tors)
     (hEtale : finiteEtaleCoveringDiagrams)
     (hOpen : profiniteGroupOpenImmersions) :
-    ThetaOrbicurveCoverData Fmod F K curveModuli where
+    ThetaOrbicurveCoverData primeFive Fmod F K curveModuli where
   cK := cK
   xK := xK
-  cK_has_type_l_tors_pm := cK_has_type_l_tors_pm
-  cK_has_type_l_tors_pm_holds := hCKType
+  cK_type := cK_type
   cK_core_is_baseChange_cF := cK_core_is_baseChange_cF
   cK_core_is_baseChange_cF_holds := hCore
   cK_determined_by_cF := cK_determined_by_cF
   cK_determined_by_cF_holds := hDetermined
-  xK_has_type_l_tors := xK_has_type_l_tors
-  xK_has_type_l_tors_holds := hXKType
+  xK_type := xK_type
   finiteEtaleCoveringDiagrams := finiteEtaleCoveringDiagrams
   finiteEtaleCoveringDiagrams_holds := hEtale
   profiniteGroupOpenImmersions := profiniteGroupOpenImmersions
@@ -138,7 +187,7 @@ def abstractThetaOrbicurveCoverData
 /-- A constructor smoke test for bad local finite-place data. -/
 def abstractThetaBadLocalData
     (curveModuli : ThetaCurveModuliData Fmod F)
-    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+    (coverData : ThetaOrbicurveCoverData primeFive Fmod F K curveModuli)
     (valuations : ThetaValuationData primeFive Fmod K)
     (localX :
       (v : NumberField.FinitePlace K) -> v ∈ valuations.selected ->
@@ -149,11 +198,19 @@ def abstractThetaBadLocalData
     (localBaseChangeDiagrams
       decompositionGroupOuterSurjection :
       (v : NumberField.FinitePlace K) -> v ∈ valuations.selected -> Prop)
-    (badLocalType thetaRootLocalModels badLocalOpenSubgroups :
+    (badLocalCType :
+      (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
+        OrbicurveTypeData primeFive (localC v hv.1) OrbicurveTypeKind.oneZModLPM)
+    (thetaRootLocalXType :
+      (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
+        OrbicurveTypeData primeFive (localX v hv.1) OrbicurveTypeKind.oneZModLTheta)
+    (thetaRootLocalCType :
+      (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.bad) ->
+        OrbicurveTypeData primeFive (localC v hv.1) OrbicurveTypeKind.oneZModLThetaPM)
+    (thetaRootLocalModels badLocalOpenSubgroups :
       (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop)
     (hBaseChange : ∀ v hv, localBaseChangeDiagrams v hv)
     (hDecomp : ∀ v hv, decompositionGroupOuterSurjection v hv)
-    (hBadType : ∀ v hv, badLocalType v hv)
     (hThetaRoot : ∀ v hv, thetaRootLocalModels v hv)
     (hOpen : ∀ v hv, badLocalOpenSubgroups v hv) :
     ThetaBadLocalData primeFive Fmod F K curveModuli coverData valuations where
@@ -163,8 +220,9 @@ def abstractThetaBadLocalData
   localBaseChangeDiagrams_holds := hBaseChange
   decompositionGroupOuterSurjection := decompositionGroupOuterSurjection
   decompositionGroupOuterSurjection_holds := hDecomp
-  badLocalType := badLocalType
-  badLocalType_holds := hBadType
+  badLocalCType := badLocalCType
+  thetaRootLocalXType := thetaRootLocalXType
+  thetaRootLocalCType := thetaRootLocalCType
   thetaRootLocalModels := thetaRootLocalModels
   thetaRootLocalModels_holds := hThetaRoot
   badLocalOpenSubgroups := badLocalOpenSubgroups
@@ -173,7 +231,7 @@ def abstractThetaBadLocalData
 /-- A constructor smoke test for the local cusp data of Definition 3.1(f). -/
 def abstractThetaCuspLocalData
     (curveModuli : ThetaCurveModuliData Fmod F)
-    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+    (coverData : ThetaOrbicurveCoverData primeFive Fmod F K curveModuli)
     (valuations : ThetaValuationData primeFive Fmod K)
     (badLocalData :
       ThetaBadLocalData primeFive Fmod F K curveModuli coverData valuations)
@@ -183,17 +241,16 @@ def abstractThetaCuspLocalData
         CuspData (badLocalData.localC v hv))
     (localCusp_determinedByGlobal :
       (v : NumberField.FinitePlace K) -> (hv : v ∈ valuations.selected) -> Prop)
-    (badLocalCuspCanonicalGenerator :
-      (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> Prop)
-    (hDetermined : ∀ v hv, localCusp_determinedByGlobal v hv)
-    (hCanonical : ∀ v hv, badLocalCuspCanonicalGenerator v hv) :
+    (badLocalCanonicalGenerator :
+      (v : NumberField.FinitePlace K) -> v ∈ valuations.bad ->
+        CanonicalGeneratorUpToSignElement)
+    (hDetermined : ∀ v hv, localCusp_determinedByGlobal v hv) :
     ThetaCuspLocalData primeFive Fmod F K curveModuli coverData valuations
       badLocalData epsilon where
   localCusp := localCusp
   localCusp_determinedByGlobal := localCusp_determinedByGlobal
   localCusp_determinedByGlobal_holds := hDetermined
-  badLocalCuspCanonicalGenerator := badLocalCuspCanonicalGenerator
-  badLocalCuspCanonicalGenerator_holds := hCanonical
+  badLocalCanonicalGenerator := badLocalCanonicalGenerator
 
 /--
 A constructor smoke test for full initial theta data under the exact field
@@ -202,7 +259,7 @@ hypotheses required by the record.
 noncomputable def abstractInitialThetaData
     (fieldTower : ThetaFieldTower primeFive Fmod F K)
     (curveModuli : ThetaCurveModuliData Fmod F)
-    (coverData : ThetaOrbicurveCoverData Fmod F K curveModuli)
+    (coverData : ThetaOrbicurveCoverData primeFive Fmod F K curveModuli)
     (valuations : ThetaValuationData primeFive Fmod K)
     (badLocalData : ThetaBadLocalData primeFive Fmod F K curveModuli coverData valuations)
     (epsilon : CuspData coverData.cK)
@@ -249,8 +306,16 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
   theta.decompositionGroupOuterSurjection v hv
 
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    theta.badLocalData.badLocalType v hv :=
+    (theta.badLocalData.badLocalCType v hv).hasType :=
   theta.badLocalType v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    (theta.badLocalData.thetaRootLocalXType v hv).hasType :=
+  theta.thetaRootLocalXType v hv
+
+example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
+    (theta.badLocalData.thetaRootLocalCType v hv).hasType :=
+  theta.thetaRootLocalCType v hv
 
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
     theta.badLocalData.thetaRootLocalModels v hv :=
@@ -269,7 +334,7 @@ example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.selected) :
   theta.localCusp_arisesFromNonzeroQuotientElement v hv
 
 example (v : NumberField.FinitePlace K) (hv : v ∈ theta.valuations.bad) :
-    theta.cuspLocalData.badLocalCuspCanonicalGenerator v hv :=
+    (theta.cuspLocalData.badLocalCanonicalGenerator v hv).canonicalGeneratorUpToSign :=
   theta.badLocalCusp_arisesFromCanonicalGenerator v hv
 
 example (v : NumberField.FinitePlace K) :
@@ -311,7 +376,7 @@ example : theta.curveModuli.stableReductionOverNonarchimedean :=
 example : theta.curveModuli.torsion23RationalOverF :=
   theta.torsion23RationalOverF
 
-example : theta.coverData.cK_has_type_l_tors_pm :=
+example : theta.coverData.cK_type.hasType :=
   theta.cKType
 
 example : theta.coverData.cK_core_is_baseChange_cF :=
@@ -320,7 +385,7 @@ example : theta.coverData.cK_core_is_baseChange_cF :=
 example : theta.coverData.cK_determined_by_cF :=
   theta.cKDeterminedByCF
 
-example : theta.coverData.xK_has_type_l_tors :=
+example : theta.coverData.xK_type.hasType :=
   theta.xKType
 
 example : theta.coverData.finiteEtaleCoveringDiagrams :=
