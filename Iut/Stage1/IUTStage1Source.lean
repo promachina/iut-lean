@@ -2524,6 +2524,42 @@ theorem structuredEndpointAuditSummary
       simpa [IUTStage1SourcePackage.publicAuditOfStructuredHypotheses] using
         hpublic }
 
+theorem structuredEndpointAuditSummary_sourceAudit_eq_routeAudit
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    (package.structuredEndpointAuditSummary inputs hypotheses).source_audit =
+      (package.structuredHypothesisRouteAudit inputs hypotheses).sourceAudit :=
+  rfl
+
+theorem structuredEndpointAuditSummary_sourceAudit_eq_auditOfStructuredHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    (package.structuredEndpointAuditSummary inputs hypotheses).source_audit =
+      package.auditOfStructuredHypotheses inputs hypotheses :=
+  rfl
+
+theorem structuredEndpointAuditSummary_payloadRouteSummary_eq_routeAudit
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    (package.structuredEndpointAuditSummary
+      inputs hypotheses).payload_route_summary =
+      (package.structuredHypothesisRouteAudit
+        inputs hypotheses).payloadRouteSummary :=
+  rfl
+
+theorem structuredEndpointAuditSummary_publicAuditEq_eq_routeAudit
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311StructuredInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    (package.structuredEndpointAuditSummary
+      inputs hypotheses).endpoint_public_audit_eq =
+      (package.structuredHypothesisRouteAudit
+        inputs hypotheses).comparisonDataEndpointPayloadRouteSummary.choose_spec.2 :=
+  Subsingleton.elim _ _
+
 namespace StructuredEndpointAuditSummary
 
 variable {package : IUTStage1SourcePackage source target index}

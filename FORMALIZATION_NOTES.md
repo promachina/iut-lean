@@ -11329,3 +11329,64 @@ the more flexible existential projections when appropriate.
 The next milestone should compare the compact structured endpoint summary with
 the structured route audit directly, proving that its source audit and payload
 summary are exactly the ones obtained from `structuredHypothesisRouteAudit`.
+
+## Milestone 144: Structured Endpoint Summary Route Coherence
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The source-side concern remains the same: at the IUT III, Theorem 3.11 to
+Corollary 3.12 boundary, the public endpoint should not obscure how structured
+input data reaches the comparison. This milestone is a bookkeeping check
+against a formalization trap rather than a new mathematical assertion. It
+records that the compact structured endpoint summary is built from the same
+structured route audit introduced for the Theorem 3.11 input and side-condition
+route.
+
+### Purpose
+
+Milestone 143 introduced `StructuredEndpointAuditSummary`. This milestone adds
+explicit coherence theorems tying that summary back to
+`structuredHypothesisRouteAudit`. Reviewers can now cite named theorems instead
+of unfolding the summary constructor to see where the source audit and payload
+summary came from.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.structuredEndpointAuditSummary_sourceAudit_eq_routeAudit
+IUTStage1SourcePackage.structuredEndpointAuditSummary_sourceAudit_eq_auditOfStructuredHypotheses
+IUTStage1SourcePackage.structuredEndpointAuditSummary_payloadRouteSummary_eq_routeAudit
+IUTStage1SourcePackage.structuredEndpointAuditSummary_publicAuditEq_eq_routeAudit
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_structured_endpoint_summary_sourceAudit_eq_route_example
+unitThetaToy_source_structured_endpoint_summary_payloadRoute_eq_route_example
+```
+
+### What This Tests
+
+The toy examples verify that the compact structured endpoint summary's source
+audit and payload route summary are definitionally the same data obtained from
+the structured route audit.
+
+### Design Trap Avoided
+
+The trap would be for the compact summary to improve readability while silently
+introducing a second route witness. The coherence theorems rule that out at the
+API level: the summary is a wrapper around the existing structured route audit.
+
+### Next Step
+
+The next milestone should start moving from endpoint packaging back into the
+source-side mathematical content by adding a compact checklist for the
+structured Theorem 3.11 input claims used by the route.
