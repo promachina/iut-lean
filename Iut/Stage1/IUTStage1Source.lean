@@ -708,6 +708,33 @@ structure LogThetaColumnId where
 structure UpperSemiCompatibilityId where
   label : String
 
+/-- Local nonarchimedean inclusion datum from the upper-semi-compatibility step. -/
+structure IUTStage1NonarchimedeanInclusionData where
+  placeLabel : String
+  sourceLabel : String
+  targetLabel : String
+  inclusionValid : Prop
+  inclusion_valid : inclusionValid
+
+/-- Local archimedean surjection datum from the upper-semi-compatibility step. -/
+structure IUTStage1ArchimedeanSurjectionData where
+  placeLabel : String
+  sourceLabel : String
+  targetLabel : String
+  surjectionValid : Prop
+  surjection_valid : surjectionValid
+
+/--
+One-sided log-volume compatibility datum for the upper-semi step.
+
+The relation is intentionally an inequality, not definitional equality, because
+the source discussion of upper semi-compatibility is precisely one-sided.
+-/
+structure IUTStage1LogVolumeCompatibilityData where
+  sourceLogVolume : Real
+  targetLogVolume : Real
+  source_le_target : sourceLogVolume <= targetLogVolume
+
 /--
 Procession state used by the Theorem 3.11 `(Ind1)` model.
 
@@ -741,10 +768,37 @@ nonarchimedean places and natural surjections at archimedean places.
 structure IUTStage1UpperSemiCompatibilityState where
   logThetaColumn : LogThetaColumnId
   compatibility : UpperSemiCompatibilityId
+  nonarchimedeanInclusions : List IUTStage1NonarchimedeanInclusionData
+  archimedeanSurjections : List IUTStage1ArchimedeanSurjectionData
+  logVolumeCompatibility : IUTStage1LogVolumeCompatibilityData
   hasNonarchimedeanInclusions : Bool
   hasArchimedeanSurjections : Bool
   logVolumeCompatible : Prop
   log_volume_compatible : logVolumeCompatible
+
+namespace IUTStage1NonarchimedeanInclusionData
+
+theorem valid (data : IUTStage1NonarchimedeanInclusionData) :
+    data.inclusionValid :=
+  data.inclusion_valid
+
+end IUTStage1NonarchimedeanInclusionData
+
+namespace IUTStage1ArchimedeanSurjectionData
+
+theorem valid (data : IUTStage1ArchimedeanSurjectionData) :
+    data.surjectionValid :=
+  data.surjection_valid
+
+end IUTStage1ArchimedeanSurjectionData
+
+namespace IUTStage1LogVolumeCompatibilityData
+
+theorem upperBound (data : IUTStage1LogVolumeCompatibilityData) :
+    data.sourceLogVolume <= data.targetLogVolume :=
+  data.source_le_target
+
+end IUTStage1LogVolumeCompatibilityData
 
 namespace IUTStage1ProcessionState
 
@@ -795,6 +849,12 @@ theorem same_compatibility_of_eq
     state₁.compatibility = state₂.compatibility := by
   cases h
   rfl
+
+theorem logVolumeUpperBound
+    (state : IUTStage1UpperSemiCompatibilityState) :
+    state.logVolumeCompatibility.sourceLogVolume <=
+      state.logVolumeCompatibility.targetLogVolume :=
+  state.logVolumeCompatibility.upperBound
 
 end IUTStage1UpperSemiCompatibilityState
 
@@ -1000,9 +1060,18 @@ structure UpperSemiCompatibilityStep
     choice₁.upper_semi_state.logThetaColumn =
       choice₂.upper_semi_state.logThetaColumn
   nonarchimedean_inclusions_eq :
+    choice₁.upper_semi_state.nonarchimedeanInclusions =
+      choice₂.upper_semi_state.nonarchimedeanInclusions
+  archimedean_surjections_eq :
+    choice₁.upper_semi_state.archimedeanSurjections =
+      choice₂.upper_semi_state.archimedeanSurjections
+  log_volume_compatibility_eq :
+    choice₁.upper_semi_state.logVolumeCompatibility =
+      choice₂.upper_semi_state.logVolumeCompatibility
+  has_nonarchimedean_inclusions_eq :
     choice₁.upper_semi_state.hasNonarchimedeanInclusions =
       choice₂.upper_semi_state.hasNonarchimedeanInclusions
-  archimedean_surjections_eq :
+  has_archimedean_surjections_eq :
     choice₁.upper_semi_state.hasArchimedeanSurjections =
       choice₂.upper_semi_state.hasArchimedeanSurjections
 
@@ -1036,12 +1105,44 @@ theorem ind3_preserves_logThetaColumn
       choice₂.upper_semi_state.logThetaColumn := by
   exact hstep.logThetaColumn_eq
 
+theorem ind3_preserves_nonarchimedeanInclusions
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      UpperSemiCompatibilityStep choice₁ choice₂) :
+    choice₁.upper_semi_state.nonarchimedeanInclusions =
+      choice₂.upper_semi_state.nonarchimedeanInclusions := by
+  exact hstep.nonarchimedean_inclusions_eq
+
+theorem ind3_preserves_archimedeanSurjections
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      UpperSemiCompatibilityStep choice₁ choice₂) :
+    choice₁.upper_semi_state.archimedeanSurjections =
+      choice₂.upper_semi_state.archimedeanSurjections := by
+  exact hstep.archimedean_surjections_eq
+
+theorem ind3_preserves_logVolumeCompatibility
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      UpperSemiCompatibilityStep choice₁ choice₂) :
+    choice₁.upper_semi_state.logVolumeCompatibility =
+      choice₂.upper_semi_state.logVolumeCompatibility := by
+  exact hstep.log_volume_compatibility_eq
+
 theorem ind3_target_logVolumeCompatible
     {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
     (_hstep :
       UpperSemiCompatibilityStep choice₁ choice₂) :
     choice₂.upper_semi_state.logVolumeCompatible := by
   exact choice₂.upper_semi_state.logVolumeCompatibleProof
+
+theorem ind3_target_logVolumeUpperBound
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (_hstep :
+      UpperSemiCompatibilityStep choice₁ choice₂) :
+    choice₂.upper_semi_state.logVolumeCompatibility.sourceLogVolume <=
+      choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+  choice₂.upper_semi_state.logVolumeUpperBound
 
 theorem generated_preserves_coric
     {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}

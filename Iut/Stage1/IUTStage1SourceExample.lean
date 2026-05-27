@@ -307,6 +307,53 @@ theorem structuredTheorem311_ind3_preserves_logThetaColumn_example
   IUTStage1StructuredTheorem311Choice.ind3_preserves_logThetaColumn
     hstep
 
+theorem upperSemi_nonarchimedeanInclusion_valid_example
+    (data : IUTStage1NonarchimedeanInclusionData) :
+    data.inclusionValid :=
+  data.valid
+
+theorem upperSemi_archimedeanSurjection_valid_example
+    (data : IUTStage1ArchimedeanSurjectionData) :
+    data.surjectionValid :=
+  data.valid
+
+theorem upperSemi_logVolumeCompatibility_upperBound_example
+    (data : IUTStage1LogVolumeCompatibilityData) :
+    data.sourceLogVolume <= data.targetLogVolume :=
+  data.upperBound
+
+theorem structuredTheorem311_ind3_preserves_nonarchimedeanInclusions_example
+    {coric : Type u}
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      IUTStage1StructuredTheorem311Choice.UpperSemiCompatibilityStep
+        choice₁ choice₂) :
+    choice₁.upper_semi_state.nonarchimedeanInclusions =
+      choice₂.upper_semi_state.nonarchimedeanInclusions :=
+  IUTStage1StructuredTheorem311Choice.ind3_preserves_nonarchimedeanInclusions
+    hstep
+
+theorem structuredTheorem311_ind3_preserves_archimedeanSurjections_example
+    {coric : Type u}
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      IUTStage1StructuredTheorem311Choice.UpperSemiCompatibilityStep
+        choice₁ choice₂) :
+    choice₁.upper_semi_state.archimedeanSurjections =
+      choice₂.upper_semi_state.archimedeanSurjections :=
+  IUTStage1StructuredTheorem311Choice.ind3_preserves_archimedeanSurjections
+    hstep
+
+theorem structuredTheorem311_ind3_target_logVolumeUpperBound_example
+    {coric : Type u}
+    {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
+    (hstep :
+      IUTStage1StructuredTheorem311Choice.UpperSemiCompatibilityStep
+        choice₁ choice₂) :
+    choice₂.upper_semi_state.logVolumeCompatibility.sourceLogVolume <=
+      choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+  IUTStage1StructuredTheorem311Choice.ind3_target_logVolumeUpperBound hstep
+
 theorem structuredTheorem311_generated_preserves_coric_example
     {coric : Type u}
     {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}

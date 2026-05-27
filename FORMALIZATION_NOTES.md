@@ -17270,3 +17270,108 @@ step should refine `IUTStage1UpperSemiCompatibilityState`, because this is the
 part closest to Corollary 3.12: it should eventually carry typed local data for
 the nonarchimedean inclusions, archimedean surjections, and compatibility of
 the relevant log-volumes under the log-link.
+
+## 122. Local Upper-Semi Compatibility Data
+
+### Goal
+
+We refined the upper-semi compatibility state so that `(Ind3)` no longer
+contains only boolean flags. It now carries local data for the pieces named in
+IUT III Theorem 3.11 and Proposition 3.5:
+
+```text
+nonarchimedean inclusions
+archimedean surjections
+one-sided log-volume compatibility
+```
+
+### Source Check
+
+Theorem 3.11 describes `(Ind3)` as upper semi-compatibility as `m` varies,
+relative to log-links in a fixed `n`-column. It explicitly points to natural
+inclusions at nonarchimedean places, natural surjections at archimedean places,
+and compatibility with log-volumes.
+
+This milestone encodes those three features as named local fields.
+
+### Lean/API Check
+
+The source layer now defines:
+
+```text
+IUTStage1NonarchimedeanInclusionData
+IUTStage1ArchimedeanSurjectionData
+IUTStage1LogVolumeCompatibilityData
+```
+
+and extends:
+
+```text
+IUTStage1UpperSemiCompatibilityState
+```
+
+with:
+
+```text
+nonarchimedeanInclusions
+archimedeanSurjections
+logVolumeCompatibility
+```
+
+The log-volume compatibility datum is one-sided:
+
+```text
+sourceLogVolume <= targetLogVolume
+```
+
+The structured `(Ind3)` relation now preserves:
+
+```text
+logThetaColumn
+nonarchimedeanInclusions
+archimedeanSurjections
+logVolumeCompatibility
+```
+
+and Lean exposes:
+
+```text
+ind3_preserves_nonarchimedeanInclusions
+ind3_preserves_archimedeanSurjections
+ind3_preserves_logVolumeCompatibility
+ind3_target_logVolumeUpperBound
+```
+
+### Lean Decisions
+
+The log-volume relation is an inequality, not an equality. This is deliberate:
+the source discussion is upper-semi and one-sided. If later source work proves a
+stronger equality in a specific subcase, that can be added as extra data without
+weakening the current interface.
+
+The local inclusion and surjection records still store labels and proof fields
+rather than concrete local analytic objects. This keeps the milestone aligned
+without pretending that Proposition 3.5 has already been formalized.
+
+### Toy Check
+
+The source example now checks:
+
+```text
+upperSemi_nonarchimedeanInclusion_valid_example
+upperSemi_archimedeanSurjection_valid_example
+upperSemi_logVolumeCompatibility_upperBound_example
+structuredTheorem311_ind3_preserves_nonarchimedeanInclusions_example
+structuredTheorem311_ind3_preserves_archimedeanSurjections_example
+structuredTheorem311_ind3_target_logVolumeUpperBound_example
+```
+
+The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
+
+### Remaining Gap
+
+The local records still need to be refined from labels to actual local objects:
+places over `vQ`, local tensor packets/log-shells, the concrete inclusion and
+surjection maps, and the log-volume maps of Proposition 3.9. This should be the
+next source-facing refinement before attempting a stronger Corollary 3.12
+endpoint.
