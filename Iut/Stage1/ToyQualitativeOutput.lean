@@ -79,8 +79,17 @@ def thetaToyStructuredSHEContext (f : Transport qLine thetaLine) (h : Real)
     thetaPilotStructure := thetaToyDomainStructure,
     q_pilot_in_codomain := rfl,
     theta_pilot_in_domain := rfl,
-    simultaneous_valid := True,
-    simultaneous_valid_holds := trivial,
+    simultaneousExpression :=
+      { domain_expression_valid := True,
+        domain_expression_valid_holds := trivial,
+        codomain_expression_valid := True,
+        codomain_expression_valid_holds := trivial,
+        q_pilot_expression_valid := True,
+        q_pilot_expression_valid_holds := trivial,
+        theta_pilot_expression_valid := True,
+        theta_pilot_expression_valid_holds := trivial,
+        simultaneous_valid := True,
+        simultaneous_valid_holds := trivial },
     histories_not_identified := by
       intro hside
       cases hside }
@@ -104,6 +113,17 @@ theorem thetaToyStructuredSHEContext_histories_not_identified
     (thetaToyStructuredSHEContext f h epsilon).domainStructure.theater.side ≠
       (thetaToyStructuredSHEContext f h epsilon).codomainStructure.theater.side :=
   (thetaToyStructuredSHEContext f h epsilon).domainHistory_ne_codomainHistory
+
+theorem thetaToyStructuredSHEContext_allLocalExpressionValid
+    (f : Transport qLine thetaLine) (h : Real)
+    (epsilon : index -> Real) :
+    let context := thetaToyStructuredSHEContext f h epsilon
+    context.simultaneousExpression.domain_expression_valid ∧
+      context.simultaneousExpression.codomain_expression_valid ∧
+      context.simultaneousExpression.q_pilot_expression_valid ∧
+      context.simultaneousExpression.theta_pilot_expression_valid ∧
+      context.simultaneous_valid :=
+  (thetaToyStructuredSHEContext f h epsilon).allLocalExpressionValid
 
 def thetaToyAPTD (f : Transport qLine thetaLine) (h : Real)
     (epsilon : index -> Real) :

@@ -7183,3 +7183,101 @@ closer to Mochizuki's actual Stage 1 mathematics, later milestones must refine
 what counts as simultaneous expression, and must connect that refinement to
 the HDD-after-SHE comparison without hiding real-line-copy or history
 identifications.
+
+## Math Milestone 72: Structured Local Validity for SHE
+
+Lean files:
+
+* `Iut/Foundations/QualitativeData.lean`
+* `Iut/Stage1/ToyQualitativeOutput.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+SHE is supposed to express simultaneous holomorphic validity across distinct
+Hodge-theater contexts, not merely assert a final equality of common-container
+labels. The previous formalization had improved placement and history
+tracking, but still stored the local validity content as one proposition:
+
+```text
+simultaneous_valid : Prop
+```
+
+That was too coarse for later auditing of the 3.11 to 3.12 transition. The
+formal model now separates local validity claims before recombining them.
+
+### Lean/API Check
+
+The new witness is:
+
+```text
+QualitativeData.SimultaneousHolomorphicExpressionData
+```
+
+with fields for:
+
+```text
+domain_expression_valid
+codomain_expression_valid
+q_pilot_expression_valid
+theta_pilot_expression_valid
+simultaneous_valid
+```
+
+The `StructuredSHEContext` now stores:
+
+```text
+simultaneousExpression : SimultaneousHolomorphicExpressionData
+```
+
+instead of a bare `simultaneous_valid` proposition. The old public shape is
+preserved by a derived definition:
+
+```text
+StructuredSHEContext.simultaneous_valid
+```
+
+and the namespace exposes:
+
+```text
+domainExpressionValid
+codomainExpressionValid
+qPilotExpressionValid
+thetaPilotExpressionValid
+simultaneousValid
+allLocalExpressionValid
+```
+
+### Lean Decisions
+
+This is still an abstract validity layer: each component is a proposition with
+a proof. But it is now structured enough that future work can replace one
+component at a time with a real definition, rather than replacing a monolithic
+black box.
+
+The downstream Stage 1 API continues to use `context.simultaneous_valid`, so
+the higher route remains stable. Internally, that proposition is now derived
+from the structured witness.
+
+### What This Tests
+
+The toy qualitative output constructs a `SimultaneousHolomorphicExpressionData`
+with trivial local witnesses, and proves an `allLocalExpressionValid` theorem.
+The source example still builds through the strengthened common-container
+compatibility, confirming that the refactor does not break the audited route.
+
+### Design Trap Avoided
+
+The trap would be to let "SHE is valid" remain indivisible. If the later
+dispute turns on which side was expressed where, or which piece of the
+holomorphic data was valid in the shared language, a monolithic validity
+predicate would hide the issue. This milestone makes those pieces separately
+addressable.
+
+### Remaining Gap
+
+The local validity components are still not Mochizuki's actual analytic and
+arithmetic definitions. The next refinement should either give one component a
+more concrete meaning, or connect the structured validity data more tightly to
+the HDD-after-SHE bridge while preserving the explicit real-line and history
+guards.
