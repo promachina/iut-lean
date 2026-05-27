@@ -6304,3 +6304,73 @@ The next milestone should look for the next abstraction boundary above Stage 1:
 either a small example module that imports the public toy theorem as a
 regression test, or the first non-toy scaffold that will eventually supply a
 real source-specific `SourceObligationLedger`.
+
+## Milestone 73: Toy Public Audit Regression Examples
+
+Lean files:
+
+* `Iut/Stage1/ToyPublicAuditExample.lean`
+* `Iut/Basic.lean`
+
+### Source Check
+
+At this stage the formal work is still a scaffold, so regression examples are
+important. They ensure that the public theorem can be used without reaching into
+the detailed toy source ledger or the full audit record.
+
+This matches the project discipline around Corollary 3.12: public consumers
+should use named, audited interfaces rather than reconstructing hidden
+identifications manually.
+
+### Purpose
+
+This milestone adds a small example module that imports:
+
+```text
+Iut.Stage1.ToySourceObligations
+```
+
+and recovers the three endpoints of the toy public audit theorem:
+
+```text
+qSigned <= thetaSigned
+Corollary312Inequality
+Stage1Comparison recovery equality
+```
+
+The root module `Iut/Basic.lean` imports the example, so `lake build` checks it
+with the rest of the project.
+
+### Lean Declarations
+
+In `ToyPublicAuditExample.lean`:
+
+```text
+unitThetaToy_publicAudit_q_le_theta_example
+unitThetaToy_publicAudit_corollary_example
+unitThetaToy_publicAudit_recovery_example
+```
+
+### What This Tests
+
+The examples destruct only:
+
+```text
+unitThetaToy_publicAudit_from_sourceObligations
+```
+
+They do not inspect `UnitThetaToySourceObligationAudit` or the internal ledger
+fields. This makes the public theorem an actual API boundary.
+
+### Design Trap Avoided
+
+The trap would be to prove examples by reaching back into all internal fields,
+which would make the public theorem ornamental rather than useful. These
+examples verify that the compact public theorem is sufficient for downstream
+use.
+
+### Next Step
+
+The next milestone should begin the first non-toy source-ledger scaffold: a
+named placeholder interface for future IUT-specific data that can eventually
+produce a `SourceObligationLedger` without changing the Stage 1 public API.
