@@ -9560,3 +9560,90 @@ The actual IUT content remains to replace the toy upper-ray hull with a
 holomorphic hull of possible Theta-pilot images and to replace the toy measure
 with the procession-normalized mono-analytic log-volume/determinant estimates
 from IUT III/IV.
+
+## Math Milestone 102: Union of Possible Images and Hull of the Union
+
+Lean files:
+
+* `Iut/Foundations/IndeterminacyRelation.lean`
+* `Iut/Foundations/CommonTargetBound.lean`
+
+### Source Check
+
+IUT III describes the Theta-side Corollary 3.12 quantity as the log-volume of
+the holomorphic hull of the union of possible images of the Theta-pilot object,
+where those possible images are subject to the indeterminacies `(Ind1)`,
+`(Ind2)`, and `(Ind3)`.
+
+Before this milestone, our `CommonHull` interface only said that some region
+contains each possible target region. It did not explicitly represent the
+union of possible images. That was too coarse for the next replacement of the
+toy upper-ray cap by a holomorphic-hull construction.
+
+### Lean/API Check
+
+The region-family layer now defines:
+
+```text
+RegionFamily.union
+RegionFamily.choice_subset_union
+RegionFamily.union_subset_iff
+RegionFamily.CommonHull.ofUnionHull
+```
+
+The comparison-family layer now defines:
+
+```text
+RegionComparisonFamily.targetUnion
+RegionComparisonFamily.commonTargetHullOfUnionHull
+```
+
+The measured common-hull layer now defines:
+
+```text
+RegionComparisonFamily.commonTargetHullBoundOfUnionHull
+```
+
+### Lean Decisions
+
+`RegionFamily.union` is a plain predicate union:
+
+```text
+x lies in the union iff x lies in some chosen possible region.
+```
+
+`CommonHull.ofUnionHull` then turns any `HullOperator` into a common hull by
+applying the operator to this union. This exactly separates two questions:
+
+```text
+What are the possible images?
+Which hull operator is being applied to their union?
+```
+
+### What This Tests
+
+Lean verifies the containment route:
+
+```text
+chosen region <= union of possible regions <= hull of that union
+```
+
+and verifies that a measured bound on the hull of the union produces a
+`CommonTargetHullBound`.
+
+Focused builds for `Iut.Foundations.IndeterminacyRelation` and
+`Iut.Foundations.CommonTargetBound` pass.
+
+### Design Trap Avoided
+
+The trap would be to treat a common hull as just another arbitrary container.
+For Corollary 3.12, the relevant object is specifically a hull of the union of
+possible Theta images. The new definitions make that shape available without
+claiming that the real holomorphic hull has already been constructed.
+
+### Remaining Gap
+
+The formal hull operator is still abstract. The next real mathematical task is
+to specialize this interface toward a holomorphic-hull operator for the
+Theta-pilot possible-image family and then connect its measured bound to the
+determinant/log-volume step.

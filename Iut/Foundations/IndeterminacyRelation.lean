@@ -140,9 +140,27 @@ namespace RegionFamily
 
 variable {line : Copy} {index : Type u}
 
+/-- The union of all possible regions in a family. -/
+def union (family : RegionFamily line index) : Region line :=
+  { Contains := fun x => ∃ choice : index, (family.region choice).Contains x }
+
 /-- A region contains every member of a family of possible regions. -/
 def ContainedIn (family : RegionFamily line index) (common : Region line) : Prop :=
   ∀ choice : index, Region.Subset (family.region choice) common
+
+theorem choice_subset_union (family : RegionFamily line index) (choice : index) :
+    Region.Subset (family.region choice) family.union := by
+  intro x hx
+  exact ⟨choice, hx⟩
+
+theorem union_subset_iff {family : RegionFamily line index} {common : Region line} :
+    Region.Subset family.union common ↔ family.ContainedIn common := by
+  constructor
+  · intro hsubset choice x hx
+    exact hsubset x ⟨choice, hx⟩
+  · intro hcontained x hx
+    rcases hx with ⟨choice, hchoice⟩
+    exact hcontained choice x hchoice
 
 /-- Membership in any chosen possible region implies membership in a common container. -/
 theorem contains_common_of_contains_choice {family : RegionFamily line index}
@@ -164,6 +182,13 @@ structure CommonHull (family : RegionFamily line index) where
 namespace CommonHull
 
 variable {family : RegionFamily line index}
+
+def ofUnionHull (operator : HullOperator line) (family : RegionFamily line index) :
+    CommonHull family :=
+  { hull := operator.hull family.union,
+    contains_each := fun choice =>
+      Region.subset_trans (family.choice_subset_union choice)
+        (operator.extensive family.union) }
 
 theorem contains_of_choice (commonHull : CommonHull family)
     {choice : index} {x : Point line} (hx : (family.region choice).Contains x) :
@@ -261,6 +286,11 @@ def targetRegions (family : RegionComparisonFamily source target index) :
     RegionFamily target index :=
   { region := fun choice => (family.comparison choice).targetRegion }
 
+/-- The union of all possible target regions of a comparison family. -/
+def targetUnion (family : RegionComparisonFamily source target index) :
+    Region target :=
+  family.targetRegions.union
+
 /-- A common target region for all comparisons in the family. -/
 def CommonTarget (family : RegionComparisonFamily source target index)
     (common : Region target) : Prop :=
@@ -277,6 +307,12 @@ theorem holds_commonTarget_of_choice {family : RegionComparisonFamily source tar
 /-- A common hull for the target regions of a comparison family. -/
 abbrev CommonTargetHull (family : RegionComparisonFamily source target index) :=
   RegionFamily.CommonHull family.targetRegions
+
+def commonTargetHullOfUnionHull
+    (operator : HullOperator target)
+    (family : RegionComparisonFamily source target index) :
+    family.CommonTargetHull :=
+  RegionFamily.CommonHull.ofUnionHull operator family.targetRegions
 
 theorem holds_commonTargetHull_of_choice {family : RegionComparisonFamily source target index}
     (commonHull : family.CommonTargetHull)
