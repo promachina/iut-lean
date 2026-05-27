@@ -1462,6 +1462,53 @@ structure IUTStage1UpperSemiCompatibilityState where
   logVolumeCompatible : Prop
   log_volume_compatible : logVolumeCompatible
 
+/--
+Compatibility between `(Ind2)` place-family action data and the `(Ind3)`
+upper-semi place-family data.
+
+This record checks that the places carrying nonarchimedean `Ism` actions are
+the same places appearing in the nonarchimedean inclusion data, and similarly
+for archimedean order-two actions and archimedean surjections.
+-/
+structure IUTStage1Ind2UpperSemiPlaceFamilyCompatibility where
+  ind2Actions : IUTStage1Ind2PlaceFamilyActionData
+  upperSemiState : IUTStage1UpperSemiCompatibilityState
+  nonarchimedean_places_eq :
+    ind2Actions.nonarchimedeanPlaces =
+      upperSemiState.nonarchimedeanInclusions.map fun data => data.place
+  archimedean_places_eq :
+    ind2Actions.archimedeanPlaces =
+      upperSemiState.archimedeanSurjections.map fun data => data.place
+
+namespace IUTStage1Ind2UpperSemiPlaceFamilyCompatibility
+
+theorem nonarchimedeanPlaces_eq
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.ind2Actions.nonarchimedeanPlaces =
+      data.upperSemiState.nonarchimedeanInclusions.map fun entry =>
+        entry.place :=
+  data.nonarchimedean_places_eq
+
+theorem archimedeanPlaces_eq
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.ind2Actions.archimedeanPlaces =
+      data.upperSemiState.archimedeanSurjections.map fun entry =>
+        entry.place :=
+  data.archimedean_places_eq
+
+theorem logVolumeCompatible
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.upperSemiState.logVolumeCompatible :=
+  data.upperSemiState.log_volume_compatible
+
+theorem logVolumeUpperBound
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.upperSemiState.logVolumeCompatibility.sourceLogVolume <=
+      data.upperSemiState.logVolumeCompatibility.targetLogVolume :=
+  data.upperSemiState.logVolumeCompatibility.source_le_target
+
+end IUTStage1Ind2UpperSemiPlaceFamilyCompatibility
+
 namespace IUTStage1NonarchimedeanInclusionData
 
 theorem sourcePlaceMatches

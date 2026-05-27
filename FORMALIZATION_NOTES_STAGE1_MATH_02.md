@@ -1485,3 +1485,75 @@ This aggregation is still only for action data.  The next step should connect
 the place-family action data to upper-semi place-family data, because Theorem
 3.11 combines `(Ind2)` local tensor-factor behavior with `(Ind3)` upper
 semi-compatibility across nonarchimedean inclusions and archimedean surjections.
+
+## 19. `(Ind2)`/`(Ind3)` Place-Family Compatibility
+
+### Goal
+
+We connected the `(Ind2)` place-family action data to the existing `(Ind3)`
+upper-semi place-family data.
+
+### Lean/API Check
+
+The new record is:
+
+```text
+IUTStage1Ind2UpperSemiPlaceFamilyCompatibility
+```
+
+It carries:
+
+```text
+ind2Actions : IUTStage1Ind2PlaceFamilyActionData
+upperSemiState : IUTStage1UpperSemiCompatibilityState
+```
+
+and proof fields:
+
+```text
+ind2Actions.nonarchimedeanPlaces =
+  upperSemiState.nonarchimedeanInclusions.map place
+
+ind2Actions.archimedeanPlaces =
+  upperSemiState.archimedeanSurjections.map place
+```
+
+It also exposes the upper-semi log-volume compatibility proof and upper-bound
+inequality from the `upperSemiState`.
+
+### Mathematical Point
+
+This links the two local layers currently modeled:
+
+```text
+Ind2: local tensor-factor actions by place kind
+Ind3: upper-semi inclusions/surjections by place kind
+```
+
+The source text treats these as distinct indeterminacy mechanisms, but they
+refer to the same nonarchimedean and archimedean place families.  The Lean
+record now makes that matching an explicit proof obligation.
+
+### Trap Avoided
+
+The compatibility record does not identify the `(Ind2)` action data with the
+`(Ind3)` inclusion/surjection data.  It only aligns their place lists.  This
+keeps the local tensor-factor action and the upper-semi comparison separate.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+ind2UpperSemiPlaceFamily_nonarchimedeanPlaces_example
+ind2UpperSemiPlaceFamily_archimedeanPlaces_example
+ind2UpperSemiPlaceFamily_logVolumeCompatible_example
+ind2UpperSemiPlaceFamily_logVolumeUpperBound_example
+```
+
+### Remaining Gap
+
+The next refinement should connect this compatibility record to refined
+Theorem 3.11 choices, so a choice can carry or reference a place-family
+compatibility audit rather than only independent local tensor and upper-semi
+states.

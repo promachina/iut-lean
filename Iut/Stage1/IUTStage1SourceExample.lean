@@ -1286,6 +1286,31 @@ theorem upperSemi_logVolumeCompatibility_upperBound_example
     data.sourceLogVolume <= data.targetLogVolume :=
   data.upperBound
 
+theorem ind2UpperSemiPlaceFamily_nonarchimedeanPlaces_example
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.ind2Actions.nonarchimedeanPlaces =
+      data.upperSemiState.nonarchimedeanInclusions.map fun entry =>
+        entry.place :=
+  data.nonarchimedeanPlaces_eq
+
+theorem ind2UpperSemiPlaceFamily_archimedeanPlaces_example
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.ind2Actions.archimedeanPlaces =
+      data.upperSemiState.archimedeanSurjections.map fun entry =>
+        entry.place :=
+  data.archimedeanPlaces_eq
+
+theorem ind2UpperSemiPlaceFamily_logVolumeCompatible_example
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.upperSemiState.logVolumeCompatible :=
+  data.logVolumeCompatible
+
+theorem ind2UpperSemiPlaceFamily_logVolumeUpperBound_example
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.upperSemiState.logVolumeCompatibility.sourceLogVolume <=
+      data.upperSemiState.logVolumeCompatibility.targetLogVolume :=
+  data.logVolumeUpperBound
+
 theorem structuredTheorem311_ind3_preserves_nonarchimedeanInclusions_example
     {coric : Type u}
     {choice₁ choice₂ : IUTStage1StructuredTheorem311Choice coric}
