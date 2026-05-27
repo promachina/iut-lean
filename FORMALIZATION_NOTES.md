@@ -8207,3 +8207,67 @@ gap audit
 The next milestone should relate the compact gap audit back to the existing
 `toSourceObligations` promotion, then start splitting the algorithm
 certification placeholder into smaller source-facing subclaims.
+
+## Milestone 99: Gap Audit Promotion Compatibility
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The gap audit is not an independent mathematical source of Corollary 3.12. It
+only repackages the same four obligations already present in
+`IUTStage1SourceObligationGap`.
+
+This milestone records that relationship in Lean. It keeps the formal path
+linear:
+
+```text
+gap audit
+  -> source obligations
+  -> promoted ledger/provider
+  -> public audit endpoint
+```
+
+### Purpose
+
+This milestone adds a projection from the compact gap audit back to
+`IUTStage1SourceObligations`, plus compatibility theorems showing that this
+projection agrees with the existing `gap.toSourceObligations` promotion.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourceObligationGap.Audit.toSourceObligations
+IUTStage1SourceObligationGap.Audit.toSourceObligations_eq_gap
+IUTStage1SourceObligationGap.Audit.canonical_toSourceObligations
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_gap_audit_to_obligations_example
+```
+
+### What This Tests
+
+The toy example verifies that audit evidence from the toy source gap promotes to
+the same toy source obligations as the original gap record.
+
+### Design Trap Avoided
+
+The trap would be to create parallel promotion paths whose equivalence is only
+informal. This milestone forces the audit-promotion route to coincide with the
+already audited source-gap promotion, using proof irrelevance only for equality
+between proof records.
+
+### Next Step
+
+The next milestone should begin replacing the monolithic
+`theorem311_algorithm_certified` placeholder with a structured source-facing
+record of subclaims, beginning with separate names for the algorithmic output
+certificate and the Hodge-theater/SHE alignment input it depends on.

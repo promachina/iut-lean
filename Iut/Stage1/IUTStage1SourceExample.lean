@@ -287,6 +287,32 @@ theorem unitThetaToy_source_gap_audit_normalization_example
   (unitThetaToy_source_gap_audit_example
     measure hnormalized hh hbound hholds).sourceNormalization
 
+theorem unitThetaToy_source_gap_audit_to_obligations_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToy_source_gap_audit_example
+      measure hnormalized hh hbound hholds).toSourceObligations =
+      unitThetaToyIUTStage1SourceObligations
+        measure hnormalized hh hbound hholds := by
+  calc
+    (unitThetaToy_source_gap_audit_example
+        measure hnormalized hh hbound hholds).toSourceObligations =
+        (unitThetaToyIUTStage1SourceObligationGap
+          measure hnormalized hh hbound hholds).toSourceObligations :=
+      IUTStage1SourceObligationGap.Audit.toSourceObligations_eq_gap
+        (unitThetaToy_source_gap_audit_example
+          measure hnormalized hh hbound hholds)
+    _ = unitThetaToyIUTStage1SourceObligations
+          measure hnormalized hh hbound hholds :=
+      unitThetaToy_source_gap_to_obligations_example
+        measure hnormalized hh hbound hholds
+
 theorem unitThetaToy_source_publicAudit_q_le_theta_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)

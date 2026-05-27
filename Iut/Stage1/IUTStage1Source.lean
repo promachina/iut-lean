@@ -256,6 +256,24 @@ theorem sourceNormalization
     package.preLedger.normalization :=
   gapAudit.source_normalization
 
+def toSourceObligations
+    (gapAudit : Audit gap) :
+    IUTStage1SourceObligations package :=
+  { algorithm_certified := gapAudit.theorem311AlgorithmCertified,
+    she_arrow_matches_certificate := gapAudit.sheAlignment,
+    q_pilot_positive := gapAudit.qPilotPositive,
+    normalization := gapAudit.sourceNormalization }
+
+theorem toSourceObligations_eq_gap
+    (gapAudit : Audit gap) :
+    gapAudit.toSourceObligations = gap.toSourceObligations :=
+  Subsingleton.elim _ _
+
+theorem canonical_toSourceObligations
+    (gap : IUTStage1SourceObligationGap package) :
+    (gap.audit).toSourceObligations = gap.toSourceObligations :=
+  Subsingleton.elim _ _
+
 end Audit
 
 end IUTStage1SourceObligationGap
