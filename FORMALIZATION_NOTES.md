@@ -5652,3 +5652,82 @@ the concrete selected output region.
 
 The next milestone should expose the composed toy q-to-Theta inequality as a
 named transitive chain through the target-volume middle term.
+
+## Milestone 64: Toy Q-to-Theta Transitive Chain
+
+Lean file:
+
+* `Iut/Stage1/ToySourceObligations.lean`
+
+### Source Check
+
+Corollary 3.12 is ultimately a comparison between signed q-side and Theta-side
+real quantities. In the source-obligation formalization, we do not make that
+comparison primitive. It is produced by composing two audited inequalities:
+
+```text
+qSigned <= targetSigned
+targetSigned <= thetaSigned
+```
+
+This mirrors the role of the measured possible output as the middle term in the
+toy version of IUT III, Step `(xi-d)`: first the q-pilot representation is
+compared with the selected output region, then that selected output volume is
+bounded by the common Theta bound.
+
+### Purpose
+
+This milestone exposes the composed toy inequality
+
+```text
+(Transport.map unitQToTheta (qAssignment h)).coord <=
+  -(2 * h) + epsilonBound
+```
+
+in four compatible ways:
+
+```text
+ledger.qSigned_le_thetaSigned
+ledger.threeTermComparison.q_le_theta
+le_trans qSigned_le_targetSigned targetSigned_le_thetaSigned
+le_trans qSigned_le_thetaTargetVolume thetaTargetVolume_le_thetaBound
+```
+
+The last form uses the concrete selected `thetaIndeterminacyComparison` volume
+as the visible middle term.
+
+### Lean Declarations
+
+In `ToySourceObligations.lean`:
+
+```text
+unitThetaToy_qSigned_le_thetaSigned_from_sourceObligations
+unitThetaToy_qSigned_le_thetaSigned_from_threeTerm
+unitThetaToy_qSigned_le_thetaSigned_via_targetSigned
+unitThetaToy_qSigned_le_thetaBound_via_thetaTargetVolume
+```
+
+### What This Tests
+
+The toy final numerical inequality is no longer visible only as the endpoint of
+the source ledger. The formalization now records its internal route:
+
+```text
+transported q-coordinate
+  <= selected target volume
+  <= common Theta endpoint
+```
+
+This is the exact place where later non-toy work must avoid collapsing labels or
+real-line identifications.
+
+### Design Trap Avoided
+
+The trap would be to introduce the final q-to-Theta inequality as a direct
+axiom. This milestone keeps it tied to the selected target-volume middle term
+and to the two earlier audited legs.
+
+### Next Step
+
+The next milestone should expose the toy Corollary 3.12 proof itself as the
+signed-pilot packaging of this transitive q-to-Theta chain.
