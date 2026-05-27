@@ -8488,3 +8488,71 @@ The next milestone should introduce a separate source-facing record for the
 q-pilot positivity and normalization side conditions, so that the Theorem 3.11
 subclaim story remains distinct from the arithmetic sign/normalization
 requirements needed for ledger promotion.
+
+## Milestone 103: Source Side Conditions
+
+Lean files:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+* `Iut/Stage1/IUTStage1SourceExample.lean`
+
+### Source Check
+
+The Stage 1 source-obligation record contains two kinds of data: Theorem
+3.11-facing algorithm/SHE data and separate side conditions needed for ledger
+promotion. The q-pilot positivity and normalization hypotheses should therefore
+not be folded into the Theorem 3.11 subclaim record.
+
+This separation is also aligned with the dispute-aware reading strategy. The
+critical Corollary 3.12 comparison must not be hidden behind a generic package
+of assumptions. Each input to the promotion step should remain named.
+
+### Purpose
+
+This milestone introduces a source-facing side-condition record for:
+
+```text
+q-pilot positivity
+source normalization
+```
+
+The record is projected from the source gap and from the source-gap audit.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourceSideConditions
+IUTStage1SourceSideConditions.qPilotPositive
+IUTStage1SourceSideConditions.sourceNormalization
+IUTStage1SourceObligationGap.sideConditions
+IUTStage1SourceObligationGap.Audit.sideConditions
+```
+
+In `IUTStage1SourceExample.lean`:
+
+```text
+unitThetaToy_source_side_conditions_example
+unitThetaToy_source_side_conditions_qPilot_positive_example
+unitThetaToy_source_side_conditions_normalization_example
+unitThetaToy_source_gap_audit_side_conditions_example
+```
+
+### What This Tests
+
+The toy examples verify that consumers can recover q-pilot positivity and source
+normalization through the new side-condition record without unpacking the full
+source gap or gap audit.
+
+### Design Trap Avoided
+
+The trap would be to enlarge the Theorem 3.11 subclaim record until it becomes a
+bag of every remaining hypothesis. This milestone keeps algorithmic/SHE
+subclaims separate from arithmetic sign and normalization side conditions.
+
+### Next Step
+
+The next milestone should add a clean constructor that combines Theorem 3.11
+subclaims with side conditions to rebuild `IUTStage1SourceObligations`, making
+the promotion boundary explicit.

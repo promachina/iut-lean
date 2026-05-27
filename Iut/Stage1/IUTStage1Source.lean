@@ -256,6 +256,36 @@ theorem hodgeTheaterSHEAlignment_eq_subclaims
 end IUTStage1Theorem311StructuredInputs
 
 /--
+Source-facing side conditions needed for Stage 1 ledger promotion.
+
+These conditions are intentionally separate from the Theorem 3.11 subclaims:
+they record the sign/normalization hypotheses that must accompany the
+algorithmic and SHE-alignment data.
+-/
+structure IUTStage1SourceSideConditions
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) : Prop where
+  q_pilot_positive : 0 < -package.preLedger.qSigned
+  source_normalization : package.preLedger.normalization
+
+namespace IUTStage1SourceSideConditions
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+theorem qPilotPositive
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    0 < -package.preLedger.qSigned :=
+  sideConditions.q_pilot_positive
+
+theorem sourceNormalization
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.preLedger.normalization :=
+  sideConditions.source_normalization
+
+end IUTStage1SourceSideConditions
+
+/--
 Named source-level gap below `IUTStage1SourceObligations`.
 
 The fields use source-facing names for the mathematical work still needed to
@@ -314,6 +344,12 @@ theorem theorem311StructuredInputs_subclaims
     gap.theorem311StructuredInputs.theorem311Subclaims =
       gap.theorem311Subclaims :=
   rfl
+
+def sideConditions
+    (gap : IUTStage1SourceObligationGap package) :
+    IUTStage1SourceSideConditions package :=
+  { q_pilot_positive := gap.qPilotPositive,
+    source_normalization := gap.sourceNormalization }
 
 def toSourceObligations
     (gap : IUTStage1SourceObligationGap package) :
@@ -388,6 +424,12 @@ theorem theorem311StructuredInputs_subclaims
     gapAudit.theorem311StructuredInputs.theorem311Subclaims =
       gapAudit.theorem311Subclaims :=
   rfl
+
+def sideConditions
+    (gapAudit : Audit gap) :
+    IUTStage1SourceSideConditions package :=
+  { q_pilot_positive := gapAudit.qPilotPositive,
+    source_normalization := gapAudit.sourceNormalization }
 
 def toSourceObligations
     (gapAudit : Audit gap) :

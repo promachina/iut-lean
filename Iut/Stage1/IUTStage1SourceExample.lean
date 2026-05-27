@@ -373,6 +373,49 @@ theorem unitThetaToy_source_gap_normalization_example
   (unitThetaToyIUTStage1SourceObligationGap
     measure hnormalized hh hbound hholds).sourceNormalization
 
+theorem unitThetaToy_source_side_conditions_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1SourceSideConditions
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds) :=
+  (unitThetaToyIUTStage1SourceObligationGap
+    measure hnormalized hh hbound hholds).sideConditions
+
+theorem unitThetaToy_source_side_conditions_qPilot_positive_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    0 < - (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds).preLedger.qSigned :=
+  (unitThetaToy_source_side_conditions_example
+    measure hnormalized hh hbound hholds).qPilotPositive
+
+theorem unitThetaToy_source_side_conditions_normalization_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    (unitThetaToyIUTStage1SourcePackage
+      measure hnormalized hh hbound hholds).preLedger.normalization :=
+  (unitThetaToy_source_side_conditions_example
+    measure hnormalized hh hbound hholds).sourceNormalization
+
 theorem unitThetaToy_source_gap_audit_example
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
@@ -493,6 +536,21 @@ theorem unitThetaToy_source_gap_audit_normalization_example
       measure hnormalized hh hbound hholds).preLedger.normalization :=
   (unitThetaToy_source_gap_audit_example
     measure hnormalized hh hbound hholds).sourceNormalization
+
+theorem unitThetaToy_source_gap_audit_side_conditions_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1SourceSideConditions
+      (unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds) :=
+  (unitThetaToy_source_gap_audit_example
+    measure hnormalized hh hbound hholds).sideConditions
 
 theorem unitThetaToy_source_gap_audit_to_obligations_example
     (measure : RegionMeasure thetaLine)
