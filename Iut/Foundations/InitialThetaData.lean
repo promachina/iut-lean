@@ -1647,6 +1647,7 @@ structure ReconstructedFunctionFieldData (deckGroup : Type u) [Group deckGroup] 
   baseToFunctionField : baseCarrier →+* carrier
   baseToFunctionField_injective : Function.Injective baseToFunctionField
   deckAction : MulSemiringAction deckGroup carrier
+  deckActionFaithful : FaithfulSMul deckGroup carrier
   deckActionFixesBase :
     ∀ (g : deckGroup) (b : baseCarrier), g • baseToFunctionField b = baseToFunctionField b
   fixedElementsFromBase :
@@ -1666,6 +1667,9 @@ instance : Field functionField.baseCarrier :=
 
 instance : MulSemiringAction deckGroup functionField.carrier :=
   functionField.deckAction
+
+instance : FaithfulSMul deckGroup functionField.carrier :=
+  functionField.deckActionFaithful
 
 theorem baseToFunctionField_injective_holds :
     Function.Injective functionField.baseToFunctionField :=
@@ -1696,6 +1700,14 @@ def deckRingAutHom : deckGroup →* RingAut functionField.carrier :=
 
 def deckRingAut (g : deckGroup) : RingAut functionField.carrier :=
   functionField.deckRingAutHom g
+
+theorem deckRingAutHom_injective :
+    Function.Injective functionField.deckRingAutHom := by
+  intro g h hgh
+  apply FaithfulSMul.eq_of_smul_eq_smul (α := functionField.carrier)
+  intro x
+  have happly := congrArg (fun e : RingAut functionField.carrier => e x) hgh
+  simpa [deckRingAutHom] using happly
 
 theorem deckRingAut_apply (g : deckGroup) (x : functionField.carrier) :
     functionField.deckRingAut g x = g • x :=
@@ -1769,6 +1781,11 @@ instance :
       (ThetaApproachFunctionFieldData.functionField functionFieldData) :=
   functionFieldData.reconstructedFunctionField.deckAction
 
+instance :
+    FaithfulSMul (ThetaApproachQuotientData.deckQuotient thetaApproach)
+      (ThetaApproachFunctionFieldData.functionField functionFieldData) :=
+  functionFieldData.reconstructedFunctionField.deckActionFaithful
+
 theorem reconstructedFromXK :
     functionFieldData.reconstructedFunctionFieldOfXK :=
   functionFieldData.reconstructedFunctionFieldOfXK_holds
@@ -1803,6 +1820,10 @@ def deckRingAutHom :
 def deckRingAut (g : ThetaApproachQuotientData.deckQuotient thetaApproach) :
     RingAut functionFieldData.functionField :=
   functionFieldData.deckRingAutHom g
+
+theorem deckRingAutHom_injective :
+    Function.Injective functionFieldData.deckRingAutHom :=
+  functionFieldData.reconstructedFunctionField.deckRingAutHom_injective
 
 instance piCKAction :
     MulSemiringAction thetaApproach.piCK.carrier functionFieldData.functionField :=
@@ -1934,6 +1955,38 @@ theorem piCK_fixed_iff_in_base (x : functionFieldData.functionField) :
   · rintro ⟨b, rfl⟩ g
     exact functionFieldData.piCK_smul_base g b
 
+theorem piCKRingAutHom_ker :
+    (functionFieldData.piCKRingAutHom).ker =
+      thetaApproach.piXK_to_piCK.openEmbedding.imageSubgroup := by
+  ext g
+  have hquot :
+      g ∈ (ThetaApproachQuotientData.quotientHom thetaApproach).ker ↔
+        g ∈ thetaApproach.piXK_to_piCK.openEmbedding.imageSubgroup := by
+    simpa using
+      congrArg (fun H : Subgroup thetaApproach.piCK.carrier => g ∈ H)
+        (ThetaApproachQuotientData.quotientHom_ker thetaApproach)
+  constructor
+  · intro hg
+    rw [← hquot]
+    change ThetaApproachQuotientData.quotientHom thetaApproach g = 1
+    apply FaithfulSMul.eq_of_smul_eq_smul (α := functionFieldData.functionField)
+    intro x
+    have happly := congrArg (fun e : RingAut functionFieldData.functionField => e x) hg
+    change functionFieldData.piCKRingAut g x = x at happly
+    rw [functionFieldData.piCKRingAut_apply] at happly
+    rw [functionFieldData.piCK_smul_eq_deck_smul] at happly
+    simpa using happly
+  · intro hg
+    change functionFieldData.piCKRingAutHom g = 1
+    ext x
+    change functionFieldData.piCKRingAut g x = x
+    rw [functionFieldData.piCKRingAut_apply]
+    rw [functionFieldData.piCK_smul_eq_deck_smul]
+    have hker := hquot.mpr hg
+    change ThetaApproachQuotientData.quotientHom thetaApproach g = 1 at hker
+    rw [hker]
+    exact one_smul (ThetaApproachQuotientData.deckQuotient thetaApproach) x
+
 theorem piXK_smul_trivial
     (g : thetaApproach.piXK.carrier) (x : functionFieldData.functionField) :
     thetaApproach.piXK_to_piCK.openEmbedding.hom g • x = x := by
@@ -1973,6 +2026,33 @@ theorem galRingAut_apply
     ThetaApproachGaloisQuotientData.galRingAut galData functionFieldData γ x =
       γ • x :=
   rfl
+
+theorem galRingAutHom_injective :
+    Function.Injective
+      (ThetaApproachGaloisQuotientData.galRingAutHom galData functionFieldData) := by
+  intro γ δ hγδ
+  apply galData.galXKCKEquivDeckQuotient.injective
+  apply functionFieldData.deckRingAutHom_injective
+  ext x
+  have happly := congrArg
+    (fun e : RingAut functionFieldData.functionField => e x) hγδ
+  change
+    ThetaApproachGaloisQuotientData.galRingAut galData functionFieldData γ x =
+      ThetaApproachGaloisQuotientData.galRingAut galData functionFieldData δ x at happly
+  rw [ThetaApproachGaloisQuotientData.galRingAut_apply] at happly
+  rw [ThetaApproachGaloisQuotientData.galRingAut_apply] at happly
+  calc
+    functionFieldData.deckRingAutHom
+          (ThetaApproachGaloisQuotientData.toDeckHom galData γ) x =
+        ThetaApproachGaloisQuotientData.toDeckHom galData γ • x := rfl
+    _ = γ • x := (ThetaApproachGaloisQuotientData.gal_smul_eq_deck_smul
+      galData functionFieldData γ x).symm
+    _ = δ • x := happly
+    _ = ThetaApproachGaloisQuotientData.toDeckHom galData δ • x :=
+      ThetaApproachGaloisQuotientData.gal_smul_eq_deck_smul
+        galData functionFieldData δ x
+    _ = functionFieldData.deckRingAutHom
+          (ThetaApproachGaloisQuotientData.toDeckHom galData δ) x := rfl
 
 theorem gal_smul_base
     (γ : galData.galXKCK)
@@ -2229,6 +2309,24 @@ def thetaApproachGalRingAutHom
       ThetaApproachGaloisQuotientData coverData.thetaApproachQuotient) :
     galData.galXKCK →* RingAut coverData.thetaApproachFunctionField.functionField :=
   ThetaApproachGaloisQuotientData.galRingAutHom galData
+    coverData.thetaApproachFunctionField
+
+theorem thetaApproachDeckRingAutHomInjective :
+    Function.Injective
+      (ThetaOrbicurveCoverData.thetaApproachDeckRingAutHom coverData) :=
+  coverData.thetaApproachFunctionField.deckRingAutHom_injective
+
+theorem thetaApproachPiCKRingAutHomKer :
+    (ThetaOrbicurveCoverData.thetaApproachPiCKRingAutHom coverData).ker =
+      coverData.thetaApproachQuotient.piXK_to_piCK.openEmbedding.imageSubgroup :=
+  coverData.thetaApproachFunctionField.piCKRingAutHom_ker
+
+theorem thetaApproachGalRingAutHomInjective
+    (galData :
+      ThetaApproachGaloisQuotientData coverData.thetaApproachQuotient) :
+    Function.Injective
+      (ThetaOrbicurveCoverData.thetaApproachGalRingAutHom coverData galData) :=
+  ThetaApproachGaloisQuotientData.galRingAutHom_injective galData
     coverData.thetaApproachFunctionField
 
 theorem thetaApproachDeckRingAut_apply
@@ -3163,6 +3261,22 @@ def thetaApproachGalRingAutHom
       ThetaApproachGaloisQuotientData theta.coverData.thetaApproachQuotient) :
     galData.galXKCK →* RingAut theta.coverData.thetaApproachFunctionField.functionField :=
   ThetaOrbicurveCoverData.thetaApproachGalRingAutHom theta.coverData galData
+
+theorem thetaApproachDeckRingAutHomInjective :
+    Function.Injective (InitialThetaData.thetaApproachDeckRingAutHom theta) :=
+  theta.coverData.thetaApproachDeckRingAutHomInjective
+
+theorem thetaApproachPiCKRingAutHomKer :
+    (InitialThetaData.thetaApproachPiCKRingAutHom theta).ker =
+      theta.coverData.thetaApproachQuotient.piXK_to_piCK.openEmbedding.imageSubgroup :=
+  theta.coverData.thetaApproachPiCKRingAutHomKer
+
+theorem thetaApproachGalRingAutHomInjective
+    (galData :
+      ThetaApproachGaloisQuotientData theta.coverData.thetaApproachQuotient) :
+    Function.Injective
+      (InitialThetaData.thetaApproachGalRingAutHom theta galData) :=
+  theta.coverData.thetaApproachGalRingAutHomInjective galData
 
 theorem thetaApproachDeckRingAut_apply
     (g : ThetaApproachQuotientData.deckQuotient theta.coverData.thetaApproachQuotient)

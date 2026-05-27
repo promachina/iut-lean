@@ -835,6 +835,19 @@ example (g : theta.coverData.thetaApproachQuotient.piCK.carrier) :
   theta.thetaApproachPiCKRingAut_eq_galRingAut galData g
 
 example :
+    Function.Injective (InitialThetaData.thetaApproachDeckRingAutHom theta) :=
+  theta.thetaApproachDeckRingAutHomInjective
+
+example :
+    (InitialThetaData.thetaApproachPiCKRingAutHom theta).ker =
+      theta.coverData.thetaApproachQuotient.piXK_to_piCK.openEmbedding.imageSubgroup :=
+  theta.thetaApproachPiCKRingAutHomKer
+
+example :
+    Function.Injective (InitialThetaData.thetaApproachGalRingAutHom theta galData) :=
+  theta.thetaApproachGalRingAutHomInjective galData
+
+example :
     Function.Injective (InitialThetaData.thetaApproachBaseToFunctionField theta) :=
   theta.thetaApproachBaseToFunctionFieldInjective
 

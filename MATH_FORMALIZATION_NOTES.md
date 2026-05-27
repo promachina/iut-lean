@@ -5318,3 +5318,110 @@ The fixed-field theorem is still an axiom-like field of the reconstructed data.
 Later milestones should derive it from a concrete finite Galois extension or
 finite etale cover formalization, then relate that construction to the
 fundamental-group quotient.
+
+## Math Milestone 53: Faithful Deck Action and Exact `Pi_CK` Kernel
+
+Lean files:
+
+* `Iut/Foundations/InitialThetaData.lean`
+* `Iut/Foundations/InitialThetaDataExample.lean`
+
+### Source Check
+
+IUT I, Remark 3.1.2, uses the notation
+
+```text
+Gal(X_K/C_K) ~= Pi_CK / Pi_XK
+```
+
+for the group acting naturally on the reconstructed function field of `X_K`.
+For this to behave like a deck/Galois group, the quotient group should act
+faithfully as automorphisms. Once that faithfulness is part of the reconstruction
+interface, the induced `Pi_CK` action on the reconstructed function field has
+kernel exactly the image of `Pi_XK`.
+
+This remains a reconstruction-layer statement in IUT I. It does not compare
+Hodge theaters and does not assert a Corollary 3.12 estimate.
+
+### Lean/API Check
+
+`ReconstructedFunctionFieldData` now includes:
+
+```text
+deckActionFaithful : FaithfulSMul deckGroup carrier
+```
+
+The generic reconstructed field package exposes:
+
+```text
+deckRingAutHom_injective
+```
+
+The theta function-field package exposes:
+
+```text
+ThetaApproachFunctionFieldData.deckRingAutHom_injective
+ThetaApproachFunctionFieldData.piCKRingAutHom_ker
+```
+
+The Galois quotient interface exposes:
+
+```text
+ThetaApproachGaloisQuotientData.galRingAutHom_injective
+```
+
+The cover and initial-theta layers expose:
+
+```text
+thetaApproachDeckRingAutHomInjective
+thetaApproachPiCKRingAutHomKer
+thetaApproachGalRingAutHomInjective
+```
+
+### Lean Decisions
+
+We model faithfulness with mathlib's standard `FaithfulSMul`, not a custom
+predicate. This makes the injectivity proof for the deck action use the same
+API as ordinary faithful group actions.
+
+The theorem
+
+```text
+ThetaApproachFunctionFieldData.piCKRingAutHom_ker
+```
+
+proves:
+
+```text
+ker(Pi_CK -> RingAut(functionField X_K)) = image(Pi_XK)
+```
+
+It uses:
+
+* faithfulness of the deck quotient action;
+* the equality `ker(Pi_CK -> Pi_CK/Pi_XK) = image(Pi_XK)`;
+* compatibility of the `Pi_CK` action with the quotient action.
+
+The Galois automorphism action is injective because the Galois group is
+multiplicatively equivalent to the deck quotient and the deck action is
+faithful.
+
+### What This Tests
+
+The example file now checks:
+
+* injectivity of the deck quotient action into `RingAut`;
+* the kernel of the induced `Pi_CK -> RingAut` action is the embedded `Pi_XK`;
+* injectivity of the Galois action into `RingAut`.
+
+### Design Trap Avoided
+
+The trap would be to have a quotient group acting on the reconstructed function
+field but allow nontrivial deck elements to act trivially. That would weaken the
+`Gal(X_K/C_K)` interpretation. This milestone makes faithfulness explicit.
+
+### Remaining Gap
+
+Faithfulness is still supplied as part of the reconstructed data. Later
+milestones should derive it from a concrete finite etale cover or Galois
+extension formalization.
