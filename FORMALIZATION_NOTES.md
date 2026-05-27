@@ -7293,3 +7293,63 @@ proof tasks without relying on positional structure fields.
 The next milestone should add source-facing public-audit projection theorems
 parallel to the pre-ledger public-audit projections, using
 `IUTStage1SourcePackage.publicAudit` as the only route to the endpoint.
+
+## Milestone 86: Source-Facing Public Audit Projections
+
+Lean file:
+
+* `Iut/Stage1/IUTStage1Source.lean`
+
+### Source Check
+
+The source-facing package now has an explicit theorem:
+
+```text
+IUTStage1SourcePackage.publicAudit
+```
+
+This theorem is available only after `IUTStage1SourceObligations` are supplied.
+That matches the intended Stage 1 boundary: source labels and qualitative
+Theorem 3.11 data do not themselves produce the Corollary 3.12-shaped endpoint.
+
+### Purpose
+
+This milestone exposes the three public endpoint components under source-facing
+names:
+
+```text
+qSigned <= thetaSigned
+Corollary312Inequality
+Stage1Comparison recovery equality
+```
+
+They are direct projections from `IUTStage1SourcePackage.publicAudit`.
+
+### Lean Declarations
+
+In `IUTStage1Source.lean`:
+
+```text
+IUTStage1SourcePackage.publicAudit_qSigned_le_thetaSigned
+IUTStage1SourcePackage.publicAudit_corollary312
+IUTStage1SourcePackage.publicAudit_stage1Comparison_recovers_qSigned_le_thetaSigned
+```
+
+### What This Tests
+
+Lean verifies that the source-facing package has the same endpoint projection
+shape as the pre-ledger API, but still requires source-facing obligations before
+any projection can be used.
+
+### Design Trap Avoided
+
+The trap would be to let a future source module bypass the public-audit theorem
+and independently assemble endpoint components. These projections keep the API
+readable while forcing all three endpoints through the same obligation-gated
+route.
+
+### Next Step
+
+The next milestone should add a source-facing recovery theorem to the promoted
+ledger's `corollary312` field, parallel to the pre-ledger and provider recovery
+theorems.

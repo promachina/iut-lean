@@ -204,6 +204,29 @@ theorem publicAudit
           (package.promotedProvider obligations).ledger.qSigned_le_thetaSigned) :=
   package.preLedger.publicAudit obligations.toLedgerPromotionObligations
 
+theorem publicAudit_qSigned_le_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  (package.publicAudit obligations).1
+
+theorem publicAudit_corollary312
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  (package.publicAudit obligations).2.1
+
+theorem publicAudit_stage1Comparison_recovers_qSigned_le_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (obligations : IUTStage1SourceObligations package) :
+    corollary312_from_stage1_comparison
+        (package.promotedProvider obligations).stage1Comparison =
+      corollary312_of_signed_le
+        (package.promotedProvider obligations).ledger.qSigned_le_thetaSigned :=
+  (package.publicAudit obligations).2.2
+
 end IUTStage1SourcePackage
 
 end Stage1
