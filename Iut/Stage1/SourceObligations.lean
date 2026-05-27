@@ -141,6 +141,21 @@ theorem targetSigned_le_thetaSigned (ledger :
     ledger.targetVolume.targetSigned <= thetaSigned := by
   exact ledger.threeTermComparison.target_le_theta
 
+theorem targetSigned_le_thetaSigned_eq_threeTerm (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.targetSigned_le_thetaSigned =
+      ledger.threeTermComparison.target_le_theta :=
+  rfl
+
+theorem targetSigned_le_thetaSigned_eq_commonBound (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.targetSigned_le_thetaSigned =
+      (by
+        rw [ledger.targetVolume.targetSigned_eq]
+        exact TransportedRegionFamily.choice_targetVolume_le_of_commonBound
+          ledger.theta_commonBound ledger.chosenOutput.choice) :=
+  rfl
+
 theorem chosenComparison_eq_outputComparison (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     ledger.chosenOutput.comparison =
@@ -331,6 +346,11 @@ def thetaCommonBound (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     output.CommonTargetBound measure thetaSigned :=
   ledger.theta_commonBound
+
+theorem thetaCommonBound_eq_field (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.thetaCommonBound = ledger.theta_commonBound :=
+  rfl
 
 theorem hasNormalization (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :

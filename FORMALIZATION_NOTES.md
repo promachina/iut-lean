@@ -4372,3 +4372,81 @@ The next milestone should expose source-ledger projections for the common
 Theta-side bound, including that `thetaCommonBound` is exactly
 `theta_commonBound` and that the target-to-Theta inequality uses this bound on
 the chosen output.
+
+## Milestone 47: Common Theta-Bound Projections
+
+Lean file:
+
+* `Iut/Stage1/SourceObligations.lean`
+
+### Source Check
+
+IUT IV describes the `Theta` side in terms of containers for possible images and
+upper bounds that absorb indeterminacies. IUT III, Step `(xi-d)`, then compares
+the `q`-side signed value with the `Theta`-side upper ray in a common real
+setting. The right side of our three-term chain abstracts this endpoint:
+
+```text
+targetSigned <= thetaSigned
+```
+
+Scholze-Stix's critique again motivates making the source of this real
+inequality explicit: it should be visible that the bound comes from the common
+Theta-side target bound applied to the selected output.
+
+### Purpose
+
+This milestone exposes the right side of the chain:
+
+```text
+ledger.targetSigned_le_thetaSigned
+  = ledger.threeTermComparison.target_le_theta
+
+ledger.targetSigned_le_thetaSigned
+  = common target bound applied to ledger.chosenOutput.choice
+
+ledger.thetaCommonBound
+  = ledger.theta_commonBound
+```
+
+### Lean Declarations
+
+In `SourceObligations.lean`:
+
+```text
+SourceObligationLedger.targetSigned_le_thetaSigned_eq_threeTerm
+SourceObligationLedger.targetSigned_le_thetaSigned_eq_commonBound
+SourceObligationLedger.thetaCommonBound_eq_field
+```
+
+All three proofs are `rfl`, so the right inequality and the public
+`thetaCommonBound` accessor are definitionally aligned with the stored
+Theta-side common-bound data.
+
+### What This Tests
+
+The right side of the three-term comparison is now traceable through:
+
+```text
+theta_commonBound
+choice_targetVolume_le_of_commonBound
+threeTermComparison.target_le_theta
+targetSigned_le_thetaSigned
+```
+
+This complements Milestone 46, which audited the left side through the
+membership witness.
+
+### Design Trap Avoided
+
+The trap would be to let `targetSigned <= thetaSigned` appear as a free real
+inequality rather than the chosen-output instance of a common container bound.
+These projections keep the right inequality tied to the common Theta-side
+bound.
+
+### Next Step
+
+The next milestone should add a compact source-ledger theorem that names the
+complete audited chain from membership and common bound to
+`qSigned <= thetaSigned`, collecting the already exposed left and right
+projections into one theorem for downstream modules.
