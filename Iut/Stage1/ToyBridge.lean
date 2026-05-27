@@ -32,30 +32,15 @@ def thetaToyCommonTargetBoundBridge
   { build := fun _ =>
       thetaAPTOutputCommonTargetBound measure hnormalized f h hbound }
 
-def thetaToyStructuredCommonTargetHullBridge
-    (measure : RegionMeasure thetaLine)
-    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
-    (f : Transport qLine thetaLine) (h : Real)
-    {epsilon : index -> Real} {epsilonBound : Real}
-    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
-    (thetaToyAlgorithmOutput f h epsilon).StructuredCommonTargetHullBridge
-      measure (-(2 * h) + epsilonBound) :=
-  { build := fun _ =>
-      thetaAPTOutputCommonTargetHullBound measure hnormalized f h hbound }
-
-def thetaToyStructuredCommonTargetBoundBridge
-    (measure : RegionMeasure thetaLine)
-    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
-    (f : Transport qLine thetaLine) (h : Real)
-    {epsilon : index -> Real} {epsilonBound : Real}
-    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
-    (thetaToyAlgorithmOutput f h epsilon).StructuredCommonTargetBoundBridge
-      measure (-(2 * h) + epsilonBound) :=
-  (thetaToyStructuredCommonTargetHullBridge
-    measure hnormalized f h hbound).toStructuredCommonTargetBoundBridge
-
 def thetaToyHullDetOperation : AlgorithmicOutput.HullDetOperationId :=
   { label := "toy-upper-ray-hull-det" }
+
+def thetaToyHullOperation : AlgorithmicOutput.HullOperationId :=
+  { label := "toy-upper-ray-hull" }
+
+def thetaToyDeterminantLogVolumeOperation :
+    AlgorithmicOutput.DeterminantLogVolumeOperationId :=
+  { label := "toy-upper-ray-det-log-volume" }
 
 def thetaToyDescentOperation : AlgorithmicOutput.DescentOperationId :=
   { label := "toy-upper-ray-descent" }
@@ -75,6 +60,64 @@ def thetaToySHEArrowData
   { arrow := thetaToySHEArrow,
     datum := thetaToySHED f h epsilon }
 
+def thetaToyStructuredCommonHullBridge
+    (f : Transport qLine thetaLine) (h : Real)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
+    (thetaToyAlgorithmOutput f h epsilon).StructuredCommonHullBridge :=
+  { build := fun _ =>
+      thetaAPTOutputCommonTargetHull f h hbound }
+
+def thetaToyStructuredDeterminantLogVolumeBridge
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    (f : Transport qLine thetaLine) (h : Real)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
+    (thetaToyAlgorithmOutput f h epsilon).StructuredDeterminantLogVolumeBridge
+      measure (-(2 * h) + epsilonBound)
+      (thetaToyStructuredCommonHullBridge f h hbound) :=
+  { bound := fun _ =>
+      (thetaAPTOutputCommonTargetHullBound measure hnormalized f h hbound).volume_bound }
+
+def thetaToyStructuredHullDetBridgeData
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    (f : Transport qLine thetaLine) (h : Real)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
+    (thetaToyAlgorithmOutput f h epsilon).StructuredHullDetBridgeData
+      measure (-(2 * h) + epsilonBound) :=
+  { operation := thetaToyHullDetOperation,
+    hullOperation := thetaToyHullOperation,
+    determinantOperation := thetaToyDeterminantLogVolumeOperation,
+    hullBridge := thetaToyStructuredCommonHullBridge f h hbound,
+    determinantBridge :=
+      thetaToyStructuredDeterminantLogVolumeBridge
+        measure hnormalized f h hbound }
+
+def thetaToyStructuredCommonTargetHullBridge
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    (f : Transport qLine thetaLine) (h : Real)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
+    (thetaToyAlgorithmOutput f h epsilon).StructuredCommonTargetHullBridge
+      measure (-(2 * h) + epsilonBound) :=
+  (thetaToyStructuredHullDetBridgeData
+    measure hnormalized f h hbound).commonTargetHullBridge
+
+def thetaToyStructuredCommonTargetBoundBridge
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    (f : Transport qLine thetaLine) (h : Real)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
+    (thetaToyAlgorithmOutput f h epsilon).StructuredCommonTargetBoundBridge
+      measure (-(2 * h) + epsilonBound) :=
+  (thetaToyStructuredCommonTargetHullBridge
+    measure hnormalized f h hbound).toStructuredCommonTargetBoundBridge
+
 def thetaToyHullDetHullBridgeData
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
@@ -83,9 +126,8 @@ def thetaToyHullDetHullBridgeData
     (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
     (thetaToyAlgorithmOutput f h epsilon).HullDetHullBridgeData
       measure (-(2 * h) + epsilonBound) :=
-  { operation := thetaToyHullDetOperation,
-    bridge := thetaToyStructuredCommonTargetHullBridge
-      measure hnormalized f h hbound }
+  (thetaToyStructuredHullDetBridgeData
+    measure hnormalized f h hbound).toHullDetHullBridgeData
 
 def thetaToyHullDetBridgeData
     (measure : RegionMeasure thetaLine)
@@ -216,6 +258,32 @@ def thetaToyHullDetHullAudit
       (thetaToyStructuredCertificate f h epsilon) :=
   (thetaToyHullDetHullBridgeData measure hnormalized f h hbound).hullAudit
     (thetaToyStructuredCertificate f h epsilon)
+
+def thetaToyStructuredHullDetStepAudit
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    (f : Transport qLine thetaLine) (h : Real)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
+    (thetaToyStructuredHullDetBridgeData
+      measure hnormalized f h hbound).StepAudit
+        (thetaToyStructuredCertificate f h epsilon) :=
+  (thetaToyStructuredHullDetBridgeData measure hnormalized f h hbound).stepAudit
+    (thetaToyStructuredCertificate f h epsilon)
+
+theorem thetaToyStructuredHullDet_determinant_volume_bound
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    (f : Transport qLine thetaLine) (h : Real)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound) :
+    RegionMeasure.HasVolumeAtMost measure
+      ((thetaToyStructuredHullDetBridgeData
+        measure hnormalized f h hbound).applyHull
+          (thetaToyStructuredCertificate f h epsilon)).hull
+      (-(2 * h) + epsilonBound) :=
+  (thetaToyStructuredHullDetStepAudit
+    measure hnormalized f h hbound).determinantVolumeBound
 
 theorem thetaToyHullDetHull_commonHull_volume_bound
     (measure : RegionMeasure thetaLine)

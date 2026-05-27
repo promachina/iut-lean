@@ -82,6 +82,10 @@ abbrev CommonTargetBound (output : AlgorithmicOutput source target index)
     (measure : RegionMeasure target) (bound : Real) :=
   output.family.CommonTargetBound measure bound
 
+/-- A common target hull for the transported output family. -/
+abbrev CommonTargetHull (output : AlgorithmicOutput source target index) :=
+  output.family.CommonTargetHull
+
 /-- A measured common-hull bound for the transported output family. -/
 abbrev CommonTargetHullBound (output : AlgorithmicOutput source target index)
     (measure : RegionMeasure target) (bound : Real) :=

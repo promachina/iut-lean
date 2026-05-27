@@ -114,6 +114,74 @@ theorem allTargetsAtMost
 end StructuredCommonTargetBoundBridge
 
 /--
+A bridge whose source-specific construction supplies the common hull before any
+measurement is applied.
+-/
+structure StructuredCommonHullBridge
+    (output : AlgorithmicOutput source target index) where
+  build :
+    QualitativeData.StructuredCertificate output.family ->
+      output.CommonTargetHull
+
+namespace StructuredCommonHullBridge
+
+variable {output : AlgorithmicOutput source target index}
+
+def apply (bridge : StructuredCommonHullBridge output)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    output.CommonTargetHull :=
+  bridge.build certificate
+
+theorem contains_each
+    (bridge : StructuredCommonHullBridge output)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    output.comparisons.CommonTarget (bridge.apply certificate).hull :=
+  (bridge.apply certificate).contains_each
+
+theorem holds_common_hull
+    (bridge : StructuredCommonHullBridge output)
+    (certificate : QualitativeData.StructuredCertificate output.family)
+    {choice : index} {sourcePoint : Point source}
+    (hholds : (output.comparison choice).Holds sourcePoint) :
+    (RegionComparison.enlargeTarget
+      (output.comparison choice)
+      (bridge.apply certificate).hull).Holds sourcePoint :=
+  RegionComparisonFamily.holds_commonTargetHull_of_choice
+    (bridge.apply certificate) hholds
+
+end StructuredCommonHullBridge
+
+/--
+The determinant/log-volume part of a hull+det construction, relative to a
+previously supplied common-hull bridge.
+-/
+structure StructuredDeterminantLogVolumeBridge
+    (output : AlgorithmicOutput source target index)
+    (measure : RegionMeasure target) (bound : Real)
+    (hullBridge : output.StructuredCommonHullBridge) where
+  bound :
+    ∀ certificate : QualitativeData.StructuredCertificate output.family,
+      RegionMeasure.HasVolumeAtMost measure
+        (hullBridge.apply certificate).hull bound
+
+namespace StructuredDeterminantLogVolumeBridge
+
+variable {measure : RegionMeasure target}
+variable {output : AlgorithmicOutput source target index}
+variable {bound : Real}
+variable {hullBridge : output.StructuredCommonHullBridge}
+
+def apply
+    (bridge :
+      StructuredDeterminantLogVolumeBridge output measure bound hullBridge)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    RegionMeasure.HasVolumeAtMost measure
+      (hullBridge.apply certificate).hull bound :=
+  bridge.bound certificate
+
+end StructuredDeterminantLogVolumeBridge
+
+/--
 A bridge whose source-specific construction first supplies a measured common
 hull for the transported family.
 
@@ -162,6 +230,23 @@ theorem allTargetsAtMost
 
 end StructuredCommonTargetHullBridge
 
+namespace StructuredDeterminantLogVolumeBridge
+
+variable {measure : RegionMeasure target}
+variable {output : AlgorithmicOutput source target index}
+variable {bound : Real}
+variable {hullBridge : output.StructuredCommonHullBridge}
+
+def toStructuredCommonTargetHullBridge
+    (detBridge :
+      StructuredDeterminantLogVolumeBridge output measure bound hullBridge) :
+    output.StructuredCommonTargetHullBridge measure bound :=
+  { build := fun certificate =>
+      { commonHull := hullBridge.apply certificate,
+        volume_bound := detBridge.apply certificate } }
+
+end StructuredDeterminantLogVolumeBridge
+
 /--
 Inert identifier for the hull+det operation used in the source-specific bridge.
 
@@ -170,6 +255,14 @@ eventual determinant/log-volume passage from being hidden inside an unnamed
 bridge.
 -/
 structure HullDetOperationId where
+  label : String
+
+/-- Inert identifier for the hull-construction half of hull+det. -/
+structure HullOperationId where
+  label : String
+
+/-- Inert identifier for the determinant/log-volume half of hull+det. -/
+structure DeterminantLogVolumeOperationId where
   label : String
 
 /--
@@ -338,6 +431,140 @@ theorem allTargetsAtMost
 end HullAudit
 
 end HullDetHullBridgeData
+
+/--
+Hull+det data decomposed into an unmeasured hull bridge followed by a
+determinant/log-volume bound bridge.
+-/
+structure StructuredHullDetBridgeData
+    (output : AlgorithmicOutput source target index)
+    (measure : RegionMeasure target) (bound : Real) where
+  operation : HullDetOperationId
+  hullOperation : HullOperationId
+  determinantOperation : DeterminantLogVolumeOperationId
+  hullBridge : output.StructuredCommonHullBridge
+  determinantBridge :
+    output.StructuredDeterminantLogVolumeBridge measure bound hullBridge
+
+namespace StructuredHullDetBridgeData
+
+variable {measure : RegionMeasure target}
+variable {output : AlgorithmicOutput source target index}
+variable {bound : Real}
+
+def commonTargetHullBridge
+    (data : StructuredHullDetBridgeData output measure bound) :
+    output.StructuredCommonTargetHullBridge measure bound :=
+  data.determinantBridge.toStructuredCommonTargetHullBridge
+
+def toHullDetHullBridgeData
+    (data : StructuredHullDetBridgeData output measure bound) :
+    output.HullDetHullBridgeData measure bound :=
+  { operation := data.operation,
+    bridge := data.commonTargetHullBridge }
+
+def applyHull (data : StructuredHullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    output.CommonTargetHull :=
+  data.hullBridge.apply certificate
+
+def applyHullBound (data : StructuredHullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    output.CommonTargetHullBound measure bound :=
+  data.commonTargetHullBridge.apply certificate
+
+theorem determinant_volume_bound
+    (data : StructuredHullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    RegionMeasure.HasVolumeAtMost measure
+      (data.applyHull certificate).hull bound :=
+  data.determinantBridge.apply certificate
+
+theorem choice_targetVolume_le
+    (data : StructuredHullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family)
+    (choice : index) :
+    RegionMeasure.targetVolume measure (output.comparison choice) <= bound :=
+  (data.toHullDetHullBridgeData).choice_targetVolume_le certificate choice
+
+theorem allTargetsAtMost
+    (data : StructuredHullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound :=
+  (data.toHullDetHullBridgeData).allTargetsAtMost certificate
+
+/-- Audit view of the internal hull and determinant/log-volume split. -/
+structure StepAudit
+    (data : StructuredHullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) : Prop where
+  hull_contains_each :
+    output.comparisons.CommonTarget (data.applyHull certificate).hull
+  determinant_volume_bound :
+    RegionMeasure.HasVolumeAtMost measure
+      (data.applyHull certificate).hull bound
+  hull_bound_common_hull_eq :
+    (data.applyHullBound certificate).commonHull = data.applyHull certificate
+  hull_det_hull_audit :
+    data.toHullDetHullBridgeData.HullAudit certificate
+  choice_target_volume_le :
+    ∀ choice : index,
+      RegionMeasure.targetVolume measure (output.comparison choice) <= bound
+  all_targets_at_most :
+    RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound
+
+theorem stepAudit
+    (data : StructuredHullDetBridgeData output measure bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    data.StepAudit certificate :=
+  { hull_contains_each := data.hullBridge.contains_each certificate,
+    determinant_volume_bound := data.determinant_volume_bound certificate,
+    hull_bound_common_hull_eq := rfl,
+    hull_det_hull_audit := data.toHullDetHullBridgeData.hullAudit certificate,
+    choice_target_volume_le := data.choice_targetVolume_le certificate,
+    all_targets_at_most := data.allTargetsAtMost certificate }
+
+namespace StepAudit
+
+variable {measure : RegionMeasure target}
+variable {output : AlgorithmicOutput source target index}
+variable {bound : Real}
+variable {data : StructuredHullDetBridgeData output measure bound}
+variable {certificate : QualitativeData.StructuredCertificate output.family}
+
+theorem hullContainsEach
+    (audit : data.StepAudit certificate) :
+    output.comparisons.CommonTarget (data.applyHull certificate).hull :=
+  audit.hull_contains_each
+
+theorem determinantVolumeBound
+    (audit : data.StepAudit certificate) :
+    RegionMeasure.HasVolumeAtMost measure
+      (data.applyHull certificate).hull bound :=
+  audit.determinant_volume_bound
+
+theorem hullBoundCommonHull_eq
+    (audit : data.StepAudit certificate) :
+    (data.applyHullBound certificate).commonHull = data.applyHull certificate :=
+  audit.hull_bound_common_hull_eq
+
+theorem hullDetHullAudit
+    (audit : data.StepAudit certificate) :
+    data.toHullDetHullBridgeData.HullAudit certificate :=
+  audit.hull_det_hull_audit
+
+theorem choiceTargetVolume_le
+    (audit : data.StepAudit certificate) (choice : index) :
+    RegionMeasure.targetVolume measure (output.comparison choice) <= bound :=
+  audit.choice_target_volume_le choice
+
+theorem allTargetsAtMost
+    (audit : data.StepAudit certificate) :
+    RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound :=
+  audit.all_targets_at_most
+
+end StepAudit
+
+end StructuredHullDetBridgeData
 
 namespace HullDetBridgeData
 

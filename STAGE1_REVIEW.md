@@ -697,3 +697,60 @@ The formalization has still not reached the hard Mochizuki mathematics.
 However, the remaining abstraction has become more constrained: a serious
 replacement for the toy bridge should now supply a measured common-hull bound,
 not merely a terminal inequality.
+
+## Periodic Review: Hull+Det Internal Split
+
+Date: 2026-05-27
+
+This checkpoint reviews the split of the hull+det bridge into a hull
+constructor and a determinant/log-volume bound constructor.
+
+### Current Lean Chain
+
+The toy bridge now factors as:
+
+```text
+thetaToyStructuredCommonHullBridge
+-> thetaToyStructuredDeterminantLogVolumeBridge
+-> thetaToyStructuredHullDetBridgeData
+-> thetaToyStructuredCommonTargetHullBridge
+-> thetaToyHullDetHullBridgeData
+-> thetaToyHullDetBridgeData
+-> HDD/SHE/common-container/charted audits
+```
+
+The generic bridge layer now has the same shape:
+
+```text
+StructuredCommonHullBridge
+StructuredDeterminantLogVolumeBridge
+StructuredHullDetBridgeData.StepAudit
+```
+
+### Positive Alignment
+
+This is aligned with the local source checks:
+
+* Mochizuki's formalization report separates descent from `hull+det` and
+  describes `hull+det` via a determinant operation after a generated
+  module/hull construction.
+* IUT III describes the Corollary 3.12 quantity as the log-volume of the
+  holomorphic hull of the union of possible Theta-pilot images.
+* Scholze-Stix's criticism makes real-line identifications and concrete pilot
+  comparisons the sensitive point, so the formalization should expose exactly
+  which hull is measured and where the measurement bound enters.
+
+### Remaining Gaps
+
+The current hull is still the toy upper-ray common hull. The determinant/log-
+volume bridge still uses upper-ray normalization, not the actual determinant
+of a module over a generated ring and not IUT's procession-normalized
+mono-analytic log-volume.
+
+### Global 3.12 Check
+
+The project remains before a proof of Corollary 3.12. But the abstraction is
+now better localized: a genuine proof must fill in an unmeasured holomorphic
+hull construction and a determinant/log-volume bound for that exact hull,
+while preserving the common-container/charted comparison audits already in
+place.
