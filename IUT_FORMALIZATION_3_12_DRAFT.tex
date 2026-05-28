@@ -239,6 +239,11 @@ The code currently covers:
   these two C1 replacements convert the Theorem 1.10 right-hand side into
   \((1+\delta h^{-1/2})S+
     200\delta^2h^{1/2}\log(2\delta h)+20\eta_{\mathrm{prm}}\);
+\item the IUT IV, Corollary 2.2(ii) \(q_2/q\) comparison:
+  the displayed estimate
+  \(\frac16\log(q_2)-\frac16\log(q)
+   \le\frac13h^{1/2}\log(2\delta h)\) follows through the intermediate
+  term \(h^{1/2}\log(\ell)\);
 \item the IUT IV, Corollary 2.2(ii) condition (C2) inequality chain:
   \(\frac16\log(q)\le\frac16\log(q_2)\le\frac16\log(q_\forall)\le
    (1+\epsilon_E)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)+C_K\);
@@ -332,8 +337,9 @@ replacement of \(20d^*_{\mathrm{mod}}\ell\) by
 composition of those replacements with Theorem 1.10.  The \(\epsilon_E\)-definition flag
 records the source formula and lower estimate for \(\epsilon_E\).  The
 \(\epsilon_E\)-absorption flag records the final denominator removal in C2.  The
-log-different/log-conductor flag records the bridge from tripodal field terms to
-curve functions.  The Corollary 2.2-to-Theorem A flag records the formal
+q2/q flag records the displayed comparison of \(\log(q_2)\) and \(\log(q)\).
+The log-different/log-conductor flag records the bridge from tripodal field
+terms to curve functions.  The Corollary 2.2-to-Theorem A flag records the formal
 bounded-discrepancy transfer from C2 to the Theorem A inequality.
 The theorem-level route is:
 \[
@@ -430,6 +436,10 @@ Lean also verifies the C1 upper-window replacement for the Theorem 1.10 error
 term \(20(d^*_{\mathrm{mod}}\ell+\eta_{\mathrm{prm}})\).
 Combining these, Lean proves the first displayed post-Theorem-1.10 bound in the
 proof of Corollary 2.2(ii).
+Lean also proves the displayed comparison
+\(\frac16\log(q_2)-\frac16\log(q)
+\le\frac13h^{1/2}\log(2\delta h)\) from the intermediate
+\(h^{1/2}\log(\ell)\) bounds.
 For Corollary 2.2(ii), Lean proves the final \(\frac16\log(q)\) bound from the
 displayed \(\log(q)\), \(\log(q_2)\), and \(\log(q_\forall)\) chain.
 Lean records the proof's definition of \(\epsilon_E\) and verifies the stated

@@ -3484,6 +3484,62 @@ theorem oneSixthLogQ_le_corollary22FirstRightHandSide
 end IUTStage1IUTIVCorollary22Theorem110ToC2FirstBoundShadow
 
 /--
+IUT IV, Corollary 2.2(ii), the displayed estimate comparing `log(q_2)` and
+`log(q)`.
+
+The source obtains
+`(1/6)log(q_2) - (1/6)log(q) <=
+  (1/3) * h^(1/2) * log(2 * delta * h)`
+through the intermediate term `h^(1/2) * log(l)`.
+-/
+structure IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow where
+  logQ : Real
+  logQTwo : Real
+  sqrtH : Real
+  logL : Real
+  logTwoDeltaH : Real
+  sqrtH_nonneg : 0 <= sqrtH
+  qTwo_minus_q_le_oneSixth_sqrtH :
+    (1 / 6 : Real) * logQTwo - (1 / 6 : Real) * logQ <=
+      (1 / 6 : Real) * sqrtH
+  one_le_six_logL : 1 <= 6 * logL
+  three_logL_le_logTwoDeltaH : 3 * logL <= logTwoDeltaH
+
+namespace IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow
+
+theorem oneSixth_sqrtH_le_sqrtH_logL
+    (data : IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow) :
+    (1 / 6 : Real) * data.sqrtH <= data.sqrtH * data.logL := by
+  have hcoeff : (1 / 6 : Real) <= data.logL := by
+    linarith [data.one_le_six_logL]
+  calc
+    (1 / 6 : Real) * data.sqrtH <= data.logL * data.sqrtH :=
+      mul_le_mul_of_nonneg_right hcoeff data.sqrtH_nonneg
+    _ = data.sqrtH * data.logL := by ring
+
+theorem sqrtH_logL_le_oneThird_sqrtH_logTwoDeltaH
+    (data : IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow) :
+    data.sqrtH * data.logL <=
+      (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH := by
+  have hcoeff : data.logL <= (1 / 3 : Real) * data.logTwoDeltaH := by
+    linarith [data.three_logL_le_logTwoDeltaH]
+  calc
+    data.sqrtH * data.logL <= data.sqrtH *
+        ((1 / 3 : Real) * data.logTwoDeltaH) :=
+      mul_le_mul_of_nonneg_left hcoeff data.sqrtH_nonneg
+    _ = (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH := by ring
+
+theorem qTwo_minus_q_le_oneThird_sqrtH_logTwoDeltaH
+    (data : IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow) :
+    (1 / 6 : Real) * data.logQTwo - (1 / 6 : Real) * data.logQ <=
+      (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH :=
+  le_trans data.qTwo_minus_q_le_oneSixth_sqrtH
+    (le_trans data.oneSixth_sqrtH_le_sqrtH_logL
+      data.sqrtH_logL_le_oneThird_sqrtH_logTwoDeltaH)
+
+end IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow
+
+/--
 IUT IV, Corollary 2.2(ii), condition (C2).
 
 The source records the chain

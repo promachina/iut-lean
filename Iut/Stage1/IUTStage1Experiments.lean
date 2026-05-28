@@ -669,6 +669,7 @@ structure ProcessionContainerExperimentReport where
   iutIVCorollary22C1Theorem110CoefficientAvailable : Bool
   iutIVCorollary22C1ErrorTermAvailable : Bool
   iutIVCorollary22Theorem110ToC2FirstBoundAvailable : Bool
+  iutIVCorollary22QTwoMinusQBoundAvailable : Bool
   iutIVCorollary22C2InequalityChainAvailable : Bool
   iutIVCorollary22EpsilonDefinitionAvailable : Bool
   iutIVCorollary22EpsilonAbsorptionAvailable : Bool
@@ -729,6 +730,7 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     iutIVCorollary22C1Theorem110CoefficientAvailable := true,
     iutIVCorollary22C1ErrorTermAvailable := true,
     iutIVCorollary22Theorem110ToC2FirstBoundAvailable := true,
+    iutIVCorollary22QTwoMinusQBoundAvailable := true,
     iutIVCorollary22C2InequalityChainAvailable := true,
     iutIVCorollary22EpsilonDefinitionAvailable := true,
     iutIVCorollary22EpsilonAbsorptionAvailable := true,
@@ -1315,6 +1317,12 @@ theorem iutIVCorollary22Theorem110ToC2_first_bound
           20 * data.etaPrm) :=
   data.oneSixthLogQ_le_corollary22FirstRightHandSide
 
+theorem iutIVCorollary22QTwoMinusQ_bound
+    (data : IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow) :
+    (1 / 6 : Real) * data.logQTwo - (1 / 6 : Real) * data.logQ <=
+      (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH :=
+  data.qTwo_minus_q_le_oneThird_sqrtH_logTwoDeltaH
+
 theorem iutIVCorollary22C2_logQ_bound
     (data : IUTStage1IUTIVCorollary22C2InequalityChainShadow) :
     (1 / 6 : Real) * data.logQ <= data.heightSide :=
@@ -1646,6 +1654,7 @@ structure Corollary312DisputeFirstPassReport where
   iutIVCorollary22C1Theorem110CoefficientAvailable : Bool
   iutIVCorollary22C1ErrorTermAvailable : Bool
   iutIVCorollary22Theorem110ToC2FirstBoundAvailable : Bool
+  iutIVCorollary22QTwoMinusQBoundAvailable : Bool
   iutIVCorollary22C2InequalityChainAvailable : Bool
   iutIVCorollary22EpsilonDefinitionAvailable : Bool
   iutIVCorollary22EpsilonAbsorptionAvailable : Bool
@@ -1719,6 +1728,7 @@ def corollary312DisputeFirstPassReport :
     iutIVCorollary22C1Theorem110CoefficientAvailable := true,
     iutIVCorollary22C1ErrorTermAvailable := true,
     iutIVCorollary22Theorem110ToC2FirstBoundAvailable := true,
+    iutIVCorollary22QTwoMinusQBoundAvailable := true,
     iutIVCorollary22C2InequalityChainAvailable := true,
     iutIVCorollary22EpsilonDefinitionAvailable := true,
     iutIVCorollary22EpsilonAbsorptionAvailable := true,
@@ -1984,6 +1994,11 @@ theorem corollary312Report_iutIVCorollary22C1ErrorTermAvailable :
 
 theorem corollary312Report_iutIVCorollary22Theorem110ToC2FirstBoundAvailable :
     corollary312DisputeFirstPassReport.iutIVCorollary22Theorem110ToC2FirstBoundAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVCorollary22QTwoMinusQBoundAvailable :
+    corollary312DisputeFirstPassReport.iutIVCorollary22QTwoMinusQBoundAvailable =
       true :=
   rfl
 
