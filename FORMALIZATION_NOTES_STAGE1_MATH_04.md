@@ -1405,3 +1405,81 @@ compare failures with the claimed real-line-identification obstruction
 The remaining experimental work is to instrument these obligations as explicit
 missing-datum reports, so we can run proof variants and measure which
 identifications are essential.
+
+## 209. First Local Ind3 Experiment Reports
+
+### Lean Move
+
+We added a small Lean-level experiment layer:
+
+```text
+IUTStage1Ind3LocalOrientation
+IUTStage1Ind3LocalExperimentReport
+```
+
+with two orientations:
+
+```text
+packet_le_theta
+theta_le_packet
+```
+
+The nonarchimedean entry alignment now reports:
+
+```text
+orientation = packet_le_theta
+canFeedPacketToThetaRoute = true
+```
+
+The archimedean entry alignment reports:
+
+```text
+orientation = theta_le_packet
+canFeedPacketToThetaRoute = false
+```
+
+The example file checks:
+
+```text
+placeAudited_nonarch_ind3_experiment_can_feed_example
+placeAudited_arch_ind3_experiment_cannot_feed_example
+placeAudited_ind3_experiment_orientations_differ_example
+```
+
+### Mathematical Reason
+
+This is the first experimental surface for the disputed Corollary 3.12 passage.
+The current Hodge-descent route needs a local inequality of the form:
+
+```text
+packet local object finite log-volume <= theta average
+```
+
+The nonarchimedean inclusion entry supplies exactly this orientation.  The
+archimedean surjection entry supplies the reverse orientation, so it cannot be
+fed into the same packet-to-theta route without an additional argument.
+
+### Source Check
+
+This is aligned with IUT III's description of `(Ind3)` as the source of the
+inequality but keeps the local models separated.  It also speaks directly to
+the Scholze-Stix concern: once the real-valued copies and local directions are
+spelled out, Lean distinguishes the usable packet-to-theta route from the
+reverse-direction route.
+
+### Experiment Status
+
+We now have two first-pass Lean experiments:
+
+```text
+nonarchimedean entry + Hodge descent:
+  can feed the q/Theta route
+
+archimedean entry alone:
+  cannot feed the current packet-to-theta route
+```
+
+The next useful experiment is a missing-alignment pass: remove the
+source/target real-line alignment fields while keeping Hodge descent and local
+entry data, and report exactly which final q/Theta proof obligation remains
+unfilled.

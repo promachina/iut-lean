@@ -10918,6 +10918,20 @@ theorem placeAudited_nonarch_ind3_entry_packet_le_theta_example
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
   FLZModCuspLabelThetaHodgeDescentPacketTransportAudit in
+theorem placeAudited_nonarch_ind3_experiment_can_feed_example
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    {thetaAverage : Real}
+    (alignment : NonarchimedeanInd3EntryAlignment
+      audited entry thetaAverage) :
+    alignment.experimentReport.canFeedPacketToThetaRoute = true :=
+  alignment.experimentReport_canFeed
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
+  FLZModCuspLabelThetaHodgeDescentPacketTransportAudit in
 theorem placeAudited_arch_ind3_entry_theta_le_packet_example
     {coric : Type u}
     {audited :
@@ -10930,6 +10944,27 @@ theorem placeAudited_arch_ind3_entry_theta_le_packet_example
     thetaAverage <=
       audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
   alignment.thetaAverage_le_packetLocalObjectFinite
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
+  FLZModCuspLabelThetaHodgeDescentPacketTransportAudit in
+theorem placeAudited_arch_ind3_experiment_cannot_feed_example
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    {entry : IUTStage1ArchimedeanSurjectionData}
+    {thetaAverage : Real}
+    (alignment : ArchimedeanInd3EntryAlignment
+      audited entry thetaAverage) :
+    alignment.experimentReport.canFeedPacketToThetaRoute = false :=
+  alignment.experimentReport_cannotFeed
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
+  FLZModCuspLabelThetaHodgeDescentPacketTransportAudit in
+theorem placeAudited_ind3_experiment_orientations_differ_example :
+    IUTStage1Ind3LocalOrientation.packet_le_theta ≠
+      IUTStage1Ind3LocalOrientation.theta_le_packet :=
+  IUTStage1Ind3LocalOrientation.packet_le_theta_ne_theta_le_packet
 
 theorem placeAudited_logVolume_fl_zmod_constant_zmod_target_bound_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}

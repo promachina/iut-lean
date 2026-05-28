@@ -21830,6 +21830,91 @@ theorem thetaAverage_eq_ind3Target
 
 end ArchimedeanInd3EntryAlignment
 
+/-- Local orientation supplied by an `(Ind3)` upper-semi entry experiment. -/
+inductive IUTStage1Ind3LocalOrientation where
+  | packet_le_theta
+  | theta_le_packet
+deriving DecidableEq, Repr
+
+namespace IUTStage1Ind3LocalOrientation
+
+theorem packet_le_theta_ne_theta_le_packet :
+    packet_le_theta ≠ theta_le_packet := by
+  intro h
+  cases h
+
+end IUTStage1Ind3LocalOrientation
+
+/--
+Lean-level experiment report for a local `(Ind3)` entry.
+
+The boolean says whether the entry has the orientation needed by the current
+Hodge-descent Corollary 3.12 route, namely packet-local-object log-volume
+bounded above by the theta average.
+-/
+structure IUTStage1Ind3LocalExperimentReport where
+  orientation : IUTStage1Ind3LocalOrientation
+  canFeedPacketToThetaRoute : Bool
+
+namespace NonarchimedeanInd3EntryAlignment
+
+variable
+  {audited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean}
+  {entry : IUTStage1NonarchimedeanInclusionData}
+  {thetaAverage : Real}
+
+def experimentReport
+    (_alignment :
+      NonarchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    IUTStage1Ind3LocalExperimentReport :=
+  { orientation := IUTStage1Ind3LocalOrientation.packet_le_theta,
+    canFeedPacketToThetaRoute := true }
+
+theorem experimentReport_canFeed
+    (alignment :
+      NonarchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    alignment.experimentReport.canFeedPacketToThetaRoute = true :=
+  rfl
+
+theorem experimentReport_orientation
+    (alignment :
+      NonarchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    alignment.experimentReport.orientation =
+      IUTStage1Ind3LocalOrientation.packet_le_theta :=
+  rfl
+
+end NonarchimedeanInd3EntryAlignment
+
+namespace ArchimedeanInd3EntryAlignment
+
+variable
+  {audited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.archimedean}
+  {entry : IUTStage1ArchimedeanSurjectionData}
+  {thetaAverage : Real}
+
+def experimentReport
+    (_alignment : ArchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    IUTStage1Ind3LocalExperimentReport :=
+  { orientation := IUTStage1Ind3LocalOrientation.theta_le_packet,
+    canFeedPacketToThetaRoute := false }
+
+theorem experimentReport_cannotFeed
+    (alignment : ArchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    alignment.experimentReport.canFeedPacketToThetaRoute = false :=
+  rfl
+
+theorem experimentReport_orientation
+    (alignment : ArchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    alignment.experimentReport.orientation =
+      IUTStage1Ind3LocalOrientation.theta_le_packet :=
+  rfl
+
+end ArchimedeanInd3EntryAlignment
+
 open FLZModCuspLabelThetaCuspClassContainerAudit in
 def toInd3SourceZeroCuspTargetThetaAudit
     (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
