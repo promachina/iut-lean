@@ -1716,6 +1716,97 @@ theorem tensorPowerLogVolume_lt_original_of_original_neg
 
 end IUTStage1ThetaPilotTensorPowerLogVolume
 
+/--
+Step (xii) local Frobenioid ambiguity for log-volume computation.
+
+The paper warns that replacing the global realified Frobenioids in the
+`Theta^{×μ}` LGP-link by only local Frobenioids leaves an integer ambiguity:
+a local object may correspond to an open log-shell submodule or to its
+`p_v^N`-multiple.  This additive log-volume shadow records that ambiguity as an
+integer shift by a fixed local step.
+-/
+structure IUTStage1LocalFrobenioidLogVolumeAmbiguity where
+  unshiftedLogVolume : Real
+  localExponent : Int
+  localPrimeStepLogVolume : Real
+  shiftedLogVolume : Real
+  shifted_logVolume_eq :
+    shiftedLogVolume =
+      unshiftedLogVolume +
+        (localExponent : Real) * localPrimeStepLogVolume
+
+namespace IUTStage1LocalFrobenioidLogVolumeAmbiguity
+
+theorem shiftTerm_ne_zero
+    (data : IUTStage1LocalFrobenioidLogVolumeAmbiguity)
+    (hExponent : data.localExponent ≠ 0)
+    (hStep : data.localPrimeStepLogVolume ≠ 0) :
+    (data.localExponent : Real) * data.localPrimeStepLogVolume ≠ 0 :=
+  mul_ne_zero (by exact_mod_cast hExponent) hStep
+
+theorem shiftedLogVolume_ne_unshifted
+    (data : IUTStage1LocalFrobenioidLogVolumeAmbiguity)
+    (hExponent : data.localExponent ≠ 0)
+    (hStep : data.localPrimeStepLogVolume ≠ 0) :
+    data.shiftedLogVolume ≠ data.unshiftedLogVolume := by
+  intro h
+  have hsum :
+      data.unshiftedLogVolume +
+          (data.localExponent : Real) * data.localPrimeStepLogVolume =
+        data.unshiftedLogVolume := by
+    simpa [data.shifted_logVolume_eq] using h
+  have hsum' :
+      data.unshiftedLogVolume +
+          (data.localExponent : Real) * data.localPrimeStepLogVolume =
+        data.unshiftedLogVolume + 0 := by
+    simpa using hsum
+  have hzero :
+      (data.localExponent : Real) * data.localPrimeStepLogVolume = 0 :=
+    add_left_cancel hsum'
+  exact data.shiftTerm_ne_zero hExponent hStep hzero
+
+end IUTStage1LocalFrobenioidLogVolumeAmbiguity
+
+/--
+Global realified Frobenioid calibration shadow for Step (xii).
+
+This record represents the use of global Frobenioid data to eliminate the local
+integer scaling ambiguity before a precise log-volume comparison is attempted.
+-/
+structure IUTStage1GlobalFrobenioidLogVolumeCalibration where
+  localData :
+    IUTStage1LocalFrobenioidLogVolumeAmbiguity
+  globalExponent : Int
+  global_exponent_eq_zero : globalExponent = 0
+  calibratedLogVolume : Real
+  calibrated_logVolume_eq :
+    calibratedLogVolume =
+      localData.unshiftedLogVolume +
+        (globalExponent : Real) * localData.localPrimeStepLogVolume
+
+namespace IUTStage1GlobalFrobenioidLogVolumeCalibration
+
+theorem calibratedLogVolume_eq_unshifted
+    (data : IUTStage1GlobalFrobenioidLogVolumeCalibration) :
+    data.calibratedLogVolume = data.localData.unshiftedLogVolume := by
+  rw [data.calibrated_logVolume_eq, data.global_exponent_eq_zero]
+  simp
+
+theorem calibratedLogVolume_ne_shifted_of_local_nonzero
+    (data : IUTStage1GlobalFrobenioidLogVolumeCalibration)
+    (hExponent : data.localData.localExponent ≠ 0)
+    (hStep : data.localData.localPrimeStepLogVolume ≠ 0) :
+    data.calibratedLogVolume ≠ data.localData.shiftedLogVolume := by
+  intro h
+  have hunshifted_eq_shifted :
+      data.localData.unshiftedLogVolume = data.localData.shiftedLogVolume := by
+    rw [← data.calibratedLogVolume_eq_unshifted]
+    exact h
+  exact data.localData.shiftedLogVolume_ne_unshifted hExponent hStep
+    hunshifted_eq_shifted.symm
+
+end IUTStage1GlobalFrobenioidLogVolumeCalibration
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

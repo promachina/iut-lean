@@ -151,6 +151,8 @@ The code currently covers:
   membership, and equality of the two \(q\)-pilot log-volume computations;
 \item the Step (xi-h) warning: for \(N\ge2\) and \(\Theta<0\), the tensor-power
   boundary satisfies \(N\Theta<\Theta\);
+\item the Step (xii) shadow: local Frobenioid \(p_v^N\)-ambiguity changes
+  log-volume by an integer shift, while global calibration fixes exponent \(0\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -180,7 +182,8 @@ SHE availability.  The obstruction flags are raw-cancellation failure,
 label-independent \(j^2\) failure, and sign-quotient representative descent
 failure.  The Gaussian/procession flags include finite tensor-packet, monoid
 action, base-valuation product, coric-transfer, determinant-normalization,
-upper-ray, \(q\)-pilot two-computation, and tensor-power warning shadows.
+upper-ray, \(q\)-pilot two-computation, tensor-power warning, and global
+Frobenioid-calibration shadows.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -216,7 +219,9 @@ as the final hull/log-volume comparison level.  Lean also rejects direct descent
 of arbitrary raw representative \(j^2\) theta-degree data to \(|F_\ell|\), while
 accepting the half-range exponent convention stated in IUT II.
 Lean also checks that an \(N\)-th tensor-power boundary is a strict strengthening
-for \(N\ge2\) and negative pilot log-volume.
+for \(N\ge2\) and negative pilot log-volume.  It also checks the Step (xii)
+numerical warning: nonzero local Frobenioid shifts change log-volume, whereas
+global calibration restores the unshifted value.
 
 \section{Missing Mathematics}
 
@@ -234,6 +239,8 @@ The present code does not yet formalize:
 \item the genuine holomorphic hull and determinant operations of Step (xi),
   beyond the present finite determinant/upper-ray/two-computation/tensor-power
   shadows;
+\item the global realified Frobenioids of Step (xii), beyond the present integer
+  log-volume shift model;
 \item the exact IUT IV log-volume estimates and Diophantine applications;
 \item a proof that the current Hodge/SHE transport obligations follow from
   Mochizuki's full hypotheses.

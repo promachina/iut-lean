@@ -642,6 +642,7 @@ structure ProcessionContainerExperimentReport where
   hullDetUpperRayComparisonAvailable : Bool
   qPilotTwoComputationComparisonAvailable : Bool
   thetaPilotTensorPowerWarningAvailable : Bool
+  globalFrobenioidCalibrationAvailable : Bool
 deriving Repr
 
 /--
@@ -669,7 +670,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     determinantTensorPowerNormalizationAvailable := true,
     hullDetUpperRayComparisonAvailable := true,
     qPilotTwoComputationComparisonAvailable := true,
-    thetaPilotTensorPowerWarningAvailable := true }
+    thetaPilotTensorPowerWarningAvailable := true,
+    globalFrobenioidCalibrationAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -946,6 +948,25 @@ theorem thetaPilotTensorPowerLogVolume_sharper_of_neg
     data.tensorPowerLogVolume < data.originalThetaPilotLogVolume :=
   data.tensorPowerLogVolume_lt_original_of_original_neg hTheta
 
+theorem localFrobenioidLogVolume_shifted_ne_unshifted
+    (data : IUTStage1LocalFrobenioidLogVolumeAmbiguity)
+    (hExponent : data.localExponent ≠ 0)
+    (hStep : data.localPrimeStepLogVolume ≠ 0) :
+    data.shiftedLogVolume ≠ data.unshiftedLogVolume :=
+  data.shiftedLogVolume_ne_unshifted hExponent hStep
+
+theorem globalFrobenioidCalibration_eq_unshifted
+    (data : IUTStage1GlobalFrobenioidLogVolumeCalibration) :
+    data.calibratedLogVolume = data.localData.unshiftedLogVolume :=
+  data.calibratedLogVolume_eq_unshifted
+
+theorem globalFrobenioidCalibration_ne_localShifted
+    (data : IUTStage1GlobalFrobenioidLogVolumeCalibration)
+    (hExponent : data.localData.localExponent ≠ 0)
+    (hStep : data.localData.localPrimeStepLogVolume ≠ 0) :
+    data.calibratedLogVolume ≠ data.localData.shiftedLogVolume :=
+  data.calibratedLogVolume_ne_shifted_of_local_nonzero hExponent hStep
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1186,6 +1207,7 @@ structure Corollary312DisputeFirstPassReport where
   hullDetUpperRayComparisonAvailable : Bool
   qPilotTwoComputationComparisonAvailable : Bool
   thetaPilotTensorPowerWarningAvailable : Bool
+  globalFrobenioidCalibrationAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1227,6 +1249,7 @@ def corollary312DisputeFirstPassReport :
     hullDetUpperRayComparisonAvailable := true,
     qPilotTwoComputationComparisonAvailable := true,
     thetaPilotTensorPowerWarningAvailable := true,
+    globalFrobenioidCalibrationAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1352,6 +1375,11 @@ theorem corollary312Report_qPilotTwoComputationComparisonAvailable :
 
 theorem corollary312Report_thetaPilotTensorPowerWarningAvailable :
     corollary312DisputeFirstPassReport.thetaPilotTensorPowerWarningAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_globalFrobenioidCalibrationAvailable :
+    corollary312DisputeFirstPassReport.globalFrobenioidCalibrationAvailable =
       true :=
   rfl
 
