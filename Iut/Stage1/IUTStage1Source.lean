@@ -4360,6 +4360,113 @@ noncomputable def toTheoremABoundedDiscrepancyShadow
 
 end IUTStage1IUTIVCorollary22ToTheoremABoundShadow
 
+/--
+Finite-exception lower-bound gluing.
+
+Corollary 2.2(ii),(iii) repeatedly enlarges finite exceptional sets.  At the
+real-valued inequality level, the bookkeeping principle is that a lower bound on
+the complement of a finite exceptional set, together with a lower bound on the
+exceptional set itself, gives a global lower bound by taking the minimum of the
+two constants.
+-/
+structure IUTStage1FiniteExceptionLowerBoundShadow
+    (Point : Type u) [DecidableEq Point] where
+  exceptional : Finset Point
+  function : Point -> Real
+  genericLowerBound : Real
+  exceptionalLowerBound : Real
+  generic_bound :
+    ∀ x : Point, x ∉ exceptional -> genericLowerBound <= function x
+  exceptional_bound :
+    ∀ x : Point, x ∈ exceptional -> exceptionalLowerBound <= function x
+
+namespace IUTStage1FiniteExceptionLowerBoundShadow
+
+variable {Point : Type u} [DecidableEq Point]
+
+noncomputable def globalLowerBound
+    (data : IUTStage1FiniteExceptionLowerBoundShadow Point) : Real :=
+  min data.genericLowerBound data.exceptionalLowerBound
+
+theorem globalLowerBound_le_genericLowerBound
+    (data : IUTStage1FiniteExceptionLowerBoundShadow Point) :
+    data.globalLowerBound <= data.genericLowerBound :=
+  min_le_left data.genericLowerBound data.exceptionalLowerBound
+
+theorem globalLowerBound_le_exceptionalLowerBound
+    (data : IUTStage1FiniteExceptionLowerBoundShadow Point) :
+    data.globalLowerBound <= data.exceptionalLowerBound :=
+  min_le_right data.genericLowerBound data.exceptionalLowerBound
+
+theorem global_bound
+    (data : IUTStage1FiniteExceptionLowerBoundShadow Point)
+    (x : Point) :
+    data.globalLowerBound <= data.function x := by
+  by_cases hx : x ∈ data.exceptional
+  · exact le_trans data.globalLowerBound_le_exceptionalLowerBound
+      (data.exceptional_bound x hx)
+  · exact le_trans data.globalLowerBound_le_genericLowerBound
+      (data.generic_bound x hx)
+
+end IUTStage1FiniteExceptionLowerBoundShadow
+
+/--
+IUT IV, Corollary 2.2 exceptional-set passage toward Corollary 2.3.
+
+This packages the previous finite-exception gluing for the specific
+height/different/conductor discrepancy that appears in Theorem A and
+Corollary 2.3.
+-/
+structure IUTStage1IUTIVCorollary22FiniteExceptionTheoremAShadow
+    (Point : Type u) [DecidableEq Point] where
+  exceptional : Finset Point
+  epsilon : Real
+  height : Point -> Real
+  logDiff : Point -> Real
+  logCond : Point -> Real
+  genericLowerBound : Real
+  exceptionalLowerBound : Real
+  generic_bound :
+    ∀ x : Point, x ∉ exceptional ->
+      genericLowerBound <=
+        (1 + epsilon) * (logDiff x + logCond x) - height x
+  exceptional_bound :
+    ∀ x : Point, x ∈ exceptional ->
+      exceptionalLowerBound <=
+        (1 + epsilon) * (logDiff x + logCond x) - height x
+
+namespace IUTStage1IUTIVCorollary22FiniteExceptionTheoremAShadow
+
+variable {Point : Type u} [DecidableEq Point]
+
+def discrepancy
+    (data : IUTStage1IUTIVCorollary22FiniteExceptionTheoremAShadow Point)
+    (x : Point) : Real :=
+  (1 + data.epsilon) * (data.logDiff x + data.logCond x) - data.height x
+
+def toFiniteExceptionLowerBound
+    (data : IUTStage1IUTIVCorollary22FiniteExceptionTheoremAShadow Point) :
+    IUTStage1FiniteExceptionLowerBoundShadow Point :=
+  { exceptional := data.exceptional
+    function := data.discrepancy
+    genericLowerBound := data.genericLowerBound
+    exceptionalLowerBound := data.exceptionalLowerBound
+    generic_bound := data.generic_bound
+    exceptional_bound := data.exceptional_bound }
+
+noncomputable def globalLowerBound
+    (data : IUTStage1IUTIVCorollary22FiniteExceptionTheoremAShadow Point) :
+    Real :=
+  data.toFiniteExceptionLowerBound.globalLowerBound
+
+theorem discrepancy_bounded_below
+    (data : IUTStage1IUTIVCorollary22FiniteExceptionTheoremAShadow Point)
+    (x : Point) :
+    data.globalLowerBound <= data.discrepancy x :=
+  data.toFiniteExceptionLowerBound.global_bound x
+
+end IUTStage1IUTIVCorollary22FiniteExceptionTheoremAShadow
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

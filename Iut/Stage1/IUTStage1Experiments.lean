@@ -681,6 +681,8 @@ structure ProcessionContainerExperimentReport where
   iutIVCorollary22LogDiffCondComparisonAvailable : Bool
   iutIVCorollary22FinalHToC2Available : Bool
   iutIVCorollary22ToTheoremABoundAvailable : Bool
+  iutIVFiniteExceptionLowerBoundAvailable : Bool
+  iutIVCorollary22FiniteExceptionTheoremAAvailable : Bool
 deriving Repr
 
 /--
@@ -747,7 +749,9 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     iutIVCorollary22FinalHBoundAvailable := true,
     iutIVCorollary22LogDiffCondComparisonAvailable := true,
     iutIVCorollary22FinalHToC2Available := true,
-    iutIVCorollary22ToTheoremABoundAvailable := true }
+    iutIVCorollary22ToTheoremABoundAvailable := true,
+    iutIVFiniteExceptionLowerBoundAvailable := true,
+    iutIVCorollary22FiniteExceptionTheoremAAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1446,6 +1450,20 @@ noncomputable def iutIVCorollary22ToTheoremA_shadow
   data.toTheoremABoundedDiscrepancyShadow d d_pos epsilonE_pos
     hyperbolicCurve hyperbolic_curve
 
+theorem iutIVFiniteExceptionLowerBound_global
+    {Point : Type u} [DecidableEq Point]
+    (data : IUTStage1FiniteExceptionLowerBoundShadow Point)
+    (x : Point) :
+    data.globalLowerBound <= data.function x :=
+  data.global_bound x
+
+theorem iutIVCorollary22FiniteExceptionTheoremA_global
+    {Point : Type u} [DecidableEq Point]
+    (data : IUTStage1IUTIVCorollary22FiniteExceptionTheoremAShadow Point)
+    (x : Point) :
+    data.globalLowerBound <= data.discrepancy x :=
+  data.discrepancy_bounded_below x
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1725,6 +1743,8 @@ structure Corollary312DisputeFirstPassReport where
   iutIVCorollary22LogDiffCondComparisonAvailable : Bool
   iutIVCorollary22FinalHToC2Available : Bool
   iutIVCorollary22ToTheoremABoundAvailable : Bool
+  iutIVFiniteExceptionLowerBoundAvailable : Bool
+  iutIVCorollary22FiniteExceptionTheoremAAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1805,6 +1825,8 @@ def corollary312DisputeFirstPassReport :
     iutIVCorollary22LogDiffCondComparisonAvailable := true,
     iutIVCorollary22FinalHToC2Available := true,
     iutIVCorollary22ToTheoremABoundAvailable := true,
+    iutIVFiniteExceptionLowerBoundAvailable := true,
+    iutIVCorollary22FiniteExceptionTheoremAAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -2125,6 +2147,16 @@ theorem corollary312Report_iutIVCorollary22FinalHToC2Available :
 
 theorem corollary312Report_iutIVCorollary22ToTheoremABoundAvailable :
     corollary312DisputeFirstPassReport.iutIVCorollary22ToTheoremABoundAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVFiniteExceptionLowerBoundAvailable :
+    corollary312DisputeFirstPassReport.iutIVFiniteExceptionLowerBoundAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVCorollary22FiniteExceptionTheoremAAvailable :
+    corollary312DisputeFirstPassReport.iutIVCorollary22FiniteExceptionTheoremAAvailable =
       true :=
   rfl
 
