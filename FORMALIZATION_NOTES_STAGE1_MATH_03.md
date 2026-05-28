@@ -3568,3 +3568,93 @@ next step: combine the coordinate-square and full-label-map/value branches into
 a single fully factored structured-SHE obligation record, then compare that
 record against the data actually supplied by local-object Hodge descent and the
 SHE common-container route.
+
+## 153. Fully Factored Structured-SHE Square/Full-Label Obligations
+
+### Lean Move
+
+We added a single factored structured-SHE input record:
+
+```text
+IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+```
+
+It contains the common data:
+
+```text
+coordinate equivalence
+source and target square-weight profiles
+source and target full-label log-volume branches
+```
+
+and three primitive preservation fields:
+
+```text
+coordinateSquare_preserved
+fullLabelMap_preserved
+fullLabelValue_preserved
+```
+
+Lean derives from these fields:
+
+```text
+fullLabelLogVolume_preserved
+toCoordinateSquareWeightObligations
+toStructuredSHESquareWeightTransportObligations
+toStructuredSHESquareWeightTransportAudit
+transportedAverage_eq
+bridge_eq_structuredSHE
+```
+
+The example module now checks this derivation path from factored data to the
+existing structured-SHE square-weight transport audit and transported-average
+equality.
+
+### Mathematical Reason
+
+This milestone consolidates the two factorizations from the previous commits.
+The final square-weighted full-label average is not treated as a primitive
+miracle.  It is derived from two independent branches:
+
+```text
+coordinate-square preservation
+  controls the j^2 weights
+
+full-label map/value preservation
+  controls the log-volume value attached to each zero/nonzero/sign label
+```
+
+Once both branches are supplied, Lean constructs the existing
+`IUTStage1StructuredSHESquareWeightTransportObligations`, hence the same
+transported weighted-average equality as before.
+
+### Source Check
+
+This continues to track the source dispute directly.  IUT II treats the
+weighted diagonal and weighted-volume computations as dependent on the `j^2`
+profile.  IUT III's Corollary 3.12 corridor applies the Theorem 3.11 output to
+averages over `j in F_l`.  The April 2026 formalization report isolates the
+final `3.11.5 => 3.12` stage as the simultaneous comparison problem.
+
+Scholze-Stix's critique asks whether the common comparison object still carries
+the nontrivial `j`/`j^2` information.  This Lean record gives a precise form of
+that question: does the IUT route supply the three primitive preservation
+fields above, or are they extra data not determined by the common-container and
+local-object descent structures?
+
+### Relevance to the 3.12 Dispute
+
+The current formal state is:
+
+```text
+factored primitive preservation data
+  => full structured-SHE square-weight obligations
+  => transported weighted-average equality
+```
+
+This is an important checkpoint.  The project has still not proved Corollary
+3.12, but the disputed preservation mechanism is now expressed as a concrete
+Lean interface.  The next review should compare this interface against the
+currently formalized Hodge-descent/local-object/common-container data and mark
+exactly which of the three primitive fields are supplied, missing, or
+unjustified.
