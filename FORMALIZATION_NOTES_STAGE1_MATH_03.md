@@ -5990,3 +5990,55 @@ these levels.  A proof cannot close the pointwise SHE square/full-label target
 with an aggregate average, and cannot close it with a final hull/log-volume
 bound.  Conversely, proving the final real inequality remains a separate goal
 from proving the pointwise transport mechanism that might justify it.
+
+## 187. Pointwise Full-Label Bounds Imply Square-Weighted Average Bounds
+
+### Lean Move
+
+We added the first constructive bridge in the square-weighted route:
+
+```text
+FLZModCuspLabelCompatibleAveragedInd12Audit
+  .targetSigned_le_squareWeightedAveragedLogVolume_of_fullLabel
+```
+
+It says that if every full-label summand satisfies
+
+```text
+targetSigned <= fullLabelLogVolume(fromCoordinate j)
+```
+
+then the same lower bound holds for the square-weighted average.
+
+### Mathematical Reason
+
+This is ordinary finite real analysis.  The weights in
+`IUTStage1ZModSquareWeightProfile` are nonnegative and have positive total
+weight.  Therefore a pointwise lower bound on every normalized/full-label value
+is preserved by the weighted average.
+
+The theorem is intentionally one-way.  It does not recover pointwise
+full-label bounds from the weighted average, and it does not prove the
+pointwise representative-square transport needed by the structured SHE
+obligations.
+
+### Source Check
+
+IUT III's Corollary 3.12 corridor uses averages over `j in F_l` and then passes
+to real log-volume inequalities.  Scholze-Stix emphasize that averages can be
+formed, but that forming an average does not itself solve the identification
+problem.  This theorem formalizes the harmless average step while preserving
+that distinction.
+
+### Relevance to the 3.12 Dispute
+
+This gives us a clean target for later source work:
+
+```text
+for all j, targetSigned <= fullLabelLogVolume(fromCoordinate j)
+```
+
+If the IUT/Hodge-theater machinery supplies this pointwise full-label lower
+bound, the square-weighted average bound follows formally in Lean.  If it only
+supplies an aggregate average or a final hull/log-volume inequality, this
+theorem cannot be applied.

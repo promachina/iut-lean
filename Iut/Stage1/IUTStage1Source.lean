@@ -15577,6 +15577,26 @@ theorem squareWeightedAverage_eq_square_fullLabelLogVolume_sum
     (part.cuspLogVolume audited)
     (fun j => part.normalizedLogVolumeEq audited j)
 
+theorem targetSigned_le_squareWeightedAveragedLogVolume_of_fullLabel
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (hpointwise :
+      ∀ j : ZMod l.value,
+        package.preLedger.targetVolume.targetSigned <=
+          (part.cuspLogVolume audited).fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.squareWeightedAveragedLogVolume profile audited).weightedAverageLogVolume :=
+  IUTStage1WeightedLabelAveragedProcessionLogVolume.const_le_weightedAverage_of_forall_le
+    (part.squareWeightedAveragedLogVolume profile audited)
+    (by intro j; exact profile.weight_nonnegative j)
+    (by
+      intro j
+      rw [part.squareWeighted_normalizedLogVolume_eq_fullLabelLogVolume
+        profile audited j]
+      exact hpointwise j)
+
 theorem ind1SquareWeightedAverageLogVolumeEq
     (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
     (profile : IUTStage1ZModSquareWeightProfile l)

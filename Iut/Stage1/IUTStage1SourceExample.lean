@@ -5704,6 +5704,28 @@ theorem placeAudited_logVolume_fl_zmod_cusp_square_weighted_average_example
   part.squareWeightedAverage_eq_square_fullLabelLogVolume_sum
     profile audited
 
+theorem placeAudited_logVolume_fl_zmod_cusp_square_weighted_lower_bound_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (hpointwise :
+      ∀ j : ZMod l.value,
+        package.preLedger.targetVolume.targetSigned <=
+          (part.cuspLogVolume audited).fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.squareWeightedAveragedLogVolume profile audited).weightedAverageLogVolume :=
+  part.targetSigned_le_squareWeightedAveragedLogVolume_of_fullLabel
+    profile audited hpointwise
+
 theorem placeAudited_logVolume_fl_zmod_cusp_square_weighted_ind1_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
