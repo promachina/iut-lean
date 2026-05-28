@@ -17983,3 +17983,52 @@ weightedAverage_le_thetaAverage
 or remain at the weighted-average bound.  This keeps the final real comparison
 visible and separate from both aggregate square evidence and pointwise SHE
 transport evidence.
+
+## 132. The Weighted-Theta Gap Is Hull/Log-Volume Level
+
+### Lean Move
+
+We attached a comparison level to the weighted-theta missing datum:
+
+```text
+IUTStage1WeightedThetaComparisonMissingDatum.comparisonLevel
+  = IUTStage1SquareComparisonLevel.hullLogVolume
+```
+
+Lean also records that this level is not pointwise representative evidence and
+not aggregate representative evidence.
+
+### Mathematical Reason
+
+The missing datum
+
+```text
+squareWeightedAverage <= thetaSourceAverage
+```
+
+is a real comparison between averaged/log-volume quantities.  It is not a
+pointwise preservation claim about representative `j.val^2` factors, and it is
+not merely the aggregate finite-sum invariance of the square-weighted average.
+
+### Source Check
+
+IUT III's final Corollary 3.12 passage moves through holomorphic-hull and
+log-volume estimates after the averaged `F_l` data are formed.  Scholze-Stix's
+critique focuses on whether the prior multiradial construction actually
+justifies that real comparison.  Classifying the missing datum as
+hull/log-volume level matches this separation.
+
+### Relevance to the 3.12 Dispute
+
+The formalization now distinguishes four nearby facts:
+
+```text
+pointwise representative-square SHE transport
+aggregate square-weighted average evidence
+the weighted-to-theta real comparison
+the final theta signed bound
+```
+
+The weighted-to-theta gap belongs to the real comparison layer.  It cannot be
+used as a replacement for the pointwise SHE transport gap, and the aggregate
+average alone cannot fill it.

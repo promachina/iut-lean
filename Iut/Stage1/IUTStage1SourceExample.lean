@@ -6254,6 +6254,13 @@ theorem placeAudited_logVolume_fl_zmod_labelwise_weighted_theta_gap_example
       part.missingWeightedThetaComparisonData profile audited :=
   part.weightedAverage_le_thetaAverage_missing profile audited
 
+theorem weighted_theta_gap_level_ne_pointwise_example :
+    IUTStage1WeightedThetaComparisonMissingDatum.comparisonLevel
+        IUTStage1WeightedThetaComparisonMissingDatum.weightedAverage_le_thetaAverage ≠
+      IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
+  IUTStage1WeightedThetaComparisonMissingDatum.comparisonLevel_ne_pointwiseRepresentative
+    IUTStage1WeightedThetaComparisonMissingDatum.weightedAverage_le_thetaAverage
+
 def placeAudited_logVolume_fl_zmod_labelwise_container_to_hull_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

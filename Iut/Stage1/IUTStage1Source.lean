@@ -3992,6 +3992,29 @@ namespace IUTStage1WeightedThetaComparisonMissingDatum
 def all : Finset IUTStage1WeightedThetaComparisonMissingDatum :=
   Finset.univ
 
+def comparisonLevel
+    (_datum : IUTStage1WeightedThetaComparisonMissingDatum) :
+    IUTStage1SquareComparisonLevel :=
+  IUTStage1SquareComparisonLevel.hullLogVolume
+
+theorem comparisonLevel_eq_hullLogVolume
+    (datum : IUTStage1WeightedThetaComparisonMissingDatum) :
+    datum.comparisonLevel =
+      IUTStage1SquareComparisonLevel.hullLogVolume :=
+  rfl
+
+theorem comparisonLevel_ne_pointwiseRepresentative
+    (datum : IUTStage1WeightedThetaComparisonMissingDatum) :
+    datum.comparisonLevel ≠
+      IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
+  IUTStage1SquareComparisonLevel.hull_ne_pointwise
+
+theorem comparisonLevel_ne_aggregateRepresentative
+    (datum : IUTStage1WeightedThetaComparisonMissingDatum) :
+    datum.comparisonLevel ≠
+      IUTStage1SquareComparisonLevel.aggregateRepresentative :=
+  IUTStage1SquareComparisonLevel.hull_ne_aggregate
+
 theorem weightedAverage_le_thetaAverage_mem_all :
     weightedAverage_le_thetaAverage ∈ all := by
   simp [all]
