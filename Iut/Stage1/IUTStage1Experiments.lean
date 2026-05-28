@@ -683,6 +683,130 @@ theorem ind3FinalRouteLevelExperimentReport_rejectsBalanced :
     ind3FinalRouteLevelExperimentReport.finalRouteRejectsBalanced = true :=
   rfl
 
+/-- First Lean-level conclusion about the Corollary 3.12 disputed passage. -/
+structure Corollary312DisputeFirstPassReport where
+  orderedRealLineRouteAvailable : Bool
+  mismatchedRealLineScalesBlockRawCancellation : Bool
+  labelIndependentJ2CollapseRejected : Bool
+  balancedSignCompatibleLevelRejectedAtFinalRoute : Bool
+  disputeSettledByCurrentStage : Bool
+deriving Repr
+
+/--
+Current experimental reading of the formalized 3.11 to 3.12 corridor.
+
+The route can reach the final q/Theta inequality after explicit ordered
+real-line alignment.  The two tested collapse mechanisms are blocked:
+mismatched real-line scales do not cancel to raw equality, and the
+representative `j^2` scale is not label-independent.  This is still a
+first-pass result, so it records that the full dispute is not settled at this
+stage.
+-/
+def corollary312DisputeFirstPassReport :
+    Corollary312DisputeFirstPassReport :=
+  { orderedRealLineRouteAvailable := true,
+    mismatchedRealLineScalesBlockRawCancellation := true,
+    labelIndependentJ2CollapseRejected := true,
+    balancedSignCompatibleLevelRejectedAtFinalRoute := true,
+    disputeSettledByCurrentStage := false }
+
+theorem corollary312Report_orderedRealLineRouteAvailable :
+    corollary312DisputeFirstPassReport.orderedRealLineRouteAvailable = true :=
+  rfl
+
+theorem corollary312Report_mismatchedScalesBlockRawCancellation :
+    corollary312DisputeFirstPassReport.mismatchedRealLineScalesBlockRawCancellation =
+      true :=
+  rfl
+
+theorem corollary312Report_labelIndependentJ2CollapseRejected :
+    corollary312DisputeFirstPassReport.labelIndependentJ2CollapseRejected =
+      true :=
+  rfl
+
+theorem corollary312Report_balancedLevelRejectedAtFinalRoute :
+    corollary312DisputeFirstPassReport.balancedSignCompatibleLevelRejectedAtFinalRoute =
+      true :=
+  rfl
+
+theorem corollary312Report_notSettledByCurrentStage :
+    corollary312DisputeFirstPassReport.disputeSettledByCurrentStage = false :=
+  rfl
+
+/--
+Corollary 3.12 first-pass route theorem.
+
+This is the positive side of the current experiment: with the ordered real-line
+alignment required by the `(Ind3)` corridor, the formal route reaches the final
+q/Theta inequality.
+-/
+theorem corollary312_firstPass_finalQTheta_from_orderedRealLineAlignment
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (transport_audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package part.bundle l)
+    (source_profile_eq :
+      profile = transport_audit.preservationAudit.sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        transport_audit.preservationAudit.sourceLogVolume)
+    (target_log_volume_eq_theta :
+      transport_audit.preservationAudit.targetLogVolume =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    (alignment : Ind3OrderedRealLineAlignment part audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  orderedRealLineAlignment_finalQTheta part profile audited transport_audit
+    source_profile_eq source_log_volume_eq target_log_volume_eq_theta alignment
+
+/--
+Scholze-Stix-style collapse test for the representative `j^2` factors.
+
+The current finite-label model rejects a single label-independent real-line
+scale that simultaneously accounts for all representative square factors.
+-/
+theorem corollary312_firstPass_rejects_labelIndependentJ2Collapse
+    (l : PrimeGeFive) (scale : Real) :
+    ¬ ∀ j : ZMod l.value,
+      scale =
+        IUTStage1ZModSquareWeightProfile.representativeSquareScale
+          (l := l) j :=
+  no_labelIndependent_transport_scale_absorbs_j2 l scale
+
+/--
+Balanced sign-compatible evidence is not accepted as the final Corollary 3.12
+comparison level.
+-/
+theorem corollary312_firstPass_rejects_balancedAsFinalRouteLevel
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (route :
+      FLZModCuspLabelThetaCuspClassContainerAudit.WeightedThetaComparisonRoute
+        part profile audited) :
+    FLZModCuspLabelThetaCuspClassContainerAudit.weightedThetaComparisonRouteLevel
+        route ≠
+      IUTStage1SquareComparisonLevel.balancedSignCompatible :=
+  finalWeightedThetaRoute_rejectsBalanced route
+
 end Experiments
 end Stage1
 end Iut

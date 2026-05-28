@@ -2128,3 +2128,93 @@ final weighted-theta route:
 
 The next mathematical step should inspect the existing Hodge/SHE endpoint audit
 and make the promotion into this hull/log-volume level more source-specific.
+
+## 218. First Corollary 3.12 Dispute Experiment
+
+### Lean Move
+
+In:
+
+```text
+Iut/Stage1/IUTStage1Experiments.lean
+```
+
+we added:
+
+```text
+Corollary312DisputeFirstPassReport
+corollary312DisputeFirstPassReport
+corollary312_firstPass_finalQTheta_from_orderedRealLineAlignment
+corollary312_firstPass_rejects_labelIndependentJ2Collapse
+corollary312_firstPass_rejects_balancedAsFinalRouteLevel
+```
+
+and evaluated the report with Lean:
+
+```text
+orderedRealLineRouteAvailable := true
+mismatchedRealLineScalesBlockRawCancellation := true
+labelIndependentJ2CollapseRejected := true
+balancedSignCompatibleLevelRejectedAtFinalRoute := true
+disputeSettledByCurrentStage := false
+```
+
+### Mathematical Reason
+
+This is the first explicit experiment pass aimed at the disputed 3.11 to 3.12
+transition.
+
+The positive route theorem says that, once the ordered real-line alignment
+required by the `(Ind3)` corridor is supplied, the current formalization reaches
+the final q/Theta inequality:
+
+```text
+qSigned <= thetaSigned
+```
+
+The obstruction theorems say that two simplifications are not accepted by the
+formal model:
+
+```text
+no label-independent scale absorbs all representative j^2 factors
+balanced sign-compatible evidence is not the final hull/log-volume route level
+```
+
+Thus the current Lean code does not collapse the passage to a single global
+real-line scaling.  It also does not declare the dispute solved: the successful
+route is still conditional on the explicit ordered real-line alignment and on
+the Hodge/SHE transport audit data.
+
+### Source Check
+
+Mochizuki's reported formalization program isolates the `3.11.5 => 3.12`
+transition as the simultaneous q-/Theta-pilot comparison after the preceding
+APT and hull+det work.  The new experiment reflects exactly this by making the
+final route a hull/log-volume comparison after ordered alignment, not a raw
+pointwise identification.
+
+Scholze-Stix's criticism tests whether the relevant one-dimensional real-line
+identifications force a collapse once the scalar factors are made consistent.
+Our first-pass Lean experiment agrees that consistency matters: a mismatched
+transport cannot be cancelled to raw equality, and a single label-independent
+scale cannot absorb the representative `j^2` profile.
+
+### Current Reading
+
+The formalization currently supports this narrow conclusion:
+
+```text
+Mochizuki-style direction:
+  a conditional 3.12 q/Theta route exists when the ordered alignment and
+  Hodge/SHE transport audit are explicitly present.
+
+Scholze-Stix-style collapse pressure:
+  the naive single-scale collapse is rejected for the representative j^2
+  branch, and balanced sign compatibility cannot be reused as the final
+  hull/log-volume comparison.
+
+Unresolved:
+  we have not yet formalized enough of the genuine IUT Hodge-theater machinery
+  to prove that the needed ordered alignment and transport audit are forced by
+  Mochizuki's full hypotheses rather than supplied as explicit assumptions.
+```
