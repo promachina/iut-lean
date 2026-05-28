@@ -6539,6 +6539,32 @@ noncomputable def placeAudited_logVolume_fl_zmod_labelwise_3115_endpoint_audit_e
   sourceAudit.endpointAudit
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_labelwise_3115_endpoint_provenance_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      FLZModCuspLabelThetaLabelwiseContainerAudit.ThreeElevenFiveWeightedThetaAudit
+        part profile audited) :
+    sourceAudit.endpointAudit.final_comparison_checkpoint =
+        theorem3115ToCorollary312Checkpoint ∧
+      sourceAudit.endpointAudit.simultaneous_comparison_checkpoint =
+        simultaneousComparisonCheckpoint ∧
+      sourceAudit.endpointAudit.real_comparison_chart =
+        package.preLedger.chartedContainer.chart.chart :=
+  ⟨sourceAudit.endpointAudit.finalCheckpoint_eq,
+    sourceAudit.endpointAudit.simultaneousCheckpoint_eq,
+    sourceAudit.endpointAudit.realComparisonChartMatchesPackage⟩
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 theorem placeAudited_logVolume_fl_zmod_labelwise_3115_endpoint_recovers_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
@@ -7229,6 +7255,32 @@ noncomputable def placeAudited_logVolume_fl_zmod_cusp_3115_endpoint_audit_exampl
     FLZModCuspLabelThetaCuspClassContainerAudit.ThreeElevenFiveWeightedThetaEndpointAudit
       part profile audited :=
   sourceAudit.endpointAudit
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_cusp_3115_endpoint_provenance_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      FLZModCuspLabelThetaCuspClassContainerAudit.ThreeElevenFiveWeightedThetaAudit
+        part profile audited) :
+    sourceAudit.endpointAudit.final_comparison_checkpoint =
+        theorem3115ToCorollary312Checkpoint ∧
+      sourceAudit.endpointAudit.simultaneous_comparison_checkpoint =
+        simultaneousComparisonCheckpoint ∧
+      sourceAudit.endpointAudit.real_comparison_chart =
+        package.preLedger.chartedContainer.chart.chart :=
+  ⟨sourceAudit.endpointAudit.finalCheckpoint_eq,
+    sourceAudit.endpointAudit.simultaneousCheckpoint_eq,
+    sourceAudit.endpointAudit.realComparisonChartMatchesPackage⟩
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 theorem placeAudited_logVolume_fl_zmod_cusp_3115_endpoint_recovers_example

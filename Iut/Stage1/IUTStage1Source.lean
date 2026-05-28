@@ -16219,6 +16219,15 @@ structure ThreeElevenFiveWeightedThetaEndpointAudit
     (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)
     (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) where
+  final_comparison_checkpoint : TransitionCheckpointId
+  final_comparison_checkpoint_eq :
+    final_comparison_checkpoint = theorem3115ToCorollary312Checkpoint
+  simultaneous_comparison_checkpoint : TransitionCheckpointId
+  simultaneous_comparison_checkpoint_eq :
+    simultaneous_comparison_checkpoint = simultaneousComparisonCheckpoint
+  real_comparison_chart : AlgorithmicOutput.RealComparisonChartId
+  real_comparison_chart_eq_package :
+    real_comparison_chart = package.preLedger.chartedContainer.chart.chart
   weighted_average_value : Real
   weighted_average_value_eq :
     weighted_average_value =
@@ -16403,7 +16412,14 @@ noncomputable def ThreeElevenFiveWeightedThetaAudit.endpointAudit
     (sourceAudit :
       ThreeElevenFiveWeightedThetaAudit part profile audited) :
     ThreeElevenFiveWeightedThetaEndpointAudit part profile audited :=
-  { weighted_average_value :=
+  { final_comparison_checkpoint := sourceAudit.final_comparison_checkpoint,
+    final_comparison_checkpoint_eq := sourceAudit.final_comparison_checkpoint_eq,
+    simultaneous_comparison_checkpoint := sourceAudit.simultaneous_comparison_checkpoint,
+    simultaneous_comparison_checkpoint_eq :=
+      sourceAudit.simultaneous_comparison_checkpoint_eq,
+    real_comparison_chart := sourceAudit.real_comparison_chart,
+    real_comparison_chart_eq_package := sourceAudit.real_comparison_chart_eq_package,
+    weighted_average_value :=
       (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
         profile audited).weightedAverageLogVolume,
     weighted_average_value_eq := rfl,
@@ -16424,6 +16440,36 @@ theorem ThreeElevenFiveWeightedThetaEndpointAudit.recovers_weightedAverage_le_th
   rw [← endpointAudit.weighted_average_value_eq,
     ← endpointAudit.theta_source_average_value_eq]
   exact endpointAudit.weighted_average_le_theta_average
+
+theorem ThreeElevenFiveWeightedThetaEndpointAudit.finalCheckpoint_eq
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (endpointAudit :
+      ThreeElevenFiveWeightedThetaEndpointAudit part profile audited) :
+    endpointAudit.final_comparison_checkpoint =
+      theorem3115ToCorollary312Checkpoint :=
+  endpointAudit.final_comparison_checkpoint_eq
+
+theorem ThreeElevenFiveWeightedThetaEndpointAudit.simultaneousCheckpoint_eq
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (endpointAudit :
+      ThreeElevenFiveWeightedThetaEndpointAudit part profile audited) :
+    endpointAudit.simultaneous_comparison_checkpoint =
+      simultaneousComparisonCheckpoint :=
+  endpointAudit.simultaneous_comparison_checkpoint_eq
+
+theorem ThreeElevenFiveWeightedThetaEndpointAudit.realComparisonChartMatchesPackage
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (endpointAudit :
+      ThreeElevenFiveWeightedThetaEndpointAudit part profile audited) :
+    endpointAudit.real_comparison_chart =
+      package.preLedger.chartedContainer.chart.chart :=
+  endpointAudit.real_comparison_chart_eq_package
 
 theorem ThreeElevenFiveWeightedThetaAudit.endpointAudit_recovers
     {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
@@ -16848,6 +16894,15 @@ structure ThreeElevenFiveWeightedThetaEndpointAudit
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)
     (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) where
+  final_comparison_checkpoint : TransitionCheckpointId
+  final_comparison_checkpoint_eq :
+    final_comparison_checkpoint = theorem3115ToCorollary312Checkpoint
+  simultaneous_comparison_checkpoint : TransitionCheckpointId
+  simultaneous_comparison_checkpoint_eq :
+    simultaneous_comparison_checkpoint = simultaneousComparisonCheckpoint
+  real_comparison_chart : AlgorithmicOutput.RealComparisonChartId
+  real_comparison_chart_eq_package :
+    real_comparison_chart = package.preLedger.chartedContainer.chart.chart
   weighted_average_value : Real
   weighted_average_value_eq :
     weighted_average_value =
@@ -17032,7 +17087,14 @@ noncomputable def ThreeElevenFiveWeightedThetaAudit.endpointAudit
     (sourceAudit :
       ThreeElevenFiveWeightedThetaAudit part profile audited) :
     ThreeElevenFiveWeightedThetaEndpointAudit part profile audited :=
-  { weighted_average_value :=
+  { final_comparison_checkpoint := sourceAudit.final_comparison_checkpoint,
+    final_comparison_checkpoint_eq := sourceAudit.final_comparison_checkpoint_eq,
+    simultaneous_comparison_checkpoint := sourceAudit.simultaneous_comparison_checkpoint,
+    simultaneous_comparison_checkpoint_eq :=
+      sourceAudit.simultaneous_comparison_checkpoint_eq,
+    real_comparison_chart := sourceAudit.real_comparison_chart,
+    real_comparison_chart_eq_package := sourceAudit.real_comparison_chart_eq_package,
+    weighted_average_value :=
       (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
         profile audited).weightedAverageLogVolume,
     weighted_average_value_eq := rfl,
@@ -17053,6 +17115,36 @@ theorem ThreeElevenFiveWeightedThetaEndpointAudit.recovers_weightedAverage_le_th
   rw [← endpointAudit.weighted_average_value_eq,
     ← endpointAudit.theta_source_average_value_eq]
   exact endpointAudit.weighted_average_le_theta_average
+
+theorem ThreeElevenFiveWeightedThetaEndpointAudit.finalCheckpoint_eq
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (endpointAudit :
+      ThreeElevenFiveWeightedThetaEndpointAudit part profile audited) :
+    endpointAudit.final_comparison_checkpoint =
+      theorem3115ToCorollary312Checkpoint :=
+  endpointAudit.final_comparison_checkpoint_eq
+
+theorem ThreeElevenFiveWeightedThetaEndpointAudit.simultaneousCheckpoint_eq
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (endpointAudit :
+      ThreeElevenFiveWeightedThetaEndpointAudit part profile audited) :
+    endpointAudit.simultaneous_comparison_checkpoint =
+      simultaneousComparisonCheckpoint :=
+  endpointAudit.simultaneous_comparison_checkpoint_eq
+
+theorem ThreeElevenFiveWeightedThetaEndpointAudit.realComparisonChartMatchesPackage
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (endpointAudit :
+      ThreeElevenFiveWeightedThetaEndpointAudit part profile audited) :
+    endpointAudit.real_comparison_chart =
+      package.preLedger.chartedContainer.chart.chart :=
+  endpointAudit.real_comparison_chart_eq_package
 
 theorem ThreeElevenFiveWeightedThetaAudit.endpointAudit_recovers
     {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}

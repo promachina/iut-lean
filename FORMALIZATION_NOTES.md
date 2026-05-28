@@ -18723,3 +18723,73 @@ comparison; it carries forward the same endpoint audit.
 Downstream users of the route can recover the precise endpoint proof that drives
 the final q/Theta inequality.  This makes the remaining dispute point visible
 even at the full-route API boundary.
+
+## 149. Endpoint Audits Carry 3.11.5 Provenance
+
+### Lean Move
+
+We strengthened:
+
+```text
+ThreeElevenFiveWeightedThetaEndpointAudit
+```
+
+for both the labelwise and cusp-class routes.  The endpoint audit now records:
+
+```text
+final_comparison_checkpoint
+simultaneous_comparison_checkpoint
+real_comparison_chart
+```
+
+with accessor theorems:
+
+```text
+ThreeElevenFiveWeightedThetaEndpointAudit.finalCheckpoint_eq
+ThreeElevenFiveWeightedThetaEndpointAudit.simultaneousCheckpoint_eq
+ThreeElevenFiveWeightedThetaEndpointAudit.realComparisonChartMatchesPackage
+```
+
+The example file exposes the same fact via endpoint-provenance examples.
+
+### Mathematical Reason
+
+The previous endpoint audit named the two real numbers and their inequality, but
+the checkpoint and chart provenance lived one layer above it in the
+`ThreeElevenFiveWeightedThetaAudit`.  That was too easy to misuse: a later
+consumer could carry the endpoint inequality without also carrying the fact that
+it belongs to the final `3.11.5 => 3.12` simultaneous comparison chart.
+
+The endpoint audit is now a self-contained certificate for the disputed real
+comparison endpoint.  It still does not derive the hard inequality; it says that
+any proof of the hard inequality must be attached to the exact final checkpoint
+and real comparison chart used by the package.
+
+### Source Check
+
+Mochizuki's April 2026 formalization report describes the final portion of the
+Theorem 3.11 to Corollary 3.12 route as the `3.11.5 => 3.12` comparison of the
+q- and Theta-pilot objects in a common container after moving the `hull+det`
+work into the `3.11.5` side.  The new fields mirror that organization: the
+endpoint comparison is not a free-floating real inequality but part of this
+named final simultaneous-comparison stage.
+
+Scholze-Stix's discussion of Corollary 3.12 asks that the relevant copies of the
+real line and their identifications be spelled out.  Recording the chart at the
+endpoint-audit level is a direct response to that requirement: the real
+endpoints and the chart in which they are compared travel together.
+
+### Relevance to the 3.12 Dispute
+
+The current unresolved mathematical load remains exactly the same endpoint
+inequality:
+
+```text
+squareWeightedAveragedLogVolume.weightedAverageLogVolume <= thetaSourceAverage
+```
+
+but the formalization now prevents that inequality from being detached from its
+claimed 3.11.5 provenance.  This is useful before moving deeper into the
+Hodge-theater side: when we eventually replace the explicit audit assumption by
+source-level construction, Lean will require us to produce not merely an
+inequality, but an inequality at the named final checkpoint and chart.
