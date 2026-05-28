@@ -18091,3 +18091,45 @@ Downstream formalization work can therefore distinguish a route that merely
 knows the gap from a route that has actually supplied the weighted-to-Theta
 comparison.  This is still separate from the pointwise representative-square
 SHE transport question.
+
+## 134. Supplied Weighted-Theta Data Has The Same Level
+
+### Lean Move
+
+We tagged the supplied comparison records with the same comparison level as the
+missing datum:
+
+```text
+weightedThetaComparisonDataLevel comparison
+  = IUTStage1SquareComparisonLevel.hullLogVolume
+```
+
+for both the labelwise and cusp-class container routes.
+
+### Mathematical Reason
+
+Supplying the missing comparison
+
+```text
+squareWeightedAverage <= thetaSourceAverage
+```
+
+does not change its mathematical kind.  It remains a final real log-volume
+comparison between an averaged weighted expression and the Theta-source
+average.  It is not pointwise representative-square transport and not aggregate
+reindexing evidence.
+
+### Source Check
+
+This matches the source-facing split in IUT III: after the `F_l`-indexed
+averaged data are formed, the remaining move toward Corollary 3.12 is a
+log-volume comparison.  It also matches Scholze-Stix's insistence that the
+critical comparison be accounted for as a real comparison, not hidden behind
+notation or behind earlier multiradial bookkeeping.
+
+### Relevance to the 3.12 Dispute
+
+The formalization now treats the missing weighted-to-Theta gap and the supplied
+weighted-to-Theta evidence as the same comparison level.  This avoids a subtle
+API drift where the missing obligation is classified correctly, but the data
+that fills it could later be mistaken for pointwise SHE transport.

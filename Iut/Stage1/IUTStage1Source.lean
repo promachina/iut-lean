@@ -16111,6 +16111,25 @@ structure WeightedThetaComparisonData
       profile audited).weightedAverageLogVolume <=
         part.theta_source.thetaSourceAverage audited
 
+def weightedThetaComparisonDataLevel
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (_comparison :
+      WeightedThetaComparisonData part profile audited) :
+    IUTStage1SquareComparisonLevel :=
+  IUTStage1SquareComparisonLevel.hullLogVolume
+
+theorem weightedThetaComparisonDataLevel_eq_hullLogVolume
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (comparison :
+      WeightedThetaComparisonData part profile audited) :
+    weightedThetaComparisonDataLevel comparison =
+      IUTStage1SquareComparisonLevel.hullLogVolume :=
+  rfl
+
 theorem qSigned_le_thetaSigned_of_weightedThetaComparisonData
     (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)
@@ -16303,6 +16322,25 @@ structure WeightedThetaComparisonData
     (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
       profile audited).weightedAverageLogVolume <=
         part.theta_source.thetaSourceAverage audited
+
+def weightedThetaComparisonDataLevel
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (_comparison :
+      WeightedThetaComparisonData part profile audited) :
+    IUTStage1SquareComparisonLevel :=
+  IUTStage1SquareComparisonLevel.hullLogVolume
+
+theorem weightedThetaComparisonDataLevel_eq_hullLogVolume
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (comparison :
+      WeightedThetaComparisonData part profile audited) :
+    weightedThetaComparisonDataLevel comparison =
+      IUTStage1SquareComparisonLevel.hullLogVolume :=
+  rfl
 
 def toLabelwiseWeightedThetaComparisonData
     {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
