@@ -4892,6 +4892,54 @@ theorem placeAudited_logVolume_fl_zmod_direct_label_object_zmod_eq_example
       audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
   part.zmodNormalizedLogVolume_eq_packetLocalObjectFinite audited j
 
+theorem placeAudited_logVolume_fl_zmod_direct_label_object_cusp_model_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.cusp_label_model).local_lab_cusp_model =
+      zmodLocalLabCuspModel l :=
+  part.localLabCuspModel_eq_zmod
+
+theorem placeAudited_logVolume_fl_zmod_direct_label_object_canonical_cusp_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.cuspLogVolume audited).cuspClassLogVolume
+        (zmodCanonicalSignLabelQuotient l) =
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
+  part.canonicalCuspClassLogVolume_eq_packetLocalObjectFinite audited
+
+theorem placeAudited_logVolume_fl_zmod_direct_label_object_zero_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.cuspLogVolume audited).zeroLogVolume =
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
+  part.zeroLogVolume_eq_packetLocalObjectFinite audited
+
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 def placeAudited_logVolume_fl_zmod_direct_label_object_to_constant_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}

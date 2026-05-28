@@ -12741,6 +12741,22 @@ theorem zmodNormalizedLogVolume_eq_packetLocalObjectFinite
     _ = audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume := by
       rw [part.labelLocalObject_eq_packetLocalObject audited j]
 
+theorem localLabCuspModel_eq_zmod
+    (part : audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.cusp_label_model).local_lab_cusp_model =
+      zmodLocalLabCuspModel l :=
+  let model :=
+    part.theta_source.compatible_average.zmod_cusp_audit.cusp_label_model
+  model.localLabCuspModel_eq_zmod
+
+theorem cuspLabelClassData_eq_zmod
+    (part : audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.cusp_label_model).cusp_label_class_data =
+      zmodCanonicalCuspLabelClassData l :=
+  let model :=
+    part.theta_source.compatible_average.zmod_cusp_audit.cusp_label_model
+  model.cuspLabelClassData_eq_zmod
+
 def toSharedZModPacketLocalObjectEstimateAudit
     (part : audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l) :
     audit.FLZModCuspLabelThetaSharedZModPacketLocalObjectEstimateAudit l :=
@@ -12753,6 +12769,33 @@ def toSharedZModPacketLocalObjectEstimateAudit
       part.packetLocalObjectEstimate_eq_packetLocalObject,
     zmodNormalizedLogVolume_eq_packetLocalObjectFinite :=
       part.zmodNormalizedLogVolume_eq_packetLocalObjectFinite }
+
+theorem cuspClassLogVolume_eq_packetLocalObjectFinite
+    (part : audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    (part.theta_source.compatible_average.cuspLogVolume audited).cuspClassLogVolume
+        label =
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
+  let sharedZMod := part.toSharedZModPacketLocalObjectEstimateAudit
+  sharedZMod.cuspClassLogVolume_eq_packetLocalObjectFinite audited label
+
+theorem canonicalCuspClassLogVolume_eq_packetLocalObjectFinite
+    (part : audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.cuspLogVolume audited).cuspClassLogVolume
+        (zmodCanonicalSignLabelQuotient l) =
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
+  part.cuspClassLogVolume_eq_packetLocalObjectFinite
+    audited (zmodCanonicalSignLabelQuotient l)
+
+theorem zeroLogVolume_eq_packetLocalObjectFinite
+    (part : audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.cuspLogVolume audited).zeroLogVolume =
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
+  let sharedZMod := part.toSharedZModPacketLocalObjectEstimateAudit
+  sharedZMod.zeroLogVolume_eq_packetLocalObjectFinite audited
 
 def toConstantZModPacketLocalObjectEstimateAudit
     (part : audit.FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit l) :

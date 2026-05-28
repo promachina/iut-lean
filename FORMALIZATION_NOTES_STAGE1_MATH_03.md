@@ -614,6 +614,70 @@ as data.  The next deeper construction should connect those objects to the
 canonical `LocalLabCuspModel`/`CuspLabelClassData` foundations, especially the
 nonzero sign-label quotient and the separate zero label.
 
+## 114. Direct Label Objects Expose Canonical Cusp/Zero Consequences
+
+### Goal
+
+We made the foundation anchor and cusp/zero consequences visible directly on
+the direct local label/object route.
+
+### Lean Move
+
+Inside:
+
+```text
+FLZModCuspLabelThetaDirectLocalLabelObjectConstructionAudit
+```
+
+we added:
+
+```text
+localLabCuspModel_eq_zmod
+cuspLabelClassData_eq_zmod
+cuspClassLogVolume_eq_packetLocalObjectFinite
+canonicalCuspClassLogVolume_eq_packetLocalObjectFinite
+zeroLogVolume_eq_packetLocalObjectFinite
+```
+
+The cusp/zero theorems are projections of the existing `ZMod` compatibility
+route, but they are now available at the direct label-object layer without
+manually unfolding the intermediate shared `ZMod` audit.
+
+### Mathematical Point
+
+This makes the current direct route easier to audit:
+
+```text
+direct label objects
+  -> all ZMod label values are packet local-object values
+  -> every cusp sign-label class is the packet local-object value
+  -> zero label is the packet local-object value
+```
+
+It also records that the cusp-label model carried by the route is the canonical
+`ZMod l` local cusp-label model.
+
+### Trap Avoided
+
+The canonical cusp class and the zero label are exposed separately.  We still
+do not treat zero as a member of the nonzero sign-label quotient.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_direct_label_object_cusp_model_example
+placeAudited_logVolume_fl_zmod_direct_label_object_canonical_cusp_eq_example
+placeAudited_logVolume_fl_zmod_direct_label_object_zero_eq_example
+```
+
+### Remaining Gap
+
+The label-local objects are still supplied as a `ZMod`-indexed family.  The next
+step should distinguish the nonzero sign-label class construction from the
+separate zero-label construction at the level of local objects themselves.
+
 ## 112. Source Audit: Labels, Averages, and Real-Line Identifications
 
 ### Check Performed
