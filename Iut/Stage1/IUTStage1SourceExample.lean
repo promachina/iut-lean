@@ -433,6 +433,29 @@ theorem packetNormalizedContainerEstimate_capsule_sum_example
         (packetState.packetState.capsuleFamily.capsuleCount : Real) :=
   estimate.localLogVolume_eq_capsuleSumAverage
 
+theorem typedCapsuleFamily_const_le_normalized_example
+    {kind : IUTStage1PlaceKind}
+    (data : IUTStage1TypedCapsuleFamilyLogVolume kind)
+    {c : Real}
+    (hcapsule :
+      ∀ i : Fin data.capsuleCount, c <= (data.capsule i).logVolume) :
+    c <= data.normalizedLogVolume :=
+  data.const_le_normalizedLogVolume_of_capsule_le hcapsule
+
+theorem packetNormalizedContainerEstimate_capsule_bound_example
+    {kind : IUTStage1PlaceKind}
+    {packetState : IUTStage1LocalTensorDirectSummandPacketState kind}
+    {targetSigned localLogVolume : Real}
+    (estimate :
+      IUTStage1PacketNormalizedContainerEstimate
+        packetState targetSigned localLogVolume)
+    (hcapsule :
+      ∀ i : Fin packetState.packetState.capsuleFamily.capsuleCount,
+        targetSigned <=
+          (packetState.packetState.capsuleFamily.capsule i).logVolume) :
+    targetSigned <= localLogVolume :=
+  estimate.targetSigned_le_localLogVolume_of_capsule_le hcapsule
+
 def labelAveragedProcessionLogVolume_average_example
     {label : Type u} [Fintype label]
     (data : IUTStage1LabelAveragedProcessionLogVolume label) :

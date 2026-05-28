@@ -1430,6 +1430,37 @@ theorem toCapsuleFamily_total_eq
       Finset.univ.sum data.toCapsuleFamilyLogVolume.capsuleLogVolume :=
   data.toCapsuleFamilyLogVolume.total_eq
 
+def toLabelAveragedCapsuleLogVolume
+    (data : IUTStage1TypedCapsuleFamilyLogVolume kind) :
+    IUTStage1LabelAveragedProcessionLogVolume (Fin data.capsuleCount) :=
+  { normalizedLogVolume := fun i => (data.capsule i).logVolume,
+    averageLogVolume := data.normalizedLogVolume,
+    average_eq := by
+      calc
+        data.normalizedLogVolume =
+            data.totalLogVolume / (data.capsuleCount : Real) :=
+          data.normalized_eq
+        _ =
+            (Finset.univ.sum fun i => (data.capsule i).logVolume) /
+              (data.capsuleCount : Real) := by
+          rw [data.total_eq]
+        _ =
+            (Finset.univ.sum fun i => (data.capsule i).logVolume) /
+              (Fintype.card (Fin data.capsuleCount) : Real) := by
+          simp }
+
+theorem const_le_normalizedLogVolume_of_capsule_le
+    (data : IUTStage1TypedCapsuleFamilyLogVolume kind)
+    {c : Real}
+    (hcapsule : ∀ i : Fin data.capsuleCount, c <= (data.capsule i).logVolume) :
+    c <= data.normalizedLogVolume := by
+  let averaged := data.toLabelAveragedCapsuleLogVolume
+  haveI : Nonempty (Fin data.capsuleCount) :=
+    ⟨⟨0, data.capsuleCount_pos⟩⟩
+  exact
+    IUTStage1LabelAveragedProcessionLogVolume.const_le_average_of_forall_le
+      averaged hcapsule
+
 end IUTStage1TypedCapsuleFamilyLogVolume
 
 /--
@@ -2344,6 +2375,20 @@ theorem localLogVolume_eq_capsuleSumAverage
             (packetState.packetState.capsuleFamily.capsule i).logVolume) /
           (packetState.packetState.capsuleFamily.capsuleCount : Real) := by
       rw [packetState.packetState.capsule_totalLogVolume_eq_sum]
+
+theorem targetSigned_le_localLogVolume_of_capsule_le
+    (estimate :
+      IUTStage1PacketNormalizedContainerEstimate
+        packetState targetSigned localLogVolume)
+    (hcapsule :
+      ∀ i : Fin packetState.packetState.capsuleFamily.capsuleCount,
+        targetSigned <=
+          (packetState.packetState.capsuleFamily.capsule i).logVolume) :
+    targetSigned <= localLogVolume := by
+  rw [estimate.localLogVolume_eq_packetNormalized]
+  exact
+    packetState.packetState.capsuleFamily.const_le_normalizedLogVolume_of_capsule_le
+      hcapsule
 
 end IUTStage1PacketNormalizedContainerEstimate
 

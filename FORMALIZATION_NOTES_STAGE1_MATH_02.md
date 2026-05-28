@@ -4810,3 +4810,89 @@ placeAudited_logVolume_fl_zmod_packet_normalized_capsule_sum_example
 The next step should push one level further into the capsule entries: local
 container estimates should eventually bound the finite capsule log-volume sum,
 not merely the normalized real after the sum has already been packaged.
+
+## 61. Capsule-Entry Bounds Imply Normalized Capsule Bounds
+
+### Goal
+
+We added the finite averaging theorem for capsule entries.
+
+### Lean Move
+
+For:
+
+```text
+IUTStage1TypedCapsuleFamilyLogVolume
+```
+
+Lean now constructs:
+
+```text
+toLabelAveragedCapsuleLogVolume
+```
+
+This views the finite capsule family as a finite label-average over
+`Fin capsuleCount`.  The denominator is checked by Lean as
+`Fintype.card (Fin capsuleCount) = capsuleCount`.
+
+Lean then proves:
+
+```text
+const_le_normalizedLogVolume_of_capsule_le
+```
+
+If:
+
+```text
+c <= capsule(i).logVolume
+```
+
+for every capsule `i`, then:
+
+```text
+c <= normalizedLogVolume
+```
+
+For packet-normalized estimates, Lean also proves:
+
+```text
+targetSigned_le_localLogVolume_of_capsule_le
+```
+
+after rewriting the local log-volume to the packet's normalized capsule-family
+value.
+
+### Mathematical Point
+
+The route can now start at individual capsule entries:
+
+```text
+targetSigned <= capsule(i).logVolume for every capsule i
+  -> targetSigned <= packet normalized capsule average
+  -> targetSigned <= cusp/zero local log-volume
+  -> labelwise and F_l average route
+```
+
+This is closer to the source mathematics around procession-normalized local
+log-volumes, where a finite capsule family is averaged.
+
+### Trap Avoided
+
+The proof uses the positivity of `capsuleCount`; averaging over an empty capsule
+family is not permitted.  This is already part of
+`IUTStage1TypedCapsuleFamilyLogVolume`.
+
+### Toy Check
+
+The examples now check:
+
+```text
+typedCapsuleFamily_const_le_normalized_example
+packetNormalizedContainerEstimate_capsule_bound_example
+```
+
+### Remaining Gap
+
+The capsule-entry bound itself is still a hypothesis.  The next step should
+make that hypothesis come from a capsule-entry container estimate, parallel to
+the local-object and packet-normalized container estimates above.
