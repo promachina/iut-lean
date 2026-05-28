@@ -7633,3 +7633,72 @@ The cusp-class and zero packet-normalized equalities are still supplied as
 route fields.  The next reduction is to construct those equalities from
 local-object/capsule normalization data or from explicit local label
 definitions, while keeping the source classification visible.
+
+## 97. Periodic Self-Audit: Label Information and Real-Line Identifications
+
+### Check Performed
+
+I reread the current Lean route against the relevant local references:
+
+```text
+IUT III, Theorem 3.11 / Corollary 3.12 discussion
+Scholze-Stix, Section 2.2
+Mochizuki, On the Formalization of IUT, Stage 1
+```
+
+I also checked the Lean files for proof holes:
+
+```text
+rg "sorry|admit|axiom|unsafe" Iut/Stage1
+```
+
+The only match is the word "unsafe" in a prose comment warning against unsafe
+identification of independently supplied volumes.
+
+### Alignment Check
+
+The current route preserves three distinctions that are central to the disputed
+Theorem 3.11 -> Corollary 3.12 passage.
+
+First, labelwise data has not been collapsed into a mere average.  The current
+dependency direction is:
+
+```text
+cusp/zero packet equalities
+  -> pointwise ZMod label equality
+  -> constant label-family equality
+  -> Theta-source average equality
+```
+
+This is stronger and more auditable than assuming an equality of averages.
+
+Second, the zero label remains separate from nonzero sign-label classes.  This
+matches the formal model in which the sign-label quotient is defined only for
+nonzero labels.
+
+Third, the target-to-Theta-average bound is not attributed to `(Ind3)` alone.
+It is sourced from direct capsule estimates plus explicit packet/label
+equalities.  This matters because Scholze-Stix emphasize that the critical
+argument requires clear identifications among the relevant copies of real lines,
+while Mochizuki emphasizes distinct labels and log-link/log-volume compatibility.
+
+### Risk Found
+
+The most important remaining assumption is still the packet-normalized
+cusp/zero equality:
+
+```text
+cuspClassLogVolume(label) = packet normalized value
+zeroLogVolume = packet normalized value
+```
+
+This is now the correct next pressure point.  It is close enough to the current
+formal cusp-label model to be meaningful, but it is not yet constructed from a
+more primitive local definition of the `ZMod` label log-volume family.
+
+### Next Action
+
+Continue reducing those cusp/zero packet-normalized equalities.  The immediate
+candidate is a route from local-object/capsule normalization data plus explicit
+cusp/zero-to-local-object log-volume identifications, because that is already
+represented by the direct identified local packet route.
