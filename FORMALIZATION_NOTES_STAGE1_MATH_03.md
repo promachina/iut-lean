@@ -1208,3 +1208,58 @@ This is still an abstract bridge.  The next step should classify the bridge
 source: direct local construction, `(Ind1)/(Ind2)` transport, or a separate
 local-object comparison lemma.  This mirrors the earlier source classifications
 and keeps the disputed identification auditable.
+
+## 123. Classified Insulated-to-Packet Bridge
+
+### Lean Move
+
+I added:
+
+```text
+FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit
+FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit
+  .ofDirectLocalLabelObjectConstruction
+FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit
+  .ofInd12TransportedLocalLabelObjectConstruction
+FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit
+  .ofSeparateLocalObjectIdentification
+FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit
+  .toCuspZeroLocalLabelObjectConstructionAudit
+```
+
+### Mathematical Reason
+
+The packet bridge is now tagged with the same source enum used for the existing
+constant `ZMod` packet-local-object bridge:
+
+```text
+IUTStage1ZModPacketLocalObjectBridgeSource
+```
+
+This keeps the zero/nonzero comparison source visible.  A proof may say that
+the bridge is direct local construction, transported construction, or separate
+local-object identification, but it cannot use the bridge without choosing one
+of these sources.
+
+### Trap Avoided
+
+The classified object does not make the bridge more true.  It only records the
+provenance of the packet-local-object identifications.  This is important for
+review because the bridge is exactly where the insulated route becomes the
+comparison route.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_classified_insulated_bridge_direct_example
+placeAudited_logVolume_fl_zmod_classified_insulated_bridge_source_example
+placeAudited_logVolume_fl_zmod_classified_insulated_bridge_target_bound_example
+```
+
+### Remaining Gap
+
+The classification is still user-supplied.  The next mathematical target is to
+connect one of the classifications, preferably the direct local construction
+branch, to already formalized direct packet-normalization/local-object data.

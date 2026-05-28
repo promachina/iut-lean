@@ -11097,6 +11097,17 @@ structure FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit
         audited.choice.local_tensor_state.packetState.localObject
 
 /--
+Classified packet bridge from the insulated cusp/zero route to the comparison
+route.
+-/
+structure FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  packet_bridge :
+    audit.FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit l
+  bridge_source : IUTStage1ZModPacketLocalObjectBridgeSource
+
+/--
 Packet-normalized source for the cusp-class local object estimates.
 
 This refinement requires each cusp-class or zero-label log-volume real to be
@@ -13398,6 +13409,60 @@ theorem targetSigned_le_thetaSourceAverage
   comparisonRoute.targetSigned_le_thetaSourceAverage audited
 
 end FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit
+
+namespace FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+def ofDirectLocalLabelObjectConstruction
+    (part : audit.FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l :=
+  { packet_bridge := part,
+    bridge_source :=
+      IUTStage1ZModPacketLocalObjectBridgeSource.directLocalLabelObjectConstruction }
+
+def ofInd12TransportedLocalLabelObjectConstruction
+    (part : audit.FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l :=
+  { packet_bridge := part,
+    bridge_source :=
+      IUTStage1ZModPacketLocalObjectBridgeSource.ind12TransportedLocalLabelObjectConstruction }
+
+def ofSeparateLocalObjectIdentification
+    (part : audit.FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l :=
+  { packet_bridge := part,
+    bridge_source :=
+      IUTStage1ZModPacketLocalObjectBridgeSource.separateLocalObjectIdentification }
+
+def toInsulatedCuspZeroPacketBridgeAudit
+    (part :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit l :=
+  part.packet_bridge
+
+def toCuspZeroLocalLabelObjectConstructionAudit
+    (part :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit l :=
+  part.packet_bridge.toCuspZeroLocalLabelObjectConstructionAudit
+
+theorem targetSigned_le_thetaSourceAverage
+    (part :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.packet_bridge.insulated_route.theta_source.thetaSourceAverage audited :=
+  part.packet_bridge.targetSigned_le_thetaSourceAverage audited
+
+theorem bridgeSource_eq_direct
+    (part : audit.FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit l) :
+    (ofDirectLocalLabelObjectConstruction part).bridge_source =
+      IUTStage1ZModPacketLocalObjectBridgeSource.directLocalLabelObjectConstruction :=
+  rfl
+
+end FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit
 
 namespace FLZModCuspLabelThetaPacketNormalizedContainerAudit
 
