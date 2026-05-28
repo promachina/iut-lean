@@ -955,6 +955,35 @@ theorem zmodSquareWeightedFullLabelTransportAudit_histories_example
     audit.bridge.domainTheater.side ≠ audit.bridge.codomainTheater.side :=
   audit.histories_not_identified
 
+theorem structuredSHESquareWeightTransportAudit_bridge_example
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {l : PrimeGeFive}
+    (audit : IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    audit.preservationAudit.bridge = bundle.hodgeTheaterDescentBridgeData :=
+  audit.bridge_eq_structuredSHE
+
+theorem structuredSHESquareWeightTransportAudit_average_example
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {l : PrimeGeFive}
+    (audit : IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    audit.preservationAudit.targetTransportedAverage =
+      audit.preservationAudit.sourceAverage :=
+  audit.targetTransportedAverage_eq_sourceAverage
+
+theorem structuredSHESquareWeightTransportAudit_descent_example
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {l : PrimeGeFive}
+    (audit : IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    audit.preservationAudit.bridge.descent =
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.descent :=
+  audit.bridge_descent_eq
+
 def flLabelModel_zmod_example
     (l : PrimeGeFive) :
     IUTStage1FLLabelModel (ZMod l.value) :=

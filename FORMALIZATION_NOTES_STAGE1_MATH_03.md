@@ -2960,3 +2960,110 @@ separate from the harder provenance question formalized in Milestone 145.
 The next step should stop treating the square-weight profile as "the same
 profile by hypothesis" and ask whether the structured-SHE/Hodge-theater route
 actually supplies the preservation audit from Milestone 145.
+
+## 147. Structured-SHE Square-Weight Transport Wrapper
+
+### Lean Move
+
+I added a route-level wrapper:
+
+```text
+IUTStage1StructuredSHESquareWeightTransportAudit
+```
+
+It contains a square-weighted full-label transport audit:
+
+```text
+preservation_audit :
+  IUTStage1ZModSquareWeightedFullLabelTransportAudit l
+```
+
+and a bridge compatibility field:
+
+```text
+preservation_audit.bridge =
+  bundle.hodgeTheaterDescentBridgeData
+```
+
+where `bundle` is an
+
+```text
+IUTStage1Theorem311StructuredInputsWithSHE package
+```
+
+The wrapper proves projections:
+
+```text
+bridge_domainTheater_eq
+bridge_codomainTheater_eq
+bridge_descent_eq
+targetTransportedSummand_eq_sourceSummand
+targetTransportedAverage_eq_sourceAverage
+histories_not_identified
+structuredSHE_histories_not_identified
+```
+
+The example file exposes the bridge equality, the HDD descent equality, and the
+transported weighted-average equality.
+
+### Mathematical Reason
+
+Milestone 145 introduced a preservation audit for the expression
+
+```text
+sum_j (j^2 * fullLabelLogVolume(j)) / squareWeightTotal
+```
+
+but that audit still contained an arbitrary
+`IUTStage1HodgeTheaterDescentBridgeData`.  This was too loose for the
+Corollary 3.12 route, because a preservation claim must be attached to the same
+Hodge-theater/SHE/HDD bridge that occurs in the structured Theorem 3.11 input.
+
+The new wrapper closes that gap.  It does not create the preservation proof.  It
+says that if such a proof is claimed in the structured-SHE route, then its
+bridge must literally be:
+
+```text
+bundle.hodgeTheaterDescentBridgeData
+```
+
+This ties the square-weight provenance question to the existing Theorem 3.11
+route rather than to an independent bookkeeping object.
+
+### Source Check
+
+The April 2026 formalization report describes the final `3.11.5 => 3.12`
+portion as concentrating on the simultaneous comparison aspect of Corollary
+3.12 after moving the `hull+det` material earlier.  Our structured-SHE bundle is
+the current Lean placeholder for that route-level comparison context.
+
+IUT III's proof of Corollary 3.12 uses the structured Hodge-theater and
+log-volume machinery leading to averages over `j ∈ F_l`.  Scholze-Stix's
+critique asks whether the relevant `j^2` information can remain meaningful
+after the identifications used in this passage.  The wrapper is therefore a
+formal way of asking the same question at the route boundary:
+
+```text
+does the structured-SHE bridge supply the square-weight/full-label
+preservation audit?
+```
+
+### Relevance to the 3.12 Dispute
+
+This milestone narrows the dispute surface.  A future proof cannot satisfy the
+square-weight preservation requirement by producing a preservation audit over a
+different bridge.  It must use the bridge extracted from the structured-SHE
+bundle, whose domain/codomain Hodge-theater histories remain explicitly
+non-identified.
+
+This is still neutral.  If Mochizuki's explanation is formalizable, the next
+work should construct this wrapper from actual Hodge-theater/log-link data.  If
+Scholze-Stix's simplification exposes a collapse, it should appear as the
+failure to produce the preservation fields for this very wrapper.
+
+### Remaining Gap
+
+The wrapper still assumes the preservation audit.  The next milestone should
+separate the available structured-SHE data from the missing square-weight data:
+what is already supplied by `bundle.hodgeTheaterDescentBridgeData`, and what
+extra equalities are still needed to construct the wrapper?

@@ -8458,6 +8458,105 @@ theorem hodgeTheaterDescentBridgeData_histories_not_identified
 end IUTStage1Theorem311StructuredInputsWithSHE
 
 /--
+Route-level wrapper for square-weighted full-label transport preservation.
+
+The underlying preservation audit from
+`IUTStage1ZModSquareWeightedFullLabelTransportAudit` already states the
+coordinate, square-weight, and full-label-log-volume preservation obligations.
+This wrapper additionally requires that its Hodge-theater/descent bridge is the
+one extracted from the structured-SHE Theorem 3.11 route.
+-/
+structure IUTStage1StructuredSHESquareWeightTransportAudit
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (l : PrimeGeFive) where
+  preservation_audit :
+    IUTStage1ZModSquareWeightedFullLabelTransportAudit l
+  bridge_eq_structured_she :
+    preservation_audit.bridge = bundle.hodgeTheaterDescentBridgeData
+
+namespace IUTStage1StructuredSHESquareWeightTransportAudit
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+variable {l : PrimeGeFive}
+
+def preservationAudit
+    (audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    IUTStage1ZModSquareWeightedFullLabelTransportAudit l :=
+  audit.preservation_audit
+
+theorem bridge_eq_structuredSHE
+    (audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    audit.preservationAudit.bridge = bundle.hodgeTheaterDescentBridgeData :=
+  audit.bridge_eq_structured_she
+
+theorem bridge_domainTheater_eq
+    (audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    audit.preservationAudit.bridge.domainTheater =
+      bundle.structuredSHE.context.domainStructure.theater := by
+  rw [audit.bridge_eq_structuredSHE]
+  rfl
+
+theorem bridge_codomainTheater_eq
+    (audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    audit.preservationAudit.bridge.codomainTheater =
+      bundle.structuredSHE.context.codomainStructure.theater := by
+  rw [audit.bridge_eq_structuredSHE]
+  rfl
+
+theorem bridge_descent_eq
+    (audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    audit.preservationAudit.bridge.descent =
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.descent := by
+  rw [audit.bridge_eq_structuredSHE]
+  rfl
+
+theorem targetTransportedSummand_eq_sourceSummand
+    (audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package bundle l)
+    (j : ZMod l.value) :
+    audit.preservationAudit.targetProfile.weight
+          (audit.preservationAudit.coordinateEquiv j) *
+        audit.preservationAudit.targetLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (audit.preservationAudit.coordinateEquiv j)) =
+      audit.preservationAudit.sourceProfile.weight j *
+        audit.preservationAudit.sourceLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  audit.preservationAudit.targetTransportedSummand_eq_sourceSummand j
+
+theorem targetTransportedAverage_eq_sourceAverage
+    (audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    audit.preservationAudit.targetTransportedAverage =
+      audit.preservationAudit.sourceAverage :=
+  audit.preservationAudit.targetTransportedAverage_eq_sourceAverage
+
+theorem histories_not_identified
+    (audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    audit.preservationAudit.bridge.domainTheater.side ≠
+      audit.preservationAudit.bridge.codomainTheater.side :=
+  audit.preservationAudit.histories_not_identified
+
+theorem structuredSHE_histories_not_identified
+    (_audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package bundle l) :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side :=
+  bundle.domainHistory_ne_codomainHistory
+
+end IUTStage1StructuredSHESquareWeightTransportAudit
+
+/--
 Audited entry from the strengthened SHE route into the existing `HDD o SHE`
 boundedness API.
 
