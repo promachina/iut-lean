@@ -653,6 +653,7 @@ structure ProcessionContainerExperimentReport where
   thetaLabelFactorPNormalizationAvailable : Bool
   frobeniusDerivativeDegreeInequalityAvailable : Bool
   iutIVThetaPilotLogVolumeEstimateAvailable : Bool
+  iutIVElementaryCoefficientEstimatesAvailable : Bool
 deriving Repr
 
 /--
@@ -691,7 +692,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     gaussBonnetMetricSignShadowAvailable := true,
     thetaLabelFactorPNormalizationAvailable := true,
     frobeniusDerivativeDegreeInequalityAvailable := true,
-    iutIVThetaPilotLogVolumeEstimateAvailable := true }
+    iutIVThetaPilotLogVolumeEstimateAvailable := true,
+    iutIVElementaryCoefficientEstimatesAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1109,6 +1111,18 @@ theorem iutIVThetaPilotLogVolumeEstimate_oneSixthLogQ_bound
     data.oneSixthLogQ <= data.theorem110RightHandSide :=
   data.oneSixthLogQ_le_theorem110RightHandSide
 
+theorem iutIVThetaPilotCorrectionFactor_inverse_bound
+    (l : PrimeGeFive) :
+    (iutIVThetaPilotCorrectionFactor l)⁻¹ <= (2 : Real) :=
+  iutIVThetaPilotCorrectionFactor_inv_le_two l
+
+theorem iutIVThetaPilotFinalCoefficient_bound
+    (l : PrimeGeFive) (dmod : Nat) :
+    (iutIVThetaPilotCorrectionFactor l)⁻¹ * ((1 : Real) / 4) *
+        (1 + 36 * (dmod : Real) / (l.value : Real)) <=
+      1 + 80 * (dmod : Real) / (l.value : Real) :=
+  iutIVThetaPilotFinalCoefficientEstimate l dmod
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1360,6 +1374,7 @@ structure Corollary312DisputeFirstPassReport where
   thetaLabelFactorPNormalizationAvailable : Bool
   frobeniusDerivativeDegreeInequalityAvailable : Bool
   iutIVThetaPilotLogVolumeEstimateAvailable : Bool
+  iutIVElementaryCoefficientEstimatesAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1412,6 +1427,7 @@ def corollary312DisputeFirstPassReport :
     thetaLabelFactorPNormalizationAvailable := true,
     frobeniusDerivativeDegreeInequalityAvailable := true,
     iutIVThetaPilotLogVolumeEstimateAvailable := true,
+    iutIVElementaryCoefficientEstimatesAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1592,6 +1608,11 @@ theorem corollary312Report_frobeniusDerivativeDegreeInequalityAvailable :
 
 theorem corollary312Report_iutIVThetaPilotLogVolumeEstimateAvailable :
     corollary312DisputeFirstPassReport.iutIVThetaPilotLogVolumeEstimateAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVElementaryCoefficientEstimatesAvailable :
+    corollary312DisputeFirstPassReport.iutIVElementaryCoefficientEstimatesAvailable =
       true :=
   rfl
 

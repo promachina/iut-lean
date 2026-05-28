@@ -2368,6 +2368,10 @@ IUT IV, Theorem 1.10 logarithmic term subtracted from the upper expression for
 noncomputable def iutIVThetaPilotMainLogTerm (l : PrimeGeFive) (logQ : Real) : Real :=
   ((1 : Real) / 6) * (1 - 12 / ((l.value : Real) ^ 2)) * logQ
 
+/-- The correction factor `1 - 12/l^2` appearing in IUT IV, Theorem 1.10. -/
+noncomputable def iutIVThetaPilotCorrectionFactor (l : PrimeGeFive) : Real :=
+  1 - 12 / ((l.value : Real) ^ 2)
+
 /-- The small correction between the main IUT IV logarithmic term and `(1/6)log(q)`. -/
 noncomputable def iutIVThetaPilotCorrectionLogTerm (l : PrimeGeFive) (logQ : Real) : Real :=
   ((1 : Real) / 6) * (12 / ((l.value : Real) ^ 2)) * logQ
@@ -2383,6 +2387,75 @@ noncomputable def iutIVThetaPilotTheorem110RightHandSide
   (1 + 80 * (dmod : Real) / (l.value : Real)) *
       (logDifferentFtpd + logConductorFtpd) +
     20 * (eStarMod * (l.value : Real) + etaPrm)
+
+/-- First elementary estimate in the final paragraph of IUT IV, Theorem 1.10. -/
+theorem iutIVThetaPilotCorrectionFactor_pos (l : PrimeGeFive) :
+    0 < iutIVThetaPilotCorrectionFactor l := by
+  rw [iutIVThetaPilotCorrectionFactor]
+  have hl : (5 : Real) <= (l.value : Real) := by exact_mod_cast l.ge_five
+  have hsq : (0 : Real) < (l.value : Real) ^ 2 := by positivity
+  have hdiv : (12 : Real) / ((l.value : Real) ^ 2) < 1 := by
+    rw [div_lt_iff₀ hsq]
+    nlinarith
+  linarith
+
+/-- The displayed estimate `(1 - 12/l^2)^(-1) <= 2` for `l >= 5`. -/
+theorem iutIVThetaPilotCorrectionFactor_inv_le_two (l : PrimeGeFive) :
+    (iutIVThetaPilotCorrectionFactor l)⁻¹ <= (2 : Real) := by
+  have hpos := iutIVThetaPilotCorrectionFactor_pos l
+  have hl : (5 : Real) <= (l.value : Real) := by exact_mod_cast l.ge_five
+  have hsq : (0 : Real) < (l.value : Real) ^ 2 := by positivity
+  have htwentyfour : (24 : Real) <= (l.value : Real) ^ 2 := by nlinarith
+  have hdiv : (12 : Real) / ((l.value : Real) ^ 2) <= (1 : Real) / 2 := by
+    rw [div_le_iff₀ hsq]
+    nlinarith
+  have hhalf : (1 : Real) / 2 <= iutIVThetaPilotCorrectionFactor l := by
+    rw [iutIVThetaPilotCorrectionFactor]
+    linarith
+  rw [inv_le_comm₀ hpos (by norm_num : (0 : Real) < 2)]
+  nlinarith
+
+/--
+Second elementary estimate in the final paragraph of IUT IV, Theorem 1.10.
+
+The paper records
+`(1 - 12/l^2)^(-1) * 1/4 * (1 + 36*dmod/l) <= 1 + 80*dmod/l`
+using `l >= 5` and `dmod >= 1`; nonnegativity of `dmod` is already built into
+the present natural-number parameter.
+-/
+theorem iutIVThetaPilotFinalCoefficientEstimate
+    (l : PrimeGeFive) (dmod : Nat) :
+    (iutIVThetaPilotCorrectionFactor l)⁻¹ * ((1 : Real) / 4) *
+        (1 + 36 * (dmod : Real) / (l.value : Real)) <=
+      1 + 80 * (dmod : Real) / (l.value : Real) := by
+  have hfactor := iutIVThetaPilotCorrectionFactor_inv_le_two l
+  have hl : (0 : Real) < (l.value : Real) := by
+    exact_mod_cast Nat.pos_of_ne_zero l.ne_zero
+  have hcoeff_nonneg :
+      0 <= ((1 : Real) / 4) *
+        (1 + 36 * (dmod : Real) / (l.value : Real)) := by
+    positivity
+  calc
+    (iutIVThetaPilotCorrectionFactor l)⁻¹ * ((1 : Real) / 4) *
+        (1 + 36 * (dmod : Real) / (l.value : Real))
+        =
+      (iutIVThetaPilotCorrectionFactor l)⁻¹ *
+        (((1 : Real) / 4) *
+          (1 + 36 * (dmod : Real) / (l.value : Real))) := by
+          ring
+    _ <=
+      2 *
+        (((1 : Real) / 4) *
+          (1 + 36 * (dmod : Real) / (l.value : Real))) := by
+          exact mul_le_mul_of_nonneg_right hfactor hcoeff_nonneg
+    _ = (1 : Real) / 2 +
+        18 * ((dmod : Real) / (l.value : Real)) := by
+          ring
+    _ <= 1 + 80 * ((dmod : Real) / (l.value : Real)) := by
+      have hdl : 0 <= (dmod : Real) / (l.value : Real) := by positivity
+      nlinarith
+    _ = 1 + 80 * (dmod : Real) / (l.value : Real) := by
+      ring
 
 /--
 IUT IV, Theorem 1.10 shadow of the `C_Theta` handoff.

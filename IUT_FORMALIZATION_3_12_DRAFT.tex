@@ -179,6 +179,10 @@ The code currently covers:
 \item the IUT IV, Theorem 1.10 algebraic handoff: an explicit expression for
   \(C_\Theta\), together with \(C_\Theta\ge-1\) and the remaining elementary
   estimates, implies the displayed \(\frac16\log(q)\) bound;
+\item the final elementary coefficient estimates in IUT IV, Theorem 1.10:
+  \((1-12/\ell^2)^{-1}\le2\) and
+  \((1-12/\ell^2)^{-1}\frac14(1+36d_{\mathrm{mod}}/\ell)
+   \le 1+80d_{\mathrm{mod}}/\ell\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -223,7 +227,7 @@ the upper semi-compatibility inequality.
 The factor-\(p\) flag records the \(F_\ell\)-label averaging denominator.
 The Frobenius-derivative flag records the degree inequality from inclusion.
 The IUT IV flag records the downstream Theorem 1.10 use of the Corollary 3.12
-lower bound on \(C_\Theta\).
+lower bound on \(C_\Theta\), including the final coefficient estimates.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -281,6 +285,8 @@ For Remark 3.12.4(v), Lean proves the displayed nonpositive degree defect from
 For IUT IV, Theorem 1.10, Lean proves the algebraic implication from the
 computed \(C_\Theta\) expression and \(C_\Theta\ge-1\) to the final
 \(\frac16\log(q)\) estimate, conditional on the separate elementary estimates.
+Lean now also proves the two displayed final elementary coefficient estimates
+from \(\ell\ge5\).
 
 \section{Missing Mathematics}
 
