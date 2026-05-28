@@ -5365,3 +5365,57 @@ representative-summand transport needed for the literal `j.val^2` branch.  The
 necessary condition is precisely coordinate-square preservation, which earlier
 rigidity lemmas show forces identity transport for the current representative
 profile.
+
+## 175. Factored SHE Obligations Carry the Representative Summand Obligation
+
+### Lean Move
+
+We connected the exact representative-summand criterion to the structured SHE
+factored obligation record:
+
+```text
+IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+  .representativeSummand_constant_one_preserved
+IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+  .representativeSummand_constant_one_preserved_iff_coordinateSquare
+```
+
+The first theorem says that a factored square/full-label SHE obligation
+preserves the constant-one representative summand.  The proof uses only the
+record field:
+
+```text
+coordinateSquare_preserved
+```
+
+The second theorem keeps the exact iff visible at the structured-SHE layer: for
+the coordinate equivalence carried by the obligation record, representative
+constant-one summand preservation is equivalent to coordinate-square
+preservation.
+
+### Mathematical Reason
+
+This is not a new assumption.  It is bookkeeping that prevents the 3.12-relevant
+condition from being hidden below the higher-level audit interface.  Once a
+route claims to provide factored SHE square/full-label transport, Lean now lets
+us read off the literal representative `j.val^2` summand preservation directly.
+
+The point is also negative: the theorem exposes exactly why a route with only
+full-label map/value preservation and modular-square preservation is too weak.
+The representative summand follows from the real representative-square branch,
+not from the full-label branch.
+
+### Source Check
+
+This matches our current reading of the IUT III Corollary 3.12 issue.  The
+comparison uses real-valued log-volume expressions, while the Scholze-Stix
+objection targets whether the relevant comparison survives the proposed
+identifications.  Our formal model therefore keeps the real representative
+square condition as an explicit obligation in the structured-SHE corridor.
+
+### Relevance to the 3.12 Dispute
+
+We have now tied the local obstruction theorem to the main audit path.  A future
+formalization of the Corollary 3.12 passage cannot silently pass through the
+structured-SHE interface unless it supplies, or proves from more primitive IUT
+data, the coordinate-square preservation needed for representative summands.

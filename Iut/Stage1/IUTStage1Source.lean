@@ -9857,6 +9857,8 @@ variable {package : IUTStage1SourcePackage source target index}
 variable {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
 variable {l : PrimeGeFive}
 
+open IUTStage1ZModSquareWeightProfile
+
 theorem fullLabelLogVolume_preserved
     (obligations :
       IUTStage1StructuredSHEFactoredSquareFullLabelObligations
@@ -9924,6 +9926,44 @@ theorem bridge_eq_structuredSHE
     obligations.toStructuredSHESquareWeightTransportAudit.preservationAudit.bridge =
       bundle.hodgeTheaterDescentBridgeData :=
   obligations.toStructuredSHESquareWeightTransportAudit.bridge_eq_structuredSHE
+
+theorem representativeSummand_constant_one_preserved
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l) :
+    ∀ j : ZMod l.value,
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant (l := l)
+            (1 : Real))
+          (obligations.coordinateEquiv j) =
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant (l := l)
+            (1 : Real))
+          j :=
+  representativeSummand_constant_one_preserved_of_coordinateSquarePreserving
+    obligations.coordinateSquare_preserved
+
+theorem representativeSummand_constant_one_preserved_iff_coordinateSquare
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l) :
+    (∀ j : ZMod l.value,
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant (l := l)
+            (1 : Real))
+          (obligations.coordinateEquiv j) =
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant (l := l)
+            (1 : Real))
+          j) ↔
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) obligations.coordinateEquiv :=
+  representativeSummand_constant_one_preserved_iff_coordinateSquarePreserving
+    obligations.coordinateEquiv
 
 end IUTStage1StructuredSHEFactoredSquareFullLabelObligations
 

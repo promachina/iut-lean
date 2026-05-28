@@ -1378,6 +1378,48 @@ theorem structuredSHEFactoredSquareFullLabelObligations_bridge_example
       bundle.hodgeTheaterDescentBridgeData :=
   obligations.bridge_eq_structuredSHE
 
+theorem structuredSHEFactoredSquareFullLabelObligations_rep_summand_example
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {l : PrimeGeFive}
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations package bundle l)
+    (j : ZMod l.value) :
+    IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant (l := l)
+          (1 : Real))
+        (obligations.coordinateEquiv j) =
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant (l := l)
+          (1 : Real))
+        j :=
+  obligations.representativeSummand_constant_one_preserved j
+
+theorem structuredSHEFactoredSquareFullLabelObligations_rep_summand_iff_example
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {l : PrimeGeFive}
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations package bundle l) :
+    (∀ j : ZMod l.value,
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant (l := l)
+            (1 : Real))
+          (obligations.coordinateEquiv j) =
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant (l := l)
+            (1 : Real))
+          j) ↔
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) obligations.coordinateEquiv :=
+  obligations.representativeSummand_constant_one_preserved_iff_coordinateSquare
+
 def structuredSHEFactoredPreservationBoundary_of_bundle_example
     {source target : Copy} {index : Type u}
     {package : IUTStage1SourcePackage source target index}
