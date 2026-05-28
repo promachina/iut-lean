@@ -16026,6 +16026,20 @@ theorem qSigned_le_squareWeightedAverageLogVolume
     part.ind12_equality_part.qSigned_le_targetSigned
     (part.targetSigned_le_squareWeightedAverageLogVolume profile audited)
 
+theorem qSigned_le_thetaSigned_via_squareWeightedAverage
+    (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (hweighted_le_thetaAverage :
+      (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume <=
+          part.theta_source.thetaSourceAverage audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  le_trans
+    (part.qSigned_le_squareWeightedAverageLogVolume profile audited)
+    (le_trans hweighted_le_thetaAverage
+      (part.theta_source.thetaSourceAverage_le_thetaSigned audited))
+
 theorem targetSigned_le_thetaAverage
     (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
     (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
@@ -16160,6 +16174,18 @@ theorem qSigned_le_squareWeightedAverageLogVolume
         profile audited).weightedAverageLogVolume :=
   part.toThetaLabelwiseContainerAudit.qSigned_le_squareWeightedAverageLogVolume
     profile audited
+
+theorem qSigned_le_thetaSigned_via_squareWeightedAverage
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (hweighted_le_thetaAverage :
+      (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume <=
+          part.theta_source.thetaSourceAverage audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.toThetaLabelwiseContainerAudit.qSigned_le_thetaSigned_via_squareWeightedAverage
+    profile audited hweighted_le_thetaAverage
 
 theorem targetSigned_le_thetaAverage
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)

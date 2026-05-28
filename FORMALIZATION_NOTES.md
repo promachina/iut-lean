@@ -17809,3 +17809,66 @@ square-weighted average data != pointwise SHE representative transport
 Thus the q-side real inequality can be propagated to the weighted average once
 local estimates are available, while Lean still blocks using this averaged
 inequality as a substitute for the disputed pointwise structured-SHE transport.
+
+## 129. Weighted Average To Theta Requires An Explicit Bound
+
+### Lean Move
+
+We added the conditional bridge:
+
+```text
+FLZModCuspLabelThetaLabelwiseContainerAudit
+  .qSigned_le_thetaSigned_via_squareWeightedAverage
+
+FLZModCuspLabelThetaCuspClassContainerAudit
+  .qSigned_le_thetaSigned_via_squareWeightedAverage
+```
+
+The theorem requires an explicit comparison
+
+```text
+squareWeightedAverage <= thetaSourceAverage
+```
+
+and then proves
+
+```text
+qSigned <= thetaSigned
+```
+
+by composing:
+
+```text
+qSigned <= squareWeightedAverage
+squareWeightedAverage <= thetaSourceAverage
+thetaSourceAverage <= thetaSigned
+```
+
+### Mathematical Reason
+
+The important point is the assumption.  We did not identify the square-weighted
+average with the theta-source average, and we did not derive the comparison
+from notation.  The theorem states the precise missing real inequality that
+would let the weighted-average route feed the existing final theta bound.
+
+### Source Check
+
+IUT III's Corollary 3.12 proof corridor combines q-pilot log-volumes,
+Theta-source averages, and final log-volume bounds.  The Scholze-Stix critique
+warns against treating averaged or diagonalized quantities as automatically
+solving the comparison between q-pilot and Theta-pilot data.  This Lean theorem
+keeps that comparison as an explicit hypothesis.
+
+### Relevance to the 3.12 Dispute
+
+The current square-weighted route can now finish the final signed inequality
+only after a user-visible theorem supplies:
+
+```text
+squareWeightedAverage <= thetaSourceAverage
+```
+
+This is the right pressure point.  It prevents the formalization from silently
+collapsing the weighted Gaussian-monoid-style average into the uniform
+Theta-source average, while still showing exactly what remains to be proved if
+that comparison is justified by the IUT source machinery.
