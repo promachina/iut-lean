@@ -2345,6 +2345,142 @@ theorem derivativeIsomorphismNotAssumed_holds
 
 end IUTStage1FrobeniusDerivativeDegreeInequalityShadow
 
+/--
+IUT IV, Theorem 1.10 arithmetic upper term for the constant `C_Theta`.
+
+This is the explicit non-negative side of the displayed expression for `C_Theta`
+before subtracting the logarithmic term and `1`.  The construction of the
+arithmetic divisors is not included here; their log-degrees enter as real
+parameters.
+-/
+noncomputable def iutIVThetaPilotArithmeticUpperTerm
+    (l : PrimeGeFive) (dmod : Nat) (absoluteLogQ logDifferentFtpd
+      logConductorFtpd eStarMod etaPrm : Real) : Real :=
+  (((l.value : Real) + 1) / (4 * absoluteLogQ)) *
+      (1 + 36 * (dmod : Real) / (l.value : Real)) *
+      (logDifferentFtpd + logConductorFtpd) +
+    10 * (eStarMod * (l.value : Real) + etaPrm)
+
+/--
+IUT IV, Theorem 1.10 logarithmic term subtracted from the upper expression for
+`C_Theta`.
+-/
+noncomputable def iutIVThetaPilotMainLogTerm (l : PrimeGeFive) (logQ : Real) : Real :=
+  ((1 : Real) / 6) * (1 - 12 / ((l.value : Real) ^ 2)) * logQ
+
+/-- The small correction between the main IUT IV logarithmic term and `(1/6)log(q)`. -/
+noncomputable def iutIVThetaPilotCorrectionLogTerm (l : PrimeGeFive) (logQ : Real) : Real :=
+  ((1 : Real) / 6) * (12 / ((l.value : Real) ^ 2)) * logQ
+
+/-- The left side of the final displayed log-volume estimate in IUT IV, Theorem 1.10. -/
+noncomputable def iutIVThetaPilotOneSixthLogQ (logQ : Real) : Real :=
+  ((1 : Real) / 6) * logQ
+
+/-- IUT IV, Theorem 1.10 final right-hand side after the elementary estimates. -/
+noncomputable def iutIVThetaPilotTheorem110RightHandSide
+    (l : PrimeGeFive) (dmod : Nat) (logDifferentFtpd logConductorFtpd
+      eStarMod etaPrm : Real) : Real :=
+  (1 + 80 * (dmod : Real) / (l.value : Real)) *
+      (logDifferentFtpd + logConductorFtpd) +
+    20 * (eStarMod * (l.value : Real) + etaPrm)
+
+/--
+IUT IV, Theorem 1.10 shadow of the `C_Theta` handoff.
+
+The source text computes an explicit expression for `C_Theta` and then applies
+the Corollary 3.12 lower bound `C_Theta >= -1`.  This record keeps precisely
+that algebraic interface: the exact displayed expression, the Corollary 3.12
+lower bound, and a separate field for the remaining elementary estimates that
+convert the intermediate logarithmic term to the final right-hand side.
+-/
+structure IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow where
+  l : PrimeGeFive
+  dmod : Nat
+  logQ : Real
+  absoluteLogQ : Real
+  logQ_pos : 0 < logQ
+  absoluteLogQ_eq : absoluteLogQ = (1 / (2 * (l.value : Real))) * logQ
+  logDifferentFtpd : Real
+  logConductorFtpd : Real
+  eStarMod : Real
+  etaPrm : Real
+  cTheta : Real
+  cTheta_eq :
+    cTheta =
+      iutIVThetaPilotArithmeticUpperTerm l dmod absoluteLogQ
+        logDifferentFtpd logConductorFtpd eStarMod etaPrm -
+        iutIVThetaPilotMainLogTerm l logQ - 1
+  cor312_lower_bound : (-1 : Real) <= cTheta
+  explicit_estimates_to_theorem110_rhs :
+    iutIVThetaPilotArithmeticUpperTerm l dmod absoluteLogQ
+        logDifferentFtpd logConductorFtpd eStarMod etaPrm +
+        iutIVThetaPilotCorrectionLogTerm l logQ <=
+      iutIVThetaPilotTheorem110RightHandSide l dmod
+        logDifferentFtpd logConductorFtpd eStarMod etaPrm
+
+namespace IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow
+
+noncomputable def arithmeticUpperTerm
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) : Real :=
+  iutIVThetaPilotArithmeticUpperTerm data.l data.dmod data.absoluteLogQ
+    data.logDifferentFtpd data.logConductorFtpd data.eStarMod data.etaPrm
+
+noncomputable def mainLogTerm
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) : Real :=
+  iutIVThetaPilotMainLogTerm data.l data.logQ
+
+noncomputable def correctionLogTerm
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) : Real :=
+  iutIVThetaPilotCorrectionLogTerm data.l data.logQ
+
+noncomputable def oneSixthLogQ
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) : Real :=
+  iutIVThetaPilotOneSixthLogQ data.logQ
+
+noncomputable def theorem110RightHandSide
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) : Real :=
+  iutIVThetaPilotTheorem110RightHandSide data.l data.dmod
+    data.logDifferentFtpd data.logConductorFtpd data.eStarMod data.etaPrm
+
+theorem absoluteLogQ_pos
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) :
+    0 < data.absoluteLogQ := by
+  rw [data.absoluteLogQ_eq]
+  have hl : (0 : Real) < (data.l.value : Real) := by
+    exact_mod_cast Nat.pos_of_ne_zero data.l.ne_zero
+  have hden : (0 : Real) < 2 * (data.l.value : Real) := by positivity
+  exact mul_pos (one_div_pos.mpr hden) data.logQ_pos
+
+theorem cTheta_expression
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) :
+    data.cTheta = data.arithmeticUpperTerm - data.mainLogTerm - 1 :=
+  data.cTheta_eq
+
+theorem mainLogTerm_le_arithmeticUpperTerm
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) :
+    data.mainLogTerm <= data.arithmeticUpperTerm := by
+  have h := data.cor312_lower_bound
+  rw [data.cTheta_expression] at h
+  linarith
+
+theorem oneSixthLogQ_eq_main_add_correction
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) :
+    data.oneSixthLogQ = data.mainLogTerm + data.correctionLogTerm := by
+  rw [oneSixthLogQ, mainLogTerm, correctionLogTerm,
+    iutIVThetaPilotOneSixthLogQ, iutIVThetaPilotMainLogTerm,
+    iutIVThetaPilotCorrectionLogTerm]
+  ring
+
+theorem oneSixthLogQ_le_theorem110RightHandSide
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) :
+    data.oneSixthLogQ <= data.theorem110RightHandSide := by
+  rw [data.oneSixthLogQ_eq_main_add_correction]
+  exact le_trans
+    (add_le_add data.mainLogTerm_le_arithmeticUpperTerm le_rfl)
+    data.explicit_estimates_to_theorem110_rhs
+
+end IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

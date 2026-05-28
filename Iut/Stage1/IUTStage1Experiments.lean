@@ -652,6 +652,7 @@ structure ProcessionContainerExperimentReport where
   gaussBonnetMetricSignShadowAvailable : Bool
   thetaLabelFactorPNormalizationAvailable : Bool
   frobeniusDerivativeDegreeInequalityAvailable : Bool
+  iutIVThetaPilotLogVolumeEstimateAvailable : Bool
 deriving Repr
 
 /--
@@ -689,7 +690,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     zeroOneColumnAbsorptionDistinctionAvailable := true,
     gaussBonnetMetricSignShadowAvailable := true,
     thetaLabelFactorPNormalizationAvailable := true,
-    frobeniusDerivativeDegreeInequalityAvailable := true }
+    frobeniusDerivativeDegreeInequalityAvailable := true,
+    iutIVThetaPilotLogVolumeEstimateAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1097,6 +1099,16 @@ theorem frobeniusDerivativeDegreeInequality_inclusion
     data.derivativeGivesInclusion :=
   data.derivativeGivesInclusion_holds
 
+theorem iutIVThetaPilotLogVolumeEstimate_mainTerm_le_upper
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) :
+    data.mainLogTerm <= data.arithmeticUpperTerm :=
+  data.mainLogTerm_le_arithmeticUpperTerm
+
+theorem iutIVThetaPilotLogVolumeEstimate_oneSixthLogQ_bound
+    (data : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) :
+    data.oneSixthLogQ <= data.theorem110RightHandSide :=
+  data.oneSixthLogQ_le_theorem110RightHandSide
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1347,6 +1359,7 @@ structure Corollary312DisputeFirstPassReport where
   gaussBonnetMetricSignShadowAvailable : Bool
   thetaLabelFactorPNormalizationAvailable : Bool
   frobeniusDerivativeDegreeInequalityAvailable : Bool
+  iutIVThetaPilotLogVolumeEstimateAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1398,6 +1411,7 @@ def corollary312DisputeFirstPassReport :
     gaussBonnetMetricSignShadowAvailable := true,
     thetaLabelFactorPNormalizationAvailable := true,
     frobeniusDerivativeDegreeInequalityAvailable := true,
+    iutIVThetaPilotLogVolumeEstimateAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1573,6 +1587,11 @@ theorem corollary312Report_thetaLabelFactorPNormalizationAvailable :
 
 theorem corollary312Report_frobeniusDerivativeDegreeInequalityAvailable :
     corollary312DisputeFirstPassReport.frobeniusDerivativeDegreeInequalityAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVThetaPilotLogVolumeEstimateAvailable :
+    corollary312DisputeFirstPassReport.iutIVThetaPilotLogVolumeEstimateAvailable =
       true :=
   rfl
 

@@ -176,6 +176,9 @@ The code currently covers:
   divides a gap log-volume by \(\ell\), and multiplication by \(\ell\) recovers it;
 \item the Remark 3.12.4(v) p-adic analogue:
   an inclusion, not isomorphism, gives \((1-p)(2g-2)\le0\);
+\item the IUT IV, Theorem 1.10 algebraic handoff: an explicit expression for
+  \(C_\Theta\), together with \(C_\Theta\ge-1\) and the remaining elementary
+  estimates, implies the displayed \(\frac16\log(q)\) bound;
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -219,6 +222,8 @@ The metric flag records the Gauss--Bonnet sign calculation used as analogy for
 the upper semi-compatibility inequality.
 The factor-\(p\) flag records the \(F_\ell\)-label averaging denominator.
 The Frobenius-derivative flag records the degree inequality from inclusion.
+The IUT IV flag records the downstream Theorem 1.10 use of the Corollary 3.12
+lower bound on \(C_\Theta\).
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -273,6 +278,9 @@ For Remark 3.12.4(iii), Lean checks the \(\ell\)-denominator normalization
 identity for the theta-label averaging analogy.
 For Remark 3.12.4(v), Lean proves the displayed nonpositive degree defect from
 \(p\ge2\) and \(g\ge2\).
+For IUT IV, Theorem 1.10, Lean proves the algebraic implication from the
+computed \(C_\Theta\) expression and \(C_\Theta\ge-1\) to the final
+\(\frac16\log(q)\) estimate, conditional on the separate elementary estimates.
 
 \section{Missing Mathematics}
 
@@ -292,7 +300,8 @@ The present code does not yet formalize:
   shadows;
 \item the global realified Frobenioids of Step (xii), beyond the present integer
   log-volume shift model;
-\item the exact IUT IV log-volume estimates and Diophantine applications;
+\item the arithmetic-divisor and local log-volume construction behind the IUT IV
+  Theorem 1.10 numerical estimates, and the Diophantine applications;
 \item a proof that the current Hodge/SHE transport obligations follow from
   Mochizuki's full hypotheses.
 \end{itemize}
