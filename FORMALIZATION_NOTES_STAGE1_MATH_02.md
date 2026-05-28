@@ -6694,3 +6694,81 @@ finite-sum packet normalization data.  The next mathematical step is to reduce
 one of those assumptions from more concrete capsule/local-object data, or to
 audit exactly where the local object estimates are supposed to enter from
 Mochizuki's source definitions.
+
+## 85. Local Object Bounds from Direct Packet Normalization
+
+### Goal
+
+We reduced a local object estimate obligation from direct packet normalization
+and capsule-entry estimates.
+
+### Lean Move
+
+For:
+
+```text
+IUTStage1DirectPacketNormalizationData state
+```
+
+Lean now proves:
+
+```text
+targetSigned <= every capsule log-volume
+  -> targetSigned <= state.localObject.finiteLogVolume
+```
+
+and the bundled version:
+
+```text
+IUTStage1TypedCapsuleFamilyContainerEstimate
+  targetSigned state.capsuleFamily
+  -> targetSigned <= state.localObject.finiteLogVolume
+```
+
+Lean also constructs:
+
+```text
+toLocalObjectContainerEstimateOfCapsuleEstimates
+```
+
+which returns a local object container estimate for:
+
+```text
+state.localObject.finiteLogVolume
+```
+
+### Mathematical Point
+
+This is the first direct bridge from capsule-entry bounds to a local object
+container estimate.  The proof goes through the finite average:
+
+```text
+targetSigned <= each capsule log-volume
+  -> targetSigned <= normalized capsule average
+  -> targetSigned <= localObject.finiteLogVolume
+```
+
+where the final step uses the direct packet normalization certificate.
+
+### Trap Avoided
+
+The theorem does not say that an arbitrary cusp-class real is the local object
+finite log-volume.  It constructs an estimate specifically for
+`state.localObject.finiteLogVolume`.  Any use for a cusp/zero log-volume still
+requires an explicit equality or transport of the log-volume real.
+
+### Toy Check
+
+The examples now check:
+
+```text
+directPacketNormalizationData_capsule_estimates_bound_localObject_example
+directPacketNormalizationData_capsule_estimates_to_localObject_example
+```
+
+### Remaining Gap
+
+The high-level direct local packet audit still takes target cusp/zero local
+object estimates directly.  A future refinement can use this theorem when the
+cusp/zero log-volume is explicitly identified with the packet local object's
+finite log-volume.

@@ -2571,6 +2571,46 @@ def toClassifiedPacketNormalizedCompatibility
   IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.ofDirectPacketNormalization
     data.toPacketNormalizedCompatibility
 
+theorem targetSigned_le_localObject_of_capsule_le
+    (data : IUTStage1DirectPacketNormalizationData state)
+    {targetSigned : Real}
+    (hcapsule :
+      ∀ i : Fin state.capsuleFamily.capsuleCount,
+        targetSigned <= (state.capsuleFamily.capsule i).logVolume) :
+    targetSigned <= state.localObject.finiteLogVolume := by
+  have hnormalized :
+      targetSigned <= state.capsuleFamily.normalizedLogVolume :=
+    state.capsuleFamily.const_le_normalizedLogVolume_of_capsule_le hcapsule
+  rw [data.toPacketNormalizedCompatibility.normalizedLogVolume_eq_localObject]
+    at hnormalized
+  exact hnormalized
+
+theorem targetSigned_le_localObject_of_capsule_estimates
+    (data : IUTStage1DirectPacketNormalizationData state)
+    {targetSigned : Real}
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned state.capsuleFamily) :
+    targetSigned <= state.localObject.finiteLogVolume :=
+  data.targetSigned_le_localObject_of_capsule_le
+    estimate.targetSigned_le_capsuleLogVolume
+
+def toLocalObjectContainerEstimateOfCapsuleEstimates
+    (data : IUTStage1DirectPacketNormalizationData state)
+    {targetSigned : Real}
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned state.capsuleFamily) :
+    IUTStage1LocalObjectContainerLogVolumeEstimate
+      kind targetSigned state.localObject.finiteLogVolume :=
+  { localObject := state.localObject,
+    localLogVolume_eq_object := rfl,
+    object_container_estimate :=
+      { containerLogVolume := state.localObject.finiteLogVolume,
+        localLogVolume_eq_container := rfl,
+        targetSigned_le_containerLogVolume :=
+          data.targetSigned_le_localObject_of_capsule_estimates estimate } }
+
 end IUTStage1DirectPacketNormalizationData
 
 namespace IUTStage1LocalTensorDirectSummandPacketState
