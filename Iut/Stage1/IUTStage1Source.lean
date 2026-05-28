@@ -10406,6 +10406,23 @@ structure FLZModCuspLabelThetaInd2TransportedCuspClassAudit
         package.preLedger.targetVolume.targetSigned
         (sourceAudited targetAudited).choice.local_tensor_state.packetState.capsuleFamily
 
+/--
+Direct capsule-estimate source for cusp-class container bounds.
+
+For each audited packet, this audit supplies capsule-entry container estimates
+directly on that packet's capsule family.  The packet-normalized audit converts
+the resulting normalized packet bound into cusp-class and zero-label bounds.
+-/
+structure FLZModCuspLabelThetaDirectCapsuleCuspClassAudit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  packet_normalized : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l
+  targetCapsuleEstimates :
+    ∀ audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind,
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        package.preLedger.targetVolume.targetSigned
+        audited.choice.local_tensor_state.packetState.capsuleFamily
+
 theorem qCharted (audit : endpoint.LogVolumeChartAudit) :
     (Transport.map package.preLedger.chartedContainer.chart.qToTarget
       package.preLedger.qValue.qPoint).coord =
@@ -11563,6 +11580,52 @@ theorem qSigned_le_thetaSigned_via_ind2_transport
     audited
 
 end FLZModCuspLabelThetaInd2TransportedCuspClassAudit
+
+namespace FLZModCuspLabelThetaDirectCapsuleCuspClassAudit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+theorem targetSigned_le_cuspClassLogVolume
+    (part : audit.FLZModCuspLabelThetaDirectCapsuleCuspClassAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.packet_normalized.theta_source.compatible_average.cuspLogVolume
+        audited).cuspClassLogVolume label := by
+  rw [part.packet_normalized.cuspClassLogVolume_eq_packetNormalized
+    audited label]
+  exact (part.targetCapsuleEstimates audited).targetSigned_le_normalizedLogVolume
+
+theorem targetSigned_le_zeroLogVolume
+    (part : audit.FLZModCuspLabelThetaDirectCapsuleCuspClassAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.packet_normalized.theta_source.compatible_average.cuspLogVolume
+        audited).zeroLogVolume := by
+  rw [part.packet_normalized.zeroLogVolume_eq_packetNormalized audited]
+  exact (part.targetCapsuleEstimates audited).targetSigned_le_normalizedLogVolume
+
+def toThetaCuspClassContainerAudit
+    (part : audit.FLZModCuspLabelThetaDirectCapsuleCuspClassAudit l) :
+    audit.FLZModCuspLabelThetaCuspClassContainerAudit l :=
+  { theta_source := part.packet_normalized.theta_source,
+    ind12_equality_part := part.packet_normalized.ind12_equality_part,
+    ind3_upper_part := part.packet_normalized.ind3_upper_part,
+    theta_images_eq_endpoint := part.packet_normalized.theta_images_eq_endpoint,
+    targetSigned_le_cuspClassLogVolume :=
+      part.targetSigned_le_cuspClassLogVolume,
+    targetSigned_le_zeroLogVolume :=
+      part.targetSigned_le_zeroLogVolume }
+
+theorem qSigned_le_thetaSigned_via_direct_capsules
+    (part : audit.FLZModCuspLabelThetaDirectCapsuleCuspClassAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.toThetaCuspClassContainerAudit.qSigned_le_thetaSigned_via_cusp_container
+    audited
+
+end FLZModCuspLabelThetaDirectCapsuleCuspClassAudit
 
 namespace FLZModCuspLabelThetaContainerBoundAudit
 

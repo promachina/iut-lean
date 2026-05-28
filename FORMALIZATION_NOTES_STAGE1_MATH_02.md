@@ -5439,3 +5439,76 @@ placeAudited_logVolume_fl_zmod_ind2_transport_q_le_theta_example
 The next refinement should introduce an analogous package for direct target
 capsule estimates, so both direct and transported local-estimate sources have
 parallel high-level audit constructors.
+
+## 69. Direct Capsule Estimates as a Cusp-Class Audit
+
+### Goal
+
+We added the direct-target analogue of the `(Ind2)`-transported cusp-class
+audit.
+
+### Lean Move
+
+We added:
+
+```text
+FLZModCuspLabelThetaDirectCapsuleCuspClassAudit
+```
+
+For every audited packet, it supplies:
+
+```text
+targetCapsuleEstimates audited :
+  IUTStage1TypedCapsuleFamilyContainerEstimate
+    targetSigned audited.packet.capsuleFamily
+```
+
+Together with the packet-normalized audit, Lean derives:
+
+```text
+targetSigned_le_cuspClassLogVolume
+targetSigned_le_zeroLogVolume
+toThetaCuspClassContainerAudit
+qSigned_le_thetaSigned_via_direct_capsules
+```
+
+### Mathematical Point
+
+We now have two parallel high-level sources for cusp/zero bounds:
+
+```text
+direct capsule estimates at the audited packet
+transported capsule estimates along audited `(Ind2)` steps
+```
+
+Both produce the same downstream object:
+
+```text
+FLZModCuspLabelThetaCuspClassContainerAudit
+```
+
+This keeps the later q-to-Theta average route independent of how the local
+capsule estimates were obtained.
+
+### Trap Avoided
+
+The direct route still goes through packet-normalized cusp/zero equalities.
+It does not bypass the explicit identification between cusp labels and the
+packet's normalized capsule-family log-volume.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_direct_capsule_cusp_bound_example
+placeAudited_logVolume_fl_zmod_direct_capsule_to_cusp_audit_example
+placeAudited_logVolume_fl_zmod_direct_capsule_q_le_theta_example
+```
+
+### Remaining Gap
+
+The next step should classify the source of cusp-class bounds, analogous to the
+earlier classification of the target-to-average bound source.  This will make
+explicit whether a cusp bound came from direct capsule estimates, transported
+capsule estimates, or a still-separate analytic comparison lemma.
