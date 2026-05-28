@@ -4777,6 +4777,55 @@ theorem placeAudited_logVolume_fl_zmod_shared_zmod_packet_object_target_bound_ex
       part.theta_source.thetaSourceAverage audited :=
   part.targetSigned_le_thetaSourceAverage audited
 
+theorem placeAudited_logVolume_fl_zmod_constant_packet_object_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaConstantZModPacketLocalObjectEstimateAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume j =
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
+  part.zmodNormalizedLogVolume_eq_packetLocalObjectFinite audited j
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_constant_packet_object_to_shared_zmod_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaConstantZModPacketLocalObjectEstimateAudit l) :
+    audit.FLZModCuspLabelThetaSharedZModPacketLocalObjectEstimateAudit l :=
+  part.toSharedZModPacketLocalObjectEstimateAudit
+
+theorem placeAudited_logVolume_fl_zmod_constant_packet_object_target_bound_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaConstantZModPacketLocalObjectEstimateAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.theta_source.thetaSourceAverage audited :=
+  part.targetSigned_le_thetaSourceAverage audited
+
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 def placeAudited_logVolume_fl_zmod_packet_local_object_to_direct_packet_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}

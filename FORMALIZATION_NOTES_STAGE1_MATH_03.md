@@ -415,3 +415,65 @@ placeAudited_logVolume_fl_zmod_shared_zmod_packet_object_target_bound_example
 The pointwise `ZMod` equality to the packet local object remains the current
 lowest explicit equality.  We should next classify or construct this equality
 from a concrete local label/object definition.
+
+## 110. Constant ZMod Family for Packet Local Object
+
+### Goal
+
+We reduced the pointwise `ZMod` equality to an object-level constant family
+equality at the local-object level.
+
+### Lean Move
+
+We added:
+
+```text
+FLZModCuspLabelThetaConstantZModPacketLocalObjectEstimateAudit
+```
+
+It assumes that the audited `ZMod l` label-averaged log-volume object is
+literally:
+
+```text
+constant(packet local-object finite log-volume)
+```
+
+Lean derives:
+
+```text
+zmodNormalizedLogVolume_eq_packetLocalObjectFinite
+toSharedZModPacketLocalObjectEstimateAudit
+toSharedPacketLocalObjectEstimateAudit
+toClassifiedPacketLocalObjectContainerAudit
+thetaSourceAverage_eq_packetLocalObjectFinite
+targetSigned_le_thetaSourceAverage
+```
+
+### Mathematical Point
+
+This is stronger than equality of averages.  The assumption is an equality of
+label-family objects, so every `j : ZMod l.value` has the packet local-object
+finite log-volume as its normalized value.  The downstream average equality is
+then a consequence.
+
+### Trap Avoided
+
+We did not infer labelwise equality from an average equality.  This matters
+because the whole route is meant to police exactly where averaging may erase
+information relevant to the Corollary 3.12 disagreement.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_constant_packet_object_eq_example
+placeAudited_logVolume_fl_zmod_constant_packet_object_to_shared_zmod_example
+placeAudited_logVolume_fl_zmod_constant_packet_object_target_bound_example
+```
+
+### Remaining Gap
+
+The constant object equality is still an input.  The next useful step is to add
+a source classification for this local label/object bridge, separating direct
+local label construction from transported or separate identifications.
