@@ -5600,3 +5600,52 @@ for same-family aggregate sums.  A credible Lean route to Corollary 3.12 must
 therefore specify which level is actually used in the paper argument: pointwise
 summands, averaged/procession-normalized log-volumes, holomorphic hull
 log-volumes, or some combination of these.
+
+## 179. Modular Negation Splits Aggregate and Pointwise Behavior
+
+### Lean Move
+
+We attached the aggregate/pointwise distinction directly to the
+modular-square-only negation transport:
+
+```text
+IUTStage1FullLabelModularSquareOnlyTransport
+  .neg_representativeSummand_constant_one_total_preserved
+IUTStage1FullLabelModularSquareOnlyTransport
+  .neg_total_preserved_and_pointwise_fails
+```
+
+Lean now packages the two facts together:
+
+```text
+total constant-one representative summand is preserved by negation
+and
+pointwise constant-one representative summand preservation fails.
+```
+
+### Mathematical Reason
+
+The negation map is a permutation of the finite label set, so it preserves a
+total sum by reindexing.  But the same map does not preserve the selected
+representative value `j.val`, so it fails pointwise preservation of
+`(j.val : Real)^2`.
+
+This is the exact formal split between an averaged/procession-normalized
+phenomenon and a pointwise transported-summand phenomenon.
+
+### Source Check
+
+IUT III uses averages over `j in F_l` in the procession-normalized
+log-volume discussion, while the disputed Corollary 3.12 passage also involves
+real-valued `j^2` factors.  Scholze-Stix explicitly discuss the possibility that
+averaging may address a local diagram issue, while maintaining that it does not
+resolve the global consistency problem for the inserted `j^2` factors.
+
+### Relevance to the 3.12 Dispute
+
+The Lean model can now represent both sides of this local observation without
+choosing a winner.  If a future route uses only an aggregate total, negation is
+not obstructed by representative squares.  If it uses pointwise transported
+representative summands, negation is excluded.  The next formal work must
+therefore identify which of these levels the actual Theorem 3.11 to Corollary
+3.12 argument requires at each step.

@@ -4000,6 +4000,46 @@ theorem neg_not_representativeSummand_constant_one_preserved
     IUTStage1ZModSquareWeightProfile.not_representativeSummand_constant_one_preserved_neg
       (l := l)
 
+open IUTStage1ZModSquareWeightProfile in
+theorem neg_representativeSummand_constant_one_total_preserved
+    (l : PrimeGeFive) :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+          (l := l) (1 : Real)) ((neg l).coordinateEquiv j)) =
+      Finset.univ.sum fun j : ZMod l.value =>
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real)) j := by
+  simpa [neg] using
+    representativeSummand_constant_one_total_preserved_neg (l := l)
+
+theorem neg_total_preserved_and_pointwise_fails
+    (l : PrimeGeFive) :
+    ((Finset.univ.sum fun j : ZMod l.value =>
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+          (l := l) (1 : Real)) ((neg l).coordinateEquiv j)) =
+      Finset.univ.sum fun j : ZMod l.value =>
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real)) j) ∧
+      ¬ ∀ j : ZMod l.value,
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real)) ((neg l).coordinateEquiv j) =
+          IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real)) j :=
+  ⟨neg_representativeSummand_constant_one_total_preserved l,
+    neg_not_representativeSummand_constant_one_preserved l⟩
+
 end IUTStage1FullLabelModularSquareOnlyTransport
 
 /--
