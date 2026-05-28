@@ -1456,6 +1456,21 @@ theorem fullLabelModularSquareOnlyTransport_value_gap_example
       transport.missingFactoredSquareFullLabelData :=
   transport.fullLabelValuePreservation_missing
 
+theorem fullLabelModularSquareOnlyTransport_neg_representative_summand_gap_example
+    (l : PrimeGeFive) :
+    ¬ ∀ j : ZMod l.value,
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real))
+          ((IUTStage1FullLabelModularSquareOnlyTransport.neg l).coordinateEquiv j) =
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real)) j :=
+  IUTStage1FullLabelModularSquareOnlyTransport.neg_not_representativeSummand_constant_one_preserved
+    l
+
 def flLabelModel_zmod_example
     (l : PrimeGeFive) :
     IUTStage1FLLabelModel (ZMod l.value) :=

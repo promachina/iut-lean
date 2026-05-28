@@ -3899,6 +3899,21 @@ theorem fullLabelValuePreservation_missing
       transport.missingFactoredSquareFullLabelData := by
   simp [missingFactoredSquareFullLabelData]
 
+theorem neg_not_representativeSummand_constant_one_preserved
+    (l : PrimeGeFive) :
+    ¬ ∀ j : ZMod l.value,
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real)) ((neg l).coordinateEquiv j) =
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real)) j := by
+  simpa [neg] using
+    IUTStage1ZModSquareWeightProfile.not_representativeSummand_constant_one_preserved_neg
+      (l := l)
+
 end IUTStage1FullLabelModularSquareOnlyTransport
 
 /--

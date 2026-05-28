@@ -5247,3 +5247,65 @@ does not imply representative j.val^2 summand transport.
 Thus the disputed `3.11.5 => 3.12` step cannot be justified merely by saying
 that the log-volume data are full-label compatible.  The representative square
 factor itself needs a source-authorized transport mechanism.
+
+## 173. Modular-Square-Only Transport Still Fails Representative Summands
+
+### Lean Move
+
+We attached the constant-one representative summand obstruction to the existing
+modular-square-only transport record:
+
+```text
+IUTStage1FullLabelModularSquareOnlyTransport.neg_not_representativeSummand_constant_one_preserved
+```
+
+This record already packages the tempting data:
+
+```text
+fullLabelMapPreserving neg
+CoordinateModularSquarePreserving neg
+```
+
+Lean now proves that even this package does not preserve the representative
+constant-one summand:
+
+```text
+not forall j,
+  representativeFullLabelWeightedSummand constantOne ((negTransport).coordinateEquiv j)
+    = representativeFullLabelWeightedSummand constantOne j.
+```
+
+### Mathematical Reason
+
+Preserving the square inside `ZMod l` means:
+
+```text
+(-j)^2 = j^2
+```
+
+but the representative summand with constant-one log-volume is:
+
+```text
+(j.val)^2.
+```
+
+The latter is a statement about the selected real representative, not about the
+finite-field square class.  Thus full-label map preservation plus modular-square
+preservation is still weaker than representative-square preservation.
+
+### Source Check
+
+This directly mirrors the narrow Scholze-Stix-style concern: an algebraic
+identification that is harmless at the sign-label or finite-field-square level
+need not preserve the real-valued `j^2` comparison.  IUT III's Corollary 3.12
+uses real log-volume comparisons, so the formal bridge must account for this
+extra real-representative layer.
+
+### Relevance to the 3.12 Dispute
+
+The formal obstruction is now attached to an explicit transport record rather
+than just a standalone theorem.  Any future proof route using only the data in
+`IUTStage1FullLabelModularSquareOnlyTransport` is insufficient for the
+representative-weighted summand.  It must be upgraded to the stronger
+coordinate-square/representative-square audit route, or use a sign-compatible
+profile with a separate source justification.
