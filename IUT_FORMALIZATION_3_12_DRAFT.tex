@@ -132,6 +132,9 @@ The code currently covers:
 \item the finite procession containers
   \(S^\pm_{j+1}=\{0,\ldots,j\}\), their nested inclusions, core-label stability,
   and stage cardinality \(j+1\);
+\item the log-volume shadow of the tensor packet over \(S^\pm_{j+1}\), with
+  total log-volume given by the finite sum over the container and normalized
+  denominator \(j+1\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -158,6 +161,7 @@ The current first-pass experiment report evaluates to:
 \texttt{absLabelThetaDegreeHalfRangeModelAvailable} & = \texttt{true},\\
 \texttt{gaussianDegreeEvaluationTheoremAvailable} & = \texttt{true},\\
 \texttt{processionContainerSkeletonAvailable} & = \texttt{true},\\
+\texttt{processionTensorPacketLogVolumeAvailable} & = \texttt{true},\\
 \texttt{balancedLevelRejectedAtFinalRouteTheoremAvailable} & = \texttt{true},\\
 \texttt{disputeSettledByCurrentStage} & = \texttt{false}.
 \end{array}
@@ -211,8 +215,8 @@ The present code does not yet formalize:
 \item the Hodge--Arakelov theta evaluation and Gaussian monoids of IUT II;
 \item the construction of the actual IUT II theta values, Gaussian monoids, and
   Frobenioids behind the present degree-level Gaussian evaluation;
-\item the tensor-packet and log-shell construction attached to the procession
-  containers in IUT III, Theorem 3.11;
+\item the actual construction of log-shells and tensor packets attached to
+  mono-analytic prime-strips in IUT III, Theorem 3.11;
 \item the genuine holomorphic hull and determinant operations of Step (xi);
 \item the exact IUT IV log-volume estimates and Diophantine applications;
 \item a proof that the current Hodge/SHE transport obligations follow from

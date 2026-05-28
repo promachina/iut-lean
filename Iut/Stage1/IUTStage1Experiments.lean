@@ -626,6 +626,7 @@ structure ProcessionContainerExperimentReport where
   nestedInclusionInjective : Bool
   coreLabelStableUnderInclusion : Bool
   stageIndeterminacyBoundedByFullContainer : Bool
+  tensorPacketLogVolumeNormalizationAvailable : Bool
 deriving Repr
 
 /--
@@ -637,7 +638,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
   { stageCardinalityFormulaAvailable := true,
     nestedInclusionInjective := true,
     coreLabelStableUnderInclusion := true,
-    stageIndeterminacyBoundedByFullContainer := true }
+    stageIndeterminacyBoundedByFullContainer := true,
+    tensorPacketLogVolumeNormalizationAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -657,6 +659,30 @@ theorem processionContainer_labelIndeterminacy_le_full
     {j full : Nat} (h : j ≤ full) :
     IUTStage1ProcessionContainer.labelIndeterminacyCount j ≤ full + 1 :=
   IUTStage1ProcessionContainer.labelIndeterminacyCount_le_full h
+
+theorem processionTensorPacket_normalized_eq_card_average
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    (packet : IUTStage1ProcessionTensorPacketLogVolume kind j) :
+    packet.normalizedLogVolume =
+      packet.tensorPacketLogVolume /
+        (Fintype.card (IUTStage1ProcessionContainer j) : Real) :=
+  packet.normalized_eq_card_average
+
+theorem processionTensorPacket_toLabelAveraged_average
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    (packet : IUTStage1ProcessionTensorPacketLogVolume kind j) :
+    packet.toLabelAveraged.averageLogVolume = packet.normalizedLogVolume :=
+  rfl
+
+theorem processionTensorPacket_const_le_normalized
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    (packet : IUTStage1ProcessionTensorPacketLogVolume kind j)
+    {c : Real}
+    (hlabel :
+      ∀ label : IUTStage1ProcessionContainer j,
+        c <= (packet.logShellDirectSum label).finiteLogVolume) :
+    c <= packet.normalizedLogVolume :=
+  packet.const_le_normalizedLogVolume_of_forall_le hlabel
 
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
@@ -882,6 +908,7 @@ structure Corollary312DisputeFirstPassReport where
   absLabelThetaDegreeHalfRangeModelAvailable : Bool
   gaussianDegreeEvaluationTheoremAvailable : Bool
   processionContainerSkeletonAvailable : Bool
+  processionTensorPacketLogVolumeAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -907,6 +934,7 @@ def corollary312DisputeFirstPassReport :
     absLabelThetaDegreeHalfRangeModelAvailable := true,
     gaussianDegreeEvaluationTheoremAvailable := true,
     processionContainerSkeletonAvailable := true,
+    processionTensorPacketLogVolumeAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -952,6 +980,11 @@ theorem corollary312Report_gaussianDegreeEvaluationTheoremAvailable :
 
 theorem corollary312Report_processionContainerSkeletonAvailable :
     corollary312DisputeFirstPassReport.processionContainerSkeletonAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_processionTensorPacketLogVolumeAvailable :
+    corollary312DisputeFirstPassReport.processionTensorPacketLogVolumeAvailable =
       true :=
   rfl
 

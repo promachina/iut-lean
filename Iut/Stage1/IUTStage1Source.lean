@@ -1050,6 +1050,65 @@ structure IUTStage1TypedCapsuleFamilyLogVolume
   normalized_eq_average :
     normalizedLogVolume = totalLogVolume / (capsuleCount : Real)
 
+/--
+Log-volume shadow of the IUT III tensor packet over a procession container.
+
+For each element of `S^±_{j+1}` this record stores the finite log-volume object
+representing the direct sum of log-shells over the relevant valuations.  The
+tensor-packet log-volume is recorded at the additive log-volume level as the sum
+over the container, with procession normalization by `j+1`.
+-/
+structure IUTStage1ProcessionTensorPacketLogVolume
+    (kind : IUTStage1PlaceKind) (j : Nat) where
+  logShellDirectSum :
+    IUTStage1ProcessionContainer j ->
+      IUTStage1FiniteLocalLogVolumeObject kind
+  tensorPacketLogVolume : Real
+  tensor_packet_eq_sum :
+    tensorPacketLogVolume =
+      Finset.univ.sum fun label : IUTStage1ProcessionContainer j =>
+        (logShellDirectSum label).finiteLogVolume
+  normalizedLogVolume : Real
+  normalized_eq_average :
+    normalizedLogVolume = tensorPacketLogVolume / ((j + 1 : Nat) : Real)
+
+namespace IUTStage1ProcessionTensorPacketLogVolume
+
+variable {kind : IUTStage1PlaceKind} {j : Nat}
+
+theorem normalized_eq_card_average
+    (data : IUTStage1ProcessionTensorPacketLogVolume kind j) :
+    data.normalizedLogVolume =
+      data.tensorPacketLogVolume /
+        (Fintype.card (IUTStage1ProcessionContainer j) : Real) := by
+  rw [data.normalized_eq_average]
+  rw [IUTStage1ProcessionContainer.card_eq]
+
+def toLabelAveraged
+    (data : IUTStage1ProcessionTensorPacketLogVolume kind j) :
+    IUTStage1LabelAveragedProcessionLogVolume
+      (IUTStage1ProcessionContainer j) :=
+  { normalizedLogVolume := fun label =>
+      (data.logShellDirectSum label).finiteLogVolume,
+    averageLogVolume := data.normalizedLogVolume,
+    average_eq := by
+      calc
+        data.normalizedLogVolume =
+            data.tensorPacketLogVolume / ((j + 1 : Nat) : Real) :=
+          data.normalized_eq_average
+        _ =
+            (Finset.univ.sum fun label : IUTStage1ProcessionContainer j =>
+              (data.logShellDirectSum label).finiteLogVolume) /
+                ((j + 1 : Nat) : Real) := by
+          rw [data.tensor_packet_eq_sum]
+        _ =
+            (Finset.univ.sum fun label : IUTStage1ProcessionContainer j =>
+              (data.logShellDirectSum label).finiteLogVolume) /
+                (Fintype.card (IUTStage1ProcessionContainer j) : Real) := by
+          rw [IUTStage1ProcessionContainer.card_eq] }
+
+end IUTStage1ProcessionTensorPacketLogVolume
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}
@@ -1884,6 +1943,26 @@ theorem const_le_average_of_forall_le
   simpa [mul_comm] using hsum
 
 end IUTStage1LabelAveragedProcessionLogVolume
+
+namespace IUTStage1ProcessionTensorPacketLogVolume
+
+variable {kind : IUTStage1PlaceKind} {j : Nat}
+
+theorem const_le_normalizedLogVolume_of_forall_le
+    (data : IUTStage1ProcessionTensorPacketLogVolume kind j)
+    {c : Real}
+    (hlabel :
+      ∀ label : IUTStage1ProcessionContainer j,
+        c <= (data.logShellDirectSum label).finiteLogVolume) :
+    c <= data.normalizedLogVolume := by
+  let averaged := data.toLabelAveraged
+  haveI : Nonempty (IUTStage1ProcessionContainer j) :=
+    ⟨IUTStage1ProcessionContainer.core j⟩
+  exact
+    IUTStage1LabelAveragedProcessionLogVolume.const_le_average_of_forall_le
+      averaged hlabel
+
+end IUTStage1ProcessionTensorPacketLogVolume
 
 namespace IUTStage1WeightedLabelAveragedProcessionLogVolume
 
