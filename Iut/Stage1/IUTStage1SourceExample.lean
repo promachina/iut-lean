@@ -5879,6 +5879,57 @@ theorem placeAudited_logVolume_fl_zmod_structured_hodge_transport_checkpoint_exa
       fourthTriangleHDDSHECheckpoint :=
   part.localObjectTransport_checkpoint_eq_fourthTriangle audited
 
+def placeAudited_logVolume_fl_zmod_structured_hodge_square_weight_boundary_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaStructuredHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+      l part.bundle.hodgeTheaterDescentBridgeData
+      (part.insulated_route.zeroLocalObject audited)
+      (part.insulated_route.cuspClassLocalObject audited)
+      audited.choice.local_tensor_state.packetState.localObject :=
+  part.localObjectSquareWeightBoundary audited
+
+theorem placeAudited_logVolume_fl_zmod_structured_hodge_square_weight_coord_gap_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaStructuredHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1SquareWeightTransportMissingDatum.coordinateEquiv ∈
+      (part.localObjectSquareWeightBoundary audited).missingSquareWeightData :=
+  part.localObjectSquareWeightBoundary_coordinateEquiv_missing audited
+
+theorem placeAudited_logVolume_fl_zmod_structured_hodge_square_weight_weight_gap_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaStructuredHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1SquareWeightTransportMissingDatum.squareWeightPreservation ∈
+      (part.localObjectSquareWeightBoundary audited).missingSquareWeightData :=
+  part.localObjectSquareWeightBoundary_squareWeightPreservation_missing audited
+
 theorem placeAudited_logVolume_fl_zmod_structured_hodge_transport_source_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

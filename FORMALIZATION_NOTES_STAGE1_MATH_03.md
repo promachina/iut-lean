@@ -3182,3 +3182,107 @@ milestone should inspect the existing local-object Hodge-descent packet audits
 and ask whether any of them can supply the coordinate equivalence and the two
 preservation equalities, or whether we need an explicit "erasure" record saying
 that this information is absent after passage to the common container.
+
+## 149. Local-Object Hodge Descent Square-Weight Gap
+
+### Lean Move
+
+We added an explicit boundary record:
+
+```text
+IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+```
+
+It wraps the existing local-object Hodge descent transport data and exposes the
+equalities that this layer really provides:
+
+```text
+zero local object = packet local object
+cusp-class local object = packet local object
+domain history is not identified with codomain history
+```
+
+We also added:
+
+```text
+IUTStage1SquareWeightTransportMissingDatum
+```
+
+This finite checklist records the square-weight transport data not supplied by
+local-object packet descent alone:
+
+```text
+coordinate equivalence
+source and target square-weight profiles
+source and target full-label log-volume evaluators
+full-label log-volume preservation
+j^2 square-weight preservation
+weight-total preservation
+```
+
+The structured FL/ZMod Hodge packet audit now projects to this boundary via:
+
+```text
+localObjectSquareWeightBoundary
+```
+
+and proves concrete gap lemmas such as:
+
+```text
+localObjectSquareWeightBoundary_coordinateEquiv_missing
+localObjectSquareWeightBoundary_squareWeightPreservation_missing
+localObjectSquareWeightBoundary_fullLabelPreservation_missing
+```
+
+The example file checks these projections on the place-audited log-volume
+route.
+
+### Mathematical Reason
+
+This is the first negative/boundary milestone in the square-weight corridor.
+It says that the local-object Hodge descent packet layer is not being silently
+used as a proof of Corollary 3.12-style square-weight preservation.
+
+The local-object layer can identify several local objects with a packet object.
+That is useful for describing the Hodge-descent packet route.  But the debated
+Corollary 3.12 issue concerns the weighted full-label expression indexed by
+`j in F_l`, especially whether the `j^2` contribution survives the passage to
+the comparison setting.  Local-object equality by itself does not provide a
+coordinate equivalence on `ZMod l`, nor does it provide preservation of the
+full-label log-volume evaluator or the total weighted average.
+
+### Source Check
+
+IUT II and IUT III repeatedly treat the `j in F_l` labels, Gaussian monoids,
+and weighted volumes as structured data rather than as an arbitrary finite
+average.  Corollary 3.12 in IUT III is precisely at the point where the
+weighted average over `j` is asserted after the Theorem 3.11 comparison.
+
+Scholze-Stix's critique focuses on this same passage: their Step (xi) pressure
+point is that after simplifying to a common comparison object, the averaging
+data appears to collapse rather than carry nontrivial independent `j`
+information.  This Lean boundary does not decide that claim.  It records the
+more modest fact that the current local-object Hodge descent fields are
+insufficient to decide it.
+
+### Relevance to the 3.12 Dispute
+
+The current formal state is:
+
+```text
+local-object Hodge descent
+  supplies packet-object equalities and history separation
+
+square-weight transport obligations
+  require coordinate/profile/log-volume/weight preservation data
+
+therefore
+  packet-object local descent is not enough to derive 3.12-weight preservation
+```
+
+This is useful for impartiality.  It blocks a false positive proof in which the
+formalization accidentally treats object-level descent as preservation of the
+weighted full-label expression.  It also gives a precise target for the next
+mathematical step: either construct the missing fields from a stronger
+Mochizuki-style Hodge-theater erasure/transport statement, or show that the
+available route data cannot determine them.

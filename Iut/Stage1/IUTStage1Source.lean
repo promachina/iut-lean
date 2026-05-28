@@ -3175,6 +3175,162 @@ structure IUTStage1ZModSourceMarkedHodgeDescentCuspZeroLocalObjectOperationData
       IUTStage1HodgeDescentLocalObjectOperationData
         hodgeData (cuspClassObject label) packetObject
 
+/--
+Square-weight transport data that are not supplied by local-object Hodge descent
+alone.
+
+The local-object packet transport records zero/cusp local objects and their
+descent to a packet object.  It does not by itself contain the coordinate and
+weight-preservation data required by
+`IUTStage1StructuredSHESquareWeightTransportObligations`.
+-/
+inductive IUTStage1SquareWeightTransportMissingDatum where
+  | coordinateEquiv
+  | sourceProfile
+  | targetProfile
+  | sourceLogVolume
+  | targetLogVolume
+  | fullLabelLogVolumePreservation
+  | squareWeightPreservation
+  | weightTotalPreservation
+deriving DecidableEq, Repr, Fintype
+
+namespace IUTStage1SquareWeightTransportMissingDatum
+
+def all : Finset IUTStage1SquareWeightTransportMissingDatum :=
+  Finset.univ
+
+theorem coordinateEquiv_mem_all :
+    coordinateEquiv ∈ all := by
+  simp [all]
+
+theorem sourceProfile_mem_all :
+    sourceProfile ∈ all := by
+  simp [all]
+
+theorem targetProfile_mem_all :
+    targetProfile ∈ all := by
+  simp [all]
+
+theorem sourceLogVolume_mem_all :
+    sourceLogVolume ∈ all := by
+  simp [all]
+
+theorem targetLogVolume_mem_all :
+    targetLogVolume ∈ all := by
+  simp [all]
+
+theorem fullLabelLogVolumePreservation_mem_all :
+    fullLabelLogVolumePreservation ∈ all := by
+  simp [all]
+
+theorem squareWeightPreservation_mem_all :
+    squareWeightPreservation ∈ all := by
+  simp [all]
+
+theorem weightTotalPreservation_mem_all :
+    weightTotalPreservation ∈ all := by
+  simp [all]
+
+end IUTStage1SquareWeightTransportMissingDatum
+
+/--
+Boundary object showing what the local-object Hodge-descent packet layer supplies
+before square-weight preservation data are added.
+
+It carries the existing local-object transport data and exposes the packet
+equalities, while the `missingSquareWeightData` checklist records the extra
+coordinate/profile/preservation data still needed to construct the
+structured-SHE square-weight transport obligations.
+-/
+structure IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+    {kind : IUTStage1PlaceKind}
+    (l : PrimeGeFive)
+    (hodgeData : IUTStage1HodgeTheaterDescentBridgeData)
+    (zeroObject : IUTStage1FiniteLocalLogVolumeObject kind)
+    (cuspClassObject :
+      (zmodSignAction l).SignLabelQuotient ->
+        IUTStage1FiniteLocalLogVolumeObject kind)
+    (packetObject : IUTStage1FiniteLocalLogVolumeObject kind) where
+  localObjectTransport :
+    IUTStage1HodgeDescentLocalObjectTransportData
+      l hodgeData zeroObject cuspClassObject packetObject
+
+namespace IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+
+variable {kind : IUTStage1PlaceKind}
+variable {l : PrimeGeFive}
+variable {hodgeData : IUTStage1HodgeTheaterDescentBridgeData}
+variable {zeroObject : IUTStage1FiniteLocalLogVolumeObject kind}
+variable
+  {cuspClassObject :
+    (zmodSignAction l).SignLabelQuotient ->
+      IUTStage1FiniteLocalLogVolumeObject kind}
+variable {packetObject : IUTStage1FiniteLocalLogVolumeObject kind}
+
+def missingSquareWeightData
+    (_boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    Finset IUTStage1SquareWeightTransportMissingDatum :=
+  IUTStage1SquareWeightTransportMissingDatum.all
+
+theorem zero_transports_to_packet
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    zeroObject = packetObject :=
+  boundary.localObjectTransport.zero_transports_to_packet
+
+theorem cuspClass_transports_to_packet
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    cuspClassObject label = packetObject :=
+  boundary.localObjectTransport.cuspClass_transports_to_packet label
+
+theorem histories_not_identified
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    hodgeData.domainTheater.side ≠ hodgeData.codomainTheater.side :=
+  boundary.localObjectTransport.histories_not_identified
+
+theorem coordinateEquiv_missing
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    IUTStage1SquareWeightTransportMissingDatum.coordinateEquiv ∈
+      boundary.missingSquareWeightData :=
+  IUTStage1SquareWeightTransportMissingDatum.coordinateEquiv_mem_all
+
+theorem fullLabelLogVolumePreservation_missing
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    IUTStage1SquareWeightTransportMissingDatum.fullLabelLogVolumePreservation ∈
+      boundary.missingSquareWeightData :=
+  IUTStage1SquareWeightTransportMissingDatum.fullLabelLogVolumePreservation_mem_all
+
+theorem squareWeightPreservation_missing
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    IUTStage1SquareWeightTransportMissingDatum.squareWeightPreservation ∈
+      boundary.missingSquareWeightData :=
+  IUTStage1SquareWeightTransportMissingDatum.squareWeightPreservation_mem_all
+
+theorem weightTotalPreservation_missing
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    IUTStage1SquareWeightTransportMissingDatum.weightTotalPreservation ∈
+      boundary.missingSquareWeightData :=
+  IUTStage1SquareWeightTransportMissingDatum.weightTotalPreservation_mem_all
+
+end IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+
 namespace IUTStage1HodgeDescentLocalObjectTransportData
 
 variable {kind : IUTStage1PlaceKind}
@@ -17118,6 +17274,41 @@ theorem localObjectTransport_checkpoint_eq_fourthTriangle
     part.bundle.hodgeTheaterDescentBridgeData.zeroColumnCheckpoint =
       fourthTriangleHDDSHECheckpoint :=
   (part.localObjectTransport audited).checkpoint_eq_fourthTriangle
+
+def localObjectSquareWeightBoundary
+    (part :
+      audit.FLZModCuspLabelThetaStructuredHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+      l part.bundle.hodgeTheaterDescentBridgeData
+      (part.insulated_route.zeroLocalObject audited)
+      (part.insulated_route.cuspClassLocalObject audited)
+      audited.choice.local_tensor_state.packetState.localObject :=
+  { localObjectTransport := part.localObjectTransport audited }
+
+theorem localObjectSquareWeightBoundary_coordinateEquiv_missing
+    (part :
+      audit.FLZModCuspLabelThetaStructuredHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1SquareWeightTransportMissingDatum.coordinateEquiv ∈
+      (part.localObjectSquareWeightBoundary audited).missingSquareWeightData :=
+  (part.localObjectSquareWeightBoundary audited).coordinateEquiv_missing
+
+theorem localObjectSquareWeightBoundary_squareWeightPreservation_missing
+    (part :
+      audit.FLZModCuspLabelThetaStructuredHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1SquareWeightTransportMissingDatum.squareWeightPreservation ∈
+      (part.localObjectSquareWeightBoundary audited).missingSquareWeightData :=
+  (part.localObjectSquareWeightBoundary audited).squareWeightPreservation_missing
+
+theorem localObjectSquareWeightBoundary_fullLabelPreservation_missing
+    (part :
+      audit.FLZModCuspLabelThetaStructuredHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1SquareWeightTransportMissingDatum.fullLabelLogVolumePreservation ∈
+      (part.localObjectSquareWeightBoundary audited).missingSquareWeightData :=
+  (part.localObjectSquareWeightBoundary audited).fullLabelLogVolumePreservation_missing
 
 theorem zeroLocalObject_eq_packetLocalObject
     (part :
