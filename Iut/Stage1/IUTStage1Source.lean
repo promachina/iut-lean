@@ -3817,6 +3817,24 @@ theorem region_eq_of_nonarchimedeanEntry_step
     (IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanEntry_toNonarchimedeanIsmStep
       hstep)
 
+theorem region_eq_and_fiber_mem_of_nonarchimedeanEntry_step
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.nonarchimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂ ∧
+      hstep.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
+  ⟨data.region_eq_of_nonarchimedeanEntry_step hstep,
+    fiberPackage.entry_place_mem_fiber hstep⟩
+
 theorem region_eq_of_archimedeanOrderTwo_step
     (data :
       IUTStage1PlaceAuditedMultiradialImages
@@ -3846,6 +3864,24 @@ theorem region_eq_of_archimedeanEntry_step
   data.region_eq_of_archimedeanOrderTwo_step
     (IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanEntry_toArchimedeanOrderTwoStep
       hstep)
+
+theorem region_eq_and_fiber_mem_of_archimedeanEntry_step
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.archimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂ ∧
+      hstep.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
+  ⟨data.region_eq_of_archimedeanEntry_step hstep,
+    fiberPackage.entry_place_mem_fiber hstep⟩
 
 theorem region_eq_of_ind3_step
     (data :
@@ -3990,6 +4026,27 @@ theorem region_eq_of_nonarchimedeanEntry_step
   rw [← data.audited_possibleImages_eq]
   exact data.auditedImages.region_eq_of_nonarchimedeanEntry_step hstep
 
+theorem region_eq_and_fiber_mem_of_nonarchimedeanEntry_step
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+        data.possibleImages.images.region audited₂ ∧
+      hstep.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
+  ⟨data.region_eq_of_nonarchimedeanEntry_step hstep,
+    fiberPackage.entry_place_mem_fiber hstep⟩
+
 theorem region_eq_of_archimedeanOrderTwo_step
     {package :
       IUTStage1SourcePackage source target
@@ -4023,6 +4080,27 @@ theorem region_eq_of_archimedeanEntry_step
       data.possibleImages.images.region audited₂ := by
   rw [← data.audited_possibleImages_eq]
   exact data.auditedImages.region_eq_of_archimedeanEntry_step hstep
+
+theorem region_eq_and_fiber_mem_of_archimedeanEntry_step
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.archimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+        data.possibleImages.images.region audited₂ ∧
+      hstep.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
+  ⟨data.region_eq_of_archimedeanEntry_step hstep,
+    fiberPackage.entry_place_mem_fiber hstep⟩
 
 theorem region_eq_of_ind3_step
     (data : IUTStage1PlaceAuditedMultiradialThetaImages package)

@@ -2477,3 +2477,58 @@ archimedeanInd2FiberPackage_entry_place_mem_fiber_example
 The next step should thread these packages into entry-based image invariance,
 so that a local `(Ind2)` entry can carry fiber membership and still land in the
 audited multiradial possible-image equality.
+
+## 33. Fiber-Aware Entry Image Invariance
+
+### Goal
+
+We threaded the `(Ind2)` fiber packages into entry-based multiradial image
+invariance.
+
+### Lean/API Check
+
+The audited image package now proves:
+
+```text
+region_eq_and_fiber_mem_of_nonarchimedeanEntry_step
+region_eq_and_fiber_mem_of_archimedeanEntry_step
+```
+
+The audited source-package theta-image wrapper exposes the same two theorems.
+
+Each theorem returns both:
+
+```text
+possible-image region equality
+action-entry place membership in the explicit fiber over vQ
+```
+
+### Mathematical Point
+
+The local `(Ind2)` entry is now carried all the way to the multiradial image
+surface without dropping its place-fiber evidence.  This is the kind of
+bookkeeping we need near the Theorem 3.11 to Corollary 3.12 boundary: image
+invariance and the source-local place indexing should remain visible together.
+
+### Trap Avoided
+
+The theorem returns a conjunction rather than building a new quotient relation.
+This keeps the quotient structure unchanged and only augments the theorem with
+the extra place-fiber evidence needed for auditing.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+placeAuditedMultiradialImages_nonarchimedeanEntry_region_fiber_example
+placeAuditedMultiradialImages_archimedeanEntry_region_fiber_example
+placeAuditedMultiradialThetaImages_nonarchimedeanEntry_region_fiber_example
+placeAuditedMultiradialThetaImages_archimedeanEntry_region_fiber_example
+```
+
+### Remaining Gap
+
+The current equality is still region-valued.  The next major mathematical
+pressure point is to connect these audited possible-image equalities to the
+holomorphic hull and log-volume side used in Corollary 3.12.
