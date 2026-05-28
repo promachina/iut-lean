@@ -2787,3 +2787,64 @@ The next refinement should split the log-volume chart audit into its equality
 part `(Ind1)/(Ind2)` and inequality part `(Ind3)`, matching the Step (x)
 description that log-volumes are invariant under `(Ind1)/(Ind2)` while `(Ind3)`
 is converted into an upper inequality.
+
+## 38. Split Log-Volume Chart Audit
+
+### Goal
+
+We split the hull-endpoint log-volume chart audit into the two pieces suggested
+by Step (x) of the Corollary 3.12 proof.
+
+### Lean/API Check
+
+Inside `LogVolumeChartAudit`, the new subrecords are:
+
+```text
+Ind12EqualityPart
+Ind3UpperInequalityPart
+```
+
+with constructors:
+
+```text
+ind12EqualityPart
+ind3UpperInequalityPart
+```
+
+The equality part carries the chart identifications and the q-to-target lower
+side.  The upper-inequality part carries:
+
+```text
+target_signed_le_theta
+determinant_volume_bound
+```
+
+### Mathematical Point
+
+This reflects the source phrasing that the procession-normalized log-volumes
+are invariant under `(Ind1)` and `(Ind2)`, while `(Ind3)` is converted into an
+upper inequality.  At this stage the formalization does not prove that analytic
+claim; it makes the split visible in the endpoint API.
+
+### Trap Avoided
+
+We did not collapse the whole real comparison into a single anonymous
+`q <= theta` proof.  Downstream code can now inspect which part is chart/equality
+data and which part is upper-bound data.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+placeAuditedMultiradialThetaHullEndpoint_logVolume_ind12_part_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_ind3_part_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_ind12_q_le_target_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_ind3_target_le_theta_example
+```
+
+### Remaining Gap
+
+The split is still fed by existing source obligations.  A later refinement
+should connect `Ind12EqualityPart` to explicit `(Ind1)/(Ind2)` invariance of
+procession-normalized log-volumes, not only to chart equalities.

@@ -9013,6 +9013,52 @@ namespace LogVolumeChartAudit
 
 variable {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
 
+/-- Equality/identification part of the log-volume chart audit. -/
+structure Ind12EqualityPart
+    (audit : endpoint.LogVolumeChartAudit) : Prop where
+  q_charted :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord =
+      package.preLedger.qSigned
+  theta_charted :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned
+  target_signed_eq_chosen_volume :
+    package.preLedger.targetVolume.targetSigned =
+      RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice)
+  q_signed_le_target :
+    package.preLedger.qSigned <= package.preLedger.targetVolume.targetSigned
+
+/-- Upper-inequality part of the log-volume chart audit. -/
+structure Ind3UpperInequalityPart
+    (audit : endpoint.LogVolumeChartAudit) : Prop where
+  target_signed_le_theta :
+    package.preLedger.targetVolume.targetSigned <=
+      package.preLedger.thetaSigned
+  determinant_volume_bound :
+    RegionMeasure.HasVolumeAtMost package.preLedger.measure
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull
+      package.preLedger.thetaSigned
+
+def ind12EqualityPart
+    (audit : endpoint.LogVolumeChartAudit) :
+    audit.Ind12EqualityPart :=
+  { q_charted := audit.q_charted,
+    theta_charted := audit.theta_charted,
+    target_signed_eq_chosen_volume :=
+      audit.target_signed_eq_chosen_volume,
+    q_signed_le_target := audit.q_signed_le_target }
+
+def ind3UpperInequalityPart
+    (audit : endpoint.LogVolumeChartAudit) :
+    audit.Ind3UpperInequalityPart :=
+  { target_signed_le_theta := audit.target_signed_le_theta,
+    determinant_volume_bound := audit.determinant_volume_bound }
+
 theorem qCharted (audit : endpoint.LogVolumeChartAudit) :
     (Transport.map package.preLedger.chartedContainer.chart.qToTarget
       package.preLedger.qValue.qPoint).coord =
@@ -9044,6 +9090,48 @@ theorem corollary312Endpoint
       (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
       (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
   audit.corollary312_endpoint
+
+namespace Ind12EqualityPart
+
+variable {audit : endpoint.LogVolumeChartAudit}
+
+theorem qCharted (part : audit.Ind12EqualityPart) :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord =
+      package.preLedger.qSigned :=
+  part.q_charted
+
+theorem thetaCharted (part : audit.Ind12EqualityPart) :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned :=
+  part.theta_charted
+
+theorem qSigned_le_targetSigned (part : audit.Ind12EqualityPart) :
+    package.preLedger.qSigned <= package.preLedger.targetVolume.targetSigned :=
+  part.q_signed_le_target
+
+end Ind12EqualityPart
+
+namespace Ind3UpperInequalityPart
+
+variable {audit : endpoint.LogVolumeChartAudit}
+
+theorem targetSigned_le_thetaSigned
+    (part : audit.Ind3UpperInequalityPart) :
+    package.preLedger.targetVolume.targetSigned <=
+      package.preLedger.thetaSigned :=
+  part.target_signed_le_theta
+
+theorem determinantVolumeBound
+    (part : audit.Ind3UpperInequalityPart) :
+    RegionMeasure.HasVolumeAtMost package.preLedger.measure
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull
+      package.preLedger.thetaSigned :=
+  part.determinant_volume_bound
+
+end Ind3UpperInequalityPart
 
 end LogVolumeChartAudit
 
