@@ -1846,6 +1846,65 @@ theorem toWeighted_const_le_weightedAverage_of_forall_le
       (by intro j; exact profile.weight_nonnegative j)
       hpointwise
 
+theorem toWeighted_normalizedLogVolume_eq_fullLabelLogVolume
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (data : IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value))
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (hcompat :
+      ∀ j : ZMod l.value,
+        data.normalizedLogVolume j = compat.normalizedLogVolume j)
+    (j : ZMod l.value) :
+    (profile.toWeighted data).normalizedLogVolume j =
+      compat.fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
+  calc
+    (profile.toWeighted data).normalizedLogVolume j =
+        data.normalizedLogVolume j :=
+      rfl
+    _ = compat.normalizedLogVolume j :=
+      hcompat j
+    _ =
+        compat.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+      compat.normalizedLogVolume_eq_fullLabelLogVolume_fromCoordinate j
+
+theorem toWeighted_weightedSummand_eq_square_fullLabelLogVolume
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (data : IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value))
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (hcompat :
+      ∀ j : ZMod l.value,
+        data.normalizedLogVolume j = compat.normalizedLogVolume j)
+    (j : ZMod l.value) :
+    (profile.toWeighted data).weight j *
+        (profile.toWeighted data).normalizedLogVolume j =
+      ((j.val : Real) ^ 2) *
+        compat.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
+  rw [profile.toWeighted_weight_eq_square_val data j,
+    profile.toWeighted_normalizedLogVolume_eq_fullLabelLogVolume
+      data compat hcompat j]
+
+theorem toWeighted_weightedAverage_eq_square_fullLabelLogVolume_sum
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (data : IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value))
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (hcompat :
+      ∀ j : ZMod l.value,
+        data.normalizedLogVolume j = compat.normalizedLogVolume j) :
+    (profile.toWeighted data).weightedAverageLogVolume =
+      (Finset.univ.sum fun j : ZMod l.value =>
+        ((j.val : Real) ^ 2) *
+          compat.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) /
+        profile.weightTotal := by
+  rw [(profile.toWeighted data).weightedAverage_eq_formula]
+  congr 1
+  exact Finset.sum_congr rfl (by
+    intro j _hj
+    exact profile.toWeighted_weightedSummand_eq_square_fullLabelLogVolume
+      data compat hcompat j)
+
 end IUTStage1ZModSquareWeightProfile
 
 namespace IUTStage1CapsuleFamilyLogVolume
@@ -13399,6 +13458,70 @@ theorem averageFullLabelLogVolume_fromCoordinate_nonzero
       (part.cuspLogVolume audited).cuspClassLogVolume
         (zmodSignLabelFromCoordinate l j hj) :=
   (part.cuspLogVolume audited).fullLabelLogVolume_fromCoordinate_nonzero j hj
+
+noncomputable def squareWeightedAveragedLogVolume
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    IUTStage1WeightedLabelAveragedProcessionLogVolume (ZMod l.value) :=
+  profile.toWeighted
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited)
+
+theorem squareWeighted_normalizedLogVolume_eq_fullLabelLogVolume
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    (part.squareWeightedAveragedLogVolume profile audited).normalizedLogVolume j =
+      (part.cuspLogVolume audited).fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  profile.toWeighted_normalizedLogVolume_eq_fullLabelLogVolume
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited)
+    (part.cuspLogVolume audited)
+    (fun j => part.normalizedLogVolumeEq audited j)
+    j
+
+theorem squareWeighted_weight_eq_square_val
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    (part.squareWeightedAveragedLogVolume profile audited).weight j =
+      ((j.val : Real) ^ 2) :=
+  profile.toWeighted_weight_eq_square_val
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited)
+    j
+
+theorem squareWeighted_summand_eq_square_fullLabelLogVolume
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    (part.squareWeightedAveragedLogVolume profile audited).weight j *
+        (part.squareWeightedAveragedLogVolume profile audited).normalizedLogVolume j =
+      ((j.val : Real) ^ 2) *
+        (part.cuspLogVolume audited).fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  profile.toWeighted_weightedSummand_eq_square_fullLabelLogVolume
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited)
+    (part.cuspLogVolume audited)
+    (fun j => part.normalizedLogVolumeEq audited j)
+    j
+
+theorem squareWeightedAverage_eq_square_fullLabelLogVolume_sum
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.squareWeightedAveragedLogVolume profile audited).weightedAverageLogVolume =
+      (Finset.univ.sum fun j : ZMod l.value =>
+        ((j.val : Real) ^ 2) *
+          (part.cuspLogVolume audited).fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) /
+        profile.weightTotal :=
+  profile.toWeighted_weightedAverage_eq_square_fullLabelLogVolume_sum
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited)
+    (part.cuspLogVolume audited)
+    (fun j => part.normalizedLogVolumeEq audited j)
 
 theorem ind1AverageLogVolumeEq
     (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)

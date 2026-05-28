@@ -2668,3 +2668,120 @@ full-label zero/nonzero split from the previous milestone and then ask whether
 Hodge-theater transport preserves, erases, or reconstructs this square-weight
 profile.  That is much closer to the actual Corollary 3.12 pressure point than
 the previous infrastructure work.
+
+## 144. Square-Weighted Full-Label Summands
+
+### Lean Move
+
+I connected the square-weight profile from Milestone 143 to the full-label
+zero/nonzero decomposition from Milestone 142.
+
+At the generic `ZMod l` profile level, the new theorems are:
+
+```text
+IUTStage1ZModSquareWeightProfile
+  .toWeighted_normalizedLogVolume_eq_fullLabelLogVolume
+  .toWeighted_weightedSummand_eq_square_fullLabelLogVolume
+  .toWeighted_weightedAverage_eq_square_fullLabelLogVolume_sum
+```
+
+These say: if a uniform `ZMod l` averaged log-volume record is compatible with a
+zero/nonzero cusp-label log-volume record, then the square-weighted version has
+summands of the form
+
+```text
+((j.val : Real) ^ 2) *
+  fullLabelLogVolume (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+```
+
+and its weighted average is the finite sum of these summands divided by the
+explicit square-weight total.
+
+At the audited endpoint level, the new declarations are:
+
+```text
+FLZModCuspLabelCompatibleAveragedInd12Audit
+  .squareWeightedAveragedLogVolume
+  .squareWeighted_normalizedLogVolume_eq_fullLabelLogVolume
+  .squareWeighted_weight_eq_square_val
+  .squareWeighted_summand_eq_square_fullLabelLogVolume
+  .squareWeightedAverage_eq_square_fullLabelLogVolume_sum
+```
+
+The example module now checks the same three public-facing facts: the normalized
+summand still factors through the full-label branch, the weight at `j` is
+`j^2`, and the whole weighted average is the finite `j^2 * fullLabel` sum.
+
+### Mathematical Reason
+
+The preceding milestone only created a square-weighted average.  That was not
+yet close enough to the Corollary 3.12 pressure point, because it did not say
+what was being weighted.
+
+This milestone states that the thing being weighted is precisely the
+coordinate-indexed log-volume after it has been interpreted through the
+zero/nonzero full-label split:
+
+```text
+coordinate j
+  -> full label fromCoordinate j
+  -> full-label log-volume branch
+  -> multiplied by j^2
+```
+
+This is a useful formal boundary because it prevents two opposite mistakes:
+
+* treating the square weights as attached to anonymous real numbers with no
+  label provenance;
+* treating the full-label factorization as if it already solved the
+  square-weight comparison.
+
+### Source Check
+
+IUT III, Corollary 3.12 and its proof discussion use averages over
+`j ∈ F_l`; the local extract around lines 9899 and 9910 is the source for our
+uniform `ZMod l` average interface.
+
+IUT II discusses weighted volume computations and the `F_l` symmetry, including
+the warning that zero and nonzero labels cannot simply be symmetrized away in
+weighted-volume computations; the local extract around lines 9198--9208 is the
+source for keeping the zero/nonzero full-label split visible.
+
+Scholze-Stix, in their discussion of IUT III Corollary 3.12, describe the
+critical comparison using `j`-indexed theta-pilot data and averages; the local
+extract around lines 624--625 and the surrounding discussion are the source for
+making the `j^2` weighting an explicit formal object rather than a hidden
+interpretation.
+
+### Relevance to the 3.12 Dispute
+
+The formalization can now state the disputed local shape as a Lean-normalized
+formula:
+
+```text
+weighted Theta-side average =
+  sum_j (j^2 * full-label-log-volume(j)) / square-weight-total
+```
+
+This is still not a proof of Corollary 3.12.  It is a sharper target for the next
+stage: an actual Hodge-theater/log-link transport theorem would have to account
+for both pieces of structure at once:
+
+```text
+full-label provenance
+square-weight provenance
+```
+
+If these pieces survive transport, the Lean proof must exhibit the transport.
+If they collapse under consistent real-line identifications, the Lean proof
+should expose that collapse by failing to reconstruct this weighted full-label
+summand data from the common comparison object.
+
+### Remaining Gap
+
+We have not yet formalized the transport behavior of square-weight profiles.
+The current theorem is local to the `ZMod l` coordinate model and to the audited
+full-label compatibility.  The next milestone should introduce an explicit
+"square-weight provenance under transport" audit: either a preservation record,
+or a deliberately weaker record showing exactly which data are unavailable after
+Hodge-theater erasure.
