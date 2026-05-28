@@ -10380,6 +10380,32 @@ structure FLZModCuspLabelThetaPacketNormalizedContainerAudit
         package.preLedger.targetVolume.targetSigned
         (theta_source.compatible_average.cuspLogVolume audited).zeroLogVolume
 
+/--
+Transported source for cusp-class container bounds.
+
+For each target audited packet, this audit chooses a source audited packet,
+an audited `(Ind2)` direct-summand step from source to target, and capsule-entry
+container estimates on the source.  The packet-normalized audit then converts
+the transported packet-normalized bound into cusp-class and zero-label bounds
+on the target.
+-/
+structure FLZModCuspLabelThetaInd2TransportedCuspClassAudit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  packet_normalized : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l
+  sourceAudited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind ->
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind
+  ind2_step :
+    ∀ targetAudited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind,
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.LocalTensorDirectSummandActionStep
+        (sourceAudited targetAudited) targetAudited
+  sourceCapsuleEstimates :
+    ∀ targetAudited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind,
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        package.preLedger.targetVolume.targetSigned
+        (sourceAudited targetAudited).choice.local_tensor_state.packetState.capsuleFamily
+
 theorem qCharted (audit : endpoint.LogVolumeChartAudit) :
     (Transport.map package.preLedger.chartedContainer.chart.qToTarget
       package.preLedger.qValue.qPoint).coord =
@@ -11492,6 +11518,51 @@ theorem qSigned_le_thetaSigned_via_packet_normalized_container
   packetAudit.qSigned_le_thetaSigned_via_packet_local_object_container audited
 
 end FLZModCuspLabelThetaPacketNormalizedContainerAudit
+
+namespace FLZModCuspLabelThetaInd2TransportedCuspClassAudit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+theorem targetSigned_le_cuspClassLogVolume
+    (part : audit.FLZModCuspLabelThetaInd2TransportedCuspClassAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.packet_normalized.theta_source.compatible_average.cuspLogVolume
+        audited).cuspClassLogVolume label :=
+  part.packet_normalized.targetSigned_le_cuspClassLogVolume_of_ind2_capsuleEstimates
+    (part.ind2_step audited) (part.sourceCapsuleEstimates audited) label
+
+theorem targetSigned_le_zeroLogVolume
+    (part : audit.FLZModCuspLabelThetaInd2TransportedCuspClassAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.packet_normalized.theta_source.compatible_average.cuspLogVolume
+        audited).zeroLogVolume :=
+  part.packet_normalized.targetSigned_le_zeroLogVolume_of_ind2_capsuleEstimates
+    (part.ind2_step audited) (part.sourceCapsuleEstimates audited)
+
+def toThetaCuspClassContainerAudit
+    (part : audit.FLZModCuspLabelThetaInd2TransportedCuspClassAudit l) :
+    audit.FLZModCuspLabelThetaCuspClassContainerAudit l :=
+  { theta_source := part.packet_normalized.theta_source,
+    ind12_equality_part := part.packet_normalized.ind12_equality_part,
+    ind3_upper_part := part.packet_normalized.ind3_upper_part,
+    theta_images_eq_endpoint := part.packet_normalized.theta_images_eq_endpoint,
+    targetSigned_le_cuspClassLogVolume :=
+      part.targetSigned_le_cuspClassLogVolume,
+    targetSigned_le_zeroLogVolume :=
+      part.targetSigned_le_zeroLogVolume }
+
+theorem qSigned_le_thetaSigned_via_ind2_transport
+    (part : audit.FLZModCuspLabelThetaInd2TransportedCuspClassAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.toThetaCuspClassContainerAudit.qSigned_le_thetaSigned_via_cusp_container
+    audited
+
+end FLZModCuspLabelThetaInd2TransportedCuspClassAudit
 
 namespace FLZModCuspLabelThetaContainerBoundAudit
 

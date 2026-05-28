@@ -5365,3 +5365,77 @@ The next refinement should package this as an optional source of the
 `FLZModCuspLabelThetaCuspClassContainerAudit` fields, so downstream code can
 use either direct target estimates or estimates transported along audited
 `(Ind2)` steps.
+
+## 68. Packaging `(Ind2)`-Transported Bounds as a Cusp-Class Audit
+
+### Goal
+
+We packaged the `(Ind2)`-transported capsule-estimate route as a source of the
+standard cusp-class container audit.
+
+### Lean Move
+
+We added:
+
+```text
+FLZModCuspLabelThetaInd2TransportedCuspClassAudit
+```
+
+For each target audited packet, it stores:
+
+```text
+sourceAudited target
+audited `(Ind2)` step from source to target
+source capsule-family container estimates
+```
+
+together with the packet-normalized audit that identifies target cusp/zero
+log-volumes with target packet-normalized capsule values.
+
+Lean proves:
+
+```text
+targetSigned_le_cuspClassLogVolume
+targetSigned_le_zeroLogVolume
+toThetaCuspClassContainerAudit
+qSigned_le_thetaSigned_via_ind2_transport
+```
+
+### Mathematical Point
+
+The high-level route can now consume transported estimates through the same
+interface as direct target cusp-class estimates:
+
+```text
+source capsule estimates + audited `(Ind2)` step
+  -> target cusp/zero bounds
+  -> FLZModCuspLabelThetaCuspClassContainerAudit
+  -> labelwise/F_l average route
+  -> qSigned <= thetaSigned
+```
+
+This keeps the downstream q-to-Theta comparison independent of whether the
+cusp/zero bounds were proved directly at the target packet or transported from
+an `(Ind2)`-related source packet.
+
+### Trap Avoided
+
+The audit chooses a source packet separately for each target packet.  This
+avoids a hidden global identification of all audited choices while still
+requiring an explicit audited `(Ind2)` step for every transported estimate.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_ind2_transport_cusp_bound_example
+placeAudited_logVolume_fl_zmod_ind2_transport_to_cusp_audit_example
+placeAudited_logVolume_fl_zmod_ind2_transport_q_le_theta_example
+```
+
+### Remaining Gap
+
+The next refinement should introduce an analogous package for direct target
+capsule estimates, so both direct and transported local-estimate sources have
+parallel high-level audit constructors.
