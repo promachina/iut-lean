@@ -3203,6 +3203,75 @@ noncomputable def logQTwo_to_canonicalHeight
 end IUTStage1IUTIVCorollary22BoundedDiscrepancyChainShadow
 
 /--
+IUT IV, Corollary 2.2(ii), condition (C1).
+
+The source records the prime-size window
+`(log(q_all))^(1/2) <= l <= 10 * delta * (log(q_all))^(1/2)`.
+This shadow keeps the square-root term as an explicit real parameter, since the
+formal construction of `log(q_all)` is not yet present in this file.
+-/
+structure IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow where
+  l : PrimeGeFive
+  delta : Real
+  delta_pos : 0 < delta
+  logQAll : Real
+  sqrtLogQAll : Real
+  sqrtLogQAll_nonneg : 0 <= sqrtLogQAll
+  sqrtLogQAll_sq_eq_logQAll : sqrtLogQAll ^ 2 = logQAll
+  lower_bound :
+    sqrtLogQAll <= (l.value : Real)
+  upper_bound :
+    (l.value : Real) <= 10 * delta * sqrtLogQAll
+
+namespace IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow
+
+theorem l_real_pos
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    0 < (data.l.value : Real) := by
+  exact_mod_cast Nat.pos_of_ne_zero data.l.ne_zero
+
+theorem logQAll_nonneg
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    0 <= data.logQAll := by
+  rw [← data.sqrtLogQAll_sq_eq_logQAll]
+  positivity
+
+theorem sqrtLogQAll_le_ten_delta_sqrtLogQAll
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    data.sqrtLogQAll <= 10 * data.delta * data.sqrtLogQAll :=
+  le_trans data.lower_bound data.upper_bound
+
+theorem upper_window_pos
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    0 < 10 * data.delta * data.sqrtLogQAll := by
+  exact lt_of_lt_of_le data.l_real_pos data.upper_bound
+
+theorem sqrtLogQAll_pos
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    0 < data.sqrtLogQAll := by
+  by_contra hnot
+  have hle : data.sqrtLogQAll <= 0 := le_of_not_gt hnot
+  have heq : data.sqrtLogQAll = 0 :=
+    le_antisymm hle data.sqrtLogQAll_nonneg
+  have hupperpos := data.upper_window_pos
+  rw [heq, mul_zero] at hupperpos
+  exact (lt_irrefl (0 : Real)) hupperpos
+
+theorem one_le_ten_delta
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    (1 : Real) <= 10 * data.delta := by
+  have hpos := data.sqrtLogQAll_pos
+  have hwindow := data.sqrtLogQAll_le_ten_delta_sqrtLogQAll
+  have hdiv : data.sqrtLogQAll / data.sqrtLogQAll <= 10 * data.delta := by
+    rw [div_le_iff₀ hpos]
+    simpa [mul_assoc] using hwindow
+  have hself : data.sqrtLogQAll / data.sqrtLogQAll = 1 :=
+    div_self (ne_of_gt hpos)
+  linarith
+
+end IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow
+
+/--
 IUT IV, Corollary 2.2(ii), condition (C2).
 
 The source records the chain

@@ -665,6 +665,7 @@ structure ProcessionContainerExperimentReport where
   iutIVTheoremABoundedDiscrepancyAvailable : Bool
   iutIVCorollary22BoundedDiscrepancyChainAvailable : Bool
   iutIVBoundedDiscrepancyTransferAvailable : Bool
+  iutIVCorollary22C1PrimeScaleWindowAvailable : Bool
   iutIVCorollary22C2InequalityChainAvailable : Bool
   iutIVCorollary22LogDiffCondComparisonAvailable : Bool
 deriving Repr
@@ -718,6 +719,7 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     iutIVTheoremABoundedDiscrepancyAvailable := true,
     iutIVCorollary22BoundedDiscrepancyChainAvailable := true,
     iutIVBoundedDiscrepancyTransferAvailable := true,
+    iutIVCorollary22C1PrimeScaleWindowAvailable := true,
     iutIVCorollary22C2InequalityChainAvailable := true,
     iutIVCorollary22LogDiffCondComparisonAvailable := true }
 
@@ -1264,6 +1266,21 @@ theorem iutIVBoundedDiscrepancy_upperBound_transfers
     ∀ x : Point, g x <= B - data.lower :=
   data.upperBound_transfers_to_right hB
 
+theorem iutIVCorollary22C1_logQAll_nonneg
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    0 <= data.logQAll :=
+  data.logQAll_nonneg
+
+theorem iutIVCorollary22C1_scale_window_nonempty
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    data.sqrtLogQAll <= 10 * data.delta * data.sqrtLogQAll :=
+  data.sqrtLogQAll_le_ten_delta_sqrtLogQAll
+
+theorem iutIVCorollary22C1_one_le_ten_delta
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    (1 : Real) <= 10 * data.delta :=
+  data.one_le_ten_delta
+
 theorem iutIVCorollary22C2_logQ_bound
     (data : IUTStage1IUTIVCorollary22C2InequalityChainShadow) :
     (1 / 6 : Real) * data.logQ <= data.heightSide :=
@@ -1547,6 +1564,7 @@ structure Corollary312DisputeFirstPassReport where
   iutIVTheoremABoundedDiscrepancyAvailable : Bool
   iutIVCorollary22BoundedDiscrepancyChainAvailable : Bool
   iutIVBoundedDiscrepancyTransferAvailable : Bool
+  iutIVCorollary22C1PrimeScaleWindowAvailable : Bool
   iutIVCorollary22C2InequalityChainAvailable : Bool
   iutIVCorollary22LogDiffCondComparisonAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
@@ -1613,6 +1631,7 @@ def corollary312DisputeFirstPassReport :
     iutIVTheoremABoundedDiscrepancyAvailable := true,
     iutIVCorollary22BoundedDiscrepancyChainAvailable := true,
     iutIVBoundedDiscrepancyTransferAvailable := true,
+    iutIVCorollary22C1PrimeScaleWindowAvailable := true,
     iutIVCorollary22C2InequalityChainAvailable := true,
     iutIVCorollary22LogDiffCondComparisonAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
@@ -1855,6 +1874,11 @@ theorem corollary312Report_iutIVCorollary22BoundedDiscrepancyChainAvailable :
 
 theorem corollary312Report_iutIVBoundedDiscrepancyTransferAvailable :
     corollary312DisputeFirstPassReport.iutIVBoundedDiscrepancyTransferAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVCorollary22C1PrimeScaleWindowAvailable :
+    corollary312DisputeFirstPassReport.iutIVCorollary22C1PrimeScaleWindowAvailable =
       true :=
   rfl
 
