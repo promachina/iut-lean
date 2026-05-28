@@ -1,0 +1,241 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,array}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\IUT}{IUT}
+\newcommand{\Lean}{Lean}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\ThetaPilot}{\Theta\text{-pilot}}
+\newcommand{\qPilot}{q\text{-pilot}}
+
+\title{A First Lean Formalization Audit of the IUT III Corollary 3.12 Corridor}
+\author{IUT Lean formalization project}
+\date{May 28, 2026}
+
+\begin{document}
+\maketitle
+\sloppy
+
+\begin{abstract}
+This note records the present state of a Lean formalization of a narrow part of
+Mochizuki's inter-universal Teichmuller theory: the passage from IUT III,
+Theorem 3.11 to Corollary 3.12, with attention to the Scholze--Stix objection.
+The current Lean code proves conditional route theorems and obstruction lemmas.
+It does not prove Corollary 3.12 and does not refute it.  The main formal result
+so far is that a nonarchimedean \((\mathrm{Ind3})\) entry, together with explicit
+Hodge/SHE square-weight transport data, feeds a hull/log-volume
+\(q\)-to-\(\Theta\) comparison, while several simplified collapse mechanisms are
+rejected by Lean.
+\end{abstract}
+
+\section{Scope}
+
+The review used the local Markdown conversions of IUT I--IV, Mochizuki's 2026
+formalization note, and the Scholze--Stix note.  The relevant source passages are:
+\begin{itemize}
+\item IUT I: initial \(\Theta\)-data, prime strips, Hodge theaters, and
+  non-scheme-theoretic \(\Theta\)-links.
+\item IUT II: Hodge--Arakelov evaluation, theta values of shape \(q^{j^2}\),
+  multiradiality, and Gaussian monoids.
+\item IUT III: Theorem 3.11; Corollary 3.12, especially Steps (x) and (xi);
+  Remarks 3.12.2 and 3.12.3.
+\item IUT IV: later explicit log-volume estimates and Diophantine consequences.
+\item Scholze--Stix: the ordered real-line identification problem in their
+  Section 2.2.
+\item Mochizuki 2026: the ``3.11.5 \(\Rightarrow\) 3.12'' fourth-triangle
+  decomposition.
+\end{itemize}
+
+\section{Mathematical Target}
+
+IUT III Step (x) treats procession-normalized log-volumes as invariants for
+\((\mathrm{Ind1})\) and \((\mathrm{Ind2})\), and turns \((\mathrm{Ind3})\) into
+an upper inequality.  Step (xi) then uses the multiradial construction, IPL, SHE,
+holomorphic hulls, determinants, and log-volume to place the \(q\)-pilot
+log-volume in an upper ray controlled by the \(\Theta\)-pilot log-volume:
+\[
+  -|\log(q)| \in \R_{\le -|\log(\Theta)|}
+  \quad\Rightarrow\quad
+  -|\log(q)| \le -|\log(\Theta)|.
+\]
+Mochizuki's 2026 note isolates the final comparison as:
+\[
+\begin{array}{ccccc}
+\text{Theorem 3.11}
+& \xrightarrow{\mathrm{APT}+\mathrm{IPL}}
+& \text{``3.11.5''}
+& \xrightarrow{\mathrm{SHE}+\mathrm{IPL}}
+& \text{Corollary 3.12}.
+\end{array}
+\]
+The present formalization targets only this corridor, not the full construction
+of Theorem 3.11.
+
+\section{Dispute Interface}
+
+Scholze--Stix require explicit bookkeeping for all ordered one-dimensional real
+vector spaces.  Their pressure point is that the \(\Theta\)-side concrete
+objects carry \(j^2\)-scaled degrees, while a consistent identification of the
+real lines appears to leave no room for inserting all these scalars.
+
+The formalization therefore separates:
+\[
+\begin{array}{c}
+\text{representative } j^2 \text{ data}\\
+\text{balanced sign-compatible data}\\
+\text{aggregate averaged data}\\
+\text{final hull/log-volume data}
+\end{array}
+\qquad
+\text{and}
+\qquad
+\begin{array}{c}
+\text{raw real equality}\\
+\text{transported equality}\\
+\text{matched transport scales}\\
+\text{cancellable ordered-line comparison.}
+\end{array}
+\]
+This separation is the main correctness guard in the current code.
+
+\section{Lean Coverage}
+
+The relevant implementation is in
+\[
+\texttt{Iut/Stage1/IUTStage1Source.lean}
+\quad\text{and}\quad
+\texttt{Iut/Stage1/IUTStage1Experiments.lean}.
+\]
+The code currently covers:
+\begin{itemize}
+\item labeled real-line copies and positive-scale transports;
+\item a finite \(\F_\ell\)-label model with representative square weights
+  \(j \mapsto j^2\);
+\item proof that one label-independent scale cannot absorb all representative
+  \(j^2\) scales in this model;
+\item comparison levels:
+  pointwise representative, aggregate representative, balanced sign-compatible,
+  and hull/log-volume;
+\item endpoint audits for the \(3.11.5 \Rightarrow 3.12\) comparison chart;
+\item nonarchimedean and archimedean \((\mathrm{Ind3})\) local orientations;
+\item ordered real-line alignment with cancellation only after scale equality;
+\item a canonical unit-scale ordered alignment from a nonarchimedean
+  \((\mathrm{Ind3})\) entry;
+\item a bridge from factored square/full-label SHE obligations to the
+  Hodge-descent \((\mathrm{Ind3})\) route.
+\end{itemize}
+
+\section{Current Lean Results}
+
+The current first-pass experiment report evaluates to:
+\[
+\begin{array}{ll}
+\texttt{orderedRealLineRouteTheoremAvailable} & = \texttt{true},\\
+\texttt{nonarchimedeanEntryCanonicalAlignmentTheoremAvailable} & = \texttt{true},\\
+\texttt{factoredSHEBridgeTheoremAvailable} & = \texttt{true},\\
+\texttt{mismatchCounterexampleBlocksRawCancellation} & = \texttt{true},\\
+\texttt{labelIndependentJ2CollapseRejectedInZModModel} & = \texttt{true},\\
+\texttt{balancedLevelRejectedAtFinalRouteTheoremAvailable} & = \texttt{true},\\
+\texttt{disputeSettledByCurrentStage} & = \texttt{false}.
+\end{array}
+\]
+The theorem-level route is:
+\[
+\begin{array}{ccccc}
+\text{nonarch. }(\mathrm{Ind3})\text{ entry}
+& \to &
+\text{canonical ordered } \R\text{-alignment}
+& \to &
+\text{source/target alignment}
+\\[3pt]
+& & \downarrow & & \downarrow
+\\[-2pt]
+\text{factored SHE transport}
+& \to &
+\text{Hodge-descent audit}
+& \to &
+q_{\mathrm{signed}}\le \Theta_{\mathrm{signed}}.
+\end{array}
+\]
+The route remains conditional on the displayed hypotheses.
+
+\section{Audit Findings}
+
+No formal statement currently proves IUT III, Corollary 3.12 from Mochizuki's
+published hypotheses.  The strongest positive result is conditional: if the
+nonarchimedean \((\mathrm{Ind3})\) entry, ordered real-line alignment, and
+Hodge/SHE square-weight transport audit are supplied, then Lean checks the final
+signed \(q\)-to-\(\Theta\) inequality.
+
+The strongest negative result is also limited: in the current \(\F_\ell\)-label
+model, Lean rejects a single label-independent scale accounting for all
+representative \(j^2\) factors, and it rejects balanced sign-compatible evidence
+as the final hull/log-volume comparison level.
+
+One correctness issue was fixed during this audit.  The experiment report fields
+were renamed so that they describe theorem availability under hypotheses rather
+than an unconditional mathematical fact.
+
+\section{Missing Mathematics}
+
+The present code does not yet formalize:
+\begin{itemize}
+\item initial \(\Theta\)-data as in IUT I;
+\item actual Hodge theaters, Frobenioids, prime strips, log-shells, or
+  \(\Theta\)-links;
+\item the Hodge--Arakelov theta evaluation and Gaussian monoids of IUT II;
+\item the full multiradial construction of IUT III, Theorem 3.11;
+\item the genuine holomorphic hull and determinant operations of Step (xi);
+\item the exact IUT IV log-volume estimates and Diophantine applications;
+\item a proof that the current Hodge/SHE transport obligations follow from
+  Mochizuki's full hypotheses.
+\end{itemize}
+
+\section{Next Work}
+
+The next significant formal step is not another wrapper.  It is to replace
+current explicit Hodge/SHE transport assumptions by constructions closer to the
+papers:
+\[
+\begin{array}{c}
+\text{theta values }q^{j^2}\\
+\leadsto\ \text{Gaussian monoids}\\
+\leadsto\ \text{square/full-label preservation}\\
+\leadsto\ \text{hull/log-volume route}.
+\end{array}
+\]
+Only after this bridge is formalized can the first-pass experiment begin to test
+the actual mathematical load-bearing part of Mochizuki's response to
+Scholze--Stix.
+
+\begin{thebibliography}{9}
+\bibitem{IUT1}
+S. Mochizuki, \emph{Inter-universal Teichmuller Theory I:
+Construction of Hodge Theaters}.
+
+\bibitem{IUT2}
+S. Mochizuki, \emph{Inter-universal Teichmuller Theory II:
+Hodge-Arakelov-theoretic Evaluation}.
+
+\bibitem{IUT3}
+S. Mochizuki, \emph{Inter-universal Teichmuller Theory III:
+Canonical Splittings of the Log-theta-lattice}.
+
+\bibitem{IUT4}
+S. Mochizuki, \emph{Inter-universal Teichmuller Theory IV:
+Log-volume Computations and Set-theoretic Foundations}.
+
+\bibitem{MochizukiLean}
+S. Mochizuki, \emph{On the Formalization of IUT: Preliminary Progress Report},
+2026.
+
+\bibitem{ScholzeStix}
+P. Scholze and J. Stix, \emph{Why abc is still a conjecture}.
+\end{thebibliography}
+
+\end{document}

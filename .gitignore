@@ -1,3 +1,6 @@
 /.lake
 /docs/
 .DS_Store
+*.aux
+*.log
+*.out

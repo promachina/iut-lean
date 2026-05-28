@@ -2152,10 +2152,10 @@ corollary312_firstPass_rejects_balancedAsFinalRouteLevel
 and evaluated the report with Lean:
 
 ```text
-orderedRealLineRouteAvailable := true
-mismatchedRealLineScalesBlockRawCancellation := true
-labelIndependentJ2CollapseRejected := true
-balancedSignCompatibleLevelRejectedAtFinalRoute := true
+orderedRealLineRouteTheoremAvailable := true
+mismatchCounterexampleBlocksRawCancellation := true
+labelIndependentJ2CollapseRejectedInZModModel := true
+balancedLevelRejectedAtFinalRouteTheoremAvailable := true
 disputeSettledByCurrentStage := false
 ```
 
@@ -2241,7 +2241,8 @@ corollary312_firstPass_finalQTheta_from_nonarchimedeanEntryCanonicalAlignment
 and extended the first-pass report with:
 
 ```text
-nonarchimedeanEntrySuppliesCanonicalOrderedAlignment := true
+nonarchimedeanEntryCanonicalAlignmentTheoremAvailable := true
+factoredSHEBridgeTheoremAvailable := true
 ```
 
 ### Mathematical Reason
@@ -2303,3 +2304,118 @@ still open:
   the general Hodge/SHE transport audit and full Mochizuki theater machinery
   remain assumptions of the current positive route.
 ```
+
+## 220. Factored SHE Obligations Feed The Hodge-Descent Ind3 Route
+
+### Lean Move
+
+In:
+
+```text
+Iut/Stage1/IUTStage1Source.lean
+```
+
+we added:
+
+```text
+FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.toInd3SourceZeroCuspTargetThetaAuditOfFactoredObligations
+FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.toInd3SourceZeroCuspTargetThetaAuditOfFactoredNonarchimedeanEntry
+```
+
+### Mathematical Reason
+
+The previous positive route still accepted a completed
+`IUTStage1StructuredSHESquareWeightTransportAudit` as a direct input.  That is
+too opaque for the Corollary 3.12 dispute, because the papers separate the
+square/Gaussian-monoid branch from the log-volume/full-label branch before the
+final hull/log-volume comparison.
+
+The new bridge lets the Hodge-descent `(Ind3)` route consume the already
+factored preservation object:
+
+```text
+coordinate-square preservation
++ full-label map preservation
++ full-label value preservation
+-> structured-SHE square-weight transport audit
+-> Ind3 source-zero/cusp-target audit
+```
+
+For the nonarchimedean case, it combines this factored transport with the
+canonical ordered-real-line alignment from the previous milestone.
+
+### Source Check
+
+IUT II identifies the Hodge-Arakelov theta-value input as carrying `j^2`-type
+weights.  IUT III Step `(xi)` then requires these transported objects to be
+placed into the hull/log-volume comparison after SHE/IPL.  The new Lean move
+does not construct the genuine Gaussian monoids or hulls, but it moves the
+interface one step closer to the paper: the transport audit is no longer a single
+black box at this point; it is obtained from separate square and full-label
+preservation branches.
+
+### Current Reading
+
+The open hypothesis has been narrowed:
+
+```text
+old:
+  assume a completed structured-SHE square-weight transport audit
+
+new:
+  assume factored square/full-label preservation data, then derive the completed
+  structured-SHE square-weight transport audit
+```
+
+The remaining mathematical gap is to construct those factored preservation data
+from actual Hodge-theater, theta-value, Gaussian-monoid, and log-shell objects.
+
+## 221. Review Pass And Paper Draft
+
+### Review Scope
+
+We reviewed the local Markdown conversions of:
+
+```text
+IUT I
+IUT II
+IUT III
+IUT IV
+Mochizuki's 2026 formalization note
+Scholze-Stix, Why abc is still a conjecture
+```
+
+The audit focused on IUT III, Corollary 3.12, Steps `(x)` and `(xi)`,
+Remarks 3.12.2 and 3.12.3, Mochizuki's `3.11.5 => 3.12` fourth-triangle
+decomposition, and Scholze-Stix's ordered-real-line objection in Section 2.2.
+
+### Correction Made
+
+The first-pass experiment report originally used field names that could be read
+as unconditional mathematical facts.  We renamed them so that they record
+theorem availability under explicit hypotheses:
+
+```text
+orderedRealLineRouteTheoremAvailable
+nonarchimedeanEntryCanonicalAlignmentTheoremAvailable
+factoredSHEBridgeTheoremAvailable
+mismatchCounterexampleBlocksRawCancellation
+labelIndependentJ2CollapseRejectedInZModModel
+balancedLevelRejectedAtFinalRouteTheoremAvailable
+```
+
+This is a correctness improvement in presentation: the Lean code still records
+that the dispute is not settled by the present stage.
+
+### Paper Draft
+
+We added and compiled:
+
+```text
+IUT_FORMALIZATION_3_12_DRAFT.tex
+IUT_FORMALIZATION_3_12_DRAFT.pdf
+```
+
+The draft states the current result as conditional, records the exact missing
+mathematics, and includes simple diagrams for the `3.11 -> 3.11.5 -> 3.12`
+decomposition and the current Lean route.
