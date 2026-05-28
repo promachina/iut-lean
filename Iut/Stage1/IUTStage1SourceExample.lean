@@ -456,6 +456,39 @@ theorem flLabelTorsorModel_zmod_translate_example
       zmodLabelTranslate l t j :=
   IUTStage1FLLabelTorsorModel.zmod_vadd_eq_translate l t j
 
+def flZModUnitSignLabelModel_zmod_example
+    (l : PrimeGeFive) :
+    IUTStage1FLZModUnitSignLabelModel l :=
+  IUTStage1FLZModUnitSignLabelModel.zmod l
+
+theorem flZModUnitSignLabelModel_signUnit_example
+    {l : PrimeGeFive}
+    (model : IUTStage1FLZModUnitSignLabelModel l)
+    (x : ZMod l.value) :
+    (zmodUnitActionData l).smul model.signUnitCompatibility.signUnit x =
+      (zmodSignAction l).neg x :=
+  model.signUnit_smul_eq_neg x
+
+theorem flZModUnitSignLabelModel_subgroup_self_or_neg_example
+    {l : PrimeGeFive}
+    (model : IUTStage1FLZModUnitSignLabelModel l)
+    {a : (ZMod l.value)ˣ}
+    (ha : a ∈ model.signUnitSubgroup)
+    (x : ZMod l.value) :
+    (zmodUnitActionData l).smul a x = x ∨
+      (zmodUnitActionData l).smul a x = (zmodSignAction l).neg x :=
+  model.signUnitSubgroup_smul_eq_self_or_neg' ha x
+
+theorem flZModUnitSignLabelModel_orbit_iff_signOrbit_example
+    {l : PrimeGeFive}
+    (model : IUTStage1FLZModUnitSignLabelModel l)
+    (x generator : ZMod l.value) :
+    (∃ a : (ZMod l.value)ˣ,
+      a ∈ model.signUnitSubgroup ∧
+        (zmodUnitActionData l).smul a generator = x) ↔
+      (zmodSignAction l).InSignOrbit x generator :=
+  model.signUnitSubgroup_orbit_iff_signOrbit' x generator
+
 theorem upperSemi_capsuleFamilyLogVolume_total_eq_sum_example
     {kind : IUTStage1PlaceKind}
     (data : IUTStage1CapsuleFamilyLogVolume kind) :

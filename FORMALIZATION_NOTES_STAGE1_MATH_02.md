@@ -3270,3 +3270,86 @@ existing unit action, sign quotient, and local cusp-label data in
 `InitialThetaData`.  That is the next needed step before the label side can
 claim to reflect the richer theta/cusp labeling apparatus used around the
 Theorem 3.11 to Corollary 3.12 transition.
+
+## 44. `F_l` Unit/Sign Label Bridge
+
+### Goal
+
+We connected the Stage 1 label bridge to the foundations-layer unit action and
+sign quotient on the canonical `ZMod l` label model.
+
+### Lean/API Check
+
+The new bridge is:
+
+```text
+IUTStage1FLZModUnitSignLabelModel l
+```
+
+It records:
+
+```text
+torsor_model : IUTStage1FLLabelTorsorModel (ZMod l.value)
+signUnitCompatibility :
+  QuotientSignUnitCompatibility
+    (zmodPointedQuotient l) (zmodUnitActionData l) (zmodSignAction l)
+signUnitSubgroup : Subgroup (ZMod l.value)ˣ
+signUnitSubgroup_smul_eq_self_or_neg
+signUnitSubgroup_orbit_iff_signOrbit
+```
+
+Lean checks the canonical model:
+
+```text
+IUTStage1FLZModUnitSignLabelModel.zmod
+```
+
+and exposes:
+
+```text
+signUnit_smul_eq_neg
+signUnitSubgroup_smul_eq_self_or_neg'
+signUnitSubgroup_orbit_iff_signOrbit'
+zmod_signUnitSubgroup_orbit_iff_signOrbit
+```
+
+### Mathematical Point
+
+The additive label torsor is not the full label-class apparatus.  In the local
+label/cusp model, the nonzero labels are also quotiented by the sign action,
+and the subgroup `{1,-1}` of `(ZMod l)^×` controls exactly this sign ambiguity.
+
+This milestone formalizes that bridge at the canonical `ZMod l` level:
+
+```text
+{1,-1}-orbit = sign orbit
+```
+
+and records the compatibility of the unit `-1` with additive negation.
+
+### Trap Avoided
+
+`QuotientUnitActionData` allows an abstract unit type.  A completely generic
+unit action cannot automatically consume elements of `(ZMod l)^×`.  The bridge
+therefore uses the canonical `zmodUnitActionData l` and `zmodSignAction l`
+directly.  This avoids a false abstraction where Lean would appear to accept
+unit/sign compatibility without a specified identification of unit groups.
+
+### Toy Check
+
+The examples now check:
+
+```text
+flZModUnitSignLabelModel_zmod_example
+flZModUnitSignLabelModel_signUnit_example
+flZModUnitSignLabelModel_subgroup_self_or_neg_example
+flZModUnitSignLabelModel_orbit_iff_signOrbit_example
+```
+
+### Remaining Gap
+
+The next step should connect this unit/sign bridge to
+`LocalLabCuspModel`/`CuspLabelClassData`, especially the canonical nonzero
+label and canonical sign-label class.  After that, the averaged label side will
+have a clearer path from finite `F_l` labels to the structured cusp-label data
+used in the source papers.

@@ -1004,6 +1004,87 @@ theorem zmod_vadd_eq_translate
 
 end IUTStage1FLLabelTorsorModel
 
+/--
+The `ZMod l` label model together with the unit action and sign quotient data
+used for label classes.
+
+This records the action of `(ZMod l)^×`, the sign action, their compatibility
+via the unit `-1`, and the subgroup `{1,-1}` whose orbits are exactly sign
+orbits.
+-/
+structure IUTStage1FLZModUnitSignLabelModel
+    (l : PrimeGeFive) where
+  torsor_model : IUTStage1FLLabelTorsorModel (ZMod l.value)
+  signUnitCompatibility :
+    QuotientSignUnitCompatibility
+      (zmodPointedQuotient l) (zmodUnitActionData l) (zmodSignAction l)
+  signUnitSubgroup : Subgroup (ZMod l.value)ˣ
+  signUnitSubgroup_smul_eq_self_or_neg :
+    ∀ {a : (ZMod l.value)ˣ},
+      a ∈ signUnitSubgroup ->
+        ∀ x : ZMod l.value,
+          (zmodUnitActionData l).smul a x = x ∨
+            (zmodUnitActionData l).smul a x = (zmodSignAction l).neg x
+  signUnitSubgroup_orbit_iff_signOrbit :
+    ∀ x generator : ZMod l.value,
+      (∃ a : (ZMod l.value)ˣ,
+        a ∈ signUnitSubgroup ∧
+          (zmodUnitActionData l).smul a generator = x) ↔
+        (zmodSignAction l).InSignOrbit x generator
+
+namespace IUTStage1FLZModUnitSignLabelModel
+
+/-- The canonical unit/sign label model supplied by the foundations layer. -/
+def zmod (l : PrimeGeFive) :
+    IUTStage1FLZModUnitSignLabelModel l :=
+  { torsor_model := IUTStage1FLLabelTorsorModel.zmod l,
+    signUnitCompatibility := zmodSignUnitCompatibility l,
+    signUnitSubgroup := zmodSignUnitSubgroup l,
+    signUnitSubgroup_smul_eq_self_or_neg := by
+      intro a ha x
+      exact zmodSignUnitSubgroup_smul_eq_self_or_neg l ha x,
+    signUnitSubgroup_orbit_iff_signOrbit := by
+      intro x generator
+      exact zmodSignUnitSubgroup_orbit_iff_signOrbit l x generator }
+
+theorem signUnit_smul_eq_neg
+    {l : PrimeGeFive}
+    (model : IUTStage1FLZModUnitSignLabelModel l)
+    (x : ZMod l.value) :
+    (zmodUnitActionData l).smul model.signUnitCompatibility.signUnit x =
+      (zmodSignAction l).neg x :=
+  model.signUnitCompatibility.signUnit_smul_eq_neg x
+
+theorem signUnitSubgroup_smul_eq_self_or_neg'
+    {l : PrimeGeFive}
+    (model : IUTStage1FLZModUnitSignLabelModel l)
+    {a : (ZMod l.value)ˣ}
+    (ha : a ∈ model.signUnitSubgroup)
+    (x : ZMod l.value) :
+    (zmodUnitActionData l).smul a x = x ∨
+      (zmodUnitActionData l).smul a x = (zmodSignAction l).neg x :=
+  model.signUnitSubgroup_smul_eq_self_or_neg ha x
+
+theorem signUnitSubgroup_orbit_iff_signOrbit'
+    {l : PrimeGeFive}
+    (model : IUTStage1FLZModUnitSignLabelModel l)
+    (x generator : ZMod l.value) :
+    (∃ a : (ZMod l.value)ˣ,
+      a ∈ model.signUnitSubgroup ∧
+        (zmodUnitActionData l).smul a generator = x) ↔
+      (zmodSignAction l).InSignOrbit x generator :=
+  model.signUnitSubgroup_orbit_iff_signOrbit x generator
+
+theorem zmod_signUnitSubgroup_orbit_iff_signOrbit
+    (l : PrimeGeFive) (x generator : ZMod l.value) :
+    (∃ a : (ZMod l.value)ˣ,
+      a ∈ (zmod l).signUnitSubgroup ∧
+        (zmodUnitActionData l).smul a generator = x) ↔
+      (zmodSignAction l).InSignOrbit x generator :=
+  (zmod l).signUnitSubgroup_orbit_iff_signOrbit' x generator
+
+end IUTStage1FLZModUnitSignLabelModel
+
 namespace IUTStage1LabelAveragedProcessionLogVolume
 
 variable {label : Type u} [Fintype label]
