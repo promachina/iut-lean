@@ -361,6 +361,89 @@ theorem indeterminaciesMatchPackage
 
 end IUTStage1ThetaPilotPossibleImages
 
+/--
+Whether a pilot object is read modulo the Theorem 3.11 indeterminacies in the
+statement of IUT III, Corollary 3.12.
+-/
+inductive IUTStage1Corollary312PilotIndeterminacyStatus where
+  | subjectToIndeterminacies
+  | notSubjectToIndeterminacies
+deriving DecidableEq, Repr
+
+namespace IUTStage1Corollary312PilotIndeterminacyStatus
+
+theorem subject_ne_notSubject :
+    subjectToIndeterminacies ≠ notSubjectToIndeterminacies := by
+  intro h
+  cases h
+
+theorem notSubject_ne_subject :
+    notSubjectToIndeterminacies ≠ subjectToIndeterminacies := by
+  intro h
+  cases h
+
+end IUTStage1Corollary312PilotIndeterminacyStatus
+
+/--
+Statement-level indeterminacy boundary in IUT III, Corollary 3.12.
+
+The source regards the Theta-pilot possible-image log-volume as subject to
+`(Ind1)`, `(Ind2)`, `(Ind3)`, but explicitly does not regard the q-pilot
+log-volume as subject to these indeterminacies.
+-/
+structure IUTStage1Corollary312PilotIndeterminacyBoundary where
+  thetaPilot : PilotObjectId
+  qPilot : PilotObjectId
+  indeterminacies : IndeterminacyProfileId
+  thetaStatus : IUTStage1Corollary312PilotIndeterminacyStatus
+  qStatus : IUTStage1Corollary312PilotIndeterminacyStatus
+  theta_status :
+    thetaStatus =
+      IUTStage1Corollary312PilotIndeterminacyStatus.subjectToIndeterminacies
+  q_status :
+    qStatus =
+      IUTStage1Corollary312PilotIndeterminacyStatus.notSubjectToIndeterminacies
+
+namespace IUTStage1Corollary312PilotIndeterminacyBoundary
+
+def ofLabels (labels : IUTStage1SourceLabels) :
+    IUTStage1Corollary312PilotIndeterminacyBoundary :=
+  { thetaPilot := labels.thetaPilot,
+    qPilot := labels.qPilot,
+    indeterminacies := labels.indeterminacies,
+    thetaStatus :=
+      IUTStage1Corollary312PilotIndeterminacyStatus.subjectToIndeterminacies,
+    qStatus :=
+      IUTStage1Corollary312PilotIndeterminacyStatus.notSubjectToIndeterminacies,
+    theta_status := rfl,
+    q_status := rfl }
+
+theorem thetaSubject
+    (data : IUTStage1Corollary312PilotIndeterminacyBoundary) :
+    data.thetaStatus =
+      IUTStage1Corollary312PilotIndeterminacyStatus.subjectToIndeterminacies :=
+  data.theta_status
+
+theorem qNotSubject
+    (data : IUTStage1Corollary312PilotIndeterminacyBoundary) :
+    data.qStatus =
+      IUTStage1Corollary312PilotIndeterminacyStatus.notSubjectToIndeterminacies :=
+  data.q_status
+
+theorem thetaStatus_ne_qStatus
+    (data : IUTStage1Corollary312PilotIndeterminacyBoundary) :
+    data.thetaStatus ≠ data.qStatus := by
+  rw [data.theta_status, data.q_status]
+  exact IUTStage1Corollary312PilotIndeterminacyStatus.subject_ne_notSubject
+
+theorem qStatus_ne_thetaStatus
+    (data : IUTStage1Corollary312PilotIndeterminacyBoundary) :
+    data.qStatus ≠ data.thetaStatus := by
+  rw [data.theta_status, data.q_status]
+  exact IUTStage1Corollary312PilotIndeterminacyStatus.notSubject_ne_subject
+
+end IUTStage1Corollary312PilotIndeterminacyBoundary
+
 /-- Source-facing placeholder for the `(Ind1)` indeterminacy in Theorem 3.11. -/
 def theorem311Ind1 : Indeterminacy :=
   { name := "Ind1",
@@ -1824,6 +1907,74 @@ theorem cTheta_ge_neg_one
   exact le_of_mul_le_mul_right hmul data.absLogQ_pos
 
 end IUTStage1Corollary312CThetaLowerBoundShadow
+
+/--
+Statement-level Corollary 3.12 endpoint with the extended Theta value.
+
+This record uses the finite branch of
+`-|log(Theta)| ∈ R ∪ {+∞}`, keeps the q-pilot outside the indeterminacy
+quotient, and applies the final ordered-real algebra to the displayed
+upper-bound hypothesis `-|log(Theta)| <= C_Theta |log(q)|`.
+-/
+structure IUTStage1Corollary312StatementEndpoint where
+  pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary
+  finiteEndpoint : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint
+  q_pilot_positive : 0 < -finiteEndpoint.upperRayData.qPilotLogVolume
+  cTheta : Real
+  thetaFiniteValue_le_cTheta_absLogQ :
+    IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+        finiteEndpoint.thetaExtended <=
+      cTheta * (-finiteEndpoint.upperRayData.qPilotLogVolume)
+
+namespace IUTStage1Corollary312StatementEndpoint
+
+def toCThetaLowerBoundShadow
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    IUTStage1Corollary312CThetaLowerBoundShadow :=
+  { absLogQ := -data.finiteEndpoint.upperRayData.qPilotLogVolume,
+    absLogQ_pos := data.q_pilot_positive,
+    qPilotLogVolume := data.finiteEndpoint.upperRayData.qPilotLogVolume,
+    thetaPilotLogVolume :=
+      IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+        data.finiteEndpoint.thetaExtended,
+    cTheta := data.cTheta,
+    qPilotLogVolume_eq_neg_absLogQ := by
+      ring,
+    qPilotLogVolume_le_thetaPilotLogVolume :=
+      data.finiteEndpoint.qPilotLogVolume_le_thetaFiniteValue,
+    thetaPilotLogVolume_le_cTheta_absLogQ :=
+      data.thetaFiniteValue_le_cTheta_absLogQ }
+
+theorem thetaExtendedFinite
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.finiteEndpoint.thetaExtended.IsFinite :=
+  data.finiteEndpoint.thetaExtendedFinite
+
+theorem qPilotNotSubject
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.pilotBoundary.qStatus =
+      IUTStage1Corollary312PilotIndeterminacyStatus.notSubjectToIndeterminacies :=
+  data.pilotBoundary.qNotSubject
+
+theorem thetaPilotSubject
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.pilotBoundary.thetaStatus =
+      IUTStage1Corollary312PilotIndeterminacyStatus.subjectToIndeterminacies :=
+  data.pilotBoundary.thetaSubject
+
+theorem qPilotLogVolume_le_thetaFiniteValue
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.finiteEndpoint.upperRayData.qPilotLogVolume <=
+      IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+        data.finiteEndpoint.thetaExtended :=
+  data.finiteEndpoint.qPilotLogVolume_le_thetaFiniteValue
+
+theorem cTheta_ge_neg_one
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    (-1 : Real) <= data.cTheta :=
+  data.toCThetaLowerBoundShadow.cTheta_ge_neg_one
+
+end IUTStage1Corollary312StatementEndpoint
 
 /--
 Signed Corollary 3.12 comparison data together with the final `C_Theta` bound.

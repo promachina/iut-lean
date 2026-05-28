@@ -644,6 +644,8 @@ structure ProcessionContainerExperimentReport where
   hullDetUpperRayComparisonAvailable : Bool
   qPilotTwoComputationComparisonAvailable : Bool
   thetaExtendedFiniteEndpointAvailable : Bool
+  corollary312PilotIndeterminacyBoundaryAvailable : Bool
+  corollary312StatementEndpointAvailable : Bool
   qPilotTwoComputationSignedEndpointAvailable : Bool
   corollary312CThetaLowerBoundAlgebraAvailable : Bool
   corollary312SignedCThetaBridgeAvailable : Bool
@@ -723,6 +725,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     hullDetUpperRayComparisonAvailable := true,
     qPilotTwoComputationComparisonAvailable := true,
     thetaExtendedFiniteEndpointAvailable := true,
+    corollary312PilotIndeterminacyBoundaryAvailable := true,
+    corollary312StatementEndpointAvailable := true,
     qPilotTwoComputationSignedEndpointAvailable := true,
     corollary312CThetaLowerBoundAlgebraAvailable := true,
     corollary312SignedCThetaBridgeAvailable := true,
@@ -1055,6 +1059,22 @@ theorem thetaFiniteEndpoint_q_le_finiteTheta
       IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
         data.thetaExtended :=
   data.qPilotLogVolume_le_thetaFiniteValue
+
+theorem pilotIndeterminacyBoundary_statuses_distinct
+    (data : IUTStage1Corollary312PilotIndeterminacyBoundary) :
+    data.thetaStatus ≠ data.qStatus :=
+  data.thetaStatus_ne_qStatus
+
+theorem corollary312StatementEndpoint_cTheta_ge_neg_one
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    (-1 : Real) <= data.cTheta :=
+  data.cTheta_ge_neg_one
+
+theorem corollary312StatementEndpoint_q_not_subject
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.pilotBoundary.qStatus =
+      IUTStage1Corollary312PilotIndeterminacyStatus.notSubjectToIndeterminacies :=
+  data.qPilotNotSubject
 
 theorem qPilotTwoComputationSignedEndpoint_corollary312
     (data : IUTStage1QPilotTwoComputationSignedEndpoint) :
@@ -1807,6 +1827,8 @@ structure Corollary312DisputeFirstPassReport where
   hullDetUpperRayComparisonAvailable : Bool
   qPilotTwoComputationComparisonAvailable : Bool
   thetaExtendedFiniteEndpointAvailable : Bool
+  corollary312PilotIndeterminacyBoundaryAvailable : Bool
+  corollary312StatementEndpointAvailable : Bool
   qPilotTwoComputationSignedEndpointAvailable : Bool
   corollary312CThetaLowerBoundAlgebraAvailable : Bool
   corollary312SignedCThetaBridgeAvailable : Bool
@@ -1899,6 +1921,8 @@ def corollary312DisputeFirstPassReport :
     hullDetUpperRayComparisonAvailable := true,
     qPilotTwoComputationComparisonAvailable := true,
     thetaExtendedFiniteEndpointAvailable := true,
+    corollary312PilotIndeterminacyBoundaryAvailable := true,
+    corollary312StatementEndpointAvailable := true,
     qPilotTwoComputationSignedEndpointAvailable := true,
     corollary312CThetaLowerBoundAlgebraAvailable := true,
     corollary312SignedCThetaBridgeAvailable := true,
@@ -2083,6 +2107,16 @@ theorem corollary312Report_qPilotTwoComputationComparisonAvailable :
 
 theorem corollary312Report_thetaExtendedFiniteEndpointAvailable :
     corollary312DisputeFirstPassReport.thetaExtendedFiniteEndpointAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_pilotIndeterminacyBoundaryAvailable :
+    corollary312DisputeFirstPassReport.corollary312PilotIndeterminacyBoundaryAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_statementEndpointAvailable :
+    corollary312DisputeFirstPassReport.corollary312StatementEndpointAvailable =
       true :=
   rfl
 
