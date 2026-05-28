@@ -1957,3 +1957,88 @@ The next step should connect this labelwise obstruction to the existing
 square-weight transport audits, so that any proposed 3.12 route must specify
 whether it is using representative `j.val^2` weights, balanced sign-compatible
 weights, or a genuinely averaged/hull-level object.
+
+## 216. Square-Weight Transport Levels Are Now Separated
+
+### Lean Move
+
+In
+
+```text
+Iut/Stage1/IUTStage1Source.lean
+Iut/Stage1/IUTStage1Experiments.lean
+```
+
+we added audit-level consequences:
+
+```text
+IUTStage1ZModSquareWeightedFullLabelTransportAudit.coordinateSquarePreserving
+IUTStage1ZModSquareWeightedFullLabelTransportAudit.coordinateEquiv_apply_eq
+IUTStage1ZModSquareWeightedFullLabelTransportAudit.coordinateEquiv_eq_refl
+IUTStage1ZModSquareWeightedFullLabelTransportAudit.coordinateEquiv_ne_neg
+Ind3SquareWeightLevelExperimentReport
+representativeSquareWeightAudit_forcesIdentity
+representativeSquareWeightAudit_rejectsNegation
+balancedNeg_preservesBalancedWeights
+balancedNeg_failsRepresentativeSummands
+balancedNeg_levelIsNotPointwise
+aggregateLevelIsNotPointwise
+```
+
+### Mathematical Reason
+
+The previous milestone proved that the representative `j^2` scale is
+label-dependent.  This milestone connects that fact to the existing square-weight
+transport audits:
+
+```text
+representative pointwise square-weight audit
+  -> coordinate-square preservation
+  -> coordinate equivalence is identity
+  -> negation is rejected
+
+balanced sign-compatible audit
+  -> negation can preserve balanced weights
+  -> representative j.val^2 summands still fail
+  -> comparison level is not pointwiseRepresentative
+
+aggregate/hull level
+  -> explicitly not the pointwiseRepresentative level
+```
+
+This matters because the final 3.12 route must not silently move between these
+levels.  A proof that works for balanced sign-compatible weights is not, by
+itself, a proof at the representative `j.val^2` pointwise level.
+
+### Source Check
+
+Mochizuki's formalization note separates the final `3.11.5 => 3.12`
+comparison from the earlier APT/hull+det work, and says the final stage is the
+simultaneous comparison of q- and Theta-pilot data.  IUT III distinguishes the
+0-column upper-bound/container behavior from the 1-column fixed-ring/equality
+behavior, while `(Ind3)` supplies the upper-semicompatibility inequality.
+
+Scholze-Stix argue that once the ordered real-line copies are spelled out, the
+`j^2` scalars cannot be inserted inconsistently without monodromy.  The Lean
+separation here formalizes one precise version of that warning: the
+representative `j.val^2` audit is rigid enough to force identity, whereas the
+balanced sign-compatible negation branch is a different comparison level.
+
+### Experiment Result
+
+The current diagnostic surface now says:
+
+```text
+representative pointwise branch:
+  rigid; coordinate transport must be identity
+
+balanced sign-compatible branch:
+  supports negation, but does not preserve representative j.val^2 summands
+
+aggregate/hull branch:
+  distinct from pointwiseRepresentative
+```
+
+This gives us a sharper next target: any proposed formal route through
+Mochizuki's Hodge-theater/SHE machinery must say exactly which comparison level
+is being used when it reaches the final q/Theta inequality.

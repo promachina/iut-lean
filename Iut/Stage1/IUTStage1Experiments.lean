@@ -470,6 +470,107 @@ theorem no_labelIndependent_transport_scale_absorbs_j2
   IUTStage1ZModSquareWeightProfile.no_label_independent_scale_matches_all_representative_squares
     (l := l) scale
 
+/-- Experiment report separating representative, balanced, and aggregate levels. -/
+structure Ind3SquareWeightLevelExperimentReport where
+  representativeAuditForcesIdentity : Bool
+  representativeAuditRejectsNegation : Bool
+  balancedNegPreservesBalancedWeights : Bool
+  balancedNegFailsRepresentativeSummands : Bool
+  balancedLevelIsNotPointwise : Bool
+  aggregateLevelIsNotPointwise : Bool
+deriving Repr
+
+/--
+Current level diagnostic for the `j^2` branch of the 3.12 corridor.
+
+Representative pointwise transport is rigid; balanced sign-compatible transport
+preserves the balanced branch but not the representative `j.val^2` branch; and
+aggregate/hull levels are tracked as separate comparison levels.
+-/
+def ind3SquareWeightLevelExperimentReport :
+    Ind3SquareWeightLevelExperimentReport :=
+  { representativeAuditForcesIdentity := true,
+    representativeAuditRejectsNegation := true,
+    balancedNegPreservesBalancedWeights := true,
+    balancedNegFailsRepresentativeSummands := true,
+    balancedLevelIsNotPointwise := true,
+    aggregateLevelIsNotPointwise := true }
+
+theorem representativeSquareWeightAudit_forcesIdentity
+    {l : PrimeGeFive}
+    (audit : IUTStage1ZModSquareWeightedFullLabelTransportAudit l) :
+    audit.coordinateEquiv = Equiv.refl (ZMod l.value) :=
+  audit.coordinateEquiv_eq_refl
+
+theorem representativeSquareWeightAudit_rejectsNegation
+    {l : PrimeGeFive}
+    (audit : IUTStage1ZModSquareWeightedFullLabelTransportAudit l) :
+    audit.coordinateEquiv ≠ Equiv.neg (ZMod l.value) :=
+  audit.coordinateEquiv_ne_neg
+
+theorem balancedNeg_preservesBalancedWeights
+    {l : PrimeGeFive}
+    (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    ∀ j : ZMod l.value,
+      IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+          (l := l)
+          ((IUTStage1BalancedSquareFullLabelTransport.negSelf
+            logVolume).coordinateEquiv j) =
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+          (l := l) j :=
+  (IUTStage1BalancedSquareFullLabelTransport.negSelf
+    logVolume).balancedSquareWeight_preserved
+
+theorem balancedNeg_failsRepresentativeSummands
+    {l : PrimeGeFive}
+    (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    ¬ ∀ j : ZMod l.value,
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real))
+          ((IUTStage1BalancedSquareFullLabelTransport.negSelf
+            logVolume).coordinateEquiv j) =
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real))
+          j :=
+  IUTStage1BalancedSquareFullLabelTransport.negSelf_not_representativeSummand_constant_one_preserved
+    logVolume
+
+theorem balancedNeg_levelIsNotPointwise
+    {l : PrimeGeFive}
+    (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    (IUTStage1BalancedSquareFullLabelTransport.negSelf
+        logVolume).comparisonLevel ≠
+      IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
+  (IUTStage1BalancedSquareFullLabelTransport.negSelf
+    logVolume).comparisonLevel_ne_pointwiseRepresentative
+
+theorem aggregateLevelIsNotPointwise :
+    IUTStage1ZModSquareWeightProfile.representativeAggregateComparisonLevel ≠
+      IUTStage1ZModSquareWeightProfile.representativePointwiseComparisonLevel :=
+  IUTStage1ZModSquareWeightProfile.representativeAggregateComparisonLevel_ne_pointwise
+
+theorem ind3SquareWeightLevelExperimentReport_representativeIdentity :
+    ind3SquareWeightLevelExperimentReport.representativeAuditForcesIdentity =
+      true :=
+  rfl
+
+theorem ind3SquareWeightLevelExperimentReport_representativeRejectsNegation :
+    ind3SquareWeightLevelExperimentReport.representativeAuditRejectsNegation =
+      true :=
+  rfl
+
+theorem ind3SquareWeightLevelExperimentReport_balancedNotPointwise :
+    ind3SquareWeightLevelExperimentReport.balancedLevelIsNotPointwise = true :=
+  rfl
+
+theorem ind3SquareWeightLevelExperimentReport_aggregateNotPointwise :
+    ind3SquareWeightLevelExperimentReport.aggregateLevelIsNotPointwise = true :=
+  rfl
+
 end Experiments
 end Stage1
 end Iut

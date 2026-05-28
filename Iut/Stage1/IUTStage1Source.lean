@@ -2836,6 +2836,35 @@ theorem transportedSquareWeight_preserved
       audit.sourceProfile.weight j :=
   audit.squareWeight_preserved j
 
+theorem coordinateSquarePreserving
+    (audit : IUTStage1ZModSquareWeightedFullLabelTransportAudit l) :
+  IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+      (l := l) audit.coordinateEquiv :=
+  IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_of_squareWeight_preserved
+    audit.sourceProfile audit.targetProfile audit.squareWeight_preserved
+
+theorem coordinateEquiv_apply_eq
+    (audit : IUTStage1ZModSquareWeightedFullLabelTransportAudit l)
+    (j : ZMod l.value) :
+    audit.coordinateEquiv j = j :=
+  IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_apply_eq
+    audit.coordinateSquarePreserving j
+
+theorem coordinateEquiv_eq_refl
+    (audit : IUTStage1ZModSquareWeightedFullLabelTransportAudit l) :
+    audit.coordinateEquiv = Equiv.refl (ZMod l.value) :=
+  IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_eq_refl
+    audit.coordinateSquarePreserving
+
+theorem coordinateEquiv_ne_neg
+    (audit : IUTStage1ZModSquareWeightedFullLabelTransportAudit l) :
+    audit.coordinateEquiv ≠ Equiv.neg (ZMod l.value) := by
+  intro h
+  exact IUTStage1ZModSquareWeightProfile.not_coordinateSquarePreserving_neg
+    (by
+      rw [← h]
+      exact audit.coordinateSquarePreserving)
+
 theorem targetTransportedSummand_eq_sourceSummand
     (audit : IUTStage1ZModSquareWeightedFullLabelTransportAudit l)
     (j : ZMod l.value) :
