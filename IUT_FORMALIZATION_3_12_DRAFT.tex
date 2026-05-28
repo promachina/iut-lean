@@ -194,6 +194,10 @@ The code currently covers:
   logarithmic bound;
 \item the IUT IV, Theorem 1.10 Step (i) \(\mathrm{GL}_2\) arithmetic constants
   for \(p=2,3,5\), including the product with the quadratic factor from (E5);
+\item the IUT IV, Theorem 1.10 Step (iii) algebraic estimate combining the
+  Step (ii) \(K\)-bound and the displayed \(\log(s_Q)\)-bound into
+  \((1+4/\ell)\log(d_K,f_K)+(16/\ell)\log(s_Q)
+   \le (1+36d_{\mathrm{mod}}/\ell)S+2\log(\ell)+70\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -242,7 +246,8 @@ lower bound on \(C_\Theta\), including the final coefficient estimates and the
 tripodal-to-\(F\) log-degree monotonicity.  The Step (i) flag records the two
 elementary sum identities used in the leading-term computation.  The Step (ii)
 small-prime flag records the additive error bound \(21\).  The \(\mathrm{GL}_2\)
-flag records the finite cardinality constants feeding that bound.
+flag records the finite cardinality constants feeding that bound.  The
+Step (iii) flag records the \(\log(s_Q)\) coefficient absorption.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -310,6 +315,9 @@ For Step (ii), Lean proves the small-prime additive error bound from the
 displayed logarithmic inequalities.
 Lean also checks the Step (i) \(\mathrm{GL}_2\) constants for \(p=2,3,5\) and
 their product with the quadratic extension factor.
+For Step (iii), Lean proves the displayed coefficient absorption from the
+source hypotheses \(d_{\mathrm{mod}}\ge1\), \(\ell\ge5\), \(2\log(\ell)\le\ell\),
+and nonnegativity of the tripodal log-degree sum.
 
 \section{Missing Mathematics}
 

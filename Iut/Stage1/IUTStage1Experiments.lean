@@ -658,6 +658,7 @@ structure ProcessionContainerExperimentReport where
   iutIVElementarySumIdentitiesAvailable : Bool
   iutIVSmallPrimeRamificationErrorBoundAvailable : Bool
   iutIVGLTwoCardinalityConstantsAvailable : Bool
+  iutIVLogSQStepIIIEstimateAvailable : Bool
 deriving Repr
 
 /--
@@ -701,7 +702,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     iutIVTripodalBaseChangeLogDegreeAvailable := true,
     iutIVElementarySumIdentitiesAvailable := true,
     iutIVSmallPrimeRamificationErrorBoundAvailable := true,
-    iutIVGLTwoCardinalityConstantsAvailable := true }
+    iutIVGLTwoCardinalityConstantsAvailable := true,
+    iutIVLogSQStepIIIEstimateAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1179,6 +1181,11 @@ theorem iutIVSmallPrimeGLTwoDegreeExpression_formula :
     iutIVSmallPrimeGLTwoDegreeExpression = 2 ^ 11 * 3 ^ 3 * 5 :=
   iutIVSmallPrimeGLTwoDegreeExpression_eq
 
+theorem iutIVLogSQStepIII_left_le_right
+    (data : IUTStage1IUTIVLogSQStepIIIShadow) :
+    data.leftHandSide <= data.rightHandSide :=
+  data.leftHandSide_le_rightHandSide
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1435,6 +1442,7 @@ structure Corollary312DisputeFirstPassReport where
   iutIVElementarySumIdentitiesAvailable : Bool
   iutIVSmallPrimeRamificationErrorBoundAvailable : Bool
   iutIVGLTwoCardinalityConstantsAvailable : Bool
+  iutIVLogSQStepIIIEstimateAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1492,6 +1500,7 @@ def corollary312DisputeFirstPassReport :
     iutIVElementarySumIdentitiesAvailable := true,
     iutIVSmallPrimeRamificationErrorBoundAvailable := true,
     iutIVGLTwoCardinalityConstantsAvailable := true,
+    iutIVLogSQStepIIIEstimateAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1697,6 +1706,11 @@ theorem corollary312Report_iutIVSmallPrimeRamificationErrorBoundAvailable :
 
 theorem corollary312Report_iutIVGLTwoCardinalityConstantsAvailable :
     corollary312DisputeFirstPassReport.iutIVGLTwoCardinalityConstantsAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVLogSQStepIIIEstimateAvailable :
+    corollary312DisputeFirstPassReport.iutIVLogSQStepIIIEstimateAvailable =
       true :=
   rfl
 

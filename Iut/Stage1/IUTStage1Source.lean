@@ -2619,6 +2619,78 @@ theorem fLogDegreeSum_le_ftpd_add_twentyOne
 end IUTStage1IUTIVTameRamificationLogDegreeErrorShadow
 
 /--
+IUT IV, Theorem 1.10, Step (iii), the algebraic `log(s_Q)` estimate.
+
+The source combines the Step (ii) estimate for `log(d_K)+log(f_K)` with
+`log(s_Q) <= 2*dmod*(log(d_Ftpd)+log(f_Ftpd))+5+log(l)`, then absorbs the
+coefficients to obtain the displayed bound with coefficient
+`1 + 36*dmod/l`.  The elementary estimate used here is `2*log(l) <= l`, valid
+for the source range `l >= 5`.  The construction of `s_Q` is not formalized
+here; its displayed real-valued bound is an explicit hypothesis.
+-/
+structure IUTStage1IUTIVLogSQStepIIIShadow where
+  l : PrimeGeFive
+  dmod : Nat
+  dmod_ge_one : 1 <= dmod
+  ftpdLogDegreeSum : Real
+  ftpdLogDegreeSum_nonneg : 0 <= ftpdLogDegreeSum
+  logKDegreeSum : Real
+  logSQ : Real
+  logL : Real
+  two_logL_le_l : 2 * logL <= (l.value : Real)
+  logKDegreeSum_bound :
+    logKDegreeSum <= ftpdLogDegreeSum + 2 * logL + 21
+  logSQ_bound :
+    logSQ <= 2 * (dmod : Real) * ftpdLogDegreeSum + 5 + logL
+
+namespace IUTStage1IUTIVLogSQStepIIIShadow
+
+noncomputable def leftHandSide
+    (data : IUTStage1IUTIVLogSQStepIIIShadow) : Real :=
+  (1 + 4 / (data.l.value : Real)) * data.logKDegreeSum +
+    (16 / (data.l.value : Real)) * data.logSQ
+
+noncomputable def rightHandSide
+    (data : IUTStage1IUTIVLogSQStepIIIShadow) : Real :=
+  (1 + 36 * (data.dmod : Real) / (data.l.value : Real)) *
+      data.ftpdLogDegreeSum +
+    2 * data.logL + 70
+
+theorem leftHandSide_le_rightHandSide
+    (data : IUTStage1IUTIVLogSQStepIIIShadow) :
+    data.leftHandSide <= data.rightHandSide := by
+  have hlpos : (0 : Real) < (data.l.value : Real) := by
+    exact_mod_cast Nat.pos_of_ne_zero data.l.ne_zero
+  have hlfive : (5 : Real) <= (data.l.value : Real) := by
+    exact_mod_cast data.l.ge_five
+  have hdmod : (1 : Real) <= (data.dmod : Real) := by
+    exact_mod_cast data.dmod_ge_one
+  have hcoeffK : 0 <= (1 : Real) + 4 / (data.l.value : Real) := by
+    positivity
+  have hcoeffSQ : 0 <= (16 : Real) / (data.l.value : Real) := by
+    positivity
+  have hK :=
+    mul_le_mul_of_nonneg_left data.logKDegreeSum_bound hcoeffK
+  have hSQ :=
+    mul_le_mul_of_nonneg_left data.logSQ_bound hcoeffSQ
+  have hcombined := add_le_add hK hSQ
+  have halgebra :
+      (1 + 4 / (data.l.value : Real)) *
+          (data.ftpdLogDegreeSum + 2 * data.logL + 21) +
+        (16 / (data.l.value : Real)) *
+          (2 * (data.dmod : Real) * data.ftpdLogDegreeSum + 5 +
+            data.logL) <=
+        (1 + 36 * (data.dmod : Real) / (data.l.value : Real)) *
+          data.ftpdLogDegreeSum +
+        2 * data.logL + 70 := by
+    field_simp [ne_of_gt hlpos]
+    nlinarith [hlfive, hdmod, data.ftpdLogDegreeSum_nonneg, data.two_logL_le_l]
+  dsimp [leftHandSide, rightHandSide] at hcombined ⊢
+  exact le_trans hcombined halgebra
+
+end IUTStage1IUTIVLogSQStepIIIShadow
+
+/--
 IUT IV, Theorem 1.10 and Step (ii): replacing the tripodal intermediate field
 by the larger field in the final displayed estimate.
 
