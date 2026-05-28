@@ -16003,6 +16003,18 @@ theorem targetSigned_le_averageLogVolume
       audited)
     (part.targetSigned_le_normalizedLogVolume audited)
 
+theorem targetSigned_le_squareWeightedAverageLogVolume
+    (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume :=
+  profile.toWeighted_const_le_weightedAverage_of_forall_le
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+      audited)
+    (part.targetSigned_le_normalizedLogVolume audited)
+
 theorem targetSigned_le_thetaAverage
     (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
     (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
@@ -16099,6 +16111,16 @@ theorem targetSigned_le_averageLogVolume
       (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
         audited).averageLogVolume :=
   part.toThetaLabelwiseContainerAudit.targetSigned_le_averageLogVolume audited
+
+theorem targetSigned_le_squareWeightedAverageLogVolume
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume :=
+  part.toThetaLabelwiseContainerAudit.targetSigned_le_squareWeightedAverageLogVolume
+    profile audited
 
 theorem targetSigned_le_thetaAverage
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)

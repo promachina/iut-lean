@@ -6042,3 +6042,54 @@ If the IUT/Hodge-theater machinery supplies this pointwise full-label lower
 bound, the square-weighted average bound follows formally in Lean.  If it only
 supplies an aggregate average or a final hull/log-volume inequality, this
 theorem cannot be applied.
+
+## 188. Cusp-Class Container Bounds Feed Square-Weighted Averages
+
+### Lean Move
+
+We connected the existing labelwise and cusp-class container audits to the
+square-weighted average:
+
+```text
+FLZModCuspLabelThetaLabelwiseContainerAudit
+  .targetSigned_le_squareWeightedAverageLogVolume
+
+FLZModCuspLabelThetaCuspClassContainerAudit
+  .targetSigned_le_squareWeightedAverageLogVolume
+```
+
+The labelwise theorem applies the generic weighted-average lower-bound lemma.
+The cusp-class theorem first converts the zero/nonzero cusp-class bounds into
+labelwise `ZMod l` bounds, then applies the labelwise theorem.
+
+### Mathematical Reason
+
+The local container route already proves that each normalized label value is at
+least `targetSigned`.  Since square weights are nonnegative and have positive
+total weight, the corresponding square-weighted average is also at least
+`targetSigned`.
+
+This is a genuine bridge from local log-volume estimates to the weighted
+average, but it still assumes the labelwise lower bounds.  It does not identify
+two Hodge-theater histories or prove representative-square transport.
+
+### Source Check
+
+IUT III's route from Theorem 3.11 to Corollary 3.12 moves through
+procession-normalized log-volumes indexed by `F_l`, then through local
+cusp/zero log-volume estimates and hull/log-volume comparison.  This Lean step
+models the benign real-averaging part of that route once the local bounds are
+already present.
+
+### Relevance to the 3.12 Dispute
+
+We have now separated the following question sharply:
+
+```text
+Can the source machinery provide the labelwise local lower bounds?
+```
+
+If yes, Lean transports them to both the uniform and square-weighted averages.
+If no, the weighted-average theorem cannot substitute for the missing local
+comparison.  This keeps the disputed SHE/Hodge-theater identification question
+upstream of the real averaging calculation.
