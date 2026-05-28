@@ -1868,3 +1868,92 @@ This is a useful diagnostic for the next stage: when we formalize the actual
 theta-link and Hodge-theater constructions, we must identify where the paper
 supplies the scale-matching datum, or else record that the route is blocked at
 exactly this point.
+
+## 215. Label-Dependent j^2 Scales Cannot Be Absorbed By One Transport
+
+### Lean Move
+
+In
+
+```text
+Iut/Stage1/IUTStage1Source.lean
+Iut/Stage1/IUTStage1Experiments.lean
+```
+
+we added:
+
+```text
+representativeSquareScale
+representativeSquareScale_one
+representativeSquareScale_two
+representativeSquareScale_one_ne_two
+no_single_scale_matches_one_two
+no_label_independent_scale_matches_all_representative_squares
+Ind3J2ScaleExperimentReport
+no_labelIndependent_transport_scale_absorbs_j2
+```
+
+The proof uses only the `l >= 5` hypothesis.  In `ZMod l`, the representatives
+`1` and `2` are both available, and their representative real square scales are:
+
+```text
+1^2 = 1
+2^2 = 4
+```
+
+Lean therefore proves that no single real transport scale can match the
+representative `j^2` scale for every label `j`.
+
+### Mathematical Reason
+
+This is the labelwise version of the transport-scale warning from the previous
+milestone.  The previous experiment showed that transported equality with
+mismatched positive scales does not imply raw equality.  This experiment shows
+that the representative `j^2` scales used in the current square-weight profile
+are genuinely label-dependent.  Thus a label-independent real-line
+identification cannot simply absorb all `j^2` factors.
+
+The key checked statement is:
+
+```text
+for any scale : Real,
+  not (for every j : ZMod l, scale = j.val^2)
+```
+
+and the contradiction is already visible at `j = 1` and `j = 2`.
+
+### Source Check
+
+Mochizuki's discussion around Corollary 3.12 distinguishes the 0-column and
+1-column roles: the 0-column side uses mono-analytic containers and upper
+bounds, while the 1-column side has fixed arithmetic holomorphic structure and
+precise log-volume equalities.  Remark 3.12.3 identifies `(Ind3)` as the
+upper-semicompatibility source of the inequality.
+
+Scholze-Stix's Section 2.2 isolates the same pressure point in different
+language: after spelling out the ordered one-dimensional real vector spaces,
+introducing `j^2` scalars into the left side of the diagram risks monodromy or
+inconsistent identifications.  The Lean result does not decide Mochizuki's
+intended Hodge-theater resolution, but it formally confirms the local algebraic
+obstruction: `j^2` cannot be hidden inside one label-independent transport
+scale.
+
+### Experiment Result
+
+The current diagnostic picture is now sharper:
+
+```text
+matched transport scales:
+  cancellation to raw real-line alignment is allowed
+
+mismatched transport scales:
+  transported equality does not imply raw equality
+
+representative j^2 scales:
+  label-dependent; no single scale matches all labels
+```
+
+The next step should connect this labelwise obstruction to the existing
+square-weight transport audits, so that any proposed 3.12 route must specify
+whether it is using representative `j.val^2` weights, balanced sign-compatible
+weights, or a genuinely averaged/hull-level object.

@@ -2044,6 +2044,60 @@ theorem toWeighted_weight_eq_square_val
     (profile.toWeighted data).weight j = ((j.val : Real) ^ 2) :=
   profile.weight_eq_square_val j
 
+/-- The representative real square scale attached to a `ZMod l` label. -/
+def representativeSquareScale (j : ZMod l.value) : Real :=
+  ((j.val : Real) ^ 2)
+
+theorem representativeSquareScale_eq
+    (j : ZMod l.value) :
+    representativeSquareScale (l := l) j = ((j.val : Real) ^ 2) :=
+  rfl
+
+theorem representativeSquareScale_one :
+    representativeSquareScale (l := l) (1 : ZMod l.value) = 1 := by
+  haveI : Fact (1 < l.value) :=
+    ⟨lt_of_lt_of_le (by norm_num) l.ge_five⟩
+  unfold representativeSquareScale
+  rw [ZMod.val_one]
+  norm_num
+
+theorem representativeSquareScale_two :
+    representativeSquareScale (l := l) (2 : ZMod l.value) = 4 := by
+  have hlt : 2 < l.value :=
+    lt_of_lt_of_le (by norm_num) l.ge_five
+  unfold representativeSquareScale
+  change ((((2 : Nat) : ZMod l.value).val : Real) ^ 2) = 4
+  rw [ZMod.val_natCast_of_lt hlt]
+  norm_num
+
+theorem representativeSquareScale_one_ne_two :
+    representativeSquareScale (l := l) (1 : ZMod l.value) ≠
+      representativeSquareScale (l := l) (2 : ZMod l.value) := by
+  rw [representativeSquareScale_one, representativeSquareScale_two]
+  norm_num
+
+/--
+There is no single real scale that simultaneously equals the representative
+`j^2` scale at `j = 1` and at `j = 2`.
+-/
+theorem no_single_scale_matches_one_two
+    (scale : Real) :
+    ¬ (scale = representativeSquareScale (l := l) (1 : ZMod l.value) ∧
+        scale = representativeSquareScale (l := l) (2 : ZMod l.value)) := by
+  intro h
+  exact representativeSquareScale_one_ne_two (h.1.symm.trans h.2)
+
+/--
+A label-independent transport scale cannot absorb all representative `j^2`
+scales.
+-/
+theorem no_label_independent_scale_matches_all_representative_squares
+    (scale : Real) :
+    ¬ ∀ j : ZMod l.value, scale = representativeSquareScale (l := l) j := by
+  intro h
+  exact no_single_scale_matches_one_two (l := l) scale
+    ⟨h (1 : ZMod l.value), h (2 : ZMod l.value)⟩
+
 theorem toWeighted_const_le_weightedAverage_of_forall_le
     (profile : IUTStage1ZModSquareWeightProfile l)
     (data : IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value))

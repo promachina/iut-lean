@@ -419,6 +419,57 @@ theorem mismatchedTransportScaleReport_cannotCancel :
     mismatchedTransportScaleReport.canCancelToRawAlignment = false :=
   rfl
 
+/-- Experiment report for the label-dependent representative `j^2` scales. -/
+structure Ind3J2ScaleExperimentReport where
+  oneScale : Real
+  twoScale : Real
+  scalesDiffer : Bool
+  labelIndependentScaleCanMatchAll : Bool
+
+/--
+For every `l >= 5`, the representative square scales at `j = 1` and `j = 2`
+already differ.
+-/
+def ind3J2ScaleExperimentReport (l : PrimeGeFive) :
+    Ind3J2ScaleExperimentReport :=
+  { oneScale :=
+      IUTStage1ZModSquareWeightProfile.representativeSquareScale
+        (l := l) (1 : ZMod l.value),
+    twoScale :=
+      IUTStage1ZModSquareWeightProfile.representativeSquareScale
+        (l := l) (2 : ZMod l.value),
+    scalesDiffer := true,
+    labelIndependentScaleCanMatchAll := false }
+
+theorem ind3J2ScaleExperimentReport_oneScale
+    (l : PrimeGeFive) :
+    (ind3J2ScaleExperimentReport l).oneScale = 1 :=
+  IUTStage1ZModSquareWeightProfile.representativeSquareScale_one
+
+theorem ind3J2ScaleExperimentReport_twoScale
+    (l : PrimeGeFive) :
+    (ind3J2ScaleExperimentReport l).twoScale = 4 :=
+  IUTStage1ZModSquareWeightProfile.representativeSquareScale_two
+
+theorem ind3J2ScaleExperimentReport_scalesDiffer
+    (l : PrimeGeFive) :
+    (ind3J2ScaleExperimentReport l).scalesDiffer = true :=
+  rfl
+
+theorem ind3J2ScaleExperimentReport_noLabelIndependentScale
+    (l : PrimeGeFive) :
+    (ind3J2ScaleExperimentReport l).labelIndependentScaleCanMatchAll = false :=
+  rfl
+
+theorem no_labelIndependent_transport_scale_absorbs_j2
+    (l : PrimeGeFive) (scale : Real) :
+    ¬ ∀ j : ZMod l.value,
+      scale =
+        IUTStage1ZModSquareWeightProfile.representativeSquareScale
+          (l := l) j :=
+  IUTStage1ZModSquareWeightProfile.no_label_independent_scale_matches_all_representative_squares
+    (l := l) scale
+
 end Experiments
 end Stage1
 end Iut
