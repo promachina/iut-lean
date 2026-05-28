@@ -4766,6 +4766,43 @@ def placeAudited_logVolume_fl_zmod_full_classified_summary_example
     theta_source_eq := hsource }
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_full_classified_direct_summary_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (packetSummary :
+      audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l)
+    (direct : audit.FLZModCuspLabelThetaDirectCapsuleCuspClassAudit l)
+    (hpacket : direct.packet_normalized = packetSummary.packet_normalized) :
+    audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l :=
+  FLZModCuspLabelThetaFullClassifiedRouteSummary.ofDirectCapsule
+    packetSummary direct hpacket
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_full_classified_ind2_summary_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (packetSummary :
+      audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l)
+    (transported : audit.FLZModCuspLabelThetaInd2TransportedCuspClassAudit l)
+    (hpacket :
+      transported.packet_normalized = packetSummary.packet_normalized) :
+    audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l :=
+  FLZModCuspLabelThetaFullClassifiedRouteSummary.ofInd2Transport
+    packetSummary transported hpacket
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 theorem placeAudited_logVolume_fl_zmod_full_classified_target_source_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

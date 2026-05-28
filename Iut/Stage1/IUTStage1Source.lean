@@ -11832,6 +11832,43 @@ namespace FLZModCuspLabelThetaFullClassifiedRouteSummary
 variable {audit : endpoint.LogVolumeChartAudit}
 variable {l : PrimeGeFive}
 
+def ofDirectCapsule
+    (packetSummary :
+      audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l)
+    (direct :
+      audit.FLZModCuspLabelThetaDirectCapsuleCuspClassAudit l)
+    (hpacket :
+      direct.packet_normalized = packetSummary.packet_normalized) :
+    audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l :=
+  { classified_packet := packetSummary,
+    classified_route :=
+      FLZModCuspLabelThetaClassifiedRouteSummary.ofClassifiedCusp
+        (FLZModCuspLabelThetaClassifiedCuspClassAudit.ofDirectCapsule direct),
+    theta_source_eq := by
+      rw [← hpacket]
+      change direct.packet_normalized.theta_source =
+        direct.packet_normalized.theta_source
+      rfl }
+
+def ofInd2Transport
+    (packetSummary :
+      audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l)
+    (transported :
+      audit.FLZModCuspLabelThetaInd2TransportedCuspClassAudit l)
+    (hpacket :
+      transported.packet_normalized = packetSummary.packet_normalized) :
+    audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l :=
+  { classified_packet := packetSummary,
+    classified_route :=
+      FLZModCuspLabelThetaClassifiedRouteSummary.ofClassifiedCusp
+        (FLZModCuspLabelThetaClassifiedCuspClassAudit.ofInd2Transport
+          transported),
+    theta_source_eq := by
+      rw [← hpacket]
+      change transported.packet_normalized.theta_source =
+        transported.packet_normalized.theta_source
+      rfl }
+
 def packetIdentificationSource
     (summary : audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l) :
     IUTStage1PacketNormalizedIdentificationSource :=

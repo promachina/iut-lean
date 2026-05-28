@@ -5972,3 +5972,58 @@ placeAudited_logVolume_fl_zmod_full_classified_target_source_example
 The full summary is a review surface, not a new theorem source.  The next
 mathematical work should continue reducing the still-open analytic assumptions
 behind capsule-entry container estimates and packet-normalized identifications.
+
+## 76. Constructors for Full Classified Summaries
+
+### Goal
+
+We removed a manual Theta-source equality obligation from the common full-route
+summary constructors.
+
+### Lean Move
+
+The full summary still stores:
+
+```text
+theta_source_eq
+```
+
+but Lean now constructs this equality automatically for the two standard
+routes:
+
+```text
+FLZModCuspLabelThetaFullClassifiedRouteSummary.ofDirectCapsule
+FLZModCuspLabelThetaFullClassifiedRouteSummary.ofInd2Transport
+```
+
+Each constructor takes a classified packet-normalized audit and either a direct
+capsule route or an `(Ind2)`-transported route, plus an equality saying that
+both routes use the same packet-normalized audit.  The Theta-source equality is
+then definitional after rewriting by that packet equality.
+
+### Mathematical Point
+
+This reduces a possible bookkeeping error.  For the standard direct and
+transported routes, one should not separately prove that the packet-normalized
+Theta source and the cusp-route Theta source match; both are projected from the
+same packet-normalized audit.
+
+### Trap Avoided
+
+We still require the packet-normalized audits to match.  Thus the constructor
+does not allow unrelated packet and cusp routes to be combined.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_full_classified_direct_summary_example
+placeAudited_logVolume_fl_zmod_full_classified_ind2_summary_example
+```
+
+### Remaining Gap
+
+The next useful reduction is still mathematical: explain or derive the
+packet-normalized identification itself, or the capsule-entry container
+estimates, from more structured local source data.
