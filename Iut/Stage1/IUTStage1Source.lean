@@ -3540,6 +3540,115 @@ theorem qTwo_minus_q_le_oneThird_sqrtH_logTwoDeltaH
 end IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow
 
 /--
+IUT IV, Corollary 2.2(ii), passage from the Theorem 1.10 bound for `q` to the
+displayed bound for `h = log(q_all)`.
+
+This combines the first post-Theorem-1.10 bound, the `q_2/q` estimate, and the
+bounded discrepancy `q_all/q_2` constant `B_K`, with
+`C_K = 40 * eta_prm + 2 * B_K`.
+-/
+structure IUTStage1IUTIVCorollary22HBoundBeforeEpsilonShadow where
+  h : Real
+  logQ : Real
+  logQTwo : Real
+  logQAll : Real
+  logDegreeSum : Real
+  delta : Real
+  sqrtH : Real
+  logTwoDeltaH : Real
+  etaPrm : Real
+  bK : Real
+  cK : Real
+  h_eq_logQAll : h = logQAll
+  delta_ge_one : 1 <= delta
+  sqrtH_logTwoDeltaH_nonneg : 0 <= sqrtH * logTwoDeltaH
+  cK_eq : cK = 40 * etaPrm + 2 * bK
+  theorem110_first_bound :
+    (1 / 6 : Real) * logQ <=
+      (1 + delta / sqrtH) * logDegreeSum +
+        (200 * delta ^ 2 * sqrtH * logTwoDeltaH + 20 * etaPrm)
+  qTwo_minus_q_bound :
+    (1 / 6 : Real) * logQTwo - (1 / 6 : Real) * logQ <=
+      (1 / 3 : Real) * sqrtH * logTwoDeltaH
+  qAll_minus_qTwo_bound :
+    (1 / 6 : Real) * logQAll - (1 / 6 : Real) * logQTwo <= bK
+
+namespace IUTStage1IUTIVCorollary22HBoundBeforeEpsilonShadow
+
+theorem error_terms_le_fifteen_delta_sq
+    (data : IUTStage1IUTIVCorollary22HBoundBeforeEpsilonShadow) :
+    200 * data.delta ^ 2 * data.sqrtH * data.logTwoDeltaH +
+        (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH <=
+      (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH := by
+  have hdelta_sq : (1 / 3 : Real) <= 25 * data.delta ^ 2 := by
+    nlinarith [data.delta_ge_one]
+  have hA := data.sqrtH_logTwoDeltaH_nonneg
+  calc
+    200 * data.delta ^ 2 * data.sqrtH * data.logTwoDeltaH +
+        (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH
+        =
+      (200 * data.delta ^ 2 + (1 / 3 : Real)) *
+        (data.sqrtH * data.logTwoDeltaH) := by ring
+    _ <=
+      (200 * data.delta ^ 2 + 25 * data.delta ^ 2) *
+        (data.sqrtH * data.logTwoDeltaH) := by
+        exact mul_le_mul_of_nonneg_right (by linarith) hA
+    _ =
+      (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH := by ring
+
+theorem cK_half_eq_eta_bK
+    (data : IUTStage1IUTIVCorollary22HBoundBeforeEpsilonShadow) :
+    (1 / 2 : Real) * data.cK = 20 * data.etaPrm + data.bK := by
+  rw [data.cK_eq]
+  ring
+
+theorem h_bound_before_epsilon
+    (data : IUTStage1IUTIVCorollary22HBoundBeforeEpsilonShadow) :
+    (1 / 6 : Real) * data.h <=
+      (1 + data.delta / data.sqrtH) * data.logDegreeSum +
+        (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH +
+          (1 / 2 : Real) * data.cK := by
+  have hq2 :
+      (1 / 6 : Real) * data.logQTwo <=
+        (1 / 6 : Real) * data.logQ +
+          (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH := by
+    linarith [data.qTwo_minus_q_bound]
+  have hqall :
+      (1 / 6 : Real) * data.logQAll <=
+        (1 / 6 : Real) * data.logQTwo + data.bK := by
+    linarith [data.qAll_minus_qTwo_bound]
+  have hfromq :
+      (1 / 6 : Real) * data.logQAll <=
+        (1 + data.delta / data.sqrtH) * data.logDegreeSum +
+          (200 * data.delta ^ 2 * data.sqrtH * data.logTwoDeltaH +
+            20 * data.etaPrm) +
+            (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH +
+            data.bK := by
+    linarith [data.theorem110_first_bound, hq2, hqall]
+  have herr := data.error_terms_le_fifteen_delta_sq
+  calc
+    (1 / 6 : Real) * data.h =
+        (1 / 6 : Real) * data.logQAll := by rw [data.h_eq_logQAll]
+    _ <=
+        (1 + data.delta / data.sqrtH) * data.logDegreeSum +
+          (200 * data.delta ^ 2 * data.sqrtH * data.logTwoDeltaH +
+            20 * data.etaPrm) +
+            (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH +
+            data.bK := hfromq
+    _ <=
+        (1 + data.delta / data.sqrtH) * data.logDegreeSum +
+          (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH +
+            (20 * data.etaPrm + data.bK) := by
+        linarith [herr]
+    _ =
+        (1 + data.delta / data.sqrtH) * data.logDegreeSum +
+          (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH +
+            (1 / 2 : Real) * data.cK := by
+        rw [data.cK_half_eq_eta_bK]
+
+end IUTStage1IUTIVCorollary22HBoundBeforeEpsilonShadow
+
+/--
 IUT IV, Corollary 2.2(ii), condition (C2).
 
 The source records the chain

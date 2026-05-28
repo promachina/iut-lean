@@ -244,6 +244,15 @@ The code currently covers:
   \(\frac16\log(q_2)-\frac16\log(q)
    \le\frac13h^{1/2}\log(2\delta h)\) follows through the intermediate
   term \(h^{1/2}\log(\ell)\);
+\item the IUT IV, Corollary 2.2(ii) pre-\(\epsilon_E\) bound for
+  \(h=\log(q_\forall)\):
+  the Theorem 1.10 bound, the \(q_2/q\) estimate, and the bounded discrepancy
+  \(B_K\) imply
+  \[
+    \frac16h\le(1+\delta h^{-1/2})S
+    +(15\delta)^2h^{1/2}\log(2\delta h)+\frac12 C_K,
+  \]
+  with \(C_K=40\eta_{\mathrm{prm}}+2B_K\);
 \item the IUT IV, Corollary 2.2(ii) condition (C2) inequality chain:
   \(\frac16\log(q)\le\frac16\log(q_2)\le\frac16\log(q_\forall)\le
    (1+\epsilon_E)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)+C_K\);
@@ -344,6 +353,8 @@ records the source formula and lower estimate for \(\epsilon_E\).  The
 \((1-2\epsilon_E/5)^{-1}\).  The \(\epsilon_E\)-absorption flag records the
 final denominator removal in C2.  The
 q2/q flag records the displayed comparison of \(\log(q_2)\) and \(\log(q)\).
+The pre-\(\epsilon_E\) \(h\)-bound flag records the subsequent absorption of
+the bounded \(q_\forall/q_2\) discrepancy into \(C_K\).
 The log-different/log-conductor flag records the bridge from tripodal field
 terms to curve functions.  The Corollary 2.2-to-Theorem A flag records the formal
 bounded-discrepancy transfer from C2 to the Theorem A inequality.
@@ -446,6 +457,8 @@ Lean also proves the displayed comparison
 \(\frac16\log(q_2)-\frac16\log(q)
 \le\frac13h^{1/2}\log(2\delta h)\) from the intermediate
 \(h^{1/2}\log(\ell)\) bounds.
+Lean then combines this with the bounded \(q_\forall/q_2\) discrepancy to prove
+the displayed pre-\(\epsilon_E\) bound for \(\frac16h\).
 For Corollary 2.2(ii), Lean proves the final \(\frac16\log(q)\) bound from the
 displayed \(\log(q)\), \(\log(q_2)\), and \(\log(q_\forall)\) chain.
 Lean records the proof's definition of \(\epsilon_E\) and verifies the stated
