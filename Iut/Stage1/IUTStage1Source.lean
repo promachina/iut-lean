@@ -2199,6 +2199,50 @@ theorem conjugate_le_source
 
 end IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice
 
+/--
+Remark 3.12.3(i) Gauss--Bonnet metric sign shadow.
+
+Mochizuki compares the Corollary 3.12 inequality to the classical formula
+`chi_S = - ∫_S dmu_S < 0` for a hyperbolic Riemann surface, where positivity of
+the metric volume gives the negative Euler characteristic.  This record keeps
+only that sign calculation and its role as the metric analogue of the `(Ind3)`
+upper-semi inequality.
+-/
+structure IUTStage1GaussBonnetMetricSignShadow where
+  metricVolume : Real
+  metric_volume_pos : 0 < metricVolume
+  eulerCharacteristic : Real
+  euler_eq_neg_metricVolume :
+    eulerCharacteristic = -metricVolume
+  upperSemiInd3Analogue : Prop
+  upper_semi_ind3_analogue :
+    upperSemiInd3Analogue
+
+namespace IUTStage1GaussBonnetMetricSignShadow
+
+theorem eulerCharacteristic_neg
+    (data : IUTStage1GaussBonnetMetricSignShadow) :
+    data.eulerCharacteristic < 0 := by
+  rw [data.euler_eq_neg_metricVolume]
+  linarith [data.metric_volume_pos]
+
+theorem metricVolume_ne_zero
+    (data : IUTStage1GaussBonnetMetricSignShadow) :
+    data.metricVolume ≠ 0 :=
+  ne_of_gt data.metric_volume_pos
+
+theorem upperSemiInd3Analogue_holds
+    (data : IUTStage1GaussBonnetMetricSignShadow) :
+    data.upperSemiInd3Analogue :=
+  data.upper_semi_ind3_analogue
+
+theorem eulerCharacteristic_ne_zero
+    (data : IUTStage1GaussBonnetMetricSignShadow) :
+    data.eulerCharacteristic ≠ 0 :=
+  ne_of_lt data.eulerCharacteristic_neg
+
+end IUTStage1GaussBonnetMetricSignShadow
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

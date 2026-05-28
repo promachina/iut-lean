@@ -169,6 +169,9 @@ The code currently covers:
 \item the Remark 3.12.2(v) absorption distinction: zero-column unit
   indeterminacy is absorbed by a hull upper ray, while one-column logarithmic
   conjugacy is absorbed as log-volume equality;
+\item the Remark 3.12.3(i) metric analogy:
+  \(\operatorname{vol}(S)>0\) and \(\chi_S=-\operatorname{vol}(S)\) imply
+  \(\chi_S<0\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -208,6 +211,8 @@ The toy-model flag records the resulting upper-ray arithmetic \(h\le\epsilon\).
 The column-table flag records the Fig. 3.9 theta/q similarity-difference split.
 The absorption flag records the zero-column upper-bound versus one-column
 equality distinction.
+The metric flag records the Gauss--Bonnet sign calculation used as analogy for
+the upper semi-compatibility inequality.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -256,6 +261,8 @@ Lean also records that the q-pilot column lacks the theta-side multiradiality
 used in Theorem 3.11(iii)(c).
 For Remark 3.12.2(v), Lean separates hull absorption of unit shifts from
 log-volume equality after logarithmic-conjugate compatibility.
+For Remark 3.12.3(i), Lean proves the stated negative Euler-characteristic sign
+from positivity of metric volume.
 
 \section{Missing Mathematics}
 
