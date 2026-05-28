@@ -1596,3 +1596,61 @@ placeAudited_logVolume_fl_zmod_hodge_descent_sourced_bridge_example
 The Hodge-theater/descent source is currently only a classification constructor.
 The next mathematical work should define what data a Hodge-theater/descent
 bridge must carry before it is allowed to produce the classified packet bridge.
+
+## 130. Hodge-Theater/Descent Wrapper for the Insulated Bridge
+
+### Lean Move
+
+I added:
+
+```text
+IUTStage1HodgeTheaterDescentBridgeData
+FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit
+FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit
+  .toSourcedInsulatedCuspZeroPacketBridgeAudit
+FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit
+  .comparisonSource_eq_hodgeTheaterDescent
+FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit
+  .histories_not_identified
+```
+
+### Mathematical Reason
+
+The Hodge-theater/descent source can no longer be just a tag.  It must carry:
+
+```text
+domain Hodge theater
+codomain Hodge theater
+descent operation identifier
+zero-column checkpoint
+indeterminacy profile
+proof that the theater histories are not identified
+classified insulated packet bridge
+```
+
+This follows the existing qualitative-data discipline in the repo: Hodge
+theater histories may be related by a structured bridge, but they are not
+silently the same history.
+
+### Trap Avoided
+
+This wrapper still does not prove the hard Hodge-theater bridge.  It only states
+what must be present before we are allowed to classify a packet bridge as
+`hodgeTheaterDescentIndeterminacy`.  This prevents reusing the constant-family
+route while labeling it as a Hodge-theater route.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_hodge_descent_bridge_to_sourced_example
+placeAudited_logVolume_fl_zmod_hodge_descent_bridge_source_example
+placeAudited_logVolume_fl_zmod_hodge_descent_bridge_history_example
+```
+
+### Remaining Gap
+
+The wrapper still accepts the classified packet bridge as input.  The next step
+is to isolate which fields of `IUTStage1HodgeTheaterDescentBridgeData` should
+produce that bridge, rather than merely accompany it.

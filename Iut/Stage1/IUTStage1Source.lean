@@ -51,6 +51,22 @@ structure TransitionCheckpointId where
   label : String
 
 /--
+Bookkeeping data for a Hodge-theater/descent bridge at the Stage 1 boundary.
+
+This record is still inert: it does not construct the bridge.  It prevents a
+future Hodge-theater/descent explanation from being represented as an unnamed
+packet comparison by requiring explicit theater histories, descent operation,
+zero-column checkpoint, and indeterminacy profile.
+-/
+structure IUTStage1HodgeTheaterDescentBridgeData where
+  domainTheater : QualitativeData.HodgeTheaterId
+  codomainTheater : QualitativeData.HodgeTheaterId
+  descent : AlgorithmicOutput.DescentOperationId
+  zeroColumnCheckpoint : TransitionCheckpointId
+  indeterminacyProfile : IndeterminacyProfileId
+  histories_not_identified : domainTheater.side ≠ codomainTheater.side
+
+/--
 Source-facing labels for the IUT III Theorem 3.11 to Corollary 3.12 boundary.
 
 These labels carry no proof content. They are bookkeeping names for the objects
@@ -11134,6 +11150,21 @@ structure FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
   comparison_source : IUTStage1InsulatedCuspZeroBridgeSource
 
 /--
+Hodge-theater/descent wrapper for a classified insulated cusp/zero packet
+bridge.
+
+The classified packet bridge remains explicit data; this wrapper records the
+Hodge-theater/descent explanation that justifies classifying it as
+`hodgeTheaterDescentIndeterminacy`.
+-/
+structure FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  hodge_descent_data : IUTStage1HodgeTheaterDescentBridgeData
+  classified_bridge :
+    audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l
+
+/--
 Packet-normalized source for the cusp-class local object estimates.
 
 This refinement requires each cusp-class or zero-label log-volume real to be
@@ -14877,6 +14908,44 @@ theorem comparisonSource_eq_constant
   rfl
 
 end FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
+
+namespace FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+open FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit in
+def toSourcedInsulatedCuspZeroPacketBridgeAudit
+    (part :
+      audit.FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit l) :
+    audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l :=
+  ofHodgeTheaterDescentIndeterminacy part.classified_bridge
+
+theorem comparisonSource_eq_hodgeTheaterDescent
+    (part :
+      audit.FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit l) :
+    part.toSourcedInsulatedCuspZeroPacketBridgeAudit.comparison_source =
+      IUTStage1InsulatedCuspZeroBridgeSource.hodgeTheaterDescentIndeterminacy :=
+  rfl
+
+theorem histories_not_identified
+    (part :
+      audit.FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit l) :
+    part.hodge_descent_data.domainTheater.side ≠
+      part.hodge_descent_data.codomainTheater.side :=
+  part.hodge_descent_data.histories_not_identified
+
+theorem targetSigned_le_thetaSourceAverage
+    (part :
+      audit.FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.classified_bridge.packet_bridge.insulated_route.theta_source.thetaSourceAverage
+        audited :=
+  let sourced := part.toSourcedInsulatedCuspZeroPacketBridgeAudit
+  sourced.targetSigned_le_thetaSourceAverage audited
+
+end FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit
 
 namespace FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit
 

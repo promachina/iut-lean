@@ -5332,6 +5332,51 @@ def placeAudited_logVolume_fl_zmod_hodge_descent_sourced_bridge_example
   ofHodgeTheaterDescentIndeterminacy part
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_hodge_descent_bridge_to_sourced_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit l) :
+    audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l :=
+  part.toSourcedInsulatedCuspZeroPacketBridgeAudit
+
+theorem placeAudited_logVolume_fl_zmod_hodge_descent_bridge_source_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit l) :
+    part.toSourcedInsulatedCuspZeroPacketBridgeAudit.comparison_source =
+      IUTStage1InsulatedCuspZeroBridgeSource.hodgeTheaterDescentIndeterminacy :=
+  part.comparisonSource_eq_hodgeTheaterDescent
+
+theorem placeAudited_logVolume_fl_zmod_hodge_descent_bridge_history_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit l) :
+    part.hodge_descent_data.domainTheater.side ≠
+      part.hodge_descent_data.codomainTheater.side :=
+  part.histories_not_identified
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 noncomputable def placeAudited_logVolume_fl_zmod_cusp_zero_label_object_to_direct_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
