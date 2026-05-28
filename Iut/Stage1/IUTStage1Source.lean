@@ -1460,6 +1460,62 @@ theorem neg_nonzero_eq
   rw [compat.nonzero_eq (-j) (zmod_neg_ne_zero_of_ne_zero l hj)]
   rw [zmodSignLabelFromCoordinate_neg_eq]
 
+def fullLabelLogVolume
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    IUTStage1ZModCuspFullLabel l -> Real
+  | IUTStage1ZModCuspFullLabel.zero => compat.zeroLogVolume
+  | IUTStage1ZModCuspFullLabel.nonzero label =>
+      compat.cuspClassLogVolume label
+
+theorem fullLabelLogVolume_zero
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    compat.fullLabelLogVolume IUTStage1ZModCuspFullLabel.zero =
+      compat.zeroLogVolume :=
+  rfl
+
+theorem fullLabelLogVolume_nonzero
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    compat.fullLabelLogVolume (IUTStage1ZModCuspFullLabel.nonzero label) =
+      compat.cuspClassLogVolume label :=
+  rfl
+
+theorem normalizedLogVolume_eq_fullLabelLogVolume_fromCoordinate
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (j : ZMod l.value) :
+    compat.normalizedLogVolume j =
+      compat.fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
+  by_cases hj : j = 0
+  · subst j
+    rw [IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+    exact compat.zero_eq_zeroLogVolume
+  · rw [IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l j hj]
+    exact compat.nonzero_eq j hj
+
+theorem fullLabelLogVolume_fromCoordinate_zero
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    compat.fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (0 : ZMod l.value)) =
+      compat.zeroLogVolume := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+  rfl
+
+theorem fullLabelLogVolume_fromCoordinate_nonzero
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    compat.fullLabelLogVolume (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      compat.cuspClassLogVolume (zmodSignLabelFromCoordinate l j hj) := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l j hj]
+  rfl
+
+theorem fullLabelLogVolume_fromCoordinate_neg_eq
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    compat.fullLabelLogVolume (IUTStage1ZModCuspFullLabel.fromCoordinate l (-j)) =
+      compat.fullLabelLogVolume (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_neg l j hj]
+
 theorem cuspClass_eq_of_normalizedLogVolume_eq
     (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
     {c : Real}
@@ -13096,6 +13152,40 @@ theorem zeroAverageLabel_eq_zeroLogVolume
       part.normalizedLogVolumeEq audited 0
     _ = (part.cuspLogVolume audited).zeroLogVolume :=
       (part.cuspLogVolume audited).zero_eq_zeroLogVolume
+
+theorem averageLabel_eq_fullLabelLogVolume_fromCoordinate
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume j =
+      (part.cuspLogVolume audited).fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
+  calc
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume j =
+        (part.cuspLogVolume audited).normalizedLogVolume j :=
+      part.normalizedLogVolumeEq audited j
+    _ =
+        (part.cuspLogVolume audited).fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+      (part.cuspLogVolume audited).normalizedLogVolume_eq_fullLabelLogVolume_fromCoordinate j
+
+theorem averageFullLabelLogVolume_fromCoordinate_zero
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.cuspLogVolume audited).fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (0 : ZMod l.value)) =
+      (part.cuspLogVolume audited).zeroLogVolume :=
+  (part.cuspLogVolume audited).fullLabelLogVolume_fromCoordinate_zero
+
+theorem averageFullLabelLogVolume_fromCoordinate_nonzero
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    (part.cuspLogVolume audited).fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      (part.cuspLogVolume audited).cuspClassLogVolume
+        (zmodSignLabelFromCoordinate l j hj) :=
+  (part.cuspLogVolume audited).fullLabelLogVolume_fromCoordinate_nonzero j hj
 
 theorem ind1AverageLogVolumeEq
     (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)

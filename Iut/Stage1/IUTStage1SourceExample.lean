@@ -996,6 +996,31 @@ theorem zmodCuspLabelLogVolumeCompatibility_neg_nonzero_example
       compat.cuspClassLogVolume (zmodSignLabelFromCoordinate l j hj) :=
   compat.neg_nonzero_eq j hj
 
+theorem zmodCuspLabelLogVolumeCompatibility_full_label_example
+    {l : PrimeGeFive}
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (j : ZMod l.value) :
+    compat.normalizedLogVolume j =
+      compat.fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  compat.normalizedLogVolume_eq_fullLabelLogVolume_fromCoordinate j
+
+theorem zmodCuspLabelLogVolumeCompatibility_full_label_zero_example
+    {l : PrimeGeFive}
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    compat.fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (0 : ZMod l.value)) =
+      compat.zeroLogVolume :=
+  compat.fullLabelLogVolume_fromCoordinate_zero
+
+theorem zmodCuspLabelLogVolumeCompatibility_full_label_nonzero_example
+    {l : PrimeGeFive}
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    compat.fullLabelLogVolume (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      compat.cuspClassLogVolume (zmodSignLabelFromCoordinate l j hj) :=
+  compat.fullLabelLogVolume_fromCoordinate_nonzero j hj
+
 theorem upperSemi_capsuleFamilyLogVolume_total_eq_sum_example
     {kind : IUTStage1PlaceKind}
     (data : IUTStage1CapsuleFamilyLogVolume kind) :
@@ -4055,6 +4080,57 @@ theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_compatib
     (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume 0 =
       (part.cuspLogVolume audited).zeroLogVolume :=
   part.zeroAverageLabel_eq_zeroLogVolume audited
+
+theorem placeAudited_logVolume_fl_zmod_cusp_compatible_full_label_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume j =
+      (part.cuspLogVolume audited).fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  part.averageLabel_eq_fullLabelLogVolume_fromCoordinate audited j
+
+theorem placeAudited_logVolume_fl_zmod_cusp_compatible_full_label_zero_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.cuspLogVolume audited).fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (0 : ZMod l.value)) =
+      (part.cuspLogVolume audited).zeroLogVolume :=
+  part.averageFullLabelLogVolume_fromCoordinate_zero audited
+
+theorem placeAudited_logVolume_fl_zmod_cusp_compatible_full_label_nonzero_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    (part.cuspLogVolume audited).fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      (part.cuspLogVolume audited).cuspClassLogVolume
+        (zmodSignLabelFromCoordinate l j hj) :=
+  part.averageFullLabelLogVolume_fromCoordinate_nonzero audited j hj
 
 theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_compat_ind1_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}

@@ -2444,3 +2444,92 @@ object once the source-marked Hodge-descent data is supplied.  The next
 mathematical pressure point is to connect this transport theorem to the weighted
 volume side: zero should remain the separate coric branch, while nonzero labels
 contribute through the `1/l`-weighted `ZMod` average.
+
+## 142. Full-Label Log-Volume Evaluation
+
+### Lean Move
+
+I added a full-label log-volume selector to the existing zero/nonzero
+compatibility record:
+
+```text
+IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelLogVolume
+```
+
+It evaluates by cases:
+
+```text
+zero             -> zeroLogVolume
+nonzero label    -> cuspClassLogVolume label
+```
+
+The key theorem is:
+
+```text
+normalizedLogVolume j =
+  fullLabelLogVolume (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+```
+
+with branch lemmas for `j = 0`, `j != 0`, and `-j`.
+
+I then lifted this to the averaged `(Ind1)/(Ind2)` audit:
+
+```text
+FLZModCuspLabelCompatibleAveragedInd12Audit
+  .averageLabel_eq_fullLabelLogVolume_fromCoordinate
+  .averageFullLabelLogVolume_fromCoordinate_zero
+  .averageFullLabelLogVolume_fromCoordinate_nonzero
+```
+
+The examples now check:
+
+```text
+zmodCuspLabelLogVolumeCompatibility_full_label_example
+zmodCuspLabelLogVolumeCompatibility_full_label_zero_example
+zmodCuspLabelLogVolumeCompatibility_full_label_nonzero_example
+placeAudited_logVolume_fl_zmod_cusp_compatible_full_label_example
+placeAudited_logVolume_fl_zmod_cusp_compatible_full_label_zero_example
+placeAudited_logVolume_fl_zmod_cusp_compatible_full_label_nonzero_example
+```
+
+### Mathematical Reason
+
+IUT III describes procession-normalized mono-analytic log-volumes as averages
+over `j ∈ F_l`, and IUT II stresses that the `F_l` symmetry separates the zero
+label from the nonzero labels when computing weighted volumes for Gaussian
+monoids.
+
+The new theorem says that the coordinate-indexed function used in the finite
+average factors through the explicit full-label split:
+
+```text
+ZMod coordinate j
+  -> full label: zero or nonzero sign class
+  -> zero/cusp log-volume branch
+```
+
+Thus the average still ranges over all `ZMod l` coordinates, but the semantic
+interpretation of each summand remembers whether it is the zero branch or a
+nonzero cusp-sign class.
+
+### Relevance to the 3.12 Dispute
+
+Scholze-Stix emphasize that the Corollary 3.12 step is about comparing real
+numbers after averaging over the concrete theta/q pilot data, and they argue
+that the `j²` scaling disappears under consistent identifications.  This
+milestone does not introduce or resolve the `j²` weights.  It prepares the Lean
+interface where that issue must be stated: every averaged summand now has a
+formal full-label provenance.
+
+This prevents an argument from replacing the average over `j ∈ F_l` by an
+anonymous real-line family without recording whether the summand came from the
+zero/coric branch or a nonzero cusp branch.
+
+### Remaining Gap
+
+The average is still the uniform finite average already present in
+`IUTStage1LabelAveragedProcessionLogVolume`.  The next step should introduce a
+separate weighted-log-volume structure for the Gaussian-monoid-style `j²`
+weights, so that the Scholze-Stix "missing `j²`" objection can be represented as
+a precise Lean comparison between the unweighted `F_l` average and the weighted
+Gaussian-monoid average.
