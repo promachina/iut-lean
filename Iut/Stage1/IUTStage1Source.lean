@@ -2256,6 +2256,62 @@ theorem summandCapsuleLogVolume_eq
 
 end IUTStage1LocalTensorDirectSummandPacketState
 
+/--
+Container estimate for a real that is identified with the normalized
+capsule-family log-volume of a local tensor packet.
+-/
+structure IUTStage1PacketNormalizedContainerEstimate
+    {kind : IUTStage1PlaceKind}
+    (packetState : IUTStage1LocalTensorDirectSummandPacketState kind)
+    (targetSigned localLogVolume : Real) where
+  objectEstimate :
+    IUTStage1LocalObjectContainerLogVolumeEstimate
+      kind targetSigned localLogVolume
+  localObject_eq_packetLocalObject :
+    objectEstimate.localObject = packetState.packetState.localObject
+  localLogVolume_eq_packetNormalized :
+    localLogVolume =
+      packetState.packetState.capsuleFamily.normalizedLogVolume
+
+namespace IUTStage1PacketNormalizedContainerEstimate
+
+variable {kind : IUTStage1PlaceKind}
+variable {packetState : IUTStage1LocalTensorDirectSummandPacketState kind}
+variable {targetSigned localLogVolume : Real}
+
+def toLocalObjectContainerEstimate
+    (estimate :
+      IUTStage1PacketNormalizedContainerEstimate
+        packetState targetSigned localLogVolume) :
+    IUTStage1LocalObjectContainerLogVolumeEstimate
+      kind targetSigned localLogVolume :=
+  estimate.objectEstimate
+
+theorem localObject_eq_packetLocalObject'
+    (estimate :
+      IUTStage1PacketNormalizedContainerEstimate
+        packetState targetSigned localLogVolume) :
+    estimate.objectEstimate.localObject =
+      packetState.packetState.localObject :=
+  estimate.localObject_eq_packetLocalObject
+
+theorem localLogVolume_eq_packetNormalized'
+    (estimate :
+      IUTStage1PacketNormalizedContainerEstimate
+        packetState targetSigned localLogVolume) :
+    localLogVolume =
+      packetState.packetState.capsuleFamily.normalizedLogVolume :=
+  estimate.localLogVolume_eq_packetNormalized
+
+theorem targetSigned_le_localLogVolume
+    (estimate :
+      IUTStage1PacketNormalizedContainerEstimate
+        packetState targetSigned localLogVolume) :
+    targetSigned <= localLogVolume :=
+  estimate.objectEstimate.targetSigned_le_localLogVolume
+
+end IUTStage1PacketNormalizedContainerEstimate
+
 namespace IUTStage1UpperSemiCompatibilityState
 
 theorem logVolumeCompatibleProof
@@ -9948,6 +10004,36 @@ structure FLZModCuspLabelThetaPacketLocalObjectContainerAudit
       (zeroObjectEstimate audited).localObject =
         audited.choice.local_tensor_state.packetState.localObject
 
+/--
+Packet-normalized source for the cusp-class local object estimates.
+
+This refinement requires each cusp-class or zero-label log-volume real to be
+identified with the normalized capsule-family log-volume of the audited local
+tensor packet.
+-/
+structure FLZModCuspLabelThetaPacketNormalizedContainerAudit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  theta_source : audit.FLZModCuspLabelThetaSourceAudit l
+  ind12_equality_part : audit.Ind12EqualityPart
+  ind3_upper_part : audit.Ind3UpperInequalityPart
+  theta_images_eq_endpoint :
+    theta_source.theta_images = endpoint.theta_hull_endpoint.possible_images
+  cuspClassPacketEstimate :
+    ∀ (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+      (label : (zmodSignAction l).SignLabelQuotient),
+      IUTStage1PacketNormalizedContainerEstimate
+        audited.choice.local_tensor_state
+        package.preLedger.targetVolume.targetSigned
+        ((theta_source.compatible_average.cuspLogVolume audited).cuspClassLogVolume
+          label)
+  zeroPacketEstimate :
+    ∀ audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind,
+      IUTStage1PacketNormalizedContainerEstimate
+        audited.choice.local_tensor_state
+        package.preLedger.targetVolume.targetSigned
+        (theta_source.compatible_average.cuspLogVolume audited).zeroLogVolume
+
 theorem qCharted (audit : endpoint.LogVolumeChartAudit) :
     (Transport.map package.preLedger.chartedContainer.chart.qToTarget
       package.preLedger.qValue.qPoint).coord =
@@ -10930,6 +11016,78 @@ theorem qSigned_le_thetaSigned_via_packet_local_object_container
     audited
 
 end FLZModCuspLabelThetaPacketLocalObjectContainerAudit
+
+namespace FLZModCuspLabelThetaPacketNormalizedContainerAudit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+theorem cuspClassLogVolume_eq_packetNormalized
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    (part.theta_source.compatible_average.cuspLogVolume audited).cuspClassLogVolume
+        label =
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  (part.cuspClassPacketEstimate audited label).localLogVolume_eq_packetNormalized
+
+theorem zeroLogVolume_eq_packetNormalized
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.cuspLogVolume audited).zeroLogVolume =
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  (part.zeroPacketEstimate audited).localLogVolume_eq_packetNormalized
+
+def toThetaPacketLocalObjectContainerAudit
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l) :
+    audit.FLZModCuspLabelThetaPacketLocalObjectContainerAudit l :=
+  { theta_source := part.theta_source,
+    ind12_equality_part := part.ind12_equality_part,
+    ind3_upper_part := part.ind3_upper_part,
+    theta_images_eq_endpoint := part.theta_images_eq_endpoint,
+    cuspClassObjectEstimate := by
+      intro audited label
+      exact
+        (part.cuspClassPacketEstimate audited label).toLocalObjectContainerEstimate,
+    cuspClassObject_eq_packetLocalObject := by
+      intro audited label
+      exact
+        (part.cuspClassPacketEstimate audited label).localObject_eq_packetLocalObject,
+    zeroObjectEstimate := by
+      intro audited
+      exact
+        (part.zeroPacketEstimate audited).toLocalObjectContainerEstimate,
+    zeroObject_eq_packetLocalObject := by
+      intro audited
+      exact (part.zeroPacketEstimate audited).localObject_eq_packetLocalObject }
+
+theorem targetSigned_le_normalizedLogVolume
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume j :=
+  let localObjectAudit :=
+    part.toThetaPacketLocalObjectContainerAudit.toThetaLocalObjectContainerAudit
+  let localAudit := localObjectAudit.toThetaLocalContainerAudit
+  let cuspAudit : audit.FLZModCuspLabelThetaCuspClassContainerAudit l :=
+    localAudit.toThetaCuspClassContainerAudit
+  cuspAudit.targetSigned_le_normalizedLogVolume audited j
+
+def toThetaPilotHullContainerAudit
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l) :
+    audit.FLZModCuspLabelThetaPilotHullContainerAudit l :=
+  part.toThetaPacketLocalObjectContainerAudit.toThetaPilotHullContainerAudit
+
+theorem qSigned_le_thetaSigned_via_packet_normalized_container
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  let packetAudit := part.toThetaPacketLocalObjectContainerAudit
+  packetAudit.qSigned_le_thetaSigned_via_packet_local_object_container audited
+
+end FLZModCuspLabelThetaPacketNormalizedContainerAudit
 
 namespace FLZModCuspLabelThetaContainerBoundAudit
 

@@ -4635,3 +4635,99 @@ placeAudited_logVolume_fl_zmod_packet_local_object_q_le_theta_example
 The next refinement should connect the packet-local object to the packet's
 capsule-family normalized log-volume.  That will make the relation between the
 object-level estimate and the procession-normalized value explicit.
+
+## 59. Packet-Normalized Container Estimates
+
+### Goal
+
+We connected the local object/container estimate to the packet's
+capsule-family normalized log-volume.
+
+### Lean Move
+
+We added:
+
+```text
+IUTStage1PacketNormalizedContainerEstimate
+```
+
+It records:
+
+```text
+objectEstimate :
+  IUTStage1LocalObjectContainerLogVolumeEstimate ...
+
+objectEstimate.localObject
+  = packetState.packetState.localObject
+
+localLogVolume
+  = packetState.packetState.capsuleFamily.normalizedLogVolume
+```
+
+Lean proves:
+
+```text
+toLocalObjectContainerEstimate
+localObject_eq_packetLocalObject'
+localLogVolume_eq_packetNormalized'
+targetSigned_le_localLogVolume
+```
+
+We then added:
+
+```text
+FLZModCuspLabelThetaPacketNormalizedContainerAudit
+```
+
+This supplies packet-normalized container estimates for each cusp sign-label
+class and for the zero label.  Lean derives:
+
+```text
+cuspClassLogVolume_eq_packetNormalized
+zeroLogVolume_eq_packetNormalized
+toThetaPacketLocalObjectContainerAudit
+targetSigned_le_normalizedLogVolume
+toThetaPilotHullContainerAudit
+qSigned_le_thetaSigned_via_packet_normalized_container
+```
+
+### Mathematical Point
+
+The formal route now requires the cusp/zero log-volume real to be the
+procession-normalized capsule-family value of the same audited local tensor
+packet:
+
+```text
+cusp/zero log-volume
+  = packet capsule-family normalized log-volume
+  -> packet-local object/container estimate
+  -> targetSigned <= cusp/zero log-volume
+  -> labelwise and averaged comparison
+```
+
+This is a stronger anti-drift condition than the previous packet-local-object
+check: the object must match, and the real log-volume used in the average must
+also match the packet's normalized capsule-family value.
+
+### Trap Avoided
+
+We avoid silently averaging reals that merely have the same local object label.
+The real itself must be identified with the normalized capsule-family value of
+the audited packet.
+
+### Toy Check
+
+The examples now check:
+
+```text
+packetNormalizedContainerEstimate_target_le_local_example
+placeAudited_logVolume_fl_zmod_packet_normalized_eq_example
+placeAudited_logVolume_fl_zmod_packet_normalized_to_object_example
+placeAudited_logVolume_fl_zmod_packet_normalized_q_le_theta_example
+```
+
+### Remaining Gap
+
+The next step should connect this packet-normalized estimate to the actual
+capsule sum formula already present in `IUTStage1TypedCapsuleFamilyLogVolume`,
+so the normalized value is not a black-box real.
