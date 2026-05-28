@@ -6286,3 +6286,89 @@ Mochizuki local packet/capsule definitions.  The next implementation step should
 move toward the data that makes these certificates true, or toward the
 transport theorem that carries a direct packet normalization through an audited
 `(Ind2)` action.
+
+## 80. Transporting Packet-Normalized Compatibility Across Ind2
+
+### Goal
+
+We proved that packet-normalized compatibility transports across the existing
+`(Ind2)` action data.
+
+### Lean Move
+
+We added transport maps at three levels:
+
+```text
+IUTStage1TensorPacketTheorem311Choice
+  .ind2_transports_packetNormalizedCompatibility
+  .ind2_transports_classifiedPacketNormalizedCompatibility
+
+IUTStage1DirectSummandPacketTheorem311Choice
+  .ind2_transports_packetNormalizedCompatibility
+  .ind2_transports_classifiedPacketNormalizedCompatibility
+
+IUTStage1PlaceAuditedDirectSummandPacketChoice
+  .ind2_transports_packetNormalizedCompatibility
+  .ind2_transports_classifiedPacketNormalizedCompatibility
+```
+
+The classified transport relabels the target compatibility source as:
+
+```text
+ind2TransportedPacketNormalization
+```
+
+### Mathematical Point
+
+The proof uses only data already recorded by the `(Ind2)` step:
+
+```text
+source normalized capsule log-volume =
+  target normalized capsule log-volume
+
+source local object =
+  target local object
+```
+
+Given a source compatibility:
+
+```text
+source normalized capsule log-volume =
+  source local object finite log-volume
+```
+
+Lean derives:
+
+```text
+target normalized capsule log-volume =
+  target local object finite log-volume
+```
+
+This is a real mathematical reduction of an assumption: the target
+packet-normalized compatibility no longer has to be independently asserted when
+it is obtained by an audited `(Ind2)` transport from a source compatibility.
+
+### Trap Avoided
+
+We did not transport the compatibility using only equality of normalized
+capsule-family values.  That would leave the finite local object on the target
+side unidentified.  The proof also requires the `(Ind2)` step's
+`local_object_eq` field.
+
+### Toy Check
+
+The examples now check:
+
+```text
+directSummandActionStep_transports_packet_compatibility_example
+directSummandActionStep_transports_classified_packet_compatibility_example
+placeAuditedDirectSummandPacketChoice_ind2_transports_packet_compatibility_example
+placeAuditedDirectSummandPacketChoice_ind2_transports_classified_packet_compatibility_example
+```
+
+### Remaining Gap
+
+We can now transport a source packet-normalization certificate.  We still need
+to construct such source certificates from a more concrete local packet/capsule
+definition, and then use transported certificates inside the classified local
+packet audit automatically.

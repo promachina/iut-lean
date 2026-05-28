@@ -652,6 +652,36 @@ theorem directSummandActionStep_transports_capsule_container_example
   IUTStage1DirectSummandPacketTheorem311Choice.ind2_transports_capsuleContainerBound
     hstep estimate
 
+def directSummandActionStep_transports_packet_compatibility_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+        choice₁ choice₂)
+    (compat :
+      IUTStage1LocalTensorPacketNormalizedCompatibility
+        choice₁.local_tensor_state.packetState) :
+    IUTStage1LocalTensorPacketNormalizedCompatibility
+      choice₂.local_tensor_state.packetState :=
+  IUTStage1DirectSummandPacketTheorem311Choice.ind2_transports_packetNormalizedCompatibility
+    hstep compat
+
+open IUTStage1DirectSummandPacketTheorem311Choice in
+def directSummandActionStep_transports_classified_packet_compatibility_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+        choice₁ choice₂)
+    (classified :
+      IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+        choice₁.local_tensor_state.packetState) :
+    IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+      choice₂.local_tensor_state.packetState :=
+  ind2_transports_classifiedPacketNormalizedCompatibility hstep classified
+
 theorem nonarchimedeanIsmStep_transports_capsule_container_example
     {coric : Type u}
     {choice₁ choice₂ :
@@ -1696,6 +1726,36 @@ theorem placeAuditedDirectSummandPacketChoice_ind2_preserves_normalizedLogVolume
       audited₂.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
   IUTStage1PlaceAuditedDirectSummandPacketChoice.ind2_preserves_capsuleNormalizedLogVolume
     hstep
+
+def placeAuditedDirectSummandPacketChoice_ind2_transports_packet_compatibility_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.LocalTensorDirectSummandActionStep
+        audited₁ audited₂)
+    (compat :
+      IUTStage1LocalTensorPacketNormalizedCompatibility
+        audited₁.choice.local_tensor_state.packetState) :
+    IUTStage1LocalTensorPacketNormalizedCompatibility
+      audited₂.choice.local_tensor_state.packetState :=
+  IUTStage1PlaceAuditedDirectSummandPacketChoice.ind2_transports_packetNormalizedCompatibility
+    hstep compat
+
+open IUTStage1PlaceAuditedDirectSummandPacketChoice in
+def placeAuditedDirectSummandPacketChoice_ind2_transports_classified_packet_compatibility_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.LocalTensorDirectSummandActionStep
+        audited₁ audited₂)
+    (classified :
+      IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+        audited₁.choice.local_tensor_state.packetState) :
+    IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+      audited₂.choice.local_tensor_state.packetState :=
+  ind2_transports_classifiedPacketNormalizedCompatibility hstep classified
 
 theorem directSummandPlaceCountAudit_capsuleCount_eq_actionCount_example
     {coric : Type u} {kind : IUTStage1PlaceKind}

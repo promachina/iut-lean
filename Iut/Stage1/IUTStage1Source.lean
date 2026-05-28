@@ -3196,6 +3196,36 @@ theorem ind2_preserves_capsuleNormalizedLogVolume
       choice₂.local_tensor_state.capsuleFamily.normalizedLogVolume :=
   hstep.capsule_normalizedLogVolume_eq
 
+def ind2_transports_packetNormalizedCompatibility
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorPacketSymmetryStep choice₁ choice₂)
+    (compat :
+      IUTStage1LocalTensorPacketNormalizedCompatibility
+        choice₁.local_tensor_state) :
+    IUTStage1LocalTensorPacketNormalizedCompatibility
+      choice₂.local_tensor_state :=
+  { normalizedLogVolume_eq_localObject := by
+      calc
+        choice₂.local_tensor_state.capsuleFamily.normalizedLogVolume =
+            choice₁.local_tensor_state.capsuleFamily.normalizedLogVolume :=
+          hstep.capsule_normalizedLogVolume_eq.symm
+        _ = choice₁.local_tensor_state.localObject.finiteLogVolume :=
+          compat.normalizedLogVolume_eq_localObject
+        _ = choice₂.local_tensor_state.localObject.finiteLogVolume := by
+          rw [hstep.local_object_eq] }
+
+def ind2_transports_classifiedPacketNormalizedCompatibility
+    {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorPacketSymmetryStep choice₁ choice₂)
+    (classified :
+      IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+        choice₁.local_tensor_state) :
+    IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+      choice₂.local_tensor_state :=
+  IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.ofInd2TransportedPacketNormalization
+    (ind2_transports_packetNormalizedCompatibility hstep
+      classified.compatibility)
+
 def toStructuredLocalTensorSymmetryStep
     {choice₁ choice₂ : IUTStage1TensorPacketTheorem311Choice coric kind}
     (hstep : LocalTensorPacketSymmetryStep choice₁ choice₂) :
@@ -3400,6 +3430,33 @@ theorem ind2_preserves_capsuleNormalizedLogVolume
       choice₂.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
   IUTStage1TensorPacketTheorem311Choice.actionStep_preserves_capsuleNormalizedLogVolume
     (toTensorPacketActionStep hstep)
+
+def ind2_transports_packetNormalizedCompatibility
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorDirectSummandActionStep choice₁ choice₂)
+    (compat :
+      IUTStage1LocalTensorPacketNormalizedCompatibility
+        choice₁.local_tensor_state.packetState) :
+    IUTStage1LocalTensorPacketNormalizedCompatibility
+      choice₂.local_tensor_state.packetState :=
+  IUTStage1TensorPacketTheorem311Choice.ind2_transports_packetNormalizedCompatibility
+    (IUTStage1TensorPacketTheorem311Choice.actionStep_toPacketSymmetryStep
+      (toTensorPacketActionStep hstep))
+    compat
+
+def ind2_transports_classifiedPacketNormalizedCompatibility
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep : LocalTensorDirectSummandActionStep choice₁ choice₂)
+    (classified :
+      IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+        choice₁.local_tensor_state.packetState) :
+    IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+      choice₂.local_tensor_state.packetState :=
+  IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.ofInd2TransportedPacketNormalization
+    (ind2_transports_packetNormalizedCompatibility hstep
+      classified.compatibility)
 
 theorem ind2_transports_capsuleContainerBound
     {choice₁ choice₂ :
@@ -4250,6 +4307,31 @@ theorem ind2_preserves_capsuleNormalizedLogVolume
       audited₂.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
   IUTStage1DirectSummandPacketTheorem311Choice.ind2_preserves_capsuleNormalizedLogVolume
     hstep.choice_step
+
+def ind2_transports_packetNormalizedCompatibility
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep : LocalTensorDirectSummandActionStep audited₁ audited₂)
+    (compat :
+      IUTStage1LocalTensorPacketNormalizedCompatibility
+        audited₁.choice.local_tensor_state.packetState) :
+    IUTStage1LocalTensorPacketNormalizedCompatibility
+      audited₂.choice.local_tensor_state.packetState :=
+  IUTStage1DirectSummandPacketTheorem311Choice.ind2_transports_packetNormalizedCompatibility
+    hstep.choice_step compat
+
+def ind2_transports_classifiedPacketNormalizedCompatibility
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep : LocalTensorDirectSummandActionStep audited₁ audited₂)
+    (classified :
+      IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+        audited₁.choice.local_tensor_state.packetState) :
+    IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+      audited₂.choice.local_tensor_state.packetState :=
+  IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.ofInd2TransportedPacketNormalization
+    (ind2_transports_packetNormalizedCompatibility hstep
+      classified.compatibility)
 
 theorem ind2_transports_capsuleContainerBound
     {audited₁ audited₂ :
