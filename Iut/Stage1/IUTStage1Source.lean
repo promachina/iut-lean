@@ -2190,6 +2190,40 @@ theorem representativeSummand_constant_one_preserved_iff_coordinateSquarePreserv
   · exact coordinateSquarePreserving_of_representativeSummand_constant_one_preserved
   · exact representativeSummand_constant_one_preserved_of_coordinateSquarePreserving
 
+theorem representativeFullLabelWeightedSummand_total_preserved
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value) :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      representativeFullLabelWeightedSummand
+        (l := l) compat (coordinateEquiv j)) =
+      Finset.univ.sum fun j : ZMod l.value =>
+        representativeFullLabelWeightedSummand (l := l) compat j :=
+  Fintype.sum_equiv coordinateEquiv
+    (fun j : ZMod l.value =>
+      representativeFullLabelWeightedSummand
+        (l := l) compat (coordinateEquiv j))
+    (fun j : ZMod l.value =>
+      representativeFullLabelWeightedSummand (l := l) compat j)
+    (fun _j => rfl)
+
+theorem representativeSummand_constant_one_total_preserved_neg :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      representativeFullLabelWeightedSummand
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+          (l := l) (1 : Real))
+        ((Equiv.neg (ZMod l.value)) j)) =
+      Finset.univ.sum fun j : ZMod l.value =>
+        representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real))
+          j :=
+  representativeFullLabelWeightedSummand_total_preserved
+    (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+      (l := l) (1 : Real))
+    (Equiv.neg (ZMod l.value))
+
 theorem fullLabelSummand_preserved_of_fullLabelMap
     {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
     (hmap :

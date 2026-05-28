@@ -5539,3 +5539,64 @@ would try to discharge the factored square/full-label obligations.  A proof that
 uses the modular-square-only negation route must either switch to the balanced
 sign-compatible profile or supply additional mathematical content explaining why
 the literal representative-square comparison is not the correct formal target.
+
+## 178. Aggregate Representative Totals Do Not See Pointwise Permutation Failure
+
+### Lean Move
+
+We added aggregate invariance theorems for representative weighted summands:
+
+```text
+IUTStage1ZModSquareWeightProfile
+  .representativeFullLabelWeightedSummand_total_preserved
+IUTStage1ZModSquareWeightProfile
+  .representativeSummand_constant_one_total_preserved_neg
+```
+
+Lean proves that for any coordinate equivalence of `ZMod l.value`, the finite
+sum
+
+```text
+sum_j representativeFullLabelWeightedSummand compat (T j)
+```
+
+is equal to the untransported sum.  This is pure finite reindexing.  In
+particular, negation preserves the total constant-one representative summand,
+even though earlier milestones prove that it fails pointwise representative
+summand preservation.
+
+### Mathematical Reason
+
+Pointwise transport and aggregate transport are different statements:
+
+```text
+forall j, f (T j) = f j      -- strong, pointwise
+sum_j f (T j) = sum_j f j   -- weak, by permutation
+```
+
+Our previous rigidity theorem concerns the first statement.  This milestone
+records that the second statement is automatically true for a finite label set.
+Thus an averaged calculation can hide the failure of pointwise preservation.
+
+### Source Check
+
+IUT III discusses procession-normalized log-volumes as averages over labels
+`j in F_l`, while Scholze-Stix's discussion of the Corollary 3.12 step notes
+that averaging may overcome a diagram-level scalar issue but does not remove
+their objection about inserting the `j^2` factors consistently across the whole
+real-line comparison.
+
+Our formal result matches that distinction.  It grants the harmless averaged
+fact, but only as a reindexing theorem inside one fixed summand family.  It does
+not identify different Hodge-theater histories, does not justify a cross-theater
+real-line comparison, and does not provide pointwise representative-square
+transport.
+
+### Relevance to the 3.12 Dispute
+
+This prevents a false dichotomy.  The negation route is not simply "bad" in all
+senses: it is bad for pointwise representative-square transport, but harmless
+for same-family aggregate sums.  A credible Lean route to Corollary 3.12 must
+therefore specify which level is actually used in the paper argument: pointwise
+summands, averaged/procession-normalized log-volumes, holomorphic hull
+log-volumes, or some combination of these.

@@ -1080,6 +1080,36 @@ theorem zmodSquareWeightProfile_rep_summand_preserved_iff_coord_square_example
     coordinateEquiv
 
 open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_rep_summand_total_preserved_example
+    {l : PrimeGeFive}
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value) :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+        (l := l) compat (coordinateEquiv j)) =
+      Finset.univ.sum fun j : ZMod l.value =>
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l) compat j :=
+  representativeFullLabelWeightedSummand_total_preserved compat coordinateEquiv
+
+open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_rep_summand_constant_one_total_neg_example
+    {l : PrimeGeFive} :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+          (l := l) (1 : Real))
+        ((Equiv.neg (ZMod l.value)) j)) =
+      Finset.univ.sum fun j : ZMod l.value =>
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real))
+          j :=
+  representativeSummand_constant_one_total_preserved_neg
+
+open IUTStage1ZModSquareWeightProfile in
 theorem zmodSquareWeightProfile_full_label_summand_transport_example
     {l : PrimeGeFive}
     {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
