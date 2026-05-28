@@ -2691,6 +2691,46 @@ theorem leftHandSide_le_rightHandSide
 end IUTStage1IUTIVLogSQStepIIIShadow
 
 /--
+IUT IV, Theorem 1.10, Step (viii), Proposition 1.6 prime-product bound.
+
+The source treats separately the cases `e*_mod*l >= eta_prm` and
+`e*_mod*l < eta_prm`, then records the uniform estimate
+`l*_mod*log(s_<=) <= 4/3*(e*_mod*l + eta_prm)`.  This record keeps exactly that
+case split at the real-valued level.
+-/
+structure IUTStage1IUTIVPrimeProductCaseSplitBoundShadow where
+  primeProductLogTerm : Real
+  eStarTimesL : Real
+  etaPrm : Real
+  eStarTimesL_nonneg : 0 <= eStarTimesL
+  etaPrm_nonneg : 0 <= etaPrm
+  large_case_bound :
+    etaPrm <= eStarTimesL ->
+      primeProductLogTerm <= (4 / 3 : Real) * eStarTimesL
+  small_case_bound :
+    eStarTimesL < etaPrm ->
+      primeProductLogTerm <= (4 / 3 : Real) * etaPrm
+
+namespace IUTStage1IUTIVPrimeProductCaseSplitBoundShadow
+
+theorem primeProductLogTerm_le_uniform
+    (data : IUTStage1IUTIVPrimeProductCaseSplitBoundShadow) :
+    data.primeProductLogTerm <=
+      (4 / 3 : Real) * (data.eStarTimesL + data.etaPrm) := by
+  by_cases hlarge : data.etaPrm <= data.eStarTimesL
+  · have hcase := data.large_case_bound hlarge
+    have heta : 0 <= (4 / 3 : Real) * data.etaPrm :=
+      mul_nonneg (by norm_num) data.etaPrm_nonneg
+    nlinarith
+  · have hsmall : data.eStarTimesL < data.etaPrm := lt_of_not_ge hlarge
+    have hcase := data.small_case_bound hsmall
+    have he : 0 <= (4 / 3 : Real) * data.eStarTimesL :=
+      mul_nonneg (by norm_num) data.eStarTimesL_nonneg
+    nlinarith
+
+end IUTStage1IUTIVPrimeProductCaseSplitBoundShadow
+
+/--
 IUT IV, Theorem 1.10 and Step (ii): replacing the tripodal intermediate field
 by the larger field in the final displayed estimate.
 
