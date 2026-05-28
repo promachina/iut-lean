@@ -1476,3 +1476,123 @@ intended to model a genuine IUT Hodge-theater operation or merely a simplified
 comparison route.  This is close to the Scholze-Stix concern: a premature
 constant-family assumption may erase exactly the history that Mochizuki says is
 handled by Hodge theaters.
+
+## 128. Self-Audit: Constant Families and the Scholze-Stix Collapse Concern
+
+### Check Performed
+
+I reread the current constant-family bridge against:
+
+```text
+Scholze-Stix, §2.2, "Proof of [IUTT-3, Corollary 3.12]"
+ON THE FORMALIZATION OF IUT.md, §4, "Skeletal Lean code for 3.11.5 => 3.12"
+README.md, project dispute summary
+```
+
+### Alignment
+
+Scholze-Stix emphasize that the critical step requires spelling out all
+identifications between copies of ordered one-dimensional real vector spaces.
+They also state that, under simplifications such as identifying identical copies
+of objects along the identity, the relevant Theorem 3.11 data becomes trivial
+rather than false.  Our Lean route now makes an analogous phenomenon explicit:
+
+```text
+constant ZMod packet family
+  -> labelwise packet equality
+  -> insulated zero/nonzero bridge
+  -> zero/nonzero local-object comparison
+```
+
+This does not decide whether IUT is correct.  It says that if the formalization
+uses the constant-family route, then the formal proof is using a simplification
+strong enough to produce the zero/nonzero comparison by packet-object
+identification.
+
+Mochizuki's formalization note describes the relevant Stage 1 as a reorganized
+comparison involving the 0-column, descent, hull+det, and indeterminacies
+`(Ind1,2,3)`.  That suggests the next Lean route should distinguish:
+
+```text
+constant comparison route
+Hodge-theater/descent route with explicit history-erasing bridge
+```
+
+### Risk
+
+If we treat the constant-family bridge as the actual IUT mechanism, we may
+formalize a simplified route that Scholze-Stix would regard as collapsing the
+critical content.  Conversely, if Mochizuki's Hodge-theater route supplies a
+different kind of bridge, we need a separate Lean interface for it rather than
+reusing the constant-family bridge silently.
+
+### Next Target
+
+Introduce a bridge-source distinction between:
+
+```text
+constantZModPacketFamily
+hodgeTheaterDescentIndeterminacy
+separateRealLineIdentification
+```
+
+This should not replace the existing packet-local-object bridge source; it
+should classify the higher-level reason that the insulated route is allowed to
+be compared through the packet object.
+
+## 129. Higher-Level Source for Insulated Cusp/Zero Bridge
+
+### Lean Move
+
+I added:
+
+```text
+IUTStage1InsulatedCuspZeroBridgeSource
+FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
+FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
+  .ofDirectPacketNormalization
+FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
+  .ofLabelwiseZModPacketEquality
+FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
+  .ofConstantZModPacketFamily
+FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
+  .ofHodgeTheaterDescentIndeterminacy
+FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
+  .ofSeparateRealLineIdentification
+```
+
+### Mathematical Reason
+
+The lower-level bridge source records how local objects are identified with the
+packet local object.  The new source records why the insulated zero/nonzero
+route is being compared through such a packet bridge in the first place.
+
+This is the distinction needed after the Scholze-Stix audit:
+
+```text
+constantZModPacketFamily           -> simplified constant-family route
+hodgeTheaterDescentIndeterminacy   -> future IUT-style history-erasing route
+separateRealLineIdentification     -> explicit external comparison
+```
+
+### Trap Avoided
+
+The constant-family route and a future Hodge-theater route are no longer forced
+to share the same explanation.  They may produce the same kind of packet bridge,
+but the higher-level source remains inspectable.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_constant_packet_sourced_bridge_example
+placeAudited_logVolume_fl_zmod_constant_packet_sourced_bridge_source_example
+placeAudited_logVolume_fl_zmod_hodge_descent_sourced_bridge_example
+```
+
+### Remaining Gap
+
+The Hodge-theater/descent source is currently only a classification constructor.
+The next mathematical work should define what data a Hodge-theater/descent
+bridge must carry before it is allowed to produce the classified packet bridge.

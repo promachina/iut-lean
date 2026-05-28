@@ -2355,6 +2355,21 @@ inductive IUTStage1ZModPacketLocalObjectBridgeSource where
 deriving DecidableEq
 
 /--
+Higher-level source classification for a bridge from the insulated cusp/zero
+route to a packet-comparison route.
+
+This distinguishes a merely constant `ZMod` comparison from a future
+Hodge-theater/descent/indeterminacy bridge.
+-/
+inductive IUTStage1InsulatedCuspZeroBridgeSource where
+  | directPacketNormalization
+  | labelwiseZModPacketEquality
+  | constantZModPacketFamily
+  | hodgeTheaterDescentIndeterminacy
+  | separateRealLineIdentification
+deriving DecidableEq
+
+/--
 Local packet-normalized compatibility together with a source classification.
 -/
 structure IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
@@ -11108,6 +11123,17 @@ structure FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit
   bridge_source : IUTStage1ZModPacketLocalObjectBridgeSource
 
 /--
+Insulated cusp/zero packet bridge with both the local packet-object source and
+the higher-level comparison source recorded.
+-/
+structure FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  classified_bridge :
+    audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l
+  comparison_source : IUTStage1InsulatedCuspZeroBridgeSource
+
+/--
 Packet-normalized source for the cusp-class local object estimates.
 
 This refinement requires each cusp-class or zero-label log-volume real to be
@@ -14785,6 +14811,72 @@ theorem insulatedPacketBridgeSource_eq_direct
   zmodRoute.insulatedPacketBridgeSource_eq_direct
 
 end FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit
+
+namespace FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+def ofDirectPacketNormalization
+    (part :
+      audit.FLZModCuspLabelThetaDirectPacketNormalizedLocalObjectRouteAudit l) :
+    audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l :=
+  { classified_bridge := part.toClassifiedInsulatedCuspZeroPacketBridgeAudit,
+    comparison_source :=
+      IUTStage1InsulatedCuspZeroBridgeSource.directPacketNormalization }
+
+def ofLabelwiseZModPacketEquality
+    (part : audit.FLZModCuspLabelThetaZModPacketNormalizedRouteAudit l) :
+    audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l :=
+  { classified_bridge := part.toClassifiedInsulatedCuspZeroPacketBridgeAudit,
+    comparison_source :=
+      IUTStage1InsulatedCuspZeroBridgeSource.labelwiseZModPacketEquality }
+
+def ofConstantZModPacketFamily
+    (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l) :
+    audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l :=
+  { classified_bridge := part.toClassifiedInsulatedCuspZeroPacketBridgeAudit,
+    comparison_source :=
+      IUTStage1InsulatedCuspZeroBridgeSource.constantZModPacketFamily }
+
+def ofHodgeTheaterDescentIndeterminacy
+    (part :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l :=
+  { classified_bridge := part,
+    comparison_source :=
+      IUTStage1InsulatedCuspZeroBridgeSource.hodgeTheaterDescentIndeterminacy }
+
+def ofSeparateRealLineIdentification
+    (part :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l :=
+  { classified_bridge := part,
+    comparison_source :=
+      IUTStage1InsulatedCuspZeroBridgeSource.separateRealLineIdentification }
+
+def toClassifiedInsulatedCuspZeroPacketBridgeAudit
+    (part :
+      audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l :=
+  part.classified_bridge
+
+theorem targetSigned_le_thetaSourceAverage
+    (part :
+      audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.classified_bridge.packet_bridge.insulated_route.theta_source.thetaSourceAverage
+        audited :=
+  part.classified_bridge.targetSigned_le_thetaSourceAverage audited
+
+theorem comparisonSource_eq_constant
+    (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l) :
+    (ofConstantZModPacketFamily part).comparison_source =
+      IUTStage1InsulatedCuspZeroBridgeSource.constantZModPacketFamily :=
+  rfl
+
+end FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit
 
 namespace FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit
 
