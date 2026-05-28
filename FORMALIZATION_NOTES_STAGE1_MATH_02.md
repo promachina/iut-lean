@@ -3055,3 +3055,106 @@ The next refinement should instantiate the abstract finite label type with the
 existing `ZMod l`/`F_l` label model in the foundations layer, or introduce a
 bridge object that records when a finite label type represents that `F_l` label
 set.
+
+## 42. `F_l` Label Model Bridge
+
+### Goal
+
+We connected the abstract finite label average to the current foundations-layer
+model of the `F_l` label set.
+
+### Lean/API Check
+
+The source layer now imports `Iut.Foundations.InitialThetaData` and introduces:
+
+```text
+IUTStage1FLLabelModel label
+```
+
+It records:
+
+```text
+prime : PrimeGeFive
+labelEquiv : label ≃ ZMod prime.value
+```
+
+Lean also checks the canonical model:
+
+```text
+IUTStage1FLLabelModel.zmod
+```
+
+and the carrier cardinality theorem:
+
+```text
+IUTStage1FLLabelModel.card_eq_primeValue
+```
+
+The log-volume endpoint audit now has an `F_l`-labelled wrapper:
+
+```text
+FLLabelAveragedInd12Audit
+```
+
+It packages:
+
+```text
+label_model : IUTStage1FLLabelModel label
+averaged_audit : LabelAveragedInd12Audit label
+```
+
+with delegated checked accessors:
+
+```text
+labelCard_eq_primeValue
+localNormalizedAudit
+ind1AverageLogVolumeEq
+ind2AverageLogVolumeEq
+```
+
+### Mathematical Point
+
+This is the first formal link between the Corollary 3.12 phrase "average over
+`j ∈ F_l`" and the concrete `ZMod l.value` model already present in the
+foundational theta-data file.  The bridge says that the labels used for the
+average are identified with `ZMod l.value`, where `l` is prime and at least
+five.
+
+This remains deliberately weaker than the full label-cusp package in the
+papers: it is a carrier-level bridge, not yet a proof that the averaged
+log-volume family respects the additive torsor, unit action, sign quotient, or
+cuspidal synchronization data.
+
+### Trap Avoided
+
+We did not replace the generic averaged log-volume object by a hard-coded
+`ZMod l.value` object.  Instead, we attached `F_l` evidence only when the audit
+needs to assert that a given finite label type is the `F_l` model.  This keeps
+transport along equivalent finite label carriers explicit, which matters for
+the overall anti-collapse discipline around cross-theater identifications.
+
+### Lean Note
+
+Mathlib provides `Fintype (ZMod n)` under a `NeZero n` instance.  Since
+`PrimeGeFive` implies `l.value ≠ 0`, the cardinality theorem introduces that
+instance locally before using `ZMod.card`.
+
+### Toy Check
+
+The examples now check:
+
+```text
+flLabelModel_zmod_example
+flLabelModel_card_eq_primeValue_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_label_card_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_label_ind1_average_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_label_ind2_average_example
+```
+
+### Remaining Gap
+
+The next refinement should use the existing `zmodLabelAdditiveTorsorData` and
+translation lemmas from `InitialThetaData` to state that the `F_l` label model is
+not merely equivalent to `ZMod l.value`, but carries the intended additive
+torsor action.  That is the next step toward making the label average compatible
+with the theta/cusp label structures rather than just the finite carrier.

@@ -3,6 +3,7 @@ Copyright (c) 2026 IUT Lean formalization contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
+import Iut.Foundations.InitialThetaData
 import Iut.Stage1.IUTStage1Data
 
 /-!
@@ -804,6 +805,20 @@ structure IUTStage1LabelAveragedProcessionLogVolume
       (Finset.univ.sum normalizedLogVolume) / (Fintype.card label : Real)
 
 /--
+Evidence that a finite label type is being used as the Stage 1 model of the
+`F_l` labels.
+
+The foundations layer supplies the concrete current model as `ZMod l.value`,
+with `l` a prime at least five.  This bridge deliberately records only the
+finite label carrier identification; torsor and unit-action compatibility are
+separate audits.
+-/
+structure IUTStage1FLLabelModel
+    (label : Type u) where
+  prime : PrimeGeFive
+  labelEquiv : label ≃ ZMod prime.value
+
+/--
 Procession-normalized log-volume with an explicit finite capsule family.
 
 The total log-volume is now tied to the finite sum over capsules rather than
@@ -881,6 +896,50 @@ def toFiniteLocalLogVolumeObject
   data.localObject
 
 end IUTStage1ProcessionNormalizedLogVolume
+
+namespace IUTStage1FLLabelModel
+
+variable {label : Type u}
+
+/-- The canonical `F_l` label model supplied by the foundations layer. -/
+def zmod (l : PrimeGeFive) :
+    IUTStage1FLLabelModel (ZMod l.value) :=
+  { prime := l,
+    labelEquiv := Equiv.refl _ }
+
+theorem card_eq_primeValue
+    [Fintype label]
+    (model : IUTStage1FLLabelModel label) :
+    Fintype.card label = model.prime.value := by
+  haveI : NeZero model.prime.value := ⟨model.prime.ne_zero⟩
+  calc
+    Fintype.card label = Fintype.card (ZMod model.prime.value) :=
+      Fintype.card_congr model.labelEquiv
+    _ = model.prime.value := by
+      rw [ZMod.card]
+
+def toZMod
+    (model : IUTStage1FLLabelModel label) :
+    label -> ZMod model.prime.value :=
+  model.labelEquiv
+
+def fromZMod
+    (model : IUTStage1FLLabelModel label) :
+    ZMod model.prime.value -> label :=
+  model.labelEquiv.symm
+
+theorem fromZMod_toZMod
+    (model : IUTStage1FLLabelModel label) (j : label) :
+    model.fromZMod (model.toZMod j) = j :=
+  model.labelEquiv.left_inv j
+
+theorem toZMod_fromZMod
+    (model : IUTStage1FLLabelModel label)
+    (j : ZMod model.prime.value) :
+    model.toZMod (model.fromZMod j) = j :=
+  model.labelEquiv.right_inv j
+
+end IUTStage1FLLabelModel
 
 namespace IUTStage1LabelAveragedProcessionLogVolume
 
@@ -9203,6 +9262,18 @@ structure LabelAveragedInd12Audit
           (averagedLogVolume audited₁).normalizedLogVolume j =
             (averagedLogVolume audited₂).normalizedLogVolume j
 
+/--
+`F_l`-labelled version of the averaged `(Ind1)/(Ind2)` audit.
+
+This packages the averaged log-volume audit together with evidence that the
+label set is the current `ZMod l` model of the `F_l` labels.
+-/
+structure FLLabelAveragedInd12Audit
+    (audit : endpoint.LogVolumeChartAudit)
+    (label : Type u) [Fintype label] where
+  label_model : IUTStage1FLLabelModel label
+  averaged_audit : audit.LabelAveragedInd12Audit label
+
 theorem qCharted (audit : endpoint.LogVolumeChartAudit) :
     (Transport.map package.preLedger.chartedContainer.chart.qToTarget
       package.preLedger.qValue.qPoint).coord =
@@ -9345,6 +9416,45 @@ theorem localNormalizedAudit
   part.normalized_audit
 
 end LabelAveragedInd12Audit
+
+namespace FLLabelAveragedInd12Audit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {label : Type u} [Fintype label]
+
+theorem labelCard_eq_primeValue
+    (part : audit.FLLabelAveragedInd12Audit label) :
+    Fintype.card label = part.label_model.prime.value :=
+  part.label_model.card_eq_primeValue
+
+theorem localNormalizedAudit
+    (part : audit.FLLabelAveragedInd12Audit label) :
+    audit.ProcessionNormalizedInd12Audit :=
+  part.averaged_audit.localNormalizedAudit
+
+theorem ind1AverageLogVolumeEq
+    (part : audit.FLLabelAveragedInd12Audit label)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ProcessionAutomorphismStep
+        audited₁ audited₂) :
+    (part.averaged_audit.averagedLogVolume audited₁).averageLogVolume =
+      (part.averaged_audit.averagedLogVolume audited₂).averageLogVolume :=
+  part.averaged_audit.ind1AverageLogVolumeEq hstep
+
+theorem ind2AverageLogVolumeEq
+    (part : audit.FLLabelAveragedInd12Audit label)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.LocalTensorDirectSummandActionStep
+        audited₁ audited₂) :
+    (part.averaged_audit.averagedLogVolume audited₁).averageLogVolume =
+      (part.averaged_audit.averagedLogVolume audited₂).averageLogVolume :=
+  part.averaged_audit.ind2AverageLogVolumeEq hstep
+
+end FLLabelAveragedInd12Audit
 
 end LogVolumeChartAudit
 
