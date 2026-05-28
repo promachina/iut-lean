@@ -172,6 +172,8 @@ The code currently covers:
 \item the Remark 3.12.3(i) metric analogy:
   \(\operatorname{vol}(S)>0\) and \(\chi_S=-\operatorname{vol}(S)\) imply
   \(\chi_S<0\);
+\item the Remark 3.12.4(iii) factor-\(p\) analogy: theta-label normalization
+  divides a gap log-volume by \(\ell\), and multiplication by \(\ell\) recovers it;
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -213,6 +215,7 @@ The absorption flag records the zero-column upper-bound versus one-column
 equality distinction.
 The metric flag records the Gauss--Bonnet sign calculation used as analogy for
 the upper semi-compatibility inequality.
+The factor-\(p\) flag records the \(F_\ell\)-label averaging denominator.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -263,6 +266,8 @@ For Remark 3.12.2(v), Lean separates hull absorption of unit shifts from
 log-volume equality after logarithmic-conjugate compatibility.
 For Remark 3.12.3(i), Lean proves the stated negative Euler-characteristic sign
 from positivity of metric volume.
+For Remark 3.12.4(iii), Lean checks the \(\ell\)-denominator normalization
+identity for the theta-label averaging analogy.
 
 \section{Missing Mathematics}
 

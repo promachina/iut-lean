@@ -2243,6 +2243,49 @@ theorem eulerCharacteristic_ne_zero
 
 end IUTStage1GaussBonnetMetricSignShadow
 
+/--
+Remark 3.12.4(iii) theta-label factor-`p` normalization shadow.
+
+The source text compares procession-normalized volumes obtained by averaging
+over `j ∈ F_l` with dividing by the factor `p` that relates the mod `p/p^2`
+portion of Witt vectors to the mod `p` portion.  In the IUT label model the
+finite factor is `l`, so this record keeps the corresponding real normalization.
+-/
+structure IUTStage1ThetaLabelFactorPNormalizationShadow where
+  l : PrimeGeFive
+  modPOverP2GapLogVolume : Real
+  normalizedModPLogVolume : Real
+  normalized_eq_div_l :
+    normalizedModPLogVolume =
+      modPOverP2GapLogVolume / (l.value : Real)
+
+namespace IUTStage1ThetaLabelFactorPNormalizationShadow
+
+theorem labelFactor_ne_zero
+    (data : IUTStage1ThetaLabelFactorPNormalizationShadow) :
+    (data.l.value : Real) ≠ 0 := by
+  exact_mod_cast data.l.ne_zero
+
+theorem labelFactor_pos
+    (data : IUTStage1ThetaLabelFactorPNormalizationShadow) :
+    0 < (data.l.value : Real) := by
+  exact_mod_cast Nat.pos_of_ne_zero data.l.ne_zero
+
+theorem normalized_mul_labelFactor
+    (data : IUTStage1ThetaLabelFactorPNormalizationShadow) :
+    data.normalizedModPLogVolume * (data.l.value : Real) =
+      data.modPOverP2GapLogVolume := by
+  rw [data.normalized_eq_div_l]
+  exact div_mul_cancel₀ data.modPOverP2GapLogVolume data.labelFactor_ne_zero
+
+theorem normalized_eq_factor_average
+    (data : IUTStage1ThetaLabelFactorPNormalizationShadow) :
+    data.normalizedModPLogVolume =
+      data.modPOverP2GapLogVolume / (data.l.value : Real) :=
+  data.normalized_eq_div_l
+
+end IUTStage1ThetaLabelFactorPNormalizationShadow
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

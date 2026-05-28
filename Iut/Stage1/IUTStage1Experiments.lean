@@ -650,6 +650,7 @@ structure ProcessionContainerExperimentReport where
   logThetaColumnRoleTableAvailable : Bool
   zeroOneColumnAbsorptionDistinctionAvailable : Bool
   gaussBonnetMetricSignShadowAvailable : Bool
+  thetaLabelFactorPNormalizationAvailable : Bool
 deriving Repr
 
 /--
@@ -685,7 +686,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     toyIntertwiningUpperRayBoundAvailable := true,
     logThetaColumnRoleTableAvailable := true,
     zeroOneColumnAbsorptionDistinctionAvailable := true,
-    gaussBonnetMetricSignShadowAvailable := true }
+    gaussBonnetMetricSignShadowAvailable := true,
+    thetaLabelFactorPNormalizationAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1077,6 +1079,12 @@ theorem gaussBonnetMetricSign_upperSemiAnalogue
     data.upperSemiInd3Analogue :=
   data.upperSemiInd3Analogue_holds
 
+theorem thetaLabelFactorPNormalization_mul_labelFactor
+    (data : IUTStage1ThetaLabelFactorPNormalizationShadow) :
+    data.normalizedModPLogVolume * (data.l.value : Real) =
+      data.modPOverP2GapLogVolume :=
+  data.normalized_mul_labelFactor
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1325,6 +1333,7 @@ structure Corollary312DisputeFirstPassReport where
   logThetaColumnRoleTableAvailable : Bool
   zeroOneColumnAbsorptionDistinctionAvailable : Bool
   gaussBonnetMetricSignShadowAvailable : Bool
+  thetaLabelFactorPNormalizationAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1374,6 +1383,7 @@ def corollary312DisputeFirstPassReport :
     logThetaColumnRoleTableAvailable := true,
     zeroOneColumnAbsorptionDistinctionAvailable := true,
     gaussBonnetMetricSignShadowAvailable := true,
+    thetaLabelFactorPNormalizationAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1539,6 +1549,11 @@ theorem corollary312Report_zeroOneColumnAbsorptionDistinctionAvailable :
 
 theorem corollary312Report_gaussBonnetMetricSignShadowAvailable :
     corollary312DisputeFirstPassReport.gaussBonnetMetricSignShadowAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_thetaLabelFactorPNormalizationAvailable :
+    corollary312DisputeFirstPassReport.thetaLabelFactorPNormalizationAvailable =
       true :=
   rfl
 
