@@ -4917,3 +4917,71 @@ IUT lower bound.  Any future formalization path that wants to use the literal
 representative `j.val^2` weight across sign indeterminacy must supply more than
 modular-square compatibility; it must supply the stronger representative-square
 compatibility, which forces the coordinate transport to be the identity.
+
+## 168. Representative Squares Do Not Descend to the Sign Quotient
+
+### Lean Move
+
+We added the sign-quotient descent test for square weights:
+
+```text
+balancedSquareWeightOnSignQuotient
+balancedSquareWeightOnSignQuotient_fromCoordinate
+coordinateSquarePreserving_neg_of_representativeSquareWeightOnSignQuotient
+not_exists_representativeSquareWeightOnSignQuotient
+```
+
+The balanced profile descends to the nonzero sign-label quotient:
+
+```text
+balancedSquareWeightOnSignQuotient (class(j)) = balancedSquareWeight j.
+```
+
+The literal representative profile does not:
+
+```text
+not exists W : F_l^± -> Real,
+  W(class(j)) = (j.val)^2 for every nonzero j.
+```
+
+The proof is structural.  If such a quotient function `W` existed, then the
+equality `class(-j) = class(j)` would force:
+
+```text
+((-j).val)^2 = (j.val)^2
+```
+
+for every nonzero `j`.  Together with the trivial zero case this would make
+negation `CoordinateSquarePreserving`, contradicting the general theorem from
+Milestone 167.
+
+### Mathematical Reason
+
+This is a sharper version of the sign-transport warning.  A function on the
+quotient `F_l^±` must assign the same value to `j` and `-j`.  The balanced
+minimal-absolute-value square does this by construction.  The selected
+nonnegative representative square `j.val^2` does not.
+
+This matters because quotient-level cusp labels and full labels erase the
+difference between a nonzero label and its sign mate.  Any construction that
+passes through that quotient cannot later recover the literal representative
+square without adding extra representative data.
+
+### Source Check
+
+IUT III uses `F_l` labels and the sign/indeterminacy apparatus around the
+Hodge-Arakelov-theoretic evaluation leading to Corollary 3.12.  Scholze-Stix's
+Section 2.2 critique is aimed at the real-valued comparison after these
+identifications.  This Lean lemma isolates one formal version of that issue:
+after passage to the sign quotient, a `j.val^2` weight is not well-defined as a
+quotient-label function.
+
+### Relevance to the 3.12 Dispute
+
+The milestone does not decide whether Mochizuki's intended Hodge-theater
+machinery supplies a different, richer route.  It does rule out a tempting
+shortcut: one cannot treat the `j.val^2` weighting as if it were merely a
+function of the sign-quotient cusp label.  A future formalization of the
+`3.11.5 => 3.12` step must either keep enough representative/history data to
+support the literal representative square, or explicitly justify replacing it by
+a sign-compatible profile.

@@ -2033,6 +2033,32 @@ theorem balancedSquareWeight_neg_eq (j : ZMod l.value) :
   unfold balancedSquareWeight
   rw [ZMod.natAbs_valMinAbs_neg]
 
+noncomputable def balancedSquareWeightOnSignQuotient
+    (label : (zmodSignAction l).SignLabelQuotient) : Real :=
+  Quotient.lift
+    (fun x : (zmodPointedQuotient l).NonzeroCarrier =>
+      balancedSquareWeight (l := l) x.1)
+    (by
+      intro x y h
+      change balancedSquareWeight (l := l) x.1 =
+        balancedSquareWeight (l := l) y.1
+      rcases h with h | h
+      · rw [h]
+      · rw [h]
+        exact balancedSquareWeight_neg_eq y.1)
+    label
+
+theorem balancedSquareWeightOnSignQuotient_fromCoordinate
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    balancedSquareWeightOnSignQuotient
+        (l := l) (zmodSignLabelFromCoordinate l j hj) =
+      balancedSquareWeight (l := l) j := by
+  unfold balancedSquareWeightOnSignQuotient zmodSignLabelFromCoordinate
+  change balancedSquareWeight (l := l)
+      (zmodNonzeroLabelFromCoordinate l j hj).1 =
+    balancedSquareWeight (l := l) j
+  rw [zmodNonzeroLabelFromCoordinate_val]
+
 theorem balancedSquareWeight_eq_square_val_of_val_le_half
     (j : ZMod l.value) (hhalf : j.val ≤ l.value / 2) :
     balancedSquareWeight (l := l) j = ((j.val : Real) ^ 2) := by
@@ -2120,6 +2146,39 @@ theorem coordinateModularSquarePreserving_neg_and_not_coordinateSquarePreserving
         (l := l) (Equiv.neg (ZMod l.value)) :=
   ⟨coordinateModularSquarePreserving_neg,
     not_coordinateSquarePreserving_neg⟩
+
+theorem coordinateSquarePreserving_neg_of_representativeSquareWeightOnSignQuotient
+    (weightOnQuotient : (zmodSignAction l).SignLabelQuotient -> Real)
+    (hweight :
+      ∀ (j : ZMod l.value) (hj : j ≠ 0),
+        weightOnQuotient (zmodSignLabelFromCoordinate l j hj) =
+          ((j.val : Real) ^ 2)) :
+    CoordinateSquarePreserving
+      (l := l) (Equiv.neg (ZMod l.value)) := by
+  intro j
+  by_cases hj : j = 0
+  · subst j
+    simp
+  · have hneg : -j ≠ 0 := zmod_neg_ne_zero_of_ne_zero l hj
+    change (((-j).val : Real) ^ 2) = ((j.val : Real) ^ 2)
+    calc
+      (((-j).val : Real) ^ 2) =
+          weightOnQuotient (zmodSignLabelFromCoordinate l (-j) hneg) := by
+        exact (hweight (-j) hneg).symm
+      _ = weightOnQuotient (zmodSignLabelFromCoordinate l j hj) := by
+        rw [zmodSignLabelFromCoordinate_neg_eq]
+      _ = ((j.val : Real) ^ 2) :=
+        hweight j hj
+
+theorem not_exists_representativeSquareWeightOnSignQuotient :
+    ¬ ∃ weightOnQuotient : (zmodSignAction l).SignLabelQuotient -> Real,
+      ∀ (j : ZMod l.value) (hj : j ≠ 0),
+        weightOnQuotient (zmodSignLabelFromCoordinate l j hj) =
+          ((j.val : Real) ^ 2) := by
+  rintro ⟨weightOnQuotient, hweight⟩
+  exact not_coordinateSquarePreserving_neg
+    (coordinateSquarePreserving_neg_of_representativeSquareWeightOnSignQuotient
+      weightOnQuotient hweight)
 
 theorem squareWeight_preserved_of_coordinateSquarePreserving
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)

@@ -950,6 +950,29 @@ theorem zmodSquareWeightProfile_neg_modular_not_representative_square_example
         (l := l) (Equiv.neg (ZMod l.value)) :=
   coordinateModularSquarePreserving_neg_and_not_coordinateSquarePreserving_neg
 
+noncomputable def zmodSquareWeightProfile_balanced_on_sign_quotient_example
+    {l : PrimeGeFive}
+    (label : (zmodSignAction l).SignLabelQuotient) : Real :=
+  IUTStage1ZModSquareWeightProfile.balancedSquareWeightOnSignQuotient
+    (l := l) label
+
+open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_balanced_on_sign_quotient_from_coord_example
+    {l : PrimeGeFive} (j : ZMod l.value) (hj : j ≠ 0) :
+    zmodSquareWeightProfile_balanced_on_sign_quotient_example
+        (zmodSignLabelFromCoordinate l j hj) =
+      IUTStage1ZModSquareWeightProfile.balancedSquareWeight (l := l) j :=
+  balancedSquareWeightOnSignQuotient_fromCoordinate j hj
+
+open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_representative_not_sign_quotient_example
+    {l : PrimeGeFive} :
+    ¬ ∃ weightOnQuotient : (zmodSignAction l).SignLabelQuotient -> Real,
+      ∀ (j : ZMod l.value) (hj : j ≠ 0),
+        weightOnQuotient (zmodSignLabelFromCoordinate l j hj) =
+          ((j.val : Real) ^ 2) :=
+  not_exists_representativeSquareWeightOnSignQuotient
+
 theorem zmodSquareWeightProfile_squareWeight_preserved_of_coord_example
     {l : PrimeGeFive}
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
