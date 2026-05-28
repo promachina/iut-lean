@@ -1137,6 +1137,117 @@ def toLabelAveraged
 
 end IUTStage1ProcessionTensorPacketLogVolume
 
+/--
+Finite-fiber direct sum of log-shell log-volumes over the places above a base
+valuation `v_Q`.
+
+This is the log-volume shadow of the IUT III operation that, for a fixed element
+of `S^±_{j+1}` and a fixed base valuation, forms the direct sum over the places
+`v ∈ V` above that base valuation.
+-/
+structure IUTStage1ValuationFiberLogShellDirectSum
+    (kind : IUTStage1PlaceKind) where
+  fiber : IUTStage1PlaceFiber kind
+  logShellLogVolume : Fin fiber.cardinality -> Real
+  directSumLogVolume : Real
+  direct_sum_eq_sum :
+    directSumLogVolume = Finset.univ.sum logShellLogVolume
+
+namespace IUTStage1ValuationFiberLogShellDirectSum
+
+variable {kind : IUTStage1PlaceKind}
+
+theorem direct_sum_eq
+    (data : IUTStage1ValuationFiberLogShellDirectSum kind) :
+    data.directSumLogVolume =
+      Finset.univ.sum data.logShellLogVolume :=
+  data.direct_sum_eq_sum
+
+theorem direct_sum_eq_zero_of_empty
+    (data : IUTStage1ValuationFiberLogShellDirectSum kind)
+    (hempty : data.fiber.cardinality = 0) :
+    data.directSumLogVolume = 0 := by
+  rw [data.direct_sum_eq]
+  haveI : IsEmpty (Fin data.fiber.cardinality) := by
+    rw [hempty]
+    infer_instance
+  simp
+
+end IUTStage1ValuationFiberLogShellDirectSum
+
+/--
+Tensor-packet log-volume over a procession container, with each factor already
+resolved as a finite-fiber direct sum over the places above a base valuation.
+-/
+structure IUTStage1ProcessionFiberTensorPacketLogVolume
+    (kind : IUTStage1PlaceKind) (j : Nat) where
+  directSum :
+    IUTStage1ProcessionContainer j ->
+      IUTStage1ValuationFiberLogShellDirectSum kind
+  tensorPacketLogVolume : Real
+  tensor_packet_eq_sum :
+    tensorPacketLogVolume =
+      Finset.univ.sum fun label : IUTStage1ProcessionContainer j =>
+        (directSum label).directSumLogVolume
+  normalizedLogVolume : Real
+  normalized_eq_average :
+    normalizedLogVolume = tensorPacketLogVolume / ((j + 1 : Nat) : Real)
+
+namespace IUTStage1ProcessionFiberTensorPacketLogVolume
+
+variable {kind : IUTStage1PlaceKind} {j : Nat}
+
+theorem normalized_eq_card_average
+    (data : IUTStage1ProcessionFiberTensorPacketLogVolume kind j) :
+    data.normalizedLogVolume =
+      data.tensorPacketLogVolume /
+        (Fintype.card (IUTStage1ProcessionContainer j) : Real) := by
+  rw [data.normalized_eq_average]
+  rw [IUTStage1ProcessionContainer.card_eq]
+
+def reindex
+    (data : IUTStage1ProcessionFiberTensorPacketLogVolume kind j)
+    (perm :
+      IUTStage1ProcessionContainer j ≃
+        IUTStage1ProcessionContainer j) :
+    IUTStage1ProcessionFiberTensorPacketLogVolume kind j :=
+  { directSum := fun label => data.directSum (perm label),
+    tensorPacketLogVolume := data.tensorPacketLogVolume,
+    tensor_packet_eq_sum := by
+      have hsum :
+          (Finset.univ.sum fun label : IUTStage1ProcessionContainer j =>
+            (data.directSum (perm label)).directSumLogVolume) =
+            Finset.univ.sum fun label : IUTStage1ProcessionContainer j =>
+              (data.directSum label).directSumLogVolume :=
+        Fintype.sum_equiv perm
+          (fun label : IUTStage1ProcessionContainer j =>
+            (data.directSum (perm label)).directSumLogVolume)
+          (fun label : IUTStage1ProcessionContainer j =>
+            (data.directSum label).directSumLogVolume)
+          (fun _label => rfl)
+      calc
+        data.tensorPacketLogVolume =
+            Finset.univ.sum fun label : IUTStage1ProcessionContainer j =>
+              (data.directSum label).directSumLogVolume :=
+          data.tensor_packet_eq_sum
+        _ =
+            Finset.univ.sum fun label : IUTStage1ProcessionContainer j =>
+              (data.directSum (perm label)).directSumLogVolume :=
+          hsum.symm,
+    normalizedLogVolume := data.normalizedLogVolume,
+    normalized_eq_average := data.normalized_eq_average }
+
+theorem reindex_normalizedLogVolume_eq
+    (data : IUTStage1ProcessionFiberTensorPacketLogVolume kind j)
+    (perm :
+      IUTStage1ProcessionContainer j ≃
+        IUTStage1ProcessionContainer j) :
+    (data.reindex perm).normalizedLogVolume =
+      data.normalizedLogVolume :=
+  rfl
+
+end IUTStage1ProcessionFiberTensorPacketLogVolume
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

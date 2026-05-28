@@ -630,6 +630,8 @@ structure ProcessionContainerExperimentReport where
   tensorPacketPermutationInvariant : Bool
   processionTotalIndeterminacyFactorial : Bool
   finalContainerMatchesAbsLabelExponents : Bool
+  valuationFiberDirectSumAvailable : Bool
+  fiberTensorPacketNormalizationAvailable : Bool
 deriving Repr
 
 /--
@@ -645,7 +647,9 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     tensorPacketLogVolumeNormalizationAvailable := true,
     tensorPacketPermutationInvariant := true,
     processionTotalIndeterminacyFactorial := true,
-    finalContainerMatchesAbsLabelExponents := true }
+    finalContainerMatchesAbsLabelExponents := true,
+    valuationFiberDirectSumAvailable := true,
+    fiberTensorPacketNormalizationAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -725,6 +729,31 @@ theorem processionTensorPacket_const_le_normalized
 theorem processionTensorPacket_reindex_preserves_normalized
     {kind : IUTStage1PlaceKind} {j : Nat}
     (packet : IUTStage1ProcessionTensorPacketLogVolume kind j)
+    (perm :
+      IUTStage1ProcessionContainer j ≃
+        IUTStage1ProcessionContainer j) :
+    (packet.reindex perm).normalizedLogVolume =
+      packet.normalizedLogVolume :=
+  packet.reindex_normalizedLogVolume_eq perm
+
+theorem valuationFiberLogShellDirectSum_eq_sum
+    {kind : IUTStage1PlaceKind}
+    (directSum : IUTStage1ValuationFiberLogShellDirectSum kind) :
+    directSum.directSumLogVolume =
+      Finset.univ.sum directSum.logShellLogVolume :=
+  directSum.direct_sum_eq
+
+theorem processionFiberTensorPacket_normalized_eq_card_average
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    (packet : IUTStage1ProcessionFiberTensorPacketLogVolume kind j) :
+    packet.normalizedLogVolume =
+      packet.tensorPacketLogVolume /
+        (Fintype.card (IUTStage1ProcessionContainer j) : Real) :=
+  packet.normalized_eq_card_average
+
+theorem processionFiberTensorPacket_reindex_preserves_normalized
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    (packet : IUTStage1ProcessionFiberTensorPacketLogVolume kind j)
     (perm :
       IUTStage1ProcessionContainer j ≃
         IUTStage1ProcessionContainer j) :
@@ -960,6 +989,8 @@ structure Corollary312DisputeFirstPassReport where
   processionTensorPacketPermutationInvariant : Bool
   processionIndeterminacyFactorialAvailable : Bool
   absLabelProcessionExponentBridgeAvailable : Bool
+  valuationFiberDirectSumAvailable : Bool
+  processionFiberTensorPacketAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -989,6 +1020,8 @@ def corollary312DisputeFirstPassReport :
     processionTensorPacketPermutationInvariant := true,
     processionIndeterminacyFactorialAvailable := true,
     absLabelProcessionExponentBridgeAvailable := true,
+    valuationFiberDirectSumAvailable := true,
+    processionFiberTensorPacketAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1054,6 +1087,16 @@ theorem corollary312Report_processionIndeterminacyFactorialAvailable :
 
 theorem corollary312Report_absLabelProcessionExponentBridgeAvailable :
     corollary312DisputeFirstPassReport.absLabelProcessionExponentBridgeAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_valuationFiberDirectSumAvailable :
+    corollary312DisputeFirstPassReport.valuationFiberDirectSumAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_processionFiberTensorPacketAvailable :
+    corollary312DisputeFirstPassReport.processionFiberTensorPacketAvailable =
       true :=
   rfl
 

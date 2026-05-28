@@ -136,8 +136,9 @@ The code currently covers:
 \item the map from the final procession container to \(|F_\ell|\), sending the
   core label to \(0\) and recovering the exponent \(j^2\);
 \item the log-volume shadow of the tensor packet over \(S^\pm_{j+1}\), with
-  total log-volume given by the finite sum over the container and normalized
-  denominator \(j+1\), invariant under reindexing by container permutations;
+  each factor a finite-fiber direct sum over places above \(v_\mathbb{Q}\), total
+  log-volume given by the finite sum over the container, normalized denominator
+  \(j+1\), and invariance under container permutations;
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -155,23 +156,18 @@ The code currently covers:
 The current first-pass experiment report evaluates to:
 \[
 \begin{array}{ll}
-\texttt{orderedRealLineRouteTheoremAvailable} & = \texttt{true},\\
-\texttt{nonarchimedeanEntryCanonicalAlignmentTheoremAvailable} & = \texttt{true},\\
-\texttt{factoredSHEBridgeTheoremAvailable} & = \texttt{true},\\
-\texttt{mismatchCounterexampleBlocksRawCancellation} & = \texttt{true},\\
-\texttt{labelIndependentJ2CollapseRejectedInZModModel} & = \texttt{true},\\
-\texttt{representativeJ2SignQuotientDescentRejectedInZModModel} & = \texttt{true},\\
-\texttt{absLabelThetaDegreeHalfRangeModelAvailable} & = \texttt{true},\\
-\texttt{gaussianDegreeEvaluationTheoremAvailable} & = \texttt{true},\\
-\texttt{processionContainerSkeletonAvailable} & = \texttt{true},\\
-\texttt{processionTensorPacketLogVolumeAvailable} & = \texttt{true},\\
-\texttt{processionTensorPacketPermutationInvariant} & = \texttt{true},\\
-\texttt{processionIndeterminacyFactorialAvailable} & = \texttt{true},\\
-\texttt{absLabelProcessionExponentBridgeAvailable} & = \texttt{true},\\
+\text{route theorem flags} & = \texttt{true},\\
+\text{collapse-obstruction flags} & = \texttt{true},\\
+\text{Gaussian/procession finite-model flags} & = \texttt{true},\\
 \texttt{balancedLevelRejectedAtFinalRouteTheoremAvailable} & = \texttt{true},\\
 \texttt{disputeSettledByCurrentStage} & = \texttt{false}.
 \end{array}
 \]
+Here the route flags are ordered real-line, nonarchimedean entry, and factored
+SHE availability.  The obstruction flags are raw-cancellation failure,
+label-independent \(j^2\) failure, and sign-quotient representative descent
+failure.  The Gaussian/procession flags include the finite-fiber direct-sum
+packet layer used as the current log-shell shadow.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
