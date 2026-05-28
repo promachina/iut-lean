@@ -13636,6 +13636,36 @@ theorem squareWeightedAverage_eq_square_fullLabelLogVolume_sum
     (part.cuspLogVolume audited)
     (fun j => part.normalizedLogVolumeEq audited j)
 
+theorem ind1SquareWeightedAverageLogVolumeEq
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ProcessionAutomorphismStep
+        audited₁ audited₂) :
+    (part.squareWeightedAveragedLogVolume profile audited₁).weightedAverageLogVolume =
+      (part.squareWeightedAveragedLogVolume profile audited₂).weightedAverageLogVolume :=
+  IUTStage1WeightedLabelAveragedProcessionLogVolume.weightedAverage_eq_of_pointwise
+    (fun _j => rfl)
+    (part.zmod_cusp_audit.averaged_audit.ind1_labelwise_eq hstep)
+    rfl
+
+theorem ind2SquareWeightedAverageLogVolumeEq
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.LocalTensorDirectSummandActionStep
+        audited₁ audited₂) :
+    (part.squareWeightedAveragedLogVolume profile audited₁).weightedAverageLogVolume =
+      (part.squareWeightedAveragedLogVolume profile audited₂).weightedAverageLogVolume :=
+  IUTStage1WeightedLabelAveragedProcessionLogVolume.weightedAverage_eq_of_pointwise
+    (fun _j => rfl)
+    (part.zmod_cusp_audit.averaged_audit.ind2_labelwise_eq hstep)
+    rfl
+
 theorem ind1AverageLogVolumeEq
     (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
     {audited₁ audited₂ :

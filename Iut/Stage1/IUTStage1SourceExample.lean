@@ -4286,6 +4286,46 @@ theorem placeAudited_logVolume_fl_zmod_cusp_square_weighted_average_example
   part.squareWeightedAverage_eq_square_fullLabelLogVolume_sum
     profile audited
 
+theorem placeAudited_logVolume_fl_zmod_cusp_square_weighted_ind1_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ProcessionAutomorphismStep
+        audited₁ audited₂) :
+    (part.squareWeightedAveragedLogVolume profile audited₁).weightedAverageLogVolume =
+      (part.squareWeightedAveragedLogVolume profile audited₂).weightedAverageLogVolume :=
+  part.ind1SquareWeightedAverageLogVolumeEq profile hstep
+
+theorem placeAudited_logVolume_fl_zmod_cusp_square_weighted_ind2_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.LocalTensorDirectSummandActionStep
+        audited₁ audited₂) :
+    (part.squareWeightedAveragedLogVolume profile audited₁).weightedAverageLogVolume =
+      (part.squareWeightedAveragedLogVolume profile audited₂).weightedAverageLogVolume :=
+  part.ind2SquareWeightedAverageLogVolumeEq profile hstep
+
 theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_compat_ind1_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

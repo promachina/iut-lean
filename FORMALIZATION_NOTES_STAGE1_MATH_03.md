@@ -2897,3 +2897,66 @@ three preservation fields.  The next mathematical work is to relate this audit
 to the existing structured-SHE/common-container route: which data in that route
 could supply the coordinate equivalence, and which data could supply or refute
 the two preservation equalities?
+
+## 146. Square-Weighted `(Ind1)/(Ind2)` Invariance
+
+### Lean Move
+
+I extended the existing `(Ind1)/(Ind2)` averaged-log-volume invariance to the
+square-weighted `ZMod l` average:
+
+```text
+FLZModCuspLabelCompatibleAveragedInd12Audit
+  .ind1SquareWeightedAverageLogVolumeEq
+  .ind2SquareWeightedAverageLogVolumeEq
+```
+
+The proof reuses the generic weighted-average theorem:
+
+```text
+IUTStage1WeightedLabelAveragedProcessionLogVolume.weightedAverage_eq_of_pointwise
+```
+
+with:
+
+```text
+same square-weight profile
+same weight total
+existing labelwise equality from Ind1 or Ind2
+```
+
+The example module now exposes both invariance theorems.
+
+### Mathematical Reason
+
+The existing audit already says that `(Ind1)` and `(Ind2)` preserve the
+coordinate-indexed normalized log-volume values label by label.  A weighted
+average is still a finite expression in those labelwise values.  Therefore,
+when the weight profile is held fixed, the weighted average is invariant under
+the same labelwise equality.
+
+This is a modest but important check: the square-weighted layer is not floating
+outside the existing indeterminacy bookkeeping.  It behaves functorially with
+respect to the already formalized labelwise `(Ind1)/(Ind2)` equalities.
+
+### Relevance to the 3.12 Dispute
+
+This does not show that the `j^2` profile survives a Hodge-theater/log-link
+transition.  It only shows:
+
+```text
+if the same square-weight profile is available on both sides,
+then Ind1/Ind2 labelwise invariance preserves the square-weighted average.
+```
+
+That distinction matters.  Scholze-Stix's objection is not that finite weighted
+sums fail algebraically once the weights are fixed; it is about whether the
+identifications in the Corollary 3.12 passage leave room for the relevant
+`j^2` structure.  This milestone keeps the algebraic finite-average fact
+separate from the harder provenance question formalized in Milestone 145.
+
+### Remaining Gap
+
+The next step should stop treating the square-weight profile as "the same
+profile by hypothesis" and ask whether the structured-SHE/Hodge-theater route
+actually supplies the preservation audit from Milestone 145.
