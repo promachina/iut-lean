@@ -20,6 +20,7 @@ namespace Iut
 namespace Stage1
 
 open RealLineCopy
+open scoped BigOperators
 
 universe u v w x
 
@@ -2456,6 +2457,77 @@ theorem iutIVThetaPilotFinalCoefficientEstimate
       nlinarith
     _ = 1 + 80 * (dmod : Real) / (l.value : Real) := by
       ring
+
+/--
+IUT IV, Theorem 1.10, Step (i), identity (E1), before division by `n`.
+
+The sum is written over `range (n+1)`, so the zero term is harmless and the
+range is exactly `0, ..., n`.
+-/
+theorem iutIVThetaPilot_sum_id_mul_two (n : Nat) :
+    (∑ m ∈ Finset.range (n + 1), (m : Real)) * 2 =
+      (n : Real) * ((n : Real) + 1) := by
+  have hnat := Finset.sum_range_id_mul_two (n + 1)
+  have hnat' :
+      (∑ m ∈ Finset.range (n + 1), m) * 2 = (n + 1) * n := by
+    simpa using hnat
+  have hreal :
+      (∑ m ∈ Finset.range (n + 1), (m : Real)) * 2 =
+        ((n + 1 : Nat) * n : Real) := by
+    rw [← Nat.cast_sum, ← Nat.cast_mul]
+    exact_mod_cast hnat'
+  calc
+    (∑ m ∈ Finset.range (n + 1), (m : Real)) * 2 =
+        ((n + 1 : Nat) * n : Real) := hreal
+    _ = (n : Real) * ((n : Real) + 1) := by
+      norm_num
+      ring
+
+/-- IUT IV, Theorem 1.10, Step (i), identity (E1). -/
+theorem iutIVThetaPilot_average_sum_id
+    (n : Nat) (hn : 1 <= n) :
+    (∑ m ∈ Finset.range (n + 1), (m : Real)) / (n : Real) =
+      ((n : Real) + 1) / 2 := by
+  have hraw := iutIVThetaPilot_sum_id_mul_two n
+  have hn_ne : (n : Real) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  field_simp [hn_ne]
+  linarith
+
+/-- IUT IV, Theorem 1.10, Step (i), identity (E2), before division by `n`. -/
+theorem iutIVThetaPilot_sum_sq_mul_six (n : Nat) :
+    (∑ m ∈ Finset.range (n + 1), (m : Real) ^ 2) * 6 =
+      (n : Real) * ((n : Real) + 1) * (2 * (n : Real) + 1) := by
+  induction n with
+  | zero =>
+      norm_num
+  | succ n ih =>
+      rw [Finset.sum_range_succ]
+      calc
+        ((∑ m ∈ Finset.range (n + 1), (m : Real) ^ 2) +
+            ((n + 1 : Nat) : Real) ^ 2) * 6 =
+          (∑ m ∈ Finset.range (n + 1), (m : Real) ^ 2) * 6 +
+            ((n + 1 : Nat) : Real) ^ 2 * 6 := by
+            ring
+        _ = (n : Real) * ((n : Real) + 1) * (2 * (n : Real) + 1) +
+            ((n + 1 : Nat) : Real) ^ 2 * 6 := by
+            rw [ih]
+        _ = ((n + 1 : Nat) : Real) * (((n + 1 : Nat) : Real) + 1) *
+            (2 * (((n + 1 : Nat) : Real)) + 1) := by
+            norm_num
+            ring
+
+/-- IUT IV, Theorem 1.10, Step (i), identity (E2). -/
+theorem iutIVThetaPilot_average_sum_sq
+    (n : Nat) (hn : 1 <= n) :
+    (∑ m ∈ Finset.range (n + 1), (m : Real) ^ 2) / (n : Real) =
+      (1 / 6 : Real) * (2 * (n : Real) + 1) * ((n : Real) + 1) := by
+  have hraw := iutIVThetaPilot_sum_sq_mul_six n
+  have hn_ne : (n : Real) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hn)
+  field_simp [hn_ne]
+  ring_nf at hraw ⊢
+  nlinarith
 
 /--
 IUT IV, Theorem 1.10 and Step (ii): replacing the tripodal intermediate field
