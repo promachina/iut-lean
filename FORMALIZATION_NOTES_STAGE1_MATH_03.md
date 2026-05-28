@@ -2364,3 +2364,83 @@ The next step should propagate this explicit full-label interface into the
 Hodge-descent source-marked transport audit, so that the packet transport can
 state in one theorem how the zero constructor and each nonzero cusp constructor
 are transported to the packet object.
+
+## 141. Full-Label Transport Through Hodge Descent
+
+### Lean Move
+
+I propagated the explicit full-label interface into the `ZMod` source-marked
+Hodge-descent transport layer.
+
+At the local operation level:
+
+```text
+IUTStage1ZModSourceMarkedHodgeDescentCuspZeroLocalObjectOperationData.fullLabelLocalObject
+...fullLabelLocalObject_zero
+...fullLabelLocalObject_nonzero
+...fullLabelLocalObject_transports_to_packet
+...fullLabelLocalObject_fromCoordinate_zero
+...fullLabelLocalObject_fromCoordinate_nonzero
+```
+
+At the packet transport audit level:
+
+```text
+FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit.fullLabelLocalObject
+...fullLabelLocalObject_zero
+...fullLabelLocalObject_nonzero
+...fullLabelLocalObject_transports_to_packet
+...fullLabelLocalObject_fromCoordinate_zero
+...fullLabelLocalObject_fromCoordinate_nonzero
+```
+
+The examples now include:
+
+```text
+placeAudited_logVolume_fl_zmod_zmod_source_marked_full_label_transport_example
+placeAudited_logVolume_fl_zmod_zmod_source_marked_full_label_zero_example
+placeAudited_logVolume_fl_zmod_zmod_source_marked_full_label_nonzero_example
+```
+
+### Mathematical Reason
+
+The previous milestone made the zero/nonzero label split explicit, but only at
+the insulated local-object route.  The present move carries that split through
+the source-marked Hodge-descent packet transport.
+
+The main theorem is now a single statement over the full-label type:
+
+```text
+fullLabelLocalObject label = packetLocalObject
+```
+
+where `label` may be the zero constructor or a nonzero sign-label class.  Lean
+proves this by cases:
+
+```text
+zero             -> zeroOperation transports to packet
+nonzero label    -> cuspClassOperation label transports to packet
+```
+
+Thus the zero/nonzero comparison is no longer hidden inside two unrelated
+projection lemmas.  It is expressed as one case split over the formal label type.
+
+### Relevance to the 3.12 Dispute
+
+This is exactly the kind of bookkeeping the Scholze-Stix criticism asks not to
+skip: if the comparison becomes trivial, Lean should show which explicit bridge
+made zero and nonzero local objects land on the same packet object.
+
+On the Mochizuki side, this keeps the bridge attached to the Hodge-descent
+source data and to the fourth-triangle HDD/SHE checkpoint.  On the skeptical
+side, it prevents the proof from silently using equality of endpoints without
+naming the zero branch, the nonzero branch, and the descent operation that
+transports each branch.
+
+### Remaining Gap
+
+The theorem still says that every full label transports to the same packet local
+object once the source-marked Hodge-descent data is supplied.  The next
+mathematical pressure point is to connect this transport theorem to the weighted
+volume side: zero should remain the separate coric branch, while nonzero labels
+contribute through the `1/l`-weighted `ZMod` average.

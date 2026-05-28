@@ -5879,6 +5879,59 @@ theorem placeAudited_logVolume_fl_zmod_zmod_source_marked_zero_to_cusp_example
       part.insulated_route.cuspClassLocalObject audited label :=
   part.zeroLocalObject_eq_cuspClassLocalObject audited label
 
+theorem placeAudited_logVolume_fl_zmod_zmod_source_marked_full_label_transport_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    part.fullLabelLocalObject audited label =
+      audited.choice.local_tensor_state.packetState.localObject :=
+  part.fullLabelLocalObject_transports_to_packet audited label
+
+theorem placeAudited_logVolume_fl_zmod_zmod_source_marked_full_label_zero_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (0 : ZMod l.value)) =
+      part.insulated_route.zeroLocalObject audited :=
+  part.fullLabelLocalObject_fromCoordinate_zero audited
+
+theorem placeAudited_logVolume_fl_zmod_zmod_source_marked_full_label_nonzero_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      part.insulated_route.cuspClassLocalObject audited
+        (zmodSignLabelFromCoordinate l j hj) :=
+  part.fullLabelLocalObject_fromCoordinate_nonzero audited j hj
+
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 def placeAudited_logVolume_fl_zmod_hodge_descent_bridge_to_sourced_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}

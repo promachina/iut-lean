@@ -3253,6 +3253,63 @@ theorem cuspClassLabel_eq_canonical_of_coordinate_eq_one
     label = zmodCanonicalSignLabelQuotient l :=
   (data.cuspClassSource label).label_eq_canonical_of_coordinate_eq_one hcoord
 
+def fullLabelLocalObject
+    (_data :
+      IUTStage1ZModSourceMarkedHodgeDescentCuspZeroLocalObjectOperationData
+        l hodgeData zeroObject cuspClassObject packetObject)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    IUTStage1FiniteLocalLogVolumeObject kind :=
+  IUTStage1ZModCuspFullLabel.localObject zeroObject cuspClassObject label
+
+theorem fullLabelLocalObject_zero
+    (data :
+      IUTStage1ZModSourceMarkedHodgeDescentCuspZeroLocalObjectOperationData
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    data.fullLabelLocalObject IUTStage1ZModCuspFullLabel.zero =
+      zeroObject :=
+  rfl
+
+theorem fullLabelLocalObject_nonzero
+    (data :
+      IUTStage1ZModSourceMarkedHodgeDescentCuspZeroLocalObjectOperationData
+        l hodgeData zeroObject cuspClassObject packetObject)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    data.fullLabelLocalObject (IUTStage1ZModCuspFullLabel.nonzero label) =
+      cuspClassObject label :=
+  rfl
+
+theorem fullLabelLocalObject_transports_to_packet
+    (data :
+      IUTStage1ZModSourceMarkedHodgeDescentCuspZeroLocalObjectOperationData
+        l hodgeData zeroObject cuspClassObject packetObject)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    data.fullLabelLocalObject label = packetObject := by
+  cases label with
+  | zero =>
+      exact data.zeroOperation.source_transports_to_packet'
+  | nonzero label =>
+      exact (data.cuspClassOperation label).source_transports_to_packet'
+
+theorem fullLabelLocalObject_fromCoordinate_zero
+    (data :
+      IUTStage1ZModSourceMarkedHodgeDescentCuspZeroLocalObjectOperationData
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    data.fullLabelLocalObject
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (0 : ZMod l.value)) =
+      zeroObject := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+  rfl
+
+theorem fullLabelLocalObject_fromCoordinate_nonzero
+    (data :
+      IUTStage1ZModSourceMarkedHodgeDescentCuspZeroLocalObjectOperationData
+        l hodgeData zeroObject cuspClassObject packetObject)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    data.fullLabelLocalObject (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      cuspClassObject (zmodSignLabelFromCoordinate l j hj) := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l j hj]
+  rfl
+
 theorem cuspClassCoordinate_ne_zero
     (data :
       IUTStage1ZModSourceMarkedHodgeDescentCuspZeroLocalObjectOperationData
@@ -16617,6 +16674,63 @@ theorem cuspClassLabel_eq_canonical_of_coordinate_eq_one
     label = zmodCanonicalSignLabelQuotient l :=
   (part.localObjectOperation audited).cuspClassLabel_eq_canonical_of_coordinate_eq_one
     label hcoord
+
+def fullLabelLocalObject
+    (part :
+      audit.FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    IUTStage1FiniteLocalLogVolumeObject kind :=
+  (part.localObjectOperation audited).fullLabelLocalObject label
+
+theorem fullLabelLocalObject_zero
+    (part :
+      audit.FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.fullLabelLocalObject audited IUTStage1ZModCuspFullLabel.zero =
+      part.insulated_route.zeroLocalObject audited :=
+  rfl
+
+theorem fullLabelLocalObject_nonzero
+    (part :
+      audit.FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.nonzero label) =
+      part.insulated_route.cuspClassLocalObject audited label :=
+  rfl
+
+theorem fullLabelLocalObject_transports_to_packet
+    (part :
+      audit.FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    part.fullLabelLocalObject audited label =
+      audited.choice.local_tensor_state.packetState.localObject :=
+  (part.localObjectOperation audited).fullLabelLocalObject_transports_to_packet label
+
+theorem fullLabelLocalObject_fromCoordinate_zero
+    (part :
+      audit.FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (0 : ZMod l.value)) =
+      part.insulated_route.zeroLocalObject audited := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+  rfl
+
+theorem fullLabelLocalObject_fromCoordinate_nonzero
+    (part :
+      audit.FLZModCuspLabelThetaZModSourceMarkedHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      part.insulated_route.cuspClassLocalObject audited
+        (zmodSignLabelFromCoordinate l j hj) := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l j hj]
+  rfl
 
 theorem cuspClassCoordinate_ne_zero
     (part :
