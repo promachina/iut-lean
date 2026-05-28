@@ -4558,3 +4558,80 @@ The next refinement should connect these finite local log-volume objects to the
 capsule-family/procession-normalized local data carried by the place-audited
 packet, so that the local object estimates are not supplied independently of
 the packet being averaged.
+
+## 58. Packet-Local Objects for Container Estimates
+
+### Goal
+
+We connected the local object used in each cusp/zero container estimate to the
+finite local object carried by the audited local tensor packet.
+
+### Lean Move
+
+We added:
+
+```text
+FLZModCuspLabelThetaPacketLocalObjectContainerAudit
+```
+
+It carries the same local-object container estimates as the previous audit, but
+adds:
+
+```text
+cuspClassObjectEstimate(audited, label).localObject
+  = audited.choice.local_tensor_state.packetState.localObject
+
+zeroObjectEstimate(audited).localObject
+  = audited.choice.local_tensor_state.packetState.localObject
+```
+
+Lean proves:
+
+```text
+cuspClassObject_eq_packetLocalObject'
+zeroObject_eq_packetLocalObject'
+toThetaLocalObjectContainerAudit
+targetSigned_le_cuspClassLogVolume
+toThetaPilotHullContainerAudit
+qSigned_le_thetaSigned_via_packet_local_object_container
+```
+
+### Mathematical Point
+
+The route now starts from the local object of the audited packet:
+
+```text
+audited packet local object
+  -> local-object container estimate
+  -> cusp/zero log-volume bound
+  -> labelwise normalized bound
+  -> F_l average bound
+  -> qSigned <= thetaSigned
+```
+
+This is an important anti-drift check.  The local estimates are no longer
+allowed to refer to unrelated local objects; they must match the local tensor
+packet whose label average is being used.
+
+### Trap Avoided
+
+This avoids a subtle version of the real-line identification problem: even if a
+container estimate is valid for some local object, it cannot be inserted into
+the average route unless Lean also has the equality identifying that object
+with the audited packet's local object.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_packet_local_object_eq_example
+placeAudited_logVolume_fl_zmod_packet_local_object_to_local_object_example
+placeAudited_logVolume_fl_zmod_packet_local_object_q_le_theta_example
+```
+
+### Remaining Gap
+
+The next refinement should connect the packet-local object to the packet's
+capsule-family normalized log-volume.  That will make the relation between the
+object-level estimate and the procession-normalized value explicit.
