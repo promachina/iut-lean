@@ -21725,6 +21725,29 @@ theorem thetaAverage_eq_ind3Target
     _ = audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
       alignment.entryTarget_eq_ind3Target
 
+def toHodgeDescentInd3SourceTargetAlignment
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (alignment :
+      NonarchimedeanInd3EntryAlignment audited entry
+        (part.insulated_route.theta_source.thetaSourceAverage audited)) :
+    Ind3SourceTargetAlignment part audited :=
+  { packetLocalObjectFinite_eq_ind3Source :=
+      alignment.packetLocalObjectFinite_eq_ind3Source,
+    thetaSourceAverage_eq_ind3Target :=
+      alignment.thetaAverage_eq_ind3Target }
+
 end NonarchimedeanInd3EntryAlignment
 
 /--
@@ -21850,6 +21873,43 @@ def toInd3SourceZeroCuspTargetThetaAudit
           alignment.packetLocalObjectFinite_eq_ind3Source,
     thetaSourceAverage_eq_ind3Target :=
       alignment.thetaSourceAverage_eq_ind3Target }
+
+open FLZModCuspLabelThetaCuspClassContainerAudit in
+def toInd3SourceZeroCuspTargetThetaAuditOfNonarchimedeanEntry
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (transport_audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit packageN part.bundle l)
+    (source_profile_eq :
+      profile = transport_audit.preservationAudit.sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        transport_audit.preservationAudit.sourceLogVolume)
+    (target_log_volume_eq_theta :
+      transport_audit.preservationAudit.targetLogVolume =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (entryAlignment :
+      NonarchimedeanInd3EntryAlignment audited entry
+        (part.insulated_route.theta_source.thetaSourceAverage audited)) :
+    ThreeElevenFiveStructuredSHEInd3SourceZeroCuspTargetThetaAudit
+      part.toThetaCuspClassContainerAudit part.bundle profile audited :=
+  part.toInd3SourceZeroCuspTargetThetaAudit profile audited transport_audit
+    source_profile_eq source_log_volume_eq target_log_volume_eq_theta
+    entryAlignment.toHodgeDescentInd3SourceTargetAlignment
 
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
     (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l) :

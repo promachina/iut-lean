@@ -10859,6 +10859,49 @@ theorem placeAudited_logVolume_fl_zmod_hodge_ind3_source_route_example
       part.bundle profile audited sourceAudit).qSigned_le_thetaSigned
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
+  FLZModCuspLabelThetaCuspClassContainerAudit
+  FLZModCuspLabelThetaHodgeDescentPacketTransportAudit in
+theorem placeAudited_logVolume_fl_zmod_nonarch_entry_hodge_ind3_route_example
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (transport_audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package part.bundle l)
+    (source_profile_eq :
+      profile = transport_audit.preservationAudit.sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        transport_audit.preservationAudit.sourceLogVolume)
+    (target_log_volume_eq_theta :
+      transport_audit.preservationAudit.targetLogVolume =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (entryAlignment :
+      NonarchimedeanInd3EntryAlignment audited entry
+        (part.insulated_route.theta_source.thetaSourceAverage audited)) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  let sourceAudit :=
+    part.toInd3SourceZeroCuspTargetThetaAuditOfNonarchimedeanEntry
+      profile audited transport_audit source_profile_eq source_log_volume_eq
+      target_log_volume_eq_theta entryAlignment
+  (part.toThetaCuspClassContainerAudit
+    |>.weightedThetaComparisonRouteOfInd3SourceZeroCuspTarget
+      part.bundle profile audited sourceAudit).qSigned_le_thetaSigned
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
   FLZModCuspLabelThetaHodgeDescentPacketTransportAudit in
 theorem placeAudited_nonarch_ind3_entry_packet_le_theta_example
     {coric : Type u}

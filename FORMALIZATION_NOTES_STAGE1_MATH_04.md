@@ -1311,3 +1311,97 @@ same ordered real inequality.  The Lean code now makes that impossible at this
 layer: the archimedean theorem exposes the reverse orientation, so any later
 global aggregation must explain how the archimedean contribution is used rather
 than silently folding it into the nonarchimedean inclusion argument.
+
+## 208. Nonarchimedean Ind3 Entry Feeds The Hodge-Descent 3.12 Route
+
+### Lean Move
+
+We connected the local nonarchimedean upper-semi entry to the Hodge-descent
+Corollary 3.12 route.
+
+In
+
+```text
+NonarchimedeanInd3EntryAlignment
+```
+
+we added:
+
+```text
+toHodgeDescentInd3SourceTargetAlignment
+```
+
+In
+
+```text
+FLZModCuspLabelThetaHodgeDescentPacketTransportAudit
+```
+
+we added:
+
+```text
+toInd3SourceZeroCuspTargetThetaAuditOfNonarchimedeanEntry
+```
+
+The example file now checks:
+
+```text
+placeAudited_logVolume_fl_zmod_nonarch_entry_hodge_ind3_route_example
+```
+
+which builds the final q/Theta comparison from:
+
+```text
+Hodge-descent zero/cusp-to-packet transport
+nonarchimedean upper-semi inclusion entry
+structured-SHE square/full-label transport audit
+```
+
+### Mathematical Reason
+
+The previous local nonarchimedean theorem proved only:
+
+```text
+packet local object finite log-volume <= theta average
+```
+
+This milestone feeds the same local entry into the full Hodge-descent `(Ind3)`
+route.  In other words, the nonarchimedean local inclusion is no longer just an
+isolated sanity check; it is now one admissible source of the
+`Ind3SourceTargetAlignment` needed by the final route.
+
+The proof corridor is:
+
+```text
+zero/cusp log-volume
+  = packet local object finite log-volume        (Hodge descent)
+  = nonarchimedean upper-semi source value       (local entry alignment)
+  <= nonarchimedean upper-semi target value      (local inclusion)
+  = theta source average                         (local entry alignment)
+  -> weighted average <= theta average
+  -> qSigned <= thetaSigned
+```
+
+### Source Check
+
+This matches IUT III's emphasis that the inequality in Corollary 3.12 is
+underwritten by upper semi-compatibility `(Ind3)` and, at the same time, keeps
+the Hodge/SHE transport data visible.  It is also consistent with the
+Scholze-Stix pressure point: the real/log-volume alignments are still explicit
+fields of the local entry alignment and are not collapsed into definitional
+equality.
+
+### Relevance to the 3.12 Dispute
+
+This is the first fully routed nonarchimedean `(Ind3)` path to the final
+q/Theta inequality.  It gives us a candidate experimental pass:
+
+```text
+remove or vary the local entry alignments
+observe exactly which final inequality proofs fail
+compare failures with the claimed real-line-identification obstruction
+```
+
+The remaining experimental work is to instrument these obligations as explicit
+missing-datum reports, so we can run proof variants and measure which
+identifications are essential.
