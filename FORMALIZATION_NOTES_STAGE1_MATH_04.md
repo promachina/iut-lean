@@ -767,3 +767,80 @@ The next nontrivial work is to replace the constant packet-normalized source by
 the actual nonconstant local Hodge-theater estimates and then examine whether
 the required structured-SHE equalities can be justified without collapsing the
 histories.
+
+## 202. Factored Structured-SHE Obligations Feed The Constant Branch
+
+### Lean Move
+
+In
+
+```text
+FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit
+```
+
+we added:
+
+```text
+toSourceZeroCuspTargetThetaAuditOfFactoredObligations
+weightedThetaComparisonRouteOfConstantZModFactoredSourceZeroCuspTarget
+```
+
+The example file now verifies a public route from constant `ZMod` packet data
+and factored structured-SHE obligations to the final `qSigned <= thetaSigned`
+comparison.
+
+### Mathematical Reason
+
+The previous constant branch accepted a ready-made
+
+```text
+IUTStage1StructuredSHESquareWeightTransportAudit
+```
+
+This milestone moves one layer closer to the primitive transport data.  The
+input is now the factored structured-SHE record:
+
+```text
+IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+```
+
+which keeps the two relevant preservation requirements separate:
+
+```text
+coordinate-square preservation for the j^2 weights
+full-label map/value preservation for the log-volume branch
+```
+
+Lean then uses the already verified conversions from factored obligations to
+the structured-SHE square-weight transport audit, and feeds the result into the
+constant packet source-zero/cusp route.
+
+### Source Check
+
+This is important for the Corollary 3.12 dispute because the representative
+`j^2` preservation condition is not interchangeable with a weaker balanced
+sign-compatible condition.  The factored obligation record is the branch where
+that distinction is explicit: coordinate-square preservation and full-label
+log-volume preservation are separate fields.
+
+The remaining profile and log-volume matching equalities are still explicit
+arguments.  This is intentional.  The formalization does not silently identify
+the source profile, source log-volume object, or target log-volume object with
+the constant packet route data.
+
+### Relevance to the 3.12 Dispute
+
+The checked branch is now:
+
+```text
+constant ZMod packet-normalized label family
+  -> source zero/cusp upper estimates
+  -> factored structured-SHE square/full-label obligations
+  -> structured-SHE transport audit
+  -> source-zero/cusp target route
+  -> final 3.11.5-to-3.12 q/Theta comparison
+```
+
+The next mathematical pressure point is to replace the constant packet data and
+explicit matching equalities by source-level constructions from the actual
+Hodge-theater/SHE apparatus.

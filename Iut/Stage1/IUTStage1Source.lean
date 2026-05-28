@@ -21042,6 +21042,53 @@ def weightedThetaComparisonRouteOfConstantZModSourceZeroCuspTarget
     (part.toSourceZeroCuspTargetThetaAudit bundle profile audited transport_audit
       source_profile_eq source_log_volume_eq target_log_volume_eq_theta)
 
+open FLZModCuspLabelThetaCuspClassContainerAudit in
+def toSourceZeroCuspTargetThetaAuditOfFactoredObligations
+    (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l)
+    (source_profile_eq : profile = obligations.sourceProfile)
+    (source_log_volume_eq :
+      part.theta_source.compatible_average.cuspLogVolume audited =
+        obligations.sourceLogVolume)
+    (target_log_volume_eq_theta :
+      obligations.targetLogVolume =
+        part.theta_source.compatible_average.cuspLogVolume audited) :
+    ThreeElevenFiveStructuredSHESourceZeroCuspTargetThetaAudit
+      part.toThetaCuspClassContainerAudit bundle profile audited :=
+  part.toSourceZeroCuspTargetThetaAudit bundle profile audited
+    obligations.toStructuredSHESquareWeightTransportAudit
+    (by simpa using source_profile_eq)
+    (by simpa using source_log_volume_eq)
+    (by simpa using target_log_volume_eq_theta)
+
+def weightedThetaComparisonRouteOfConstantZModFactoredSourceZeroCuspTarget
+    (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l)
+    (source_profile_eq : profile = obligations.sourceProfile)
+    (source_log_volume_eq :
+      part.theta_source.compatible_average.cuspLogVolume audited =
+        obligations.sourceLogVolume)
+    (target_log_volume_eq_theta :
+      obligations.targetLogVolume =
+        part.theta_source.compatible_average.cuspLogVolume audited) :
+    FLZModCuspLabelThetaCuspClassContainerAudit.WeightedThetaComparisonRoute
+      part.toThetaCuspClassContainerAudit profile audited :=
+  part.toThetaCuspClassContainerAudit.weightedThetaComparisonRouteOfSourceZeroCuspTarget
+    bundle profile audited
+    (part.toSourceZeroCuspTargetThetaAuditOfFactoredObligations
+      bundle profile audited obligations source_profile_eq source_log_volume_eq
+      target_log_volume_eq_theta)
+
 open FLZModCuspLabelThetaClassifiedZModPacketNormalizedRouteAudit in
 def toClassifiedZModPacketNormalizedRouteAudit
     (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l) :
