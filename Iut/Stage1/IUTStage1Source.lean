@@ -16152,6 +16152,35 @@ structure WeightedThetaComparisonData
       profile audited).weightedAverageLogVolume <=
         part.theta_source.thetaSourceAverage audited
 
+structure WeightedThetaComparisonRoute
+    (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) where
+  comparison_data : WeightedThetaComparisonData part profile audited
+  targetSigned_le_squareWeightedAverage :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume
+  qSigned_le_squareWeightedAverage :
+    package.preLedger.qSigned <=
+      (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume
+  weightedAverage_le_thetaAverage :
+    (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+      profile audited).weightedAverageLogVolume <=
+        part.theta_source.thetaSourceAverage audited
+  targetSigned_le_thetaAverage :
+    package.preLedger.targetVolume.targetSigned <=
+      part.theta_source.thetaSourceAverage audited
+  qSigned_le_thetaAverage :
+    package.preLedger.qSigned <= part.theta_source.thetaSourceAverage audited
+  thetaAverage_le_thetaSigned :
+    part.theta_source.thetaSourceAverage audited <= package.preLedger.thetaSigned
+  targetSigned_le_thetaSigned :
+    package.preLedger.targetVolume.targetSigned <= package.preLedger.thetaSigned
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
 def weightedThetaComparisonDataLevel
     {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
     {profile : IUTStage1ZModSquareWeightProfile l}
@@ -16211,6 +16240,35 @@ theorem targetSigned_le_thetaSigned_of_weightedThetaComparisonData
     package.preLedger.targetVolume.targetSigned <= package.preLedger.thetaSigned :=
   part.targetSigned_le_thetaSigned_via_squareWeightedAverage
     profile audited comparison.weightedAverage_le_thetaAverage
+
+def weightedThetaComparisonRoute
+    (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (comparison :
+      WeightedThetaComparisonData part profile audited) :
+    WeightedThetaComparisonRoute part profile audited :=
+  { comparison_data := comparison,
+    targetSigned_le_squareWeightedAverage :=
+      part.targetSigned_le_squareWeightedAverageLogVolume profile audited,
+    qSigned_le_squareWeightedAverage :=
+      part.qSigned_le_squareWeightedAverageLogVolume profile audited,
+    weightedAverage_le_thetaAverage :=
+      comparison.weightedAverage_le_thetaAverage,
+    targetSigned_le_thetaAverage :=
+      part.targetSigned_le_thetaSourceAverage_of_weightedThetaComparisonData
+        profile audited comparison,
+    qSigned_le_thetaAverage :=
+      part.qSigned_le_thetaSourceAverage_of_weightedThetaComparisonData
+        profile audited comparison,
+    thetaAverage_le_thetaSigned :=
+      part.theta_source.thetaSourceAverage_le_thetaSigned audited,
+    targetSigned_le_thetaSigned :=
+      part.targetSigned_le_thetaSigned_of_weightedThetaComparisonData
+        profile audited comparison,
+    qSigned_le_thetaSigned :=
+      part.qSigned_le_thetaSigned_of_weightedThetaComparisonData
+        profile audited comparison }
 
 theorem targetSigned_le_thetaAverage
     (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
@@ -16432,6 +16490,35 @@ structure WeightedThetaComparisonData
       profile audited).weightedAverageLogVolume <=
         part.theta_source.thetaSourceAverage audited
 
+structure WeightedThetaComparisonRoute
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) where
+  comparison_data : WeightedThetaComparisonData part profile audited
+  targetSigned_le_squareWeightedAverage :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume
+  qSigned_le_squareWeightedAverage :
+    package.preLedger.qSigned <=
+      (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume
+  weightedAverage_le_thetaAverage :
+    (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+      profile audited).weightedAverageLogVolume <=
+        part.theta_source.thetaSourceAverage audited
+  targetSigned_le_thetaAverage :
+    package.preLedger.targetVolume.targetSigned <=
+      part.theta_source.thetaSourceAverage audited
+  qSigned_le_thetaAverage :
+    package.preLedger.qSigned <= part.theta_source.thetaSourceAverage audited
+  thetaAverage_le_thetaSigned :
+    part.theta_source.thetaSourceAverage audited <= package.preLedger.thetaSigned
+  targetSigned_le_thetaSigned :
+    package.preLedger.targetVolume.targetSigned <= package.preLedger.thetaSigned
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
 def weightedThetaComparisonDataLevel
     {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
     {profile : IUTStage1ZModSquareWeightProfile l}
@@ -16501,6 +16588,35 @@ theorem targetSigned_le_thetaSigned_of_weightedThetaComparisonData
     package.preLedger.targetVolume.targetSigned <= package.preLedger.thetaSigned :=
   part.targetSigned_le_thetaSigned_via_squareWeightedAverage
     profile audited comparison.weightedAverage_le_thetaAverage
+
+def weightedThetaComparisonRoute
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (comparison :
+      WeightedThetaComparisonData part profile audited) :
+    WeightedThetaComparisonRoute part profile audited :=
+  { comparison_data := comparison,
+    targetSigned_le_squareWeightedAverage :=
+      part.targetSigned_le_squareWeightedAverageLogVolume profile audited,
+    qSigned_le_squareWeightedAverage :=
+      part.qSigned_le_squareWeightedAverageLogVolume profile audited,
+    weightedAverage_le_thetaAverage :=
+      comparison.weightedAverage_le_thetaAverage,
+    targetSigned_le_thetaAverage :=
+      part.targetSigned_le_thetaSourceAverage_of_weightedThetaComparisonData
+        profile audited comparison,
+    qSigned_le_thetaAverage :=
+      part.qSigned_le_thetaSourceAverage_of_weightedThetaComparisonData
+        profile audited comparison,
+    thetaAverage_le_thetaSigned :=
+      part.theta_source.thetaSourceAverage_le_thetaSigned audited,
+    targetSigned_le_thetaSigned :=
+      part.targetSigned_le_thetaSigned_of_weightedThetaComparisonData
+        profile audited comparison,
+    qSigned_le_thetaSigned :=
+      part.qSigned_le_thetaSigned_of_weightedThetaComparisonData
+        profile audited comparison }
 
 theorem targetSigned_le_thetaAverage
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)

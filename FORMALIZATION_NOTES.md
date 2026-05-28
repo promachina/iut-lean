@@ -18285,3 +18285,53 @@ This gives us a clean test surface: if later IUT source formalization supplies a
 valid weighted-to-Theta comparison, then Lean can derive the target final bound
 through the disputed corridor; if it cannot, the remaining missing point is
 localized before the last `thetaSourceAverage <= thetaSigned` step.
+
+## 138. Package The Weighted-Theta Corridor As A Route Certificate
+
+### Lean Move
+
+We introduced:
+
+```text
+WeightedThetaComparisonRoute
+weightedThetaComparisonRoute
+```
+
+for both labelwise and cusp-class container audits.
+
+The route record contains the supplied comparison datum and every real
+inequality in the corridor:
+
+```text
+targetSigned <= squareWeightedAverage
+qSigned <= squareWeightedAverage
+squareWeightedAverage <= thetaSourceAverage
+targetSigned <= thetaSourceAverage
+qSigned <= thetaSourceAverage
+thetaSourceAverage <= thetaSigned
+targetSigned <= thetaSigned
+qSigned <= thetaSigned
+```
+
+### Mathematical Reason
+
+Earlier milestones exposed the individual transitivity steps.  This milestone
+packages the same proof data as a derived certificate, not as a new assumption.
+The record is useful because it makes the full audited route reviewable in one
+object while preserving the internal factorization.
+
+### Source Check
+
+This mirrors the current source-facing reading of the IUT III Corollary 3.12
+passage: the proof corridor is a sequence of real log-volume comparisons after
+the finite `F_l`/cusp-label data and weighted averages have been formed.  The
+Scholze-Stix concern is exactly that a simplified proof may hide or collapse one
+of these comparison stages; the route certificate keeps them separate.
+
+### Relevance to the 3.12 Dispute
+
+Future work can point to one object and ask which field is still assumed rather
+than derived from Hodge-theater data.  At present the answer is explicit:
+`weightedAverage_le_thetaAverage` is supplied by `WeightedThetaComparisonData`;
+the other fields are derived from already formalized local/container,
+q-to-target, and Theta-source upper-bound data.
