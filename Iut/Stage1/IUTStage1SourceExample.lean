@@ -4744,6 +4744,42 @@ theorem placeAudited_logVolume_fl_zmod_classified_route_target_source_example
       IUTStage1TargetAverageBoundSource.thetaPilotHullContainer :=
   summary.targetAverageSource_eq_thetaPilotHullContainer
 
+def placeAudited_logVolume_fl_zmod_full_classified_summary_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (packetSummary :
+      audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l)
+    (routeSummary :
+      audit.FLZModCuspLabelThetaClassifiedRouteSummary l)
+    (hsource :
+      packetSummary.packet_normalized.theta_source =
+        routeSummary.classified_cusp.cusp_class_audit.theta_source) :
+    audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l :=
+  { classified_packet := packetSummary,
+    classified_route := routeSummary,
+    theta_source_eq := hsource }
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_full_classified_target_source_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (summary : audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l) :
+    summary.targetAverageSource =
+      IUTStage1TargetAverageBoundSource.thetaPilotHullContainer :=
+  summary.targetAverageSource_eq_thetaPilotHullContainer
+
 theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_ind3_target_le_theta_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

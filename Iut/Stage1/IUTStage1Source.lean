@@ -11813,6 +11813,54 @@ theorem qSigned_le_thetaSigned
 
 end FLZModCuspLabelThetaClassifiedRouteSummary
 
+/--
+Full classified route summary, including the packet-normalized real-line
+identification source.
+-/
+structure FLZModCuspLabelThetaFullClassifiedRouteSummary
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  classified_packet :
+    audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l
+  classified_route : audit.FLZModCuspLabelThetaClassifiedRouteSummary l
+  theta_source_eq :
+    classified_packet.packet_normalized.theta_source =
+      classified_route.classified_cusp.cusp_class_audit.theta_source
+
+namespace FLZModCuspLabelThetaFullClassifiedRouteSummary
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+def packetIdentificationSource
+    (summary : audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l) :
+    IUTStage1PacketNormalizedIdentificationSource :=
+  summary.classified_packet.identification_source
+
+def cuspBoundSource
+    (summary : audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l) :
+    IUTStage1CuspClassBoundSource :=
+  summary.classified_route.cusp_bound_source
+
+def targetAverageSource
+    (summary : audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l) :
+    IUTStage1TargetAverageBoundSource :=
+  summary.classified_route.target_average_source
+
+theorem targetAverageSource_eq_thetaPilotHullContainer
+    (summary : audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l) :
+    summary.targetAverageSource =
+      IUTStage1TargetAverageBoundSource.thetaPilotHullContainer :=
+  summary.classified_route.targetAverageSource_eq_thetaPilotHullContainer
+
+theorem qSigned_le_thetaSigned
+    (summary : audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  summary.classified_route.qSigned_le_thetaSigned audited
+
+end FLZModCuspLabelThetaFullClassifiedRouteSummary
+
 namespace FLZModCuspLabelThetaContainerBoundAudit
 
 variable {audit : endpoint.LogVolumeChartAudit}

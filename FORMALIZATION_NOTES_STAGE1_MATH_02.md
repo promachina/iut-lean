@@ -5902,3 +5902,73 @@ packet-normalized identification source
 cusp-bound source
 target-average source
 ```
+
+## 75. Full Three-Level Route Summary
+
+### Goal
+
+We extended the route summary to include the packet-normalized real-line
+identification source.
+
+### Lean Move
+
+We added:
+
+```text
+FLZModCuspLabelThetaFullClassifiedRouteSummary
+```
+
+It stores:
+
+```text
+classified_packet
+classified_route
+theta_source_eq
+```
+
+where `theta_source_eq` checks that the packet-normalized audit and the
+classified cusp route refer to the same Theta-source audit.
+
+Lean exposes:
+
+```text
+packetIdentificationSource
+cuspBoundSource
+targetAverageSource
+targetAverageSource_eq_thetaPilotHullContainer
+qSigned_le_thetaSigned
+```
+
+### Mathematical Point
+
+The review object now records all three provenance layers:
+
+```text
+packet-normalized real-line identification source
+cusp/zero bound source
+target-to-average source
+```
+
+This is directly aimed at keeping the real-line identification and averaging
+steps inspectable.
+
+### Trap Avoided
+
+The full summary requires an equality between the packet-normalized audit's
+Theta source and the classified cusp route's Theta source.  This prevents a
+summary from combining unrelated local and global routes.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_full_classified_summary_example
+placeAudited_logVolume_fl_zmod_full_classified_target_source_example
+```
+
+### Remaining Gap
+
+The full summary is a review surface, not a new theorem source.  The next
+mathematical work should continue reducing the still-open analytic assumptions
+behind capsule-entry container estimates and packet-normalized identifications.
