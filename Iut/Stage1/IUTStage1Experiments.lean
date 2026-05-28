@@ -620,6 +620,44 @@ theorem gaussianDegreeEvaluation_matches_halfRange_j2
       ((j.val : Real) ^ 2) * evaluation.environmentDegree :=
   evaluation.gaussianDegree_fromCoordinate_of_val_le_half j hhalf
 
+/-- Procession-container experiment surface for IUT III's sets `S^±_{j+1}`. -/
+structure ProcessionContainerExperimentReport where
+  stageCardinalityFormulaAvailable : Bool
+  nestedInclusionInjective : Bool
+  coreLabelStableUnderInclusion : Bool
+  stageIndeterminacyBoundedByFullContainer : Bool
+deriving Repr
+
+/--
+The finite skeleton of the procession construction is available: the stage `j`
+container has `j+1` elements, embeds in the next stage, preserves the core label,
+and has label ambiguity bounded by any later full container.
+-/
+def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
+  { stageCardinalityFormulaAvailable := true,
+    nestedInclusionInjective := true,
+    coreLabelStableUnderInclusion := true,
+    stageIndeterminacyBoundedByFullContainer := true }
+
+theorem processionContainer_card_eq (j : Nat) :
+    Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
+  IUTStage1ProcessionContainer.card_eq j
+
+theorem processionContainer_inclusion_injective (j : Nat) :
+    Function.Injective (IUTStage1ProcessionContainer.inclusion j) :=
+  IUTStage1ProcessionContainer.inclusion_injective j
+
+theorem processionContainer_core_stable (j : Nat) :
+    IUTStage1ProcessionContainer.inclusion j
+        (IUTStage1ProcessionContainer.core j) =
+      IUTStage1ProcessionContainer.core (j + 1) :=
+  IUTStage1ProcessionContainer.inclusion_core j
+
+theorem processionContainer_labelIndeterminacy_le_full
+    {j full : Nat} (h : j ≤ full) :
+    IUTStage1ProcessionContainer.labelIndeterminacyCount j ≤ full + 1 :=
+  IUTStage1ProcessionContainer.labelIndeterminacyCount_le_full h
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -843,6 +881,7 @@ structure Corollary312DisputeFirstPassReport where
   representativeJ2SignQuotientDescentRejectedInZModModel : Bool
   absLabelThetaDegreeHalfRangeModelAvailable : Bool
   gaussianDegreeEvaluationTheoremAvailable : Bool
+  processionContainerSkeletonAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -867,6 +906,7 @@ def corollary312DisputeFirstPassReport :
     representativeJ2SignQuotientDescentRejectedInZModModel := true,
     absLabelThetaDegreeHalfRangeModelAvailable := true,
     gaussianDegreeEvaluationTheoremAvailable := true,
+    processionContainerSkeletonAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -907,6 +947,11 @@ theorem corollary312Report_absLabelThetaDegreeHalfRangeModelAvailable :
 
 theorem corollary312Report_gaussianDegreeEvaluationTheoremAvailable :
     corollary312DisputeFirstPassReport.gaussianDegreeEvaluationTheoremAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_processionContainerSkeletonAvailable :
+    corollary312DisputeFirstPassReport.processionContainerSkeletonAvailable =
       true :=
   rfl
 

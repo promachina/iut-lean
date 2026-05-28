@@ -811,6 +811,58 @@ structure IUTStage1ProcessionNormalizedLogVolume
     normalizedLogVolume = totalLogVolume / (capsuleCount : Real)
 
 /--
+Finite procession containers from IUT III.
+
+The paper writes `S^±_{j+1} = {0, 1, ..., j}`.  The current model represents
+this set by `Fin (j + 1)`.  This is only the finite label skeleton; prime-strips,
+log-shells, and tensor packets are attached later.
+-/
+abbrev IUTStage1ProcessionContainer (j : Nat) : Type :=
+  Fin (j + 1)
+
+namespace IUTStage1ProcessionContainer
+
+def core (j : Nat) : IUTStage1ProcessionContainer j :=
+  ⟨0, Nat.succ_pos j⟩
+
+def terminal (j : Nat) : IUTStage1ProcessionContainer j :=
+  ⟨j, Nat.lt_succ_self j⟩
+
+def inclusion (j : Nat) :
+    IUTStage1ProcessionContainer j ->
+      IUTStage1ProcessionContainer (j + 1) :=
+  fun label => ⟨label.val, by omega⟩
+
+theorem card_eq (j : Nat) :
+    Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
+  Fintype.card_fin (j + 1)
+
+theorem inclusion_injective (j : Nat) :
+    Function.Injective (inclusion j) := by
+  intro a b h
+  apply Fin.ext
+  simpa [inclusion] using congrArg Fin.val h
+
+theorem inclusion_core (j : Nat) :
+    inclusion j (core j) = core (j + 1) :=
+  rfl
+
+def labelIndeterminacyCount (j : Nat) : Nat :=
+  Fintype.card (IUTStage1ProcessionContainer j)
+
+theorem labelIndeterminacyCount_eq (j : Nat) :
+    labelIndeterminacyCount j = j + 1 :=
+  card_eq j
+
+theorem labelIndeterminacyCount_le_full
+    {j full : Nat} (h : j ≤ full) :
+    labelIndeterminacyCount j ≤ full + 1 := by
+  rw [labelIndeterminacyCount_eq]
+  omega
+
+end IUTStage1ProcessionContainer
+
+/--
 Real-valued local container estimate.
 
 This is the Stage 1 placeholder for a local analytic container computation:
