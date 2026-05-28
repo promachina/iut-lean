@@ -4398,3 +4398,100 @@ or add the missing Hodge-theoretic mechanism that reconciles the two.
 ```
 
 The formalization is now precise enough to keep these choices separate.
+
+## 162. Balanced Numerator and Average Transport
+
+### Lean Move
+
+We extended:
+
+```text
+IUTStage1BalancedSquareFullLabelTransport
+```
+
+with balanced numerator and average objects:
+
+```text
+balancedWeightTotal
+sourceBalancedNumerator
+targetTransportedBalancedNumerator
+sourceBalancedAverage
+targetTransportedBalancedAverage
+```
+
+and proved:
+
+```text
+targetTransportedBalancedNumerator_eq_sourceBalancedNumerator
+targetTransportedBalancedAverage_eq_sourceBalancedAverage
+```
+
+The numerator theorem is the finite-sum lift of the pointwise balanced summand
+transport from Milestone 161.  The average theorem divides both sides by the same
+balanced denominator:
+
+```text
+sum_j balancedWeight(j)
+```
+
+### Mathematical Reason
+
+This mirrors the existing representative-profile audit:
+
+```text
+IUTStage1ZModSquareWeightedFullLabelTransportAudit
+```
+
+which already proves summand, numerator, and average preservation for the
+`j.val^2` profile once the representative square-weight preservation data are
+supplied.
+
+The balanced branch now reaches the same formal strength, but only for the
+balanced profile:
+
+```text
+(j.valMinAbs.natAbs : Real)^2
+```
+
+This gives us two parallel but separate audit routes:
+
+```text
+representative route:
+  sourceProfile.weight j = (j.val : Real)^2
+
+balanced route:
+  balancedWeight j = (j.valMinAbs.natAbs : Real)^2
+```
+
+### Source Check
+
+The source papers keep the final average over `j in F_l` central.  IUT III
+Corollary 3.12 states the log-volume estimate using a procession-normalized
+average over `F_l`; IUT III Remark 3.12.4 ties this averaging to the analogy with
+the `mod p/p^2` part of Witt-vector structure.  IUT II separates the coric role
+of `F_l^±` from the Gaussian-monoid role of full `F_l`.  Scholze-Stix Section 2.2
+presses on whether the `j^2` scaling can consistently survive the real-line
+comparison.
+
+This milestone does not choose between those interpretations.  It makes the
+balanced interpretation strong enough to compare structurally with the existing
+representative interpretation.
+
+### Relevance to the 3.12 Dispute
+
+The formal status is now:
+
+```text
+representative j.val^2 average:
+  available as the current Corollary 3.12 audit target,
+  but preservation is identity-rigid
+
+balanced valMinAbs.natAbs^2 average:
+  sign-compatible and transportable under negation,
+  but not yet justified as the paper's intended j^2 expression
+```
+
+The next source-facing question is therefore precise: does the original `j^2`
+weight in the Corollary 3.12 corridor behave like the representative route, the
+balanced route, or something supplied by additional Hodge-theoretic/log-link
+data?

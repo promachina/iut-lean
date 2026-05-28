@@ -3699,6 +3699,57 @@ theorem balancedSummand_preserved
   rw [transport.balancedSquareWeight_preserved j,
     transport.fullLabelLogVolume_preserved j]
 
+def balancedWeightTotal
+    (_transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    Real :=
+  Finset.univ.sum fun j : ZMod l.value =>
+    IUTStage1ZModSquareWeightProfile.balancedSquareWeight (l := l) j
+
+def sourceBalancedNumerator
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    Real :=
+  Finset.univ.sum fun j : ZMod l.value =>
+    IUTStage1ZModSquareWeightProfile.balancedSquareWeight (l := l) j *
+      transport.sourceLogVolume.fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+
+def targetTransportedBalancedNumerator
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    Real :=
+  Finset.univ.sum fun j : ZMod l.value =>
+    IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+        (l := l) (transport.coordinateEquiv j) *
+      transport.targetLogVolume.fullLabelLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (transport.coordinateEquiv j))
+
+noncomputable def sourceBalancedAverage
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    Real :=
+  transport.sourceBalancedNumerator / transport.balancedWeightTotal
+
+noncomputable def targetTransportedBalancedAverage
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    Real :=
+  transport.targetTransportedBalancedNumerator /
+    transport.balancedWeightTotal
+
+theorem targetTransportedBalancedNumerator_eq_sourceBalancedNumerator
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    transport.targetTransportedBalancedNumerator =
+      transport.sourceBalancedNumerator := by
+  unfold targetTransportedBalancedNumerator sourceBalancedNumerator
+  exact Finset.sum_congr rfl (by
+    intro j _hj
+    exact transport.balancedSummand_preserved j)
+
+theorem targetTransportedBalancedAverage_eq_sourceBalancedAverage
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    transport.targetTransportedBalancedAverage =
+      transport.sourceBalancedAverage := by
+  unfold targetTransportedBalancedAverage sourceBalancedAverage
+  rw [transport.targetTransportedBalancedNumerator_eq_sourceBalancedNumerator]
+
 end IUTStage1BalancedSquareFullLabelTransport
 
 /--

@@ -1519,6 +1519,29 @@ theorem balancedSquareFullLabelTransport_summand_example
         (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
   transport.balancedSummand_preserved j
 
+theorem balancedSquareFullLabelTransport_weight_total_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    transport.balancedWeightTotal =
+      Finset.univ.sum fun j : ZMod l.value =>
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+          (l := l) j :=
+  rfl
+
+theorem balancedSquareFullLabelTransport_numerator_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    transport.targetTransportedBalancedNumerator =
+      transport.sourceBalancedNumerator :=
+  transport.targetTransportedBalancedNumerator_eq_sourceBalancedNumerator
+
+theorem balancedSquareFullLabelTransport_average_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    transport.targetTransportedBalancedAverage =
+      transport.sourceBalancedAverage :=
+  transport.targetTransportedBalancedAverage_eq_sourceBalancedAverage
+
 theorem zmodSquareWeightProfile_coordinate_square_val_rigid_example
     {l : PrimeGeFive}
     {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
