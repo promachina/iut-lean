@@ -2286,6 +2286,65 @@ theorem normalized_eq_factor_average
 
 end IUTStage1ThetaLabelFactorPNormalizationShadow
 
+/--
+Remark 3.12.4(v) p-adic Frobenius derivative degree inequality.
+
+The source text says that the derivative of the canonical Frobenius lifting,
+after division by `p`, yields an inclusion of line bundles
+`omega_Xk -> Phi^* omega_Xk`, not an isomorphism.  At degree level this gives
+the inequality `(1 - p) * (2g_X - 2) <= 0`.  This record keeps only that
+degree-level sign shadow and the inclusion-not-isomorphism marker.
+-/
+structure IUTStage1FrobeniusDerivativeDegreeInequalityShadow where
+  p : Nat
+  p_ge_two : 2 <= p
+  genus : Nat
+  genus_ge_two : 2 <= genus
+  derivativeGivesInclusion : Prop
+  derivative_gives_inclusion : derivativeGivesInclusion
+  derivativeIsomorphismNotAssumed : Prop
+  derivative_isomorphism_not_assumed :
+    derivativeIsomorphismNotAssumed
+
+namespace IUTStage1FrobeniusDerivativeDegreeInequalityShadow
+
+def degreeDefect
+    (data : IUTStage1FrobeniusDerivativeDegreeInequalityShadow) :
+    Real :=
+  ((1 : Real) - (data.p : Real)) *
+    ((2 : Real) * (data.genus : Real) - 2)
+
+theorem one_le_p_real
+    (data : IUTStage1FrobeniusDerivativeDegreeInequalityShadow) :
+    (1 : Real) <= data.p := by
+  exact_mod_cast le_trans (by decide : 1 <= 2) data.p_ge_two
+
+theorem genus_term_nonneg
+    (data : IUTStage1FrobeniusDerivativeDegreeInequalityShadow) :
+    (0 : Real) <= (2 : Real) * (data.genus : Real) - 2 := by
+  have hgenus : (2 : Real) <= data.genus := by
+    exact_mod_cast data.genus_ge_two
+  nlinarith
+
+theorem degreeDefect_nonpos
+    (data : IUTStage1FrobeniusDerivativeDegreeInequalityShadow) :
+    data.degreeDefect <= 0 := by
+  have hp : (1 : Real) - (data.p : Real) <= 0 := by
+    linarith [data.one_le_p_real]
+  exact mul_nonpos_of_nonpos_of_nonneg hp data.genus_term_nonneg
+
+theorem derivativeGivesInclusion_holds
+    (data : IUTStage1FrobeniusDerivativeDegreeInequalityShadow) :
+    data.derivativeGivesInclusion :=
+  data.derivative_gives_inclusion
+
+theorem derivativeIsomorphismNotAssumed_holds
+    (data : IUTStage1FrobeniusDerivativeDegreeInequalityShadow) :
+    data.derivativeIsomorphismNotAssumed :=
+  data.derivative_isomorphism_not_assumed
+
+end IUTStage1FrobeniusDerivativeDegreeInequalityShadow
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

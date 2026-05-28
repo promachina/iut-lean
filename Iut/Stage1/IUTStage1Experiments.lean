@@ -651,6 +651,7 @@ structure ProcessionContainerExperimentReport where
   zeroOneColumnAbsorptionDistinctionAvailable : Bool
   gaussBonnetMetricSignShadowAvailable : Bool
   thetaLabelFactorPNormalizationAvailable : Bool
+  frobeniusDerivativeDegreeInequalityAvailable : Bool
 deriving Repr
 
 /--
@@ -687,7 +688,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     logThetaColumnRoleTableAvailable := true,
     zeroOneColumnAbsorptionDistinctionAvailable := true,
     gaussBonnetMetricSignShadowAvailable := true,
-    thetaLabelFactorPNormalizationAvailable := true }
+    thetaLabelFactorPNormalizationAvailable := true,
+    frobeniusDerivativeDegreeInequalityAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1085,6 +1087,16 @@ theorem thetaLabelFactorPNormalization_mul_labelFactor
       data.modPOverP2GapLogVolume :=
   data.normalized_mul_labelFactor
 
+theorem frobeniusDerivativeDegreeInequality_nonpos
+    (data : IUTStage1FrobeniusDerivativeDegreeInequalityShadow) :
+    data.degreeDefect <= 0 :=
+  data.degreeDefect_nonpos
+
+theorem frobeniusDerivativeDegreeInequality_inclusion
+    (data : IUTStage1FrobeniusDerivativeDegreeInequalityShadow) :
+    data.derivativeGivesInclusion :=
+  data.derivativeGivesInclusion_holds
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1334,6 +1346,7 @@ structure Corollary312DisputeFirstPassReport where
   zeroOneColumnAbsorptionDistinctionAvailable : Bool
   gaussBonnetMetricSignShadowAvailable : Bool
   thetaLabelFactorPNormalizationAvailable : Bool
+  frobeniusDerivativeDegreeInequalityAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1384,6 +1397,7 @@ def corollary312DisputeFirstPassReport :
     zeroOneColumnAbsorptionDistinctionAvailable := true,
     gaussBonnetMetricSignShadowAvailable := true,
     thetaLabelFactorPNormalizationAvailable := true,
+    frobeniusDerivativeDegreeInequalityAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1554,6 +1568,11 @@ theorem corollary312Report_gaussBonnetMetricSignShadowAvailable :
 
 theorem corollary312Report_thetaLabelFactorPNormalizationAvailable :
     corollary312DisputeFirstPassReport.thetaLabelFactorPNormalizationAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_frobeniusDerivativeDegreeInequalityAvailable :
+    corollary312DisputeFirstPassReport.frobeniusDerivativeDegreeInequalityAvailable =
       true :=
   rfl
 
