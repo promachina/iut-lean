@@ -1301,6 +1301,21 @@ theorem placeAuditedNonarchimedeanEntry_place_mem_upperSemi_example
   IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanEntry_place_mem_upperSemi
     hstep
 
+theorem placeAuditedNonarchimedeanEntry_place_mem_fiber_example
+    {coric : Type u}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂)
+    (fiberAudit :
+      IUTStage1NonarchimedeanInd2PlaceFiberAudit
+        audited₁.placeFamilyCompatibility.ind2Actions) :
+    hstep.action_entry.place ∈ fiberAudit.fiber.places :=
+  IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanEntry_place_mem_fiber
+    hstep fiberAudit
+
 theorem placeAuditedNonarchimedeanEntry_preserves_totalLogVolume_example
     {coric : Type u}
     {audited₁ audited₂ :
@@ -1353,6 +1368,21 @@ theorem placeAuditedArchimedeanEntry_place_mem_upperSemi_example
         fun entry => entry.place :=
   IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanEntry_place_mem_upperSemi
     hstep
+
+theorem placeAuditedArchimedeanEntry_place_mem_fiber_example
+    {coric : Type u}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂)
+    (fiberAudit :
+      IUTStage1ArchimedeanInd2PlaceFiberAudit
+        audited₁.placeFamilyCompatibility.ind2Actions) :
+    hstep.action_entry.place ∈ fiberAudit.fiber.places :=
+  IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanEntry_place_mem_fiber
+    hstep fiberAudit
 
 theorem placeAuditedArchimedeanEntry_preserves_totalLogVolume_example
     {coric : Type u}

@@ -2360,3 +2360,56 @@ directSummandPlaceCountAudit_archimedean_fiber_count_example
 The next refinement should connect entry-based `(Ind2)` action steps to a
 chosen place fiber, so that a local action entry is not only in the action list
 and upper-semi list, but also in the explicit fiber over `vQ`.
+
+## 31. Entry Places Lie in the Typed Fiber
+
+### Goal
+
+We connected entry-based audited `(Ind2)` steps to the explicit place fiber
+over `vQ`.
+
+### Lean/API Check
+
+The audited choice namespace now proves:
+
+```text
+nonarchimedeanEntry_place_mem_fiber
+archimedeanEntry_place_mem_fiber
+```
+
+These take an entry-based local `(Ind2)` step and a corresponding place-fiber
+audit, and conclude that the action entry's place lies in the fiber's place
+list.
+
+### Mathematical Point
+
+The local action entry is now traceable through three surfaces:
+
+```text
+audited Ind2 action list
+upper-semi place list
+explicit fiber of places over vQ
+```
+
+This is still abstract, but it gives the Lean development a named route from a
+single local `(Ind2)` action to the fiber-count statement in Theorem 3.11.
+
+### Trap Avoided
+
+The proof uses the explicit fiber audit.  It does not infer fiber membership
+from a label match or from the existence of a local action alone.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+placeAuditedNonarchimedeanEntry_place_mem_fiber_example
+placeAuditedArchimedeanEntry_place_mem_fiber_example
+```
+
+### Remaining Gap
+
+We still need a common package that carries an audited choice, its direct
+summand count audit, and its place-fiber audit together.  That package should
+be the next target for source-facing Theorem 3.11 `(Ind2)` obligations.

@@ -3398,6 +3398,30 @@ theorem archimedeanEntry_place_mem_upperSemi
   rw [← audited₁.archimedeanPlaces_eq]
   exact archimedeanEntry_place_mem_ind2Actions hstep
 
+theorem nonarchimedeanEntry_place_mem_fiber
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmActionEntryStep audited₁ audited₂)
+    (fiberAudit :
+      IUTStage1NonarchimedeanInd2PlaceFiberAudit
+        audited₁.placeFamilyCompatibility.ind2Actions) :
+    hstep.action_entry.place ∈ fiberAudit.fiber.places := by
+  rw [← fiberAudit.places_eq]
+  exact nonarchimedeanEntry_place_mem_ind2Actions hstep
+
+theorem archimedeanEntry_place_mem_fiber
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoActionEntryStep audited₁ audited₂)
+    (fiberAudit :
+      IUTStage1ArchimedeanInd2PlaceFiberAudit
+        audited₁.placeFamilyCompatibility.ind2Actions) :
+    hstep.action_entry.place ∈ fiberAudit.fiber.places := by
+  rw [← fiberAudit.places_eq]
+  exact archimedeanEntry_place_mem_ind2Actions hstep
+
 theorem nonarchimedeanEntry_preserves_capsuleTotalLogVolume
     {audited₁ audited₂ :
       IUTStage1PlaceAuditedDirectSummandPacketChoice
