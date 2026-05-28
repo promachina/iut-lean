@@ -643,6 +643,7 @@ structure ProcessionContainerExperimentReport where
   determinantTensorPowerNormalizationAvailable : Bool
   hullDetUpperRayComparisonAvailable : Bool
   qPilotTwoComputationComparisonAvailable : Bool
+  thetaExtendedFiniteEndpointAvailable : Bool
   qPilotTwoComputationSignedEndpointAvailable : Bool
   corollary312CThetaLowerBoundAlgebraAvailable : Bool
   corollary312SignedCThetaBridgeAvailable : Bool
@@ -721,6 +722,7 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     determinantTensorPowerNormalizationAvailable := true,
     hullDetUpperRayComparisonAvailable := true,
     qPilotTwoComputationComparisonAvailable := true,
+    thetaExtendedFiniteEndpointAvailable := true,
     qPilotTwoComputationSignedEndpointAvailable := true,
     corollary312CThetaLowerBoundAlgebraAvailable := true,
     corollary312SignedCThetaBridgeAvailable := true,
@@ -1041,6 +1043,18 @@ theorem qPilotTwoComputation_output_le_theta
     (data : IUTStage1QPilotTwoComputationLogVolume) :
     data.outputHullLogVolume <= data.upperRayData.thetaHullLogVolume :=
   data.output_le_thetaHullLogVolume
+
+theorem thetaFiniteEndpoint_isFinite
+    (data : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint) :
+    data.thetaExtended.IsFinite :=
+  data.thetaExtendedFinite
+
+theorem thetaFiniteEndpoint_q_le_finiteTheta
+    (data : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint) :
+    data.upperRayData.qPilotLogVolume <=
+      IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+        data.thetaExtended :=
+  data.qPilotLogVolume_le_thetaFiniteValue
 
 theorem qPilotTwoComputationSignedEndpoint_corollary312
     (data : IUTStage1QPilotTwoComputationSignedEndpoint) :
@@ -1792,6 +1806,7 @@ structure Corollary312DisputeFirstPassReport where
   determinantTensorPowerNormalizationAvailable : Bool
   hullDetUpperRayComparisonAvailable : Bool
   qPilotTwoComputationComparisonAvailable : Bool
+  thetaExtendedFiniteEndpointAvailable : Bool
   qPilotTwoComputationSignedEndpointAvailable : Bool
   corollary312CThetaLowerBoundAlgebraAvailable : Bool
   corollary312SignedCThetaBridgeAvailable : Bool
@@ -1883,6 +1898,7 @@ def corollary312DisputeFirstPassReport :
     determinantTensorPowerNormalizationAvailable := true,
     hullDetUpperRayComparisonAvailable := true,
     qPilotTwoComputationComparisonAvailable := true,
+    thetaExtendedFiniteEndpointAvailable := true,
     qPilotTwoComputationSignedEndpointAvailable := true,
     corollary312CThetaLowerBoundAlgebraAvailable := true,
     corollary312SignedCThetaBridgeAvailable := true,
@@ -2062,6 +2078,11 @@ theorem corollary312Report_hullDetUpperRayComparisonAvailable :
 
 theorem corollary312Report_qPilotTwoComputationComparisonAvailable :
     corollary312DisputeFirstPassReport.qPilotTwoComputationComparisonAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_thetaExtendedFiniteEndpointAvailable :
+    corollary312DisputeFirstPassReport.thetaExtendedFiniteEndpointAvailable =
       true :=
   rfl
 

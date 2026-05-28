@@ -1693,6 +1693,93 @@ theorem corollary312
 end IUTStage1QPilotTwoComputationSignedEndpoint
 
 /--
+Extended signed log-volume used in the statement of IUT III, Corollary 3.12.
+
+The source first writes the Theta-pilot signed log-volume as an element of
+`R ∪ {+∞}` and then proves that the value is real.  This finite/infinite split is
+kept separate from the real-valued comparison records.
+-/
+inductive IUTStage1ExtendedSignedLogVolume where
+  | finite : Real -> IUTStage1ExtendedSignedLogVolume
+  | plusInfinity : IUTStage1ExtendedSignedLogVolume
+
+namespace IUTStage1ExtendedSignedLogVolume
+
+def IsFinite : IUTStage1ExtendedSignedLogVolume -> Prop
+  | finite _ => True
+  | plusInfinity => False
+
+def finiteValue : (value : IUTStage1ExtendedSignedLogVolume) ->
+    value.IsFinite -> Real
+  | finite realValue, _ => realValue
+  | plusInfinity, h => False.elim h
+
+def finiteValueOrZero : IUTStage1ExtendedSignedLogVolume -> Real
+  | finite realValue => realValue
+  | plusInfinity => 0
+
+theorem finite_isFinite (value : Real) :
+    (finite value).IsFinite :=
+  trivial
+
+theorem not_plusInfinity_isFinite :
+    ¬ plusInfinity.IsFinite := by
+  intro h
+  exact h
+
+theorem finiteValue_finite (value : Real) :
+    finiteValue (finite value) (finite_isFinite value) = value :=
+  rfl
+
+theorem finiteValueOrZero_finite (value : Real) :
+    finiteValueOrZero (finite value) = value :=
+  rfl
+
+end IUTStage1ExtendedSignedLogVolume
+
+/--
+Finiteness endpoint for the Theta-pilot signed log-volume in Corollary 3.12.
+
+The hull/determinant upper-ray datum provides a real value for the
+Theta-pilot boundary.  Thus the extended statement-level value is the finite
+branch, and the same datum still supplies the q-pilot upper-ray comparison.
+-/
+structure IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint where
+  upperRayData : IUTStage1HullDetPilotUpperRayLogVolume
+  thetaExtended : IUTStage1ExtendedSignedLogVolume
+  thetaExtended_eq_finiteHull :
+    thetaExtended =
+      IUTStage1ExtendedSignedLogVolume.finite
+        upperRayData.thetaHullLogVolume
+
+namespace IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint
+
+theorem thetaExtendedFinite
+    (data : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint) :
+    data.thetaExtended.IsFinite := by
+  rw [data.thetaExtended_eq_finiteHull]
+  exact IUTStage1ExtendedSignedLogVolume.finite_isFinite
+    data.upperRayData.thetaHullLogVolume
+
+theorem thetaFiniteValue_eq_hull
+    (data : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint) :
+    IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+        data.thetaExtended =
+      data.upperRayData.thetaHullLogVolume := by
+  rw [data.thetaExtended_eq_finiteHull]
+  rfl
+
+theorem qPilotLogVolume_le_thetaFiniteValue
+    (data : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint) :
+    data.upperRayData.qPilotLogVolume <=
+      IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+        data.thetaExtended := by
+  rw [data.thetaFiniteValue_eq_hull]
+  exact data.upperRayData.qPilotLogVolume_le_thetaHullLogVolume
+
+end IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint
+
+/--
 IUT III, Corollary 3.12 Step (xi-f) final `C_Theta` algebra.
 
 The source text obtains `-|log(q)| <= -|log(Theta)|` from membership of the
