@@ -5649,3 +5649,52 @@ not obstructed by representative squares.  If it uses pointwise transported
 representative summands, negation is excluded.  The next formal work must
 therefore identify which of these levels the actual Theorem 3.11 to Corollary
 3.12 argument requires at each step.
+
+## 180. Aggregate Preservation Does Not Imply Pointwise Preservation
+
+### Lean Move
+
+We promoted the aggregate/pointwise split to an explicit non-implication
+example:
+
+```text
+IUTStage1ZModSquareWeightProfile
+  .exists_representativeSummand_constant_one_total_preserved_not_pointwise
+```
+
+Lean proves that there exists a coordinate equivalence such that the total
+constant-one representative summand is preserved, but the pointwise
+constant-one representative summand is not preserved.  The witness is negation
+on `ZMod l.value`.
+
+### Mathematical Reason
+
+This theorem blocks a common formalization mistake.  From
+
+```text
+sum_j f (T j) = sum_j f j
+```
+
+one cannot infer
+
+```text
+forall j, f (T j) = f j.
+```
+
+For finite sums, the aggregate equality may come only from permutation of the
+index set.  It carries no pointwise preservation information.
+
+### Source Check
+
+This matches the paper-level distinction between averaged/procession-normalized
+log-volumes and the pointwise `j^2` factors discussed in the Scholze-Stix
+critique.  The fact that an average can be reindexed does not by itself justify
+transporting each labeled `j^2` contribution through the disputed real-line
+comparison.
+
+### Relevance to the 3.12 Dispute
+
+Any future Lean proof step that tries to use an averaged equality as if it were
+pointwise representative-square preservation should now fail unless it supplies
+additional hypotheses.  This is exactly the kind of trap we need the
+formalization to expose.

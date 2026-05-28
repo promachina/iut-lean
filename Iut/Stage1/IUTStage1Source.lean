@@ -2452,6 +2452,36 @@ theorem not_representativeSummand_constant_one_preserved_neg :
     (coordinateSquarePreserving_neg_of_representativeSummand_constant_one_preserved
       hsummand)
 
+theorem exists_representativeSummand_constant_one_total_preserved_not_pointwise :
+    ∃ coordinateEquiv : ZMod l.value ≃ ZMod l.value,
+      ((Finset.univ.sum fun j : ZMod l.value =>
+        representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real))
+          (coordinateEquiv j)) =
+        Finset.univ.sum fun j : ZMod l.value =>
+          representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real))
+            j) ∧
+        ¬ ∀ j : ZMod l.value,
+          representativeFullLabelWeightedSummand
+              (l := l)
+              (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+                (l := l) (1 : Real))
+              (coordinateEquiv j) =
+            representativeFullLabelWeightedSummand
+              (l := l)
+              (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+                (l := l) (1 : Real))
+              j := by
+  exact
+    ⟨Equiv.neg (ZMod l.value),
+      representativeSummand_constant_one_total_preserved_neg,
+      not_representativeSummand_constant_one_preserved_neg⟩
+
 theorem squareWeight_preserved_of_coordinateSquarePreserving
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
     {coordinateEquiv : ZMod l.value ≃ ZMod l.value}

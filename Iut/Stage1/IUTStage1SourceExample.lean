@@ -1110,6 +1110,35 @@ theorem zmodSquareWeightProfile_rep_summand_constant_one_total_neg_example
   representativeSummand_constant_one_total_preserved_neg
 
 open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_total_preserved_not_pointwise_example
+    {l : PrimeGeFive} :
+    ∃ coordinateEquiv : ZMod l.value ≃ ZMod l.value,
+      ((Finset.univ.sum fun j : ZMod l.value =>
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real))
+          (coordinateEquiv j)) =
+        Finset.univ.sum fun j : ZMod l.value =>
+          IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real))
+            j) ∧
+        ¬ ∀ j : ZMod l.value,
+          IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+              (l := l)
+              (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+                (l := l) (1 : Real))
+              (coordinateEquiv j) =
+            IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+              (l := l)
+              (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+                (l := l) (1 : Real))
+              j :=
+  exists_representativeSummand_constant_one_total_preserved_not_pointwise
+
+open IUTStage1ZModSquareWeightProfile in
 theorem zmodSquareWeightProfile_full_label_summand_transport_example
     {l : PrimeGeFive}
     {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
