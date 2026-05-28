@@ -3457,6 +3457,72 @@ theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_torsor_label_ind2_
       (part.averaged_audit.averagedLogVolume audited₂).averageLogVolume :=
   part.ind2AverageLogVolumeEq hstep
 
+theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_label_card_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelAveragedInd12Audit l) :
+    Fintype.card (ZMod l.value) = l.value :=
+  part.labelCard_eq_primeValue
+
+theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_label_class_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelAveragedInd12Audit l) :
+    part.cusp_label_model.cusp_label_class_data.labelClass =
+      part.cusp_label_model.cusp_label_class_data.model.signAction.toSignLabelQuotient
+        part.cusp_label_model.cusp_label_class_data.model.canonicalNonzeroLabel :=
+  part.labelClass_eq_model_quotient
+
+theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_label_ind1_average_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelAveragedInd12Audit l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ProcessionAutomorphismStep
+        audited₁ audited₂) :
+    (part.averaged_audit.averagedLogVolume audited₁).averageLogVolume =
+      (part.averaged_audit.averagedLogVolume audited₂).averageLogVolume :=
+  part.ind1AverageLogVolumeEq hstep
+
+theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_label_ind2_average_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelAveragedInd12Audit l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.LocalTensorDirectSummandActionStep
+        audited₁ audited₂) :
+    (part.averaged_audit.averagedLogVolume audited₁).averageLogVolume =
+      (part.averaged_audit.averagedLogVolume audited₂).averageLogVolume :=
+  part.ind2AverageLogVolumeEq hstep
+
 theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_ind3_target_le_theta_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

@@ -22,6 +22,10 @@ open RealLineCopy
 
 universe u v w x
 
+/-- A prime `l ≥ 5` is nonzero, so `ZMod l.value` has its finite model. -/
+instance primeGeFiveValueNeZero (l : PrimeGeFive) : NeZero l.value :=
+  ⟨l.ne_zero⟩
+
 /-- Inert identifier for a pilot object in the source-facing Stage 1 package. -/
 structure PilotObjectId where
   label : String
@@ -9508,6 +9512,19 @@ structure FLLabelTorsorAveragedInd12Audit
   torsor_model : IUTStage1FLLabelTorsorModel label
   averaged_audit : audit.LabelAveragedInd12Audit label
 
+/--
+`ZMod l`-indexed averaged audit carrying the canonical local cusp-label model
+for the same prime `l`.
+
+This is the Stage 1 package in which the average over `j ∈ F_l` and the local
+cusp-label class data share the same formal `ZMod l` source.
+-/
+structure FLZModCuspLabelAveragedInd12Audit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  cusp_label_model : IUTStage1FLZModCuspLabelClassModel l
+  averaged_audit : audit.LabelAveragedInd12Audit (ZMod l.value)
+
 theorem qCharted (audit : endpoint.LogVolumeChartAudit) :
     (Transport.map package.preLedger.chartedContainer.chart.qToTarget
       package.preLedger.qValue.qPoint).coord =
@@ -9742,6 +9759,60 @@ theorem ind2AverageLogVolumeEq
   part.averaged_audit.ind2AverageLogVolumeEq hstep
 
 end FLLabelTorsorAveragedInd12Audit
+
+namespace FLZModCuspLabelAveragedInd12Audit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+theorem labelCard_eq_primeValue
+    (_part : audit.FLZModCuspLabelAveragedInd12Audit l) :
+    Fintype.card (ZMod l.value) = l.value := by
+  rw [ZMod.card]
+
+theorem localNormalizedAudit
+    (part : audit.FLZModCuspLabelAveragedInd12Audit l) :
+    audit.ProcessionNormalizedInd12Audit :=
+  part.averaged_audit.localNormalizedAudit
+
+theorem canonicalLabelTranslate
+    (part : audit.FLZModCuspLabelAveragedInd12Audit l) :
+    part.cusp_label_model.local_lab_cusp_model.canonicalNonzeroLabel.1 =
+      part.cusp_label_model.local_lab_cusp_model.additiveTorsor.vadd
+        part.cusp_label_model.local_lab_cusp_model.canonicalCoordinate
+        part.cusp_label_model.local_lab_cusp_model.labelQuotient.zero :=
+  part.cusp_label_model.canonicalLabelTranslate
+
+theorem labelClass_eq_model_quotient
+    (part : audit.FLZModCuspLabelAveragedInd12Audit l) :
+    part.cusp_label_model.cusp_label_class_data.labelClass =
+      part.cusp_label_model.cusp_label_class_data.model.signAction.toSignLabelQuotient
+        part.cusp_label_model.cusp_label_class_data.model.canonicalNonzeroLabel :=
+  part.cusp_label_model.labelClass_eq_model_quotient
+
+theorem ind1AverageLogVolumeEq
+    (part : audit.FLZModCuspLabelAveragedInd12Audit l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ProcessionAutomorphismStep
+        audited₁ audited₂) :
+    (part.averaged_audit.averagedLogVolume audited₁).averageLogVolume =
+      (part.averaged_audit.averagedLogVolume audited₂).averageLogVolume :=
+  part.averaged_audit.ind1AverageLogVolumeEq hstep
+
+theorem ind2AverageLogVolumeEq
+    (part : audit.FLZModCuspLabelAveragedInd12Audit l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.LocalTensorDirectSummandActionStep
+        audited₁ audited₂) :
+    (part.averaged_audit.averagedLogVolume audited₁).averageLogVolume =
+      (part.averaged_audit.averagedLogVolume audited₂).averageLogVolume :=
+  part.averaged_audit.ind2AverageLogVolumeEq hstep
+
+end FLZModCuspLabelAveragedInd12Audit
 
 end LogVolumeChartAudit
 

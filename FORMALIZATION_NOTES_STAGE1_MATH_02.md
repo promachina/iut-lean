@@ -3438,3 +3438,81 @@ where the label set is `ZMod l.value`, the averaged audit is indexed by those
 labels, and the same `l` carries the cusp-label class model.  That will make the
 average over `j ∈ F_l` and the local cusp-label structure live in the same
 formal package.
+
+## 46. `ZMod l` Cusp-Label Averaged Audit
+
+### Goal
+
+We connected the label-averaged `(Ind1)/(Ind2)` log-volume audit to the
+canonical `ZMod l` cusp-label class bridge.
+
+### Lean/API Check
+
+The new endpoint-level wrapper is:
+
+```text
+FLZModCuspLabelAveragedInd12Audit
+```
+
+It carries:
+
+```text
+cusp_label_model : IUTStage1FLZModCuspLabelClassModel l
+averaged_audit : LabelAveragedInd12Audit (ZMod l.value)
+```
+
+Lean exposes:
+
+```text
+labelCard_eq_primeValue
+localNormalizedAudit
+canonicalLabelTranslate
+labelClass_eq_model_quotient
+ind1AverageLogVolumeEq
+ind2AverageLogVolumeEq
+```
+
+We also added:
+
+```text
+primeGeFiveValueNeZero
+```
+
+as a local Stage 1 instance witnessing `NeZero l.value`, so the finite
+`ZMod l.value` model is available whenever `l : PrimeGeFive`.
+
+### Mathematical Point
+
+This is the first checked package where the phrase "average over `j ∈ F_l`" is
+not merely represented by an arbitrary finite label type, but by the concrete
+`ZMod l.value` carrier tied to the same canonical cusp-label class model.
+
+The result is still conditional in the right way: averaged invariance comes
+from the explicit label-wise `(Ind1)/(Ind2)` audit, not from the cusp-label
+model by itself.
+
+### Trap Avoided
+
+We did not identify the cusp-label class with the averaged log-volume values.
+The wrapper only makes them share the same `l` and the same `ZMod l` label
+source.  A future theorem must still specify how theta/cusp labels index the
+actual log-volume family.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_label_card_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_label_class_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_label_ind1_average_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_label_ind2_average_example
+```
+
+### Remaining Gap
+
+The next refinement should state an explicit compatibility between the
+label-indexed normalized log-volume family and the cusp-label class data.  In
+other words, the formalization should distinguish "indexed by `ZMod l`" from
+"indexed by the cusp labels arising from the local model" and then prove or
+assume the precise bridge between those two descriptions.
