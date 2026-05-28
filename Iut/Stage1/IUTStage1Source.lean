@@ -1241,11 +1241,43 @@ theorem zmod_canonicalSignLabel_eq
       zmodCanonicalSignLabelQuotient l :=
   rfl
 
+theorem zmod_canonicalCoordinate_eq_one
+    (l : PrimeGeFive) :
+    (zmod l).local_lab_cusp_model.canonicalCoordinate =
+      (1 : ZMod l.value) :=
+  rfl
+
+theorem zmod_canonicalSignLabel_eq_fromCoordinate_one
+    (l : PrimeGeFive) :
+    (zmod l).local_lab_cusp_model.canonicalSignLabel =
+      zmodSignLabelFromCoordinate l (1 : ZMod l.value)
+        (zmodOneNonzeroLabel l).2 := by
+  calc
+    (zmod l).local_lab_cusp_model.canonicalSignLabel =
+        zmodCanonicalSignLabelQuotient l :=
+      zmod_canonicalSignLabel_eq l
+    _ = zmodSignLabelFromCoordinate l (1 : ZMod l.value)
+          (zmodOneNonzeroLabel l).2 :=
+      (zmodSignLabelFromCoordinate_one_eq_canonical l).symm
+
 theorem zmod_cuspLabelClass_eq_canonical
     (l : PrimeGeFive) :
     (zmod l).cusp_label_class_data.labelClass =
       (zmod l).cusp_label_class_data.model.canonicalSignLabel :=
   (zmod l).cusp_label_class_data.labelClass_eq_canonical
+
+theorem zmod_cuspLabelClass_eq_fromCoordinate_one
+    (l : PrimeGeFive) :
+    (zmod l).cusp_label_class_data.labelClass =
+      zmodSignLabelFromCoordinate l (1 : ZMod l.value)
+        (zmodOneNonzeroLabel l).2 := by
+  calc
+    (zmod l).cusp_label_class_data.labelClass =
+        (zmod l).cusp_label_class_data.model.canonicalSignLabel :=
+      zmod_cuspLabelClass_eq_canonical l
+    _ = zmodSignLabelFromCoordinate l (1 : ZMod l.value)
+          (zmodOneNonzeroLabel l).2 :=
+      zmod_canonicalSignLabel_eq_fromCoordinate_one l
 
 end IUTStage1FLZModCuspLabelClassModel
 
@@ -12971,6 +13003,43 @@ theorem targetSigned_le_thetaSourceAverage
       part.theta_source.thetaSourceAverage audited :=
   let directRoute := part.toDirectLocalLabelObjectConstructionAudit
   directRoute.targetSigned_le_thetaSourceAverage audited
+
+theorem canonicalCuspClassLocalObject_eq_packetLocalObject
+    (part : audit.FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.cuspClassLocalObject audited (zmodCanonicalSignLabelQuotient l) =
+      audited.choice.local_tensor_state.packetState.localObject :=
+  part.cuspClassLocalObject_eq_packetLocalObject
+    audited (zmodCanonicalSignLabelQuotient l)
+
+theorem one_normalizedLogVolume_eq_canonicalCuspClassLocalObjectFinite
+    (part : audit.FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume (1 : ZMod l.value) =
+      (part.cuspClassLocalObject audited
+        (zmodCanonicalSignLabelQuotient l)).finiteLogVolume := by
+  calc
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume (1 : ZMod l.value) =
+        (part.theta_source.compatible_average.cuspLogVolume audited).normalizedLogVolume
+          (1 : ZMod l.value) :=
+      part.theta_source.compatible_average.normalizedLogVolumeEq
+        audited (1 : ZMod l.value)
+    _ =
+        (part.theta_source.compatible_average.cuspLogVolume audited).cuspClassLogVolume
+          (zmodSignLabelFromCoordinate l (1 : ZMod l.value)
+            (zmodOneNonzeroLabel l).2) :=
+      (part.theta_source.compatible_average.cuspLogVolume audited).nonzero_eq
+        (1 : ZMod l.value) (zmodOneNonzeroLabel l).2
+    _ =
+        (part.theta_source.compatible_average.cuspLogVolume audited).cuspClassLogVolume
+          (zmodCanonicalSignLabelQuotient l) := by
+      rw [zmodSignLabelFromCoordinate_one_eq_canonical]
+    _ = (part.cuspClassLocalObject audited
+          (zmodCanonicalSignLabelQuotient l)).finiteLogVolume :=
+      part.cuspClassLogVolume_eq_localObjectFinite
+        audited (zmodCanonicalSignLabelQuotient l)
 
 end FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit
 

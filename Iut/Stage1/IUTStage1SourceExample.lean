@@ -967,6 +967,13 @@ theorem flZModCuspLabelClassModel_label_class_example
         model.cusp_label_class_data.model.canonicalNonzeroLabel :=
   model.labelClass_eq_model_quotient
 
+theorem flZModCuspLabelClassModel_zmod_label_class_from_one_example
+    {l : PrimeGeFive} :
+    (IUTStage1FLZModCuspLabelClassModel.zmod l).cusp_label_class_data.labelClass =
+      zmodSignLabelFromCoordinate l (1 : ZMod l.value)
+        (zmodOneNonzeroLabel l).2 :=
+  IUTStage1FLZModCuspLabelClassModel.zmod_cuspLabelClass_eq_fromCoordinate_one l
+
 theorem zmodCuspLabelLogVolumeCompatibility_nonzero_example
     {l : PrimeGeFive}
     (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
@@ -5025,6 +5032,24 @@ theorem placeAudited_logVolume_fl_zmod_cusp_zero_label_object_zero_eq_example
       (part.theta_source.compatible_average.cuspLogVolume audited).zero_eq_zeroLogVolume
     _ = (part.zeroLocalObject audited).finiteLogVolume :=
       part.zeroLogVolume_eq_localObjectFinite audited
+
+theorem placeAudited_logVolume_fl_zmod_cusp_zero_label_object_one_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume (1 : ZMod l.value) =
+      (part.cuspClassLocalObject audited
+        (zmodCanonicalSignLabelQuotient l)).finiteLogVolume :=
+  part.one_normalizedLogVolume_eq_canonicalCuspClassLocalObjectFinite audited
 
 theorem placeAudited_logVolume_fl_zmod_cusp_zero_label_object_target_bound_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}

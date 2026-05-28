@@ -799,3 +799,63 @@ The split route still takes the cusp-class and zero local objects as supplied
 data.  The next mathematical step should connect these fields to the canonical
 `LocalLabCuspModel`/cusp-label construction itself, so that the split is not
 merely an interface but is produced from the local cusp-label data.
+
+## 116. Canonical One-Coordinate in the Cusp/Zero Split
+
+### Lean Move
+
+I exposed the canonical coordinate of the `ZMod l` local cusp model:
+
+```text
+IUTStage1FLZModCuspLabelClassModel.zmod_canonicalCoordinate_eq_one
+IUTStage1FLZModCuspLabelClassModel.zmod_canonicalSignLabel_eq_fromCoordinate_one
+IUTStage1FLZModCuspLabelClassModel.zmod_cuspLabelClass_eq_fromCoordinate_one
+```
+
+I also added the split-route consequence:
+
+```text
+FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit
+  .one_normalizedLogVolume_eq_canonicalCuspClassLocalObjectFinite
+```
+
+### Mathematical Reason
+
+The canonical nonzero label in the current `LocalLabCuspModel` is represented by
+`1 : ZMod l.value`.  The foundations layer already proves that this coordinate
+maps to `zmodCanonicalSignLabelQuotient l`.  Stage 1 now records that fact at
+the route boundary and uses it in the cusp/zero split.
+
+This matters because the split route handles:
+
+```text
+0       as the separate zero log-volume
+1       as a nonzero cusp sign-label class
+```
+
+Thus the canonical cusp class has a concrete nonzero coordinate witness.  The
+Lean theorem for `j = 1` must use the nonzero branch and cannot be proved by
+the zero branch.
+
+### Trap Avoided
+
+The proof of the `j = 1` branch uses `(zmodOneNonzeroLabel l).2`, so Lean checks
+that `1 != 0` in `ZMod l.value`.  This keeps the canonical cusp class tied to
+the nonzero quotient, not merely to an arbitrary label name.
+
+### Toy Check
+
+The examples now check:
+
+```text
+flZModCuspLabelClassModel_zmod_label_class_from_one_example
+placeAudited_logVolume_fl_zmod_cusp_zero_label_object_one_eq_example
+```
+
+### Remaining Gap
+
+This pins down the canonical nonzero cusp class, but only for the distinguished
+coordinate `1`.  The next useful step is to expose the analogous sign-orbit
+invariance for `-1` and then for arbitrary nonzero coordinates modulo sign, so
+that the quotient behavior is available in the local-object route rather than
+only in the raw compatibility structure.
