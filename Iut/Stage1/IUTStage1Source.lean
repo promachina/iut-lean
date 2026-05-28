@@ -1643,6 +1643,79 @@ theorem input_le_determinant
 
 end IUTStage1QPilotTwoComputationLogVolume
 
+/--
+Step (xi-h) tensor-power warning for the `Theta`-pilot log-volume.
+
+The source text recalls that the EtTh argument used in Step (xi) has no evident
+generalization to `N`-th tensor powers of `Theta`-pilot objects for `N ≥ 2`.
+Numerically, the log-volume of such a tensor power is computed by multiplying
+the original `Theta`-pilot log-volume by `N`.  For the negative log-volumes in
+the Corollary 3.12 corridor, this produces a genuinely sharper upper-ray
+boundary, so it cannot be silently substituted for the original comparison.
+-/
+structure IUTStage1ThetaPilotTensorPowerLogVolume where
+  originalThetaPilotLogVolume : Real
+  tensorPower : Nat
+  tensor_power_ge_two : 2 ≤ tensorPower
+  tensorPowerLogVolume : Real
+  tensor_power_logVolume_eq :
+    tensorPowerLogVolume =
+      (tensorPower : Real) * originalThetaPilotLogVolume
+
+namespace IUTStage1ThetaPilotTensorPowerLogVolume
+
+def originalUpperRay
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume) : Set Real :=
+  { value | value <= data.originalThetaPilotLogVolume }
+
+def tensorPowerUpperRay
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume) : Set Real :=
+  { value | value <= data.tensorPowerLogVolume }
+
+theorem tensorPowerLogVolume_eq_mul
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume) :
+    data.tensorPowerLogVolume =
+      (data.tensorPower : Real) * data.originalThetaPilotLogVolume :=
+  data.tensor_power_logVolume_eq
+
+theorem one_le_tensorPower_real
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume) :
+    (1 : Real) <= data.tensorPower := by
+  exact_mod_cast le_trans (by decide : 1 ≤ 2) data.tensor_power_ge_two
+
+theorem one_lt_tensorPower_real
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume) :
+    (1 : Real) < data.tensorPower := by
+  exact_mod_cast lt_of_lt_of_le (by decide : 1 < 2) data.tensor_power_ge_two
+
+theorem tensorPowerLogVolume_le_original_of_original_nonpos
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume)
+    (hTheta : data.originalThetaPilotLogVolume <= 0) :
+    data.tensorPowerLogVolume <= data.originalThetaPilotLogVolume := by
+  rw [data.tensorPowerLogVolume_eq_mul]
+  have h :=
+    mul_le_mul_of_nonpos_right data.one_le_tensorPower_real hTheta
+  simpa using h
+
+theorem tensorPowerUpperRay_subset_originalUpperRay_of_original_nonpos
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume)
+    (hTheta : data.originalThetaPilotLogVolume <= 0) :
+    data.tensorPowerUpperRay ⊆ data.originalUpperRay := by
+  intro value hvalue
+  exact le_trans hvalue
+    (data.tensorPowerLogVolume_le_original_of_original_nonpos hTheta)
+
+theorem tensorPowerLogVolume_lt_original_of_original_neg
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume)
+    (hTheta : data.originalThetaPilotLogVolume < 0) :
+    data.tensorPowerLogVolume < data.originalThetaPilotLogVolume := by
+  rw [data.tensorPowerLogVolume_eq_mul]
+  have h :=
+    mul_lt_mul_of_neg_right data.one_lt_tensorPower_real hTheta
+  simpa using h
+
+end IUTStage1ThetaPilotTensorPowerLogVolume
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

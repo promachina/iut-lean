@@ -641,6 +641,7 @@ structure ProcessionContainerExperimentReport where
   determinantTensorPowerNormalizationAvailable : Bool
   hullDetUpperRayComparisonAvailable : Bool
   qPilotTwoComputationComparisonAvailable : Bool
+  thetaPilotTensorPowerWarningAvailable : Bool
 deriving Repr
 
 /--
@@ -667,7 +668,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     monoAnalyticTensorPacketForgettingAvailable := true,
     determinantTensorPowerNormalizationAvailable := true,
     hullDetUpperRayComparisonAvailable := true,
-    qPilotTwoComputationComparisonAvailable := true }
+    qPilotTwoComputationComparisonAvailable := true,
+    thetaPilotTensorPowerWarningAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -926,6 +928,24 @@ theorem qPilotTwoComputation_output_le_theta
     data.outputHullLogVolume <= data.upperRayData.thetaHullLogVolume :=
   data.output_le_thetaHullLogVolume
 
+theorem thetaPilotTensorPowerLogVolume_eq_mul
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume) :
+    data.tensorPowerLogVolume =
+      (data.tensorPower : Real) * data.originalThetaPilotLogVolume :=
+  data.tensorPowerLogVolume_eq_mul
+
+theorem thetaPilotTensorPowerUpperRay_subset_original
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume)
+    (hTheta : data.originalThetaPilotLogVolume <= 0) :
+    data.tensorPowerUpperRay ⊆ data.originalUpperRay :=
+  data.tensorPowerUpperRay_subset_originalUpperRay_of_original_nonpos hTheta
+
+theorem thetaPilotTensorPowerLogVolume_sharper_of_neg
+    (data : IUTStage1ThetaPilotTensorPowerLogVolume)
+    (hTheta : data.originalThetaPilotLogVolume < 0) :
+    data.tensorPowerLogVolume < data.originalThetaPilotLogVolume :=
+  data.tensorPowerLogVolume_lt_original_of_original_neg hTheta
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1165,6 +1185,7 @@ structure Corollary312DisputeFirstPassReport where
   determinantTensorPowerNormalizationAvailable : Bool
   hullDetUpperRayComparisonAvailable : Bool
   qPilotTwoComputationComparisonAvailable : Bool
+  thetaPilotTensorPowerWarningAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1205,6 +1226,7 @@ def corollary312DisputeFirstPassReport :
     determinantTensorPowerNormalizationAvailable := true,
     hullDetUpperRayComparisonAvailable := true,
     qPilotTwoComputationComparisonAvailable := true,
+    thetaPilotTensorPowerWarningAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1325,6 +1347,11 @@ theorem corollary312Report_hullDetUpperRayComparisonAvailable :
 
 theorem corollary312Report_qPilotTwoComputationComparisonAvailable :
     corollary312DisputeFirstPassReport.qPilotTwoComputationComparisonAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_thetaPilotTensorPowerWarningAvailable :
+    corollary312DisputeFirstPassReport.thetaPilotTensorPowerWarningAvailable =
       true :=
   rfl
 

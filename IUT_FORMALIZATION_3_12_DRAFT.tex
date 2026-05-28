@@ -149,6 +149,8 @@ The code currently covers:
   Hodge-theater histories;
 \item the Step (xi-d)--(xi-g) shadow: determinant normalization, upper-ray
   membership, and equality of the two \(q\)-pilot log-volume computations;
+\item the Step (xi-h) warning: for \(N\ge2\) and \(\Theta<0\), the tensor-power
+  boundary satisfies \(N\Theta<\Theta\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -178,7 +180,7 @@ SHE availability.  The obstruction flags are raw-cancellation failure,
 label-independent \(j^2\) failure, and sign-quotient representative descent
 failure.  The Gaussian/procession flags include finite tensor-packet, monoid
 action, base-valuation product, coric-transfer, determinant-normalization,
-upper-ray, and \(q\)-pilot two-computation shadows.
+upper-ray, \(q\)-pilot two-computation, and tensor-power warning shadows.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -213,6 +215,8 @@ representative \(j^2\) factors, and it rejects balanced sign-compatible evidence
 as the final hull/log-volume comparison level.  Lean also rejects direct descent
 of arbitrary raw representative \(j^2\) theta-degree data to \(|F_\ell|\), while
 accepting the half-range exponent convention stated in IUT II.
+Lean also checks that an \(N\)-th tensor-power boundary is a strict strengthening
+for \(N\ge2\) and negative pilot log-volume.
 
 \section{Missing Mathematics}
 
@@ -228,7 +232,8 @@ The present code does not yet formalize:
 \item the actual construction of log-shells and tensor packets attached to
   mono-analytic prime-strips in IUT III, Theorem 3.11;
 \item the genuine holomorphic hull and determinant operations of Step (xi),
-  beyond the present finite determinant/upper-ray/two-computation shadows;
+  beyond the present finite determinant/upper-ray/two-computation/tensor-power
+  shadows;
 \item the exact IUT IV log-volume estimates and Diophantine applications;
 \item a proof that the current Hodge/SHE transport obligations follow from
   Mochizuki's full hypotheses.
@@ -251,6 +256,8 @@ Only after this bridge is formalized can the first-pass experiment begin to test
 the actual mathematical load-bearing part of Mochizuki's response to
 Scholze--Stix.
 
+\begingroup
+\small
 \begin{thebibliography}{9}
 \bibitem{IUT1}
 S. Mochizuki, \emph{Inter-universal Teichmuller Theory I:
@@ -275,5 +282,6 @@ S. Mochizuki, \emph{On the Formalization of IUT: Preliminary Progress Report},
 \bibitem{ScholzeStix}
 P. Scholze and J. Stix, \emph{Why abc is still a conjecture}.
 \end{thebibliography}
+\endgroup
 
 \end{document}
