@@ -558,6 +558,56 @@ theorem archimedeanDirectSummandAction_transformed_container_bound_example
   action.transformedContainerEstimate_targetSigned_le_normalizedLogVolume
     estimate
 
+theorem directSummandActionStep_transports_capsule_container_example
+    {coric : Type u} {kind : IUTStage1PlaceKind}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice coric kind}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+        choice₁ choice₂)
+    {targetSigned : Real}
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned choice₁.local_tensor_state.packetState.capsuleFamily) :
+    targetSigned <=
+      choice₂.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  IUTStage1DirectSummandPacketTheorem311Choice.ind2_transports_capsuleContainerBound
+    hstep estimate
+
+theorem nonarchimedeanIsmStep_transports_capsule_container_example
+    {coric : Type u}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.NonarchimedeanIsmInd2Step
+        choice₁ choice₂)
+    {targetSigned : Real}
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned choice₁.local_tensor_state.packetState.capsuleFamily) :
+    targetSigned <=
+      choice₂.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  IUTStage1DirectSummandPacketTheorem311Choice.nonarchimedeanIsm_transports_capsuleContainerBound
+    hstep estimate
+
+theorem archimedeanOrderTwoStep_transports_capsule_container_example
+    {coric : Type u}
+    {choice₁ choice₂ :
+      IUTStage1DirectSummandPacketTheorem311Choice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1DirectSummandPacketTheorem311Choice.ArchimedeanOrderTwoInd2Step
+        choice₁ choice₂)
+    {targetSigned : Real}
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned choice₁.local_tensor_state.packetState.capsuleFamily) :
+    targetSigned <=
+      choice₂.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  IUTStage1DirectSummandPacketTheorem311Choice.archimedeanOrderTwo_transports_capsuleContainerBound
+    hstep estimate
+
 def labelAveragedProcessionLogVolume_average_example
     {label : Type u} [Fintype label]
     (data : IUTStage1LabelAveragedProcessionLogVolume label) :

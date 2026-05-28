@@ -5135,3 +5135,92 @@ archimedeanDirectSummandAction_transformed_container_bound_example
 The next refinement should connect these direct-summand action preservation
 facts to `IUTStage1PlaceAuditedDirectSummandPacketChoice` and its `(Ind2)` step
 records.
+
+## 65. Capsule Container Bounds Across Direct-Summand `(Ind2)` Steps
+
+### Goal
+
+We connected capsule-entry container estimate preservation to the actual
+`LocalTensorDirectSummandActionStep` records used by the refined Theorem 3.11
+choice model.
+
+### Lean Move
+
+For:
+
+```text
+IUTStage1DirectSummandPacketTheorem311Choice.LocalTensorDirectSummandActionStep
+```
+
+Lean now proves:
+
+```text
+ind2_transports_capsuleContainerBound
+```
+
+Given capsule-family container estimates on the source choice, the target
+choice's normalized capsule-family log-volume satisfies the same target lower
+bound.
+
+The two concrete `(Ind2)` action surfaces inherit this theorem:
+
+```text
+nonarchimedeanIsm_transports_capsuleContainerBound
+archimedeanOrderTwo_transports_capsuleContainerBound
+```
+
+### Mathematical Point
+
+We now have a formal preservation statement at the intended `(Ind2)` level:
+
+```text
+source capsule-entry container estimates
+  -> direct-summand action step
+  -> target normalized capsule-family bound
+```
+
+This matters because the Corollary 3.12 average route should not depend on a
+particular representative of the local tensor/direct-summand data.
+
+### Trap Avoided
+
+The theorem is proved by unpacking the action witness in the `(Ind2)` step and
+then using the already-audited capsule-action transport.  It does not assume
+that all choices have identical capsule estimates by fiat.
+
+### Periodic Audit
+
+At this point the formal chain from the local side to the final q/Theta bound
+has the following audited layers:
+
+```text
+capsule-entry container estimate
+  -> finite capsule normalized average
+  -> packet-normalized cusp/zero log-volume
+  -> cusp/sign-label bound
+  -> ZMod labelwise bound
+  -> F_l average bound
+  -> theta-source average
+  -> target-to-average classified as thetaPilotHullContainer
+  -> qSigned <= thetaSigned
+```
+
+The chain is still aligned with the main dispute: the real-valued comparison
+and averaging steps are explicit, and `(Ind3)` is still not used as the source
+of the target-to-average bound.
+
+### Toy Check
+
+The examples now check:
+
+```text
+directSummandActionStep_transports_capsule_container_example
+nonarchimedeanIsmStep_transports_capsule_container_example
+archimedeanOrderTwoStep_transports_capsule_container_example
+```
+
+### Remaining Gap
+
+The next step should lift this from direct-summand packet choices to
+`IUTStage1PlaceAuditedDirectSummandPacketChoice`, the type used by the
+place-audited multiradial Theta endpoint.
