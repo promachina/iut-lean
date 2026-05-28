@@ -2438,6 +2438,22 @@ theorem thetaExponentOnAbsLabel_fromCoordinate_neg_eq
         (l := l) (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
   rw [IUTStage1ZModCuspFullLabel.fromCoordinate_neg l j hj]
 
+theorem thetaExponentOnAbsLabel_one :
+    thetaExponentOnAbsLabel
+        (l := l)
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      1 := by
+  haveI : Fact (1 < l.value) :=
+    ⟨lt_of_lt_of_le (by norm_num) l.ge_five⟩
+  have hhalf : (1 : ZMod l.value).val ≤ l.value / 2 := by
+    have hge : 5 ≤ l.value := l.ge_five
+    rw [ZMod.val_one]
+    omega
+  have h :=
+    thetaExponentOnAbsLabel_fromCoordinate_of_val_le_half
+      (l := l) (1 : ZMod l.value) hhalf
+  simpa [ZMod.val_one] using h
+
 /--
 Full `|F_l|` pilot-degree model for theta values of the form `q^{j^2}`.
 
@@ -2493,6 +2509,70 @@ theorem thetaPilotDegree_neg_fromCoordinate_eq
   rw [IUTStage1ZModCuspFullLabel.fromCoordinate_neg l j hj]
 
 end AbsThetaPilotDegreeProfile
+
+/--
+Log-degree shadow of the IUT II Gaussian monoid evaluation.
+
+The environment side has one q/theta degree.  The Gaussian side is the
+`|F_l|`-indexed family obtained by multiplying that degree by the absolute-label
+theta exponent.  This records only the degree-level content of
+`q -> (q^{j^2})_j`; it does not construct the Frobenioid or its splittings.
+-/
+structure GaussianMonoidDegreeEvaluation
+    (l : PrimeGeFive) where
+  environmentDegree : Real
+  gaussianDegree : IUTStage1ZModCuspFullLabel l -> Real
+  gaussianDegree_eq_eval :
+    ∀ label : IUTStage1ZModCuspFullLabel l,
+      gaussianDegree label =
+        thetaExponentOnAbsLabel (l := l) label * environmentDegree
+
+namespace GaussianMonoidDegreeEvaluation
+
+variable {l : PrimeGeFive}
+
+def toAbsThetaPilotDegreeProfile
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    AbsThetaPilotDegreeProfile l :=
+  { qPilotDegree := evaluation.environmentDegree,
+    thetaPilotDegree := evaluation.gaussianDegree,
+    thetaPilotDegree_eq_abs_exponent := evaluation.gaussianDegree_eq_eval }
+
+theorem gaussianDegree_zero
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.gaussianDegree IUTStage1ZModCuspFullLabel.zero = 0 := by
+  rw [evaluation.gaussianDegree_eq_eval,
+    thetaExponentOnAbsLabel_zero]
+  ring
+
+theorem gaussianDegree_one
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      evaluation.environmentDegree := by
+  rw [evaluation.gaussianDegree_eq_eval,
+    thetaExponentOnAbsLabel_one]
+  ring
+
+theorem gaussianDegree_fromCoordinate_of_val_le_half
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (j : ZMod l.value) (hhalf : j.val ≤ l.value / 2) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      ((j.val : Real) ^ 2) * evaluation.environmentDegree := by
+  rw [evaluation.gaussianDegree_eq_eval,
+    thetaExponentOnAbsLabel_fromCoordinate_of_val_le_half j hhalf]
+
+theorem gaussianDegree_neg_fromCoordinate_eq
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (-j)) =
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_neg l j hj]
+
+end GaussianMonoidDegreeEvaluation
 
 noncomputable def balancedFullLabelWeightedSummand
     (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)

@@ -430,6 +430,7 @@ structure Ind3J2ScaleExperimentReport where
   balancedThetaPilotDegreeDescendsToSignQuotient : Bool
   absLabelThetaExponentMatchesHalfRangeJ2 : Bool
   absLabelThetaPilotDegreeProfileAvailable : Bool
+  gaussianDegreeEvaluationIdentityAtOne : Bool
 
 /--
 For every `l >= 5`, the representative square scales at `j = 1` and `j = 2`
@@ -450,7 +451,8 @@ def ind3J2ScaleExperimentReport (l : PrimeGeFive) :
     representativeJ2SignQuotientDescentRejected := true,
     balancedThetaPilotDegreeDescendsToSignQuotient := true,
     absLabelThetaExponentMatchesHalfRangeJ2 := true,
-    absLabelThetaPilotDegreeProfileAvailable := true }
+    absLabelThetaPilotDegreeProfileAvailable := true,
+    gaussianDegreeEvaluationIdentityAtOne := true }
 
 theorem ind3J2ScaleExperimentReport_oneScale
     (l : PrimeGeFive) :
@@ -500,6 +502,12 @@ theorem ind3J2ScaleExperimentReport_absLabelProfile
     (l : PrimeGeFive) :
     (ind3J2ScaleExperimentReport
       l).absLabelThetaPilotDegreeProfileAvailable = true :=
+  rfl
+
+theorem ind3J2ScaleExperimentReport_gaussianIdentityAtOne
+    (l : PrimeGeFive) :
+    (ind3J2ScaleExperimentReport
+      l).gaussianDegreeEvaluationIdentityAtOne = true :=
   rfl
 
 theorem no_labelIndependent_transport_scale_absorbs_j2
@@ -584,6 +592,33 @@ theorem absLabel_thetaPilot_degree_matches_halfRange_j2
         (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
       ((j.val : Real) ^ 2) * profile.qPilotDegree :=
   profile.thetaPilotDegree_fromCoordinate_of_val_le_half j hhalf
+
+/--
+Degree-level Gaussian evaluation has the identity component at the canonical
+label `j = 1`, matching IUT II's restriction of `q -> (q^{j^2})_j` to `j=1`.
+-/
+theorem gaussianDegreeEvaluation_identity_at_one
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      evaluation.environmentDegree :=
+  evaluation.gaussianDegree_one
+
+/--
+On half-range representatives, the degree-level Gaussian evaluation is exactly
+the displayed `j^2` scaling.
+-/
+theorem gaussianDegreeEvaluation_matches_halfRange_j2
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (j : ZMod l.value) (hhalf : j.val ≤ l.value / 2) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      ((j.val : Real) ^ 2) * evaluation.environmentDegree :=
+  evaluation.gaussianDegree_fromCoordinate_of_val_le_half j hhalf
 
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
@@ -807,6 +842,7 @@ structure Corollary312DisputeFirstPassReport where
   labelIndependentJ2CollapseRejectedInZModModel : Bool
   representativeJ2SignQuotientDescentRejectedInZModModel : Bool
   absLabelThetaDegreeHalfRangeModelAvailable : Bool
+  gaussianDegreeEvaluationTheoremAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -830,6 +866,7 @@ def corollary312DisputeFirstPassReport :
     labelIndependentJ2CollapseRejectedInZModModel := true,
     representativeJ2SignQuotientDescentRejectedInZModModel := true,
     absLabelThetaDegreeHalfRangeModelAvailable := true,
+    gaussianDegreeEvaluationTheoremAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -865,6 +902,11 @@ theorem corollary312Report_representativeJ2SignQuotientDescentRejected :
 
 theorem corollary312Report_absLabelThetaDegreeHalfRangeModelAvailable :
     corollary312DisputeFirstPassReport.absLabelThetaDegreeHalfRangeModelAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_gaussianDegreeEvaluationTheoremAvailable :
+    corollary312DisputeFirstPassReport.gaussianDegreeEvaluationTheoremAvailable =
       true :=
   rfl
 

@@ -127,6 +127,8 @@ The code currently covers:
 \item an absolute-label exponent on \(|F_\ell|=\{0\}\cup F_\ell^\times/\{\pm1\}\)
   which agrees with \(j^2\) for the canonical representatives
   \(0\le j\le(\ell-1)/2\), and the corresponding theta-degree profile;
+\item the degree-level Gaussian evaluation
+  \(q\mapsto(q^{j^2})_{j\in |F_\ell|}\), including identity at \(j=1\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -151,6 +153,7 @@ The current first-pass experiment report evaluates to:
 \texttt{labelIndependentJ2CollapseRejectedInZModModel} & = \texttt{true},\\
 \texttt{representativeJ2SignQuotientDescentRejectedInZModModel} & = \texttt{true},\\
 \texttt{absLabelThetaDegreeHalfRangeModelAvailable} & = \texttt{true},\\
+\texttt{gaussianDegreeEvaluationTheoremAvailable} & = \texttt{true},\\
 \texttt{balancedLevelRejectedAtFinalRouteTheoremAvailable} & = \texttt{true},\\
 \texttt{disputeSettledByCurrentStage} & = \texttt{false}.
 \end{array}
@@ -202,8 +205,8 @@ The present code does not yet formalize:
 \item actual Hodge theaters, Frobenioids, prime strips, log-shells, or
   \(\Theta\)-links;
 \item the Hodge--Arakelov theta evaluation and Gaussian monoids of IUT II;
-\item the construction of the IUT II theta values and Gaussian monoids which
-  should supply the present \(|F_\ell|\)-exponent data;
+\item the construction of the actual IUT II theta values, Gaussian monoids, and
+  Frobenioids behind the present degree-level Gaussian evaluation;
 \item the full multiradial construction of IUT III, Theorem 3.11;
 \item the genuine holomorphic hull and determinant operations of Step (xi);
 \item the exact IUT IV log-volume estimates and Diophantine applications;
