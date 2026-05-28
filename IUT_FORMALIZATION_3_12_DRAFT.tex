@@ -183,6 +183,9 @@ The code currently covers:
   \((1-12/\ell^2)^{-1}\le2\) and
   \((1-12/\ell^2)^{-1}\frac14(1+36d_{\mathrm{mod}}/\ell)
    \le 1+80d_{\mathrm{mod}}/\ell\);
+\item the IUT IV, Theorem 1.10 base-change monotonicity:
+  \(\log(d_{F_{\mathrm{tpd}}})+\log(f_{F_{\mathrm{tpd}}})
+   \le \log(d_F)+\log(f_F)\) propagates through the final right-hand side;
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -227,7 +230,8 @@ the upper semi-compatibility inequality.
 The factor-\(p\) flag records the \(F_\ell\)-label averaging denominator.
 The Frobenius-derivative flag records the degree inequality from inclusion.
 The IUT IV flag records the downstream Theorem 1.10 use of the Corollary 3.12
-lower bound on \(C_\Theta\), including the final coefficient estimates.
+lower bound on \(C_\Theta\), including the final coefficient estimates and the
+tripodal-to-\(F\) log-degree monotonicity.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -287,6 +291,9 @@ computed \(C_\Theta\) expression and \(C_\Theta\ge-1\) to the final
 \(\frac16\log(q)\) estimate, conditional on the separate elementary estimates.
 Lean now also proves the two displayed final elementary coefficient estimates
 from \(\ell\ge5\).
+It also proves the final monotonic replacement of the tripodal log-degree sum by
+the larger \(F\)-level log-degree sum, conditional on the two component
+monotonicity inequalities cited from Proposition 1.3(i).
 
 \section{Missing Mathematics}
 

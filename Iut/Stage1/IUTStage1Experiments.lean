@@ -654,6 +654,7 @@ structure ProcessionContainerExperimentReport where
   frobeniusDerivativeDegreeInequalityAvailable : Bool
   iutIVThetaPilotLogVolumeEstimateAvailable : Bool
   iutIVElementaryCoefficientEstimatesAvailable : Bool
+  iutIVTripodalBaseChangeLogDegreeAvailable : Bool
 deriving Repr
 
 /--
@@ -693,7 +694,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     thetaLabelFactorPNormalizationAvailable := true,
     frobeniusDerivativeDegreeInequalityAvailable := true,
     iutIVThetaPilotLogVolumeEstimateAvailable := true,
-    iutIVElementaryCoefficientEstimatesAvailable := true }
+    iutIVElementaryCoefficientEstimatesAvailable := true,
+    iutIVTripodalBaseChangeLogDegreeAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1123,6 +1125,16 @@ theorem iutIVThetaPilotFinalCoefficient_bound
       1 + 80 * (dmod : Real) / (l.value : Real) :=
   iutIVThetaPilotFinalCoefficientEstimate l dmod
 
+theorem iutIVTripodalBaseChange_logDegreeSum_le
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) :
+    data.ftpdLogDegreeSum <= data.fLogDegreeSum :=
+  data.logDegreeSum_le
+
+theorem iutIVTripodalBaseChange_theorem110RHS_le
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) :
+    data.ftpdTheorem110RightHandSide <= data.fTheorem110RightHandSide :=
+  data.ftpdTheorem110RightHandSide_le_fTheorem110RightHandSide
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1375,6 +1387,7 @@ structure Corollary312DisputeFirstPassReport where
   frobeniusDerivativeDegreeInequalityAvailable : Bool
   iutIVThetaPilotLogVolumeEstimateAvailable : Bool
   iutIVElementaryCoefficientEstimatesAvailable : Bool
+  iutIVTripodalBaseChangeLogDegreeAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1428,6 +1441,7 @@ def corollary312DisputeFirstPassReport :
     frobeniusDerivativeDegreeInequalityAvailable := true,
     iutIVThetaPilotLogVolumeEstimateAvailable := true,
     iutIVElementaryCoefficientEstimatesAvailable := true,
+    iutIVTripodalBaseChangeLogDegreeAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1613,6 +1627,11 @@ theorem corollary312Report_iutIVThetaPilotLogVolumeEstimateAvailable :
 
 theorem corollary312Report_iutIVElementaryCoefficientEstimatesAvailable :
     corollary312DisputeFirstPassReport.iutIVElementaryCoefficientEstimatesAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVTripodalBaseChangeLogDegreeAvailable :
+    corollary312DisputeFirstPassReport.iutIVTripodalBaseChangeLogDegreeAvailable =
       true :=
   rfl
 

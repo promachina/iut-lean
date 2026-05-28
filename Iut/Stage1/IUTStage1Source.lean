@@ -2458,6 +2458,74 @@ theorem iutIVThetaPilotFinalCoefficientEstimate
       ring
 
 /--
+IUT IV, Theorem 1.10 and Step (ii): replacing the tripodal intermediate field
+by the larger field in the final displayed estimate.
+
+The source justification is the inequality
+`log(d_Ftpd) + log(f_Ftpd) <= log(d_F) + log(f_F)`, derived from Proposition
+1.3(i) and the definitions.  This record isolates exactly the real-valued
+log-degree monotonicity needed by the final line of the theorem.
+-/
+structure IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow where
+  l : PrimeGeFive
+  dmod : Nat
+  logDifferentFtpd : Real
+  logConductorFtpd : Real
+  logDifferentF : Real
+  logConductorF : Real
+  eStarMod : Real
+  etaPrm : Real
+  different_le : logDifferentFtpd <= logDifferentF
+  conductor_le : logConductorFtpd <= logConductorF
+
+namespace IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow
+
+def ftpdLogDegreeSum
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) : Real :=
+  data.logDifferentFtpd + data.logConductorFtpd
+
+def fLogDegreeSum
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) : Real :=
+  data.logDifferentF + data.logConductorF
+
+noncomputable def coefficient
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) : Real :=
+  1 + 80 * (data.dmod : Real) / (data.l.value : Real)
+
+noncomputable def ftpdTheorem110RightHandSide
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) : Real :=
+  iutIVThetaPilotTheorem110RightHandSide data.l data.dmod
+    data.logDifferentFtpd data.logConductorFtpd data.eStarMod data.etaPrm
+
+noncomputable def fTheorem110RightHandSide
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) : Real :=
+  iutIVThetaPilotTheorem110RightHandSide data.l data.dmod
+    data.logDifferentF data.logConductorF data.eStarMod data.etaPrm
+
+theorem logDegreeSum_le
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) :
+    data.ftpdLogDegreeSum <= data.fLogDegreeSum :=
+  add_le_add data.different_le data.conductor_le
+
+theorem coefficient_nonneg
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) :
+    0 <= data.coefficient := by
+  rw [coefficient]
+  positivity
+
+theorem ftpdTheorem110RightHandSide_le_fTheorem110RightHandSide
+    (data : IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow) :
+    data.ftpdTheorem110RightHandSide <= data.fTheorem110RightHandSide := by
+  have hsum := data.logDegreeSum_le
+  have hcoeff := data.coefficient_nonneg
+  dsimp [ftpdTheorem110RightHandSide, fTheorem110RightHandSide,
+    iutIVThetaPilotTheorem110RightHandSide, ftpdLogDegreeSum,
+    fLogDegreeSum, coefficient] at hsum hcoeff ⊢
+  exact add_le_add (mul_le_mul_of_nonneg_left hsum hcoeff) le_rfl
+
+end IUTStage1IUTIVTripodalBaseChangeLogDegreeShadow
+
+/--
 IUT IV, Theorem 1.10 shadow of the `C_Theta` handoff.
 
 The source text computes an explicit expression for `C_Theta` and then applies
