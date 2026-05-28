@@ -5257,6 +5257,34 @@ theorem placeAudited_logVolume_fl_zmod_zmod_packet_insulated_bridge_source_examp
   part.insulatedPacketBridgeSource_eq_direct
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_constant_packet_to_insulated_bridge_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l) :
+    audit.FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit l :=
+  part.toInsulatedCuspZeroPacketBridgeAudit
+
+theorem placeAudited_logVolume_fl_zmod_constant_packet_insulated_bridge_source_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l) :
+    part.toClassifiedInsulatedCuspZeroPacketBridgeAudit.bridge_source =
+      IUTStage1ZModPacketLocalObjectBridgeSource.directLocalLabelObjectConstruction :=
+  part.insulatedPacketBridgeSource_eq_direct
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 noncomputable def placeAudited_logVolume_fl_zmod_cusp_zero_label_object_to_direct_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

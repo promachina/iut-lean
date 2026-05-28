@@ -14765,6 +14765,25 @@ theorem cuspBoundSource_eq_directCapsule
       IUTStage1CuspClassBoundSource.directCapsuleEstimates :=
   rfl
 
+def toInsulatedCuspZeroPacketBridgeAudit
+    (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l) :
+    audit.FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit l :=
+  let zmodRoute := part.toZModPacketNormalizedRouteAudit
+  zmodRoute.toInsulatedCuspZeroPacketBridgeAudit
+
+def toClassifiedInsulatedCuspZeroPacketBridgeAudit
+    (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l :=
+  let zmodRoute := part.toZModPacketNormalizedRouteAudit
+  zmodRoute.toClassifiedInsulatedCuspZeroPacketBridgeAudit
+
+theorem insulatedPacketBridgeSource_eq_direct
+    (part : audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l) :
+    part.toClassifiedInsulatedCuspZeroPacketBridgeAudit.bridge_source =
+      IUTStage1ZModPacketLocalObjectBridgeSource.directLocalLabelObjectConstruction :=
+  let zmodRoute := part.toZModPacketNormalizedRouteAudit
+  zmodRoute.insulatedPacketBridgeSource_eq_direct
+
 end FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit
 
 namespace FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit

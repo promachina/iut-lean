@@ -1426,3 +1426,53 @@ The next step should expose the strongest version: a constant `ZMod` packet
 family gives the same insulated bridge.  That will make clear that a constant
 label family is sufficient to collapse the insulated zero/nonzero route through
 the packet object.
+
+## 127. Constant ZMod Packet Family Produces the Insulated Bridge
+
+### Lean Move
+
+I added:
+
+```text
+FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit
+  .toInsulatedCuspZeroPacketBridgeAudit
+FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit
+  .toClassifiedInsulatedCuspZeroPacketBridgeAudit
+FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit
+  .insulatedPacketBridgeSource_eq_direct
+```
+
+### Mathematical Reason
+
+A constant `ZMod` packet-normalized label family implies the labelwise `ZMod`
+packet-normalized route.  Therefore it also produces the insulated packet
+bridge.  This makes the consequence explicit:
+
+```text
+constant label family
+  -> labelwise packet equality
+  -> cusp/zero packet bridge
+```
+
+### Trap Exposed
+
+If a proof assumes a constant label family too early, then the insulated
+zero/nonzero distinction can be collapsed through the packet object.  Lean now
+marks this as a theorem, not an implicit informal inference.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_constant_packet_to_insulated_bridge_example
+placeAudited_logVolume_fl_zmod_constant_packet_insulated_bridge_source_example
+```
+
+### Remaining Gap
+
+The next useful self-audit is to review whether the constant-family route is
+intended to model a genuine IUT Hodge-theater operation or merely a simplified
+comparison route.  This is close to the Scholze-Stix concern: a premature
+constant-family assumption may erase exactly the history that Mochizuki says is
+handled by Hodge theaters.
