@@ -4163,3 +4163,100 @@ The next mathematical step is to refine
 `targetSigned_le_thetaAverage_from_hull_container`.  It should become a theorem
 whose hypotheses name the actual local container estimate and the finite
 `F_l`-average estimate, instead of remaining a field of the audit.
+
+## 54. Turning Labelwise Container Estimates into the Theta Average
+
+### Goal
+
+We began refining the remaining hull/container field by adding the finite
+average theorem that converts pointwise label estimates into an averaged
+estimate.
+
+### Lean Move
+
+For any finite nonempty label type, Lean now proves:
+
+```text
+IUTStage1LabelAveragedProcessionLogVolume.const_le_average_of_forall_le
+```
+
+If a constant `c` is bounded above by every label-normalized log-volume, then
+`c` is bounded above by the average log-volume.  The proof is the standard
+finite-sum argument:
+
+```text
+c <= f(j) for all j
+  -> card(label) * c <= sum_j f(j)
+  -> c <= sum_j f(j) / card(label)
+```
+
+The nonempty hypothesis is essential.  Without it, averaging over an empty
+label set would divide by zero and would not support this comparison.
+
+We then added:
+
+```text
+FLZModCuspLabelThetaLabelwiseContainerAudit
+```
+
+This refines the previous hull/container audit by assuming a labelwise bound:
+
+```text
+targetSigned <= normalizedLogVolume(j)
+```
+
+for every `j : ZMod l.value`.  Lean derives:
+
+```text
+targetSigned_le_averageLogVolume
+targetSigned_le_thetaAverage
+toThetaPilotHullContainerAudit
+qSigned_le_thetaSigned_via_labelwise_container
+```
+
+### Mathematical Point
+
+This is a real reduction of the remaining gap.  Previously the hull/container
+audit carried:
+
+```text
+targetSigned <= thetaSourceAverage
+```
+
+directly.  Now we have a more local route:
+
+```text
+for every F_l label j:
+  targetSigned <= normalized local log-volume at j
+
+therefore:
+  targetSigned <= F_l-average
+```
+
+This matches the IUT IV style of local upper-bound computations followed by
+averaging over `j ∈ F_l`, while keeping the Scholze-Stix concern visible: the
+pointwise real-valued inequalities must be attached to the correct label and
+real-line identification before the averaging theorem applies.
+
+### Trap Avoided
+
+We did not use the final chart inequality `targetSigned <= thetaSigned` to
+derive the average estimate.  The new route derives the average bound only
+from labelwise normalized log-volume estimates.
+
+### Toy Check
+
+The examples now check:
+
+```text
+labelAveragedProcessionLogVolume_const_le_average_example
+placeAudited_logVolume_fl_zmod_labelwise_container_average_example
+placeAudited_logVolume_fl_zmod_labelwise_container_to_hull_example
+placeAudited_logVolume_fl_zmod_labelwise_container_q_le_theta_example
+```
+
+### Remaining Gap
+
+The next step is to replace the raw labelwise inequality field by more
+structured source data: a local container estimate for each `j : F_l`, tied to
+the cusp/sign label model and to the chosen place-audited packet.
