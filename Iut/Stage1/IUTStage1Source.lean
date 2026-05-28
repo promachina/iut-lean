@@ -2310,6 +2310,41 @@ theorem targetSigned_le_localLogVolume
     targetSigned <= localLogVolume :=
   estimate.objectEstimate.targetSigned_le_localLogVolume
 
+theorem localLogVolume_eq_capsuleAverage
+    (estimate :
+      IUTStage1PacketNormalizedContainerEstimate
+        packetState targetSigned localLogVolume) :
+    localLogVolume =
+      packetState.packetState.capsuleFamily.totalLogVolume /
+        (packetState.packetState.capsuleFamily.capsuleCount : Real) := by
+  calc
+    localLogVolume =
+        packetState.packetState.capsuleFamily.normalizedLogVolume :=
+      estimate.localLogVolume_eq_packetNormalized
+    _ =
+        packetState.packetState.capsuleFamily.totalLogVolume /
+          (packetState.packetState.capsuleFamily.capsuleCount : Real) :=
+      packetState.packetState.capsule_normalizedLogVolume_eq
+
+theorem localLogVolume_eq_capsuleSumAverage
+    (estimate :
+      IUTStage1PacketNormalizedContainerEstimate
+        packetState targetSigned localLogVolume) :
+    localLogVolume =
+      (Finset.univ.sum fun i =>
+          (packetState.packetState.capsuleFamily.capsule i).logVolume) /
+        (packetState.packetState.capsuleFamily.capsuleCount : Real) := by
+  calc
+    localLogVolume =
+        packetState.packetState.capsuleFamily.totalLogVolume /
+          (packetState.packetState.capsuleFamily.capsuleCount : Real) :=
+      estimate.localLogVolume_eq_capsuleAverage
+    _ =
+        (Finset.univ.sum fun i =>
+            (packetState.packetState.capsuleFamily.capsule i).logVolume) /
+          (packetState.packetState.capsuleFamily.capsuleCount : Real) := by
+      rw [packetState.packetState.capsule_totalLogVolume_eq_sum]
+
 end IUTStage1PacketNormalizedContainerEstimate
 
 namespace IUTStage1UpperSemiCompatibilityState
@@ -11037,6 +11072,26 @@ theorem zeroLogVolume_eq_packetNormalized
     (part.theta_source.compatible_average.cuspLogVolume audited).zeroLogVolume =
       audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
   (part.zeroPacketEstimate audited).localLogVolume_eq_packetNormalized
+
+theorem cuspClassLogVolume_eq_capsuleSumAverage
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    (part.theta_source.compatible_average.cuspLogVolume audited).cuspClassLogVolume
+        label =
+      (Finset.univ.sum fun i =>
+          (audited.choice.local_tensor_state.packetState.capsuleFamily.capsule i).logVolume) /
+        (audited.choice.local_tensor_state.packetState.capsuleFamily.capsuleCount : Real) :=
+  (part.cuspClassPacketEstimate audited label).localLogVolume_eq_capsuleSumAverage
+
+theorem zeroLogVolume_eq_capsuleSumAverage
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.cuspLogVolume audited).zeroLogVolume =
+      (Finset.univ.sum fun i =>
+          (audited.choice.local_tensor_state.packetState.capsuleFamily.capsule i).logVolume) /
+        (audited.choice.local_tensor_state.packetState.capsuleFamily.capsuleCount : Real) :=
+  (part.zeroPacketEstimate audited).localLogVolume_eq_capsuleSumAverage
 
 def toThetaPacketLocalObjectContainerAudit
     (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l) :

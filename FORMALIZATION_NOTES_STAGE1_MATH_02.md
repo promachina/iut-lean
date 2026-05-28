@@ -4731,3 +4731,82 @@ placeAudited_logVolume_fl_zmod_packet_normalized_q_le_theta_example
 The next step should connect this packet-normalized estimate to the actual
 capsule sum formula already present in `IUTStage1TypedCapsuleFamilyLogVolume`,
 so the normalized value is not a black-box real.
+
+## 60. Capsule-Sum Formula for Packet-Normalized Estimates
+
+### Goal
+
+We exposed the finite capsule-sum formula behind the packet-normalized
+log-volume used by the container route.
+
+### Lean Move
+
+For:
+
+```text
+IUTStage1PacketNormalizedContainerEstimate
+```
+
+Lean now proves:
+
+```text
+localLogVolume_eq_capsuleAverage
+localLogVolume_eq_capsuleSumAverage
+```
+
+The second theorem expands the normalized packet value to:
+
+```text
+(sum_i capsule(i).logVolume) / capsuleCount
+```
+
+using the existing `IUTStage1TypedCapsuleFamilyLogVolume` fields:
+
+```text
+total_eq_sum
+normalized_eq_average
+```
+
+For the full cusp-label route, Lean now proves:
+
+```text
+cuspClassLogVolume_eq_capsuleSumAverage
+zeroLogVolume_eq_capsuleSumAverage
+```
+
+inside `FLZModCuspLabelThetaPacketNormalizedContainerAudit`.
+
+### Mathematical Point
+
+The source real in the average route is now traceable down to a finite capsule
+sum:
+
+```text
+cusp/zero log-volume
+  = packet normalized capsule-family value
+  = (finite sum of capsule log-volumes) / capsule count
+```
+
+This is the expected shape for the procession-normalized local log-volume side
+of the IUT III/IV estimates.
+
+### Trap Avoided
+
+The normalized value is no longer treated as an uninterpreted real once the
+packet-normalized audit is supplied.  It is tied to the actual finite capsule
+family carried by the audited packet.
+
+### Toy Check
+
+The examples now check:
+
+```text
+packetNormalizedContainerEstimate_capsule_sum_example
+placeAudited_logVolume_fl_zmod_packet_normalized_capsule_sum_example
+```
+
+### Remaining Gap
+
+The next step should push one level further into the capsule entries: local
+container estimates should eventually bound the finite capsule log-volume sum,
+not merely the normalized real after the sum has already been packaged.
