@@ -4653,6 +4653,51 @@ theorem placeAudited_logVolume_fl_zmod_packet_local_object_q_le_theta_example
   part.qSigned_le_thetaSigned_via_packet_local_object_container audited
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_shared_packet_object_to_packet_local_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaSharedPacketLocalObjectEstimateAudit l) :
+    audit.FLZModCuspLabelThetaPacketLocalObjectContainerAudit l :=
+  part.toPacketLocalObjectContainerAudit
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_shared_packet_object_to_classified_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaSharedPacketLocalObjectEstimateAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedPacketLocalObjectContainerAudit l :=
+  part.toClassifiedPacketLocalObjectContainerAudit
+
+theorem placeAudited_logVolume_fl_zmod_shared_packet_object_source_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaSharedPacketLocalObjectEstimateAudit l) :
+    part.toClassifiedPacketLocalObjectContainerAudit.estimate_source =
+      IUTStage1PacketLocalObjectEstimateSource.directLocalCuspConstruction :=
+  part.estimateSource_eq_direct
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 def placeAudited_logVolume_fl_zmod_packet_local_object_to_direct_packet_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

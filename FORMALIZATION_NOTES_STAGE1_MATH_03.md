@@ -191,3 +191,74 @@ The actual construction of packet-local-object estimates from this canonical
 cusp-label data remains open.  The next Lean step should introduce only the
 minimal interface needed to say that such estimates are produced from the
 canonical local cusp construction.
+
+## 107. Shared Packet Local-Object Estimate for All Cusp Labels
+
+### Goal
+
+We reduced labelwise freedom in the packet-local-object estimate layer.
+
+### Lean Move
+
+We added:
+
+```text
+FLZModCuspLabelThetaSharedPacketLocalObjectEstimateAudit
+```
+
+This audit supplies, for each audited packet, one local-object container
+estimate for the packet local object's finite log-volume:
+
+```text
+packetLocalObjectEstimate audited
+```
+
+It also supplies explicit equalities from each cusp-class and zero log-volume
+to that packet finite log-volume.
+
+Lean then constructs:
+
+```text
+toPacketLocalObjectContainerAudit
+toClassifiedPacketLocalObjectContainerAudit
+estimateSource_eq_direct
+```
+
+The cusp and zero estimates are obtained by transporting the single packet
+local-object estimate along the corresponding log-volume equality.
+
+### Mathematical Point
+
+This is closer to the intended local picture than arbitrary per-label local
+object estimates.  The formal route now has an intermediate layer saying:
+
+```text
+one packet local object supplies the local estimate
+all cusp/zero log-volumes are explicitly identified with that object
+```
+
+Only after those identifications are provided do we obtain the labelwise
+packet-local-object estimates.
+
+### Trap Avoided
+
+We did not allow each label to silently choose its own local object.  Every
+labelwise estimate is transported from the same packet local-object estimate,
+and the source is classified as `directLocalCuspConstruction`.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_shared_packet_object_to_packet_local_example
+placeAudited_logVolume_fl_zmod_shared_packet_object_to_classified_example
+placeAudited_logVolume_fl_zmod_shared_packet_object_source_example
+```
+
+### Remaining Gap
+
+The shared packet estimate still requires explicit cusp/zero log-volume
+equalities.  The next construction should connect those equalities to the
+canonical nonzero sign-label quotient and the separate zero label, rather than
+treating them as unstructured real-line equalities.
