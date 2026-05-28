@@ -644,6 +644,7 @@ structure ProcessionContainerExperimentReport where
   thetaPilotTensorPowerWarningAvailable : Bool
   globalFrobenioidCalibrationAvailable : Bool
   positiveRationalUnitRigidityAvailable : Bool
+  generalizedThetaLGPLambdaBoundAvailable : Bool
 deriving Repr
 
 /--
@@ -673,7 +674,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     qPilotTwoComputationComparisonAvailable := true,
     thetaPilotTensorPowerWarningAvailable := true,
     globalFrobenioidCalibrationAvailable := true,
-    positiveRationalUnitRigidityAvailable := true }
+    positiveRationalUnitRigidityAvailable := true,
+    generalizedThetaLGPLambdaBoundAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -976,6 +978,18 @@ theorem positiveRationalUnitRigidity_eq_one
   IUTStage1PositiveRationalUnitRigidity.eq_one_of_pos_of_integerUnit
     hpos hunit
 
+theorem generalizedThetaLGPLambda_standard_bound
+    (data : IUTStage1GeneralizedThetaLGPLambdaBound)
+    (hlambda : data.lambda <= 1) :
+    (-1 : Real) <= data.cTheta :=
+  data.standard_bound_of_lambda_le_one hlambda
+
+theorem generalizedThetaLGPLambda_sharper_boundary
+    (data : IUTStage1GeneralizedThetaLGPLambdaBound)
+    (hlambda : data.lambda < 1) :
+    (-1 : Real) < -((data.lambda : Real)) :=
+  data.sharper_boundary_of_lambda_lt_one hlambda
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1218,6 +1232,7 @@ structure Corollary312DisputeFirstPassReport where
   thetaPilotTensorPowerWarningAvailable : Bool
   globalFrobenioidCalibrationAvailable : Bool
   positiveRationalUnitRigidityAvailable : Bool
+  generalizedThetaLGPLambdaBoundAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1261,6 +1276,7 @@ def corollary312DisputeFirstPassReport :
     thetaPilotTensorPowerWarningAvailable := true,
     globalFrobenioidCalibrationAvailable := true,
     positiveRationalUnitRigidityAvailable := true,
+    generalizedThetaLGPLambdaBoundAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1396,6 +1412,11 @@ theorem corollary312Report_globalFrobenioidCalibrationAvailable :
 
 theorem corollary312Report_positiveRationalUnitRigidityAvailable :
     corollary312DisputeFirstPassReport.positiveRationalUnitRigidityAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_generalizedThetaLGPLambdaBoundAvailable :
+    corollary312DisputeFirstPassReport.generalizedThetaLGPLambdaBoundAvailable =
       true :=
   rfl
 

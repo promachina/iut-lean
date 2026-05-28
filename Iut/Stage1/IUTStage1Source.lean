@@ -1840,6 +1840,48 @@ theorem positive_integerUnit_iff_eq_one
 
 end IUTStage1PositiveRationalUnitRigidity
 
+/--
+Remark 3.12.1(ii) generalized `Theta^{×μ}` LGP-link bound.
+
+For a positive rational parameter `lambda`, the source text says that the same
+argument gives a lower bound `C_Theta ≥ -lambda`; the published theory is the
+case `lambda = 1`.  This record keeps only the ordered-real numerical content of
+that generalized comparison.
+-/
+structure IUTStage1GeneralizedThetaLGPLambdaBound where
+  lambda : Rat
+  lambda_pos : 0 < lambda
+  cTheta : Real
+  generalized_bound : -((lambda : Real)) <= cTheta
+
+namespace IUTStage1GeneralizedThetaLGPLambdaBound
+
+theorem standard_bound_of_lambda_le_one
+    (data : IUTStage1GeneralizedThetaLGPLambdaBound)
+    (hlambda : data.lambda <= 1) :
+    (-1 : Real) <= data.cTheta := by
+  have hcast : (data.lambda : Real) <= 1 := by
+    exact_mod_cast hlambda
+  have hstandard : (-1 : Real) <= -((data.lambda : Real)) := by
+    linarith
+  exact le_trans hstandard data.generalized_bound
+
+theorem sharper_boundary_of_lambda_lt_one
+    (data : IUTStage1GeneralizedThetaLGPLambdaBound)
+    (hlambda : data.lambda < 1) :
+    (-1 : Real) < -((data.lambda : Real)) := by
+  have hcast : (data.lambda : Real) < 1 := by
+    exact_mod_cast hlambda
+  linarith
+
+theorem standard_case_bound
+    (data : IUTStage1GeneralizedThetaLGPLambdaBound)
+    (hlambda : data.lambda = 1) :
+    (-1 : Real) <= data.cTheta := by
+  exact data.standard_bound_of_lambda_le_one (by rw [hlambda])
+
+end IUTStage1GeneralizedThetaLGPLambdaBound
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

@@ -155,6 +155,9 @@ The code currently covers:
   log-volume by an integer shift, while global calibration fixes exponent \(0\);
 \item the Remark 3.12.1(iii) arithmetic fact
   \(\mathbb{Q}_{>0}\cap\mathbb{Z}^{\times}=\{1\}\);
+\item the Remark 3.12.1(ii) generalized-link numerical bound
+  \(C_\Theta\ge-\lambda\) for \(\lambda\in\mathbb{Q}_{>0}\), with strict
+  strengthening over the \(\lambda=1\) bound when \(\lambda<1\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -186,6 +189,8 @@ failure.  The Gaussian/procession flags include finite tensor-packet, monoid
 action, base-valuation product, coric-transfer, determinant-normalization,
 upper-ray, \(q\)-pilot two-computation, tensor-power warning, and global
 Frobenioid-calibration shadows, plus positive-rational unit rigidity.
+The generalized-link flag records the rational parameter inequality
+\(C_\Theta\ge-\lambda\).
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -225,6 +230,7 @@ for \(N\ge2\) and negative pilot log-volume.  It also checks the Step (xii)
 numerical warning: nonzero local Frobenioid shifts change log-volume, whereas
 global calibration restores the unshifted value.  The positive rational unit
 rigidity fact in Remark 3.12.1(iii) is formalized directly over \(\mathbb{Q}\).
+For generalized links, Lean records that \(\lambda<1\) makes \(-\lambda>-1\).
 
 \section{Missing Mathematics}
 
