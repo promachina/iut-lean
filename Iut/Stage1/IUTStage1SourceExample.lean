@@ -1640,6 +1640,21 @@ theorem squareProfileProbeLogVolume_neg (j : ZMod 5) :
     squareProfileProbeLogVolume (-j) = squareProfileProbeLogVolume j := by
   fin_cases j <;> rfl
 
+theorem zmodSquareWeightProfile_balanced_zero_primeFive_example :
+    IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+        (l := squareAuditPrimeFiveExample) (0 : ZMod 5) = 0 := by
+  rw [IUTStage1ZModSquareWeightProfile.balancedSquareWeight_eq_square_val_of_val_le_half
+      (l := squareAuditPrimeFiveExample) (0 : ZMod 5) (by decide)]
+  have hVal : ((0 : ZMod 5).val) = 0 := by
+    rfl
+  have hReal : (((0 : ZMod 5).val : Real)) = 0 := by
+    exact_mod_cast hVal
+  calc
+    (((0 : ZMod 5).val : Real) ^ 2) = (0 : Real) ^ 2 := by
+      rw [hReal]
+    _ = 0 := by
+      norm_num
+
 theorem zmodSquareWeightProfile_balanced_one_primeFive_example :
     IUTStage1ZModSquareWeightProfile.balancedSquareWeight
         (l := squareAuditPrimeFiveExample) (1 : ZMod 5) = 1 := by
@@ -1653,6 +1668,36 @@ theorem zmodSquareWeightProfile_balanced_one_primeFive_example :
     (((1 : ZMod 5).val : Real) ^ 2) = (1 : Real) ^ 2 := by
       rw [hReal]
     _ = 1 := by
+      norm_num
+
+theorem zmodSquareWeightProfile_balanced_two_primeFive_example :
+    IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+        (l := squareAuditPrimeFiveExample) (2 : ZMod 5) = 4 := by
+  rw [IUTStage1ZModSquareWeightProfile.balancedSquareWeight_eq_square_val_of_val_le_half
+      (l := squareAuditPrimeFiveExample) (2 : ZMod 5) (by decide)]
+  have hVal : ((2 : ZMod 5).val) = 2 := by
+    rfl
+  have hReal : (((2 : ZMod 5).val : Real)) = 2 := by
+    exact_mod_cast hVal
+  calc
+    (((2 : ZMod 5).val : Real) ^ 2) = (2 : Real) ^ 2 := by
+      rw [hReal]
+    _ = 4 := by
+      norm_num
+
+theorem zmodSquareWeightProfile_balanced_three_primeFive_example :
+    IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+        (l := squareAuditPrimeFiveExample) (3 : ZMod 5) = 4 := by
+  unfold IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+  have hNat : ((3 : ZMod 5).valMinAbs.natAbs) = 2 := by
+    rfl
+  have hReal : (((3 : ZMod 5).valMinAbs.natAbs : Real)) = 2 := by
+    exact_mod_cast hNat
+  calc
+    (((3 : ZMod 5).valMinAbs.natAbs : Real) ^ 2) =
+        (2 : Real) ^ 2 := by
+      rw [hReal]
+    _ = 4 := by
       norm_num
 
 theorem squareProfileProbe_representativeNumerator_primeFive_example :
@@ -1710,6 +1755,83 @@ theorem squareProfileProbe_numerators_differ_primeFive_example :
         squareProfileProbeLogVolume j) := by
   rw [squareProfileProbe_representativeNumerator_primeFive_example,
     squareProfileProbe_balancedNumerator_primeFive_example]
+  norm_num
+
+theorem squareProfileProbe_representativeWeightTotal_primeFive_example :
+    (Finset.univ.sum fun j : ZMod 5 => ((j.val : Real) ^ 2)) = 30 := by
+  rw [zmodFive_univ_eq_insert]
+  rw [Finset.sum_insert]
+  · rw [Finset.sum_insert]
+    · rw [Finset.sum_insert]
+      · rw [Finset.sum_insert]
+        · rw [Finset.sum_singleton]
+          have h0 : ((0 : ZMod 5).val) = 0 := rfl
+          have h1 : ((1 : ZMod 5).val) = 1 := rfl
+          have h2 : ((2 : ZMod 5).val) = 2 := rfl
+          have h3 : ((3 : ZMod 5).val) = 3 := rfl
+          have h4 : ((4 : ZMod 5).val) = 4 := rfl
+          simp [h0, h1, h2, h3, h4]
+          norm_num
+        · decide
+      · decide
+    · decide
+  · decide
+
+theorem squareProfileProbe_balancedWeightTotal_primeFive_example :
+    (Finset.univ.sum fun j : ZMod 5 =>
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+          (l := squareAuditPrimeFiveExample) j) = 10 := by
+  rw [zmodFive_univ_eq_insert]
+  rw [Finset.sum_insert]
+  · rw [Finset.sum_insert]
+    · rw [Finset.sum_insert]
+      · rw [Finset.sum_insert]
+        · rw [Finset.sum_singleton]
+          simp [zmodSquareWeightProfile_balanced_zero_primeFive_example,
+            zmodSquareWeightProfile_balanced_one_primeFive_example,
+            zmodSquareWeightProfile_balanced_two_primeFive_example,
+            zmodSquareWeightProfile_balanced_three_primeFive_example,
+            zmodSquareWeightProfile_balanced_four_primeFive_example]
+          norm_num
+        · decide
+      · decide
+    · decide
+  · decide
+
+theorem squareProfileProbe_representativeAverage_primeFive_example :
+    ((Finset.univ.sum fun j : ZMod 5 =>
+        ((j.val : Real) ^ 2) * squareProfileProbeLogVolume j) /
+      (Finset.univ.sum fun j : ZMod 5 => ((j.val : Real) ^ 2))) =
+        (17 : Real) / 30 := by
+  rw [squareProfileProbe_representativeNumerator_primeFive_example,
+    squareProfileProbe_representativeWeightTotal_primeFive_example]
+
+theorem squareProfileProbe_balancedAverage_primeFive_example :
+    ((Finset.univ.sum fun j : ZMod 5 =>
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+          (l := squareAuditPrimeFiveExample) j *
+        squareProfileProbeLogVolume j) /
+      (Finset.univ.sum fun j : ZMod 5 =>
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+          (l := squareAuditPrimeFiveExample) j)) =
+        (1 : Real) / 5 := by
+  rw [squareProfileProbe_balancedNumerator_primeFive_example,
+    squareProfileProbe_balancedWeightTotal_primeFive_example]
+  norm_num
+
+theorem squareProfileProbe_averages_differ_primeFive_example :
+    ((Finset.univ.sum fun j : ZMod 5 =>
+        ((j.val : Real) ^ 2) * squareProfileProbeLogVolume j) /
+      (Finset.univ.sum fun j : ZMod 5 => ((j.val : Real) ^ 2))) ≠
+      ((Finset.univ.sum fun j : ZMod 5 =>
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+          (l := squareAuditPrimeFiveExample) j *
+        squareProfileProbeLogVolume j) /
+      (Finset.univ.sum fun j : ZMod 5 =>
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+          (l := squareAuditPrimeFiveExample) j)) := by
+  rw [squareProfileProbe_representativeAverage_primeFive_example,
+    squareProfileProbe_balancedAverage_primeFive_example]
   norm_num
 
 theorem zmodCuspLabelLogVolumeCompatibility_full_label_value_refl_example

@@ -4690,3 +4690,78 @@ Thus a future formalization of the disputed step must not merely establish
 sign-invariance of the label/log-volume data.  It must identify the square
 profile used by the source argument and prove the corresponding weighted
 numerator or average transport for that profile.
+
+## 165. The Probe Also Separates Normalized Weighted Averages
+
+### Lean Move
+
+We extended the `ZMod 5` probe from Milestone 164 by computing the two total
+weights:
+
+```text
+squareProfileProbe_representativeWeightTotal_primeFive_example
+squareProfileProbe_balancedWeightTotal_primeFive_example
+```
+
+Lean checks:
+
+```text
+representative total = 0^2 + 1^2 + 2^2 + 3^2 + 4^2 = 30
+balanced total       = 0^2 + 1^2 + 2^2 + 2^2 + 1^2 = 10
+```
+
+Together with the numerator computations from Milestone 164, Lean proves:
+
+```text
+squareProfileProbe_representativeAverage_primeFive_example
+squareProfileProbe_balancedAverage_primeFive_example
+squareProfileProbe_averages_differ_primeFive_example
+```
+
+Concretely:
+
+```text
+representative average = 17 / 30
+balanced average       = 1 / 5
+```
+
+and these are not equal.
+
+### Mathematical Reason
+
+The previous milestone showed that the profile choice changes a numerator.  This
+milestone rules out the possibility that the denominator change accidentally
+normalizes away the difference for this sign-invariant probe.
+
+For the sign pair `{1, -1}` in `ZMod 5`:
+
+```text
+representative numerator / representative total = 17 / 30
+balanced numerator / balanced total             = 2 / 10 = 1 / 5
+```
+
+Thus the representative/balanced distinction can survive all the way to the
+normalized weighted average.
+
+### Source Check
+
+This matters because IUT III Corollary 3.12 is stated in terms of
+procession-normalized log-volume averages over `F_l`, not merely pointwise
+weights or unnormalized sums.  Scholze-Stix Section 2.2 also frames the
+objection in terms of comparing real numbers after the relevant real-line
+identifications.  A numerator-only discrepancy would be weaker; a normalized
+average discrepancy is directly aligned with the final comparison layer.
+
+### Relevance to the 3.12 Dispute
+
+The Lean warning is now:
+
+```text
+even after normalization,
+representative j.val^2 averaging and balanced sign-compatible averaging
+can give different real values.
+```
+
+Therefore, a formal proof of the `3.11.5 => 3.12` step must commit to a precise
+weighted-average construction.  It is not enough to say that the labels are
+handled up to sign or that the denominator is adjusted by averaging.
