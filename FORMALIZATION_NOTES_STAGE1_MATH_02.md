@@ -7070,3 +7070,81 @@ The route still assumes the cusp/zero-to-packet-normalized equalities.  The next
 source-facing work is to trace those equalities back to the cusp-compatible
 label average and the packet/capsule construction, or keep them explicitly
 classified as separate real-line identifications.
+
+## 90. Self-Review: Packet-Normalized Local Object Route
+
+### Scope Checked
+
+This review checked the current direct packet-normalized/local-object route
+against the Corollary 3.12 dispute surface.
+
+### Current Lean Chain
+
+The direct source-facing route now factors the target-to-average path through
+the following pieces:
+
+```text
+capsule-entry estimates
+direct finite-sum packet normalization
+cusp/zero = packet normalized capsule average
+packet normalized capsule average = packet local object finiteLogVolume
+local object estimate for cusp/zero log-volume
+packet-normalized container audit
+cusp-class/zero bounds
+label average bound
+theta-pilot hull container route
+qSigned <= thetaSigned
+```
+
+Lean has checked the following derived route packages:
+
+```text
+FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit
+FLZModCuspLabelThetaClassifiedDirectIdentifiedLocalPacketRouteAudit
+FLZModCuspLabelThetaDirectPacketNormalizedLocalObjectRouteAudit
+FLZModCuspLabelThetaFullClassifiedRouteSummary
+```
+
+### Alignment With the Papers and Dispute
+
+This remains aligned with the IUT III Theorem 3.11 to Corollary 3.12 boundary:
+the formalization still treats the holomorphic hull/Theta-pilot route as the
+target route, while keeping the local packet and label-average identifications
+explicit.
+
+The Scholze-Stix warning is still visible in the Lean data.  The route cannot
+use a cusp or zero log-volume as a packet local object unless it supplies either
+an explicit equality or a structured derivation from:
+
+```text
+cusp/zero = packet normalized capsule average
+packet normalized capsule average = packet local object finiteLogVolume
+```
+
+### Current Assumptions
+
+The largest remaining source assumptions in this part of the route are:
+
+```text
+cusp/zero log-volume = packet normalized capsule average
+direct finite-sum packet normalization data
+capsule-entry container estimates
+```
+
+The first is the most sensitive real-line identification.  The second should
+eventually come from a concrete local packet/capsule construction.  The third
+is the analytic estimate layer.
+
+### Verification
+
+Before this review, the worktree was clean.  Focused builds and full `lake
+build` had passed after the last committed milestone.  A search for Lean holes
+found no `sorry`, `admit`, `axiom`, or actual unsafe declaration in the Stage 1
+Lean files; the only match was the word "unsafe" inside a prose comment.
+
+### Next Step
+
+The next useful implementation target is the first remaining assumption:
+classify or derive the cusp/zero-to-packet-normalized equalities from the
+cusp-compatible label average and packet/capsule side, rather than treating them
+as unstructured fields.
