@@ -12023,6 +12023,13 @@ theorem targetSigned_le_averageLogVolume
         audited).averageLogVolume :=
   part.toThetaLabelwiseContainerAudit.targetSigned_le_averageLogVolume audited
 
+theorem targetSigned_le_thetaAverage
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.theta_source.thetaSourceAverage audited :=
+  part.toThetaLabelwiseContainerAudit.targetSigned_le_thetaAverage audited
+
 def toThetaPilotHullContainerAudit
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l) :
     audit.FLZModCuspLabelThetaPilotHullContainerAudit l :=
@@ -12653,6 +12660,13 @@ theorem qSigned_le_thetaSigned_via_ind2_transport
     package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   part.toThetaCuspClassContainerAudit.qSigned_le_thetaSigned_via_cusp_container
     audited
+
+theorem targetSigned_le_thetaAverage
+    (part : audit.FLZModCuspLabelThetaInd2TransportedCuspClassAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.packet_normalized.theta_source.thetaSourceAverage audited :=
+  part.toThetaCuspClassContainerAudit.targetSigned_le_thetaAverage audited
 
 end FLZModCuspLabelThetaInd2TransportedCuspClassAudit
 
@@ -13643,6 +13657,15 @@ theorem cuspBoundSource_eq_ind2Transported
     part.toFullClassifiedRouteSummary.cuspBoundSource =
       IUTStage1CuspClassBoundSource.ind2TransportedCapsuleEstimates :=
   rfl
+
+theorem targetSigned_le_thetaSourceAverage
+    (part :
+      audit.FLZModCuspLabelThetaInd2LocalPacketTransportedCapsuleRouteAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.ind2_packet.theta_source.thetaSourceAverage audited :=
+  let transported := part.toInd2TransportedCuspClassAudit
+  transported.targetSigned_le_thetaAverage audited
 
 end FLZModCuspLabelThetaInd2LocalPacketTransportedCapsuleRouteAudit
 

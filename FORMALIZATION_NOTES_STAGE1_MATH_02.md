@@ -8041,3 +8041,72 @@ The next mathematical work should target the construction of the
 packet-local-object estimates from local/cusp data.  The local reference point
 is the `LocalLabCuspModel`/`CuspLabelClassData` foundation layer and the IUT III
 discussion of labels, tensor packets, and log-shells.
+
+## 103. Cusp-Class Bounds to Theta Average, Including Ind2 Transport
+
+### Goal
+
+We exposed the target-to-Theta-average consequence of cusp-class and zero-label
+bounds, and then applied it to the `(Ind2)` transported capsule route.
+
+### Lean Move
+
+Inside:
+
+```text
+FLZModCuspLabelThetaCuspClassContainerAudit
+```
+
+we added:
+
+```text
+targetSigned_le_thetaAverage
+```
+
+This composes the already formalized route:
+
+```text
+cusp/zero bounds
+  -> labelwise ZMod bounds
+  -> finite-average bound
+  -> Theta-source average bound
+```
+
+Then we added:
+
+```text
+FLZModCuspLabelThetaInd2TransportedCuspClassAudit.targetSigned_le_thetaAverage
+FLZModCuspLabelThetaInd2LocalPacketTransportedCapsuleRouteAudit
+  .targetSigned_le_thetaSourceAverage
+```
+
+### Mathematical Point
+
+This makes the transported branch match the direct branch at the level of the
+target-to-average comparison.  In the transported branch, the source capsule
+estimates are moved across an audited `(Ind2)` local-tensor direct-summand step
+before they become target-side cusp/zero bounds.
+
+### Trap Avoided
+
+We did not identify source and target packets by equality.  The transported
+route goes through the existing audited `(Ind2)` step and the existing theorem
+that transports classified packet-normalization compatibility.  This keeps the
+Scholze-Stix concern about hidden same-copy identifications visible in the Lean
+API.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_cusp_container_target_average_example
+placeAudited_logVolume_fl_zmod_ind2_local_packet_target_bound_example
+```
+
+### Remaining Gap
+
+For the transported branch, the remaining mathematical work is to justify the
+source capsule estimates and source packet-normalization compatibility from the
+original IUT local tensor packet construction, rather than supplying them as
+route fields.

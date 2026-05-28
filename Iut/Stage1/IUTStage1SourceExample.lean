@@ -4478,6 +4478,21 @@ theorem placeAudited_logVolume_fl_zmod_cusp_container_q_le_theta_example
     package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   part.qSigned_le_thetaSigned_via_cusp_container audited
 
+theorem placeAudited_logVolume_fl_zmod_cusp_container_target_average_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.theta_source.thetaSourceAverage audited :=
+  part.targetSigned_le_thetaAverage audited
+
 theorem placeAudited_logVolume_fl_zmod_local_container_cusp_bound_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
@@ -5216,6 +5231,22 @@ def placeAudited_logVolume_fl_zmod_ind2_local_packet_full_route_example
       audit.FLZModCuspLabelThetaInd2LocalPacketTransportedCapsuleRouteAudit l) :
     audit.FLZModCuspLabelThetaFullClassifiedRouteSummary l :=
   part.toFullClassifiedRouteSummary
+
+theorem placeAudited_logVolume_fl_zmod_ind2_local_packet_target_bound_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaInd2LocalPacketTransportedCapsuleRouteAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.ind2_packet.theta_source.thetaSourceAverage audited :=
+  part.targetSigned_le_thetaSourceAverage audited
 
 theorem placeAudited_logVolume_fl_zmod_direct_local_packet_full_route_source_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
