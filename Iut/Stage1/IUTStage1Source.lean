@@ -7025,6 +7025,52 @@ theorem commonContainerContextMatches
       bundle.structuredSHE.context.sharedContext :=
   bundle.structuredSHE.commonContainerContextMatches
 
+def hodgeTheaterDescentBridgeData
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    IUTStage1HodgeTheaterDescentBridgeData :=
+  { domainTheater := bundle.structuredSHE.context.domainStructure.theater,
+    codomainTheater := bundle.structuredSHE.context.codomainStructure.theater,
+    descent := package.preLedger.chartedContainer.commonContainer.hddShe.hdd.descent,
+    zeroColumnCheckpoint := fourthTriangleHDDSHECheckpoint,
+    indeterminacyProfile := package.indeterminacies,
+    histories_not_identified := bundle.domainHistory_ne_codomainHistory }
+
+theorem hodgeTheaterDescentBridgeData_domainTheater_eq
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    bundle.hodgeTheaterDescentBridgeData.domainTheater =
+      bundle.structuredSHE.context.domainStructure.theater :=
+  rfl
+
+theorem hodgeTheaterDescentBridgeData_codomainTheater_eq
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    bundle.hodgeTheaterDescentBridgeData.codomainTheater =
+      bundle.structuredSHE.context.codomainStructure.theater :=
+  rfl
+
+theorem hodgeTheaterDescentBridgeData_descent_eq
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    bundle.hodgeTheaterDescentBridgeData.descent =
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.descent :=
+  rfl
+
+theorem hodgeTheaterDescentBridgeData_checkpoint_eq
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    bundle.hodgeTheaterDescentBridgeData.zeroColumnCheckpoint =
+      fourthTriangleHDDSHECheckpoint :=
+  rfl
+
+theorem hodgeTheaterDescentBridgeData_indeterminacyProfile_eq
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    bundle.hodgeTheaterDescentBridgeData.indeterminacyProfile =
+      package.indeterminacies :=
+  rfl
+
+theorem hodgeTheaterDescentBridgeData_histories_not_identified
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    bundle.hodgeTheaterDescentBridgeData.domainTheater.side ≠
+      bundle.hodgeTheaterDescentBridgeData.codomainTheater.side :=
+  bundle.hodgeTheaterDescentBridgeData.histories_not_identified
+
 end IUTStage1Theorem311StructuredInputsWithSHE
 
 /--
@@ -14914,6 +14960,14 @@ namespace FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit
 variable {audit : endpoint.LogVolumeChartAudit}
 variable {l : PrimeGeFive}
 
+def ofStructuredInputsWithSHE
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (classified_bridge :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit l :=
+  { hodge_descent_data := bundle.hodgeTheaterDescentBridgeData,
+    classified_bridge := classified_bridge }
+
 open FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit in
 def toSourcedInsulatedCuspZeroPacketBridgeAudit
     (part :
@@ -14934,6 +14988,23 @@ theorem histories_not_identified
     part.hodge_descent_data.domainTheater.side ≠
       part.hodge_descent_data.codomainTheater.side :=
   part.hodge_descent_data.histories_not_identified
+
+theorem ofStructuredInputsWithSHE_hodgeData_eq
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (classified_bridge :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l) :
+    (ofStructuredInputsWithSHE bundle classified_bridge).hodge_descent_data =
+      bundle.hodgeTheaterDescentBridgeData :=
+  rfl
+
+theorem ofStructuredInputsWithSHE_histories_not_identified
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (classified_bridge :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l) :
+    let part := ofStructuredInputsWithSHE bundle classified_bridge
+    part.hodge_descent_data.domainTheater.side ≠
+      part.hodge_descent_data.codomainTheater.side :=
+  (ofStructuredInputsWithSHE bundle classified_bridge).histories_not_identified
 
 theorem targetSigned_le_thetaSourceAverage
     (part :

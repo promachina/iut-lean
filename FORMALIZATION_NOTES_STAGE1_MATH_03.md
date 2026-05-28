@@ -1654,3 +1654,79 @@ placeAudited_logVolume_fl_zmod_hodge_descent_bridge_history_example
 The wrapper still accepts the classified packet bridge as input.  The next step
 is to isolate which fields of `IUTStage1HodgeTheaterDescentBridgeData` should
 produce that bridge, rather than merely accompany it.
+
+## 131. Hodge-Descent Bridge Data Extracted from Structured SHE Inputs
+
+### Lean Move
+
+I added a canonical extractor:
+
+```text
+IUTStage1Theorem311StructuredInputsWithSHE.hodgeTheaterDescentBridgeData
+```
+
+and projection checks for its domain theater, codomain theater, descent
+operation, fourth-triangle HDD/SHE checkpoint, indeterminacy profile, and
+history-separation proof.
+
+I also added:
+
+```text
+FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit
+  .ofStructuredInputsWithSHE
+```
+
+which builds the Hodge-descent wrapper from structured SHE inputs plus the still
+explicit classified insulated packet bridge.
+
+### Mathematical Reason
+
+The previous wrapper required Hodge-theater/descent data, but that data could be
+chosen independently.  This was too loose for the Corollary 3.12 dispute: the
+Hodge-theater explanation must be tied to the same structured SHE and HDD data
+used on the Theorem 3.11 side of the route.
+
+The extractor now fixes that tie:
+
+```text
+domain theater      = structured SHE domain theater
+codomain theater    = structured SHE codomain theater
+descent             = package common-container HDD descent
+zero checkpoint     = fourth-triangle HDD-after-SHE checkpoint
+indeterminacies     = package Ind1-Ind2-Ind3 profile
+history separation  = structured SHE history-separation proof
+```
+
+This mirrors the source-side reading we are using: the Hodge-theater route is
+not a bare real-line identification.  It is a descent/SHE/HDD route whose
+history discipline has to be visible in the formal object.
+
+### Trap Avoided
+
+This still does not derive the packet bridge from Hodge theory.  The classified
+packet bridge remains an input.  The improvement is that a bridge may now be
+called Hodge-descent-sourced only when its Hodge metadata comes from structured
+SHE inputs, rather than from arbitrary labels.
+
+This is important for the Scholze-Stix/Mochizuki pressure point: we should not
+silently identify the two histories and then later claim that Hodge-theater
+descent preserved the missing distinction.
+
+### Toy Check
+
+The examples now check:
+
+```text
+unitThetaToy_source_theorem311_hodge_descent_bridge_data_example
+unitThetaToy_source_theorem311_hodge_descent_bridge_data_descent_example
+unitThetaToy_source_theorem311_hodge_descent_bridge_data_history_example
+placeAudited_logVolume_fl_zmod_hodge_descent_bridge_from_she_example
+placeAudited_logVolume_fl_zmod_hodge_descent_bridge_from_she_history_example
+```
+
+### Remaining Gap
+
+The next mathematical gap is the hard one: specify which structured SHE/HDD
+facts actually justify the classified packet bridge equalities.  At present the
+formalization records the correct source of the Hodge-descent data, but it does
+not yet construct the packet-local-object identifications from that source.

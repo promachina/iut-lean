@@ -5331,6 +5331,43 @@ def placeAudited_logVolume_fl_zmod_hodge_descent_sourced_bridge_example
     audit.FLZModCuspLabelThetaSourcedInsulatedCuspZeroPacketBridgeAudit l :=
   ofHodgeTheaterDescentIndeterminacy part
 
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
+  FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit in
+def placeAudited_logVolume_fl_zmod_hodge_descent_bridge_from_she_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (part :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l) :
+    audit.FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit l :=
+  ofStructuredInputsWithSHE bundle part
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
+  FLZModCuspLabelThetaHodgeDescentInsulatedCuspZeroBridgeAudit in
+theorem placeAudited_logVolume_fl_zmod_hodge_descent_bridge_from_she_history_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (part :
+      audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l) :
+    let hodgePart := ofStructuredInputsWithSHE bundle part
+    hodgePart.hodge_descent_data.domainTheater.side ≠
+      hodgePart.hodge_descent_data.codomainTheater.side :=
+  let hodgePart := ofStructuredInputsWithSHE bundle part
+  hodgePart.histories_not_identified
+
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 def placeAudited_logVolume_fl_zmod_hodge_descent_bridge_to_sourced_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
@@ -7425,6 +7462,56 @@ theorem unitThetaToy_source_theorem311_structured_inputs_with_she_common_context
       bundle.structuredSHE.context.sharedContext :=
   (unitThetaToy_source_theorem311_structured_inputs_with_she_example
     measure hnormalized hh hbound hholds).commonContainerContextMatches
+
+def unitThetaToy_source_theorem311_hodge_descent_bridge_data_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    IUTStage1HodgeTheaterDescentBridgeData :=
+  (unitThetaToy_source_theorem311_structured_inputs_with_she_example
+    measure hnormalized hh hbound hholds).hodgeTheaterDescentBridgeData
+
+theorem unitThetaToy_source_theorem311_hodge_descent_bridge_data_descent_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let package :=
+      unitThetaToyIUTStage1SourcePackage
+        measure hnormalized hh hbound hholds
+    let bundle :=
+      unitThetaToy_source_theorem311_structured_inputs_with_she_example
+        measure hnormalized hh hbound hholds
+    bundle.hodgeTheaterDescentBridgeData.descent =
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.descent :=
+  (unitThetaToy_source_theorem311_structured_inputs_with_she_example
+    measure hnormalized hh hbound hholds).hodgeTheaterDescentBridgeData_descent_eq
+
+theorem unitThetaToy_source_theorem311_hodge_descent_bridge_data_history_example
+    (measure : RegionMeasure thetaLine)
+    (hnormalized : RegionMeasure.NormalizesUpperRays measure)
+    {h : Real} (hh : 0 < h)
+    {epsilon : index -> Real} {epsilonBound : Real}
+    (hbound : ∀ choice : index, epsilon choice <= epsilonBound)
+    {choice : index}
+    (hholds : (thetaToyAlgorithmOutput unitQToTheta h epsilon).Holds choice
+      (qAssignment h)) :
+    let bundle :=
+      unitThetaToy_source_theorem311_structured_inputs_with_she_example
+        measure hnormalized hh hbound hholds
+    bundle.hodgeTheaterDescentBridgeData.domainTheater.side ≠
+      bundle.hodgeTheaterDescentBridgeData.codomainTheater.side :=
+  (unitThetaToy_source_theorem311_structured_inputs_with_she_example
+    measure hnormalized hh hbound hholds).hodgeTheaterDescentBridgeData_histories_not_identified
 
 theorem unitThetaToy_source_theorem311_audited_hdd_she_bound_example
     (measure : RegionMeasure thetaLine)
