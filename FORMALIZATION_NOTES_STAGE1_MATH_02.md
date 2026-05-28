@@ -3516,3 +3516,107 @@ label-indexed normalized log-volume family and the cusp-label class data.  In
 other words, the formalization should distinguish "indexed by `ZMod l`" from
 "indexed by the cusp labels arising from the local model" and then prove or
 assume the precise bridge between those two descriptions.
+
+## 47. Cusp-Compatible `ZMod l` Log-Volume Families
+
+### Goal
+
+We added an explicit compatibility layer between a `ZMod l`-indexed normalized
+log-volume family and the nonzero cusp sign-label classes.
+
+### Lean/API Check
+
+The new source object is:
+
+```text
+IUTStage1ZModCuspLabelLogVolumeCompatibility l
+```
+
+It carries:
+
+```text
+normalizedLogVolume : ZMod l.value -> Real
+cuspClassLogVolume : (zmodSignAction l).SignLabelQuotient -> Real
+zeroLogVolume : Real
+nonzero_eq_cuspClass
+zero_eq
+```
+
+Lean proves:
+
+```text
+nonzero_eq
+zero_eq_zeroLogVolume
+neg_nonzero_eq
+```
+
+The endpoint-level wrapper is:
+
+```text
+FLZModCuspLabelCompatibleAveragedInd12Audit
+```
+
+It packages:
+
+```text
+zmod_cusp_audit : FLZModCuspLabelAveragedInd12Audit l
+cuspLogVolume :
+  audited choice -> IUTStage1ZModCuspLabelLogVolumeCompatibility l
+normalizedLogVolume_eq
+```
+
+and exposes:
+
+```text
+nonzeroAverageLabel_eq_cuspClass
+zeroAverageLabel_eq_zeroLogVolume
+ind1AverageLogVolumeEq
+ind2AverageLogVolumeEq
+```
+
+### Mathematical Point
+
+This is a sharper version of the label/cusp bridge.  A normalized log-volume
+family indexed by `j : ZMod l.value` is now explicitly related to a family
+indexed by sign-label classes for nonzero labels:
+
+```text
+normalizedLogVolume j =
+  cuspClassLogVolume (sign class of j)    if j ≠ 0
+```
+
+The zero label is separated:
+
+```text
+normalizedLogVolume 0 = zeroLogVolume
+```
+
+This separation is important because the sign-label quotient in the foundations
+layer is defined on nonzero labels.
+
+### Trap Avoided
+
+We did not quotient the whole average by sign.  The average is still over
+`ZMod l.value`; the sign-label description is an additional compatibility for
+nonzero labels.  This avoids silently changing the indexing set of the average.
+
+### Toy Check
+
+The examples now check:
+
+```text
+zmodCuspLabelLogVolumeCompatibility_nonzero_example
+zmodCuspLabelLogVolumeCompatibility_zero_example
+zmodCuspLabelLogVolumeCompatibility_neg_nonzero_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_compatible_nonzero_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_compatible_zero_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_compat_ind1_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_cusp_compat_ind2_example
+```
+
+### Remaining Gap
+
+We still need to connect this cusp-compatible label average to the actual
+theta-value side of the source construction.  At present the compatibility is a
+typed audit object; a later theorem must explain how the normalized log-volume
+family is produced from the theta/cusp data used in Theorem 3.11.

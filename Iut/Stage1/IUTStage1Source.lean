@@ -1167,6 +1167,51 @@ theorem zmod_cuspLabelClass_eq_canonical
 
 end IUTStage1FLZModCuspLabelClassModel
 
+/--
+Compatibility between a `ZMod l`-indexed normalized log-volume family and a
+description by nonzero cusp sign-label classes.
+
+The zero label is recorded separately because the sign-label quotient in the
+foundations layer is defined on nonzero labels.
+-/
+structure IUTStage1ZModCuspLabelLogVolumeCompatibility
+    (l : PrimeGeFive) where
+  normalizedLogVolume : ZMod l.value -> Real
+  cuspClassLogVolume :
+    (zmodSignAction l).SignLabelQuotient -> Real
+  zeroLogVolume : Real
+  nonzero_eq_cuspClass :
+    ∀ (j : ZMod l.value) (hj : j ≠ 0),
+      normalizedLogVolume j =
+        cuspClassLogVolume (zmodSignLabelFromCoordinate l j hj)
+  zero_eq : normalizedLogVolume 0 = zeroLogVolume
+
+namespace IUTStage1ZModCuspLabelLogVolumeCompatibility
+
+variable {l : PrimeGeFive}
+
+theorem nonzero_eq
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    compat.normalizedLogVolume j =
+      compat.cuspClassLogVolume (zmodSignLabelFromCoordinate l j hj) :=
+  compat.nonzero_eq_cuspClass j hj
+
+theorem zero_eq_zeroLogVolume
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    compat.normalizedLogVolume 0 = compat.zeroLogVolume :=
+  compat.zero_eq
+
+theorem neg_nonzero_eq
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    compat.normalizedLogVolume (-j) =
+      compat.cuspClassLogVolume (zmodSignLabelFromCoordinate l j hj) := by
+  rw [compat.nonzero_eq (-j) (zmod_neg_ne_zero_of_ne_zero l hj)]
+  rw [zmodSignLabelFromCoordinate_neg_eq]
+
+end IUTStage1ZModCuspLabelLogVolumeCompatibility
+
 namespace IUTStage1LabelAveragedProcessionLogVolume
 
 variable {label : Type u} [Fintype label]
@@ -9525,6 +9570,23 @@ structure FLZModCuspLabelAveragedInd12Audit
   cusp_label_model : IUTStage1FLZModCuspLabelClassModel l
   averaged_audit : audit.LabelAveragedInd12Audit (ZMod l.value)
 
+/--
+`ZMod l` cusp-label averaged audit with an explicit compatibility between the
+averaged normalized log-volume family and cusp sign-label classes.
+-/
+structure FLZModCuspLabelCompatibleAveragedInd12Audit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  zmod_cusp_audit : audit.FLZModCuspLabelAveragedInd12Audit l
+  cuspLogVolume :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind ->
+      IUTStage1ZModCuspLabelLogVolumeCompatibility l
+  normalizedLogVolume_eq :
+    ∀ (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+      (j : ZMod l.value),
+      (zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume j =
+        (cuspLogVolume audited).normalizedLogVolume j
+
 theorem qCharted (audit : endpoint.LogVolumeChartAudit) :
     (Transport.map package.preLedger.chartedContainer.chart.qToTarget
       package.preLedger.qValue.qPoint).coord =
@@ -9813,6 +9875,76 @@ theorem ind2AverageLogVolumeEq
   part.averaged_audit.ind2AverageLogVolumeEq hstep
 
 end FLZModCuspLabelAveragedInd12Audit
+
+namespace FLZModCuspLabelCompatibleAveragedInd12Audit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+theorem localNormalizedAudit
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l) :
+    audit.ProcessionNormalizedInd12Audit :=
+  part.zmod_cusp_audit.localNormalizedAudit
+
+theorem normalizedLogVolumeEq
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume j =
+      (part.cuspLogVolume audited).normalizedLogVolume j :=
+  part.normalizedLogVolume_eq audited j
+
+theorem nonzeroAverageLabel_eq_cuspClass
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume j =
+      (part.cuspLogVolume audited).cuspClassLogVolume
+        (zmodSignLabelFromCoordinate l j hj) := by
+  calc
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume j =
+        (part.cuspLogVolume audited).normalizedLogVolume j :=
+      part.normalizedLogVolumeEq audited j
+    _ =
+        (part.cuspLogVolume audited).cuspClassLogVolume
+          (zmodSignLabelFromCoordinate l j hj) :=
+      (part.cuspLogVolume audited).nonzero_eq j hj
+
+theorem zeroAverageLabel_eq_zeroLogVolume
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume 0 =
+      (part.cuspLogVolume audited).zeroLogVolume := by
+  calc
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited).normalizedLogVolume 0 =
+        (part.cuspLogVolume audited).normalizedLogVolume 0 :=
+      part.normalizedLogVolumeEq audited 0
+    _ = (part.cuspLogVolume audited).zeroLogVolume :=
+      (part.cuspLogVolume audited).zero_eq_zeroLogVolume
+
+theorem ind1AverageLogVolumeEq
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ProcessionAutomorphismStep
+        audited₁ audited₂) :
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited₁).averageLogVolume =
+      (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited₂).averageLogVolume :=
+  part.zmod_cusp_audit.ind1AverageLogVolumeEq hstep
+
+theorem ind2AverageLogVolumeEq
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.LocalTensorDirectSummandActionStep
+        audited₁ audited₂) :
+    (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited₁).averageLogVolume =
+      (part.zmod_cusp_audit.averaged_audit.averagedLogVolume audited₂).averageLogVolume :=
+  part.zmod_cusp_audit.ind2AverageLogVolumeEq hstep
+
+end FLZModCuspLabelCompatibleAveragedInd12Audit
 
 end LogVolumeChartAudit
 
