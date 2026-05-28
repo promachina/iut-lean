@@ -2059,6 +2059,29 @@ theorem balancedSquareWeightOnSignQuotient_fromCoordinate
     balancedSquareWeight (l := l) j
   rw [zmodNonzeroLabelFromCoordinate_val]
 
+theorem balancedSquareWeight_zero :
+    balancedSquareWeight (l := l) (0 : ZMod l.value) = 0 := by
+  unfold balancedSquareWeight
+  simp
+
+noncomputable def balancedSquareWeightOnFullLabel :
+    IUTStage1ZModCuspFullLabel l -> Real
+  | IUTStage1ZModCuspFullLabel.zero => 0
+  | IUTStage1ZModCuspFullLabel.nonzero label =>
+      balancedSquareWeightOnSignQuotient (l := l) label
+
+theorem balancedSquareWeightOnFullLabel_fromCoordinate
+    (j : ZMod l.value) :
+    balancedSquareWeightOnFullLabel
+        (l := l) (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      balancedSquareWeight (l := l) j := by
+  by_cases hj : j = 0
+  · subst j
+    rw [IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+    exact balancedSquareWeight_zero.symm
+  · rw [IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l j hj]
+    exact balancedSquareWeightOnSignQuotient_fromCoordinate j hj
+
 theorem balancedSquareWeight_eq_square_val_of_val_le_half
     (j : ZMod l.value) (hhalf : j.val ≤ l.value / 2) :
     balancedSquareWeight (l := l) j = ((j.val : Real) ^ 2) := by
@@ -2179,6 +2202,24 @@ theorem not_exists_representativeSquareWeightOnSignQuotient :
   exact not_coordinateSquarePreserving_neg
     (coordinateSquarePreserving_neg_of_representativeSquareWeightOnSignQuotient
       weightOnQuotient hweight)
+
+theorem not_exists_representativeSquareWeightOnFullLabel :
+    ¬ ∃ weightOnFullLabel : IUTStage1ZModCuspFullLabel l -> Real,
+      ∀ j : ZMod l.value,
+        weightOnFullLabel (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          ((j.val : Real) ^ 2) := by
+  rintro ⟨weightOnFullLabel, hweight⟩
+  exact not_exists_representativeSquareWeightOnSignQuotient
+    ⟨fun label =>
+        weightOnFullLabel (IUTStage1ZModCuspFullLabel.nonzero label),
+      by
+        intro j hj
+        change weightOnFullLabel
+            (IUTStage1ZModCuspFullLabel.nonzero
+              (zmodSignLabelFromCoordinate l j hj)) =
+          ((j.val : Real) ^ 2)
+        rw [← IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l j hj]
+        exact hweight j⟩
 
 theorem squareWeight_preserved_of_coordinateSquarePreserving
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)

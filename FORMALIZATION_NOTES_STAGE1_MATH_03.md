@@ -4985,3 +4985,77 @@ function of the sign-quotient cusp label.  A future formalization of the
 `3.11.5 => 3.12` step must either keep enough representative/history data to
 support the literal representative square, or explicitly justify replacing it by
 a sign-compatible profile.
+
+## 169. Representative Squares Do Not Descend to Full Cusp Labels
+
+### Lean Move
+
+We lifted the previous sign-quotient result to the full cusp-label type:
+
+```text
+balancedSquareWeight_zero
+balancedSquareWeightOnFullLabel
+balancedSquareWeightOnFullLabel_fromCoordinate
+not_exists_representativeSquareWeightOnFullLabel
+```
+
+The balanced profile now extends across the zero/nonzero full-label split:
+
+```text
+balancedSquareWeightOnFullLabel (fromCoordinate j) =
+  balancedSquareWeight j.
+```
+
+But the representative profile still cannot be read from the full label:
+
+```text
+not exists W : FullLabel -> Real,
+  W(fromCoordinate j) = (j.val)^2 for every j.
+```
+
+The proof reduces the full-label claim to the sign-quotient obstruction from
+Milestone 168 by restricting a hypothetical full-label weight to the nonzero
+constructor.
+
+### Mathematical Reason
+
+The full cusp-label type records the zero label separately and sends every
+nonzero coordinate through the sign quotient.  Thus it contains exactly the
+label information used by the compatibility layer:
+
+```text
+normalizedLogVolume j =
+  fullLabelLogVolume (fromCoordinate j).
+```
+
+It does not contain a distinguished nonnegative representative of a nonzero
+class.  Therefore a balanced sign-compatible square profile can be attached to
+full labels, but the literal representative square `j.val^2` cannot.
+
+### Source Check
+
+The IUT III route to Corollary 3.12 passes through label/log-volume data and
+full-label compatibility, while the Scholze-Stix concern is about whether the
+real-valued comparison survives the identifications between Hodge theaters.  The
+new Lean statement aligns with this boundary: full-label log-volume data alone
+does not determine the representative-dependent square weights.
+
+### Relevance to the 3.12 Dispute
+
+This is a stronger anti-drift guard than the previous quotient theorem.  It
+states the obstruction at the same level where our Stage 1 log-volume
+compatibility is expressed.  A formal proof of the `3.11.5 => 3.12` step cannot
+silently combine:
+
+```text
+fullLabelLogVolume (fromCoordinate j)
+```
+
+with:
+
+```text
+(j.val)^2
+```
+
+as though both were determined by the same full-label object.  The second
+quantity requires extra coordinate/representative data or a separate argument.

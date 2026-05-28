@@ -973,6 +973,29 @@ theorem zmodSquareWeightProfile_representative_not_sign_quotient_example
           ((j.val : Real) ^ 2) :=
   not_exists_representativeSquareWeightOnSignQuotient
 
+noncomputable def zmodSquareWeightProfile_balanced_on_full_label_example
+    {l : PrimeGeFive}
+    (label : IUTStage1ZModCuspFullLabel l) : Real :=
+  IUTStage1ZModSquareWeightProfile.balancedSquareWeightOnFullLabel
+    (l := l) label
+
+open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_balanced_on_full_label_from_coord_example
+    {l : PrimeGeFive} (j : ZMod l.value) :
+    zmodSquareWeightProfile_balanced_on_full_label_example
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      IUTStage1ZModSquareWeightProfile.balancedSquareWeight (l := l) j :=
+  balancedSquareWeightOnFullLabel_fromCoordinate j
+
+open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_representative_not_full_label_example
+    {l : PrimeGeFive} :
+    ¬ ∃ weightOnFullLabel : IUTStage1ZModCuspFullLabel l -> Real,
+      ∀ j : ZMod l.value,
+        weightOnFullLabel (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          ((j.val : Real) ^ 2) :=
+  not_exists_representativeSquareWeightOnFullLabel
+
 theorem zmodSquareWeightProfile_squareWeight_preserved_of_coord_example
     {l : PrimeGeFive}
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
