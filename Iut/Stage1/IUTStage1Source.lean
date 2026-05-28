@@ -4213,6 +4213,76 @@ theorem curveLogSum_le_ftpdLogSum_add_logTwoL
 end IUTStage1IUTIVCorollary22LogDiffCondComparisonShadow
 
 /--
+IUT IV, Corollary 2.2(ii), final passage from the `h = log(q_all)` bound to
+condition (C2).
+
+The source uses the comparison of tripodal different/conductor terms with
+`log-diff_X(x_E) + log-cond_D(x_E)` to turn the final `h` bound into the
+displayed C2 inequality chain.
+-/
+structure IUTStage1IUTIVCorollary22FinalHToC2Shadow where
+  logQ : Real
+  logQTwo : Real
+  logQAll : Real
+  h : Real
+  epsilonE : Real
+  logDegreeSum : Real
+  logDiffX : Real
+  logCondD : Real
+  cK : Real
+  h_eq_logQAll : h = logQAll
+  epsilonE_pos : 0 < epsilonE
+  logDegreeSum_le_curveSum :
+    logDegreeSum <= logDiffX + logCondD
+  final_h_bound :
+    (1 / 6 : Real) * h <=
+      (1 + epsilonE) * logDegreeSum + cK
+  logQ_le_logQTwo :
+    (1 / 6 : Real) * logQ <= (1 / 6 : Real) * logQTwo
+  logQTwo_le_logQAll :
+    (1 / 6 : Real) * logQTwo <= (1 / 6 : Real) * logQAll
+
+namespace IUTStage1IUTIVCorollary22FinalHToC2Shadow
+
+theorem one_plus_epsilonE_nonneg
+    (data : IUTStage1IUTIVCorollary22FinalHToC2Shadow) :
+    0 <= 1 + data.epsilonE := by
+  linarith [data.epsilonE_pos]
+
+theorem logQAll_le_curveSide
+    (data : IUTStage1IUTIVCorollary22FinalHToC2Shadow) :
+    (1 / 6 : Real) * data.logQAll <=
+      (1 + data.epsilonE) * (data.logDiffX + data.logCondD) + data.cK := by
+  have hmono :
+      (1 + data.epsilonE) * data.logDegreeSum <=
+        (1 + data.epsilonE) * (data.logDiffX + data.logCondD) :=
+    mul_le_mul_of_nonneg_left data.logDegreeSum_le_curveSum
+      data.one_plus_epsilonE_nonneg
+  calc
+    (1 / 6 : Real) * data.logQAll =
+        (1 / 6 : Real) * data.h := by rw [data.h_eq_logQAll]
+    _ <= (1 + data.epsilonE) * data.logDegreeSum + data.cK :=
+        data.final_h_bound
+    _ <= (1 + data.epsilonE) * (data.logDiffX + data.logCondD) + data.cK :=
+        add_le_add hmono le_rfl
+
+def toC2InequalityChain
+    (data : IUTStage1IUTIVCorollary22FinalHToC2Shadow) :
+    IUTStage1IUTIVCorollary22C2InequalityChainShadow :=
+  { logQ := data.logQ
+    logQTwo := data.logQTwo
+    logQAll := data.logQAll
+    epsilonE := data.epsilonE
+    logDiffX := data.logDiffX
+    logCondD := data.logCondD
+    cK := data.cK
+    logQ_le_logQTwo := data.logQ_le_logQTwo
+    logQTwo_le_logQAll := data.logQTwo_le_logQAll
+    logQAll_le_heightSide := data.logQAll_le_curveSide }
+
+end IUTStage1IUTIVCorollary22FinalHToC2Shadow
+
+/--
 IUT IV, Corollary 2.2 to Theorem A bounded-discrepancy passage.
 
 Corollary 2.2(i) compares `(1/6)log(q_2)` with the canonical height up to

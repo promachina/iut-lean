@@ -285,6 +285,9 @@ The code currently covers:
   Lean composes the pre-\(\epsilon_E\) bound, error conversion, move-left step,
   and absorption to prove
   \(\frac16h\le(1+\epsilon_E)S+C_K\);
+\item the IUT IV, Corollary 2.2(ii) final C2 bridge:
+  using \(S\le\log\operatorname{diff}_X(x_E)+\log\operatorname{cond}_D(x_E)\),
+  Lean derives the displayed C2 inequality chain;
 \item the IUT IV, Corollary 2.2(ii) comparison
   \(\log\operatorname{diff}_X(x_E)=\log(d_{F_{\mathrm{tpd}}})\) and
   \(\log(f_{F_{\mathrm{tpd}}})\le\log\operatorname{cond}_D(x_E)\le
@@ -367,6 +370,8 @@ final denominator removal in C2.  The
 \(\epsilon_E\)-error flag records the conversion of the \((15\delta)^2\)-term
 to the \(\frac25\epsilon_E\frac16h\) term.
 The final \(h\)-bound flag records the full composition through absorption.
+The final C2 bridge flag records the last monotonic replacement of the tripodal
+log-degree sum by the curve different/conductor sum.
 The \(h\)-to-move-left flag records the bridge from the pre-\(\epsilon_E\) bound
 to the denominator-stage preliminary inequality.
 q2/q flag records the displayed comparison of \(\log(q_2)\) and \(\log(q)\).
@@ -491,6 +496,8 @@ the intermediate expression with denominator \(1-2\epsilon_E/5\) is bounded by
 \((1+\epsilon_E)\) times the log-degree sum plus \(C_K\).
 Lean now composes these steps into the final displayed \(h=\log(q_\forall)\)
 bound.
+Lean also derives the displayed C2 chain from this \(h\)-bound and the
+tripodal-to-curve log-degree comparison.
 It also proves the two sum inequalities relating the tripodal different and
 conductor terms to \(\log\operatorname{diff}_X+\log\operatorname{cond}_D\).
 Finally, Lean combines the Corollary 2.2(i) bounded-discrepancy height

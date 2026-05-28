@@ -679,6 +679,7 @@ structure ProcessionContainerExperimentReport where
   iutIVCorollary22EpsilonAbsorptionAvailable : Bool
   iutIVCorollary22FinalHBoundAvailable : Bool
   iutIVCorollary22LogDiffCondComparisonAvailable : Bool
+  iutIVCorollary22FinalHToC2Available : Bool
   iutIVCorollary22ToTheoremABoundAvailable : Bool
 deriving Repr
 
@@ -745,6 +746,7 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     iutIVCorollary22EpsilonAbsorptionAvailable := true,
     iutIVCorollary22FinalHBoundAvailable := true,
     iutIVCorollary22LogDiffCondComparisonAvailable := true,
+    iutIVCorollary22FinalHToC2Available := true,
     iutIVCorollary22ToTheoremABoundAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
@@ -1416,6 +1418,17 @@ theorem iutIVCorollary22LogDiffCond_curve_le_ftpd_add_logTwoL
     data.curveLogSum <= data.ftpdLogSum + data.logTwoL :=
   data.curveLogSum_le_ftpdLogSum_add_logTwoL
 
+theorem iutIVCorollary22FinalHToC2_logQAll_bound
+    (data : IUTStage1IUTIVCorollary22FinalHToC2Shadow) :
+    (1 / 6 : Real) * data.logQAll <=
+      (1 + data.epsilonE) * (data.logDiffX + data.logCondD) + data.cK :=
+  data.logQAll_le_curveSide
+
+def iutIVCorollary22FinalHToC2_chain
+    (data : IUTStage1IUTIVCorollary22FinalHToC2Shadow) :
+    IUTStage1IUTIVCorollary22C2InequalityChainShadow :=
+  data.toC2InequalityChain
+
 theorem iutIVCorollary22ToTheoremA_discrepancy_bounded_below
     {Point : Type u}
     (data : IUTStage1IUTIVCorollary22ToTheoremABoundShadow Point)
@@ -1710,6 +1723,7 @@ structure Corollary312DisputeFirstPassReport where
   iutIVCorollary22EpsilonAbsorptionAvailable : Bool
   iutIVCorollary22FinalHBoundAvailable : Bool
   iutIVCorollary22LogDiffCondComparisonAvailable : Bool
+  iutIVCorollary22FinalHToC2Available : Bool
   iutIVCorollary22ToTheoremABoundAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
@@ -1789,6 +1803,7 @@ def corollary312DisputeFirstPassReport :
     iutIVCorollary22EpsilonAbsorptionAvailable := true,
     iutIVCorollary22FinalHBoundAvailable := true,
     iutIVCorollary22LogDiffCondComparisonAvailable := true,
+    iutIVCorollary22FinalHToC2Available := true,
     iutIVCorollary22ToTheoremABoundAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
@@ -2100,6 +2115,11 @@ theorem corollary312Report_iutIVCorollary22FinalHBoundAvailable :
 
 theorem corollary312Report_iutIVCorollary22LogDiffCondComparisonAvailable :
     corollary312DisputeFirstPassReport.iutIVCorollary22LogDiffCondComparisonAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVCorollary22FinalHToC2Available :
+    corollary312DisputeFirstPassReport.iutIVCorollary22FinalHToC2Available =
       true :=
   rfl
 
