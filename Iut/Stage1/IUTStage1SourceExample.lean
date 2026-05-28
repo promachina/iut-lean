@@ -1245,6 +1245,39 @@ theorem fullLabelMapOnlyTransport_value_gap_example
       transport.missingFactoredSquareFullLabelData :=
   transport.fullLabelValuePreservation_missing
 
+def fullLabelModularSquareOnlyTransport_neg_example
+    (l : PrimeGeFive) :
+    IUTStage1FullLabelModularSquareOnlyTransport l :=
+  IUTStage1FullLabelModularSquareOnlyTransport.neg l
+
+theorem fullLabelModularSquareOnlyTransport_map_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1FullLabelModularSquareOnlyTransport l) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+      (l := l) transport.coordinateEquiv :=
+  transport.fullLabelMapPreserved
+
+theorem fullLabelModularSquareOnlyTransport_modular_square_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1FullLabelModularSquareOnlyTransport l) :
+    IUTStage1ZModSquareWeightProfile.CoordinateModularSquarePreserving
+      (l := l) transport.coordinateEquiv :=
+  transport.coordinateModularSquarePreserved
+
+theorem fullLabelModularSquareOnlyTransport_coord_gap_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1FullLabelModularSquareOnlyTransport l) :
+    IUTStage1FactoredSquareFullLabelMissingDatum.coordinateSquarePreservation ∈
+      transport.missingFactoredSquareFullLabelData :=
+  transport.coordinateSquarePreservation_missing
+
+theorem fullLabelModularSquareOnlyTransport_value_gap_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1FullLabelModularSquareOnlyTransport l) :
+    IUTStage1FactoredSquareFullLabelMissingDatum.fullLabelValuePreservation ∈
+      transport.missingFactoredSquareFullLabelData :=
+  transport.fullLabelValuePreservation_missing
+
 def flLabelModel_zmod_example
     (l : PrimeGeFive) :
     IUTStage1FLLabelModel (ZMod l.value) :=
@@ -1415,6 +1448,12 @@ theorem zmodCuspLabelLogVolumeCompatibility_full_label_map_neg_example
     IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
       (l := l) (Equiv.neg (ZMod l.value)) :=
   IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_neg
+
+theorem zmodSquareWeightProfile_modular_square_neg_example
+    {l : PrimeGeFive} :
+    IUTStage1ZModSquareWeightProfile.CoordinateModularSquarePreserving
+      (l := l) (Equiv.neg (ZMod l.value)) :=
+  IUTStage1ZModSquareWeightProfile.coordinateModularSquarePreserving_neg
 
 theorem zmodCuspLabelLogVolumeCompatibility_full_label_value_refl_example
     {l : PrimeGeFive}

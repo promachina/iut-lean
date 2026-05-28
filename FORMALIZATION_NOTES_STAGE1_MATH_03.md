@@ -3931,3 +3931,100 @@ sign-quotient branch preserved
 This does not decide whether Mochizuki's Hodge-theoretic route supplies the
 missing data.  It says that our formalization will require that data explicitly
 before accepting the `3.11 => 3.12` transport step.
+
+## 157. Modular Squaring Is Weaker Than Real Square-Weight Transport
+
+### Lean Move
+
+We added a second square-preservation predicate:
+
+```text
+IUTStage1ZModSquareWeightProfile.CoordinateModularSquarePreserving
+```
+
+It states:
+
+```text
+(coordinateEquiv j)^2 = j^2
+```
+
+inside `ZMod l.value`.  This is intentionally separate from:
+
+```text
+IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+```
+
+which states equality of real representative squares:
+
+```text
+((coordinateEquiv j).val : Real)^2 = (j.val : Real)^2
+```
+
+Lean proves that negation preserves the modular square:
+
+```text
+coordinateModularSquarePreserving_neg
+```
+
+We then added:
+
+```text
+IUTStage1FullLabelModularSquareOnlyTransport
+```
+
+This record carries both full-label map preservation and modular-square
+preservation, but it still marks the real coordinate-square preservation and
+full-label value preservation fields as missing.
+
+### Mathematical Reason
+
+The sign change `j ↦ -j` is harmless for the sign quotient and for the square
+class in the finite field:
+
+```text
+(-j)^2 = j^2
+```
+
+But the current square-weight profile used for the Corollary 3.12 audit is not a
+`ZMod`-valued square class.  It is the real number:
+
+```text
+(j.val : Real)^2
+```
+
+For a representative-valued profile, sign change need not preserve the chosen
+real representative square.  The formalization therefore refuses to treat
+finite-field square compatibility as enough evidence for transporting the
+`q^{j^2}`-style real weighted average.
+
+### Source Check
+
+IUT II separates the roles of the `F_l^±`-symmetry and the full `F_l`-symmetry:
+the former has uniradial/coric aspects, while the latter is tied to separating
+zero from nonzero labels and describing Gaussian-monoid internal structure.
+IUT III's Corollary 3.12 averages over `j in F_l`; Scholze-Stix's Section 2.2
+presses on whether the required `j^2` scaling can be maintained under coherent
+real-line identifications.
+
+This milestone keeps those layers apart:
+
+```text
+F_l^± / sign quotient / modular square
+real representative square profile used in the weighted log-volume expression
+```
+
+### Relevance to the 3.12 Dispute
+
+The formal trap is now sharper:
+
+```text
+sign quotient preserved
+modular square preserved
+  still does not imply
+real square-weighted full-label average transported
+```
+
+This is not a negative result about IUT.  It is an audit condition.  If
+Mochizuki's Hodge-theoretic route supplies the real representative-square
+transport by some additional mechanism, the Lean development must encode that
+mechanism explicitly rather than deriving it from sign/modular compatibility.

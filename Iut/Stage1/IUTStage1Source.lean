@@ -1980,10 +1980,34 @@ def CoordinateSquarePreserving
   ∀ j : ZMod l.value,
     (((coordinateEquiv j).val : Real) ^ 2) = ((j.val : Real) ^ 2)
 
+/--
+Coordinate-level preservation of the square map inside `ZMod l.value`.
+
+This is weaker than `CoordinateSquarePreserving`: it records equality of the
+finite-field square classes, not equality of the real representative squares
+used by the current square-weight profile.
+-/
+def CoordinateModularSquarePreserving
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value) : Prop :=
+  ∀ j : ZMod l.value, (coordinateEquiv j) ^ 2 = j ^ 2
+
 theorem coordinateSquarePreserving_refl :
     CoordinateSquarePreserving (l := l) (Equiv.refl (ZMod l.value)) := by
   intro j
   rfl
+
+theorem coordinateModularSquarePreserving_refl :
+    CoordinateModularSquarePreserving
+      (l := l) (Equiv.refl (ZMod l.value)) := by
+  intro j
+  rfl
+
+theorem coordinateModularSquarePreserving_neg :
+    CoordinateModularSquarePreserving
+      (l := l) (Equiv.neg (ZMod l.value)) := by
+  intro j
+  change (-j) ^ 2 = j ^ 2
+  simp [pow_two]
 
 theorem squareWeight_preserved_of_coordinateSquarePreserving
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
@@ -3458,6 +3482,67 @@ theorem fullLabelValuePreservation_missing
   simp [missingFactoredSquareFullLabelData]
 
 end IUTStage1FullLabelMapOnlyTransport
+
+/--
+Transport data that preserves the sign-quotient full-label map and the square
+map inside `ZMod l.value`, but not the real representative square profile.
+
+This records the distinction between finite-field square compatibility and the
+real `j.val ^ 2` weights used in the current Corollary 3.12 audit target.
+-/
+structure IUTStage1FullLabelModularSquareOnlyTransport
+    (l : PrimeGeFive) where
+  coordinateEquiv : ZMod l.value ≃ ZMod l.value
+  fullLabelMap_preserved :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+      (l := l) coordinateEquiv
+  coordinateModularSquare_preserved :
+    IUTStage1ZModSquareWeightProfile.CoordinateModularSquarePreserving
+      (l := l) coordinateEquiv
+
+namespace IUTStage1FullLabelModularSquareOnlyTransport
+
+variable {l : PrimeGeFive}
+
+def neg (l : PrimeGeFive) :
+    IUTStage1FullLabelModularSquareOnlyTransport l :=
+  { coordinateEquiv := Equiv.neg (ZMod l.value),
+    fullLabelMap_preserved :=
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_neg,
+    coordinateModularSquare_preserved :=
+      IUTStage1ZModSquareWeightProfile.coordinateModularSquarePreserving_neg }
+
+def missingFactoredSquareFullLabelData
+    (_transport : IUTStage1FullLabelModularSquareOnlyTransport l) :
+    Finset IUTStage1FactoredSquareFullLabelMissingDatum :=
+  { IUTStage1FactoredSquareFullLabelMissingDatum.coordinateSquarePreservation,
+    IUTStage1FactoredSquareFullLabelMissingDatum.fullLabelValuePreservation }
+
+theorem fullLabelMapPreserved
+    (transport : IUTStage1FullLabelModularSquareOnlyTransport l) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+      (l := l) transport.coordinateEquiv :=
+  transport.fullLabelMap_preserved
+
+theorem coordinateModularSquarePreserved
+    (transport : IUTStage1FullLabelModularSquareOnlyTransport l) :
+    IUTStage1ZModSquareWeightProfile.CoordinateModularSquarePreserving
+      (l := l) transport.coordinateEquiv :=
+  transport.coordinateModularSquare_preserved
+
+theorem coordinateSquarePreservation_missing
+    (transport : IUTStage1FullLabelModularSquareOnlyTransport l) :
+    IUTStage1FactoredSquareFullLabelMissingDatum.coordinateSquarePreservation ∈
+      transport.missingFactoredSquareFullLabelData := by
+  simp [missingFactoredSquareFullLabelData]
+
+theorem fullLabelValuePreservation_missing
+    (transport : IUTStage1FullLabelModularSquareOnlyTransport l) :
+    IUTStage1FactoredSquareFullLabelMissingDatum.fullLabelValuePreservation ∈
+      transport.missingFactoredSquareFullLabelData := by
+  simp [missingFactoredSquareFullLabelData]
+
+end IUTStage1FullLabelModularSquareOnlyTransport
 
 /--
 Boundary object showing what the local-object Hodge-descent packet layer supplies
