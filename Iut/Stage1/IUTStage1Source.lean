@@ -4069,6 +4069,103 @@ theorem final_bound
 end IUTStage1IUTIVCorollary22EpsilonAbsorptionShadow
 
 /--
+IUT IV, Corollary 2.2(ii), final `h = log(q_all)` bound.
+
+This record composes the pre-`epsilon_E` bound, the definition of
+`epsilon_E`, the move-left denominator step, and the final absorption estimates.
+-/
+structure IUTStage1IUTIVCorollary22FinalHBoundShadow where
+  h : Real
+  logDegreeSum : Real
+  cK : Real
+  delta : Real
+  sqrtH : Real
+  logTwoDeltaH : Real
+  epsilonE : Real
+  sqrtH_pos : 0 < sqrtH
+  delta_sq_log_nonneg : 0 <= delta ^ 2 * logTwoDeltaH
+  h_eq_sqrtH_sq : h = sqrtH ^ 2
+  epsilonE_eq :
+    epsilonE =
+      iutIVCorollary22EpsilonDefinitionRHS delta sqrtH logTwoDeltaH
+  logDegreeSum_nonneg : 0 <= logDegreeSum
+  delta_inv_sqrtH_le_epsilon_over_five :
+    delta / sqrtH <= (1 / 5 : Real) * epsilonE
+  epsilonE_pos : 0 < epsilonE
+  epsilonE_le_one : epsilonE <= 1
+  cK_nonneg : 0 <= cK
+  pre_epsilon_bound :
+    (1 / 6 : Real) * h <=
+      (1 + delta / sqrtH) * logDegreeSum +
+        (15 * delta) ^ 2 * sqrtH * logTwoDeltaH +
+          (1 / 2 : Real) * cK
+
+namespace IUTStage1IUTIVCorollary22FinalHBoundShadow
+
+def errorConversion
+    (data : IUTStage1IUTIVCorollary22FinalHBoundShadow) :
+    IUTStage1IUTIVCorollary22EpsilonErrorConversionShadow :=
+  { h := data.h
+    delta := data.delta
+    sqrtH := data.sqrtH
+    logTwoDeltaH := data.logTwoDeltaH
+    epsilonE := data.epsilonE
+    sqrtH_pos := data.sqrtH_pos
+    delta_sq_log_nonneg := data.delta_sq_log_nonneg
+    h_eq_sqrtH_sq := data.h_eq_sqrtH_sq
+    epsilonE_eq := data.epsilonE_eq }
+
+def hBoundToMoveLeft
+    (data : IUTStage1IUTIVCorollary22FinalHBoundShadow) :
+    IUTStage1IUTIVCorollary22HBoundToMoveLeftShadow :=
+  { h := data.h
+    logDegreeSum := data.logDegreeSum
+    cK := data.cK
+    delta := data.delta
+    sqrtH := data.sqrtH
+    logTwoDeltaH := data.logTwoDeltaH
+    epsilonE := data.epsilonE
+    logDegreeSum_nonneg := data.logDegreeSum_nonneg
+    delta_inv_sqrtH_le_epsilon_over_five :=
+      data.delta_inv_sqrtH_le_epsilon_over_five
+    error_conversion_bound :=
+      data.errorConversion.fifteen_delta_sq_error_le_epsilon_term
+    pre_epsilon_bound := data.pre_epsilon_bound }
+
+def moveLeft
+    (data : IUTStage1IUTIVCorollary22FinalHBoundShadow) :
+    IUTStage1IUTIVCorollary22EpsilonMoveLeftShadow :=
+  { h := data.h
+    logDegreeSum := data.logDegreeSum
+    cK := data.cK
+    epsilonE := data.epsilonE
+    denominator_pos := by
+      rw [iutIVCorollary22EpsilonDenominator]
+      nlinarith [data.epsilonE_pos, data.epsilonE_le_one]
+    preliminary_bound := data.hBoundToMoveLeft.preliminary_for_move_left }
+
+def absorption
+    (data : IUTStage1IUTIVCorollary22FinalHBoundShadow) :
+    IUTStage1IUTIVCorollary22EpsilonAbsorptionShadow :=
+  { h := data.h
+    logDegreeSum := data.logDegreeSum
+    cK := data.cK
+    epsilonE := data.epsilonE
+    epsilonE_pos := data.epsilonE_pos
+    epsilonE_le_one := data.epsilonE_le_one
+    logDegreeSum_nonneg := data.logDegreeSum_nonneg
+    cK_nonneg := data.cK_nonneg
+    preliminary_bound := data.moveLeft.moved_left_bound }
+
+theorem final_h_bound
+    (data : IUTStage1IUTIVCorollary22FinalHBoundShadow) :
+    (1 / 6 : Real) * data.h <=
+      (1 + data.epsilonE) * data.logDegreeSum + data.cK :=
+  data.absorption.final_bound
+
+end IUTStage1IUTIVCorollary22FinalHBoundShadow
+
+/--
 IUT IV, Corollary 2.2(ii), comparison of curve functions with tripodal field
 terms.
 
