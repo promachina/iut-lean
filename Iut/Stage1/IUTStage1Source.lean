@@ -6248,6 +6248,63 @@ theorem representativeSquareScale_one :
   rw [ZMod.val_one]
   norm_num
 
+/--
+The Gaussian square-weight profile has positive total mass.
+
+The source square profile is `j ↦ j^2` on `F_l`; since `l ≥ 5`, the label
+`j = 1` is present and contributes weight `1`.
+-/
+theorem squareWeightTotal_pos :
+    0 <
+      Finset.univ.sum (fun j : ZMod l.value => ((j.val : Real) ^ 2)) := by
+  have hnonneg :
+      ∀ j : ZMod l.value, 0 <= ((j.val : Real) ^ 2) := by
+    intro j
+    exact sq_nonneg (j.val : Real)
+  have hone :
+      (((1 : ZMod l.value).val : Real) ^ 2) = 1 := by
+    simpa [representativeSquareScale] using
+      (representativeSquareScale_one (l := l))
+  have hterm_pos :
+      0 < (((1 : ZMod l.value).val : Real) ^ 2) := by
+    rw [hone]
+    norm_num
+  have hterm_le_sum :
+      (((1 : ZMod l.value).val : Real) ^ 2) <=
+        Finset.univ.sum (fun j : ZMod l.value => ((j.val : Real) ^ 2)) :=
+    Finset.single_le_sum
+      (s := (Finset.univ : Finset (ZMod l.value)))
+      (a := (1 : ZMod l.value))
+      (f := fun j : ZMod l.value => ((j.val : Real) ^ 2))
+      (by
+        intro j _hj
+        exact hnonneg j)
+      (Finset.mem_univ (1 : ZMod l.value))
+  exact lt_of_lt_of_le hterm_pos hterm_le_sum
+
+/--
+Canonical representative square-weight profile for the current `F_l = ZMod l`
+model.
+-/
+def canonicalSquareWeights (l : PrimeGeFive) :
+    IUTStage1ZModSquareWeightProfile l :=
+  fromSquareWeights l (squareWeightTotal_pos (l := l))
+
+theorem canonicalSquareWeights_weight_eq_square_val
+    (j : ZMod l.value) :
+    (canonicalSquareWeights l).weight j = ((j.val : Real) ^ 2) :=
+  (canonicalSquareWeights l).profile_weight_eq_square_val j
+
+theorem canonicalSquareWeights_weight_one :
+    (canonicalSquareWeights l).weight (1 : ZMod l.value) = 1 := by
+  rw [canonicalSquareWeights_weight_eq_square_val]
+  simpa [representativeSquareScale] using
+    (representativeSquareScale_one (l := l))
+
+theorem canonicalSquareWeights_weightTotal_pos :
+    0 < (canonicalSquareWeights l).weightTotal :=
+  (canonicalSquareWeights l).positive_weightTotal
+
 theorem representativeSquareScale_two :
     representativeSquareScale (l := l) (2 : ZMod l.value) = 4 := by
   have hlt : 2 < l.value :=

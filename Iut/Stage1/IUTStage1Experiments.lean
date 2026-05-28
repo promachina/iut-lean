@@ -431,6 +431,7 @@ structure Ind3J2ScaleExperimentReport where
   absLabelThetaExponentMatchesHalfRangeJ2 : Bool
   absLabelThetaPilotDegreeProfileAvailable : Bool
   gaussianDegreeEvaluationIdentityAtOne : Bool
+  canonicalSquareWeightProfileAvailable : Bool
 
 /--
 For every `l >= 5`, the representative square scales at `j = 1` and `j = 2`
@@ -452,7 +453,8 @@ def ind3J2ScaleExperimentReport (l : PrimeGeFive) :
     balancedThetaPilotDegreeDescendsToSignQuotient := true,
     absLabelThetaExponentMatchesHalfRangeJ2 := true,
     absLabelThetaPilotDegreeProfileAvailable := true,
-    gaussianDegreeEvaluationIdentityAtOne := true }
+    gaussianDegreeEvaluationIdentityAtOne := true,
+    canonicalSquareWeightProfileAvailable := true }
 
 theorem ind3J2ScaleExperimentReport_oneScale
     (l : PrimeGeFive) :
@@ -508,6 +510,12 @@ theorem ind3J2ScaleExperimentReport_gaussianIdentityAtOne
     (l : PrimeGeFive) :
     (ind3J2ScaleExperimentReport
       l).gaussianDegreeEvaluationIdentityAtOne = true :=
+  rfl
+
+theorem ind3J2ScaleExperimentReport_canonicalSquareWeightProfile
+    (l : PrimeGeFive) :
+    (ind3J2ScaleExperimentReport
+      l).canonicalSquareWeightProfileAvailable = true :=
   rfl
 
 theorem no_labelIndependent_transport_scale_absorbs_j2
@@ -605,6 +613,17 @@ theorem gaussianDegreeEvaluation_identity_at_one
         (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
       evaluation.environmentDegree :=
   evaluation.gaussianDegree_one
+
+theorem canonicalSquareWeightProfile_total_positive
+    (l : PrimeGeFive) :
+    0 < (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l).weightTotal :=
+  IUTStage1ZModSquareWeightProfile.canonicalSquareWeights_weightTotal_pos
+
+theorem canonicalSquareWeightProfile_weight_one
+    (l : PrimeGeFive) :
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l).weight
+        (1 : ZMod l.value) = 1 :=
+  IUTStage1ZModSquareWeightProfile.canonicalSquareWeights_weight_one
 
 /--
 On half-range representatives, the degree-level Gaussian evaluation is exactly
@@ -1808,6 +1827,7 @@ structure Corollary312DisputeFirstPassReport where
   representativeJ2SignQuotientDescentRejectedInZModModel : Bool
   absLabelThetaDegreeHalfRangeModelAvailable : Bool
   gaussianDegreeEvaluationTheoremAvailable : Bool
+  canonicalSquareWeightProfileAvailable : Bool
   processionContainerSkeletonAvailable : Bool
   processionTensorPacketLogVolumeAvailable : Bool
   processionTensorPacketPermutationInvariant : Bool
@@ -1902,6 +1922,7 @@ def corollary312DisputeFirstPassReport :
     representativeJ2SignQuotientDescentRejectedInZModModel := true,
     absLabelThetaDegreeHalfRangeModelAvailable := true,
     gaussianDegreeEvaluationTheoremAvailable := true,
+    canonicalSquareWeightProfileAvailable := true,
     processionContainerSkeletonAvailable := true,
     processionTensorPacketLogVolumeAvailable := true,
     processionTensorPacketPermutationInvariant := true,
@@ -2012,6 +2033,11 @@ theorem corollary312Report_absLabelThetaDegreeHalfRangeModelAvailable :
 
 theorem corollary312Report_gaussianDegreeEvaluationTheoremAvailable :
     corollary312DisputeFirstPassReport.gaussianDegreeEvaluationTheoremAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_canonicalSquareWeightProfileAvailable :
+    corollary312DisputeFirstPassReport.canonicalSquareWeightProfileAvailable =
       true :=
   rfl
 
