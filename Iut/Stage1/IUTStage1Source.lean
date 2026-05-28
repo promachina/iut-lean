@@ -3202,6 +3202,49 @@ noncomputable def logQTwo_to_canonicalHeight
 
 end IUTStage1IUTIVCorollary22BoundedDiscrepancyChainShadow
 
+/--
+IUT IV, Corollary 2.2(ii), condition (C2).
+
+The source records the chain
+`(1/6)log(q) <= (1/6)log(q_2) <= (1/6)log(q_all) <=
+(1+epsilon_E)*(log-diff_X(x_E)+log-cond_D(x_E))+C_K`.
+This record keeps exactly that real-valued inequality chain.
+-/
+structure IUTStage1IUTIVCorollary22C2InequalityChainShadow where
+  logQ : Real
+  logQTwo : Real
+  logQAll : Real
+  epsilonE : Real
+  logDiffX : Real
+  logCondD : Real
+  cK : Real
+  logQ_le_logQTwo :
+    (1 / 6 : Real) * logQ <= (1 / 6 : Real) * logQTwo
+  logQTwo_le_logQAll :
+    (1 / 6 : Real) * logQTwo <= (1 / 6 : Real) * logQAll
+  logQAll_le_heightSide :
+    (1 / 6 : Real) * logQAll <=
+      (1 + epsilonE) * (logDiffX + logCondD) + cK
+
+namespace IUTStage1IUTIVCorollary22C2InequalityChainShadow
+
+noncomputable def heightSide
+    (data : IUTStage1IUTIVCorollary22C2InequalityChainShadow) : Real :=
+  (1 + data.epsilonE) * (data.logDiffX + data.logCondD) + data.cK
+
+theorem logQ_le_heightSide
+    (data : IUTStage1IUTIVCorollary22C2InequalityChainShadow) :
+    (1 / 6 : Real) * data.logQ <= data.heightSide :=
+  le_trans data.logQ_le_logQTwo
+    (le_trans data.logQTwo_le_logQAll data.logQAll_le_heightSide)
+
+theorem logQTwo_le_heightSide
+    (data : IUTStage1IUTIVCorollary22C2InequalityChainShadow) :
+    (1 / 6 : Real) * data.logQTwo <= data.heightSide :=
+  le_trans data.logQTwo_le_logQAll data.logQAll_le_heightSide
+
+end IUTStage1IUTIVCorollary22C2InequalityChainShadow
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

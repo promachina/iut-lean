@@ -665,6 +665,7 @@ structure ProcessionContainerExperimentReport where
   iutIVTheoremABoundedDiscrepancyAvailable : Bool
   iutIVCorollary22BoundedDiscrepancyChainAvailable : Bool
   iutIVBoundedDiscrepancyTransferAvailable : Bool
+  iutIVCorollary22C2InequalityChainAvailable : Bool
 deriving Repr
 
 /--
@@ -715,7 +716,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     iutIVTheorem110FinalDisplayAvailable := true,
     iutIVTheoremABoundedDiscrepancyAvailable := true,
     iutIVCorollary22BoundedDiscrepancyChainAvailable := true,
-    iutIVBoundedDiscrepancyTransferAvailable := true }
+    iutIVBoundedDiscrepancyTransferAvailable := true,
+    iutIVCorollary22C2InequalityChainAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1260,6 +1262,16 @@ theorem iutIVBoundedDiscrepancy_upperBound_transfers
     ∀ x : Point, g x <= B - data.lower :=
   data.upperBound_transfers_to_right hB
 
+theorem iutIVCorollary22C2_logQ_bound
+    (data : IUTStage1IUTIVCorollary22C2InequalityChainShadow) :
+    (1 / 6 : Real) * data.logQ <= data.heightSide :=
+  data.logQ_le_heightSide
+
+theorem iutIVCorollary22C2_logQTwo_bound
+    (data : IUTStage1IUTIVCorollary22C2InequalityChainShadow) :
+    (1 / 6 : Real) * data.logQTwo <= data.heightSide :=
+  data.logQTwo_le_heightSide
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1523,6 +1535,7 @@ structure Corollary312DisputeFirstPassReport where
   iutIVTheoremABoundedDiscrepancyAvailable : Bool
   iutIVCorollary22BoundedDiscrepancyChainAvailable : Bool
   iutIVBoundedDiscrepancyTransferAvailable : Bool
+  iutIVCorollary22C2InequalityChainAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1587,6 +1600,7 @@ def corollary312DisputeFirstPassReport :
     iutIVTheoremABoundedDiscrepancyAvailable := true,
     iutIVCorollary22BoundedDiscrepancyChainAvailable := true,
     iutIVBoundedDiscrepancyTransferAvailable := true,
+    iutIVCorollary22C2InequalityChainAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1827,6 +1841,11 @@ theorem corollary312Report_iutIVCorollary22BoundedDiscrepancyChainAvailable :
 
 theorem corollary312Report_iutIVBoundedDiscrepancyTransferAvailable :
     corollary312DisputeFirstPassReport.iutIVBoundedDiscrepancyTransferAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVCorollary22C2InequalityChainAvailable :
+    corollary312DisputeFirstPassReport.iutIVCorollary22C2InequalityChainAvailable =
       true :=
   rfl
 
