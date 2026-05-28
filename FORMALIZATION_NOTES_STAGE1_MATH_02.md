@@ -3938,3 +3938,109 @@ construction, or is it an extra comparison assumption?  The next milestone
 should inspect the surrounding source definitions and decide whether this bound
 belongs to `(Ind3)` upper semi-compatibility, to the theta-value construction,
 or to a separate comparison lemma.
+
+## 52. Classifying the Target-to-Average Bound
+
+### Goal
+
+We classified the remaining target-to-Theta-average bound so it is not silently
+attributed to `(Ind3)` alone.
+
+### Source Check
+
+In the IUT III introduction to Corollary 3.12, Mochizuki describes the
+Theta-pilot log-volume as the log-volume of the holomorphic hull of the union of
+possible images, subject to `(Ind1)`, `(Ind2)`, `(Ind3)`.  The same discussion
+then says that the log-theta-lattice and the gluing isomorphism are constructed
+so that this holomorphic-hull computation gives an upper-bound computation for
+the q-pilot log-volume.
+
+In IUT IV, the local estimates repeatedly say that `(Ind3)` is accounted for by
+working with upper bounds/containers, while the actual local upper bounds are
+computed from the container and then averaged over `j ∈ F_l`.
+
+Scholze-Stix identify this comparison region as the critical place where
+consistent real-line identifications and averaging must be made explicit.
+
+### Lean/API Check
+
+The new classification type is:
+
+```text
+IUTStage1TargetAverageBoundSource
+```
+
+with alternatives:
+
+```text
+ind3UpperSemiOnly
+thetaPilotHullContainer
+separateComparisonLemma
+```
+
+The new audit is:
+
+```text
+FLZModCuspLabelThetaContainerBoundAudit
+```
+
+It carries:
+
+```text
+theta_source : FLZModCuspLabelThetaSourceAudit l
+ind12_equality_part : Ind12EqualityPart
+ind3_upper_part : Ind3UpperInequalityPart
+bound_source : IUTStage1TargetAverageBoundSource
+bound_source_not_ind3_only :
+  bound_source ≠ ind3UpperSemiOnly
+targetSigned_le_thetaAverage
+```
+
+Lean proves:
+
+```text
+boundSource_not_ind3Only
+targetSigned_le_thetaAverage'
+ind3TargetSigned_le_thetaSigned
+toTargetAverageReductionAudit
+qSigned_le_thetaSourceAverage
+qSigned_le_thetaSigned_via_average
+targetSigned_le_thetaSigned_via_average
+```
+
+### Mathematical Point
+
+The formalization now records the distinction suggested by the source texts:
+`(Ind3)` provides the upper-bound/container context, but the numerical bound
+
+```text
+targetSigned <= thetaSourceAverage
+```
+
+must be justified by the theta-pilot hull/container computation or by a separate
+comparison lemma.  It cannot be treated as an `(Ind3)` consequence by itself.
+
+### Trap Avoided
+
+We made `ind3UpperSemiOnly` a possible classification but require every usable
+audit to prove that this is not the chosen classification.  This prevents later
+code from hiding the target-to-average comparison inside the existing
+`Ind3UpperInequalityPart`.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_container_not_ind3_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_container_to_reduction_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_container_q_le_theta_example
+```
+
+### Remaining Gap
+
+The next milestone should split the non-`Ind3` source into the two constructive
+paths now named by the classification: a theta-pilot hull/container theorem, or
+a separate comparison lemma.  The more faithful first target is the
+theta-pilot hull/container route, since that matches the IUT III/IV descriptions
+of upper bounds for the holomorphic hull of possible Theta-pilot images.

@@ -9657,6 +9657,42 @@ structure FLZModCuspLabelTargetAverageReductionAudit
       package.preLedger.targetVolume.targetSigned <=
         theta_source.thetaSourceAverage audited
 
+/--
+Source classification for the target-to-Theta-average bound isolated at the
+Corollary 3.12 boundary.
+
+`ind3UpperSemiOnly` is intentionally available as a rejected classification:
+the audit below requires evidence that the bound is not being attributed to
+`(Ind3)` alone.
+-/
+inductive IUTStage1TargetAverageBoundSource where
+  | ind3UpperSemiOnly
+  | thetaPilotHullContainer
+  | separateComparisonLemma
+deriving DecidableEq
+
+/--
+Target-to-average bound packaged with its source classification.
+
+The bound is kept separate from `(Ind3)`: `(Ind3)` supplies the upper-bound
+context, while the domination of the target signed volume by the Theta-source
+average must come from a hull/container computation or a separate comparison
+lemma.
+-/
+structure FLZModCuspLabelThetaContainerBoundAudit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  theta_source : audit.FLZModCuspLabelThetaSourceAudit l
+  ind12_equality_part : audit.Ind12EqualityPart
+  ind3_upper_part : audit.Ind3UpperInequalityPart
+  bound_source : IUTStage1TargetAverageBoundSource
+  bound_source_not_ind3_only :
+    bound_source ≠ IUTStage1TargetAverageBoundSource.ind3UpperSemiOnly
+  targetSigned_le_thetaAverage :
+    ∀ audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind,
+      package.preLedger.targetVolume.targetSigned <=
+        theta_source.thetaSourceAverage audited
+
 theorem qCharted (audit : endpoint.LogVolumeChartAudit) :
     (Transport.map package.preLedger.chartedContainer.chart.qToTarget
       package.preLedger.qValue.qPoint).coord =
@@ -10265,6 +10301,58 @@ theorem targetSigned_le_thetaSigned_via_average
     (part.theta_source.thetaSourceAverage_le_thetaSigned audited)
 
 end FLZModCuspLabelTargetAverageReductionAudit
+
+namespace FLZModCuspLabelThetaContainerBoundAudit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+theorem boundSource_not_ind3Only
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l) :
+    part.bound_source ≠ IUTStage1TargetAverageBoundSource.ind3UpperSemiOnly :=
+  part.bound_source_not_ind3_only
+
+theorem targetSigned_le_thetaAverage'
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.theta_source.thetaSourceAverage audited :=
+  part.targetSigned_le_thetaAverage audited
+
+theorem ind3TargetSigned_le_thetaSigned
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l) :
+    package.preLedger.targetVolume.targetSigned <=
+      package.preLedger.thetaSigned :=
+  part.ind3_upper_part.targetSigned_le_thetaSigned
+
+def toTargetAverageReductionAudit
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l) :
+    audit.FLZModCuspLabelTargetAverageReductionAudit l :=
+  { theta_source := part.theta_source,
+    ind12_equality_part := part.ind12_equality_part,
+    targetSigned_le_thetaAverage := part.targetSigned_le_thetaAverage }
+
+theorem qSigned_le_thetaSourceAverage
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.qSigned <= part.theta_source.thetaSourceAverage audited :=
+  part.toTargetAverageReductionAudit.qSigned_le_thetaSourceAverage audited
+
+theorem qSigned_le_thetaSigned_via_average
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.toTargetAverageReductionAudit.toQThetaComparisonAudit_qSigned_le_thetaSigned
+    audited
+
+theorem targetSigned_le_thetaSigned_via_average
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <= package.preLedger.thetaSigned :=
+  part.toTargetAverageReductionAudit.targetSigned_le_thetaSigned_via_average
+    audited
+
+end FLZModCuspLabelThetaContainerBoundAudit
 
 end LogVolumeChartAudit
 
