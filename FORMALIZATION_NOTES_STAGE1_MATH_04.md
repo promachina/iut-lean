@@ -548,3 +548,71 @@ nonzero cusp-class target estimates
 This is still not a proof of Corollary 3.12.  It exposes the precise local
 upper estimates that would have to come from the Hodge-theater/SHE and
 hull/log-volume machinery without collapsing the histories.
+
+## 199. Source Zero/Cusp Bounds Feed The Target Zero/Cusp Route
+
+### Lean Move
+
+For both the labelwise and cusp-class 3.11.5 routes we added:
+
+```text
+ThreeElevenFiveStructuredSHESourceZeroCuspTargetThetaAudit
+ThreeElevenFiveStructuredSHESourceZeroCuspTargetThetaAudit.toZeroCuspTargetThetaAudit
+ThreeElevenFiveStructuredSHESourceZeroCuspTargetThetaAudit.weightedAverage_le_thetaAverage
+ThreeElevenFiveStructuredSHESourceZeroCuspTargetThetaAudit.toThreeElevenFiveWeightedThetaAudit
+weightedThetaComparisonRouteOfSourceZeroCuspTarget
+weightedThetaComparisonRouteOfSourceZeroCuspTarget_uses_sourceZeroCuspTarget
+```
+
+The example file now has public source-zero/cusp target examples for both route
+shapes.
+
+### Mathematical Reason
+
+The previous milestone required target-side zero/cusp estimates:
+
+```text
+targetLogVolume.zeroLogVolume <= thetaSourceAverage
+targetLogVolume.cuspClassLogVolume label <= thetaSourceAverage
+```
+
+This milestone introduces a source-facing way to produce them.  If the
+structured-SHE transport audit identifies its target log-volume object with the
+Theta-side cusp log-volume object,
+
+```text
+transport.targetLogVolume = theta_source.compatible_average.cuspLogVolume audited
+```
+
+then upper estimates on the Theta-side zero/cusp log-volume components rewrite
+to the target-side estimates and feed the zero/cusp target route.
+
+### Source Check
+
+This is closer to the final disputed shape than the constant-target sanity
+route.  The remaining estimates are now stated on the Theta-side local
+zero/nonzero cusp components, while the structured-SHE audit is responsible for
+moving those components to the transported target log-volume object.
+
+The move is deliberately conservative: it records the target/source
+log-volume equality as an explicit field.  That prevents Lean from silently
+identifying the histories or real-line copies, which is exactly the kind of
+collapse Scholze-Stix warn about and Mochizuki says the Hodge-theater
+apparatus is designed to avoid.
+
+### Relevance to the 3.12 Dispute
+
+The formal corridor now factors this branch as:
+
+```text
+Theta-side zero/cusp upper estimates
+transport target log-volume equals the Theta-side cusp object
+  -> target zero/cusp upper estimates
+  -> pointwise transported target bounds
+  -> transported weighted-average bound
+  -> final 3.11.5-to-3.12 q/Theta comparison
+```
+
+The hard mathematical load has moved to proving the Theta-side zero/cusp upper
+estimates and the justified structured-SHE target/source log-volume equality
+from the actual Hodge-theater construction.
