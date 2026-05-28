@@ -7557,3 +7557,79 @@ label(j) = packet normalized value
 The next step is to derive this pointwise bridge from explicit cusp-class and
 zero-label packet-normalized equalities, because those are closer to the
 nonzero sign-label quotient and zero-label split in the current formal model.
+
+## 96. Pointwise ZMod Equality from Cusp-Class and Zero Packet Equalities
+
+### Goal
+
+We derived the pointwise `ZMod l` packet-normalized bridge from the existing
+nonzero cusp-class and zero-label split.
+
+### Lean Move
+
+Inside:
+
+```text
+FLZModCuspLabelThetaDirectPacketNormalizedLocalObjectRouteAudit
+```
+
+we added:
+
+```text
+zmodNormalizedLogVolume_eq_packetNormalized
+toZModPacketNormalizedRouteAudit
+```
+
+The theorem proves, for every `j : ZMod l.value`, that the averaged label value
+equals the packet capsule-family normalized value.
+
+The proof splits on `j = 0`.
+
+For `j = 0`, it composes:
+
+```text
+averaged normalized label(0)
+  = cusp-compatible normalizedLogVolume(0)
+  = zeroLogVolume
+  = packet normalized value
+```
+
+For `j ≠ 0`, it composes:
+
+```text
+averaged normalized label(j)
+  = cusp-compatible normalizedLogVolume(j)
+  = cuspClassLogVolume(sign-class of j)
+  = packet normalized value
+```
+
+### Mathematical Point
+
+This matches the current formal model of the local `ZMod`/cusp-label bridge:
+nonzero labels live in the sign-label quotient, while the zero label is handled
+separately.  The pointwise `ZMod` packet equality is now not an opaque field
+when cusp-class and zero packet-normalized equalities are already available.
+
+### Trap Avoided
+
+We did not treat zero as a cusp sign-label class.  The sign-label quotient is
+defined on nonzero labels, so the Lean proof has a real `by_cases j = 0` split.
+This is a useful guardrail: any future attempt to blur the zero/nonzero
+distinction has to pass through this theorem or replace it with a more precise
+model.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_cusp_zero_to_zmod_packet_example
+placeAudited_logVolume_fl_zmod_cusp_zero_pointwise_eq_example
+```
+
+### Remaining Gap
+
+The cusp-class and zero packet-normalized equalities are still supplied as
+route fields.  The next reduction is to construct those equalities from
+local-object/capsule normalization data or from explicit local label
+definitions, while keeping the source classification visible.
