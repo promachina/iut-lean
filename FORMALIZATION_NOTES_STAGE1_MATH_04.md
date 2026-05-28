@@ -1692,3 +1692,87 @@ obligation.
 
 This is the first actual experiment output from the Lean model of the disputed
 passage.
+
+## 213. Final-Route Ind3 Experiment Reports
+
+### Lean Move
+
+In
+
+```text
+Iut/Stage1/IUTStage1Experiments.lean
+```
+
+we added:
+
+```text
+Ind3FinalRouteExperimentReport
+missingAlignmentFinalRouteReport
+nonarchimedeanFinalRouteReport
+archimedeanFinalRouteReport
+nonarchimedeanEntry_finalQTheta
+```
+
+The report records three pieces of data:
+
+```text
+whether the final q/Theta route is available
+which local Ind3 orientation is present, if any
+which real-line alignment datum is still missing
+```
+
+The nonarchimedean theorem `nonarchimedeanEntry_finalQTheta` is the first
+experiment-level theorem that actually reaches the final inequality
+
+```text
+package.preLedger.qSigned <= package.preLedger.thetaSigned
+```
+
+from a local nonarchimedean `(Ind3)` entry plus the already audited Hodge
+descent and theta/cusp-class transport data.
+
+### Mathematical Reason
+
+This separates three situations that must not be conflated in the disputed
+3.11-to-3.12 passage:
+
+```text
+missing alignment:
+  no source/target real-line identifications have been supplied, so the final
+  route is unavailable
+
+nonarchimedean entry:
+  packet <= theta orientation is present, and the current audited corridor can
+  reach q <= theta
+
+archimedean entry:
+  theta <= packet orientation is present, so this local datum cannot feed the
+  current packet-to-theta route without an additional argument
+```
+
+This is deliberately a small experiment, not a global proof of Corollary 3.12.
+Its value is that Lean now checks the final route only in the case where the
+required orientation and alignment fields are actually present.
+
+### Source Check
+
+IUT III treats `(Ind3)` as the upper-semicompatibility input used in the
+Corollary 3.12 inequality corridor.  The Scholze-Stix objection focuses on
+whether the relevant ordered one-dimensional real vector spaces have been
+identified in a way that preserves the numerical comparison.  The new report is
+designed around exactly those two checks: local orientation and real-line
+alignment.
+
+### Experiment Result
+
+The first final-route pass currently says:
+
+```text
+missing real alignment -> route unavailable
+nonarchimedean aligned entry -> route available and proves q <= theta
+archimedean aligned entry -> reverse orientation, route unavailable
+```
+
+The next mathematical task is to replace the simplified local entry structures
+with definitions closer to Mochizuki's actual theta-link/Hodge theater objects,
+while preserving this explicit route accounting.

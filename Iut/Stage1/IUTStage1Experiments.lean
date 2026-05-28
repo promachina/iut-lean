@@ -20,6 +20,7 @@ namespace Experiments
 open RealLineCopy
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
 open FLZModCuspLabelThetaHodgeDescentPacketTransportAudit
+open FLZModCuspLabelThetaCuspClassContainerAudit
 
 /-- First pass: no real-line/log-volume alignment has been supplied. -/
 def ind3MissingRealAlignmentReport :
@@ -132,6 +133,156 @@ theorem ind3FirstPassDashboard_archimedeanEntryCanFeed :
 theorem ind3FirstPassDashboard_localOrientationsSeparated :
     ind3FirstPassDashboard.localOrientationsSeparated = true :=
   rfl
+
+/-- Final-route experiment status for the current `(Ind3)` corridor. -/
+structure Ind3FinalRouteExperimentReport where
+  finalQThetaRouteAvailable : Bool
+  localOrientation : Option IUTStage1Ind3LocalOrientation
+  missingAlignment : Finset IUTStage1Ind3AlignmentMissingDatum
+
+/-- No source/target real alignment: the final q/Theta route is unavailable. -/
+def missingAlignmentFinalRouteReport : Ind3FinalRouteExperimentReport :=
+  { finalQThetaRouteAvailable := false,
+    localOrientation := none,
+    missingAlignment := IUTStage1Ind3AlignmentMissingDatum.all }
+
+theorem missingAlignmentFinalRouteReport_unavailable :
+    missingAlignmentFinalRouteReport.finalQThetaRouteAvailable = false :=
+  rfl
+
+theorem missingAlignmentFinalRouteReport_packetSourceGap :
+    IUTStage1Ind3AlignmentMissingDatum.packetLocalObjectFinite_eq_ind3Source ∈
+      missingAlignmentFinalRouteReport.missingAlignment :=
+  IUTStage1Ind3AlignmentMissingDatum.packetLocalObjectFinite_eq_ind3Source_mem_all
+
+theorem missingAlignmentFinalRouteReport_thetaTargetGap :
+    IUTStage1Ind3AlignmentMissingDatum.thetaAverage_eq_ind3Target ∈
+      missingAlignmentFinalRouteReport.missingAlignment :=
+  IUTStage1Ind3AlignmentMissingDatum.thetaAverage_eq_ind3Target_mem_all
+
+/-- Nonarchimedean local alignment: the current final q/Theta route is available. -/
+def nonarchimedeanFinalRouteReport
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    {thetaAverage : Real}
+    (_alignment :
+      NonarchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    Ind3FinalRouteExperimentReport :=
+  { finalQThetaRouteAvailable := true,
+    localOrientation := some IUTStage1Ind3LocalOrientation.packet_le_theta,
+    missingAlignment := ∅ }
+
+theorem nonarchimedeanFinalRouteReport_available
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    {thetaAverage : Real}
+    (alignment :
+      NonarchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    (nonarchimedeanFinalRouteReport alignment).finalQThetaRouteAvailable = true :=
+  rfl
+
+theorem nonarchimedeanFinalRouteReport_orientation
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    {thetaAverage : Real}
+    (alignment :
+      NonarchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    (nonarchimedeanFinalRouteReport alignment).localOrientation =
+      some IUTStage1Ind3LocalOrientation.packet_le_theta :=
+  rfl
+
+/-- Archimedean local alignment: reverse orientation, so this route is unavailable. -/
+def archimedeanFinalRouteReport
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    {entry : IUTStage1ArchimedeanSurjectionData}
+    {thetaAverage : Real}
+    (_alignment :
+      ArchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    Ind3FinalRouteExperimentReport :=
+  { finalQThetaRouteAvailable := false,
+    localOrientation := some IUTStage1Ind3LocalOrientation.theta_le_packet,
+    missingAlignment := ∅ }
+
+theorem archimedeanFinalRouteReport_unavailable
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    {entry : IUTStage1ArchimedeanSurjectionData}
+    {thetaAverage : Real}
+    (alignment :
+      ArchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    (archimedeanFinalRouteReport alignment).finalQThetaRouteAvailable = false :=
+  rfl
+
+theorem archimedeanFinalRouteReport_orientation
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    {entry : IUTStage1ArchimedeanSurjectionData}
+    {thetaAverage : Real}
+    (alignment :
+      ArchimedeanInd3EntryAlignment audited entry thetaAverage) :
+    (archimedeanFinalRouteReport alignment).localOrientation =
+      some IUTStage1Ind3LocalOrientation.theta_le_packet :=
+  rfl
+
+/--
+Route theorem used by the final-route experiment: a nonarchimedean local
+`(Ind3)` entry with the required alignments reaches the q/Theta comparison.
+-/
+theorem nonarchimedeanEntry_finalQTheta
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (transport_audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package part.bundle l)
+    (source_profile_eq :
+      profile = transport_audit.preservationAudit.sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        transport_audit.preservationAudit.sourceLogVolume)
+    (target_log_volume_eq_theta :
+      transport_audit.preservationAudit.targetLogVolume =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (entryAlignment :
+      NonarchimedeanInd3EntryAlignment audited entry
+        (part.insulated_route.theta_source.thetaSourceAverage audited)) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  let sourceAudit :=
+    part.toInd3SourceZeroCuspTargetThetaAuditOfNonarchimedeanEntry
+      profile audited transport_audit source_profile_eq source_log_volume_eq
+      target_log_volume_eq_theta entryAlignment
+  (part.toThetaCuspClassContainerAudit
+    |>.weightedThetaComparisonRouteOfInd3SourceZeroCuspTarget
+      part.bundle profile audited sourceAudit).qSigned_le_thetaSigned
 
 end Experiments
 end Stage1
