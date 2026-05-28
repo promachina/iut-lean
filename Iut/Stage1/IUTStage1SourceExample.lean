@@ -395,6 +395,23 @@ def upperSemi_processionNormalized_to_finite_example
     IUTStage1FiniteLocalLogVolumeObject kind :=
   data.toFiniteLocalLogVolumeObject
 
+theorem localTensorPacketNormalizedCompatibility_finite_eq_normalized_example
+    {kind : IUTStage1PlaceKind}
+    {state : IUTStage1LocalTensorPacketLogVolumeState kind}
+    (compat : IUTStage1LocalTensorPacketNormalizedCompatibility state) :
+    state.localObject.finiteLogVolume =
+      state.capsuleFamily.normalizedLogVolume :=
+  compat.localObject_finiteLogVolume_eq_normalizedLogVolume
+
+theorem localTensorPacketNormalizedCompatibility_average_example
+    {kind : IUTStage1PlaceKind}
+    {state : IUTStage1LocalTensorPacketLogVolumeState kind}
+    (compat : IUTStage1LocalTensorPacketNormalizedCompatibility state) :
+    state.localObject.finiteLogVolume =
+      state.capsuleFamily.totalLogVolume /
+        (state.capsuleFamily.capsuleCount : Real) :=
+  compat.normalizedLogVolume_eq_capsuleAverage
+
 theorem localContainerLogVolumeEstimate_target_le_local_example
     {targetSigned localLogVolume : Real}
     (estimate :
@@ -432,6 +449,24 @@ theorem packetNormalizedContainerEstimate_capsule_sum_example
           (packetState.packetState.capsuleFamily.capsule i).logVolume) /
         (packetState.packetState.capsuleFamily.capsuleCount : Real) :=
   estimate.localLogVolume_eq_capsuleSumAverage
+
+def packetNormalizedContainerEstimate_of_local_compatibility_example
+    {kind : IUTStage1PlaceKind}
+    {packetState : IUTStage1LocalTensorDirectSummandPacketState kind}
+    {targetSigned localLogVolume : Real}
+    (objectEstimate :
+      IUTStage1LocalObjectContainerLogVolumeEstimate
+        kind targetSigned localLogVolume)
+    (hobject :
+      objectEstimate.localObject =
+        packetState.packetState.localObject)
+    (compat :
+      IUTStage1LocalTensorPacketNormalizedCompatibility
+        packetState.packetState) :
+    IUTStage1PacketNormalizedContainerEstimate
+      packetState targetSigned localLogVolume :=
+  IUTStage1PacketNormalizedContainerEstimate.ofLocalObjectCompatibility
+    objectEstimate hobject compat
 
 theorem typedCapsuleFamily_const_le_normalized_example
     {kind : IUTStage1PlaceKind}

@@ -6027,3 +6027,96 @@ placeAudited_logVolume_fl_zmod_full_classified_ind2_summary_example
 The next useful reduction is still mathematical: explain or derive the
 packet-normalized identification itself, or the capsule-entry container
 estimates, from more structured local source data.
+
+## 77. Packet Local-Object Normalized Compatibility
+
+### Goal
+
+We isolated the equality between a packet's normalized capsule-family
+log-volume and the finite log-volume of its local object.
+
+### Lean Move
+
+We added:
+
+```text
+IUTStage1LocalTensorPacketNormalizedCompatibility
+```
+
+for a local tensor packet log-volume state.  Its single field is:
+
+```text
+state.capsuleFamily.normalizedLogVolume =
+  state.localObject.finiteLogVolume
+```
+
+Lean also exposes the reverse direction:
+
+```text
+localObject_finiteLogVolume_eq_normalizedLogVolume
+```
+
+and the induced average formula:
+
+```text
+state.localObject.finiteLogVolume =
+  state.capsuleFamily.totalLogVolume /
+    state.capsuleFamily.capsuleCount
+```
+
+Finally, `IUTStage1PacketNormalizedContainerEstimate` now has:
+
+```text
+ofLocalObjectCompatibility
+```
+
+This constructor builds a packet-normalized container estimate from:
+
+```text
+local object container estimate
+same local object as packet
+packet normalized compatibility
+```
+
+### Mathematical Point
+
+The base packet state already recorded:
+
+```text
+capsuleFamily.localObject = localObject
+```
+
+but that only says the capsule family is attached to the same local object.  It
+does not say that the real number obtained by averaging capsule log-volumes is
+the same real number as the finite log-volume attached to that local object.
+
+This distinction is important for the Corollary 3.12 dispute.  The debated
+route cannot silently identify all relevant real lines or averages.  The new
+compatibility object names the precise equality that a later, more source-close
+formalization must prove from the local packet/capsule construction.
+
+### Trap Avoided
+
+We did not add the normalized equality as a field of the basic packet state.
+Doing that would make every packet carry the disputed real-line identification
+for free.  Instead, packet-normalized container estimates must now either carry
+the equality directly, as before, or be constructed from this explicit
+compatibility certificate.
+
+### Toy Check
+
+The examples now check:
+
+```text
+localTensorPacketNormalizedCompatibility_finite_eq_normalized_example
+localTensorPacketNormalizedCompatibility_average_example
+packetNormalizedContainerEstimate_of_local_compatibility_example
+```
+
+### Remaining Gap
+
+The compatibility certificate is still an assumption at this layer.  The next
+mathematical task is to connect it to a more concrete description of the local
+tensor packet/capsule construction, or to classify its source as a direct packet
+normalization, an `(Ind2)`-transported normalization, or a separate real-line
+identification.

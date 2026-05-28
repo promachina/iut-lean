@@ -2198,6 +2198,22 @@ structure IUTStage1LocalTensorDirectSummandPacketState
     IUTStage1TensorDirectSummandFamily packetState.capsuleFamily
 
 /--
+Compatibility asserting that the normalized capsule-family log-volume of a
+local tensor packet is the finite log-volume of its local object.
+
+This is kept separate from `IUTStage1LocalTensorPacketLogVolumeState`: the base
+state records that the capsule family is attached to the same local object,
+while this certificate records the stronger real-line/log-volume
+identification needed by packet-normalized container estimates.
+-/
+structure IUTStage1LocalTensorPacketNormalizedCompatibility
+    {kind : IUTStage1PlaceKind}
+    (state : IUTStage1LocalTensorPacketLogVolumeState kind) where
+  normalizedLogVolume_eq_localObject :
+    state.capsuleFamily.normalizedLogVolume =
+      state.localObject.finiteLogVolume
+
+/--
 Upper semi-compatibility state used by the Theorem 3.11 `(Ind3)` model.
 
 The booleans record whether the local comparison is modeled by the two source
@@ -2413,6 +2429,33 @@ theorem capsule_normalizedLogVolume_eq
 
 end IUTStage1LocalTensorPacketLogVolumeState
 
+namespace IUTStage1LocalTensorPacketNormalizedCompatibility
+
+variable {kind : IUTStage1PlaceKind}
+variable {state : IUTStage1LocalTensorPacketLogVolumeState kind}
+
+theorem localObject_finiteLogVolume_eq_normalizedLogVolume
+    (compat : IUTStage1LocalTensorPacketNormalizedCompatibility state) :
+    state.localObject.finiteLogVolume =
+      state.capsuleFamily.normalizedLogVolume :=
+  compat.normalizedLogVolume_eq_localObject.symm
+
+theorem normalizedLogVolume_eq_capsuleAverage
+    (compat : IUTStage1LocalTensorPacketNormalizedCompatibility state) :
+    state.localObject.finiteLogVolume =
+      state.capsuleFamily.totalLogVolume /
+        (state.capsuleFamily.capsuleCount : Real) := by
+  calc
+    state.localObject.finiteLogVolume =
+        state.capsuleFamily.normalizedLogVolume :=
+      compat.localObject_finiteLogVolume_eq_normalizedLogVolume
+    _ =
+        state.capsuleFamily.totalLogVolume /
+          (state.capsuleFamily.capsuleCount : Real) :=
+      state.capsule_normalizedLogVolume_eq
+
+end IUTStage1LocalTensorPacketNormalizedCompatibility
+
 namespace IUTStage1LocalTensorDirectSummandPacketState
 
 variable {kind : IUTStage1PlaceKind}
@@ -2500,6 +2543,32 @@ theorem localLogVolume_eq_packetNormalized'
     localLogVolume =
       packetState.packetState.capsuleFamily.normalizedLogVolume :=
   estimate.localLogVolume_eq_packetNormalized
+
+def ofLocalObjectCompatibility
+    (objectEstimate :
+      IUTStage1LocalObjectContainerLogVolumeEstimate
+        kind targetSigned localLogVolume)
+    (hobject :
+      objectEstimate.localObject =
+        packetState.packetState.localObject)
+    (compat :
+      IUTStage1LocalTensorPacketNormalizedCompatibility
+        packetState.packetState) :
+    IUTStage1PacketNormalizedContainerEstimate
+      packetState targetSigned localLogVolume :=
+  { objectEstimate := objectEstimate,
+    localObject_eq_packetLocalObject := hobject,
+    localLogVolume_eq_packetNormalized := by
+      calc
+        localLogVolume =
+            objectEstimate.localObject.finiteLogVolume :=
+          objectEstimate.localLogVolume_eq_object
+        _ =
+            packetState.packetState.localObject.finiteLogVolume := by
+          rw [hobject]
+        _ =
+            packetState.packetState.capsuleFamily.normalizedLogVolume :=
+          compat.localObject_finiteLogVolume_eq_normalizedLogVolume }
 
 theorem targetSigned_le_localLogVolume
     (estimate :
