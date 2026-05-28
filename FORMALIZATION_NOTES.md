@@ -18421,3 +18421,47 @@ This prevents an anonymous real inequality from entering the proof.  Downstream
 work must supply both the inequality and its claimed source.  Later milestones
 can refine these constructors into actual source-level Lean data and reject
 source labels that do not provide the required real comparison.
+
+## 141. A 3.11.5-To-3.12 Weighted-Theta Audit Feeds The Route
+
+### Lean Move
+
+We introduced:
+
+```text
+ThreeElevenFiveWeightedThetaAudit
+ThreeElevenFiveWeightedThetaAudit.toWeightedThetaComparisonData
+weightedThetaComparisonRouteOfThreeElevenFive
+```
+
+for both the labelwise and cusp-class routes.
+
+### Mathematical Reason
+
+The new audit record still contains the same critical inequality:
+
+```text
+squareWeightedAverage <= thetaSourceAverage
+```
+
+but it localizes the assumption to the source-facing "3.11.5 => 3.12" step.
+Converting it to `WeightedThetaComparisonData` automatically tags the source as:
+
+```text
+threeElevenFiveToCorollary312
+```
+
+### Source Check
+
+This follows Mochizuki's recent decomposition: after moving the hull+det
+material into the predecessor stage, the last part of the argument focuses on
+the simultaneous comparison of q- and Theta-pilot data.  Scholze-Stix identify
+this same final comparison as the point where the averaged `j^2` data and real
+line identifications must be justified.
+
+### Relevance to the 3.12 Dispute
+
+We now have a named Lean slot for the exact claim that must eventually be
+proved from the source-level IUT construction.  At this stage it remains an
+explicit audit input, but it is no longer just an arbitrary real inequality with
+no provenance.
