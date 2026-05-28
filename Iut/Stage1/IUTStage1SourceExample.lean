@@ -1219,6 +1219,32 @@ theorem structuredSHEFactoredPreservationBoundary_value_gap_example
       boundary.missingFactoredSquareFullLabelData :=
   boundary.fullLabelValuePreservation_missing
 
+def fullLabelMapOnlyTransport_neg_example
+    (l : PrimeGeFive) :
+    IUTStage1FullLabelMapOnlyTransport l :=
+  IUTStage1FullLabelMapOnlyTransport.neg l
+
+theorem fullLabelMapOnlyTransport_map_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1FullLabelMapOnlyTransport l) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+      (l := l) transport.coordinateEquiv :=
+  transport.fullLabelMapPreserved
+
+theorem fullLabelMapOnlyTransport_coord_gap_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1FullLabelMapOnlyTransport l) :
+    IUTStage1FactoredSquareFullLabelMissingDatum.coordinateSquarePreservation ∈
+      transport.missingFactoredSquareFullLabelData :=
+  transport.coordinateSquarePreservation_missing
+
+theorem fullLabelMapOnlyTransport_value_gap_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1FullLabelMapOnlyTransport l) :
+    IUTStage1FactoredSquareFullLabelMissingDatum.fullLabelValuePreservation ∈
+      transport.missingFactoredSquareFullLabelData :=
+  transport.fullLabelValuePreservation_missing
+
 def flLabelModel_zmod_example
     (l : PrimeGeFive) :
     IUTStage1FLLabelModel (ZMod l.value) :=
@@ -1383,6 +1409,12 @@ theorem zmodCuspLabelLogVolumeCompatibility_full_label_map_refl_example
     IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
       (l := l) (Equiv.refl (ZMod l.value)) :=
   IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_refl
+
+theorem zmodCuspLabelLogVolumeCompatibility_full_label_map_neg_example
+    {l : PrimeGeFive} :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+      (l := l) (Equiv.neg (ZMod l.value)) :=
+  IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_neg
 
 theorem zmodCuspLabelLogVolumeCompatibility_full_label_value_refl_example
     {l : PrimeGeFive}

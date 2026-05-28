@@ -1600,6 +1600,14 @@ theorem fullLabelMapPreserving_refl :
   intro j
   rfl
 
+theorem fullLabelMapPreserving_neg :
+    FullLabelMapPreserving (l := l) (Equiv.neg (ZMod l.value)) := by
+  intro j
+  by_cases hj : j = 0
+  · subst j
+    simp [IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+  · exact IUTStage1ZModCuspFullLabel.fromCoordinate_neg l j hj
+
 /--
 Labelwise preservation of the full-label log-volume branch.
 
@@ -3399,6 +3407,57 @@ theorem fullLabelValuePreservation_mem_all :
   simp [all]
 
 end IUTStage1FactoredSquareFullLabelMissingDatum
+
+/--
+Transport data that preserves only the zero/nonzero/sign-quotient full-label
+map.
+
+This is intentionally weaker than the factored square/full-label preservation
+interface: it carries no coordinate-square preservation and no log-volume value
+preservation.
+-/
+structure IUTStage1FullLabelMapOnlyTransport
+    (l : PrimeGeFive) where
+  coordinateEquiv : ZMod l.value ≃ ZMod l.value
+  fullLabelMap_preserved :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+      (l := l) coordinateEquiv
+
+namespace IUTStage1FullLabelMapOnlyTransport
+
+variable {l : PrimeGeFive}
+
+def neg (l : PrimeGeFive) :
+    IUTStage1FullLabelMapOnlyTransport l :=
+  { coordinateEquiv := Equiv.neg (ZMod l.value),
+    fullLabelMap_preserved :=
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_neg }
+
+def missingFactoredSquareFullLabelData
+    (_transport : IUTStage1FullLabelMapOnlyTransport l) :
+    Finset IUTStage1FactoredSquareFullLabelMissingDatum :=
+  { IUTStage1FactoredSquareFullLabelMissingDatum.coordinateSquarePreservation,
+    IUTStage1FactoredSquareFullLabelMissingDatum.fullLabelValuePreservation }
+
+theorem fullLabelMapPreserved
+    (transport : IUTStage1FullLabelMapOnlyTransport l) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+      (l := l) transport.coordinateEquiv :=
+  transport.fullLabelMap_preserved
+
+theorem coordinateSquarePreservation_missing
+    (transport : IUTStage1FullLabelMapOnlyTransport l) :
+    IUTStage1FactoredSquareFullLabelMissingDatum.coordinateSquarePreservation ∈
+      transport.missingFactoredSquareFullLabelData := by
+  simp [missingFactoredSquareFullLabelData]
+
+theorem fullLabelValuePreservation_missing
+    (transport : IUTStage1FullLabelMapOnlyTransport l) :
+    IUTStage1FactoredSquareFullLabelMissingDatum.fullLabelValuePreservation ∈
+      transport.missingFactoredSquareFullLabelData := by
+  simp [missingFactoredSquareFullLabelData]
+
+end IUTStage1FullLabelMapOnlyTransport
 
 /--
 Boundary object showing what the local-object Hodge-descent packet layer supplies

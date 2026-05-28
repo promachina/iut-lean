@@ -3843,3 +3843,91 @@ source theory may intend to supply these fields by additional Hodge-theoretic
 or log-link arguments.  It also does not prove Corollary 3.12, because the
 fields are not yet constructed.  It identifies exactly what the next source
 audit must look for.
+
+## 156. Full-Label Map Preservation Is Weaker Than Square Transport
+
+### Lean Move
+
+We added the sign-change instance:
+
+```text
+IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_neg
+```
+
+This proves that negation on `ZMod l.value` preserves the full-label map
+`fromCoordinate`.  At zero this is immediate.  Away from zero it uses the
+existing sign-quotient lemma:
+
+```text
+IUTStage1ZModCuspFullLabel.fromCoordinate_neg
+```
+
+We also added:
+
+```text
+IUTStage1FullLabelMapOnlyTransport
+```
+
+This record deliberately carries only:
+
+```text
+coordinateEquiv
+fullLabelMap_preserved
+```
+
+and records that two fields are still missing for the stronger factored
+square/full-label transport interface:
+
+```text
+coordinateSquarePreservation
+fullLabelValuePreservation
+```
+
+The example file now checks the negation instance, construction of the
+map-only transport, and the two explicitly missing fields.
+
+### Mathematical Reason
+
+This is a small but important trap guard.  The sign quotient identifies the
+nonzero labels `j` and `-j`, so a sign change can preserve the full-label
+branch.  That fact alone does not say that the transported `j^2`-weighted
+expression has been preserved as a log-volume computation.
+
+In the current Lean model, the square-weight branch and the full-label branch
+are therefore kept factored:
+
+```text
+full-label-map preservation
+coordinate-square preservation
+full-label-value preservation
+```
+
+The new map-only transport witnesses the first item without supplying the
+other two.  This prevents us from silently replacing the disputed weighted
+transport step by a weaker sign-quotient compatibility statement.
+
+### Source Check
+
+IUT III's Corollary 3.12 corridor uses averages over `j in F_l` with the
+`q^{j^2}` weight profile.  IUT II's weighted-volume discussion also treats this
+square-weight profile as structured data, not merely as a quotient-label
+lookup.  Scholze-Stix's criticism focuses precisely on whether the comparison
+retains nontrivial `j^2` scaling data after the proposed simplification.
+
+This Lean step is consistent with that pressure point: preserving the
+zero/nonzero/sign-quotient label map is useful, but it is not the same datum as
+transporting the square-weighted log-volume expression.
+
+### Relevance to the 3.12 Dispute
+
+We now have a formal counterweight against a possible false shortcut:
+
+```text
+sign-quotient branch preserved
+  does not imply
+3.12 weighted average transported
+```
+
+This does not decide whether Mochizuki's Hodge-theoretic route supplies the
+missing data.  It says that our formalization will require that data explicitly
+before accepting the `3.11 => 3.12` transport step.
