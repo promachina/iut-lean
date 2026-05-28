@@ -16368,6 +16368,27 @@ structure ThreeElevenFiveStructuredSHEPointwiseTargetThetaAudit
             (transport_audit.preservationAudit.coordinateEquiv j)) <=
         part.theta_source.thetaSourceAverage audited
 
+structure ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+    (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) where
+  transport_audit :
+    IUTStage1StructuredSHESquareWeightTransportAudit package bundle l
+  source_profile_eq :
+    profile = transport_audit.preservationAudit.sourceProfile
+  source_log_volume_eq :
+    part.theta_source.compatible_average.cuspLogVolume audited =
+      transport_audit.preservationAudit.sourceLogVolume
+  target_log_volume_eq_theta :
+    transport_audit.preservationAudit.targetLogVolume =
+      part.theta_source.compatible_average.cuspLogVolume audited
+  target_normalizedLogVolume_eq_thetaAverage :
+    ∀ j : ZMod l.value,
+      (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume j =
+        part.theta_source.thetaSourceAverage audited
+
 structure WeightedThetaComparisonRoute
     (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)
@@ -16712,6 +16733,51 @@ def ThreeElevenFiveStructuredSHEPointwiseTargetThetaAudit.toThreeElevenFiveWeigh
     ThreeElevenFiveWeightedThetaAudit part profile audited :=
   sourceAudit.toStructuredSHEWeightedThetaAudit.toThreeElevenFiveWeightedThetaAudit
 
+def ThreeElevenFiveStructuredSHEConstantTargetThetaAudit.toPointwiseTargetThetaAudit
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    ThreeElevenFiveStructuredSHEPointwiseTargetThetaAudit
+      part bundle profile audited :=
+  { transport_audit := sourceAudit.transport_audit,
+    source_profile_eq := sourceAudit.source_profile_eq,
+    source_log_volume_eq := sourceAudit.source_log_volume_eq,
+    targetFullLabel_le_thetaAverage := by
+      intro j
+      rw [sourceAudit.target_log_volume_eq_theta]
+      rw [← part.theta_source.compatible_average.averageLabel_eq_fullLabelLogVolume_fromCoordinate
+        audited (sourceAudit.transport_audit.preservationAudit.coordinateEquiv j)]
+      exact le_of_eq (sourceAudit.target_normalizedLogVolume_eq_thetaAverage
+        (sourceAudit.transport_audit.preservationAudit.coordinateEquiv j)) }
+
+theorem ThreeElevenFiveStructuredSHEConstantTargetThetaAudit.weightedAverage_le_thetaAverage
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume <=
+      part.theta_source.thetaSourceAverage audited :=
+  sourceAudit.toPointwiseTargetThetaAudit.weightedAverage_le_thetaAverage
+
+def ThreeElevenFiveStructuredSHEConstantTargetThetaAudit.toThreeElevenFiveWeightedThetaAudit
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    ThreeElevenFiveWeightedThetaAudit part profile audited :=
+  sourceAudit.toPointwiseTargetThetaAudit.toThreeElevenFiveWeightedThetaAudit
+
 theorem ThreeElevenFiveWeightedThetaAudit.endpointAudit_recovers
     {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
     {profile : IUTStage1ZModSquareWeightProfile l}
@@ -16836,6 +16902,18 @@ def weightedThetaComparisonRouteOfPointwiseTarget
   part.weightedThetaComparisonRouteOfThreeElevenFive profile audited
     sourceAudit.toThreeElevenFiveWeightedThetaAudit
 
+def weightedThetaComparisonRouteOfConstantTarget
+    (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    WeightedThetaComparisonRoute part profile audited :=
+  part.weightedThetaComparisonRouteOfThreeElevenFive profile audited
+    sourceAudit.toThreeElevenFiveWeightedThetaAudit
+
 theorem weightedThetaComparisonRouteOfThreeElevenFive_source
     (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)
@@ -16880,6 +16958,19 @@ theorem weightedThetaComparisonRouteOfStructuredSHE_uses_transport
       ThreeElevenFiveStructuredSHEWeightedThetaAudit
         part bundle profile audited) :
     (part.weightedThetaComparisonRouteOfStructuredSHE
+        bundle profile audited sourceAudit).weightedAverage_le_thetaAverage =
+      sourceAudit.weightedAverage_le_thetaAverage :=
+  rfl
+
+theorem weightedThetaComparisonRouteOfConstantTarget_uses_constantTarget
+    (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    (part.weightedThetaComparisonRouteOfConstantTarget
         bundle profile audited sourceAudit).weightedAverage_le_thetaAverage =
       sourceAudit.weightedAverage_le_thetaAverage :=
   rfl
@@ -17240,6 +17331,27 @@ structure ThreeElevenFiveStructuredSHEPointwiseTargetThetaAudit
             (transport_audit.preservationAudit.coordinateEquiv j)) <=
         part.theta_source.thetaSourceAverage audited
 
+structure ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) where
+  transport_audit :
+    IUTStage1StructuredSHESquareWeightTransportAudit package bundle l
+  source_profile_eq :
+    profile = transport_audit.preservationAudit.sourceProfile
+  source_log_volume_eq :
+    part.theta_source.compatible_average.cuspLogVolume audited =
+      transport_audit.preservationAudit.sourceLogVolume
+  target_log_volume_eq_theta :
+    transport_audit.preservationAudit.targetLogVolume =
+      part.theta_source.compatible_average.cuspLogVolume audited
+  target_normalizedLogVolume_eq_thetaAverage :
+    ∀ j : ZMod l.value,
+      (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume j =
+        part.theta_source.thetaSourceAverage audited
+
 structure WeightedThetaComparisonRoute
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)
@@ -17584,6 +17696,51 @@ def ThreeElevenFiveStructuredSHEPointwiseTargetThetaAudit.toThreeElevenFiveWeigh
     ThreeElevenFiveWeightedThetaAudit part profile audited :=
   sourceAudit.toStructuredSHEWeightedThetaAudit.toThreeElevenFiveWeightedThetaAudit
 
+def ThreeElevenFiveStructuredSHEConstantTargetThetaAudit.toPointwiseTargetThetaAudit
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    ThreeElevenFiveStructuredSHEPointwiseTargetThetaAudit
+      part bundle profile audited :=
+  { transport_audit := sourceAudit.transport_audit,
+    source_profile_eq := sourceAudit.source_profile_eq,
+    source_log_volume_eq := sourceAudit.source_log_volume_eq,
+    targetFullLabel_le_thetaAverage := by
+      intro j
+      rw [sourceAudit.target_log_volume_eq_theta]
+      rw [← part.theta_source.compatible_average.averageLabel_eq_fullLabelLogVolume_fromCoordinate
+        audited (sourceAudit.transport_audit.preservationAudit.coordinateEquiv j)]
+      exact le_of_eq (sourceAudit.target_normalizedLogVolume_eq_thetaAverage
+        (sourceAudit.transport_audit.preservationAudit.coordinateEquiv j)) }
+
+theorem ThreeElevenFiveStructuredSHEConstantTargetThetaAudit.weightedAverage_le_thetaAverage
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume <=
+      part.theta_source.thetaSourceAverage audited :=
+  sourceAudit.toPointwiseTargetThetaAudit.weightedAverage_le_thetaAverage
+
+def ThreeElevenFiveStructuredSHEConstantTargetThetaAudit.toThreeElevenFiveWeightedThetaAudit
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    ThreeElevenFiveWeightedThetaAudit part profile audited :=
+  sourceAudit.toPointwiseTargetThetaAudit.toThreeElevenFiveWeightedThetaAudit
+
 theorem ThreeElevenFiveWeightedThetaAudit.endpointAudit_recovers
     {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
     {profile : IUTStage1ZModSquareWeightProfile l}
@@ -17719,6 +17876,18 @@ def weightedThetaComparisonRouteOfPointwiseTarget
   part.weightedThetaComparisonRouteOfThreeElevenFive profile audited
     sourceAudit.toThreeElevenFiveWeightedThetaAudit
 
+def weightedThetaComparisonRouteOfConstantTarget
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    WeightedThetaComparisonRoute part profile audited :=
+  part.weightedThetaComparisonRouteOfThreeElevenFive profile audited
+    sourceAudit.toThreeElevenFiveWeightedThetaAudit
+
 theorem weightedThetaComparisonRouteOfThreeElevenFive_source
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)
@@ -17763,6 +17932,19 @@ theorem weightedThetaComparisonRouteOfStructuredSHE_uses_transport
       ThreeElevenFiveStructuredSHEWeightedThetaAudit
         part bundle profile audited) :
     (part.weightedThetaComparisonRouteOfStructuredSHE
+        bundle profile audited sourceAudit).weightedAverage_le_thetaAverage =
+      sourceAudit.weightedAverage_le_thetaAverage :=
+  rfl
+
+theorem weightedThetaComparisonRouteOfConstantTarget_uses_constantTarget
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceAudit :
+      ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+        part bundle profile audited) :
+    (part.weightedThetaComparisonRouteOfConstantTarget
         bundle profile audited sourceAudit).weightedAverage_le_thetaAverage =
       sourceAudit.weightedAverage_le_thetaAverage :=
   rfl

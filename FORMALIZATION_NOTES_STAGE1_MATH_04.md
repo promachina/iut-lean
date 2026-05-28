@@ -391,3 +391,75 @@ source-level construction of the pointwise transported target full-label
 inequalities from the actual multiradial/Hodge-theater data.  The Lean chain
 from such pointwise inequalities to the final Corollary-3.12-shaped q/Theta
 comparison is now explicit and verified.
+
+## 197. Constant Target Values Supply Pointwise Target Bounds
+
+### Lean Move
+
+We added, for both the labelwise and cusp-class routes:
+
+```text
+ThreeElevenFiveStructuredSHEConstantTargetThetaAudit
+ThreeElevenFiveStructuredSHEConstantTargetThetaAudit.toPointwiseTargetThetaAudit
+ThreeElevenFiveStructuredSHEConstantTargetThetaAudit.weightedAverage_le_thetaAverage
+ThreeElevenFiveStructuredSHEConstantTargetThetaAudit.toThreeElevenFiveWeightedThetaAudit
+weightedThetaComparisonRouteOfConstantTarget
+weightedThetaComparisonRouteOfConstantTarget_uses_constantTarget
+```
+
+The example file now exposes public constant-target examples for both route
+shapes.
+
+### Mathematical Reason
+
+The previous milestone accepted pointwise transported target bounds as the
+remaining input:
+
+```text
+targetLogVolume.fullLabelLogVolume(fromCoordinate (coordinateEquiv j))
+  <= thetaSourceAverage
+```
+
+This milestone records one concrete sufficient condition for those pointwise
+bounds.  If the transported target log-volume object is exactly the Theta-side
+cusp log-volume object, and every normalized averaged label value is exactly the
+Theta-source average, then each transported target full-label value is bounded
+by the Theta-source average by equality.
+
+Lean proves this by rewriting the target log-volume object, then using the
+existing full-label/coordinate compatibility theorem:
+
+```text
+averageLabel_eq_fullLabelLogVolume_fromCoordinate
+```
+
+The result is intentionally only a sufficient route.  It does not assert that
+the actual IUT source machinery produces constant normalized target values.
+
+### Source Check
+
+This is not claimed as a direct theorem from Mochizuki's papers.  It is a
+sanity route: it checks that the formal pipeline from target-side label control
+to the final q/Theta comparison behaves correctly when the target label data is
+degenerate in the strongest possible way.
+
+For the Corollary 3.12 dispute this is useful mainly as a guardrail.  If a later
+candidate Hodge-theater construction silently collapses the relevant target data
+to this constant case, the assumption will be visible as an explicit equality
+field rather than hidden inside the weighted-average endpoint.
+
+### Relevance to the 3.12 Dispute
+
+The proof obligation is now stratified into three visible levels:
+
+```text
+constant target labels
+  -> pointwise transported target bounds
+  -> transported weighted-average bound
+  -> final 3.11.5-to-3.12 q/Theta comparison
+```
+
+The actual dispute still sits upstream: whether Mochizuki's Hodge-theater/SHE
+machinery legitimately supplies the needed target-side control without the
+Scholze-Stix collapse.  This milestone gives Lean another audited route through
+the corridor, while keeping that source-level question explicit.
