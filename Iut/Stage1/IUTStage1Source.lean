@@ -2349,6 +2349,14 @@ theorem coordinateModularSquarePreserving_neg_and_not_coordinateSquarePreserving
   ⟨coordinateModularSquarePreserving_neg,
     not_coordinateSquarePreserving_neg⟩
 
+theorem coordinateBalancedSquarePreserving_neg_and_not_coordinateSquarePreserving_neg :
+    CoordinateBalancedSquarePreserving
+        (l := l) (Equiv.neg (ZMod l.value)) ∧
+      ¬ CoordinateSquarePreserving
+        (l := l) (Equiv.neg (ZMod l.value)) :=
+  ⟨coordinateBalancedSquarePreserving_neg,
+    not_coordinateSquarePreserving_neg⟩
+
 theorem coordinateSquarePreserving_neg_of_representativeSquareWeightOnSignQuotient
     (weightOnQuotient : (zmodSignAction l).SignLabelQuotient -> Real)
     (hweight :
@@ -2481,6 +2489,24 @@ theorem exists_representativeSummand_constant_one_total_preserved_not_pointwise 
     ⟨Equiv.neg (ZMod l.value),
       representativeSummand_constant_one_total_preserved_neg,
       not_representativeSummand_constant_one_preserved_neg⟩
+
+theorem exists_balancedSquarePreserving_not_representativeSummand_preserved :
+    ∃ coordinateEquiv : ZMod l.value ≃ ZMod l.value,
+      CoordinateBalancedSquarePreserving (l := l) coordinateEquiv ∧
+        ¬ ∀ j : ZMod l.value,
+          representativeFullLabelWeightedSummand
+              (l := l)
+              (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+                (l := l) (1 : Real))
+              (coordinateEquiv j) =
+            representativeFullLabelWeightedSummand
+              (l := l)
+              (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+                (l := l) (1 : Real))
+              j :=
+  ⟨Equiv.neg (ZMod l.value),
+    coordinateBalancedSquarePreserving_neg,
+    not_representativeSummand_constant_one_preserved_neg⟩
 
 theorem squareWeight_preserved_of_coordinateSquarePreserving
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
@@ -4217,6 +4243,43 @@ theorem targetTransportedBalancedAverage_eq_sourceBalancedAverage
       transport.sourceBalancedAverage := by
   unfold targetTransportedBalancedAverage sourceBalancedAverage
   rw [transport.targetTransportedBalancedNumerator_eq_sourceBalancedNumerator]
+
+theorem negSelf_not_representativeSummand_constant_one_preserved
+    (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    ¬ ∀ j : ZMod l.value,
+      IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real))
+          ((negSelf logVolume).coordinateEquiv j) =
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real))
+          j := by
+  simpa [negSelf] using
+    IUTStage1ZModSquareWeightProfile.not_representativeSummand_constant_one_preserved_neg
+      (l := l)
+
+theorem negSelf_balanced_preserved_and_representative_fails
+    (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    (∀ j : ZMod l.value,
+      IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+          (l := l) ((negSelf logVolume).coordinateEquiv j) =
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight (l := l) j) ∧
+      ¬ ∀ j : ZMod l.value,
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real))
+            ((negSelf logVolume).coordinateEquiv j) =
+          IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real))
+            j :=
+  ⟨(negSelf logVolume).balancedSquareWeight_preserved,
+    negSelf_not_representativeSummand_constant_one_preserved logVolume⟩
 
 end IUTStage1BalancedSquareFullLabelTransport
 

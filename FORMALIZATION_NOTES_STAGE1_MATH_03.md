@@ -5698,3 +5698,60 @@ Any future Lean proof step that tries to use an averaged equality as if it were
 pointwise representative-square preservation should now fail unless it supplies
 additional hypotheses.  This is exactly the kind of trap we need the
 formalization to expose.
+
+## 181. Balanced Sign-Compatible Preservation Is Not Representative Preservation
+
+### Lean Move
+
+We added the cross-profile obstruction:
+
+```text
+IUTStage1ZModSquareWeightProfile
+  .coordinateBalancedSquarePreserving_neg_and_not_coordinateSquarePreserving_neg
+IUTStage1ZModSquareWeightProfile
+  .exists_balancedSquarePreserving_not_representativeSummand_preserved
+IUTStage1BalancedSquareFullLabelTransport
+  .negSelf_not_representativeSummand_constant_one_preserved
+IUTStage1BalancedSquareFullLabelTransport
+  .negSelf_balanced_preserved_and_representative_fails
+```
+
+Lean now proves that negation preserves the balanced square profile
+`valMinAbs.natAbs^2`, but still fails the pointwise representative
+constant-one summand based on `j.val^2`.
+
+### Mathematical Reason
+
+The balanced profile is sign-compatible by construction:
+
+```text
+balancedSquareWeight (-j) = balancedSquareWeight j.
+```
+
+The representative profile is not sign-compatible:
+
+```text
+((-j).val : Real)^2 != (j.val : Real)^2
+```
+
+for nontrivial labels such as `j = 1` in `ZMod 5`.  Thus a proof route that
+uses the balanced profile has changed the invariant.  It may be the correct
+invariant for a sign-quotient or full-label descent argument, but it is not the
+same as the literal representative `j.val^2` branch.
+
+### Source Check
+
+IUT III repeatedly emphasizes compatibility with the `F_l^+/-` label
+symmetries and the use of averages/procession-normalized log-volumes.  The
+Scholze-Stix critique, by contrast, focuses on the inserted real `j^2` factors
+in the Corollary 3.12 comparison.  This milestone keeps those two readings
+separate: sign-compatible data can be formalized, but Lean does not let it
+stand in for the representative-square datum without an explicit bridge.
+
+### Relevance to the 3.12 Dispute
+
+This closes another easy escape hatch.  If future work decides that the
+Mochizuki route should be modeled with a sign-compatible balanced square
+profile, that decision must be justified against the paper text and the
+Corollary 3.12 target.  It cannot be treated as a harmless reformulation of the
+representative `j^2` comparison.
