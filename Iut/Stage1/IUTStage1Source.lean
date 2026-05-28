@@ -3566,6 +3566,84 @@ theorem curveLogSum_le_ftpdLogSum_add_logTwoL
 
 end IUTStage1IUTIVCorollary22LogDiffCondComparisonShadow
 
+/--
+IUT IV, Corollary 2.2 to Theorem A bounded-discrepancy passage.
+
+Corollary 2.2(i) compares `(1/6)log(q_2)` with the canonical height up to
+bounded discrepancy; Corollary 2.2(ii)(C2) bounds `(1/6)log(q_2)` by the
+different/conductor side.  This record proves the resulting lower bound for
+`(1 + epsilon_E) * (log-diff + log-cond) - height`.
+-/
+structure IUTStage1IUTIVCorollary22ToTheoremABoundShadow
+    (Point : Type u) where
+  epsilonE : Real
+  cK : Real
+  logQTwo : Point -> Real
+  canonicalHeight : Point -> Real
+  logDiff : Point -> Real
+  logCond : Point -> Real
+  logQTwo_to_canonicalHeight :
+    IUTStage1BoundedDiscrepancyEquivalent Point
+      (fun x => (1 / 6 : Real) * logQTwo x)
+      canonicalHeight
+  c2_logQTwo_bound :
+    ∀ x : Point,
+      (1 / 6 : Real) * logQTwo x <=
+        (1 + epsilonE) * (logDiff x + logCond x) + cK
+
+namespace IUTStage1IUTIVCorollary22ToTheoremABoundShadow
+
+variable {Point : Type u}
+
+def lowerBound
+    (data : IUTStage1IUTIVCorollary22ToTheoremABoundShadow Point) :
+    Real :=
+  data.logQTwo_to_canonicalHeight.lower - data.cK
+
+def discrepancy
+    (data : IUTStage1IUTIVCorollary22ToTheoremABoundShadow Point)
+    (x : Point) : Real :=
+  (1 + data.epsilonE) * (data.logDiff x + data.logCond x) -
+    data.canonicalHeight x
+
+theorem canonicalHeight_le_weightedSide_minus_lower
+    (data : IUTStage1IUTIVCorollary22ToTheoremABoundShadow Point)
+    (x : Point) :
+    data.canonicalHeight x <=
+      (1 + data.epsilonE) * (data.logDiff x + data.logCond x) +
+        data.cK - data.logQTwo_to_canonicalHeight.lower := by
+  have hbd := data.logQTwo_to_canonicalHeight.lower_bound x
+  have hc2 := data.c2_logQTwo_bound x
+  linarith
+
+theorem discrepancy_bounded_below
+    (data : IUTStage1IUTIVCorollary22ToTheoremABoundShadow Point)
+    (x : Point) :
+    data.lowerBound <= data.discrepancy x := by
+  have hheight := data.canonicalHeight_le_weightedSide_minus_lower x
+  dsimp [lowerBound, discrepancy]
+  linarith
+
+noncomputable def toTheoremABoundedDiscrepancyShadow
+    (data : IUTStage1IUTIVCorollary22ToTheoremABoundShadow Point)
+    (d : Nat) (d_pos : 0 < d)
+    (epsilonE_pos : 0 < data.epsilonE)
+    (hyperbolicCurve : Prop) (hyperbolic_curve : hyperbolicCurve) :
+    IUTStage1IUTIVTheoremABoundedDiscrepancyShadow Point :=
+  { d := d
+    d_pos := d_pos
+    epsilon := data.epsilonE
+    epsilon_pos := epsilonE_pos
+    hyperbolicCurve := hyperbolicCurve
+    hyperbolic_curve := hyperbolic_curve
+    height := data.canonicalHeight
+    logDiff := data.logDiff
+    logCond := data.logCond
+    lowerBound := data.lowerBound
+    discrepancy_bounded_below := data.discrepancy_bounded_below }
+
+end IUTStage1IUTIVCorollary22ToTheoremABoundShadow
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

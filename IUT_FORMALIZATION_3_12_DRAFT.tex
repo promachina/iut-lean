@@ -246,6 +246,12 @@ The code currently covers:
   \(\log\operatorname{diff}_X(x_E)=\log(d_{F_{\mathrm{tpd}}})\) and
   \(\log(f_{F_{\mathrm{tpd}}})\le\log\operatorname{cond}_D(x_E)\le
    \log(f_{F_{\mathrm{tpd}}})+\log(2\ell)\);
+\item the IUT IV, Corollary 2.2 to Theorem A passage:
+  bounded-discrepancy equivalence
+  \(\frac16\log(q_2)\approx\operatorname{ht}_{\omega_X(D)}\), together with the
+  C2 bound for \(\frac16\log(q_2)\), gives a lower bound for
+  \((1+\epsilon_E)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)
+   -\operatorname{ht}_{\omega_X(D)}\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -309,7 +315,8 @@ three-step logarithmic inequality chain.  The \(\epsilon_E\)-definition flag
 records the source formula and lower estimate for \(\epsilon_E\).  The
 \(\epsilon_E\)-absorption flag records the final denominator removal in C2.  The
 log-different/log-conductor flag records the bridge from tripodal field terms to
-curve functions.
+curve functions.  The Corollary 2.2-to-Theorem A flag records the formal
+bounded-discrepancy transfer from C2 to the Theorem A inequality.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -406,6 +413,8 @@ the intermediate expression with denominator \(1-2\epsilon_E/5\) is bounded by
 \((1+\epsilon_E)\) times the log-degree sum plus \(C_K\).
 It also proves the two sum inequalities relating the tripodal different and
 conductor terms to \(\log\operatorname{diff}_X+\log\operatorname{cond}_D\).
+Finally, Lean combines the Corollary 2.2(i) bounded-discrepancy height
+comparison with the C2 bound to construct the Theorem A lower-bound shadow.
 
 \section{Missing Mathematics}
 

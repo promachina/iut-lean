@@ -670,6 +670,7 @@ structure ProcessionContainerExperimentReport where
   iutIVCorollary22EpsilonDefinitionAvailable : Bool
   iutIVCorollary22EpsilonAbsorptionAvailable : Bool
   iutIVCorollary22LogDiffCondComparisonAvailable : Bool
+  iutIVCorollary22ToTheoremABoundAvailable : Bool
 deriving Repr
 
 /--
@@ -725,7 +726,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     iutIVCorollary22C2InequalityChainAvailable := true,
     iutIVCorollary22EpsilonDefinitionAvailable := true,
     iutIVCorollary22EpsilonAbsorptionAvailable := true,
-    iutIVCorollary22LogDiffCondComparisonAvailable := true }
+    iutIVCorollary22LogDiffCondComparisonAvailable := true,
+    iutIVCorollary22ToTheoremABoundAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1332,6 +1334,23 @@ theorem iutIVCorollary22LogDiffCond_curve_le_ftpd_add_logTwoL
     data.curveLogSum <= data.ftpdLogSum + data.logTwoL :=
   data.curveLogSum_le_ftpdLogSum_add_logTwoL
 
+theorem iutIVCorollary22ToTheoremA_discrepancy_bounded_below
+    {Point : Type u}
+    (data : IUTStage1IUTIVCorollary22ToTheoremABoundShadow Point)
+    (x : Point) :
+    data.lowerBound <= data.discrepancy x :=
+  data.discrepancy_bounded_below x
+
+noncomputable def iutIVCorollary22ToTheoremA_shadow
+    {Point : Type u}
+    (data : IUTStage1IUTIVCorollary22ToTheoremABoundShadow Point)
+    (d : Nat) (d_pos : 0 < d)
+    (epsilonE_pos : 0 < data.epsilonE)
+    (hyperbolicCurve : Prop) (hyperbolic_curve : hyperbolicCurve) :
+    IUTStage1IUTIVTheoremABoundedDiscrepancyShadow Point :=
+  data.toTheoremABoundedDiscrepancyShadow d d_pos epsilonE_pos
+    hyperbolicCurve hyperbolic_curve
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1600,6 +1619,7 @@ structure Corollary312DisputeFirstPassReport where
   iutIVCorollary22EpsilonDefinitionAvailable : Bool
   iutIVCorollary22EpsilonAbsorptionAvailable : Bool
   iutIVCorollary22LogDiffCondComparisonAvailable : Bool
+  iutIVCorollary22ToTheoremABoundAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1669,6 +1689,7 @@ def corollary312DisputeFirstPassReport :
     iutIVCorollary22EpsilonDefinitionAvailable := true,
     iutIVCorollary22EpsilonAbsorptionAvailable := true,
     iutIVCorollary22LogDiffCondComparisonAvailable := true,
+    iutIVCorollary22ToTheoremABoundAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1934,6 +1955,11 @@ theorem corollary312Report_iutIVCorollary22EpsilonAbsorptionAvailable :
 
 theorem corollary312Report_iutIVCorollary22LogDiffCondComparisonAvailable :
     corollary312DisputeFirstPassReport.iutIVCorollary22LogDiffCondComparisonAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVCorollary22ToTheoremABoundAvailable :
+    corollary312DisputeFirstPassReport.iutIVCorollary22ToTheoremABoundAvailable =
       true :=
   rfl
 
