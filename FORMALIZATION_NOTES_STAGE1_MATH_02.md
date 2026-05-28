@@ -2105,3 +2105,97 @@ place-family action data, then derive the existing audited
 `NonarchimedeanIsmInd2Step` and `ArchimedeanOrderTwoInd2Step` from those
 entry-based steps.  This should make the "direct summands over places above
 `vQ`" requirement more concrete.
+
+## 28. Entry-Based Audited `(Ind2)` Steps
+
+### Goal
+
+We connected the audited nonarchimedean and archimedean `(Ind2)` source steps
+to entries in the audited place-family action lists.
+
+### Lean/API Check
+
+The audited choice namespace now defines entry-based data structures:
+
+```text
+NonarchimedeanIsmActionEntryStep
+ArchimedeanOrderTwoActionEntryStep
+```
+
+They descend to the source-specific audited `(Ind2)` steps:
+
+```text
+nonarchimedeanEntry_toNonarchimedeanIsmStep
+archimedeanEntry_toArchimedeanOrderTwoStep
+```
+
+and then to the common direct-summand `(Ind2)` step:
+
+```text
+nonarchimedeanEntry_toDirectSummandActionStep
+archimedeanEntry_toDirectSummandActionStep
+```
+
+The entry place is now linked to both sides of the audit:
+
+```text
+nonarchimedeanEntry_place_mem_ind2Actions
+archimedeanEntry_place_mem_ind2Actions
+nonarchimedeanEntry_place_mem_upperSemi
+archimedeanEntry_place_mem_upperSemi
+```
+
+The image packages expose:
+
+```text
+region_eq_of_nonarchimedeanEntry_step
+region_eq_of_archimedeanEntry_step
+```
+
+### Mathematical Point
+
+The previous audited source steps said that an appropriate local `(Ind2)` action
+exists and that the place-family audit is preserved.  This new layer remembers
+which action entry in the audited nonarchimedean or archimedean action list is
+being used.  Lean also proves that the entry's place appears in the
+corresponding upper-semi place list via the compatibility audit.
+
+This is closer to the Theorem 3.11 statement that the local `(Ind2)` actions
+occur place-by-place over `vQ`: the formal step now ties a local action to the
+audited place-family surface instead of leaving it as an unlocated existential.
+
+### Trap Avoided
+
+The entry-based records are data-carrying structures, not `Prop`, because they
+contain an actual action entry.  Lean rejected the first attempt to make them
+`Prop`; that was the correct failure mode.  Keeping these records in `Type`
+prevents proof irrelevance from erasing the entry we are trying to audit.
+
+The current layer still does not derive the arithmetic action from list
+membership alone.  It requires an explicit source step and a matching-action
+witness.  This avoids overstating what our abstract place-family entries prove.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+placeAuditedNonarchimedeanEntry_to_ism_example
+placeAuditedArchimedeanEntry_to_orderTwo_example
+placeAuditedNonarchimedeanEntry_place_mem_upperSemi_example
+placeAuditedArchimedeanEntry_place_mem_upperSemi_example
+placeAuditedNonarchimedeanEntry_preserves_totalLogVolume_example
+placeAuditedArchimedeanEntry_preserves_totalLogVolume_example
+placeAuditedMultiradialImages_nonarchimedeanEntry_region_eq_example
+placeAuditedMultiradialImages_archimedeanEntry_region_eq_example
+placeAuditedMultiradialThetaImages_nonarchimedeanEntry_region_eq_example
+placeAuditedMultiradialThetaImages_archimedeanEntry_region_eq_example
+```
+
+### Remaining Gap
+
+The matching-action witness is still a compatibility field, not a constructed
+transport of the action entry across an equality of direct-summand families.
+The next serious refinement is to make the action-entry family and the choice's
+local summand family share a common typed source, reducing the need for this
+extra witness.

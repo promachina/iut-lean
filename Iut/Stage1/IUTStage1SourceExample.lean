@@ -1165,6 +1165,46 @@ theorem placeAuditedNonarchimedeanIsm_preserves_totalLogVolume_example
   IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanIsm_preserves_capsuleTotalLogVolume
     hstep
 
+def placeAuditedNonarchimedeanEntry_to_ism_example
+    {coric : Type u}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂) :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmInd2Step
+      audited₁ audited₂ :=
+  IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanEntry_toNonarchimedeanIsmStep
+    hstep
+
+theorem placeAuditedNonarchimedeanEntry_place_mem_upperSemi_example
+    {coric : Type u}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂) :
+    hstep.action_entry.place ∈
+      audited₁.choice.upper_semi_state.nonarchimedeanInclusions.map
+        fun entry => entry.place :=
+  IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanEntry_place_mem_upperSemi
+    hstep
+
+theorem placeAuditedNonarchimedeanEntry_preserves_totalLogVolume_example
+    {coric : Type u}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂) :
+    audited₁.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      audited₂.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanEntry_preserves_capsuleTotalLogVolume
+    hstep
+
 theorem placeAuditedArchimedeanOrderTwo_preserves_totalLogVolume_example
     {coric : Type u}
     {audited₁ audited₂ :
@@ -1176,6 +1216,46 @@ theorem placeAuditedArchimedeanOrderTwo_preserves_totalLogVolume_example
     audited₁.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
       audited₂.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
   IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanOrderTwo_preserves_capsuleTotalLogVolume
+    hstep
+
+def placeAuditedArchimedeanEntry_to_orderTwo_example
+    {coric : Type u}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂) :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoInd2Step
+      audited₁ audited₂ :=
+  IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanEntry_toArchimedeanOrderTwoStep
+    hstep
+
+theorem placeAuditedArchimedeanEntry_place_mem_upperSemi_example
+    {coric : Type u}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂) :
+    hstep.action_entry.place ∈
+      audited₁.choice.upper_semi_state.archimedeanSurjections.map
+        fun entry => entry.place :=
+  IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanEntry_place_mem_upperSemi
+    hstep
+
+theorem placeAuditedArchimedeanEntry_preserves_totalLogVolume_example
+    {coric : Type u}
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂) :
+    audited₁.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      audited₂.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanEntry_preserves_capsuleTotalLogVolume
     hstep
 
 theorem placeAuditedDirectSummandPacketChoice_generated_preserves_audit_example
@@ -1307,6 +1387,21 @@ theorem placeAuditedMultiradialImages_nonarchimedeanIsm_region_eq_example
       data.possibleImages.region audited₂ :=
   data.region_eq_of_nonarchimedeanIsm_step hstep
 
+theorem placeAuditedMultiradialImages_nonarchimedeanEntry_region_eq_example
+    {target : Copy} {coric : Type u}
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.nonarchimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ =
+      data.possibleImages.region audited₂ :=
+  data.region_eq_of_nonarchimedeanEntry_step hstep
+
 theorem placeAuditedMultiradialImages_archimedeanOrderTwo_region_eq_example
     {target : Copy} {coric : Type u}
     (data :
@@ -1321,6 +1416,21 @@ theorem placeAuditedMultiradialImages_archimedeanOrderTwo_region_eq_example
     data.possibleImages.region audited₁ =
       data.possibleImages.region audited₂ :=
   data.region_eq_of_archimedeanOrderTwo_step hstep
+
+theorem placeAuditedMultiradialImages_archimedeanEntry_region_eq_example
+    {target : Copy} {coric : Type u}
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.archimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ =
+      data.possibleImages.region audited₂ :=
+  data.region_eq_of_archimedeanEntry_step hstep
 
 theorem placeAuditedMultiradialImages_ind3_region_eq_example
     {target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
@@ -1405,6 +1515,23 @@ theorem placeAuditedMultiradialThetaImages_nonarchimedeanIsm_region_eq_example
       data.possibleImages.images.region audited₂ :=
   data.region_eq_of_nonarchimedeanIsm_step hstep
 
+theorem placeAuditedMultiradialThetaImages_nonarchimedeanEntry_region_eq_example
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+      data.possibleImages.images.region audited₂ :=
+  data.region_eq_of_nonarchimedeanEntry_step hstep
+
 theorem placeAuditedMultiradialThetaImages_archimedeanOrderTwo_region_eq_example
     {source target : Copy} {coric : Type u}
     {package :
@@ -1421,6 +1548,23 @@ theorem placeAuditedMultiradialThetaImages_archimedeanOrderTwo_region_eq_example
     data.possibleImages.images.region audited₁ =
       data.possibleImages.images.region audited₂ :=
   data.region_eq_of_archimedeanOrderTwo_step hstep
+
+theorem placeAuditedMultiradialThetaImages_archimedeanEntry_region_eq_example
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.archimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+      data.possibleImages.images.region audited₂ :=
+  data.region_eq_of_archimedeanEntry_step hstep
 
 theorem placeAuditedMultiradialThetaImages_union_eq_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}

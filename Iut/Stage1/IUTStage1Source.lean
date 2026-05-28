@@ -3118,6 +3118,146 @@ theorem archimedeanOrderTwo_preserves_capsuleTotalLogVolume
   ind2_preserves_capsuleTotalLogVolume
     (archimedeanOrderTwo_toDirectSummandActionStep hstep)
 
+/--
+Audited nonarchimedean `Ism` step tied to an entry in the `(Ind2)`
+place-family action data.
+-/
+structure NonarchimedeanIsmActionEntryStep
+    (audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) where
+  action_entry : IUTStage1NonarchimedeanIsmActionEntry
+  action_entry_mem :
+    action_entry ∈
+      audited₁.placeFamilyCompatibility.ind2Actions.nonarchimedeanActions
+  source_step : NonarchimedeanIsmInd2Step audited₁ audited₂
+  matching_action_exists :
+    ∃ action :
+      IUTStage1NonarchimedeanIsmDirectSummandAction
+        audited₁.choice.local_tensor_state.summandFamily,
+      action.place = action_entry.place ∧
+        action.toDirectSummandAction.toCapsuleAction.transformedFamily =
+          action_entry.toDirectSummandAction.toCapsuleAction.transformedFamily ∧
+        audited₂.choice.local_tensor_state.packetState.capsuleFamily =
+          action.toDirectSummandAction.toCapsuleAction.transformedFamily
+
+/--
+Audited archimedean order-two step tied to an entry in the `(Ind2)`
+place-family action data.
+-/
+structure ArchimedeanOrderTwoActionEntryStep
+    (audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean) where
+  action_entry : IUTStage1ArchimedeanOrderTwoActionEntry
+  action_entry_mem :
+    action_entry ∈
+      audited₁.placeFamilyCompatibility.ind2Actions.archimedeanActions
+  source_step : ArchimedeanOrderTwoInd2Step audited₁ audited₂
+  matching_action_exists :
+    ∃ action :
+      IUTStage1ArchimedeanOrderTwoDirectSummandAction
+        audited₁.choice.local_tensor_state.summandFamily,
+      action.place = action_entry.place ∧
+        action.toDirectSummandAction.toCapsuleAction.transformedFamily =
+          action_entry.toDirectSummandAction.toCapsuleAction.transformedFamily ∧
+        audited₂.choice.local_tensor_state.packetState.capsuleFamily =
+          action.toDirectSummandAction.toCapsuleAction.transformedFamily
+
+def nonarchimedeanEntry_toNonarchimedeanIsmStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmActionEntryStep audited₁ audited₂) :
+    NonarchimedeanIsmInd2Step audited₁ audited₂ :=
+  hstep.source_step
+
+def archimedeanEntry_toArchimedeanOrderTwoStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoActionEntryStep audited₁ audited₂) :
+    ArchimedeanOrderTwoInd2Step audited₁ audited₂ :=
+  hstep.source_step
+
+def nonarchimedeanEntry_toDirectSummandActionStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmActionEntryStep audited₁ audited₂) :
+    LocalTensorDirectSummandActionStep audited₁ audited₂ :=
+  nonarchimedeanIsm_toDirectSummandActionStep
+    (nonarchimedeanEntry_toNonarchimedeanIsmStep hstep)
+
+def archimedeanEntry_toDirectSummandActionStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoActionEntryStep audited₁ audited₂) :
+    LocalTensorDirectSummandActionStep audited₁ audited₂ :=
+  archimedeanOrderTwo_toDirectSummandActionStep
+    (archimedeanEntry_toArchimedeanOrderTwoStep hstep)
+
+theorem nonarchimedeanEntry_place_mem_ind2Actions
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmActionEntryStep audited₁ audited₂) :
+    hstep.action_entry.place ∈
+      audited₁.placeFamilyCompatibility.ind2Actions.nonarchimedeanPlaces := by
+  exact List.mem_map.mpr ⟨hstep.action_entry, hstep.action_entry_mem, rfl⟩
+
+theorem archimedeanEntry_place_mem_ind2Actions
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoActionEntryStep audited₁ audited₂) :
+    hstep.action_entry.place ∈
+      audited₁.placeFamilyCompatibility.ind2Actions.archimedeanPlaces := by
+  exact List.mem_map.mpr ⟨hstep.action_entry, hstep.action_entry_mem, rfl⟩
+
+theorem nonarchimedeanEntry_place_mem_upperSemi
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmActionEntryStep audited₁ audited₂) :
+    hstep.action_entry.place ∈
+      audited₁.choice.upper_semi_state.nonarchimedeanInclusions.map
+        fun entry => entry.place := by
+  rw [← audited₁.nonarchimedeanPlaces_eq]
+  exact nonarchimedeanEntry_place_mem_ind2Actions hstep
+
+theorem archimedeanEntry_place_mem_upperSemi
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoActionEntryStep audited₁ audited₂) :
+    hstep.action_entry.place ∈
+      audited₁.choice.upper_semi_state.archimedeanSurjections.map
+        fun entry => entry.place := by
+  rw [← audited₁.archimedeanPlaces_eq]
+  exact archimedeanEntry_place_mem_ind2Actions hstep
+
+theorem nonarchimedeanEntry_preserves_capsuleTotalLogVolume
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmActionEntryStep audited₁ audited₂) :
+    audited₁.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      audited₂.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  ind2_preserves_capsuleTotalLogVolume
+    (nonarchimedeanEntry_toDirectSummandActionStep hstep)
+
+theorem archimedeanEntry_preserves_capsuleTotalLogVolume
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoActionEntryStep audited₁ audited₂) :
+    audited₁.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume =
+      audited₂.choice.local_tensor_state.packetState.capsuleFamily.totalLogVolume :=
+  ind2_preserves_capsuleTotalLogVolume
+    (archimedeanEntry_toDirectSummandActionStep hstep)
+
 def indeterminacySourceData :
     IUTStage1Theorem311IndeterminacySourceData
       (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :=
@@ -3382,6 +3522,21 @@ theorem region_eq_of_nonarchimedeanIsm_step
     (IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanIsm_toDirectSummandActionStep
       hstep)
 
+theorem region_eq_of_nonarchimedeanEntry_step
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.nonarchimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂ :=
+  data.region_eq_of_nonarchimedeanIsm_step
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanEntry_toNonarchimedeanIsmStep
+      hstep)
+
 theorem region_eq_of_archimedeanOrderTwo_step
     (data :
       IUTStage1PlaceAuditedMultiradialImages
@@ -3395,6 +3550,21 @@ theorem region_eq_of_archimedeanOrderTwo_step
     data.possibleImages.region audited₁ = data.possibleImages.region audited₂ :=
   data.region_eq_of_ind2_step
     (IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanOrderTwo_toDirectSummandActionStep
+      hstep)
+
+theorem region_eq_of_archimedeanEntry_step
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.archimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂ :=
+  data.region_eq_of_archimedeanOrderTwo_step
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanEntry_toArchimedeanOrderTwoStep
       hstep)
 
 theorem region_eq_of_ind3_step
@@ -3523,6 +3693,23 @@ theorem region_eq_of_nonarchimedeanIsm_step
   rw [← data.audited_possibleImages_eq]
   exact data.auditedImages.region_eq_of_nonarchimedeanIsm_step hstep
 
+theorem region_eq_of_nonarchimedeanEntry_step
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+      data.possibleImages.images.region audited₂ := by
+  rw [← data.audited_possibleImages_eq]
+  exact data.auditedImages.region_eq_of_nonarchimedeanEntry_step hstep
+
 theorem region_eq_of_archimedeanOrderTwo_step
     {package :
       IUTStage1SourcePackage source target
@@ -3539,6 +3726,23 @@ theorem region_eq_of_archimedeanOrderTwo_step
       data.possibleImages.images.region audited₂ := by
   rw [← data.audited_possibleImages_eq]
   exact data.auditedImages.region_eq_of_archimedeanOrderTwo_step hstep
+
+theorem region_eq_of_archimedeanEntry_step
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.archimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+      data.possibleImages.images.region audited₂ := by
+  rw [← data.audited_possibleImages_eq]
+  exact data.auditedImages.region_eq_of_archimedeanEntry_step hstep
 
 theorem region_eq_of_ind3_step
     (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
