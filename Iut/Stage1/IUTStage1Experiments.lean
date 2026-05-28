@@ -636,6 +636,8 @@ structure ProcessionContainerExperimentReport where
   lgpSplittingMonoidAddsGaussianGenerators : Bool
   baseValuationPacketProductAvailable : Bool
   fmodUnitCopyProductActionAvailable : Bool
+  kummerFTensorPacketToDTransferAvailable : Bool
+  monoAnalyticTensorPacketForgettingAvailable : Bool
 deriving Repr
 
 /--
@@ -657,7 +659,9 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     lgpSplittingMonoidActionAvailable := true,
     lgpSplittingMonoidAddsGaussianGenerators := true,
     baseValuationPacketProductAvailable := true,
-    fmodUnitCopyProductActionAvailable := true }
+    fmodUnitCopyProductActionAvailable := true,
+    kummerFTensorPacketToDTransferAvailable := true,
+    monoAnalyticTensorPacketForgettingAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -837,6 +841,44 @@ theorem fmodUnitCopyProductAction_eq_original_plus_unitCopies
         Finset.univ.sum fun _base : Fin action.product.baseCount =>
           Finset.univ.sum action.unitCopyLogVolume :=
   action.actedProductLogVolume_eq_original_plus_unitCopies
+
+theorem tensorPacketCoricTransfer_preserves_productLogVolume
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    {source target : IUTStage1RealizedTensorPacketProductLogVolume kind j}
+    (transfer : IUTStage1TensorPacketCoricTransfer source target) :
+    target.product.productLogVolume = source.product.productLogVolume :=
+  transfer.preserves_productLogVolume
+
+theorem tensorPacketCoricTransfer_histories_not_identified
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    {source target : IUTStage1RealizedTensorPacketProductLogVolume kind j}
+    (transfer : IUTStage1TensorPacketCoricTransfer source target) :
+    source.theater.side ≠ target.theater.side :=
+  transfer.source_history_ne_target_history
+
+theorem kummerFTensorPacketToD_preserves_productLogVolume
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    {source target : IUTStage1RealizedTensorPacketProductLogVolume kind j}
+    (transfer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer source target) :
+    target.product.productLogVolume = source.product.productLogVolume :=
+  transfer.preserves_productLogVolume
+
+theorem monoAnalyticTensorPacketForgetting_preserves_productLogVolume
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    {source target : IUTStage1RealizedTensorPacketProductLogVolume kind j}
+    (transfer :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer source target) :
+    target.product.productLogVolume = source.product.productLogVolume :=
+  transfer.preserves_productLogVolume
+
+theorem monoAnalyticTensorPacketForgetting_structureForgotten
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    {source target : IUTStage1RealizedTensorPacketProductLogVolume kind j}
+    (transfer :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer source target) :
+    transfer.holomorphicStructureForgotten :=
+  transfer.structureForgotten
 
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
@@ -1072,6 +1114,8 @@ structure Corollary312DisputeFirstPassReport where
   lgpSplittingMonoidAddsGaussianGenerators : Bool
   baseValuationPacketProductAvailable : Bool
   fmodUnitCopyProductActionAvailable : Bool
+  kummerFTensorPacketToDTransferAvailable : Bool
+  monoAnalyticTensorPacketForgettingAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1107,6 +1151,8 @@ def corollary312DisputeFirstPassReport :
     lgpSplittingMonoidAddsGaussianGenerators := true,
     baseValuationPacketProductAvailable := true,
     fmodUnitCopyProductActionAvailable := true,
+    kummerFTensorPacketToDTransferAvailable := true,
+    monoAnalyticTensorPacketForgettingAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1202,6 +1248,16 @@ theorem corollary312Report_baseValuationPacketProductAvailable :
 
 theorem corollary312Report_fmodUnitCopyProductActionAvailable :
     corollary312DisputeFirstPassReport.fmodUnitCopyProductActionAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_kummerFTensorPacketToDTransferAvailable :
+    corollary312DisputeFirstPassReport.kummerFTensorPacketToDTransferAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_monoAnalyticTensorPacketForgettingAvailable :
+    corollary312DisputeFirstPassReport.monoAnalyticTensorPacketForgettingAvailable =
       true :=
   rfl
 

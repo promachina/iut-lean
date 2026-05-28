@@ -1375,6 +1375,138 @@ theorem actedProductLogVolume_eq_original_plus_unitCopies
 
 end IUTStage1FmodUnitCopyTensorPacketProductAction
 
+/-- Realization stage of a tensor-packet product in the IUT III passage. -/
+inductive IUTStage1TensorPacketRealizationKind where
+  | holomorphicF
+  | holomorphicD
+  | monoAnalyticD
+deriving DecidableEq, Repr
+
+/--
+Tensor-packet product together with the realization kind that records whether it
+is still attached to an `F`-prime-strip, to a `D`-prime-strip, or to the
+mono-analytic `D^⊢` container after forgetting the holomorphic structure.
+-/
+structure IUTStage1RealizedTensorPacketProductLogVolume
+    (kind : IUTStage1PlaceKind) (j : Nat) where
+  realization : IUTStage1TensorPacketRealizationKind
+  theater : QualitativeData.HodgeTheaterId
+  product : IUTStage1BaseValuationTensorPacketProductLogVolume kind j
+
+/--
+Finite log-volume shadow of the Kummer/coric transfer from one realized
+tensor-packet product to another.
+
+For the IUT III paragraph after Fig. I.5, the intended uses are:
+`holomorphicF -> holomorphicD` by Kummer isomorphism, and then
+`holomorphicD -> monoAnalyticD` by forgetting the arithmetic holomorphic
+structure of a vertical line.  The history guard prevents this transfer from
+being represented as an identification of the two Hodge-theater histories.
+-/
+structure IUTStage1TensorPacketCoricTransfer
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    (source target :
+      IUTStage1RealizedTensorPacketProductLogVolume kind j) where
+  sourceRealization : IUTStage1TensorPacketRealizationKind
+  targetRealization : IUTStage1TensorPacketRealizationKind
+  source_realization_eq : source.realization = sourceRealization
+  target_realization_eq : target.realization = targetRealization
+  histories_not_identified : source.theater.side ≠ target.theater.side
+  baseCount_eq : source.product.baseCount = target.product.baseCount
+  productLogVolume_eq :
+    target.product.productLogVolume = source.product.productLogVolume
+
+namespace IUTStage1TensorPacketCoricTransfer
+
+variable {kind : IUTStage1PlaceKind} {j : Nat}
+variable {source target :
+  IUTStage1RealizedTensorPacketProductLogVolume kind j}
+
+theorem preserves_productLogVolume
+    (transfer : IUTStage1TensorPacketCoricTransfer source target) :
+    target.product.productLogVolume = source.product.productLogVolume :=
+  transfer.productLogVolume_eq
+
+theorem source_history_ne_target_history
+    (transfer : IUTStage1TensorPacketCoricTransfer source target) :
+    source.theater.side ≠ target.theater.side :=
+  transfer.histories_not_identified
+
+end IUTStage1TensorPacketCoricTransfer
+
+/-- Kummer transfer from labeled `F` tensor packets to labeled `D` tensor packets. -/
+structure IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    (source target :
+      IUTStage1RealizedTensorPacketProductLogVolume kind j) where
+  transfer : IUTStage1TensorPacketCoricTransfer source target
+  source_is_holomorphicF :
+    source.realization = IUTStage1TensorPacketRealizationKind.holomorphicF
+  target_is_holomorphicD :
+    target.realization = IUTStage1TensorPacketRealizationKind.holomorphicD
+
+namespace IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+
+variable {kind : IUTStage1PlaceKind} {j : Nat}
+variable {source target :
+  IUTStage1RealizedTensorPacketProductLogVolume kind j}
+
+theorem preserves_productLogVolume
+    (data :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer source target) :
+    target.product.productLogVolume = source.product.productLogVolume :=
+  data.transfer.preserves_productLogVolume
+
+theorem source_history_ne_target_history
+    (data :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer source target) :
+    source.theater.side ≠ target.theater.side :=
+  data.transfer.source_history_ne_target_history
+
+end IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+
+/--
+Forgetting step from a holomorphic `D` tensor-packet product to a mono-analytic
+`D^⊢` tensor-packet product.
+-/
+structure IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    (source target :
+      IUTStage1RealizedTensorPacketProductLogVolume kind j) where
+  transfer : IUTStage1TensorPacketCoricTransfer source target
+  source_is_holomorphicD :
+    source.realization = IUTStage1TensorPacketRealizationKind.holomorphicD
+  target_is_monoAnalyticD :
+    target.realization = IUTStage1TensorPacketRealizationKind.monoAnalyticD
+  holomorphicStructureForgotten : Prop
+  holomorphic_structure_forgotten : holomorphicStructureForgotten
+
+namespace IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+
+variable {kind : IUTStage1PlaceKind} {j : Nat}
+variable {source target :
+  IUTStage1RealizedTensorPacketProductLogVolume kind j}
+
+theorem preserves_productLogVolume
+    (data :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer source target) :
+    target.product.productLogVolume = source.product.productLogVolume :=
+  data.transfer.preserves_productLogVolume
+
+theorem source_history_ne_target_history
+    (data :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer source target) :
+    source.theater.side ≠ target.theater.side :=
+  data.transfer.source_history_ne_target_history
+
+theorem structureForgotten
+    (data :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer source target) :
+    data.holomorphicStructureForgotten :=
+  data.holomorphic_structure_forgotten
+
+end IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}
