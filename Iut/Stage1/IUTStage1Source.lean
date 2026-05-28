@@ -1307,6 +1307,117 @@ theorem zmod_toSignLabelQuotient_eq_fromCoordinate
   exact (zmodNonzeroLabelFromCoordinate_val l x.1 x.2).symm
 
 /--
+The Stage 1 zero/nonzero cusp-label split for the concrete `F_l = ZMod l`
+model.
+
+The zero label is kept as its own constructor.  Nonzero labels enter only through
+the sign-label quotient.
+-/
+inductive IUTStage1ZModCuspFullLabel (l : PrimeGeFive) where
+  | zero
+  | nonzero : (zmodSignAction l).SignLabelQuotient -> IUTStage1ZModCuspFullLabel l
+
+namespace IUTStage1ZModCuspFullLabel
+
+variable {l : PrimeGeFive}
+
+def fromCoordinate (l : PrimeGeFive) (j : ZMod l.value) :
+    IUTStage1ZModCuspFullLabel l :=
+  if hj : j = 0 then
+    zero
+  else
+    nonzero (zmodSignLabelFromCoordinate l j hj)
+
+theorem fromCoordinate_zero (l : PrimeGeFive) :
+    fromCoordinate l (0 : ZMod l.value) = zero := by
+  simp [fromCoordinate]
+
+theorem fromCoordinate_nonzero
+    (l : PrimeGeFive) (j : ZMod l.value) (hj : j ≠ 0) :
+    fromCoordinate l j = nonzero (zmodSignLabelFromCoordinate l j hj) := by
+  simp [fromCoordinate, hj]
+
+theorem fromCoordinate_one (l : PrimeGeFive) :
+    fromCoordinate l (1 : ZMod l.value) =
+      nonzero (zmodCanonicalSignLabelQuotient l) := by
+  rw [fromCoordinate_nonzero l (1 : ZMod l.value) (zmodOneNonzeroLabel l).2]
+  rw [zmodSignLabelFromCoordinate_one_eq_canonical]
+
+theorem fromCoordinate_neg
+    (l : PrimeGeFive) (j : ZMod l.value) (hj : j ≠ 0) :
+    fromCoordinate l (-j) = fromCoordinate l j := by
+  rw [fromCoordinate_nonzero l (-j) (zmod_neg_ne_zero_of_ne_zero l hj)]
+  rw [fromCoordinate_nonzero l j hj]
+  rw [zmodSignLabelFromCoordinate_neg_eq]
+
+def localObject
+    {kind : IUTStage1PlaceKind}
+    (zeroObject : IUTStage1FiniteLocalLogVolumeObject kind)
+    (cuspClassObject :
+      (zmodSignAction l).SignLabelQuotient ->
+        IUTStage1FiniteLocalLogVolumeObject kind) :
+    IUTStage1ZModCuspFullLabel l ->
+      IUTStage1FiniteLocalLogVolumeObject kind
+  | zero => zeroObject
+  | nonzero label => cuspClassObject label
+
+theorem localObject_zero
+    {kind : IUTStage1PlaceKind}
+    (zeroObject : IUTStage1FiniteLocalLogVolumeObject kind)
+    (cuspClassObject :
+      (zmodSignAction l).SignLabelQuotient ->
+        IUTStage1FiniteLocalLogVolumeObject kind) :
+    localObject zeroObject cuspClassObject zero = zeroObject :=
+  rfl
+
+theorem localObject_nonzero
+    {kind : IUTStage1PlaceKind}
+    (zeroObject : IUTStage1FiniteLocalLogVolumeObject kind)
+    (cuspClassObject :
+      (zmodSignAction l).SignLabelQuotient ->
+        IUTStage1FiniteLocalLogVolumeObject kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    localObject zeroObject cuspClassObject (nonzero label) =
+      cuspClassObject label :=
+  rfl
+
+theorem localObject_fromCoordinate_zero
+    {kind : IUTStage1PlaceKind}
+    (zeroObject : IUTStage1FiniteLocalLogVolumeObject kind)
+    (cuspClassObject :
+      (zmodSignAction l).SignLabelQuotient ->
+        IUTStage1FiniteLocalLogVolumeObject kind) :
+    localObject zeroObject cuspClassObject (fromCoordinate l (0 : ZMod l.value)) =
+      zeroObject := by
+  rw [fromCoordinate_zero]
+  rfl
+
+theorem localObject_fromCoordinate_nonzero
+    {kind : IUTStage1PlaceKind}
+    (zeroObject : IUTStage1FiniteLocalLogVolumeObject kind)
+    (cuspClassObject :
+      (zmodSignAction l).SignLabelQuotient ->
+        IUTStage1FiniteLocalLogVolumeObject kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    localObject zeroObject cuspClassObject (fromCoordinate l j) =
+      cuspClassObject (zmodSignLabelFromCoordinate l j hj) := by
+  rw [fromCoordinate_nonzero l j hj]
+  rfl
+
+theorem localObject_fromCoordinate_neg_eq
+    {kind : IUTStage1PlaceKind}
+    (zeroObject : IUTStage1FiniteLocalLogVolumeObject kind)
+    (cuspClassObject :
+      (zmodSignAction l).SignLabelQuotient ->
+        IUTStage1FiniteLocalLogVolumeObject kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    localObject zeroObject cuspClassObject (fromCoordinate l (-j)) =
+      localObject zeroObject cuspClassObject (fromCoordinate l j) := by
+  rw [fromCoordinate_neg l j hj]
+
+end IUTStage1ZModCuspFullLabel
+
+/--
 Compatibility between a `ZMod l`-indexed normalized log-volume family and a
 description by nonzero cusp sign-label classes.
 
@@ -14064,6 +14175,85 @@ noncomputable def labelLocalObject
   by_cases hj : j = 0
   · exact part.zeroLocalObject audited
   · exact part.cuspClassLocalObject audited (zmodSignLabelFromCoordinate l j hj)
+
+def fullLabelLocalObject
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    IUTStage1FiniteLocalLogVolumeObject kind :=
+  IUTStage1ZModCuspFullLabel.localObject
+    (part.zeroLocalObject audited)
+    (part.cuspClassLocalObject audited)
+    label
+
+theorem fullLabelLocalObject_zero
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.fullLabelLocalObject audited IUTStage1ZModCuspFullLabel.zero =
+      part.zeroLocalObject audited :=
+  rfl
+
+theorem fullLabelLocalObject_nonzero
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.nonzero label) =
+      part.cuspClassLocalObject audited label :=
+  rfl
+
+theorem labelLocalObject_eq_fullLabelLocalObject_fromCoordinate
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    part.labelLocalObject audited j =
+      part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
+  classical
+  unfold labelLocalObject fullLabelLocalObject
+  by_cases hj : j = 0
+  · subst j
+    simp [IUTStage1ZModCuspFullLabel.fromCoordinate,
+      IUTStage1ZModCuspFullLabel.localObject]
+  · simp [IUTStage1ZModCuspFullLabel.fromCoordinate,
+      IUTStage1ZModCuspFullLabel.localObject, hj]
+
+theorem fullLabelLocalObject_fromCoordinate_zero
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (0 : ZMod l.value)) =
+      part.zeroLocalObject audited := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+  rfl
+
+theorem fullLabelLocalObject_fromCoordinate_nonzero
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      part.cuspClassLocalObject audited
+        (zmodSignLabelFromCoordinate l j hj) := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l j hj]
+  rfl
+
+theorem fullLabelLocalObject_fromCoordinate_neg_eq
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (-j)) =
+      part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_neg l j hj]
 
 theorem normalizedLogVolume_eq_labelLocalObjectFinite
     (part :

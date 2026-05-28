@@ -2278,3 +2278,89 @@ of this route.
 
 This gives the later Hodge-theater/descent bridge a precise local object to
 transport, instead of only an anonymous endpoint equality.
+
+## 140. Explicit Zero/Nonzero Full Cusp Labels
+
+### Lean Move
+
+I added an explicit full-label type for the concrete `F_l = ZMod l` cusp-label
+interface:
+
+```text
+IUTStage1ZModCuspFullLabel.zero
+IUTStage1ZModCuspFullLabel.nonzero label
+IUTStage1ZModCuspFullLabel.fromCoordinate
+IUTStage1ZModCuspFullLabel.localObject
+```
+
+The new API proves:
+
+```text
+fromCoordinate 0 = zero
+fromCoordinate 1 = nonzero canonicalSignLabel
+fromCoordinate (-j) = fromCoordinate j, for j != 0
+localObject zero/cusp (fromCoordinate 0) = zeroObject
+localObject zero/cusp (fromCoordinate j) = cuspClassObject (label of j), for j != 0
+```
+
+I also connected the existing insulated cusp/zero route to this full-label API:
+
+```text
+FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit.fullLabelLocalObject
+...fullLabelLocalObject_zero
+...fullLabelLocalObject_nonzero
+...labelLocalObject_eq_fullLabelLocalObject_fromCoordinate
+...fullLabelLocalObject_fromCoordinate_neg_eq
+```
+
+and added examples:
+
+```text
+placeAudited_logVolume_fl_zmod_insulated_full_label_zero_example
+placeAudited_logVolume_fl_zmod_insulated_full_label_nonzero_example
+placeAudited_logVolume_fl_zmod_insulated_label_object_full_label_example
+placeAudited_logVolume_fl_zmod_insulated_full_label_neg_example
+```
+
+### Mathematical Reason
+
+The papers distinguish two related symmetries.  IUT I, Remark 6.12.5 says the
+`F_l^±` symmetry includes the zero element and can relate zero-labeled and
+nonzero-labeled prime strips, but also warns that this makes it harder to
+insulate nonzero labels from confusion with the zero label.  IUT II, Remark
+4.7.3 says the `F_l^±` symmetry involves the zero label and has a coric role,
+while the `F_l` symmetry separates zero from nonzero labels and is important for
+Gaussian monoids and weighted-volume computations.
+
+The previous Lean route already branched internally on `j = 0`, but the branch
+type was implicit.  The new full-label type makes the branch explicit:
+
+```text
+zero coordinate        -> zero constructor
+nonzero coordinate     -> nonzero sign-label quotient constructor
+```
+
+This is a better local model of the paper distinction.  It lets us write
+functions over all `ZMod l` labels without pretending that zero belongs to the
+nonzero sign-label quotient.
+
+### Relevance to the 3.12 Dispute
+
+Scholze-Stix argue that, after simplification, the Corollary 3.12 route loses
+the intended nontrivial weighted comparison and collapses toward a trivial
+inequality.  The formalization should therefore expose exactly where zero and
+nonzero labels are related and exactly where they remain separate.
+
+This milestone does not prove the disputed step.  It narrows the formal
+language around it: a zero/nonzero comparison must either be a case split over
+`IUTStage1ZModCuspFullLabel`, or must pass through an explicit bridge such as
+the Hodge-descent packet transport.  It cannot silently reinterpret zero as a
+nonzero cusp sign-label class.
+
+### Remaining Gap
+
+The full-label object selector is still local to the insulated cusp/zero route.
+The next step should propagate this explicit full-label interface into the
+Hodge-descent source-marked transport audit, so that the packet transport can
+state in one theorem how the zero constructor and each nonzero cusp constructor
+are transported to the packet object.

@@ -5056,6 +5056,77 @@ theorem placeAudited_logVolume_fl_zmod_insulated_cusp_zero_neg_object_eq_example
         (zmodSignLabelFromCoordinate l j hj) :=
   part.cuspClassLocalObject_negCoordinate_eq audited j hj
 
+theorem placeAudited_logVolume_fl_zmod_insulated_full_label_zero_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.fullLabelLocalObject audited IUTStage1ZModCuspFullLabel.zero =
+      part.zeroLocalObject audited :=
+  part.fullLabelLocalObject_zero audited
+
+theorem placeAudited_logVolume_fl_zmod_insulated_full_label_nonzero_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.nonzero label) =
+      part.cuspClassLocalObject audited label :=
+  part.fullLabelLocalObject_nonzero audited label
+
+theorem placeAudited_logVolume_fl_zmod_insulated_label_object_full_label_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    part.labelLocalObject audited j =
+      part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  part.labelLocalObject_eq_fullLabelLocalObject_fromCoordinate audited j
+
+theorem placeAudited_logVolume_fl_zmod_insulated_full_label_neg_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (-j)) =
+      part.fullLabelLocalObject audited
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  part.fullLabelLocalObject_fromCoordinate_neg_eq audited j hj
+
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 def placeAudited_logVolume_fl_zmod_insulated_packet_bridge_to_comparison_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
