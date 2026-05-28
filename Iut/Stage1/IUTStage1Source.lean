@@ -2094,6 +2094,33 @@ theorem coordinateSquarePreserving_eq_refl
   ext j
   exact coordinateSquarePreserving_apply_eq hcoord j
 
+theorem neg_one_ne_one :
+    (-(1 : ZMod l.value)) ≠ (1 : ZMod l.value) := by
+  intro h
+  haveI : Fact (1 < l.value) :=
+    ⟨lt_of_lt_of_le (by norm_num) l.ge_five⟩
+  have hval := congrArg ZMod.val h
+  have hOneNe : (1 : ZMod l.value) ≠ 0 := one_ne_zero
+  haveI : NeZero (1 : ZMod l.value) := ⟨hOneNe⟩
+  rw [ZMod.val_neg_of_ne_zero, ZMod.val_one] at hval
+  have hge : 5 ≤ l.value := l.ge_five
+  omega
+
+theorem not_coordinateSquarePreserving_neg :
+    ¬ CoordinateSquarePreserving
+      (l := l) (Equiv.neg (ZMod l.value)) := by
+  intro hcoord
+  exact neg_one_ne_one
+    (coordinateSquarePreserving_apply_eq hcoord (1 : ZMod l.value))
+
+theorem coordinateModularSquarePreserving_neg_and_not_coordinateSquarePreserving_neg :
+    CoordinateModularSquarePreserving
+        (l := l) (Equiv.neg (ZMod l.value)) ∧
+      ¬ CoordinateSquarePreserving
+        (l := l) (Equiv.neg (ZMod l.value)) :=
+  ⟨coordinateModularSquarePreserving_neg,
+    not_coordinateSquarePreserving_neg⟩
+
 theorem squareWeight_preserved_of_coordinateSquarePreserving
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
     {coordinateEquiv : ZMod l.value ≃ ZMod l.value}

@@ -930,6 +930,26 @@ theorem zmodSquareWeightProfile_coordinateSquarePreserving_refl_example
       (l := l) (Equiv.refl (ZMod l.value)) :=
   IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_refl
 
+theorem zmodSquareWeightProfile_neg_one_ne_one_example
+    {l : PrimeGeFive} :
+    (-(1 : ZMod l.value)) ≠ (1 : ZMod l.value) :=
+  IUTStage1ZModSquareWeightProfile.neg_one_ne_one
+
+theorem zmodSquareWeightProfile_neg_not_coordinate_square_example
+    {l : PrimeGeFive} :
+    ¬ IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+      (l := l) (Equiv.neg (ZMod l.value)) :=
+  IUTStage1ZModSquareWeightProfile.not_coordinateSquarePreserving_neg
+
+open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_neg_modular_not_representative_square_example
+    {l : PrimeGeFive} :
+    IUTStage1ZModSquareWeightProfile.CoordinateModularSquarePreserving
+        (l := l) (Equiv.neg (ZMod l.value)) ∧
+      ¬ IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) (Equiv.neg (ZMod l.value)) :=
+  coordinateModularSquarePreserving_neg_and_not_coordinateSquarePreserving_neg
+
 theorem zmodSquareWeightProfile_squareWeight_preserved_of_coord_example
     {l : PrimeGeFive}
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)

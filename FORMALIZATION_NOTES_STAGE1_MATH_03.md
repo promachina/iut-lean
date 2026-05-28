@@ -4835,3 +4835,85 @@ balanced, sign-compatible profile can satisfy the pointwise transport test, but
 then it is a different profile from the literal representative `j.val^2` profile
 and must be justified against the source text before it can be used in a
 formalized `3.11.5 => 3.12` argument.
+
+## 167. The Sign Transport Gap Holds for Every `l >= 5`
+
+### Lean Move
+
+We promoted the previous `ZMod 5` warning to a general theorem for every
+`PrimeGeFive`:
+
+```text
+neg_one_ne_one
+not_coordinateSquarePreserving_neg
+coordinateModularSquarePreserving_neg_and_not_coordinateSquarePreserving_neg
+```
+
+The last theorem states:
+
+```text
+negation preserves modular square classes,
+but negation does not preserve representative real squares.
+```
+
+In Lean terms:
+
+```text
+CoordinateModularSquarePreserving (Equiv.neg (ZMod l.value))
+and not CoordinateSquarePreserving (Equiv.neg (ZMod l.value)).
+```
+
+The proof uses the coordinate `1`.  If representative square preservation held,
+the earlier rigidity theorem would force `-1 = 1` in `ZMod l.value`.  But for
+`l >= 5`, Lean computes the representative of `-1` as `l.value - 1`, while the
+representative of `1` is `1`; these cannot be equal.
+
+### Mathematical Reason
+
+This is the general version of the Scholze-Stix-style `j^2` warning.  In the
+finite ring:
+
+```text
+(-j)^2 = j^2
+```
+
+but for the selected nonnegative representative map:
+
+```text
+(-1).val = l - 1
+```
+
+so the real representative square changes from:
+
+```text
+1^2
+```
+
+to:
+
+```text
+(l - 1)^2.
+```
+
+Thus modular square preservation is strictly weaker than the representative
+real-square preservation needed by our current square-weight audit record.
+
+### Source Check
+
+IUT III repeatedly emphasizes the role of labels `j in F_l` in the
+Hodge-Arakelov-theoretic evaluation leading to Corollary 3.12, and the proof of
+Corollary 3.12 uses these labels in the final log-volume comparison.  The
+Scholze-Stix critique focuses on whether the real-valued comparison remains
+well-defined after the proposed identifications between Hodge theaters.  This
+Lean theorem makes one precise boundary: preserving the algebraic square class
+inside `F_l` does not by itself preserve the real representative square profile
+used in a `j.val^2` weighted average.
+
+### Relevance to the 3.12 Dispute
+
+The previous probe example was intentionally concrete.  This milestone removes
+the dependence on `l = 5`: the gap is structural for all primes satisfying the
+IUT lower bound.  Any future formalization path that wants to use the literal
+representative `j.val^2` weight across sign indeterminacy must supply more than
+modular-square compatibility; it must supply the stronger representative-square
+compatibility, which forces the coordinate transport to be the identity.
