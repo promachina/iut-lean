@@ -968,6 +968,19 @@ theorem targetSigned_le_localLogVolume
     targetSigned <= localLogVolume :=
   estimate.toLocalContainerEstimate.targetSigned_le_localLogVolume
 
+def transportLocalLogVolume
+    {newLocalLogVolume : Real}
+    (estimate :
+      IUTStage1LocalObjectContainerLogVolumeEstimate
+        kind targetSigned localLogVolume)
+    (hlog : newLocalLogVolume = localLogVolume) :
+    IUTStage1LocalObjectContainerLogVolumeEstimate
+      kind targetSigned newLocalLogVolume :=
+  { localObject := estimate.localObject,
+    localLogVolume_eq_object :=
+      hlog.trans estimate.localLogVolume_eq_object,
+    object_container_estimate := estimate.object_container_estimate }
+
 end IUTStage1LocalObjectContainerLogVolumeEstimate
 
 namespace IUTStage1FLLabelModel
@@ -1419,6 +1432,16 @@ theorem localObject_eq_capsuleLocalObject'
     estimate.objectEstimate.localObject = capsule.localObject :=
   estimate.localObject_eq_capsuleLocalObject
 
+def transportCapsule
+    (estimate :
+      IUTStage1CapsuleEntryContainerEstimate targetSigned capsule)
+    (newCapsule : IUTStage1CapsuleLogVolumeObject kind)
+    (hlog : newCapsule.logVolume = capsule.logVolume)
+    (hobject : estimate.objectEstimate.localObject = newCapsule.localObject) :
+    IUTStage1CapsuleEntryContainerEstimate targetSigned newCapsule :=
+  { objectEstimate := estimate.objectEstimate.transportLocalLogVolume hlog,
+    localObject_eq_capsuleLocalObject := hobject }
+
 end IUTStage1CapsuleEntryContainerEstimate
 
 /-- Container estimates for every entry of a typed capsule family. -/
@@ -1593,6 +1616,38 @@ theorem transformedFamily_total_eq_sum
       Finset.univ.sum fun i =>
         (action.transformedFamily.capsule i).logVolume :=
   action.transformedFamily.total_eq
+
+def transformedContainerEstimate
+    {targetSigned : Real}
+    (action : IUTStage1TypedCapsuleFamilyLogVolumeAction data)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate targetSigned data) :
+    IUTStage1TypedCapsuleFamilyContainerEstimate
+      targetSigned action.transformedFamily :=
+  { capsuleEntryEstimate := by
+      intro i
+      exact
+        (estimate.capsuleEntryEstimate i).transportCapsule
+          (action.transformedFamily.capsule i)
+          (action.logVolume_eq i)
+          (by
+            calc
+              (estimate.capsuleEntryEstimate i).objectEstimate.localObject =
+                  (data.capsule i).localObject :=
+                (estimate.capsuleEntryEstimate i).localObject_eq_capsuleLocalObject'
+              _ = data.localObject :=
+                data.capsuleLocalObject_eq i
+              _ = (action.transformedFamily.capsule i).localObject :=
+                (action.capsule_local_object_eq i).symm) }
+
+theorem transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    {targetSigned : Real}
+    (action : IUTStage1TypedCapsuleFamilyLogVolumeAction data)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate targetSigned data) :
+    targetSigned <= action.transformedFamily.normalizedLogVolume :=
+  let transformedEstimate := action.transformedContainerEstimate estimate
+  transformedEstimate.targetSigned_le_normalizedLogVolume
 
 end IUTStage1TypedCapsuleFamilyLogVolumeAction
 

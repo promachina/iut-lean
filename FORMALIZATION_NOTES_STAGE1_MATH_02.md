@@ -4978,3 +4978,82 @@ packetNormalizedContainerEstimate_capsule_estimates_example
 The next refinement should decide how these capsule-entry estimates interact
 with `(Ind2)` direct-summand actions, i.e. whether capsule-entry container
 estimates are preserved under the local tensor direct-summand action.
+
+## 63. Transporting Capsule Estimates Across Local Tensor Actions
+
+### Goal
+
+We checked that capsule-entry container estimates are stable under the modeled
+capsule action used for the local tensor/direct-summand side of `(Ind2)`.
+
+### Lean Move
+
+We added transport operations:
+
+```text
+IUTStage1LocalObjectContainerLogVolumeEstimate.transportLocalLogVolume
+IUTStage1CapsuleEntryContainerEstimate.transportCapsule
+```
+
+These transport an estimate across an equality of local log-volume reals, while
+requiring the appropriate local-object equality for the target capsule.
+
+For:
+
+```text
+IUTStage1TypedCapsuleFamilyLogVolumeAction
+```
+
+Lean now constructs:
+
+```text
+transformedContainerEstimate
+```
+
+from a container estimate on the original capsule family.  The construction
+uses the action's two preservation facts:
+
+```text
+capsule local object is preserved
+capsule log-volume is preserved
+```
+
+Lean also proves:
+
+```text
+transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+```
+
+### Mathematical Point
+
+This connects the local container estimates to the `(Ind2)` action surface:
+
+```text
+capsule-entry estimates on a capsule family
+  -> transported estimates on the transformed capsule family
+  -> normalized bound survives the local tensor action
+```
+
+This is important because the average route must remain compatible with the
+indeterminacies represented by local tensor/direct-summand actions.
+
+### Trap Avoided
+
+The transport is not based on name equality alone.  Lean requires both the
+log-volume equality and the local-object equality before an estimate can be
+moved to the transformed capsule.
+
+### Toy Check
+
+The examples now check:
+
+```text
+typedCapsuleFamilyAction_transformed_container_estimate_example
+typedCapsuleFamilyAction_transformed_container_bound_example
+```
+
+### Remaining Gap
+
+The next refinement should lift this preservation from raw capsule-family
+actions to the direct-summand packet action data already used in the
+place-audited `(Ind2)` model.
