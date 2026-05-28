@@ -12463,6 +12463,47 @@ theorem zeroLogVolume_eq_packetLocalObjectFinite
     (part.theta_source.compatible_average.cuspLogVolume audited)
     (part.cuspLogVolume_normalized_eq_packetLocalObjectFinite audited)
 
+theorem thetaSourceAverage_eq_packetLocalObjectFinite
+    (part : audit.FLZModCuspLabelThetaSharedZModPacketLocalObjectEstimateAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.theta_source.thetaSourceAverage audited =
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume := by
+  let averaged :=
+    part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+      audited
+  have haverage :
+      averaged.averageLogVolume =
+        (IUTStage1LabelAveragedProcessionLogVolume.constant
+          (label := ZMod l.value)
+          audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume
+        ).averageLogVolume :=
+    IUTStage1LabelAveragedProcessionLogVolume.average_eq_of_pointwise
+      (part.zmodNormalizedLogVolume_eq_packetLocalObjectFinite audited)
+  calc
+    part.theta_source.thetaSourceAverage audited =
+        averaged.averageLogVolume :=
+      part.theta_source.thetaSourceAverage_eq_average audited
+    _ =
+        (IUTStage1LabelAveragedProcessionLogVolume.constant
+          (label := ZMod l.value)
+          audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume
+        ).averageLogVolume :=
+      haverage
+    _ = audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
+      rfl
+
+theorem targetSigned_le_thetaSourceAverage
+    (part : audit.FLZModCuspLabelThetaSharedZModPacketLocalObjectEstimateAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.theta_source.thetaSourceAverage audited := by
+  have hpacket :
+      package.preLedger.targetVolume.targetSigned <=
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
+    (part.packetLocalObjectEstimate audited).targetSigned_le_localLogVolume
+  rw [part.thetaSourceAverage_eq_packetLocalObjectFinite audited]
+  exact hpacket
+
 def toSharedPacketLocalObjectEstimateAudit
     (part : audit.FLZModCuspLabelThetaSharedZModPacketLocalObjectEstimateAudit l) :
     audit.FLZModCuspLabelThetaSharedPacketLocalObjectEstimateAudit l :=

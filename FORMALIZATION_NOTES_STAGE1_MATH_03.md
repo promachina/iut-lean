@@ -340,3 +340,78 @@ The pointwise `ZMod` equality to the packet local-object finite log-volume is
 still supplied as an input.  A later construction should either derive this from
 the local definition of the label log-volume family or explicitly classify it as
 a separate local label/object identification.
+
+## 109. Theta Average from Shared ZMod Packet-Object Equality
+
+### Goal
+
+We derived the Theta-source average and target bound directly from the shared
+`ZMod` packet-local-object route.
+
+### Lean Move
+
+Inside:
+
+```text
+FLZModCuspLabelThetaSharedZModPacketLocalObjectEstimateAudit
+```
+
+we added:
+
+```text
+thetaSourceAverage_eq_packetLocalObjectFinite
+targetSigned_le_thetaSourceAverage
+```
+
+The average equality uses the finite label-average extensional lemma:
+
+```text
+IUTStage1LabelAveragedProcessionLogVolume.average_eq_of_pointwise
+```
+
+to compare the audited label family with the constant family whose value is the
+packet local object's finite log-volume.
+
+The target bound then comes from:
+
+```text
+packetLocalObjectEstimate audited
+```
+
+not from a packet-normalized or capsule-normalized detour.
+
+### Mathematical Point
+
+This gives a direct local-object route:
+
+```text
+every ZMod label value = packet local-object finite log-volume
+packet local-object estimate bounds targetSigned
+  -> targetSigned <= thetaSourceAverage
+```
+
+It is useful because it isolates the analytic/local-object burden from the
+packet-normalization burden.  If the local `ZMod` label family can be shown to
+be the packet local object, the target-average comparison follows directly.
+
+### Trap Avoided
+
+The proof again goes through pointwise label equality before averaging.  It
+does not infer the result from equality of averages alone, and it does not
+replace the local-object estimate by a capsule estimate unless a later route
+explicitly chooses to do so.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_shared_zmod_packet_object_average_eq_example
+placeAudited_logVolume_fl_zmod_shared_zmod_packet_object_target_bound_example
+```
+
+### Remaining Gap
+
+The pointwise `ZMod` equality to the packet local object remains the current
+lowest explicit equality.  We should next classify or construct this equality
+from a concrete local label/object definition.
