@@ -164,6 +164,8 @@ The code currently covers:
 \item the Remark 3.12.2 toy calculation: forgotten concrete assignments
   \(-h\) and \(-2h\) are incompatible for \(h>0\), while
   \(-h\in\R_{\le-2h+\epsilon}\) implies \(h\le\epsilon\);
+\item the Fig. 3.9 column table: both \(\bullet_0\) and \(\circ\) roles are
+  required in both columns, while q-pilot multiradiality is absent;
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -200,6 +202,7 @@ The generalized-link flag records the rational parameter inequality
 The distinct-label flag records the logical intertwining display in
 Remark 3.12.2 and rejects collapse of the q-native and \(\Theta\)-native labels.
 The toy-model flag records the resulting upper-ray arithmetic \(h\le\epsilon\).
+The column-table flag records the Fig. 3.9 theta/q similarity-difference split.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -244,6 +247,8 @@ Lean also checks that the Remark 3.12.2 simultaneous-intertwining step depends
 on distinct labels rather than an unlabeled identification.
 In the accompanying toy model, Lean proves the final upper bound exactly from
 the upper-ray membership hypothesis.
+Lean also records that the q-pilot column lacks the theta-side multiradiality
+used in Theorem 3.11(iii)(c).
 
 \section{Missing Mathematics}
 

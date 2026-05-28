@@ -2006,6 +2006,118 @@ theorem h_le_epsilon
 
 end IUTStage1ToyIntertwiningUpperRayBound
 
+/-- The two vertical columns compared in IUT III, Fig. 3.9. -/
+inductive IUTStage1LogThetaVerticalColumn where
+  | zeroThetaPilot
+  | oneQPilot
+deriving DecidableEq, Repr
+
+/-- Treatment of vertically coric log-shells in the lower half of Fig. 3.9. -/
+inductive IUTStage1LogShellColumnTreatment where
+  | monoAnalyticContainers
+  | tautologicalLogDocumentation
+deriving DecidableEq, Repr
+
+namespace IUTStage1LogThetaVerticalColumn
+
+/-- Fig. 3.9: both columns require Frobenius-like and etale-like roles. -/
+def requiresFrobeniusLikeRole :
+    IUTStage1LogThetaVerticalColumn -> Bool
+  | zeroThetaPilot => true
+  | oneQPilot => true
+
+/-- Fig. 3.9: both columns require vertically coric etale-like containers. -/
+def requiresEtaleLikeRole :
+    IUTStage1LogThetaVerticalColumn -> Bool
+  | zeroThetaPilot => true
+  | oneQPilot => true
+
+/-- Fig. 3.9: log-volume compatibility is similar in the two columns. -/
+def hasLogVolumeCompatibility :
+    IUTStage1LogThetaVerticalColumn -> Bool
+  | zeroThetaPilot => true
+  | oneQPilot => true
+
+/-- Fig. 3.9: log-Kummer non-interference is similar in the two columns. -/
+def hasLogKummerNonInterference :
+    IUTStage1LogThetaVerticalColumn -> Bool
+  | zeroThetaPilot => true
+  | oneQPilot => true
+
+/-- Fig. 3.9: Theorem 3.11(iii)(c)-type multiradiality holds only on the theta side. -/
+def hasPilotMultiradiality :
+    IUTStage1LogThetaVerticalColumn -> Bool
+  | zeroThetaPilot => true
+  | oneQPilot => false
+
+/-- Fig. 3.9: the two columns use log-shells differently. -/
+def logShellTreatment :
+    IUTStage1LogThetaVerticalColumn ->
+      IUTStage1LogShellColumnTreatment
+  | zeroThetaPilot =>
+      IUTStage1LogShellColumnTreatment.monoAnalyticContainers
+  | oneQPilot =>
+      IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation
+
+theorem requiresFrobeniusLikeRole_eq_true
+    (column : IUTStage1LogThetaVerticalColumn) :
+    column.requiresFrobeniusLikeRole = true := by
+  cases column <;> rfl
+
+theorem requiresEtaleLikeRole_eq_true
+    (column : IUTStage1LogThetaVerticalColumn) :
+    column.requiresEtaleLikeRole = true := by
+  cases column <;> rfl
+
+theorem both_roles_essential
+    (column : IUTStage1LogThetaVerticalColumn) :
+    column.requiresFrobeniusLikeRole = true ∧
+      column.requiresEtaleLikeRole = true :=
+  ⟨column.requiresFrobeniusLikeRole_eq_true,
+    column.requiresEtaleLikeRole_eq_true⟩
+
+theorem logVolumeCompatibility_eq_true
+    (column : IUTStage1LogThetaVerticalColumn) :
+    column.hasLogVolumeCompatibility = true := by
+  cases column <;> rfl
+
+theorem logKummerNonInterference_eq_true
+    (column : IUTStage1LogThetaVerticalColumn) :
+    column.hasLogKummerNonInterference = true := by
+  cases column <;> rfl
+
+theorem thetaPilot_hasMultiradiality :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.hasPilotMultiradiality =
+      true :=
+  rfl
+
+theorem qPilot_lacksMultiradiality :
+    IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality =
+      false :=
+  rfl
+
+theorem multiradiality_distinguishes_columns :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.hasPilotMultiradiality ≠
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality := by
+  simp [hasPilotMultiradiality]
+
+theorem thetaPilot_logShellTreatment :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment =
+      IUTStage1LogShellColumnTreatment.monoAnalyticContainers :=
+  rfl
+
+theorem qPilot_logShellTreatment :
+    IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
+      IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation :=
+  rfl
+
+theorem logShellTreatment_distinguishes_columns :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment ≠
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment := by
+  simp [logShellTreatment]
+
+end IUTStage1LogThetaVerticalColumn
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

@@ -647,6 +647,7 @@ structure ProcessionContainerExperimentReport where
   generalizedThetaLGPLambdaBoundAvailable : Bool
   distinctLabelIntertwiningTransportAvailable : Bool
   toyIntertwiningUpperRayBoundAvailable : Bool
+  logThetaColumnRoleTableAvailable : Bool
 deriving Repr
 
 /--
@@ -679,7 +680,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     positiveRationalUnitRigidityAvailable := true,
     generalizedThetaLGPLambdaBoundAvailable := true,
     distinctLabelIntertwiningTransportAvailable := true,
-    toyIntertwiningUpperRayBoundAvailable := true }
+    toyIntertwiningUpperRayBoundAvailable := true,
+    logThetaColumnRoleTableAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1020,6 +1022,27 @@ theorem toyIntertwining_h_le_epsilon
     data.h <= data.epsilon :=
   data.h_le_epsilon
 
+theorem logThetaColumn_both_roles_essential
+    (column : IUTStage1LogThetaVerticalColumn) :
+    column.requiresFrobeniusLikeRole = true ∧
+      column.requiresEtaleLikeRole = true :=
+  column.both_roles_essential
+
+theorem logThetaColumn_qPilot_lacksMultiradiality :
+    IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality =
+      false :=
+  IUTStage1LogThetaVerticalColumn.qPilot_lacksMultiradiality
+
+theorem logThetaColumn_multiradialityDistinguishesColumns :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.hasPilotMultiradiality ≠
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality :=
+  IUTStage1LogThetaVerticalColumn.multiradiality_distinguishes_columns
+
+theorem logThetaColumn_logShellTreatmentDistinguishesColumns :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment ≠
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment :=
+  IUTStage1LogThetaVerticalColumn.logShellTreatment_distinguishes_columns
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1265,6 +1288,7 @@ structure Corollary312DisputeFirstPassReport where
   generalizedThetaLGPLambdaBoundAvailable : Bool
   distinctLabelIntertwiningTransportAvailable : Bool
   toyIntertwiningUpperRayBoundAvailable : Bool
+  logThetaColumnRoleTableAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1311,6 +1335,7 @@ def corollary312DisputeFirstPassReport :
     generalizedThetaLGPLambdaBoundAvailable := true,
     distinctLabelIntertwiningTransportAvailable := true,
     toyIntertwiningUpperRayBoundAvailable := true,
+    logThetaColumnRoleTableAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1461,6 +1486,11 @@ theorem corollary312Report_distinctLabelIntertwiningTransportAvailable :
 
 theorem corollary312Report_toyIntertwiningUpperRayBoundAvailable :
     corollary312DisputeFirstPassReport.toyIntertwiningUpperRayBoundAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_logThetaColumnRoleTableAvailable :
+    corollary312DisputeFirstPassReport.logThetaColumnRoleTableAvailable =
       true :=
   rfl
 
