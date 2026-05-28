@@ -412,6 +412,31 @@ theorem localTensorPacketNormalizedCompatibility_average_example
         (state.capsuleFamily.capsuleCount : Real) :=
   compat.normalizedLogVolume_eq_capsuleAverage
 
+def classifiedLocalTensorPacketNormalizedCompatibility_direct_example
+    {kind : IUTStage1PlaceKind}
+    {state : IUTStage1LocalTensorPacketLogVolumeState kind}
+    (compat : IUTStage1LocalTensorPacketNormalizedCompatibility state) :
+    IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility state :=
+  IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.ofDirectPacketNormalization
+    compat
+
+def classifiedLocalTensorPacketNormalizedCompatibility_ind2_example
+    {kind : IUTStage1PlaceKind}
+    {state : IUTStage1LocalTensorPacketLogVolumeState kind}
+    (compat : IUTStage1LocalTensorPacketNormalizedCompatibility state) :
+    IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility state :=
+  IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.ofInd2TransportedPacketNormalization
+    compat
+
+theorem classifiedLocalTensorPacketNormalizedCompatibility_source_example
+    {kind : IUTStage1PlaceKind}
+    {state : IUTStage1LocalTensorPacketLogVolumeState kind}
+    (compat : IUTStage1LocalTensorPacketNormalizedCompatibility state) :
+    (IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.ofSeparateRealLineIdentification
+      compat).identification_source =
+        IUTStage1PacketNormalizedIdentificationSource.separateRealLineIdentification :=
+  rfl
+
 theorem localContainerLogVolumeEstimate_target_le_local_example
     {targetSigned localLogVolume : Real}
     (estimate :
@@ -467,6 +492,24 @@ def packetNormalizedContainerEstimate_of_local_compatibility_example
       packetState targetSigned localLogVolume :=
   IUTStage1PacketNormalizedContainerEstimate.ofLocalObjectCompatibility
     objectEstimate hobject compat
+
+def packetNormalizedContainerEstimate_of_classified_local_compatibility_example
+    {kind : IUTStage1PlaceKind}
+    {packetState : IUTStage1LocalTensorDirectSummandPacketState kind}
+    {targetSigned localLogVolume : Real}
+    (objectEstimate :
+      IUTStage1LocalObjectContainerLogVolumeEstimate
+        kind targetSigned localLogVolume)
+    (hobject :
+      objectEstimate.localObject =
+        packetState.packetState.localObject)
+    (classified :
+      IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+        packetState.packetState) :
+    IUTStage1PacketNormalizedContainerEstimate
+      packetState targetSigned localLogVolume :=
+  IUTStage1PacketNormalizedContainerEstimate.ofClassifiedLocalObjectCompatibility
+    objectEstimate hobject classified
 
 theorem typedCapsuleFamily_const_le_normalized_example
     {kind : IUTStage1PlaceKind}
@@ -4541,6 +4584,34 @@ theorem placeAudited_logVolume_fl_zmod_classified_packet_normalized_eq_example
         audited).cuspClassLogVolume label =
       audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
   part.cuspClassLogVolume_eq_packetNormalized audited label
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_classified_local_packet_to_global_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaClassifiedLocalPacketNormalizedAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l :=
+  part.toClassifiedPacketNormalizedAudit
+
+theorem placeAudited_logVolume_fl_zmod_classified_local_packet_source_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaClassifiedLocalPacketNormalizedAudit l) :
+    part.toClassifiedPacketNormalizedAudit.identification_source =
+      part.identification_source :=
+  rfl
 
 theorem placeAudited_logVolume_fl_zmod_packet_normalized_ind2_cusp_bound_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}

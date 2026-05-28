@@ -6120,3 +6120,169 @@ mathematical task is to connect it to a more concrete description of the local
 tensor packet/capsule construction, or to classify its source as a direct packet
 normalization, an `(Ind2)`-transported normalization, or a separate real-line
 identification.
+
+## 78. Classified Local Packet-Normalized Compatibility
+
+### Goal
+
+We moved the packet-normalized source classification down to the local
+compatibility certificate itself.
+
+### Lean Move
+
+The source enum:
+
+```text
+IUTStage1PacketNormalizedIdentificationSource
+```
+
+is now available at the local compatibility layer.  We added:
+
+```text
+IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+```
+
+It stores:
+
+```text
+compatibility
+identification_source
+```
+
+with constructors:
+
+```text
+ofDirectPacketNormalization
+ofInd2TransportedPacketNormalization
+ofSeparateRealLineIdentification
+```
+
+`IUTStage1PacketNormalizedContainerEstimate` now also has:
+
+```text
+ofClassifiedLocalObjectCompatibility
+```
+
+so a packet-normalized estimate can be constructed from a classified local
+compatibility certificate.
+
+### Mathematical Point
+
+The global packet-normalized audit already classified the source of the
+real-line identification.  This refinement says the same provenance should be
+visible at the local packet level, where the equality actually lives:
+
+```text
+capsuleFamily.normalizedLogVolume = localObject.finiteLogVolume
+```
+
+This is closer to the Scholze-Stix pressure point: the equality is not just a
+global bookkeeping label; it is a local assertion that must be justified by a
+specific route.
+
+### Trap Avoided
+
+The classification does not prove the compatibility.  It records how a proof is
+being sourced.  This prevents us from treating an `(Ind2)`-transported
+normalization and a separate real-line identification as interchangeable merely
+because both end in the same equality type.
+
+### Toy Check
+
+The examples now check:
+
+```text
+classifiedLocalTensorPacketNormalizedCompatibility_direct_example
+classifiedLocalTensorPacketNormalizedCompatibility_ind2_example
+classifiedLocalTensorPacketNormalizedCompatibility_source_example
+packetNormalizedContainerEstimate_of_classified_local_compatibility_example
+```
+
+### Remaining Gap
+
+The next useful step is to connect classified local compatibility certificates
+to the high-level `FLZModCuspLabelThetaClassifiedPacketNormalizedAudit`, so the
+classification used by packet estimates and the classification reported by the
+route summary cannot drift apart.
+
+## 79. Local Classified Packet Audit to Global Route Classification
+
+### Goal
+
+We connected classified local packet-normalized compatibility certificates to
+the high-level packet-normalized audit used in the route summary.
+
+### Lean Move
+
+We added:
+
+```text
+FLZModCuspLabelThetaClassifiedLocalPacketNormalizedAudit
+```
+
+It carries:
+
+```text
+theta_source
+Ind1/Ind2 equality part
+Ind3 upper part
+global identification_source
+cusp-class local object estimates
+cusp-class classified local compatibilities
+zero local object estimates
+zero classified local compatibility
+source-equality checks for all local compatibilities
+```
+
+It converts to:
+
+```text
+FLZModCuspLabelThetaPacketNormalizedContainerAudit
+FLZModCuspLabelThetaClassifiedPacketNormalizedAudit
+```
+
+The conversion constructs packet-normalized estimates from local object
+estimates and classified local compatibility certificates.
+
+### Mathematical Point
+
+This closes a bookkeeping gap between the local equality:
+
+```text
+packet normalized capsule average = packet local object finite log-volume
+```
+
+and the global route summary's label:
+
+```text
+direct packet normalization
+Ind2-transported packet normalization
+separate real-line identification
+```
+
+Every local certificate now has to report the same source as the high-level
+classified packet audit.
+
+### Trap Avoided
+
+Without the source-equality checks, the formalization could locally use
+certificates classified as one kind of identification while globally summarizing
+the route as another.  That would be a subtle provenance drift, especially near
+the Corollary 3.12 real-line-identification issue.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_classified_local_packet_to_global_example
+placeAudited_logVolume_fl_zmod_classified_local_packet_source_example
+```
+
+### Remaining Gap
+
+The local compatibility certificates are still not constructed from the actual
+Mochizuki local packet/capsule definitions.  The next implementation step should
+move toward the data that makes these certificates true, or toward the
+transport theorem that carries a direct packet normalization through an audited
+`(Ind2)` action.
