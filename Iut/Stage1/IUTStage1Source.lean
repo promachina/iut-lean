@@ -8957,6 +8957,96 @@ theorem multiradialOutputMatchesPackage
       package.multiradialOutput :=
   endpoint.audited_images.multiradial_output_eq
 
+/--
+Endpoint audit for the signed real/log-volume chart data used at the
+place-audited hull boundary.
+-/
+structure LogVolumeChartAudit
+    (endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations) :
+    Prop where
+  q_charted :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord =
+      package.preLedger.qSigned
+  theta_charted :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned
+  target_signed_eq_chosen_volume :
+    package.preLedger.targetVolume.targetSigned =
+      RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice)
+  q_signed_le_target :
+    package.preLedger.qSigned <= package.preLedger.targetVolume.targetSigned
+  target_signed_le_theta :
+    package.preLedger.targetVolume.targetSigned <=
+      package.preLedger.thetaSigned
+  q_signed_le_theta :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+  determinant_volume_bound :
+    RegionMeasure.HasVolumeAtMost package.preLedger.measure
+      (obligations.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull
+      package.preLedger.thetaSigned
+  corollary312_endpoint :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned)
+
+def logVolumeChartAudit
+    (endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations) :
+    endpoint.LogVolumeChartAudit :=
+  { q_charted := package.preLedger.qSigned_eq_chartedQ,
+    theta_charted := package.preLedger.thetaSigned_eq_chartedTheta,
+    target_signed_eq_chosen_volume :=
+      package.preLedger.targetSigned_eq_choiceTargetVolume,
+    q_signed_le_target := package.preLedger.qSigned_le_targetSigned,
+    target_signed_le_theta := package.preLedger.targetSigned_le_thetaSigned,
+    q_signed_le_theta :=
+      le_trans package.preLedger.qSigned_le_targetSigned
+        package.preLedger.targetSigned_le_thetaSigned,
+    determinant_volume_bound := endpoint.determinantVolumeBound,
+    corollary312_endpoint := endpoint.corollary312Endpoint }
+
+namespace LogVolumeChartAudit
+
+variable {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+
+theorem qCharted (audit : endpoint.LogVolumeChartAudit) :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord =
+      package.preLedger.qSigned :=
+  audit.q_charted
+
+theorem thetaCharted (audit : endpoint.LogVolumeChartAudit) :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      package.preLedger.thetaSigned :=
+  audit.theta_charted
+
+theorem targetSigned_eq_chosenVolume
+    (audit : endpoint.LogVolumeChartAudit) :
+    package.preLedger.targetVolume.targetSigned =
+      RegionMeasure.targetVolume package.preLedger.measure
+        (package.preLedger.output.comparison
+          package.preLedger.chosenOutput.choice) :=
+  audit.target_signed_eq_chosen_volume
+
+theorem qSigned_le_thetaSigned
+    (audit : endpoint.LogVolumeChartAudit) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  audit.q_signed_le_theta
+
+theorem corollary312Endpoint
+    (audit : endpoint.LogVolumeChartAudit) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  audit.corollary312_endpoint
+
+end LogVolumeChartAudit
+
 end PlaceAuditedMultiradialThetaHullEndpoint
 
 theorem auditOfParts

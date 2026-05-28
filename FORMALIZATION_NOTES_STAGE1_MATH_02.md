@@ -2713,3 +2713,77 @@ place-audited hull endpoint that records the target signed real, the theta
 signed real, the chart compatibility, and the determinant/hull bound used to
 obtain the upper estimate.  It should not prove new arithmetic content; it
 should make the real-line/log-volume identifications explicit at the endpoint.
+
+## 37. Hull-Endpoint Log-Volume Chart Audit
+
+### Goal
+
+We attached an explicit signed-real/log-volume chart audit to the
+place-audited multiradial hull endpoint.
+
+### Lean/API Check
+
+The endpoint namespace now defines:
+
+```text
+LogVolumeChartAudit
+logVolumeChartAudit
+```
+
+The audit records:
+
+```text
+q_charted
+theta_charted
+target_signed_eq_chosen_volume
+q_signed_le_target
+target_signed_le_theta
+q_signed_le_theta
+determinant_volume_bound
+corollary312_endpoint
+```
+
+and exposes accessors:
+
+```text
+qCharted
+thetaCharted
+targetSigned_eq_chosenVolume
+qSigned_le_thetaSigned
+corollary312Endpoint
+```
+
+### Mathematical Point
+
+This is a typed bookkeeping response to the Corollary 3.12 boundary.  The
+endpoint already had the final inequality, but now the route records the real
+chart equalities and the intermediate signed target-volume inequality at the
+same place as the audited possible-image/hull data.
+
+This is also where the Scholze-Stix real-line-identification concern begins to
+touch the formalization: the chart equalities are explicit theorem fields rather
+than implicit notation.
+
+### Trap Avoided
+
+The audit is proof-valued and contains no new arithmetic data.  It does not
+collapse the source and target Hodge-theater histories; it only records which
+charted real values the endpoint is using.
+
+### Toy Check
+
+The source examples now check:
+
+```text
+placeAuditedMultiradialThetaHullEndpoint_logVolumeChartAudit_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_q_charted_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_q_le_theta_example
+placeAuditedMultiradialThetaHullEndpoint_logVolume_corollary_example
+```
+
+### Remaining Gap
+
+The next refinement should split the log-volume chart audit into its equality
+part `(Ind1)/(Ind2)` and inequality part `(Ind3)`, matching the Step (x)
+description that log-volumes are invariant under `(Ind1)/(Ind2)` while `(Ind3)`
+is converted into an upper inequality.

@@ -3032,6 +3032,53 @@ theorem placeAuditedMultiradialThetaHullEndpoint_archimedeanEntry_example
   endpoint.archimedeanEntry_region_eq_and_fiber_mem
     fiberPackage hstep
 
+def placeAuditedMultiradialThetaHullEndpoint_logVolumeChartAudit_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    (endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations) :
+    endpoint.LogVolumeChartAudit :=
+  endpoint.logVolumeChartAudit
+
+theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_q_charted_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    (audit : endpoint.LogVolumeChartAudit) :
+    (Transport.map package.preLedger.chartedContainer.chart.qToTarget
+      package.preLedger.qValue.qPoint).coord =
+      package.preLedger.qSigned :=
+  audit.qCharted
+
+theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_q_le_theta_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    (audit : endpoint.LogVolumeChartAudit) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  audit.qSigned_le_thetaSigned
+
+theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_corollary_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    (audit : endpoint.LogVolumeChartAudit) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  audit.corollary312Endpoint
+
 def unitThetaToyIUTStage1SourceObligationGap
     (measure : RegionMeasure thetaLine)
     (hnormalized : RegionMeasure.NormalizesUpperRays measure)
