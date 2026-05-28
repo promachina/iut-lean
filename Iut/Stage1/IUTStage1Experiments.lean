@@ -648,6 +648,7 @@ structure ProcessionContainerExperimentReport where
   distinctLabelIntertwiningTransportAvailable : Bool
   toyIntertwiningUpperRayBoundAvailable : Bool
   logThetaColumnRoleTableAvailable : Bool
+  zeroOneColumnAbsorptionDistinctionAvailable : Bool
 deriving Repr
 
 /--
@@ -681,7 +682,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     generalizedThetaLGPLambdaBoundAvailable := true,
     distinctLabelIntertwiningTransportAvailable := true,
     toyIntertwiningUpperRayBoundAvailable := true,
-    logThetaColumnRoleTableAvailable := true }
+    logThetaColumnRoleTableAvailable := true,
+    zeroOneColumnAbsorptionDistinctionAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1043,6 +1045,26 @@ theorem logThetaColumn_logShellTreatmentDistinguishesColumns :
       IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment :=
   IUTStage1LogThetaVerticalColumn.logShellTreatment_distinguishes_columns
 
+theorem zeroColumnHullAbsorption_bothRegions
+    (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) :
+    data.originalRegionLogVolume ∈ data.hullUpperRay ∧
+      data.unitShiftedRegionLogVolume ∈ data.hullUpperRay :=
+  data.both_regions_absorbed_by_hull
+
+theorem oneColumnLogVolumeCompatibility_precise_eq
+    (data :
+      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
+    data.sourceRingStructureLogVolume =
+      data.conjugateRingStructureLogVolume :=
+  data.precise_logVolume_eq
+
+theorem oneColumnLogVolumeCompatibility_source_le_conjugate
+    (data :
+      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
+    data.sourceRingStructureLogVolume <=
+      data.conjugateRingStructureLogVolume :=
+  data.source_le_conjugate
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1289,6 +1311,7 @@ structure Corollary312DisputeFirstPassReport where
   distinctLabelIntertwiningTransportAvailable : Bool
   toyIntertwiningUpperRayBoundAvailable : Bool
   logThetaColumnRoleTableAvailable : Bool
+  zeroOneColumnAbsorptionDistinctionAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1336,6 +1359,7 @@ def corollary312DisputeFirstPassReport :
     distinctLabelIntertwiningTransportAvailable := true,
     toyIntertwiningUpperRayBoundAvailable := true,
     logThetaColumnRoleTableAvailable := true,
+    zeroOneColumnAbsorptionDistinctionAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1491,6 +1515,11 @@ theorem corollary312Report_toyIntertwiningUpperRayBoundAvailable :
 
 theorem corollary312Report_logThetaColumnRoleTableAvailable :
     corollary312DisputeFirstPassReport.logThetaColumnRoleTableAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_zeroOneColumnAbsorptionDistinctionAvailable :
+    corollary312DisputeFirstPassReport.zeroOneColumnAbsorptionDistinctionAvailable =
       true :=
   rfl
 

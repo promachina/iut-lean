@@ -2118,6 +2118,87 @@ theorem logShellTreatment_distinguishes_columns :
 
 end IUTStage1LogThetaVerticalColumn
 
+/--
+Remark 3.12.2(v) zero-column hull absorption shadow.
+
+For the 0-column, regions in mono-analytic log-shells are related to unit-group
+data only up to local `O^×`-multiple indeterminacy.  The source text says that
+Step (xi) introduces holomorphic hulls to absorb this indeterminacy.  This record
+keeps the ordered log-volume skeleton: both the original and unit-shifted
+regions lie below the same hull boundary.
+-/
+structure IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy where
+  originalRegionLogVolume : Real
+  unitShiftedRegionLogVolume : Real
+  hullLogVolume : Real
+  original_le_hull :
+    originalRegionLogVolume <= hullLogVolume
+  unit_shifted_le_hull :
+    unitShiftedRegionLogVolume <= hullLogVolume
+
+namespace IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy
+
+def hullUpperRay
+    (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) : Set Real :=
+  { value | value <= data.hullLogVolume }
+
+theorem original_mem_hullUpperRay
+    (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) :
+    data.originalRegionLogVolume ∈ data.hullUpperRay :=
+  data.original_le_hull
+
+theorem unitShifted_mem_hullUpperRay
+    (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) :
+    data.unitShiftedRegionLogVolume ∈ data.hullUpperRay :=
+  data.unit_shifted_le_hull
+
+theorem both_regions_absorbed_by_hull
+    (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) :
+    data.originalRegionLogVolume ∈ data.hullUpperRay ∧
+      data.unitShiftedRegionLogVolume ∈ data.hullUpperRay :=
+  ⟨data.original_mem_hullUpperRay, data.unitShifted_mem_hullUpperRay⟩
+
+end IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy
+
+/--
+Remark 3.12.2(v) one-column log-volume compatibility shadow.
+
+For the 1-column, the arithmetic holomorphic structure is held fixed and the
+choice among logarithmic conjugates is absorbed by passing to log-volumes via
+log-link compatibility.  The numerical content retained here is equality, not
+merely an upper bound.
+-/
+structure IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice where
+  sourceRingStructureLogVolume : Real
+  conjugateRingStructureLogVolume : Real
+  log_volume_compatible :
+    sourceRingStructureLogVolume = conjugateRingStructureLogVolume
+
+namespace IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice
+
+theorem precise_logVolume_eq
+    (data :
+      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
+    data.sourceRingStructureLogVolume =
+      data.conjugateRingStructureLogVolume :=
+  data.log_volume_compatible
+
+theorem source_le_conjugate
+    (data :
+      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
+    data.sourceRingStructureLogVolume <=
+      data.conjugateRingStructureLogVolume := by
+  rw [data.precise_logVolume_eq]
+
+theorem conjugate_le_source
+    (data :
+      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
+    data.conjugateRingStructureLogVolume <=
+      data.sourceRingStructureLogVolume := by
+  rw [data.precise_logVolume_eq]
+
+end IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}
