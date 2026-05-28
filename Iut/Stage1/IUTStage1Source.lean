@@ -2033,6 +2033,15 @@ theorem balancedSquareWeight_neg_eq (j : ZMod l.value) :
   unfold balancedSquareWeight
   rw [ZMod.natAbs_valMinAbs_neg]
 
+theorem balancedSquareWeight_eq_square_val_of_val_le_half
+    (j : ZMod l.value) (hhalf : j.val ≤ l.value / 2) :
+    balancedSquareWeight (l := l) j = ((j.val : Real) ^ 2) := by
+  unfold balancedSquareWeight
+  rw [ZMod.valMinAbs_natAbs_eq_min]
+  have hcomp : j.val ≤ l.value - j.val := by
+    omega
+  rw [Nat.min_eq_left hcomp]
+
 theorem coordinateBalancedSquarePreserving_refl :
     CoordinateBalancedSquarePreserving
       (l := l) (Equiv.refl (ZMod l.value)) := by

@@ -4495,3 +4495,104 @@ The next source-facing question is therefore precise: does the original `j^2`
 weight in the Corollary 3.12 corridor behave like the representative route, the
 balanced route, or something supplied by additional Hodge-theoretic/log-link
 data?
+
+## 163. Agreement and Divergence of the Two Square Profiles
+
+### Lean Move
+
+We added a comparison theorem:
+
+```text
+IUTStage1ZModSquareWeightProfile
+  .balancedSquareWeight_eq_square_val_of_val_le_half
+```
+
+It states that if a coordinate lies in the lower half of the chosen
+representatives:
+
+```text
+j.val <= l.value / 2
+```
+
+then the balanced and representative square profiles agree:
+
+```text
+balancedSquareWeight j = (j.val : Real)^2
+```
+
+The proof uses mathlib's formula:
+
+```text
+ZMod.valMinAbs_natAbs_eq_min
+```
+
+which identifies the minimal absolute representative with:
+
+```text
+min j.val (l.value - j.val)
+```
+
+We also added concrete prime-five examples:
+
+```text
+zmodSquareWeightProfile_balanced_four_primeFive_example
+zmodSquareWeightProfile_representative_four_primeFive_example
+zmodSquareWeightProfile_balanced_ne_representative_four_primeFive_example
+```
+
+For `4 : ZMod 5`, Lean checks:
+
+```text
+balancedSquareWeight 4 = 1
+(4.val : Real)^2 = 16
+```
+
+so the profiles diverge.
+
+### Mathematical Reason
+
+The representative and balanced routes are not unrelated.  They coincide on the
+lower half of representatives.  They diverge precisely where the balanced
+profile replaces a large representative by its shorter signed representative.
+
+This is the correct formal behavior:
+
+```text
+j = 1 in ZMod 5:
+  representative weight = 1
+  balanced weight       = 1
+
+j = 4 in ZMod 5, i.e. -1:
+  representative weight = 16
+  balanced weight       = 1
+```
+
+Thus the balanced profile is not merely a renamed version of the representative
+profile.  It is a sign-invariant quotient of the representative data.
+
+### Source Check
+
+This directly sharpens the source audit.  IUT III Corollary 3.12 uses averages
+over `j in F_l`; IUT II assigns full `F_l` symmetry a role in Gaussian-monoid
+structure while distinguishing it from the `F_l^±` sign/symmetrizing role.
+Scholze-Stix Section 2.2 presses on whether the `j^2` scalars can survive
+coherent real-line identifications.
+
+The new theorem says where a sign-compatible interpretation can agree with a
+representative interpretation, and the `ZMod 5` example says where it cannot.
+
+### Relevance to the 3.12 Dispute
+
+The two formal corridors now have a precise comparison:
+
+```text
+lower half:
+  representative j.val^2 = balanced valMinAbs.natAbs^2
+
+upper half:
+  representative and balanced profiles may differ
+```
+
+So future source-facing work cannot simply switch between the two profiles.  It
+must show that the Corollary 3.12 `j^2` expression is insensitive to this
+difference, or else identify which profile is actually intended.

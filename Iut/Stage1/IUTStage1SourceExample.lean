@@ -1467,6 +1467,13 @@ theorem zmodSquareWeightProfile_balanced_square_neg_example
       IUTStage1ZModSquareWeightProfile.balancedSquareWeight (l := l) j :=
   IUTStage1ZModSquareWeightProfile.balancedSquareWeight_neg_eq j
 
+theorem zmodSquareWeightProfile_balanced_eq_representative_lower_half_example
+    {l : PrimeGeFive} (j : ZMod l.value) (hhalf : j.val ≤ l.value / 2) :
+    IUTStage1ZModSquareWeightProfile.balancedSquareWeight (l := l) j =
+      ((j.val : Real) ^ 2) :=
+  IUTStage1ZModSquareWeightProfile.balancedSquareWeight_eq_square_val_of_val_le_half
+    j hhalf
+
 theorem zmodSquareWeightProfile_balanced_square_preserving_refl_example
     {l : PrimeGeFive} :
     IUTStage1ZModSquareWeightProfile.CoordinateBalancedSquarePreserving
@@ -1591,6 +1598,35 @@ theorem zmodSquareWeightProfile_neg_not_coordinate_square_primeFive_example :
   have hone : ((1 : ZMod 5).val) = 1 := rfl
   rw [hneg, hone] at h1
   norm_num at h1
+
+theorem zmodSquareWeightProfile_balanced_four_primeFive_example :
+    IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+        (l := squareAuditPrimeFiveExample) (4 : ZMod 5) = 1 := by
+  unfold IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+  have hNat : ((4 : ZMod 5).valMinAbs.natAbs) = 1 := by
+    rfl
+  have hReal : (((4 : ZMod 5).valMinAbs.natAbs : Real)) = 1 := by
+    exact_mod_cast hNat
+  calc
+    (((4 : ZMod 5).valMinAbs.natAbs : Real) ^ 2) =
+        (1 : Real) ^ 2 := by
+      rw [hReal]
+    _ = 1 := by
+      norm_num
+
+theorem zmodSquareWeightProfile_representative_four_primeFive_example :
+    (((4 : ZMod 5).val : Real) ^ 2) = 16 := by
+  have hVal : ((4 : ZMod 5).val) = 4 := by
+    rfl
+  norm_num [hVal]
+
+theorem zmodSquareWeightProfile_balanced_ne_representative_four_primeFive_example :
+    IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+        (l := squareAuditPrimeFiveExample) (4 : ZMod 5) ≠
+      (((4 : ZMod 5).val : Real) ^ 2) := by
+  rw [zmodSquareWeightProfile_balanced_four_primeFive_example,
+    zmodSquareWeightProfile_representative_four_primeFive_example]
+  norm_num
 
 theorem zmodCuspLabelLogVolumeCompatibility_full_label_value_refl_example
     {l : PrimeGeFive}
