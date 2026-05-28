@@ -657,6 +657,7 @@ structure ProcessionContainerExperimentReport where
   iutIVTripodalBaseChangeLogDegreeAvailable : Bool
   iutIVElementarySumIdentitiesAvailable : Bool
   iutIVSmallPrimeRamificationErrorBoundAvailable : Bool
+  iutIVGLTwoCardinalityConstantsAvailable : Bool
 deriving Repr
 
 /--
@@ -699,7 +700,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     iutIVElementaryCoefficientEstimatesAvailable := true,
     iutIVTripodalBaseChangeLogDegreeAvailable := true,
     iutIVElementarySumIdentitiesAvailable := true,
-    iutIVSmallPrimeRamificationErrorBoundAvailable := true }
+    iutIVSmallPrimeRamificationErrorBoundAvailable := true,
+    iutIVGLTwoCardinalityConstantsAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -1161,6 +1163,22 @@ theorem iutIVTameRamificationLogDegreeError_le_twentyOne
     data.fLogDegreeSum <= data.ftpdLogDegreeSum + 21 :=
   data.fLogDegreeSum_le_ftpd_add_twentyOne
 
+theorem iutIVGLTwoCardinality_two :
+    iutIVGLTwoCardinalityExpression 2 = 2 * 3 :=
+  iutIVGLTwoCardinalityExpression_two
+
+theorem iutIVGLTwoCardinality_three :
+    iutIVGLTwoCardinalityExpression 3 = 3 * 2 ^ 4 :=
+  iutIVGLTwoCardinalityExpression_three
+
+theorem iutIVGLTwoCardinality_five :
+    iutIVGLTwoCardinalityExpression 5 = 5 * 2 ^ 5 * 3 :=
+  iutIVGLTwoCardinalityExpression_five
+
+theorem iutIVSmallPrimeGLTwoDegreeExpression_formula :
+    iutIVSmallPrimeGLTwoDegreeExpression = 2 ^ 11 * 3 ^ 3 * 5 :=
+  iutIVSmallPrimeGLTwoDegreeExpression_eq
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1416,6 +1434,7 @@ structure Corollary312DisputeFirstPassReport where
   iutIVTripodalBaseChangeLogDegreeAvailable : Bool
   iutIVElementarySumIdentitiesAvailable : Bool
   iutIVSmallPrimeRamificationErrorBoundAvailable : Bool
+  iutIVGLTwoCardinalityConstantsAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1472,6 +1491,7 @@ def corollary312DisputeFirstPassReport :
     iutIVTripodalBaseChangeLogDegreeAvailable := true,
     iutIVElementarySumIdentitiesAvailable := true,
     iutIVSmallPrimeRamificationErrorBoundAvailable := true,
+    iutIVGLTwoCardinalityConstantsAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1672,6 +1692,11 @@ theorem corollary312Report_iutIVElementarySumIdentitiesAvailable :
 
 theorem corollary312Report_iutIVSmallPrimeRamificationErrorBoundAvailable :
     corollary312DisputeFirstPassReport.iutIVSmallPrimeRamificationErrorBoundAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_iutIVGLTwoCardinalityConstantsAvailable :
+    corollary312DisputeFirstPassReport.iutIVGLTwoCardinalityConstantsAvailable =
       true :=
   rfl
 

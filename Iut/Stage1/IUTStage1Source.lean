@@ -2529,6 +2529,41 @@ theorem iutIVThetaPilot_average_sum_sq
   ring_nf at hraw ⊢
   nlinarith
 
+/-- IUT IV, Theorem 1.10, Step (i), formula (E3) as a numerical expression. -/
+def iutIVGLTwoCardinalityExpression (p : Nat) : Nat :=
+  p * (p + 1) * (p - 1) ^ 2
+
+/-- IUT IV, Theorem 1.10, Step (i), formula (E4), the case `p = 2`. -/
+theorem iutIVGLTwoCardinalityExpression_two :
+    iutIVGLTwoCardinalityExpression 2 = 2 * 3 := by
+  norm_num [iutIVGLTwoCardinalityExpression]
+
+/-- IUT IV, Theorem 1.10, Step (i), formula (E4), the case `p = 3`. -/
+theorem iutIVGLTwoCardinalityExpression_three :
+    iutIVGLTwoCardinalityExpression 3 = 3 * 2 ^ 4 := by
+  norm_num [iutIVGLTwoCardinalityExpression]
+
+/-- IUT IV, Theorem 1.10, Step (i), formula (E4), the case `p = 5`. -/
+theorem iutIVGLTwoCardinalityExpression_five :
+    iutIVGLTwoCardinalityExpression 5 = 5 * 2 ^ 5 * 3 := by
+  norm_num [iutIVGLTwoCardinalityExpression]
+
+/--
+The product of the Step (i) `p = 2,3,5` cardinality expressions and the quadratic
+factor from (E5).  This is the arithmetic core used before the coarser
+small-prime logarithmic bound in Step (ii).
+-/
+def iutIVSmallPrimeGLTwoDegreeExpression : Nat :=
+  iutIVGLTwoCardinalityExpression 2 *
+    iutIVGLTwoCardinalityExpression 3 *
+    iutIVGLTwoCardinalityExpression 5 *
+    2
+
+theorem iutIVSmallPrimeGLTwoDegreeExpression_eq :
+    iutIVSmallPrimeGLTwoDegreeExpression = 2 ^ 11 * 3 ^ 3 * 5 := by
+  norm_num [iutIVSmallPrimeGLTwoDegreeExpression,
+    iutIVGLTwoCardinalityExpression]
+
 /--
 IUT IV, Theorem 1.10, Step (ii), small-prime ramification error.
 
