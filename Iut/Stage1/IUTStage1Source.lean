@@ -16165,6 +16165,18 @@ theorem targetSigned_le_squareWeightedAverageLogVolume
   part.toThetaLabelwiseContainerAudit.targetSigned_le_squareWeightedAverageLogVolume
     profile audited
 
+theorem targetSigned_le_squareWeightedAverageLogVolume_via_fullLabel
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      (part.theta_source.compatible_average.squareWeightedAveragedLogVolume
+        profile audited).weightedAverageLogVolume :=
+  let compatible := part.theta_source.compatible_average
+  compatible.targetSigned_le_squareWeightedAveragedLogVolume_of_fullLabel
+    profile audited
+    (part.targetSigned_le_fullLabelLogVolume_fromCoordinate audited)
+
 theorem qSigned_le_squareWeightedAverageLogVolume
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)

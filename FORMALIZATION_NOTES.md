@@ -17872,3 +17872,60 @@ This is the right pressure point.  It prevents the formalization from silently
 collapsing the weighted Gaussian-monoid-style average into the uniform
 Theta-source average, while still showing exactly what remains to be proved if
 that comparison is justified by the IUT source machinery.
+
+## 130. Full-Label Bounds Directly Feed The Weighted Average
+
+### Lean Move
+
+We added a second version of the cusp-class weighted-average lower-bound
+theorem:
+
+```text
+FLZModCuspLabelThetaCuspClassContainerAudit
+  .targetSigned_le_squareWeightedAverageLogVolume_via_fullLabel
+```
+
+This proof uses the full-label theorem from Section 128/189 directly:
+
+```text
+targetSigned <= fullLabelLogVolume(fromCoordinate j)
+```
+
+and then applies the square-weighted average lower-bound theorem for compatible
+`F_l` cusp-label averages.
+
+### Mathematical Reason
+
+The earlier route passed through normalized label values.  This new theorem
+passes through the full-label interface, which is closer to the disputed
+`j`-indexed expression: each summand is a square weight times the full-label
+log-volume selected by `fromCoordinate j`.
+
+The two routes prove the same lower bound, but they expose different audit
+boundaries.  The full-label route is the one later structured-SHE or
+Hodge-theater data must justify if it claims to control the actual
+coordinate-indexed full-label comparison.
+
+### Source Check
+
+IUT III treats the final Corollary 3.12 corridor in terms of log-volume data
+indexed over `F_l`, with zero and nonzero/cusp-class behavior separated before
+being assembled into the averaged expression.  Scholze-Stix also phrase their
+criticism around whether the `j`-indexed pilot-object data are comparable in
+the required sense.  This theorem keeps that `j`-indexed full-label boundary in
+the formal API.
+
+### Relevance to the 3.12 Dispute
+
+The Lean corridor now has an explicit full-label chain:
+
+```text
+zero/cusp local estimates
+  -> targetSigned <= fullLabelLogVolume(fromCoordinate j)
+  -> targetSigned <= squareWeightedAverage
+  -> qSigned <= squareWeightedAverage
+```
+
+The unresolved part remains upstream: proving that the required full-label
+comparison is actually supplied by the structured Hodge-theater/SHE machinery,
+without replacing it by a weaker aggregate or hull/log-volume statement.
