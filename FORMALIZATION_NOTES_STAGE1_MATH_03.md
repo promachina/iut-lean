@@ -3286,3 +3286,103 @@ weighted full-label expression.  It also gives a precise target for the next
 mathematical step: either construct the missing fields from a stronger
 Mochizuki-style Hodge-theater erasure/transport statement, or show that the
 available route data cannot determine them.
+
+## 150. Coordinate Square-Preservation for the `j^2` Profile
+
+### Lean Move
+
+We refined the square-weight transport branch by naming the coordinate condition
+that makes the `j^2` profile transportable:
+
+```text
+IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+```
+
+For a coordinate equivalence
+
+```text
+coordinateEquiv : ZMod l.value ≃ ZMod l.value
+```
+
+this condition says:
+
+```text
+((coordinateEquiv j).val : Real)^2 = (j.val : Real)^2
+```
+
+for every `j : ZMod l.value`.
+
+The new checked lemmas are:
+
+```text
+coordinateSquarePreserving_refl
+squareWeight_preserved_of_coordinateSquarePreserving
+coordinateSquarePreserving_of_squareWeight_preserved
+squareWeight_preserved_iff_coordinateSquarePreserving
+weightTotal_preserved_of_squareWeight_preserved
+weightTotal_preserved_of_coordinateSquarePreserving
+```
+
+The example file now checks that:
+
+```text
+identity coordinates preserve the square profile;
+coordinate square-preservation gives pointwise square-weight preservation;
+pointwise square-weight preservation is equivalent to coordinate square-preservation;
+coordinate square-preservation also gives total-weight preservation.
+```
+
+### Mathematical Reason
+
+This milestone makes the square-weight transport obligation less opaque.  Earlier
+we had a field:
+
+```text
+targetProfile.weight (coordinateEquiv j) = sourceProfile.weight j
+```
+
+but the formalization did not yet say what this means for the canonical
+`j.val^2` profile.  Since every `IUTStage1ZModSquareWeightProfile` is tied to
+the real square of the chosen `ZMod l` representative, Lean can now prove that
+pointwise weight preservation is exactly the same as preservation of those real
+square coordinates.
+
+This is a useful trap check: arbitrary relabeling of `F_l` is not automatically
+legal in the square-weight branch.  A coordinate equivalence only transports the
+`j^2` data if it preserves the real-valued square profile used by the current
+Stage 1 model.
+
+### Source Check
+
+IUT II describes the relevant diagonal as weighted by the vector of `j^2`
+values and connects this to weighted-volume computation.  IUT III then uses
+averages over `j in F_l` in the Corollary 3.12 corridor.  The Scholze-Stix
+critique focuses on whether the comparison step still contains the nontrivial
+`j`/`j^2` information after passage to the simplified common comparison object.
+
+The April 2026 formalization report isolates the final `3.11.5 => 3.12` stage
+as the simultaneous comparison problem.  This milestone keeps that comparison
+honest by requiring a concrete coordinate-square preservation statement before
+the square-weight branch can be transported.
+
+### Relevance to the 3.12 Dispute
+
+The current square-weight branch now has the following dependency:
+
+```text
+coordinate-square preservation
+  <=> pointwise j^2 square-weight preservation
+  => total square-weight preservation
+```
+
+Thus the formalization has reduced two fields of
+`IUTStage1StructuredSHESquareWeightTransportObligations` to a sharper question:
+does the Hodge-theater/SHE route supply a coordinate equivalence that preserves
+the relevant real square profile?
+
+It still does not solve the full Corollary 3.12 passage, because the
+full-label log-volume preservation field remains separate.  But it narrows the
+weight side of the dispute: the next serious gap is no longer "preserve weights"
+in the abstract, but "produce or justify a coordinate equivalence preserving the
+specific `j.val^2` profile while also preserving the full-label log-volume
+branch."

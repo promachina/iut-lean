@@ -924,6 +924,48 @@ theorem zmodSquareWeightProfile_toWeighted_const_le_average_example
     c <= (profile.toWeighted data).weightedAverageLogVolume :=
   profile.toWeighted_const_le_weightedAverage_of_forall_le data hpointwise
 
+theorem zmodSquareWeightProfile_coordinateSquarePreserving_refl_example
+    {l : PrimeGeFive} :
+    IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+      (l := l) (Equiv.refl (ZMod l.value)) :=
+  IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_refl
+
+theorem zmodSquareWeightProfile_squareWeight_preserved_of_coord_example
+    {l : PrimeGeFive}
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
+    (hcoord :
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) coordinateEquiv)
+    (j : ZMod l.value) :
+    targetProfile.weight (coordinateEquiv j) =
+      sourceProfile.weight j :=
+  IUTStage1ZModSquareWeightProfile.squareWeight_preserved_of_coordinateSquarePreserving
+    sourceProfile targetProfile hcoord j
+
+theorem zmodSquareWeightProfile_coord_preserving_iff_weight_example
+    {l : PrimeGeFive}
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value) :
+    (∀ j : ZMod l.value,
+      targetProfile.weight (coordinateEquiv j) =
+        sourceProfile.weight j) ↔
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) coordinateEquiv :=
+  IUTStage1ZModSquareWeightProfile.squareWeight_preserved_iff_coordinateSquarePreserving
+    sourceProfile targetProfile coordinateEquiv
+
+theorem zmodSquareWeightProfile_weightTotal_preserved_of_coord_example
+    {l : PrimeGeFive}
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
+    (hcoord :
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) coordinateEquiv) :
+    targetProfile.weightTotal = sourceProfile.weightTotal :=
+  IUTStage1ZModSquareWeightProfile.weightTotal_preserved_of_coordinateSquarePreserving
+    sourceProfile targetProfile hcoord
+
 theorem zmodSquareWeightedFullLabelTransportAudit_summand_example
     {l : PrimeGeFive}
     (audit : IUTStage1ZModSquareWeightedFullLabelTransportAudit l)

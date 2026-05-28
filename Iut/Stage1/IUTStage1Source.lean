@@ -1905,6 +1905,88 @@ theorem toWeighted_weightedAverage_eq_square_fullLabelLogVolume_sum
     exact profile.toWeighted_weightedSummand_eq_square_fullLabelLogVolume
       data compat hcompat j)
 
+/--
+Coordinate-level condition for transporting the square-weight profile.
+
+The profile is not an anonymous weight function: it is tied to the chosen
+`ZMod l.value` coordinate representative by `j.val ^ 2`.  Thus a coordinate
+equivalence may be used in the square-weight branch only after one records that
+it preserves these real square values.
+-/
+def CoordinateSquarePreserving
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value) : Prop :=
+  ∀ j : ZMod l.value,
+    (((coordinateEquiv j).val : Real) ^ 2) = ((j.val : Real) ^ 2)
+
+theorem coordinateSquarePreserving_refl :
+    CoordinateSquarePreserving (l := l) (Equiv.refl (ZMod l.value)) := by
+  intro j
+  rfl
+
+theorem squareWeight_preserved_of_coordinateSquarePreserving
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
+    (hcoord : CoordinateSquarePreserving (l := l) coordinateEquiv) :
+    ∀ j : ZMod l.value,
+      targetProfile.weight (coordinateEquiv j) =
+        sourceProfile.weight j := by
+  intro j
+  rw [targetProfile.weight_eq_square_val, sourceProfile.weight_eq_square_val]
+  exact hcoord j
+
+theorem coordinateSquarePreserving_of_squareWeight_preserved
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
+    (hweight :
+      ∀ j : ZMod l.value,
+        targetProfile.weight (coordinateEquiv j) =
+          sourceProfile.weight j) :
+    CoordinateSquarePreserving (l := l) coordinateEquiv := by
+  intro j
+  have h := hweight j
+  rw [targetProfile.weight_eq_square_val, sourceProfile.weight_eq_square_val] at h
+  exact h
+
+theorem squareWeight_preserved_iff_coordinateSquarePreserving
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value) :
+    (∀ j : ZMod l.value,
+      targetProfile.weight (coordinateEquiv j) =
+        sourceProfile.weight j) ↔
+      CoordinateSquarePreserving (l := l) coordinateEquiv := by
+  constructor
+  · exact coordinateSquarePreserving_of_squareWeight_preserved
+      sourceProfile targetProfile
+  · exact squareWeight_preserved_of_coordinateSquarePreserving
+      sourceProfile targetProfile
+
+theorem weightTotal_preserved_of_squareWeight_preserved
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
+    (hweight :
+      ∀ j : ZMod l.value,
+        targetProfile.weight (coordinateEquiv j) =
+          sourceProfile.weight j) :
+    targetProfile.weightTotal = sourceProfile.weightTotal := by
+  rw [targetProfile.weightTotal_eq_sum, sourceProfile.weightTotal_eq_sum]
+  have hsum :
+      Finset.univ.sum sourceProfile.weight =
+        Finset.univ.sum targetProfile.weight :=
+    Fintype.sum_equiv coordinateEquiv
+      sourceProfile.weight targetProfile.weight
+      (fun j => (hweight j).symm)
+  exact hsum.symm
+
+theorem weightTotal_preserved_of_coordinateSquarePreserving
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
+    (hcoord : CoordinateSquarePreserving (l := l) coordinateEquiv) :
+    targetProfile.weightTotal = sourceProfile.weightTotal :=
+  weightTotal_preserved_of_squareWeight_preserved
+    sourceProfile targetProfile coordinateEquiv
+    (squareWeight_preserved_of_coordinateSquarePreserving
+      sourceProfile targetProfile hcoord)
+
 end IUTStage1ZModSquareWeightProfile
 
 /--
