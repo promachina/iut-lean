@@ -893,6 +893,49 @@ structure IUTStage1ZModSquareWeightProfile
   weightTotal_eq_sum : weightTotal = Finset.univ.sum weight
 
 /--
+Classification of square-comparison evidence at the Corollary 3.12 boundary.
+
+The constructors intentionally separate facts that are easy to conflate:
+pointwise representative `j.val^2` preservation, aggregate reindexing of the
+same representative summands, balanced sign-compatible preservation, and a
+future holomorphic-hull/log-volume comparison.
+-/
+inductive IUTStage1SquareComparisonLevel where
+  | pointwiseRepresentative
+  | aggregateRepresentative
+  | balancedSignCompatible
+  | hullLogVolume
+deriving DecidableEq, Repr
+
+namespace IUTStage1SquareComparisonLevel
+
+theorem aggregate_ne_pointwise :
+    aggregateRepresentative ≠ pointwiseRepresentative := by
+  decide
+
+theorem balanced_ne_pointwise :
+    balancedSignCompatible ≠ pointwiseRepresentative := by
+  decide
+
+theorem hull_ne_pointwise :
+    hullLogVolume ≠ pointwiseRepresentative := by
+  decide
+
+theorem pointwise_ne_aggregate :
+    pointwiseRepresentative ≠ aggregateRepresentative := by
+  decide
+
+theorem pointwise_ne_balanced :
+    pointwiseRepresentative ≠ balancedSignCompatible := by
+  decide
+
+theorem pointwise_ne_hull :
+    pointwiseRepresentative ≠ hullLogVolume := by
+  decide
+
+end IUTStage1SquareComparisonLevel
+
+/--
 Evidence that a finite label type is being used as the Stage 1 model of the
 `F_l` labels.
 
@@ -1870,6 +1913,28 @@ end IUTStage1LabelAveragedProcessionLogVolume
 namespace IUTStage1ZModSquareWeightProfile
 
 variable {l : PrimeGeFive}
+
+def representativePointwiseComparisonLevel :
+    IUTStage1SquareComparisonLevel :=
+  IUTStage1SquareComparisonLevel.pointwiseRepresentative
+
+def representativeAggregateComparisonLevel :
+    IUTStage1SquareComparisonLevel :=
+  IUTStage1SquareComparisonLevel.aggregateRepresentative
+
+def balancedSignCompatibleComparisonLevel :
+    IUTStage1SquareComparisonLevel :=
+  IUTStage1SquareComparisonLevel.balancedSignCompatible
+
+theorem representativeAggregateComparisonLevel_ne_pointwise :
+    representativeAggregateComparisonLevel ≠
+      representativePointwiseComparisonLevel :=
+  IUTStage1SquareComparisonLevel.aggregate_ne_pointwise
+
+theorem balancedSignCompatibleComparisonLevel_ne_pointwise :
+    balancedSignCompatibleComparisonLevel ≠
+      representativePointwiseComparisonLevel :=
+  IUTStage1SquareComparisonLevel.balanced_ne_pointwise
 
 def fromSquareWeights
     (l : PrimeGeFive)
@@ -4123,6 +4188,17 @@ structure IUTStage1BalancedSquareFullLabelTransport
 namespace IUTStage1BalancedSquareFullLabelTransport
 
 variable {l : PrimeGeFive}
+
+def comparisonLevel
+    (_transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    IUTStage1SquareComparisonLevel :=
+  IUTStage1SquareComparisonLevel.balancedSignCompatible
+
+theorem comparisonLevel_ne_pointwiseRepresentative
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    transport.comparisonLevel ≠
+      IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
+  IUTStage1SquareComparisonLevel.balanced_ne_pointwise
 
 def negSelf
     (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
@@ -10025,6 +10101,29 @@ variable {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
 variable {l : PrimeGeFive}
 
 open IUTStage1ZModSquareWeightProfile
+
+def comparisonLevel
+    (_obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l) :
+    IUTStage1SquareComparisonLevel :=
+  IUTStage1SquareComparisonLevel.pointwiseRepresentative
+
+theorem comparisonLevel_eq_pointwiseRepresentative
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l) :
+    obligations.comparisonLevel =
+      IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
+  rfl
+
+theorem comparisonLevel_ne_balancedSignCompatible
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l) :
+    obligations.comparisonLevel ≠
+      IUTStage1SquareComparisonLevel.balancedSignCompatible :=
+  IUTStage1SquareComparisonLevel.pointwise_ne_balanced
 
 theorem fullLabelLogVolume_preserved
     (obligations :

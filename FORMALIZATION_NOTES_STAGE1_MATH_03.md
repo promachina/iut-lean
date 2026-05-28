@@ -5794,3 +5794,50 @@ Future high-level proof routes cannot satisfy the representative-square SHE
 interface by presenting the balanced negation transport.  If balanced data are
 the intended IUT invariant, a separate bridge theorem must explain why this is
 the correct Corollary 3.12 target.
+
+## 183. Square Comparison Levels Are Explicit
+
+### Lean Move
+
+We introduced a small source-facing classification:
+
+```text
+IUTStage1SquareComparisonLevel
+  .pointwiseRepresentative
+  .aggregateRepresentative
+  .balancedSignCompatible
+  .hullLogVolume
+```
+
+The current representative square SHE obligations are tagged as
+`pointwiseRepresentative`, while balanced transports are tagged as
+`balancedSignCompatible`.  Lean also records that aggregate representative and
+balanced sign-compatible levels are not the same as the pointwise
+representative level.
+
+### Mathematical Reason
+
+The previous milestones showed several non-implications:
+
+```text
+aggregate total preservation does not imply pointwise preservation
+balanced sign-compatible preservation does not imply representative preservation
+```
+
+The new classification makes these distinctions available at the API level.
+This is not additional mathematical content; it is a guardrail that forces later
+formal steps to state which comparison level they are using.
+
+### Source Check
+
+IUT III contains several comparison idioms: pointwise `j^2` expressions,
+averages/procession-normalized log-volumes, sign-label compatibility, and
+holomorphic-hull/log-volume estimates.  Scholze-Stix's critique also separates
+averaging from the global consistency of inserting the `j^2` factors.  A Lean
+formalization needs these levels distinguished explicitly.
+
+### Relevance to the 3.12 Dispute
+
+Future proofs can no longer pass around an untyped "square comparison" and
+silently switch its meaning.  The next task is to audit the existing Theorem
+3.11-to-Corollary 3.12 route and assign each step one of these levels.

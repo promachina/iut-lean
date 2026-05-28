@@ -1223,6 +1223,18 @@ theorem zmodSquareWeightProfile_balanced_preserving_not_representative_example
               j :=
   exists_balancedSquarePreserving_not_representativeSummand_preserved
 
+open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_aggregate_level_ne_pointwise_example :
+    representativeAggregateComparisonLevel ≠
+      representativePointwiseComparisonLevel :=
+  representativeAggregateComparisonLevel_ne_pointwise
+
+open IUTStage1ZModSquareWeightProfile in
+theorem zmodSquareWeightProfile_balanced_level_ne_pointwise_example :
+    balancedSignCompatibleComparisonLevel ≠
+      representativePointwiseComparisonLevel :=
+  balancedSignCompatibleComparisonLevel_ne_pointwise
+
 theorem zmodSquareWeightProfile_squareWeight_preserved_of_coord_example
     {l : PrimeGeFive}
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
@@ -1455,6 +1467,28 @@ theorem structuredSHEFactoredSquareFullLabelObligations_bridge_example
     obligations.toStructuredSHESquareWeightTransportAudit.preservationAudit.bridge =
       bundle.hodgeTheaterDescentBridgeData :=
   obligations.bridge_eq_structuredSHE
+
+theorem structuredSHEFactoredSquareFullLabelObligations_level_example
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {l : PrimeGeFive}
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations package bundle l) :
+    obligations.comparisonLevel =
+      IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
+  obligations.comparisonLevel_eq_pointwiseRepresentative
+
+theorem structuredSHEFactoredSquareFullLabelObligations_level_ne_balanced_example
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {l : PrimeGeFive}
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations package bundle l) :
+    obligations.comparisonLevel ≠
+      IUTStage1SquareComparisonLevel.balancedSignCompatible :=
+  obligations.comparisonLevel_ne_balancedSignCompatible
 
 theorem structuredSHEFactoredSquareFullLabelObligations_rep_summand_example
     {source target : Copy} {index : Type u}
@@ -2030,6 +2064,20 @@ theorem balancedSquareFullLabelTransport_average_example
     transport.targetTransportedBalancedAverage =
       transport.sourceBalancedAverage :=
   transport.targetTransportedBalancedAverage_eq_sourceBalancedAverage
+
+theorem balancedSquareFullLabelTransport_level_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    transport.comparisonLevel =
+      IUTStage1SquareComparisonLevel.balancedSignCompatible :=
+  rfl
+
+theorem balancedSquareFullLabelTransport_level_ne_pointwise_example
+    {l : PrimeGeFive}
+    (transport : IUTStage1BalancedSquareFullLabelTransport l) :
+    transport.comparisonLevel ≠
+      IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
+  transport.comparisonLevel_ne_pointwiseRepresentative
 
 theorem balancedSquareFullLabelTransport_neg_self_representative_gap_example
     {l : PrimeGeFive}
