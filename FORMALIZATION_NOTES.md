@@ -18240,3 +18240,48 @@ The formal API can now ask whether the disputed weighted-theta datum supplies
 the target-average inequality before any q-side transport is used.  This gives
 us a cleaner audit point when later replacing the current explicit comparison
 field by a theorem derived from more source-level IUT objects.
+
+## 137. The Target Weighted Route Reaches The Final Theta Bound
+
+### Lean Move
+
+We added:
+
+```text
+targetSigned_le_thetaSigned_via_squareWeightedAverage
+targetSigned_le_thetaSigned_of_weightedThetaComparisonData
+```
+
+again in both the labelwise and cusp-class container audit namespaces, with
+example-facing theorems.
+
+### Mathematical Reason
+
+The target route now has the same visible three-step shape as the q route:
+
+```text
+targetSigned <= squareWeightedAverage
+squareWeightedAverage <= thetaSourceAverage
+thetaSourceAverage <= thetaSigned
+```
+
+This is intentionally not identified with the pre-existing `(Ind3)` upper
+inequality.  It records the alternative route that passes through the supplied
+weighted-theta comparison before using the independent Theta-source upper
+bound.
+
+### Source Check
+
+IUT III describes Corollary 3.12 as a log-volume estimate whose final form uses
+averaged theta/Gaussian data and the holomorphic-hull bound.  Scholze-Stix's
+discussion of the critical step asks precisely whether the averaged data can be
+compared to the final real line in a non-collapsing way.  Naming the final target
+route prevents the Lean development from silently replacing this route by the
+raw `(Ind3)` target bound.
+
+### Relevance to the 3.12 Dispute
+
+This gives us a clean test surface: if later IUT source formalization supplies a
+valid weighted-to-Theta comparison, then Lean can derive the target final bound
+through the disputed corridor; if it cannot, the remaining missing point is
+localized before the last `thetaSourceAverage <= thetaSigned` step.
