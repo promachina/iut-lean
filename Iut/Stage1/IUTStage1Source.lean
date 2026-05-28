@@ -13469,6 +13469,39 @@ namespace FLZModCuspLabelThetaDirectLocalPacketDirectCapsuleRouteAudit
 variable {audit : endpoint.LogVolumeChartAudit}
 variable {l : PrimeGeFive}
 
+def toDirectIdentifiedLocalPacketRouteAudit
+    (part :
+      audit.FLZModCuspLabelThetaDirectLocalPacketDirectCapsuleRouteAudit l) :
+    audit.FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit l :=
+  { theta_source := part.direct_packet.theta_source,
+    ind12_equality_part := part.direct_packet.ind12_equality_part,
+    ind3_upper_part := part.direct_packet.ind3_upper_part,
+    theta_images_eq_endpoint := part.direct_packet.theta_images_eq_endpoint,
+    targetCapsuleEstimates := part.targetCapsuleEstimates,
+    directNormalization := part.direct_packet.zeroDirectNormalization,
+    cuspClassLogVolume_eq_localObjectFinite := by
+      intro audited label
+      let estimate := part.direct_packet.cuspClassObjectEstimate audited label
+      calc
+        (part.direct_packet.theta_source.compatible_average.cuspLogVolume
+          audited).cuspClassLogVolume label =
+            estimate.localObject.finiteLogVolume :=
+          estimate.localLogVolume_eq_object
+        _ =
+            audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume := by
+          rw [part.direct_packet.cuspClassObject_eq_packetLocalObject audited label],
+    zeroLogVolume_eq_localObjectFinite := by
+      intro audited
+      let estimate := part.direct_packet.zeroObjectEstimate audited
+      calc
+        (part.direct_packet.theta_source.compatible_average.cuspLogVolume
+          audited).zeroLogVolume =
+            estimate.localObject.finiteLogVolume :=
+          estimate.localLogVolume_eq_object
+        _ =
+            audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume := by
+          rw [part.direct_packet.zeroObject_eq_packetLocalObject audited] }
+
 def toDirectCapsuleCuspClassAudit
     (part :
       audit.FLZModCuspLabelThetaDirectLocalPacketDirectCapsuleRouteAudit l) :
@@ -13499,6 +13532,15 @@ theorem cuspBoundSource_eq_directCapsule
     part.toFullClassifiedRouteSummary.cuspBoundSource =
       IUTStage1CuspClassBoundSource.directCapsuleEstimates :=
   rfl
+
+theorem targetSigned_le_thetaSourceAverage
+    (part :
+      audit.FLZModCuspLabelThetaDirectLocalPacketDirectCapsuleRouteAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.direct_packet.theta_source.thetaSourceAverage audited :=
+  let identifiedRoute := part.toDirectIdentifiedLocalPacketRouteAudit
+  identifiedRoute.targetSigned_le_thetaSourceAverage audited
 
 end FLZModCuspLabelThetaDirectLocalPacketDirectCapsuleRouteAudit
 

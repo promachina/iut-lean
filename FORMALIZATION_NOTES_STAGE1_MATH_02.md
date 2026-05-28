@@ -7841,3 +7841,79 @@ placeAudited_logVolume_fl_zmod_identified_target_bound_example
 The next serious mathematical task is still the same: construct or classify the
 cusp/zero-to-local-object identifications.  The current endpoint tells us exactly
 where such a construction would feed into the global target-average inequality.
+
+## 100. Local-Object Identifications from Direct Local Packet Estimates
+
+### Goal
+
+We constructed the direct identified local-packet route from already-existing
+direct local packet data.
+
+### Lean Move
+
+Inside:
+
+```text
+FLZModCuspLabelThetaDirectLocalPacketDirectCapsuleRouteAudit
+```
+
+we added:
+
+```text
+toDirectIdentifiedLocalPacketRouteAudit
+targetSigned_le_thetaSourceAverage
+```
+
+The constructor uses:
+
+```text
+cuspClassObjectEstimate
+zeroObjectEstimate
+cuspClassObject_eq_packetLocalObject
+zeroObject_eq_packetLocalObject
+zeroDirectNormalization
+targetCapsuleEstimates
+```
+
+to build the direct identified route.  For the cusp branch it proves:
+
+```text
+cuspClassLogVolume(label)
+  = finite log-volume of the local object carried by the cusp estimate
+  = finite log-volume of the packet local object
+```
+
+The zero branch is identical, using the zero estimate.
+
+### Mathematical Point
+
+This removes the need to assume the cusp/zero-to-local-object equality when we
+have a local-object estimate whose local object is explicitly the packet local
+object.  The remaining datum is now concrete: for each cusp-class and for zero,
+produce a local-object estimate and show that its local object is the packet
+local object.
+
+### Trap Avoided
+
+We did not use packet normalization to manufacture the local-object equality.
+The local-object equality comes from the estimate's own
+`localLogVolume_eq_object` field and the explicit proof that the estimate's
+object is the packet object.  Packet normalization enters only after this
+through the already named direct identified route.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_direct_local_packet_to_identified_example
+placeAudited_logVolume_fl_zmod_direct_local_packet_target_bound_example
+```
+
+### Remaining Gap
+
+The remaining construction target is the local-object estimate itself.  We need
+to model, from the original IUT local/cusp definitions, why each cusp-class and
+zero label supplies a local-object estimate attached to the same packet local
+object.  This is now the lowest-level real-line identification in the current
+route.
