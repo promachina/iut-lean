@@ -4028,3 +4028,65 @@ This is not a negative result about IUT.  It is an audit condition.  If
 Mochizuki's Hodge-theoretic route supplies the real representative-square
 transport by some additional mechanism, the Lean development must encode that
 mechanism explicitly rather than deriving it from sign/modular compatibility.
+
+## 158. Concrete Prime-Five Witness for the Square-Weight Trap
+
+### Lean Move
+
+The example file now contains a concrete prime-five regression:
+
+```text
+squareAuditPrimeFiveExample
+zmodSquareWeightProfile_neg_not_coordinate_square_primeFive_example
+```
+
+Lean proves:
+
+```text
+not CoordinateSquarePreserving (Equiv.neg (ZMod 5))
+```
+
+for the real representative-square predicate.  The proof tests the coordinate
+`1 : ZMod 5`.  Under negation its representative is `4`, so the real squares are:
+
+```text
+4^2 = 16
+1^2 = 1
+```
+
+and the required equality is impossible.
+
+### Mathematical Reason
+
+This is the concrete witness behind Milestone 157.  The same negation map
+preserves:
+
+```text
+full-label sign quotient
+modular square class
+```
+
+but it does not preserve the representative-valued real square profile used in
+our current weighted-average audit.  This is not merely a typing distinction:
+Lean computes an explicit failing coordinate in the first admissible prime case.
+
+### Source Check
+
+The source documents make the distinction worth preserving.  IUT II distinguishes
+the `F_l^±` symmetry from the full `F_l` symmetry involved in Gaussian-monoid
+structure.  IUT III Corollary 3.12 works with averages over `j in F_l`, while
+Scholze-Stix Section 2.2 argues that the `j^2` real scaling is exactly where
+consistent real-line identifications become problematic.
+
+### Relevance to the 3.12 Dispute
+
+This example gives the formalization a small executable warning sign:
+
+```text
+do not replace real representative-square preservation
+by sign/modular-square preservation
+```
+
+Any later construction that claims to supply the Corollary 3.12 weighted
+transport must pass the stronger `CoordinateSquarePreserving` interface, not
+just the sign-quotient or modular-square interfaces.

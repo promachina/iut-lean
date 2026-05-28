@@ -1455,6 +1455,24 @@ theorem zmodSquareWeightProfile_modular_square_neg_example
       (l := l) (Equiv.neg (ZMod l.value)) :=
   IUTStage1ZModSquareWeightProfile.coordinateModularSquarePreserving_neg
 
+def squareAuditPrimeFiveExample : PrimeGeFive where
+  value := 5
+  prime := by norm_num
+  ge_five := by norm_num
+
+theorem zmodSquareWeightProfile_neg_not_coordinate_square_primeFive_example :
+    ¬ IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+      (l := squareAuditPrimeFiveExample)
+      (Equiv.neg (ZMod squareAuditPrimeFiveExample.value)) := by
+  intro h
+  have h1 := h (1 : ZMod squareAuditPrimeFiveExample.value)
+  change (((-(1 : ZMod 5)).val : Real) ^ 2) =
+    (((1 : ZMod 5).val : Real) ^ 2) at h1
+  have hneg : ((-(1 : ZMod 5)).val) = 4 := rfl
+  have hone : ((1 : ZMod 5).val) = 1 := rfl
+  rw [hneg, hone] at h1
+  norm_num at h1
+
 theorem zmodCuspLabelLogVolumeCompatibility_full_label_value_refl_example
     {l : PrimeGeFive}
     (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
