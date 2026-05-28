@@ -1782,6 +1782,27 @@ theorem toCapsuleAction_normalizedLogVolume
       capsuleFamily.normalizedLogVolume :=
   action.toCapsuleAction.transformedFamily_normalizedLogVolume
 
+def transformedContainerEstimate
+    {targetSigned : Real}
+    (action : IUTStage1TensorDirectSummandFamilyAction family)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned capsuleFamily) :
+    IUTStage1TypedCapsuleFamilyContainerEstimate
+      targetSigned action.toCapsuleAction.transformedFamily :=
+  action.toCapsuleAction.transformedContainerEstimate estimate
+
+theorem transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    {targetSigned : Real}
+    (action : IUTStage1TensorDirectSummandFamilyAction family)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned capsuleFamily) :
+    targetSigned <= action.toCapsuleAction.transformedFamily.normalizedLogVolume :=
+  let capsuleAction := action.toCapsuleAction
+  capsuleAction.transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    estimate
+
 end IUTStage1TensorDirectSummandFamilyAction
 
 /--
@@ -1843,6 +1864,18 @@ theorem capsuleTotalLogVolume_eq
       capsuleFamily.totalLogVolume :=
   data.toDirectSummandAction.toCapsuleAction_totalLogVolume
 
+theorem transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    {targetSigned : Real}
+    (data : IUTStage1NonarchimedeanIsmDirectSummandAction family)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned capsuleFamily) :
+    targetSigned <=
+      data.toDirectSummandAction.toCapsuleAction.transformedFamily.normalizedLogVolume :=
+  let action := data.toDirectSummandAction
+  action.transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    estimate
+
 end IUTStage1NonarchimedeanIsmDirectSummandAction
 
 namespace IUTStage1ArchimedeanOrderTwoDirectSummandAction
@@ -1868,6 +1901,18 @@ theorem capsuleTotalLogVolume_eq
     data.toDirectSummandAction.toCapsuleAction.transformedFamily.totalLogVolume =
       capsuleFamily.totalLogVolume :=
   data.toDirectSummandAction.toCapsuleAction_totalLogVolume
+
+theorem transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    {targetSigned : Real}
+    (data : IUTStage1ArchimedeanOrderTwoDirectSummandAction family)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned capsuleFamily) :
+    targetSigned <=
+      data.toDirectSummandAction.toCapsuleAction.transformedFamily.normalizedLogVolume :=
+  let action := data.toDirectSummandAction
+  action.transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    estimate
 
 end IUTStage1ArchimedeanOrderTwoDirectSummandAction
 

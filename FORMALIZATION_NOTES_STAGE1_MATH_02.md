@@ -5057,3 +5057,81 @@ typedCapsuleFamilyAction_transformed_container_bound_example
 The next refinement should lift this preservation from raw capsule-family
 actions to the direct-summand packet action data already used in the
 place-audited `(Ind2)` model.
+
+## 64. Direct-Summand Action Preservation of Capsule Estimates
+
+### Goal
+
+We lifted capsule-entry container estimate preservation from raw capsule
+actions to the direct-summand action layer.
+
+### Lean Move
+
+For:
+
+```text
+IUTStage1TensorDirectSummandFamilyAction
+```
+
+Lean now constructs:
+
+```text
+transformedContainerEstimate
+```
+
+by passing through the existing:
+
+```text
+toCapsuleAction
+```
+
+Lean also proves:
+
+```text
+transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+```
+
+The two typed source surfaces for `(Ind2)` inherit this theorem:
+
+```text
+IUTStage1NonarchimedeanIsmDirectSummandAction
+IUTStage1ArchimedeanOrderTwoDirectSummandAction
+```
+
+### Mathematical Point
+
+This moves the preservation statement from the raw capsule-family level to the
+local tensor/direct-summand action layer:
+
+```text
+direct-summand action
+  -> induced capsule action
+  -> transported capsule-entry container estimates
+  -> transformed normalized capsule-family bound
+```
+
+This is closer to the formal `(Ind2)` model, where the source action is a local
+tensor/direct-summand action and capsule preservation is a consequence.
+
+### Trap Avoided
+
+The direct-summand theorem does not introduce a new preservation assumption. It
+uses the existing induced capsule action and its already checked log-volume and
+local-object preservation.
+
+### Toy Check
+
+The examples now check:
+
+```text
+directSummandFamilyAction_transformed_container_estimate_example
+directSummandFamilyAction_transformed_container_bound_example
+nonarchimedeanDirectSummandAction_transformed_container_bound_example
+archimedeanDirectSummandAction_transformed_container_bound_example
+```
+
+### Remaining Gap
+
+The next refinement should connect these direct-summand action preservation
+facts to `IUTStage1PlaceAuditedDirectSummandPacketChoice` and its `(Ind2)` step
+records.

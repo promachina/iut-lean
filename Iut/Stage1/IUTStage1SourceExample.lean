@@ -505,6 +505,59 @@ theorem typedCapsuleFamilyAction_transformed_container_bound_example
   action.transformedContainerEstimate_targetSigned_le_normalizedLogVolume
     estimate
 
+def directSummandFamilyAction_transformed_container_estimate_example
+    {kind : IUTStage1PlaceKind} {targetSigned : Real}
+    {capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    {family : IUTStage1TensorDirectSummandFamily capsuleFamily}
+    (action : IUTStage1TensorDirectSummandFamilyAction family)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned capsuleFamily) :
+    IUTStage1TypedCapsuleFamilyContainerEstimate
+      targetSigned action.toCapsuleAction.transformedFamily :=
+  action.transformedContainerEstimate estimate
+
+theorem directSummandFamilyAction_transformed_container_bound_example
+    {kind : IUTStage1PlaceKind} {targetSigned : Real}
+    {capsuleFamily : IUTStage1TypedCapsuleFamilyLogVolume kind}
+    {family : IUTStage1TensorDirectSummandFamily capsuleFamily}
+    (action : IUTStage1TensorDirectSummandFamilyAction family)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned capsuleFamily) :
+    targetSigned <= action.toCapsuleAction.transformedFamily.normalizedLogVolume :=
+  action.transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    estimate
+
+theorem nonarchimedeanDirectSummandAction_transformed_container_bound_example
+    {targetSigned : Real}
+    {capsuleFamily :
+      IUTStage1TypedCapsuleFamilyLogVolume
+        IUTStage1PlaceKind.nonarchimedean}
+    {family : IUTStage1TensorDirectSummandFamily capsuleFamily}
+    (action : IUTStage1NonarchimedeanIsmDirectSummandAction family)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned capsuleFamily) :
+    targetSigned <=
+      action.toDirectSummandAction.toCapsuleAction.transformedFamily.normalizedLogVolume :=
+  action.transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    estimate
+
+theorem archimedeanDirectSummandAction_transformed_container_bound_example
+    {targetSigned : Real}
+    {capsuleFamily :
+      IUTStage1TypedCapsuleFamilyLogVolume IUTStage1PlaceKind.archimedean}
+    {family : IUTStage1TensorDirectSummandFamily capsuleFamily}
+    (action : IUTStage1ArchimedeanOrderTwoDirectSummandAction family)
+    (estimate :
+      IUTStage1TypedCapsuleFamilyContainerEstimate
+        targetSigned capsuleFamily) :
+    targetSigned <=
+      action.toDirectSummandAction.toCapsuleAction.transformedFamily.normalizedLogVolume :=
+  action.transformedContainerEstimate_targetSigned_le_normalizedLogVolume
+    estimate
+
 def labelAveragedProcessionLogVolume_average_example
     {label : Type u} [Fintype label]
     (data : IUTStage1LabelAveragedProcessionLogVolume label) :
