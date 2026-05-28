@@ -6259,6 +6259,26 @@ theorem placeAudited_logVolume_fl_zmod_labelwise_weighted_theta_data_q_theta_exa
     profile audited comparison
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_labelwise_weighted_theta_data_q_average_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (comparison :
+      FLZModCuspLabelThetaLabelwiseContainerAudit.WeightedThetaComparisonData
+        part profile audited) :
+    package.preLedger.qSigned <= part.theta_source.thetaSourceAverage audited :=
+  part.qSigned_le_thetaSourceAverage_of_weightedThetaComparisonData
+    profile audited comparison
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 theorem placeAudited_logVolume_fl_zmod_labelwise_weighted_theta_data_level_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
@@ -6496,6 +6516,26 @@ theorem placeAudited_logVolume_fl_zmod_cusp_weighted_theta_data_q_theta_example
         part profile audited) :
     package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   part.qSigned_le_thetaSigned_of_weightedThetaComparisonData
+    profile audited comparison
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_cusp_weighted_theta_data_q_average_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (comparison :
+      FLZModCuspLabelThetaCuspClassContainerAudit.WeightedThetaComparisonData
+        part profile audited) :
+    package.preLedger.qSigned <= part.theta_source.thetaSourceAverage audited :=
+  part.qSigned_le_thetaSourceAverage_of_weightedThetaComparisonData
     profile audited comparison
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in

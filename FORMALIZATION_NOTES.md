@@ -18133,3 +18133,57 @@ The formalization now treats the missing weighted-to-Theta gap and the supplied
 weighted-to-Theta evidence as the same comparison level.  This avoids a subtle
 API drift where the missing obligation is classified correctly, but the data
 that fills it could later be mistaken for pointwise SHE transport.
+
+## 135. Weighted-Theta Data First Gives The Theta-Source Average Bound
+
+### Lean Move
+
+We factored the supplied weighted-theta route by adding:
+
+```text
+qSigned_le_thetaSourceAverage_via_squareWeightedAverage
+qSigned_le_thetaSourceAverage_of_weightedThetaComparisonData
+```
+
+for both the labelwise and cusp-class container audit namespaces.
+
+### Mathematical Reason
+
+The final signed inequality
+
+```text
+qSigned <= thetaSigned
+```
+
+passes through the intermediate Theta-source average:
+
+```text
+qSigned <= squareWeightedAverage
+squareWeightedAverage <= thetaSourceAverage
+thetaSourceAverage <= thetaSigned
+```
+
+The new theorem exposes the first two steps as their own result:
+
+```text
+qSigned <= thetaSourceAverage
+```
+
+before applying the independent upper bound from the Theta-source audit.
+
+### Source Check
+
+IUT III's Corollary 3.12 proof corridor distinguishes the averaged
+Theta-source log-volume data from the final pilot-object/log-volume bound.
+Scholze-Stix's criticism also asks that real-valued comparisons not hide which
+intermediate quantity is being compared.  This factorization keeps the
+weighted-average-to-Theta-average step separate from the later
+Theta-average-to-theta-signed step.
+
+### Relevance to the 3.12 Dispute
+
+The supplied weighted-theta comparison now produces a precise intermediate
+endpoint.  If later source work justifies the weighted-to-Theta comparison, Lean
+can show exactly what it gives before the final hull/log-volume upper bound is
+used.  This prevents the formal proof from treating the final signed inequality
+as one opaque transitivity step.
