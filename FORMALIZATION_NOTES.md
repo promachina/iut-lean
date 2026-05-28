@@ -17754,3 +17754,58 @@ The focused build for `Iut.Stage1.IUTStage1SourceExample` passes.
 The capsule object is still a record with labels and a log-volume equality. The
 next refinement should connect these capsule objects to local tensor packets or
 log-shell objects from the Theorem 3.11 state records.
+
+## 128. Q-Signed Bounds Feed Square-Weighted Averages
+
+### Lean Move
+
+We exposed the q-side version of the square-weighted average lower bound:
+
+```text
+FLZModCuspLabelThetaLabelwiseContainerAudit
+  .qSigned_le_squareWeightedAverageLogVolume
+
+FLZModCuspLabelThetaCuspClassContainerAudit
+  .qSigned_le_squareWeightedAverageLogVolume
+```
+
+The proof is a two-step real inequality:
+
+```text
+qSigned <= targetSigned
+targetSigned <= squareWeightedAverage
+```
+
+where the first inequality is the existing `(Ind1)/(Ind2)` equality-part audit,
+and the second is the local labelwise/cusp-class square-weighted average bound.
+
+### Mathematical Reason
+
+This theorem does not create new local estimates.  It records exactly how the
+q-pilot side enters the square-weighted average corridor once the target-side
+local lower bounds are already present.  The proof is just transitivity of `<=`,
+but the theorem is useful because it keeps the q-side comparison explicit at
+the weighted-average level.
+
+### Source Check
+
+IUT III's proof corridor for Corollary 3.12 discusses q-pilot log-volumes,
+averages over `j in F_l`, and the final real pilot-object comparison.  The
+Scholze-Stix critique also focuses on whether the q-pilot and Theta-pilot
+quantities are genuinely comparable after the multiradial passage; it notes that
+averages may be formed, but that this does not by itself settle the underlying
+identification question.
+
+### Relevance to the 3.12 Dispute
+
+The formal route now separates:
+
+```text
+qSigned <= targetSigned
+targetSigned <= full-label / square-weighted average data
+square-weighted average data != pointwise SHE representative transport
+```
+
+Thus the q-side real inequality can be propagated to the weighted average once
+local estimates are available, while Lean still blocks using this averaged
+inequality as a substitute for the disputed pointwise structured-SHE transport.
