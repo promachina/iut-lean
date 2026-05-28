@@ -11690,6 +11690,22 @@ theorem qSigned_le_thetaSigned_via_classified_cusp
     package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   part.cusp_class_audit.qSigned_le_thetaSigned_via_cusp_container audited
 
+def toThetaPilotHullContainerAudit
+    (part : audit.FLZModCuspLabelThetaClassifiedCuspClassAudit l) :
+    audit.FLZModCuspLabelThetaPilotHullContainerAudit l :=
+  part.cusp_class_audit.toThetaPilotHullContainerAudit
+
+def toThetaContainerBoundAudit
+    (part : audit.FLZModCuspLabelThetaClassifiedCuspClassAudit l) :
+    audit.FLZModCuspLabelThetaContainerBoundAudit l :=
+  part.toThetaPilotHullContainerAudit.toThetaContainerBoundAudit
+
+theorem targetAverageBoundSource_eq_thetaPilotHullContainer
+    (part : audit.FLZModCuspLabelThetaClassifiedCuspClassAudit l) :
+    part.toThetaContainerBoundAudit.bound_source =
+      IUTStage1TargetAverageBoundSource.thetaPilotHullContainer :=
+  rfl
+
 end FLZModCuspLabelThetaClassifiedCuspClassAudit
 
 namespace FLZModCuspLabelThetaContainerBoundAudit

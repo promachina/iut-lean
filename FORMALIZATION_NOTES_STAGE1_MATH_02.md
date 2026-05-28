@@ -5600,3 +5600,72 @@ The next step should connect the classified cusp-class audit to the
 target-to-average classification, so the final hull/container route records
 both the source of the local cusp bounds and the source of the global
 target-to-average comparison.
+
+## 71. Connecting Cusp-Bound Classification to the Target-Average Source
+
+### Goal
+
+We connected the classified cusp-class audit to the earlier
+target-to-average source classification.
+
+### Lean Move
+
+For:
+
+```text
+FLZModCuspLabelThetaClassifiedCuspClassAudit
+```
+
+Lean now exposes:
+
+```text
+toThetaPilotHullContainerAudit
+toThetaContainerBoundAudit
+targetAverageBoundSource_eq_thetaPilotHullContainer
+```
+
+Thus a classified cusp-bound route can be converted all the way to the
+target-to-average container-bound audit, with:
+
+```text
+bound_source = thetaPilotHullContainer
+```
+
+### Mathematical Point
+
+We now carry two layers of provenance:
+
+```text
+cusp/zero bound source:
+  direct capsule estimates
+  transported capsule estimates
+  separate analytic comparison
+
+target-to-average source:
+  thetaPilotHullContainer
+```
+
+This is the intended dependency structure: local cusp-bound provenance is
+separate from the global fact that the target-to-average comparison is being
+attributed to the Theta-pilot hull/container route.
+
+### Trap Avoided
+
+The code does not collapse the local source classification into the global
+target-to-average classification.  They remain two different pieces of audit
+data.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_classified_cusp_to_hull_example
+placeAudited_logVolume_fl_zmod_classified_cusp_target_source_example
+```
+
+### Remaining Gap
+
+The next step should produce a compact summary object for this two-level
+classification, so later reviews can inspect the local cusp-bound source and
+the global target-average source together.
