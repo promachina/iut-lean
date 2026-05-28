@@ -4683,6 +4683,35 @@ theorem placeAudited_logVolume_fl_zmod_classified_cusp_target_source_example
       IUTStage1TargetAverageBoundSource.thetaPilotHullContainer :=
   part.targetAverageBoundSource_eq_thetaPilotHullContainer
 
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_classified_route_summary_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaClassifiedCuspClassAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedRouteSummary l :=
+  FLZModCuspLabelThetaClassifiedRouteSummary.ofClassifiedCusp part
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_classified_route_target_source_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (summary : audit.FLZModCuspLabelThetaClassifiedRouteSummary l) :
+    summary.target_average_source =
+      IUTStage1TargetAverageBoundSource.thetaPilotHullContainer :=
+  summary.targetAverageSource_eq_thetaPilotHullContainer
+
 theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_ind3_target_le_theta_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

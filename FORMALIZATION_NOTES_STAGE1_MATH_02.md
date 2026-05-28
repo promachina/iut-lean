@@ -5669,3 +5669,74 @@ placeAudited_logVolume_fl_zmod_classified_cusp_target_source_example
 The next step should produce a compact summary object for this two-level
 classification, so later reviews can inspect the local cusp-bound source and
 the global target-average source together.
+
+## 72. Compact Summary for the Classified Route
+
+### Goal
+
+We added a compact summary object for the two-level classification of the
+local-to-global route.
+
+### Lean Move
+
+We added:
+
+```text
+FLZModCuspLabelThetaClassifiedRouteSummary
+```
+
+It stores:
+
+```text
+classified_cusp
+cusp_bound_source
+target_average_source
+```
+
+with equality fields tying these summary labels back to the underlying
+classified cusp audit and target-container audit.
+
+Lean constructs summaries by:
+
+```text
+ofClassifiedCusp
+```
+
+and proves:
+
+```text
+targetAverageSource_eq_thetaPilotHullContainer
+qSigned_le_thetaSigned
+```
+
+### Mathematical Point
+
+This is a review object.  It lets us inspect, in one place:
+
+```text
+where the local cusp/zero bounds came from
+where the global target-to-average comparison came from
+```
+
+The two classifications remain distinct, but can be viewed together.
+
+### Trap Avoided
+
+The summary does not replace the underlying audits.  It stores equalities back
+to the audits, so it cannot drift into a hand-written label that disagrees with
+the proof route.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_classified_route_summary_example
+placeAudited_logVolume_fl_zmod_classified_route_target_source_example
+```
+
+### Remaining Gap
+
+The next step should use this summary as the checkpoint for a broader review of
+the current local-to-global chain against IUT III/IV and the Scholze-Stix
+critique before adding more layers.

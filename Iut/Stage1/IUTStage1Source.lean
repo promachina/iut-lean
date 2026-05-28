@@ -11708,6 +11708,48 @@ theorem targetAverageBoundSource_eq_thetaPilotHullContainer
 
 end FLZModCuspLabelThetaClassifiedCuspClassAudit
 
+/-- Compact summary of the classified local and global average route. -/
+structure FLZModCuspLabelThetaClassifiedRouteSummary
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  classified_cusp : audit.FLZModCuspLabelThetaClassifiedCuspClassAudit l
+  cusp_bound_source : IUTStage1CuspClassBoundSource
+  cusp_bound_source_eq : cusp_bound_source = classified_cusp.bound_source
+  target_average_source : IUTStage1TargetAverageBoundSource
+  target_average_source_eq :
+    target_average_source =
+      classified_cusp.toThetaContainerBoundAudit.bound_source
+
+namespace FLZModCuspLabelThetaClassifiedRouteSummary
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+def ofClassifiedCusp
+    (part : audit.FLZModCuspLabelThetaClassifiedCuspClassAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedRouteSummary l :=
+  { classified_cusp := part,
+    cusp_bound_source := part.bound_source,
+    cusp_bound_source_eq := rfl,
+    target_average_source := part.toThetaContainerBoundAudit.bound_source,
+    target_average_source_eq := rfl }
+
+theorem targetAverageSource_eq_thetaPilotHullContainer
+    (summary : audit.FLZModCuspLabelThetaClassifiedRouteSummary l) :
+    summary.target_average_source =
+      IUTStage1TargetAverageBoundSource.thetaPilotHullContainer := by
+  rw [summary.target_average_source_eq]
+  exact
+    summary.classified_cusp.targetAverageBoundSource_eq_thetaPilotHullContainer
+
+theorem qSigned_le_thetaSigned
+    (summary : audit.FLZModCuspLabelThetaClassifiedRouteSummary l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  summary.classified_cusp.qSigned_le_thetaSigned_via_classified_cusp audited
+
+end FLZModCuspLabelThetaClassifiedRouteSummary
+
 namespace FLZModCuspLabelThetaContainerBoundAudit
 
 variable {audit : endpoint.LogVolumeChartAudit}
