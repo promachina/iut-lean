@@ -284,6 +284,141 @@ theorem nonarchimedeanEntry_finalQTheta
     |>.weightedThetaComparisonRouteOfInd3SourceZeroCuspTarget
       part.bundle profile audited sourceAudit).qSigned_le_thetaSigned
 
+/-- Scale-level status for transport-explicit real-line cancellation. -/
+structure Ind3TransportScaleExperimentReport where
+  sourceScaleMatched : Bool
+  targetScaleMatched : Bool
+  canCancelToRawAlignment : Bool
+deriving Repr
+
+/-- Matched source and target scales allow the transport-explicit alignment to feed the route. -/
+def matchedTransportScaleReport
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (_alignment : Ind3OrderedRealLineAlignment part audited) :
+    Ind3TransportScaleExperimentReport :=
+  { sourceScaleMatched := true,
+    targetScaleMatched := true,
+    canCancelToRawAlignment := true }
+
+theorem matchedTransportScaleReport_canCancel
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (alignment : Ind3OrderedRealLineAlignment part audited) :
+    (matchedTransportScaleReport alignment).canCancelToRawAlignment = true :=
+  rfl
+
+/--
+Route theorem using transport-explicit real-line alignment rather than raw
+source/target equalities.
+-/
+theorem orderedRealLineAlignment_finalQTheta
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (transport_audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package part.bundle l)
+    (source_profile_eq :
+      profile = transport_audit.preservationAudit.sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        transport_audit.preservationAudit.sourceLogVolume)
+    (target_log_volume_eq_theta :
+      transport_audit.preservationAudit.targetLogVolume =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    (alignment : Ind3OrderedRealLineAlignment part audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  let sourceAudit :=
+    part.toInd3SourceZeroCuspTargetThetaAudit profile audited transport_audit
+      source_profile_eq source_log_volume_eq target_log_volume_eq_theta
+      alignment.toInd3SourceTargetAlignment
+  (part.toThetaCuspClassContainerAudit
+    |>.weightedThetaComparisonRouteOfInd3SourceZeroCuspTarget
+      part.bundle profile audited sourceAudit).qSigned_le_thetaSigned
+
+/-- A concrete positive scale `2`, used to test mismatched real-line transports. -/
+def positiveScaleTwo : PositiveScale :=
+  { val := 2, pos := by norm_num }
+
+def scaleMismatchPacketLine : Copy :=
+  { label := "Ind3 scale-mismatch packet line" }
+
+def scaleMismatchSourceLine : Copy :=
+  { label := "Ind3 scale-mismatch source line" }
+
+def scaleMismatchCommonLine : Copy :=
+  { label := "Ind3 scale-mismatch common line" }
+
+def scaleMismatchPacketToCommon :
+    Transport scaleMismatchPacketLine scaleMismatchCommonLine :=
+  { scale := PositiveScale.one }
+
+def scaleMismatchSourceToCommon :
+    Transport scaleMismatchSourceLine scaleMismatchCommonLine :=
+  { scale := positiveScaleTwo }
+
+def scaleMismatchPacketPoint : Point scaleMismatchPacketLine :=
+  point scaleMismatchPacketLine 2
+
+def scaleMismatchSourcePoint : Point scaleMismatchSourceLine :=
+  point scaleMismatchSourceLine 1
+
+/--
+Transported coordinates can agree under mismatched positive scales even when
+the raw coordinates do not.
+-/
+theorem scaleMismatch_transported_coords_equal :
+    (Transport.map scaleMismatchPacketToCommon scaleMismatchPacketPoint).coord =
+      (Transport.map scaleMismatchSourceToCommon scaleMismatchSourcePoint).coord := by
+  norm_num [scaleMismatchPacketToCommon, scaleMismatchSourceToCommon,
+    scaleMismatchPacketPoint, scaleMismatchSourcePoint, Transport.map,
+    PositiveScale.one, positiveScaleTwo, point]
+
+theorem scaleMismatch_transport_scales_differ :
+    scaleMismatchPacketToCommon.scale.val ≠
+      scaleMismatchSourceToCommon.scale.val := by
+  norm_num [scaleMismatchPacketToCommon, scaleMismatchSourceToCommon,
+    PositiveScale.one, positiveScaleTwo]
+
+theorem scaleMismatch_raw_coords_differ :
+    scaleMismatchPacketPoint.coord ≠ scaleMismatchSourcePoint.coord := by
+  norm_num [scaleMismatchPacketPoint, scaleMismatchSourcePoint, point]
+
+def mismatchedTransportScaleReport : Ind3TransportScaleExperimentReport :=
+  { sourceScaleMatched := false,
+    targetScaleMatched := true,
+    canCancelToRawAlignment := false }
+
+theorem mismatchedTransportScaleReport_cannotCancel :
+    mismatchedTransportScaleReport.canCancelToRawAlignment = false :=
+  rfl
+
 end Experiments
 end Stage1
 end Iut

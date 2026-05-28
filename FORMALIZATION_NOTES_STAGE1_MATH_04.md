@@ -1776,3 +1776,95 @@ archimedean aligned entry -> reverse orientation, route unavailable
 The next mathematical task is to replace the simplified local entry structures
 with definitions closer to Mochizuki's actual theta-link/Hodge theater objects,
 while preserving this explicit route accounting.
+
+## 214. Transport-Explicit Real-Line Alignment for Ind3
+
+### Lean Move
+
+In
+
+```text
+Iut/Stage1/IUTStage1Source.lean
+Iut/Stage1/IUTStage1Experiments.lean
+```
+
+we added:
+
+```text
+Ind3OrderedRealLineAlignment
+Ind3OrderedRealLineAlignment.toInd3SourceTargetAlignment
+orderedRealLineAlignment_finalQTheta
+scaleMismatch_transported_coords_equal
+scaleMismatch_transport_scales_differ
+scaleMismatch_raw_coords_differ
+```
+
+The new alignment object replaces two raw real equalities by explicit
+real-line-copy data:
+
+```text
+packet line -> common line
+Ind3 source line -> common line
+theta line -> common line
+Ind3 target line -> common line
+```
+
+It permits cancellation back to the raw equalities only when the corresponding
+transport scales match.
+
+### Mathematical Reason
+
+This is the first formal pass aimed directly at the Scholze-Stix style concern:
+an equality after transporting into a common real line does not by itself
+justify an equality of the original coordinates unless the transports have
+compatible normalization.
+
+Lean now proves the good case:
+
+```text
+matched transport scales
++ transported packet/source equality
++ transported theta/target equality
+-> raw source/target alignment
+-> final q <= theta route
+```
+
+and also proves a concrete warning example:
+
+```text
+1 * 2 = 2 * 1
+but
+2 != 1
+```
+
+In our formal language, this is a pair of positive real-line transports whose
+transported coordinates agree while the raw coordinates differ.  Thus a
+transported equality cannot be collapsed into a raw equality when the scales are
+not matched.
+
+### Source Check
+
+This matches the role of real-line identifications in the 3.12 dispute.  The
+IUT route needs common-container comparisons after Hodge-theater operations,
+but the Scholze-Stix criticism warns that scalar changes in the ordered
+one-dimensional real vector spaces cannot be ignored.  The new Lean object does
+not decide which mathematical identifications Mochizuki's text ultimately
+supplies; it states the exact transport-scale datum that our formal route
+requires before the final cancellation.
+
+### Experiment Result
+
+The current experiment surface now has two first-pass insights:
+
+```text
+Nonarchimedean aligned Ind3 entry:
+  can feed the final q/Theta route.
+
+Transported real-line equality with mismatched scales:
+  cannot be treated as raw source/target equality.
+```
+
+This is a useful diagnostic for the next stage: when we formalize the actual
+theta-link and Hodge-theater constructions, we must identify where the paper
+supplies the scale-matching datum, or else record that the route is blocked at
+exactly this point.

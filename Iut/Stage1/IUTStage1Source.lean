@@ -21647,6 +21647,119 @@ structure Ind3SourceTargetAlignment
       audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume
 
 /--
+Transport-explicit real-line alignment for the two real equalities required by
+`Ind3SourceTargetAlignment`.
+
+The transported point equalities alone are not enough: the source-side and
+target-side transports must also have the same positive scale before Lean is
+allowed to cancel the transport and recover the raw real equality consumed by
+the final q/Theta route.
+-/
+structure Ind3OrderedRealLineAlignment
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) where
+  packetLine : Copy
+  ind3SourceLine : Copy
+  thetaLine : Copy
+  ind3TargetLine : Copy
+  commonLine : Copy
+  packetToCommon : Transport packetLine commonLine
+  ind3SourceToCommon : Transport ind3SourceLine commonLine
+  thetaToCommon : Transport thetaLine commonLine
+  ind3TargetToCommon : Transport ind3TargetLine commonLine
+  packetPoint : Point packetLine
+  ind3SourcePoint : Point ind3SourceLine
+  thetaPoint : Point thetaLine
+  ind3TargetPoint : Point ind3TargetLine
+  packetPoint_coord :
+    packetPoint.coord =
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume
+  ind3SourcePoint_coord :
+    ind3SourcePoint.coord =
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  thetaPoint_coord :
+    thetaPoint.coord = part.insulated_route.theta_source.thetaSourceAverage audited
+  ind3TargetPoint_coord :
+    ind3TargetPoint.coord =
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume
+  source_transport_scale_eq :
+    packetToCommon.scale.val = ind3SourceToCommon.scale.val
+  target_transport_scale_eq :
+    thetaToCommon.scale.val = ind3TargetToCommon.scale.val
+  transported_packet_eq_ind3Source :
+    (Transport.map packetToCommon packetPoint).coord =
+      (Transport.map ind3SourceToCommon ind3SourcePoint).coord
+  transported_theta_eq_ind3Target :
+    (Transport.map thetaToCommon thetaPoint).coord =
+      (Transport.map ind3TargetToCommon ind3TargetPoint).coord
+
+namespace Ind3OrderedRealLineAlignment
+
+variable
+  {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+  {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+
+theorem packetPoint_eq_ind3SourcePoint
+    (alignment : Ind3OrderedRealLineAlignment part audited) :
+    alignment.packetPoint.coord = alignment.ind3SourcePoint.coord := by
+  have hmap :
+      alignment.packetToCommon.scale.val * alignment.packetPoint.coord =
+        alignment.ind3SourceToCommon.scale.val *
+          alignment.ind3SourcePoint.coord := by
+    simpa [Transport.map] using alignment.transported_packet_eq_ind3Source
+  rw [← alignment.source_transport_scale_eq] at hmap
+  apply mul_left_cancel₀ (ne_of_gt alignment.packetToCommon.scale.pos)
+  exact hmap
+
+theorem thetaPoint_eq_ind3TargetPoint
+    (alignment : Ind3OrderedRealLineAlignment part audited) :
+    alignment.thetaPoint.coord = alignment.ind3TargetPoint.coord := by
+  have hmap :
+      alignment.thetaToCommon.scale.val * alignment.thetaPoint.coord =
+        alignment.ind3TargetToCommon.scale.val *
+          alignment.ind3TargetPoint.coord := by
+    simpa [Transport.map] using alignment.transported_theta_eq_ind3Target
+  rw [← alignment.target_transport_scale_eq] at hmap
+  apply mul_left_cancel₀ (ne_of_gt alignment.thetaToCommon.scale.pos)
+  exact hmap
+
+theorem packetLocalObjectFinite_eq_ind3Source
+    (alignment : Ind3OrderedRealLineAlignment part audited) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
+  calc
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        alignment.packetPoint.coord :=
+      alignment.packetPoint_coord.symm
+    _ = alignment.ind3SourcePoint.coord :=
+      alignment.packetPoint_eq_ind3SourcePoint
+    _ = audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+      alignment.ind3SourcePoint_coord
+
+theorem thetaSourceAverage_eq_ind3Target
+    (alignment : Ind3OrderedRealLineAlignment part audited) :
+    part.insulated_route.theta_source.thetaSourceAverage audited =
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  calc
+    part.insulated_route.theta_source.thetaSourceAverage audited =
+        alignment.thetaPoint.coord :=
+      alignment.thetaPoint_coord.symm
+    _ = alignment.ind3TargetPoint.coord :=
+      alignment.thetaPoint_eq_ind3TargetPoint
+    _ = audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+      alignment.ind3TargetPoint_coord
+
+def toInd3SourceTargetAlignment
+    (alignment : Ind3OrderedRealLineAlignment part audited) :
+    Ind3SourceTargetAlignment part audited :=
+  { packetLocalObjectFinite_eq_ind3Source :=
+      alignment.packetLocalObjectFinite_eq_ind3Source,
+    thetaSourceAverage_eq_ind3Target :=
+      alignment.thetaSourceAverage_eq_ind3Target }
+
+end Ind3OrderedRealLineAlignment
+
+/--
 Nonarchimedean local upper-semi entry explaining a packet-to-theta real
 comparison.
 
