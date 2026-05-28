@@ -735,3 +735,67 @@ constant `ZMod` packet-local-object family and classifies the bridge as:
 ```text
 directLocalLabelObjectConstruction
 ```
+
+## 115. Cusp/Zero Local-Object Split for Direct Label Objects
+
+### Lean Move
+
+I added:
+
+```text
+FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit
+FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit.labelLocalObject
+FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit.normalizedLogVolume_eq_labelLocalObjectFinite
+FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit.toDirectLocalLabelObjectConstructionAudit
+```
+
+This is a refinement of the previous direct label-object route.  Instead of
+asking directly for a `ZMod l.value`-indexed local-object family, it asks for:
+
+```text
+one local object for every nonzero cusp sign-label class
+one separate local object for the zero label
+```
+
+The exported `labelLocalObject` then performs the only allowed case split:
+
+```text
+j = 0        -> use zeroLocalObject
+j != 0       -> use cuspClassLocalObject at zmodSignLabelFromCoordinate l j hj
+```
+
+### Mathematical Reason
+
+This is closer to the current Stage 1 model of the local cusp-label object than
+the previous direct route.  The local cusp model has a distinguished zero label
+and nonzero labels modulo the sign action.  Keeping those two cases separate is
+important for the Corollary 3.12 route because a later proof must not silently
+identify the zero coordinate with a nonzero cusp class.
+
+The bridge still proves the same endpoint consequence: after the zero/nonzero
+split has supplied compatible local-object log-volumes, the construction
+forgets the split and produces the existing direct `ZMod` label-object route.
+That existing route then yields the target-average bound.
+
+### Trap Avoided
+
+The nonzero branch uses `zmodSignLabelFromCoordinate l j hj`, so a proof of
+`j != 0` is required before entering the sign-label quotient.  The zero branch
+uses `zeroLogVolume` and never passes through the quotient.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_cusp_zero_label_object_to_direct_example
+placeAudited_logVolume_fl_zmod_cusp_zero_label_object_zero_eq_example
+placeAudited_logVolume_fl_zmod_cusp_zero_label_object_target_bound_example
+```
+
+### Remaining Gap
+
+The split route still takes the cusp-class and zero local objects as supplied
+data.  The next mathematical step should connect these fields to the canonical
+`LocalLabCuspModel`/cusp-label construction itself, so that the split is not
+merely an interface but is produced from the local cusp-label data.
