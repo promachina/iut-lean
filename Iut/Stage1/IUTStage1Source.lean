@@ -1645,6 +1645,54 @@ theorem input_le_determinant
 end IUTStage1QPilotTwoComputationLogVolume
 
 /--
+Signed Corollary 3.12 endpoint extracted from the Step (xi-g) q-pilot
+two-computation record.
+
+The input prime-strip log-volume is used as the signed q-pilot value, while the
+upper-ray boundary supplied by the hull/determinant construction is used as the
+signed Theta-pilot value.
+-/
+structure IUTStage1QPilotTwoComputationSignedEndpoint where
+  twoComputation : IUTStage1QPilotTwoComputationLogVolume
+  q_pilot_positive : 0 < -twoComputation.inputPrimeStripLogVolume
+
+namespace IUTStage1QPilotTwoComputationSignedEndpoint
+
+def comparisonData
+    (data : IUTStage1QPilotTwoComputationSignedEndpoint) :
+    Corollary312ComparisonData :=
+  { thetaSigned := data.twoComputation.upperRayData.thetaHullLogVolume,
+    qSigned := data.twoComputation.inputPrimeStripLogVolume,
+    q_positive := data.q_pilot_positive,
+    qSigned_le_thetaSigned :=
+      data.twoComputation.input_le_thetaHullLogVolume }
+
+theorem comparisonData_qSigned
+    (data : IUTStage1QPilotTwoComputationSignedEndpoint) :
+    data.comparisonData.qSigned =
+      data.twoComputation.inputPrimeStripLogVolume :=
+  rfl
+
+theorem comparisonData_thetaSigned
+    (data : IUTStage1QPilotTwoComputationSignedEndpoint) :
+    data.comparisonData.thetaSigned =
+      data.twoComputation.upperRayData.thetaHullLogVolume :=
+  rfl
+
+theorem qSigned_le_thetaSigned
+    (data : IUTStage1QPilotTwoComputationSignedEndpoint) :
+    data.comparisonData.qSigned <= data.comparisonData.thetaSigned :=
+  data.comparisonData.qSigned_le_thetaSigned
+
+theorem corollary312
+    (data : IUTStage1QPilotTwoComputationSignedEndpoint) :
+    Corollary312Inequality
+      data.comparisonData.thetaPilot data.comparisonData.qPilot :=
+  data.comparisonData.corollary312
+
+end IUTStage1QPilotTwoComputationSignedEndpoint
+
+/--
 IUT III, Corollary 3.12 Step (xi-f) final `C_Theta` algebra.
 
 The source text obtains `-|log(q)| <= -|log(Theta)|` from membership of the
@@ -1734,6 +1782,45 @@ theorem cTheta_ge_neg_one
   data.toCThetaLowerBoundShadow.cTheta_ge_neg_one
 
 end IUTStage1Corollary312SignedCThetaBound
+
+/--
+Step (xi-g) to Step (xi-f) endpoint with a chosen `C_Theta`.
+
+This composes the two q-pilot computations, the signed Corollary 3.12 payload,
+and the final `C_Theta` bound hypothesis into the lower bound
+`C_Theta >= -1`.
+-/
+structure IUTStage1QPilotTwoComputationCThetaEndpoint where
+  signedEndpoint : IUTStage1QPilotTwoComputationSignedEndpoint
+  cTheta : Real
+  thetaHullLogVolume_le_cTheta_absLogQ :
+    signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume <=
+      cTheta * (-signedEndpoint.twoComputation.inputPrimeStripLogVolume)
+
+namespace IUTStage1QPilotTwoComputationCThetaEndpoint
+
+def toSignedCThetaBound
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
+    IUTStage1Corollary312SignedCThetaBound :=
+  { comparison := data.signedEndpoint.comparisonData,
+    cTheta := data.cTheta,
+    thetaSigned_le_cTheta_absLogQ := by
+      simpa [IUTStage1QPilotTwoComputationSignedEndpoint.comparisonData] using
+        data.thetaHullLogVolume_le_cTheta_absLogQ }
+
+theorem cTheta_ge_neg_one
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
+    (-1 : Real) <= data.cTheta :=
+  data.toSignedCThetaBound.cTheta_ge_neg_one
+
+theorem qInputLogVolume_le_cTheta_absLogQ
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
+    data.signedEndpoint.twoComputation.inputPrimeStripLogVolume <=
+      data.cTheta *
+        (-data.signedEndpoint.twoComputation.inputPrimeStripLogVolume) :=
+  data.toSignedCThetaBound.qSigned_le_cTheta_absLogQ
+
+end IUTStage1QPilotTwoComputationCThetaEndpoint
 
 /--
 Step (xi-h) tensor-power warning for the `Theta`-pilot log-volume.
