@@ -638,6 +638,7 @@ structure ProcessionContainerExperimentReport where
   fmodUnitCopyProductActionAvailable : Bool
   kummerFTensorPacketToDTransferAvailable : Bool
   monoAnalyticTensorPacketForgettingAvailable : Bool
+  determinantTensorPowerNormalizationAvailable : Bool
 deriving Repr
 
 /--
@@ -661,7 +662,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     baseValuationPacketProductAvailable := true,
     fmodUnitCopyProductActionAvailable := true,
     kummerFTensorPacketToDTransferAvailable := true,
-    monoAnalyticTensorPacketForgettingAvailable := true }
+    monoAnalyticTensorPacketForgettingAvailable := true,
+    determinantTensorPowerNormalizationAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -879,6 +881,16 @@ theorem monoAnalyticTensorPacketForgetting_structureForgotten
       IUTStage1MonoAnalyticTensorPacketForgettingTransfer source target) :
     transfer.holomorphicStructureForgotten :=
   transfer.structureForgotten
+
+theorem arithmeticVectorBundleDeterminant_normalizedLogVolume_eq_determinant
+    (data : IUTStage1ArithmeticVectorBundleDeterminantLogVolume) :
+    data.normalizedLogVolume = data.determinantLogVolume :=
+  data.normalizedLogVolume_eq_determinant
+
+theorem arithmeticVectorBundleDeterminant_rank_pos
+    (data : IUTStage1ArithmeticVectorBundleDeterminantLogVolume) :
+    0 < data.rank :=
+  data.rank_pos
 
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
@@ -1116,6 +1128,7 @@ structure Corollary312DisputeFirstPassReport where
   fmodUnitCopyProductActionAvailable : Bool
   kummerFTensorPacketToDTransferAvailable : Bool
   monoAnalyticTensorPacketForgettingAvailable : Bool
+  determinantTensorPowerNormalizationAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1153,6 +1166,7 @@ def corollary312DisputeFirstPassReport :
     fmodUnitCopyProductActionAvailable := true,
     kummerFTensorPacketToDTransferAvailable := true,
     monoAnalyticTensorPacketForgettingAvailable := true,
+    determinantTensorPowerNormalizationAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1258,6 +1272,11 @@ theorem corollary312Report_kummerFTensorPacketToDTransferAvailable :
 
 theorem corollary312Report_monoAnalyticTensorPacketForgettingAvailable :
     corollary312DisputeFirstPassReport.monoAnalyticTensorPacketForgettingAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_determinantTensorPowerNormalizationAvailable :
+    corollary312DisputeFirstPassReport.determinantTensorPowerNormalizationAvailable =
       true :=
   rfl
 

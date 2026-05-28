@@ -1507,6 +1507,49 @@ theorem structureForgotten
 
 end IUTStage1MonoAnalyticTensorPacketForgettingTransfer
 
+/--
+Finite log-volume shadow of the Step (xi-d) determinant passage.
+
+The paper passes from localizations of arithmetic vector bundles of rank `> 1` to
+a positive tensor power of their determinant, and then applies a suitably
+normalized log-volume.  This record keeps only that numerical skeleton.
+-/
+structure IUTStage1ArithmeticVectorBundleDeterminantLogVolume where
+  rank : Nat
+  rank_gt_one : 1 < rank
+  determinantLogVolume : Real
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  tensorPowerLogVolume : Real
+  tensor_power_eq :
+    tensorPowerLogVolume =
+      (positiveTensorPower : Real) * determinantLogVolume
+  normalizedLogVolume : Real
+  normalized_eq :
+    normalizedLogVolume =
+      tensorPowerLogVolume / (positiveTensorPower : Real)
+
+namespace IUTStage1ArithmeticVectorBundleDeterminantLogVolume
+
+theorem positiveTensorPower_ne_zero
+    (data : IUTStage1ArithmeticVectorBundleDeterminantLogVolume) :
+    (data.positiveTensorPower : Real) ≠ 0 := by
+  exact_mod_cast Nat.ne_of_gt data.tensor_power_pos
+
+theorem normalizedLogVolume_eq_determinant
+    (data : IUTStage1ArithmeticVectorBundleDeterminantLogVolume) :
+    data.normalizedLogVolume = data.determinantLogVolume := by
+  rw [data.normalized_eq, data.tensor_power_eq]
+  exact mul_div_cancel_left₀ data.determinantLogVolume
+    data.positiveTensorPower_ne_zero
+
+theorem rank_pos
+    (data : IUTStage1ArithmeticVectorBundleDeterminantLogVolume) :
+    0 < data.rank :=
+  lt_trans Nat.zero_lt_one data.rank_gt_one
+
+end IUTStage1ArithmeticVectorBundleDeterminantLogVolume
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}
