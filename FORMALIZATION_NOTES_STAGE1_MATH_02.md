@@ -2649,3 +2649,67 @@ The next global audit should re-read the Corollary 3.12 proof steps around the
 holomorphic hull and procession-normalized log-volume to decide whether the
 next formal object should be a hull-volume audit, a procession-normalization
 audit, or a log-Kummer compatibility audit.
+
+## 36. Self-Audit: Corollary 3.12 Hull and Log-Volume Boundary
+
+### Source Check
+
+I reread the Corollary 3.12 proof discussion around Steps (i)--(x), especially
+the summary in Step (x).  The source pressure there is different from the local
+`(Ind2)` bookkeeping we just formalized.
+
+The relevant points are:
+
+```text
+the proof concentrates on a single Theta-link
+the unit and value-group portions must be related simultaneously
+the multiradial representation is subject to Ind1, Ind2, Ind3
+procession-normalized log-volumes are invariant under Ind1 and Ind2
+Ind3 is converted into an upper inequality
+log-link compatibility is needed for the log-volumes
+the final comparison lives in real-valued log-volumes
+```
+
+I also checked the Scholze-Stix discussion of the same critical step.  Their
+emphasis is on consistently identifying the various ordered one-dimensional
+real vector spaces or copies of real numbers attached to abstract and concrete
+pilot objects across Hodge theaters.
+
+### Current Lean Alignment
+
+The current Lean state has:
+
+```text
+place-audited Ind2 source and entry/fiber bookkeeping
+audited image invariance for Ind1/Ind2/Ind3-generated relations
+audited possible-image unions connected to the hull endpoint
+determinant/log-volume bound available from hull-det obligations
+final signed Corollary 3.12 inequality available from obligations
+```
+
+This means the local direct-summand/action/fiber bookkeeping now reaches the
+same endpoint as the earlier hull+det route.
+
+### Main Remaining Mismatch
+
+The next unresolved point is not local `(Ind2)` structure.  It is the boundary
+where a region/hull statement becomes a real-valued log-volume statement.
+In particular, we need to keep explicit:
+
+```text
+which real/log-volume chart is being used
+which normalization is procession-normalized
+which invariances are equalities under Ind1/Ind2
+which part is an upper inequality from Ind3
+```
+
+This is also the place where the Scholze-Stix concern about identifying real
+lines has to be represented as typed data rather than informal notation.
+
+### Next Step
+
+Add a hull-endpoint log-volume chart audit: a small structure attached to the
+place-audited hull endpoint that records the target signed real, the theta
+signed real, the chart compatibility, and the determinant/hull bound used to
+obtain the upper estimate.  It should not prove new arithmetic content; it
+should make the real-line/log-volume identifications explicit at the endpoint.
