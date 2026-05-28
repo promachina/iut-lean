@@ -2218,3 +2218,88 @@ Unresolved:
   to prove that the needed ordered alignment and transport audit are forced by
   Mochizuki's full hypotheses rather than supplied as explicit assumptions.
 ```
+
+## 219. Nonarchimedean Ind3 Entry Gives Canonical Ordered Alignment
+
+### Lean Move
+
+In:
+
+```text
+Iut/Stage1/IUTStage1Source.lean
+Iut/Stage1/IUTStage1Experiments.lean
+```
+
+we added:
+
+```text
+NonarchimedeanInd3EntryAlignment.toCanonicalOrderedRealLineAlignment
+NonarchimedeanInd3EntryAlignment.canonicalOrderedRealLineAlignment_toRaw
+corollary312_firstPass_finalQTheta_from_nonarchimedeanEntryCanonicalAlignment
+```
+
+and extended the first-pass report with:
+
+```text
+nonarchimedeanEntrySuppliesCanonicalOrderedAlignment := true
+```
+
+### Mathematical Reason
+
+The previous experiment separated two facts:
+
+```text
+nonarchimedean Ind3 entry -> raw source/target equality
+ordered real-line alignment -> final q/Theta route
+```
+
+This left the ordered real-line alignment as an independent assumption in the
+positive 3.12 route theorem.  The new Lean construction closes that gap for the
+canonical nonarchimedean case.  It places the packet local object, the Ind3
+source value, the theta average, and the Ind3 target value in one real-line copy
+and uses unit transports on all four sides.
+
+Lean then checks:
+
+```text
+nonarchimedean entry alignment
+-> canonical ordered-real-line alignment with matched unit scales
+-> raw Ind3 source/target alignment
+-> final qSigned <= thetaSigned route
+```
+
+This is not a proof that arbitrary ordered identifications are harmless.  It is
+the controlled case: no hidden scalar is introduced, so the ordered-line
+presentation is exactly the same information as the nonarchimedean source/target
+equalities.
+
+### Source Check
+
+Scholze-Stix emphasize that ordered one-dimensional real-vector-space
+identifications must be made explicit.  This milestone follows that demand in
+the nonarchimedean entry case: the real-line copies and positive scales are
+part of the formal object, and cancellation is permitted only because the
+scales are definitionally equal to `1`.
+
+Mochizuki's 3.11 to 3.12 route needs the nonarchimedean `(Ind3)` upper-semi
+input to feed the simultaneous q/Theta comparison.  The new theorem verifies
+that this feed can pass through the explicit ordered-real-line bookkeeping in
+the canonical unit-scale case.
+
+### Current Reading
+
+The first-pass 3.12 experiment is now slightly stronger:
+
+```text
+positive:
+  nonarchimedean Ind3 entry data supplies the canonical ordered real-line
+  alignment needed by the final route.
+
+negative:
+  mismatched scales still cannot be cancelled, and a single global scalar still
+  cannot absorb the representative j^2 profile.
+
+still open:
+  the general Hodge/SHE transport audit and full Mochizuki theater machinery
+  remain assumptions of the current positive route.
+```

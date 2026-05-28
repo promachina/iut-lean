@@ -21976,6 +21976,89 @@ def toHodgeDescentInd3SourceTargetAlignment
     thetaSourceAverage_eq_ind3Target :=
       alignment.thetaAverage_eq_ind3Target }
 
+/--
+Canonical ordered-real-line presentation of a nonarchimedean `(Ind3)` entry.
+
+All four values are placed in a single real-line copy with unit transport
+scales.  This records the consistent-identification case: the ordered real-line
+bookkeeping can be discharged from the nonarchimedean source/target equalities,
+without introducing a hidden rescaling.
+-/
+def toCanonicalOrderedRealLineAlignment
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (alignment :
+      NonarchimedeanInd3EntryAlignment audited entry
+        (part.insulated_route.theta_source.thetaSourceAverage audited)) :
+    Ind3OrderedRealLineAlignment part audited :=
+  let line : Copy :=
+    { label := "Ind3 nonarchimedean canonical ordered real line" }
+  { packetLine := line,
+    ind3SourceLine := line,
+    thetaLine := line,
+    ind3TargetLine := line,
+    commonLine := line,
+    packetToCommon := Transport.id line,
+    ind3SourceToCommon := Transport.id line,
+    thetaToCommon := Transport.id line,
+    ind3TargetToCommon := Transport.id line,
+    packetPoint :=
+      point line
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume,
+    ind3SourcePoint :=
+      point line
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume,
+    thetaPoint :=
+      point line
+        (part.insulated_route.theta_source.thetaSourceAverage audited),
+    ind3TargetPoint :=
+      point line
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume,
+    packetPoint_coord := rfl,
+    ind3SourcePoint_coord := rfl,
+    thetaPoint_coord := rfl,
+    ind3TargetPoint_coord := rfl,
+    source_transport_scale_eq := rfl,
+    target_transport_scale_eq := rfl,
+    transported_packet_eq_ind3Source := by
+      simp [Transport.map, Transport.id, PositiveScale.one, point,
+        alignment.packetLocalObjectFinite_eq_ind3Source],
+    transported_theta_eq_ind3Target := by
+      simp [Transport.map, Transport.id, PositiveScale.one, point,
+        alignment.thetaAverage_eq_ind3Target] }
+
+theorem canonicalOrderedRealLineAlignment_toRaw
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (alignment :
+      NonarchimedeanInd3EntryAlignment audited entry
+        (part.insulated_route.theta_source.thetaSourceAverage audited)) :
+    alignment.toCanonicalOrderedRealLineAlignment.toInd3SourceTargetAlignment =
+      alignment.toHodgeDescentInd3SourceTargetAlignment := by
+  exact Subsingleton.elim _ _
+
 end NonarchimedeanInd3EntryAlignment
 
 /--

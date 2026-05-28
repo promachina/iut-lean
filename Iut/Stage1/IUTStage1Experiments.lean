@@ -686,6 +686,7 @@ theorem ind3FinalRouteLevelExperimentReport_rejectsBalanced :
 /-- First Lean-level conclusion about the Corollary 3.12 disputed passage. -/
 structure Corollary312DisputeFirstPassReport where
   orderedRealLineRouteAvailable : Bool
+  nonarchimedeanEntrySuppliesCanonicalOrderedAlignment : Bool
   mismatchedRealLineScalesBlockRawCancellation : Bool
   labelIndependentJ2CollapseRejected : Bool
   balancedSignCompatibleLevelRejectedAtFinalRoute : Bool
@@ -705,6 +706,7 @@ stage.
 def corollary312DisputeFirstPassReport :
     Corollary312DisputeFirstPassReport :=
   { orderedRealLineRouteAvailable := true,
+    nonarchimedeanEntrySuppliesCanonicalOrderedAlignment := true,
     mismatchedRealLineScalesBlockRawCancellation := true,
     labelIndependentJ2CollapseRejected := true,
     balancedSignCompatibleLevelRejectedAtFinalRoute := true,
@@ -712,6 +714,11 @@ def corollary312DisputeFirstPassReport :
 
 theorem corollary312Report_orderedRealLineRouteAvailable :
     corollary312DisputeFirstPassReport.orderedRealLineRouteAvailable = true :=
+  rfl
+
+theorem corollary312Report_nonarchimedeanEntrySuppliesCanonicalAlignment :
+    corollary312DisputeFirstPassReport.nonarchimedeanEntrySuppliesCanonicalOrderedAlignment =
+      true :=
   rfl
 
 theorem corollary312Report_mismatchedScalesBlockRawCancellation :
@@ -768,6 +775,50 @@ theorem corollary312_firstPass_finalQTheta_from_orderedRealLineAlignment
     package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   orderedRealLineAlignment_finalQTheta part profile audited transport_audit
     source_profile_eq source_log_volume_eq target_log_volume_eq_theta alignment
+
+/--
+Corollary 3.12 first-pass route from a nonarchimedean `(Ind3)` entry through
+the canonical ordered-real-line presentation.
+
+This theorem removes the independent ordered-alignment assumption in the
+nonarchimedean entry case: the entry alignment supplies source/target equalities,
+and those equalities induce a matched unit-scale ordered-real-line alignment.
+-/
+theorem corollary312_firstPass_finalQTheta_from_nonarchimedeanEntryCanonicalAlignment
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (transport_audit :
+      IUTStage1StructuredSHESquareWeightTransportAudit package part.bundle l)
+    (source_profile_eq :
+      profile = transport_audit.preservationAudit.sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        transport_audit.preservationAudit.sourceLogVolume)
+    (target_log_volume_eq_theta :
+      transport_audit.preservationAudit.targetLogVolume =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (entryAlignment :
+      NonarchimedeanInd3EntryAlignment audited entry
+        (part.insulated_route.theta_source.thetaSourceAverage audited)) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  orderedRealLineAlignment_finalQTheta part profile audited transport_audit
+    source_profile_eq source_log_volume_eq target_log_volume_eq_theta
+    entryAlignment.toCanonicalOrderedRealLineAlignment
 
 /--
 Scholze-Stix-style collapse test for the representative `j^2` factors.
