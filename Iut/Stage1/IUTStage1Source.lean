@@ -3828,6 +3828,66 @@ theorem fifteen_delta_sq_error_le_epsilon_term
 end IUTStage1IUTIVCorollary22EpsilonErrorConversionShadow
 
 /--
+IUT IV, Corollary 2.2(ii), bridge from the pre-`epsilon_E` bound to the
+preliminary inequality used in the denominator step.
+
+This combines `epsilon_E >= 5 * delta * h^(-1/2)` with the preceding conversion
+of the `(15 * delta)^2` error term.
+-/
+structure IUTStage1IUTIVCorollary22HBoundToMoveLeftShadow where
+  h : Real
+  logDegreeSum : Real
+  cK : Real
+  delta : Real
+  sqrtH : Real
+  logTwoDeltaH : Real
+  epsilonE : Real
+  logDegreeSum_nonneg : 0 <= logDegreeSum
+  delta_inv_sqrtH_le_epsilon_over_five :
+    delta / sqrtH <= (1 / 5 : Real) * epsilonE
+  error_conversion_bound :
+    (15 * delta) ^ 2 * sqrtH * logTwoDeltaH <=
+      (1 / 6 : Real) * h * ((2 / 5 : Real) * epsilonE)
+  pre_epsilon_bound :
+    (1 / 6 : Real) * h <=
+      (1 + delta / sqrtH) * logDegreeSum +
+        (15 * delta) ^ 2 * sqrtH * logTwoDeltaH +
+          (1 / 2 : Real) * cK
+
+namespace IUTStage1IUTIVCorollary22HBoundToMoveLeftShadow
+
+theorem coefficient_le_epsilon_coefficient
+    (data : IUTStage1IUTIVCorollary22HBoundToMoveLeftShadow) :
+    1 + data.delta / data.sqrtH <=
+      1 + (1 / 5 : Real) * data.epsilonE := by
+  linarith [data.delta_inv_sqrtH_le_epsilon_over_five]
+
+theorem preliminary_for_move_left
+    (data : IUTStage1IUTIVCorollary22HBoundToMoveLeftShadow) :
+    (1 / 6 : Real) * data.h <=
+      (1 + (1 / 5 : Real) * data.epsilonE) * data.logDegreeSum +
+        (1 / 6 : Real) * data.h * ((2 / 5 : Real) * data.epsilonE) +
+          (1 / 2 : Real) * data.cK := by
+  have hcoeff := data.coefficient_le_epsilon_coefficient
+  have hcoeff_mul :
+      (1 + data.delta / data.sqrtH) * data.logDegreeSum <=
+        (1 + (1 / 5 : Real) * data.epsilonE) * data.logDegreeSum :=
+    mul_le_mul_of_nonneg_right hcoeff data.logDegreeSum_nonneg
+  calc
+    (1 / 6 : Real) * data.h <=
+      (1 + data.delta / data.sqrtH) * data.logDegreeSum +
+        (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH +
+          (1 / 2 : Real) * data.cK :=
+          data.pre_epsilon_bound
+    _ <=
+      (1 + (1 / 5 : Real) * data.epsilonE) * data.logDegreeSum +
+        (1 / 6 : Real) * data.h * ((2 / 5 : Real) * data.epsilonE) +
+          (1 / 2 : Real) * data.cK :=
+          add_le_add (add_le_add hcoeff_mul data.error_conversion_bound) le_rfl
+
+end IUTStage1IUTIVCorollary22HBoundToMoveLeftShadow
+
+/--
 The denominator `1 - (2/5) * epsilon_E` appearing in the last absorption step
 of the proof of IUT IV, Corollary 2.2(ii).
 -/

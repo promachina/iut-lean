@@ -265,6 +265,10 @@ The code currently covers:
   substituting the definition of \(\epsilon_E\), Lean proves
   \((15\delta)^2h^{1/2}\log(2\delta h)
    \le \frac16h\cdot\frac25\epsilon_E\);
+\item the IUT IV, Corollary 2.2(ii) bridge to the denominator step:
+  the pre-\(\epsilon_E\) \(h\)-bound, the error conversion, and
+  \(\delta h^{-1/2}\le\epsilon_E/5\) yield the preliminary inequality used to
+  move the \(\frac25\epsilon_E\frac16h\) term to the left;
 \item the IUT IV, Corollary 2.2(ii) denominator step:
   Lean moves the term
   \((2\epsilon_E/5)\frac16h\) to the left and obtains the denominator
@@ -358,6 +362,8 @@ records the source formula and lower estimate for \(\epsilon_E\).  The
 final denominator removal in C2.  The
 \(\epsilon_E\)-error flag records the conversion of the \((15\delta)^2\)-term
 to the \(\frac25\epsilon_E\frac16h\) term.
+The \(h\)-to-move-left flag records the bridge from the pre-\(\epsilon_E\) bound
+to the denominator-stage preliminary inequality.
 q2/q flag records the displayed comparison of \(\log(q_2)\) and \(\log(q)\).
 The pre-\(\epsilon_E\) \(h\)-bound flag records the subsequent absorption of
 the bounded \(q_\forall/q_2\) discrepancy into \(C_K\).
@@ -471,6 +477,8 @@ Lean records the proof's definition of \(\epsilon_E\) and verifies the stated
 lower estimate \(\epsilon_E\ge5\delta h^{-1/2}\).
 Lean also verifies the source conversion
 \((15\delta)^2h^{1/2}\log(2\delta h)\le\frac16h\cdot\frac25\epsilon_E\).
+Combining this with \(\delta h^{-1/2}\le\epsilon_E/5\), Lean proves the
+preliminary inequality needed for the move-left step.
 Lean then verifies the algebraic move-left step that introduces the denominator
 \((1-2\epsilon_E/5)^{-1}\).
 Lean also proves the final \(\epsilon_E\)-absorption step used just before C2:
