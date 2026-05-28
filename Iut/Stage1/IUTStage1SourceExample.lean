@@ -6480,6 +6480,45 @@ theorem placeAudited_logVolume_fl_zmod_labelwise_3115_chart_example
   sourceAudit.realComparisonChartMatchesPackage
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_labelwise_3115_q_chart_allowed_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      FLZModCuspLabelThetaLabelwiseContainerAudit.ThreeElevenFiveWeightedThetaAudit
+        part profile audited) :
+    package.preLedger.chartedContainer.chart.QToTargetAllowedReading :=
+  sourceAudit.qToTargetAllowedAtChart
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_labelwise_3115_theta_chart_trivial_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      FLZModCuspLabelThetaLabelwiseContainerAudit.ThreeElevenFiveWeightedThetaAudit
+        part profile audited) :
+    Transport.TrivialMonodromy
+      package.preLedger.chartedContainer.chart.thetaToTarget :=
+  sourceAudit.thetaChartTrivial
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 theorem placeAudited_logVolume_fl_zmod_labelwise_3115_weighted_theta_q_theta_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
@@ -7048,6 +7087,45 @@ theorem placeAudited_logVolume_fl_zmod_cusp_3115_chart_example
     sourceAudit.real_comparison_chart =
       package.preLedger.chartedContainer.chart.chart :=
   sourceAudit.realComparisonChartMatchesPackage
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_cusp_3115_q_chart_allowed_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      FLZModCuspLabelThetaCuspClassContainerAudit.ThreeElevenFiveWeightedThetaAudit
+        part profile audited) :
+    package.preLedger.chartedContainer.chart.QToTargetAllowedReading :=
+  sourceAudit.qToTargetAllowedAtChart
+
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+theorem placeAudited_logVolume_fl_zmod_cusp_3115_theta_chart_trivial_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (sourceAudit :
+      FLZModCuspLabelThetaCuspClassContainerAudit.ThreeElevenFiveWeightedThetaAudit
+        part profile audited) :
+    Transport.TrivialMonodromy
+      package.preLedger.chartedContainer.chart.thetaToTarget :=
+  sourceAudit.thetaChartTrivial
 
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 theorem placeAudited_logVolume_fl_zmod_cusp_3115_weighted_theta_q_theta_example

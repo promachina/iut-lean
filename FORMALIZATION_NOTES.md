@@ -18582,3 +18582,38 @@ The hard audit now has four visible pieces of provenance: final checkpoint,
 simultaneous-comparison checkpoint, q/Theta pilots, and the package's real
 comparison chart.  Future source-level proofs must match all four before Lean
 will accept them as this 3.11.5-to-3.12 comparison.
+
+## 145. The 3.11.5 Audit Exposes Allowed Chart Readings
+
+### Lean Move
+
+We added the chart-discipline accessors:
+
+```text
+qToTargetAllowedAtChart
+thetaToTargetAllowedAtChart
+thetaChartTrivial
+```
+
+for `ThreeElevenFiveWeightedThetaAudit` in both route namespaces.
+
+### Mathematical Reason
+
+Once the audit names the package's real-comparison chart, it should also expose
+the permitted readings attached to that chart.  The q-side reading is the
+order-preserving transport into the target real-line copy, while the Theta-side
+reading is allowed together with explicit trivial monodromy.
+
+### Source Check
+
+This addresses the real-line-copy part of the Corollary 3.12 dispute at the
+current abstraction level.  It does not assert that the weighted-theta
+comparison has been proved, but it records that any use of the 3.11.5 audit is
+using the package's named chart discipline rather than an unnamed identification
+of real numbers.
+
+### Relevance to the 3.12 Dispute
+
+The formal boundary now exposes the exact chart permissions available when the
+hard comparison is supplied.  Later work can require these accessors when
+deriving the weighted-to-Theta inequality from Hodge-theater data.

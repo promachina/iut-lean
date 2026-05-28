@@ -16353,6 +16353,34 @@ theorem ThreeElevenFiveWeightedThetaAudit.realComparisonChartMatchesPackage
       package.preLedger.chartedContainer.chart.chart :=
   sourceAudit.real_comparison_chart_eq_package
 
+theorem ThreeElevenFiveWeightedThetaAudit.qToTargetAllowedAtChart
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (_sourceAudit :
+      ThreeElevenFiveWeightedThetaAudit part profile audited) :
+    package.preLedger.chartedContainer.chart.QToTargetAllowedReading :=
+  package.preLedger.chartedContainer.chart.qToTargetAllowedReading
+
+theorem ThreeElevenFiveWeightedThetaAudit.thetaToTargetAllowedAtChart
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (_sourceAudit :
+      ThreeElevenFiveWeightedThetaAudit part profile audited) :
+    package.preLedger.chartedContainer.chart.ThetaToTargetAllowedReading :=
+  package.preLedger.chartedContainer.chart.thetaToTargetAllowedReading
+
+theorem ThreeElevenFiveWeightedThetaAudit.thetaChartTrivial
+    {part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (_sourceAudit :
+      ThreeElevenFiveWeightedThetaAudit part profile audited) :
+    Transport.TrivialMonodromy
+      package.preLedger.chartedContainer.chart.thetaToTarget :=
+  package.preLedger.thetaChartTrivial
+
 theorem qSigned_le_thetaSigned_of_weightedThetaComparisonData
     (part : audit.FLZModCuspLabelThetaLabelwiseContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)
@@ -16878,6 +16906,34 @@ theorem ThreeElevenFiveWeightedThetaAudit.realComparisonChartMatchesPackage
     sourceAudit.real_comparison_chart =
       package.preLedger.chartedContainer.chart.chart :=
   sourceAudit.real_comparison_chart_eq_package
+
+theorem ThreeElevenFiveWeightedThetaAudit.qToTargetAllowedAtChart
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (_sourceAudit :
+      ThreeElevenFiveWeightedThetaAudit part profile audited) :
+    package.preLedger.chartedContainer.chart.QToTargetAllowedReading :=
+  package.preLedger.chartedContainer.chart.qToTargetAllowedReading
+
+theorem ThreeElevenFiveWeightedThetaAudit.thetaToTargetAllowedAtChart
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (_sourceAudit :
+      ThreeElevenFiveWeightedThetaAudit part profile audited) :
+    package.preLedger.chartedContainer.chart.ThetaToTargetAllowedReading :=
+  package.preLedger.chartedContainer.chart.thetaToTargetAllowedReading
+
+theorem ThreeElevenFiveWeightedThetaAudit.thetaChartTrivial
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (_sourceAudit :
+      ThreeElevenFiveWeightedThetaAudit part profile audited) :
+    Transport.TrivialMonodromy
+      package.preLedger.chartedContainer.chart.thetaToTarget :=
+  package.preLedger.thetaChartTrivial
 
 def toLabelwiseWeightedThetaComparisonData
     {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
