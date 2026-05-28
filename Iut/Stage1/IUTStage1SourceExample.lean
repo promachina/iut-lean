@@ -4993,6 +4993,69 @@ theorem placeAudited_logVolume_fl_zmod_direct_label_object_target_bound_example
       part.theta_source.thetaSourceAverage audited :=
   part.targetSigned_le_thetaSourceAverage audited
 
+theorem placeAudited_logVolume_fl_zmod_insulated_cusp_zero_zero_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume 0 =
+      (part.zeroLocalObject audited).finiteLogVolume := by
+  calc
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume 0 =
+        (part.theta_source.compatible_average.cuspLogVolume audited).normalizedLogVolume 0 :=
+      part.theta_source.compatible_average.normalizedLogVolumeEq audited 0
+    _ = (part.theta_source.compatible_average.cuspLogVolume audited).zeroLogVolume :=
+      (part.theta_source.compatible_average.cuspLogVolume audited).zero_eq_zeroLogVolume
+    _ = (part.zeroLocalObject audited).finiteLogVolume :=
+      part.zeroLogVolume_eq_localObjectFinite audited
+
+theorem placeAudited_logVolume_fl_zmod_insulated_cusp_zero_one_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume (1 : ZMod l.value) =
+      (part.cuspClassLocalObject audited
+        (zmodCanonicalSignLabelQuotient l)).finiteLogVolume :=
+  part.one_normalizedLogVolume_eq_canonicalCuspClassLocalObjectFinite audited
+
+theorem placeAudited_logVolume_fl_zmod_insulated_cusp_zero_neg_object_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part :
+      audit.FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    part.cuspClassLocalObject audited
+        (zmodSignLabelFromCoordinate l (-j)
+          (zmod_neg_ne_zero_of_ne_zero l hj)) =
+      part.cuspClassLocalObject audited
+        (zmodSignLabelFromCoordinate l j hj) :=
+  part.cuspClassLocalObject_negCoordinate_eq audited j hj
+
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
 noncomputable def placeAudited_logVolume_fl_zmod_cusp_zero_label_object_to_direct_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}

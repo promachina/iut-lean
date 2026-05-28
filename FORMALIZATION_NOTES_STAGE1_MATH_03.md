@@ -1095,3 +1095,60 @@ insulated route: zero/nonzero branches remain separate until an explicit bridge
 
 That split will let us test whether Corollary 3.12 needs the comparison route
 and where the required bridge is supposed to come from.
+
+## 121. Insulated Cusp/Zero Local-Object Route
+
+### Lean Move
+
+I added:
+
+```text
+FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit
+FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit
+  .labelLocalObject
+FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit
+  .normalizedLogVolume_eq_labelLocalObjectFinite
+FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit
+  .one_normalizedLogVolume_eq_canonicalCuspClassLocalObjectFinite
+FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit
+  .neg_normalizedLogVolume_eq_cuspClassLocalObjectFinite
+FLZModCuspLabelThetaInsulatedCuspZeroLocalLabelObjectConstructionAudit
+  .cuspClassLocalObject_negCoordinate_eq
+```
+
+### Mathematical Reason
+
+This route records the zero branch and the nonzero cusp-class branch without
+identifying either branch with the packet local object.  It still proves the
+basic `ZMod` label-to-local-object facts:
+
+```text
+j = 0      -> zeroLocalObject
+j != 0     -> cuspClassLocalObject at the sign class of j
+```
+
+It also preserves the sign quotient for nonzero coordinates.  What it does not
+prove is any equality between `zeroLocalObject` and `cuspClassLocalObject`.
+
+### Trap Avoided
+
+This gives us a Lean object representing the pre-collapse state.  Any later
+proof that zero and nonzero branches become comparable must pass through an
+additional bridge, rather than being inherited from the route itself.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_insulated_cusp_zero_zero_eq_example
+placeAudited_logVolume_fl_zmod_insulated_cusp_zero_one_eq_example
+placeAudited_logVolume_fl_zmod_insulated_cusp_zero_neg_object_eq_example
+```
+
+### Remaining Gap
+
+The next step is to add a bridge from the insulated route to the comparison
+route.  That bridge should contain precisely the packet-local-object
+identifications that cause the zero/nonzero collapse, making the disputed
+assumption boundary easy to inspect.
