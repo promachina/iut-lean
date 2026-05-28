@@ -4596,3 +4596,97 @@ upper half:
 So future source-facing work cannot simply switch between the two profiles.  It
 must show that the Corollary 3.12 `j^2` expression is insensitive to this
 difference, or else identify which profile is actually intended.
+
+## 164. A Sign-Invariant Probe Whose Weighted Numerators Differ
+
+### Lean Move
+
+We added a concrete `ZMod 5` probe:
+
+```text
+squareProfileProbeLogVolume
+```
+
+It is supported on the sign pair `{1, 4}`, i.e. on the class `{1, -1}`:
+
+```text
+squareProfileProbeLogVolume j = 1
+  when j.val = 1 or j.val = 4
+squareProfileProbeLogVolume j = 0
+  otherwise
+```
+
+Lean proves it is sign-invariant:
+
+```text
+squareProfileProbeLogVolume_neg
+```
+
+Then Lean computes two weighted numerators:
+
+```text
+squareProfileProbe_representativeNumerator_primeFive_example
+squareProfileProbe_balancedNumerator_primeFive_example
+```
+
+with values:
+
+```text
+representative numerator = 17
+balanced numerator       = 2
+```
+
+and finally:
+
+```text
+squareProfileProbe_numerators_differ_primeFive_example
+```
+
+which proves that these two numerators are not equal.
+
+### Mathematical Reason
+
+This shows that the representative/balanced distinction is not merely local to a
+single label.  It can change the weighted finite sum even when the log-volume
+test function is sign-invariant.
+
+The computation is simple:
+
+```text
+support = {1, -1} = {1, 4} in ZMod 5
+
+representative weights:
+  1^2 + 4^2 = 1 + 16 = 17
+
+balanced weights:
+  |1|^2 + |-1|^2 = 1 + 1 = 2
+```
+
+So sign invariance of the log-volume branch does not erase the difference
+between the two square profiles.
+
+### Source Check
+
+This is directly relevant to the IUT III Corollary 3.12 corridor because the
+source expression is an average over `j in F_l`, while IUT II distinguishes the
+full `F_l` Gaussian-monoid indexing from the `F_l^±` sign/symmetrizing role.
+Scholze-Stix Section 2.2 presses exactly on whether `j^2` scaling survives once
+the real-line identifications are made coherent.
+
+The probe is not intended as an IUT model.  It is a small formal test showing
+that a sign-compatible interpretation and a representative interpretation can
+produce different weighted finite sums.
+
+### Relevance to the 3.12 Dispute
+
+The formal question is now sharper:
+
+```text
+Even if the log-volume branch is sign-invariant,
+the j^2 weighted numerator still depends on which square profile is used.
+```
+
+Thus a future formalization of the disputed step must not merely establish
+sign-invariance of the label/log-volume data.  It must identify the square
+profile used by the source argument and prove the corresponding weighted
+numerator or average transport for that profile.
