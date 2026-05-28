@@ -20644,6 +20644,43 @@ theorem targetSigned_le_squareWeightedAveragedLogVolume_of_fullLabel
         profile audited j]
       exact hpointwise j)
 
+theorem squareWeightedAverage_eq_const_of_fullLabelLogVolume_eq
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    {c : Real}
+    (hconstant :
+      ∀ j : ZMod l.value,
+        (part.cuspLogVolume audited).fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) = c) :
+    (part.squareWeightedAveragedLogVolume profile audited).weightedAverageLogVolume =
+      c :=
+  IUTStage1WeightedLabelAveragedProcessionLogVolume.weightedAverage_eq_const_of_forall_eq
+    (part.squareWeightedAveragedLogVolume profile audited)
+    (by
+      intro j
+      exact profile.weight_nonnegative j)
+    (by
+      intro j
+      rw [part.squareWeighted_normalizedLogVolume_eq_fullLabelLogVolume
+        profile audited j]
+      exact hconstant j)
+
+theorem canonicalSquareWeightedAverage_eq_const_of_fullLabelLogVolume_eq
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    {c : Real}
+    (hconstant :
+      ∀ j : ZMod l.value,
+        (part.cuspLogVolume audited).fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) = c) :
+    (part.squareWeightedAveragedLogVolume
+        (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+        audited).weightedAverageLogVolume = c :=
+  part.squareWeightedAverage_eq_const_of_fullLabelLogVolume_eq
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    audited hconstant
+
 theorem ind1SquareWeightedAverageLogVolumeEq
     (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
     (profile : IUTStage1ZModSquareWeightProfile l)
