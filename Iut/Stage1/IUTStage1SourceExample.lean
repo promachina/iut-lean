@@ -4475,6 +4475,38 @@ theorem placeAudited_logVolume_fl_zmod_packet_normalized_q_le_theta_example
     package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   part.qSigned_le_thetaSigned_via_packet_normalized_container audited
 
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit in
+def placeAudited_logVolume_fl_zmod_classified_packet_normalized_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l :=
+  FLZModCuspLabelThetaClassifiedPacketNormalizedAudit.ofSeparateRealLineIdentification
+    part
+
+theorem placeAudited_logVolume_fl_zmod_classified_packet_normalized_eq_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    (part.packet_normalized.theta_source.compatible_average.cuspLogVolume
+        audited).cuspClassLogVolume label =
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  part.cuspClassLogVolume_eq_packetNormalized audited label
+
 theorem placeAudited_logVolume_fl_zmod_packet_normalized_ind2_cusp_bound_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :

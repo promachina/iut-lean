@@ -5824,3 +5824,81 @@ analytic/container proofs.  The notes and names now make that status explicit.
 Continue by reducing these assumptions further when possible, but avoid adding
 new abstractions unless they discharge or localize one of the watch-point
 assumptions above.
+
+## 74. Classifying Packet-Normalized Real-Line Identifications
+
+### Goal
+
+We localized one of the main watch-point assumptions from the periodic review:
+the equality between cusp/zero log-volumes and packet-normalized capsule-family
+values.
+
+### Lean Move
+
+We added:
+
+```text
+IUTStage1PacketNormalizedIdentificationSource
+```
+
+with constructors:
+
+```text
+directPacketNormalization
+ind2TransportedPacketNormalization
+separateRealLineIdentification
+```
+
+We then added:
+
+```text
+FLZModCuspLabelThetaClassifiedPacketNormalizedAudit
+```
+
+It packages:
+
+```text
+FLZModCuspLabelThetaPacketNormalizedContainerAudit
+```
+
+with an identification-source classification.  Lean re-exposes:
+
+```text
+cuspClassLogVolume_eq_packetNormalized
+zeroLogVolume_eq_packetNormalized
+```
+
+### Mathematical Point
+
+This classification addresses the Scholze-Stix warning about real-line
+identifications.  The equality:
+
+```text
+cusp/zero log-volume = packet normalized capsule-family log-volume
+```
+
+is now not just a field of a large audit; it can carry explicit provenance.
+
+### Trap Avoided
+
+We did not reinterpret the equality as automatic.  It remains a required audit,
+now with a named source classification.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_classified_packet_normalized_example
+placeAudited_logVolume_fl_zmod_classified_packet_normalized_eq_example
+```
+
+### Remaining Gap
+
+The route summary should eventually include this third classification:
+
+```text
+packet-normalized identification source
+cusp-bound source
+target-average source
+```

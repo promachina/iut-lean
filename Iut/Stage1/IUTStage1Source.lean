@@ -10380,6 +10380,24 @@ structure FLZModCuspLabelThetaPacketNormalizedContainerAudit
         package.preLedger.targetVolume.targetSigned
         (theta_source.compatible_average.cuspLogVolume audited).zeroLogVolume
 
+/-- Source classification for packet-normalized real-line identifications. -/
+inductive IUTStage1PacketNormalizedIdentificationSource where
+  | directPacketNormalization
+  | ind2TransportedPacketNormalization
+  | separateRealLineIdentification
+deriving DecidableEq
+
+/--
+Packet-normalized audit with an explicit source classification for the
+real-line identification between cusp/zero log-volumes and packet-normalized
+capsule-family values.
+-/
+structure FLZModCuspLabelThetaClassifiedPacketNormalizedAudit
+    (audit : endpoint.LogVolumeChartAudit)
+    (l : PrimeGeFive) where
+  packet_normalized : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l
+  identification_source : IUTStage1PacketNormalizedIdentificationSource
+
 /--
 Transported source for cusp-class container bounds.
 
@@ -11552,6 +11570,51 @@ theorem qSigned_le_thetaSigned_via_packet_normalized_container
   packetAudit.qSigned_le_thetaSigned_via_packet_local_object_container audited
 
 end FLZModCuspLabelThetaPacketNormalizedContainerAudit
+
+namespace FLZModCuspLabelThetaClassifiedPacketNormalizedAudit
+
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+
+def ofDirectPacketNormalization
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l :=
+  { packet_normalized := part,
+    identification_source :=
+      IUTStage1PacketNormalizedIdentificationSource.directPacketNormalization }
+
+def ofInd2TransportedPacketNormalization
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l :=
+  { packet_normalized := part,
+    identification_source :=
+      IUTStage1PacketNormalizedIdentificationSource.ind2TransportedPacketNormalization }
+
+def ofSeparateRealLineIdentification
+    (part : audit.FLZModCuspLabelThetaPacketNormalizedContainerAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l :=
+  { packet_normalized := part,
+    identification_source :=
+      IUTStage1PacketNormalizedIdentificationSource.separateRealLineIdentification }
+
+theorem cuspClassLogVolume_eq_packetNormalized
+    (part : audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    (part.packet_normalized.theta_source.compatible_average.cuspLogVolume
+        audited).cuspClassLogVolume label =
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  part.packet_normalized.cuspClassLogVolume_eq_packetNormalized audited label
+
+theorem zeroLogVolume_eq_packetNormalized
+    (part : audit.FLZModCuspLabelThetaClassifiedPacketNormalizedAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.packet_normalized.theta_source.compatible_average.cuspLogVolume
+        audited).zeroLogVolume =
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  part.packet_normalized.zeroLogVolume_eq_packetNormalized audited
+
+end FLZModCuspLabelThetaClassifiedPacketNormalizedAudit
 
 namespace FLZModCuspLabelThetaInd2TransportedCuspClassAudit
 
