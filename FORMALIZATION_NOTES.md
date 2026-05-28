@@ -18617,3 +18617,43 @@ of real numbers.
 The formal boundary now exposes the exact chart permissions available when the
 hard comparison is supplied.  Later work can require these accessors when
 deriving the weighted-to-Theta inequality from Hodge-theater data.
+
+## 146. The 3.11.5 Audit Names The Two Real Endpoints
+
+### Lean Move
+
+We added:
+
+```text
+ThreeElevenFiveWeightedThetaEndpointAudit
+ThreeElevenFiveWeightedThetaAudit.endpointAudit
+ThreeElevenFiveWeightedThetaEndpointAudit.recovers_weightedAverage_le_thetaAverage
+```
+
+for both the labelwise and cusp-class routes.
+
+### Mathematical Reason
+
+The remaining hard comparison has two precise real endpoints:
+
+```text
+squareWeightedAverage.weightedAverageLogVolume
+thetaSourceAverage
+```
+
+The endpoint audit names these reals and records that the inequality in the
+3.11.5 audit is exactly the inequality between them.  The constructor is marked
+`noncomputable` because it materializes the square-weighted average value.
+
+### Source Check
+
+This matches the Scholze-Stix demand that the real quantities being compared be
+spelled out, rather than hidden behind notation.  It also keeps Mochizuki's
+final comparison slot precise: the source-level proof must target these two
+real log-volume endpoints.
+
+### Relevance to the 3.12 Dispute
+
+Future work can replace the current explicit inequality by a proof that
+constructs this endpoint audit from source-level Hodge-theater data.  Until
+then, Lean records exactly which endpoint inequality remains assumed.
