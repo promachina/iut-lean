@@ -1807,6 +1807,39 @@ theorem calibratedLogVolume_ne_shifted_of_local_nonzero
 
 end IUTStage1GlobalFrobenioidLogVolumeCalibration
 
+/-
+Remark 3.12.1(iii) positive rational unit rigidity.
+
+The source text points to the elementary fact `Q_{>0} Z^× = {1}` as a key input
+for the cyclotomic rigidity algorithms in the number-field case.  This namespace
+records the exact arithmetic shadow used here: a rational number that is
+positive and is an integral unit (`±1`) is forced to be `1`.
+-/
+namespace IUTStage1PositiveRationalUnitRigidity
+
+def IsIntegerUnit (q : Rat) : Prop :=
+  q = 1 ∨ q = -1
+
+theorem eq_one_of_pos_of_integerUnit
+    {q : Rat} (hpos : 0 < q) (hunit : IsIntegerUnit q) :
+    q = 1 := by
+  rcases hunit with h | h
+  · exact h
+  · subst q
+    norm_num at hpos
+
+theorem positive_integerUnit_iff_eq_one
+    {q : Rat} (hunit : IsIntegerUnit q) :
+    0 < q ↔ q = 1 := by
+  constructor
+  · intro hpos
+    exact eq_one_of_pos_of_integerUnit hpos hunit
+  · intro h
+    rw [h]
+    norm_num
+
+end IUTStage1PositiveRationalUnitRigidity
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}

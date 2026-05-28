@@ -643,6 +643,7 @@ structure ProcessionContainerExperimentReport where
   qPilotTwoComputationComparisonAvailable : Bool
   thetaPilotTensorPowerWarningAvailable : Bool
   globalFrobenioidCalibrationAvailable : Bool
+  positiveRationalUnitRigidityAvailable : Bool
 deriving Repr
 
 /--
@@ -671,7 +672,8 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     hullDetUpperRayComparisonAvailable := true,
     qPilotTwoComputationComparisonAvailable := true,
     thetaPilotTensorPowerWarningAvailable := true,
-    globalFrobenioidCalibrationAvailable := true }
+    globalFrobenioidCalibrationAvailable := true,
+    positiveRationalUnitRigidityAvailable := true }
 
 theorem processionContainer_card_eq (j : Nat) :
     Fintype.card (IUTStage1ProcessionContainer j) = j + 1 :=
@@ -967,6 +969,13 @@ theorem globalFrobenioidCalibration_ne_localShifted
     data.calibratedLogVolume ≠ data.localData.shiftedLogVolume :=
   data.calibratedLogVolume_ne_shifted_of_local_nonzero hExponent hStep
 
+theorem positiveRationalUnitRigidity_eq_one
+    {q : Rat} (hpos : 0 < q)
+    (hunit : IUTStage1PositiveRationalUnitRigidity.IsIntegerUnit q) :
+    q = 1 :=
+  IUTStage1PositiveRationalUnitRigidity.eq_one_of_pos_of_integerUnit
+    hpos hunit
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
@@ -1208,6 +1217,7 @@ structure Corollary312DisputeFirstPassReport where
   qPilotTwoComputationComparisonAvailable : Bool
   thetaPilotTensorPowerWarningAvailable : Bool
   globalFrobenioidCalibrationAvailable : Bool
+  positiveRationalUnitRigidityAvailable : Bool
   balancedLevelRejectedAtFinalRouteTheoremAvailable : Bool
   disputeSettledByCurrentStage : Bool
 deriving Repr
@@ -1250,6 +1260,7 @@ def corollary312DisputeFirstPassReport :
     qPilotTwoComputationComparisonAvailable := true,
     thetaPilotTensorPowerWarningAvailable := true,
     globalFrobenioidCalibrationAvailable := true,
+    positiveRationalUnitRigidityAvailable := true,
     balancedLevelRejectedAtFinalRouteTheoremAvailable := true,
     disputeSettledByCurrentStage := false }
 
@@ -1380,6 +1391,11 @@ theorem corollary312Report_thetaPilotTensorPowerWarningAvailable :
 
 theorem corollary312Report_globalFrobenioidCalibrationAvailable :
     corollary312DisputeFirstPassReport.globalFrobenioidCalibrationAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_positiveRationalUnitRigidityAvailable :
+    corollary312DisputeFirstPassReport.positiveRationalUnitRigidityAvailable =
       true :=
   rfl
 

@@ -153,6 +153,8 @@ The code currently covers:
   boundary satisfies \(N\Theta<\Theta\);
 \item the Step (xii) shadow: local Frobenioid \(p_v^N\)-ambiguity changes
   log-volume by an integer shift, while global calibration fixes exponent \(0\);
+\item the Remark 3.12.1(iii) arithmetic fact
+  \(\mathbb{Q}_{>0}\cap\mathbb{Z}^{\times}=\{1\}\);
 \item comparison levels:
   pointwise representative, aggregate representative, balanced sign-compatible,
   and hull/log-volume;
@@ -183,7 +185,7 @@ label-independent \(j^2\) failure, and sign-quotient representative descent
 failure.  The Gaussian/procession flags include finite tensor-packet, monoid
 action, base-valuation product, coric-transfer, determinant-normalization,
 upper-ray, \(q\)-pilot two-computation, tensor-power warning, and global
-Frobenioid-calibration shadows.
+Frobenioid-calibration shadows, plus positive-rational unit rigidity.
 The theorem-level route is:
 \[
 \begin{array}{ccccc}
@@ -221,7 +223,8 @@ accepting the half-range exponent convention stated in IUT II.
 Lean also checks that an \(N\)-th tensor-power boundary is a strict strengthening
 for \(N\ge2\) and negative pilot log-volume.  It also checks the Step (xii)
 numerical warning: nonzero local Frobenioid shifts change log-volume, whereas
-global calibration restores the unshifted value.
+global calibration restores the unshifted value.  The positive rational unit
+rigidity fact in Remark 3.12.1(iii) is formalized directly over \(\mathbb{Q}\).
 
 \section{Missing Mathematics}
 
