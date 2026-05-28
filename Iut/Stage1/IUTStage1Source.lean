@@ -15427,6 +15427,17 @@ theorem squareWeightedAverageComparisonLevel_ne_pointwise
       IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
   IUTStage1SquareComparisonLevel.aggregate_ne_pointwise
 
+theorem squareWeightedAverageComparisonLevel_ne_structuredSHEFactored
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l) :
+    part.squareWeightedAverageComparisonLevel ≠ obligations.comparisonLevel := by
+  rw [part.squareWeightedAverageComparisonLevel_eq_aggregate,
+    obligations.comparisonLevel_eq_pointwiseRepresentative]
+  exact IUTStage1SquareComparisonLevel.aggregate_ne_pointwise
+
 theorem localNormalizedAudit
     (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l) :
     audit.ProcessionNormalizedInd12Audit :=
@@ -19647,6 +19658,26 @@ theorem comparisonLevel_ne_aggregateRepresentative
     part.comparisonLevel ≠
       IUTStage1SquareComparisonLevel.aggregateRepresentative :=
   IUTStage1SquareComparisonLevel.hull_ne_aggregate
+
+theorem comparisonLevel_ne_structuredSHEFactored
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l)
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (obligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l) :
+    part.comparisonLevel ≠ obligations.comparisonLevel := by
+  rw [part.comparisonLevel_eq_hullLogVolume,
+    obligations.comparisonLevel_eq_pointwiseRepresentative]
+  exact IUTStage1SquareComparisonLevel.hull_ne_pointwise
+
+theorem comparisonLevel_ne_squareWeightedAverage
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l)
+    (averagePart : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l) :
+    part.comparisonLevel ≠
+      averagePart.squareWeightedAverageComparisonLevel := by
+  rw [part.comparisonLevel_eq_hullLogVolume,
+    averagePart.squareWeightedAverageComparisonLevel_eq_aggregate]
+  exact IUTStage1SquareComparisonLevel.hull_ne_aggregate
 
 theorem boundSource_not_ind3Only
     (part : audit.FLZModCuspLabelThetaContainerBoundAudit l) :

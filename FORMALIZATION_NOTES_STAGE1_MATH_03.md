@@ -5946,3 +5946,47 @@ This prevents a proof from using the final hull/log-volume inequality as if it
 had supplied the missing pointwise representative-square transport.  It also
 prevents the aggregate square-weight average from being conflated with the
 global real inequality after holomorphic-hull/log-volume comparison.
+
+## 186. Cross-Level Mismatches Are Theorems
+
+### Lean Move
+
+We added explicit mismatch theorems:
+
+```text
+square-weighted average level != structured SHE factored level
+hull/log-volume level       != structured SHE factored level
+hull/log-volume level       != square-weighted average level
+```
+
+The proofs are small rewrites through the comparison-level tags introduced in
+the previous milestones.
+
+### Mathematical Reason
+
+This does not add a new comparison theorem.  It records a negative interface
+fact: the three currently formalized pieces of the 3.12 corridor have different
+mathematical meanings.
+
+The structured SHE factored obligation is a pointwise representative-square
+transport condition.  The square-weighted averaged route is an aggregate
+finite-sum statement.  The container-bound route is a final real
+hull/log-volume inequality.  These may belong to one proof narrative, but Lean
+should not permit one to be used in place of another.
+
+### Source Check
+
+This is aligned with the source split we have been tracking.  IUT III's
+Corollary 3.12 proof language combines multiradial comparison, averaged
+log-volumes over `F_l`, and holomorphic-hull/log-volume estimates.  The
+Scholze-Stix criticism targets whether the multiradial comparison justifies the
+particular real comparison after simplification.  Treating these stages as
+interchangeable would hide exactly the disputed point.
+
+### Relevance to the 3.12 Dispute
+
+Future Lean code must now provide an actual bridge theorem when moving between
+these levels.  A proof cannot close the pointwise SHE square/full-label target
+with an aggregate average, and cannot close it with a final hull/log-volume
+bound.  Conversely, proving the final real inequality remains a separate goal
+from proving the pointwise transport mechanism that might justify it.

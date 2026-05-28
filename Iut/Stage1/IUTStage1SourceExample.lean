@@ -5644,6 +5644,24 @@ theorem placeAudited_logVolume_fl_zmod_cusp_square_weighted_level_ne_pointwise_e
       IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
   part.squareWeightedAverageComparisonLevel_ne_pointwise
 
+theorem placeAudited_logVolume_fl_zmod_cusp_square_weighted_level_ne_she_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (part : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l)
+    (sheObligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l) :
+    part.squareWeightedAverageComparisonLevel ≠ sheObligations.comparisonLevel :=
+  part.squareWeightedAverageComparisonLevel_ne_structuredSHEFactored
+    sheObligations
+
 theorem placeAudited_logVolume_fl_zmod_cusp_square_weighted_summand_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
@@ -6011,6 +6029,38 @@ theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_container_lev
     part.comparisonLevel ≠
       IUTStage1SquareComparisonLevel.aggregateRepresentative :=
   part.comparisonLevel_ne_aggregateRepresentative
+
+theorem placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_container_level_ne_she_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l)
+    (sheObligations :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l) :
+    part.comparisonLevel ≠ sheObligations.comparisonLevel :=
+  part.comparisonLevel_ne_structuredSHEFactored sheObligations
+
+theorem placeAudited_logVolume_fl_zmod_container_level_ne_square_avg_example
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaContainerBoundAudit l)
+    (averagePart : audit.FLZModCuspLabelCompatibleAveragedInd12Audit l) :
+    part.comparisonLevel ≠
+      averagePart.squareWeightedAverageComparisonLevel :=
+  part.comparisonLevel_ne_squareWeightedAverage averagePart
 
 def placeAuditedMultiradialThetaHullEndpoint_logVolume_fl_zmod_container_to_reduction_example
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
