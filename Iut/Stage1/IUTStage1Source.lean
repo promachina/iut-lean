@@ -14735,6 +14735,55 @@ theorem targetSigned_le_thetaSourceAverage
   let constantRoute := part.toConstantZModPacketNormalizedRouteAudit
   constantRoute.targetSigned_le_thetaSourceAverage audited
 
+def toInsulatedCuspZeroPacketBridgeAudit
+    (part :
+      audit.FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit l) :
+    audit.FLZModCuspLabelThetaInsulatedCuspZeroPacketBridgeAudit l :=
+  { insulated_route :=
+      { theta_source := part.theta_source,
+        ind12_equality_part := part.ind12_equality_part,
+        ind3_upper_part := part.ind3_upper_part,
+        theta_images_eq_endpoint := part.theta_images_eq_endpoint,
+        cuspClassLocalObject := by
+          intro audited _label
+          exact audited.choice.local_tensor_state.packetState.localObject,
+        cuspClassLogVolume_eq_localObjectFinite :=
+          part.cuspClassLogVolume_eq_localObjectFinite,
+        zeroLocalObject := by
+          intro audited
+          exact audited.choice.local_tensor_state.packetState.localObject,
+        zeroLogVolume_eq_localObjectFinite :=
+          part.zeroLogVolume_eq_localObjectFinite },
+    packetLocalObjectEstimate := by
+      intro audited
+      exact
+        (part.directNormalization audited).toLocalObjectContainerEstimateOfCapsuleEstimates
+          (part.targetCapsuleEstimates audited),
+    packetLocalObjectEstimate_eq_packetLocalObject := by
+      intro _audited
+      rfl,
+    cuspClassLocalObject_eq_packetLocalObject := by
+      intro _audited _label
+      rfl,
+    zeroLocalObject_eq_packetLocalObject := by
+      intro _audited
+      rfl }
+
+open FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit in
+def toClassifiedInsulatedCuspZeroPacketBridgeAudit
+    (part :
+      audit.FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit l) :
+    audit.FLZModCuspLabelThetaClassifiedInsulatedCuspZeroPacketBridgeAudit l :=
+  ofDirectLocalLabelObjectConstruction
+    part.toInsulatedCuspZeroPacketBridgeAudit
+
+theorem insulatedPacketBridgeSource_eq_direct
+    (part :
+      audit.FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit l) :
+    part.toClassifiedInsulatedCuspZeroPacketBridgeAudit.bridge_source =
+      IUTStage1ZModPacketLocalObjectBridgeSource.directLocalLabelObjectConstruction :=
+  rfl
+
 end FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit
 
 namespace FLZModCuspLabelThetaDirectLocalPacketDirectCapsuleRouteAudit

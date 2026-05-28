@@ -1263,3 +1263,61 @@ placeAudited_logVolume_fl_zmod_classified_insulated_bridge_target_bound_example
 The classification is still user-supplied.  The next mathematical target is to
 connect one of the classifications, preferably the direct local construction
 branch, to already formalized direct packet-normalization/local-object data.
+
+## 124. Direct Identified Packet Route Produces the Insulated Bridge
+
+### Lean Move
+
+I added:
+
+```text
+FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit
+  .toInsulatedCuspZeroPacketBridgeAudit
+FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit
+  .toClassifiedInsulatedCuspZeroPacketBridgeAudit
+FLZModCuspLabelThetaDirectIdentifiedLocalPacketRouteAudit
+  .insulatedPacketBridgeSource_eq_direct
+```
+
+### Mathematical Reason
+
+The direct identified local packet route already contains:
+
+```text
+direct packet normalization data
+target capsule estimates
+cusp-class log-volume = packet local-object finite log-volume
+zero log-volume = packet local-object finite log-volume
+```
+
+From this data Lean can build the insulated route by choosing the packet local
+object as the branch object for each cusp class and for zero.  It then builds
+the packet bridge using the direct packet normalization container estimate.
+
+### Trap Avoided
+
+This does not make the insulated route collapse by itself.  It says that one
+specific source, the direct identified packet route, supplies the bridge that
+causes the comparison route.  The source tag is forced to:
+
+```text
+directLocalLabelObjectConstruction
+```
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_direct_identified_to_insulated_bridge_example
+placeAudited_logVolume_fl_zmod_direct_identified_to_classified_insulated_bridge_example
+placeAudited_logVolume_fl_zmod_direct_identified_insulated_bridge_source_example
+```
+
+### Remaining Gap
+
+The direct identified route is still an interface: it assumes the cusp/zero
+log-volume-to-local-object equalities.  The next step should investigate whether
+those equalities can be derived from packet-normalized equalities plus direct
+normalization, or whether they need a separate Hodge-theater/local-object
+construction.
