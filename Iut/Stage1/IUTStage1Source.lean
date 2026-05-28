@@ -12196,6 +12196,42 @@ theorem qSigned_le_thetaSigned_via_packet_local_object_container
   part.toThetaLocalObjectContainerAudit.qSigned_le_thetaSigned_via_local_object_container
     audited
 
+def toDirectLocalPacketNormalizedAudit
+    (part : audit.FLZModCuspLabelThetaPacketLocalObjectContainerAudit l)
+    (directNormalization :
+      ∀ audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind,
+        IUTStage1DirectPacketNormalizationData
+          audited.choice.local_tensor_state.packetState) :
+    audit.FLZModCuspLabelThetaDirectLocalPacketNormalizedAudit l :=
+  { theta_source := part.theta_source,
+    ind12_equality_part := part.ind12_equality_part,
+    ind3_upper_part := part.ind3_upper_part,
+    theta_images_eq_endpoint := part.theta_images_eq_endpoint,
+    cuspClassObjectEstimate := part.cuspClassObjectEstimate,
+    cuspClassObject_eq_packetLocalObject :=
+      part.cuspClassObject_eq_packetLocalObject,
+    cuspClassDirectNormalization := by
+      intro audited _label
+      exact directNormalization audited,
+    zeroObjectEstimate := part.zeroObjectEstimate,
+    zeroObject_eq_packetLocalObject := part.zeroObject_eq_packetLocalObject,
+    zeroDirectNormalization := directNormalization }
+
+def toDirectLocalPacketDirectCapsuleRouteAudit
+    (part : audit.FLZModCuspLabelThetaPacketLocalObjectContainerAudit l)
+    (directNormalization :
+      ∀ audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind,
+        IUTStage1DirectPacketNormalizationData
+          audited.choice.local_tensor_state.packetState)
+    (targetCapsuleEstimates :
+      ∀ audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind,
+        IUTStage1TypedCapsuleFamilyContainerEstimate
+          package.preLedger.targetVolume.targetSigned
+          audited.choice.local_tensor_state.packetState.capsuleFamily) :
+    audit.FLZModCuspLabelThetaDirectLocalPacketDirectCapsuleRouteAudit l :=
+  { direct_packet := part.toDirectLocalPacketNormalizedAudit directNormalization,
+    targetCapsuleEstimates := targetCapsuleEstimates }
+
 end FLZModCuspLabelThetaPacketLocalObjectContainerAudit
 
 namespace FLZModCuspLabelThetaPacketNormalizedContainerAudit

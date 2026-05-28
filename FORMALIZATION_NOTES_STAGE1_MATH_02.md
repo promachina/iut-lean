@@ -7917,3 +7917,65 @@ to model, from the original IUT local/cusp definitions, why each cusp-class and
 zero label supplies a local-object estimate attached to the same packet local
 object.  This is now the lowest-level real-line identification in the current
 route.
+
+## 101. Direct Local Packet Audit from Packet-Local-Object Estimates
+
+### Goal
+
+We reduced the direct local packet audit to packet-local-object estimates plus
+one direct packet-normalization certificate per audited packet.
+
+### Lean Move
+
+Inside:
+
+```text
+FLZModCuspLabelThetaPacketLocalObjectContainerAudit
+```
+
+we added:
+
+```text
+toDirectLocalPacketNormalizedAudit
+toDirectLocalPacketDirectCapsuleRouteAudit
+```
+
+The first constructor reuses the packet-local-object estimates and supplies the
+same direct packet-normalization data for all cusp labels and for zero.  The
+second adds the target capsule estimates needed for the direct capsule route.
+
+### Mathematical Point
+
+This shows that we do not need independent packet-normalization certificates
+for every cusp label.  It is enough to know:
+
+```text
+each cusp/zero estimate is attached to the packet local object
+the packet itself has direct normalization data
+the packet capsule family has target capsule estimates
+```
+
+From these, the later route constructs the target-to-Theta-average bound.
+
+### Trap Avoided
+
+We did not duplicate label-indexed normalization assumptions.  A single packet
+normalization datum is shared across all labels for the same audited packet,
+which better reflects that normalization belongs to the packet/capsule family,
+not separately to each cusp label.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_packet_local_object_to_direct_packet_example
+placeAudited_logVolume_fl_zmod_packet_local_object_to_direct_route_example
+```
+
+### Remaining Gap
+
+The lowest-level open problem in the current route is now the construction of
+the packet-local-object estimates themselves from more primitive local/cusp
+data.  This is where the formalization must eventually encode the actual local
+objects behind the `ZMod` cusp-label bridge.
