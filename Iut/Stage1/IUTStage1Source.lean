@@ -1954,6 +1954,58 @@ theorem unlabeled_collapse_rejected
 
 end IUTStage1DistinctLabelIntertwiningTransport
 
+/--
+Remark 3.12.2 toy-model upper-ray calculation.
+
+In the toy model `(atoy)--(ftoy)`, forgetting the labels on the two real-line
+copies makes the concrete assignments `* ↦ -h` and `* ↦ -2h` incompatible for
+`h > 0`.  Replacing the second assignment by the indeterminate upper ray
+`R_{≤ -2h + epsilon}` makes the final formal step the elementary inequality
+`-h ≤ -2h + epsilon`, hence `h ≤ epsilon`.
+-/
+structure IUTStage1ToyIntertwiningUpperRayBound where
+  h : Real
+  epsilon : Real
+  h_pos : 0 < h
+  epsilon_pos : 0 < epsilon
+  qAssignment : Real
+  thetaUpperRayBound : Real
+  q_assignment_eq_neg_h : qAssignment = -h
+  theta_upperRay_bound_eq :
+    thetaUpperRayBound = -2 * h + epsilon
+  q_assignment_mem_theta_upperRay :
+    qAssignment <= thetaUpperRayBound
+
+namespace IUTStage1ToyIntertwiningUpperRayBound
+
+def thetaUpperRay
+    (data : IUTStage1ToyIntertwiningUpperRayBound) : Set Real :=
+  { value | value <= data.thetaUpperRayBound }
+
+theorem qAssignment_mem_thetaUpperRay
+    (data : IUTStage1ToyIntertwiningUpperRayBound) :
+    data.qAssignment ∈ data.thetaUpperRay :=
+  data.q_assignment_mem_theta_upperRay
+
+theorem forgotten_concrete_assignments_incompatible
+    (data : IUTStage1ToyIntertwiningUpperRayBound) :
+    (-data.h : Real) ≠ -2 * data.h := by
+  intro hEq
+  linarith [data.h_pos]
+
+theorem neg_h_le_neg_two_h_plus_epsilon
+    (data : IUTStage1ToyIntertwiningUpperRayBound) :
+    (-data.h : Real) <= -2 * data.h + data.epsilon := by
+  rw [← data.q_assignment_eq_neg_h, ← data.theta_upperRay_bound_eq]
+  exact data.q_assignment_mem_theta_upperRay
+
+theorem h_le_epsilon
+    (data : IUTStage1ToyIntertwiningUpperRayBound) :
+    data.h <= data.epsilon := by
+  linarith [data.neg_h_le_neg_two_h_plus_epsilon]
+
+end IUTStage1ToyIntertwiningUpperRayBound
+
 namespace IUTStage1FiniteLocalLogVolumeObject
 
 variable {kind : IUTStage1PlaceKind}
