@@ -13041,6 +13041,49 @@ theorem one_normalizedLogVolume_eq_canonicalCuspClassLocalObjectFinite
       part.cuspClassLogVolume_eq_localObjectFinite
         audited (zmodCanonicalSignLabelQuotient l)
 
+theorem neg_normalizedLogVolume_eq_cuspClassLocalObjectFinite
+    (part : audit.FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume (-j) =
+      (part.cuspClassLocalObject audited
+        (zmodSignLabelFromCoordinate l j hj)).finiteLogVolume := by
+  calc
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume (-j) =
+        (part.theta_source.compatible_average.cuspLogVolume audited).normalizedLogVolume
+          (-j) :=
+      part.theta_source.compatible_average.normalizedLogVolumeEq audited (-j)
+    _ =
+        (part.theta_source.compatible_average.cuspLogVolume audited).cuspClassLogVolume
+          (zmodSignLabelFromCoordinate l j hj) :=
+      (part.theta_source.compatible_average.cuspLogVolume audited).neg_nonzero_eq j hj
+    _ = (part.cuspClassLocalObject audited
+          (zmodSignLabelFromCoordinate l j hj)).finiteLogVolume :=
+      part.cuspClassLogVolume_eq_localObjectFinite
+        audited (zmodSignLabelFromCoordinate l j hj)
+
+theorem neg_one_normalizedLogVolume_eq_canonicalCuspClassLocalObjectFinite
+    (part : audit.FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume (-(1 : ZMod l.value)) =
+      (part.cuspClassLocalObject audited
+        (zmodCanonicalSignLabelQuotient l)).finiteLogVolume := by
+  calc
+    (part.theta_source.compatible_average.zmod_cusp_audit.averaged_audit.averagedLogVolume
+        audited).normalizedLogVolume (-(1 : ZMod l.value)) =
+        (part.cuspClassLocalObject audited
+          (zmodSignLabelFromCoordinate l (1 : ZMod l.value)
+            (zmodOneNonzeroLabel l).2)).finiteLogVolume :=
+      part.neg_normalizedLogVolume_eq_cuspClassLocalObjectFinite
+        audited (1 : ZMod l.value) (zmodOneNonzeroLabel l).2
+    _ =
+        (part.cuspClassLocalObject audited
+          (zmodCanonicalSignLabelQuotient l)).finiteLogVolume := by
+      rw [zmodSignLabelFromCoordinate_one_eq_canonical]
+
 end FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit
 
 namespace FLZModCuspLabelThetaPacketNormalizedContainerAudit

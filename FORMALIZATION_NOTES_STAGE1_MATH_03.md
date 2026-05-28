@@ -859,3 +859,54 @@ coordinate `1`.  The next useful step is to expose the analogous sign-orbit
 invariance for `-1` and then for arbitrary nonzero coordinates modulo sign, so
 that the quotient behavior is available in the local-object route rather than
 only in the raw compatibility structure.
+
+## 117. Sign-Pair Invariance in the Cusp/Zero Local-Object Route
+
+### Lean Move
+
+I added:
+
+```text
+FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit
+  .neg_normalizedLogVolume_eq_cuspClassLocalObjectFinite
+FLZModCuspLabelThetaCuspZeroLocalLabelObjectConstructionAudit
+  .neg_one_normalizedLogVolume_eq_canonicalCuspClassLocalObjectFinite
+```
+
+The first theorem says that if `j != 0`, then the label `-j` has the finite
+log-volume of the same cusp-class local object selected by `j`.  The second is
+the canonical specialization for the sign pair `{1, -1}`.
+
+### Mathematical Reason
+
+The local cusp labels are not ordinary `ZMod l` labels after passing to cusp
+classes; nonzero coordinates are quotiented by the sign action.  The theorem
+uses the existing compatibility result:
+
+```text
+IUTStage1ZModCuspLabelLogVolumeCompatibility.neg_nonzero_eq
+```
+
+and lifts it into the local-object route.  This keeps the sign quotient visible
+at the point where log-volumes are tied to finite local objects.
+
+### Trap Avoided
+
+The proof still requires `j != 0`.  Thus the sign-pair theorem only applies to
+the nonzero quotient and cannot be used to smuggle the zero label into a cusp
+class.
+
+### Toy Check
+
+The examples now check:
+
+```text
+placeAudited_logVolume_fl_zmod_cusp_zero_label_object_neg_eq_example
+placeAudited_logVolume_fl_zmod_cusp_zero_label_object_neg_one_eq_example
+```
+
+### Remaining Gap
+
+The route now knows that opposite nonzero coordinates share a cusp-class local
+object.  The next useful refinement is to expose this at the level of local
+objects themselves, not only at the level of their finite log-volumes.
