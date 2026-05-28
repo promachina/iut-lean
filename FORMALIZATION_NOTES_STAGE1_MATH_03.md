@@ -5187,3 +5187,63 @@ after the summand is actually shown to be full-label based.  Our representative
 `j.val^2` branch has not passed that test; the balanced branch has.  This keeps
 the formalization honest about where the disputed additional argument must
 enter.
+
+## 172. Constant-One Log-Volume Still Does Not Save Representative Summands
+
+### Lean Move
+
+We introduced the coordinate-dependent representative summand:
+
+```text
+representativeFullLabelWeightedSummand
+representativeFullLabelWeightedSummand_constant_one
+coordinateSquarePreserving_neg_of_representativeSummand_constant_one_preserved
+not_representativeSummand_constant_one_preserved_neg
+```
+
+For constant-one log-volume, Lean computes:
+
+```text
+representativeFullLabelWeightedSummand constantOne j = (j.val)^2.
+```
+
+Therefore, if this representative summand were preserved by negation for every
+`j`, then negation would preserve the real representative square profile.  Lean
+already proved that this is false for every `l >= 5`, so it proves:
+
+```text
+not forall j,
+  representativeFullLabelWeightedSummand constantOne (-j)
+    = representativeFullLabelWeightedSummand constantOne j.
+```
+
+### Mathematical Reason
+
+This removes one possible escape hatch.  The failure is not caused by a
+pathological log-volume family.  Even when the log-volume part is the constant
+function `1`, the representative summand is just the representative square, and
+the sign-transport obstruction remains.
+
+The balanced branch remains transportable because its weight descends to full
+labels.  The representative branch remains coordinate-dependent even in the
+simplest log-volume situation.
+
+### Source Check
+
+Corollary 3.12 concerns weighted log-volume comparisons.  Scholze-Stix's
+criticism targets the real-valued comparison after the relevant identifications.
+This milestone shows that the representative-weight obstruction survives at the
+summand level independently of log-volume variation.
+
+### Relevance to the 3.12 Dispute
+
+The formal warning is now very narrow:
+
+```text
+full-label transport + constant log-volume
+does not imply representative j.val^2 summand transport.
+```
+
+Thus the disputed `3.11.5 => 3.12` step cannot be justified merely by saying
+that the log-volume data are full-label compatible.  The representative square
+factor itself needs a source-authorized transport mechanism.

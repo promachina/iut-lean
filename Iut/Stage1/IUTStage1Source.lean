@@ -2109,6 +2109,12 @@ noncomputable def balancedFullLabelWeightedSummand
   balancedSquareWeightOnFullLabel (l := l) label *
     compat.fullLabelLogVolume label
 
+noncomputable def representativeFullLabelWeightedSummand
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (j : ZMod l.value) : Real :=
+  ((j.val : Real) ^ 2) *
+    compat.fullLabelLogVolume (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+
 theorem balancedFullLabelWeightedSummand_fromCoordinate
     (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
     (j : ZMod l.value) :
@@ -2119,6 +2125,18 @@ theorem balancedFullLabelWeightedSummand_fromCoordinate
   unfold balancedFullLabelWeightedSummand
   rw [balancedSquareWeightOnFullLabel_fromCoordinate]
   rw [compat.normalizedLogVolume_eq_fullLabelLogVolume_fromCoordinate]
+
+theorem representativeFullLabelWeightedSummand_constant_one
+    (j : ZMod l.value) :
+    representativeFullLabelWeightedSummand
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+          (l := l) (1 : Real)) j =
+      ((j.val : Real) ^ 2) := by
+  unfold representativeFullLabelWeightedSummand
+  rw [IUTStage1ZModCuspLabelLogVolumeCompatibility.constant_fullLabelLogVolume_fromCoordinate
+    (l := l) (1 : Real) j]
+  ring
 
 theorem fullLabelSummand_preserved_of_fullLabelMap
     {coordinateEquiv : ZMod l.value ≃ ZMod l.value}
@@ -2312,6 +2330,41 @@ theorem not_exists_representativeSquareUnitSummandOnFullLabel :
       rw [IUTStage1ZModCuspLabelLogVolumeCompatibility.constant_fullLabelLogVolume_fromCoordinate
         (l := l) (1 : Real) j] at h
       simpa using h⟩
+
+theorem coordinateSquarePreserving_neg_of_representativeSummand_constant_one_preserved
+    (hsummand :
+      ∀ j : ZMod l.value,
+        representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real)) (-j) =
+          representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real)) j) :
+    CoordinateSquarePreserving
+      (l := l) (Equiv.neg (ZMod l.value)) := by
+  intro j
+  change (((-j).val : Real) ^ 2) = ((j.val : Real) ^ 2)
+  have h := hsummand j
+  rw [representativeFullLabelWeightedSummand_constant_one,
+    representativeFullLabelWeightedSummand_constant_one] at h
+  exact h
+
+theorem not_representativeSummand_constant_one_preserved_neg :
+    ¬ ∀ j : ZMod l.value,
+      representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real)) (-j) =
+        representativeFullLabelWeightedSummand
+          (l := l)
+          (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+            (l := l) (1 : Real)) j := by
+  intro hsummand
+  exact not_coordinateSquarePreserving_neg
+    (coordinateSquarePreserving_neg_of_representativeSummand_constant_one_preserved
+      hsummand)
 
 theorem squareWeight_preserved_of_coordinateSquarePreserving
     (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
