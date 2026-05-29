@@ -172,7 +172,10 @@ The code currently covers:
   \(\deg(q)=0\);
   Lean now also converts such an evaluation into a cusp/full-label log-volume
   compatibility object and proves the full-label value-preservation branch when
-  the source and target environment degrees agree; Lean also proves the IUT II
+  the source and target environment degrees agree.  Conversely, Lean proves
+  that full-label value preservation for two Gaussian evaluations is equivalent
+  to equality of their environment degrees, and this equality is already
+  detected at the canonical \(j=1\) component.  Lean also proves the IUT II
   restriction check at the canonical \(j=1\) sign label:
   the Gaussian component and the corresponding cusp-class log-volume are both
   the original environment degree; Lean also records the accompanying IUT II
@@ -842,7 +845,9 @@ full-label-map preservation, equal source/target environment degree, and
 environment degree bounded above by the \(\Theta\)-source average.  In the
 identity-coordinate case, Lean now supplies the coordinate-square and
 full-label-map preservation branches internally, so this route only asks for
-equal Gaussian environment degree and the nonpositive environment comparison.
+equal Gaussian environment degree and the nonpositive environment comparison;
+equivalently, the equal-environment input may be replaced by equality of the
+canonical \(j=1\) Gaussian components.
 The
 zero/nonzero average split is now exact: the nonzero carrier has cardinality
 \(\ell-1=2j_{\max}\), the signed carrier is a twofold cover of the nonzero

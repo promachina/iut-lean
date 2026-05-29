@@ -6111,6 +6111,64 @@ theorem gaussianDegree_one
     thetaExponentOnAbsLabel_one]
   ring
 
+theorem environmentDegree_eq_of_gaussianDegree_one_eq
+    (sourceEvaluation targetEvaluation : GaussianMonoidDegreeEvaluation l)
+    (hone :
+      targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    targetEvaluation.environmentDegree =
+      sourceEvaluation.environmentDegree := by
+  rw [targetEvaluation.gaussianDegree_one,
+    sourceEvaluation.gaussianDegree_one] at hone
+  exact hone
+
+theorem gaussianDegree_one_eq_iff_environmentDegree_eq
+    (sourceEvaluation targetEvaluation : GaussianMonoidDegreeEvaluation l) :
+    targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ↔
+      targetEvaluation.environmentDegree =
+        sourceEvaluation.environmentDegree := by
+  constructor
+  · exact sourceEvaluation.environmentDegree_eq_of_gaussianDegree_one_eq
+      targetEvaluation
+  · intro henv
+    rw [targetEvaluation.gaussianDegree_one,
+      sourceEvaluation.gaussianDegree_one, henv]
+
+theorem environmentDegree_eq_of_fullLabelLogVolumeValuePreserving
+    (sourceEvaluation targetEvaluation : GaussianMonoidDegreeEvaluation l)
+    (hvalue :
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        sourceEvaluation.toCuspLabelLogVolumeCompatibility
+        targetEvaluation.toCuspLabelLogVolumeCompatibility) :
+    targetEvaluation.environmentDegree =
+      sourceEvaluation.environmentDegree := by
+  have hone :=
+    hvalue
+      (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  rw [targetEvaluation.toCuspLabelLogVolumeCompatibility_fullLabelLogVolume,
+    sourceEvaluation.toCuspLabelLogVolumeCompatibility_fullLabelLogVolume,
+    targetEvaluation.gaussianDegree_one,
+    sourceEvaluation.gaussianDegree_one] at hone
+  exact hone
+
+theorem fullLabelLogVolumeValuePreserving_iff_environmentDegree_eq
+    (sourceEvaluation targetEvaluation : GaussianMonoidDegreeEvaluation l) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        sourceEvaluation.toCuspLabelLogVolumeCompatibility
+        targetEvaluation.toCuspLabelLogVolumeCompatibility ↔
+      targetEvaluation.environmentDegree =
+        sourceEvaluation.environmentDegree := by
+  constructor
+  · exact sourceEvaluation.environmentDegree_eq_of_fullLabelLogVolumeValuePreserving
+      targetEvaluation
+  · exact sourceEvaluation.fullLabelLogVolumeValuePreserving_of_environmentDegree_eq
+      targetEvaluation
+
 theorem gaussianDegree_two
     (evaluation : GaussianMonoidDegreeEvaluation l) :
     evaluation.gaussianDegree
@@ -24665,6 +24723,38 @@ theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityNonzeroEnvironment
     IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_refl
     environmentDegree_preserved source_profile_eq source_log_volume_eq
     target_environment_nonpositive environment_le_thetaAverage
+
+theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOne
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (canonical_one_preserved :
+      targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (source_profile_eq : profile = sourceProfile)
+    (source_log_volume_eq :
+      part.theta_source.compatible_average.cuspLogVolume audited =
+        sourceEvaluation.toCuspLabelLogVolumeCompatibility)
+    (target_environment_nonpositive :
+      targetEvaluation.environmentDegree <= 0)
+    (environment_le_thetaAverage :
+      targetEvaluation.environmentDegree <=
+        part.theta_source.thetaSourceAverage audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityNonzeroEnvironment
+    (bundle := bundle)
+    profile audited sourceProfile targetProfile
+    sourceEvaluation targetEvaluation
+    (sourceEvaluation.environmentDegree_eq_of_gaussianDegree_one_eq
+      targetEvaluation canonical_one_preserved)
+    source_profile_eq source_log_volume_eq target_environment_nonpositive
+    environment_le_thetaAverage
 
 theorem targetSigned_le_thetaSourceAverage_via_squareWeightedAverage
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
