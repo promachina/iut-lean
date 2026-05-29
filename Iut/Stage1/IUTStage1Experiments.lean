@@ -5454,14 +5454,9 @@ theorem balancedNeg_preservesGaussianAndBalanced_rejectsRepresentative
             (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
               (l := l) (1 : Real))
             j := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro j
-    by_cases hj : j = 0
-    · simp [IUTStage1BalancedSquareFullLabelTransport.negSelf, hj]
-    · simpa [IUTStage1BalancedSquareFullLabelTransport.negSelf] using
-        evaluation.gaussianDegree_neg_fromCoordinate_eq j hj
-  · exact balancedNeg_preservesBalancedWeights logVolume
-  · exact balancedNeg_failsRepresentativeSummands logVolume
+  open IUTStage1BalancedSquareFullLabelTransport in
+  exact negSelf_gaussian_balanced_preserved_and_representative_fails
+    evaluation logVolume
 
 theorem balancedNeg_levelIsNotPointwise
     {l : PrimeGeFive}

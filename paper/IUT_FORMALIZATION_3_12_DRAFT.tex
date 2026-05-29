@@ -355,7 +355,8 @@ The code currently covers:
   Lean exposes this as a direct
   diagnostic: the affine action \(j\mapsto -j\) preserves Gaussian degrees
   pointwise but does not preserve the representative \(j^2\) coordinate-square
-  profile.  Lean now packages the sign-negation case at the transport level:
+  profile.  Lean now packages the sign-negation case as a source-layer
+  transport theorem:
   the balanced self-transport \(j\mapsto -j\) simultaneously preserves all
   Gaussian degrees and all balanced square weights, while it fails preservation
   of the representative constant-one square-weighted summands.  This is a

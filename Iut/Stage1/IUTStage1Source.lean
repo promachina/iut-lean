@@ -11561,6 +11561,41 @@ theorem negSelf_balanced_preserved_and_representative_fails
   ⟨(negSelf logVolume).balancedSquareWeight_preserved,
     negSelf_not_representativeSummand_constant_one_preserved logVolume⟩
 
+theorem negSelf_gaussian_balanced_preserved_and_representative_fails
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    (∀ j : ZMod l.value,
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            ((negSelf logVolume).coordinateEquiv j)) =
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      (∀ j : ZMod l.value,
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+            (l := l) ((negSelf logVolume).coordinateEquiv j) =
+          IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+            (l := l) j) ∧
+      ¬ ∀ j : ZMod l.value,
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real))
+            ((negSelf logVolume).coordinateEquiv j) =
+          IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real))
+            j := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro j
+    by_cases hj : j = 0
+    · simp [negSelf, hj]
+    · simpa [negSelf] using
+        evaluation.gaussianDegree_neg_fromCoordinate_eq j hj
+  · exact (negSelf logVolume).balancedSquareWeight_preserved
+  · exact negSelf_not_representativeSummand_constant_one_preserved logVolume
+
 end IUTStage1BalancedSquareFullLabelTransport
 
 /--
