@@ -813,6 +813,9 @@ bound still holds whenever the Gaussian environment degree is bounded by that
 same average.  With the remaining endpoint hypotheses, this same negative
 \(\Theta\)-branch still yields the final \(q_{\mathrm{signed}}\le
 \Theta_{\mathrm{signed}}\) route through the nonzero-bound endpoint; the
+target nonpositive-environment hypothesis is then available, but the
+nonnegative-\(\Theta\) hypothesis of the nonpositive/nonnegative all-label
+endpoint is impossible.  The
 source-supplied nonzero/environment formulation gives the same conclusion and
 rejects both source and target all-label bounds.  More
 generally, Lean decomposes the all-label Gaussian bound
@@ -885,6 +888,8 @@ nonzero-label bound under the environment comparison; the separated
 nonzero-label branch also feeds the final \(q\)-to-\(\Theta\) theorem, both
 from target-side and source-side environment data.  In the source-side version,
 Lean rejects both all-label predicates while retaining the final comparison.
+For the target-side nonpositive/nonnegative endpoint, Lean isolates the failed
+premise as \(0\le\Theta_{\mathrm{avg}}\), not target nonpositivity.
 On the nonzero-label part, the formal
 obstruction disappears:
 exponent \(\ge1\) gives the expected bound from the environment comparison.  The
