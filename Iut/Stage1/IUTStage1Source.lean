@@ -5353,6 +5353,61 @@ theorem thetaFiniteLogVolumeEndpoint
       endpoint.thetaRealLogVolume_eq_hull,
       endpoint.qPilotLogVolume_le_thetaRealLogVolume⟩
 
+def toThetaPilotTensorPowerLogVolume
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (tensorPower : Nat)
+    (tensor_power_ge_two : 2 ≤ tensorPower) :
+    IUTStage1ThetaPilotTensorPowerLogVolume :=
+  { originalThetaPilotLogVolume := data.thetaHullLogVolume,
+    tensorPower := tensorPower,
+    tensor_power_ge_two := tensor_power_ge_two,
+    tensorPowerLogVolume :=
+      (tensorPower : Real) * data.thetaHullLogVolume,
+    tensor_power_logVolume_eq := rfl }
+
+theorem thetaFinite_tensorPower_warning
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (tensorPower : Nat)
+    (tensor_power_ge_two : 2 ≤ tensorPower)
+    (theta_neg : data.thetaHullLogVolume < 0) :
+    let finite := data.toThetaFiniteLogVolumeEndpoint;
+    let tensor :=
+      data.toThetaPilotTensorPowerLogVolume
+        tensorPower tensor_power_ge_two;
+    tensor.tensorPowerLogVolume < finite.thetaRealLogVolume ∧
+      tensor.tensorPowerUpperRay ⊆ finite.upperRayData.upperRay ∧
+      finite.thetaRealLogVolume ∉ tensor.tensorPowerUpperRay := by
+  intro finite tensor
+  have hTensorNeg : tensor.originalThetaPilotLogVolume < 0 := by
+    simpa [toThetaPilotTensorPowerLogVolume] using theta_neg
+  have hFinite :
+      finite.thetaRealLogVolume = tensor.originalThetaPilotLogVolume := by
+    simpa [toThetaPilotTensorPowerLogVolume] using
+      finite.thetaRealLogVolume_eq_hull
+  exact
+    ⟨by
+      calc
+        tensor.tensorPowerLogVolume <
+            tensor.originalThetaPilotLogVolume :=
+          tensor.tensorPowerLogVolume_lt_original_of_original_neg hTensorNeg
+        _ = finite.thetaRealLogVolume := hFinite.symm,
+    by
+      intro value hvalue
+      have hleOriginal :
+          value <= tensor.originalThetaPilotLogVolume :=
+        le_trans hvalue
+          (tensor.tensorPowerLogVolume_le_original_of_original_nonpos
+            (le_of_lt hTensorNeg))
+      simpa [IUTStage1HullDetPilotUpperRayLogVolume.upperRay, hFinite]
+        using hleOriginal,
+    by
+      intro hmem
+      have hnot :=
+        tensor.originalBoundary_not_mem_tensorPowerUpperRay_of_original_neg
+          hTensorNeg
+      rw [hFinite] at hmem
+      exact hnot hmem⟩
+
 theorem ofZModCuspLabelLogVolumeCompatibilities_q_mem_upperRay
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :
@@ -5421,6 +5476,47 @@ theorem ofZModCuspLabelLogVolumeCompatibilities_thetaFiniteEndpoint
         endpoint.thetaRealLogVolume := by
   intro data endpoint
   exact data.thetaFiniteLogVolumeEndpoint
+
+theorem ofZModCuspLabelLogVolumeCompatibilities_thetaFinite_tensorPower_warning
+    {l : PrimeGeFive}
+    (before afterInd1 afterInd2 :
+      IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (ind3UpperBound : Real)
+    (hind1 :
+      ∀ j : ZMod l.value,
+        before.normalizedLogVolume j =
+          afterInd1.normalizedLogVolume j)
+    (hind2 :
+      ∀ j : ZMod l.value,
+        afterInd1.normalizedLogVolume j =
+          afterInd2.normalizedLogVolume j)
+    (hzero : afterInd2.zeroLogVolume <= ind3UpperBound)
+    (hcusp : ∀ label : (zmodSignAction l).SignLabelQuotient,
+      afterInd2.cuspClassLogVolume label <= ind3UpperBound)
+    (determinant :
+      IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (thetaHullLogVolume : Real)
+    (theta_eq_ind3Upper :
+      thetaHullLogVolume = ind3UpperBound)
+    (theta_eq_normalized_determinant :
+      thetaHullLogVolume = determinant.normalizedLogVolume)
+    (tensorPower : Nat)
+    (tensor_power_ge_two : 2 ≤ tensorPower)
+    (theta_neg : thetaHullLogVolume < 0) :
+    let data :=
+      ofZModCuspLabelLogVolumeCompatibilities before afterInd1 afterInd2
+        ind3UpperBound hind1 hind2 hzero hcusp determinant thetaHullLogVolume
+        theta_eq_ind3Upper theta_eq_normalized_determinant;
+    let finite := data.toThetaFiniteLogVolumeEndpoint;
+    let tensor :=
+      data.toThetaPilotTensorPowerLogVolume
+        tensorPower tensor_power_ge_two;
+    tensor.tensorPowerLogVolume < finite.thetaRealLogVolume ∧
+      tensor.tensorPowerUpperRay ⊆ finite.upperRayData.upperRay ∧
+      finite.thetaRealLogVolume ∉ tensor.tensorPowerUpperRay := by
+  intro data finite tensor
+  exact data.thetaFinite_tensorPower_warning
+    tensorPower tensor_power_ge_two theta_neg
 
 def toQPilotTwoComputationLogVolume
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
