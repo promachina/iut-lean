@@ -7063,6 +7063,25 @@ theorem not_forall_coordinateFullLabel_le_of_negative_bound
       coordinateEquiv hbound
   linarith
 
+theorem forall_coordinateFullLabel_le_iff_bound_nonnegative
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
+    (henv_nonpos : evaluation.environmentDegree <= 0)
+    {c : Real} :
+    (∀ j : ZMod l.value,
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (coordinateEquiv j)) <= c) ↔
+      0 <= c := by
+  constructor
+  · exact evaluation.forall_coordinateFullLabel_le_implies_bound_nonnegative
+      coordinateEquiv
+  · intro hc j
+    exact
+      evaluation.gaussianDegree_le_of_environment_nonpositive_of_nonnegative_bound
+        henv_nonpos hc
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (coordinateEquiv j))
+
 theorem forall_coordinateFullLabel_nonzero_le_iff_environment_le_bound
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
