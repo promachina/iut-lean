@@ -813,7 +813,8 @@ corresponding nonzero-label bound.  The corresponding identity-coordinate final
 route can now be stated directly from canonical \(j=1\) equality, nonpositive
 target environment, and nonnegative \(\Theta\)-source average; if the all-label
 Gaussian target bound is supplied directly, the same endpoint no longer needs
-the nonpositive/nonnegative branch hypotheses.  The nonzero environment route
+the nonpositive/nonnegative branch hypotheses, and its proof also uses only the
+nonzero-label part of the supplied all-label target bound.  The nonzero environment route
 also has a source-side variant: canonical \(j=1\) equality transports
 nonpositivity and the comparison with the \(\Theta\)-source average from the
 source environment degree to the target environment degree.  Lean also proves
@@ -905,7 +906,9 @@ that predicate from nonpositive target environment and nonnegative
 \(\Theta\)-source average.  Lean also records the inclusion from the all-label
 predicate to the nonzero-label predicate used by the weighted-summand route,
 and the converse after adding the zero-label nonnegativity condition; the
-corresponding direct endpoint is exposed with this decomposed input.
+corresponding direct endpoint is exposed with this decomposed input.  The
+target all-label endpoint is now implemented by this same nonzero/square-weighted
+route rather than by a full all-label factored bound.
 The
 zero/nonzero average split is now exact: the nonzero carrier has cardinality
 \(\ell-1=2j_{\max}\), the signed carrier is a twofold cover of the nonzero

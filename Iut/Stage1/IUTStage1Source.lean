@@ -25047,26 +25047,13 @@ theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneAllLab
       targetEvaluation.environmentDegree <= 0)
     (theta_average_nonnegative :
       0 <= part.theta_source.thetaSourceAverage audited) :
-    package.preLedger.qSigned <= package.preLedger.thetaSigned := by
-  let factored :=
-    IUTStage1StructuredSHEFactoredSquareFullLabelObligations.fromGaussianDegreeEvaluations
-      (package := package) (bundle := bundle)
-      (Equiv.refl (ZMod l.value)) sourceProfile targetProfile
-      sourceEvaluation targetEvaluation
-      IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_refl
-      IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_refl
-      (sourceEvaluation.environmentDegree_eq_of_gaussianDegree_one_eq
-        targetEvaluation canonical_one_preserved)
-  exact part.qSigned_le_thetaSigned_via_factoredSHEBound
-    profile audited factored source_profile_eq source_log_volume_eq
-    (by
-      intro j
-      dsimp [factored,
-        IUTStage1StructuredSHEFactoredSquareFullLabelObligations.fromGaussianDegreeEvaluations]
-      rw [targetEvaluation.toCuspLabelLogVolumeCompatibility_fullLabelLogVolume]
-      exact targetEvaluation.gaussianDegree_le_of_environment_nonpositive_of_nonnegative_bound
-        target_environment_nonpositive theta_average_nonnegative
-        (IUTStage1ZModCuspFullLabel.fromCoordinate l j))
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOne
+    (bundle := bundle)
+    profile audited sourceProfile targetProfile sourceEvaluation targetEvaluation
+    canonical_one_preserved source_profile_eq source_log_volume_eq
+    target_environment_nonpositive
+    (le_trans target_environment_nonpositive theta_average_nonnegative)
 
 theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneAllLabelBound
     {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
@@ -25100,10 +25087,10 @@ theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneAllLab
       IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_refl
       (sourceEvaluation.environmentDegree_eq_of_gaussianDegree_one_eq
         targetEvaluation canonical_one_preserved)
-  exact part.qSigned_le_thetaSigned_via_factoredSHEBound
+  exact part.qSigned_le_thetaSigned_via_factoredSHENonzeroBound
     profile audited factored source_profile_eq source_log_volume_eq
     (by
-      intro j
+      intro j _hj
       dsimp [factored,
         IUTStage1StructuredSHEFactoredSquareFullLabelObligations.fromGaussianDegreeEvaluations]
       rw [targetEvaluation.toCuspLabelLogVolumeCompatibility_fullLabelLogVolume]
