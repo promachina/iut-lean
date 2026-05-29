@@ -2085,6 +2085,18 @@ theorem qPilotLogVolume_le_thetaRealLogVolume
       data.thetaRealLogVolume :=
   data.finiteEndpoint.qPilotLogVolume_le_thetaRealLogVolume
 
+theorem qPilotLogVolume_neg
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.finiteEndpoint.upperRayData.qPilotLogVolume < 0 := by
+  linarith [data.q_pilot_positive]
+
+theorem qPilotLogVolume_lt_thetaRealLogVolume_of_theta_nonneg
+    (data : IUTStage1Corollary312StatementEndpoint)
+    (hTheta : 0 <= data.thetaRealLogVolume) :
+    data.finiteEndpoint.upperRayData.qPilotLogVolume <
+      data.thetaRealLogVolume :=
+  lt_of_lt_of_le data.qPilotLogVolume_neg hTheta
+
 theorem thetaRealLogVolume_le_cTheta_absLogQ
     (data : IUTStage1Corollary312StatementEndpoint) :
     data.thetaRealLogVolume <=

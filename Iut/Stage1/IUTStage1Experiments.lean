@@ -1171,6 +1171,18 @@ theorem corollary312StatementEndpoint_q_le_realTheta
       data.thetaRealLogVolume :=
   data.qPilotLogVolume_le_thetaRealLogVolume
 
+theorem corollary312StatementEndpoint_q_neg
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.finiteEndpoint.upperRayData.qPilotLogVolume < 0 :=
+  data.qPilotLogVolume_neg
+
+theorem corollary312StatementEndpoint_trivial_nonneg_theta_case
+    (data : IUTStage1Corollary312StatementEndpoint)
+    (hTheta : 0 <= data.thetaRealLogVolume) :
+    data.finiteEndpoint.upperRayData.qPilotLogVolume <
+      data.thetaRealLogVolume :=
+  data.qPilotLogVolume_lt_thetaRealLogVolume_of_theta_nonneg hTheta
+
 theorem corollary312StatementEndpoint_realTheta_le_cTheta_absLogQ
     (data : IUTStage1Corollary312StatementEndpoint) :
     data.thetaRealLogVolume <=
