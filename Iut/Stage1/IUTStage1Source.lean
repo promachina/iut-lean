@@ -6328,6 +6328,20 @@ theorem standardQLambdaCTheta_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
   rw [data.q_eq_beforeAverage]
   exact hbefore
 
+theorem standardQLambdaCTheta_qPilot_eq_determinantLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    data.qPilotLogVolume = data.determinant.determinantLogVolume := by
+  rw [data.standardQLambdaCTheta_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
+    q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ hC,
+    data.thetaHullLogVolume_eq_determinantLogVolume]
+
 theorem cTheta_ge_neg_one
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (q_pilot_positive :
