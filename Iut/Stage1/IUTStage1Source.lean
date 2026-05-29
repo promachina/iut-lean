@@ -6357,6 +6357,49 @@ theorem cTheta_ge_neg_one
   (data.toQPilotTwoComputationCThetaEndpoint
     q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ).cTheta_ge_neg_one
 
+def toStatementEndpoint
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    IUTStage1Corollary312StatementEndpoint :=
+  (data.toQPilotTwoComputationCThetaEndpoint
+    q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ).toStatementEndpoint
+      pilotBoundary
+
+theorem statementEndpoint_thetaExtendedFinite
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+      thetaHull_le_cTheta_absLogQ).finiteEndpoint.thetaExtended.IsFinite :=
+  (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+    thetaHull_le_cTheta_absLogQ).thetaExtendedFinite
+
+theorem statementEndpoint_cTheta_ge_neg_one
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    (-1 : Real) <=
+      (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ).cTheta :=
+  (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+    thetaHull_le_cTheta_absLogQ).cTheta_ge_neg_one
+
 end IUTStage1StepXToHullUpperRayLogVolume
 
 namespace IUTStage1WeightedLabelAveragedProcessionLogVolume
