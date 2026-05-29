@@ -8472,6 +8472,32 @@ theorem fullLabel_card_eq_half_plus_one (l : PrimeGeFive) :
   rw [fullLabel_card_eq_procession,
     absLabelProcession_card_eq_half_plus_one]
 
+theorem fullLabel_sum_eq_procession_sum
+    (f : IUTStage1ZModCuspFullLabel l -> Real) :
+    (Finset.univ.sum f) =
+      Finset.univ.sum fun label :
+        IUTStage1ProcessionContainer (absLabelProcessionTop l) =>
+          f (absLabelFromProcession l label) := by
+  symm
+  exact Fintype.sum_equiv (absLabelProcessionEquivFullLabel (l := l))
+    (fun label : IUTStage1ProcessionContainer (absLabelProcessionTop l) =>
+      f (absLabelFromProcession l label))
+    f
+    (by
+      intro label
+      rw [absLabelProcessionEquivFullLabel_apply])
+
+theorem fullLabel_average_eq_procession_average
+    (f : IUTStage1ZModCuspFullLabel l -> Real) :
+    (Finset.univ.sum f) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) =
+      (Finset.univ.sum fun label :
+        IUTStage1ProcessionContainer (absLabelProcessionTop l) =>
+          f (absLabelFromProcession l label)) /
+        (Fintype.card
+          (IUTStage1ProcessionContainer (absLabelProcessionTop l)) : Real) := by
+  rw [fullLabel_sum_eq_procession_sum, fullLabel_card_eq_procession]
+
 theorem gaussianDegree_fromProcession
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (label : IUTStage1ProcessionContainer (absLabelProcessionTop l)) :

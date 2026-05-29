@@ -855,6 +855,23 @@ theorem fullLabelCard_eq_halfPlusOne
       (l.value + 1) / 2 :=
   IUTStage1ZModSquareWeightProfile.fullLabel_card_eq_half_plus_one l
 
+theorem gaussianFullLabelAverage_eq_processionAverage
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    (Finset.univ.sum evaluation.gaussianDegree) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) =
+      (Finset.univ.sum fun label :
+        IUTStage1ProcessionContainer
+          (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l) =>
+          evaluation.gaussianDegree
+            (IUTStage1ZModSquareWeightProfile.absLabelFromProcession l label)) /
+        (Fintype.card
+          (IUTStage1ProcessionContainer
+            (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l)) : Real) :=
+  IUTStage1ZModSquareWeightProfile.fullLabel_average_eq_procession_average
+    evaluation.gaussianDegree
+
 theorem gaussianDegree_fromAbsLabelProcession
     {l : PrimeGeFive}
     (evaluation :
