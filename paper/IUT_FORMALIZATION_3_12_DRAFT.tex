@@ -705,9 +705,10 @@ The code currently covers:
   determinant reading; conversely, if an arbitrary collapsed region contains
   both the fixed q/determinant boundary and a nonzero local shift, Lean proves
   that the quotient identifies them while the underlying log-volumes remain
-  unequal.  The same diagnostic applies to two shifted local readings with
-  unequal exponents and nonzero local step when both lie in the collapsed
-  subset;
+  unequal; this broad-collapse diagnostic is now packaged as a
+  boundary-versus-strict theorem together with the determinant boundary.  The
+  same diagnostic applies to two shifted local readings with unequal exponents
+  and nonzero local step when both lie in the collapsed subset;
 \item the Remark 3.12.1(iii) arithmetic fact
   \(\mathbb{Q}_{>0}\cap\mathbb{Z}^{\times}=\{1\}\), formalized as the exact
   characterization \(0<q\iff q=1\) for rational integer units \(q=\pm1\);
