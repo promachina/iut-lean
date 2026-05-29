@@ -25034,6 +25034,59 @@ theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneAllLab
       rw [targetEvaluation.toCuspLabelLogVolumeCompatibility_fullLabelLogVolume]
       exact target_gaussian_le_thetaAverage j)
 
+theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneAllLabelSourceEnvironment
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (canonical_one_preserved :
+      targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (source_profile_eq : profile = sourceProfile)
+    (source_log_volume_eq :
+      part.theta_source.compatible_average.cuspLogVolume audited =
+        sourceEvaluation.toCuspLabelLogVolumeCompatibility)
+    (source_environment_nonpositive :
+      sourceEvaluation.environmentDegree <= 0)
+    (theta_average_nonnegative :
+      0 <= part.theta_source.thetaSourceAverage audited)
+    (source_environment_le_thetaAverage :
+      sourceEvaluation.environmentDegree <=
+        part.theta_source.thetaSourceAverage audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned := by
+  have henv :
+      targetEvaluation.environmentDegree =
+        sourceEvaluation.environmentDegree :=
+    sourceEvaluation.environmentDegree_eq_of_gaussianDegree_one_eq
+      targetEvaluation canonical_one_preserved
+  have htarget_nonpositive :
+      targetEvaluation.environmentDegree <= 0 := by
+    simpa [henv] using source_environment_nonpositive
+  have htarget_bound :
+      ∀ j : ZMod l.value,
+        targetEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) <=
+          part.theta_source.thetaSourceAverage audited := by
+    have hall :=
+      (sourceEvaluation
+        |>.target_allLabelBound_iff_nonnegative_and_source_environment_le_of_gaussianDegree_one_eq
+          targetEvaluation (Equiv.refl (ZMod l.value)) htarget_nonpositive
+          canonical_one_preserved).mpr
+        ⟨theta_average_nonnegative, source_environment_le_thetaAverage⟩
+    intro j
+    simpa using hall j
+  exact
+    part.qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneAllLabelBound
+      (bundle := bundle)
+      profile audited sourceProfile targetProfile sourceEvaluation
+      targetEvaluation canonical_one_preserved source_profile_eq
+      source_log_volume_eq htarget_bound
+
 theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneZeroNonzeroBound
     {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
