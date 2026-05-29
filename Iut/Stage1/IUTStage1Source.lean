@@ -10125,6 +10125,31 @@ theorem cuspClass_transports_to_packet
     cuspClassObject label = packetObject :=
   boundary.localObjectTransport.cuspClass_transports_to_packet label
 
+theorem zero_finiteLogVolume_eq_packet
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    zeroObject.finiteLogVolume = packetObject.finiteLogVolume := by
+  rw [boundary.zero_transports_to_packet]
+
+theorem cuspClass_finiteLogVolume_eq_packet
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    (cuspClassObject label).finiteLogVolume = packetObject.finiteLogVolume := by
+  rw [boundary.cuspClass_transports_to_packet label]
+
+theorem zero_finiteLogVolume_eq_cuspClass
+    (boundary :
+      IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
+        l hodgeData zeroObject cuspClassObject packetObject)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    zeroObject.finiteLogVolume =
+      (cuspClassObject label).finiteLogVolume := by
+  rw [boundary.zero_finiteLogVolume_eq_packet,
+    boundary.cuspClass_finiteLogVolume_eq_packet label]
+
 theorem histories_not_identified
     (boundary :
       IUTStage1LocalObjectHodgeDescentSquareWeightBoundary
@@ -10225,6 +10250,31 @@ theorem zero_eq_cuspClass
     zeroObject = cuspClassObject label :=
   data.zero_transports_to_packet.trans
     (data.cuspClass_transports_to_packet label).symm
+
+theorem zero_finiteLogVolume_eq_packet
+    (data :
+      IUTStage1HodgeDescentLocalObjectTransportData
+        l hodgeData zeroObject cuspClassObject packetObject) :
+    zeroObject.finiteLogVolume = packetObject.finiteLogVolume := by
+  rw [data.zero_transports_to_packet]
+
+theorem cuspClass_finiteLogVolume_eq_packet
+    (data :
+      IUTStage1HodgeDescentLocalObjectTransportData
+        l hodgeData zeroObject cuspClassObject packetObject)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    (cuspClassObject label).finiteLogVolume = packetObject.finiteLogVolume := by
+  rw [data.cuspClass_transports_to_packet label]
+
+theorem zero_finiteLogVolume_eq_cuspClass
+    (data :
+      IUTStage1HodgeDescentLocalObjectTransportData
+        l hodgeData zeroObject cuspClassObject packetObject)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    zeroObject.finiteLogVolume =
+      (cuspClassObject label).finiteLogVolume := by
+  rw [data.zero_finiteLogVolume_eq_packet,
+    data.cuspClass_finiteLogVolume_eq_packet label]
 
 theorem checkpoint_eq_fourthTriangle
     (data :
