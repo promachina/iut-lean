@@ -1547,6 +1547,26 @@ theorem unitAffine_allNonzeroEnvironment_pointwiseGaussianPreserving_iff_fullLab
   unitAffine_all_nonzero_environment_pointwise_gaussian_preserving_iff_fullLabelMapPreserving
     a t
 
+theorem unitAffine_pointwiseGaussian_and_coordinateSquarePreserving_iff_identity
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value)
+    (henv : evaluation.environmentDegree ≠ 0) :
+    ((∀ j : ZMod l.value,
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t)) ↔
+      t = 0 ∧ a = 1 :=
+  evaluation.unitAffine_pointwise_gaussian_and_coordinateSquarePreserving_iff_identity
+    a t henv
+
 theorem coordinateSquarePreserving_unitAffine_iff
     {l : PrimeGeFive} (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
     IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving

@@ -8960,6 +8960,41 @@ theorem unitAffine_factoredSquareFullLabelPreserving_iff_identity
       subst a
       exact ⟨ht, one_mem_zmodSignUnitSubgroup l⟩
 
+namespace GaussianMonoidDegreeEvaluation
+
+theorem unitAffine_pointwise_gaussian_and_coordinateSquarePreserving_iff_identity
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value)
+    (henv : evaluation.environmentDegree ≠ 0) :
+    ((∀ j : ZMod l.value,
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      CoordinateSquarePreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t)) ↔
+      t = 0 ∧ a = 1 := by
+  constructor
+  · intro hpres
+    exact
+      (coordinateSquarePreserving_unitAffine_iff (l := l) a t).mp
+        hpres.2
+  · intro hidentity
+    constructor
+    · exact
+        (evaluation.unitAffine_pointwise_gaussian_preserving_iff a t henv).mpr
+          ⟨hidentity.1, by
+            rw [hidentity.2]
+            exact one_mem_zmodSignUnitSubgroup l⟩
+    · exact
+        (coordinateSquarePreserving_unitAffine_iff (l := l) a t).mpr
+          hidentity
+
+end GaussianMonoidDegreeEvaluation
+
 theorem neg_one_ne_one :
     (-(1 : ZMod l.value)) ≠ (1 : ZMod l.value) := by
   intro h
