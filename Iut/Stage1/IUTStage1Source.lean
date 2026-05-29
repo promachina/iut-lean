@@ -5418,6 +5418,112 @@ def toQPilotTwoComputationSignedEndpoint
   { twoComputation := data.toQPilotTwoComputationLogVolume,
     q_pilot_positive := q_pilot_positive }
 
+theorem signedEndpoint_corollary312
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume) :
+    let endpoint :=
+      data.toQPilotTwoComputationSignedEndpoint q_pilot_positive;
+    Corollary312Inequality
+      endpoint.comparisonData.thetaPilot
+      endpoint.comparisonData.qPilot := by
+  intro endpoint
+  exact endpoint.corollary312
+
+theorem signedEndpoint_corollary312_magnitudes
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume) :
+    let endpoint :=
+      data.toQPilotTwoComputationSignedEndpoint q_pilot_positive;
+    endpoint.comparisonData.qPilot.value =
+        -data.corridor.beforeIndeterminacy.averageLogVolume ∧
+      endpoint.comparisonData.thetaPilot.value =
+        -data.thetaHullLogVolume ∧
+      Corollary312Inequality
+        endpoint.comparisonData.thetaPilot
+        endpoint.comparisonData.qPilot := by
+  intro endpoint
+  exact ⟨rfl, rfl, endpoint.corollary312⟩
+
+theorem ofZModCuspLabelLogVolumeCompatibilities_signedEndpointCorollary312
+    {l : PrimeGeFive}
+    (before afterInd1 afterInd2 :
+      IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (ind3UpperBound : Real)
+    (hind1 :
+      ∀ j : ZMod l.value,
+        before.normalizedLogVolume j =
+          afterInd1.normalizedLogVolume j)
+    (hind2 :
+      ∀ j : ZMod l.value,
+        afterInd1.normalizedLogVolume j =
+          afterInd2.normalizedLogVolume j)
+    (hzero : afterInd2.zeroLogVolume <= ind3UpperBound)
+    (hcusp : ∀ label : (zmodSignAction l).SignLabelQuotient,
+      afterInd2.cuspClassLogVolume label <= ind3UpperBound)
+    (determinant :
+      IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (thetaHullLogVolume : Real)
+    (theta_eq_ind3Upper :
+      thetaHullLogVolume = ind3UpperBound)
+    (theta_eq_normalized_determinant :
+      thetaHullLogVolume = determinant.normalizedLogVolume)
+    (q_pilot_positive :
+      0 < -before.toLabelAveraged.averageLogVolume) :
+    let data :=
+      ofZModCuspLabelLogVolumeCompatibilities before afterInd1 afterInd2
+        ind3UpperBound hind1 hind2 hzero hcusp determinant thetaHullLogVolume
+        theta_eq_ind3Upper theta_eq_normalized_determinant;
+    let endpoint :=
+      data.toQPilotTwoComputationSignedEndpoint q_pilot_positive;
+    Corollary312Inequality
+      endpoint.comparisonData.thetaPilot
+      endpoint.comparisonData.qPilot := by
+  intro data endpoint
+  exact data.signedEndpoint_corollary312 q_pilot_positive
+
+theorem ofZModCuspLabelLogVolumeCompatibilities_signedEndpointCorollary312_magnitudes
+    {l : PrimeGeFive}
+    (before afterInd1 afterInd2 :
+      IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (ind3UpperBound : Real)
+    (hind1 :
+      ∀ j : ZMod l.value,
+        before.normalizedLogVolume j =
+          afterInd1.normalizedLogVolume j)
+    (hind2 :
+      ∀ j : ZMod l.value,
+        afterInd1.normalizedLogVolume j =
+          afterInd2.normalizedLogVolume j)
+    (hzero : afterInd2.zeroLogVolume <= ind3UpperBound)
+    (hcusp : ∀ label : (zmodSignAction l).SignLabelQuotient,
+      afterInd2.cuspClassLogVolume label <= ind3UpperBound)
+    (determinant :
+      IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (thetaHullLogVolume : Real)
+    (theta_eq_ind3Upper :
+      thetaHullLogVolume = ind3UpperBound)
+    (theta_eq_normalized_determinant :
+      thetaHullLogVolume = determinant.normalizedLogVolume)
+    (q_pilot_positive :
+      0 < -before.toLabelAveraged.averageLogVolume) :
+    let data :=
+      ofZModCuspLabelLogVolumeCompatibilities before afterInd1 afterInd2
+        ind3UpperBound hind1 hind2 hzero hcusp determinant thetaHullLogVolume
+        theta_eq_ind3Upper theta_eq_normalized_determinant;
+    let endpoint :=
+      data.toQPilotTwoComputationSignedEndpoint q_pilot_positive;
+    endpoint.comparisonData.qPilot.value =
+        -before.toLabelAveraged.averageLogVolume ∧
+      endpoint.comparisonData.thetaPilot.value =
+        -thetaHullLogVolume ∧
+      Corollary312Inequality
+        endpoint.comparisonData.thetaPilot
+        endpoint.comparisonData.qPilot := by
+  intro data endpoint
+  exact data.signedEndpoint_corollary312_magnitudes q_pilot_positive
+
 def toQPilotTwoComputationCThetaEndpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (q_pilot_positive :

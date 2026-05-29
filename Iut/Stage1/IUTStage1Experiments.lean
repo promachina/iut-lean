@@ -4072,6 +4072,92 @@ theorem zmodCuspLabelLogVolumeCompatibility_stepXToHull_q_mem
     determinant thetaHullLogVolume theta_eq_ind3Upper
     theta_eq_normalized_determinant
 
+theorem zmodCuspLabelLogVolumeCompatibility_signedEndpointCorollary312
+    {l : PrimeGeFive}
+    (before afterInd1 afterInd2 :
+      IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (ind3UpperBound : Real)
+    (hind1 :
+      ∀ j : ZMod l.value,
+        before.normalizedLogVolume j =
+          afterInd1.normalizedLogVolume j)
+    (hind2 :
+      ∀ j : ZMod l.value,
+        afterInd1.normalizedLogVolume j =
+          afterInd2.normalizedLogVolume j)
+    (hzero : afterInd2.zeroLogVolume <= ind3UpperBound)
+    (hcusp : ∀ label : (zmodSignAction l).SignLabelQuotient,
+      afterInd2.cuspClassLogVolume label <= ind3UpperBound)
+    (determinant :
+      IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (thetaHullLogVolume : Real)
+    (theta_eq_ind3Upper :
+      thetaHullLogVolume = ind3UpperBound)
+    (theta_eq_normalized_determinant :
+      thetaHullLogVolume = determinant.normalizedLogVolume)
+    (q_pilot_positive :
+      0 < -before.toLabelAveraged.averageLogVolume) :
+    let data :=
+      IUTStage1StepXToHullUpperRayLogVolume.ofZModCuspLabelLogVolumeCompatibilities
+        before afterInd1 afterInd2 ind3UpperBound hind1 hind2 hzero hcusp
+        determinant thetaHullLogVolume theta_eq_ind3Upper
+        theta_eq_normalized_determinant;
+    let endpoint :=
+      data.toQPilotTwoComputationSignedEndpoint q_pilot_positive;
+    Corollary312Inequality
+      endpoint.comparisonData.thetaPilot
+      endpoint.comparisonData.qPilot := by
+  open IUTStage1StepXToHullUpperRayLogVolume in
+    exact ofZModCuspLabelLogVolumeCompatibilities_signedEndpointCorollary312
+      before afterInd1 afterInd2 ind3UpperBound hind1 hind2 hzero hcusp
+      determinant thetaHullLogVolume theta_eq_ind3Upper
+      theta_eq_normalized_determinant q_pilot_positive
+
+theorem zmodCuspLabelLogVolumeCompatibility_signedEndpointCorollary312_magnitudes
+    {l : PrimeGeFive}
+    (before afterInd1 afterInd2 :
+      IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (ind3UpperBound : Real)
+    (hind1 :
+      ∀ j : ZMod l.value,
+        before.normalizedLogVolume j =
+          afterInd1.normalizedLogVolume j)
+    (hind2 :
+      ∀ j : ZMod l.value,
+        afterInd1.normalizedLogVolume j =
+          afterInd2.normalizedLogVolume j)
+    (hzero : afterInd2.zeroLogVolume <= ind3UpperBound)
+    (hcusp : ∀ label : (zmodSignAction l).SignLabelQuotient,
+      afterInd2.cuspClassLogVolume label <= ind3UpperBound)
+    (determinant :
+      IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (thetaHullLogVolume : Real)
+    (theta_eq_ind3Upper :
+      thetaHullLogVolume = ind3UpperBound)
+    (theta_eq_normalized_determinant :
+      thetaHullLogVolume = determinant.normalizedLogVolume)
+    (q_pilot_positive :
+      0 < -before.toLabelAveraged.averageLogVolume) :
+    let data :=
+      IUTStage1StepXToHullUpperRayLogVolume.ofZModCuspLabelLogVolumeCompatibilities
+        before afterInd1 afterInd2 ind3UpperBound hind1 hind2 hzero hcusp
+        determinant thetaHullLogVolume theta_eq_ind3Upper
+        theta_eq_normalized_determinant;
+    let endpoint :=
+      data.toQPilotTwoComputationSignedEndpoint q_pilot_positive;
+    endpoint.comparisonData.qPilot.value =
+        -before.toLabelAveraged.averageLogVolume ∧
+      endpoint.comparisonData.thetaPilot.value =
+        -thetaHullLogVolume ∧
+      Corollary312Inequality
+        endpoint.comparisonData.thetaPilot
+        endpoint.comparisonData.qPilot := by
+  open IUTStage1StepXToHullUpperRayLogVolume in
+    exact ofZModCuspLabelLogVolumeCompatibilities_signedEndpointCorollary312_magnitudes
+      before afterInd1 afterInd2 ind3UpperBound hind1 hind2 hzero hcusp
+      determinant thetaHullLogVolume theta_eq_ind3Upper
+      theta_eq_normalized_determinant q_pilot_positive
+
 theorem zmodCuspLabelLogVolumeCompatibility_statementEndpoint
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :
