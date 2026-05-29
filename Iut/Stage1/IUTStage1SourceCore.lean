@@ -2419,6 +2419,45 @@ theorem corollary312_of_theta_nonnegative
 
 end IUTStage1Corollary312ThetaSignReduction
 
+namespace IUTStage1Corollary312StatementEndpoint
+
+def toThetaSignReduction
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    IUTStage1Corollary312ThetaSignReduction :=
+  { qSigned := data.finiteEndpoint.upperRayData.qPilotLogVolume,
+    thetaSigned := data.thetaRealLogVolume,
+    q_pilot_positive := data.q_pilot_positive }
+
+theorem thetaSignReduction_qSigned
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.toThetaSignReduction.qSigned =
+      data.finiteEndpoint.upperRayData.qPilotLogVolume :=
+  rfl
+
+theorem thetaSignReduction_thetaSigned
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.toThetaSignReduction.thetaSigned = data.thetaRealLogVolume :=
+  rfl
+
+theorem qPilotLogVolume_le_thetaRealLogVolume_of_theta_nonnegative
+    (data : IUTStage1Corollary312StatementEndpoint)
+    (hTheta : 0 <= data.thetaRealLogVolume) :
+    data.finiteEndpoint.upperRayData.qPilotLogVolume <=
+      data.thetaRealLogVolume :=
+  data.toThetaSignReduction.qSigned_le_thetaSigned_of_theta_nonneg hTheta
+
+theorem corollary312_of_thetaRealLogVolume_nonnegative
+    (data : IUTStage1Corollary312StatementEndpoint)
+    (hTheta : 0 <= data.thetaRealLogVolume) :
+    Corollary312Inequality
+      (data.toThetaSignReduction.comparisonDataOfThetaNonnegative
+        hTheta).thetaPilot
+      (data.toThetaSignReduction.comparisonDataOfThetaNonnegative
+        hTheta).qPilot :=
+  data.toThetaSignReduction.corollary312_of_theta_nonnegative hTheta
+
+end IUTStage1Corollary312StatementEndpoint
+
 /--
 Step (xi-h) tensor-power warning for the `Theta`-pilot log-volume.
 
