@@ -5054,6 +5054,53 @@ theorem zmodCuspLabelLogVolumeCompatibility_standardQLambdaCThetaEndpoint
       data.standardQLambdaCTheta_endpoint
         q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
 
+theorem stepXToHullUpperRay_qLambdaCTheta_boundary_or_strict
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (lambda : Rat)
+    (lambda_pos : 0 < lambda)
+    (cTheta : Real)
+    (qLambda_le_thetaHull :
+      -((lambda : Real) *
+        (-data.corridor.beforeIndeterminacy.averageLogVolume)) <=
+        data.thetaHullLogVolume)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    cTheta = -((lambda : Real)) ∨ -((lambda : Real)) < cTheta :=
+  data.qLambdaCTheta_boundary_or_strict q_pilot_positive lambda lambda_pos
+    cTheta qLambda_le_thetaHull thetaHull_le_cTheta_absLogQ
+
+theorem stepXToHullUpperRay_standardQLambdaCTheta_strict_of_qPilot_lt_theta
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hstrict : data.qPilotLogVolume < data.thetaHullLogVolume) :
+    (-1 : Real) < cTheta :=
+  data.standardQLambdaCTheta_strict_of_qPilot_lt_thetaHullLogVolume
+    q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ hstrict
+
+theorem stepXToHullUpperRay_standardQLambdaCTheta_qPilot_eq_theta_of_boundary
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    data.qPilotLogVolume = data.thetaHullLogVolume :=
+  data.standardQLambdaCTheta_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
+    q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ hC
+
 theorem zmodCuspLabelLogVolumeCompatibility_signedCorollary312
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :

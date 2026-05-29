@@ -6016,6 +6016,25 @@ theorem qLambdaCTheta_endpoint
       endpoint.standard_bound_of_lambda_le_one,
       endpoint.strict_standard_bound_of_lambda_lt_one⟩
 
+theorem qLambdaCTheta_boundary_or_strict
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (lambda : Rat)
+    (lambda_pos : 0 < lambda)
+    (cTheta : Real)
+    (qLambda_le_thetaHull :
+      -((lambda : Real) *
+        (-data.corridor.beforeIndeterminacy.averageLogVolume)) <=
+        data.thetaHullLogVolume)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    cTheta = -((lambda : Real)) ∨ -((lambda : Real)) < cTheta :=
+  (data.toQLambdaCThetaBound q_pilot_positive lambda lambda_pos cTheta
+    qLambda_le_thetaHull thetaHull_le_cTheta_absLogQ)
+      |>.cTheta_eq_neg_lambda_or_gt_neg_lambda
+
 def toStandardQLambdaCThetaBound
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (q_pilot_positive :
@@ -6059,6 +6078,56 @@ theorem standardQLambdaCTheta_endpoint
       (by
         change (1 : Rat) <= 1
         norm_num)⟩
+
+theorem standardQLambdaCTheta_strict_of_qPilot_lt_thetaHullLogVolume
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hstrict : data.qPilotLogVolume < data.thetaHullLogVolume) :
+    (-1 : Real) < cTheta := by
+  have hstrict_before :
+      data.corridor.beforeIndeterminacy.averageLogVolume <
+        data.thetaHullLogVolume := by
+    rw [← data.q_eq_beforeAverage]
+    exact hstrict
+  have h :=
+    (data.toStandardQLambdaCThetaBound
+      q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ)
+        |>.cTheta_gt_neg_lambda_of_qLambda_lt_theta
+          (by
+            simpa [toStandardQLambdaCThetaBound, toQLambdaCThetaBound]
+              using hstrict_before)
+  simpa [toStandardQLambdaCThetaBound, toQLambdaCThetaBound] using h
+
+theorem standardQLambdaCTheta_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    data.qPilotLogVolume = data.thetaHullLogVolume := by
+  let endpoint :=
+    data.toStandardQLambdaCThetaBound
+      q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
+  have hCendpoint : endpoint.cTheta = -((endpoint.lambda : Real)) := by
+    simpa [endpoint, toStandardQLambdaCThetaBound, toQLambdaCThetaBound]
+      using hC
+  have h :=
+    endpoint.qLambdaSigned_eq_thetaSigned_of_cTheta_eq_neg_lambda
+      hCendpoint
+  have hbefore :
+      data.corridor.beforeIndeterminacy.averageLogVolume =
+        data.thetaHullLogVolume := by
+    simpa [endpoint, toStandardQLambdaCThetaBound, toQLambdaCThetaBound] using h
+  rw [data.q_eq_beforeAverage]
+  exact hbefore
 
 theorem cTheta_ge_neg_one
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
