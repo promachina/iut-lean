@@ -7530,6 +7530,11 @@ theorem balancedSquareWeight_zero :
   unfold balancedSquareWeight
   simp
 
+theorem balancedSquareWeight_nonnegative (j : ZMod l.value) :
+    0 <= balancedSquareWeight (l := l) j := by
+  unfold balancedSquareWeight
+  positivity
+
 noncomputable def balancedSquareWeightOnFullLabel :
     IUTStage1ZModCuspFullLabel l -> Real
   | IUTStage1ZModCuspFullLabel.zero => 0
@@ -7564,6 +7569,18 @@ theorem thetaExponentOnAbsLabel_zero :
     thetaExponentOnAbsLabel
         (l := l) (IUTStage1ZModCuspFullLabel.zero) = 0 :=
   rfl
+
+theorem thetaExponentOnAbsLabel_nonnegative
+    (label : IUTStage1ZModCuspFullLabel l) :
+    0 <= thetaExponentOnAbsLabel (l := l) label := by
+  cases label with
+  | zero =>
+      simp [thetaExponentOnAbsLabel, balancedSquareWeightOnFullLabel]
+  | nonzero label =>
+      unfold thetaExponentOnAbsLabel balancedSquareWeightOnFullLabel
+      refine Quotient.inductionOn label ?_
+      intro x
+      exact balancedSquareWeight_nonnegative x.1
 
 theorem thetaExponentOnAbsLabel_fromCoordinate
     (j : ZMod l.value) :
@@ -7774,6 +7791,35 @@ theorem gaussianDegree_neg_fromCoordinate_eq
       evaluation.gaussianDegree
         (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
   rw [IUTStage1ZModCuspFullLabel.fromCoordinate_neg l j hj]
+
+theorem gaussianDegree_nonnegative_of_environment_nonnegative
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv : 0 <= evaluation.environmentDegree)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    0 <= evaluation.gaussianDegree label := by
+  rw [evaluation.gaussianDegree_eq_eval]
+  exact mul_nonneg (thetaExponentOnAbsLabel_nonnegative label) henv
+
+theorem gaussianDegree_nonpositive_of_environment_nonpositive
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv : evaluation.environmentDegree <= 0)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    evaluation.gaussianDegree label <= 0 := by
+  rw [evaluation.gaussianDegree_eq_eval]
+  exact mul_nonpos_of_nonneg_of_nonpos
+    (thetaExponentOnAbsLabel_nonnegative label) henv
+
+theorem gaussianDegree_le_of_environment_nonpositive_of_nonnegative_bound
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    {c : Real}
+    (henv : evaluation.environmentDegree <= 0)
+    (hc : 0 <= c)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    evaluation.gaussianDegree label <= c :=
+  le_trans
+    (evaluation.gaussianDegree_nonpositive_of_environment_nonpositive
+      henv label)
+    hc
 
 end GaussianMonoidDegreeEvaluation
 

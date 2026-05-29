@@ -404,6 +404,54 @@ theorem gaussianFactoredSHETargetBound_finalQTheta
       rw [hfull]
       exact target_gaussian_le_thetaAverage j)
 
+theorem gaussianFactoredSHETargetBound_finalQTheta_of_nonpositive_environment
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (coordinate_square_preserved :
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) coordinateEquiv)
+    (fullLabelMap_preserved :
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l) coordinateEquiv)
+    (environmentDegree_preserved :
+      targetEvaluation.environmentDegree =
+        sourceEvaluation.environmentDegree)
+    (source_profile_eq : profile = sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sourceEvaluation.toCuspLabelLogVolumeCompatibility)
+    (target_environment_nonpositive :
+      targetEvaluation.environmentDegree <= 0)
+    (theta_average_nonnegative :
+      0 <=
+        part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+          audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  gaussianFactoredSHETargetBound_finalQTheta
+    part profile audited coordinateEquiv sourceProfile targetProfile
+    sourceEvaluation targetEvaluation coordinate_square_preserved
+    fullLabelMap_preserved environmentDegree_preserved source_profile_eq
+    source_log_volume_eq
+    (by
+      intro j
+      exact targetEvaluation.gaussianDegree_le_of_environment_nonpositive_of_nonnegative_bound
+        target_environment_nonpositive theta_average_nonnegative
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (coordinateEquiv j)))
+
 /-- Scale-level status for transport-explicit real-line cancellation. -/
 structure Ind3TransportScaleExperimentReport where
   sourceScaleMatched : Bool

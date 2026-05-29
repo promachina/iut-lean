@@ -475,7 +475,9 @@ The code currently covers:
   square/full-label SHE obligations; with separate coordinate-square and
   full-label-map preservation, the experiment route reaches
   \(q_{\mathrm{signed}}\le\Theta_{\mathrm{signed}}\) directly from Gaussian
-  target bounds;
+  target bounds; since the absolute-label exponent is nonnegative, Lean also
+  derives those target bounds in the branch where the target environment degree
+  is nonpositive and the \(\Theta\)-source average is nonnegative;
 \item a bridge from factored square/full-label SHE obligations to the
   Hodge-descent \((\mathrm{Ind3})\) route.
 \end{itemize}
@@ -612,7 +614,9 @@ route wrapper, and the experiment layer exposes the resulting final
 q-to-\(\Theta\) comparison theorem.  The same experiment-level theorem is now
 exposed for primitive factored square/full-label SHE obligations and for
 degree-level Gaussian evaluations after the explicit preservation branches are
-supplied.
+supplied.  In the nonpositive-environment/nonnegative-\(\Theta\)-average branch,
+the Gaussian pointwise target bound is derived from the sign of the
+\(q^{j^2}\)-exponent rather than assumed.
 
 \section{Audit Findings}
 
@@ -628,6 +632,10 @@ obligations are supplied instead, Lean first constructs the transport audit and
 checks the same final inequality.  If the input is a pair of degree-level
 Gaussian evaluations with equal environment degree, Lean constructs the
 full-label log-volume compatibility branch before invoking the factored route.
+The branch with nonnegative \(\Theta\)-source average is formally easier:
+nonnegativity of \(j^2\) makes every nonpositive environment-degree Gaussian
+target value bounded above by that average.  The genuinely difficult branch is
+still the negative \(\Theta\)-source comparison.
 
 The strongest negative result is also limited: in the current \(\F_\ell\)-label
 model, Lean rejects a single label-independent scale accounting for all
