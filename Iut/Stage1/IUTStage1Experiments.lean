@@ -974,6 +974,26 @@ theorem translationEquiv_fullLabelMapPreserving_iff_zero
   IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_translation_iff_zero
     t
 
+theorem unitSmulEquiv_fullLabelMapPreserving_iff_signSubgroup
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitSmulEquiv
+          l a) ↔
+      a ∈ zmodSignUnitSubgroup l :=
+  IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_unitSmul_iff_signSubgroup
+    a
+
+theorem unitAffineEquiv_fullLabelMapPreserving_iff
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t) ↔
+      t = 0 ∧ a ∈ zmodSignUnitSubgroup l :=
+  IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_unitAffine_iff
+    a t
+
 theorem rawCoordinate_sum_translation_eq
     {l : PrimeGeFive} (t : ZMod l.value) (f : ZMod l.value -> Real) :
     (Finset.univ.sum fun j : ZMod l.value => f (zmodLabelTranslate l t j)) =

@@ -19360,3 +19360,42 @@ Gaussian component is the degenerate zero-environment case.
 This refines the finite Gaussian shadow of IUT II's \(q^{j^2}\) convention: the
 zero label is the unique coordinate-level zero of the exponent, except when the
 entire Gaussian degree scale is zero.
+
+## Pointwise full-label preservation for affine coordinate maps
+
+### Lean Move
+
+Added:
+
+```text
+fullLabelMapPreserving_unitSmul_of_signSubgroup
+signSubgroup_of_fullLabelMapPreserving_unitSmul
+fullLabelMapPreserving_unitSmul_iff_signSubgroup
+zero_translation_of_fullLabelMapPreserving_unitAffine
+fullLabelMapPreserving_unitAffine_iff
+unitSmulEquiv_fullLabelMapPreserving_iff_signSubgroup
+unitAffineEquiv_fullLabelMapPreserving_iff
+```
+
+### Mathematical Reason
+
+Lean now classifies pointwise preservation of full absolute labels under affine
+coordinate maps:
+
+```text
+fromCoordinate (a*j + t) = fromCoordinate j for all j
+iff
+t = 0 and a in {1, -1}.
+```
+
+The proof first reads the zero coordinate to force \(t=0\).  It then reads the
+coordinate \(1\) to force \(a=1\) or \(a=-1\), using the exact full-label fiber
+criterion \(j\sim k\iff j=k\) or \(j=-k\).  The reverse direction is the already
+formalized triviality of the sign subgroup on full absolute labels.
+
+### Source Check
+
+This is the pointwise version of the IUT II, Remarks 4.7.3--4.7.4 distinction:
+raw affine reindexing may preserve aggregate sums, but pointwise preservation
+of the \(|F_\ell|\)-label structure allows only the sign ambiguity and no
+additive offset.

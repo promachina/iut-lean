@@ -6761,6 +6761,52 @@ theorem zmodUnitAffine_sum_eq
     (fun j : ZMod l.value => f j)
     (fun j => by rw [zmodUnitAffineEquiv_apply])
 
+theorem fullLabelMapPreserving_unitSmul_of_signSubgroup
+    {a : (ZMod l.value)ˣ}
+    (ha : a ∈ zmodSignUnitSubgroup l) :
+    FullLabelMapPreserving (l := l) (zmodUnitSmulEquiv l a) := by
+  intro j
+  rcases zmodSignUnitSubgroup_smul_eq_self_or_neg l ha j with h | h
+  · rw [zmodUnitSmulEquiv_apply, h]
+  · rw [zmodUnitSmulEquiv_apply, h]
+    by_cases hj : j = 0
+    · subst j
+      simp [zmodSignAction, IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+    · exact IUTStage1ZModCuspFullLabel.fromCoordinate_neg l j hj
+
+theorem signSubgroup_of_fullLabelMapPreserving_unitSmul
+    {a : (ZMod l.value)ˣ}
+    (hpres : FullLabelMapPreserving (l := l) (zmodUnitSmulEquiv l a)) :
+    a ∈ zmodSignUnitSubgroup l := by
+  have hone := hpres (1 : ZMod l.value)
+  rw [zmodUnitSmulEquiv_apply] at hone
+  have ha_coord :
+      (a : ZMod l.value) = 1 ∨ (a : ZMod l.value) = -1 := by
+    have hsame :
+        IUTStage1ZModCuspFullLabel.fromCoordinate l
+            ((zmodUnitActionData l).smul a (1 : ZMod l.value)) =
+          IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) :=
+      hone
+    simpa [zmodUnitActionData] using
+      (IUTStage1ZModCuspFullLabel.fromCoordinate_eq_iff (l := l)
+        ((zmodUnitActionData l).smul a (1 : ZMod l.value))
+        (1 : ZMod l.value)).mp hsame
+  rw [mem_zmodSignUnitSubgroup_iff]
+  rcases ha_coord with ha1 | haneg
+  · left
+    ext
+    simpa using ha1
+  · right
+    ext
+    simpa using haneg
+
+theorem fullLabelMapPreserving_unitSmul_iff_signSubgroup
+    (a : (ZMod l.value)ˣ) :
+    FullLabelMapPreserving (l := l) (zmodUnitSmulEquiv l a) ↔
+      a ∈ zmodSignUnitSubgroup l :=
+  ⟨signSubgroup_of_fullLabelMapPreserving_unitSmul,
+    fullLabelMapPreserving_unitSmul_of_signSubgroup⟩
+
 theorem fullLabelMapPreserving_translation_iff_zero
     (t : ZMod l.value) :
     FullLabelMapPreserving (l := l) (zmodTranslationEquiv l t) ↔
@@ -6780,6 +6826,43 @@ theorem fullLabelMapPreserving_translation_iff_zero
     subst t
     intro j
     rw [zmodTranslationEquiv_apply, zmodLabelTranslate_zero]
+
+theorem zero_translation_of_fullLabelMapPreserving_unitAffine
+    (a : (ZMod l.value)ˣ) {t : ZMod l.value}
+    (hpres : FullLabelMapPreserving (l := l) (zmodUnitAffineEquiv l a t)) :
+    t = 0 := by
+  have hzero := hpres 0
+  rw [zmodUnitAffineEquiv_apply, zmodLabelTranslate_eq_add] at hzero
+  have hzero' :
+      IUTStage1ZModCuspFullLabel.fromCoordinate l t =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l 0 := by
+    simpa [zmodUnitActionData] using hzero
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_zero] at hzero'
+  exact (IUTStage1ZModCuspFullLabel.fromCoordinate_eq_zero_iff
+    (l := l) t).mp hzero'
+
+theorem fullLabelMapPreserving_unitAffine_iff
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    FullLabelMapPreserving (l := l) (zmodUnitAffineEquiv l a t) ↔
+      t = 0 ∧ a ∈ zmodSignUnitSubgroup l := by
+  constructor
+  · intro hpres
+    have ht := zero_translation_of_fullLabelMapPreserving_unitAffine
+      (l := l) a hpres
+    have hunit :
+        FullLabelMapPreserving (l := l) (zmodUnitSmulEquiv l a) := by
+      intro j
+      have hj := hpres j
+      rw [zmodUnitAffineEquiv_apply] at hj
+      subst t
+      simpa [zmodLabelTranslate_zero, zmodUnitSmulEquiv_apply] using hj
+    exact ⟨ht, signSubgroup_of_fullLabelMapPreserving_unitSmul hunit⟩
+  · rintro ⟨ht, ha⟩
+    intro j
+    subst t
+    rw [zmodUnitAffineEquiv_apply, zmodLabelTranslate_zero]
+    exact fullLabelMapPreserving_unitSmul_of_signSubgroup
+      (l := l) ha j
 
 /--
 Labelwise preservation of the full-label log-volume branch.
