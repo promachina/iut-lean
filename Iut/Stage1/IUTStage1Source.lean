@@ -10131,6 +10131,22 @@ noncomputable def fullLabelAveragedLogVolume
         (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real),
     average_eq := rfl }
 
+theorem fullLabelAveragedLogVolume_average_eq_subordinate_sum_div
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume =
+      ((@Finset.filter (IUTStage1ZModCuspFullLabel l)
+        (fun label : IUTStage1ZModCuspFullLabel l =>
+          IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+            label IUTStage1ZModCuspFullLabel.zero)
+        (Classical.decPred _) Finset.univ).sum evaluation.gaussianDegree) /
+        ((absLabelProcessionTop l : Real) + 1) := by
+  classical
+  have hsplit :=
+    fullLabel_average_eq_zero_add_subordinate_sum_div
+      (l := l) evaluation.gaussianDegree
+  rw [evaluation.gaussianDegree_zero] at hsplit
+  simpa [fullLabelAveragedLogVolume] using hsplit
+
 theorem fullLabelAveragedLogVolume_average_eq_coeff
     (evaluation : GaussianMonoidDegreeEvaluation l) :
     evaluation.fullLabelAveragedLogVolume.averageLogVolume =

@@ -279,7 +279,10 @@ The code currently covers:
   subordinate to zero has cardinality \((\ell-1)/2\), the nonzero absolute
   half-range, and decomposes any full-label sum, hence any full-label average,
   into its zero contribution plus the subordinate nonzero contribution with
-  denominator \((\ell+1)/2\).  Lean also converts the
+  denominator \((\ell+1)/2\).  Applying this to the Gaussian degree function,
+  whose zero component is \(0\), Lean rewrites the full absolute-label
+  Gaussian average as the subordinate nonzero Gaussian sum divided by the full
+  absolute-label denominator.  Lean also converts the
   zero/nonzero cusp-label compatibility object to a uniform \(F_\ell\) average
   and proves that a diagonal constant log-volume distribution averages to that
   same constant;

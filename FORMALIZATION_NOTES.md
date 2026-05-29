@@ -18885,3 +18885,28 @@ separate coric label, while nonzero Gaussian labels form the subordinate
 weighted-volume part.  The theorem avoids replacing the full \(|F_\ell|\)
 average by a nonzero-only average without explicitly accounting for the zero
 summand.
+
+## Gaussian full-label average as subordinate sum
+
+### Lean Move
+
+Added:
+
+```text
+fullLabelAveragedLogVolume_average_eq_subordinate_sum_div
+gaussianFullLabelAverage_eq_subordinateSum_div
+```
+
+### Mathematical Reason
+
+Specializing the zero/subordinate sum split to the Gaussian degree function,
+Lean uses the already proved zero component \(G(0)=0\) to rewrite the full
+\(|F_\ell|\)-average as the subordinate nonzero Gaussian sum divided by the
+full denominator `absLabelProcessionTop l + 1`.  This keeps the zero label in
+the denominator even though it contributes zero to the numerator.
+
+### Source Check
+
+This matches the weighted-volume convention in IUT II, Remark 4.7.3(iii): the
+zero label is part of the full distribution and controls the denominator, while
+the nonzero Gaussian components supply the subordinate numerator.
