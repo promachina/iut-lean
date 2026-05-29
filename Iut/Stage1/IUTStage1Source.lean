@@ -5701,6 +5701,18 @@ theorem zmod_toSignLabelQuotient_eq_fromCoordinate
   left
   exact (zmodNonzeroLabelFromCoordinate_val l x.1 x.2).symm
 
+noncomputable instance zmodNonzeroCarrierFintype
+    (l : PrimeGeFive) :
+    Fintype (zmodPointedQuotient l).NonzeroCarrier := by
+  classical
+  unfold PointedEtaleQuotient.NonzeroCarrier zmodPointedQuotient
+  infer_instance
+
+instance zmodNonzeroCarrierNonempty
+    (l : PrimeGeFive) :
+    Nonempty (zmodPointedQuotient l).NonzeroCarrier :=
+  ⟨zmodOneNonzeroLabel l⟩
+
 /--
 The Stage 1 zero/nonzero cusp-label split for the concrete `F_l = ZMod l`
 model.
@@ -6139,7 +6151,27 @@ theorem const_le_average_of_forall_le
     simpa [Finset.sum_const, nsmul_eq_mul] using
       (Finset.sum_le_sum (fun j _hj => hpointwise j) :
         Finset.univ.sum (fun _ : label => c) <=
-          Finset.univ.sum data.normalizedLogVolume)
+        Finset.univ.sum data.normalizedLogVolume)
+  simpa [mul_comm] using hsum
+
+theorem average_le_const_of_forall_le
+    [Nonempty label]
+    (data : IUTStage1LabelAveragedProcessionLogVolume label)
+    {c : Real}
+    (hpointwise : ∀ j : label, data.normalizedLogVolume j <= c) :
+    data.averageLogVolume <= c := by
+  rw [data.average_eq]
+  have hcard_nat : 0 < Fintype.card label := Fintype.card_pos
+  have hcard_real : 0 < (Fintype.card label : Real) :=
+    Nat.cast_pos.mpr hcard_nat
+  rw [div_le_iff₀ hcard_real]
+  have hsum :
+      Finset.univ.sum data.normalizedLogVolume <=
+        (Fintype.card label : Real) * c := by
+    simpa [Finset.sum_const, nsmul_eq_mul] using
+      (Finset.sum_le_sum (fun j _hj => hpointwise j) :
+        Finset.univ.sum data.normalizedLogVolume <=
+          Finset.univ.sum (fun _ : label => c))
   simpa [mul_comm] using hsum
 
 end IUTStage1LabelAveragedProcessionLogVolume
@@ -7877,6 +7909,47 @@ theorem gaussianDegree_nonzero_le_of_environment_le_bound
     (evaluation.gaussianDegree_nonzero_le_environment_of_environment_nonpositive
       henv_nonpos label)
     henv_le
+
+noncomputable def nonzeroCarrierAveragedLogVolume
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    IUTStage1LabelAveragedProcessionLogVolume
+      (zmodPointedQuotient l).NonzeroCarrier :=
+  { normalizedLogVolume := fun x =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.nonzero
+          ((zmodSignAction l).toSignLabelQuotient x)),
+    averageLogVolume :=
+      (Finset.univ.sum fun x : (zmodPointedQuotient l).NonzeroCarrier =>
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.nonzero
+            ((zmodSignAction l).toSignLabelQuotient x))) /
+        (Fintype.card (zmodPointedQuotient l).NonzeroCarrier : Real),
+    average_eq := rfl }
+
+theorem nonzeroCarrierAveragedLogVolume_apply
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (x : (zmodPointedQuotient l).NonzeroCarrier) :
+    evaluation.nonzeroCarrierAveragedLogVolume.normalizedLogVolume x =
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.nonzero
+          ((zmodSignAction l).toSignLabelQuotient x)) :=
+  rfl
+
+theorem nonzeroCarrierAverage_le_of_environment_le_bound
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    {c : Real}
+    (henv_nonpos : evaluation.environmentDegree <= 0)
+    (henv_le : evaluation.environmentDegree <= c) :
+    evaluation.nonzeroCarrierAveragedLogVolume.averageLogVolume <= c := by
+  haveI : Nonempty (zmodPointedQuotient l).NonzeroCarrier :=
+    ⟨zmodOneNonzeroLabel l⟩
+  exact
+    IUTStage1LabelAveragedProcessionLogVolume.average_le_const_of_forall_le
+      evaluation.nonzeroCarrierAveragedLogVolume
+      (by
+        intro x
+        exact evaluation.gaussianDegree_nonzero_le_of_environment_le_bound
+          henv_nonpos henv_le ((zmodSignAction l).toSignLabelQuotient x))
 
 theorem forall_coordinateFullLabel_le_implies_bound_nonnegative
     (evaluation : GaussianMonoidDegreeEvaluation l)

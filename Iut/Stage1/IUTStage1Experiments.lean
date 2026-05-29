@@ -533,6 +533,31 @@ theorem gaussianNonzeroTargetBound_of_environment_le_thetaAverage
   exact targetEvaluation.gaussianDegree_nonzero_le_of_environment_le_bound
     target_environment_nonpositive environment_le_thetaAverage label
 
+theorem gaussianNonzeroAverage_le_thetaAverage_of_environment_le
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (target_environment_nonpositive :
+      targetEvaluation.environmentDegree <= 0)
+    (environment_le_thetaAverage :
+      targetEvaluation.environmentDegree <=
+        part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+          audited) :
+    targetEvaluation.nonzeroCarrierAveragedLogVolume.averageLogVolume <=
+      part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+        audited :=
+  targetEvaluation.nonzeroCarrierAverage_le_of_environment_le_bound
+    target_environment_nonpositive environment_le_thetaAverage
+
 /-- Scale-level status for transport-explicit real-line cancellation. -/
 structure Ind3TransportScaleExperimentReport where
   sourceScaleMatched : Bool

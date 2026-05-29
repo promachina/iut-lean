@@ -483,7 +483,8 @@ The code currently covers:
   Gaussian degree \(0\); after removing the core label, Lean proves that every
   nonzero Gaussian target value is bounded by the \(\Theta\)-source average if
   the target environment degree is nonpositive and is itself bounded by that
-  average;
+  average; Lean also forms the corresponding finite average over the nonzero
+  \(ZMod\) carrier and proves the same upper bound for this nonzero average;
 \item a bridge from factored square/full-label SHE obligations to the
   Hodge-descent \((\mathrm{Ind3})\) route.
 \end{itemize}
@@ -626,7 +627,8 @@ the Gaussian pointwise target bound is derived from the sign of the
 all-label Gaussian bound cannot hold when the \(\Theta\)-source average is
 negative.  For nonzero labels, Lean proves the complementary bound: the
 absolute exponent is at least \(1\), so a nonpositive environment degree below
-the \(\Theta\)-source average bounds every nonzero Gaussian component.
+the \(\Theta\)-source average bounds every nonzero Gaussian component and hence
+their finite nonzero-label average.
 
 \section{Audit Findings}
 
@@ -649,7 +651,9 @@ the negative branch: the core label contributes \(0\), so a negative upper bound
 is impossible.  On the nonzero-label part, the formal obstruction disappears:
 exponent \(\ge1\) gives the expected bound from the environment comparison.  The
 remaining task is to connect this refined nonzero-label statement, together with
-the separate core/coric bookkeeping, to the hull/log-volume route.
+the separate core/coric bookkeeping, to the hull/log-volume route.  The present
+formalization now has the nonzero average, but the final route still consumes
+the older all-label square/full-label average.
 
 The strongest negative result is also limited: in the current \(\F_\ell\)-label
 model, Lean rejects a single label-independent scale accounting for all
