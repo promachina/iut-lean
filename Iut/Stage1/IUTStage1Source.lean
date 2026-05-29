@@ -4012,6 +4012,27 @@ theorem no_fullLabel_map_descends_unitAffine_nonzero_translation
   exact ht
     ((fullLabel_map_descends_unitAffine_iff_zero_translation l a t).mp hdesc)
 
+theorem unitActionAndAffineDescent_endpoint
+    (l : PrimeGeFive) (a b : (ZMod l.value)ˣ) (t j : ZMod l.value)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    unitActionOnFullLabel l 1 label = label ∧
+      unitActionOnFullLabel l (a * b) label =
+        unitActionOnFullLabel l a (unitActionOnFullLabel l b label) ∧
+      unitActionOnFullLabel l a (fromCoordinate l j) =
+        fromCoordinate l ((zmodUnitActionData l).smul a j) ∧
+      (unitActionOnFullLabel l a label = zero ↔ label = zero) ∧
+      ((∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+        ∀ k : ZMod l.value,
+          T (fromCoordinate l k) =
+            fromCoordinate l
+              (zmodLabelTranslate l t ((zmodUnitActionData l).smul a k))) ↔
+        t = 0) :=
+  ⟨unitActionOnFullLabel_one l label,
+    unitActionOnFullLabel_mul l a b label,
+    unitActionOnFullLabel_fromCoordinate l a j,
+    unitActionOnFullLabel_eq_zero_iff l a label,
+    fullLabel_map_descends_unitAffine_iff_zero_translation l a t⟩
+
 /--
 Stage 1 shadow of the weighted-volume relation `F_l ∋ j ≪ 0` from IUT II,
 Remark 4.7.3(iii).

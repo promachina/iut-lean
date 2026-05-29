@@ -5965,6 +5965,30 @@ theorem zmodCuspFullLabel_fromCoordinate_endpoint
       Function.Surjective (IUTStage1ZModCuspFullLabel.fromCoordinate l) :=
   IUTStage1ZModCuspFullLabel.fromCoordinate_fullLabel_endpoint j k
 
+theorem zmodCuspFullLabel_unitActionAffineDescent_endpoint
+    (l : PrimeGeFive) (a b : (ZMod l.value)ˣ) (t j : ZMod l.value)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l 1 label = label ∧
+      IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l (a * b) label =
+        IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a
+          (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l b label) ∧
+      IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l
+          ((zmodUnitActionData l).smul a j) ∧
+      (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label =
+          IUTStage1ZModCuspFullLabel.zero ↔
+        label = IUTStage1ZModCuspFullLabel.zero) ∧
+      ((∃ T : IUTStage1ZModCuspFullLabel l ->
+          IUTStage1ZModCuspFullLabel l,
+        ∀ k : ZMod l.value,
+          T (IUTStage1ZModCuspFullLabel.fromCoordinate l k) =
+            IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (zmodLabelTranslate l t ((zmodUnitActionData l).smul a k))) ↔
+        t = 0) :=
+  IUTStage1ZModCuspFullLabel.unitActionAndAffineDescent_endpoint
+    l a b t j label
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
