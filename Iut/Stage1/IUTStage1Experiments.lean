@@ -976,6 +976,26 @@ theorem gaussianFullLabelAveragedLogVolume_eq_coeff
           evaluation.environmentDegree :=
   evaluation.fullLabelAveragedLogVolume_average_eq_coeff
 
+theorem gaussianFullLabelAveragedLogVolume_canonical_eq_environment
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.fullLabelAveragedLogVolume.normalizedLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      evaluation.environmentDegree :=
+  evaluation.fullLabelAveragedLogVolume_canonicalCoordinate_eq_environment
+
+theorem gaussianFullLabelAveragedLogVolume_average_ne_canonical
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (henv : evaluation.environmentDegree ≠ 0) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume ≠
+      evaluation.fullLabelAveragedLogVolume.normalizedLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+  evaluation.fullLabelAveragedLogVolume_average_ne_canonicalCoordinate_of_nonzero
+    henv
+
 theorem gaussianFullLabelAveragedLogVolume_le_of_environment_le_bound
     {l : PrimeGeFive}
     (evaluation :

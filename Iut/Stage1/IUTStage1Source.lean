@@ -9004,6 +9004,28 @@ theorem fullLabelAveragedLogVolume_average_eq_coeff
   LGPSplittingMonoidTensorPacketAction.gaussianDegree_fullLabel_average_eq_coeff
     evaluation
 
+theorem fullLabelAveragedLogVolume_canonicalCoordinate_eq_environment
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.fullLabelAveragedLogVolume.normalizedLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      evaluation.environmentDegree :=
+  evaluation.gaussianDegree_one
+
+theorem fullLabelAveragedLogVolume_average_ne_canonicalCoordinate_of_nonzero
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv : evaluation.environmentDegree ≠ 0) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume ≠
+      evaluation.fullLabelAveragedLogVolume.normalizedLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) := by
+  have hraw :=
+    gaussianDegree_fullLabel_average_ne_environment_of_nonzero
+      evaluation henv
+  intro h
+  apply hraw
+  rw [← fullLabelAveragedLogVolume_canonicalCoordinate_eq_environment
+    evaluation]
+  exact h
+
 theorem fullLabelAveragedLogVolume_le_environment_of_nonpositive
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (henv_nonpos : evaluation.environmentDegree <= 0) :
