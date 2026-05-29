@@ -1592,6 +1592,80 @@ theorem structureForgotten
 end IUTStage1MonoAnalyticTensorPacketForgettingTransfer
 
 /--
+Remark 3.9.5 holomorphic-hull shadow.
+
+The paper characterizes hull formation by the three closure properties P1--P3:
+closed hulls are fixed, every region is contained in its hull, and inclusion of
+regions is preserved by hull formation.  We record exactly that closure-operator
+skeleton, together with the monotonicity of the log-volume used in Step (xi).
+-/
+structure IUTStage1HolomorphicHullLogVolumeShadow (α : Type u) where
+  hull : ClosureOperator (Set α)
+  logVolume : Set α -> Real
+  logVolume_mono :
+    ∀ {region₁ region₂ : Set α},
+      region₁ ⊆ region₂ -> logVolume region₁ <= logVolume region₂
+
+namespace IUTStage1HolomorphicHullLogVolumeShadow
+
+variable {α : Type u}
+
+def hullRegion
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (region : Set α) :
+    Set α :=
+  data.hull region
+
+theorem hull_fix_of_closed
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    {region : Set α}
+    (hclosed : data.hull.IsClosed region) :
+    data.hullRegion region = region :=
+  data.hull.isClosed_iff.mp hclosed
+
+theorem region_subset_hull
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (region : Set α) :
+    region ⊆ data.hullRegion region :=
+  data.hull.le_closure region
+
+theorem hull_mono
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    {region₁ region₂ : Set α}
+    (hsubset : region₁ ⊆ region₂) :
+    data.hullRegion region₁ ⊆ data.hullRegion region₂ :=
+  data.hull.monotone hsubset
+
+theorem hull_idempotent
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (region : Set α) :
+    data.hullRegion (data.hullRegion region) = data.hullRegion region :=
+  data.hull.idempotent region
+
+theorem logVolume_le_hullLogVolume
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (region : Set α) :
+    data.logVolume region <= data.logVolume (data.hullRegion region) :=
+  data.logVolume_mono (data.region_subset_hull region)
+
+theorem logVolume_hull_mono
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    {region₁ region₂ : Set α}
+    (hsubset : region₁ ⊆ region₂) :
+    data.logVolume (data.hullRegion region₁) <=
+      data.logVolume (data.hullRegion region₂) :=
+  data.logVolume_mono (data.hull_mono hsubset)
+
+theorem logVolume_le_of_subset_hull
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    {region₁ region₂ : Set α}
+    (hsubset : region₁ ⊆ data.hullRegion region₂) :
+    data.logVolume region₁ <= data.logVolume (data.hullRegion region₂) :=
+  data.logVolume_mono hsubset
+
+end IUTStage1HolomorphicHullLogVolumeShadow
+
+/--
 Finite log-volume shadow of the Step (xi-d) determinant passage.
 
 The paper passes from localizations of arithmetic vector bundles of rank `> 1` to
@@ -1672,6 +1746,23 @@ structure IUTStage1HullDetPilotUpperRayLogVolume where
 
 namespace IUTStage1HullDetPilotUpperRayLogVolume
 
+def ofHolomorphicHull
+    {α : Type u}
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (qRegion thetaRegion : Set α)
+    (q_subset_hull : qRegion ⊆ hullData.hullRegion thetaRegion)
+    (determinant : IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (theta_eq_normalized_determinant :
+      hullData.logVolume (hullData.hullRegion thetaRegion) =
+        determinant.normalizedLogVolume) :
+    IUTStage1HullDetPilotUpperRayLogVolume :=
+  { determinant := determinant,
+    thetaHullLogVolume :=
+      hullData.logVolume (hullData.hullRegion thetaRegion),
+    theta_eq_normalized_determinant := theta_eq_normalized_determinant,
+    qPilotLogVolume := hullData.logVolume qRegion,
+    q_mem_upperRay := hullData.logVolume_le_of_subset_hull q_subset_hull }
+
 def upperRay
     (data : IUTStage1HullDetPilotUpperRayLogVolume) : Set Real :=
   { value | value <= data.thetaHullLogVolume }
@@ -1697,6 +1788,21 @@ theorem qPilotLogVolume_le_thetaHullLogVolume
     (data : IUTStage1HullDetPilotUpperRayLogVolume) :
     data.qPilotLogVolume <= data.thetaHullLogVolume :=
   data.q_mem_upperRay
+
+theorem ofHolomorphicHull_qPilotLogVolume_le_thetaHullLogVolume
+    {α : Type u}
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (qRegion thetaRegion : Set α)
+    (q_subset_hull : qRegion ⊆ hullData.hullRegion thetaRegion)
+    (determinant : IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (theta_eq_normalized_determinant :
+      hullData.logVolume (hullData.hullRegion thetaRegion) =
+        determinant.normalizedLogVolume) :
+    (ofHolomorphicHull hullData qRegion thetaRegion q_subset_hull
+      determinant theta_eq_normalized_determinant).qPilotLogVolume <=
+      (ofHolomorphicHull hullData qRegion thetaRegion q_subset_hull
+        determinant theta_eq_normalized_determinant).thetaHullLogVolume :=
+  hullData.logVolume_le_of_subset_hull q_subset_hull
 
 theorem thetaHullLogVolume_eq_determinant
     (data : IUTStage1HullDetPilotUpperRayLogVolume) :
