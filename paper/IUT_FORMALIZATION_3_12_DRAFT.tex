@@ -233,6 +233,11 @@ The code currently covers:
   each factor a finite-fiber direct sum over places above \(v_\mathbb{Q}\), total
   log-volume given by the finite sum over the container, normalized denominator
   \(j+1\), and invariance under container permutations;
+\item source-side local log-volume interfaces:
+  Lean packages finite local log-volume identification, positive capsule count,
+  procession-normalized averaging, and local container estimates
+  \(q_{\mathrm{signed}}\le\operatorname{logvol}_{\mathrm{local}}\), while
+  leaving the analytic construction of the local objects external;
 \item the \(F_\ell\)-label average specialization:
   for labels represented as \(\mathbb{Z}/\ell\mathbb{Z}\), Lean rewrites the
   procession-normalized average denominator as \(\ell\);
@@ -1179,8 +1184,9 @@ The present code does not yet formalize:
   shadows;
 \item the global realified Frobenioids of Step (xii), beyond the present integer
   log-volume shift model;
-\item the arithmetic-divisor and local log-volume construction behind the IUT IV
-  Theorem 1.10 numerical estimates, and the Diophantine applications;
+\item the arithmetic-divisor and analytic local log-volume construction behind
+  the IUT IV Theorem 1.10 numerical estimates, beyond the present source-side
+  interface records;
 \item the construction of the normalized height, log-different, and log-conductor
   functions used in IUT IV, Theorem A;
 \item the construction of the bounded-discrepancy equivalences asserted in

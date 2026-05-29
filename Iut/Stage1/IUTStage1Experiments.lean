@@ -5852,6 +5852,43 @@ theorem iutIVCorollary23DiophantineInequality_endpoint
       data.lowerBound <= data.discrepancy x :=
   data.diophantine_inequality_endpoint x
 
+theorem finiteLocalLogVolume_endpoint
+    {kind : IUTStage1PlaceKind}
+    (data : IUTStage1FiniteLocalLogVolumeObject kind) :
+    data.localObject.logVolume = data.finiteLogVolume ∧
+      data.place = data.localObject.object.place :=
+  data.finiteLocalLogVolume_endpoint
+
+theorem processionNormalizedLogVolume_endpoint
+    {kind : IUTStage1PlaceKind}
+    (data : IUTStage1ProcessionNormalizedLogVolume kind) :
+    0 < data.capsuleCount ∧
+      data.normalizedLogVolume =
+        data.totalLogVolume / (data.capsuleCount : Real) ∧
+      data.toFiniteLocalLogVolumeObject = data.localObject :=
+  data.processionNormalized_endpoint
+
+theorem localContainerLogVolume_endpoint
+    {targetSigned localLogVolume : Real}
+    (estimate :
+      IUTStage1LocalContainerLogVolumeEstimate targetSigned localLogVolume) :
+    localLogVolume = estimate.containerLogVolume ∧
+      targetSigned <= estimate.containerLogVolume ∧
+      targetSigned <= localLogVolume :=
+  estimate.localContainerLogVolume_endpoint
+
+theorem localObjectContainerLogVolume_endpoint
+    {kind : IUTStage1PlaceKind}
+    {targetSigned localLogVolume : Real}
+    (estimate :
+      IUTStage1LocalObjectContainerLogVolumeEstimate
+        kind targetSigned localLogVolume) :
+    localLogVolume = estimate.localObject.finiteLogVolume ∧
+      targetSigned <= estimate.object_container_estimate.containerLogVolume ∧
+      targetSigned <= estimate.localObject.finiteLogVolume ∧
+      targetSigned <= localLogVolume :=
+  estimate.localObjectContainerLogVolume_endpoint
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool

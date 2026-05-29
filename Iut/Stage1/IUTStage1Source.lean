@@ -2985,6 +2985,12 @@ def place
     IUTStage1PlaceId kind :=
   data.localObject.object.place
 
+theorem finiteLocalLogVolume_endpoint
+    (data : IUTStage1FiniteLocalLogVolumeObject kind) :
+    data.localObject.logVolume = data.finiteLogVolume ∧
+      data.place = data.localObject.object.place :=
+  ⟨data.logVolume_eq, rfl⟩
+
 end IUTStage1FiniteLocalLogVolumeObject
 
 namespace IUTStage1ProcessionNormalizedLogVolume
@@ -3007,6 +3013,14 @@ def toFiniteLocalLogVolumeObject
     IUTStage1FiniteLocalLogVolumeObject kind :=
   data.localObject
 
+theorem processionNormalized_endpoint
+    (data : IUTStage1ProcessionNormalizedLogVolume kind) :
+    0 < data.capsuleCount ∧
+      data.normalizedLogVolume =
+        data.totalLogVolume / (data.capsuleCount : Real) ∧
+      data.toFiniteLocalLogVolumeObject = data.localObject :=
+  ⟨data.capsuleCount_pos, data.normalized_eq, rfl⟩
+
 end IUTStage1ProcessionNormalizedLogVolume
 
 namespace IUTStage1LocalContainerLogVolumeEstimate
@@ -3019,6 +3033,16 @@ theorem targetSigned_le_localLogVolume
     targetSigned <= localLogVolume := by
   rw [estimate.localLogVolume_eq_container]
   exact estimate.targetSigned_le_containerLogVolume
+
+theorem localContainerLogVolume_endpoint
+    (estimate :
+      IUTStage1LocalContainerLogVolumeEstimate targetSigned localLogVolume) :
+    localLogVolume = estimate.containerLogVolume ∧
+      targetSigned <= estimate.containerLogVolume ∧
+      targetSigned <= localLogVolume :=
+  ⟨estimate.localLogVolume_eq_container,
+    estimate.targetSigned_le_containerLogVolume,
+    estimate.targetSigned_le_localLogVolume⟩
 
 end IUTStage1LocalContainerLogVolumeEstimate
 
@@ -3047,6 +3071,19 @@ theorem targetSigned_le_localLogVolume
         kind targetSigned localLogVolume) :
     targetSigned <= localLogVolume :=
   estimate.toLocalContainerEstimate.targetSigned_le_localLogVolume
+
+theorem localObjectContainerLogVolume_endpoint
+    (estimate :
+      IUTStage1LocalObjectContainerLogVolumeEstimate
+        kind targetSigned localLogVolume) :
+    localLogVolume = estimate.localObject.finiteLogVolume ∧
+      targetSigned <= estimate.object_container_estimate.containerLogVolume ∧
+      targetSigned <= estimate.localObject.finiteLogVolume ∧
+      targetSigned <= localLogVolume :=
+  ⟨estimate.localLogVolume_eq_object,
+    estimate.object_container_estimate.targetSigned_le_containerLogVolume,
+    estimate.object_container_estimate.targetSigned_le_localLogVolume,
+    estimate.targetSigned_le_localLogVolume⟩
 
 def transportLocalLogVolume
     {newLocalLogVolume : Real}
