@@ -23603,6 +23603,31 @@ theorem qSigned_le_thetaSigned_via_structuredSHEBound
       profile audited transport hprofile hlog hpointwise)
     (part.theta_source.thetaSourceAverage_le_thetaSigned audited)
 
+theorem qSigned_le_thetaSigned_via_factoredSHEBound
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (factored :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package bundle l)
+    (hprofile : profile = factored.sourceProfile)
+    (hlog :
+      part.theta_source.compatible_average.cuspLogVolume audited =
+        factored.sourceLogVolume)
+    (hpointwise :
+      ∀ j : ZMod l.value,
+        factored.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (factored.coordinateEquiv j)) <=
+          part.theta_source.thetaSourceAverage audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.qSigned_le_thetaSigned_via_structuredSHEBound
+    profile audited factored.toStructuredSHESquareWeightTransportAudit
+    (by simpa using hprofile)
+    (by simpa using hlog)
+    (by simpa using hpointwise)
+
 theorem targetSigned_le_thetaSourceAverage_via_squareWeightedAverage
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)

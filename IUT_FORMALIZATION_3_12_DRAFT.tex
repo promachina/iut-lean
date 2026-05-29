@@ -30,8 +30,9 @@ the final ordered-real algebra in Step (xi-f).  It does not prove Corollary 3.12
 and does not refute it.  The main formal result so far is that a supplied
 hull/log-volume \(q\)-to-\(\Theta\) comparison gives \(C_\Theta\ge-1\), and that a
 nonarchimedean \((\mathrm{Ind3})\) entry together with explicit Hodge/SHE
-square-weight transport data feeds such a comparison, while several simplified
-collapse mechanisms are rejected by Lean.
+square-weight transport data, or the primitive factored square/full-label SHE
+obligations, feeds such a comparison, while several simplified collapse
+mechanisms are rejected by Lean.
 \end{abstract}
 
 \section{Scope}
@@ -462,7 +463,9 @@ The code currently covers:
   route after matching the source profile and source log-volume; consequently,
   structured-SHE target full-label bounds by the \(\Theta\)-source average feed
   the cusp-class container route all the way to
-  \(q_{\mathrm{signed}}\le\Theta_{\mathrm{signed}}\);
+  \(q_{\mathrm{signed}}\le\Theta_{\mathrm{signed}}\); the same final comparison
+  is now available directly from the primitive factored square/full-label SHE
+  obligations, without requiring a prebuilt transport-audit argument;
 \item a bridge from factored square/full-label SHE obligations to the
   Hodge-descent \((\mathrm{Ind3})\) route.
 \end{itemize}
@@ -596,7 +599,8 @@ finite log-volumes before square/full-label preservation is supplied.
 The square/full-label audit now also transports target pointwise upper bounds
 back to the source square-weighted average, including through the structured-SHE
 route wrapper, and the experiment layer exposes the resulting final
-q-to-\(\Theta\) comparison theorem.
+q-to-\(\Theta\) comparison theorem.  The same experiment-level theorem is now
+exposed for primitive factored square/full-label SHE obligations.
 
 \section{Audit Findings}
 
@@ -607,7 +611,9 @@ hull/log-volume upper-ray comparison supplies
 conclusion \(C_\Theta\ge-1\).  If the nonarchimedean \((\mathrm{Ind3})\) entry,
 ordered real-line alignment, and Hodge/SHE square-weight transport audit are
 supplied, Lean checks the final signed \(q\)-to-\(\Theta\) inequality feeding
-that algebra.
+that algebra.  If the corresponding primitive factored square/full-label SHE
+obligations are supplied instead, Lean first constructs the transport audit and
+checks the same final inequality.
 
 The strongest negative result is also limited: in the current \(\F_\ell\)-label
 model, Lean rejects a single label-independent scale accounting for all

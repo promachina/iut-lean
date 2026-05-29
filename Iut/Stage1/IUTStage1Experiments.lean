@@ -316,6 +316,38 @@ theorem structuredSHETargetBound_finalQTheta
     profile audited transport_audit source_profile_eq source_log_volume_eq
     target_fullLabel_le_thetaAverage
 
+theorem factoredSHETargetBound_finalQTheta
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (factored :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        package part.bundle l)
+    (source_profile_eq : profile = factored.sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        factored.sourceLogVolume)
+    (target_fullLabel_le_thetaAverage :
+      ∀ j : ZMod l.value,
+        factored.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (factored.coordinateEquiv j)) <=
+          part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+            audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.toThetaCuspClassContainerAudit.qSigned_le_thetaSigned_via_factoredSHEBound
+    profile audited factored source_profile_eq source_log_volume_eq
+    target_fullLabel_le_thetaAverage
+
 /-- Scale-level status for transport-explicit real-line cancellation. -/
 structure Ind3TransportScaleExperimentReport where
   sourceScaleMatched : Bool
