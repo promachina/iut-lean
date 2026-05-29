@@ -8133,6 +8133,24 @@ end GaussianMonoidDegreeEvaluation
 def absLabelProcessionTop (l : PrimeGeFive) : Nat :=
   l.value / 2
 
+theorem absLabelProcessionTop_eq_half_minus_one (l : PrimeGeFive) :
+    absLabelProcessionTop l = (l.value - 1) / 2 := by
+  unfold absLabelProcessionTop
+  have hodd : Odd l.value := l.prime.odd_of_ne_two l.ne_two
+  rcases hodd with ⟨k, hk⟩
+  rw [hk]
+  omega
+
+theorem absLabelProcession_card_eq_half_plus_one (l : PrimeGeFive) :
+    Fintype.card (IUTStage1ProcessionContainer (absLabelProcessionTop l)) =
+      (l.value + 1) / 2 := by
+  rw [IUTStage1ProcessionContainer.card_eq]
+  unfold absLabelProcessionTop
+  have hodd : Odd l.value := l.prime.odd_of_ne_two l.ne_two
+  rcases hodd with ⟨k, hk⟩
+  rw [hk]
+  omega
+
 def absLabelFromProcession
     (l : PrimeGeFive)
     (label : IUTStage1ProcessionContainer (absLabelProcessionTop l)) :

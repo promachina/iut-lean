@@ -708,6 +708,20 @@ theorem gaussianCoordinateAverage_eq_nonzeroMassRescale
         evaluation.nonzeroCarrierAveragedLogVolume.averageLogVolume :=
   evaluation.coordinateAveragedLogVolume_eq_nonzero_mass_rescale
 
+theorem absLabelProcessionTop_eq_halfMinusOne
+    (l : PrimeGeFive) :
+    IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l =
+      (l.value - 1) / 2 :=
+  IUTStage1ZModSquareWeightProfile.absLabelProcessionTop_eq_half_minus_one l
+
+theorem absLabelProcessionCard_eq_halfPlusOne
+    (l : PrimeGeFive) :
+    Fintype.card
+        (IUTStage1ProcessionContainer
+          (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l)) =
+      (l.value + 1) / 2 :=
+  IUTStage1ZModSquareWeightProfile.absLabelProcession_card_eq_half_plus_one l
+
 /-- Scale-level status for transport-explicit real-line cancellation. -/
 structure Ind3TransportScaleExperimentReport where
   sourceScaleMatched : Bool
