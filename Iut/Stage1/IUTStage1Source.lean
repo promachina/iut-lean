@@ -5408,6 +5408,65 @@ theorem thetaFinite_tensorPower_warning
       rw [hFinite] at hmem
       exact hnot hmem⟩
 
+def toLocalFrobenioidLogVolumeAmbiguity
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (localExponent : Int)
+    (localPrimeStepLogVolume : Real) :
+    IUTStage1LocalFrobenioidLogVolumeAmbiguity :=
+  { unshiftedLogVolume := data.toThetaFiniteLogVolumeEndpoint.thetaRealLogVolume,
+    localExponent := localExponent,
+    localPrimeStepLogVolume := localPrimeStepLogVolume,
+    shiftedLogVolume :=
+      data.toThetaFiniteLogVolumeEndpoint.thetaRealLogVolume +
+        (localExponent : Real) * localPrimeStepLogVolume,
+    shifted_logVolume_eq := rfl }
+
+def toGlobalFrobenioidLogVolumeCalibration
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (localExponent : Int)
+    (localPrimeStepLogVolume : Real) :
+    IUTStage1GlobalFrobenioidLogVolumeCalibration :=
+  { localData :=
+      data.toLocalFrobenioidLogVolumeAmbiguity
+        localExponent localPrimeStepLogVolume,
+    globalExponent := 0,
+    global_exponent_eq_zero := rfl,
+    calibratedLogVolume :=
+      data.toThetaFiniteLogVolumeEndpoint.thetaRealLogVolume,
+    calibrated_logVolume_eq := by
+      simp [toLocalFrobenioidLogVolumeAmbiguity] }
+
+theorem thetaFinite_globalFrobenioidCalibration
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (localExponent : Int)
+    (localPrimeStepLogVolume : Real) :
+    let finite := data.toThetaFiniteLogVolumeEndpoint;
+    let localDatum :=
+      data.toLocalFrobenioidLogVolumeAmbiguity
+        localExponent localPrimeStepLogVolume;
+    let global :=
+      data.toGlobalFrobenioidLogVolumeCalibration
+        localExponent localPrimeStepLogVolume;
+    localDatum.unshiftedLogVolume = finite.thetaRealLogVolume ∧
+      localDatum.shiftedLogVolume =
+        finite.thetaRealLogVolume +
+          (localExponent : Real) * localPrimeStepLogVolume ∧
+      global.calibratedLogVolume = finite.thetaRealLogVolume ∧
+      global.calibratedLogVolume = localDatum.unshiftedLogVolume ∧
+      (global.calibratedLogVolume = localDatum.shiftedLogVolume ↔
+        (localDatum.localExponent : Real) * localDatum.localPrimeStepLogVolume = 0) ∧
+      (localExponent ≠ 0 →
+        localPrimeStepLogVolume ≠ 0 →
+          global.calibratedLogVolume ≠ localDatum.shiftedLogVolume) := by
+  intro finite localDatum global
+  exact
+    ⟨rfl, rfl, global.calibratedLogVolume_eq_unshifted,
+      global.calibratedLogVolume_eq_unshifted,
+      global.calibratedLogVolume_eq_shifted_iff_shiftTerm_eq_zero,
+      fun hExponent hStep =>
+        global.calibratedLogVolume_ne_shifted_of_local_nonzero
+          hExponent hStep⟩
+
 theorem ofZModCuspLabelLogVolumeCompatibilities_q_mem_upperRay
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :
