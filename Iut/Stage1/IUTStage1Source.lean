@@ -6406,6 +6406,23 @@ theorem unitAffine_pointwise_gaussian_preserving_iff
     exact evaluation.gaussianDegree_unitSmul_fromCoordinate_eq_of_signSubgroup
       ha j
 
+theorem unitAffine_pointwise_gaussian_preserving_iff_fullLabelMapPreserving
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value)
+    (henv : evaluation.environmentDegree ≠ 0) :
+    (∀ j : ZMod l.value,
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ↔
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t) := by
+  rw [evaluation.unitAffine_pointwise_gaussian_preserving_iff a t henv]
+  rw [IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_unitAffine_iff]
+
 theorem coordinateAveragedLogVolume_average_translation_eq
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (t : ZMod l.value) :
