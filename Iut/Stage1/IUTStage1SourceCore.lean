@@ -1658,10 +1658,22 @@ def upperRay
     (data : IUTStage1HullDetPilotUpperRayLogVolume) : Set Real :=
   { value | value <= data.thetaHullLogVolume }
 
+theorem mem_upperRay_iff
+    (data : IUTStage1HullDetPilotUpperRayLogVolume)
+    (value : Real) :
+    value ∈ data.upperRay ↔ value <= data.thetaHullLogVolume :=
+  Iff.rfl
+
 theorem qPilot_mem_upperRay
     (data : IUTStage1HullDetPilotUpperRayLogVolume) :
     data.qPilotLogVolume ∈ data.upperRay :=
   data.q_mem_upperRay
+
+theorem qPilot_mem_upperRay_iff
+    (data : IUTStage1HullDetPilotUpperRayLogVolume) :
+    data.qPilotLogVolume ∈ data.upperRay ↔
+      data.qPilotLogVolume <= data.thetaHullLogVolume :=
+  data.mem_upperRay_iff data.qPilotLogVolume
 
 theorem qPilotLogVolume_le_thetaHullLogVolume
     (data : IUTStage1HullDetPilotUpperRayLogVolume) :

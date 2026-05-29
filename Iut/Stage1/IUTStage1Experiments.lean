@@ -3979,6 +3979,14 @@ theorem stepXToHullUpperRay_q_mem
       data.toHullDetPilotUpperRayLogVolume.upperRay :=
   data.toUpperRay_q_mem
 
+theorem stepXToHullUpperRay_q_mem_iff_q_le_theta
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.qPilotLogVolume ∈
+        data.toHullDetPilotUpperRayLogVolume.upperRay ↔
+      data.qPilotLogVolume <= data.thetaHullLogVolume :=
+  data.toHullDetPilotUpperRayLogVolume.qPilot_mem_upperRay_iff
+
 theorem stepXToHullUpperRay_twoComputation_input_le_theta
     {label : Type u} [Fintype label]
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
