@@ -477,7 +477,10 @@ The code currently covers:
   \(q_{\mathrm{signed}}\le\Theta_{\mathrm{signed}}\) directly from Gaussian
   target bounds; since the absolute-label exponent is nonnegative, Lean also
   derives those target bounds in the branch where the target environment degree
-  is nonpositive and the \(\Theta\)-source average is nonnegative;
+  is nonpositive and the \(\Theta\)-source average is nonnegative; conversely,
+  the all-label Gaussian target-bound formulation forces the
+  \(\Theta\)-source average to be nonnegative, since the core label has
+  Gaussian degree \(0\);
 \item a bridge from factored square/full-label SHE obligations to the
   Hodge-descent \((\mathrm{Ind3})\) route.
 \end{itemize}
@@ -616,7 +619,9 @@ exposed for primitive factored square/full-label SHE obligations and for
 degree-level Gaussian evaluations after the explicit preservation branches are
 supplied.  In the nonpositive-environment/nonnegative-\(\Theta\)-average branch,
 the Gaussian pointwise target bound is derived from the sign of the
-\(q^{j^2}\)-exponent rather than assumed.
+\(q^{j^2}\)-exponent rather than assumed.  Lean also proves that this
+all-label Gaussian bound cannot hold when the \(\Theta\)-source average is
+negative.
 
 \section{Audit Findings}
 
@@ -634,8 +639,11 @@ Gaussian evaluations with equal environment degree, Lean constructs the
 full-label log-volume compatibility branch before invoking the factored route.
 The branch with nonnegative \(\Theta\)-source average is formally easier:
 nonnegativity of \(j^2\) makes every nonpositive environment-degree Gaussian
-target value bounded above by that average.  The genuinely difficult branch is
-still the negative \(\Theta\)-source comparison.
+target value bounded above by that average.  The all-label version cannot be
+the negative branch: the core label contributes \(0\), so a negative upper bound
+is impossible.  The genuinely difficult branch must therefore refine the
+label/domain statement or use additional hull/log-volume structure before the
+target bound is formulated.
 
 The strongest negative result is also limited: in the current \(\F_\ell\)-label
 model, Lean rejects a single label-independent scale accounting for all

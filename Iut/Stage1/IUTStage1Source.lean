@@ -7821,6 +7821,35 @@ theorem gaussianDegree_le_of_environment_nonpositive_of_nonnegative_bound
       henv label)
     hc
 
+theorem forall_coordinateFullLabel_le_implies_bound_nonnegative
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
+    {c : Real}
+    (hbound :
+      ∀ j : ZMod l.value,
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (coordinateEquiv j)) <= c) :
+    0 <= c := by
+  have hzero := hbound (coordinateEquiv.symm (0 : ZMod l.value))
+  simpa [IUTStage1ZModCuspFullLabel.fromCoordinate_zero,
+    gaussianDegree_zero] using hzero
+
+theorem not_forall_coordinateFullLabel_le_of_negative_bound
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
+    {c : Real}
+    (hc : c < 0) :
+    ¬ ∀ j : ZMod l.value,
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (coordinateEquiv j)) <= c := by
+  intro hbound
+  have hnonneg :=
+    evaluation.forall_coordinateFullLabel_le_implies_bound_nonnegative
+      coordinateEquiv hbound
+  linarith
+
 end GaussianMonoidDegreeEvaluation
 
 def absLabelProcessionTop (l : PrimeGeFive) : Nat :=
