@@ -407,7 +407,11 @@ The code currently covers:
   zero and cusp-class branches are bounded by the proposed \((\mathrm{Ind3})\)
   bound; the before-, after-\((\mathrm{Ind1})\)-, and
   after-\((\mathrm{Ind2})\)-averages are all bounded by the same
-  \((\mathrm{Ind3})\) upper bound;
+  \((\mathrm{Ind3})\) upper bound; Lean now packages the
+  Remark 3.12.2(iii) log-link-juggling endpoint by combining these two
+  equalities with the one-sided \((\mathrm{Ind3})\) bound, and separately
+  records the matching nonarchimedean/archimedean place families for the
+  upper-semi state;
 \item the Step (x) to Step (xi) upper-ray handoff:
   if the q-pilot reading is the pre-indeterminacy averaged log-volume and the
   \(\Theta\)-hull reading is the \((\mathrm{Ind3})\) upper bound, Lean constructs
@@ -917,6 +921,10 @@ equality distinction, tied to the two Fig. 3.9 log-shell treatments.
 The metric flag records the Gauss--Bonnet sign calculation used as analogy for
 the upper semi-compatibility inequality, including the nonpositive inequality
 form following from strict negativity.
+The log-link-juggling flag records the Remark 3.12.2(iii) source of
+\((\mathrm{Ind3})\): unchanged procession-normalized averages through
+\((\mathrm{Ind1})\) and \((\mathrm{Ind2})\), plus a one-sided upper-semi bound
+and matching place families.
 The factor-\(p\) flag records the \(F_\ell\)-label averaging denominator and
 the order-preservation of this positive normalization.
 The Frobenius-derivative flag records the degree inequality from inclusion and
@@ -1160,6 +1168,9 @@ In the accompanying toy model, Lean proves the final upper bound exactly from
 the upper-ray membership hypothesis.
 Lean also records that the q-pilot column lacks the theta-side multiradiality
 used in Theorem 3.11(iii)(c).
+For Remark 3.12.2(iii), Lean packages the log-link juggling as the source of
+the upper-semi \((\mathrm{Ind3})\) endpoint: the averaged value is fixed through
+\((\mathrm{Ind1})\) and \((\mathrm{Ind2})\), then bounded from above.
 For Remark 3.12.2(v), Lean separates hull absorption of unit shifts from
 log-volume equality after logarithmic-conjugate compatibility.
 For Remark 3.12.3(i), Lean proves the stated negative Euler-characteristic sign

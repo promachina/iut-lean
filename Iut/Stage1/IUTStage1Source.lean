@@ -5074,6 +5074,26 @@ theorem afterInd2_average_le_ind3UpperBound
     data.afterInd2.averageLogVolume <= data.ind3UpperBound :=
   data.ind3_upper
 
+/--
+Remark 3.12.2(iii) averaged-log-volume endpoint.
+
+The procession-normalized average is unchanged by `(Ind1)` and `(Ind2)`;
+the remaining log-link upper-semi ambiguity `(Ind3)` is exactly the one-sided
+upper bound recorded by the corridor.
+-/
+theorem remark3122_logLinkJuggling_ind3_endpoint
+    (data : IUTStage1ProcessionNormalizedIndeterminacyCorridor label) :
+    data.beforeIndeterminacy.averageLogVolume =
+        data.afterInd1.averageLogVolume ∧
+      data.afterInd1.averageLogVolume =
+        data.afterInd2.averageLogVolume ∧
+      data.afterInd2.averageLogVolume <= data.ind3UpperBound ∧
+      data.beforeIndeterminacy.averageLogVolume <= data.ind3UpperBound :=
+  ⟨data.ind1_preserves_average,
+    data.ind2_preserves_average,
+    data.afterInd2_average_le_ind3UpperBound,
+    data.before_average_le_ind3UpperBound⟩
+
 noncomputable def ofZModCuspLabelLogVolumeCompatibilities
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :
@@ -14642,6 +14662,29 @@ theorem logVolumeUpperBound
     data.upperSemiState.logVolumeCompatibility.sourceLogVolume <=
       data.upperSemiState.logVolumeCompatibility.targetLogVolume :=
   data.upperSemiState.logVolumeCompatibility.source_le_target
+
+/--
+Remark 3.12.2(iii) upper-semi place-family endpoint.
+
+The log-link juggling responsible for `(Ind3)` is recorded here as the same
+nonarchimedean/archimedean place families as `(Ind2)`, together with the
+one-sided log-volume comparison of the upper-semi state.
+-/
+theorem remark3122_logLinkJuggling_upperSemi_endpoint
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.ind2Actions.nonarchimedeanPlaces =
+        (data.upperSemiState.nonarchimedeanInclusions.map fun entry =>
+          entry.place) ∧
+      data.ind2Actions.archimedeanPlaces =
+        (data.upperSemiState.archimedeanSurjections.map fun entry =>
+          entry.place) ∧
+      data.upperSemiState.logVolumeCompatible ∧
+      data.upperSemiState.logVolumeCompatibility.sourceLogVolume <=
+        data.upperSemiState.logVolumeCompatibility.targetLogVolume :=
+  ⟨data.nonarchimedeanPlaces_eq,
+    data.archimedeanPlaces_eq,
+    data.logVolumeCompatible,
+    data.logVolumeUpperBound⟩
 
 end IUTStage1Ind2UpperSemiPlaceFamilyCompatibility
 

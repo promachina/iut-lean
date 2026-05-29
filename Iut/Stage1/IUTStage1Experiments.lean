@@ -3991,6 +3991,32 @@ theorem processionNormalizedIndeterminacyCorridor_afterInd2_eq_before
       data.beforeIndeterminacy.averageLogVolume :=
   data.afterInd2_average_eq_before
 
+theorem remark3122_logLinkJuggling_ind3_endpoint
+    {label : Type u} [Fintype label]
+    (data : IUTStage1ProcessionNormalizedIndeterminacyCorridor label) :
+    data.beforeIndeterminacy.averageLogVolume =
+        data.afterInd1.averageLogVolume ∧
+      data.afterInd1.averageLogVolume =
+        data.afterInd2.averageLogVolume ∧
+      data.afterInd2.averageLogVolume <= data.ind3UpperBound ∧
+      data.beforeIndeterminacy.averageLogVolume <= data.ind3UpperBound :=
+  IUTStage1ProcessionNormalizedIndeterminacyCorridor.remark3122_logLinkJuggling_ind3_endpoint
+    data
+
+theorem remark3122_logLinkJuggling_upperSemi_endpoint
+    (data : IUTStage1Ind2UpperSemiPlaceFamilyCompatibility) :
+    data.ind2Actions.nonarchimedeanPlaces =
+        (data.upperSemiState.nonarchimedeanInclusions.map fun entry =>
+          entry.place) ∧
+      data.ind2Actions.archimedeanPlaces =
+        (data.upperSemiState.archimedeanSurjections.map fun entry =>
+          entry.place) ∧
+      data.upperSemiState.logVolumeCompatible ∧
+      data.upperSemiState.logVolumeCompatibility.sourceLogVolume <=
+        data.upperSemiState.logVolumeCompatibility.targetLogVolume :=
+  IUTStage1Ind2UpperSemiPlaceFamilyCompatibility.remark3122_logLinkJuggling_upperSemi_endpoint
+    data
+
 theorem zmodCuspLabelLogVolumeCompatibility_corridor_endpoint
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :
