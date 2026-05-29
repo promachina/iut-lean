@@ -5511,6 +5511,20 @@ theorem iutIVCorollary22QTwoMinusQ_bound
       (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH :=
   data.qTwo_minus_q_le_oneThird_sqrtH_logTwoDeltaH
 
+theorem iutIVCorollary22QTwoMinusQ_endpoint
+    (data : IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow) :
+    0 <= data.sqrtH ∧
+      (1 / 6 : Real) * data.logQTwo - (1 / 6 : Real) * data.logQ <=
+        (1 / 6 : Real) * data.sqrtH ∧
+      1 <= 6 * data.logL ∧
+      3 * data.logL <= data.logTwoDeltaH ∧
+      (1 / 6 : Real) * data.sqrtH <= data.sqrtH * data.logL ∧
+      data.sqrtH * data.logL <=
+        (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH ∧
+      (1 / 6 : Real) * data.logQTwo - (1 / 6 : Real) * data.logQ <=
+        (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH :=
+  data.qTwo_minus_q_endpoint
+
 theorem iutIVCorollary22HBound_before_epsilon
     (data : IUTStage1IUTIVCorollary22HBoundBeforeEpsilonShadow) :
     (1 / 6 : Real) * data.h <=

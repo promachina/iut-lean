@@ -613,7 +613,8 @@ The code currently covers:
   the displayed estimate
   \(\frac16\log(q_2)-\frac16\log(q)
    \le\frac13h^{1/2}\log(2\delta h)\) follows through the intermediate
-  term \(h^{1/2}\log(\ell)\);
+  term \(h^{1/2}\log(\ell)\), with \(1\le6\log(\ell)\) and
+  \(3\log(\ell)\le\log(2\delta h)\) exposed in one endpoint;
 \item the IUT IV, Corollary 2.2(ii) pre-\(\epsilon_E\) bound for
   \(h=\log(q_\forall)\):
   the Theorem 1.10 bound, the \(q_2/q\) estimate, and the bounded discrepancy
@@ -1091,7 +1092,7 @@ proof of Corollary 2.2(ii).
 Lean also proves the displayed comparison
 \(\frac16\log(q_2)-\frac16\log(q)
 \le\frac13h^{1/2}\log(2\delta h)\) from the intermediate
-\(h^{1/2}\log(\ell)\) bounds.
+\(h^{1/2}\log(\ell)\) bounds and their two logarithmic side inequalities.
 Lean then combines this with the bounded \(q_\forall/q_2\) discrepancy to prove
 the displayed pre-\(\epsilon_E\) bound for \(\frac16h\).
 For Corollary 2.2(ii), Lean proves the final \(\frac16\log(q)\) bound from the

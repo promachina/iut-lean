@@ -1680,6 +1680,26 @@ theorem qTwo_minus_q_le_oneThird_sqrtH_logTwoDeltaH
     (le_trans data.oneSixth_sqrtH_le_sqrtH_logL
       data.sqrtH_logL_le_oneThird_sqrtH_logTwoDeltaH)
 
+theorem qTwo_minus_q_endpoint
+    (data : IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow) :
+    0 <= data.sqrtH ∧
+      (1 / 6 : Real) * data.logQTwo - (1 / 6 : Real) * data.logQ <=
+        (1 / 6 : Real) * data.sqrtH ∧
+      1 <= 6 * data.logL ∧
+      3 * data.logL <= data.logTwoDeltaH ∧
+      (1 / 6 : Real) * data.sqrtH <= data.sqrtH * data.logL ∧
+      data.sqrtH * data.logL <=
+        (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH ∧
+      (1 / 6 : Real) * data.logQTwo - (1 / 6 : Real) * data.logQ <=
+        (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH :=
+  ⟨data.sqrtH_nonneg,
+    data.qTwo_minus_q_le_oneSixth_sqrtH,
+    data.one_le_six_logL,
+    data.three_logL_le_logTwoDeltaH,
+    data.oneSixth_sqrtH_le_sqrtH_logL,
+    data.sqrtH_logL_le_oneThird_sqrtH_logTwoDeltaH,
+    data.qTwo_minus_q_le_oneThird_sqrtH_logTwoDeltaH⟩
+
 end IUTStage1IUTIVCorollary22QTwoMinusQBoundShadow
 
 /--
