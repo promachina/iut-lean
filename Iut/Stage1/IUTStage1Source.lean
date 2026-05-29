@@ -24945,6 +24945,46 @@ theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneAllLab
       rw [targetEvaluation.toCuspLabelLogVolumeCompatibility_fullLabelLogVolume]
       exact target_gaussian_le_thetaAverage j)
 
+theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneZeroNonzeroBound
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (canonical_one_preserved :
+      targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (source_profile_eq : profile = sourceProfile)
+    (source_log_volume_eq :
+      part.theta_source.compatible_average.cuspLogVolume audited =
+        sourceEvaluation.toCuspLabelLogVolumeCompatibility)
+    (theta_average_nonnegative :
+      0 <= part.theta_source.thetaSourceAverage audited)
+    (target_nonzero_gaussian_le_thetaAverage :
+      ∀ j : ZMod l.value,
+        j ≠ 0 ->
+          targetEvaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.fromCoordinate l j) <=
+            part.theta_source.thetaSourceAverage audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneAllLabelBound
+    (bundle := bundle)
+    profile audited sourceProfile targetProfile
+    sourceEvaluation targetEvaluation canonical_one_preserved
+    source_profile_eq source_log_volume_eq
+    (by
+      intro j
+      by_cases hj : j = 0
+      · subst j
+        rw [IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+        rw [targetEvaluation.gaussianDegree_zero]
+        exact theta_average_nonnegative
+      · exact target_nonzero_gaussian_le_thetaAverage j hj)
+
 theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneNonzeroBound
     {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)

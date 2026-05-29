@@ -813,10 +813,11 @@ corresponding nonzero-label bound.  The corresponding identity-coordinate final
 route can now be stated directly from canonical \(j=1\) equality, nonpositive
 target environment, and nonnegative \(\Theta\)-source average; if the all-label
 Gaussian target bound is supplied directly, the same endpoint no longer needs
-the nonpositive/nonnegative branch hypotheses.  For nonzero labels, Lean proves
-the complementary bound: the absolute exponent is at least \(1\), so a
-nonpositive environment degree below the \(\Theta\)-source average bounds every
-nonzero Gaussian component and hence their finite nonzero-label average.  The
+the nonpositive/nonnegative branch hypotheses.  It can also consume the
+decomposed zero/nonzero input directly.  For nonzero labels, Lean proves the
+complementary bound: the absolute exponent is at least \(1\), so a nonpositive
+environment degree below the \(\Theta\)-source average bounds every nonzero
+Gaussian component and hence their finite nonzero-label average.  The
 square-weighted transport route has also been strengthened from an all-label
 pointwise bound to a weighted-summand bound, so the zero label requires no
 target upper bound.  The experiment theorem now delegates to the source-layer
@@ -869,7 +870,8 @@ In the all-label branch, the analogous direct endpoint may either use canonical
 that predicate from nonpositive target environment and nonnegative
 \(\Theta\)-source average.  Lean also records the inclusion from the all-label
 predicate to the nonzero-label predicate used by the weighted-summand route,
-and the converse after adding the zero-label nonnegativity condition.
+and the converse after adding the zero-label nonnegativity condition; the
+corresponding direct endpoint is exposed with this decomposed input.
 The
 zero/nonzero average split is now exact: the nonzero carrier has cardinality
 \(\ell-1=2j_{\max}\), the signed carrier is a twofold cover of the nonzero
