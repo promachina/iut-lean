@@ -7214,6 +7214,37 @@ theorem target_nonzeroBound_iff_source_environment_le_of_gaussianDegree_one_eq
   · intro hsource
     simpa [henv] using hsource
 
+theorem target_nonzeroBound_iff_source_nonzeroBound_of_gaussianDegree_one_eq
+    (sourceEvaluation targetEvaluation : GaussianMonoidDegreeEvaluation l)
+    (targetCoordinateEquiv sourceCoordinateEquiv :
+      ZMod l.value ≃ ZMod l.value)
+    (target_environment_nonpositive :
+      targetEvaluation.environmentDegree <= 0)
+    (source_environment_nonpositive :
+      sourceEvaluation.environmentDegree <= 0)
+    (canonical_one_preserved :
+      targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    {c : Real} :
+    (∀ j : ZMod l.value,
+        targetCoordinateEquiv j ≠ 0 ->
+          targetEvaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.fromCoordinate l
+                (targetCoordinateEquiv j)) <= c) ↔
+      ∀ j : ZMod l.value,
+        sourceCoordinateEquiv j ≠ 0 ->
+          sourceEvaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.fromCoordinate l
+                (sourceCoordinateEquiv j)) <= c := by
+  rw [sourceEvaluation
+    |>.target_nonzeroBound_iff_source_environment_le_of_gaussianDegree_one_eq
+      targetEvaluation targetCoordinateEquiv target_environment_nonpositive
+      canonical_one_preserved]
+  rw [sourceEvaluation.forall_coordinateFullLabel_nonzero_le_iff_environment_le_bound
+    sourceCoordinateEquiv source_environment_nonpositive]
+
 theorem target_allLabelBound_iff_nonnegative_and_source_environment_le_of_gaussianDegree_one_eq
     (sourceEvaluation targetEvaluation : GaussianMonoidDegreeEvaluation l)
     (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
