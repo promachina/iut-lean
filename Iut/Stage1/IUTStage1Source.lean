@@ -7119,6 +7119,34 @@ theorem forall_coordinateFullLabel_nonzero_le_of_forall_coordinateFullLabel_le
   intro j _hj
   exact hbound j
 
+theorem forall_coordinateFullLabel_le_iff_bound_nonnegative_and_nonzero_le
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
+    {c : Real} :
+    (∀ j : ZMod l.value,
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (coordinateEquiv j)) <= c) ↔
+      0 <= c ∧
+        ∀ j : ZMod l.value,
+          coordinateEquiv j ≠ 0 ->
+            evaluation.gaussianDegree
+                (IUTStage1ZModCuspFullLabel.fromCoordinate l
+                  (coordinateEquiv j)) <= c := by
+  constructor
+  · intro hbound
+    exact
+      ⟨evaluation.forall_coordinateFullLabel_le_implies_bound_nonnegative
+          coordinateEquiv hbound,
+        evaluation.forall_coordinateFullLabel_nonzero_le_of_forall_coordinateFullLabel_le
+          coordinateEquiv hbound⟩
+  · rintro ⟨hc, hnonzero⟩ j
+    by_cases hj : coordinateEquiv j = 0
+    · rw [hj, IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+      rw [evaluation.gaussianDegree_zero]
+      exact hc
+    · exact hnonzero j hj
+
 theorem forall_coordinateFullLabel_nonzero_le_iff_environment_le_bound
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (coordinateEquiv : ZMod l.value ≃ ZMod l.value)

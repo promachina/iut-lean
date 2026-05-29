@@ -807,9 +807,11 @@ the Gaussian pointwise target bound is derived from the sign of the
 \(q^{j^2}\)-exponent rather than assumed.  Lean also proves that this
 all-label Gaussian bound cannot hold when the \(\Theta\)-source average is
 negative; under nonpositive environment it is equivalent to nonnegativity of
-that average.  The corresponding identity-coordinate final route can now be
-stated directly from canonical \(j=1\) equality, nonpositive target
-environment, and nonnegative \(\Theta\)-source average; if the all-label
+that average.  More generally, Lean decomposes the all-label Gaussian bound
+exactly into nonnegativity of the upper bound at the zero label and the
+corresponding nonzero-label bound.  The corresponding identity-coordinate final
+route can now be stated directly from canonical \(j=1\) equality, nonpositive
+target environment, and nonnegative \(\Theta\)-source average; if the all-label
 Gaussian target bound is supplied directly, the same endpoint no longer needs
 the nonpositive/nonnegative branch hypotheses.  For nonzero labels, Lean proves
 the complementary bound: the absolute exponent is at least \(1\), so a
@@ -866,7 +868,8 @@ In the all-label branch, the analogous direct endpoint may either use canonical
 \(j=1\) equality plus the all-label Gaussian target-bound predicate, or derive
 that predicate from nonpositive target environment and nonnegative
 \(\Theta\)-source average.  Lean also records the inclusion from the all-label
-predicate to the nonzero-label predicate used by the weighted-summand route.
+predicate to the nonzero-label predicate used by the weighted-summand route,
+and the converse after adding the zero-label nonnegativity condition.
 The
 zero/nonzero average split is now exact: the nonzero carrier has cardinality
 \(\ell-1=2j_{\max}\), the signed carrier is a twofold cover of the nonzero
