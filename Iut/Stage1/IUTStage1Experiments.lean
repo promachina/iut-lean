@@ -5044,6 +5044,28 @@ theorem distinctLabelIntertwining_simultaneous_of_q
     data.qIntertwining ∧ data.thetaIntertwiningUpToIndeterminacy :=
   data.simultaneous_intertwining_of_q hq
 
+theorem distinctLabelIntertwining_formal_second_implication
+    (data : IUTStage1DistinctLabelIntertwiningTransport)
+    (h :
+      data.qIntertwining ∧ data.thetaIntertwiningUpToIndeterminacy) :
+    data.thetaIntertwiningUpToIndeterminacy :=
+  data.formal_second_implication h
+
+theorem distinctLabelIntertwining_fixed_prime_strip_simultaneous_of_q
+    (data : IUTStage1DistinctLabelIntertwiningTransport)
+    (hq : data.qIntertwining) :
+    data.weakenedPrimeStripCannotDistinguishPilots ∧
+      data.qIntertwining ∧ data.thetaIntertwiningUpToIndeterminacy :=
+  data.fixed_prime_strip_simultaneous_of_q hq
+
+theorem distinctLabelIntertwining_distinct_labels_fixed_prime_strip_simultaneous_of_q
+    (data : IUTStage1DistinctLabelIntertwiningTransport)
+    (hq : data.qIntertwining) :
+    data.qLabel ≠ data.thetaLabel ∧
+      data.weakenedPrimeStripCannotDistinguishPilots ∧
+        data.qIntertwining ∧ data.thetaIntertwiningUpToIndeterminacy :=
+  data.distinct_labels_fixed_prime_strip_simultaneous_of_q hq
+
 theorem distinctLabelIntertwining_unlabeled_collapse_rejected
     (data : IUTStage1DistinctLabelIntertwiningTransport) :
     ¬ data.qLabel = data.thetaLabel :=

@@ -2829,11 +2829,33 @@ theorem simultaneous_intertwining_of_q
     data.qIntertwining ∧ data.thetaIntertwiningUpToIndeterminacy :=
   ⟨hq, data.theta_from_q hq⟩
 
+theorem formal_second_implication
+    (data : IUTStage1DistinctLabelIntertwiningTransport)
+    (h :
+      data.qIntertwining ∧ data.thetaIntertwiningUpToIndeterminacy) :
+    data.thetaIntertwiningUpToIndeterminacy :=
+  h.2
+
 theorem theta_intertwining_of_q
     (data : IUTStage1DistinctLabelIntertwiningTransport)
     (hq : data.qIntertwining) :
     data.thetaIntertwiningUpToIndeterminacy :=
-  (data.simultaneous_intertwining_of_q hq).2
+  data.formal_second_implication (data.simultaneous_intertwining_of_q hq)
+
+theorem fixed_prime_strip_simultaneous_of_q
+    (data : IUTStage1DistinctLabelIntertwiningTransport)
+    (hq : data.qIntertwining) :
+    data.weakenedPrimeStripCannotDistinguishPilots ∧
+      data.qIntertwining ∧ data.thetaIntertwiningUpToIndeterminacy :=
+  ⟨data.weakenedPrimeStripCondition, data.simultaneous_intertwining_of_q hq⟩
+
+theorem distinct_labels_fixed_prime_strip_simultaneous_of_q
+    (data : IUTStage1DistinctLabelIntertwiningTransport)
+    (hq : data.qIntertwining) :
+    data.qLabel ≠ data.thetaLabel ∧
+      data.weakenedPrimeStripCannotDistinguishPilots ∧
+        data.qIntertwining ∧ data.thetaIntertwiningUpToIndeterminacy :=
+  ⟨data.labels_distinct, data.fixed_prime_strip_simultaneous_of_q hq⟩
 
 theorem q_intertwining_not_invalidated
     (data : IUTStage1DistinctLabelIntertwiningTransport)

@@ -504,7 +504,11 @@ The code currently covers:
   \(-1<C_\Theta\) conclusion when \(\lambda<1\);
 \item the Remark 3.12.2 distinct-label implication
   \(q\text{-itw}\Rightarrow q\text{-itw}\wedge\Theta\text{-itw}/\mathrm{indets}\),
-  with q-native and \(\Theta\)-native labels proved distinct;
+  with q-native and \(\Theta\)-native labels proved distinct; Lean now also
+  packages this simultaneous validity together with the fixed weakened
+  \(F^{\times\mu}\)-prime-strip condition, and exposes the second implication
+  \(q\text{-itw}\wedge\Theta\text{-itw}/\mathrm{indets}
+  \Rightarrow\Theta\text{-itw}/\mathrm{indets}\) as formal projection;
 \item the Remark 3.12.2 toy calculation: forgotten concrete assignments
   \(-h\) and \(-2h\) are incompatible for \(h>0\), while
   \(-h\in\R_{\le-2h+\epsilon}\) implies \(h\le\epsilon\);
@@ -756,7 +760,8 @@ The generalized-link flag records the rational parameter inequality
 \(C_\Theta\ge-\lambda\), now with the corresponding \(q^\lambda\)-pilot
 real-valued derivation.
 The distinct-label flag records the logical intertwining display in
-Remark 3.12.2 and rejects collapse of the q-native and \(\Theta\)-native labels.
+Remark 3.12.2, keeps the weakened abstract prime-strip condition fixed, and
+rejects collapse of the q-native and \(\Theta\)-native labels.
 The toy-model flag records the resulting upper-ray arithmetic \(h\le\epsilon\).
 The column-table flag records the Fig. 3.9 theta/q similarity-difference split.
 The absorption flag records the zero-column upper-bound versus one-column
@@ -993,7 +998,8 @@ global calibration restores the unshifted value.  The positive rational unit
 rigidity fact in Remark 3.12.1(iii) is formalized directly over \(\mathbb{Q}\).
 For generalized links, Lean records that \(\lambda<1\) makes \(-\lambda>-1\).
 Lean also checks that the Remark 3.12.2 simultaneous-intertwining step depends
-on distinct labels rather than an unlabeled identification.
+on distinct labels rather than an unlabeled identification, while the weakened
+prime-strip condition is retained.
 In the accompanying toy model, Lean proves the final upper bound exactly from
 the upper-ray membership hypothesis.
 Lean also records that the q-pilot column lacks the theta-side multiradiality
@@ -1110,16 +1116,11 @@ The present code does not yet formalize:
 
 \section{Next Work}
 
-Before extending the mathematics, the Lean tree should be trimmed so that the
-root import exposes the present corridor rather than early toy scaffolding.  This
-cleanup is organizational only: the continuation point after it remains the
-finite \(q^{j^2}\) branch just reached above, namely the exact theorem that
-nondegenerate affine pointwise Gaussian preservation is equivalent to zero
-translation plus sign action.
+The continuation point remains the finite \(q^{j^2}\) branch and the
+distinct-label/intertwining corridor.  The next significant formal step is not
+another wrapper.  It is to replace current explicit Hodge/SHE transport
+assumptions by constructions closer to the papers:
 
-The next significant formal step is not another wrapper.  It is to replace
-current explicit Hodge/SHE transport assumptions by constructions closer to the
-papers:
 \[
 \begin{array}{c}
 \text{theta values }q^{j^2}\\
