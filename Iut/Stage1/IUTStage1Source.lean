@@ -6219,6 +6219,37 @@ theorem thetaFinite_globalFrobenioidCThetaEndpoint
       global.calibratedLogVolume_ne_shifted_of_local_nonzero
         hExponent hStep⟩
 
+theorem thetaFinite_globalFrobenioidCThetaEndpoint_eq_shifted_iff_exponent_zero_or_step_zero
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (localExponent : Int)
+    (localPrimeStepLogVolume : Real)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    let finite := data.toThetaFiniteLogVolumeEndpoint;
+    let global :=
+      data.toGlobalFrobenioidLogVolumeCalibration
+        localExponent localPrimeStepLogVolume;
+    let endpoint :=
+      data.toQPilotTwoComputationCThetaEndpoint
+        q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ;
+    global.calibratedLogVolume = finite.thetaRealLogVolume ∧
+      global.calibratedLogVolume = data.thetaHullLogVolume ∧
+      (-1 : Real) <= endpoint.cTheta ∧
+      (global.calibratedLogVolume = global.localData.shiftedLogVolume ↔
+        localExponent = 0 ∨ localPrimeStepLogVolume = 0) := by
+  intro finite global endpoint
+  exact
+    ⟨global.calibratedLogVolume_eq_unshifted,
+      by
+        rw [global.calibratedLogVolume_eq_unshifted]
+        exact finite.thetaRealLogVolume_eq_hull,
+      endpoint.cTheta_ge_neg_one,
+      global.calibratedLogVolume_eq_shifted_iff_exponent_zero_or_step_zero⟩
+
 theorem fixedQPilotCTheta_endpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (q_pilot_positive :

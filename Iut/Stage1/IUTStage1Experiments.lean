@@ -4423,6 +4423,64 @@ theorem zmodCuspLabelLogVolumeCompatibility_globalFrobenioidCThetaEndpoint
         localExponent localPrimeStepLogVolume q_pilot_positive cTheta
         thetaHull_le_cTheta_absLogQ
 
+theorem zmodCuspLabelLogVolumeCompatibility_globalFrobenioidCTheta_zero_branch
+    {l : PrimeGeFive}
+    (before afterInd1 afterInd2 :
+      IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (ind3UpperBound : Real)
+    (hind1 :
+      ∀ j : ZMod l.value,
+        before.normalizedLogVolume j =
+          afterInd1.normalizedLogVolume j)
+    (hind2 :
+      ∀ j : ZMod l.value,
+        afterInd1.normalizedLogVolume j =
+          afterInd2.normalizedLogVolume j)
+    (hzero : afterInd2.zeroLogVolume <= ind3UpperBound)
+    (hcusp : ∀ label : (zmodSignAction l).SignLabelQuotient,
+      afterInd2.cuspClassLogVolume label <= ind3UpperBound)
+    (determinant :
+      IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (thetaHullLogVolume : Real)
+    (theta_eq_ind3Upper :
+      thetaHullLogVolume = ind3UpperBound)
+    (theta_eq_normalized_determinant :
+      thetaHullLogVolume = determinant.normalizedLogVolume)
+    (localExponent : Int)
+    (localPrimeStepLogVolume : Real)
+    (q_pilot_positive :
+      0 < -before.toLabelAveraged.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      thetaHullLogVolume <=
+        cTheta * (-before.toLabelAveraged.averageLogVolume)) :
+    let data :=
+      IUTStage1StepXToHullUpperRayLogVolume.ofZModCuspLabelLogVolumeCompatibilities
+        before afterInd1 afterInd2 ind3UpperBound hind1 hind2 hzero hcusp
+        determinant thetaHullLogVolume theta_eq_ind3Upper
+        theta_eq_normalized_determinant;
+    let finite := data.toThetaFiniteLogVolumeEndpoint;
+    let global :=
+      data.toGlobalFrobenioidLogVolumeCalibration
+        localExponent localPrimeStepLogVolume;
+    let endpoint :=
+      data.toQPilotTwoComputationCThetaEndpoint
+        q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ;
+    global.calibratedLogVolume = finite.thetaRealLogVolume ∧
+      global.calibratedLogVolume = thetaHullLogVolume ∧
+      (-1 : Real) <= endpoint.cTheta ∧
+      (global.calibratedLogVolume = global.localData.shiftedLogVolume ↔
+        localExponent = 0 ∨ localPrimeStepLogVolume = 0) := by
+  open IUTStage1StepXToHullUpperRayLogVolume in
+    let data :=
+      ofZModCuspLabelLogVolumeCompatibilities before afterInd1 afterInd2
+        ind3UpperBound hind1 hind2 hzero hcusp determinant thetaHullLogVolume
+        theta_eq_ind3Upper theta_eq_normalized_determinant
+    exact
+      data.thetaFinite_globalFrobenioidCThetaEndpoint_eq_shifted_iff_exponent_zero_or_step_zero
+        localExponent localPrimeStepLogVolume q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ
+
 theorem zmodCuspLabelLogVolumeCompatibility_signedEndpointCorollary312
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :
