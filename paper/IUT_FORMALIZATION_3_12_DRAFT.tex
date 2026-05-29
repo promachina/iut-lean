@@ -129,6 +129,11 @@ The code currently covers:
   \(j \mapsto j^2\);
 \item a representative pilot-degree profile
   \(\deg(\Theta_j)=j^2\deg(q)\);
+\item a finite \(q^{j^2}\) endpoint connecting this representative
+  Gaussian-degree rule to the square-weight profile: for canonical
+  representatives, the Gaussian degree is the square weight times the
+  environment/q-pilot degree; Lean packages this together with the zero branch,
+  the canonical \(j=1\) branch, and sign invariance;
 \item proof that one label-independent scale cannot absorb all representative
   \(j^2\) scales in this model;
 \item proof that, for nonzero \(\deg(q)\), one label-independent scale cannot
@@ -1338,15 +1343,14 @@ assumptions by constructions closer to the papers:
 
 \[
 \begin{array}{c}
-\text{theta values }q^{j^2}\\
+\text{theta values }q^{j^2}\quad\checkmark\ \text{finite square-weight endpoint}\\
 \leadsto\ \text{Gaussian and splitting monoids}\\
 \leadsto\ \text{square/full-label preservation}\\
 \leadsto\ \text{hull/log-volume route}.
 \end{array}
 \]
-Only after this bridge is formalized can the first-pass experiment begin to test
-the actual mathematical load-bearing part of Mochizuki's response to
-Scholze--Stix.
+The next step is to connect this finite endpoint to the Gaussian/splitting
+monoid action data and then to the square/full-label preservation route.
 
 \begingroup
 \small

@@ -8467,6 +8467,40 @@ theorem gaussianDegree_neg_fromCoordinate_eq
         (IUTStage1ZModCuspFullLabel.fromCoordinate l j) := by
   rw [IUTStage1ZModCuspFullLabel.fromCoordinate_neg l j hj]
 
+/--
+Finite `q^{j^2}` square-weight endpoint.
+
+For canonical representatives of the finite label set, the Gaussian degree is
+the square weight times the environment/q-pilot degree.  The same package also
+records the zero branch, the canonical one branch, and sign invariance.
+-/
+theorem finiteQJSquaredSquareWeight_endpoint
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (profile : IUTStage1ZModSquareWeightProfile l) :
+    (∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+        profile.weight j * evaluation.environmentDegree) ∧
+      evaluation.gaussianDegree IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        evaluation.environmentDegree ∧
+      profile.weight (1 : ZMod l.value) = 1 ∧
+      (∀ j : ZMod l.value, j ≠ 0 ->
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l (-j)) =
+          evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) := by
+  refine ⟨?_, evaluation.gaussianDegree_zero, evaluation.gaussianDegree_one,
+    ?_, ?_⟩
+  · intro j hhalf
+    rw [profile.weight_eq_square_val j]
+    exact evaluation.gaussianDegree_fromCoordinate_of_val_le_half j hhalf
+  · rw [profile.weight_eq_square_val]
+    exact representativeSquareScale_one (l := l)
+  · intro j hj
+    exact evaluation.gaussianDegree_neg_fromCoordinate_eq j hj
+
 theorem gaussianDegree_nonnegative_of_environment_nonnegative
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (henv : 0 <= evaluation.environmentDegree)

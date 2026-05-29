@@ -4045,6 +4045,27 @@ theorem zmodCuspLabelLogVolumeCompatibility_corridor_endpoint
   ofZModCuspLabelLogVolumeCompatibilities_endpoint
     before afterInd1 afterInd2 ind3UpperBound hind1 hind2 hzero hcusp
 
+theorem gaussianDegree_finiteQJSquaredSquareWeight_endpoint
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (profile : IUTStage1ZModSquareWeightProfile l) :
+    (∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+        profile.weight j * evaluation.environmentDegree) ∧
+      evaluation.gaussianDegree IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        evaluation.environmentDegree ∧
+      profile.weight (1 : ZMod l.value) = 1 ∧
+      (∀ j : ZMod l.value, j ≠ 0 ->
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l (-j)) =
+          evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) :=
+  evaluation.finiteQJSquaredSquareWeight_endpoint profile
+
 theorem stepXToHullUpperRay_q_le_theta
     {label : Type u} [Fintype label]
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
