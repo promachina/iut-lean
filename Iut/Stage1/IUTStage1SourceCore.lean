@@ -3010,6 +3010,17 @@ theorem logKummerNonInterference_eq_true
     column.hasLogKummerNonInterference = true := by
   cases column <;> rfl
 
+theorem upper_table_similarities
+    (column : IUTStage1LogThetaVerticalColumn) :
+    column.requiresFrobeniusLikeRole = true ∧
+      column.requiresEtaleLikeRole = true ∧
+        column.hasLogVolumeCompatibility = true ∧
+          column.hasLogKummerNonInterference = true :=
+  ⟨column.requiresFrobeniusLikeRole_eq_true,
+    column.requiresEtaleLikeRole_eq_true,
+    column.logVolumeCompatibility_eq_true,
+    column.logKummerNonInterference_eq_true⟩
+
 theorem thetaPilot_hasMultiradiality :
     IUTStage1LogThetaVerticalColumn.zeroThetaPilot.hasPilotMultiradiality =
       true :=
@@ -3039,6 +3050,26 @@ theorem logShellTreatment_distinguishes_columns :
     IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment ≠
       IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment := by
   simp [logShellTreatment]
+
+theorem lower_table_differences :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.hasPilotMultiradiality =
+        true ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality =
+        false ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.monoAnalyticContainers ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.hasPilotMultiradiality ≠
+        IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment ≠
+        IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment :=
+  ⟨thetaPilot_hasMultiradiality,
+    qPilot_lacksMultiradiality,
+    thetaPilot_logShellTreatment,
+    qPilot_logShellTreatment,
+    multiradiality_distinguishes_columns,
+    logShellTreatment_distinguishes_columns⟩
 
 end IUTStage1LogThetaVerticalColumn
 

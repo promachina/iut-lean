@@ -5094,6 +5094,14 @@ theorem logThetaColumn_both_roles_essential
       column.requiresEtaleLikeRole = true :=
   column.both_roles_essential
 
+theorem logThetaColumn_upperTableSimilarities
+    (column : IUTStage1LogThetaVerticalColumn) :
+    column.requiresFrobeniusLikeRole = true ∧
+      column.requiresEtaleLikeRole = true ∧
+        column.hasLogVolumeCompatibility = true ∧
+          column.hasLogKummerNonInterference = true :=
+  column.upper_table_similarities
+
 theorem logThetaColumn_qPilot_lacksMultiradiality :
     IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality =
       false :=
@@ -5108,6 +5116,21 @@ theorem logThetaColumn_logShellTreatmentDistinguishesColumns :
     IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment ≠
       IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment :=
   IUTStage1LogThetaVerticalColumn.logShellTreatment_distinguishes_columns
+
+theorem logThetaColumn_lowerTableDifferences :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.hasPilotMultiradiality =
+        true ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality =
+        false ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.monoAnalyticContainers ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.hasPilotMultiradiality ≠
+        IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment ≠
+        IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment :=
+  IUTStage1LogThetaVerticalColumn.lower_table_differences
 
 theorem zeroColumnHullAbsorption_bothRegions
     (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) :
