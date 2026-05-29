@@ -247,6 +247,9 @@ The instantiated endpoint also exposes the strict and boundary alternatives:
 strict source comparison gives \(C_\Theta>-1\), while \(C_\Theta=-1\) forces
 equality of the signed \(q\)- and \(\Theta\)-readings and makes the
 \(\Theta\)-reading negative.
+These facts are now also packaged as a single route-level alternative:
+boundary equality with negative \(\Theta\)-reading, or strict
+\(C_\Theta>-1\).
 The code also proves a Gaussian-to-factored-\SHE{} bridge at the present finite
 degree level.  In particular, equality of the source and target environment
 degrees gives full-label value preservation; nonzero-label target bounds are
@@ -342,6 +345,7 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The same nonarchimedean route now exposes the strict branch
   \(C_\Theta>-1\) and the boundary consequence
   \(C_\Theta=-1\Rightarrow q_{\mathrm{signed}}=\Theta_{\mathrm{signed}}<0\).
+  It also packages these as one dichotomy at the route level.
 \item The Step (xi-f) real algebra proves \(C_\Theta\ge-1\), strictness under
   strict upper-ray membership, and equality constraints in the boundary case.
 \item The final route rejects the balanced sign-compatible comparison level as

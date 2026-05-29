@@ -35594,6 +35594,60 @@ theorem thetaSigned_neg_of_factoredNonarchimedeanEntry_cTheta_eq_neg_one
     target_log_volume_eq_theta entryAlignment q_pilot_positive cTheta
     thetaSigned_le_cTheta_absLogQ).thetaSigned_neg_of_cTheta_eq_neg_one hC
 
+theorem boundarySignedEqualityOrStrictCTheta_of_factoredNonarchimedeanEntry
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (factored :
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+        packageN part.bundle l)
+    (source_profile_eq : profile = factored.sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        factored.sourceLogVolume)
+    (target_log_volume_eq_theta :
+      factored.targetLogVolume =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (entryAlignment :
+      NonarchimedeanInd3EntryAlignment audited entry
+        (part.insulated_route.theta_source.thetaSourceAverage audited))
+    (q_pilot_positive : 0 < -packageN.preLedger.qSigned)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta := by
+  rcases
+    part.cTheta_eq_neg_one_or_gt_neg_one_of_factoredNonarchimedeanEntry
+      profile audited factored source_profile_eq source_log_volume_eq
+      target_log_volume_eq_theta entryAlignment q_pilot_positive cTheta
+      thetaSigned_le_cTheta_absLogQ with hC | hstrict
+  · exact Or.inl
+      ⟨part.qSigned_eq_thetaSigned_of_factoredNonarchimedeanEntry_cTheta_eq_neg_one
+          profile audited factored source_profile_eq source_log_volume_eq
+          target_log_volume_eq_theta entryAlignment q_pilot_positive cTheta
+          thetaSigned_le_cTheta_absLogQ hC,
+        part.thetaSigned_neg_of_factoredNonarchimedeanEntry_cTheta_eq_neg_one
+          profile audited factored source_profile_eq source_log_volume_eq
+          target_log_volume_eq_theta entryAlignment q_pilot_positive cTheta
+          thetaSigned_le_cTheta_absLogQ hC⟩
+  · exact Or.inr hstrict
+
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
     (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l) :
     part.toHodgeDescentInsulatedCuspZeroBridgeAudit.classified_bridge.bridge_source =
