@@ -11,7 +11,8 @@ hypotheses.
 The local `docs/` folder contains Markdown conversions of the four IUT papers,
 Mochizuki's April 2026 formalization progress report, and the Scholze-Stix
 critique. It is intentionally gitignored as a local paper cache. The tracked
-research diary is `FORMALIZATION_NOTES.md`.
+research draft is `IUT_FORMALIZATION_3_12_DRAFT.tex`; `FORMALIZATION_NOTES.md`
+is only a short pointer kept for old references.
 
 ## Current Understanding
 
@@ -134,7 +135,7 @@ This is a Lean 4.30.0 project with Mathlib.
 
 Current modules:
 
-* `Iut.Basic`: root import for the project scaffold.
+* `Iut.Basic`: root import for the current Stage 1 corridor.
 * `Iut.Foundations.Species`: minimal species/mutation and labeled-copy
   bookkeeping.
 * `Iut.Foundations.RealLineCopy`: explicit labeled real-line copies and
@@ -160,24 +161,8 @@ Current modules:
   memberships, target volumes, and Theta bounds.
 * `Iut.Stage1.PilotComparison`: first neutral interface for the Corollary 3.12
   target shape.
-* `Iut.Stage1.ToyModel`: Lean tests for Mochizuki's real-valued toy model from
-  IUT III, Remark 3.12.2.
-* `Iut.Stage1.ToyMeasuredComparison`: measured upper-ray version of the toy
-  model, keeping containment, calibration, and arithmetic bounds separate.
-* `Iut.Stage1.ToyFamilyBounds`: toy indexed families of upper-ray comparisons
-  controlled by an explicit common epsilon bound.
-* `Iut.Stage1.ToyAPTTransport`: toy APT-style transported output data before
-  passage to common targets and measured bounds.
-* `Iut.Stage1.ToyQualitativeOutput`: toy algorithmic output with structured
-  inert IPL/SHE/APT certificates plus separate common-target bound data.
-* `Iut.Stage1.ToyBridge`: toy bridge from qualitative certification to
-  common-target bounds via the epsilon-cap construction, with an inert named
-  descent, hull+det, HDD, SHE-restricted composite, common container, and real
-  comparison chart.
 * `Iut.Stage1.CorollarySchema`: signed-real schema for producing the
   Corollary-3.12-shaped pilot inequality from bridge output.
-* `Iut.Stage1.ToyCorollarySchema`: toy specialization deriving the signed
-  inequality from membership in a chosen upper-ray output.
 * `Iut.Stage1.SourceObligations`: source-obligation ledger for the structured
   Stage 1 final comparison, now requiring a charted common-container bridge and
   chosen output with charted q/membership/target/Theta values.
@@ -189,10 +174,12 @@ Current modules:
 * `Iut.Stage1.IUTStage1Source`: first source-facing non-toy package for the
   Theorem 3.11 to Corollary 3.12 boundary, restating the promotion obligations
   under IUT Stage 1 names.
-* `Iut.Stage1.ToySourceObligations`: toy completion of that ledger using
-  upper-ray normalization and epsilon-cap bounds.
-* `Iut.Stage1.IUTStage1SourceExample`: toy-backed regression examples for the
-  source-facing package API, without treating the toy data as genuine IUT data.
+* `Iut.Stage1.IUTStage1Experiments`: finite-model tests and theorem exports for
+  the current Corollary 3.12 corridor, including the label, Gaussian,
+  affine-action, and pointwise/aggregate separation results.
+
+Historical toy and example modules remain in the tree for direct regression
+builds, but they are no longer imported by the root module.
 
 Useful commands:
 

@@ -15,33 +15,20 @@ import Iut.Foundations.InitialThetaData
 import Iut.Foundations.AlgorithmicOutput
 import Iut.Foundations.AlgorithmicBridge
 import Iut.Stage1.PilotComparison
-import Iut.Stage1.ToyModel
-import Iut.Stage1.ToyMeasuredComparison
-import Iut.Stage1.ToyFamilyBounds
-import Iut.Stage1.ToyAPTTransport
-import Iut.Stage1.ToyQualitativeOutput
-import Iut.Stage1.ToyBridge
 import Iut.Stage1.CorollarySchema
-import Iut.Stage1.ToyCorollarySchema
 import Iut.Stage1.SourceObligations
 import Iut.Stage1.IUTSourceScaffold
 import Iut.Stage1.IUTStage1Data
 import Iut.Stage1.IUTStage1Source
 import Iut.Stage1.IUTStage1Experiments
-import Iut.Stage1.ToySourceObligations
-import Iut.Stage1.ToyPublicAuditExample
-import Iut.Stage1.IUTSourceScaffoldExample
-import Iut.Stage1.IUTStage1DataExample
-import Iut.Stage1.IUTStage1SourceExample
 import Iut.Foundations.InitialThetaDataExample
 
 /-!
-Root module for the IUT formalization scaffold.
+Root module for the IUT formalization corridor.
 
-The current code deliberately records interfaces and bookkeeping objects only.
-Mathematical claims from IUT will be added as separate theorem statements once
-their hypotheses have been made explicit enough to avoid hiding the disputed
-identifications.
+The root import now exposes the current Stage 1 formal corridor rather than the
+early toy/example scaffolding. Historical toy modules remain buildable directly
+while the main project surface tracks the Corollary 3.12 work.
 -/
 
 namespace Iut
