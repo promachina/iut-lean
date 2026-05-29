@@ -19285,3 +19285,39 @@ This extends the IUT II, Remarks 4.7.3--4.7.4 finite-model check from pure
 translations to mixed unit-plus-translation coordinate changes.  Raw
 permutation invariance of an \(F_\ell\)-indexed sum is formally weaker than the
 absolute-label/multiplicative symmetry used for Gaussian-monoid bookkeeping.
+
+## Affine aggregate invariance versus pointwise Gaussian compatibility
+
+### Lean Move
+
+Added:
+
+```text
+gaussianDegree_nonzero_ne_zero_of_environment_ne_zero
+gaussianDegree_fromCoordinate_ne_zero_of_environment_ne_zero
+unitAffine_zeroGaussianComponent_ne_zero_of_environment_ne_zero
+coordinateAverage_unitAffineInvariant_but_zeroGaussianChanged_and_not_fullLabelDescend
+gaussianDegree_nonzero_ne_zero_of_environment_ne_zero
+gaussianDegree_fromCoordinate_ne_zero_of_environment_ne_zero
+gaussianUnitAffine_zeroComponent_ne_zero_of_environment_ne_zero
+gaussianCoordinateAverage_unitAffineInvariant_but_zeroChanged_and_notDescent
+```
+
+### Mathematical Reason
+
+When the environment degree is nonzero, every nonzero absolute Gaussian label
+has nonzero Gaussian degree.  Therefore an affine coordinate operation
+\(j\mapsto a j+t\) with \(t\ne0\) sends the zero coordinate into a nonzero
+Gaussian component whose degree differs from the original zero component.
+
+Lean packages this with the previous affine-average theorem: the raw
+all-coordinate Gaussian average is invariant under the affine permutation, but
+the zero component changes and the operation does not descend to full absolute
+labels.
+
+### Source Check
+
+This is a finite-model guard for the Corollary 3.12 debate.  It separates an
+aggregate equality obtained by reindexing \(F_\ell\) from pointwise
+compatibility of the Gaussian branch used in the absolute-label/Hodge-theater
+comparison.

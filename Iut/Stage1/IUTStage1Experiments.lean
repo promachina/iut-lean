@@ -1326,6 +1326,66 @@ theorem gaussianCoordinateAverage_unitAffineInvariant_but_notFullLabelDescent
   evaluation.coordinateAverage_unitAffineInvariant_but_not_fullLabelDescend
     a ht
 
+theorem gaussianDegree_nonzero_ne_zero_of_environment_ne_zero
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (label : (zmodSignAction l).SignLabelQuotient)
+    (henv : evaluation.environmentDegree ≠ 0) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.nonzero label) ≠ 0 :=
+  evaluation.gaussianDegree_nonzero_ne_zero_of_environment_ne_zero label henv
+
+theorem gaussianDegree_fromCoordinate_ne_zero_of_environment_ne_zero
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (j : ZMod l.value) (hj : j ≠ 0)
+    (henv : evaluation.environmentDegree ≠ 0) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) ≠ 0 :=
+  evaluation.gaussianDegree_fromCoordinate_ne_zero_of_environment_ne_zero
+    j hj henv
+
+theorem gaussianUnitAffine_zeroComponent_ne_zero_of_environment_ne_zero
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) {t : ZMod l.value}
+    (ht : t ≠ 0) (henv : evaluation.environmentDegree ≠ 0) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t
+            ((zmodUnitActionData l).smul a (0 : ZMod l.value)))) ≠
+      evaluation.gaussianDegree IUTStage1ZModCuspFullLabel.zero :=
+  evaluation.unitAffine_zeroGaussianComponent_ne_zero_of_environment_ne_zero
+    a ht henv
+
+theorem gaussianCoordinateAverage_unitAffineInvariant_but_zeroChanged_and_notDescent
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) {t : ZMod l.value}
+    (ht : t ≠ 0) (henv : evaluation.environmentDegree ≠ 0) :
+    ((Finset.univ.sum fun j : ZMod l.value =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))) /
+        (l.value : Real)) =
+      evaluation.coordinateAveragedLogVolume.averageLogVolume ∧
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t
+            ((zmodUnitActionData l).smul a (0 : ZMod l.value)))) ≠
+      evaluation.gaussianDegree IUTStage1ZModCuspFullLabel.zero ∧
+    ¬ ∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+      ∀ j : ZMod l.value,
+        T (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)) :=
+  evaluation.coordinateAverage_unitAffineInvariant_but_zeroGaussianChanged_and_not_fullLabelDescend
+    a ht henv
+
 theorem gaussianFullLabelAverage_eq_subordinateSum_div
     {l : PrimeGeFive}
     (evaluation :

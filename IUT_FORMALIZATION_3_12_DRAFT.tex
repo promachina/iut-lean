@@ -313,7 +313,10 @@ The code currently covers:
   composition; this is only finite-permutation invariance and does not supply
   descent to \(|F_\ell|\).  For the Gaussian coordinate average, Lean packages
   this as a diagnostic: every affine map with nonzero additive offset preserves
-  the raw coordinate average but fails full-label descent.
+  the raw coordinate average but fails full-label descent.  If the Gaussian
+  environment degree is nonzero, the same affine operation also changes the
+  zero Gaussian component, so aggregate average invariance is not pointwise
+  Gaussian compatibility.
   Lean also converts the
   zero/nonzero cusp-label compatibility object to a uniform \(F_\ell\) average
   and proves that a diagonal constant log-volume distribution averages to that
