@@ -747,6 +747,19 @@ theorem absLabelProcessionCard_eq_halfPlusOne
       (l.value + 1) / 2 :=
   IUTStage1ZModSquareWeightProfile.absLabelProcession_card_eq_half_plus_one l
 
+theorem gaussianDegree_fromAbsLabelProcession
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (label :
+      IUTStage1ProcessionContainer
+        (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l)) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModSquareWeightProfile.absLabelFromProcession l label) =
+      ((label.val : Real) ^ 2) * evaluation.environmentDegree :=
+  IUTStage1ZModSquareWeightProfile.gaussianDegree_fromProcession
+    evaluation label
+
 /-- Scale-level status for transport-explicit real-line cancellation. -/
 structure Ind3TransportScaleExperimentReport where
   sourceScaleMatched : Bool

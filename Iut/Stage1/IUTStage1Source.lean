@@ -8242,6 +8242,22 @@ theorem thetaExponentOnAbsLabel_fromProcession
     (l := l) (label.val : ZMod l.value) hhalf]
   rw [hval]
 
+theorem gaussianDegree_fromProcession
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (label : IUTStage1ProcessionContainer (absLabelProcessionTop l)) :
+    evaluation.gaussianDegree (absLabelFromProcession l label) =
+      ((label.val : Real) ^ 2) * evaluation.environmentDegree := by
+  rw [evaluation.gaussianDegree_eq_eval,
+    thetaExponentOnAbsLabel_fromProcession]
+
+theorem gaussianDegree_processionCore
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.gaussianDegree
+        (absLabelFromProcession l
+          (IUTStage1ProcessionContainer.core
+            (absLabelProcessionTop l))) = 0 := by
+  rw [absLabelFromProcession_core, evaluation.gaussianDegree_zero]
+
 theorem absLabelProcessionTop_ge_two (l : PrimeGeFive) :
     2 ≤ absLabelProcessionTop l := by
   unfold absLabelProcessionTop
