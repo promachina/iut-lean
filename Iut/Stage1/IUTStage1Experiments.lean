@@ -5533,6 +5533,31 @@ theorem iutIVCorollary22HBound_before_epsilon
           (1 / 2 : Real) * data.cK :=
   data.h_bound_before_epsilon
 
+theorem iutIVCorollary22HBound_beforeEpsilonEndpoint
+    (data : IUTStage1IUTIVCorollary22HBoundBeforeEpsilonShadow) :
+    data.h = data.logQAll ∧
+      1 <= data.delta ∧
+      0 <= data.sqrtH * data.logTwoDeltaH ∧
+      data.cK = 40 * data.etaPrm + 2 * data.bK ∧
+      (1 / 6 : Real) * data.logQ <=
+        (1 + data.delta / data.sqrtH) * data.logDegreeSum +
+          (200 * data.delta ^ 2 * data.sqrtH * data.logTwoDeltaH +
+            20 * data.etaPrm) ∧
+      (1 / 6 : Real) * data.logQTwo <=
+        (1 / 6 : Real) * data.logQ +
+          (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH ∧
+      (1 / 6 : Real) * data.logQAll <=
+        (1 / 6 : Real) * data.logQTwo + data.bK ∧
+      200 * data.delta ^ 2 * data.sqrtH * data.logTwoDeltaH +
+          (1 / 3 : Real) * data.sqrtH * data.logTwoDeltaH <=
+        (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH ∧
+      (1 / 2 : Real) * data.cK = 20 * data.etaPrm + data.bK ∧
+      (1 / 6 : Real) * data.h <=
+        (1 + data.delta / data.sqrtH) * data.logDegreeSum +
+          (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH +
+            (1 / 2 : Real) * data.cK :=
+  data.h_bound_before_epsilon_endpoint
+
 theorem iutIVCorollary22C2_logQ_bound
     (data : IUTStage1IUTIVCorollary22C2InequalityChainShadow) :
     (1 / 6 : Real) * data.logQ <= data.heightSide :=

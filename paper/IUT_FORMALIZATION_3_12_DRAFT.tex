@@ -623,7 +623,9 @@ The code currently covers:
     \frac16h\le(1+\delta h^{-1/2})S
     +(15\delta)^2h^{1/2}\log(2\delta h)+\frac12 C_K,
   \]
-  with \(C_K=40\eta_{\mathrm{prm}}+2B_K\);
+  with \(C_K=40\eta_{\mathrm{prm}}+2B_K\).  Lean exposes the
+  \(q\to q_2\to q_\forall\) inequalities, the absorption into
+  \((15\delta)^2\), and the identity \(\frac12C_K=20\eta_{\mathrm{prm}}+B_K\);
 \item the IUT IV, Corollary 2.2(ii) condition (C2) inequality chain:
   \(\frac16\log(q)\le\frac16\log(q_2)\le\frac16\log(q_\forall)\le
    (1+\epsilon_E)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)+C_K\);
@@ -1094,7 +1096,9 @@ Lean also proves the displayed comparison
 \le\frac13h^{1/2}\log(2\delta h)\) from the intermediate
 \(h^{1/2}\log(\ell)\) bounds and their two logarithmic side inequalities.
 Lean then combines this with the bounded \(q_\forall/q_2\) discrepancy to prove
-the displayed pre-\(\epsilon_E\) bound for \(\frac16h\).
+the displayed pre-\(\epsilon_E\) bound for \(\frac16h\), with the
+\(q\to q_2\to q_\forall\) transfers, \((15\delta)^2\) absorption, and
+\(\frac12C_K\) rewrite exposed as named subclaims.
 For Corollary 2.2(ii), Lean proves the final \(\frac16\log(q)\) bound from the
 displayed \(\log(q)\), \(\log(q_2)\), and \(\log(q_\forall)\) chain.
 Lean records the proof's definition of \(\epsilon_E\) and verifies the stated
