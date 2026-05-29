@@ -1803,6 +1803,24 @@ theorem output_le_determinant
   rw [data.output_eq_q]
   exact data.upperRayData.qPilotLogVolume_le_determinant
 
+theorem input_eq_determinant_iff_reverse_bound
+    (data : IUTStage1QPilotTwoComputationLogVolume) :
+    data.inputPrimeStripLogVolume =
+        data.upperRayData.determinant.determinantLogVolume ↔
+      data.upperRayData.determinant.determinantLogVolume <=
+        data.inputPrimeStripLogVolume :=
+  ⟨fun h => by rw [h],
+    fun h => le_antisymm data.input_le_determinant h⟩
+
+theorem output_eq_determinant_iff_reverse_bound
+    (data : IUTStage1QPilotTwoComputationLogVolume) :
+    data.outputHullLogVolume =
+        data.upperRayData.determinant.determinantLogVolume ↔
+      data.upperRayData.determinant.determinantLogVolume <=
+        data.outputHullLogVolume :=
+  ⟨fun h => by rw [h],
+    fun h => le_antisymm data.output_le_determinant h⟩
+
 end IUTStage1QPilotTwoComputationLogVolume
 
 /--

@@ -5847,6 +5847,28 @@ theorem twoComputation_determinant_endpoint
           toHullDetPilotUpperRayLogVolume] using
           data.qPilotLogVolume_le_tensorPowerLogVolume_div⟩
 
+theorem twoComputation_determinantEqualityRequiresReverseBounds
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    let twoComputation := data.toQPilotTwoComputationLogVolume;
+    (twoComputation.inputPrimeStripLogVolume =
+        data.determinant.determinantLogVolume ↔
+      data.determinant.determinantLogVolume <=
+        twoComputation.inputPrimeStripLogVolume) ∧
+      (twoComputation.outputHullLogVolume =
+          data.determinant.determinantLogVolume ↔
+        data.determinant.determinantLogVolume <=
+          twoComputation.outputHullLogVolume) := by
+  intro twoComputation
+  exact
+    ⟨by
+      simpa [toQPilotTwoComputationLogVolume,
+        toHullDetPilotUpperRayLogVolume] using
+        twoComputation.input_eq_determinant_iff_reverse_bound,
+    by
+      simpa [toQPilotTwoComputationLogVolume,
+        toHullDetPilotUpperRayLogVolume] using
+        twoComputation.output_eq_determinant_iff_reverse_bound⟩
+
 theorem twoComputation_fig38_endpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
     let twoComputation := data.toQPilotTwoComputationLogVolume;
