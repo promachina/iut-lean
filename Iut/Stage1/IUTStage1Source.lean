@@ -8938,6 +8938,28 @@ theorem coordinateSquarePreserving_unitAffine_iff
       zmodLabelTranslate_zero]
     simp [zmodUnitActionData]
 
+theorem unitAffine_factoredSquareFullLabelPreserving_iff_identity
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (CoordinateSquarePreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t) ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t)) ↔
+      t = 0 ∧ a = 1 := by
+  constructor
+  · intro hpres
+    exact (coordinateSquarePreserving_unitAffine_iff (l := l) a t).mp hpres.1
+  · rintro ⟨ht, ha⟩
+    constructor
+    · exact (coordinateSquarePreserving_unitAffine_iff (l := l) a t).mpr
+        ⟨ht, ha⟩
+    · rw [IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_unitAffine_iff]
+      subst a
+      exact ⟨ht, one_mem_zmodSignUnitSubgroup l⟩
+
 theorem neg_one_ne_one :
     (-(1 : ZMod l.value)) ≠ (1 : ZMod l.value) := by
   intro h

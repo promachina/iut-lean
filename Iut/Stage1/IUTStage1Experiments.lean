@@ -1519,6 +1519,20 @@ theorem coordinateSquarePreserving_unitAffine_iff
   IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_unitAffine_iff
     a t
 
+theorem unitAffine_factoredSquareFullLabelPreserving_iff_identity
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t) ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t)) ↔
+      t = 0 ∧ a = 1 :=
+  IUTStage1ZModSquareWeightProfile.unitAffine_factoredSquareFullLabelPreserving_iff_identity
+    a t
+
 theorem negUnitAffine_pointwiseGaussianPreserving_but_not_coordinateSquarePreserving
     {l : PrimeGeFive}
     (evaluation :
