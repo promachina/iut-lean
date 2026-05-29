@@ -505,6 +505,34 @@ theorem gaussianAllLabelTargetBound_rejects_negative_thetaAverage
   targetEvaluation.not_forall_coordinateFullLabel_le_of_negative_bound
     coordinateEquiv theta_average_negative
 
+theorem gaussianNonzeroTargetBound_of_environment_le_thetaAverage
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (target_environment_nonpositive :
+      targetEvaluation.environmentDegree <= 0)
+    (environment_le_thetaAverage :
+      targetEvaluation.environmentDegree <=
+        part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+          audited) :
+    ∀ label : (zmodSignAction l).SignLabelQuotient,
+      targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.nonzero label) <=
+        part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+          audited := by
+  intro label
+  exact targetEvaluation.gaussianDegree_nonzero_le_of_environment_le_bound
+    target_environment_nonpositive environment_le_thetaAverage label
+
 /-- Scale-level status for transport-explicit real-line cancellation. -/
 structure Ind3TransportScaleExperimentReport where
   sourceScaleMatched : Bool

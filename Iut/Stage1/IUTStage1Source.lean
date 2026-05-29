@@ -7535,6 +7535,20 @@ theorem balancedSquareWeight_nonnegative (j : ZMod l.value) :
   unfold balancedSquareWeight
   positivity
 
+theorem balancedSquareWeight_ge_one_of_ne_zero
+    (j : ZMod l.value) (hj : j ≠ 0) :
+    1 <= balancedSquareWeight (l := l) j := by
+  unfold balancedSquareWeight
+  have hnat_ne : j.valMinAbs.natAbs ≠ 0 := by
+    intro hnat
+    have hint : j.valMinAbs = 0 := Int.natAbs_eq_zero.mp hnat
+    exact hj ((ZMod.valMinAbs_eq_zero j).mp hint)
+  have hnat : 1 <= j.valMinAbs.natAbs :=
+    Nat.succ_le_of_lt (Nat.pos_of_ne_zero hnat_ne)
+  have hreal : (1 : Real) <= (j.valMinAbs.natAbs : Real) := by
+    exact_mod_cast hnat
+  nlinarith
+
 noncomputable def balancedSquareWeightOnFullLabel :
     IUTStage1ZModCuspFullLabel l -> Real
   | IUTStage1ZModCuspFullLabel.zero => 0
@@ -7581,6 +7595,16 @@ theorem thetaExponentOnAbsLabel_nonnegative
       refine Quotient.inductionOn label ?_
       intro x
       exact balancedSquareWeight_nonnegative x.1
+
+theorem thetaExponentOnAbsLabel_nonzero_ge_one
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    1 <=
+      thetaExponentOnAbsLabel
+        (l := l) (IUTStage1ZModCuspFullLabel.nonzero label) := by
+  unfold thetaExponentOnAbsLabel balancedSquareWeightOnFullLabel
+  refine Quotient.inductionOn label ?_
+  intro x
+  exact balancedSquareWeight_ge_one_of_ne_zero x.1 x.2
 
 theorem thetaExponentOnAbsLabel_fromCoordinate
     (j : ZMod l.value) :
@@ -7820,6 +7844,39 @@ theorem gaussianDegree_le_of_environment_nonpositive_of_nonnegative_bound
     (evaluation.gaussianDegree_nonpositive_of_environment_nonpositive
       henv label)
     hc
+
+theorem gaussianDegree_nonzero_le_environment_of_environment_nonpositive
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv : evaluation.environmentDegree <= 0)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    evaluation.gaussianDegree (IUTStage1ZModCuspFullLabel.nonzero label) <=
+      evaluation.environmentDegree := by
+  rw [evaluation.gaussianDegree_eq_eval]
+  have hexp_ge_one := thetaExponentOnAbsLabel_nonzero_ge_one (l := l) label
+  have hfactor_nonneg :
+      0 <=
+        thetaExponentOnAbsLabel
+            (l := l) (IUTStage1ZModCuspFullLabel.nonzero label) -
+          1 := by
+    linarith
+  have hprod :
+      (thetaExponentOnAbsLabel
+            (l := l) (IUTStage1ZModCuspFullLabel.nonzero label) -
+          1) * evaluation.environmentDegree <= 0 :=
+    mul_nonpos_of_nonneg_of_nonpos hfactor_nonneg henv
+  nlinarith
+
+theorem gaussianDegree_nonzero_le_of_environment_le_bound
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    {c : Real}
+    (henv_nonpos : evaluation.environmentDegree <= 0)
+    (henv_le : evaluation.environmentDegree <= c)
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    evaluation.gaussianDegree (IUTStage1ZModCuspFullLabel.nonzero label) <= c :=
+  le_trans
+    (evaluation.gaussianDegree_nonzero_le_environment_of_environment_nonpositive
+      henv_nonpos label)
+    henv_le
 
 theorem forall_coordinateFullLabel_le_implies_bound_nonnegative
     (evaluation : GaussianMonoidDegreeEvaluation l)

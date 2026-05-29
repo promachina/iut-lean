@@ -480,7 +480,10 @@ The code currently covers:
   is nonpositive and the \(\Theta\)-source average is nonnegative; conversely,
   the all-label Gaussian target-bound formulation forces the
   \(\Theta\)-source average to be nonnegative, since the core label has
-  Gaussian degree \(0\);
+  Gaussian degree \(0\); after removing the core label, Lean proves that every
+  nonzero Gaussian target value is bounded by the \(\Theta\)-source average if
+  the target environment degree is nonpositive and is itself bounded by that
+  average;
 \item a bridge from factored square/full-label SHE obligations to the
   Hodge-descent \((\mathrm{Ind3})\) route.
 \end{itemize}
@@ -621,7 +624,9 @@ supplied.  In the nonpositive-environment/nonnegative-\(\Theta\)-average branch,
 the Gaussian pointwise target bound is derived from the sign of the
 \(q^{j^2}\)-exponent rather than assumed.  Lean also proves that this
 all-label Gaussian bound cannot hold when the \(\Theta\)-source average is
-negative.
+negative.  For nonzero labels, Lean proves the complementary bound: the
+absolute exponent is at least \(1\), so a nonpositive environment degree below
+the \(\Theta\)-source average bounds every nonzero Gaussian component.
 
 \section{Audit Findings}
 
@@ -641,9 +646,10 @@ The branch with nonnegative \(\Theta\)-source average is formally easier:
 nonnegativity of \(j^2\) makes every nonpositive environment-degree Gaussian
 target value bounded above by that average.  The all-label version cannot be
 the negative branch: the core label contributes \(0\), so a negative upper bound
-is impossible.  The genuinely difficult branch must therefore refine the
-label/domain statement or use additional hull/log-volume structure before the
-target bound is formulated.
+is impossible.  On the nonzero-label part, the formal obstruction disappears:
+exponent \(\ge1\) gives the expected bound from the environment comparison.  The
+remaining task is to connect this refined nonzero-label statement, together with
+the separate core/coric bookkeeping, to the hull/log-volume route.
 
 The strongest negative result is also limited: in the current \(\F_\ell\)-label
 model, Lean rejects a single label-independent scale accounting for all
