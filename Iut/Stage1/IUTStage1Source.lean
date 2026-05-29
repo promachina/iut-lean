@@ -3676,6 +3676,30 @@ theorem unitActionOnFullLabel_fromCoordinate
         zmodLabelTranslate_eq_add]
     rw [hx]
 
+theorem finiteSymmetrySplit_endpoint
+    (l : PrimeGeFive)
+    (t j k x generator : ZMod l.value)
+    (a : (ZMod l.value)ˣ) :
+    (IUTStage1FLLabelTorsorModel.zmod l).torsor.vadd t j =
+        zmodLabelTranslate l t j ∧
+      (zmodUnitActionData l).smul
+          (IUTStage1FLZModUnitSignLabelModel.zmod l).signUnitCompatibility.signUnit
+          x =
+        (zmodSignAction l).neg x ∧
+      ((∃ b : (ZMod l.value)ˣ,
+        b ∈ (IUTStage1FLZModUnitSignLabelModel.zmod l).signUnitSubgroup ∧
+          (zmodUnitActionData l).smul b generator = x) ↔
+        (zmodSignAction l).InSignOrbit x generator) ∧
+      (fromCoordinate l j = fromCoordinate l k ↔ j = k ∨ j = -k) ∧
+      unitActionOnFullLabel l a (fromCoordinate l j) =
+        fromCoordinate l ((zmodUnitActionData l).smul a j) :=
+  ⟨IUTStage1FLLabelTorsorModel.zmod_vadd_eq_translate l t j,
+    (IUTStage1FLZModUnitSignLabelModel.zmod l).signUnit_smul_eq_neg x,
+    (IUTStage1FLZModUnitSignLabelModel.zmod l).signUnitSubgroup_orbit_iff_signOrbit'
+      x generator,
+    fromCoordinate_eq_iff j k,
+    unitActionOnFullLabel_fromCoordinate l a j⟩
+
 theorem unitActionOnFullLabel_one
     (l : PrimeGeFive) (label : IUTStage1ZModCuspFullLabel l) :
     unitActionOnFullLabel l 1 label = label := by
