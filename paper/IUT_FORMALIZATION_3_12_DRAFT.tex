@@ -818,7 +818,8 @@ also has a source-side variant: canonical \(j=1\) equality transports
 nonpositivity and the comparison with the \(\Theta\)-source average from the
 source environment degree to the target environment degree.  Lean also proves
 that the nonzero target-bound predicate is then equivalent to this
-source-environment comparison.  It can also
+source-environment comparison, and that the all-label predicate is equivalent
+to this source comparison plus nonnegativity at the zero label.  It can also
 consume the decomposed zero/nonzero input directly.  For nonzero labels, Lean
 proves the complementary bound: the absolute exponent is at least \(1\), so a
 nonpositive environment degree below the \(\Theta\)-source average bounds every
@@ -865,10 +866,11 @@ equal Gaussian environment degree and the nonpositive environment comparison;
 equivalently, the equal-environment input may be replaced by equality of the
 canonical \(j=1\) Gaussian components, and the target-side environment
 comparison may be supplied on the source side after the same equality; the
-nonzero target-bound predicate is equivalent to this source-side comparison.
-Lean
-also proves that, in the nonpositive environment branch, the nonzero coordinate
-target-bound formulation is equivalent to this environment bound against the
+nonzero target-bound predicate is equivalent to this source-side comparison,
+and the all-label target predicate is equivalent to this comparison together
+with \(0\le\Theta_{\mathrm{avg}}\).  Lean also proves that, in the nonpositive
+environment branch, the nonzero coordinate target-bound formulation is
+equivalent to this environment bound against the
 \(\Theta\)-source average;
 the necessity direction does not use the nonpositive hypothesis, since the
 canonical \(j=1\) component is the environment degree itself.

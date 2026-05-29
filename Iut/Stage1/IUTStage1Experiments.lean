@@ -988,6 +988,44 @@ theorem gaussianAllLabelTargetBound_iff_thetaAverage_nonnegative_and_nonzeroBoun
   targetEvaluation.forall_coordinateFullLabel_le_iff_bound_nonnegative_and_nonzero_le
     coordinateEquiv
 
+theorem gaussianAllLabelTargetBound_iff_thetaAverage_nonnegative_and_sourceEnvironment
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (target_environment_nonpositive :
+      targetEvaluation.environmentDegree <= 0)
+    (canonical_one_preserved :
+      targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    (∀ j : ZMod l.value,
+        targetEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (coordinateEquiv j)) <=
+          part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+            audited) ↔
+      0 <=
+          part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+            audited ∧
+        sourceEvaluation.environmentDegree <=
+          part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+            audited :=
+  sourceEvaluation
+    |>.target_allLabelBound_iff_nonnegative_and_source_environment_le_of_gaussianDegree_one_eq
+      targetEvaluation coordinateEquiv target_environment_nonpositive
+      canonical_one_preserved
+
 theorem gaussianNonzeroTargetBound_of_environment_le_thetaAverage
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
