@@ -830,7 +830,9 @@ predicate is itself equivalent, under source nonpositivity, to the conjunction o
 \(0\le\Theta_{\mathrm{avg}}\) and the source-environment upper bound.  Hence,
 under canonical \(j=1\) preservation and the two nonpositive branches, the
 source and target all-label Gaussian predicates are equivalent.  It can also
-consume the decomposed zero/nonzero input directly.  For nonzero labels, Lean
+consume the decomposed zero/nonzero input directly; this endpoint now ignores
+the zero-label nonnegativity component and proceeds through the nonzero
+factored route.  For nonzero labels, Lean
 proves the complementary bound: the absolute exponent is at least \(1\), so a
 nonpositive environment degree below the \(\Theta\)-source average bounds every
 nonzero Gaussian component and hence their finite nonzero-label average.  The
