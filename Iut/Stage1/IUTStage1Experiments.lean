@@ -1027,6 +1027,38 @@ theorem stepXToHullUpperRay_statementEndpoint_thetaFinite
   data.statementEndpoint_thetaExtendedFinite
     pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
 
+theorem stepXToHullUpperRay_statementEndpoint_qNotSubject
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+      thetaHull_le_cTheta_absLogQ).pilotBoundary.qStatus =
+      IUTStage1Corollary312PilotIndeterminacyStatus.notSubjectToIndeterminacies :=
+  data.statementEndpoint_qPilotNotSubject
+    pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
+
+theorem stepXToHullUpperRay_statementEndpoint_thetaSubject
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+      thetaHull_le_cTheta_absLogQ).pilotBoundary.thetaStatus =
+      IUTStage1Corollary312PilotIndeterminacyStatus.subjectToIndeterminacies :=
+  data.statementEndpoint_thetaPilotSubject
+    pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
+
 theorem stepXToHullUpperRay_statementEndpoint_q_le_thetaReal
     {label : Type u} [Fintype label]
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
