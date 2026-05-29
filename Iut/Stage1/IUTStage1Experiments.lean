@@ -1346,6 +1346,65 @@ theorem gaussianCoordinateAverage_unitAffineInvariant_but_notFullLabelDescent
   evaluation.coordinateAverage_unitAffineInvariant_but_not_fullLabelDescend
     a ht
 
+theorem gaussianDegree_unitSmul_eq_of_signSubgroup
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    {a : (ZMod l.value)ˣ} (ha : a ∈ zmodSignUnitSubgroup l)
+    (j : ZMod l.value) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          ((zmodUnitActionData l).smul a j)) =
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  evaluation.gaussianDegree_unitSmul_fromCoordinate_eq_of_signSubgroup ha j
+
+theorem gaussianDegree_unitAffine_zeroTranslation_eq_of_signSubgroup
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    {a : (ZMod l.value)ˣ} (ha : a ∈ zmodSignUnitSubgroup l)
+    (j : ZMod l.value) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l (0 : ZMod l.value)
+            ((zmodUnitActionData l).smul a j))) =
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  evaluation.gaussianDegree_unitAffine_fromCoordinate_eq_of_signSubgroup
+    ha j
+
+theorem zeroTranslation_of_unitAffine_pointwiseGaussianPreserving
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) {t : ZMod l.value}
+    (henv : evaluation.environmentDegree ≠ 0)
+    (hpres : ∀ j : ZMod l.value,
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) :
+    t = 0 :=
+  evaluation.zero_translation_of_unitAffine_pointwise_gaussian_preserving
+    a henv hpres
+
+theorem nonzeroTranslation_not_unitAffine_pointwiseGaussianPreserving
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) {t : ZMod l.value}
+    (ht : t ≠ 0) (henv : evaluation.environmentDegree ≠ 0) :
+    ¬ ∀ j : ZMod l.value,
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  evaluation.no_nonzero_translation_unitAffine_pointwise_gaussian_preserving
+    a ht henv
+
 theorem gaussianDegree_nonzero_ne_zero_of_environment_ne_zero
     {l : PrimeGeFive}
     (evaluation :

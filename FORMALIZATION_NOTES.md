@@ -19399,3 +19399,35 @@ This is the pointwise version of the IUT II, Remarks 4.7.3--4.7.4 distinction:
 raw affine reindexing may preserve aggregate sums, but pointwise preservation
 of the \(|F_\ell|\)-label structure allows only the sign ambiguity and no
 additive offset.
+
+## Pointwise Gaussian preservation versus affine aggregate invariance
+
+### Lean Move
+
+Added:
+
+```text
+gaussianDegree_unitSmul_fromCoordinate_eq_of_signSubgroup
+gaussianDegree_unitAffine_fromCoordinate_eq_of_signSubgroup
+zero_translation_of_unitAffine_pointwise_gaussian_preserving
+no_nonzero_translation_unitAffine_pointwise_gaussian_preserving
+gaussianDegree_unitSmul_eq_of_signSubgroup
+gaussianDegree_unitAffine_zeroTranslation_eq_of_signSubgroup
+zeroTranslation_of_unitAffine_pointwiseGaussianPreserving
+nonzeroTranslation_not_unitAffine_pointwiseGaussianPreserving
+```
+
+### Mathematical Reason
+
+The sign subgroup \(\{\pm1\}\) acts trivially on full absolute labels, hence it
+preserves coordinate Gaussian degrees pointwise when the additive offset is
+zero.  Conversely, if the environment degree is nonzero and an affine operation
+\(j\mapsto a j+t\) preserves every coordinate Gaussian degree pointwise, then
+reading the zero coordinate forces \(t=0\).  Thus aggregate affine invariance is
+strictly weaker than pointwise Gaussian compatibility.
+
+### Source Check
+
+This is another finite-model version of the IUT II distinction between
+permutation symmetry and componentwise compatibility.  It keeps the Gaussian
+\(q^{j^2}\) branch from being silently identified after an additive offset.
