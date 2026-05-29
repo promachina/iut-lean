@@ -1243,6 +1243,12 @@ theorem qPilotTwoComputationCThetaEndpoint_fixed_le_cTheta_absLogQ
     -data.absLogQ <= data.cTheta * data.absLogQ :=
   data.fixed_qPilotLogVolume_le_cTheta_absLogQ
 
+theorem qPilotTwoComputationCThetaEndpoint_statement_lower_bound
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary) :
+    (-1 : Real) <= (data.toStatementEndpoint pilotBoundary).cTheta :=
+  data.toStatementEndpoint_cTheta_ge_neg_one pilotBoundary
+
 theorem corollary312ThetaSignReduction_trivial_case
     (data : IUTStage1Corollary312ThetaSignReduction)
     (hTheta : 0 <= data.thetaSigned) :

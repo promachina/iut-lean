@@ -1895,6 +1895,15 @@ structure IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint where
 
 namespace IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint
 
+def ofUpperRayData
+    (upperRayData : IUTStage1HullDetPilotUpperRayLogVolume) :
+    IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint :=
+  { upperRayData := upperRayData,
+    thetaExtended :=
+      IUTStage1ExtendedSignedLogVolume.finite
+        upperRayData.thetaHullLogVolume,
+    thetaExtended_eq_finiteHull := rfl }
+
 theorem thetaExtendedFinite
     (data : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint) :
     data.thetaExtended.IsFinite := by
@@ -2282,6 +2291,30 @@ theorem fixed_qPilotLogVolume_le_cTheta_absLogQ
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
     -data.absLogQ <= data.cTheta * data.absLogQ :=
   data.toFixedValueCThetaLowerBoundShadow.neg_absLogQ_le_cTheta_absLogQ
+
+def toStatementEndpoint
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary) :
+    IUTStage1Corollary312StatementEndpoint :=
+  { pilotBoundary := pilotBoundary,
+    finiteEndpoint :=
+      IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint.ofUpperRayData
+        data.signedEndpoint.twoComputation.upperRayData,
+    q_pilot_positive := by
+      simpa [IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint.ofUpperRayData,
+        data.signedEndpoint.twoComputation.input_eq_q] using
+        data.signedEndpoint.q_pilot_positive,
+    cTheta := data.cTheta,
+    thetaFiniteValue_le_cTheta_absLogQ := by
+      simpa [IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint.ofUpperRayData,
+        data.signedEndpoint.twoComputation.input_eq_q] using
+        data.thetaHullLogVolume_le_cTheta_absLogQ }
+
+theorem toStatementEndpoint_cTheta_ge_neg_one
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary) :
+    (-1 : Real) <= (data.toStatementEndpoint pilotBoundary).cTheta :=
+  (data.toStatementEndpoint pilotBoundary).cTheta_ge_neg_one
 
 end IUTStage1QPilotTwoComputationCThetaEndpoint
 
