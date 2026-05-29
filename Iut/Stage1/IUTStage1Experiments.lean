@@ -3994,6 +3994,27 @@ theorem stepXToHullUpperRay_twoComputation_input_le_theta
       data.toQPilotTwoComputationLogVolume.upperRayData.thetaHullLogVolume :=
   data.twoComputation_input_le_theta
 
+theorem stepXToHullUpperRay_twoComputation_input_eq_output
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume =
+      data.toQPilotTwoComputationLogVolume.outputHullLogVolume :=
+  data.twoComputation_input_eq_output
+
+theorem stepXToHullUpperRay_beforeAverage_eq_twoComputation_output
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.corridor.beforeIndeterminacy.averageLogVolume =
+      data.toQPilotTwoComputationLogVolume.outputHullLogVolume :=
+  data.beforeAverage_eq_twoComputation_output
+
+theorem stepXToHullUpperRay_twoComputation_output_le_theta
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.toQPilotTwoComputationLogVolume.outputHullLogVolume <=
+      data.toQPilotTwoComputationLogVolume.upperRayData.thetaHullLogVolume :=
+  data.twoComputation_output_le_theta
+
 theorem stepXToHullUpperRay_cTheta_ge_neg_one
     {label : Type u} [Fintype label]
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
