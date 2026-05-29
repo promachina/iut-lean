@@ -7211,6 +7211,38 @@ theorem boundaryCTheta_actualUpperRayQuotient_eq_q_iff_shiftTerm_nonpos
       · exact hzero.2.2
       · exact False.elim ((not_lt_of_ge hnonpos) hpos.1)
 
+theorem boundaryCTheta_actualUpperRayQuotient_ne_q_iff_shiftTerm_pos
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (localExponent : Int)
+    (localPrimeStepLogVolume : Real)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    let collapsedRegion : Set Real :=
+      data.toHullDetPilotUpperRayLogVolume.upperRay;
+    let global :=
+      data.toGlobalFrobenioidLogVolumeCalibration
+        localExponent localPrimeStepLogVolume;
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        collapsedRegion global.localData.shiftedLogVolume ≠
+      IUTStage1UpperSemiSetQuotient.quotientMap
+        collapsedRegion data.qPilotLogVolume ↔
+      0 < (localExponent : Real) * localPrimeStepLogVolume := by
+  intro collapsedRegion global
+  have heq :=
+    data.boundaryCTheta_actualUpperRayQuotient_eq_q_iff_shiftTerm_nonpos
+      localExponent localPrimeStepLogVolume q_pilot_positive cTheta
+      thetaHull_le_cTheta_absLogQ hC
+  constructor
+  · intro hne
+    exact not_le.mp fun hnonpos => hne (heq.mpr hnonpos)
+  · intro hpos hmap
+    exact (not_le_of_gt hpos) (heq.mp hmap)
+
 theorem boundaryCTheta_upperSemiQuotient_collapses_nonzeroLocalShift_of_mem
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (collapsedRegion : Set Real)
