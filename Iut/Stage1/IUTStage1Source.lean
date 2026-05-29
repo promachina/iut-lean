@@ -7102,6 +7102,23 @@ theorem environment_le_bound_of_forall_coordinateFullLabel_nonzero_le
     hbound (coordinateEquiv.symm (1 : ZMod l.value)) hone_ne
   simpa [evaluation.gaussianDegree_one] using h
 
+theorem forall_coordinateFullLabel_nonzero_le_of_forall_coordinateFullLabel_le
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
+    {c : Real}
+    (hbound :
+      ∀ j : ZMod l.value,
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (coordinateEquiv j)) <= c) :
+    ∀ j : ZMod l.value,
+      coordinateEquiv j ≠ 0 ->
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (coordinateEquiv j)) <= c := by
+  intro j _hj
+  exact hbound j
+
 theorem forall_coordinateFullLabel_nonzero_le_iff_environment_le_bound
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (coordinateEquiv : ZMod l.value ≃ ZMod l.value)

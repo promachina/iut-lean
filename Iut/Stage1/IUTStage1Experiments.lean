@@ -956,6 +956,37 @@ theorem gaussianCoordinateNonzeroTargetBound_implies_environment_le_thetaAverage
   targetEvaluation.environment_le_bound_of_forall_coordinateFullLabel_nonzero_le
     coordinateEquiv target_nonzero_gaussian_le_thetaAverage
 
+theorem gaussianAllLabelTargetBound_implies_nonzeroTargetBound
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (coordinateEquiv : ZMod l.value ≃ ZMod l.value)
+    (targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (target_gaussian_le_thetaAverage :
+      ∀ j : ZMod l.value,
+        targetEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (coordinateEquiv j)) <=
+          part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+            audited) :
+    ∀ j : ZMod l.value,
+      coordinateEquiv j ≠ 0 ->
+        targetEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (coordinateEquiv j)) <=
+          part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+            audited :=
+  targetEvaluation.forall_coordinateFullLabel_nonzero_le_of_forall_coordinateFullLabel_le
+    coordinateEquiv target_gaussian_le_thetaAverage
+
 theorem gaussianNonzeroAverage_le_thetaAverage_of_environment_le
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
