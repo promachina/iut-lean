@@ -24862,6 +24862,43 @@ theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOne
     source_profile_eq source_log_volume_eq target_environment_nonpositive
     environment_le_thetaAverage
 
+theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneSourceEnvironment
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (canonical_one_preserved :
+      targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (source_profile_eq : profile = sourceProfile)
+    (source_log_volume_eq :
+      part.theta_source.compatible_average.cuspLogVolume audited =
+        sourceEvaluation.toCuspLabelLogVolumeCompatibility)
+    (source_environment_nonpositive :
+      sourceEvaluation.environmentDegree <= 0)
+    (source_environment_le_thetaAverage :
+      sourceEvaluation.environmentDegree <=
+        part.theta_source.thetaSourceAverage audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned := by
+  have henv :
+      targetEvaluation.environmentDegree =
+        sourceEvaluation.environmentDegree :=
+    sourceEvaluation.environmentDegree_eq_of_gaussianDegree_one_eq
+      targetEvaluation canonical_one_preserved
+  exact
+    part.qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOne
+      (bundle := bundle)
+      profile audited sourceProfile targetProfile sourceEvaluation
+      targetEvaluation canonical_one_preserved source_profile_eq
+      source_log_volume_eq
+      (by simpa [henv] using source_environment_nonpositive)
+      (by simpa [henv] using source_environment_le_thetaAverage)
+
 theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityCanonicalOneAllLabelNonnegative
     {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)

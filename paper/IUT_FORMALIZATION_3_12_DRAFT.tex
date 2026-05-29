@@ -813,11 +813,14 @@ corresponding nonzero-label bound.  The corresponding identity-coordinate final
 route can now be stated directly from canonical \(j=1\) equality, nonpositive
 target environment, and nonnegative \(\Theta\)-source average; if the all-label
 Gaussian target bound is supplied directly, the same endpoint no longer needs
-the nonpositive/nonnegative branch hypotheses.  It can also consume the
-decomposed zero/nonzero input directly.  For nonzero labels, Lean proves the
-complementary bound: the absolute exponent is at least \(1\), so a nonpositive
-environment degree below the \(\Theta\)-source average bounds every nonzero
-Gaussian component and hence their finite nonzero-label average.  The
+the nonpositive/nonnegative branch hypotheses.  The nonzero environment route
+also has a source-side variant: canonical \(j=1\) equality transports
+nonpositivity and the comparison with the \(\Theta\)-source average from the
+source environment degree to the target environment degree.  It can also
+consume the decomposed zero/nonzero input directly.  For nonzero labels, Lean
+proves the complementary bound: the absolute exponent is at least \(1\), so a
+nonpositive environment degree below the \(\Theta\)-source average bounds every
+nonzero Gaussian component and hence their finite nonzero-label average.  The
 square-weighted transport route has also been strengthened from an all-label
 pointwise bound to a weighted-summand bound, so the zero label requires no
 target upper bound.  The experiment theorem now delegates to the source-layer
@@ -858,9 +861,11 @@ identity-coordinate case, Lean now supplies the coordinate-square and
 full-label-map preservation branches internally, so this route only asks for
 equal Gaussian environment degree and the nonpositive environment comparison;
 equivalently, the equal-environment input may be replaced by equality of the
-canonical \(j=1\) Gaussian components.  Lean also proves that, in the
-nonpositive environment branch, the nonzero coordinate target-bound formulation
-is equivalent to this environment bound against the \(\Theta\)-source average;
+canonical \(j=1\) Gaussian components, and the target-side environment
+comparison may be supplied on the source side after the same equality.  Lean
+also proves that, in the nonpositive environment branch, the nonzero coordinate
+target-bound formulation is equivalent to this environment bound against the
+\(\Theta\)-source average;
 the necessity direction does not use the nonpositive hypothesis, since the
 canonical \(j=1\) component is the environment degree itself.
 The final identity-coordinate route may now be stated directly from canonical
