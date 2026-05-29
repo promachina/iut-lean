@@ -5851,6 +5851,26 @@ theorem lgpSplittingMonoid_normalizedActed_eq_packetNormalized_plus_gaussianFull
           (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) :=
   action.normalizedActedLogVolume_eq_packetNormalized_plus_gaussianFullLabelAverage
 
+theorem lgpSplittingMonoid_environmentDegree_eq_zero_of_normalizedFixed
+    {l : PrimeGeFive}
+    (action :
+      IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction l)
+    (hfixed :
+      action.normalizedActedLogVolume =
+        action.packet.normalizedLogVolume) :
+    action.evaluation.environmentDegree = 0 :=
+  action.environmentDegree_eq_zero_of_normalizedActedLogVolume_eq_packetNormalized
+    hfixed
+
+theorem lgpSplittingMonoid_normalizedFixed_iff_environmentDegree_zero
+    {l : PrimeGeFive}
+    (action :
+      IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction l) :
+    action.normalizedActedLogVolume =
+        action.packet.normalizedLogVolume ↔
+      action.evaluation.environmentDegree = 0 :=
+  action.normalizedActedLogVolume_eq_packetNormalized_iff_environmentDegree_eq_zero
+
 theorem lgpSplittingMonoid_normalizedActed_delta_mul_six
     {l : PrimeGeFive}
     (action :
@@ -5908,6 +5928,9 @@ theorem lgpSplittingMonoid_qSquaredGeneratorTensorPacketAction_endpoint
         action.packet.normalizedLogVolume +
           (Finset.univ.sum action.evaluation.gaussianDegree) /
             (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) ∧
+      (action.normalizedActedLogVolume =
+          action.packet.normalizedLogVolume ↔
+        action.evaluation.environmentDegree = 0) ∧
       (0 <= action.evaluation.environmentDegree ->
         action.packet.normalizedLogVolume <= action.normalizedActedLogVolume) :=
   action.qSquaredGeneratorTensorPacketAction_endpoint
