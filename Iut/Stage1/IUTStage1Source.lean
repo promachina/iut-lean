@@ -2549,6 +2549,19 @@ theorem curveLogSum_le_ftpdLogSum_add_logTwoL
   rw [data.logDiff_eq_logDifferentFtpd]
   linarith [data.logCondD_le_logConductorFtpd_add_logTwoL]
 
+theorem logDiffCondComparison_endpoint
+    (data : IUTStage1IUTIVCorollary22LogDiffCondComparisonShadow) :
+    data.logDiffX = data.logDifferentFtpd ∧
+      data.logConductorFtpd <= data.logCondD ∧
+      data.logCondD <= data.logConductorFtpd + data.logTwoL ∧
+      data.ftpdLogSum <= data.curveLogSum ∧
+      data.curveLogSum <= data.ftpdLogSum + data.logTwoL :=
+  ⟨data.logDiff_eq_logDifferentFtpd,
+    data.logConductorFtpd_le_logCondD,
+    data.logCondD_le_logConductorFtpd_add_logTwoL,
+    data.ftpdLogSum_le_curveLogSum,
+    data.curveLogSum_le_ftpdLogSum_add_logTwoL⟩
+
 end IUTStage1IUTIVCorollary22LogDiffCondComparisonShadow
 
 /--

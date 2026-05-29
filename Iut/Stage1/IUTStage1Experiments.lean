@@ -5731,6 +5731,15 @@ theorem iutIVCorollary22LogDiffCond_curve_le_ftpd_add_logTwoL
     data.curveLogSum <= data.ftpdLogSum + data.logTwoL :=
   data.curveLogSum_le_ftpdLogSum_add_logTwoL
 
+theorem iutIVCorollary22LogDiffCondComparison_endpoint
+    (data : IUTStage1IUTIVCorollary22LogDiffCondComparisonShadow) :
+    data.logDiffX = data.logDifferentFtpd ∧
+      data.logConductorFtpd <= data.logCondD ∧
+      data.logCondD <= data.logConductorFtpd + data.logTwoL ∧
+      data.ftpdLogSum <= data.curveLogSum ∧
+      data.curveLogSum <= data.ftpdLogSum + data.logTwoL :=
+  data.logDiffCondComparison_endpoint
+
 theorem iutIVCorollary22FinalHToC2_logQAll_bound
     (data : IUTStage1IUTIVCorollary22FinalHToC2Shadow) :
     (1 / 6 : Real) * data.logQAll <=

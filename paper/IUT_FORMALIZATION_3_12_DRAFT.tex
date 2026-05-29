@@ -675,7 +675,8 @@ The code currently covers:
 \item the IUT IV, Corollary 2.2(ii) comparison
   \(\log\operatorname{diff}_X(x_E)=\log(d_{F_{\mathrm{tpd}}})\) and
   \(\log(f_{F_{\mathrm{tpd}}})\le\log\operatorname{cond}_D(x_E)\le
-   \log(f_{F_{\mathrm{tpd}}})+\log(2\ell)\);
+   \log(f_{F_{\mathrm{tpd}}})+\log(2\ell)\); Lean packages these as the two
+  corresponding sum inequalities for the tripodal and curve log sums;
 \item the IUT IV, Corollary 2.2 to Theorem A passage:
   bounded-discrepancy equivalence
   \(\frac16\log(q_2)\approx\operatorname{ht}_{\omega_X(D)}\), together with the
@@ -1135,7 +1136,8 @@ Lean also derives the displayed C2 chain from this \(h\)-bound and the
 tripodal-to-curve log-degree comparison, recording the \(q\to q_2\to
 q_\forall\) inequalities and the monotonicity condition \(1+\epsilon_E\ge0\).
 It also proves the two sum inequalities relating the tripodal different and
-conductor terms to \(\log\operatorname{diff}_X+\log\operatorname{cond}_D\).
+conductor terms to \(\log\operatorname{diff}_X+\log\operatorname{cond}_D\),
+packaged with the defining equality and conductor inequalities.
 For the Corollary 2.2/2.3 exceptional-set passage, Lean proves that a lower
 bound off a finite exceptional set and a lower bound on the exceptional set imply
 a global lower bound, and specializes this to the Theorem A discrepancy.
