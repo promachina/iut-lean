@@ -115,5 +115,30 @@ theorem zero_one_column_absorption_profile
     IUTStage1LogThetaVerticalColumn.qPilot_logShellTreatment,
     oneData.precise_logVolume_eq⟩
 
+/--
+Remark 3.12.2(v) inequality-versus-equality endpoint.
+
+The zero-column treatment records hull upper bounds for the original and
+unit-shifted regions.  The one-column treatment records precise log-volume
+equality for logarithmic conjugates, hence inequalities in both directions.
+-/
+theorem zero_one_column_inequality_vs_equality_endpoint
+    (zeroData : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy)
+    (oneData :
+      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
+    zeroData.originalRegionLogVolume <= zeroData.hullLogVolume ∧
+      zeroData.unitShiftedRegionLogVolume <= zeroData.hullLogVolume ∧
+      oneData.sourceRingStructureLogVolume =
+        oneData.conjugateRingStructureLogVolume ∧
+      oneData.sourceRingStructureLogVolume <=
+        oneData.conjugateRingStructureLogVolume ∧
+      oneData.conjugateRingStructureLogVolume <=
+        oneData.sourceRingStructureLogVolume :=
+  ⟨zeroData.original_le_hull,
+    zeroData.unit_shifted_le_hull,
+    oneData.precise_logVolume_eq,
+    oneData.source_le_conjugate,
+    oneData.conjugate_le_source⟩
+
 end Stage1
 end Iut

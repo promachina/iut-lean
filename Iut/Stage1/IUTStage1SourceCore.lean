@@ -3126,6 +3126,24 @@ theorem lower_table_differences :
     multiradiality_distinguishes_columns,
     logShellTreatment_distinguishes_columns⟩
 
+/--
+Remark 3.12.2(iv),(v) q-pilot endpoint.
+
+The q-pilot side retains the log-Kummer non-interference similarity from the
+upper half of Fig. 3.9, but lacks theta-pilot multiradiality and uses the
+tautological log-shell treatment from the lower half.
+-/
+theorem remark3122v_qPilot_nonInterference_without_multiradiality_endpoint :
+    IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality =
+        false ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation :=
+  ⟨IUTStage1LogThetaVerticalColumn.oneQPilot.logKummerNonInterference_eq_true,
+    IUTStage1LogThetaVerticalColumn.qPilot_lacksMultiradiality,
+    IUTStage1LogThetaVerticalColumn.qPilot_logShellTreatment⟩
+
 end IUTStage1LogThetaVerticalColumn
 
 end Stage1

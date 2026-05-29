@@ -6317,6 +6317,15 @@ theorem logThetaColumn_lowerTableDifferences :
         IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment :=
   IUTStage1LogThetaVerticalColumn.lower_table_differences
 
+theorem remark3122v_qPilot_nonInterference_without_multiradiality_endpoint :
+    IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasPilotMultiradiality =
+        false ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation :=
+  IUTStage1LogThetaVerticalColumn.remark3122v_qPilot_nonInterference_without_multiradiality_endpoint
+
 theorem zeroColumnHullAbsorption_bothRegions
     (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) :
     data.originalRegionLogVolume ∈ data.hullUpperRay ∧
@@ -6350,6 +6359,20 @@ theorem zeroOneColumn_absorptionProfile
       oneData.sourceRingStructureLogVolume =
         oneData.conjugateRingStructureLogVolume :=
   zero_one_column_absorption_profile zeroData oneData
+
+theorem zeroOneColumn_inequalityVsEquality_endpoint
+    (zeroData : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy)
+    (oneData :
+      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
+    zeroData.originalRegionLogVolume <= zeroData.hullLogVolume ∧
+      zeroData.unitShiftedRegionLogVolume <= zeroData.hullLogVolume ∧
+      oneData.sourceRingStructureLogVolume =
+        oneData.conjugateRingStructureLogVolume ∧
+      oneData.sourceRingStructureLogVolume <=
+        oneData.conjugateRingStructureLogVolume ∧
+      oneData.conjugateRingStructureLogVolume <=
+        oneData.sourceRingStructureLogVolume :=
+  zero_one_column_inequality_vs_equality_endpoint zeroData oneData
 
 theorem thetaFinite_zeroOneColumnAbsorptionProfile
     {label : Type u} [Fintype label]
