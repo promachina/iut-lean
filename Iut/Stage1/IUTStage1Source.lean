@@ -5713,6 +5713,14 @@ instance zmodNonzeroCarrierNonempty
     Nonempty (zmodPointedQuotient l).NonzeroCarrier :=
   ⟨zmodOneNonzeroLabel l⟩
 
+theorem zmodNonzeroCarrier_card_eq
+    (l : PrimeGeFive) :
+    Fintype.card (zmodPointedQuotient l).NonzeroCarrier = l.value - 1 := by
+  classical
+  change Fintype.card {x : ZMod l.value // x ≠ 0} = l.value - 1
+  rw [Fintype.card_subtype_compl (fun x : ZMod l.value => x = 0)]
+  rw [Fintype.card_subtype_eq (0 : ZMod l.value), ZMod.card]
+
 /--
 The Stage 1 zero/nonzero cusp-label split for the concrete `F_l = ZMod l`
 model.
@@ -7963,6 +7971,117 @@ theorem nonzeroCarrierAveragedLogVolume_apply
         (IUTStage1ZModCuspFullLabel.nonzero
           ((zmodSignAction l).toSignLabelQuotient x)) :=
   rfl
+
+noncomputable def coordinateAveragedLogVolume
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value) :=
+  { normalizedLogVolume := fun j =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j),
+    averageLogVolume :=
+      (Finset.univ.sum fun j : ZMod l.value =>
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) /
+        (l.value : Real),
+    average_eq := by rw [ZMod.card] }
+
+theorem coordinateGaussian_sum_eq_zero_add_nonzero
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    Finset.univ.sum (fun j : ZMod l.value =>
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) =
+      evaluation.gaussianDegree IUTStage1ZModCuspFullLabel.zero +
+        Finset.univ.sum
+          (fun x : (zmodPointedQuotient l).NonzeroCarrier =>
+            evaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.nonzero
+                ((zmodSignAction l).toSignLabelQuotient x))) := by
+  classical
+  let f : ZMod l.value -> Real := fun j =>
+    evaluation.gaussianDegree
+      (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+  have hnonzero_sum :
+      (Finset.univ.erase (0 : ZMod l.value)).sum f =
+        Finset.univ.sum
+          (fun x : (zmodPointedQuotient l).NonzeroCarrier =>
+            evaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.nonzero
+                ((zmodSignAction l).toSignLabelQuotient x))) := by
+    change (Finset.univ.erase (0 : ZMod l.value)).sum f =
+      Finset.univ.sum
+        (fun x : {x : ZMod l.value // x ≠ 0} =>
+          evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.nonzero
+              ((zmodSignAction l).toSignLabelQuotient x)))
+    calc
+      (Finset.univ.erase (0 : ZMod l.value)).sum f =
+          Finset.univ.sum
+            (fun x : {x : ZMod l.value // x ≠ 0} => f x.1) := by
+        rw [Finset.sum_subtype (Finset.univ.erase (0 : ZMod l.value))]
+        intro j
+        simp
+      _ =
+          Finset.univ.sum
+            (fun x : {x : ZMod l.value // x ≠ 0} =>
+              evaluation.gaussianDegree
+                (IUTStage1ZModCuspFullLabel.nonzero
+                  ((zmodSignAction l).toSignLabelQuotient x))) := by
+        apply Finset.sum_congr rfl
+        intro x _hx
+        simp [f, IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l x.1 x.2,
+          zmod_toSignLabelQuotient_eq_fromCoordinate]
+  have hsplit :=
+    Finset.sum_erase_add Finset.univ f
+      (Finset.mem_univ (0 : ZMod l.value))
+  rw [← hsplit]
+  rw [hnonzero_sum]
+  simp [f, IUTStage1ZModCuspFullLabel.fromCoordinate_zero, add_comm]
+
+theorem coordinateAveragedLogVolume_average_eq_nonzero_sum_over_prime
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume =
+      (Finset.univ.sum
+        (fun x : (zmodPointedQuotient l).NonzeroCarrier =>
+          evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.nonzero
+              ((zmodSignAction l).toSignLabelQuotient x)))) /
+        (l.value : Real) := by
+  rw [coordinateAveragedLogVolume]
+  simp only
+  rw [coordinateGaussian_sum_eq_zero_add_nonzero]
+  rw [evaluation.gaussianDegree_zero]
+  ring
+
+theorem coordinateAveragedLogVolume_eq_nonzero_mass_rescale
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume =
+      ((l.value - 1 : Nat) : Real) / (l.value : Real) *
+        evaluation.nonzeroCarrierAveragedLogVolume.averageLogVolume := by
+  rw [coordinateAveragedLogVolume_average_eq_nonzero_sum_over_prime]
+  rw [evaluation.nonzeroCarrierAveragedLogVolume.average_eq]
+  change
+    (Finset.univ.sum
+          (fun x : (zmodPointedQuotient l).NonzeroCarrier =>
+            evaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.nonzero
+                ((zmodSignAction l).toSignLabelQuotient x)))) /
+        (l.value : Real) =
+      ((l.value - 1 : Nat) : Real) / (l.value : Real) *
+        ((Finset.univ.sum
+            (fun x : (zmodPointedQuotient l).NonzeroCarrier =>
+              evaluation.gaussianDegree
+                (IUTStage1ZModCuspFullLabel.nonzero
+                  ((zmodSignAction l).toSignLabelQuotient x)))) /
+          (Fintype.card (zmodPointedQuotient l).NonzeroCarrier : Real))
+  rw [zmodNonzeroCarrier_card_eq]
+  have hl_ne : (l.value : Real) ≠ 0 := by
+    exact_mod_cast l.ne_zero
+  have hlm_ne : ((l.value - 1 : Nat) : Real) ≠ 0 := by
+    have hpos : 0 < l.value - 1 := by
+      have hge : 5 ≤ l.value := l.ge_five
+      omega
+    exact_mod_cast (ne_of_gt hpos)
+  field_simp [hl_ne, hlm_ne]
 
 theorem nonzeroCarrierAverage_le_of_environment_le_bound
     (evaluation : GaussianMonoidDegreeEvaluation l)

@@ -694,6 +694,20 @@ theorem gaussianNonzeroAverage_le_thetaAverage_of_environment_le
   targetEvaluation.nonzeroCarrierAverage_le_of_environment_le_bound
     target_environment_nonpositive environment_le_thetaAverage
 
+theorem zmodNonzeroCarrierCard_eq
+    (l : PrimeGeFive) :
+    Fintype.card (zmodPointedQuotient l).NonzeroCarrier = l.value - 1 :=
+  zmodNonzeroCarrier_card_eq l
+
+theorem gaussianCoordinateAverage_eq_nonzeroMassRescale
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume =
+      ((l.value - 1 : Nat) : Real) / (l.value : Real) *
+        evaluation.nonzeroCarrierAveragedLogVolume.averageLogVolume :=
+  evaluation.coordinateAveragedLogVolume_eq_nonzero_mass_rescale
+
 /-- Scale-level status for transport-explicit real-line cancellation. -/
 structure Ind3TransportScaleExperimentReport where
   sourceScaleMatched : Bool

@@ -182,6 +182,16 @@ The code currently covers:
 \item the \(F_\ell\)-label average specialization:
   for labels represented as \(\mathbb{Z}/\ell\mathbb{Z}\), Lean rewrites the
   procession-normalized average denominator as \(\ell\);
+\item the zero/nonzero Gaussian average split:
+  Lean proves
+  \[
+  \#(\mathbb{Z}/\ell\mathbb{Z})^\times=\ell-1,\qquad
+  \operatorname{Avg}_{j\in F_\ell}G(j)
+  =\frac{\ell-1}{\ell}\operatorname{Avg}_{j\ne0}G(j),
+  \]
+  for the degree-level Gaussian evaluation \(G\), using \(G(0)=0\).  Thus the
+  paper's uniform \(1/\ell\) weighted-volume convention is not silently replaced
+  by the auxiliary nonzero-only average;
 \item the IUT III Step (x) averaged-log-volume corridor:
   Lean records that \((\mathrm{Ind1})\) and \((\mathrm{Ind2})\) preserve the
   procession-normalized averaged log-volume, while \((\mathrm{Ind3})\) supplies
@@ -484,7 +494,9 @@ The code currently covers:
   nonzero Gaussian target value is bounded by the \(\Theta\)-source average if
   the target environment degree is nonpositive and is itself bounded by that
   average; Lean also forms the corresponding finite average over the nonzero
-  \(ZMod\) carrier and proves the same upper bound for this nonzero average;
+  \(ZMod\) carrier, proves the same upper bound for this nonzero average, and
+  proves the exact rescaling between this auxiliary nonzero average and the
+  uniform \(F_\ell\)-average with zero Gaussian term;
   because the square-weighted route assigns weight \(0\) to the core label, Lean
   now feeds nonzero-only target bounds through the square/full-label transport
   audit all the way to \(q_{\mathrm{signed}}\le\Theta_{\mathrm{signed}}\); this
@@ -637,7 +649,10 @@ their finite nonzero-label average.  The square-weighted transport route has
 also been strengthened from an all-label pointwise bound to a weighted-summand
 bound, so the zero label requires no target upper bound.  The experiment theorem
 now delegates to the source-layer q-to-\(\Theta\) theorem for this nonzero
-Gaussian environment-comparison route.
+Gaussian environment-comparison route.  Separately, Lean proves that the
+uniform \(F_\ell\)-average of the Gaussian shadow is
+\((\ell-1)/\ell\) times the auxiliary nonzero-carrier average, fixing the
+denominator at \(\ell\) when the zero label is present.
 
 \section{Audit Findings}
 
@@ -663,10 +678,12 @@ square-weighted final route now accepts this nonzero-only bound, since the core
 summand has weight \(0\).  This gives a conditional source-level q-to-\(\Theta\)
 route from degree-level Gaussian data, coordinate-square preservation,
 full-label-map preservation, equal source/target environment degree, and
-environment degree bounded above by the \(\Theta\)-source average.  The remaining
-task is to replace the current
-degree-level Gaussian shadow by the actual Hodge--Arakelov Gaussian/Frobenioid
-construction behind this environment comparison.
+environment degree bounded above by the \(\Theta\)-source average.  The
+zero/nonzero average split is now exact: the nonzero carrier has cardinality
+\(\ell-1\), the zero Gaussian degree is \(0\), and the all-\(F_\ell\) average is
+\((\ell-1)/\ell\) times the nonzero average.  The remaining task is to replace
+the current degree-level Gaussian shadow by the actual Hodge--Arakelov
+Gaussian/Frobenioid construction behind this environment comparison.
 
 The strongest negative result is also limited: in the current \(\F_\ell\)-label
 model, Lean rejects a single label-independent scale accounting for all
