@@ -6246,6 +6246,56 @@ theorem before_average_le_ind3UpperBound
 
 end IUTStage1ProcessionNormalizedIndeterminacyCorridor
 
+/--
+Step (x) to Step (xi) upper-ray bridge.
+
+Step (x) converts the procession-normalized `(Ind3)` ambiguity into an upper
+bound.  Step (xi) then uses a hull/determinant log-volume upper ray.  This
+record keeps the minimal numerical handoff: the q-pilot real is the
+pre-indeterminacy averaged log-volume, and the Theta hull real is the Step (x)
+`(Ind3)` upper bound.
+-/
+structure IUTStage1StepXToHullUpperRayLogVolume
+    (label : Type u) [Fintype label] where
+  corridor : IUTStage1ProcessionNormalizedIndeterminacyCorridor label
+  determinant :
+    IUTStage1ArithmeticVectorBundleDeterminantLogVolume
+  thetaHullLogVolume : Real
+  theta_eq_ind3Upper :
+    thetaHullLogVolume = corridor.ind3UpperBound
+  theta_eq_normalized_determinant :
+    thetaHullLogVolume = determinant.normalizedLogVolume
+  qPilotLogVolume : Real
+  q_eq_beforeAverage :
+    qPilotLogVolume = corridor.beforeIndeterminacy.averageLogVolume
+
+namespace IUTStage1StepXToHullUpperRayLogVolume
+
+variable {label : Type u} [Fintype label]
+
+theorem qPilotLogVolume_le_thetaHullLogVolume
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.qPilotLogVolume <= data.thetaHullLogVolume := by
+  rw [data.q_eq_beforeAverage, data.theta_eq_ind3Upper]
+  exact data.corridor.before_average_le_ind3UpperBound
+
+def toHullDetPilotUpperRayLogVolume
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    IUTStage1HullDetPilotUpperRayLogVolume :=
+  { determinant := data.determinant,
+    thetaHullLogVolume := data.thetaHullLogVolume,
+    theta_eq_normalized_determinant := data.theta_eq_normalized_determinant,
+    qPilotLogVolume := data.qPilotLogVolume,
+    q_mem_upperRay := data.qPilotLogVolume_le_thetaHullLogVolume }
+
+theorem toUpperRay_q_mem
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.qPilotLogVolume ∈
+      data.toHullDetPilotUpperRayLogVolume.upperRay :=
+  data.toHullDetPilotUpperRayLogVolume.qPilot_mem_upperRay
+
+end IUTStage1StepXToHullUpperRayLogVolume
+
 namespace IUTStage1WeightedLabelAveragedProcessionLogVolume
 
 variable {label : Type u} [Fintype label]

@@ -943,6 +943,19 @@ theorem processionNormalizedIndeterminacyCorridor_before_le_ind3Upper
     data.beforeIndeterminacy.averageLogVolume <= data.ind3UpperBound :=
   data.before_average_le_ind3UpperBound
 
+theorem stepXToHullUpperRay_q_le_theta
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.qPilotLogVolume <= data.thetaHullLogVolume :=
+  data.qPilotLogVolume_le_thetaHullLogVolume
+
+theorem stepXToHullUpperRay_q_mem
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.qPilotLogVolume ∈
+      data.toHullDetPilotUpperRayLogVolume.upperRay :=
+  data.toUpperRay_q_mem
+
 theorem valuationFiberLogShellDirectSum_eq_sum
     {kind : IUTStage1PlaceKind}
     (directSum : IUTStage1ValuationFiberLogShellDirectSum kind) :
