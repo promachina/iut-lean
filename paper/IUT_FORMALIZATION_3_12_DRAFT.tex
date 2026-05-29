@@ -842,7 +842,9 @@ under canonical \(j=1\) preservation and the two nonpositive branches, the
 source and target all-label Gaussian predicates are equivalent.  It can also
 consume the decomposed zero/nonzero input directly; this endpoint now ignores
 the zero-label nonnegativity component and proceeds through the nonzero
-factored route.  For nonzero labels, Lean
+factored route.  In the negative \(\Theta\)-branch, Lean proves that this
+zero-label nonnegativity component is impossible, while the source
+environment/nonzero route still gives the final comparison.  For nonzero labels, Lean
 proves the complementary bound: the absolute exponent is at least \(1\), so a
 nonpositive environment degree below the \(\Theta\)-source average bounds every
 nonzero Gaussian component and hence their finite nonzero-label average.  The
