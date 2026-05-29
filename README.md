@@ -129,6 +129,53 @@ Initial milestones:
    geometry and algebra for elliptic curves, valuations, monoids, Galois actions,
    Frobenioid-like categories, and anabelian reconstruction.
 
+## Current Audit
+
+As of 29 May 2026, the strongest Lean result is a conditional Stage 1 corridor,
+not a proof of IUT III, Corollary 3.12 from Mochizuki's published hypotheses.
+The final ordered-real calculation is formalized: from `qSigned <= thetaSigned`,
+`0 < -qSigned`, and `thetaSigned <= C_Theta * (-qSigned)`, Lean proves
+`-1 <= C_Theta`, strictness when `qSigned < thetaSigned`, and equality of the
+signed readings in the boundary case `C_Theta = -1`.
+
+The source-facing route is also formalized at the interface level. A
+nonarchimedean `(Ind3)` entry, factored square/full-label SHE preservation, and
+Hodge-descent packet transport compose to the final weighted-theta comparison.
+With the displayed `C_Theta` bound, this route reaches the signed `C_Theta`
+endpoint and packages the boundary-vs-strict dichotomy:
+
+```lean
+qSigned = thetaSigned ∧ thetaSigned < 0 ∨ (-1 : Real) < C_Theta
+```
+
+This is deliberately not marked as settling the dispute. The experiment report
+keeps `disputeSettledByCurrentStage = false`. The remaining issue is whether the
+records consumed by this route are actually constructible from the IUT I-III
+machinery: initial theta data, Hodge theaters, Frobenioids, log-Kummer
+correspondences, holomorphic hulls, determinants, IPL, SHE, and APT.
+
+The latest source reread gives the following interpretation:
+
+* IUT I supplies initial theta data and Hodge theaters. Our code does not yet
+  construct these objects; it only has typed shadows and source packages.
+* IUT II supplies Hodge-Arakelov theta evaluation, Gaussian Frobenioids,
+  conjugate synchronization, and multiradial/coric behavior. Our code currently
+  formalizes finite-label and Gaussian-degree shadows, not the full theory.
+* IUT III, Step (x), is represented by an `(Ind1)/(Ind2)` equality corridor plus
+  `(Ind3)` upper-semi inequality. Step (xi) is represented by hull/log-volume and
+  SHE/Hodge-descent route records. Step (xii) is represented by a local
+  Frobenioid shift quotient experiment.
+* IUT IV is represented only as conditional ordered-real and elementary
+  estimate algebra downstream of a Corollary-3.12-shaped input.
+* The Scholze-Stix concern is addressed only at the diagnostic level: Lean keeps
+  the `j^2` representative level, sign quotient, averages, ordered real-line
+  transports, and hull/log-volume endpoint as separate types. It proves that a
+  balanced sign-compatible level alone is not enough for the final route.
+
+The tracked paper draft `paper/IUT_FORMALIZATION_3_12_DRAFT.tex` is the concise
+mathematical state document. The old formalization-note markdown files are not
+part of the current workflow.
+
 ## Lean Layout
 
 This is a Lean 4.30.0 project with Mathlib.
@@ -198,3 +245,38 @@ expects repositories to build with commands such as `lake build`, and its longer
 term runtime design supports Lean goal-state and tactic operations through a
 process-adapter backend. This repository should stay conventional as a Lake
 project so it can later be ingested by Apodeixis without custom handling.
+
+## TODO
+
+Near-term engineering:
+
+* Split `Iut/Stage1/IUTStage1Source.lean` into reviewable modules for finite
+  labels/Gaussian data, Step (xi) hull and determinant endpoints, Step (xii)
+  Frobenioid shifts, and IUT IV ordered-real algebra.
+* Keep theorem names stable while refactoring; rebuild after each mechanical
+  move.
+* Add experiment exports for the newest nonarchimedean `C_Theta` endpoint
+  theorems so the report surface tracks the route-level dichotomy directly.
+
+Near-term mathematics:
+
+* Replace `IUTStage1StructuredSHEFactoredSquareFullLabelObligations` with a
+  construction from the Gaussian/Frobenioid material corresponding to IUT II.
+* Replace `NonarchimedeanInd3EntryAlignment` with the log-Kummer
+  upper-semi-compatibility construction of IUT III, Step (x).
+* Replace the current hull/determinant obligation records with formal
+  holomorphic-hull and determinant operations from IUT III, Remark 3.9.5 and
+  Step (xi).
+* Formalize the input prime-strip link `(IPL)`, simultaneous holomorphic
+  expressibility `(SHE)`, and algorithmic parallel transport `(APT)` as
+  constructed properties, not assumed record fields.
+* Continue testing weakened hypotheses to identify exactly which comparison
+  level or preservation property is mathematically necessary.
+
+Longer-term mathematics:
+
+* Build initial theta data from IUT I rather than treating it as source metadata.
+* Formalize enough Hodge theater, Frobenioid, log-shell, prime-strip, and
+  theta-link structure to construct Theorem 3.11 inputs.
+* Connect the conditional IUT IV ordered-real estimates to actual arithmetic
+  height, log-different, log-conductor, and bounded-discrepancy statements.

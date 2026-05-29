@@ -57,6 +57,13 @@ membership is strict, \Lean{} proves \(C_\Theta>-1\).  In the boundary case
 \(p_v^N\)-shift behavior under the actual upper-ray quotient.  This does not
 prove Corollary 3.12 from Mochizuki's published hypotheses; it identifies the
 remaining mathematical construction problem.
+
+After a source audit against \IUT{} I--IV, Mochizuki's 2026 LeanForm report,
+and Scholze--Stix, the status is unchanged in kind but sharper in formulation:
+the final ordered-real implication is formalized, and several collapse-prone
+comparison levels are separated, but the code still assumes the source
+construction of the multiradial/HDD/SHE/IPL data that \IUT{} III assigns to
+Theorem 3.11 and its reorganization.
 \end{abstract}
 
 \section{Aim and Sources}
@@ -171,6 +178,54 @@ therefore separates four comparison levels:
 The final route consumes only the hull/log-volume comparison level.  \Lean{}
 rejects the balanced sign-compatible level as sufficient for the final
 comparison.
+
+\section{Source Audit}
+
+The local sources impose the following constraints on the formalization.
+\IUT{} I constructs the initial \(\Theta\)-data and the
+\(\Theta^{\pm\mathrm{ell}}\mathrm{NF}\)-Hodge theaters.  It is not merely a
+notation layer: the paper's central point is that the Hodge theaters separate
+the additive and multiplicative combinatorial dimensions of a number field.
+\IUT{} II supplies the Hodge--Arakelov theta evaluation, theta values at
+\(\ell\)-torsion points, Gaussian Frobenioids, conjugate synchronization, and
+the multiradial/coric phenomena needed later.  The current code models only
+finite label and Gaussian degree shadows of this material.
+
+\IUT{} III is the direct source for the formal corridor.  Step (x) says that
+procession-normalized log-volumes are invariant under \((\Ind1)\) and
+\((\Ind2)\), while \((\Ind3)\) becomes an upper-semi inequality after applying
+log-volume.  Step (xi) uses the multiradial construction, \(\IPL\), \(\SHE\),
+holomorphic hulls, determinants, and the 1-column log-Kummer correspondence to
+put the \(q\)-pilot log-volume in the upper ray
+\(\R_{\le -|\log(\Theta)|}\).  Step (xii) warns that replacing global
+realified Frobenioids by local Frobenioids loses calibration because local
+objects admit \(p_v^N\)-type endomorphisms.  Remark 3.12.2 further stresses
+that the argument depends on weakened data, distinct \(q/\Theta\) labels,
+upper-semi indeterminacy, and the asymmetry between the 0-column
+\(\Theta\)-pilot and the 1-column \(q\)-pilot.
+
+\IUT{} IV uses the resulting log-volume estimate as input to elementary
+log-volume and Diophantine inequalities.  Our \IUT{} IV code is therefore only
+conditional algebra at present: it records how later estimates consume a
+Corollary 3.12-shaped bound, but it does not prove that bound from the full
+arithmetic constructions.
+
+Mochizuki's 2026 report explicitly recommends Stage 1 as the implication
+\(\IUT{}\,\mathrm{III}\), Theorem 3.11 \(\Rightarrow\) Corollary 3.12, with a
+reorganized intermediate ``3.11.5'' obtained by moving the hull-plus-determinant
+operation before the final simultaneous comparison.  The same report states
+that the current official code is skeletal.  Our formalization is best read as a
+more diagnostic Stage 1 interface: it does not replace Stage 2, because it has
+not constructed Theorem 3.11.
+
+Scholze--Stix argue that, after simplification, the comparison loses the
+\(j^2\)-scaled theta contribution and becomes essentially contentless.  The
+Lean code therefore treats the \(j^2\)-representative level, sign quotient,
+averages, square/full-label preservation, ordered real-line transports, and
+hull/log-volume endpoint as different types.  This confirms that the final
+Corollary 3.12 endpoint cannot be obtained from the balanced sign-compatible
+level alone.  It does not prove that Mochizuki's source constructions supply the
+missing higher-level data.
 
 \section{Formalized Corridor}
 
@@ -361,6 +416,14 @@ collapse-obstruction, upper-ray, and \IUT{} IV algebra flags to
 \texttt{true}.  The flag \texttt{disputeSettledByCurrentStage} remains
 \texttt{false}.
 
+The current code base is large enough to distinguish three meanings of
+``available''.  First, pure ordered-real consequences are proved outright.
+Second, route theorems prove that certain named source-facing records imply the
+desired endpoint.  Third, the records themselves remain obligations when they
+stand for Hodge-theater, Frobenioid, log-Kummer, hull, determinant, or
+multiradial constructions not yet formalized from \IUT{} I--III.  Only the first
+two meanings are currently achieved.
+
 \section{What Is Not Yet Proved}
 
 No formal statement currently proves \IUT{} III, Corollary 3.12 from
@@ -377,6 +440,10 @@ to the code:
   Step (xi), beyond the present ordered-real upper-ray model;
 \item the proof that the typed \SHE{} and Hodge-descent transport obligations
   follow from Mochizuki's source constructions;
+\item the construction of the input prime-strip link \((\IPL)\), simultaneous
+  holomorphic expressibility \((\SHE)\), and algorithmic parallel transport
+  \((\APT)\) properties as actual consequences of Theorem 3.11 rather than
+  records;
 \item the arithmetic-divisor, height, log-different, and log-conductor
   constructions behind the \IUT{} IV Diophantine applications.
 \end{enumerate}
@@ -429,6 +496,22 @@ C_\Theta\ge -1 .
 The project should continue by replacing the present record fields for
 factored \SHE{} preservation and Hodge-descent source-target alignment with
 the corresponding constructions from \IUT{} I--III.
+
+The practical priority order is:
+\begin{enumerate}
+\item factor the large source module into reviewable finite-label, hull,
+  Frobenioid-shift, and \IUT{} IV algebra modules without changing theorem
+  statements;
+\item replace the factored \SHE{} full-label preservation record by a construction
+  from the Gaussian/Frobenioid material of \IUT{} II;
+\item replace the nonarchimedean \((\Ind3)\) alignment record by the
+  log-Kummer upper-semi compatibility construction of \IUT{} III, Step (x);
+\item replace the hull/determinant endpoint records by the actual
+  holomorphic-hull and determinant operations from Remark 3.9.5 and
+  Step (xi);
+\item only then evaluate whether the Stage 1 interface has enough source
+  content to bear on the Mochizuki--Scholze--Stix disagreement.
+\end{enumerate}
 
 \begingroup
 \small
