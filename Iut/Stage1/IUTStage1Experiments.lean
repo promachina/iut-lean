@@ -5152,6 +5152,20 @@ theorem oneColumnLogVolumeCompatibility_source_le_conjugate
       data.conjugateRingStructureLogVolume :=
   data.source_le_conjugate
 
+theorem zeroOneColumn_absorptionProfile
+    (zeroData : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy)
+    (oneData :
+      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.monoAnalyticContainers ∧
+      zeroData.originalRegionLogVolume ∈ zeroData.hullUpperRay ∧
+      zeroData.unitShiftedRegionLogVolume ∈ zeroData.hullUpperRay ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation ∧
+      oneData.sourceRingStructureLogVolume =
+        oneData.conjugateRingStructureLogVolume :=
+  zero_one_column_absorption_profile zeroData oneData
+
 theorem gaussBonnetMetricSign_euler_neg
     (data : IUTStage1GaussBonnetMetricSignShadow) :
     data.eulerCharacteristic < 0 :=

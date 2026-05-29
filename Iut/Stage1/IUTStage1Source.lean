@@ -102,6 +102,24 @@ theorem conjugate_le_source
 
 end IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice
 
+theorem zero_one_column_absorption_profile
+    (zeroData : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy)
+    (oneData :
+      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
+    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.monoAnalyticContainers ∧
+      zeroData.originalRegionLogVolume ∈ zeroData.hullUpperRay ∧
+      zeroData.unitShiftedRegionLogVolume ∈ zeroData.hullUpperRay ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation ∧
+      oneData.sourceRingStructureLogVolume =
+        oneData.conjugateRingStructureLogVolume :=
+  ⟨IUTStage1LogThetaVerticalColumn.thetaPilot_logShellTreatment,
+    zeroData.original_mem_hullUpperRay,
+    zeroData.unitShifted_mem_hullUpperRay,
+    IUTStage1LogThetaVerticalColumn.qPilot_logShellTreatment,
+    oneData.precise_logVolume_eq⟩
+
 /--
 Remark 3.12.3(i) Gauss--Bonnet metric sign shadow.
 
