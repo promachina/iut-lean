@@ -19086,3 +19086,31 @@ This is the finite-sum version of the permutation-symmetry language in IUT II,
 Remark 4.7.4: the multiplicative \(F_\ell\)-symmetry acts on the
 absolute-label side as a genuine permutation symmetry compatible with the
 zero/nonzero separation.
+
+## Gaussian invariance under unit reindexing
+
+### Lean Move
+
+Added:
+
+```text
+gaussianDegree_fullLabel_sum_unitAction_eq
+fullLabelAveragedLogVolume_average_unitAction_eq
+gaussianDegree_subordinate_sum_unitAction_eq
+gaussianDegree_fullLabelSum_unitAction_eq
+gaussianFullLabelAverage_unitAction_eq
+gaussianDegree_subordinateSum_unitAction_eq
+```
+
+### Mathematical Reason
+
+The generic full-label and subordinate-sum invariance theorems are now
+specialized to the Gaussian degree function \(G(a)\).  Lean proves that
+reindexing by any multiplicative unit preserves the total full-label Gaussian
+sum, the full-label Gaussian average, and the subordinate nonzero Gaussian sum.
+
+### Source Check
+
+This is the Gaussian-monoid instance of the \(F_\ell\)-symmetry/permutation
+bookkeeping in IUT II, Remark 4.7.4, while retaining the zero/nonzero split of
+Remark 4.7.3(iii).

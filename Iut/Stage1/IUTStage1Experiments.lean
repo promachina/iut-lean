@@ -1213,6 +1213,49 @@ theorem gaussianFullLabelAverage_eq_subordinateSum_div
         ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) + 1) :=
   evaluation.fullLabelAveragedLogVolume_average_eq_subordinate_sum_div
 
+theorem gaussianDegree_fullLabelSum_unitAction_eq
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) :
+    (Finset.univ.sum fun label : IUTStage1ZModCuspFullLabel l =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label)) =
+      Finset.univ.sum evaluation.gaussianDegree :=
+  evaluation.gaussianDegree_fullLabel_sum_unitAction_eq a
+
+theorem gaussianFullLabelAverage_unitAction_eq
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) :
+    (Finset.univ.sum fun label : IUTStage1ZModCuspFullLabel l =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label)) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) =
+      evaluation.fullLabelAveragedLogVolume.averageLogVolume :=
+  evaluation.fullLabelAveragedLogVolume_average_unitAction_eq a
+
+theorem gaussianDegree_subordinateSum_unitAction_eq
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) :
+    (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+      (fun label : IUTStage1ZModCuspFullLabel l =>
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          label IUTStage1ZModCuspFullLabel.zero)
+      (Classical.decPred _) Finset.univ).sum
+        (fun label : IUTStage1ZModCuspFullLabel l =>
+          evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label)) =
+      (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+        (fun label : IUTStage1ZModCuspFullLabel l =>
+          IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+            label IUTStage1ZModCuspFullLabel.zero)
+        (Classical.decPred _) Finset.univ).sum evaluation.gaussianDegree :=
+  evaluation.gaussianDegree_subordinate_sum_unitAction_eq a
+
 theorem gaussianSubordinateSum_mul_six
     {l : PrimeGeFive}
     (evaluation :
