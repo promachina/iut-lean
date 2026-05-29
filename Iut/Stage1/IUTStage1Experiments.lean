@@ -734,6 +734,33 @@ theorem singletonOneRestriction_not_translationInvariant
         j = 1 -> zmodLabelTranslate l (1 : ZMod l.value) j = 1 :=
   IUTStage1FLLabelTorsorModel.singletonOne_not_closed_under_translation_one l
 
+theorem nonzeroWeightedVolumeSubordinate_zero
+    {l : PrimeGeFive}
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+      (IUTStage1ZModCuspFullLabel.nonzero label)
+      IUTStage1ZModCuspFullLabel.zero :=
+  IUTStage1ZModCuspFullLabel.nonzero_weightedVolumeSubordinate_zero label
+
+theorem zeroWeightedVolumeSubordinate_zero_absurd
+    {l : PrimeGeFive} :
+    ¬ IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+      (l := l) IUTStage1ZModCuspFullLabel.zero
+      IUTStage1ZModCuspFullLabel.zero :=
+  IUTStage1ZModCuspFullLabel.not_zero_weightedVolumeSubordinate_zero
+
+theorem weightedVolumeSubordinate_not_symmetric_at_zero
+    {l : PrimeGeFive}
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    ¬ (IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.nonzero label)
+          IUTStage1ZModCuspFullLabel.zero ->
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (l := l) IUTStage1ZModCuspFullLabel.zero
+          (IUTStage1ZModCuspFullLabel.nonzero label)) :=
+  IUTStage1ZModCuspFullLabel.not_weightedVolumeSubordinate_symmetric_at_nonzero_zero
+    label
+
 theorem absLabelProcessionTop_eq_halfMinusOne
     (l : PrimeGeFive) :
     IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l =

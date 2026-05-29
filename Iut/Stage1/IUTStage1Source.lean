@@ -5795,6 +5795,53 @@ theorem fromCoordinate_neg
   rw [fromCoordinate_nonzero l j hj]
   rw [zmodSignLabelFromCoordinate_neg_eq]
 
+/--
+Stage 1 shadow of the weighted-volume relation `F_l ∋ j ≪ 0` from IUT II,
+Remark 4.7.3(iii).
+
+The relation is intentionally not symmetric: nonzero Gaussian components are
+subordinate to the zero/coric label, while the zero label is not subordinate to
+itself.
+-/
+def WeightedVolumeSubordinate :
+    IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l -> Prop
+  | nonzero _, zero => True
+  | _, _ => False
+
+theorem nonzero_weightedVolumeSubordinate_zero
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    WeightedVolumeSubordinate
+      (IUTStage1ZModCuspFullLabel.nonzero label)
+      IUTStage1ZModCuspFullLabel.zero :=
+  trivial
+
+theorem not_zero_weightedVolumeSubordinate_zero :
+    ¬ WeightedVolumeSubordinate
+      (l := l) IUTStage1ZModCuspFullLabel.zero
+      IUTStage1ZModCuspFullLabel.zero := by
+  intro h
+  exact h
+
+theorem not_zero_weightedVolumeSubordinate_nonzero
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    ¬ WeightedVolumeSubordinate
+      (l := l) IUTStage1ZModCuspFullLabel.zero
+      (IUTStage1ZModCuspFullLabel.nonzero label) := by
+  intro h
+  exact h
+
+theorem not_weightedVolumeSubordinate_symmetric_at_nonzero_zero
+    (label : (zmodSignAction l).SignLabelQuotient) :
+    ¬ (WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.nonzero label)
+          IUTStage1ZModCuspFullLabel.zero ->
+        WeightedVolumeSubordinate
+          (l := l) IUTStage1ZModCuspFullLabel.zero
+          (IUTStage1ZModCuspFullLabel.nonzero label)) := by
+  intro hsym
+  exact not_zero_weightedVolumeSubordinate_nonzero label
+    (hsym (nonzero_weightedVolumeSubordinate_zero label))
+
 def localObject
     {kind : IUTStage1PlaceKind}
     (zeroObject : IUTStage1FiniteLocalLogVolumeObject kind)
