@@ -271,10 +271,11 @@ The code currently covers:
   \(\deg(q)>0\), and equal to it only when \(\deg(q)=0\);
 \item the IUT II Remark 4.7.3 zero/nonzero weighted-volume relation:
   Lean records a relation in which every nonzero full label is subordinate to
-  the zero label, proves that \(0\ll0\) is false, and proves that this relation
-  is not symmetric at the zero label; at coordinate level, every nonzero
-  \(j\in F_\ell\) is subordinate to zero, while the corresponding all-coordinate
-  statement is false because it includes \(j=0\); Lean also converts the
+  the zero label, proves that \(0\ll0\) is false, proves that this relation
+  is not symmetric at the zero label, and proves the exact criterion
+  \(a\ll0\iff a\ne0\) for full labels; at coordinate level this becomes
+  \(j\ll0\iff j\ne0\), so the all-coordinate statement is false precisely
+  because it includes \(j=0\); Lean also converts the
   zero/nonzero cusp-label compatibility object to a uniform \(F_\ell\) average
   and proves that a diagonal constant log-volume distribution averages to that
   same constant;

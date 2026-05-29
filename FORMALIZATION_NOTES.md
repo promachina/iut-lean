@@ -18802,3 +18802,32 @@ This is still only the finite label skeleton, but it matches the convention
 \(|F_\ell|=\{0\}\cup F_\ell^\times/\{\pm1\}\) and the IUT II emphasis that the
 zero label is not to be treated as just another nonzero Gaussian component in
 weighted-volume bookkeeping.
+
+## Exact weighted-volume subordinate criterion
+
+### Lean Move
+
+Added:
+
+```text
+weightedVolumeSubordinate_zero_iff_ne_zero
+fromCoordinate_weightedVolumeSubordinate_zero_iff
+weightedVolumeSubordinate_zero_iff_nonzeroFullLabel
+coordinateWeightedVolumeSubordinate_zero_iff_nonzero
+```
+
+### Mathematical Reason
+
+The subordinate relation used to model IUT II, Remark 4.7.3(iii), is now exact:
+for a full absolute label \(a\), Lean proves \(a\ll0\) if and only if
+\(a\ne0\).  Pulling this criterion back along \(F_\ell\to |F_\ell|\), Lean
+proves \(j\ll0\) if and only if \(j\ne0\).  Thus the failure of the universal
+coordinate statement is not an artifact of the definition; it is exactly the
+presence of the zero coordinate.
+
+### Source Check
+
+This matches the passage in IUT II, Remark 4.7.3(iii), where nonzero
+\(j\in F_\ell\) are subordinate to \(0\in |F_\ell|\) for weighted-volume
+computations, while allowing \(0\ll0\) is declared incompatible with those
+computations.

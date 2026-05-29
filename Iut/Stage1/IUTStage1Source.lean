@@ -6108,6 +6108,12 @@ theorem not_weightedVolumeSubordinate_symmetric_at_nonzero_zero
   exact not_zero_weightedVolumeSubordinate_nonzero label
     (hsym (nonzero_weightedVolumeSubordinate_zero label))
 
+theorem weightedVolumeSubordinate_zero_iff_ne_zero
+    (label : IUTStage1ZModCuspFullLabel l) :
+    WeightedVolumeSubordinate label IUTStage1ZModCuspFullLabel.zero ↔
+      label ≠ IUTStage1ZModCuspFullLabel.zero := by
+  cases label <;> simp [WeightedVolumeSubordinate]
+
 theorem fromCoordinate_nonzero_weightedVolumeSubordinate_zero
     (l : PrimeGeFive) (j : ZMod l.value) (hj : j ≠ 0) :
     WeightedVolumeSubordinate
@@ -6115,6 +6121,14 @@ theorem fromCoordinate_nonzero_weightedVolumeSubordinate_zero
   rw [fromCoordinate_nonzero l j hj]
   exact nonzero_weightedVolumeSubordinate_zero
     (zmodSignLabelFromCoordinate l j hj)
+
+theorem fromCoordinate_weightedVolumeSubordinate_zero_iff
+    (l : PrimeGeFive) (j : ZMod l.value) :
+    WeightedVolumeSubordinate
+        (fromCoordinate l j) IUTStage1ZModCuspFullLabel.zero ↔
+      j ≠ 0 := by
+  rw [weightedVolumeSubordinate_zero_iff_ne_zero]
+  exact fromCoordinate_ne_zero_iff j
 
 theorem not_forall_coordinate_weightedVolumeSubordinate_zero
     (l : PrimeGeFive) :

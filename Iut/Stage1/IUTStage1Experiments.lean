@@ -945,6 +945,23 @@ theorem not_allCoordinatesWeightedVolumeSubordinate_zero
   IUTStage1ZModCuspFullLabel.not_forall_coordinate_weightedVolumeSubordinate_zero
     l
 
+theorem weightedVolumeSubordinate_zero_iff_nonzeroFullLabel
+    {l : PrimeGeFive} (label : IUTStage1ZModCuspFullLabel l) :
+    IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+        label IUTStage1ZModCuspFullLabel.zero ↔
+      label ≠ IUTStage1ZModCuspFullLabel.zero :=
+  IUTStage1ZModCuspFullLabel.weightedVolumeSubordinate_zero_iff_ne_zero
+    label
+
+theorem coordinateWeightedVolumeSubordinate_zero_iff_nonzero
+    (l : PrimeGeFive) (j : ZMod l.value) :
+    IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+        IUTStage1ZModCuspFullLabel.zero ↔
+      j ≠ 0 :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate_weightedVolumeSubordinate_zero_iff
+    l j
+
 theorem constantCuspLabelLogVolume_toLabelAveraged_eq_constant
     {l : PrimeGeFive} (c : Real) :
     (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
