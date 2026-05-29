@@ -5282,6 +5282,20 @@ theorem tensorPowerLogVolume_eq_positiveTensorPower_mul_thetaHullLogVolume
   rw [data.thetaHullLogVolume_eq_determinantLogVolume,
     data.determinant.tensor_power_eq]
 
+theorem qPilotLogVolume_le_determinantLogVolume
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.qPilotLogVolume <= data.determinant.determinantLogVolume := by
+  rw [← data.thetaHullLogVolume_eq_determinantLogVolume]
+  exact data.qPilotLogVolume_le_thetaHullLogVolume
+
+theorem qPilotLogVolume_le_tensorPowerLogVolume_div
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.qPilotLogVolume <=
+      data.determinant.tensorPowerLogVolume /
+        (data.determinant.positiveTensorPower : Real) := by
+  rw [← data.thetaHullLogVolume_eq_tensorPowerLogVolume_div]
+  exact data.qPilotLogVolume_le_thetaHullLogVolume
+
 theorem determinantLogVolume_endpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
     1 < data.determinant.rank ∧
@@ -5289,12 +5303,18 @@ theorem determinantLogVolume_endpoint
       data.determinant.tensorPowerLogVolume =
         (data.determinant.positiveTensorPower : Real) *
           data.determinant.determinantLogVolume ∧
-      data.thetaHullLogVolume = data.determinant.determinantLogVolume := by
+      data.thetaHullLogVolume = data.determinant.determinantLogVolume ∧
+      data.qPilotLogVolume <= data.determinant.determinantLogVolume ∧
+      data.qPilotLogVolume <=
+        data.determinant.tensorPowerLogVolume /
+          (data.determinant.positiveTensorPower : Real) := by
   exact
     ⟨data.determinant.rank_gt_one,
       data.determinant.tensor_power_pos,
       data.determinant.tensor_power_eq,
-      data.thetaHullLogVolume_eq_determinantLogVolume⟩
+      data.thetaHullLogVolume_eq_determinantLogVolume,
+      data.qPilotLogVolume_le_determinantLogVolume,
+      data.qPilotLogVolume_le_tensorPowerLogVolume_div⟩
 
 def toHullDetPilotUpperRayLogVolume
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
