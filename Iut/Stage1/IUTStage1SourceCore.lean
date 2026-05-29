@@ -1733,6 +1733,24 @@ theorem quotientMap_preimage_collapsed :
   · intro hx
     exact quotientMap_eq_collapsed_of_mem hx
 
+theorem quotientMap_eq_collapsed_iff {x : E} :
+    quotientMap S x = collapsed ↔ x ∈ S := by
+  constructor
+  · intro hmap
+    have hpre :
+        x ∈ { x : E | quotientMap S x = collapsed } :=
+      hmap
+    rw [quotientMap_preimage_collapsed] at hpre
+    exact hpre
+  · intro hx
+    exact quotientMap_eq_collapsed_of_mem hx
+
+theorem quotientMap_ne_collapsed_of_not_mem
+    {x : E} (hx : x ∉ S) :
+    quotientMap S x ≠ collapsed := by
+  intro hmap
+  exact hx (quotientMap_eq_collapsed_iff.mp hmap)
+
 theorem quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
     {A : Set E} (hne : A.Nonempty) (hsubset : A ⊆ S) :
     quotientMap S '' A = {collapsed} := by

@@ -699,7 +699,10 @@ The code currently covers:
   collapse to both fixed q-readings; Lean also combines this local shift
   calculation with the upper-semi quotient audit: outside the collapsed subset,
   quotient equality of two shifted local readings is equivalent to equality of
-  their integer exponents, assuming nonzero local step;
+  their integer exponents, assuming nonzero local step; in the boundary branch,
+  if the quotient collapses only the fixed q-reading, a nonzero local shift
+  remains distinct from the quotient images of both the q-reading and the
+  determinant reading;
 \item the Remark 3.12.1(iii) arithmetic fact
   \(\mathbb{Q}_{>0}\cap\mathbb{Z}^{\times}=\{1\}\), formalized as the exact
   characterization \(0<q\iff q=1\) for rational integer units \(q=\pm1\);
