@@ -1684,6 +1684,93 @@ theorem logVolume_hull_le_closed_of_subset
 end IUTStage1HolomorphicHullLogVolumeShadow
 
 /--
+Remark 3.9.5(v) upper-semi set quotient.
+
+For a subset `S ⊆ E`, the paper considers the quotient `E^S` that identifies
+all elements of `S` and leaves the complement unchanged.  This is the abstract
+set-theoretic skeleton used to explain upper semi-compatibility: after passing
+to the quotient, any nonempty subset of `S` has the same image.
+-/
+inductive IUTStage1UpperSemiSetQuotient (E : Type u) (S : Set E) where
+  | collapsed : IUTStage1UpperSemiSetQuotient E S
+  | outside (x : E) (hx : x ∉ S) : IUTStage1UpperSemiSetQuotient E S
+
+namespace IUTStage1UpperSemiSetQuotient
+
+variable {E : Type u} {S : Set E}
+
+noncomputable def quotientMap
+    (S : Set E) (x : E) : IUTStage1UpperSemiSetQuotient E S := by
+  classical
+  exact if hx : x ∈ S then collapsed else outside x hx
+
+theorem quotientMap_eq_collapsed_of_mem
+    {x : E} (hx : x ∈ S) :
+    quotientMap S x = collapsed := by
+  simp [quotientMap, hx]
+
+theorem quotientMap_eq_outside_of_not_mem
+    {x : E} (hx : x ∉ S) :
+    quotientMap S x = outside x hx := by
+  simp [quotientMap, hx]
+
+theorem quotientMap_eq_of_mem
+    {x y : E} (hx : x ∈ S) (hy : y ∈ S) :
+    quotientMap S x = quotientMap S y := by
+  rw [quotientMap_eq_collapsed_of_mem hx,
+    quotientMap_eq_collapsed_of_mem hy]
+
+theorem quotientMap_preimage_collapsed :
+    { x : E | quotientMap S x = collapsed } = S := by
+  ext x
+  constructor
+  · intro hmap
+    change quotientMap S x = collapsed at hmap
+    by_cases hx : x ∈ S
+    · exact hx
+    · rw [quotientMap_eq_outside_of_not_mem hx] at hmap
+      cases hmap
+  · intro hx
+    exact quotientMap_eq_collapsed_of_mem hx
+
+theorem quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+    {A : Set E} (hne : A.Nonempty) (hsubset : A ⊆ S) :
+    quotientMap S '' A = {collapsed} := by
+  ext q
+  constructor
+  · rintro ⟨x, hxA, rfl⟩
+    simp [quotientMap_eq_collapsed_of_mem (hsubset hxA)]
+  · intro hq
+    rcases hne with ⟨x, hxA⟩
+    rw [Set.mem_singleton_iff] at hq
+    subst q
+    exact
+      ⟨x, hxA, quotientMap_eq_collapsed_of_mem (hsubset hxA)⟩
+
+theorem quotientMap_images_eq_of_nonempty_subsets
+    {A B : Set E}
+    (hneA : A.Nonempty) (hsubA : A ⊆ S)
+    (hneB : B.Nonempty) (hsubB : B ⊆ S) :
+    quotientMap S '' A = quotientMap S '' B := by
+  rw [quotientMap_image_eq_singleton_collapsed_of_nonempty_subset hneA hsubA,
+    quotientMap_image_eq_singleton_collapsed_of_nonempty_subset hneB hsubB]
+
+theorem quotientMap_eq_iff_of_not_mem
+    {x y : E} (hx : x ∉ S) (hy : y ∉ S) :
+    quotientMap S x = quotientMap S y ↔ x = y := by
+  constructor
+  · intro hmap
+    rw [quotientMap_eq_outside_of_not_mem hx,
+      quotientMap_eq_outside_of_not_mem hy] at hmap
+    cases hmap
+    rfl
+  · intro hxy
+    subst y
+    rfl
+
+end IUTStage1UpperSemiSetQuotient
+
+/--
 Finite log-volume shadow of the Step (xi-d) determinant passage.
 
 The paper passes from localizations of arithmetic vector bundles of rank `> 1` to
