@@ -5957,6 +5957,24 @@ namespace GaussianMonoidDegreeEvaluation
 
 variable {l : PrimeGeFive}
 
+noncomputable def unitEnvironment
+    (l : PrimeGeFive) :
+    GaussianMonoidDegreeEvaluation l :=
+  { environmentDegree := 1,
+    gaussianDegree := fun label =>
+      thetaExponentOnAbsLabel (l := l) label,
+    gaussianDegree_eq_eval := by
+      intro label
+      ring }
+
+theorem unitEnvironment_environmentDegree :
+    (unitEnvironment l).environmentDegree = 1 :=
+  rfl
+
+theorem unitEnvironment_environmentDegree_ne_zero :
+    (unitEnvironment l).environmentDegree ≠ 0 := by
+  norm_num [unitEnvironment]
+
 def toAbsThetaPilotDegreeProfile
     (evaluation : GaussianMonoidDegreeEvaluation l) :
     AbsThetaPilotDegreeProfile l :=
@@ -6486,6 +6504,33 @@ theorem unitAffine_pointwise_gaussian_preserving_iff_environment_zero_or_fullLab
       rcases h with hzero | hmap
       · exact False.elim (henv hzero)
       · exact hmap
+
+theorem unitAffine_all_nonzero_environment_pointwise_gaussian_preserving_iff_fullLabelMapPreserving
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (∀ evaluation : GaussianMonoidDegreeEvaluation l,
+      evaluation.environmentDegree ≠ 0 ->
+        ∀ j : ZMod l.value,
+          evaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.fromCoordinate l
+                (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+            evaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ↔
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t) := by
+  constructor
+  · intro hpres
+    have hunit :=
+      hpres (unitEnvironment l)
+        (unitEnvironment_environmentDegree_ne_zero (l := l))
+    exact
+      ((unitEnvironment l).unitAffine_pointwise_gaussian_preserving_iff_fullLabelMapPreserving
+        a t (unitEnvironment_environmentDegree_ne_zero (l := l))).mp hunit
+  · intro hmap evaluation henv
+    exact
+      (evaluation.unitAffine_pointwise_gaussian_preserving_iff_fullLabelMapPreserving
+        a t henv).mpr hmap
 
 theorem coordinateAveragedLogVolume_average_translation_eq
     (evaluation : GaussianMonoidDegreeEvaluation l)

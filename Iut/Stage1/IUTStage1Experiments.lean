@@ -23,6 +23,7 @@ open FLZModCuspLabelThetaHodgeDescentPacketTransportAudit
 open FLZModCuspLabelThetaCuspClassContainerAudit
 open IUTStage1ZModCuspFullLabel
 open IUTStage1ZModSquareWeightProfile
+open IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation
 open IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction
 
 /-- First pass: no real-line/log-volume alignment has been supplied. -/
@@ -1487,6 +1488,25 @@ theorem unitAffine_pointwiseGaussianPreserving_iff_environmentZero_or_fullLabelM
           (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
             l a t) :=
   evaluation.unitAffine_pointwise_gaussian_preserving_iff_environment_zero_or_fullLabelMapPreserving
+    a t
+
+theorem unitAffine_allNonzeroEnvironment_pointwiseGaussianPreserving_iff_fullLabelMap
+    {l : PrimeGeFive}
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (∀ evaluation :
+        IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l,
+      evaluation.environmentDegree ≠ 0 ->
+        ∀ j : ZMod l.value,
+          evaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.fromCoordinate l
+                (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+            evaluation.gaussianDegree
+              (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ↔
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t) :=
+  unitAffine_all_nonzero_environment_pointwise_gaussian_preserving_iff_fullLabelMapPreserving
     a t
 
 theorem coordinateSquarePreserving_unitAffine_iff
