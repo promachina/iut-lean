@@ -1508,6 +1508,31 @@ theorem theorem110_errorTerm_le_corollary22_errorTerm
         20 * data.etaPrm := by
         ring
 
+theorem errorTerm_replacement_endpoint
+    (data : IUTStage1IUTIVCorollary22C1ErrorTermShadow) :
+    0 <= (data.l.value : Real) ∧
+      0 <= data.dStarMod ∧
+      0 <= data.delta ∧
+      0 <= data.sqrtH ∧
+      0 <= data.logTwoDeltaH ∧
+      data.dStarMod <= data.delta ∧
+      (data.l.value : Real) <=
+        10 * data.delta * data.sqrtH * data.logTwoDeltaH ∧
+      data.dStarMod * (data.l.value : Real) <=
+        data.delta * (10 * data.delta * data.sqrtH * data.logTwoDeltaH) ∧
+      20 * (data.dStarMod * (data.l.value : Real) + data.etaPrm) <=
+        200 * data.delta ^ 2 * data.sqrtH * data.logTwoDeltaH +
+          20 * data.etaPrm :=
+  ⟨data.l_real_nonneg,
+    data.dStarMod_nonneg,
+    data.delta_nonneg,
+    data.sqrtH_nonneg,
+    data.logTwoDeltaH_nonneg,
+    data.dStarMod_le_delta,
+    data.l_upper_bound,
+    data.dStarMod_mul_l_le_delta_window,
+    data.theorem110_errorTerm_le_corollary22_errorTerm⟩
+
 end IUTStage1IUTIVCorollary22C1ErrorTermShadow
 
 /--

@@ -5480,6 +5480,23 @@ theorem iutIVCorollary22C1_errorTerm_bound
         20 * data.etaPrm :=
   data.theorem110_errorTerm_le_corollary22_errorTerm
 
+theorem iutIVCorollary22C1_errorTermEndpoint
+    (data : IUTStage1IUTIVCorollary22C1ErrorTermShadow) :
+    0 <= (data.l.value : Real) ∧
+      0 <= data.dStarMod ∧
+      0 <= data.delta ∧
+      0 <= data.sqrtH ∧
+      0 <= data.logTwoDeltaH ∧
+      data.dStarMod <= data.delta ∧
+      (data.l.value : Real) <=
+        10 * data.delta * data.sqrtH * data.logTwoDeltaH ∧
+      data.dStarMod * (data.l.value : Real) <=
+        data.delta * (10 * data.delta * data.sqrtH * data.logTwoDeltaH) ∧
+      20 * (data.dStarMod * (data.l.value : Real) + data.etaPrm) <=
+        200 * data.delta ^ 2 * data.sqrtH * data.logTwoDeltaH +
+          20 * data.etaPrm :=
+  data.errorTerm_replacement_endpoint
+
 theorem iutIVCorollary22Theorem110ToC2_first_bound
     (data : IUTStage1IUTIVCorollary22Theorem110ToC2FirstBoundShadow) :
     (1 / 6 : Real) * data.logQ <=
