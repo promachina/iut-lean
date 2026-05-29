@@ -2694,6 +2694,28 @@ theorem calibratedLogVolume_eq_shifted_iff_shiftTerm_eq_zero
 
 end IUTStage1GlobalFrobenioidLogVolumeCalibration
 
+theorem remark3122_ringStructureDimensionSplit_endpoint
+    {kind : IUTStage1PlaceKind} {j : Nat}
+    {source target :
+      IUTStage1RealizedTensorPacketProductLogVolume kind j}
+    (logShellData : IUTStage1ValuationFiberLogShellDirectSum kind)
+    (global :
+      IUTStage1GlobalFrobenioidLogVolumeCalibration)
+    (transfer : IUTStage1TensorPacketCoricTransfer source target) :
+    logShellData.directSumLogVolume =
+        Finset.univ.sum logShellData.logShellLogVolume ∧
+      global.calibratedLogVolume = global.localData.unshiftedLogVolume ∧
+      (global.calibratedLogVolume = global.localData.shiftedLogVolume ↔
+        (global.localData.localExponent : Real) *
+          global.localData.localPrimeStepLogVolume = 0) ∧
+      target.product.productLogVolume = source.product.productLogVolume ∧
+      source.theater.side ≠ target.theater.side :=
+  ⟨logShellData.direct_sum_eq,
+    global.calibratedLogVolume_eq_unshifted,
+    global.calibratedLogVolume_eq_shifted_iff_shiftTerm_eq_zero,
+    transfer.preserves_productLogVolume,
+    transfer.source_history_ne_target_history⟩
+
 /-
 Remark 3.12.1(iii) positive rational unit rigidity.
 
