@@ -812,7 +812,9 @@ that average.  Lean also packages the resulting separation: for negative
 bound still holds whenever the Gaussian environment degree is bounded by that
 same average.  With the remaining endpoint hypotheses, this same negative
 \(\Theta\)-branch still yields the final \(q_{\mathrm{signed}}\le
-\Theta_{\mathrm{signed}}\) route through the nonzero-bound endpoint.  More
+\Theta_{\mathrm{signed}}\) route through the nonzero-bound endpoint; the
+source-supplied nonzero/environment formulation gives the same conclusion and
+rejects the source all-label bound.  More
 generally, Lean decomposes the all-label Gaussian bound
 exactly into nonnegativity of the upper bound at the zero label and the
 corresponding nonzero-label bound.  The corresponding identity-coordinate final
@@ -878,7 +880,8 @@ the negative branch: the core label contributes \(0\), so a negative upper bound
 is impossible; Lean now packages this as an exact equivalence with
 nonnegativity of the upper bound and as a separation theorem from the
 nonzero-label bound under the environment comparison; the separated
-nonzero-label branch also feeds the final \(q\)-to-\(\Theta\) theorem.  On the nonzero-label part, the formal
+nonzero-label branch also feeds the final \(q\)-to-\(\Theta\) theorem, both
+from target-side and source-side environment data.  On the nonzero-label part, the formal
 obstruction disappears:
 exponent \(\ge1\) gives the expected bound from the environment comparison.  The
 square-weighted final route now accepts this nonzero-only bound, since the core
