@@ -1153,6 +1153,11 @@ theorem corollary312StatementEndpoint_cTheta_ge_neg_one
     (-1 : Real) <= data.cTheta :=
   data.cTheta_ge_neg_one
 
+theorem corollary312StatementEndpoint_rejects_cTheta_lt_neg_one
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    ¬ data.cTheta < (-1 : Real) :=
+  data.not_cTheta_lt_neg_one
+
 theorem corollary312StatementEndpoint_q_not_subject
     (data : IUTStage1Corollary312StatementEndpoint) :
     data.pilotBoundary.qStatus =
@@ -1249,6 +1254,11 @@ theorem qPilotTwoComputationCThetaEndpoint_fixed_lower_bound
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
     (-1 : Real) <= data.cTheta :=
   data.cTheta_ge_neg_one_from_fixed_qPilot
+
+theorem qPilotTwoComputationCThetaEndpoint_rejects_fixed_cTheta_lt_neg_one
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
+    ¬ data.cTheta < (-1 : Real) :=
+  data.not_cTheta_lt_neg_one_from_fixed_qPilot
 
 theorem qPilotTwoComputationCThetaEndpoint_fixed_le_cTheta_absLogQ
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :

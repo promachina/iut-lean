@@ -2111,6 +2111,11 @@ theorem cTheta_ge_neg_one
     (-1 : Real) <= data.cTheta :=
   data.toCThetaLowerBoundShadow.cTheta_ge_neg_one
 
+theorem not_cTheta_lt_neg_one
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    ¬ data.cTheta < (-1 : Real) :=
+  not_lt_of_ge data.cTheta_ge_neg_one
+
 end IUTStage1Corollary312StatementEndpoint
 
 /--
@@ -2291,6 +2296,11 @@ theorem cTheta_ge_neg_one_from_fixed_qPilot
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
     (-1 : Real) <= data.cTheta :=
   data.toFixedValueCThetaLowerBoundShadow.cTheta_ge_neg_one
+
+theorem not_cTheta_lt_neg_one_from_fixed_qPilot
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
+    ¬ data.cTheta < (-1 : Real) :=
+  not_lt_of_ge data.cTheta_ge_neg_one_from_fixed_qPilot
 
 theorem qInputLogVolume_le_cTheta_absLogQ
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
