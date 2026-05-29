@@ -5710,6 +5710,46 @@ theorem thetaFinite_upperSemiQuotient_localShift_eq_iff_exponent_eq_of_step_nonz
       exponent₁ exponent₂ localPrimeStepLogVolume hStep
   exact hquot.trans hshift
 
+theorem thetaFinite_upperSemiQuotient_collapses_distinct_localShifts_of_mem
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (collapsedRegion : Set Real)
+    (exponent₁ exponent₂ : Int)
+    (localPrimeStepLogVolume : Real)
+    (hStep : localPrimeStepLogVolume ≠ 0)
+    (hExponent : exponent₁ ≠ exponent₂)
+    (hmem₁ :
+      (data.toLocalFrobenioidLogVolumeAmbiguity
+        exponent₁ localPrimeStepLogVolume).shiftedLogVolume ∈ collapsedRegion)
+    (hmem₂ :
+      (data.toLocalFrobenioidLogVolumeAmbiguity
+        exponent₂ localPrimeStepLogVolume).shiftedLogVolume ∈ collapsedRegion) :
+    let local₁ :=
+      data.toLocalFrobenioidLogVolumeAmbiguity
+        exponent₁ localPrimeStepLogVolume;
+    let local₂ :=
+      data.toLocalFrobenioidLogVolumeAmbiguity
+        exponent₂ localPrimeStepLogVolume;
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        collapsedRegion local₁.shiftedLogVolume =
+      IUTStage1UpperSemiSetQuotient.quotientMap
+        collapsedRegion local₂.shiftedLogVolume ∧
+      local₁.shiftedLogVolume ≠ local₂.shiftedLogVolume := by
+  intro local₁ local₂
+  have hmap :
+      IUTStage1UpperSemiSetQuotient.quotientMap
+          collapsedRegion local₁.shiftedLogVolume =
+        IUTStage1UpperSemiSetQuotient.quotientMap
+          collapsedRegion local₂.shiftedLogVolume :=
+    IUTStage1UpperSemiSetQuotient.quotientMap_eq_of_mem
+      (by simpa [local₁] using hmem₁)
+      (by simpa [local₂] using hmem₂)
+  have hshift_iff :=
+    data.thetaFinite_localFrobenioidShift_eq_iff_exponent_eq_of_step_nonzero
+      exponent₁ exponent₂ localPrimeStepLogVolume hStep
+  exact
+    ⟨hmap, fun hshift =>
+      hExponent (hshift_iff.mp hshift)⟩
+
 theorem ofZModCuspLabelLogVolumeCompatibilities_q_mem_upperRay
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :

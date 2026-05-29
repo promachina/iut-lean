@@ -702,7 +702,10 @@ The code currently covers:
   their integer exponents, assuming nonzero local step; in the boundary branch,
   if the quotient collapses only the fixed q-reading, a nonzero local shift
   remains distinct from the quotient images of both the q-reading and the
-  determinant reading;
+  determinant reading; conversely, Lean proves the diagnostic collapse case:
+  if two shifted local readings with unequal exponents and nonzero local step
+  are both placed inside the same collapsed subset, their quotient images agree
+  while the underlying shifted log-volumes remain unequal;
 \item the Remark 3.12.1(iii) arithmetic fact
   \(\mathbb{Q}_{>0}\cap\mathbb{Z}^{\times}=\{1\}\), formalized as the exact
   characterization \(0<q\iff q=1\) for rational integer units \(q=\pm1\);
