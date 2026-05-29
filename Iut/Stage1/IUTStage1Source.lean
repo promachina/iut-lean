@@ -7602,6 +7602,88 @@ theorem determinantBoundary_actualUpperRaySeparationThreshold_or_strict
       ⟨hboundary.1, hboundary.2.1, hboundary.2.2, hthreshold⟩
   · exact Or.inr hstrict
 
+theorem determinantBoundary_actualUpperRayIntExponentCollapse_or_strict
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (localExponent : Int)
+    (localPrimeStepLogVolume : Real)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hExponent : localExponent <= 0)
+    (hStep : 0 < localPrimeStepLogVolume) :
+    let twoComputation := data.toQPilotTwoComputationLogVolume;
+    let collapsedRegion : Set Real :=
+      data.toHullDetPilotUpperRayLogVolume.upperRay;
+    let global :=
+      data.toGlobalFrobenioidLogVolumeCalibration
+        localExponent localPrimeStepLogVolume;
+    (cTheta = (-1 : Real) ∧
+        twoComputation.inputPrimeStripLogVolume =
+          data.determinant.determinantLogVolume ∧
+        twoComputation.outputHullLogVolume =
+          data.determinant.determinantLogVolume ∧
+        IUTStage1UpperSemiSetQuotient.quotientMap
+            collapsedRegion global.localData.shiftedLogVolume =
+          IUTStage1UpperSemiSetQuotient.quotientMap
+            collapsedRegion data.qPilotLogVolume) ∨
+      (-1 : Real) < cTheta := by
+  intro twoComputation collapsedRegion global
+  rcases data.standardQLambdaCTheta_determinantBoundary_or_strict
+      q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ with
+    hboundary | hstrict
+  · left
+    have hcollapse :=
+      data.boundaryCTheta_actualUpperRayQuotient_eq_q_of_intExponent_nonpos_step_pos
+        localExponent localPrimeStepLogVolume q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ hboundary.1 hExponent hStep
+    exact
+      ⟨hboundary.1, hboundary.2.1, hboundary.2.2, hcollapse⟩
+  · exact Or.inr hstrict
+
+theorem determinantBoundary_actualUpperRayIntExponentSeparation_or_strict
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (localExponent : Int)
+    (localPrimeStepLogVolume : Real)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hExponent : 0 < localExponent)
+    (hStep : 0 < localPrimeStepLogVolume) :
+    let twoComputation := data.toQPilotTwoComputationLogVolume;
+    let collapsedRegion : Set Real :=
+      data.toHullDetPilotUpperRayLogVolume.upperRay;
+    let global :=
+      data.toGlobalFrobenioidLogVolumeCalibration
+        localExponent localPrimeStepLogVolume;
+    (cTheta = (-1 : Real) ∧
+        twoComputation.inputPrimeStripLogVolume =
+          data.determinant.determinantLogVolume ∧
+        twoComputation.outputHullLogVolume =
+          data.determinant.determinantLogVolume ∧
+        IUTStage1UpperSemiSetQuotient.quotientMap
+            collapsedRegion global.localData.shiftedLogVolume ≠
+          IUTStage1UpperSemiSetQuotient.quotientMap
+            collapsedRegion data.qPilotLogVolume) ∨
+      (-1 : Real) < cTheta := by
+  intro twoComputation collapsedRegion global
+  rcases data.standardQLambdaCTheta_determinantBoundary_or_strict
+      q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ with
+    hboundary | hstrict
+  · left
+    have hseparate :=
+      data.boundaryCTheta_actualUpperRayQuotient_ne_q_of_intExponent_pos_step_pos
+        localExponent localPrimeStepLogVolume q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ hboundary.1 hExponent hStep
+    exact
+      ⟨hboundary.1, hboundary.2.1, hboundary.2.2, hseparate⟩
+  · exact Or.inr hstrict
+
 theorem determinantTensorBoundary_separatesLocalShift_or_strict
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (localExponent : Int)
