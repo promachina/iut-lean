@@ -2920,6 +2920,14 @@ theorem h_le_epsilon
     data.h <= data.epsilon := by
   linarith [data.neg_h_le_neg_two_h_plus_epsilon]
 
+theorem ftoy_upper_ray_endpoint
+    (data : IUTStage1Remark3122IntertwiningUpperRayBound) :
+    data.qAssignment ∈ data.thetaUpperRay ∧
+      (-data.h : Real) <= -2 * data.h + data.epsilon ∧
+        data.h <= data.epsilon :=
+  ⟨data.qAssignment_mem_thetaUpperRay, data.neg_h_le_neg_two_h_plus_epsilon,
+    data.h_le_epsilon⟩
+
 end IUTStage1Remark3122IntertwiningUpperRayBound
 
 /-- The two vertical columns compared in IUT III, Fig. 3.9. -/

@@ -5081,6 +5081,13 @@ theorem remark3122Intertwining_h_le_epsilon
     data.h <= data.epsilon :=
   data.h_le_epsilon
 
+theorem remark3122Intertwining_ftoy_upper_ray_endpoint
+    (data : IUTStage1Remark3122IntertwiningUpperRayBound) :
+    data.qAssignment ∈ data.thetaUpperRay ∧
+      (-data.h : Real) <= -2 * data.h + data.epsilon ∧
+        data.h <= data.epsilon :=
+  data.ftoy_upper_ray_endpoint
+
 theorem logThetaColumn_both_roles_essential
     (column : IUTStage1LogThetaVerticalColumn) :
     column.requiresFrobeniusLikeRole = true ∧

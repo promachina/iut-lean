@@ -511,7 +511,10 @@ The code currently covers:
   \Rightarrow\Theta\text{-itw}/\mathrm{indets}\) as formal projection;
 \item the Remark 3.12.2 toy calculation: forgotten concrete assignments
   \(-h\) and \(-2h\) are incompatible for \(h>0\), while
-  \(-h\in\R_{\le-2h+\epsilon}\) implies \(h\le\epsilon\);
+  \(-h\in\R_{\le-2h+\epsilon}\) implies \(h\le\epsilon\); Lean now packages
+  this as the full \((\mathrm{ftoy})\) endpoint:
+  membership in the upper ray, the displayed inequality
+  \(-h\le-2h+\epsilon\), and the bound \(h\le\epsilon\);
 \item the Fig. 3.9 column table: both \(\bullet_0\) and \(\circ\) roles are
   required in both columns, while q-pilot multiradiality is absent;
 \item the Remark 3.12.2(v) absorption distinction: zero-column unit
@@ -762,7 +765,8 @@ real-valued derivation.
 The distinct-label flag records the logical intertwining display in
 Remark 3.12.2, keeps the weakened abstract prime-strip condition fixed, and
 rejects collapse of the q-native and \(\Theta\)-native labels.
-The toy-model flag records the resulting upper-ray arithmetic \(h\le\epsilon\).
+The toy-model flag records the resulting \((\mathrm{ftoy})\) upper-ray endpoint
+and arithmetic bound \(h\le\epsilon\).
 The column-table flag records the Fig. 3.9 theta/q similarity-difference split.
 The absorption flag records the zero-column upper-bound versus one-column
 equality distinction.
