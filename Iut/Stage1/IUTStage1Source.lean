@@ -3,7 +3,7 @@ Copyright (c) 2026 IUT Lean formalization contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
-import Iut.Stage1.IUTStage1SourceCore
+import Iut.Stage1.IUTStage1Remark312Absorption
 
 /-!
 Continuation module for the Stage 1 IUT source-facing corridor.
@@ -20,105 +20,6 @@ open RealLineCopy
 open scoped BigOperators
 
 universe u v w x
-
-/--
-Remark 3.12.2(v) zero-column hull absorption shadow.
-
-For the 0-column, regions in mono-analytic log-shells are related to unit-group
-data only up to local `O^×`-multiple indeterminacy.  The source text says that
-Step (xi) introduces holomorphic hulls to absorb this indeterminacy.  This record
-keeps the ordered log-volume skeleton: both the original and unit-shifted
-regions lie below the same hull boundary.
--/
-structure IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy where
-  originalRegionLogVolume : Real
-  unitShiftedRegionLogVolume : Real
-  hullLogVolume : Real
-  original_le_hull :
-    originalRegionLogVolume <= hullLogVolume
-  unit_shifted_le_hull :
-    unitShiftedRegionLogVolume <= hullLogVolume
-
-namespace IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy
-
-def hullUpperRay
-    (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) : Set Real :=
-  { value | value <= data.hullLogVolume }
-
-theorem original_mem_hullUpperRay
-    (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) :
-    data.originalRegionLogVolume ∈ data.hullUpperRay :=
-  data.original_le_hull
-
-theorem unitShifted_mem_hullUpperRay
-    (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) :
-    data.unitShiftedRegionLogVolume ∈ data.hullUpperRay :=
-  data.unit_shifted_le_hull
-
-theorem both_regions_absorbed_by_hull
-    (data : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy) :
-    data.originalRegionLogVolume ∈ data.hullUpperRay ∧
-      data.unitShiftedRegionLogVolume ∈ data.hullUpperRay :=
-  ⟨data.original_mem_hullUpperRay, data.unitShifted_mem_hullUpperRay⟩
-
-end IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy
-
-/--
-Remark 3.12.2(v) one-column log-volume compatibility shadow.
-
-For the 1-column, the arithmetic holomorphic structure is held fixed and the
-choice among logarithmic conjugates is absorbed by passing to log-volumes via
-log-link compatibility.  The numerical content retained here is equality, not
-merely an upper bound.
--/
-structure IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice where
-  sourceRingStructureLogVolume : Real
-  conjugateRingStructureLogVolume : Real
-  log_volume_compatible :
-    sourceRingStructureLogVolume = conjugateRingStructureLogVolume
-
-namespace IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice
-
-theorem precise_logVolume_eq
-    (data :
-      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
-    data.sourceRingStructureLogVolume =
-      data.conjugateRingStructureLogVolume :=
-  data.log_volume_compatible
-
-theorem source_le_conjugate
-    (data :
-      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
-    data.sourceRingStructureLogVolume <=
-      data.conjugateRingStructureLogVolume := by
-  rw [data.precise_logVolume_eq]
-
-theorem conjugate_le_source
-    (data :
-      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
-    data.conjugateRingStructureLogVolume <=
-      data.sourceRingStructureLogVolume := by
-  rw [data.precise_logVolume_eq]
-
-end IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice
-
-theorem zero_one_column_absorption_profile
-    (zeroData : IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy)
-    (oneData :
-      IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice) :
-    IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment =
-        IUTStage1LogShellColumnTreatment.monoAnalyticContainers ∧
-      zeroData.originalRegionLogVolume ∈ zeroData.hullUpperRay ∧
-      zeroData.unitShiftedRegionLogVolume ∈ zeroData.hullUpperRay ∧
-      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
-        IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation ∧
-      oneData.sourceRingStructureLogVolume =
-        oneData.conjugateRingStructureLogVolume :=
-  ⟨IUTStage1LogThetaVerticalColumn.thetaPilot_logShellTreatment,
-    zeroData.original_mem_hullUpperRay,
-    zeroData.unitShifted_mem_hullUpperRay,
-    IUTStage1LogThetaVerticalColumn.qPilot_logShellTreatment,
-    oneData.precise_logVolume_eq⟩
 
 /--
 Remark 3.12.3(i) Gauss--Bonnet metric sign shadow.
@@ -5352,6 +5253,76 @@ theorem thetaFiniteLogVolumeEndpoint
       endpoint.thetaExtended_ne_plusInfinity,
       endpoint.thetaRealLogVolume_eq_hull,
       endpoint.qPilotLogVolume_le_thetaRealLogVolume⟩
+
+def toZeroColumnHullAbsorption
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (originalRegionLogVolume unitShiftedRegionLogVolume : Real)
+    (original_le_thetaHull :
+      originalRegionLogVolume <= data.thetaHullLogVolume)
+    (unit_shifted_le_thetaHull :
+      unitShiftedRegionLogVolume <= data.thetaHullLogVolume) :
+    IUTStage1ZeroColumnHullAbsorbsUnitIndeterminacy :=
+  { originalRegionLogVolume := originalRegionLogVolume,
+    unitShiftedRegionLogVolume := unitShiftedRegionLogVolume,
+    hullLogVolume := data.thetaHullLogVolume,
+    original_le_hull := original_le_thetaHull,
+    unit_shifted_le_hull := unit_shifted_le_thetaHull }
+
+def toOneColumnLogVolumeCompatibility
+    (_data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (sourceRingStructureLogVolume conjugateRingStructureLogVolume : Real)
+    (log_volume_compatible :
+      sourceRingStructureLogVolume = conjugateRingStructureLogVolume) :
+    IUTStage1OneColumnLogVolumeCompatibilityAbsorbsConjugateChoice :=
+  { sourceRingStructureLogVolume := sourceRingStructureLogVolume,
+    conjugateRingStructureLogVolume := conjugateRingStructureLogVolume,
+    log_volume_compatible := log_volume_compatible }
+
+theorem thetaFinite_zeroOneColumnAbsorptionProfile
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (originalRegionLogVolume unitShiftedRegionLogVolume : Real)
+    (original_le_thetaHull :
+      originalRegionLogVolume <= data.thetaHullLogVolume)
+    (unit_shifted_le_thetaHull :
+      unitShiftedRegionLogVolume <= data.thetaHullLogVolume)
+    (sourceRingStructureLogVolume conjugateRingStructureLogVolume : Real)
+    (log_volume_compatible :
+      sourceRingStructureLogVolume = conjugateRingStructureLogVolume) :
+    let finite := data.toThetaFiniteLogVolumeEndpoint;
+    let zeroData :=
+      data.toZeroColumnHullAbsorption
+        originalRegionLogVolume unitShiftedRegionLogVolume
+        original_le_thetaHull unit_shifted_le_thetaHull;
+    let oneData :=
+      data.toOneColumnLogVolumeCompatibility
+        sourceRingStructureLogVolume conjugateRingStructureLogVolume
+        log_volume_compatible;
+    zeroData.hullLogVolume = finite.thetaRealLogVolume ∧
+      zeroData.originalRegionLogVolume ∈ finite.upperRayData.upperRay ∧
+      zeroData.unitShiftedRegionLogVolume ∈ finite.upperRayData.upperRay ∧
+      oneData.sourceRingStructureLogVolume =
+        oneData.conjugateRingStructureLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.monoAnalyticContainers ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment ≠
+        IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment := by
+  intro finite zeroData oneData
+  exact
+    ⟨by
+      rw [finite.thetaRealLogVolume_eq_hull]
+      rfl,
+    by
+      simpa [IUTStage1HullDetPilotUpperRayLogVolume.upperRay,
+        toHullDetPilotUpperRayLogVolume] using original_le_thetaHull,
+    by
+      simpa [IUTStage1HullDetPilotUpperRayLogVolume.upperRay,
+        toHullDetPilotUpperRayLogVolume] using unit_shifted_le_thetaHull,
+    oneData.precise_logVolume_eq,
+    IUTStage1LogThetaVerticalColumn.thetaPilot_logShellTreatment,
+    IUTStage1LogThetaVerticalColumn.qPilot_logShellTreatment,
+    IUTStage1LogThetaVerticalColumn.logShellTreatment_distinguishes_columns⟩
 
 def toThetaPilotTensorPowerLogVolume
     (data : IUTStage1StepXToHullUpperRayLogVolume label)

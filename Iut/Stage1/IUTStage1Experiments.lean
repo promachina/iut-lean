@@ -6085,6 +6085,43 @@ theorem zeroOneColumn_absorptionProfile
         oneData.conjugateRingStructureLogVolume :=
   zero_one_column_absorption_profile zeroData oneData
 
+theorem thetaFinite_zeroOneColumnAbsorptionProfile
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (originalRegionLogVolume unitShiftedRegionLogVolume : Real)
+    (original_le_thetaHull :
+      originalRegionLogVolume <= data.thetaHullLogVolume)
+    (unit_shifted_le_thetaHull :
+      unitShiftedRegionLogVolume <= data.thetaHullLogVolume)
+    (sourceRingStructureLogVolume conjugateRingStructureLogVolume : Real)
+    (log_volume_compatible :
+      sourceRingStructureLogVolume = conjugateRingStructureLogVolume) :
+    let finite := data.toThetaFiniteLogVolumeEndpoint;
+    let zeroData :=
+      data.toZeroColumnHullAbsorption
+        originalRegionLogVolume unitShiftedRegionLogVolume
+        original_le_thetaHull unit_shifted_le_thetaHull;
+    let oneData :=
+      data.toOneColumnLogVolumeCompatibility
+        sourceRingStructureLogVolume conjugateRingStructureLogVolume
+        log_volume_compatible;
+    zeroData.hullLogVolume = finite.thetaRealLogVolume ∧
+      zeroData.originalRegionLogVolume ∈ finite.upperRayData.upperRay ∧
+      zeroData.unitShiftedRegionLogVolume ∈ finite.upperRayData.upperRay ∧
+      oneData.sourceRingStructureLogVolume =
+        oneData.conjugateRingStructureLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.monoAnalyticContainers ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment =
+        IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation ∧
+      IUTStage1LogThetaVerticalColumn.zeroThetaPilot.logShellTreatment ≠
+        IUTStage1LogThetaVerticalColumn.oneQPilot.logShellTreatment :=
+  data.thetaFinite_zeroOneColumnAbsorptionProfile
+    originalRegionLogVolume unitShiftedRegionLogVolume
+    original_le_thetaHull unit_shifted_le_thetaHull
+    sourceRingStructureLogVolume conjugateRingStructureLogVolume
+    log_volume_compatible
+
 theorem gaussBonnetMetricSign_euler_neg
     (data : IUTStage1GaussBonnetMetricSignShadow) :
     data.eulerCharacteristic < 0 :=

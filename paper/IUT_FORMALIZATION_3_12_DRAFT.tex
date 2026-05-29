@@ -119,6 +119,7 @@ This separation is the main correctness guard in the current code.
 
 The relevant implementation is in
 \texttt{Iut/Stage1/IUTStage1SourceCore.lean},
+\texttt{Iut/Stage1/IUTStage1Remark312Absorption.lean},
 \texttt{Iut/Stage1/IUTStage1Source.lean}, and
 \texttt{Iut/Stage1/IUTStage1Experiments.lean}.
 The code currently covers:
@@ -605,7 +606,9 @@ The code currently covers:
 \item the Remark 3.12.2(v) absorption distinction: zero-column unit
   indeterminacy is absorbed by a hull upper ray, while one-column logarithmic
   conjugacy is absorbed as log-volume equality; Lean now packages these two
-  outcomes together with the corresponding Fig. 3.9 log-shell treatments;
+  outcomes together with the corresponding Fig. 3.9 log-shell treatments, and
+  instantiates the zero-column hull at the finite \(\Theta\)-boundary supplied
+  by the Step (x) to Step (xi) corridor;
 \item the Remark 3.12.3(i) metric analogy:
   \(\operatorname{vol}(S)>0\) and \(\chi_S=-\operatorname{vol}(S)\) imply
   \(\chi_S<0\), hence \(\chi_S\le0\), together with the stored
