@@ -8455,6 +8455,23 @@ theorem absLabelProcessionEquivFullLabel_apply
     absLabelProcessionEquivFullLabel label = absLabelFromProcession l label :=
   rfl
 
+noncomputable instance zmodCuspFullLabelFintype :
+    Fintype (IUTStage1ZModCuspFullLabel l) :=
+  Fintype.ofEquiv
+    (IUTStage1ProcessionContainer (absLabelProcessionTop l))
+    (absLabelProcessionEquivFullLabel (l := l))
+
+theorem fullLabel_card_eq_procession :
+    Fintype.card (IUTStage1ZModCuspFullLabel l) =
+      Fintype.card
+        (IUTStage1ProcessionContainer (absLabelProcessionTop l)) :=
+  Fintype.card_congr (absLabelProcessionEquivFullLabel (l := l)).symm
+
+theorem fullLabel_card_eq_half_plus_one (l : PrimeGeFive) :
+    Fintype.card (IUTStage1ZModCuspFullLabel l) = (l.value + 1) / 2 := by
+  rw [fullLabel_card_eq_procession,
+    absLabelProcession_card_eq_half_plus_one]
+
 theorem gaussianDegree_fromProcession
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (label : IUTStage1ProcessionContainer (absLabelProcessionTop l)) :

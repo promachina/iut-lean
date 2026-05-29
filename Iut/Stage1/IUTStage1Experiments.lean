@@ -849,6 +849,12 @@ theorem absLabelProcessionEquivFullLabel_apply
   IUTStage1ZModSquareWeightProfile.absLabelProcessionEquivFullLabel_apply
     label
 
+theorem fullLabelCard_eq_halfPlusOne
+    (l : PrimeGeFive) :
+    Fintype.card (IUTStage1ZModCuspFullLabel l) =
+      (l.value + 1) / 2 :=
+  IUTStage1ZModSquareWeightProfile.fullLabel_card_eq_half_plus_one l
+
 theorem gaussianDegree_fromAbsLabelProcession
     {l : PrimeGeFive}
     (evaluation :
