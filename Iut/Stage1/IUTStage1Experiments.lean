@@ -1254,6 +1254,23 @@ theorem gaussianCoordinateAverage_translation_eq
       evaluation.coordinateAveragedLogVolume.averageLogVolume :=
   evaluation.coordinateAveragedLogVolume_average_translation_eq t
 
+theorem gaussianCoordinateAverage_translationInvariant_but_notFullLabelDescent
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    {t : ZMod l.value} (ht : t ≠ 0) :
+    ((Finset.univ.sum fun j : ZMod l.value =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t j))) / (l.value : Real)) =
+      evaluation.coordinateAveragedLogVolume.averageLogVolume ∧
+    ¬ ∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+      ∀ j : ZMod l.value,
+        T (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t j) :=
+  evaluation.coordinateAverage_translationInvariant_but_not_fullLabelDescend ht
+
 theorem gaussianFullLabelAverage_eq_subordinateSum_div
     {l : PrimeGeFive}
     (evaluation :

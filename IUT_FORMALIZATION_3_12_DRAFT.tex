@@ -309,7 +309,9 @@ The code currently covers:
   descends to full absolute labels if and only if \(t=0\).
   Lean separately proves that raw \(F_\ell\)-coordinate sums are invariant
   under additive translation; this is only finite-permutation invariance and
-  does not supply descent to \(|F_\ell|\).
+  does not supply descent to \(|F_\ell|\).  For the Gaussian coordinate
+  average, Lean packages this as a diagnostic: every nonzero additive
+  translation preserves the raw coordinate average but fails full-label descent.
   Lean also converts the
   zero/nonzero cusp-label compatibility object to a uniform \(F_\ell\) average
   and proves that a diagonal constant log-volume distribution averages to that

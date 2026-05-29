@@ -19210,3 +19210,36 @@ This matches the bookkeeping tension around IUT II, Remarks 4.7.3--4.7.4:
 ordinary \(F_\ell\)-coordinate permutation invariance is weaker than the
 multiplicative symmetry on absolute labels that is used for the Gaussian
 monoid side.
+
+## Gaussian raw-invariance/non-descent diagnostic
+
+### Lean Move
+
+Added:
+
+```text
+coordinateAverage_translationInvariant_but_not_fullLabelDescend
+gaussianCoordinateAverage_translationInvariant_but_notFullLabelDescent
+```
+
+### Mathematical Reason
+
+For any nonzero additive translation \(t\), Lean now proves both facts in one
+conjunction:
+
+```text
+translated raw Gaussian coordinate average = original raw coordinate average
+and
+no full-label map descends this translation
+```
+
+This is the current finite-model version of a central guardrail for the
+Corollary 3.12 dispute: an equality of raw averaged coordinate data is not
+strong enough to justify an identification at the full-label/Hodge-theater
+boundary.
+
+### Source Check
+
+The source comparison remains IUT II, Remarks 4.7.3--4.7.4: additive
+\(F_\ell^\pm\)-coordinate motion and multiplicative \(F_\ell\)-symmetry on
+absolute labels must be tracked as different structures.
