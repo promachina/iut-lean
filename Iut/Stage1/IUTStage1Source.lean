@@ -8751,6 +8751,16 @@ theorem gaussianDegree_procession_average_mul_six
             evaluation.environmentDegree := by
       field_simp [hden]
 
+theorem gaussianDegree_fullLabel_average_mul_six
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    (((Finset.univ.sum evaluation.gaussianDegree) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real)) * 6 =
+      (absLabelProcessionTop l : Real) *
+        (2 * (absLabelProcessionTop l : Real) + 1) *
+          evaluation.environmentDegree) := by
+  rw [fullLabel_average_eq_procession_average]
+  exact gaussianDegree_procession_average_mul_six evaluation
+
 theorem generatorLogVolume_sum_mul_six
     (action : LGPSplittingMonoidTensorPacketAction l) :
     (Finset.univ.sum action.generatorLogVolume) * 6 =
