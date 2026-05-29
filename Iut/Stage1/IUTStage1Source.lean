@@ -8979,6 +8979,52 @@ theorem packet_normalizedLogVolume_le_normalizedActedLogVolume_of_environment_no
 
 end LGPSplittingMonoidTensorPacketAction
 
+namespace GaussianMonoidDegreeEvaluation
+
+variable {l : PrimeGeFive}
+
+open LGPSplittingMonoidTensorPacketAction
+
+noncomputable def fullLabelAveragedLogVolume
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    IUTStage1LabelAveragedProcessionLogVolume
+      (IUTStage1ZModCuspFullLabel l) :=
+  { normalizedLogVolume := evaluation.gaussianDegree,
+    averageLogVolume :=
+      (Finset.univ.sum evaluation.gaussianDegree) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real),
+    average_eq := rfl }
+
+theorem fullLabelAveragedLogVolume_average_eq_coeff
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume =
+      ((absLabelProcessionTop l : Real) *
+        (2 * (absLabelProcessionTop l : Real) + 1) / 6) *
+          evaluation.environmentDegree :=
+  LGPSplittingMonoidTensorPacketAction.gaussianDegree_fullLabel_average_eq_coeff
+    evaluation
+
+theorem fullLabelAveragedLogVolume_le_environment_of_nonpositive
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv_nonpos : evaluation.environmentDegree <= 0) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume <=
+      evaluation.environmentDegree :=
+  gaussianDegree_fullLabel_average_le_environment_of_nonpositive
+    evaluation henv_nonpos
+
+theorem fullLabelAveragedLogVolume_le_of_environment_le_bound
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    {c : Real}
+    (henv_nonpos : evaluation.environmentDegree <= 0)
+    (henv_le : evaluation.environmentDegree <= c) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume <= c :=
+  le_trans
+    (evaluation.fullLabelAveragedLogVolume_le_environment_of_nonpositive
+      henv_nonpos)
+    henv_le
+
+end GaussianMonoidDegreeEvaluation
+
 noncomputable def balancedFullLabelWeightedSummand
     (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
     (label : IUTStage1ZModCuspFullLabel l) : Real :=

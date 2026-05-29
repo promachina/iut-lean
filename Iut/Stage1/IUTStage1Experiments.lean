@@ -964,6 +964,29 @@ theorem gaussianDegree_fullLabelAverage_le_of_environment_le_bound
   gaussianDegree_fullLabel_average_le_of_environment_le_bound
     evaluation henv_nonpos henv_le
 
+theorem gaussianFullLabelAveragedLogVolume_eq_coeff
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume =
+      ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) *
+        (2 *
+          (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) +
+            1) / 6) *
+          evaluation.environmentDegree :=
+  evaluation.fullLabelAveragedLogVolume_average_eq_coeff
+
+theorem gaussianFullLabelAveragedLogVolume_le_of_environment_le_bound
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    {c : Real}
+    (henv_nonpos : evaluation.environmentDegree <= 0)
+    (henv_le : evaluation.environmentDegree <= c) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume <= c :=
+  evaluation.fullLabelAveragedLogVolume_le_of_environment_le_bound
+    henv_nonpos henv_le
+
 /-- Scale-level status for transport-explicit real-line cancellation. -/
 structure Ind3TransportScaleExperimentReport where
   sourceScaleMatched : Bool
