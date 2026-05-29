@@ -24601,6 +24601,36 @@ theorem qSigned_le_thetaSigned_via_gaussianFactoredSHENonzeroEnvironment
         target_environment_nonpositive environment_le_thetaAverage
         (zmodSignLabelFromCoordinate l (coordinateEquiv j) hj))
 
+theorem qSigned_le_thetaSigned_via_gaussianFactoredSHEIdentityNonzeroEnvironment
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (environmentDegree_preserved :
+      targetEvaluation.environmentDegree =
+        sourceEvaluation.environmentDegree)
+    (source_profile_eq : profile = sourceProfile)
+    (source_log_volume_eq :
+      part.theta_source.compatible_average.cuspLogVolume audited =
+        sourceEvaluation.toCuspLabelLogVolumeCompatibility)
+    (target_environment_nonpositive :
+      targetEvaluation.environmentDegree <= 0)
+    (environment_le_thetaAverage :
+      targetEvaluation.environmentDegree <=
+        part.theta_source.thetaSourceAverage audited) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part.qSigned_le_thetaSigned_via_gaussianFactoredSHENonzeroEnvironment
+    (bundle := bundle)
+    profile audited (Equiv.refl (ZMod l.value)) sourceProfile targetProfile
+    sourceEvaluation targetEvaluation
+    IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_refl
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_refl
+    environmentDegree_preserved source_profile_eq source_log_volume_eq
+    target_environment_nonpositive environment_le_thetaAverage
+
 theorem targetSigned_le_thetaSourceAverage_via_squareWeightedAverage
     (part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l)
     (profile : IUTStage1ZModSquareWeightProfile l)

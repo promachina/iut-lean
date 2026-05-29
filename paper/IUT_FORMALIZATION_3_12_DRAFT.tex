@@ -837,7 +837,11 @@ square-weighted final route now accepts this nonzero-only bound, since the core
 summand has weight \(0\).  This gives a conditional source-level q-to-\(\Theta\)
 route from degree-level Gaussian data, coordinate-square preservation,
 full-label-map preservation, equal source/target environment degree, and
-environment degree bounded above by the \(\Theta\)-source average.  The
+environment degree bounded above by the \(\Theta\)-source average.  In the
+identity-coordinate case, Lean now supplies the coordinate-square and
+full-label-map preservation branches internally, so this route only asks for
+equal Gaussian environment degree and the nonpositive environment comparison.
+The
 zero/nonzero average split is now exact: the nonzero carrier has cardinality
 \(\ell-1=2j_{\max}\), the signed carrier is a twofold cover of the nonzero
 absolute half-range, the zero Gaussian degree is \(0\), and the all-\(F_\ell\)
