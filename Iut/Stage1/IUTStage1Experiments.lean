@@ -956,6 +956,13 @@ theorem stepXToHullUpperRay_q_mem
       data.toHullDetPilotUpperRayLogVolume.upperRay :=
   data.toUpperRay_q_mem
 
+theorem stepXToHullUpperRay_twoComputation_input_le_theta
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume <=
+      data.toQPilotTwoComputationLogVolume.upperRayData.thetaHullLogVolume :=
+  data.twoComputation_input_le_theta
+
 theorem valuationFiberLogShellDirectSum_eq_sum
     {kind : IUTStage1PlaceKind}
     (directSum : IUTStage1ValuationFiberLogShellDirectSum kind) :

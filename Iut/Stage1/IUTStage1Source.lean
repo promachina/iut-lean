@@ -6294,6 +6294,34 @@ theorem toUpperRay_q_mem
       data.toHullDetPilotUpperRayLogVolume.upperRay :=
   data.toHullDetPilotUpperRayLogVolume.qPilot_mem_upperRay
 
+def toQPilotTwoComputationLogVolume
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    IUTStage1QPilotTwoComputationLogVolume :=
+  { upperRayData := data.toHullDetPilotUpperRayLogVolume,
+    inputPrimeStripLogVolume :=
+      data.corridor.beforeIndeterminacy.averageLogVolume,
+    outputHullLogVolume := data.qPilotLogVolume,
+    input_eq_q := data.q_eq_beforeAverage.symm,
+    output_eq_q := rfl }
+
+theorem twoComputation_input_eq_beforeAverage
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume =
+      data.corridor.beforeIndeterminacy.averageLogVolume :=
+  rfl
+
+theorem twoComputation_output_eq_qPilotLogVolume
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.toQPilotTwoComputationLogVolume.outputHullLogVolume =
+      data.qPilotLogVolume :=
+  rfl
+
+theorem twoComputation_input_le_theta
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume <=
+      data.toQPilotTwoComputationLogVolume.upperRayData.thetaHullLogVolume :=
+  data.toQPilotTwoComputationLogVolume.input_le_thetaHullLogVolume
+
 end IUTStage1StepXToHullUpperRayLogVolume
 
 namespace IUTStage1WeightedLabelAveragedProcessionLogVolume
