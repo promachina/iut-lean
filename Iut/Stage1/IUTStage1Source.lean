@@ -6372,6 +6372,30 @@ theorem standardQLambdaCTheta_strict_of_qPilot_mem_tensorPowerUpperRay
   simpa [toThetaFiniteLogVolumeEndpoint, toHullDetPilotUpperRayLogVolume]
     using hstrict
 
+theorem standardQLambdaCTheta_not_qPilot_mem_tensorPowerUpperRay_of_boundary
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (tensorPower : Nat)
+    (tensor_power_ge_two : 2 ≤ tensorPower)
+    (theta_neg : data.thetaHullLogVolume < 0)
+    (hC : cTheta = (-1 : Real)) :
+    data.toThetaFiniteLogVolumeEndpoint.upperRayData.qPilotLogVolume ∉
+      (data.toThetaPilotTensorPowerLogVolume
+        tensorPower tensor_power_ge_two).tensorPowerUpperRay := by
+  intro hmem
+  have hstrict :
+      (-1 : Real) < cTheta :=
+    data.standardQLambdaCTheta_strict_of_qPilot_mem_tensorPowerUpperRay
+      q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
+      tensorPower tensor_power_ge_two theta_neg hmem
+  rw [hC] at hstrict
+  norm_num at hstrict
+
 theorem standardQLambdaCTheta_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (q_pilot_positive :
