@@ -1186,6 +1186,15 @@ theorem gaussianCoordinateAveragedLogVolume_eq_coeff
           evaluation.environmentDegree :=
   evaluation.coordinateAveragedLogVolume_average_eq_coeff
 
+theorem gaussianCoordinateAverage_eq_fullLabelMassRescale
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume =
+      ((l.value + 1 : Nat) : Real) / (l.value : Real) *
+        evaluation.fullLabelAveragedLogVolume.averageLogVolume :=
+  evaluation.coordinateAveragedLogVolume_eq_fullLabel_mass_rescale
+
 theorem gaussianCoordinateAverage_lt_fullLabelAverage_of_negative
     {l : PrimeGeFive}
     (evaluation :

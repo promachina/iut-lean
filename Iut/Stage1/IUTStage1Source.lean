@@ -9830,6 +9830,21 @@ theorem coordinateAveragedLogVolume_average_eq_coeff
   field_simp [hden]
   ring
 
+theorem coordinateAveragedLogVolume_eq_fullLabel_mass_rescale
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume =
+      ((l.value + 1 : Nat) : Real) / (l.value : Real) *
+        evaluation.fullLabelAveragedLogVolume.averageLogVolume := by
+  rw [evaluation.coordinateAveragedLogVolume_average_eq_coeff,
+    evaluation.fullLabelAveragedLogVolume_average_eq_coeff]
+  rw [primeValue_eq_two_absLabelProcessionTop_add_one]
+  have hden :
+      (2 * (absLabelProcessionTop l : Real) + 1) ≠ 0 := by
+    positivity
+  norm_num
+  field_simp [hden]
+  ring
+
 theorem fullLabelAverageCoefficient_lt_coordinateAverageCoefficient :
     (absLabelProcessionTop l : Real) *
         (2 * (absLabelProcessionTop l : Real) + 1) / 6 <
