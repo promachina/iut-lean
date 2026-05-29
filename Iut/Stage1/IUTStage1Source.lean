@@ -8459,6 +8459,75 @@ theorem coordinateAveragedLogVolume_eq_nonzeroCarrierAverage_iff
     rw [hnonzero]
     ring
 
+noncomputable def coordinateNonzeroMassFactor (l : PrimeGeFive) : Real :=
+  ((l.value - 1 : Nat) : Real) / (l.value : Real)
+
+theorem coordinateNonzeroMassFactor_pos :
+    0 < coordinateNonzeroMassFactor l := by
+  unfold coordinateNonzeroMassFactor
+  have hl_pos : 0 < (l.value : Real) := by
+    exact_mod_cast (lt_of_lt_of_le (by decide : 0 < 5) l.ge_five)
+  have hlm_pos : 0 < ((l.value - 1 : Nat) : Real) := by
+    have hpos : 0 < l.value - 1 := by
+      have hge : 5 ≤ l.value := l.ge_five
+      omega
+    exact_mod_cast hpos
+  positivity
+
+theorem coordinateAveragedLogVolume_lt_zero_of_environment_negative
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv_neg : evaluation.environmentDegree < 0) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume < 0 := by
+  rw [evaluation.coordinateAveragedLogVolume_eq_nonzero_mass_rescale]
+  have hfactor_pos : 0 < coordinateNonzeroMassFactor l :=
+    coordinateNonzeroMassFactor_pos (l := l)
+  have havg_neg :=
+    evaluation.nonzeroCarrierAveragedLogVolume_lt_zero_of_environment_negative
+      henv_neg
+  change
+    coordinateNonzeroMassFactor l *
+      evaluation.nonzeroCarrierAveragedLogVolume.averageLogVolume < 0
+  exact mul_neg_of_pos_of_neg hfactor_pos havg_neg
+
+theorem coordinateAveragedLogVolume_gt_zero_of_environment_positive
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv_pos : 0 < evaluation.environmentDegree) :
+    0 < evaluation.coordinateAveragedLogVolume.averageLogVolume := by
+  rw [evaluation.coordinateAveragedLogVolume_eq_nonzero_mass_rescale]
+  have hfactor_pos : 0 < coordinateNonzeroMassFactor l :=
+    coordinateNonzeroMassFactor_pos (l := l)
+  have havg_pos :=
+    evaluation.nonzeroCarrierAveragedLogVolume_gt_zero_of_environment_positive
+      henv_pos
+  change
+    0 <
+      coordinateNonzeroMassFactor l *
+        evaluation.nonzeroCarrierAveragedLogVolume.averageLogVolume
+  exact mul_pos hfactor_pos havg_pos
+
+theorem coordinateAveragedLogVolume_eq_zero_iff
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume = 0 ↔
+      evaluation.environmentDegree = 0 := by
+  constructor
+  · intro h
+    by_cases hneg : evaluation.environmentDegree < 0
+    · have hlt :=
+        evaluation.coordinateAveragedLogVolume_lt_zero_of_environment_negative
+          hneg
+      linarith
+    · by_cases hpos : 0 < evaluation.environmentDegree
+      · have hgt :=
+          evaluation.coordinateAveragedLogVolume_gt_zero_of_environment_positive
+            hpos
+        linarith
+      · linarith
+  · intro henv_zero
+    rw [evaluation.coordinateAveragedLogVolume_eq_nonzero_mass_rescale]
+    rw [evaluation.nonzeroCarrierAveragedLogVolume_eq_zero_of_environment_zero
+      henv_zero]
+    ring
+
 theorem forall_coordinateFullLabel_le_implies_bound_nonnegative
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (coordinateEquiv : ZMod l.value ≃ ZMod l.value)

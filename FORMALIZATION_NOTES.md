@@ -18596,12 +18596,15 @@ coordinateAveragedLogVolume_lt_nonzeroCarrierAverage_of_positive
 gaussianCoordinateAverage_strictly_below_nonzeroAverage_of_positive
 coordinateAveragedLogVolume_eq_nonzeroCarrierAverage_iff
 gaussianCoordinateAverage_eq_nonzeroAverage_iff
+coordinateAveragedLogVolume_eq_zero_iff
+gaussianCoordinateAverage_eq_zero_iff
 ```
 
 The negative branch was already present; the positive branch now completes the
 sign-dependent comparison between the all-\(F_\ell\) coordinate average and the
 auxiliary nonzero-coordinate average.  Lean also proves that equality between
-these two averages is equivalent to \(\deg(q)=0\).
+these two averages is equivalent to \(\deg(q)=0\), and that the all-coordinate
+average itself vanishes exactly in this same degenerate case.
 
 ### Mathematical Reason
 
@@ -18612,7 +18615,8 @@ average is \((\ell-1)/\ell\) times the nonzero average, it is strictly smaller i
 the positive branch.  In the negative branch the same rescaling makes the
 all-coordinate average strictly larger than the nonzero average.  The only way
 the denominator change can be invisible is the degenerate case
-\(\deg(q)=0\).
+\(\deg(q)=0\).  Positivity of the rescaling factor also gives the zero criterion
+for the all-coordinate average.
 
 ### Source Check
 
