@@ -6883,6 +6883,60 @@ theorem boundaryCTheta_upperSemiSingletonQuotient_separates_nonzeroLocalShift
       intro hmap
       exact hshift_ne_collapsed (hmap.trans hdet_collapsed)⟩
 
+theorem boundaryCTheta_upperSemiQuotient_collapses_nonzeroLocalShift_of_mem
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (collapsedRegion : Set Real)
+    (localExponent : Int)
+    (localPrimeStepLogVolume : Real)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real))
+    (hExponent : localExponent ≠ 0)
+    (hStep : localPrimeStepLogVolume ≠ 0)
+    (hq_mem : data.qPilotLogVolume ∈ collapsedRegion)
+    (hshift_mem :
+      (data.toGlobalFrobenioidLogVolumeCalibration
+        localExponent localPrimeStepLogVolume).localData.shiftedLogVolume ∈
+          collapsedRegion) :
+    let global :=
+      data.toGlobalFrobenioidLogVolumeCalibration
+        localExponent localPrimeStepLogVolume;
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        collapsedRegion global.localData.shiftedLogVolume =
+      IUTStage1UpperSemiSetQuotient.quotientMap
+        collapsedRegion data.qPilotLogVolume ∧
+      IUTStage1UpperSemiSetQuotient.quotientMap
+        collapsedRegion global.localData.shiftedLogVolume =
+        IUTStage1UpperSemiSetQuotient.quotientMap
+          collapsedRegion data.determinant.determinantLogVolume ∧
+      global.localData.shiftedLogVolume ≠ data.qPilotLogVolume ∧
+      global.localData.shiftedLogVolume ≠
+        data.determinant.determinantLogVolume := by
+  intro global
+  have hsep :=
+    data.boundaryCTheta_globalFrobenioidCalibration_separates_localShift
+      localExponent localPrimeStepLogVolume q_pilot_positive cTheta
+      thetaHull_le_cTheta_absLogQ hC hExponent hStep
+  have hdet_eq_q :
+      data.determinant.determinantLogVolume = data.qPilotLogVolume :=
+    hsep.2.1.symm.trans hsep.1
+  have hshift_mem_global :
+      global.localData.shiftedLogVolume ∈ collapsedRegion := by
+    simpa [global] using hshift_mem
+  have hdet_mem :
+      data.determinant.determinantLogVolume ∈ collapsedRegion := by
+    simpa [hdet_eq_q] using hq_mem
+  exact
+    ⟨IUTStage1UpperSemiSetQuotient.quotientMap_eq_of_mem
+      hshift_mem_global hq_mem,
+    IUTStage1UpperSemiSetQuotient.quotientMap_eq_of_mem
+      hshift_mem_global hdet_mem,
+    hsep.2.2.2.1, hsep.2.2.2.2⟩
+
 theorem determinantTensorBoundary_separatesLocalShift_or_strict
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (localExponent : Int)
