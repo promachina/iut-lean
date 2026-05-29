@@ -633,7 +633,8 @@ The code currently covers:
   \(\epsilon_E=(60\delta)^2h^{-1/2}\log(2\delta h)\), represented with
   \(h^{1/2}\) and \(\log(2\delta h)\) as explicit real parameters; Lean proves
   positivity and \(\epsilon_E\ge5\delta h^{-1/2}\) from
-  \(\delta\ge2\), \(h^{1/2}>0\), and \(\log(2\delta h)\ge1\);
+  \(\delta\ge2\), \(h^{1/2}>0\), and \(\log(2\delta h)\ge1\), packaged as one
+  definition endpoint;
 \item the IUT IV, Corollary 2.2(ii) \(\epsilon_E\)-error conversion:
   substituting the definition of \(\epsilon_E\), Lean proves
   \((15\delta)^2h^{1/2}\log(2\delta h)
@@ -1102,7 +1103,8 @@ the displayed pre-\(\epsilon_E\) bound for \(\frac16h\), with the
 For Corollary 2.2(ii), Lean proves the final \(\frac16\log(q)\) bound from the
 displayed \(\log(q)\), \(\log(q_2)\), and \(\log(q_\forall)\) chain.
 Lean records the proof's definition of \(\epsilon_E\) and verifies the stated
-lower estimate \(\epsilon_E\ge5\delta h^{-1/2}\).
+lower estimate \(\epsilon_E\ge5\delta h^{-1/2}\), including the positivity
+facts used in the inverse-square-root comparison.
 Lean also verifies the source conversion
 \((15\delta)^2h^{1/2}\log(2\delta h)\le\frac16h\cdot\frac25\epsilon_E\).
 Combining this with \(\delta h^{-1/2}\le\epsilon_E/5\), Lean proves the

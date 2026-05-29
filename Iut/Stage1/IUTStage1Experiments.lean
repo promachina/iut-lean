@@ -5578,6 +5578,19 @@ theorem iutIVCorollary22EpsilonDefinition_lower_bound
     5 * data.delta * data.sqrtH⁻¹ <= data.epsilonE :=
   data.five_delta_inv_sqrtH_le_epsilonE
 
+theorem iutIVCorollary22EpsilonDefinition_endpoint
+    (data : IUTStage1IUTIVCorollary22EpsilonDefinitionShadow) :
+    2 <= data.delta ∧
+      0 < data.delta ∧
+      0 < data.sqrtH ∧
+      1 <= data.logTwoDeltaH ∧
+      data.epsilonE =
+        iutIVCorollary22EpsilonDefinitionRHS
+          data.delta data.sqrtH data.logTwoDeltaH ∧
+      0 < data.epsilonE ∧
+      5 * data.delta * data.sqrtH⁻¹ <= data.epsilonE :=
+  data.epsilon_definition_endpoint
+
 theorem iutIVCorollary22EpsilonErrorConversion_bound
     (data : IUTStage1IUTIVCorollary22EpsilonErrorConversionShadow) :
     (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH <=

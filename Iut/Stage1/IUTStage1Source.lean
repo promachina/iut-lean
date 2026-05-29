@@ -1978,6 +1978,25 @@ theorem five_delta_inv_sqrtH_le_one_of_epsilonE_le_one
     5 * data.delta * data.sqrtH⁻¹ <= 1 :=
   le_trans data.five_delta_inv_sqrtH_le_epsilonE heps
 
+theorem epsilon_definition_endpoint
+    (data : IUTStage1IUTIVCorollary22EpsilonDefinitionShadow) :
+    2 <= data.delta ∧
+      0 < data.delta ∧
+      0 < data.sqrtH ∧
+      1 <= data.logTwoDeltaH ∧
+      data.epsilonE =
+        iutIVCorollary22EpsilonDefinitionRHS
+          data.delta data.sqrtH data.logTwoDeltaH ∧
+      0 < data.epsilonE ∧
+      5 * data.delta * data.sqrtH⁻¹ <= data.epsilonE :=
+  ⟨data.delta_ge_two,
+    data.delta_pos,
+    data.sqrtH_pos,
+    data.logTwoDeltaH_ge_one,
+    data.epsilonE_eq,
+    data.epsilonE_pos,
+    data.five_delta_inv_sqrtH_le_epsilonE⟩
+
 end IUTStage1IUTIVCorollary22EpsilonDefinitionShadow
 
 /--
