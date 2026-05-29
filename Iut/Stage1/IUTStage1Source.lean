@@ -1818,6 +1818,16 @@ theorem finiteValueOrZero_finite (value : Real) :
     finiteValueOrZero (finite value) = value :=
   rfl
 
+theorem finite_ne_plusInfinity (value : Real) :
+    finite value ≠ plusInfinity := by
+  intro h
+  cases h
+
+theorem plusInfinity_ne_finite (value : Real) :
+    plusInfinity ≠ finite value := by
+  intro h
+  cases h
+
 end IUTStage1ExtendedSignedLogVolume
 
 /--
@@ -1842,6 +1852,14 @@ theorem thetaExtendedFinite
     data.thetaExtended.IsFinite := by
   rw [data.thetaExtended_eq_finiteHull]
   exact IUTStage1ExtendedSignedLogVolume.finite_isFinite
+    data.upperRayData.thetaHullLogVolume
+
+theorem thetaExtended_ne_plusInfinity
+    (data : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint) :
+    data.thetaExtended ≠
+      IUTStage1ExtendedSignedLogVolume.plusInfinity := by
+  rw [data.thetaExtended_eq_finiteHull]
+  exact IUTStage1ExtendedSignedLogVolume.finite_ne_plusInfinity
     data.upperRayData.thetaHullLogVolume
 
 theorem thetaFiniteValue_eq_hull
@@ -1949,6 +1967,12 @@ theorem thetaExtendedFinite
     (data : IUTStage1Corollary312StatementEndpoint) :
     data.finiteEndpoint.thetaExtended.IsFinite :=
   data.finiteEndpoint.thetaExtendedFinite
+
+theorem thetaExtended_ne_plusInfinity
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.finiteEndpoint.thetaExtended ≠
+      IUTStage1ExtendedSignedLogVolume.plusInfinity :=
+  data.finiteEndpoint.thetaExtended_ne_plusInfinity
 
 theorem qPilotNotSubject
     (data : IUTStage1Corollary312StatementEndpoint) :

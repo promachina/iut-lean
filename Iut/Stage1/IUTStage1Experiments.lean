@@ -1120,6 +1120,12 @@ theorem thetaFiniteEndpoint_isFinite
     data.thetaExtended.IsFinite :=
   data.thetaExtendedFinite
 
+theorem thetaFiniteEndpoint_ne_plusInfinity
+    (data : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint) :
+    data.thetaExtended ≠
+      IUTStage1ExtendedSignedLogVolume.plusInfinity :=
+  data.thetaExtended_ne_plusInfinity
+
 theorem thetaFiniteEndpoint_q_le_finiteTheta
     (data : IUTStage1Corollary312ThetaFiniteLogVolumeEndpoint) :
     data.upperRayData.qPilotLogVolume <=
@@ -1142,6 +1148,12 @@ theorem corollary312StatementEndpoint_q_not_subject
     data.pilotBoundary.qStatus =
       IUTStage1Corollary312PilotIndeterminacyStatus.notSubjectToIndeterminacies :=
   data.qPilotNotSubject
+
+theorem corollary312StatementEndpoint_theta_ne_plusInfinity
+    (data : IUTStage1Corollary312StatementEndpoint) :
+    data.finiteEndpoint.thetaExtended ≠
+      IUTStage1ExtendedSignedLogVolume.plusInfinity :=
+  data.thetaExtended_ne_plusInfinity
 
 theorem qPilotTwoComputationSignedEndpoint_corollary312
     (data : IUTStage1QPilotTwoComputationSignedEndpoint) :
