@@ -5597,6 +5597,18 @@ theorem iutIVCorollary22EpsilonErrorConversion_bound
       (1 / 6 : Real) * data.h * ((2 / 5 : Real) * data.epsilonE) :=
   data.fifteen_delta_sq_error_le_epsilon_term
 
+theorem iutIVCorollary22EpsilonErrorConversion_endpoint
+    (data : IUTStage1IUTIVCorollary22EpsilonErrorConversionShadow) :
+    0 < data.sqrtH ∧
+      0 <= data.delta ^ 2 * data.logTwoDeltaH ∧
+      data.h = data.sqrtH ^ 2 ∧
+      data.epsilonE =
+        iutIVCorollary22EpsilonDefinitionRHS
+          data.delta data.sqrtH data.logTwoDeltaH ∧
+      (15 * data.delta) ^ 2 * data.sqrtH * data.logTwoDeltaH <=
+        (1 / 6 : Real) * data.h * ((2 / 5 : Real) * data.epsilonE) :=
+  data.epsilon_error_conversion_endpoint
+
 theorem iutIVCorollary22HBoundToMoveLeft_preliminary
     (data : IUTStage1IUTIVCorollary22HBoundToMoveLeftShadow) :
     (1 / 6 : Real) * data.h <=

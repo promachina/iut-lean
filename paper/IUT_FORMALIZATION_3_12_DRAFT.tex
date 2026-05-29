@@ -638,7 +638,9 @@ The code currently covers:
 \item the IUT IV, Corollary 2.2(ii) \(\epsilon_E\)-error conversion:
   substituting the definition of \(\epsilon_E\), Lean proves
   \((15\delta)^2h^{1/2}\log(2\delta h)
-   \le \frac16h\cdot\frac25\epsilon_E\);
+   \le \frac16h\cdot\frac25\epsilon_E\), packaged with
+  \(h=(h^{1/2})^2\), \(h^{1/2}>0\), and the nonnegativity premise for the
+  logarithmic factor;
 \item the IUT IV, Corollary 2.2(ii) bridge to the denominator step:
   the pre-\(\epsilon_E\) \(h\)-bound, the error conversion, and
   \(\delta h^{-1/2}\le\epsilon_E/5\) yield the preliminary inequality used to
@@ -1106,7 +1108,8 @@ Lean records the proof's definition of \(\epsilon_E\) and verifies the stated
 lower estimate \(\epsilon_E\ge5\delta h^{-1/2}\), including the positivity
 facts used in the inverse-square-root comparison.
 Lean also verifies the source conversion
-\((15\delta)^2h^{1/2}\log(2\delta h)\le\frac16h\cdot\frac25\epsilon_E\).
+\((15\delta)^2h^{1/2}\log(2\delta h)\le\frac16h\cdot\frac25\epsilon_E\),
+with \(h=(h^{1/2})^2\) and the required nonnegativity facts explicit.
 Combining this with \(\delta h^{-1/2}\le\epsilon_E/5\), Lean proves the
 preliminary inequality needed for the move-left step.
 Lean then verifies the algebraic move-left step that introduces the denominator
