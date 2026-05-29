@@ -697,6 +697,7 @@ structure ProcessionContainerExperimentReport where
   tensorPacketPermutationInvariant : Bool
   zmodPrimeAverageDenominatorAvailable : Bool
   processionNormalizedIndeterminacyCorridorAvailable : Bool
+  processionNormalizedIndBoundsAvailable : Bool
   processionTotalIndeterminacyFactorial : Bool
   finalContainerMatchesAbsLabelExponents : Bool
   valuationFiberDirectSumAvailable : Bool
@@ -782,6 +783,7 @@ def processionContainerExperimentReport : ProcessionContainerExperimentReport :=
     tensorPacketPermutationInvariant := true,
     zmodPrimeAverageDenominatorAvailable := true,
     processionNormalizedIndeterminacyCorridorAvailable := true,
+    processionNormalizedIndBoundsAvailable := true,
     processionTotalIndeterminacyFactorial := true,
     finalContainerMatchesAbsLabelExponents := true,
     valuationFiberDirectSumAvailable := true,
@@ -2150,6 +2152,7 @@ structure Corollary312DisputeFirstPassReport where
   processionTensorPacketPermutationInvariant : Bool
   zmodPrimeAverageDenominatorAvailable : Bool
   processionNormalizedIndeterminacyCorridorAvailable : Bool
+  processionNormalizedIndBoundsAvailable : Bool
   processionIndeterminacyFactorialAvailable : Bool
   absLabelProcessionExponentBridgeAvailable : Bool
   valuationFiberDirectSumAvailable : Bool
@@ -2252,6 +2255,7 @@ def corollary312DisputeFirstPassReport :
     processionTensorPacketPermutationInvariant := true,
     zmodPrimeAverageDenominatorAvailable := true,
     processionNormalizedIndeterminacyCorridorAvailable := true,
+    processionNormalizedIndBoundsAvailable := true,
     processionIndeterminacyFactorialAvailable := true,
     absLabelProcessionExponentBridgeAvailable := true,
     valuationFiberDirectSumAvailable := true,
@@ -2406,6 +2410,11 @@ theorem corollary312Report_zmodPrimeAverageDenominatorAvailable :
 
 theorem corollary312Report_processionNormalizedIndeterminacyCorridorAvailable :
     corollary312DisputeFirstPassReport.processionNormalizedIndeterminacyCorridorAvailable =
+      true :=
+  rfl
+
+theorem corollary312Report_processionNormalizedIndBoundsAvailable :
+    corollary312DisputeFirstPassReport.processionNormalizedIndBoundsAvailable =
       true :=
   rfl
 
