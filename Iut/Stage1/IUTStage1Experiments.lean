@@ -5496,6 +5496,7 @@ structure Ind3FinalRouteLevelExperimentReport where
   finalRouteRejectsPointwise : Bool
   finalRouteRejectsAggregate : Bool
   finalRouteRejectsBalanced : Bool
+  finalRouteRejectsBalancedNegTransport : Bool
   missingComparisonDatumIsHullLevel : Bool
 deriving Repr
 
@@ -5509,6 +5510,7 @@ def ind3FinalRouteLevelExperimentReport :
     finalRouteRejectsPointwise := true,
     finalRouteRejectsAggregate := true,
     finalRouteRejectsBalanced := true,
+    finalRouteRejectsBalancedNegTransport := true,
     missingComparisonDatumIsHullLevel := true }
 
 theorem finalWeightedThetaRoute_levelIsHull
@@ -5550,6 +5552,30 @@ theorem finalWeightedThetaRoute_rejectsBalanced
         route ≠
       IUTStage1SquareComparisonLevel.balancedSignCompatible :=
   weightedThetaComparisonRouteLevel_ne_balancedSignCompatible route
+
+theorem finalWeightedThetaRoute_rejectsBalancedNegTransportLevel
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    {part : audit.FLZModCuspLabelThetaCuspClassContainerAudit l}
+    {profile : IUTStage1ZModSquareWeightProfile l}
+    {audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind}
+    (route :
+      FLZModCuspLabelThetaCuspClassContainerAudit.WeightedThetaComparisonRoute
+        part profile audited)
+    (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    FLZModCuspLabelThetaCuspClassContainerAudit.weightedThetaComparisonRouteLevel
+        route ≠
+      (IUTStage1BalancedSquareFullLabelTransport.negSelf
+        logVolume).comparisonLevel := by
+  intro h
+  exact finalWeightedThetaRoute_rejectsBalanced route (by
+    simpa [IUTStage1BalancedSquareFullLabelTransport.comparisonLevel] using h)
 
 theorem finalWeightedThetaRoute_rejectsPointwise
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
@@ -5600,6 +5626,11 @@ theorem missingWeightedThetaComparisonDatum_rejectsBalanced :
 
 theorem ind3FinalRouteLevelExperimentReport_rejectsBalanced :
     ind3FinalRouteLevelExperimentReport.finalRouteRejectsBalanced = true :=
+  rfl
+
+theorem ind3FinalRouteLevelExperimentReport_rejectsBalancedNegTransport :
+    ind3FinalRouteLevelExperimentReport.finalRouteRejectsBalancedNegTransport =
+      true :=
   rfl
 
 /-- First Lean-level conclusion about the Corollary 3.12 disputed passage. -/
