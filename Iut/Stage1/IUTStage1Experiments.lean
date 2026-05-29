@@ -6036,6 +6036,22 @@ theorem arithmeticVectorBundleDeterminant_rank_pos
     0 < data.rank :=
   data.rank_pos
 
+theorem arithmeticVectorBundleDeterminant_normalized_eq_of_determinant_eq
+    (source target : IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (hdet :
+      source.determinantLogVolume = target.determinantLogVolume) :
+    source.normalizedLogVolume = target.normalizedLogVolume :=
+  source.normalizedLogVolume_eq_of_determinantLogVolume_eq target hdet
+
+theorem arithmeticVectorBundleDeterminant_normalization_endpoint
+    (data : IUTStage1ArithmeticVectorBundleDeterminantLogVolume) :
+    1 < data.rank ∧
+      0 < data.positiveTensorPower ∧
+      data.tensorPowerLogVolume =
+        (data.positiveTensorPower : Real) * data.determinantLogVolume ∧
+      data.normalizedLogVolume = data.determinantLogVolume :=
+  data.determinantNormalization_endpoint
+
 theorem hullDetUpperRay_qPilot_mem
     (data : IUTStage1HullDetPilotUpperRayLogVolume) :
     data.qPilotLogVolume ∈ data.upperRay :=

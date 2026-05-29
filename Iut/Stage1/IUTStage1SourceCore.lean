@@ -1632,6 +1632,24 @@ theorem rank_pos
     0 < data.rank :=
   lt_trans Nat.zero_lt_one data.rank_gt_one
 
+theorem normalizedLogVolume_eq_of_determinantLogVolume_eq
+    (source target : IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (hdet :
+      source.determinantLogVolume = target.determinantLogVolume) :
+    source.normalizedLogVolume = target.normalizedLogVolume := by
+  rw [source.normalizedLogVolume_eq_determinant,
+    target.normalizedLogVolume_eq_determinant, hdet]
+
+theorem determinantNormalization_endpoint
+    (data : IUTStage1ArithmeticVectorBundleDeterminantLogVolume) :
+    1 < data.rank ∧
+      0 < data.positiveTensorPower ∧
+      data.tensorPowerLogVolume =
+        (data.positiveTensorPower : Real) * data.determinantLogVolume ∧
+      data.normalizedLogVolume = data.determinantLogVolume :=
+  ⟨data.rank_gt_one, data.tensor_power_pos, data.tensor_power_eq,
+    data.normalizedLogVolume_eq_determinant⟩
+
 end IUTStage1ArithmeticVectorBundleDeterminantLogVolume
 
 /--
