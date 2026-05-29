@@ -4221,6 +4221,30 @@ theorem not_forall_coordinate_weightedVolumeSubordinate_zero
   rw [fromCoordinate_zero] at hzero
   exact not_zero_weightedVolumeSubordinate_zero hzero
 
+theorem weightedVolumeSubordinate_endpoint
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ) (t j : ZMod l.value)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    (WeightedVolumeSubordinate label zero ↔ label ≠ zero) ∧
+      (WeightedVolumeSubordinate (fromCoordinate l j) zero ↔ j ≠ 0) ∧
+      (WeightedVolumeSubordinate
+          (fromCoordinate l ((zmodUnitActionData l).smul a j)) zero ↔
+        WeightedVolumeSubordinate (fromCoordinate l j) zero) ∧
+      ((∀ k : ZMod l.value,
+        WeightedVolumeSubordinate
+            (fromCoordinate l
+              (zmodLabelTranslate l t ((zmodUnitActionData l).smul a k)))
+            zero ↔
+          WeightedVolumeSubordinate (fromCoordinate l k) zero) ↔
+        t = 0) ∧
+      ¬ ∀ k : ZMod l.value,
+        WeightedVolumeSubordinate (fromCoordinate l k) zero :=
+  ⟨weightedVolumeSubordinate_zero_iff_ne_zero label,
+    fromCoordinate_weightedVolumeSubordinate_zero_iff l j,
+    unit_smul_fromCoordinate_weightedVolumeSubordinate_zero_iff l a j,
+    unitAffine_fromCoordinate_weightedVolumeSubordinate_zero_iff_zero_translation
+      l a t,
+    not_forall_coordinate_weightedVolumeSubordinate_zero l⟩
+
 def localObject
     {kind : IUTStage1PlaceKind}
     (zeroObject : IUTStage1FiniteLocalLogVolumeObject kind)

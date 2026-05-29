@@ -5989,6 +5989,39 @@ theorem zmodCuspFullLabel_unitActionAffineDescent_endpoint
   IUTStage1ZModCuspFullLabel.unitActionAndAffineDescent_endpoint
     l a b t j label
 
+theorem zmodCuspFullLabel_weightedVolumeSubordinate_endpoint
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ) (t j : ZMod l.value)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    (IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate label
+        IUTStage1ZModCuspFullLabel.zero ↔
+      label ≠ IUTStage1ZModCuspFullLabel.zero) ∧
+      (IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+          IUTStage1ZModCuspFullLabel.zero ↔
+        j ≠ 0) ∧
+      (IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            ((zmodUnitActionData l).smul a j))
+          IUTStage1ZModCuspFullLabel.zero ↔
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+          IUTStage1ZModCuspFullLabel.zero) ∧
+      ((∀ k : ZMod l.value,
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (zmodLabelTranslate l t ((zmodUnitActionData l).smul a k)))
+            IUTStage1ZModCuspFullLabel.zero ↔
+          IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l k)
+            IUTStage1ZModCuspFullLabel.zero) ↔
+        t = 0) ∧
+      ¬ ∀ k : ZMod l.value,
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l k)
+          IUTStage1ZModCuspFullLabel.zero :=
+  IUTStage1ZModCuspFullLabel.weightedVolumeSubordinate_endpoint
+    l a t j label
+
 /-- Experiment report separating representative, balanced, and aggregate levels. -/
 structure Ind3SquareWeightLevelExperimentReport where
   representativeAuditForcesIdentity : Bool
