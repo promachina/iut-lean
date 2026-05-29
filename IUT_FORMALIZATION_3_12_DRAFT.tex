@@ -228,7 +228,12 @@ The code currently covers:
   Lean separately formalizes the nonzero half-range
   \(j=1,\ldots,(\ell-1)/2\) average and proves
   \(6\,\operatorname{Avg}_{j\ne0,\,|F_\ell|}G(j)
-   =(j_{\max}+1)(2j_{\max}+1)\deg(q)\); since the full \(|F_\ell|\)-average
+   =(j_{\max}+1)(2j_{\max}+1)\deg(q)\); Lean also proves the exact rescaling
+  \[
+    \operatorname{Avg}_{|F_\ell|}G
+    =\frac{j_{\max}}{j_{\max}+1}\operatorname{Avg}_{j\ne0,\,|F_\ell|}G.
+  \]
+  Since the full \(|F_\ell|\)-average
   has coefficient \(j_{\max}(2j_{\max}+1)/6\), Lean proves that the nonzero
   absolute-label average is strictly below the full average when \(\deg(q)<0\)
   and strictly above it when \(\deg(q)>0\), with equality if and only if

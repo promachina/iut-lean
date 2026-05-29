@@ -935,6 +935,20 @@ theorem gaussianDegree_absNonzeroIndexAverage_eq_coeff
   open IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction in
   gaussianDegree_absNonzeroLabel_average_eq_coeff evaluation
 
+theorem gaussianDegree_fullLabelAverage_eq_absNonzeroIndexRescale
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    (Finset.univ.sum evaluation.gaussianDegree) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) =
+      (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) /
+        ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) +
+          1) *
+          (IUTStage1ZModSquareWeightProfile.absNonzeroLabelAveragedLogVolume
+            evaluation).averageLogVolume :=
+  open IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction in
+  gaussianDegree_fullLabel_average_eq_absNonzeroLabel_rescale evaluation
+
 theorem gaussianDegree_absNonzeroIndexAverage_lt_fullLabelAverage_of_negative
     {l : PrimeGeFive}
     (evaluation :

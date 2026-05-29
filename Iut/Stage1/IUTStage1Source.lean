@@ -8955,6 +8955,19 @@ theorem gaussianDegree_absNonzeroLabel_average_eq_coeff
   have h := gaussianDegree_absNonzeroLabelAverage_mul_six evaluation
   nlinarith
 
+theorem gaussianDegree_fullLabel_average_eq_absNonzeroLabel_rescale
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    (Finset.univ.sum evaluation.gaussianDegree) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) =
+      (absLabelProcessionTop l : Real) /
+        ((absLabelProcessionTop l : Real) + 1) *
+          (absNonzeroLabelAveragedLogVolume evaluation).averageLogVolume := by
+  rw [gaussianDegree_fullLabel_average_eq_coeff,
+    gaussianDegree_absNonzeroLabel_average_eq_coeff]
+  have hden : ((absLabelProcessionTop l : Real) + 1) ≠ 0 := by
+    positivity
+  field_simp [hden]
+
 theorem absNonzeroLabelAverageCoefficient_gt_fullLabelAverageCoefficient :
     (absLabelProcessionTop l : Real) *
         (2 * (absLabelProcessionTop l : Real) + 1) / 6 <
