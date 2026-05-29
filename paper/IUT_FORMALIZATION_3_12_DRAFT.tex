@@ -624,7 +624,10 @@ The code currently covers:
   nonzero local exponent with nonzero local step gives a distinct shifted
   local log-volume; Lean now also couples this global calibrated value to the
   same \(C_\Theta\)-endpoint that proves \(C_\Theta\ge-1\), and at that endpoint
-  keeps the equality criterion in the decomposed exponent-or-step form;
+  keeps the equality criterion in the decomposed exponent-or-step form; Lean also
+  records the ordered alternative: a positive exponent-step product places the
+  local shifted log-volume above the calibrated value, and a negative product
+  places it below;
 \item the Remark 3.12.1(iii) arithmetic fact
   \(\mathbb{Q}_{>0}\cap\mathbb{Z}^{\times}=\{1\}\), formalized as the exact
   characterization \(0<q\iff q=1\) for rational integer units \(q=\pm1\);

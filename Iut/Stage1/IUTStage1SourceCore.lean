@@ -3000,6 +3000,28 @@ theorem shiftedLogVolume_eq_unshifted_iff_exponent_zero_or_step_zero
   rw [data.shiftedLogVolume_eq_unshifted_iff_shiftTerm_eq_zero,
     data.shiftTerm_eq_zero_iff_exponent_zero_or_step_zero]
 
+theorem shiftedLogVolume_lt_unshifted_iff_shiftTerm_lt_zero
+    (data : IUTStage1LocalFrobenioidLogVolumeAmbiguity) :
+    data.shiftedLogVolume < data.unshiftedLogVolume ↔
+      (data.localExponent : Real) * data.localPrimeStepLogVolume < 0 := by
+  constructor
+  · intro h
+    nlinarith [data.shifted_logVolume_eq]
+  · intro h
+    rw [data.shifted_logVolume_eq]
+    linarith
+
+theorem unshiftedLogVolume_lt_shifted_iff_shiftTerm_pos
+    (data : IUTStage1LocalFrobenioidLogVolumeAmbiguity) :
+    data.unshiftedLogVolume < data.shiftedLogVolume ↔
+      0 < (data.localExponent : Real) * data.localPrimeStepLogVolume := by
+  constructor
+  · intro h
+    nlinarith [data.shifted_logVolume_eq]
+  · intro h
+    rw [data.shifted_logVolume_eq]
+    linarith
+
 end IUTStage1LocalFrobenioidLogVolumeAmbiguity
 
 /--
@@ -3068,6 +3090,22 @@ theorem calibratedLogVolume_eq_shifted_iff_exponent_zero_or_step_zero
         data.localData.localPrimeStepLogVolume = 0 := by
   rw [data.calibratedLogVolume_eq_shifted_iff_shiftTerm_eq_zero,
     data.localData.shiftTerm_eq_zero_iff_exponent_zero_or_step_zero]
+
+theorem calibratedLogVolume_lt_shifted_iff_shiftTerm_pos
+    (data : IUTStage1GlobalFrobenioidLogVolumeCalibration) :
+    data.calibratedLogVolume < data.localData.shiftedLogVolume ↔
+      0 < (data.localData.localExponent : Real) *
+        data.localData.localPrimeStepLogVolume := by
+  rw [data.calibratedLogVolume_eq_unshifted]
+  exact data.localData.unshiftedLogVolume_lt_shifted_iff_shiftTerm_pos
+
+theorem shiftedLogVolume_lt_calibrated_iff_shiftTerm_lt_zero
+    (data : IUTStage1GlobalFrobenioidLogVolumeCalibration) :
+    data.localData.shiftedLogVolume < data.calibratedLogVolume ↔
+      (data.localData.localExponent : Real) *
+        data.localData.localPrimeStepLogVolume < 0 := by
+  rw [data.calibratedLogVolume_eq_unshifted]
+  exact data.localData.shiftedLogVolume_lt_unshifted_iff_shiftTerm_lt_zero
 
 end IUTStage1GlobalFrobenioidLogVolumeCalibration
 

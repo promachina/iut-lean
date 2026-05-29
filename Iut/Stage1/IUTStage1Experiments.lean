@@ -6615,6 +6615,17 @@ theorem globalFrobenioidCalibration_eq_localShifted_iff_zero_exponent_or_step
         data.localData.localPrimeStepLogVolume = 0 :=
   data.calibratedLogVolume_eq_shifted_iff_exponent_zero_or_step_zero
 
+theorem globalFrobenioidCalibration_ordered_shift
+    (data : IUTStage1GlobalFrobenioidLogVolumeCalibration) :
+    (data.calibratedLogVolume < data.localData.shiftedLogVolume ↔
+      0 < (data.localData.localExponent : Real) *
+        data.localData.localPrimeStepLogVolume) ∧
+      (data.localData.shiftedLogVolume < data.calibratedLogVolume ↔
+        (data.localData.localExponent : Real) *
+          data.localData.localPrimeStepLogVolume < 0) :=
+  ⟨data.calibratedLogVolume_lt_shifted_iff_shiftTerm_pos,
+    data.shiftedLogVolume_lt_calibrated_iff_shiftTerm_lt_zero⟩
+
 theorem remark3122_ringStructureDimensionSplit_endpoint
     {kind : IUTStage1PlaceKind} {j : Nat}
     {source target :
