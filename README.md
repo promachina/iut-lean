@@ -151,7 +151,9 @@ qSigned = thetaSigned ∧ thetaSigned < 0 ∨ (-1 : Real) < C_Theta
 The factored square/full-label SHE preservation package no longer has to be
 primitive in the finite Gaussian case: Gaussian degree evaluations with preserved
 environment degree now construct that package and feed it directly into the
-nonarchimedean `C_Theta` dichotomy.
+nonarchimedean `C_Theta` dichotomy. In the identity-coordinate Gaussian route,
+equality at the canonical full label `1` supplies the required environment-degree
+preservation, so that preservation is no longer an independent input there.
 
 This is deliberately not marked as settling the dispute. The experiment report
 keeps `disputeSettledByCurrentStage = false`. The remaining issue is whether the
@@ -265,9 +267,9 @@ Near-term engineering:
 
 Near-term mathematics:
 
-* Extend the Gaussian-derived factored SHE construction toward actual
-  Gaussian/Frobenioid material corresponding to IUT II, rather than only finite
-  degree-evaluation shadows.
+* Extend the Gaussian-derived factored SHE construction beyond finite
+  degree-evaluation and canonical-label shadows toward actual Gaussian/Frobenioid
+  material corresponding to IUT II.
 * Replace `NonarchimedeanInd3EntryAlignment` with the log-Kummer
   upper-semi-compatibility construction of IUT III, Step (x).
 * Replace the current hull/determinant obligation records with formal
