@@ -6393,6 +6393,28 @@ theorem qPilotTwoComputationCThetaEndpoint_fixed_le_cTheta_absLogQ
     -data.absLogQ <= data.cTheta * data.absLogQ :=
   data.fixed_qPilotLogVolume_le_cTheta_absLogQ
 
+theorem qPilotTwoComputationCThetaEndpoint_output_strict_lower_bound
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hstrict :
+      data.signedEndpoint.twoComputation.outputHullLogVolume <
+        data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume) :
+    (-1 : Real) < data.cTheta :=
+  data.cTheta_gt_neg_one_of_qOutput_lt_thetaHullLogVolume hstrict
+
+theorem qPilotTwoComputationCThetaEndpoint_output_eq_theta_of_boundary
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hC : data.cTheta = (-1 : Real)) :
+    data.signedEndpoint.twoComputation.outputHullLogVolume =
+      data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume :=
+  data.qOutputLogVolume_eq_thetaHullLogVolume_of_cTheta_eq_neg_one hC
+
+theorem qPilotTwoComputationCThetaEndpoint_not_output_strict_of_boundary
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hC : data.cTheta = (-1 : Real)) :
+    ¬ data.signedEndpoint.twoComputation.outputHullLogVolume <
+      data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume :=
+  data.not_qOutputLogVolume_lt_thetaHullLogVolume_of_cTheta_eq_neg_one hC
+
 theorem qPilotTwoComputationCThetaEndpoint_statement_lower_bound
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
     (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary) :

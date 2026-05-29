@@ -577,7 +577,10 @@ The code currently covers:
   the two-computation q-pilot record produces the signed comparison payload
   with \(q_{\mathrm{signed}}\) read from the input prime-strip log-volume and
   \(\Theta_{\mathrm{signed}}\) read from the hull/determinant upper-ray
-  boundary;
+  boundary; Lean now propagates the strict and boundary \(C_\Theta\)-branches to
+  both q-computations: a strict hull-output inequality gives \(C_\Theta>-1\),
+  while \(C_\Theta=-1\) forces the hull-output q-reading to equal the
+  \(\Theta\)-boundary;
 \item the Step (xi-e)--(xi-f) fixed-value condition:
   in the signed two-computation endpoint, Lean proves that the input
   prime-strip reading and the hull-output reading are both the same real value

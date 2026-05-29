@@ -1771,11 +1771,36 @@ theorem output_le_thetaHullLogVolume
   rw [data.output_eq_q]
   exact data.upperRayData.qPilotLogVolume_le_thetaHullLogVolume
 
+theorem input_eq_thetaHullLogVolume_iff_reverse_bound
+    (data : IUTStage1QPilotTwoComputationLogVolume) :
+    data.inputPrimeStripLogVolume =
+        data.upperRayData.thetaHullLogVolume ↔
+      data.upperRayData.thetaHullLogVolume <=
+        data.inputPrimeStripLogVolume :=
+  ⟨fun h => by rw [h],
+    fun h => le_antisymm data.input_le_thetaHullLogVolume h⟩
+
+theorem output_eq_thetaHullLogVolume_iff_reverse_bound
+    (data : IUTStage1QPilotTwoComputationLogVolume) :
+    data.outputHullLogVolume =
+        data.upperRayData.thetaHullLogVolume ↔
+      data.upperRayData.thetaHullLogVolume <=
+        data.outputHullLogVolume :=
+  ⟨fun h => by rw [h],
+    fun h => le_antisymm data.output_le_thetaHullLogVolume h⟩
+
 theorem input_le_determinant
     (data : IUTStage1QPilotTwoComputationLogVolume) :
     data.inputPrimeStripLogVolume <=
       data.upperRayData.determinant.determinantLogVolume := by
   rw [data.input_eq_q]
+  exact data.upperRayData.qPilotLogVolume_le_determinant
+
+theorem output_le_determinant
+    (data : IUTStage1QPilotTwoComputationLogVolume) :
+    data.outputHullLogVolume <=
+      data.upperRayData.determinant.determinantLogVolume := by
+  rw [data.output_eq_q]
   exact data.upperRayData.qPilotLogVolume_le_determinant
 
 end IUTStage1QPilotTwoComputationLogVolume
@@ -2546,6 +2571,16 @@ theorem cTheta_gt_neg_one_of_qInput_lt_thetaHullLogVolume
   rw [← hinput]
   exact hstrict
 
+theorem cTheta_gt_neg_one_of_qOutput_lt_thetaHullLogVolume
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hstrict :
+      data.signedEndpoint.twoComputation.outputHullLogVolume <
+        data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume) :
+    (-1 : Real) < data.cTheta := by
+  apply data.cTheta_gt_neg_one_of_qInput_lt_thetaHullLogVolume
+  rw [data.signedEndpoint.twoComputation.input_eq_output]
+  exact hstrict
+
 theorem fixed_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
     (hC : data.cTheta = (-1 : Real)) :
@@ -2562,6 +2597,22 @@ theorem qInputLogVolume_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
   rw [data.signedEndpoint.inputPrimeStripLogVolume_eq_neg_absLogQ]
   simpa [IUTStage1QPilotTwoComputationCThetaEndpoint.absLogQ] using
     data.fixed_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one hC
+
+theorem qOutputLogVolume_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hC : data.cTheta = (-1 : Real)) :
+    data.signedEndpoint.twoComputation.outputHullLogVolume =
+      data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume := by
+  rw [← data.signedEndpoint.twoComputation.input_eq_output]
+  exact data.qInputLogVolume_eq_thetaHullLogVolume_of_cTheta_eq_neg_one hC
+
+theorem not_qOutputLogVolume_lt_thetaHullLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hC : data.cTheta = (-1 : Real)) :
+    ¬ data.signedEndpoint.twoComputation.outputHullLogVolume <
+      data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume := by
+  rw [data.qOutputLogVolume_eq_thetaHullLogVolume_of_cTheta_eq_neg_one hC]
+  exact lt_irrefl _
 
 theorem thetaHullLogVolume_neg_of_cTheta_eq_neg_one
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
