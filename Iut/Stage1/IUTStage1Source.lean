@@ -6415,6 +6415,46 @@ theorem standardQLambdaCTheta_not_qPilot_mem_tensorPowerUpperRay_of_boundary
   rw [hC] at hstrict
   norm_num at hstrict
 
+theorem standardQLambdaCTheta_not_twoComputation_mem_tensorPowerUpperRay_of_boundary
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (tensorPower : Nat)
+    (tensor_power_ge_two : 2 ≤ tensorPower)
+    (theta_neg : data.thetaHullLogVolume < 0)
+    (hC : cTheta = (-1 : Real)) :
+    let twoComputation := data.toQPilotTwoComputationLogVolume;
+    twoComputation.inputPrimeStripLogVolume ∉
+        (data.toThetaPilotTensorPowerLogVolume
+          tensorPower tensor_power_ge_two).tensorPowerUpperRay ∧
+      twoComputation.outputHullLogVolume ∉
+        (data.toThetaPilotTensorPowerLogVolume
+          tensorPower tensor_power_ge_two).tensorPowerUpperRay := by
+  intro twoComputation
+  have hnot :=
+    data.standardQLambdaCTheta_not_qPilot_mem_tensorPowerUpperRay_of_boundary
+      q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
+      tensorPower tensor_power_ge_two theta_neg hC
+  have hendpointq :
+      data.toThetaFiniteLogVolumeEndpoint.upperRayData.qPilotLogVolume =
+        data.qPilotLogVolume := by
+    rfl
+  exact
+    ⟨by
+      intro hmem
+      exact hnot (by
+        rw [hendpointq, data.q_eq_beforeAverage]
+        simpa [twoComputation, toQPilotTwoComputationLogVolume] using hmem),
+    by
+      intro hmem
+      exact hnot (by
+        rw [hendpointq]
+        simpa [twoComputation, toQPilotTwoComputationLogVolume] using hmem)⟩
+
 theorem standardQLambdaCTheta_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (q_pilot_positive :
