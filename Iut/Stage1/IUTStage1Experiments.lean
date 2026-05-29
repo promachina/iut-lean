@@ -1060,6 +1060,40 @@ theorem stepXToHullUpperRay_statementEndpoint_thetaFiniteValue_eq_ind3Upper
   data.statementEndpoint_thetaFiniteValue_eq_ind3Upper
     pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
 
+theorem stepXToHullUpperRay_statementEndpoint_qMemUpperRay
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+      thetaHull_le_cTheta_absLogQ).finiteEndpoint.upperRayData.qPilotLogVolume ∈
+      (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ).finiteEndpoint.upperRayData.upperRay :=
+  data.statementEndpoint_qPilotLogVolume_mem_upperRay
+    pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
+
+theorem stepXToHullUpperRay_statementEndpoint_q_le_thetaRealLogVolume
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+      thetaHull_le_cTheta_absLogQ).finiteEndpoint.upperRayData.qPilotLogVolume <=
+      (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ).thetaRealLogVolume :=
+  data.statementEndpoint_qPilotLogVolume_le_thetaRealLogVolume
+    pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
+
 theorem stepXToHullUpperRay_statementEndpoint_qNotSubject
     {label : Type u} [Fintype label]
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
