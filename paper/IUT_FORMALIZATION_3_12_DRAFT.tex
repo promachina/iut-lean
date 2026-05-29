@@ -74,7 +74,8 @@ If \(C_\Theta\) is any real number satisfying
   -|\log(\Theta)|\le C_\Theta|\log(q)|,\qquad |\log(q)|>0,
 \]
 then Step (xi-f) concludes \(C_\Theta\ge-1\).  This last inference is now a
-Lean theorem.
+Lean theorem.  Lean also proves the strict variant: if the q-pilot lies strictly
+inside the \(\Theta\)-upper ray, then \(C_\Theta>-1\).
 Mochizuki's 2026 note isolates the final comparison as:
 \[
 \begin{array}{ccccc}
@@ -470,7 +471,8 @@ The code currently covers:
   hence \(q_{\mathrm{avg}}\le C_\Theta|q_{\mathrm{avg}}|\), before invoking the
   final ordered-real algebra; the Step (xi-f) endpoint now packages q-pilot
   upper-ray membership, both ordered inequalities, \(C_\Theta\ge-1\), and the
-  rejection of \(C_\Theta<-1\) directly at the route level; Lean now also
+  rejection of \(C_\Theta<-1\) directly at the route level; if the q-pilot
+  inequality is strict, Lean proves \(C_\Theta>-1\); Lean now also
   combines this Step (xi-f) package with the Remark 3.12.2 distinct-label
   intertwining discipline, so the inequality endpoint is available while the
   q-native and \(\Theta\)-native labels remain unequal;
@@ -551,9 +553,13 @@ The code currently covers:
   from the finite \(\Theta\)-branch, \(0<-|\log(q)|\), the upper-ray comparison,
   and the displayed hypothesis
   \(-|\log(\Theta)|\le C_\Theta|\log(q)|\), Lean proves \(C_\Theta\ge-1\);
+  if the finite \(\Theta\)-value is nonnegative, the q-pilot is strictly below
+  it and Lean proves the sharper \(C_\Theta>-1\);
 \item the Step (xi-f) final algebra:
   from \(-|\log(q)|\le-|\log(\Theta)|\), \(|\log(q)|>0\), and
   \(-|\log(\Theta)|\le C_\Theta|\log(q)|\), Lean proves \(C_\Theta\ge-1\);
+  from the strict inequality
+  \(-|\log(q)|<-|\log(\Theta)|\), Lean proves \(C_\Theta>-1\);
 \item the signed-payload bridge:
   the existing Stage 1 comparison record \(q_{\mathrm{signed}}\le
   \Theta_{\mathrm{signed}}\), together with
@@ -1110,7 +1116,8 @@ No formal statement currently proves IUT III, Corollary 3.12 from Mochizuki's
 published hypotheses.  The strongest positive result is conditional: if the
 hull/log-volume upper-ray comparison supplies
 \(-|\log(q)|\le-|\log(\Theta)|\), then Lean checks the formal Step (xi-f)
-conclusion \(C_\Theta\ge-1\).  If the nonarchimedean \((\mathrm{Ind3})\) entry,
+conclusion \(C_\Theta\ge-1\); if the upper-ray membership is strict, Lean checks
+the sharper \(C_\Theta>-1\).  If the nonarchimedean \((\mathrm{Ind3})\) entry,
 ordered real-line alignment, and Hodge/SHE square-weight transport audit are
 supplied, Lean checks the final signed \(q\)-to-\(\Theta\) inequality feeding
 that algebra.  If the corresponding primitive factored square/full-label SHE

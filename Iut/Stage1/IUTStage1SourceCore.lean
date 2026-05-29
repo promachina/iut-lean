@@ -2058,6 +2058,32 @@ theorem cTheta_ge_neg_one
     simpa using data.neg_absLogQ_le_cTheta_absLogQ
   exact le_of_mul_le_mul_right hmul data.absLogQ_pos
 
+theorem neg_absLogQ_lt_cTheta_absLogQ_of_qPilot_lt_theta
+    (data : IUTStage1Corollary312CThetaLowerBoundShadow)
+    (hstrict :
+      data.qPilotLogVolume < data.thetaPilotLogVolume) :
+    -data.absLogQ < data.cTheta * data.absLogQ := by
+  rw [← data.qPilotLogVolume_eq_neg_absLogQ]
+  exact lt_of_lt_of_le hstrict data.thetaPilotLogVolume_le_cTheta_absLogQ
+
+theorem cTheta_gt_neg_one_of_qPilot_lt_theta
+    (data : IUTStage1Corollary312CThetaLowerBoundShadow)
+    (hstrict :
+      data.qPilotLogVolume < data.thetaPilotLogVolume) :
+    (-1 : Real) < data.cTheta := by
+  have hmul :
+      (-1 : Real) * data.absLogQ < data.cTheta * data.absLogQ := by
+    simpa using
+      data.neg_absLogQ_lt_cTheta_absLogQ_of_qPilot_lt_theta hstrict
+  nlinarith [data.absLogQ_pos]
+
+theorem not_cTheta_le_neg_one_of_qPilot_lt_theta
+    (data : IUTStage1Corollary312CThetaLowerBoundShadow)
+    (hstrict :
+      data.qPilotLogVolume < data.thetaPilotLogVolume) :
+    ¬ data.cTheta <= (-1 : Real) :=
+  not_le_of_gt (data.cTheta_gt_neg_one_of_qPilot_lt_theta hstrict)
+
 end IUTStage1Corollary312CThetaLowerBoundShadow
 
 /--
@@ -2185,6 +2211,25 @@ theorem cTheta_ge_neg_one
     (-1 : Real) <= data.cTheta :=
   data.toCThetaLowerBoundShadow.cTheta_ge_neg_one
 
+theorem cTheta_gt_neg_one_of_qPilot_lt_thetaRealLogVolume
+    (data : IUTStage1Corollary312StatementEndpoint)
+    (hstrict :
+      data.finiteEndpoint.upperRayData.qPilotLogVolume <
+        data.thetaRealLogVolume) :
+    (-1 : Real) < data.cTheta := by
+  apply data.toCThetaLowerBoundShadow.cTheta_gt_neg_one_of_qPilot_lt_theta
+  have htheta :
+      data.thetaRealLogVolume =
+        IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+          data.finiteEndpoint.thetaExtended := by
+    rw [data.thetaRealLogVolume_eq_hull,
+      data.finiteEndpoint.thetaFiniteValue_eq_hull]
+  change data.finiteEndpoint.upperRayData.qPilotLogVolume <
+    IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+      data.finiteEndpoint.thetaExtended
+  rw [← htheta]
+  exact hstrict
+
 theorem not_cTheta_lt_neg_one
     (data : IUTStage1Corollary312StatementEndpoint) :
     ¬ data.cTheta < (-1 : Real) :=
@@ -2234,6 +2279,13 @@ theorem cTheta_ge_neg_one
     (data : IUTStage1Corollary312SignedCThetaBound) :
     (-1 : Real) <= data.cTheta :=
   data.toCThetaLowerBoundShadow.cTheta_ge_neg_one
+
+theorem cTheta_gt_neg_one_of_qSigned_lt_thetaSigned
+    (data : IUTStage1Corollary312SignedCThetaBound)
+    (hstrict : data.comparison.qSigned < data.comparison.thetaSigned) :
+    (-1 : Real) < data.cTheta :=
+  data.toCThetaLowerBoundShadow.cTheta_gt_neg_one_of_qPilot_lt_theta
+    hstrict
 
 end IUTStage1Corollary312SignedCThetaBound
 
@@ -2380,6 +2432,30 @@ theorem cTheta_ge_neg_one_from_fixed_qPilot
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
     (-1 : Real) <= data.cTheta :=
   data.toFixedValueCThetaLowerBoundShadow.cTheta_ge_neg_one
+
+theorem cTheta_gt_neg_one_of_fixed_qPilot_lt_thetaHullLogVolume
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hstrict :
+      -data.absLogQ <
+        data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume) :
+    (-1 : Real) < data.cTheta :=
+  data.toFixedValueCThetaLowerBoundShadow.cTheta_gt_neg_one_of_qPilot_lt_theta
+    hstrict
+
+theorem cTheta_gt_neg_one_of_qInput_lt_thetaHullLogVolume
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hstrict :
+      data.signedEndpoint.twoComputation.inputPrimeStripLogVolume <
+        data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume) :
+    (-1 : Real) < data.cTheta := by
+  apply data.cTheta_gt_neg_one_of_fixed_qPilot_lt_thetaHullLogVolume
+  have hinput :
+      data.signedEndpoint.twoComputation.inputPrimeStripLogVolume =
+        -data.absLogQ := by
+    rw [IUTStage1QPilotTwoComputationCThetaEndpoint.absLogQ,
+      data.signedEndpoint.inputPrimeStripLogVolume_eq_neg_absLogQ]
+  rw [← hinput]
+  exact hstrict
 
 theorem not_cTheta_lt_neg_one_from_fixed_qPilot
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :
