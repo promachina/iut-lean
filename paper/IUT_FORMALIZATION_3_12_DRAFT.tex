@@ -561,7 +561,8 @@ The code currently covers:
   \(F_\ell\)-sourced finite \(\Theta\)-endpoint, the globally calibrated
   log-volume is identified with the finite real \(\Theta\)-value, while any
   nonzero local exponent with nonzero local step gives a distinct shifted
-  local log-volume;
+  local log-volume; Lean now also couples this global calibrated value to the
+  same \(C_\Theta\)-endpoint that proves \(C_\Theta\ge-1\);
 \item the Remark 3.12.1(iii) arithmetic fact
   \(\mathbb{Q}_{>0}\cap\mathbb{Z}^{\times}=\{1\}\), formalized as the exact
   characterization \(0<q\iff q=1\) for rational integer units \(q=\pm1\);
@@ -1264,7 +1265,7 @@ The present code does not yet formalize:
   beyond the present finite determinant/upper-ray/two-computation/tensor-power
   shadows;
 \item the global realified Frobenioids of Step (xii), beyond the present integer
-  log-volume shift model;
+  shift and calibrated-\(C_\Theta\) shadow;
 \item the arithmetic-divisor and analytic local log-volume construction behind
   the IUT IV Theorem 1.10 numerical estimates, beyond the present source-side
   interface records;
