@@ -8819,6 +8819,24 @@ theorem gaussianDegree_fullLabel_average_le_environment_of_nonpositive
     mul_le_mul_of_nonpos_right hcoeff henv_nonpos
   simpa [coeff] using hmul
 
+theorem gaussianDegree_fullLabel_average_lt_environment_of_negative
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv_neg : evaluation.environmentDegree < 0) :
+    (Finset.univ.sum evaluation.gaussianDegree) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) <
+      evaluation.environmentDegree := by
+  rw [gaussianDegree_fullLabel_average_eq_coeff]
+  let coeff : Real :=
+    (absLabelProcessionTop l : Real) *
+      (2 * (absLabelProcessionTop l : Real) + 1) / 6
+  have hcoeff : 1 < coeff := by
+    simpa [coeff] using absLabelAverageCoefficient_gt_one (l := l)
+  have hmul :
+      coeff * evaluation.environmentDegree <
+        1 * evaluation.environmentDegree :=
+    mul_lt_mul_of_neg_right hcoeff henv_neg
+  simpa [coeff] using hmul
+
 theorem gaussianDegree_fullLabel_average_le_of_environment_le_bound
     (evaluation : GaussianMonoidDegreeEvaluation l)
     {c : Real}
@@ -9025,6 +9043,16 @@ theorem fullLabelAveragedLogVolume_average_ne_canonicalCoordinate_of_nonzero
   rw [← fullLabelAveragedLogVolume_canonicalCoordinate_eq_environment
     evaluation]
   exact h
+
+theorem fullLabelAveragedLogVolume_average_lt_canonicalCoordinate_of_negative
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv_neg : evaluation.environmentDegree < 0) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume <
+      evaluation.fullLabelAveragedLogVolume.normalizedLogVolume
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) := by
+  rw [evaluation.fullLabelAveragedLogVolume_canonicalCoordinate_eq_environment]
+  exact gaussianDegree_fullLabel_average_lt_environment_of_negative
+    evaluation henv_neg
 
 theorem fullLabelAveragedLogVolume_average_eq_canonicalCoordinate_iff
     (evaluation : GaussianMonoidDegreeEvaluation l) :
