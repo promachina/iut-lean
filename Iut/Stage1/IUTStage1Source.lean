@@ -5669,6 +5669,47 @@ theorem thetaFinite_localFrobenioidShift_eq_iff_exponent_eq_of_step_nonzero
       local₁ local₂ rfl rfl hStep
   simpa [local₁, local₂, toLocalFrobenioidLogVolumeAmbiguity] using hlocal
 
+theorem thetaFinite_upperSemiQuotient_localShift_eq_iff_exponent_eq_of_step_nonzero
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (collapsedRegion : Set Real)
+    (exponent₁ exponent₂ : Int)
+    (localPrimeStepLogVolume : Real)
+    (hStep : localPrimeStepLogVolume ≠ 0)
+    (houtside₁ :
+      (data.toLocalFrobenioidLogVolumeAmbiguity
+        exponent₁ localPrimeStepLogVolume).shiftedLogVolume ∉ collapsedRegion)
+    (houtside₂ :
+      (data.toLocalFrobenioidLogVolumeAmbiguity
+        exponent₂ localPrimeStepLogVolume).shiftedLogVolume ∉ collapsedRegion) :
+    let local₁ :=
+      data.toLocalFrobenioidLogVolumeAmbiguity
+        exponent₁ localPrimeStepLogVolume;
+    let local₂ :=
+      data.toLocalFrobenioidLogVolumeAmbiguity
+        exponent₂ localPrimeStepLogVolume;
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        collapsedRegion local₁.shiftedLogVolume =
+      IUTStage1UpperSemiSetQuotient.quotientMap
+        collapsedRegion local₂.shiftedLogVolume ↔
+      exponent₁ = exponent₂ := by
+  intro local₁ local₂
+  have hquot :
+      IUTStage1UpperSemiSetQuotient.quotientMap
+          collapsedRegion local₁.shiftedLogVolume =
+        IUTStage1UpperSemiSetQuotient.quotientMap
+          collapsedRegion local₂.shiftedLogVolume ↔
+        local₁.shiftedLogVolume = local₂.shiftedLogVolume :=
+    IUTStage1UpperSemiSetQuotient.quotientMap_eq_iff_of_not_mem
+      (S := collapsedRegion)
+      (x := local₁.shiftedLogVolume)
+      (y := local₂.shiftedLogVolume)
+      (by simpa [local₁] using houtside₁)
+      (by simpa [local₂] using houtside₂)
+  have hshift :=
+    data.thetaFinite_localFrobenioidShift_eq_iff_exponent_eq_of_step_nonzero
+      exponent₁ exponent₂ localPrimeStepLogVolume hStep
+  exact hquot.trans hshift
+
 theorem ofZModCuspLabelLogVolumeCompatibilities_q_mem_upperRay
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :
