@@ -5267,6 +5267,21 @@ theorem thetaHullLogVolume_eq_determinantLogVolume
   rw [data.theta_eq_normalized_determinant,
     data.determinant.normalizedLogVolume_eq_determinant]
 
+theorem thetaHullLogVolume_eq_tensorPowerLogVolume_div
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.thetaHullLogVolume =
+      data.determinant.tensorPowerLogVolume /
+        (data.determinant.positiveTensorPower : Real) := by
+  rw [data.theta_eq_normalized_determinant, data.determinant.normalized_eq]
+
+theorem tensorPowerLogVolume_eq_positiveTensorPower_mul_thetaHullLogVolume
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    data.determinant.tensorPowerLogVolume =
+      (data.determinant.positiveTensorPower : Real) *
+        data.thetaHullLogVolume := by
+  rw [data.thetaHullLogVolume_eq_determinantLogVolume,
+    data.determinant.tensor_power_eq]
+
 theorem determinantLogVolume_endpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
     1 < data.determinant.rank ∧
