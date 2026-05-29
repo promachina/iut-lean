@@ -6914,6 +6914,80 @@ theorem statementEndpoint_cTheta_gt_neg_one_of_thetaRealLogVolume_nonnegative
       pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ
       hTheta)
 
+theorem statementEndpoint_qPilotLogVolume_eq_thetaRealLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+      thetaHull_le_cTheta_absLogQ).finiteEndpoint.upperRayData.qPilotLogVolume =
+      (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ).thetaRealLogVolume :=
+  (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+    thetaHull_le_cTheta_absLogQ)
+      |>.qPilotLogVolume_eq_thetaRealLogVolume_of_cTheta_eq_neg_one hC
+
+theorem beforeAverage_eq_statementEndpoint_thetaRealLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    data.corridor.beforeIndeterminacy.averageLogVolume =
+      (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ).thetaRealLogVolume := by
+  have h :=
+    data.statementEndpoint_qPilotLogVolume_eq_thetaRealLogVolume_of_cTheta_eq_neg_one
+      pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ hC
+  rw [data.statementEndpoint_qPilotLogVolume_eq_beforeAverage
+    pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ] at h
+  exact h
+
+theorem beforeAverage_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    data.corridor.beforeIndeterminacy.averageLogVolume =
+      data.thetaHullLogVolume := by
+  have h :=
+    data.beforeAverage_eq_statementEndpoint_thetaRealLogVolume_of_cTheta_eq_neg_one
+      pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ hC
+  rw [data.statementEndpoint_thetaRealLogVolume_eq_hull
+    pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ] at h
+  exact h
+
+theorem not_beforeAverage_lt_statementEndpoint_thetaRealLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    ¬ data.corridor.beforeIndeterminacy.averageLogVolume <
+      (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ).thetaRealLogVolume := by
+  rw [data.beforeAverage_eq_statementEndpoint_thetaRealLogVolume_of_cTheta_eq_neg_one
+    pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ hC]
+  exact lt_irrefl _
+
 theorem statementEndpoint_not_cTheta_lt_neg_one
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)

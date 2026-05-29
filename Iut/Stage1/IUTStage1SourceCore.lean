@@ -2058,6 +2058,31 @@ theorem cTheta_ge_neg_one
     simpa using data.neg_absLogQ_le_cTheta_absLogQ
   exact le_of_mul_le_mul_right hmul data.absLogQ_pos
 
+theorem thetaPilotLogVolume_eq_neg_absLogQ_of_cTheta_eq_neg_one
+    (data : IUTStage1Corollary312CThetaLowerBoundShadow)
+    (hC : data.cTheta = (-1 : Real)) :
+    data.thetaPilotLogVolume = -data.absLogQ := by
+  have hupper :
+      data.thetaPilotLogVolume <= -data.absLogQ := by
+    calc
+      data.thetaPilotLogVolume <= data.cTheta * data.absLogQ :=
+        data.thetaPilotLogVolume_le_cTheta_absLogQ
+      _ = -data.absLogQ := by
+        rw [hC]
+        ring
+  have hlower :
+      -data.absLogQ <= data.thetaPilotLogVolume := by
+    rw [← data.qPilotLogVolume_eq_neg_absLogQ]
+    exact data.qPilotLogVolume_le_thetaPilotLogVolume
+  exact le_antisymm hupper hlower
+
+theorem qPilotLogVolume_eq_thetaPilotLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1Corollary312CThetaLowerBoundShadow)
+    (hC : data.cTheta = (-1 : Real)) :
+    data.qPilotLogVolume = data.thetaPilotLogVolume := by
+  rw [data.qPilotLogVolume_eq_neg_absLogQ,
+    data.thetaPilotLogVolume_eq_neg_absLogQ_of_cTheta_eq_neg_one hC]
+
 theorem neg_absLogQ_lt_cTheta_absLogQ_of_qPilot_lt_theta
     (data : IUTStage1Corollary312CThetaLowerBoundShadow)
     (hstrict :
@@ -2230,6 +2255,26 @@ theorem cTheta_gt_neg_one_of_qPilot_lt_thetaRealLogVolume
   rw [← htheta]
   exact hstrict
 
+theorem qPilotLogVolume_eq_thetaRealLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1Corollary312StatementEndpoint)
+    (hC : data.cTheta = (-1 : Real)) :
+    data.finiteEndpoint.upperRayData.qPilotLogVolume =
+      data.thetaRealLogVolume := by
+  have h :=
+    data.toCThetaLowerBoundShadow
+      |>.qPilotLogVolume_eq_thetaPilotLogVolume_of_cTheta_eq_neg_one hC
+  change data.finiteEndpoint.upperRayData.qPilotLogVolume =
+    IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+      data.finiteEndpoint.thetaExtended at h
+  have htheta :
+      IUTStage1ExtendedSignedLogVolume.finiteValueOrZero
+          data.finiteEndpoint.thetaExtended =
+        data.thetaRealLogVolume := by
+    rw [data.thetaRealLogVolume_eq_hull,
+      data.finiteEndpoint.thetaFiniteValue_eq_hull]
+  rw [htheta] at h
+  exact h
+
 theorem not_cTheta_lt_neg_one
     (data : IUTStage1Corollary312StatementEndpoint) :
     ¬ data.cTheta < (-1 : Real) :=
@@ -2286,6 +2331,13 @@ theorem cTheta_gt_neg_one_of_qSigned_lt_thetaSigned
     (-1 : Real) < data.cTheta :=
   data.toCThetaLowerBoundShadow.cTheta_gt_neg_one_of_qPilot_lt_theta
     hstrict
+
+theorem qSigned_eq_thetaSigned_of_cTheta_eq_neg_one
+    (data : IUTStage1Corollary312SignedCThetaBound)
+    (hC : data.cTheta = (-1 : Real)) :
+    data.comparison.qSigned = data.comparison.thetaSigned :=
+  data.toCThetaLowerBoundShadow
+    |>.qPilotLogVolume_eq_thetaPilotLogVolume_of_cTheta_eq_neg_one hC
 
 end IUTStage1Corollary312SignedCThetaBound
 
@@ -2456,6 +2508,23 @@ theorem cTheta_gt_neg_one_of_qInput_lt_thetaHullLogVolume
       data.signedEndpoint.inputPrimeStripLogVolume_eq_neg_absLogQ]
   rw [← hinput]
   exact hstrict
+
+theorem fixed_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hC : data.cTheta = (-1 : Real)) :
+    -data.absLogQ =
+      data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume :=
+  data.toFixedValueCThetaLowerBoundShadow
+    |>.qPilotLogVolume_eq_thetaPilotLogVolume_of_cTheta_eq_neg_one hC
+
+theorem qInputLogVolume_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
+    (data : IUTStage1QPilotTwoComputationCThetaEndpoint)
+    (hC : data.cTheta = (-1 : Real)) :
+    data.signedEndpoint.twoComputation.inputPrimeStripLogVolume =
+      data.signedEndpoint.twoComputation.upperRayData.thetaHullLogVolume := by
+  rw [data.signedEndpoint.inputPrimeStripLogVolume_eq_neg_absLogQ]
+  simpa [IUTStage1QPilotTwoComputationCThetaEndpoint.absLogQ] using
+    data.fixed_qPilot_eq_thetaHullLogVolume_of_cTheta_eq_neg_one hC
 
 theorem not_cTheta_lt_neg_one_from_fixed_qPilot
     (data : IUTStage1QPilotTwoComputationCThetaEndpoint) :

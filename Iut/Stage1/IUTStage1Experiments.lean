@@ -5419,6 +5419,39 @@ theorem stepXToHullUpperRay_statementEndpoint_cTheta_gt_neg_one_of_theta_nonneg
   data.statementEndpoint_cTheta_gt_neg_one_of_thetaRealLogVolume_nonnegative
     pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ hTheta
 
+theorem stepXToHullUpperRay_beforeAverage_eq_thetaHull_of_cTheta_eq_neg_one
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    data.corridor.beforeIndeterminacy.averageLogVolume =
+      data.thetaHullLogVolume :=
+  data.beforeAverage_eq_thetaHullLogVolume_of_cTheta_eq_neg_one
+    pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ hC
+
+theorem stepXToHullUpperRay_not_beforeAverage_lt_theta_of_cTheta_eq_neg_one
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (pilotBoundary : IUTStage1Corollary312PilotIndeterminacyBoundary)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume))
+    (hC : cTheta = (-1 : Real)) :
+    ¬ data.corridor.beforeIndeterminacy.averageLogVolume <
+      (data.toStatementEndpoint pilotBoundary q_pilot_positive cTheta
+        thetaHull_le_cTheta_absLogQ).thetaRealLogVolume :=
+  data.not_beforeAverage_lt_statementEndpoint_thetaRealLogVolume_of_cTheta_eq_neg_one
+    pilotBoundary q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ hC
+
 theorem stepXToHullUpperRay_statementEndpoint_qNotSubject
     {label : Type u} [Fintype label]
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
