@@ -761,6 +761,23 @@ theorem weightedVolumeSubordinate_not_symmetric_at_zero
   IUTStage1ZModCuspFullLabel.not_weightedVolumeSubordinate_symmetric_at_nonzero_zero
     label
 
+theorem coordinateNonzeroWeightedVolumeSubordinate_zero
+    (l : PrimeGeFive) (j : ZMod l.value) (hj : j ≠ 0) :
+    IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+      (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+      IUTStage1ZModCuspFullLabel.zero :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero_weightedVolumeSubordinate_zero
+    l j hj
+
+theorem not_allCoordinatesWeightedVolumeSubordinate_zero
+    (l : PrimeGeFive) :
+    ¬ ∀ j : ZMod l.value,
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+          IUTStage1ZModCuspFullLabel.zero :=
+  IUTStage1ZModCuspFullLabel.not_forall_coordinate_weightedVolumeSubordinate_zero
+    l
+
 theorem absLabelProcessionTop_eq_halfMinusOne
     (l : PrimeGeFive) :
     IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l =
