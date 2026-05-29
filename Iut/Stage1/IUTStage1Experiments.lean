@@ -6543,6 +6543,24 @@ theorem generalizedQLambdaCTheta_lower_bound
     -((data.lambda : Real)) <= data.cTheta :=
   data.cTheta_ge_neg_lambda
 
+theorem generalizedQLambdaCTheta_boundary_or_strict
+    (data : IUTStage1Corollary312QLambdaCThetaBoundShadow) :
+    data.cTheta = -((data.lambda : Real)) ∨
+      -((data.lambda : Real)) < data.cTheta :=
+  data.cTheta_eq_neg_lambda_or_gt_neg_lambda
+
+theorem generalizedQLambdaCTheta_strict_of_qLambda_strict
+    (data : IUTStage1Corollary312QLambdaCThetaBoundShadow)
+    (hstrict : data.qLambdaSigned < data.thetaSigned) :
+    -((data.lambda : Real)) < data.cTheta :=
+  data.cTheta_gt_neg_lambda_of_qLambda_lt_theta hstrict
+
+theorem generalizedQLambdaCTheta_qLambda_eq_theta_of_boundary
+    (data : IUTStage1Corollary312QLambdaCThetaBoundShadow)
+    (hC : data.cTheta = -((data.lambda : Real))) :
+    data.qLambdaSigned = data.thetaSigned :=
+  data.qLambdaSigned_eq_thetaSigned_of_cTheta_eq_neg_lambda hC
+
 theorem generalizedQLambdaCTheta_standard_bound
     (data : IUTStage1Corollary312QLambdaCThetaBoundShadow)
     (hlambda : data.lambda <= 1) :

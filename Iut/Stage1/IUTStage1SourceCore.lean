@@ -2445,6 +2445,58 @@ theorem cTheta_ge_neg_lambda
     simpa [neg_mul] using hle
   exact le_of_mul_le_mul_right hmul data.absLogQ_pos
 
+theorem thetaSigned_eq_neg_lambda_absLogQ_of_cTheta_eq_neg_lambda
+    (data : IUTStage1Corollary312QLambdaCThetaBoundShadow)
+    (hC : data.cTheta = -((data.lambda : Real))) :
+    data.thetaSigned = -((data.lambda : Real) * data.absLogQ) := by
+  have hupper :
+      data.thetaSigned <= -((data.lambda : Real) * data.absLogQ) := by
+    calc
+      data.thetaSigned <= data.cTheta * data.absLogQ :=
+        data.thetaSigned_le_cTheta_absLogQ
+      _ = -((data.lambda : Real) * data.absLogQ) := by
+        rw [hC]
+        ring
+  have hlower :
+      -((data.lambda : Real) * data.absLogQ) <= data.thetaSigned := by
+    rw [← data.qLambdaSigned_eq_neg_lambda_absLogQ]
+    exact data.qLambdaSigned_le_thetaSigned
+  exact le_antisymm hupper hlower
+
+theorem qLambdaSigned_eq_thetaSigned_of_cTheta_eq_neg_lambda
+    (data : IUTStage1Corollary312QLambdaCThetaBoundShadow)
+    (hC : data.cTheta = -((data.lambda : Real))) :
+    data.qLambdaSigned = data.thetaSigned := by
+  rw [data.qLambdaSigned_eq_neg_lambda_absLogQ,
+    data.thetaSigned_eq_neg_lambda_absLogQ_of_cTheta_eq_neg_lambda hC]
+
+theorem cTheta_eq_neg_lambda_or_gt_neg_lambda
+    (data : IUTStage1Corollary312QLambdaCThetaBoundShadow) :
+    data.cTheta = -((data.lambda : Real)) ∨
+      -((data.lambda : Real)) < data.cTheta := by
+  by_cases hC : data.cTheta = -((data.lambda : Real))
+  · exact Or.inl hC
+  · exact Or.inr (lt_of_le_of_ne data.cTheta_ge_neg_lambda (Ne.symm hC))
+
+theorem neg_lambda_absLogQ_lt_cTheta_absLogQ_of_qLambda_lt_theta
+    (data : IUTStage1Corollary312QLambdaCThetaBoundShadow)
+    (hstrict : data.qLambdaSigned < data.thetaSigned) :
+    -((data.lambda : Real) * data.absLogQ) <
+      data.cTheta * data.absLogQ := by
+  rw [← data.qLambdaSigned_eq_neg_lambda_absLogQ]
+  exact lt_of_lt_of_le hstrict data.thetaSigned_le_cTheta_absLogQ
+
+theorem cTheta_gt_neg_lambda_of_qLambda_lt_theta
+    (data : IUTStage1Corollary312QLambdaCThetaBoundShadow)
+    (hstrict : data.qLambdaSigned < data.thetaSigned) :
+    -((data.lambda : Real)) < data.cTheta := by
+  have hmul :
+      -((data.lambda : Real)) * data.absLogQ <
+        data.cTheta * data.absLogQ := by
+    simpa [neg_mul] using
+      data.neg_lambda_absLogQ_lt_cTheta_absLogQ_of_qLambda_lt_theta hstrict
+  nlinarith [data.absLogQ_pos]
+
 theorem standard_bound_of_lambda_le_one
     (data : IUTStage1Corollary312QLambdaCThetaBoundShadow)
     (hlambda : data.lambda <= 1) :
