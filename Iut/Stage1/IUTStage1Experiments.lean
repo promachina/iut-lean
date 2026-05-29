@@ -1485,6 +1485,33 @@ theorem lgpSplittingMonoid_generator_sum_eq_procession_square_sum
         action.evaluation.environmentDegree :=
   action.generatorLogVolume_sum_eq_procession_square_sum
 
+theorem lgpSplittingMonoid_processionSquareSum_mul_six
+    {l : PrimeGeFive} :
+    ((Finset.univ.sum fun label :
+      IUTStage1ProcessionContainer
+        (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l) =>
+        ((label.val : Real) ^ 2)) * 6) =
+      (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) *
+        ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) + 1) *
+          (2 *
+            (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) +
+              1) :=
+  IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction.processionSquareSum_mul_six
+    (l := l)
+
+theorem lgpSplittingMonoid_generator_sum_mul_six
+    {l : PrimeGeFive}
+    (action :
+      IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction l) :
+    (Finset.univ.sum action.generatorLogVolume) * 6 =
+      ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) *
+        ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) + 1) *
+          (2 *
+            (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) +
+              1)) *
+        action.evaluation.environmentDegree :=
+  action.generatorLogVolume_sum_mul_six
+
 theorem lgpSplittingMonoid_normalizedActed_eq_packetNormalized_plus_generatorAverage
     {l : PrimeGeFive}
     (action :

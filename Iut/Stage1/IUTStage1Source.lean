@@ -7895,6 +7895,62 @@ theorem generatorLogVolume_sum_eq_procession_square_sum
           action.evaluation.environmentDegree := by
       rw [Finset.sum_mul]
 
+theorem processionSquareSum_mul_six :
+    ((Finset.univ.sum fun label :
+      IUTStage1ProcessionContainer (absLabelProcessionTop l) =>
+        ((label.val : Real) ^ 2)) * 6) =
+      (absLabelProcessionTop l : Real) *
+        ((absLabelProcessionTop l : Real) + 1) *
+          (2 * (absLabelProcessionTop l : Real) + 1) := by
+  change
+    ((Finset.univ.sum fun label : Fin (absLabelProcessionTop l + 1) =>
+      ((label.val : Real) ^ 2)) * 6) =
+      (absLabelProcessionTop l : Real) *
+        ((absLabelProcessionTop l : Real) + 1) *
+          (2 * (absLabelProcessionTop l : Real) + 1)
+  rw [Finset.sum_fin_eq_sum_range]
+  have hsum_eq :
+      (Finset.range (absLabelProcessionTop l + 1)).sum
+          (fun x : Nat =>
+            if h : x < absLabelProcessionTop l + 1 then
+              (((⟨x, h⟩ : Fin (absLabelProcessionTop l + 1)).val : Real) ^ 2)
+            else 0) =
+        (Finset.range (absLabelProcessionTop l + 1)).sum
+          (fun x : Nat => ((x : Real) ^ 2)) := by
+    apply Finset.sum_congr rfl
+    intro x hx
+    have hxlt : x < absLabelProcessionTop l + 1 :=
+      Finset.mem_range.mp hx
+    simp [hxlt]
+  rw [hsum_eq]
+  exact iutIVThetaPilot_sum_sq_mul_six (absLabelProcessionTop l)
+
+theorem generatorLogVolume_sum_mul_six
+    (action : LGPSplittingMonoidTensorPacketAction l) :
+    (Finset.univ.sum action.generatorLogVolume) * 6 =
+      ((absLabelProcessionTop l : Real) *
+        ((absLabelProcessionTop l : Real) + 1) *
+          (2 * (absLabelProcessionTop l : Real) + 1)) *
+        action.evaluation.environmentDegree := by
+  rw [action.generatorLogVolume_sum_eq_procession_square_sum]
+  have hsum := processionSquareSum_mul_six (l := l)
+  calc
+    ((Finset.univ.sum fun label :
+      IUTStage1ProcessionContainer (absLabelProcessionTop l) =>
+        ((label.val : Real) ^ 2)) *
+        action.evaluation.environmentDegree) * 6 =
+        (((Finset.univ.sum fun label :
+          IUTStage1ProcessionContainer (absLabelProcessionTop l) =>
+            ((label.val : Real) ^ 2)) * 6) *
+          action.evaluation.environmentDegree) := by
+      ring
+    _ =
+        ((absLabelProcessionTop l : Real) *
+          ((absLabelProcessionTop l : Real) + 1) *
+            (2 * (absLabelProcessionTop l : Real) + 1)) *
+          action.evaluation.environmentDegree := by
+      rw [hsum]
+
 theorem normalizedActedLogVolume_eq_packetNormalized_plus_generatorAverage
     (action : LGPSplittingMonoidTensorPacketAction l) :
     action.normalizedActedLogVolume =
