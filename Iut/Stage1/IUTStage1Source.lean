@@ -9136,6 +9136,53 @@ theorem fullLabel_average_eq_zero_add_subordinate_sum_div
   rw [fullLabel_card_eq_procession, IUTStage1ProcessionContainer.card_eq]
   norm_num
 
+theorem fullLabel_sum_unitAction_eq
+    (a : (ZMod l.value)ˣ) (f : IUTStage1ZModCuspFullLabel l -> Real) :
+    (Finset.univ.sum fun label : IUTStage1ZModCuspFullLabel l =>
+      f (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label)) =
+      Finset.univ.sum f :=
+  Fintype.sum_equiv
+    (IUTStage1ZModCuspFullLabel.unitActionOnFullLabelEquiv l a)
+    (fun label : IUTStage1ZModCuspFullLabel l =>
+      f (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label))
+    f
+    (fun _label => rfl)
+
+theorem fullLabel_average_unitAction_eq
+    (a : (ZMod l.value)ˣ) (f : IUTStage1ZModCuspFullLabel l -> Real) :
+    (Finset.univ.sum fun label : IUTStage1ZModCuspFullLabel l =>
+      f (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label)) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) =
+      (Finset.univ.sum f) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) := by
+  rw [fullLabel_sum_unitAction_eq]
+
+theorem subordinateFullLabel_sum_unitAction_eq
+    (a : (ZMod l.value)ˣ) (f : IUTStage1ZModCuspFullLabel l -> Real) :
+    (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+      (fun label : IUTStage1ZModCuspFullLabel l =>
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          label IUTStage1ZModCuspFullLabel.zero)
+      (Classical.decPred _) Finset.univ).sum
+        (fun label : IUTStage1ZModCuspFullLabel l =>
+          f (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label)) =
+      (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+        (fun label : IUTStage1ZModCuspFullLabel l =>
+          IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+            label IUTStage1ZModCuspFullLabel.zero)
+        (Classical.decPred _) Finset.univ).sum f := by
+  classical
+  have hfull := fullLabel_sum_unitAction_eq (l := l) a f
+  have hleft :=
+    fullLabel_sum_eq_zero_add_subordinate_sum
+      (l := l)
+      (fun label : IUTStage1ZModCuspFullLabel l =>
+        f (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label))
+  have hright := fullLabel_sum_eq_zero_add_subordinate_sum (l := l) f
+  rw [hleft, hright] at hfull
+  rw [IUTStage1ZModCuspFullLabel.unitActionOnFullLabel_zero] at hfull
+  linarith
+
 theorem fullLabel_sum_eq_procession_sum
     (f : IUTStage1ZModCuspFullLabel l -> Real) :
     (Finset.univ.sum f) =

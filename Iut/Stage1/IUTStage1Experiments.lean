@@ -1148,6 +1148,41 @@ theorem fullLabelAverage_eq_zero_add_subordinateSum_div
   IUTStage1ZModSquareWeightProfile.fullLabel_average_eq_zero_add_subordinate_sum_div
     f
 
+theorem fullLabelSum_unitAction_eq
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ)
+    (f : IUTStage1ZModCuspFullLabel l -> Real) :
+    (Finset.univ.sum fun label : IUTStage1ZModCuspFullLabel l =>
+      f (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label)) =
+      Finset.univ.sum f :=
+  IUTStage1ZModSquareWeightProfile.fullLabel_sum_unitAction_eq a f
+
+theorem fullLabelAverage_unitAction_eq
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ)
+    (f : IUTStage1ZModCuspFullLabel l -> Real) :
+    (Finset.univ.sum fun label : IUTStage1ZModCuspFullLabel l =>
+      f (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label)) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) =
+      (Finset.univ.sum f) /
+        (Fintype.card (IUTStage1ZModCuspFullLabel l) : Real) :=
+  IUTStage1ZModSquareWeightProfile.fullLabel_average_unitAction_eq a f
+
+theorem subordinateFullLabelSum_unitAction_eq
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ)
+    (f : IUTStage1ZModCuspFullLabel l -> Real) :
+    (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+      (fun label : IUTStage1ZModCuspFullLabel l =>
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          label IUTStage1ZModCuspFullLabel.zero)
+      (Classical.decPred _) Finset.univ).sum
+        (fun label : IUTStage1ZModCuspFullLabel l =>
+          f (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label)) =
+      (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+        (fun label : IUTStage1ZModCuspFullLabel l =>
+          IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+            label IUTStage1ZModCuspFullLabel.zero)
+        (Classical.decPred _) Finset.univ).sum f :=
+  IUTStage1ZModSquareWeightProfile.subordinateFullLabel_sum_unitAction_eq a f
+
 theorem gaussianFullLabelAverage_eq_processionAverage
     {l : PrimeGeFive}
     (evaluation :

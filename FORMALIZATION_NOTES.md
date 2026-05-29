@@ -19055,3 +19055,34 @@ as a predicate, but as an equivalence of the full label set.
 This strengthens the formal counterpart of IUT II, Remarks 4.7.3--4.7.5:
 the \(F_\ell\)-symmetry on the absolute-label side is modeled as genuine
 permutation symmetry, while the zero label remains distinguished.
+
+## Unit-action invariance of full-label sums
+
+### Lean Move
+
+Added:
+
+```text
+fullLabel_sum_unitAction_eq
+fullLabel_average_unitAction_eq
+subordinateFullLabel_sum_unitAction_eq
+fullLabelSum_unitAction_eq
+fullLabelAverage_unitAction_eq
+subordinateFullLabelSum_unitAction_eq
+```
+
+### Mathematical Reason
+
+Since each unit acts by an equivalence of the full-label set, Lean proves that
+reindexing a full-label sum by this action leaves the sum unchanged.  The same
+statement holds after dividing by the full-label cardinality.  Using the exact
+zero/subordinate split and the fact that the unit action fixes zero, Lean also
+proves that the sum over the subordinate nonzero labels is invariant under the
+unit action.
+
+### Source Check
+
+This is the finite-sum version of the permutation-symmetry language in IUT II,
+Remark 4.7.4: the multiplicative \(F_\ell\)-symmetry acts on the
+absolute-label side as a genuine permutation symmetry compatible with the
+zero/nonzero separation.
