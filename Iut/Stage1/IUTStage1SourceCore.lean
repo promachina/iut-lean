@@ -1747,6 +1747,27 @@ theorem quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
     exact
       ⟨x, hxA, quotientMap_eq_collapsed_of_mem (hsubset hxA)⟩
 
+theorem quotientMap_image_eq_singleton_collapsed_iff
+    {A : Set E} (hne : A.Nonempty) :
+    quotientMap S '' A = {collapsed} ↔ A ⊆ S := by
+  constructor
+  · intro himage x hxA
+    have hcollapsed :
+        quotientMap S x = collapsed := by
+      have hmem : quotientMap S x ∈ quotientMap S '' A :=
+        ⟨x, hxA, rfl⟩
+      rw [himage] at hmem
+      exact Set.mem_singleton_iff.mp hmem
+    have hpre :
+        x ∈ { x : E | quotientMap S x = collapsed } :=
+      hcollapsed
+    rw [quotientMap_preimage_collapsed] at hpre
+    exact hpre
+  · intro hsubset
+    exact
+      quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+        hne hsubset
+
 theorem quotientMap_images_eq_of_nonempty_subsets
     {A B : Set E}
     (hneA : A.Nonempty) (hsubA : A ⊆ S)
@@ -1754,6 +1775,22 @@ theorem quotientMap_images_eq_of_nonempty_subsets
     quotientMap S '' A = quotientMap S '' B := by
   rw [quotientMap_image_eq_singleton_collapsed_of_nonempty_subset hneA hsubA,
     quotientMap_image_eq_singleton_collapsed_of_nonempty_subset hneB hsubB]
+
+theorem quotientMap_two_images_collapse_iff
+    {A B : Set E}
+    (hneA : A.Nonempty) (hneB : B.Nonempty) :
+    quotientMap S '' A = {collapsed} ∧
+        quotientMap S '' B = {collapsed} ↔
+      A ⊆ S ∧ B ⊆ S := by
+  constructor
+  · rintro ⟨hA, hB⟩
+    exact
+      ⟨(quotientMap_image_eq_singleton_collapsed_iff hneA).mp hA,
+        (quotientMap_image_eq_singleton_collapsed_iff hneB).mp hB⟩
+  · rintro ⟨hA, hB⟩
+    exact
+      ⟨(quotientMap_image_eq_singleton_collapsed_iff hneA).mpr hA,
+        (quotientMap_image_eq_singleton_collapsed_iff hneB).mpr hB⟩
 
 theorem quotientMap_eq_iff_of_not_mem
     {x y : E} (hx : x ∉ S) (hy : y ∉ S) :
