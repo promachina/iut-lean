@@ -5423,6 +5423,46 @@ theorem balancedNeg_failsRepresentativeSummands
   IUTStage1BalancedSquareFullLabelTransport.negSelf_not_representativeSummand_constant_one_preserved
     logVolume
 
+theorem balancedNeg_preservesGaussianAndBalanced_rejectsRepresentative
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    (∀ j : ZMod l.value,
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            ((IUTStage1BalancedSquareFullLabelTransport.negSelf
+              logVolume).coordinateEquiv j)) =
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      (∀ j : ZMod l.value,
+        IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+            (l := l)
+            ((IUTStage1BalancedSquareFullLabelTransport.negSelf
+              logVolume).coordinateEquiv j) =
+          IUTStage1ZModSquareWeightProfile.balancedSquareWeight
+            (l := l) j) ∧
+      ¬ ∀ j : ZMod l.value,
+        IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real))
+            ((IUTStage1BalancedSquareFullLabelTransport.negSelf
+              logVolume).coordinateEquiv j) =
+          IUTStage1ZModSquareWeightProfile.representativeFullLabelWeightedSummand
+            (l := l)
+            (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+              (l := l) (1 : Real))
+            j := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro j
+    by_cases hj : j = 0
+    · simp [IUTStage1BalancedSquareFullLabelTransport.negSelf, hj]
+    · simpa [IUTStage1BalancedSquareFullLabelTransport.negSelf] using
+        evaluation.gaussianDegree_neg_fromCoordinate_eq j hj
+  · exact balancedNeg_preservesBalancedWeights logVolume
+  · exact balancedNeg_failsRepresentativeSummands logVolume
+
 theorem balancedNeg_levelIsNotPointwise
     {l : PrimeGeFive}
     (logVolume : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :

@@ -351,7 +351,12 @@ The code currently covers:
   Lean exposes this as a direct
   diagnostic: the affine action \(j\mapsto -j\) preserves Gaussian degrees
   pointwise but does not preserve the representative \(j^2\) coordinate-square
-  profile.
+  profile.  Lean now packages the sign-negation case at the transport level:
+  the balanced self-transport \(j\mapsto -j\) simultaneously preserves all
+  Gaussian degrees and all balanced square weights, while it fails preservation
+  of the representative constant-one square-weighted summands.  This is a
+  formal separation between sign-compatible balanced transport and the stricter
+  representative branch.
   Lean also converts the
   zero/nonzero cusp-label compatibility object to a uniform \(F_\ell\) average
   and proves that a diagonal constant log-volume distribution averages to that
