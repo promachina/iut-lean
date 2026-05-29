@@ -5807,6 +5807,46 @@ theorem twoComputation_output_le_theta
       data.toQPilotTwoComputationLogVolume.upperRayData.thetaHullLogVolume :=
   data.toQPilotTwoComputationLogVolume.output_le_thetaHullLogVolume
 
+theorem twoComputation_determinant_endpoint
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) :
+    let twoComputation := data.toQPilotTwoComputationLogVolume;
+    twoComputation.inputPrimeStripLogVolume =
+        data.corridor.beforeIndeterminacy.averageLogVolume ∧
+      twoComputation.outputHullLogVolume = data.qPilotLogVolume ∧
+      twoComputation.inputPrimeStripLogVolume =
+        twoComputation.outputHullLogVolume ∧
+      twoComputation.inputPrimeStripLogVolume <=
+        data.determinant.determinantLogVolume ∧
+      twoComputation.outputHullLogVolume <=
+        data.determinant.determinantLogVolume ∧
+      twoComputation.inputPrimeStripLogVolume <=
+        data.determinant.tensorPowerLogVolume /
+          (data.determinant.positiveTensorPower : Real) ∧
+      twoComputation.outputHullLogVolume <=
+        data.determinant.tensorPowerLogVolume /
+          (data.determinant.positiveTensorPower : Real) := by
+  intro twoComputation
+  exact
+    ⟨rfl, rfl, data.twoComputation_input_eq_output,
+      by
+        simpa [toQPilotTwoComputationLogVolume,
+          toHullDetPilotUpperRayLogVolume] using
+          twoComputation.input_le_determinant,
+      by
+        simpa [toQPilotTwoComputationLogVolume,
+          toHullDetPilotUpperRayLogVolume] using
+          twoComputation.output_le_determinant,
+      by
+        rw [twoComputation.input_eq_q]
+        simpa [toQPilotTwoComputationLogVolume,
+          toHullDetPilotUpperRayLogVolume] using
+          data.qPilotLogVolume_le_tensorPowerLogVolume_div,
+      by
+        rw [twoComputation.output_eq_q]
+        simpa [toQPilotTwoComputationLogVolume,
+          toHullDetPilotUpperRayLogVolume] using
+          data.qPilotLogVolume_le_tensorPowerLogVolume_div⟩
+
 theorem twoComputation_fig38_endpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
     let twoComputation := data.toQPilotTwoComputationLogVolume;
