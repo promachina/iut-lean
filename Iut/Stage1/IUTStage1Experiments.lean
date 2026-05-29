@@ -6062,10 +6062,30 @@ theorem hullDetUpperRay_qPilot_le_theta
     data.qPilotLogVolume <= data.thetaHullLogVolume :=
   data.qPilotLogVolume_le_thetaHullLogVolume
 
+theorem hullDetUpperRay_qPilot_eq_theta_iff_reverse_bound
+    (data : IUTStage1HullDetPilotUpperRayLogVolume) :
+    data.qPilotLogVolume = data.thetaHullLogVolume ↔
+      data.thetaHullLogVolume <= data.qPilotLogVolume :=
+  data.qPilotLogVolume_eq_thetaHullLogVolume_iff_reverse_bound
+
 theorem hullDetUpperRay_qPilot_le_determinant
     (data : IUTStage1HullDetPilotUpperRayLogVolume) :
     data.qPilotLogVolume <= data.determinant.determinantLogVolume :=
   data.qPilotLogVolume_le_determinant
+
+theorem hullDetUpperRay_qPilot_eq_determinant_iff_reverse_bound
+    (data : IUTStage1HullDetPilotUpperRayLogVolume) :
+    data.qPilotLogVolume = data.determinant.determinantLogVolume ↔
+      data.determinant.determinantLogVolume <= data.qPilotLogVolume :=
+  data.qPilotLogVolume_eq_determinant_iff_reverse_bound
+
+theorem hullDetUpperRay_equality_requires_reverse_bounds
+    (data : IUTStage1HullDetPilotUpperRayLogVolume) :
+    (data.qPilotLogVolume = data.thetaHullLogVolume ↔
+        data.thetaHullLogVolume <= data.qPilotLogVolume) ∧
+      (data.qPilotLogVolume = data.determinant.determinantLogVolume ↔
+        data.determinant.determinantLogVolume <= data.qPilotLogVolume) :=
+  data.upperRayEqualityRequiresReverseBounds
 
 theorem qPilotTwoComputation_input_eq_output
     (data : IUTStage1QPilotTwoComputationLogVolume) :

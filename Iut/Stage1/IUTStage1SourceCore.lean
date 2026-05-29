@@ -1710,6 +1710,29 @@ theorem qPilotLogVolume_le_determinant
   rw [← data.thetaHullLogVolume_eq_determinant]
   exact data.qPilotLogVolume_le_thetaHullLogVolume
 
+theorem qPilotLogVolume_eq_thetaHullLogVolume_iff_reverse_bound
+    (data : IUTStage1HullDetPilotUpperRayLogVolume) :
+    data.qPilotLogVolume = data.thetaHullLogVolume ↔
+      data.thetaHullLogVolume <= data.qPilotLogVolume :=
+  ⟨fun h => by rw [h],
+    fun h => le_antisymm data.qPilotLogVolume_le_thetaHullLogVolume h⟩
+
+theorem qPilotLogVolume_eq_determinant_iff_reverse_bound
+    (data : IUTStage1HullDetPilotUpperRayLogVolume) :
+    data.qPilotLogVolume = data.determinant.determinantLogVolume ↔
+      data.determinant.determinantLogVolume <= data.qPilotLogVolume :=
+  ⟨fun h => by rw [h],
+    fun h => le_antisymm data.qPilotLogVolume_le_determinant h⟩
+
+theorem upperRayEqualityRequiresReverseBounds
+    (data : IUTStage1HullDetPilotUpperRayLogVolume) :
+    (data.qPilotLogVolume = data.thetaHullLogVolume ↔
+        data.thetaHullLogVolume <= data.qPilotLogVolume) ∧
+      (data.qPilotLogVolume = data.determinant.determinantLogVolume ↔
+        data.determinant.determinantLogVolume <= data.qPilotLogVolume) :=
+  ⟨data.qPilotLogVolume_eq_thetaHullLogVolume_iff_reverse_bound,
+    data.qPilotLogVolume_eq_determinant_iff_reverse_bound⟩
+
 end IUTStage1HullDetPilotUpperRayLogVolume
 
 /--
