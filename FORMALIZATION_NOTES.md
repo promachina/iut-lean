@@ -18656,3 +18656,38 @@ nonzero absolute half-range sum, and the averages are equal after dividing by
 This matches the IUT II convention that \(|F_\ell|=\{0\}\cup
 F_\ell^\times/\{\pm1\}\), while preserving the separate \(F_\ell\)-indexed
 weighted-volume average with the zero label included.
+
+## Coordinate average versus full absolute average
+
+### Lean Move
+
+Added:
+
+```text
+primeValue_sub_one_eq_two_absLabelProcessionTop
+primeValue_eq_two_absLabelProcessionTop_add_one
+coordinateAveragedLogVolume_average_eq_coeff
+fullLabelAverageCoefficient_lt_coordinateAverageCoefficient
+coordinateAveragedLogVolume_lt_fullLabelAverage_of_negative
+fullLabelAverage_lt_coordinateAveragedLogVolume_of_positive
+coordinateAveragedLogVolume_eq_fullLabelAverage_iff
+gaussianCoordinateAveragedLogVolume_eq_coeff
+gaussianCoordinateAverage_eq_fullLabelAverage_iff
+```
+
+### Mathematical Reason
+
+After identifying the signed nonzero average with the nonzero absolute average,
+Lean can compare the full \(F_\ell\)-coordinate average directly with the full
+\(|F_\ell|\)-absolute average.  If \(j_{\max}=(\ell-1)/2\), the coordinate
+average has coefficient \(j_{\max}(j_{\max}+1)/3\), whereas the full absolute
+average has coefficient \(j_{\max}(2j_{\max}+1)/6\).  The coordinate coefficient
+is larger by \(j_{\max}/6\), so the inequality direction depends on the sign of
+\(\deg(q)\), and equality occurs exactly when \(\deg(q)=0\).
+
+### Source Check
+
+This is another bookkeeping guard around IUT II's simultaneous use of
+\(F_\ell\), \(F_\ell^\times/\{\pm1\}\), and \(|F_\ell|\).  It shows that the
+formal model does not silently conflate the \(F_\ell\)-indexed weighted-volume
+average with the full absolute-label average.

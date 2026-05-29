@@ -9088,6 +9088,18 @@ theorem zmodNonzeroCarrier_card_eq_two_absLabelProcessionTop :
   rw [hk]
   omega
 
+theorem primeValue_sub_one_eq_two_absLabelProcessionTop :
+    l.value - 1 = 2 * absLabelProcessionTop l := by
+  have hcard := zmodNonzeroCarrier_card_eq_two_absLabelProcessionTop (l := l)
+  rw [zmodNonzeroCarrier_card_eq] at hcard
+  exact hcard
+
+theorem primeValue_eq_two_absLabelProcessionTop_add_one :
+    l.value = 2 * absLabelProcessionTop l + 1 := by
+  have hsub := primeValue_sub_one_eq_two_absLabelProcessionTop (l := l)
+  have hge : 5 ≤ l.value := l.ge_five
+  omega
+
 theorem nonzeroCarrierAveragedLogVolume_eq_absNonzeroLabelAveragedLogVolume
     (evaluation : GaussianMonoidDegreeEvaluation l) :
     evaluation.nonzeroCarrierAveragedLogVolume.averageLogVolume =
@@ -9800,6 +9812,99 @@ theorem fullLabelAveragedLogVolume_average_eq_coeff
           evaluation.environmentDegree :=
   LGPSplittingMonoidTensorPacketAction.gaussianDegree_fullLabel_average_eq_coeff
     evaluation
+
+theorem coordinateAveragedLogVolume_average_eq_coeff
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume =
+      ((absLabelProcessionTop l : Real) *
+        ((absLabelProcessionTop l : Real) + 1) / 3) *
+          evaluation.environmentDegree := by
+  rw [coordinateAveragedLogVolume_eq_absNonzero_mass_rescale,
+    LGPSplittingMonoidTensorPacketAction.gaussianDegree_absNonzeroLabel_average_eq_coeff]
+  rw [primeValue_sub_one_eq_two_absLabelProcessionTop,
+    primeValue_eq_two_absLabelProcessionTop_add_one]
+  have hden :
+      (2 * (absLabelProcessionTop l : Real) + 1) ≠ 0 := by
+    positivity
+  norm_num
+  field_simp [hden]
+  ring
+
+theorem fullLabelAverageCoefficient_lt_coordinateAverageCoefficient :
+    (absLabelProcessionTop l : Real) *
+        (2 * (absLabelProcessionTop l : Real) + 1) / 6 <
+      (absLabelProcessionTop l : Real) *
+        ((absLabelProcessionTop l : Real) + 1) / 3 := by
+  have htop_pos : 0 < (absLabelProcessionTop l : Real) := by
+    exact_mod_cast absLabelProcessionTop_pos l
+  nlinarith
+
+theorem coordinateAveragedLogVolume_lt_fullLabelAverage_of_negative
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv_neg : evaluation.environmentDegree < 0) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume <
+      evaluation.fullLabelAveragedLogVolume.averageLogVolume := by
+  rw [evaluation.coordinateAveragedLogVolume_average_eq_coeff,
+    evaluation.fullLabelAveragedLogVolume_average_eq_coeff]
+  let fullCoeff : Real :=
+    (absLabelProcessionTop l : Real) *
+      (2 * (absLabelProcessionTop l : Real) + 1) / 6
+  let coordinateCoeff : Real :=
+    (absLabelProcessionTop l : Real) *
+      ((absLabelProcessionTop l : Real) + 1) / 3
+  have hcoeff : fullCoeff < coordinateCoeff := by
+    simpa [fullCoeff, coordinateCoeff] using
+      fullLabelAverageCoefficient_lt_coordinateAverageCoefficient (l := l)
+  have hmul :
+      coordinateCoeff * evaluation.environmentDegree <
+        fullCoeff * evaluation.environmentDegree :=
+    mul_lt_mul_of_neg_right hcoeff henv_neg
+  simpa [fullCoeff, coordinateCoeff] using hmul
+
+theorem fullLabelAverage_lt_coordinateAveragedLogVolume_of_positive
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv_pos : 0 < evaluation.environmentDegree) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume <
+      evaluation.coordinateAveragedLogVolume.averageLogVolume := by
+  rw [evaluation.coordinateAveragedLogVolume_average_eq_coeff,
+    evaluation.fullLabelAveragedLogVolume_average_eq_coeff]
+  let fullCoeff : Real :=
+    (absLabelProcessionTop l : Real) *
+      (2 * (absLabelProcessionTop l : Real) + 1) / 6
+  let coordinateCoeff : Real :=
+    (absLabelProcessionTop l : Real) *
+      ((absLabelProcessionTop l : Real) + 1) / 3
+  have hcoeff : fullCoeff < coordinateCoeff := by
+    simpa [fullCoeff, coordinateCoeff] using
+      fullLabelAverageCoefficient_lt_coordinateAverageCoefficient (l := l)
+  have hmul :
+      fullCoeff * evaluation.environmentDegree <
+        coordinateCoeff * evaluation.environmentDegree :=
+    mul_lt_mul_of_pos_right hcoeff henv_pos
+  simpa [fullCoeff, coordinateCoeff] using hmul
+
+theorem coordinateAveragedLogVolume_eq_fullLabelAverage_iff
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume =
+        evaluation.fullLabelAveragedLogVolume.averageLogVolume ↔
+      evaluation.environmentDegree = 0 := by
+  constructor
+  · intro h
+    by_cases hneg : evaluation.environmentDegree < 0
+    · have hlt :=
+        evaluation.coordinateAveragedLogVolume_lt_fullLabelAverage_of_negative
+          hneg
+      linarith
+    · by_cases hpos : 0 < evaluation.environmentDegree
+      · have hlt :=
+          evaluation.fullLabelAverage_lt_coordinateAveragedLogVolume_of_positive
+            hpos
+        linarith
+      · linarith
+  · intro henv
+    rw [evaluation.coordinateAveragedLogVolume_average_eq_coeff,
+      evaluation.fullLabelAveragedLogVolume_average_eq_coeff, henv]
+    ring
 
 theorem fullLabelAveragedLogVolume_canonicalCoordinate_eq_environment
     (evaluation : GaussianMonoidDegreeEvaluation l) :

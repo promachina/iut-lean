@@ -1175,6 +1175,46 @@ theorem gaussianFullLabelAveragedLogVolume_eq_coeff
           evaluation.environmentDegree :=
   evaluation.fullLabelAveragedLogVolume_average_eq_coeff
 
+theorem gaussianCoordinateAveragedLogVolume_eq_coeff
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume =
+      ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) *
+        ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) +
+          1) / 3) *
+          evaluation.environmentDegree :=
+  evaluation.coordinateAveragedLogVolume_average_eq_coeff
+
+theorem gaussianCoordinateAverage_lt_fullLabelAverage_of_negative
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (henv_neg : evaluation.environmentDegree < 0) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume <
+      evaluation.fullLabelAveragedLogVolume.averageLogVolume :=
+  evaluation.coordinateAveragedLogVolume_lt_fullLabelAverage_of_negative
+    henv_neg
+
+theorem gaussianFullLabelAverage_lt_coordinateAverage_of_positive
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (henv_pos : 0 < evaluation.environmentDegree) :
+    evaluation.fullLabelAveragedLogVolume.averageLogVolume <
+      evaluation.coordinateAveragedLogVolume.averageLogVolume :=
+  evaluation.fullLabelAverage_lt_coordinateAveragedLogVolume_of_positive
+    henv_pos
+
+theorem gaussianCoordinateAverage_eq_fullLabelAverage_iff
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.coordinateAveragedLogVolume.averageLogVolume =
+        evaluation.fullLabelAveragedLogVolume.averageLogVolume ↔
+      evaluation.environmentDegree = 0 :=
+  evaluation.coordinateAveragedLogVolume_eq_fullLabelAverage_iff
+
 theorem gaussianFullLabelAveragedLogVolume_canonical_eq_environment
     {l : PrimeGeFive}
     (evaluation :
