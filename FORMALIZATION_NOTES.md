@@ -18910,3 +18910,31 @@ the denominator even though it contributes zero to the numerator.
 This matches the weighted-volume convention in IUT II, Remark 4.7.3(iii): the
 zero label is part of the full distribution and controls the denominator, while
 the nonzero Gaussian components supply the subordinate numerator.
+
+## Closed form for subordinate Gaussian sum
+
+### Lean Move
+
+Added:
+
+```text
+gaussianDegree_subordinate_sum_mul_six
+gaussianSubordinateSum_mul_six
+```
+
+### Mathematical Reason
+
+Lean now proves the closed-form numerator identity
+\[
+6\sum_{a\ll0}G(a)
+= j_{\max}(j_{\max}+1)(2j_{\max}+1)\deg(q),
+\]
+where \(j_{\max}=(\ell-1)/2\).  This is the same square-sum arithmetic
+\(\sum_{j=1}^{j_{\max}}j^2\), but expressed through the subordinate
+full-label relation rather than through an external index set.
+
+### Source Check
+
+This stays aligned with IUT II's Gaussian convention \(q^{j^2}\) and Remark
+4.7.3(iii)'s notation \(j\ll0\): the finite Lean statement makes explicit that
+the nonzero subordinate part is exactly where the square exponents contribute.

@@ -1107,6 +1107,21 @@ theorem gaussianFullLabelAverage_eq_subordinateSum_div
         ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) + 1) :=
   evaluation.fullLabelAveragedLogVolume_average_eq_subordinate_sum_div
 
+theorem gaussianSubordinateSum_mul_six
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    ((@Finset.filter (IUTStage1ZModCuspFullLabel l)
+      (fun label : IUTStage1ZModCuspFullLabel l =>
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          label IUTStage1ZModCuspFullLabel.zero)
+      (Classical.decPred _) Finset.univ).sum evaluation.gaussianDegree) * 6 =
+      ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) *
+        ((IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) + 1) *
+          (2 * (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l : Real) + 1)) *
+        evaluation.environmentDegree :=
+  evaluation.gaussianDegree_subordinate_sum_mul_six
+
 theorem gaussianDegree_fromAbsLabelProcession
     {l : PrimeGeFive}
     (evaluation :

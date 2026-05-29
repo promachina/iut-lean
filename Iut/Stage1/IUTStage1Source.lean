@@ -10156,6 +10156,42 @@ theorem fullLabelAveragedLogVolume_average_eq_coeff
   LGPSplittingMonoidTensorPacketAction.gaussianDegree_fullLabel_average_eq_coeff
     evaluation
 
+theorem gaussianDegree_subordinate_sum_mul_six
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    ((@Finset.filter (IUTStage1ZModCuspFullLabel l)
+      (fun label : IUTStage1ZModCuspFullLabel l =>
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          label IUTStage1ZModCuspFullLabel.zero)
+      (Classical.decPred _) Finset.univ).sum evaluation.gaussianDegree) * 6 =
+      ((absLabelProcessionTop l : Real) *
+        ((absLabelProcessionTop l : Real) + 1) *
+          (2 * (absLabelProcessionTop l : Real) + 1)) *
+        evaluation.environmentDegree := by
+  classical
+  let subSum : Real :=
+    (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+      (fun label : IUTStage1ZModCuspFullLabel l =>
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          label IUTStage1ZModCuspFullLabel.zero)
+      (Classical.decPred _) Finset.univ).sum evaluation.gaussianDegree
+  have hcoeff := evaluation.fullLabelAveragedLogVolume_average_eq_coeff
+  rw [evaluation.fullLabelAveragedLogVolume_average_eq_subordinate_sum_div] at hcoeff
+  change
+    subSum / ((absLabelProcessionTop l : Real) + 1) =
+      ((absLabelProcessionTop l : Real) *
+        (2 * (absLabelProcessionTop l : Real) + 1) / 6) *
+          evaluation.environmentDegree at hcoeff
+  have hden : ((absLabelProcessionTop l : Real) + 1) ≠ 0 := by
+    positivity
+  rw [div_eq_iff hden] at hcoeff
+  change
+    subSum * 6 =
+      ((absLabelProcessionTop l : Real) *
+        ((absLabelProcessionTop l : Real) + 1) *
+          (2 * (absLabelProcessionTop l : Real) + 1)) *
+        evaluation.environmentDegree
+  nlinarith
+
 theorem coordinateAveragedLogVolume_average_eq_coeff
     (evaluation : GaussianMonoidDegreeEvaluation l) :
     evaluation.coordinateAveragedLogVolume.averageLogVolume =
