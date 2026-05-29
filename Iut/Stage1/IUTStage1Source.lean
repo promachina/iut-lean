@@ -5816,6 +5816,64 @@ def toQPilotTwoComputationCThetaEndpoint
     thetaHullLogVolume_le_cTheta_absLogQ :=
       thetaHull_le_cTheta_absLogQ }
 
+def toQLambdaCThetaBound
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (lambda : Rat)
+    (lambda_pos : 0 < lambda)
+    (cTheta : Real)
+    (qLambda_le_thetaHull :
+      -((lambda : Real) *
+        (-data.corridor.beforeIndeterminacy.averageLogVolume)) <=
+        data.thetaHullLogVolume)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    IUTStage1Corollary312QLambdaCThetaBoundShadow :=
+  { lambda := lambda,
+    lambda_pos := lambda_pos,
+    absLogQ := -data.corridor.beforeIndeterminacy.averageLogVolume,
+    absLogQ_pos := q_pilot_positive,
+    qLambdaSigned :=
+      -((lambda : Real) *
+        (-data.corridor.beforeIndeterminacy.averageLogVolume)),
+    thetaSigned := data.thetaHullLogVolume,
+    cTheta := cTheta,
+    qLambdaSigned_eq_neg_lambda_absLogQ := rfl,
+    qLambdaSigned_le_thetaSigned := qLambda_le_thetaHull,
+    thetaSigned_le_cTheta_absLogQ := thetaHull_le_cTheta_absLogQ }
+
+theorem qLambdaCTheta_endpoint
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (lambda : Rat)
+    (lambda_pos : 0 < lambda)
+    (cTheta : Real)
+    (qLambda_le_thetaHull :
+      -((lambda : Real) *
+        (-data.corridor.beforeIndeterminacy.averageLogVolume)) <=
+        data.thetaHullLogVolume)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta * (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    let endpoint :=
+      data.toQLambdaCThetaBound q_pilot_positive lambda lambda_pos cTheta
+        qLambda_le_thetaHull thetaHull_le_cTheta_absLogQ;
+    endpoint.qLambdaSigned =
+        -((lambda : Real) *
+          (-data.corridor.beforeIndeterminacy.averageLogVolume)) ∧
+      endpoint.thetaSigned = data.thetaHullLogVolume ∧
+      -((lambda : Real)) <= endpoint.cTheta ∧
+      (lambda <= 1 → (-1 : Real) <= endpoint.cTheta) ∧
+      (lambda < 1 → (-1 : Real) < endpoint.cTheta) := by
+  intro endpoint
+  exact
+    ⟨rfl, rfl, endpoint.cTheta_ge_neg_lambda,
+      endpoint.standard_bound_of_lambda_le_one,
+      endpoint.strict_standard_bound_of_lambda_lt_one⟩
+
 theorem cTheta_ge_neg_one
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (q_pilot_positive :
