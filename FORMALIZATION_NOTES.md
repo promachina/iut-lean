@@ -19243,3 +19243,45 @@ boundary.
 The source comparison remains IUT II, Remarks 4.7.3--4.7.4: additive
 \(F_\ell^\pm\)-coordinate motion and multiplicative \(F_\ell\)-symmetry on
 absolute labels must be tracked as different structures.
+
+## Affine raw-invariance and branch/descent diagnostics
+
+### Lean Move
+
+Added:
+
+```text
+zmodUnitSmulEquiv
+zmodUnitAffineEquiv
+zmodUnitSmul_sum_eq
+zmodUnitAffine_sum_eq
+unitAffine_fromCoordinate_weightedVolumeSubordinate_zero_iff_zero_translation
+coordinateGaussian_sum_unitAffine_eq
+coordinateAveragedLogVolume_average_unitAffine_eq
+coordinateAverage_unitAffineInvariant_but_not_fullLabelDescend
+rawCoordinate_sum_unitAffine_eq
+gaussianCoordinateSum_unitAffine_eq
+gaussianCoordinateAverage_unitAffine_eq
+gaussianCoordinateAverage_unitAffineInvariant_but_notFullLabelDescent
+unitAffine_preserves_coordinateSubordinateZero_iff_zeroTranslation
+```
+
+### Mathematical Reason
+
+Lean now treats affine coordinate operations \(j\mapsto a j+t\), with
+\(a\in F_\ell^\times\), as explicit equivalences of the raw coordinate set.
+Therefore every raw coordinate sum, and in particular the all-coordinate
+Gaussian average, is invariant under this affine reindexing.
+
+The same affine operation preserves the subordinate-to-zero predicate for every
+coordinate exactly when \(t=0\), and it descends to full absolute labels exactly
+when \(t=0\).  Thus the multiplicative unit part is harmless, but a nonzero
+additive offset remains visible at both the zero/nonzero branch and the
+full-label quotient.
+
+### Source Check
+
+This extends the IUT II, Remarks 4.7.3--4.7.4 finite-model check from pure
+translations to mixed unit-plus-translation coordinate changes.  Raw
+permutation invariance of an \(F_\ell\)-indexed sum is formally weaker than the
+absolute-label/multiplicative symmetry used for Gaussian-monoid bookkeeping.

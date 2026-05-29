@@ -6360,6 +6360,45 @@ theorem nonzero_translation_not_preserves_fromCoordinate_weightedVolumeSubordina
     ((translation_fromCoordinate_weightedVolumeSubordinate_zero_iff_zero
       l t).mp hpres)
 
+theorem unitAffine_fromCoordinate_weightedVolumeSubordinate_zero_iff_zero_translation
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (∀ j : ZMod l.value,
+      WeightedVolumeSubordinate
+          (fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))
+          IUTStage1ZModCuspFullLabel.zero ↔
+        WeightedVolumeSubordinate
+          (fromCoordinate l j) IUTStage1ZModCuspFullLabel.zero) ↔
+      t = 0 := by
+  constructor
+  · intro hpres
+    have hzero := hpres 0
+    have hzero' :
+        WeightedVolumeSubordinate
+            (fromCoordinate l t) IUTStage1ZModCuspFullLabel.zero ↔
+          WeightedVolumeSubordinate
+            (fromCoordinate l (0 : ZMod l.value))
+            IUTStage1ZModCuspFullLabel.zero := by
+      simpa [zmodLabelTranslate_eq_add, zmodUnitActionData] using hzero
+    have hzero_not :
+        ¬ WeightedVolumeSubordinate
+            (fromCoordinate l (0 : ZMod l.value))
+            IUTStage1ZModCuspFullLabel.zero := by
+      rw [fromCoordinate_weightedVolumeSubordinate_zero_iff]
+      simp
+    have ht_not :
+        ¬ WeightedVolumeSubordinate
+            (fromCoordinate l t) IUTStage1ZModCuspFullLabel.zero := by
+      intro htSub
+      exact hzero_not (hzero'.mp htSub)
+    by_contra ht
+    exact ht_not
+      ((fromCoordinate_weightedVolumeSubordinate_zero_iff l t).mpr ht)
+  · intro ht j
+    subst t
+    rw [zmodLabelTranslate_zero]
+    exact unit_smul_fromCoordinate_weightedVolumeSubordinate_zero_iff l a j
+
 theorem not_forall_coordinate_weightedVolumeSubordinate_zero
     (l : PrimeGeFive) :
     ¬ ∀ j : ZMod l.value,
@@ -6652,6 +6691,45 @@ theorem zmodTranslationEquiv_apply
   rw [zmodLabelTranslate_eq_add]
   rfl
 
+def zmodUnitSmulEquiv
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ) :
+    ZMod l.value ≃ ZMod l.value where
+  toFun := fun j => (zmodUnitActionData l).smul a j
+  invFun := fun j =>
+    (zmodUnitActionData l).smul (a⁻¹ : (ZMod l.value)ˣ) j
+  left_inv := by
+    intro j
+    simp [zmodUnitActionData]
+  right_inv := by
+    intro j
+    simp [zmodUnitActionData]
+
+theorem zmodUnitSmulEquiv_apply
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ) (j : ZMod l.value) :
+    zmodUnitSmulEquiv l a j = (zmodUnitActionData l).smul a j :=
+  rfl
+
+def zmodUnitAffineEquiv
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    ZMod l.value ≃ ZMod l.value where
+  toFun := fun j => zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)
+  invFun := fun j =>
+    (zmodUnitActionData l).smul (a⁻¹ : (ZMod l.value)ˣ)
+      (zmodLabelTranslate l (-t) j)
+  left_inv := by
+    intro j
+    simp [zmodLabelTranslate_eq_add, zmodUnitActionData]
+  right_inv := by
+    intro j
+    simp [zmodLabelTranslate_eq_add, zmodUnitActionData]
+
+theorem zmodUnitAffineEquiv_apply
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ)
+    (t j : ZMod l.value) :
+    zmodUnitAffineEquiv l a t j =
+      zmodLabelTranslate l t ((zmodUnitActionData l).smul a j) :=
+  rfl
+
 theorem zmodTranslation_sum_eq
     (t : ZMod l.value) (f : ZMod l.value -> Real) :
     (Finset.univ.sum fun j : ZMod l.value => f (zmodLabelTranslate l t j)) =
@@ -6660,6 +6738,28 @@ theorem zmodTranslation_sum_eq
     (fun j : ZMod l.value => f (zmodLabelTranslate l t j))
     (fun j : ZMod l.value => f j)
     (fun j => by rw [zmodTranslationEquiv_apply])
+
+theorem zmodUnitSmul_sum_eq
+    (a : (ZMod l.value)ˣ) (f : ZMod l.value -> Real) :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      f ((zmodUnitActionData l).smul a j)) =
+      Finset.univ.sum f :=
+  Fintype.sum_equiv (zmodUnitSmulEquiv l a)
+    (fun j : ZMod l.value => f ((zmodUnitActionData l).smul a j))
+    (fun j : ZMod l.value => f j)
+    (fun j => by rw [zmodUnitSmulEquiv_apply])
+
+theorem zmodUnitAffine_sum_eq
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value)
+    (f : ZMod l.value -> Real) :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      f (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+      Finset.univ.sum f :=
+  Fintype.sum_equiv (zmodUnitAffineEquiv l a t)
+    (fun j : ZMod l.value =>
+      f (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))
+    (fun j : ZMod l.value => f j)
+    (fun j => by rw [zmodUnitAffineEquiv_apply])
 
 theorem fullLabelMapPreserving_translation_iff_zero
     (t : ZMod l.value) :
@@ -8720,6 +8820,22 @@ theorem coordinateGaussian_sum_translation_eq
       evaluation.gaussianDegree
         (IUTStage1ZModCuspFullLabel.fromCoordinate l j))
 
+theorem coordinateGaussian_sum_unitAffine_eq
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))) =
+      Finset.univ.sum fun j : ZMod l.value =>
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffine_sum_eq
+    (l := l) a t
+    (fun j : ZMod l.value =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j))
+
 theorem coordinateAveragedLogVolume_average_translation_eq
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (t : ZMod l.value) :
@@ -8729,6 +8845,18 @@ theorem coordinateAveragedLogVolume_average_translation_eq
           (zmodLabelTranslate l t j))) / (l.value : Real)) =
       evaluation.coordinateAveragedLogVolume.averageLogVolume := by
   rw [evaluation.coordinateGaussian_sum_translation_eq t]
+  rfl
+
+theorem coordinateAveragedLogVolume_average_unitAffine_eq
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    ((Finset.univ.sum fun j : ZMod l.value =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))) /
+        (l.value : Real)) =
+      evaluation.coordinateAveragedLogVolume.averageLogVolume := by
+  rw [evaluation.coordinateGaussian_sum_unitAffine_eq a t]
   rfl
 
 theorem coordinateAverage_translationInvariant_but_not_fullLabelDescend
@@ -8747,6 +8875,24 @@ theorem coordinateAverage_translationInvariant_but_not_fullLabelDescend
   ⟨evaluation.coordinateAveragedLogVolume_average_translation_eq t,
     IUTStage1ZModCuspFullLabel.no_fullLabel_map_descends_nonzero_translation
       l t ht⟩
+
+theorem coordinateAverage_unitAffineInvariant_but_not_fullLabelDescend
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) {t : ZMod l.value} (ht : t ≠ 0) :
+    ((Finset.univ.sum fun j : ZMod l.value =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))) /
+        (l.value : Real)) =
+      evaluation.coordinateAveragedLogVolume.averageLogVolume ∧
+    ¬ ∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+      ∀ j : ZMod l.value,
+        T (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)) :=
+  ⟨evaluation.coordinateAveragedLogVolume_average_unitAffine_eq a t,
+    IUTStage1ZModCuspFullLabel.no_fullLabel_map_descends_unitAffine_nonzero_translation
+      l a ht⟩
 
 theorem coordinateGaussian_sum_eq_zero_add_nonzero
     (evaluation : GaussianMonoidDegreeEvaluation l) :

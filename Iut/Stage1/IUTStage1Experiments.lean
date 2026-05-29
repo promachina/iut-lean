@@ -981,6 +981,15 @@ theorem rawCoordinate_sum_translation_eq
   IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodTranslation_sum_eq
     (l := l) t f
 
+theorem rawCoordinate_sum_unitAffine_eq
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ) (t : ZMod l.value)
+    (f : ZMod l.value -> Real) :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      f (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+      Finset.univ.sum f :=
+  IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffine_sum_eq
+    (l := l) a t f
+
 theorem properNonemptySubset_not_translationInvariant
     (l : PrimeGeFive) (s : Finset (ZMod l.value))
     (hne : s.Nonempty)
@@ -1271,6 +1280,52 @@ theorem gaussianCoordinateAverage_translationInvariant_but_notFullLabelDescent
             (zmodLabelTranslate l t j) :=
   evaluation.coordinateAverage_translationInvariant_but_not_fullLabelDescend ht
 
+theorem gaussianCoordinateSum_unitAffine_eq
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (Finset.univ.sum fun j : ZMod l.value =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))) =
+      Finset.univ.sum fun j : ZMod l.value =>
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  evaluation.coordinateGaussian_sum_unitAffine_eq a t
+
+theorem gaussianCoordinateAverage_unitAffine_eq
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    ((Finset.univ.sum fun j : ZMod l.value =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))) /
+        (l.value : Real)) =
+      evaluation.coordinateAveragedLogVolume.averageLogVolume :=
+  evaluation.coordinateAveragedLogVolume_average_unitAffine_eq a t
+
+theorem gaussianCoordinateAverage_unitAffineInvariant_but_notFullLabelDescent
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) {t : ZMod l.value} (ht : t ≠ 0) :
+    ((Finset.univ.sum fun j : ZMod l.value =>
+      evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))) /
+        (l.value : Real)) =
+      evaluation.coordinateAveragedLogVolume.averageLogVolume ∧
+    ¬ ∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+      ∀ j : ZMod l.value,
+        T (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)) :=
+  evaluation.coordinateAverage_unitAffineInvariant_but_not_fullLabelDescend
+    a ht
+
 theorem gaussianFullLabelAverage_eq_subordinateSum_div
     {l : PrimeGeFive}
     (evaluation :
@@ -1365,6 +1420,20 @@ theorem nonzeroTranslation_not_preserves_coordinateSubordinateZero
           IUTStage1ZModCuspFullLabel.zero :=
   nonzero_translation_not_preserves_fromCoordinate_weightedVolumeSubordinate_zero
     l ht
+
+theorem unitAffine_preserves_coordinateSubordinateZero_iff_zeroTranslation
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (∀ j : ZMod l.value,
+      IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)))
+          IUTStage1ZModCuspFullLabel.zero ↔
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+          IUTStage1ZModCuspFullLabel.zero) ↔
+      t = 0 :=
+  unitAffine_fromCoordinate_weightedVolumeSubordinate_zero_iff_zero_translation
+    l a t
 
 theorem gaussianSubordinateSum_mul_six
     {l : PrimeGeFive}
