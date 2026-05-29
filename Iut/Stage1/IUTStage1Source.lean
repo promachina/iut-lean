@@ -147,6 +147,11 @@ theorem eulerCharacteristic_neg
   rw [data.euler_eq_neg_metricVolume]
   linarith [data.metric_volume_pos]
 
+theorem eulerCharacteristic_nonpos
+    (data : IUTStage1GaussBonnetMetricSignShadow) :
+    data.eulerCharacteristic <= 0 :=
+  le_of_lt data.eulerCharacteristic_neg
+
 theorem metricVolume_ne_zero
     (data : IUTStage1GaussBonnetMetricSignShadow) :
     data.metricVolume ≠ 0 :=
@@ -161,6 +166,13 @@ theorem eulerCharacteristic_ne_zero
     (data : IUTStage1GaussBonnetMetricSignShadow) :
     data.eulerCharacteristic ≠ 0 :=
   ne_of_lt data.eulerCharacteristic_neg
+
+theorem gauss_bonnet_metric_endpoint
+    (data : IUTStage1GaussBonnetMetricSignShadow) :
+    data.eulerCharacteristic < 0 ∧
+      data.eulerCharacteristic <= 0 ∧ data.upperSemiInd3Analogue :=
+  ⟨data.eulerCharacteristic_neg, data.eulerCharacteristic_nonpos,
+    data.upperSemiInd3Analogue_holds⟩
 
 end IUTStage1GaussBonnetMetricSignShadow
 

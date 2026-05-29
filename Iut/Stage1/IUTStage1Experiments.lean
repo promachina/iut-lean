@@ -5171,10 +5171,21 @@ theorem gaussBonnetMetricSign_euler_neg
     data.eulerCharacteristic < 0 :=
   data.eulerCharacteristic_neg
 
+theorem gaussBonnetMetricSign_euler_nonpos
+    (data : IUTStage1GaussBonnetMetricSignShadow) :
+    data.eulerCharacteristic <= 0 :=
+  data.eulerCharacteristic_nonpos
+
 theorem gaussBonnetMetricSign_upperSemiAnalogue
     (data : IUTStage1GaussBonnetMetricSignShadow) :
     data.upperSemiInd3Analogue :=
   data.upperSemiInd3Analogue_holds
+
+theorem gaussBonnetMetricSign_endpoint
+    (data : IUTStage1GaussBonnetMetricSignShadow) :
+    data.eulerCharacteristic < 0 ∧
+      data.eulerCharacteristic <= 0 ∧ data.upperSemiInd3Analogue :=
+  data.gauss_bonnet_metric_endpoint
 
 theorem thetaLabelFactorPNormalization_mul_labelFactor
     (data : IUTStage1ThetaLabelFactorPNormalizationShadow) :
