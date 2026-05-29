@@ -6178,6 +6178,49 @@ theorem fullLabel_map_descends_translation_iff
     subst t
     exact fullLabel_map_descends_zero_translation l
 
+theorem fullLabel_map_descends_unitAffine_iff_zero_translation
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+      ∀ j : ZMod l.value,
+        T (fromCoordinate l j) =
+          fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) ↔
+      t = 0 := by
+  constructor
+  · rintro ⟨T, hT⟩
+    have htrans :
+        ∃ S : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+          ∀ k : ZMod l.value,
+            S (fromCoordinate l k) =
+              fromCoordinate l (zmodLabelTranslate l t k) := by
+      refine ⟨fun label => T (unitActionOnFullLabel l a⁻¹ label), ?_⟩
+      intro k
+      change T (unitActionOnFullLabel l a⁻¹ (fromCoordinate l k)) =
+        fromCoordinate l (zmodLabelTranslate l t k)
+      rw [unitActionOnFullLabel_fromCoordinate]
+      rw [hT]
+      congr 1
+      simp [zmodLabelTranslate_eq_add, zmodUnitActionData]
+    exact (fullLabel_map_descends_translation_iff l t).mp htrans
+  · intro ht
+    subst t
+    refine ⟨unitActionOnFullLabel l a, ?_⟩
+    intro j
+    rw [zmodLabelTranslate_zero]
+    exact unitActionOnFullLabel_fromCoordinate l a j
+
+theorem no_fullLabel_map_descends_unitAffine_nonzero_translation
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ)
+    {t : ZMod l.value} (ht : t ≠ 0) :
+    ¬ ∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+      ∀ j : ZMod l.value,
+        T (fromCoordinate l j) =
+          fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)) := by
+  intro hdesc
+  exact ht
+    ((fullLabel_map_descends_unitAffine_iff_zero_translation l a t).mp hdesc)
+
 /--
 Stage 1 shadow of the weighted-volume relation `F_l ∋ j ≪ 0` from IUT II,
 Remark 4.7.3(iii).

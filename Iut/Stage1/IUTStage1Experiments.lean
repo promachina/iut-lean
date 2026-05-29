@@ -944,6 +944,26 @@ theorem translation_descends_to_fullLabel_iff_zero
       t = 0 :=
   IUTStage1ZModCuspFullLabel.fullLabel_map_descends_translation_iff l t
 
+theorem unitAffine_descends_to_fullLabel_iff_zeroTranslation
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+      ∀ j : ZMod l.value,
+        T (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) ↔
+      t = 0 :=
+  fullLabel_map_descends_unitAffine_iff_zero_translation l a t
+
+theorem nonzeroTranslation_unitAffine_not_descend_to_fullLabel
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ)
+    {t : ZMod l.value} (ht : t ≠ 0) :
+    ¬ ∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,
+      ∀ j : ZMod l.value,
+        T (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j)) :=
+  no_fullLabel_map_descends_unitAffine_nonzero_translation l a ht
+
 theorem translationEquiv_fullLabelMapPreserving_iff_zero
     {l : PrimeGeFive} (t : ZMod l.value) :
     IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving

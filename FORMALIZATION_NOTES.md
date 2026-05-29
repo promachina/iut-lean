@@ -19146,3 +19146,32 @@ multiplicative \(F_\ell\)-symmetry acts as a permutation symmetry compatible
 with the zero/nonzero Gaussian split, while the additive \(F_\ell^\pm\)-torsor
 structure does not preserve that split after the zero label has been
 distinguished.
+
+## Affine unit-plus-translation descent to absolute labels
+
+### Lean Move
+
+Added:
+
+```text
+fullLabel_map_descends_unitAffine_iff_zero_translation
+no_fullLabel_map_descends_unitAffine_nonzero_translation
+unitAffine_descends_to_fullLabel_iff_zeroTranslation
+nonzeroTranslation_unitAffine_not_descend_to_fullLabel
+```
+
+### Mathematical Reason
+
+Lean now treats the mixed coordinate operation \(j\mapsto a j+t\), where
+\(a\in F_\ell^\times\).  Such an operation descends from coordinates to full
+absolute labels exactly when \(t=0\).  The proof factors any alleged affine
+descent through the inverse unit action, reducing it to the already proved
+classification of pure translations.  Thus multiplying by a unit cannot hide a
+nonzero additive offset.
+
+### Source Check
+
+This strengthens the finite-model version of the IUT II, Remarks 4.7.3--4.7.4
+separation: residual multiplicative symmetry is compatible with the
+\(|F_\ell|\) label quotient, but an additive displacement remains detectable
+even after composing with a multiplicative unit.
