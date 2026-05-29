@@ -5387,6 +5387,27 @@ theorem iutIVCorollary22BoundedDiscrepancyChain_lower
       (1 / 6 : Real) * data.logQTwo x - data.canonicalHeight x :=
   data.logQTwo_to_canonicalHeight.lower_bound x
 
+theorem iutIVCorollary22BoundedDiscrepancyChain_endpoint
+    {Point : Type u}
+    (data : IUTStage1IUTIVCorollary22BoundedDiscrepancyChainShadow Point) :
+    Nonempty
+        (IUTStage1BoundedDiscrepancyEquivalent Point
+          (fun x => (1 / 6 : Real) * data.logQTwo x)
+          (fun x => (1 / 6 : Real) * data.logQAll x)) ∧
+      Nonempty
+        (IUTStage1BoundedDiscrepancyEquivalent Point
+          (fun x => (1 / 6 : Real) * data.logQAll x)
+          (fun x => (1 / 6 : Real) * data.heightInfinity x)) ∧
+      Nonempty
+        (IUTStage1BoundedDiscrepancyEquivalent Point
+          (fun x => (1 / 6 : Real) * data.heightInfinity x)
+          data.canonicalHeight) ∧
+      Nonempty
+        (IUTStage1BoundedDiscrepancyEquivalent Point
+          (fun x => (1 / 6 : Real) * data.logQTwo x)
+          data.canonicalHeight) :=
+  data.bounded_discrepancy_chain_endpoint
+
 theorem iutIVBoundedDiscrepancy_lowerBound_transfers
     {Point : Type u} {f g : Point -> Real}
     (data : IUTStage1BoundedDiscrepancyEquivalent Point f g)

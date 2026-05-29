@@ -1265,6 +1265,30 @@ noncomputable def logQTwo_to_canonicalHeight
       data.logQTwo_to_logQAll data.logQAll_to_heightInfinity)
     data.heightInfinity_to_canonicalHeight
 
+theorem bounded_discrepancy_chain_endpoint
+    (data :
+      IUTStage1IUTIVCorollary22BoundedDiscrepancyChainShadow Point) :
+    Nonempty
+        (IUTStage1BoundedDiscrepancyEquivalent Point
+          (fun x => (1 / 6 : Real) * data.logQTwo x)
+          (fun x => (1 / 6 : Real) * data.logQAll x)) ∧
+      Nonempty
+        (IUTStage1BoundedDiscrepancyEquivalent Point
+          (fun x => (1 / 6 : Real) * data.logQAll x)
+          (fun x => (1 / 6 : Real) * data.heightInfinity x)) ∧
+      Nonempty
+        (IUTStage1BoundedDiscrepancyEquivalent Point
+          (fun x => (1 / 6 : Real) * data.heightInfinity x)
+          data.canonicalHeight) ∧
+      Nonempty
+        (IUTStage1BoundedDiscrepancyEquivalent Point
+          (fun x => (1 / 6 : Real) * data.logQTwo x)
+          data.canonicalHeight) :=
+  ⟨⟨data.logQTwo_to_logQAll⟩,
+    ⟨data.logQAll_to_heightInfinity⟩,
+    ⟨data.heightInfinity_to_canonicalHeight⟩,
+    ⟨data.logQTwo_to_canonicalHeight⟩⟩
+
 end IUTStage1IUTIVCorollary22BoundedDiscrepancyChainShadow
 
 /--
