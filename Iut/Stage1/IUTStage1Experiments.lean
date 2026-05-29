@@ -778,6 +778,15 @@ theorem not_allCoordinatesWeightedVolumeSubordinate_zero
   IUTStage1ZModCuspFullLabel.not_forall_coordinate_weightedVolumeSubordinate_zero
     l
 
+theorem constantCuspLabelLogVolume_toLabelAveraged_eq_constant
+    {l : PrimeGeFive} (c : Real) :
+    (IUTStage1ZModCuspLabelLogVolumeCompatibility.constant
+        (l := l) c).toLabelAveraged =
+      IUTStage1LabelAveragedProcessionLogVolume.constant
+        (label := ZMod l.value) c :=
+  IUTStage1ZModCuspLabelLogVolumeCompatibility.constant_toLabelAveraged_eq_constant
+    c
+
 theorem absLabelProcessionTop_eq_halfMinusOne
     (l : PrimeGeFive) :
     IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l =

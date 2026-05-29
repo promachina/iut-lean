@@ -6279,6 +6279,56 @@ theorem average_le_const_of_forall_le
 
 end IUTStage1LabelAveragedProcessionLogVolume
 
+namespace IUTStage1ZModCuspLabelLogVolumeCompatibility
+
+variable {l : PrimeGeFive}
+
+/--
+Uniform `F_l` average associated to a cusp-label log-volume compatibility.
+
+This keeps the zero label in the averaging set.  It is the finite model of the
+IUT II convention that all `j ∈ F_l` receive weight `1 / l`, with the zero
+label recorded separately from nonzero sign-label classes.
+-/
+noncomputable def toLabelAveraged
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l) :
+    IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value) :=
+  { normalizedLogVolume := compat.normalizedLogVolume,
+    averageLogVolume :=
+      (Finset.univ.sum compat.normalizedLogVolume) / (l.value : Real),
+    average_eq := by
+      rw [ZMod.card] }
+
+theorem toLabelAveraged_eq_constant_of_zero_and_cusp_eq
+    (compat : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    {c : Real}
+    (hzero : compat.zeroLogVolume = c)
+    (hcusp : ∀ label : (zmodSignAction l).SignLabelQuotient,
+      compat.cuspClassLogVolume label = c) :
+    compat.toLabelAveraged =
+      IUTStage1LabelAveragedProcessionLogVolume.constant
+        (label := ZMod l.value) c := by
+  haveI : Nonempty (ZMod l.value) := ⟨0⟩
+  exact IUTStage1LabelAveragedProcessionLogVolume.eq_constant_of_forall_eq
+    compat.toLabelAveraged
+    (by
+      intro j
+      by_cases hj : j = 0
+      · subst j
+        exact (compat.zero_eq.trans hzero)
+      · exact (compat.nonzero_eq j hj).trans
+          (hcusp (zmodSignLabelFromCoordinate l j hj)))
+
+theorem constant_toLabelAveraged_eq_constant
+    (c : Real) :
+    (constant (l := l) c).toLabelAveraged =
+      IUTStage1LabelAveragedProcessionLogVolume.constant
+        (label := ZMod l.value) c := by
+  exact toLabelAveraged_eq_constant_of_zero_and_cusp_eq
+    (constant (l := l) c) rfl (by intro label; rfl)
+
+end IUTStage1ZModCuspLabelLogVolumeCompatibility
+
 namespace IUTStage1ProcessionTensorPacketLogVolume
 
 variable {kind : IUTStage1PlaceKind} {j : Nat}
