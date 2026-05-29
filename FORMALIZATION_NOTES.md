@@ -18831,3 +18831,27 @@ This matches the passage in IUT II, Remark 4.7.3(iii), where nonzero
 \(j\in F_\ell\) are subordinate to \(0\in |F_\ell|\) for weighted-volume
 computations, while allowing \(0\ll0\) is declared incompatible with those
 computations.
+
+## Cardinality of subordinate full labels
+
+### Lean Move
+
+Added:
+
+```text
+subordinateFullLabel_card_eq_absLabelProcessionTop
+```
+
+### Mathematical Reason
+
+After the exact criterion \(a\ll0\iff a\ne0\), Lean counts the subordinate
+full-label set.  Since \(|F_\ell|\) has \((\ell+1)/2\) labels and the zero label
+is excluded, the subordinate full labels have cardinality
+\((\ell-1)/2\), represented in the code as `absLabelProcessionTop l`.
+
+### Source Check
+
+This is the finite-count form of the IUT II zero/nonzero separation in
+Remark 4.7.3(iii): the zero label is coric/unit-like, while the nonzero
+absolute labels form the Gaussian side that is subordinate to zero in
+weighted-volume computations.

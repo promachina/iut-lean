@@ -8945,6 +8945,29 @@ theorem fullLabel_card_eq_half_plus_one (l : PrimeGeFive) :
   rw [fullLabel_card_eq_procession,
     absLabelProcession_card_eq_half_plus_one]
 
+theorem subordinateFullLabel_card_eq_absLabelProcessionTop :
+    (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+      (fun label : IUTStage1ZModCuspFullLabel l =>
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          label IUTStage1ZModCuspFullLabel.zero)
+      (Classical.decPred _) Finset.univ).card =
+        absLabelProcessionTop l := by
+  classical
+  have hset :
+      (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+        (fun label : IUTStage1ZModCuspFullLabel l =>
+          IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+            label IUTStage1ZModCuspFullLabel.zero)
+        (Classical.decPred _) Finset.univ) =
+          (Finset.univ.erase IUTStage1ZModCuspFullLabel.zero) := by
+    ext label
+    simp [IUTStage1ZModCuspFullLabel.weightedVolumeSubordinate_zero_iff_ne_zero]
+  rw [hset]
+  rw [Finset.card_erase_of_mem (Finset.mem_univ IUTStage1ZModCuspFullLabel.zero)]
+  rw [Finset.card_univ, fullLabel_card_eq_procession,
+    IUTStage1ProcessionContainer.card_eq]
+  omega
+
 theorem fullLabel_sum_eq_procession_sum
     (f : IUTStage1ZModCuspFullLabel l -> Real) :
     (Finset.univ.sum f) =

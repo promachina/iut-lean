@@ -1039,6 +1039,16 @@ theorem fullLabelCard_eq_halfPlusOne
       (l.value + 1) / 2 :=
   IUTStage1ZModSquareWeightProfile.fullLabel_card_eq_half_plus_one l
 
+theorem subordinateFullLabel_card_eq_absLabelProcessionTop
+    {l : PrimeGeFive} :
+    (@Finset.filter (IUTStage1ZModCuspFullLabel l)
+      (fun label : IUTStage1ZModCuspFullLabel l =>
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          label IUTStage1ZModCuspFullLabel.zero)
+      (Classical.decPred _) Finset.univ).card =
+        IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l :=
+  IUTStage1ZModSquareWeightProfile.subordinateFullLabel_card_eq_absLabelProcessionTop
+
 theorem gaussianFullLabelAverage_eq_processionAverage
     {l : PrimeGeFive}
     (evaluation :
