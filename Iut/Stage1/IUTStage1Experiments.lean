@@ -1111,6 +1111,36 @@ theorem gaussianAllLabelTargetBound_iff_thetaAverage_nonnegative_and_sourceEnvir
       targetEvaluation coordinateEquiv target_environment_nonpositive
       canonical_one_preserved
 
+theorem gaussianAllLabelSourceBound_iff_thetaAverage_nonnegative_and_sourceEnvironment
+    {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (sourceEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (source_environment_nonpositive :
+      sourceEvaluation.environmentDegree <= 0) :
+    (∀ j : ZMod l.value,
+        sourceEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) <=
+          part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+            audited) ↔
+      0 <=
+          part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+            audited ∧
+        sourceEvaluation.environmentDegree <=
+          part.toThetaCuspClassContainerAudit.theta_source.thetaSourceAverage
+            audited :=
+  sourceEvaluation
+    |>.forall_coordinateFullLabel_le_iff_bound_nonnegative_and_environment_le
+      (Equiv.refl (ZMod l.value)) source_environment_nonpositive
+
 theorem gaussianNonzeroTargetBound_of_environment_le_thetaAverage
     {source target : Copy} {coric : Type u} {kind : IUTStage1PlaceKind}
     {package :
