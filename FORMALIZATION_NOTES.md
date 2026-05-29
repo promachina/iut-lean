@@ -18775,3 +18775,30 @@ This is the formal version of the paper's convention
 \(|F_\ell|=\{0\}\cup F_\ell^\times/\{\pm1\}\).  It is the pointwise fiber
 bookkeeping underlying the half-range procession and signed/nonzero average
 theorems.
+
+## Singleton zero absolute-label fiber
+
+### Lean Move
+
+Added:
+
+```text
+zero_fullLabel_fiber_card
+zeroFullLabel_fiber_card
+```
+
+### Mathematical Reason
+
+The full absolute-label map \(F_\ell\to |F_\ell|\) has a singleton zero fiber.
+Lean already proved `fromCoordinate l j = zero ↔ j = 0`; the new theorem turns
+this into the finite cardinality statement that the zero fiber has size \(1\).
+Together with the nonzero fiber theorem, the model now records the exact
+zero/nonzero fiber asymmetry: zero has one coordinate representative, while
+each nonzero absolute label has the two representatives \(j\) and \(-j\).
+
+### Source Check
+
+This is still only the finite label skeleton, but it matches the convention
+\(|F_\ell|=\{0\}\cup F_\ell^\times/\{\pm1\}\) and the IUT II emphasis that the
+zero label is not to be treated as just another nonzero Gaussian component in
+weighted-volume bookkeeping.

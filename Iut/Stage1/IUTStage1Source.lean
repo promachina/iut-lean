@@ -5983,6 +5983,21 @@ theorem nonzero_fullLabel_fiber_card
   rw [hset]
   simp [hnot_neg]
 
+theorem zero_fullLabel_fiber_card :
+    (@Finset.filter (ZMod l.value)
+      (fun k : ZMod l.value => fromCoordinate l k = zero)
+      (Classical.decPred _) Finset.univ).card = 1 := by
+  classical
+  have hset :
+      (@Finset.filter (ZMod l.value)
+        (fun k : ZMod l.value => fromCoordinate l k = zero)
+        (Classical.decPred _) Finset.univ) =
+        ({0} : Finset (ZMod l.value)) := by
+    ext k
+    simp [fromCoordinate_eq_zero_iff]
+  rw [hset]
+  simp
+
 theorem no_fullLabel_map_descends_nonzero_translation
     (l : PrimeGeFive) (t : ZMod l.value) (ht : t ≠ 0) :
     ¬ ∃ T : IUTStage1ZModCuspFullLabel l -> IUTStage1ZModCuspFullLabel l,

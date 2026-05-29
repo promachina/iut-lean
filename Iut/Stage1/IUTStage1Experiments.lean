@@ -839,6 +839,15 @@ theorem nonzeroFullLabel_fiber_card
       (Classical.decPred _) Finset.univ).card = 2 :=
   IUTStage1ZModCuspFullLabel.nonzero_fullLabel_fiber_card label
 
+theorem zeroFullLabel_fiber_card
+    {l : PrimeGeFive} :
+    (@Finset.filter (ZMod l.value)
+      (fun k : ZMod l.value =>
+        IUTStage1ZModCuspFullLabel.fromCoordinate l k =
+          IUTStage1ZModCuspFullLabel.zero)
+      (Classical.decPred _) Finset.univ).card = 1 :=
+  IUTStage1ZModCuspFullLabel.zero_fullLabel_fiber_card
+
 theorem singletonOneRestriction_not_translationInvariant
     (l : PrimeGeFive) :
     ¬ ∀ j : ZMod l.value,
