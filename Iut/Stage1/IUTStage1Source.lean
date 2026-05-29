@@ -5368,6 +5368,37 @@ theorem thetaFinite_zeroOneColumnAbsorptionProfile
     IUTStage1LogThetaVerticalColumn.qPilot_logShellTreatment,
     IUTStage1LogThetaVerticalColumn.logShellTreatment_distinguishes_columns⟩
 
+/--
+Remark 3.12.2(v) finite-theta hull equality guard.
+
+After Step (x) to Step (xi), the zero-column hull is the finite theta boundary.
+Membership in the associated upper ray supplies upper bounds only.  Equality
+with the finite theta boundary is equivalent to supplying the reverse bound.
+-/
+theorem thetaFinite_zeroColumnHullEqualityRequiresReverseBounds
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (originalRegionLogVolume unitShiftedRegionLogVolume : Real)
+    (original_le_thetaHull :
+      originalRegionLogVolume <= data.thetaHullLogVolume)
+    (unit_shifted_le_thetaHull :
+      unitShiftedRegionLogVolume <= data.thetaHullLogVolume) :
+    let finite := data.toThetaFiniteLogVolumeEndpoint;
+    let zeroData :=
+      data.toZeroColumnHullAbsorption
+        originalRegionLogVolume unitShiftedRegionLogVolume
+        original_le_thetaHull unit_shifted_le_thetaHull;
+    zeroData.hullLogVolume = finite.thetaRealLogVolume ∧
+      (zeroData.originalRegionLogVolume = finite.thetaRealLogVolume ↔
+        finite.thetaRealLogVolume <= zeroData.originalRegionLogVolume) ∧
+      (zeroData.unitShiftedRegionLogVolume = finite.thetaRealLogVolume ↔
+        finite.thetaRealLogVolume <= zeroData.unitShiftedRegionLogVolume) := by
+  intro finite zeroData
+  rw [finite.thetaRealLogVolume_eq_hull]
+  exact
+    ⟨rfl,
+      zeroData.original_eq_hull_iff_hull_le_original,
+      zeroData.unitShifted_eq_hull_iff_hull_le_unitShifted⟩
+
 def toThetaPilotTensorPowerLogVolume
     (data : IUTStage1StepXToHullUpperRayLogVolume label)
     (tensorPower : Nat)

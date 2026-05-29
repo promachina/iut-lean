@@ -6419,6 +6419,28 @@ theorem thetaFinite_zeroOneColumnAbsorptionProfile
     sourceRingStructureLogVolume conjugateRingStructureLogVolume
     log_volume_compatible
 
+theorem thetaFinite_zeroColumnHullEqualityRequiresReverseBounds
+    {label : Type u} [Fintype label]
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (originalRegionLogVolume unitShiftedRegionLogVolume : Real)
+    (original_le_thetaHull :
+      originalRegionLogVolume <= data.thetaHullLogVolume)
+    (unit_shifted_le_thetaHull :
+      unitShiftedRegionLogVolume <= data.thetaHullLogVolume) :
+    let finite := data.toThetaFiniteLogVolumeEndpoint;
+    let zeroData :=
+      data.toZeroColumnHullAbsorption
+        originalRegionLogVolume unitShiftedRegionLogVolume
+        original_le_thetaHull unit_shifted_le_thetaHull;
+    zeroData.hullLogVolume = finite.thetaRealLogVolume ∧
+      (zeroData.originalRegionLogVolume = finite.thetaRealLogVolume ↔
+        finite.thetaRealLogVolume <= zeroData.originalRegionLogVolume) ∧
+      (zeroData.unitShiftedRegionLogVolume = finite.thetaRealLogVolume ↔
+        finite.thetaRealLogVolume <= zeroData.unitShiftedRegionLogVolume) :=
+  data.thetaFinite_zeroColumnHullEqualityRequiresReverseBounds
+    originalRegionLogVolume unitShiftedRegionLogVolume
+    original_le_thetaHull unit_shifted_le_thetaHull
+
 theorem gaussBonnetMetricSign_euler_neg
     (data : IUTStage1GaussBonnetMetricSignShadow) :
     data.eulerCharacteristic < 0 :=
