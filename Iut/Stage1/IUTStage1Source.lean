@@ -10928,6 +10928,38 @@ theorem packet_normalizedLogVolume_le_normalizedActedLogVolume_of_environment_no
       henv
   linarith
 
+/--
+IUT III Fig. I.4 splitting-action endpoint.
+
+The finite `q^{j^2}` Gaussian generators act on the procession tensor packet by
+adding the generator log-volume at each label.  Consequently the normalized
+acted log-volume is the original normalized packet log-volume plus the averaged
+generator contribution; for nonnegative environment degree this action is
+monotone at the normalized log-volume level.
+-/
+theorem qSquaredGeneratorTensorPacketAction_endpoint
+    (action : LGPSplittingMonoidTensorPacketAction l) :
+    action.generatorLogVolume
+        (IUTStage1ProcessionContainer.core (absLabelProcessionTop l)) = 0 ∧
+      (∀ label : IUTStage1ProcessionContainer (absLabelProcessionTop l),
+        action.generatorLogVolume label =
+          ((label.val : Real) ^ 2) * action.evaluation.environmentDegree) ∧
+      action.actedTensorPacketLogVolume =
+        action.packet.tensorPacketLogVolume +
+          Finset.univ.sum action.generatorLogVolume ∧
+      action.normalizedActedLogVolume =
+        action.packet.normalizedLogVolume +
+          (Finset.univ.sum action.generatorLogVolume) /
+            (Fintype.card
+              (IUTStage1ProcessionContainer (absLabelProcessionTop l)) : Real) ∧
+      (0 <= action.evaluation.environmentDegree ->
+        action.packet.normalizedLogVolume <= action.normalizedActedLogVolume) :=
+  ⟨action.generatorLogVolume_core,
+    action.generatorLogVolume_eq_procession_square,
+    action.actedTensorPacketLogVolume_eq_original_plus_generators,
+    action.normalizedActedLogVolume_eq_packetNormalized_plus_generatorAverage,
+    action.packet_normalizedLogVolume_le_normalizedActedLogVolume_of_environment_nonnegative⟩
+
 end LGPSplittingMonoidTensorPacketAction
 
 namespace GaussianMonoidDegreeEvaluation

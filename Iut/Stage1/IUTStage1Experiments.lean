@@ -5815,6 +5815,32 @@ theorem lgpSplittingMonoid_packet_normalized_le_acted_of_environment_nonnegative
   action.packet_normalizedLogVolume_le_normalizedActedLogVolume_of_environment_nonnegative
     henv
 
+theorem lgpSplittingMonoid_qSquaredGeneratorTensorPacketAction_endpoint
+    {l : PrimeGeFive}
+    (action :
+      IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction l) :
+    action.generatorLogVolume
+        (IUTStage1ProcessionContainer.core
+          (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l)) = 0 ∧
+      (∀ label :
+          IUTStage1ProcessionContainer
+            (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l),
+        action.generatorLogVolume label =
+          ((label.val : Real) ^ 2) * action.evaluation.environmentDegree) ∧
+      action.actedTensorPacketLogVolume =
+        action.packet.tensorPacketLogVolume +
+          Finset.univ.sum action.generatorLogVolume ∧
+      action.normalizedActedLogVolume =
+        action.packet.normalizedLogVolume +
+          (Finset.univ.sum action.generatorLogVolume) /
+            (Fintype.card
+              (IUTStage1ProcessionContainer
+                (IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l)) :
+                  Real) ∧
+      (0 <= action.evaluation.environmentDegree ->
+        action.packet.normalizedLogVolume <= action.normalizedActedLogVolume) :=
+  action.qSquaredGeneratorTensorPacketAction_endpoint
+
 theorem baseValuationTensorPacketProduct_eq_nested_sum
     {kind : IUTStage1PlaceKind} {j : Nat}
     (product : IUTStage1BaseValuationTensorPacketProductLogVolume kind j) :

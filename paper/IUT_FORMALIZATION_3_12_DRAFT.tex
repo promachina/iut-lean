@@ -134,6 +134,11 @@ The code currently covers:
   representatives, the Gaussian degree is the square weight times the
   environment/q-pilot degree; Lean packages this together with the zero branch,
   the canonical \(j=1\) branch, and sign invariance;
+\item a splitting-monoid/tensor-packet endpoint for the same finite branch:
+  the core generator is zero, each procession generator is the procession
+  square times the environment degree, acting on the tensor packet adds the
+  generator log-volumes, and nonnegative environment degree gives monotonicity
+  of the normalized acted packet;
 \item proof that one label-independent scale cannot absorb all representative
   \(j^2\) scales in this model;
 \item proof that, for nonzero \(\deg(q)\), one label-independent scale cannot
@@ -1344,13 +1349,14 @@ assumptions by constructions closer to the papers:
 \[
 \begin{array}{c}
 \text{theta values }q^{j^2}\quad\checkmark\ \text{finite square-weight endpoint}\\
-\leadsto\ \text{Gaussian and splitting monoids}\\
+\leadsto\ \text{Gaussian and splitting monoids}\quad\checkmark\
+  \text{generator action endpoint}\\
 \leadsto\ \text{square/full-label preservation}\\
 \leadsto\ \text{hull/log-volume route}.
 \end{array}
 \]
-The next step is to connect this finite endpoint to the Gaussian/splitting
-monoid action data and then to the square/full-label preservation route.
+The next step is to connect the generator-action endpoint to the
+square/full-label preservation route.
 
 \begingroup
 \small
