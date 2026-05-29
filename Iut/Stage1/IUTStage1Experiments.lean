@@ -856,6 +856,27 @@ theorem unitActionOnFullLabel_fromCoordinate
         ((zmodUnitActionData l).smul a j) :=
   IUTStage1ZModCuspFullLabel.unitActionOnFullLabel_fromCoordinate l a j
 
+theorem unitActionOnFullLabel_one
+    (l : PrimeGeFive) (label : IUTStage1ZModCuspFullLabel l) :
+    IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l 1 label = label :=
+  IUTStage1ZModCuspFullLabel.unitActionOnFullLabel_one l label
+
+theorem unitActionOnFullLabel_mul
+    (l : PrimeGeFive) (a b : (ZMod l.value)ˣ)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l (a * b) label =
+      IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a
+        (IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l b label) :=
+  IUTStage1ZModCuspFullLabel.unitActionOnFullLabel_mul l a b label
+
+theorem unitActionOnFullLabel_signSubgroup_trivial
+    (l : PrimeGeFive) {a : (ZMod l.value)ˣ}
+    (ha : a ∈ zmodSignUnitSubgroup l)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    IUTStage1ZModCuspFullLabel.unitActionOnFullLabel l a label = label :=
+  IUTStage1ZModCuspFullLabel.unitActionOnFullLabel_signSubgroup_trivial
+    l ha label
+
 theorem singletonOneRestriction_not_translationInvariant
     (l : PrimeGeFive) :
     ¬ ∀ j : ZMod l.value,

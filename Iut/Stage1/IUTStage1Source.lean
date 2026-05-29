@@ -5984,6 +5984,38 @@ theorem unitActionOnFullLabel_fromCoordinate
         zmodLabelTranslate_eq_add]
     rw [hx]
 
+theorem unitActionOnFullLabel_one
+    (l : PrimeGeFive) (label : IUTStage1ZModCuspFullLabel l) :
+    unitActionOnFullLabel l 1 label = label := by
+  cases label with
+  | zero => rfl
+  | nonzero label =>
+      rw [unitActionOnFullLabel_nonzero,
+        zmodUnitActionOnSignLabelQuotient_one]
+
+theorem unitActionOnFullLabel_mul
+    (l : PrimeGeFive) (a b : (ZMod l.value)ˣ)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    unitActionOnFullLabel l (a * b) label =
+      unitActionOnFullLabel l a (unitActionOnFullLabel l b label) := by
+  cases label with
+  | zero => rfl
+  | nonzero label =>
+      rw [unitActionOnFullLabel_nonzero, unitActionOnFullLabel_nonzero,
+        unitActionOnFullLabel_nonzero,
+        zmodUnitActionOnSignLabelQuotient_mul]
+
+theorem unitActionOnFullLabel_signSubgroup_trivial
+    (l : PrimeGeFive) {a : (ZMod l.value)ˣ}
+    (ha : a ∈ zmodSignUnitSubgroup l)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    unitActionOnFullLabel l a label = label := by
+  cases label with
+  | zero => rfl
+  | nonzero label =>
+      rw [unitActionOnFullLabel_nonzero]
+      rw [zmodSignUnitSubgroup_action_trivial_on_signLabelQuotient l ha label]
+
 theorem two_ne_zero (l : PrimeGeFive) :
     (2 : ZMod l.value) ≠ 0 := by
   intro hzero

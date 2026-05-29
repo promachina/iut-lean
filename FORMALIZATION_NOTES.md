@@ -18999,3 +18999,31 @@ This matches IUT II, Remark 4.7.3(i),(iii): the \(F_\ell\)-symmetry is tied to
 the multiplicative structure and separates the zero label from the nonzero
 Gaussian components, whereas the additive \(F_\ell^\pm\)-symmetry has different
 zero/nonzero behavior.
+
+## Unit-action laws and sign-subgroup triviality
+
+### Lean Move
+
+Added:
+
+```text
+unitActionOnFullLabel_one
+unitActionOnFullLabel_mul
+unitActionOnFullLabel_signSubgroup_trivial
+```
+
+### Mathematical Reason
+
+The multiplicative operation on full labels is now proved to be an action:
+the unit acts as the identity and multiplication of units composes the induced
+maps.  Lean also proves that the sign subgroup \(\{\pm1\}\) acts trivially on
+full absolute labels.  This records formally that passing to
+\(|F_\ell|=\{0\}\cup F_\ell^\times/\{\pm1\}\) has already quotiented out the
+sign ambiguity, while retaining the residual multiplicative unit action.
+
+### Source Check
+
+This refines the formal version of IUT II, Remarks 4.7.3--4.7.5: the
+multiplicative \(F_\ell\)-symmetry is kept as an action on the absolute-label
+side, while the \(\{\pm1\}\) ambiguity is exactly the one killed by the sign
+quotient.
