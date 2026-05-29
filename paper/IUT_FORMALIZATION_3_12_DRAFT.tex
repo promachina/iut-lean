@@ -3,7 +3,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath,amssymb,array}
+\usepackage{amsmath,amssymb,amsthm,array}
 \usepackage[hidelinks]{hyperref}
 
 \newcommand{\IUT}{IUT}
@@ -12,8 +12,24 @@
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\ThetaPilot}{\Theta\text{-pilot}}
 \newcommand{\qPilot}{q\text{-pilot}}
+\newcommand{\Ind}{\ensuremath{\mathrm{Ind}}}
+\newcommand{\SHE}{\ensuremath{\mathrm{SHE}}}
+\newcommand{\HDD}{\ensuremath{\mathrm{HDD}}}
+\newcommand{\IPL}{\ensuremath{\mathrm{IPL}}}
+\newcommand{\APT}{\ensuremath{\mathrm{APT}}}
 
-\title{A First Lean Formalization Audit of the IUT III Corollary 3.12 Corridor}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\title{A Lean Audit of the IUT III Corollary 3.12 Corridor}
 \author{IUT Lean formalization project}
 \date{May 29, 2026}
 
@@ -22,1504 +38,372 @@
 \sloppy
 
 \begin{abstract}
-This note records the present state of a Lean formalization of a narrow part of
-Mochizuki's inter-universal Teichmuller theory: the passage from IUT III,
-Theorem 3.11 to Corollary 3.12, with attention to the Scholze--Stix objection.
-The current Lean code proves conditional route theorems, obstruction lemmas, and
-the final ordered-real algebra in Step (xi-f).  It does not prove Corollary 3.12
-and does not refute it.  The main formal result so far is that a supplied
-hull/log-volume \(q\)-to-\(\Theta\) comparison gives \(C_\Theta\ge-1\), and that a
-nonarchimedean \((\mathrm{Ind3})\) entry together with explicit Hodge/SHE
-square-weight transport data, or the primitive factored square/full-label SHE
-obligations, feeds such a comparison, while several simplified collapse
-mechanisms are rejected by Lean.
+We report on a first \Lean{} formalization of the logical corridor from
+\IUT{} III, Theorem 3.11 to Corollary 3.12.  The formalization is deliberately
+neutral with respect to the correctness of \IUT{} as a proof of the abc
+conjecture.  It isolates the ordered-real comparison required at the end of
+Corollary 3.12, tracks the finite \(q^{j^2}\) and label-quotient phenomena
+that enter the public dispute, and records exactly which source-facing
+construction hypotheses are still external.
+
+The current code proves conditional theorems.  If the hull/log-volume
+upper-ray comparison supplies
+\(-|\log(q)|\le -|\log(\Theta)|\), and if the displayed hypothesis
+\(-|\log(\Theta)|\le C_\Theta|\log(q)|\) is supplied with
+\(|\log(q)|>0\), then \Lean{} proves \(C_\Theta\ge -1\).  If the upper-ray
+membership is strict, \Lean{} proves \(C_\Theta>-1\).  In the boundary case
+\(C_\Theta=-1\), \Lean{} proves equality of the \(q\)-pilot reading and the
+\(\Theta\)-hull boundary, and then classifies the local Frobenioid
+\(p_v^N\)-shift behavior under the actual upper-ray quotient.  This does not
+prove Corollary 3.12 from Mochizuki's published hypotheses; it identifies the
+remaining mathematical construction problem.
 \end{abstract}
 
-\section{Scope}
+\section{Aim and Sources}
 
-The review used the local Markdown conversions of IUT I--IV, Mochizuki's 2026
-formalization note, and the Scholze--Stix note.  The relevant source passages are:
-\begin{itemize}
-\item IUT I: initial \(\Theta\)-data, prime strips, Hodge theaters, and
-  non-scheme-theoretic \(\Theta\)-links.
-\item IUT II: Hodge--Arakelov evaluation, theta values of shape \(q^{j^2}\),
-  multiradiality, and Gaussian monoids.
-\item IUT III: Theorem 3.11; Corollary 3.12, especially Steps (x) and (xi);
-  Remarks 3.12.2 and 3.12.3.
-\item IUT IV: later explicit log-volume estimates and Diophantine consequences.
-\item Scholze--Stix: the ordered real-line identification problem in their
-  Section 2.2.
-\item Mochizuki 2026: the ``3.11.5 \(\Rightarrow\) 3.12'' fourth-triangle
-  decomposition.
-\end{itemize}
-The namespace \texttt{Iut.Stage1} is local terminology for the present
-corridor layer.  It is inspired by Mochizuki's staged formalization plan, but
-does not assert completion of his Stage 1: many Frobenioid, Hodge-theater,
-log-Kummer, and theta-link constructions remain external obligations.
-
-\section{Mathematical Target}
-
-IUT III Step (x) treats procession-normalized log-volumes as invariants for
-\((\mathrm{Ind1})\) and \((\mathrm{Ind2})\), and turns \((\mathrm{Ind3})\) into
-an upper inequality.  Step (xi) then uses the multiradial construction, IPL, SHE,
-holomorphic hulls, determinants, and log-volume to place the \(q\)-pilot
-log-volume in an upper ray controlled by the \(\Theta\)-pilot log-volume:
-\[
-  -|\log(q)| \in \R_{\le -|\log(\Theta)|}
-  \quad\Rightarrow\quad
-  -|\log(q)| \le -|\log(\Theta)|.
-\]
-If \(C_\Theta\) is any real number satisfying
-\[
-  -|\log(\Theta)|\le C_\Theta|\log(q)|,\qquad |\log(q)|>0,
-\]
-then Step (xi-f) concludes \(C_\Theta\ge-1\).  This last inference is now a
-Lean theorem.  Lean also proves the strict variant: if the q-pilot lies strictly
-inside the \(\Theta\)-upper ray, then \(C_\Theta>-1\); conversely, the boundary
-case \(C_\Theta=-1\) forces equality of the q-pilot and \(\Theta\)-boundary
-log-volumes and places the \(\Theta\)-boundary on the negative branch.
-Mochizuki's 2026 note isolates the final comparison as:
+The project formalizes a narrow and contested part of Mochizuki's
+inter-universal Teichmuller theory.  The source base is the local copy of
+\IUT{} I--IV, Mochizuki's 2026 report on formalization, and the Scholze--Stix
+note.  The current target is the portion that Mochizuki's report calls Stage 1:
 \[
 \begin{array}{ccccc}
-\text{Theorem 3.11}
-& \xrightarrow{\mathrm{APT}+\mathrm{IPL}}
-& \text{``3.11.5''}
-& \xrightarrow{\mathrm{SHE}+\mathrm{IPL}}
-& \text{Corollary 3.12}.
+\text{\IUT{} III, Theorem 3.11}
+& \xrightarrow{\APT+\IPL} &
+\text{``3.11.5''}
+& \xrightarrow{\SHE+\IPL} &
+\text{\IUT{} III, Corollary 3.12}.
 \end{array}
 \]
-The present formalization targets only this corridor, not the full construction
-of Theorem 3.11.
+The notation ``3.11.5'' is not a statement in \IUT{} III.  It is Mochizuki's
+2026 name for the reorganized boundary where the hull-plus-determinant
+operation is moved before the final simultaneous comparison of the
+\(\Theta\)-pilot and the \(q\)-pilot.
+
+The formalization is source-facing but not source-complete.  It does not
+construct Hodge theaters, Frobenioids, log-shells, prime strips, or theta links
+from first principles.  Instead, these are represented by typed records with
+named hypotheses.  The point of the current work is to test whether the
+claimed formal corridor is coherent once every comparison level, label
+quotient, ordered real line, hull boundary, and quotient collapse is made
+explicit.
+
+\section{Framework and Tooling}
+
+The repository is organized as a Lean verification project, not as a prose
+annotation project.  The source papers in \texttt{docs/} are treated as the
+mathematical source of truth.  The formalization then moves through three
+layers:
+\[
+\begin{array}{c}
+\text{source papers}\\
+\Downarrow\\
+\text{\Lean{} definitions, records, and theorems}\\
+\Downarrow\\
+\text{this paper draft}.
+\end{array}
+\]
+The paper draft records only the current mathematical state of the
+formalization.  It is not a research log.
+
+The Lean code uses typed interfaces to prevent comparison-level drift.  A datum
+that is merely a representative \(j^2\)-coordinate computation has a different
+type from a balanced full-label datum, and both differ from the final
+hull/log-volume comparison datum.  Likewise, ordered real-line transports,
+Hodge/SHE preservation records, upper-ray membership, and quotient-collapse
+audits are separate structures.  This is the main anti-collapse mechanism in
+the framework: a proof cannot silently use a raw coordinate equality where the
+Corollary 3.12 corridor asks for a hull/log-volume comparison.
+
+The module roles are:
+\begin{itemize}
+\item \texttt{IUTStage1SourceCore}: core real-line, pilot, hull, quotient, and
+  \(C_\Theta\) algebra.
+\item \texttt{IUTStage1Remark312Absorption}: Remark 3.12.2(v) absorption
+  interfaces.
+\item \texttt{IUTStage1Source}: finite labels, Gaussian data, SHE/Hodge
+  interfaces, and route theorems.
+\item \texttt{IUTStage1Experiments}: compiled endpoint checks and diagnostic
+  theorems.
+\end{itemize}
+The experiment file is not a substitute for proof.  It is a curated surface
+that forces the important route theorems to elaborate together and exposes
+Boolean/report endpoints such as whether the present stage settles the dispute.
+At present that endpoint is deliberately false.
+
+The build discipline is simple.  Each mathematical increment is checked by
+\Lean{} via \texttt{lake build Iut.Stage1.IUTStage1Experiments}; the paper is
+rebuilt from this LaTeX source; and the code is scanned for explicit proof
+placeholders such as \texttt{sorry}, \texttt{admit}, and \texttt{axiom}.  The
+long-term collaboration plan is compatible with Apodixis: the current typed
+route endpoints and missing-obligation records give a natural surface for a
+collaboration tool to show which mathematical interfaces are proved and which
+remain open.
 
 \section{Dispute Interface}
 
-Scholze--Stix require explicit bookkeeping for all ordered one-dimensional real
-vector spaces.  Their pressure point is that the \(\Theta\)-side concrete
-objects carry \(j^2\)-scaled degrees, while a consistent identification of the
-real lines appears to leave no room for inserting all these scalars.
+In \IUT{} III, Step (x) treats the procession-normalized log-volume as
+unchanged under \((\Ind1)\) and \((\Ind2)\), while \((\Ind3)\) supplies a
+one-sided upper-semi comparison.  Step (xi) then passes through multiradiality,
+\(\IPL\), \(\SHE\), holomorphic hulls, determinants, and log-volume to place
+the \(q\)-pilot reading in the upper ray determined by the \(\Theta\)-pilot:
+\[
+  -|\log(q)|\in\R_{\le -|\log(\Theta)|}.
+\]
+The final numerical step is elementary:
+\[
+  -|\log(q)|\le -|\log(\Theta)|
+  \le C_\Theta|\log(q)|,\qquad |\log(q)|>0
+  \quad\Longrightarrow\quad C_\Theta\ge -1 .
+\]
 
-The formalization therefore separates:
+Scholze--Stix object to the comparison because the \(\Theta\)-side data carries
+\(j^2\)-scaled degrees, while a naive identification of ordered real lines
+appears to remove the room needed for these scalars.  The formalization
+therefore separates four comparison levels:
 \[
 \begin{array}{c}
-\text{representative } j^2 \text{ data}\\
+\text{representative }j^2\text{ data}\\
 \text{balanced sign-compatible data}\\
-\text{aggregate averaged data}\\
-\text{final hull/log-volume data}
-\end{array}
-\qquad
-\text{and}
-\qquad
-\begin{array}{c}
-\text{raw real equality}\\
-\text{transported equality}\\
-\text{matched transport scales}\\
-\text{cancellable ordered-line comparison.}
+\text{averaged cusp-label data}\\
+\text{hull/log-volume data}.
 \end{array}
 \]
-This separation is the main correctness guard in the current code.
+The final route consumes only the hull/log-volume comparison level.  \Lean{}
+rejects the balanced sign-compatible level as sufficient for the final
+comparison.
 
-\section{Lean Coverage}
+\section{Formalized Corridor}
 
-The relevant implementation is in
-\texttt{Iut/Stage1/IUTStage1SourceCore.lean},
-\texttt{Iut/Stage1/IUTStage1Remark312Absorption.lean},
-\texttt{Iut/Stage1/IUTStage1Source.lean}, and
-\texttt{Iut/Stage1/IUTStage1Experiments.lean}.
-The code currently covers:
+The relevant implementation lives in four Lean modules:
 \begin{itemize}
-\item labeled real-line copies and positive-scale transports;
-\item a finite \(\F_\ell\)-label model with representative square weights
-  \(j \mapsto j^2\);
-\item a representative pilot-degree profile
-  \(\deg(\Theta_j)=j^2\deg(q)\);
-\item a finite \(q^{j^2}\) endpoint connecting this representative
-  Gaussian-degree rule to the square-weight profile: for canonical
-  representatives, the Gaussian degree is the square weight times the
-  environment/q-pilot degree; Lean packages this together with the zero branch,
-  the canonical \(j=1\) branch, and sign invariance;
-\item a splitting-monoid/tensor-packet endpoint for the same finite branch:
-  the core generator is zero, each procession generator is the procession
-  square times the environment degree, acting on the tensor packet adds the
-  generator log-volumes, and nonnegative environment degree gives monotonicity
-  of the normalized acted packet; Lean now also identifies the averaged
-  splitting-generator contribution with the full-label Gaussian average, so the
-  normalized acted packet is the original packet plus either of these equivalent
-  finite \(q^{j^2}\) averages; normalized-log-volume triviality of the action is
-  equivalent in this finite model to zero environment degree, with strict
-  increase for positive environment degree and strict decrease for negative
-  environment degree;
-\item proof that one label-independent scale cannot absorb all representative
-  \(j^2\) scales in this model;
-\item proof that, for nonzero \(\deg(q)\), one label-independent scale cannot
-  account for all representative \(\Theta_j\)-degrees; Lean now proves the exact
-  converse classifier: such a scale exists if and only if \(\deg(q)=0\); under
-  the Corollary 3.12 sign hypothesis \(0<-\deg(q)\), no such scalar exists;
-\item proof that the raw representative \(j^2\) theta-degree rule does not
-  descend to the sign quotient \(|F_\ell|=F_\ell/\{\pm1\}\) when \(\deg(q)\ne0\);
-\item an absolute-label exponent on \(|F_\ell|=\{0\}\cup F_\ell^\times/\{\pm1\}\)
-  which agrees with \(j^2\) for the canonical representatives
-  \(0\le j\le(\ell-1)/2\), and the corresponding theta-degree profile;
-  Lean proves that the coordinate map \(F_\ell\to |F_\ell|\) is surjective,
-  that the zero absolute label is reached exactly by \(j=0\), hence has
-  singleton coordinate fiber, and that every nonzero sign-label class has a
-  nonzero coordinate representative; Lean also
-  proves the exact fiber relation:
-  two coordinates have the same full absolute label if and only if they are
-  equal or negatives of one another; equivalently, every nonzero full-label
-  fiber is exactly a sign pair \(\{j,-j\}\), hence has cardinality \(2\).  These
-  zero, canonical-one, equality-up-to-sign, and surjectivity facts are now
-  packaged as a full-label endpoint.
-  Lean also
-  proves that the half-range procession map to \(|F_\ell|\) is bijective, using
-  the minimal absolute representative \(j_{\min}\) for surjectivity and the
-  exponent \(j^2\) for injectivity; this gives
-  \(\#|F_\ell|=(\ell+1)/2\) in the finite model and permits Lean to reindex
-  absolute-label averages by half-range processions;
-  Lean also proves that the half-range procession top is exactly
-  \((\ell-1)/2\) and that the resulting finite index set has cardinality
-  \((\ell+1)/2\), matching the \(j\in\{0,\ldots,(\ell-1)/2\}\) convention in
-  IUT II; on this half-range procession, Lean proves the Gaussian degree formula
-  \(G(j)=j^2\deg(q)\), with \(G(0)=0\), and the normalized average identity
-  \(6\,\operatorname{Avg}(G)=j_{\max}(2j_{\max}+1)\deg(q)\); by reindexing,
-  the same identity holds for the average over \(|F_\ell|\).  Since
-  \(j_{\max}\ge2\), Lean proves that this full average is not the singleton
-  \(j=1\) identity value when \(\deg(q)\ne0\); in the nonpositive environment
-  branch, the full \(|F_\ell|\)-average is bounded above by \(\deg(q)\), and
-  hence by any bound above \(\deg(q)\); if \(\deg(q)<0\), this bound is strict:
-  the full average is \(<\deg(q)\), while for \(\deg(q)>0\) it is \(>\deg(q)\);
-  the same facts are now packaged as a
-  typed \(|F_\ell|\)-indexed procession-normalized average object, where the
-  average is provably distinct from the canonical \(j=1\) component unless
-  \(\deg(q)=0\), strictly below it if \(\deg(q)<0\), strictly above it if
-  \(\deg(q)>0\), and equal to that component if and only if \(\deg(q)=0\);
-\item the degree-level Gaussian evaluation
-  \(q\mapsto(q^{j^2})_{j\in |F_\ell|}\), including identity at \(j=1\);
-  Lean proves that the absolute-label exponents at \(j=1\) and \(j=2\) are
-  \(1\) and \(4\), hence the corresponding theta/Gaussian degrees are distinct
-  whenever \(\deg(q)\ne0\), and equal exactly in the degenerate case
-  \(\deg(q)=0\);
-  Lean now also converts such an evaluation into a cusp/full-label log-volume
-  compatibility object and proves the full-label value-preservation branch when
-  the source and target environment degrees agree.  Conversely, Lean proves
-  that full-label value preservation for two Gaussian evaluations is equivalent
-  to equality of their environment degrees, and this equality is already
-  detected at the canonical \(j=1\) component.  Lean also proves the IUT II
-  restriction check at the canonical \(j=1\) sign label:
-  the Gaussian component and the corresponding cusp-class log-volume are both
-  the original environment degree; Lean also records the accompanying IUT II
-  \(F_\ell\)-label model endpoint: the carrier has cardinality \(\ell\), the
-  maps to and from \(\mathbb{Z}/\ell\mathbb{Z}\) are inverse, and the additive
-  torsor action is transported by coordinate addition.  Lean also packages the
-  unit/sign bridge: the distinguished sign unit acts by negation, the
-  \(\{\pm1\}\)-unit subgroup orbits are exactly sign orbits, and the canonical
-  cusp class is the sign class of coordinate \(1\).  It also records the
-  zero/nonzero local-object assignment and the coordinate-to-full-label
-  log-volume compatibility endpoint, including invariance under \(j\mapsto -j\);
-  Lean now packages the Remark 3.12.2(i)(b) finite-symmetry split in one
-  endpoint: additive \(F_\ell\)-translation, multiplicative unit action, the
-  sign-unit orbit criterion, equality up to sign in the full-label quotient,
-  and compatibility of unit action with coordinate-to-full-label descent,
-  and the warning in the finite model: the singleton restriction to \(j=1\) is not
-  stable under the additive \(F_\ell\)-torsor action, since translation by \(1\)
-  sends \(1\) to \(2\ne1\); more generally, Lean proves that every nonempty
-  translation-stable finite subset of \(F_\ell\) is all of \(F_\ell\), packaged
-  as a translation-closure endpoint, so no nonempty proper subset restriction is
-  compatible with this symmetry; Lean
-  also proves that no nonzero additive translation descends to a well-defined
-  map on \(|F_\ell|\), since the equal absolute labels of \(t\) and \(-t\) would
-  have to map simultaneously to the nonzero label of \(2t\) and to \(0\);
-  equivalently, an additive translation descends to \(|F_\ell|\) if and only if
-  it is the zero translation; the same iff is exposed at the route interface as
-  the exact condition for a translation equivalence to preserve full labels;
-\item a canonical representative square-weight profile on \(F_\ell\):
-  Lean proves the total \(j^2\)-mass is positive from the \(j=1\) contribution
-  and therefore constructs the profile without an external positivity premise;
-  it also proves
-  \(6\sum_{j\in\mathbb{Z}/\ell\mathbb{Z}}j_{\mathrm{rep}}^2
-   =(\ell-1)\ell(2(\ell-1)+1)\), hence the corresponding average formula after
-  division by \(\ell\);
-\item the square-weighted constant-average check:
-  a constant procession-normalized log-volume remains equal to the same
-  constant after averaging with the canonical \(j^2\)-weights;
-\item the same constant-average check inside the
-  \(F_\ell=\mathbb{Z}/\ell\mathbb{Z}\) cusp-label corridor:
-  if the full-label log-volume is constant, the square-weighted average used in
-  the \(\Theta\)-route is that constant, including for the canonical weights;
-\item the constant-target structured-SHE subcase:
-  the formal route now proves equality of the square-weighted average with the
-  \(\Theta\)-source average, not merely an upper bound;
-\item a log-volume shadow of the IUT III splitting-monoid action: the generator
-  attached to a procession label contributes \(j^2\deg(q)\), contributes \(0\) at
-  the core label, and adds its finite generator sum to the tensor-packet
-  log-volume; Lean also proves the procession-normalized form: the acted
-  tensor-packet average is the original tensor-packet average plus the averaged
-  Gaussian generator contribution, equivalently the average of the
-  \(j^2\deg(q)\) contributions over the procession container; for
-  \(S_{j+1}=\{0,\ldots,j\}\), Lean expands the total generator contribution to
-  \(j(j+1)(2j+1)\deg(q)/6\), and the resulting normalized log-volume change to
-  \(j(2j+1)\deg(q)/6\); at the final procession length this averaged generator
-  contribution is equal to the full-label Gaussian average; since
-  \(j=\lfloor\ell/2\rfloor\ge2\), a nonnegative
-  environment degree makes the acted normalized tensor-packet log-volume an
-  upper bound for the original one; equality of acted and original normalized
-  log-volume is equivalent to zero environment degree, and the sign of the
-  environment degree determines the strict direction of the change;
-\item the finite procession containers
-  \(S^\pm_{j+1}=\{0,\ldots,j\}\), their nested inclusions, core-label stability,
-  stage cardinality \(j+1\), and total procession ambiguity \((\ell^\pm)!\)
-  rather than \((\ell^\pm)^{\ell^\pm}\);
-\item the map from the final procession container to \(|F_\ell|\), sending the
-  core label to \(0\) and recovering the exponent \(j^2\);
-\item the log-volume shadow of the tensor packet over \(S^\pm_{j+1}\), with
-  each factor a finite-fiber direct sum over places above \(v_\mathbb{Q}\), total
-  log-volume given by the finite sum over the container, normalized denominator
-  \(j+1\), and invariance under container permutations;
-\item source-side local log-volume interfaces:
-  Lean packages finite local log-volume identification, positive capsule count,
-  procession-normalized averaging, and local container estimates
-  \(q_{\mathrm{signed}}\le\operatorname{logvol}_{\mathrm{local}}\), while
-  leaving the analytic construction of the local objects external;
-\item the \(F_\ell\)-label average specialization:
-  for labels represented as \(\mathbb{Z}/\ell\mathbb{Z}\), Lean rewrites the
-  procession-normalized average denominator as \(\ell\);
-\item the zero/nonzero Gaussian average split:
-  Lean proves
-  \[
-  \#(\mathbb{Z}/\ell\mathbb{Z})^\times=\ell-1,\qquad
-  \operatorname{Avg}_{j\in F_\ell}G(j)
-  =\frac{\ell-1}{\ell}\operatorname{Avg}_{j\ne0}G(j),
-  \]
-  for the degree-level Gaussian evaluation \(G\), using \(G(0)=0\).  Thus the
-  paper's uniform \(1/\ell\) weighted-volume convention is not silently replaced
-  by the auxiliary nonzero-only average; in the negative signed branch Lean also
-  proves the strict inequality
-  \(\operatorname{Avg}_{j\ne0}G(j)<\operatorname{Avg}_{j\in F_\ell}G(j)\),
-  while in the positive branch the inequality is reversed; equality between the
-  two averages holds if and only if \(\deg(q)=0\).  Lean also proves that the
-  all-\(F_\ell\) coordinate average itself is zero if and only if
-  \(\deg(q)=0\);
-  Lean separately formalizes the nonzero half-range
-  \(j=1,\ldots,(\ell-1)/2\) average, proves that the signed nonzero carrier
-  \(F_\ell^\times\) is the twofold cover of this half-range by \(j\) and \(-j\),
-  and therefore proves that the signed nonzero average equals the nonzero
-  absolute-label average.  It also proves
-  \(6\,\operatorname{Avg}_{j\ne0,\,|F_\ell|}G(j)
-   =(j_{\max}+1)(2j_{\max}+1)\deg(q)\); Lean also proves the exact rescaling
-  \[
-    \operatorname{Avg}_{|F_\ell|}G
-    =\frac{j_{\max}}{j_{\max}+1}\operatorname{Avg}_{j\ne0,\,|F_\ell|}G.
-  \]
-  Since the full \(|F_\ell|\)-average
-  has coefficient \(j_{\max}(2j_{\max}+1)/6\), Lean proves that the nonzero
-  absolute-label average is strictly below the full average when \(\deg(q)<0\)
-  and strictly above it when \(\deg(q)>0\), with equality if and only if
-  \(\deg(q)=0\).  Combining the signed and absolute computations, Lean proves
-  \[
-  \operatorname{Avg}_{F_\ell}G
-  =\frac{j_{\max}(j_{\max}+1)}{3}\deg(q),
-  \]
-  equivalently
-  \(\operatorname{Avg}_{F_\ell}G=((\ell+1)/\ell)
-  \operatorname{Avg}_{|F_\ell|}G\),
-  so \(\operatorname{Avg}_{F_\ell}G\) is strictly below
-  \(\operatorname{Avg}_{|F_\ell|}G\) when \(\deg(q)<0\), strictly above it when
-  \(\deg(q)>0\), and equal to it only when \(\deg(q)=0\);
-\item the IUT II Remark 4.7.3 zero/nonzero weighted-volume relation:
-  Lean records a relation in which every nonzero full label is subordinate to
-  the zero label, proves that \(0\ll0\) is false, proves that this relation
-  is not symmetric at the zero label, and proves the exact criterion
-  \(a\ll0\iff a\ne0\) for full labels; at coordinate level this becomes
-  \(j\ll0\iff j\ne0\), so the all-coordinate statement is false precisely
-  because it includes \(j=0\).  Lean packages this with unit-action
-  preservation and the zero-translation criterion for affine preservation.
-  Lean also proves that the full-label set
-  subordinate to zero has cardinality \((\ell-1)/2\), the nonzero absolute
-  half-range, and decomposes any full-label sum, hence any full-label average,
-  into its zero contribution plus the subordinate nonzero contribution with
-  denominator \((\ell+1)/2\).  Applying this to the Gaussian degree function,
-  whose zero component is \(0\), Lean rewrites the full absolute-label
-  Gaussian average as the subordinate nonzero Gaussian sum divided by the full
-  absolute-label denominator and proves the closed form
-  \[
-    6\sum_{a\ll0}G(a)
-    =j_{\max}(j_{\max}+1)(2j_{\max}+1)\deg(q).
-  \]
-  Lean also proves that this subordinate sum is exactly the canonical
-  nonzero absolute half-range sum \(\sum_{j=1}^{j_{\max}}G(j)\).
-  In contrast to nonzero additive translations, Lean defines the multiplicative
-  unit action on full labels, proves its compatibility with the coordinate
-  formula \(j\mapsto a\cdot j\), and proves that it preserves the subordinate
-  zero/nonzero relation.  Lean also proves the unit and multiplication laws for
-  this action and proves that the sign subgroup \(\{\pm1\}\) acts trivially on
-  full absolute labels.  Each unit action is packaged as an equivalence of
-  full labels with inverse action by \(a^{-1}\), and Lean proves that the zero
-  label is fixed exactly.  Consequently Lean proves that full-label sums and
-  full-label averages are invariant under this multiplicative permutation; the
-  same holds for sums over the subordinate nonzero full-label subset.  These
-  invariance statements are also specialized to the Gaussian degree function
-  \(G(a)\), so the full Gaussian average and the subordinate Gaussian sum are
-  invariant under multiplicative reindexing.  At the coordinate level, Lean
-  proves the corresponding sharp contrast: unit multiplication preserves the
-  predicate \(j\ll0\), whereas additive translation preserves this predicate
-  for all \(j\) if and only if the translation is zero.  More strongly, an
-  affine coordinate operation \(j\mapsto a j+t\), with \(a\in F_\ell^\times\),
-  descends to full absolute labels if and only if \(t=0\), and preserves the
-  subordinate predicate for all \(j\) if and only if \(t=0\).  Lean now packages
-  the unit-action laws, coordinate compatibility, zero-label preservation, and
-  affine descent criterion in one endpoint.
-  Lean separately proves that raw \(F_\ell\)-coordinate sums are invariant
-  under additive translation, unit multiplication, and their affine
-  composition; this is only finite-permutation invariance and does not supply
-  descent to \(|F_\ell|\).  For the Gaussian coordinate average, Lean packages
-  this as a diagnostic: every affine map with nonzero additive offset preserves
-  the raw coordinate average but fails full-label descent.  If the Gaussian
-  environment degree is nonzero, the same affine operation also changes the
-  zero Gaussian component, so aggregate average invariance is not pointwise
-  Gaussian compatibility.  Lean also proves the exact degeneracy criterion:
-  a coordinate Gaussian component is zero if and only if its coordinate is zero
-  or the environment degree is zero; for an affine zero-coordinate image this
-  becomes \(t=0\) or \(\deg(q)=0\).
-  At the purely labelwise level, Lean proves the exact pointwise preservation
-  criterion: \(j\mapsto a j+t\) preserves the full absolute label of every
-  coordinate if and only if \(t=0\) and \(a\in\{\pm1\}\).
-  At the Gaussian-value level, Lean proves the exact nondegenerate pointwise
-  criterion: if the environment degree is nonzero, then
-  \(j\mapsto a j+t\) preserves all coordinate Gaussian degrees if and only if
-  \(t=0\) and \(a\in\{\pm1\}\).  Equivalently, in this finite affine family,
-  nondegenerate pointwise Gaussian preservation is exactly preservation of the
-  full absolute-label map.  Lean also proves the degenerate complement:
-  if \(\deg(q)=0\), then every Gaussian degree is \(0\), so every affine
-  coordinate operation preserves Gaussian values.  Combining both cases, Lean
-  proves the exact classification: affine Gaussian-value preservation is
-  equivalent to either \(\deg(q)=0\) or preservation of the full absolute-label
-  map.  Uniform preservation over all nonzero environment degrees is therefore
-  equivalent exactly to full absolute-label preservation.
-  For the stricter representative \(j^2\) square-weight branch, Lean proves the
-  corresponding affine criterion \(t=0\) and \(a=1\).  Thus the sign action is
-  legitimate for the balanced/full-label Gaussian branch, but not for the
-  representative-square transport branch.  Requiring both the
-  representative-square branch and the full-label branch is therefore
-  equivalent, in the unit-affine family, to the identity case \(t=0,a=1\).
-  Likewise, nondegenerate pointwise Gaussian preservation plus representative
-  square preservation is equivalent to \(t=0,a=1\).
-  Lean exposes this as a direct
-  diagnostic: the affine action \(j\mapsto -j\) preserves Gaussian degrees
-  pointwise but does not preserve the representative \(j^2\) coordinate-square
-  profile.  Lean now packages the sign-negation case as a source-layer
-  transport theorem:
-  the balanced self-transport \(j\mapsto -j\) simultaneously preserves all
-  Gaussian degrees and all balanced square weights, while it fails preservation
-  of the representative constant-one square-weighted summands.  This is a
-  formal separation between sign-compatible balanced transport and the stricter
-  representative branch.  A further experiment theorem combines this
-  preservation/failure package with the final-route audit: the same balanced
-  negation transport is not the comparison level consumed by the final
-  weighted-theta route.
-  Lean also converts the
-  zero/nonzero cusp-label compatibility object to a uniform \(F_\ell\) average
-  and proves that a diagonal constant log-volume distribution averages to that
-  same constant; the same compatibility layer now exposes, as a single endpoint,
-  the equality between coordinate-normalized log-volumes and full-label
-  log-volumes, together with the zero branch, nonzero cusp-class branch, and
-  sign-pair invariance; Lean also proves that the uniform \(F_\ell\)-average is
-  the average of these full-label values, and that zero/cusp-class upper bounds
-  propagate to this average;
-\item the IUT III Step (x) averaged-log-volume corridor:
-  Lean records that \((\mathrm{Ind1})\) and \((\mathrm{Ind2})\) preserve the
-  procession-normalized averaged log-volume, while \((\mathrm{Ind3})\) supplies
-  an upper bound; the code now constructs this corridor from three
-  \(F_\ell\)-cusp log-volume compatibility objects when the after-\((\mathrm{Ind2})\)
-  zero and cusp-class branches are bounded by the proposed \((\mathrm{Ind3})\)
-  bound; the before-, after-\((\mathrm{Ind1})\)-, and
-  after-\((\mathrm{Ind2})\)-averages are all bounded by the same
-  \((\mathrm{Ind3})\) upper bound; Lean now packages the
-  Remark 3.12.2(iii) log-link-juggling endpoint by combining these two
-  equalities with the one-sided \((\mathrm{Ind3})\) bound, and separately
-  records the matching nonarchimedean/archimedean place families for the
-  upper-semi state;
-\item the Step (x) to Step (xi) upper-ray handoff:
-  if the q-pilot reading is the pre-indeterminacy averaged log-volume and the
-  \(\Theta\)-hull reading is the \((\mathrm{Ind3})\) upper bound, Lean constructs
-  the hull/determinant upper-ray datum used in Step (xi); the code now also
-  constructs this handoff directly from the \(F_\ell\)-cusp compatibility
-  corridor plus the determinant/hull identifications and proves the resulting
-  q-pilot membership in the hull upper ray; Lean now exposes the
-  defining equivalence \(x\in R_{\le\Theta}\iff x\le\Theta\), so the
-  Step (xi-f) passage from q-pilot membership in the upper ray to the ordered
-  real inequality is explicit; the same handoff also constructs the finite
-  extended \(\Theta\)-log-volume endpoint, excludes \(+\infty\), identifies its
-  real value with the hull boundary, and proves the q-pilot comparison against
-  this real value before adjoining any \(C_\Theta\)-hypothesis; Lean also
-  identifies this finite endpoint with the signed two-computation endpoint:
-  the signed \(q\)-reading is the finite endpoint's q-pilot log-volume, the
-  signed \(\Theta\)-reading is its real \(\Theta\)-value, and the formal
-  \texttt{Corollary312Inequality} is obtained from these two shared readings;
-\item the Step (x) to Step (xi-g) two-computation handoff:
-  the same data constructs the q-pilot two-computation record, with the input
-  prime-strip reading equal to the pre-indeterminacy average and bounded by the
-  \(\Theta\)-hull upper-ray value; Lean now also proves, at this route level,
-  that the input prime-strip q-reading and the hull-side q-reading are equal,
-  and hence that the pre-indeterminacy average is the hull-side q-reading; the
-  Fig. 3.8 endpoint now packages both readings, their equality, both
-  upper-ray inequalities, and hull-side q-membership in one theorem;
-  before any \(C_\Theta\) is chosen, the resulting signed two-computation
-  endpoint already yields the formal \texttt{Corollary312Inequality}, with
-  q- and \(\Theta\)-pilot magnitudes identified as the negatives of the
-  pre-indeterminacy average and the hull boundary;
-\item the Step (x)-sourced \(C_\Theta\) endpoint:
-  adding \(|\log(q)|>0\) for the pre-indeterminacy q-pilot average and the
-  displayed upper bound
-  \(-|\log(\Theta)|\le C_\Theta|\log(q)|\) yields \(C_\Theta\ge-1\);
-  Lean also exposes the route-level chain
-  \(q_{\mathrm{avg}}\le\Theta_{\mathrm{real}}\le C_\Theta|q_{\mathrm{avg}}|\),
-  hence \(q_{\mathrm{avg}}\le C_\Theta|q_{\mathrm{avg}}|\), before invoking the
-  final ordered-real algebra; the Step (xi-f) endpoint now packages q-pilot
-  upper-ray membership, both ordered inequalities, \(C_\Theta\ge-1\), and the
-  rejection of \(C_\Theta<-1\) directly at the route level; if the q-pilot
-  inequality is strict, Lean proves \(C_\Theta>-1\); Lean now also
-  combines this Step (xi-f) package with the Remark 3.12.2 distinct-label
-  intertwining discipline, so the inequality endpoint is available while the
-  q-native and \(\Theta\)-native labels remain unequal;
-\item the Step (x)-sourced statement endpoint:
-  after adjoining the statement-level
-  \(\Theta\)-subject/\(q\)-not-subject boundary, the same data constructs the
-  Corollary 3.12 statement endpoint, with finite \(\Theta\)-branch excluding
-  \(+\infty\) and \(C_\Theta\ge-1\); Lean proves that this constructed endpoint still records
-  the \(\Theta\)-pilot as subject to \((\mathrm{Ind1}),(\mathrm{Ind2}),
-  (\mathrm{Ind3})\) and the \(q\)-pilot as not subject to them, and that these
-  two status fields are unequal at the constructed endpoint; the same endpoint
-  is now constructed directly from the \(F_\ell\)-cusp compatibility corridor,
-  determinant/hull identifications, q-pilot positivity, and the displayed
-  \(C_\Theta\)-bound, preserving the q-pilot average, upper-ray membership,
-  real \(\Theta\)-value, and status separation; from the same \(F_\ell\)-sourced
-  endpoint, Lean proves the nonnegative-\(\Theta\) branch:
-  if the \((\mathrm{Ind3})\) upper bound is nonnegative, then the q-pilot
-  average is strictly smaller than it and the endpoint has \(C_\Theta\ge0\);
-  Lean also packages this branch as a formal `Corollary312Inequality` value
-  for the comparison data induced by the endpoint sign reduction; without the
-  nonnegative-\(\Theta\) assumption, the same \(F_\ell\)-sourced endpoint proves
-  \(q_{\mathrm{avg}}\le C_\Theta|q_{\mathrm{avg}}|\), \(C_\Theta\ge-1\), and
-  rejection of \(C_\Theta<-1\); the fixed-q two-computation version is also
-  exposed, with the lower-bound algebra applied to
-  \(-|\log(q)|\) as determined by the input prime-strip q-computation; the
-  signed \(C_\Theta\) comparison payload is exposed from the same data, with
-  signed \(q\) equal to the pre-indeterminacy average and signed \(\Theta\)
-  equal to the hull boundary, and Lean derives the corresponding formal
-  \texttt{Corollary312Inequality} from this signed payload while identifying
-  the positive q- and \(\Theta\)-pilot magnitudes as the negatives of these
-  two signed readings;
-  Lean also proves
-  that the endpoint \(q\)-pilot log-volume is exactly the pre-indeterminacy
-  average and, by Step (x) invariance, also the after-\((\mathrm{Ind1})\)- and
-  after-\((\mathrm{Ind2})\)-averages; thus \(|\log(q)|\) is the negative of
-  these equal averages and is positive; equivalently, the three equal averages
-  are negative under the q-pilot positivity hypothesis; Lean also proves
-  the displayed inequality
-  \(-|\log(q)|\le-|\log(\Theta)|\) at this endpoint, with \(q\) read as the
-  pre-indeterminacy average and \(\Theta\) read as the finite real branch;
-  equivalently, the endpoint \(q\)-pilot log-volume lies in the constructed
-  upper ray \(\mathbb{R}_{\le-|\log(\Theta)|}\);
-  Lean also formalizes the opening reduction in the printed proof: if this
-  finite real \(\Theta\)-value is nonnegative, then the strict negativity of the
-  q-pilot log-volume gives the comparison immediately; moreover the displayed
-  bound
-  \(-|\log(\Theta)|\le C_\Theta|\log(q)|\) then forces \(C_\Theta\ge0\);
-  the finite extended \(\Theta\)-value and the real \(\Theta\)-branch are
-  identified with the Step (x) \((\mathrm{Ind3})\) upper bound; the same endpoint
-  bound holds after the
-  \((\mathrm{Ind1})\) and \((\mathrm{Ind2})\) average-preserving
-  transformations; the Step (x)-sourced endpoint also directly rejects
-  \(C_\Theta<-1\);
-\item base-valuation products of tensor packets, the finite
-  \((F_{\mathrm{mod}}^\times)_j\)-action shadow, and a coric transfer shadow
-  \(F\to D\to D^\vdash\) preserving product log-volume without identifying
-  Hodge-theater histories; Lean now also packages the Remark 3.12.2(i)(c)
-  ring-structure split: additive/log-shell direct sums, multiplicative/global
-  Frobenioid calibration, the local-shift criterion, and the guarded transfer
-  between histories;
-\item the Remark 3.9.5 holomorphic-hull operation:
-  Lean now represents hull formation by a closure operator on regions, proving
-  the fixed-hull, extensivity, monotonicity, idempotence, and log-volume
-  monotonicity properties P1--P3 used in Step (xi); from a q-region contained
-  in the theta hull, Lean constructs the existing hull/determinant upper-ray
-  endpoint \(q_{\mathrm{pilot}}\le\Theta_{\mathrm{hull}}\); Lean now also
-  packages the Step (xi) union of possible theta images and derives the same
-  upper-ray endpoint from containment of the q-pilot region in the holomorphic
-  hull of that union; this possible-image hull endpoint now feeds directly into
-  the \(C_\Theta\)-lower-bound algebra, giving \(C_\Theta\ge-1\), the
-  boundary/strict split, and equality of the theta hull with the q-pilot
-  log-volume in the boundary case; Lean also records the hull minimality
-  principle: any closed region containing all possible theta images contains
-  the theta hull, hence bounds its log-volume; the possible-image hull endpoint
-  now also proves the strict branch \(C_\Theta>-1\) whenever the q-pilot
-  log-volume is strictly below the theta hull, and packages the resulting
-  boundary-equality-versus-strict alternative;
-\item the Step (xi-d)--(xi-g) shadow: determinant normalization, upper-ray
-  membership, and equality of the two \(q\)-pilot log-volume computations; the
-  determinant normalization is invariant under changing the positive
-  tensor-power representative when the determinant log-volume is fixed; equality
-  of the \(q\)-pilot log-volume with the \(\Theta\)-hull or determinant boundary
-  is equivalent to supplying the corresponding reverse inequality;
-\item the Corollary 3.12 finiteness endpoint:
-  the statement-level value \(-|\log(\Theta)|\in\mathbb{R}\cup\{+\infty\}\)
-  is represented by an explicit finite/\(+\infty\) split, and the
-  hull/determinant upper-ray datum forces the finite real branch, explicitly
-  excluding the \(+\infty\) branch; Lean also exposes the resulting real
-  \(\Theta\)-log-volume and proves the \(q\)-pilot upper-ray comparison against
-  that real value;
-\item the Step (xi-d) determinant normalization:
-  the hull boundary is tied to a rank \(>1\) arithmetic-vector-bundle
-  determinant, a positive tensor power of that determinant, and the normalized
-  determinant log-volume; Lean now proves at the corridor endpoint that the
-  normalized value is exactly the determinant log-volume itself, so the
-  \(\Theta\)-hull log-volume is the determinant log-volume; it also records the
-  equivalent tensor-power equations before and after normalization, and transports
-  the q-pilot upper-ray comparison to both determinant coordinates; the same
-  determinant/tensor-power description is now available at the finite
-  \(\Theta\)-endpoint;
-\item the Corollary 3.12 statement boundary:
-  the \(\Theta\)-pilot log-volume is typed as subject to
-  \((\mathrm{Ind1}),(\mathrm{Ind2}),(\mathrm{Ind3})\), while the \(q\)-pilot
-  log-volume is typed as not subject to these indeterminacies;
-\item the extended statement endpoint:
-  from the finite \(\Theta\)-branch, \(0<-|\log(q)|\), the upper-ray comparison,
-  and the displayed hypothesis
-  \(-|\log(\Theta)|\le C_\Theta|\log(q)|\), Lean proves \(C_\Theta\ge-1\);
-  if the finite \(\Theta\)-value is nonnegative, the q-pilot is strictly below
-  it and Lean proves the sharper \(C_\Theta>-1\);
-\item the Step (xi-f) final algebra:
-  from \(-|\log(q)|\le-|\log(\Theta)|\), \(|\log(q)|>0\), and
-  \(-|\log(\Theta)|\le C_\Theta|\log(q)|\), Lean proves \(C_\Theta\ge-1\);
-  from the strict inequality
-  \(-|\log(q)|<-|\log(\Theta)|\), Lean proves \(C_\Theta>-1\); if
-  \(C_\Theta=-1\), Lean proves
-  \(-|\log(q)|=-|\log(\Theta)|\), hence equality with the determinant
-  log-volume, and \(-|\log(\Theta)|<0\); hence the endpoint splits into the
-  boundary branch \(C_\Theta=-1\) or the strict branch \(C_\Theta>-1\); Lean also
-  proves the determinant-coordinate strict branch: if the fixed q-reading is
-  strictly below the determinant boundary, then \(C_\Theta>-1\); equivalently, at
-  the determinant-coordinate endpoint, Lean separates the boundary branch where
-  both fixed q-readings equal the determinant log-volume from the strict branch;
-  combined with the tensor-power warning, the boundary branch also excludes both
-  fixed q-readings from the \(N\)-tensor-power upper ray;
-\item the signed-payload bridge:
-  the existing Stage 1 comparison record \(q_{\mathrm{signed}}\le
-  \Theta_{\mathrm{signed}}\), together with
-  \(\Theta_{\mathrm{signed}}\le C_\Theta(-q_{\mathrm{signed}})\), feeds this
-  Step (xi-f) algebra directly;
-\item the Step (xi-g) endpoint bridge:
-  the two-computation q-pilot record produces the signed comparison payload
-  with \(q_{\mathrm{signed}}\) read from the input prime-strip log-volume and
-  \(\Theta_{\mathrm{signed}}\) read from the hull/determinant upper-ray
-  boundary; Lean now propagates the strict and boundary \(C_\Theta\)-branches to
-  both q-computations: a strict hull-output inequality gives \(C_\Theta>-1\),
-  while \(C_\Theta=-1\) forces the hull-output q-reading to equal the
-  \(\Theta\)-boundary;
-\item the Step (xi-e)--(xi-f) fixed-value condition:
-  in the signed two-computation endpoint, Lean proves that the input
-  prime-strip reading and the hull-output reading are both the same real value
-  \(-|\log(q)|\), and that this value lies in the upper ray
-  \(\mathbb{R}_{\le-|\log(\Theta)|}\); the source endpoint now also records these
-  two fixed readings in determinant and normalized tensor-power coordinates, with
-  equality to the determinant boundary guarded by the corresponding reverse
-  determinant inequality;
-\item the fixed-value \(C_\Theta\) endpoint:
-  combining the preceding fixed upper-ray membership with
-  \(-|\log(\Theta)|\le C_\Theta|\log(q)|\), Lean derives
-  \(-|\log(q)|\le C_\Theta|\log(q)|\) and hence \(C_\Theta\ge-1\);
-  consequently the same hypotheses reject any \(C_\Theta<-1\);
-\item the statement-endpoint composition:
-  the two-computation \(C_\Theta\) endpoint canonically supplies the finite
-  \(\Theta\)-branch Corollary 3.12 statement endpoint once the
-  \(\Theta\)-subject/\(q\)-not-subject indeterminacy boundary is provided;
-\item the opening sign reduction in the proof of Corollary 3.12:
-  from \(0<-q_{\mathrm{signed}}\), Lean proves that
-  \(0\le\Theta_{\mathrm{signed}}\) immediately implies
-  \(q_{\mathrm{signed}}\le\Theta_{\mathrm{signed}}\), matching the printed
-  reduction to the case \(-|\log(\Theta)|<0\); the same strict-negativity
-  argument is now available at the statement endpoint for the real
-  \(\Theta\)-log-volume, and the statement endpoint now maps directly to the
-  sign-reduction record and proves the nonnegative branch of the Corollary 3.12
-  comparison from it;
-\item the Step (xi-h) warning: for \(N\ge2\) and \(\Theta<0\), the tensor-power
-  boundary satisfies \(N\Theta<\Theta\); Lean now also proves that the original
-  \(\Theta\)-boundary lies in the original upper ray but not in the tensor-power
-  upper ray, so the replacement changes the comparison region; at the
-  \(F_\ell\)-sourced corridor endpoint, this warning is tied to the finite
-  \(\Theta\)-branch: the \(N\)-tensor-power upper ray is a strict tightening of
-  the finite endpoint's upper ray and excludes the original real \(\Theta\)
-  value; Lean now also proves that every value in the tensor-power upper ray is
-  strictly below the original \(\Theta\)-boundary; consequently, if the fixed
-  input or output q-reading is forced into this tensor-power upper ray while the usual
-  \(C_\Theta\)-bound is assumed, Lean derives the strict branch
-  \(C_\Theta>-1\), hence the boundary branch \(C_\Theta=-1\) forbids such
-  q-membership in the tensor-power upper ray; the same exclusion now applies to
-  both q-readings of the two-computation endpoint, and Lean packages the
-  resulting endpoint alternative as boundary-with-exclusion versus strict branch;
-\item the Step (xii) shadow: local Frobenioid \(p_v^N\)-ambiguity changes
-  log-volume by an integer shift, while global calibration fixes exponent \(0\);
-  Lean now records the exact criterion: the local shifted and unshifted
-  log-volumes agree, and likewise the globally calibrated and local shifted
-  values agree, exactly when the local exponent-step product is zero, equivalently
-  when the local exponent is zero or the local prime-step log-volume is zero; for
-  a fixed local base and nonzero local step, equality of two shifted readings is
-  equivalent to equality of their integer exponents; at the
-  \(F_\ell\)-sourced finite \(\Theta\)-endpoint, the globally calibrated
-  log-volume is identified with the finite real \(\Theta\)-value, while any
-  nonzero local exponent with nonzero local step gives a distinct shifted
-  local log-volume; Lean now also couples this global calibrated value to the
-  same \(C_\Theta\)-endpoint that proves \(C_\Theta\ge-1\), and at that endpoint
-  keeps the equality criterion in the decomposed exponent-or-step form; there Lean also
-  records the ordered alternative: a positive exponent-step product places the
-  local shifted log-volume above the calibrated value, and a negative product
-  places it below; in the boundary branch \(C_\Theta=-1\), Lean now proves that
-  the globally calibrated value agrees with the q/determinant value while any
-  nonzero local Frobenioid shift remains distinct from that value; conversely,
-  identifying the shifted local value with the boundary q/determinant value is
-  equivalent to a trivial local shift, and the sign of the local exponent-step
-  product determines whether the shifted local value lies above or below the
-  boundary value; if the local prime-step log-volume is nonzero, this boundary
-  identification is equivalent simply to exponent \(N=0\); if the local step is
-  set to zero, every exponent collapses to the same boundary q/determinant value;
-  the same ordered local-shift comparison is now stated against both fixed
-  q-readings;
-  Lean now fuses these facts into a trichotomy: at \(C_\Theta=-1\), the sign of
-  the Frobenioid shift term decides whether the local shifted value is below,
-  equal to, or above both fixed q-readings;
-  Lean now also packages the determinant boundary, tensor-ray exclusion, and
-  nonzero local-shift separation into one boundary-versus-strict branch theorem,
-  including separation from both fixed q-readings of the two-computation endpoint;
-  a parallel branch theorem packages the determinant/tensor boundary together
-  with the ordered local-shift comparison around both fixed q-readings;
-  this has now been sharpened to a determinant/tensor branch theorem carrying
-  the full sign trichotomy for the local shifted value, opposed to the strict
-  branch \(C_\Theta>-1\);
-  with nonzero local step, equality with either fixed q-reading is equivalent to
-  exponent \(N=0\), while in the zero-step case Lean proves the complementary
-  collapse to both fixed q-readings; Lean also combines this local shift
-  calculation with the upper-semi quotient audit: outside the collapsed subset,
-  quotient equality of two shifted local readings is equivalent to equality of
-  their integer exponents, assuming nonzero local step; in the boundary branch,
-  if the quotient collapses only the fixed q-reading, a nonzero local shift
-  remains distinct from the quotient images of both the q-reading and the
-  determinant reading; conversely, if an arbitrary collapsed region contains
-  the fixed q-boundary, Lean proves the exact audit criterion: quotient equality
-  between a local shifted value and q is equivalent to membership of that
-  shifted value in the collapsed region.  For the concrete q-upper-ray collapse
-  \(\{x\mid x\le q\}\), Lean proves the sign classification: a negative local
-  shift term lies below q and is quotient-identified with q, a zero term equals
-  q, and a positive term lies above q and is not quotient-identified with q.
-  The same classification is now proved for the actual hull/determinant upper
-  ray already present in the corridor, using the boundary identification
-  \(q=\Theta_{\mathrm{hull}}\), and then packaged with the determinant boundary
-  as a boundary-versus-strict endpoint theorem.  Lean also exposes the two
-  nonzero sign cases separately: negative local shifts are genuinely below q
-  but quotient-collapse to q in the actual upper ray, while positive local
-  shifts remain quotient-separated from q.  Equivalently, in the boundary
-  branch, actual-upper-ray quotient equality with q holds exactly when the
-  local shift term is nonpositive; this exact threshold is now also packaged
-  with the determinant boundary as a boundary-versus-strict endpoint theorem.
-  The complementary separation criterion is also formalized: quotient
-  non-equality with q is equivalent to a positive local shift term, again with
-  a boundary-versus-strict endpoint package.  Under a positive local prime-step
-  log-volume, Lean specializes this to the exponent: nonpositive exponents
-  quotient-collapse to q, while positive exponents remain quotient-separated
-  from q; the same criterion is now exposed directly for integer exponents and
-  packaged as boundary-versus-strict endpoint theorems.
-  Hence, if the collapsed region also contains a nonzero local shift, Lean
-  proves that the quotient identifies it with the fixed q/determinant boundary
-  while the underlying log-volumes remain unequal; this broad-collapse
-  diagnostic is now packaged as a
-  boundary-versus-strict theorem together with the determinant boundary.  The
-  same diagnostic applies to two shifted local readings with unequal exponents
-  and nonzero local step when both lie in the collapsed subset;
-\item the Remark 3.12.1(iii) arithmetic fact
-  \(\mathbb{Q}_{>0}\cap\mathbb{Z}^{\times}=\{1\}\), formalized as the exact
-  characterization \(0<q\iff q=1\) for rational integer units \(q=\pm1\);
-\item the Remark 3.12.1(ii) generalized-link numerical bound
-  \(C_\Theta\ge-\lambda\) for \(\lambda\in\mathbb{Q}_{>0}\), with strict
-  strengthening over the \(\lambda=1\) bound when \(\lambda<1\); Lean now proves
-  the resulting strict conclusion \(-1<C_\Theta\) in this case, and now also
-  splits the generalized endpoint into the boundary branch
-  \(C_\Theta=-\lambda\), where the \(q^\lambda\)-pilot and \(\Theta\)-pilot
-  signed log-volumes are equal, or the strict branch \(C_\Theta>-\lambda\);
-\item the \(q^\lambda\)-pilot endpoint algebra:
-  from a signed comparison for \(-\lambda|\log(q)|\) and the same
-  \(C_\Theta|\log(q)|\) upper bound, Lean derives \(C_\Theta\ge-\lambda\), and
-  hence \(C_\Theta\ge-1\) when \(\lambda\le1\), with the strict
-  \(-1<C_\Theta\) conclusion when \(\lambda<1\); the \(F_\ell\)-sourced
-  corridor exposes this as a conditional generalized endpoint, without
-  asserting that the ordinary \(\lambda=1\) construction supplies all
-  generalized links; Lean now also specializes the endpoint at \(\lambda=1\)
-  and proves that its signed \(q^\lambda\)-boundary is exactly the ordinary
-  q-pilot log-volume; the strict and boundary branch classifiers specialize to
-  the ordinary q-pilot upper-ray comparison at \(\lambda=1\);
-\item the Remark 3.12.2 distinct-label implication
-  \(q\text{-itw}\Rightarrow q\text{-itw}\wedge\Theta\text{-itw}/\mathrm{indets}\),
-  with q-native and \(\Theta\)-native labels proved distinct; Lean now also
-  packages this simultaneous validity together with the fixed weakened
-  \(F^{\times\mu}\)-prime-strip condition, and exposes the second implication
-  \(q\text{-itw}\wedge\Theta\text{-itw}/\mathrm{indets}
-  \Rightarrow\Theta\text{-itw}/\mathrm{indets}\) as formal projection; at the
-  \(F_\ell\)-sourced finite/signed endpoint, Lean combines the signed
-  q-to-\(\Theta\) comparison with this distinct-label discipline, so the
-  comparison is available while the q-native and \(\Theta\)-native labels remain
-  provably unequal; the same discipline is now attached to the Step (xi-f)
-  \(C_\Theta\)-endpoint itself;
-\item the Remark 3.12.2 toy calculation: forgotten concrete assignments
-  \(-h\) and \(-2h\) are incompatible for \(h>0\), while
-  \(-h\in\R_{\le-2h+\epsilon}\) implies \(h\le\epsilon\); Lean now packages
-  this as the full \((\mathrm{ftoy})\) endpoint:
-  membership in the upper ray, the displayed inequality
-  \(-h\le-2h+\epsilon\), and the bound \(h\le\epsilon\); the same toy endpoint
-  is now instantiated from the \(F_\ell\)-sourced finite \(\Theta\)-upper ray
-  whenever the corridor q-boundary and \(\Theta\)-boundary are written as
-  \(-h\) and \(-2h+\epsilon\);
-\item the Fig. 3.9 column table: Lean packages the upper-row similarities
-  shared by the 0-column and 1-column, namely the essential
-  \(\bullet_0\) and \(\circ\) roles, log-volume compatibility, and
-  log-Kummer non-interference; the simultaneous Remark 3.12.2(iv) endpoint
-  now records these facts for both columns, including q-pilot
-  non-interference; Lean now also packages the q-pilot-specific combination:
-  non-interference holds, multiradiality fails, and the log-shell treatment is
-  tautological; it also packages the lower-row differences:
-  \(\Theta\)-pilot multiradiality holds, q-pilot multiradiality does not, and
-  the log-shell treatments differ;
-\item the Remark 3.9.5(v) upper-semi set quotient:
-  Lean models the quotient \(E^S\) that collapses a subset \(S\subseteq E\)
-  to a single point and leaves the complement unchanged; every nonempty
-  subset of \(S\) has image equal to the collapsed singleton, while outside
-  points remain injective.  This isolates the precise set-theoretic collapse
-  mechanism used to explain upper semi-compatibility; Lean also proves the
-  converse audit: a nonempty subset maps to the collapsed singleton only if it
-  was contained in \(S\), matching the expected equivalence relation in
-  Remark 3.9.5(vi); moreover, any map between subsets contained in \(S\)
-  becomes the identity on the collapsed quotient image;
-\item the Remark 3.12.2(v) absorption distinction: zero-column unit
-  indeterminacy is absorbed by a hull upper ray, while one-column logarithmic
-  conjugacy is absorbed as log-volume equality; Lean now packages these two
-  outcomes together with the corresponding Fig. 3.9 log-shell treatments, and
-  instantiates the zero-column hull at the finite \(\Theta\)-boundary supplied
-  by the Step (x) to Step (xi) corridor; Lean also records the exact
-  inequality-versus-equality profile: two zero-column upper bounds and one
-  one-column equality, hence inequalities in both directions on the one-column
-  side; on the zero-column side, Lean proves that equality with the hull
-  boundary, after identification with the finite \(\Theta\)-boundary from
-  Step (xi), requires the corresponding reverse inequality as additional data;
-\item the Remark 3.12.3(i) metric analogy:
-  \(\operatorname{vol}(S)>0\) and \(\chi_S=-\operatorname{vol}(S)\) imply
-  \(\chi_S<0\), hence \(\chi_S\le0\), together with the stored
-  upper-semi-\((\mathrm{Ind3})\) analogue;
-\item the Remark 3.12.4(iii) factor-\(p\) analogy: theta-label normalization
-  divides a gap log-volume by \(\ell\), multiplication by \(\ell\) recovers it,
-  and the positive factor \(\ell\) preserves nonpositive bounds exactly;
-\item the Remark 3.12.4(v) p-adic analogue:
-  an inclusion, not isomorphism, gives \((1-p)(2g-2)\le0\); under the
-  recorded hypotheses \(p\ge2\) and \(g\ge2\), Lean also proves the defect is
-  strictly negative;
-\item the IUT IV, Theorem 1.10 algebraic handoff: an explicit expression for
-  \(C_\Theta\), together with \(C_\Theta\ge-1\) and the remaining elementary
-  estimates, implies the displayed \(\frac16\log(q)\) bound; Lean now exposes
-  the exact Corollary 3.12 handoff identity
-  \(C_\Theta+1=A-M\), where \(A\) is the arithmetic upper term and \(M\) is the
-  main logarithmic term, so \(C_\Theta\ge-1\) gives \(0\le A-M\);
-\item the final elementary coefficient estimates in IUT IV, Theorem 1.10:
-  \((1-12/\ell^2)^{-1}\le2\) and
-  \((1-12/\ell^2)^{-1}\frac14(1+36d_{\mathrm{mod}}/\ell)
-   \le 1+80d_{\mathrm{mod}}/\ell\);
-\item the IUT IV, Theorem 1.10 base-change monotonicity:
-  \(\log(d_{F_{\mathrm{tpd}}})+\log(f_{F_{\mathrm{tpd}}})
-   \le \log(d_F)+\log(f_F)\) propagates through the final right-hand side;
-\item the IUT IV, Theorem 1.10 Step (i) identities:
-  \(n^{-1}\sum_{m=1}^n m=(n+1)/2\) and
-  \(n^{-1}\sum_{m=1}^n m^2=(2n+1)(n+1)/6\);
-\item the IUT IV, Theorem 1.10 Step (ii) small-prime error:
-  \(\log(2^{11}3^35^2)\le21\), represented by the corresponding linear
-  logarithmic bound;
-\item the IUT IV, Theorem 1.10 Step (i) \(\mathrm{GL}_2\) arithmetic constants
-  for \(p=2,3,5\), including the product with the quadratic factor from (E5);
-\item the IUT IV, Theorem 1.10 Step (iii) algebraic estimate combining the
-  Step (ii) \(K\)-bound and the displayed \(\log(s_Q)\)-bound into
-  \((1+4/\ell)\log(d_K,f_K)+(16/\ell)\log(s_Q)
-   \le (1+36d_{\mathrm{mod}}/\ell)S+2\log(\ell)+70\);
-\item the IUT IV, Theorem 1.10 Step (viii) Proposition 1.6 case split:
-  the two cases \(e^*_{\mathrm{mod}}\ell\ge\eta_{\mathrm{prm}}\) and
-  \(e^*_{\mathrm{mod}}\ell<\eta_{\mathrm{prm}}\) imply the uniform
-  \(4/3(e^*_{\mathrm{mod}}\ell+\eta_{\mathrm{prm}})\) bound;
-\item the IUT IV, Theorem 1.10 Step (viii) final absorption of
-  \(2\log(\ell)+74\) and the prime-product term into
-  \(10(e^*_{\mathrm{mod}}\ell+\eta_{\mathrm{prm}})\);
-\item the IUT IV, Theorem 1.10 final display:
-  the Corollary 3.12 \(C_\Theta\) handoff, followed by the
-  tripodal-to-\(F\) monotonicity, gives the two displayed inequalities:
-  first the \(F_{\mathrm{tpd}}\)-level \(\frac16\log(q)\) bound, then the
-  final \(F\)-level bound;
-\item the IUT IV, Theorem A bounded-discrepancy conclusion:
-  boundedness below of
-  \((1+\epsilon)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)
-   -\operatorname{ht}_{\omega_X(D)}\) is packaged together with the
-  corresponding pointwise height inequality on points of bounded degree;
-\item the IUT IV, Corollary 2.2(i) bounded-discrepancy chain:
-  \(\frac16\log(q_2)\approx\frac16\log(q_\forall)
-   \approx\frac16\operatorname{ht}_\infty
-   \approx\operatorname{ht}_{\omega_X(D)}\) is packaged as three adjacent
-  links together with the composed direct bounded-discrepancy relation;
-\item bounded-discrepancy transfer lemmas: pointwise upper and lower bounds move
-  across an \(\approx\) relation with the expected additive constant shift; Lean
-  also packages simultaneous two-sided bound transfer;
-\item the IUT IV, Corollary 2.2(ii) condition (C1) prime-scale window:
-  \((\log(q_\forall))^{1/2}\le\ell\le
-   10\delta(\log(q_\forall))^{1/2}\log(2\delta\log(q_\forall))\).  Lean keeps
-  the square-root and logarithmic factor explicit, proves
-  \(\log(q_\forall)\ge0\), and derives
-  \(1\le10\delta\log(2\delta\log(q_\forall))\) from the nonempty window; Lean
-  now packages the full C1 window endpoint with these immediate consequences;
-\item the IUT IV, Corollary 2.2(ii) use of (C1) in Theorem 1.10:
-  \(\sqrt h\le\ell\) and \(80d_{\mathrm{mod}}\le\delta\) imply
-  \(80d_{\mathrm{mod}}/\ell\le\delta h^{-1/2}\); Lean packages this with the
-  positive-denominator and nonnegative-numerator side conditions and the
-  resulting \(1+\cdots\) coefficient inequality;
-\item the IUT IV, Corollary 2.2(ii) error-term use of (C1):
-  \(d^*_{\mathrm{mod}}\le\delta\) and
-  \(\ell\le10\delta h^{1/2}\log(2\delta h)\) imply
-  \(20(d^*_{\mathrm{mod}}\ell+\eta_{\mathrm{prm}})
-   \le200\delta^2h^{1/2}\log(2\delta h)+20\eta_{\mathrm{prm}}\).  Lean
-  packages this with the nonnegativity and upper-window premises needed for
-  the multiplication comparison;
-\item the IUT IV, Theorem 1.10 to Corollary 2.2(ii) first-bound composition:
-  these two C1 replacements convert the Theorem 1.10 right-hand side into
-  \((1+\delta h^{-1/2})S+
-    200\delta^2h^{1/2}\log(2\delta h)+20\eta_{\mathrm{prm}}\);
-\item the IUT IV, Corollary 2.2(ii) \(q_2/q\) comparison:
-  the displayed estimate
-  \(\frac16\log(q_2)-\frac16\log(q)
-   \le\frac13h^{1/2}\log(2\delta h)\) follows through the intermediate
-  term \(h^{1/2}\log(\ell)\), with \(1\le6\log(\ell)\) and
-  \(3\log(\ell)\le\log(2\delta h)\) exposed in one endpoint;
-\item the IUT IV, Corollary 2.2(ii) pre-\(\epsilon_E\) bound for
-  \(h=\log(q_\forall)\):
-  the Theorem 1.10 bound, the \(q_2/q\) estimate, and the bounded discrepancy
-  \(B_K\) imply
-  \[
-    \frac16h\le(1+\delta h^{-1/2})S
-    +(15\delta)^2h^{1/2}\log(2\delta h)+\frac12 C_K,
-  \]
-  with \(C_K=40\eta_{\mathrm{prm}}+2B_K\).  Lean exposes the
-  \(q\to q_2\to q_\forall\) inequalities, the absorption into
-  \((15\delta)^2\), and the identity \(\frac12C_K=20\eta_{\mathrm{prm}}+B_K\);
-\item the IUT IV, Corollary 2.2(ii) condition (C2) inequality chain:
-  \(\frac16\log(q)\le\frac16\log(q_2)\le\frac16\log(q_\forall)\le
-   (1+\epsilon_E)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)+C_K\);
-\item the IUT IV, Corollary 2.2(ii) definition of \(\epsilon_E\):
-  \(\epsilon_E=(60\delta)^2h^{-1/2}\log(2\delta h)\), represented with
-  \(h^{1/2}\) and \(\log(2\delta h)\) as explicit real parameters; Lean proves
-  positivity and \(\epsilon_E\ge5\delta h^{-1/2}\) from
-  \(\delta\ge2\), \(h^{1/2}>0\), and \(\log(2\delta h)\ge1\), packaged as one
-  definition endpoint;
-\item the IUT IV, Corollary 2.2(ii) \(\epsilon_E\)-error conversion:
-  substituting the definition of \(\epsilon_E\), Lean proves
-  \((15\delta)^2h^{1/2}\log(2\delta h)
-   \le \frac16h\cdot\frac25\epsilon_E\), packaged with
-  \(h=(h^{1/2})^2\), \(h^{1/2}>0\), and the nonnegativity premise for the
-  logarithmic factor;
-\item the IUT IV, Corollary 2.2(ii) bridge to the denominator step:
-  the pre-\(\epsilon_E\) \(h\)-bound, the error conversion, and
-  \(\delta h^{-1/2}\le\epsilon_E/5\) yield the preliminary inequality used to
-  move the \(\frac25\epsilon_E\frac16h\) term to the left; Lean packages this
-  with log-degree nonnegativity and
-  \(1+\delta h^{-1/2}\le1+\epsilon_E/5\);
-\item the IUT IV, Corollary 2.2(ii) denominator step:
-  Lean moves the term
-  \((2\epsilon_E/5)\frac16h\) to the left and obtains the denominator
-  \((1-2\epsilon_E/5)^{-1}\), packaged with positivity of
-  \(1-2\epsilon_E/5\) and the preliminary inequality it acts on;
-\item the IUT IV, Corollary 2.2(ii) final \(\epsilon_E\)-absorption:
-  from \(0<\epsilon_E\le1\), Lean proves
-  \[
-    \frac{1+\epsilon_E/5}{1-2\epsilon_E/5}\le1+\epsilon_E,
-    \qquad
-    (1-2\epsilon_E/5)^{-1}C_K/2\le C_K,
-  \]
-  using nonnegativity of \(S\) and \(C_K\), and hence the displayed C2 bound
-  from the preceding denominator expression;
-\item the IUT IV, Corollary 2.2(ii) final \(h\)-bound:
-  Lean composes the pre-\(\epsilon_E\) bound, error conversion, move-left step,
-  and absorption to prove
-  \(\frac16h\le(1+\epsilon_E)S+C_K\), with the square-root identity,
-  \(\epsilon_E\) definition, coefficient comparison, \(0<\epsilon_E\le1\),
-  and nonnegativity hypotheses exposed in one endpoint;
-\item the IUT IV, Corollary 2.2(ii) final C2 bridge:
-  using \(S\le\log\operatorname{diff}_X(x_E)+\log\operatorname{cond}_D(x_E)\),
-  Lean derives the displayed C2 inequality chain, including the
-  \(q\to q_2\to q_\forall\) inequalities and monotonicity under
-  \(1+\epsilon_E\ge0\);
-\item the IUT IV, Corollary 2.2(ii) comparison
-  \(\log\operatorname{diff}_X(x_E)=\log(d_{F_{\mathrm{tpd}}})\) and
-  \(\log(f_{F_{\mathrm{tpd}}})\le\log\operatorname{cond}_D(x_E)\le
-   \log(f_{F_{\mathrm{tpd}}})+\log(2\ell)\); Lean packages these as the two
-  corresponding sum inequalities for the tripodal and curve log sums;
-\item the IUT IV, Corollary 2.2 to Theorem A passage:
-  bounded-discrepancy equivalence
-  \(\frac16\log(q_2)\approx\operatorname{ht}_{\omega_X(D)}\), together with the
-  C2 bound for \(\frac16\log(q_2)\), gives a lower bound for
-  \((1+\epsilon_E)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)
-   -\operatorname{ht}_{\omega_X(D)}\); Lean packages the lower
-  bounded-discrepancy constant, the C2 input, the induced height upper bound,
-  and the resulting discrepancy lower bound in one endpoint;
-\item the IUT IV, Corollary 2.2/2.3 finite-exception passage:
-  a lower bound on the complement of a finite exceptional set and a lower bound
-  on the exceptional set glue to a global lower bound by taking the minimum of
-  the two constants; Lean packages both minimum comparisons together with the
-  resulting pointwise global lower bound;
-\item the IUT IV, Corollary 2.3 Diophantine inequality:
-  Lean records the GenEll transfer as an explicit hypothesis and derives the
-  global bounded-discrepancy lower bound for
-  \((1+\epsilon)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)
-   -\operatorname{ht}_{\omega_X(D)}\), packaged with \(d>0\),
-  \(\epsilon>0\), the hyperbolic-curve premise, and the compact-subset
-  Theorem A premise;
-\item comparison levels:
-  pointwise representative, aggregate representative, balanced sign-compatible,
-  and hull/log-volume; Lean proves that the final weighted-theta route is
-  hull/log-volume level and rejects the balanced sign-compatible level,
-  including the balanced negation transport;
-\item endpoint audits for the \(3.11.5 \Rightarrow 3.12\) comparison chart;
-\item nonarchimedean and archimedean \((\mathrm{Ind3})\) local orientations;
-\item ordered real-line alignment with cancellation only after scale equality;
-\item a canonical unit-scale ordered alignment from a nonarchimedean
-  \((\mathrm{Ind3})\) entry;
-\item the local-object Hodge-descent square-weight boundary:
-  transported zero-column and cusp-class local objects have the same finite
-  log-volume as the packet object, while square/full-label preservation
-  obligations remain explicit;
-\item the square/full-label Hodge/SHE transport audit:
-  a pointwise upper bound on the transported target full-label log-volumes
-  transfers to the source square-weighted average once full-label log-volume,
-  square weight, and total-weight preservation are supplied; the same transfer
-  is now available inside the structured-SHE wrapper, and the resulting upper
-  bound is exposed for the square-weighted average in the \(F_\ell\) cusp-label
-  route after matching the source profile and source log-volume; consequently,
-  structured-SHE target full-label bounds by the \(\Theta\)-source average feed
-  the cusp-class container route all the way to
-  \(q_{\mathrm{signed}}\le\Theta_{\mathrm{signed}}\); the same final comparison
-  is now available directly from the primitive factored square/full-label SHE
-  obligations, without requiring a prebuilt transport-audit argument;
-\item a Gaussian-to-factored-SHE bridge:
-  source and target degree-level Gaussian evaluations with equal environment
-  degree supply the full-label value-preservation branch of the factored
-  square/full-label SHE obligations; with separate coordinate-square and
-  full-label-map preservation, Lean exposes the resulting pointwise comparison
-  level, transported-average equality, forced identity of the representative
-  square coordinate map, and retained separation of the two Hodge histories;
-  the experiment route then reaches
-  \(q_{\mathrm{signed}}\le\Theta_{\mathrm{signed}}\) directly from Gaussian
-  target bounds; since the absolute-label exponent is nonnegative, Lean also
-  derives those target bounds in the branch where the target environment degree
-  is nonpositive and the \(\Theta\)-source average is nonnegative; conversely,
-  the all-label Gaussian target-bound formulation forces the
-  \(\Theta\)-source average to be nonnegative, since the core label has
-  Gaussian degree \(0\); after removing the core label, Lean proves that every
-  nonzero Gaussian target value is bounded by the \(\Theta\)-source average if
-  the target environment degree is nonpositive and is itself bounded by that
-  average; Lean also forms the corresponding finite average over the nonzero
-  \(ZMod\) carrier, proves the same upper bound for this nonzero average, and
-  proves the exact rescaling between this auxiliary nonzero average and the
-  uniform \(F_\ell\)-average with zero Gaussian term;
-  because the square-weighted route assigns weight \(0\) to the core label, Lean
-  now feeds nonzero-only target bounds through the square/full-label transport
-  audit all the way to \(q_{\mathrm{signed}}\le\Theta_{\mathrm{signed}}\); this
-  nonzero Gaussian environment-comparison route is now a source-layer theorem,
-  not only an experiment wrapper;
-\item a bridge from factored square/full-label SHE obligations to the
-  Hodge-descent \((\mathrm{Ind3})\) route.
+\item \texttt{Iut/Stage1/IUTStage1SourceCore.lean}
+\item \texttt{Iut/Stage1/IUTStage1Remark312Absorption.lean}
+\item \texttt{Iut/Stage1/IUTStage1Source.lean}
+\item \texttt{Iut/Stage1/IUTStage1Experiments.lean}
 \end{itemize}
 
-\section{Current Lean Results}
+\subsection{Finite label model}
 
-The current first-pass experiment report evaluates to:
+The code defines a finite \(\F_\ell\)-label model, its sign quotient
+\(|F_\ell|=F_\ell/\{\pm 1\}\), and the canonical half-range representatives
+\[
+  j=0,\ldots,(\ell-1)/2 .
+\]
+It proves:
+\[
+  \deg(\Theta_j)=j^2\deg(q)
+\]
+for the degree-level Gaussian endpoint, with sign invariance on the full-label
+quotient.  It also proves that \(j=1\) and \(j=2\) give distinct degrees exactly
+when \(\deg(q)\ne0\).  Thus the \(q^{j^2}\) phenomenon is present in the model;
+it is not hidden inside a scalar identification.
+
+The coordinate average, the nonzero-coordinate average, and the absolute-label
+average are all formalized separately.  \Lean{} proves the exact denominator
+relations and shows that these averages differ strictly for nonzero
+environment degree.  This prevents silently replacing the paper's
+\(\ell\)-denominator convention by an auxiliary nonzero-only average.
+
+\subsection{Indeterminacy and upper-semi route}
+
+The Step (x) corridor is represented as:
+\[
+\begin{array}{cccccc}
+A_0 & = & A_1 & = & A_2 & \le U_{\Ind3},
+\end{array}
+\]
+where \(A_0,A_1,A_2\) are the before-, after-\((\Ind1)\)-, and
+after-\((\Ind2)\)-averaged log-volumes, and \(U_{\Ind3}\) is the
+\((\Ind3)\) upper-semi target.  From this data and the hull/determinant
+identifications, the code constructs the Step (xi) upper-ray datum:
+\[
+  q_{\mathrm{avg}}\le \Theta_{\mathrm{hull}} .
+\]
+The same route constructs the two \(q\)-pilot readings in Step (xi-g) and
+proves that they are equal to the same fixed real value.
+
+\subsection{SHE and Hodge-descent boundary}
+
+The current \SHE{} layer is conditional.  It has typed records for:
+\[
+\begin{array}{c}
+\text{structured \SHE{} square-weight transport}\\
+\text{factored square/full-label preservation}\\
+\text{Hodge-descent packet transport}\\
+\text{nonarchimedean \((\Ind3)\) source-target alignment}.
+\end{array}
+\]
+Given these inputs, \Lean{} constructs the weighted theta comparison consumed
+by the final route:
+\[
+  q_{\mathrm{signed}}\le \Theta_{\mathrm{signed}}.
+\]
+The code also proves a Gaussian-to-factored-\SHE{} bridge at the present finite
+degree level.  In particular, equality of the source and target environment
+degrees gives full-label value preservation; nonzero-label target bounds are
+enough because the zero label has square weight zero.
+
+\subsection{Step (xi-f) algebra}
+
+The final real algebra is fully formalized.  In informal notation, the main
+theorem is:
+
+\begin{theorem}[Formal Step (xi-f)]
+Assume \(q<0\), \(q\le\theta\), and \(\theta\le C(-q)\).  Then \(C\ge -1\).
+If \(q<\theta\), then \(C>-1\).  If \(C=-1\), then \(q=\theta\) and
+\(\theta<0\).
+\end{theorem}
+
+This theorem is instantiated by the Step (x)-to-Step (xi) route whenever the
+hull/log-volume upper-ray comparison and the displayed \(C_\Theta\)-bound are
+available.
+
+\section{Boundary Quotient Experiment}
+
+The most developed diagnostic concerns Step (xii), where local Frobenioid
+\(p_v^N\)-ambiguity is compared with the globally calibrated log-volume.  The
+formal model records a local shift
+\[
+  L_N=L_0+N\delta,\qquad N\in\mathbb{Z},\ \delta\in\mathbb{R},
+\]
+and a global calibration that fixes exponent \(0\).  \Lean{} proves
+\[
+  L_N=L_0 \quad\Longleftrightarrow\quad N\delta=0,
+\]
+and, if \(\delta\ne0\),
+\[
+  L_N=L_M \quad\Longleftrightarrow\quad N=M .
+\]
+
+At the boundary branch \(C_\Theta=-1\), the formal corridor identifies
+\[
+  q_{\mathrm{pilot}}=\Theta_{\mathrm{hull}}=L_0 .
+\]
+For the actual upper-ray quotient that collapses
+\(\{x\mid x\le \Theta_{\mathrm{hull}}\}\), \Lean{} proves the exact
+classification
+\[
+  [L_N]=[q_{\mathrm{pilot}}]
+  \quad\Longleftrightarrow\quad
+  N\delta\le0,
+\]
+and the complementary separation criterion
+\[
+  [L_N]\ne[q_{\mathrm{pilot}}]
+  \quad\Longleftrightarrow\quad
+  N\delta>0.
+\]
+If \(\delta>0\), this becomes:
+\[
+  [L_N]=[q_{\mathrm{pilot}}]\Longleftrightarrow N\le0,\qquad
+  [L_N]\ne[q_{\mathrm{pilot}}]\Longleftrightarrow 0<N .
+\]
+
+This is not a proof for either side of the Mochizuki--Scholze--Stix dispute.
+It is a precise reading of one simplified quotient mechanism inside the current
+formal corridor.  It shows that quotient collapse can identify unequal
+underlying log-volumes if they lie in the collapsed upper ray, while positive
+local shifts remain separated.  The decisive question is therefore not the
+ordered-real algebra; it is whether the source \IUT{} constructions actually
+supply the required calibrated hull/log-volume comparison without making an
+illicit identification of histories or comparison levels.
+
+\section{Current Results}
+
+The project currently proves the following source-facing results in \Lean{}:
+
+\begin{enumerate}
+\item The finite \(q^{j^2}\) degree rule, sign quotient, half-range
+  representatives, zero/nonzero split, and average formulas are formalized.
+\item A single label-independent scalar cannot absorb all representative
+  \(j^2\)-degrees when \(\deg(q)\ne0\).
+\item The raw representative branch does not descend to the sign quotient,
+  while the balanced full-label Gaussian branch does.
+\item The Step (x) averaged-log-volume corridor feeds a Step (xi) upper-ray
+  comparison once determinant/hull identifications are supplied.
+\item The Step (xi-f) real algebra proves \(C_\Theta\ge-1\), strictness under
+  strict upper-ray membership, and equality constraints in the boundary case.
+\item The final route rejects the balanced sign-compatible comparison level as
+  sufficient; it requires hull/log-volume comparison data.
+\item The local Frobenioid shift quotient experiment gives an exact threshold
+  for collapse versus separation in the boundary upper ray.
+\item Several downstream \IUT{} IV numerical estimates are formalized as
+  ordered-real algebra conditional on the Corollary 3.12 input.
+\end{enumerate}
+
+The first-pass experiment report evaluates the route-theorem, finite Gaussian,
+collapse-obstruction, upper-ray, and \IUT{} IV algebra flags to
+\texttt{true}.  The flag \texttt{disputeSettledByCurrentStage} remains
+\texttt{false}.
+
+\section{What Is Not Yet Proved}
+
+No formal statement currently proves \IUT{} III, Corollary 3.12 from
+Mochizuki's published hypotheses.  The following mathematics is still external
+to the code:
+
+\begin{enumerate}
+\item initial \(\Theta\)-data and its arithmetic hypotheses from \IUT{} I;
+\item Hodge theaters, Frobenioids, log-shells, prime strips, and theta links;
+\item the Hodge--Arakelov theta evaluation and Gaussian monoids of \IUT{} II;
+\item the construction of the actual \((\Ind1),(\Ind2),(\Ind3)\) data in
+  Theorem 3.11;
+\item the genuine holomorphic hull and determinant constructions used in
+  Step (xi), beyond the present ordered-real upper-ray model;
+\item the proof that the typed \SHE{} and Hodge-descent transport obligations
+  follow from Mochizuki's source constructions;
+\item the arithmetic-divisor, height, log-different, and log-conductor
+  constructions behind the \IUT{} IV Diophantine applications.
+\end{enumerate}
+
+\section{Implementation Audit}
+
+The code contains no \texttt{sorry}, \texttt{admit}, or Lean axioms in the
+Stage 1 corridor.  The current risk is not hidden unsoundness of this form, but
+mathematical incompleteness: several records are deliberately named
+obligation interfaces.  These interfaces are acceptable only as temporary
+boundaries.  The next phase must replace them by constructions from the source
+papers or mark them as unresolved.
+
+The largest engineering issue is
+\texttt{Iut/Stage1/IUTStage1Source.lean}, which currently contains most of the
+finite-label, Gaussian, Hodge/SHE, hull, Step (x), Step (xi), Step (xii), and
+\IUT{} IV algebra.  This is now too large for comfortable review.  Low-risk
+future refactors are:
 \[
 \begin{array}{ll}
-\text{route theorem flags} & = \texttt{true},\\
-\text{collapse-obstruction flags} & = \texttt{true},\\
-\text{Gaussian/procession finite-model flags} & = \texttt{true},\\
-\texttt{balancedLevelRejectedAtFinalRouteTheoremAvailable} & = \texttt{true},\\
-\texttt{disputeSettledByCurrentStage} & = \texttt{false}.
+\text{finite labels and }q^{j^2}\text{ averages} & \text{separate module},\\
+\text{Step (xi) hull/determinant upper rays} & \text{separate module},\\
+\text{Step (xii) local Frobenioid shifts} & \text{separate module},\\
+\text{\IUT{} IV real algebra} & \text{separate module}.
 \end{array}
 \]
-Here the route flags are ordered real-line, nonarchimedean entry, and factored
-SHE availability.  The obstruction flags are raw-cancellation failure,
-label-independent \(j^2\) failure, and sign-quotient representative descent
-failure.  The Gaussian/procession flags include finite tensor-packet, monoid
-action, normalized splitting-generator average, the explicit square-sum formula
-for the generator total and normalized delta, the resulting conditional
-monotonicity of the acted tensor packet, canonical positive square-weight
-profile, the constant-average check,
-base-valuation product,
-coric-transfer, determinant-normalization,
-upper-ray, \(q\)-pilot two-computation, the Step (x) averaged-log-volume
-indeterminacy corridor, the refined Step (x) bounds for the before-,
-after-\((\mathrm{Ind1})\)-, and after-\((\mathrm{Ind2})\)-averages,
-tensor-power warning, and global Frobenioid-calibration
-shadows, plus the finiteness endpoint for
-\(-|\log(\Theta)|\in\mathbb{R}\cup\{+\infty\}\), including extraction of the
-finite real \(\Theta\)-value, the direct
-Corollary 3.12 statement endpoint with \(\Theta\)-subject/\(q\)-not-subject
-pilot bookkeeping, the Step (x)-sourced upper-ray, q-pilot two-computation,
-statement endpoint, propagation of the same pilot-status boundary to that
-endpoint, proof that the endpoint \(\Theta\)- and \(q\)-statuses are distinct,
-identification of its \(q\)-pilot real with the Step (x)
-pre-, after-\((\mathrm{Ind1})\)-, and after-\((\mathrm{Ind2})\)-averages,
-positivity of \(|\log(q)|\) at that endpoint, and direct
-\(-|\log(q)|\in\mathbb{R}_{\le-|\log(\Theta)|}\),
-\(-|\log(q)|\le-|\log(\Theta)|\), finite-\(\Theta\) exclusion of \(+\infty\),
-identification of the finite extended \(\Theta\)-value with the Step (x)
-\((\mathrm{Ind3})\) upper bound, the nonnegative-\(\Theta\) opening reduction
-including the stronger \(C_\Theta\ge0\) branch, and \(C_\Theta\nless-1\)
-conclusions,
-the
-Step (xi-g)-to-(xi-f) endpoint bridge giving \(C_\Theta\ge-1\) from the
-two-computation q-pilot record, the Step (xi-e)--(xi-f) fixed
-\(-|\log(q)|\) membership check and its direct \(C_\Theta\ge-1\) consequence,
-the composition into the statement-level endpoint, and positive-rational unit
-rigidity.
-The generalized-link flag records the rational parameter inequality
-\(C_\Theta\ge-\lambda\), now with the corresponding \(q^\lambda\)-pilot
-real-valued derivation.
-The distinct-label flag records the logical intertwining display in
-Remark 3.12.2, keeps the weakened abstract prime-strip condition fixed, and
-rejects collapse of the q-native and \(\Theta\)-native labels; the final
-Step (xi-f) inequality package is now checked under this same label separation.
-The toy-model flag records the resulting \((\mathrm{ftoy})\) upper-ray endpoint
-and arithmetic bound \(h\le\epsilon\).
-The column-table flag records the Fig. 3.9 theta/q similarity-difference split:
-upper similarities are common to both columns, while multiradiality and
-log-shell treatment distinguish the 0-column from the 1-column; the upper
-similarities are now exposed as a simultaneous zero/one-column theorem.
-The absorption flag records the zero-column upper-bound versus one-column
-equality distinction, tied to the two Fig. 3.9 log-shell treatments; the
-one-column equality is now exposed together with its two induced inequalities,
-while zero-column hull equality is equivalent to adding the missing reverse
-bound; the same guard is now stated after replacing the hull by the finite
-\(\Theta\)-boundary.
-The metric flag records the Gauss--Bonnet sign calculation used as analogy for
-the upper semi-compatibility inequality, including the nonpositive inequality
-form following from strict negativity.
-The log-link-juggling flag records the Remark 3.12.2(iii) source of
-\((\mathrm{Ind3})\): unchanged procession-normalized averages through
-\((\mathrm{Ind1})\) and \((\mathrm{Ind2})\), plus a one-sided upper-semi bound
-and matching place families.
-The factor-\(p\) flag records the \(F_\ell\)-label averaging denominator and
-the order-preservation of this positive normalization.
-The Frobenius-derivative flag records the degree inequality from inclusion and
-the sharper strict negativity of the degree defect under \(p\ge2\), \(g\ge2\).
-The IUT IV flag records the downstream Theorem 1.10 use of the Corollary 3.12
-lower bound on \(C_\Theta\), including the identity \(C_\Theta+1=A-M\), the
-resulting nonnegative gap \(0\le A-M\), the final coefficient estimates, and the
-tripodal-to-\(F\) log-degree monotonicity.  The Step (i) flag records the two
-elementary sum identities used in the leading-term computation.  The Step (ii)
-small-prime flag records the additive error bound \(21\).  The \(\mathrm{GL}_2\)
-flag records the finite cardinality constants feeding that bound.  The
-Step (iii) flag records the \(\log(s_Q)\) coefficient absorption.
-The Step (viii) flag records the prime-product case split used before the final
-upper bound for \(C_\Theta\), plus the final coarse error absorption.  The final
-display flag records the composed Theorem 1.10 inequality with \(F\)-level
-log-degree terms.  The Theorem A flag records the bounded-discrepancy
-height/log-different/log-conductor inequality.  The Corollary 2.2 flag records
-composition of the displayed bounded-discrepancy chain.  The transfer flag
-records movement of pointwise bounds across bounded-discrepancy equivalence.
-The Corollary 2.2(C1) flag records the displayed prime-scale window and its
-elementary consequences.  The Corollary 2.2(C2) flag records the displayed
-three-step logarithmic inequality chain.  The C1 coefficient flag records the
-replacement of \(80d_{\mathrm{mod}}/\ell\) by \(\delta h^{-1/2}\) in the
-Theorem 1.10-to-C2 proof.  The C1 error-term flag records the corresponding
-replacement of \(20d^*_{\mathrm{mod}}\ell\) by
-\(200\delta^2h^{1/2}\log(2\delta h)\).  The first-bound flag records the
-composition of those replacements with Theorem 1.10.  The \(\epsilon_E\)-definition flag
-records the source formula and lower estimate for \(\epsilon_E\).  The
-\(\epsilon_E\)-move-left flag records introduction of the denominator
-\((1-2\epsilon_E/5)^{-1}\).  The \(\epsilon_E\)-absorption flag records the
-final denominator removal in C2.  The
-\(\epsilon_E\)-error flag records the conversion of the \((15\delta)^2\)-term
-to the \(\frac25\epsilon_E\frac16h\) term.
-The final \(h\)-bound flag records the full composition through absorption.
-The final C2 bridge flag records the last monotonic replacement of the tripodal
-log-degree sum by the curve different/conductor sum.
-The \(h\)-to-move-left flag records the bridge from the pre-\(\epsilon_E\) bound
-to the denominator-stage preliminary inequality.
-q2/q flag records the displayed comparison of \(\log(q_2)\) and \(\log(q)\).
-The pre-\(\epsilon_E\) \(h\)-bound flag records the subsequent absorption of
-the bounded \(q_\forall/q_2\) discrepancy into \(C_K\).
-The log-different/log-conductor flag records the bridge from tripodal field
-terms to curve functions.  The Corollary 2.2-to-Theorem A flag records the formal
-bounded-discrepancy transfer from C2 to the Theorem A inequality.
-The finite-exception flags record the lower-bound gluing used when finite
-exceptional sets are enlarged in Corollary 2.2 and then passed toward
-Corollary 2.3.
-The Corollary 2.3 flag records the final GenEll-transfer interface for the
-Diophantine inequality.
-The theorem-level route is:
-\[
-\begin{array}{ccccc}
-\text{nonarch. }(\mathrm{Ind3})\text{ entry}
-& \to &
-\text{canonical ordered } \R\text{-alignment}
-& \to &
-\text{source/target alignment}
-\\[3pt]
-& & \downarrow & & \downarrow
-\\[-2pt]
-\text{factored SHE transport}
-& \to &
-\text{Hodge-descent audit}
-& \to &
-q_{\mathrm{signed}}\le \Theta_{\mathrm{signed}}.
-\end{array}
-\]
-The route remains conditional on the displayed hypotheses.
-The local-object Hodge-descent layer now exposes equality of the transported
-finite log-volumes before square/full-label preservation is supplied.
-The square/full-label audit now also transports target pointwise upper bounds
-back to the source square-weighted average, including through the structured-SHE
-route wrapper, and the experiment layer exposes the resulting final
-q-to-\(\Theta\) comparison theorem.  The same experiment-level theorem is now
-exposed for primitive factored square/full-label SHE obligations and for
-degree-level Gaussian evaluations after the explicit preservation branches are
-supplied.  In the nonpositive-environment/nonnegative-\(\Theta\)-average branch,
-the Gaussian pointwise target bound is derived from the sign of the
-\(q^{j^2}\)-exponent rather than assumed.  Lean also proves that this
-all-label Gaussian bound cannot hold when the \(\Theta\)-source average is
-negative; under nonpositive environment it is equivalent to nonnegativity of
-that average.  Lean also packages the resulting separation: for negative
-\(\Theta\)-source average, the all-label bound fails, while the nonzero-label
-bound still holds whenever the Gaussian environment degree is bounded by that
-same average.  With the remaining endpoint hypotheses, this same negative
-\(\Theta\)-branch still yields the final \(q_{\mathrm{signed}}\le
-\Theta_{\mathrm{signed}}\) route through the nonzero-bound endpoint; the
-target nonpositive-environment hypothesis is then available, but the
-nonnegative-\(\Theta\) hypothesis of the nonpositive/nonnegative all-label
-endpoint is impossible.  The
-source-supplied nonzero/environment formulation gives the same conclusion and
-rejects both source and target all-label bounds.  More
-generally, Lean decomposes the all-label Gaussian bound
-exactly into nonnegativity of the upper bound at the zero label and the
-corresponding nonzero-label bound.  The corresponding identity-coordinate final
-route can now be stated directly from canonical \(j=1\) equality, nonpositive
-target environment, and nonnegative \(\Theta\)-source average; if the all-label
-Gaussian target bound is supplied directly, the same endpoint no longer needs
-the nonpositive/nonnegative branch hypotheses, and its proof also uses only the
-nonzero-label part of the supplied all-label target bound.  The nonzero environment route
-also has a source-side variant: canonical \(j=1\) equality transports
-nonpositivity and the comparison with the \(\Theta\)-source average from the
-source environment degree to the target environment degree.  Lean also proves
-that the nonzero target-bound predicate is then equivalent to this
-source-environment comparison, hence to the source nonzero-bound predicate
-under source nonpositivity, and that the all-label predicate is equivalent
-to this source comparison plus nonnegativity at the zero label.  The final
-all-label q-to-\(\Theta\) endpoint now consumes this source-side package
-directly through the source-environment comparison; the zero-label
-nonnegativity component is retained in the API but not used by this final
-proof.  It can alternatively derive that package from a source all-label
-Gaussian bound under source nonpositivity; the proof now uses only the
-nonzero-label part of this source all-label input.  The source all-label
-predicate is itself equivalent, under source nonpositivity, to the conjunction of
-\(0\le\Theta_{\mathrm{avg}}\) and the source-environment upper bound.  Hence,
-under canonical \(j=1\) preservation and the two nonpositive branches, the
-source and target all-label Gaussian predicates are equivalent.  It can also
-consume the decomposed zero/nonzero input directly; this endpoint now ignores
-the zero-label nonnegativity component and proceeds through the nonzero
-factored route.  In the negative \(\Theta\)-branch, Lean proves that this
-zero-label nonnegativity component is impossible, while the source
-environment/nonzero route still gives the final comparison.  For nonzero labels, Lean
-proves the complementary bound: the absolute exponent is at least \(1\), so a
-nonpositive environment degree below the \(\Theta\)-source average bounds every
-nonzero Gaussian component and hence their finite nonzero-label average.  The
-final nonzero route may now consume the source nonzero Gaussian predicate
-directly after canonical \(j=1\) preservation and source nonpositivity; Lean
-reduces this input to the source-environment upper bound before invoking the
-source-environment endpoint.  The
-square-weighted transport route has also been strengthened from an all-label
-pointwise bound to a weighted-summand bound, so the zero label requires no
-target upper bound.  The experiment theorem now delegates to the source-layer
-q-to-\(\Theta\) theorem for this nonzero Gaussian environment-comparison route.
-Separately, Lean proves that the
-uniform \(F_\ell\)-average of the Gaussian shadow is
-\((\ell-1)/\ell\) times the auxiliary nonzero-carrier average, fixing the
-denominator at \(\ell\) when the zero label is present.
-
-\section{Audit Findings}
-
-No formal statement currently proves IUT III, Corollary 3.12 from Mochizuki's
-published hypotheses.  The strongest positive result is conditional: if the
-hull/log-volume upper-ray comparison supplies
-\(-|\log(q)|\le-|\log(\Theta)|\), then Lean checks the formal Step (xi-f)
-conclusion \(C_\Theta\ge-1\); if the upper-ray membership is strict, Lean checks
-the sharper \(C_\Theta>-1\), while the boundary value \(C_\Theta=-1\) collapses
-the q-pilot and \(\Theta\)-boundary log-volumes to equality and forces the
-\(\Theta\)-boundary to be negative.  If the
-nonarchimedean \((\mathrm{Ind3})\) entry,
-ordered real-line alignment, and Hodge/SHE square-weight transport audit are
-supplied, Lean checks the final signed \(q\)-to-\(\Theta\) inequality feeding
-that algebra.  If the corresponding primitive factored square/full-label SHE
-obligations are supplied instead, Lean first constructs the transport audit and
-checks the same final inequality.  If the input is a pair of degree-level
-Gaussian evaluations with equal environment degree, Lean constructs the
-full-label log-volume compatibility branch before invoking the factored route.
-The branch with nonnegative \(\Theta\)-source average is formally easier:
-nonnegativity of \(j^2\) makes every nonpositive environment-degree Gaussian
-target value bounded above by that average.  The all-label version cannot be
-the negative branch: the core label contributes \(0\), so a negative upper bound
-is impossible; Lean now packages this as an exact equivalence with
-nonnegativity of the upper bound and as a separation theorem from the
-nonzero-label bound under the environment comparison; the separated
-nonzero-label branch also feeds the final \(q\)-to-\(\Theta\) theorem, both
-from target-side and source-side environment data.  In the source-side version,
-Lean rejects both all-label predicates while retaining the final comparison.
-For the target-side nonpositive/nonnegative endpoint, Lean isolates the failed
-premise as \(0\le\Theta_{\mathrm{avg}}\), not target nonpositivity.
-On the nonzero-label part, the formal
-obstruction disappears:
-exponent \(\ge1\) gives the expected bound from the environment comparison.  The
-square-weighted final route now accepts this nonzero-only bound, since the core
-summand has weight \(0\).  This gives a conditional source-level q-to-\(\Theta\)
-route from degree-level Gaussian data, coordinate-square preservation,
-full-label-map preservation, equal source/target environment degree, and
-environment degree bounded above by the \(\Theta\)-source average.  In the
-identity-coordinate case, Lean now supplies the coordinate-square and
-full-label-map preservation branches internally, so this route only asks for
-equal Gaussian environment degree and the nonpositive environment comparison;
-equivalently, the equal-environment input may be replaced by equality of the
-canonical \(j=1\) Gaussian components, and the target-side environment
-comparison may be supplied on the source side after the same equality; the
-nonzero target-bound predicate is equivalent to this source-side comparison,
-and the all-label target predicate is equivalent to this comparison together
-with \(0\le\Theta_{\mathrm{avg}}\).  The corresponding final theorem now
-uses these source-side inputs directly rather than asking for the all-label
-target predicate separately; a further variant derives them from a source
-all-label Gaussian bound, and Lean classifies that source all-label predicate
-as exactly \(0\le\Theta_{\mathrm{avg}}\) plus the source-environment bound; the
-target and source all-label predicates are consequently equivalent under the
-same canonical \(j=1\) and nonpositivity hypotheses.
-Lean also proves that, in the nonpositive
-environment branch, the nonzero coordinate target-bound formulation is
-equivalent to this environment bound against the
-\(\Theta\)-source average and, with source nonpositivity, to the source
-nonzero predicate;
-the necessity direction does not use the nonpositive hypothesis, since the
-canonical \(j=1\) component is the environment degree itself.
-The final identity-coordinate route may now be stated directly from canonical
-\(j=1\) equality and the nonzero Gaussian target-bound predicate; after source
-nonpositivity, the corresponding source nonzero-bound predicate supplies the
-same endpoint through the source-environment classification.
-In the all-label branch, the analogous direct endpoint may either use canonical
-\(j=1\) equality plus the all-label Gaussian target-bound predicate, or derive
-that predicate from nonpositive target environment and nonnegative
-\(\Theta\)-source average.  Lean also records the inclusion from the all-label
-predicate to the nonzero-label predicate used by the weighted-summand route,
-and the converse after adding the zero-label nonnegativity condition; the
-corresponding direct endpoint is exposed with this decomposed input.  The
-target all-label endpoint is now implemented by this same nonzero/square-weighted
-route rather than by a full all-label factored bound.
-The
-zero/nonzero average split is now exact: the nonzero carrier has cardinality
-\(\ell-1=2j_{\max}\), the signed carrier is a twofold cover of the nonzero
-absolute half-range, the zero Gaussian degree is \(0\), and the all-\(F_\ell\)
-average is \((\ell-1)/\ell\) times the nonzero absolute average; consequently
-the \(F_\ell\)-coordinate and full \(|F_\ell|\)-absolute averages differ
-strictly for nonzero environment degree.  Lean also now proves the local
-distinct-label fact emphasized in IUT II: the \(j=1\) and \(j=2\) theta/Gaussian
-components coincide if and only if the environment degree vanishes.  The
-remaining task is to replace
-the current degree-level Gaussian shadow by the actual Hodge--Arakelov
-Gaussian/Frobenioid construction behind this environment comparison.
-
-The strongest negative result is also limited: in the current \(\F_\ell\)-label
-model, Lean rejects a single label-independent scale accounting for all
-representative \(j^2\) factors, and it rejects balanced sign-compatible evidence
-as the final hull/log-volume comparison level.  Lean also rejects direct descent
-of arbitrary raw representative \(j^2\) theta-degree data to \(|F_\ell|\), while
-the underlying \(F_\ell\)-label model, additive torsor laws, sign-unit quotient,
-and canonical cusp-class bridge are now packaged as source-side endpoints,
-accepting the half-range exponent convention stated in IUT II.
-Lean also checks that an \(N\)-th tensor-power boundary is a strict strengthening
-for \(N\ge2\) and negative pilot log-volume.  It also checks the Step (xii)
-numerical warning: nonzero local Frobenioid shifts change log-volume, whereas
-global calibration restores the unshifted value.  The positive rational unit
-rigidity fact in Remark 3.12.1(iii) is formalized directly over \(\mathbb{Q}\).
-For generalized links, Lean records that \(\lambda<1\) makes \(-\lambda>-1\).
-At \(\lambda=1\), the generalized endpoint reduces to the ordinary q-pilot
-boundary.
-Lean also checks that the Remark 3.12.2 simultaneous-intertwining step depends
-on distinct labels rather than an unlabeled identification, while the weakened
-prime-strip condition is retained.
-In the accompanying toy model, Lean proves the final upper bound exactly from
-the upper-ray membership hypothesis.
-Lean also records that the q-pilot column lacks the theta-side multiradiality
-used in Theorem 3.11(iii)(c).
-For Remark 3.12.2(iv), Lean records that the essential \(\bullet_0\) and
-\(\circ\) roles, log-volume compatibility, and log-Kummer non-interference hold
-on both the 0-column and the 1-column.
-For Remark 3.12.2(iii), Lean packages the log-link juggling as the source of
-the upper-semi \((\mathrm{Ind3})\) endpoint: the averaged value is fixed through
-\((\mathrm{Ind1})\) and \((\mathrm{Ind2})\), then bounded from above.
-For Remark 3.12.2(v), Lean separates hull absorption of unit shifts from
-log-volume equality after logarithmic-conjugate compatibility, and records that
-q-pilot non-interference does not supply q-pilot multiradiality.  It also checks
-that zero-column hull upper bounds do not become hull equalities without
-reverse inequalities, even after the hull is identified with the finite
-\(\Theta\)-boundary in Step (xi).
-For Remark 3.12.3(i), Lean proves the stated negative Euler-characteristic sign
-from positivity of metric volume.
-For Remark 3.12.4(iii), Lean checks the \(\ell\)-denominator normalization
-identity for the theta-label averaging analogy.
-For Remark 3.12.4(v), Lean proves the displayed nonpositive degree defect from
-\(p\ge2\) and \(g\ge2\).
-For IUT IV, Theorem 1.10, Lean proves the algebraic implication from the
-computed \(C_\Theta\) expression and \(C_\Theta\ge-1\) to the final
-\(\frac16\log(q)\) estimate, conditional on the separate elementary estimates.
-Lean now also proves the two displayed final elementary coefficient estimates
-from \(\ell\ge5\).
-It also proves the final monotonic replacement of the tripodal log-degree sum by
-the larger \(F\)-level log-degree sum, conditional on the two component
-monotonicity inequalities cited from Proposition 1.3(i).
-Lean also proves the Step (i) sum and square-sum identities over \(\mathbb{R}\).
-For Step (ii), Lean proves the small-prime additive error bound from the
-displayed logarithmic inequalities.
-Lean also checks the Step (i) \(\mathrm{GL}_2\) constants for \(p=2,3,5\) and
-their product with the quadratic extension factor.
-For Step (iii), Lean proves the displayed coefficient absorption from the
-source hypotheses \(d_{\mathrm{mod}}\ge1\), \(\ell\ge5\), \(2\log(\ell)\le\ell\),
-and nonnegativity of the tripodal log-degree sum.
-For Step (viii), Lean checks that the two Proposition 1.6 cases imply the
-uniform prime-product bound used in the final \(C_\Theta\) estimate.
-Lean also checks the subsequent absorption into the coefficient \(10\) of
-\(e^*_{\mathrm{mod}}\ell+\eta_{\mathrm{prm}}\).
-Combining the Corollary 3.12 handoff with the tripodal-to-\(F\) monotonicity,
-Lean proves the two-line final display of Theorem 1.10 at this real-valued
-shadow level: the intermediate \(F_{\mathrm{tpd}}\)-level bound and the final
-\(F\)-level bound.
-For Theorem A, Lean records the exact bounded-discrepancy conclusion and
-packages it with the equivalent pointwise height bound from the lower-bound
-hypothesis.
-For Corollary 2.2(i), Lean defines equality up to bounded discrepancy, proves
-reflexivity, symmetry, transitivity, nonnegative scaling, and composes the
-displayed chain from \(\log(q_2)\) to \(\operatorname{ht}_{\omega_X(D)}\);
-the chain endpoint records both the adjacent links and the composite relation.
-Lean also proves that upper and lower pointwise bounds transfer across such a
-bounded-discrepancy equivalence with the appropriate constant shift, including a
-combined two-sided transfer theorem.
-For Corollary 2.2(ii)(C1), Lean records the displayed window for \(\ell\) and
-derives nonnegativity of \(\log(q_\forall)\), positivity of
-\((\log(q_\forall))^{1/2}\), and
-\(1\le10\delta\log(2\delta\log(q_\forall))\), packaged as a single C1 endpoint.
-Lean also verifies the C1 coefficient replacement
-\(80d_{\mathrm{mod}}/\ell\le\delta h^{-1/2}\) used immediately after applying
-Theorem 1.10, together with the positivity/nonnegativity facts needed for the
-division comparison.
-Lean also verifies the C1 upper-window replacement for the Theorem 1.10 error
-term \(20(d^*_{\mathrm{mod}}\ell+\eta_{\mathrm{prm}})\), including the
-nonnegativity and upper-window facts used in the product estimate.
-Combining these, Lean proves the first displayed post-Theorem-1.10 bound in the
-proof of Corollary 2.2(ii).
-Lean also proves the displayed comparison
-\(\frac16\log(q_2)-\frac16\log(q)
-\le\frac13h^{1/2}\log(2\delta h)\) from the intermediate
-\(h^{1/2}\log(\ell)\) bounds and their two logarithmic side inequalities.
-Lean then combines this with the bounded \(q_\forall/q_2\) discrepancy to prove
-the displayed pre-\(\epsilon_E\) bound for \(\frac16h\), with the
-\(q\to q_2\to q_\forall\) transfers, \((15\delta)^2\) absorption, and
-\(\frac12C_K\) rewrite exposed as named subclaims.
-For Corollary 2.2(ii), Lean proves the final \(\frac16\log(q)\) bound from the
-displayed \(\log(q)\), \(\log(q_2)\), and \(\log(q_\forall)\) chain.
-Lean records the proof's definition of \(\epsilon_E\) and verifies the stated
-lower estimate \(\epsilon_E\ge5\delta h^{-1/2}\), including the positivity
-facts used in the inverse-square-root comparison.
-Lean also verifies the source conversion
-\((15\delta)^2h^{1/2}\log(2\delta h)\le\frac16h\cdot\frac25\epsilon_E\),
-with \(h=(h^{1/2})^2\) and the required nonnegativity facts explicit.
-Combining this with \(\delta h^{-1/2}\le\epsilon_E/5\), Lean proves the
-preliminary inequality needed for the move-left step, including the
-nonnegative log-degree premise used to scale the coefficient comparison.
-Lean then verifies the algebraic move-left step that introduces the denominator
-\((1-2\epsilon_E/5)^{-1}\), exposing denominator positivity and the input
-preliminary inequality.
-Lean also proves the final \(\epsilon_E\)-absorption step used just before C2:
-the intermediate expression with denominator \(1-2\epsilon_E/5\) is bounded by
-\((1+\epsilon_E)\) times the log-degree sum plus \(C_K\), with denominator
-\(\ge1/2\) and nonnegativity of \(S\) and \(C_K\) explicit.
-Lean now composes these steps into the final displayed \(h=\log(q_\forall)\)
-bound, with all square-root, \(\epsilon_E\), coefficient, and nonnegativity
-premises exposed in one endpoint.
-Lean also derives the displayed C2 chain from this \(h\)-bound and the
-tripodal-to-curve log-degree comparison, recording the \(q\to q_2\to
-q_\forall\) inequalities and the monotonicity condition \(1+\epsilon_E\ge0\).
-It also proves the two sum inequalities relating the tripodal different and
-conductor terms to \(\log\operatorname{diff}_X+\log\operatorname{cond}_D\),
-packaged with the defining equality and conductor inequalities.
-For the Corollary 2.2 to Theorem A passage, Lean combines the
-bounded-discrepancy lower estimate for
-\(\frac16\log(q_2)-\operatorname{ht}_{\omega_X(D)}\) with the C2 upper bound
-for \(\frac16\log(q_2)\), deriving both the corresponding upper bound for the
-height and the lower bound for
-\((1+\epsilon_E)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)
--\operatorname{ht}_{\omega_X(D)}\).
-For the Corollary 2.2/2.3 exceptional-set passage, Lean proves that a lower
-bound off a finite exceptional set and a lower bound on the exceptional set imply
-a global lower bound, and specializes this to the Theorem A discrepancy.  The
-endpoint records both minimum comparisons and the resulting pointwise bound.
-For Corollary 2.3, Lean proves the stated bounded-discrepancy conclusion from an
-explicit GenEll transfer hypothesis; GenEll itself is not formalized here.  The
-endpoint exposes \(d>0\), \(\epsilon>0\), hyperbolicity, and the compact-subset
-Theorem A premise.
-Finally, Lean combines the Corollary 2.2(i) bounded-discrepancy height
-comparison with the C2 bound to construct the Theorem A lower-bound shadow.
-
-\section{Missing Mathematics}
-
-The present code does not yet formalize:
-\begin{itemize}
-\item initial \(\Theta\)-data as in IUT I;
-\item actual Hodge theaters, Frobenioids, prime strips, log-shells, or
-  \(\Theta\)-links;
-\item the Hodge--Arakelov theta evaluation and Gaussian monoids of IUT II;
-\item the construction of the actual theta values, Gaussian/splitting monoids,
-  \(F_{\mathrm{mod}}^\times\)-actions, Kummer isomorphisms,
-  mono-analyticization, and Frobenioids behind the present shadows;
-\item the actual construction of log-shells and tensor packets attached to
-  mono-analytic prime-strips in IUT III, Theorem 3.11;
-\item the genuine holomorphic hull and determinant operations of Step (xi),
-  beyond the present finite determinant/upper-ray/two-computation/tensor-power
-  shadows;
-\item the global realified Frobenioids of Step (xii), beyond the present integer
-  shift and calibrated-\(C_\Theta\) shadow;
-\item the arithmetic-divisor and analytic local log-volume construction behind
-  the IUT IV Theorem 1.10 numerical estimates, beyond the present source-side
-  interface records;
-\item the construction of the normalized height, log-different, and log-conductor
-  functions used in IUT IV, Theorem A;
-\item the construction of the bounded-discrepancy equivalences asserted in
-  IUT IV, Corollary 2.2(i);
-\item a proof that the current Hodge/SHE transport obligations follow from
-  Mochizuki's full hypotheses.
-\end{itemize}
+These refactors should be mechanical only: move declarations, preserve names
+where possible, and rebuild after each move.
 
 \section{Next Work}
 
-The finite \(q^{j^2}\), splitting-generator, and Gaussian-to-factored-SHE
-packaging endpoints are now in place.  The next significant formal step is to
-replace current explicit Hodge/SHE transport assumptions by constructions
-closer to the papers:
-
+The next mathematical milestone is to construct, rather than assume, more of
+the source-facing \SHE{} and Hodge-descent preservation data.  The immediate
+route is:
 \[
 \begin{array}{c}
-\text{theta values }q^{j^2}\quad\checkmark\ \text{finite square-weight endpoint}\\
-\leadsto\ \text{Gaussian and splitting monoids}\quad\checkmark\
-  \text{generator action endpoint}\\
-\leadsto\ \text{factored square/full-label preservation}\quad\checkmark\
-  \text{Gaussian endpoint}\\
-\leadsto\ \text{hull/log-volume route}.
+q^{j^2}\text{ finite Gaussian endpoint}\\
+\Downarrow\\
+\text{Gaussian and splitting monoid construction}\\
+\Downarrow\\
+\text{factored square/full-label preservation}\\
+\Downarrow\\
+\text{Hodge/SHE transport audit}\\
+\Downarrow\\
+\text{hull/log-volume comparison}\\
+\Downarrow\\
+C_\Theta\ge -1 .
 \end{array}
 \]
-The next step is to construct the Hodge/SHE preservation hypotheses themselves.
+The project should continue by replacing the present record fields for
+factored \SHE{} preservation and Hodge-descent source-target alignment with
+the corresponding constructions from \IUT{} I--III.
 
 \begingroup
 \small
