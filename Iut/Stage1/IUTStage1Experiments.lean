@@ -5446,6 +5446,16 @@ theorem iutIVCorollary22C1_one_le_ten_delta_logFactor
     (1 : Real) <= 10 * data.delta * data.logTwoDeltaLogQAll :=
   data.one_le_ten_delta_logFactor
 
+theorem iutIVCorollary22C1_primeScaleWindowEndpoint
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    data.sqrtLogQAll <= (data.l.value : Real) ∧
+      (data.l.value : Real) <=
+        10 * data.delta * data.sqrtLogQAll * data.logTwoDeltaLogQAll ∧
+      0 < data.sqrtLogQAll ∧
+      0 <= data.logQAll ∧
+      (1 : Real) <= 10 * data.delta * data.logTwoDeltaLogQAll :=
+  data.c1_prime_scale_window_endpoint
+
 theorem iutIVCorollary22C1Theorem110_coefficient_bound
     (data : IUTStage1IUTIVCorollary22C1Theorem110CoefficientShadow) :
     80 * (data.dmod : Real) / (data.l.value : Real) <=

@@ -1365,6 +1365,20 @@ theorem one_le_ten_delta_logFactor
     div_self (ne_of_gt hpos)
   linarith
 
+theorem c1_prime_scale_window_endpoint
+    (data : IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow) :
+    data.sqrtLogQAll <= (data.l.value : Real) ∧
+      (data.l.value : Real) <=
+        10 * data.delta * data.sqrtLogQAll * data.logTwoDeltaLogQAll ∧
+      0 < data.sqrtLogQAll ∧
+      0 <= data.logQAll ∧
+      (1 : Real) <= 10 * data.delta * data.logTwoDeltaLogQAll :=
+  ⟨data.lower_bound,
+    data.upper_bound,
+    data.sqrtLogQAll_pos,
+    data.logQAll_nonneg,
+    data.one_le_ten_delta_logFactor⟩
+
 end IUTStage1IUTIVCorollary22C1PrimeScaleWindowShadow
 
 /--
