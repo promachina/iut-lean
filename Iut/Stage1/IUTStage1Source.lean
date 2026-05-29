@@ -6256,6 +6256,67 @@ theorem fromCoordinate_weightedVolumeSubordinate_zero_iff
   rw [weightedVolumeSubordinate_zero_iff_ne_zero]
   exact fromCoordinate_ne_zero_iff j
 
+theorem unit_smul_fromCoordinate_weightedVolumeSubordinate_zero_iff
+    (l : PrimeGeFive) (a : (ZMod l.value)ˣ) (j : ZMod l.value) :
+    WeightedVolumeSubordinate
+        (fromCoordinate l ((zmodUnitActionData l).smul a j))
+        IUTStage1ZModCuspFullLabel.zero ↔
+      WeightedVolumeSubordinate
+        (fromCoordinate l j) IUTStage1ZModCuspFullLabel.zero := by
+  rw [← unitActionOnFullLabel_fromCoordinate l a j]
+  exact unitActionOnFullLabel_preserves_subordinate_zero l a
+    (fromCoordinate l j)
+
+theorem translation_fromCoordinate_weightedVolumeSubordinate_zero_iff_zero
+    (l : PrimeGeFive) (t : ZMod l.value) :
+    (∀ j : ZMod l.value,
+      WeightedVolumeSubordinate
+          (fromCoordinate l (zmodLabelTranslate l t j))
+          IUTStage1ZModCuspFullLabel.zero ↔
+        WeightedVolumeSubordinate
+          (fromCoordinate l j) IUTStage1ZModCuspFullLabel.zero) ↔
+      t = 0 := by
+  constructor
+  · intro hpres
+    have hzero := hpres 0
+    have hzero' :
+        WeightedVolumeSubordinate
+            (fromCoordinate l t) IUTStage1ZModCuspFullLabel.zero ↔
+          WeightedVolumeSubordinate
+            (fromCoordinate l (0 : ZMod l.value))
+            IUTStage1ZModCuspFullLabel.zero := by
+      simpa [zmodLabelTranslate_eq_add] using hzero
+    have hzero_not :
+        ¬ WeightedVolumeSubordinate
+            (fromCoordinate l (0 : ZMod l.value))
+            IUTStage1ZModCuspFullLabel.zero := by
+      rw [fromCoordinate_weightedVolumeSubordinate_zero_iff]
+      simp
+    have ht_not :
+        ¬ WeightedVolumeSubordinate
+            (fromCoordinate l t) IUTStage1ZModCuspFullLabel.zero := by
+      intro htSub
+      exact hzero_not (hzero'.mp htSub)
+    by_contra ht
+    exact ht_not
+      ((fromCoordinate_weightedVolumeSubordinate_zero_iff l t).mpr ht)
+  · intro ht j
+    subst t
+    rw [zmodLabelTranslate_zero]
+
+theorem nonzero_translation_not_preserves_fromCoordinate_weightedVolumeSubordinate_zero
+    (l : PrimeGeFive) {t : ZMod l.value} (ht : t ≠ 0) :
+    ¬ ∀ j : ZMod l.value,
+      WeightedVolumeSubordinate
+          (fromCoordinate l (zmodLabelTranslate l t j))
+          IUTStage1ZModCuspFullLabel.zero ↔
+        WeightedVolumeSubordinate
+          (fromCoordinate l j) IUTStage1ZModCuspFullLabel.zero := by
+  intro hpres
+  exact ht
+    ((translation_fromCoordinate_weightedVolumeSubordinate_zero_iff_zero
+      l t).mp hpres)
+
 theorem not_forall_coordinate_weightedVolumeSubordinate_zero
     (l : PrimeGeFive) :
     ¬ ∀ j : ZMod l.value,

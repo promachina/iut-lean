@@ -19114,3 +19114,35 @@ sum, the full-label Gaussian average, and the subordinate nonzero Gaussian sum.
 This is the Gaussian-monoid instance of the \(F_\ell\)-symmetry/permutation
 bookkeeping in IUT II, Remark 4.7.4, while retaining the zero/nonzero split of
 Remark 4.7.3(iii).
+
+## Coordinate subordinate predicate under unit and translation actions
+
+### Lean Move
+
+Added:
+
+```text
+unit_smul_fromCoordinate_weightedVolumeSubordinate_zero_iff
+translation_fromCoordinate_weightedVolumeSubordinate_zero_iff_zero
+nonzero_translation_not_preserves_fromCoordinate_weightedVolumeSubordinate_zero
+unitSmul_preserves_coordinateSubordinateZero
+translation_preserves_coordinateSubordinateZero_iff_zero
+nonzeroTranslation_not_preserves_coordinateSubordinateZero
+```
+
+### Mathematical Reason
+
+Lean now proves the coordinate-level version of the symmetry split.  Multiplying
+a coordinate \(j\in F_\ell\) by any unit preserves the subordinate-to-zero
+predicate \(j\ll0\).  By contrast, additive translation by \(t\) preserves this
+predicate for every coordinate exactly when \(t=0\).  Equivalently, every
+nonzero additive translation moves the distinguished zero/coric coordinate into
+the nonzero Gaussian branch.
+
+### Source Check
+
+This is checked against IUT II, Remarks 4.7.3(i),(iii) and 4.7.4: the
+multiplicative \(F_\ell\)-symmetry acts as a permutation symmetry compatible
+with the zero/nonzero Gaussian split, while the additive \(F_\ell^\pm\)-torsor
+structure does not preserve that split after the zero label has been
+distinguished.

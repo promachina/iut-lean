@@ -21,6 +21,7 @@ open RealLineCopy
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
 open FLZModCuspLabelThetaHodgeDescentPacketTransportAudit
 open FLZModCuspLabelThetaCuspClassContainerAudit
+open IUTStage1ZModCuspFullLabel
 open IUTStage1ZModSquareWeightProfile
 open IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction
 
@@ -1255,6 +1256,45 @@ theorem gaussianDegree_subordinateSum_unitAction_eq
             label IUTStage1ZModCuspFullLabel.zero)
         (Classical.decPred _) Finset.univ).sum evaluation.gaussianDegree :=
   evaluation.gaussianDegree_subordinate_sum_unitAction_eq a
+
+theorem unitSmul_preserves_coordinateSubordinateZero
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ) (j : ZMod l.value) :
+    IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          ((zmodUnitActionData l).smul a j))
+        IUTStage1ZModCuspFullLabel.zero ↔
+      IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+        IUTStage1ZModCuspFullLabel.zero :=
+  IUTStage1ZModCuspFullLabel.unit_smul_fromCoordinate_weightedVolumeSubordinate_zero_iff
+    l a j
+
+theorem translation_preserves_coordinateSubordinateZero_iff_zero
+    {l : PrimeGeFive} (t : ZMod l.value) :
+    (∀ j : ZMod l.value,
+      IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t j))
+          IUTStage1ZModCuspFullLabel.zero ↔
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+          IUTStage1ZModCuspFullLabel.zero) ↔
+      t = 0 :=
+  IUTStage1ZModCuspFullLabel.translation_fromCoordinate_weightedVolumeSubordinate_zero_iff_zero
+    l t
+
+theorem nonzeroTranslation_not_preserves_coordinateSubordinateZero
+    {l : PrimeGeFive} {t : ZMod l.value} (ht : t ≠ 0) :
+    ¬ ∀ j : ZMod l.value,
+      IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t j))
+          IUTStage1ZModCuspFullLabel.zero ↔
+        IUTStage1ZModCuspFullLabel.WeightedVolumeSubordinate
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+          IUTStage1ZModCuspFullLabel.zero :=
+  nonzero_translation_not_preserves_fromCoordinate_weightedVolumeSubordinate_zero
+    l ht
 
 theorem gaussianSubordinateSum_mul_six
     {l : PrimeGeFive}
