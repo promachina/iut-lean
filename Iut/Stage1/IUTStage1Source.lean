@@ -11545,6 +11545,38 @@ theorem coordinateSquarePreserving_eq_refl
   ext j
   exact coordinateSquarePreserving_apply_eq hcoord j
 
+theorem coordinateSquarePreserving_unitAffine_iff
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    CoordinateSquarePreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t) ↔
+      t = 0 ∧ a = 1 := by
+  constructor
+  · intro hcoord
+    have hzero := coordinateSquarePreserving_apply_eq hcoord (0 : ZMod l.value)
+    rw [IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv_apply,
+      zmodLabelTranslate_eq_add] at hzero
+    have ht : t = 0 := by
+      simpa [zmodUnitActionData] using hzero
+    have hone := coordinateSquarePreserving_apply_eq hcoord (1 : ZMod l.value)
+    subst t
+    rw [IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv_apply,
+      zmodLabelTranslate_zero] at hone
+    have ha_coord : (a : ZMod l.value) = 1 := by
+      simpa [zmodUnitActionData] using hone
+    have ha : a = 1 := by
+      ext
+      simpa using ha_coord
+    exact ⟨rfl, ha⟩
+  · rintro ⟨ht, ha⟩
+    subst t
+    subst a
+    intro j
+    rw [IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv_apply,
+      zmodLabelTranslate_zero]
+    simp [zmodUnitActionData]
+
 theorem neg_one_ne_one :
     (-(1 : ZMod l.value)) ≠ (1 : ZMod l.value) := by
   intro h

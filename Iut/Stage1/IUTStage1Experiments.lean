@@ -1436,6 +1436,16 @@ theorem unitAffine_pointwiseGaussianPreserving_iff
       t = 0 ∧ a ∈ zmodSignUnitSubgroup l :=
   evaluation.unitAffine_pointwise_gaussian_preserving_iff a t henv
 
+theorem coordinateSquarePreserving_unitAffine_iff
+    {l : PrimeGeFive} (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t) ↔
+      t = 0 ∧ a = 1 :=
+  IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_unitAffine_iff
+    a t
+
 theorem gaussianDegree_nonzero_ne_zero_of_environment_ne_zero
     {l : PrimeGeFive}
     (evaluation :
