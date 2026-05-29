@@ -19321,3 +19321,42 @@ This is a finite-model guard for the Corollary 3.12 debate.  It separates an
 aggregate equality obtained by reindexing \(F_\ell\) from pointwise
 compatibility of the Gaussian branch used in the absolute-label/Hodge-theater
 comparison.
+
+## Exact Gaussian zero criterion
+
+### Lean Move
+
+Added:
+
+```text
+balancedSquareWeight_eq_zero_iff
+thetaExponentOnAbsLabel_fromCoordinate_eq_zero_iff
+gaussianDegree_fromCoordinate_eq_zero_iff
+unitAffine_zeroGaussianComponent_eq_zero_iff
+gaussianDegree_fromCoordinate_eq_zero_iff
+gaussianUnitAffine_zeroComponent_eq_zero_iff
+```
+
+### Mathematical Reason
+
+Lean now proves the exact zero criterion for the coordinate Gaussian degree:
+
+```text
+G(fromCoordinate j) = 0 iff j = 0 or environmentDegree = 0.
+```
+
+The proof uses the lower bound \(1\le j^2\) for nonzero absolute labels.  For
+the affine image of the zero coordinate, this specializes to:
+
+```text
+G(fromCoordinate (a*0 + t)) = G(0) iff t = 0 or environmentDegree = 0.
+```
+
+Thus the only way a nonzero additive offset can fail to change the zero
+Gaussian component is the degenerate zero-environment case.
+
+### Source Check
+
+This refines the finite Gaussian shadow of IUT II's \(q^{j^2}\) convention: the
+zero label is the unique coordinate-level zero of the exponent, except when the
+entire Gaussian degree scale is zero.

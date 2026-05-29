@@ -316,7 +316,10 @@ The code currently covers:
   the raw coordinate average but fails full-label descent.  If the Gaussian
   environment degree is nonzero, the same affine operation also changes the
   zero Gaussian component, so aggregate average invariance is not pointwise
-  Gaussian compatibility.
+  Gaussian compatibility.  Lean also proves the exact degeneracy criterion:
+  a coordinate Gaussian component is zero if and only if its coordinate is zero
+  or the environment degree is zero; for an affine zero-coordinate image this
+  becomes \(t=0\) or \(\deg(q)=0\).
   Lean also converts the
   zero/nonzero cusp-label compatibility object to a uniform \(F_\ell\) average
   and proves that a diagonal constant log-volume distribution averages to that

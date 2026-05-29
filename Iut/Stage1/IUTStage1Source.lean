@@ -8420,6 +8420,18 @@ theorem balancedSquareWeight_ge_one_of_ne_zero
     exact_mod_cast hnat
   nlinarith
 
+theorem balancedSquareWeight_eq_zero_iff
+    (j : ZMod l.value) :
+    balancedSquareWeight (l := l) j = 0 ↔ j = 0 := by
+  constructor
+  · intro hzero
+    by_contra hj
+    have hge := balancedSquareWeight_ge_one_of_ne_zero (l := l) j hj
+    linarith
+  · intro hj
+    subst j
+    exact balancedSquareWeight_zero
+
 noncomputable def balancedSquareWeightOnFullLabel :
     IUTStage1ZModCuspFullLabel l -> Real
   | IUTStage1ZModCuspFullLabel.zero => 0
@@ -8483,6 +8495,14 @@ theorem thetaExponentOnAbsLabel_fromCoordinate
         (l := l) (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
       balancedSquareWeight (l := l) j :=
   balancedSquareWeightOnFullLabel_fromCoordinate j
+
+theorem thetaExponentOnAbsLabel_fromCoordinate_eq_zero_iff
+    (j : ZMod l.value) :
+    thetaExponentOnAbsLabel
+        (l := l) (IUTStage1ZModCuspFullLabel.fromCoordinate l j) = 0 ↔
+      j = 0 := by
+  rw [thetaExponentOnAbsLabel_fromCoordinate]
+  exact balancedSquareWeight_eq_zero_iff (l := l) j
 
 theorem thetaExponentOnAbsLabel_fromCoordinate_of_val_le_half
     (j : ZMod l.value) (hhalf : j.val ≤ l.value / 2) :
@@ -8684,6 +8704,28 @@ theorem gaussianDegree_fromCoordinate_ne_zero_of_environment_ne_zero
   rw [IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l j hj]
   exact evaluation.gaussianDegree_nonzero_ne_zero_of_environment_ne_zero
     (zmodSignLabelFromCoordinate l j hj) henv
+
+theorem gaussianDegree_fromCoordinate_eq_zero_iff
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (j : ZMod l.value) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) = 0 ↔
+      j = 0 ∨ evaluation.environmentDegree = 0 := by
+  constructor
+  · intro hzero
+    rw [evaluation.gaussianDegree_eq_eval] at hzero
+    rcases mul_eq_zero.mp hzero with hexp | henv
+    · exact Or.inl
+        ((thetaExponentOnAbsLabel_fromCoordinate_eq_zero_iff
+          (l := l) j).mp hexp)
+    · exact Or.inr henv
+  · intro h
+    rcases h with hj | henv
+    · subst j
+      rw [IUTStage1ZModCuspFullLabel.fromCoordinate_zero,
+        evaluation.gaussianDegree_zero]
+    · rw [evaluation.gaussianDegree_eq_eval, henv]
+      ring
 
 theorem gaussianDegree_one
     (evaluation : GaussianMonoidDegreeEvaluation l) :
@@ -8938,6 +8980,21 @@ theorem unitAffine_zeroGaussianComponent_ne_zero_of_environment_ne_zero
     (zmodLabelTranslate l t
       ((zmodUnitActionData l).smul a (0 : ZMod l.value)))
     hcoord henv
+
+theorem unitAffine_zeroGaussianComponent_eq_zero_iff
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t
+            ((zmodUnitActionData l).smul a (0 : ZMod l.value)))) =
+      evaluation.gaussianDegree IUTStage1ZModCuspFullLabel.zero ↔
+    t = 0 ∨ evaluation.environmentDegree = 0 := by
+  rw [evaluation.gaussianDegree_zero]
+  simpa [zmodLabelTranslate_eq_add, zmodUnitActionData] using
+    (evaluation.gaussianDegree_fromCoordinate_eq_zero_iff
+      (zmodLabelTranslate l t
+        ((zmodUnitActionData l).smul a (0 : ZMod l.value))))
 
 theorem coordinateAverage_unitAffineInvariant_but_zeroGaussianChanged_and_not_fullLabelDescend
     (evaluation : GaussianMonoidDegreeEvaluation l)

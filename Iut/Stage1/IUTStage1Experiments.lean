@@ -1347,6 +1347,16 @@ theorem gaussianDegree_fromCoordinate_ne_zero_of_environment_ne_zero
   evaluation.gaussianDegree_fromCoordinate_ne_zero_of_environment_ne_zero
     j hj henv
 
+theorem gaussianDegree_fromCoordinate_eq_zero_iff
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (j : ZMod l.value) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) = 0 ↔
+      j = 0 ∨ evaluation.environmentDegree = 0 :=
+  evaluation.gaussianDegree_fromCoordinate_eq_zero_iff j
+
 theorem gaussianUnitAffine_zeroComponent_ne_zero_of_environment_ne_zero
     {l : PrimeGeFive}
     (evaluation :
@@ -1360,6 +1370,19 @@ theorem gaussianUnitAffine_zeroComponent_ne_zero_of_environment_ne_zero
       evaluation.gaussianDegree IUTStage1ZModCuspFullLabel.zero :=
   evaluation.unitAffine_zeroGaussianComponent_ne_zero_of_environment_ne_zero
     a ht henv
+
+theorem gaussianUnitAffine_zeroComponent_eq_zero_iff
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l
+          (zmodLabelTranslate l t
+            ((zmodUnitActionData l).smul a (0 : ZMod l.value)))) =
+      evaluation.gaussianDegree IUTStage1ZModCuspFullLabel.zero ↔
+    t = 0 ∨ evaluation.environmentDegree = 0 :=
+  evaluation.unitAffine_zeroGaussianComponent_eq_zero_iff a t
 
 theorem gaussianCoordinateAverage_unitAffineInvariant_but_zeroChanged_and_notDescent
     {l : PrimeGeFive}
