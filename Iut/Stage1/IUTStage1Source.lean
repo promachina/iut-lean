@@ -1074,6 +1074,23 @@ theorem hyperbolicCurve_holds
     data.hyperbolicCurve :=
   data.hyperbolic_curve
 
+theorem theoremA_bounded_discrepancy_endpoint
+    (data : IUTStage1IUTIVTheoremABoundedDiscrepancyShadow Point)
+    (x : Point) :
+    data.hyperbolicCurve ∧
+      0 < 1 + data.epsilon ∧
+      data.lowerBound <= data.discrepancy x ∧
+      data.height x + data.lowerBound <=
+        (1 + data.epsilon) * (data.logDiff x + data.logCond x) ∧
+      data.height x <=
+        (1 + data.epsilon) * (data.logDiff x + data.logCond x) -
+          data.lowerBound :=
+  ⟨data.hyperbolicCurve_holds,
+    data.one_plus_epsilon_pos,
+    data.discrepancy_lower_bound x,
+    data.height_add_lowerBound_le_weighted_logDiff_logCond x,
+    data.height_le_weighted_logDiff_logCond_minus_lowerBound x⟩
+
 end IUTStage1IUTIVTheoremABoundedDiscrepancyShadow
 
 /--

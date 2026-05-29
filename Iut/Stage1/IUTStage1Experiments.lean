@@ -5351,6 +5351,20 @@ theorem iutIVTheoremABoundedDiscrepancy_height_bound
         data.lowerBound :=
   data.height_le_weighted_logDiff_logCond_minus_lowerBound x
 
+theorem iutIVTheoremABoundedDiscrepancy_endpoint
+    {Point : Type u}
+    (data : IUTStage1IUTIVTheoremABoundedDiscrepancyShadow Point)
+    (x : Point) :
+    data.hyperbolicCurve ∧
+      0 < 1 + data.epsilon ∧
+      data.lowerBound <= data.discrepancy x ∧
+      data.height x + data.lowerBound <=
+        (1 + data.epsilon) * (data.logDiff x + data.logCond x) ∧
+      data.height x <=
+        (1 + data.epsilon) * (data.logDiff x + data.logCond x) -
+          data.lowerBound :=
+  data.theoremA_bounded_discrepancy_endpoint x
+
 theorem iutIVTheoremABoundedDiscrepancy_hyperbolic
     {Point : Type u}
     (data : IUTStage1IUTIVTheoremABoundedDiscrepancyShadow Point) :

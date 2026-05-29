@@ -576,8 +576,8 @@ The code currently covers:
 \item the IUT IV, Theorem A bounded-discrepancy conclusion:
   boundedness below of
   \((1+\epsilon)(\log\operatorname{diff}_X+\log\operatorname{cond}_D)
-   -\operatorname{ht}_{\omega_X(D)}\) implies the corresponding pointwise height
-  inequality on points of bounded degree;
+   -\operatorname{ht}_{\omega_X(D)}\) is packaged together with the
+  corresponding pointwise height inequality on points of bounded degree;
 \item the IUT IV, Corollary 2.2(i) bounded-discrepancy chain:
   \(\frac16\log(q_2)\approx\frac16\log(q_\forall)
    \approx\frac16\operatorname{ht}_\infty
@@ -1059,8 +1059,9 @@ Combining the Corollary 3.12 handoff with the tripodal-to-\(F\) monotonicity,
 Lean proves the two-line final display of Theorem 1.10 at this real-valued
 shadow level: the intermediate \(F_{\mathrm{tpd}}\)-level bound and the final
 \(F\)-level bound.
-For Theorem A, Lean records the exact bounded-discrepancy conclusion and proves
-the equivalent pointwise height bound from the lower-bound hypothesis.
+For Theorem A, Lean records the exact bounded-discrepancy conclusion and
+packages it with the equivalent pointwise height bound from the lower-bound
+hypothesis.
 For Corollary 2.2(i), Lean defines equality up to bounded discrepancy, proves
 reflexivity, symmetry, transitivity, nonnegative scaling, and composes the
 displayed chain from \(\log(q_2)\) to \(\operatorname{ht}_{\omega_X(D)}\).
