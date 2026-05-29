@@ -820,6 +820,19 @@ theorem absLabelProcessionCard_eq_halfPlusOne
       (l.value + 1) / 2 :=
   IUTStage1ZModSquareWeightProfile.absLabelProcession_card_eq_half_plus_one l
 
+theorem fullLabelFromNatAbsValMinAbs_eq
+    {l : PrimeGeFive} (j : ZMod l.value) :
+    IUTStage1ZModCuspFullLabel.fromCoordinate l
+        (j.valMinAbs.natAbs : ZMod l.value) =
+      IUTStage1ZModCuspFullLabel.fromCoordinate l j :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate_natAbs_valMinAbs j
+
+theorem absLabelFromProcession_surjective
+    {l : PrimeGeFive} :
+    Function.Surjective
+      (IUTStage1ZModSquareWeightProfile.absLabelFromProcession l) :=
+  IUTStage1ZModSquareWeightProfile.absLabelFromProcession_surjective
+
 theorem gaussianDegree_fromAbsLabelProcession
     {l : PrimeGeFive}
     (evaluation :

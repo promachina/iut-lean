@@ -5838,6 +5838,19 @@ theorem nonzero_fromCoordinate_surjective
   rw [← zmod_toSignLabelQuotient_eq_fromCoordinate x]
   rfl
 
+theorem fromCoordinate_natAbs_valMinAbs
+    (j : ZMod l.value) :
+    fromCoordinate l (j.valMinAbs.natAbs : ZMod l.value) =
+      fromCoordinate l j := by
+  rw [ZMod.natCast_natAbs_valMinAbs]
+  split_ifs with hhalf
+  · rfl
+  · have hj : j ≠ 0 := by
+      intro hj
+      subst j
+      exact hhalf (by simp)
+    rw [fromCoordinate_neg l j hj]
+
 /--
 Stage 1 shadow of the weighted-volume relation `F_l ∋ j ≪ 0` from IUT II,
 Remark 4.7.3(iii).
@@ -8377,6 +8390,21 @@ theorem absLabelFromProcession_core :
       IUTStage1ZModCuspFullLabel.zero := by
   simp [absLabelFromProcession, IUTStage1ProcessionContainer.core,
     IUTStage1ZModCuspFullLabel.fromCoordinate_zero]
+
+theorem absLabelFromProcession_surjective :
+    Function.Surjective (absLabelFromProcession l) := by
+  intro label
+  rcases IUTStage1ZModCuspFullLabel.fromCoordinate_surjective
+      (l := l) label with ⟨j, hj⟩
+  let k : Nat := j.valMinAbs.natAbs
+  have hk_le : k ≤ absLabelProcessionTop l := by
+    dsimp [k]
+    unfold absLabelProcessionTop
+    exact ZMod.natAbs_valMinAbs_le j
+  refine ⟨⟨k, by omega⟩, ?_⟩
+  dsimp [absLabelFromProcession, k]
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_natAbs_valMinAbs]
+  exact hj
 
 theorem thetaExponentOnAbsLabel_fromProcession
     (label : IUTStage1ProcessionContainer (absLabelProcessionTop l)) :
