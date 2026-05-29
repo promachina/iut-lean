@@ -708,6 +708,25 @@ theorem gaussianCoordinateAverage_eq_nonzeroMassRescale
         evaluation.nonzeroCarrierAveragedLogVolume.averageLogVolume :=
   evaluation.coordinateAveragedLogVolume_eq_nonzero_mass_rescale
 
+theorem gaussianCanonicalSignLabel_eq_environment
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.nonzero
+          (zmodCanonicalSignLabelQuotient l)) =
+      evaluation.environmentDegree :=
+  evaluation.gaussianDegree_canonicalSignLabel
+
+theorem gaussianCuspClassCanonicalSignLabel_eq_environment
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.toCuspLabelLogVolumeCompatibility.cuspClassLogVolume
+        (zmodCanonicalSignLabelQuotient l) =
+      evaluation.environmentDegree :=
+  evaluation.cuspClassLogVolume_canonicalSignLabel
+
 theorem absLabelProcessionTop_eq_halfMinusOne
     (l : PrimeGeFive) :
     IUTStage1ZModSquareWeightProfile.absLabelProcessionTop l =

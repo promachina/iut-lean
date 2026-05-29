@@ -143,7 +143,10 @@ The code currently covers:
   \(q\mapsto(q^{j^2})_{j\in |F_\ell|}\), including identity at \(j=1\);
   Lean now also converts such an evaluation into a cusp/full-label log-volume
   compatibility object and proves the full-label value-preservation branch when
-  the source and target environment degrees agree;
+  the source and target environment degrees agree; Lean also proves the IUT II
+  restriction check at the canonical \(j=1\) sign label:
+  the Gaussian component and the corresponding cusp-class log-volume are both
+  the original environment degree;
 \item a canonical representative square-weight profile on \(F_\ell\):
   Lean proves the total \(j^2\)-mass is positive from the \(j=1\) contribution
   and therefore constructs the profile without an external positivity premise;

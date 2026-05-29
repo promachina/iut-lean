@@ -7867,6 +7867,23 @@ theorem gaussianDegree_one
     thetaExponentOnAbsLabel_one]
   ring
 
+theorem gaussianDegree_canonicalSignLabel
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.nonzero
+          (zmodCanonicalSignLabelQuotient l)) =
+      evaluation.environmentDegree := by
+  have h := evaluation.gaussianDegree_one
+  rw [IUTStage1ZModCuspFullLabel.fromCoordinate_one] at h
+  exact h
+
+theorem cuspClassLogVolume_canonicalSignLabel
+    (evaluation : GaussianMonoidDegreeEvaluation l) :
+    evaluation.toCuspLabelLogVolumeCompatibility.cuspClassLogVolume
+        (zmodCanonicalSignLabelQuotient l) =
+      evaluation.environmentDegree :=
+  evaluation.gaussianDegree_canonicalSignLabel
+
 theorem gaussianDegree_fromCoordinate_of_val_le_half
     (evaluation : GaussianMonoidDegreeEvaluation l)
     (j : ZMod l.value) (hhalf : j.val ≤ l.value / 2) :
