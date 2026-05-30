@@ -490,12 +490,14 @@ def toSourceObligationLedger
     (obligations : LedgerPromotionObligations data) :
     SourceObligationLedger
       data.output data.measure data.thetaSigned data.qSigned data.normalization :=
-  { certificate := data.certificate,
+  { certified := obligations.certified,
+    certificate := data.certificate,
     chartedContainer := data.chartedContainer,
     she_matches_certificate := obligations.she_matches_certificate,
     qValue := data.qValue,
     thetaBound := data.thetaBound,
     theta_commonBound := data.chartedContainer.apply data.certificate,
+    theta_commonBound_eq_charted := rfl,
     chosenOutput := data.chosenOutput,
     targetVolume := data.targetVolume,
     membership := data.membership,

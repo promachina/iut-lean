@@ -46,6 +46,7 @@ structure SourceObligationLedger
     (output : AlgorithmicOutput source target index)
     (measure : RegionMeasure target) (thetaSigned qSigned : Real)
     (normalization : Prop) where
+  certified : output.Certified
   certificate : QualitativeData.StructuredCertificate output.family
   chartedContainer : output.ChartedCommonContainerData measure thetaSigned
   she_matches_certificate :
@@ -55,6 +56,8 @@ structure SourceObligationLedger
     output.ChartedThetaBoundData measure chartedContainer.chart thetaSigned
   theta_commonBound :
     output.CommonTargetBound measure thetaSigned
+  theta_commonBound_eq_charted :
+    theta_commonBound = chartedContainer.apply certificate
   chosenOutput : output.ChosenOutputData
   targetVolume :
     output.ChartedTargetVolumeData measure chartedContainer.chart chosenOutput.choice
@@ -71,6 +74,11 @@ variable {output : AlgorithmicOutput source target index}
 variable {measure : RegionMeasure target}
 variable {thetaSigned qSigned : Real}
 variable {normalization : Prop}
+
+theorem algorithmCertified (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    output.Certified :=
+  ledger.certified
 
 def threeTermComparison (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
@@ -476,12 +484,23 @@ theorem thetaCommonBound_eq_field (ledger :
     ledger.thetaCommonBound = ledger.theta_commonBound :=
   rfl
 
+theorem thetaCommonBound_eq_chartedContainer_apply (ledger :
+    SourceObligationLedger output measure thetaSigned qSigned normalization) :
+    ledger.thetaCommonBound =
+      ledger.chartedContainer.apply ledger.certificate :=
+  ledger.theta_commonBound_eq_charted
+
 /-- Source-agnostic audit summary for a completed source-obligation ledger. -/
 structure Audit (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) : Prop where
+  certified :
+    output.Certified
   she_matches_certificate :
     ledger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
       ledger.certificate.she
+  theta_commonBound_matches_charted :
+    ledger.thetaCommonBound =
+      ledger.chartedContainer.apply ledger.certificate
   common_context_matches :
     ledger.chartedContainer.commonContainer.context =
       ledger.certificate.she.sharedContext
@@ -515,7 +534,10 @@ structure Audit (ledger :
 theorem audit (ledger :
     SourceObligationLedger output measure thetaSigned qSigned normalization) :
     Audit ledger :=
-  { she_matches_certificate := ledger.sheMatchesCertificate,
+  { certified := ledger.algorithmCertified,
+    she_matches_certificate := ledger.sheMatchesCertificate,
+    theta_commonBound_matches_charted :=
+      ledger.thetaCommonBound_eq_chartedContainer_apply,
     common_context_matches := ledger.commonContextMatchesCertificate,
     theta_chart_trivial := ledger.thetaChartTrivial,
     q_charted := ledger.qSigned_eq_chartedQ,
