@@ -879,6 +879,12 @@
               <a href="#vertical-bicoric-log-shells">bi-coric log-shells</a>,
               <a href="#vertical-cores">vertical cores</a>,
               <a href="#multiradial-theta-monoids">multiradial theta monoids</a>,
+              <a href="#vertical-coric-theta-monoids">vertical coric theta monoids</a>,
+              <a href="#theta-monoid-kummer-isomorphisms">theta-monoid Kummer isomorphisms</a>,
+              <a href="#bad-prime-kummer-zero-map">bad-prime zero map</a>,
+              <a href="#mono-theta-rigidity-package">mono-theta rigidity package</a>,
+              <a href="#radial-environment">radial environment</a>,
+              <a href="#etale-picture-radial-data">etale-picture of radial data</a>,
               <a href="#lgp-monoids">LGP monoids</a>
             </td>
             <td>IUT III, Sections 1-3</td>
@@ -5199,7 +5205,193 @@
           </svg>
         </div>
 
+        <table>
+          <tr>
+            <th>IUT III §2 source item</th>
+            <th>Multiradial theta-monoid content</th>
+            <th>Formal consequence</th>
+          </tr>
+          <tr>
+            <td>Proposition 2.1(i)</td>
+            <td>
+              From the D- and <span class="math">D⊢</span>-prime-strips of a
+              Theta±ellNF-Hodge theater, functorial algorithms construct
+              <span class="math">Psi_env(D&gt;)</span>,
+              <span class="math">infty Psi_env(D&gt;)</span>, and
+              <span class="math">D_env(D⊢_&gt;)</span>. Vertical log-link
+              poly-isomorphisms transport these data.
+            </td>
+            <td>
+              Theta-environment monoids are vertically coric before the §3 tensor-packet
+              construction starts.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 2.1(ii)</td>
+            <td>
+              Kummer isomorphisms identify the Frobenioid-theoretic
+              <span class="math">Psi_Fenv(HT_Theta)</span>,
+              <span class="math">infty Psi_Fenv(HT_Theta)</span>, and
+              <span class="math">C_env(HT_Theta)</span> with the D-theoretic
+              environment data.
+            </td>
+            <td>
+              This is the Frobenius-like to etale-like passage for theta-environment
+              monoids.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 2.1(iii)-(vi)</td>
+            <td>
+              At bad primes, mono-theta Kummer classes and exterior cyclotome
+              isomorphisms yield a composite map to
+              <span class="math">Psi(F⊢_△)×μ</span> that is zero; good and archimedean
+              places use labeled Kummer semi-simplification isomorphisms. These are
+              compatible with constant-monoid identifications.
+            </td>
+            <td>
+              The zero-map/torsion insulation is the local mechanism that keeps
+              mono-theta rigidity compatible with <span class="math">F⊢×μ</span>
+              automorphisms.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 2.1.1</td>
+            <td>
+              The proof-critical mono-theta properties are cyclotomic rigidity, discrete
+              rigidity, constant multiple rigidity, isomorphism class compatibility, and
+              Frobenioid structure compatibility.
+            </td>
+            <td>
+              The wiki treats "rigidity" as a five-part source package, not a single
+              informal stability assertion.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 2.2(i)</td>
+            <td>
+              Automorphism groups of F-prime-strips map to automorphisms of associated
+              <span class="math">F×μ</span> and then
+              <span class="math">F⊢×μ</span> prime-strips, compatibly with the Kummer
+              isomorphisms of Proposition 2.1 and Theorem 1.5.
+            </td>
+            <td>
+              Multiradiality must account for the exact automorphism route through the
+              weakened prime-strip interfaces.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 2.2(ii)</td>
+            <td>
+              At bad primes, the identity automorphism on the theta-splitting objects,
+              exterior cyclotome torsion, mono-theta environments, and zero-labeled
+              splittings is compatible with arbitrary
+              <span class="math">Aut(F⊢×μ_△)</span> actions.
+            </td>
+            <td>
+              This is the local Kummer-compatible multiradiality statement for theta
+              monoids.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 2.3</td>
+            <td>
+              A radial environment packages D-Theta±ellNF data, the associated
+              <span class="math">F_env(D&gt;)</span>, bad-prime rigidity data,
+              <span class="math">F⊢×μ_△(D⊢_△)</span>, and the full poly-isomorphism
+              from environment to constant side. The radial algorithm maps this to
+              coric data and is full and essentially surjective.
+            </td>
+            <td>
+              This is the §2 etale-picture of radial data: spokes are radial data and
+              the center is the common coric <span class="math">F⊢×μ_△(D⊢_△)</span>
+              output.
+            </td>
+          </tr>
+        </table>
+
         <div class="grid2">
+          <div class="card" id="vertical-coric-theta-monoids">
+            <h3>Vertical coric theta monoids</h3>
+            <p>
+              Proposition 2.1(i) reconstructs theta-environment monoids and global
+              realified Frobenioids from D-theater data and shows that vertical
+              log-link poly-isomorphisms transport them compatibly.
+            </p>
+            <p>
+              This is the §2 reason the theta monoid layer can be read along a vertical
+              line of the log-theta lattice.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 2.1(i)</span><span class="tag">vertical coric</span></div>
+          </div>
+          <div class="card" id="theta-monoid-kummer-isomorphisms">
+            <h3>Theta-monoid Kummer isomorphisms</h3>
+            <p>
+              Proposition 2.1(ii) supplies Kummer isomorphisms from the
+              Frobenioid-theoretic theta-environment monoids to the D-theoretic
+              environment monoids, including the associated global realified Frobenioids.
+            </p>
+            <p>
+              These isomorphisms are the controlled Frobenius-like to etale-like passage
+              for the theta environment.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 2.1(ii)</span><span class="tag">Kummer</span></div>
+          </div>
+          <div class="card" id="bad-prime-kummer-zero-map">
+            <h3>Bad-prime zero map</h3>
+            <p>
+              Proposition 2.1(iii) and Theorem 2.2(ii) isolate the bad-prime mechanism:
+              torsion/exterior-cyclotome data maps trivially into the relevant
+              <span class="math">×μ</span> quotient, so the identity on mono-theta
+              rigidity data remains compatible with arbitrary
+              <span class="math">F⊢×μ_△</span> automorphisms.
+            </p>
+            <p>
+              This is the source-level insulation of cyclotomic rigidity from the
+              <span class="math">Z^×</span>-type indeterminacies.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 2.1(iii)</span><span class="tag green">Theorem 2.2(ii)</span></div>
+          </div>
+          <div class="card" id="mono-theta-rigidity-package">
+            <h3>Mono-theta rigidity package</h3>
+            <p>
+              Remark 2.1.1 names five inputs from mono-theta theory: cyclotomic
+              rigidity, discrete rigidity, constant multiple rigidity, isomorphism class
+              compatibility, and Frobenioid structure compatibility.
+            </p>
+            <p>
+              The §2 multiradial argument depends on this package, especially on
+              cyclotomic rigidity and isomorphism class compatibility with log-link
+              basepoints.
+            </p>
+            <div class="tagRow"><span class="tag green">Remark 2.1.1</span><span class="tag">rigidity</span></div>
+          </div>
+          <div class="card" id="radial-environment">
+            <h3>Radial environment</h3>
+            <p>
+              Corollary 2.3 packages D-Theta±ellNF data, theta-environment
+              F-prime-strips, bad-prime rigidity data, and the
+              <span class="math">F⊢×μ_△</span> output into a radial environment.
+            </p>
+            <p>
+              The radial algorithm forgets to the coric pair
+              <span class="math">(D⊢_△, F⊢×μ_△(D⊢_△))</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Corollary 2.3</span><span class="tag">radial data</span></div>
+          </div>
+          <div class="card" id="etale-picture-radial-data">
+            <h3>Etale-picture of radial data</h3>
+            <p>
+              Corollary 2.3 identifies radial data along vertical lines, then uses
+              horizontal poly-isomorphisms to form a common coric center. The resulting
+              etale-picture admits arbitrary permutation symmetries among spokes.
+            </p>
+            <p>
+              This extends IUT II's D-theater etale-picture to the theta-monoid
+              multiradial setting.
+            </p>
+            <div class="tagRow"><span class="tag green">Corollary 2.3(ii)</span><span class="tag">etale-picture</span></div>
+          </div>
           <div class="card">
             <h3>Procession reduction</h3>
             <p>
