@@ -479,6 +479,7 @@
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
         <a href="#iut-iv">IUT IV and consequences</a>
+        <a href="#species-mutations">Species and mutations</a>
         <h2>Context</h2>
         <a href="#dispute">Scholze-Stix and responses</a>
         <a href="#formalization">RIMS Lean effort</a>
@@ -2958,6 +2959,165 @@
           Related: <a href="#iut-iv-atlas">IUT IV atlas</a>
           <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
           <a href="#source-library">source library</a>
+        </div>
+      </section>
+
+      <section id="species-mutations">
+        <h2>Species, Mutations, and Inter-universal Formalism</h2>
+        <p class="lede">
+          IUT IV Section 3 introduces species to make explicit a kind of mathematical
+          bookkeeping that is often left informal: a "type of object" is described by
+          set-theoretic formulas, interpreted in ZFC-models, rather than by one preferred
+          set of representatives. Mutations are formula-defined transformations between
+          species. Mutation histories, observables, and cores then describe what changes
+          and what remains invariant when the theory moves through distinct copies.
+        </p>
+        <div class="diagram" aria-label="Species and mutation history">
+          <div class="diagramHeader">
+            <strong>Species-level movement</strong>
+            <span>rules, specimens, mutations, and cores</span>
+          </div>
+          <svg viewBox="0 0 920 410" role="img">
+            <defs>
+              <marker id="arrowSpecies" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox green" x="44" y="52" width="164" height="84"></rect>
+            <text class="nodeTitle" x="126" y="82" text-anchor="middle">species</text>
+            <text class="tinyText" x="126" y="105" text-anchor="middle">0-species + 1-species</text>
+            <text class="tinyText" x="126" y="123" text-anchor="middle">set-theoretic formulas</text>
+
+            <rect class="nodeBox blue" x="280" y="36" width="164" height="84"></rect>
+            <text class="nodeTitle" x="362" y="66" text-anchor="middle">specimens</text>
+            <text class="tinyText" x="362" y="89" text-anchor="middle">objects and morphisms</text>
+            <text class="tinyText" x="362" y="107" text-anchor="middle">inside a ZFC-model</text>
+
+            <rect class="nodeBox violet" x="280" y="168" width="164" height="84"></rect>
+            <text class="nodeTitle" x="362" y="198" text-anchor="middle">model-free data</text>
+            <text class="tinyText" x="362" y="221" text-anchor="middle">same formula under</text>
+            <text class="tinyText" x="362" y="239" text-anchor="middle">universe extension</text>
+
+            <rect class="nodeBox gold" x="520" y="78" width="170" height="96"></rect>
+            <text class="nodeTitle" x="605" y="109" text-anchor="middle">mutation</text>
+            <text class="tinyText" x="605" y="132" text-anchor="middle">formula-defined functor</text>
+            <text class="tinyText" x="605" y="150" text-anchor="middle">between species</text>
+
+            <rect class="nodeBox red" x="520" y="246" width="170" height="96"></rect>
+            <text class="nodeTitle" x="605" y="277" text-anchor="middle">mutation history</text>
+            <text class="tinyText" x="605" y="300" text-anchor="middle">oriented graph</text>
+            <text class="tinyText" x="605" y="318" text-anchor="middle">of species + mutations</text>
+
+            <rect class="nodeBox blue" x="748" y="246" width="132" height="96"></rect>
+            <text class="nodeTitle" x="814" y="277" text-anchor="middle">core</text>
+            <text class="tinyText" x="814" y="300" text-anchor="middle">coric observable</text>
+            <text class="tinyText" x="814" y="318" text-anchor="middle">invariant piece</text>
+
+            <line class="arrow" x1="208" y1="92" x2="280" y2="76" marker-end="url(#arrowSpecies)"></line>
+            <line class="arrow" x1="208" y1="108" x2="280" y2="203" marker-end="url(#arrowSpecies)"></line>
+            <line class="arrow" x1="444" y1="81" x2="520" y2="114" marker-end="url(#arrowSpecies)"></line>
+            <line class="arrow" x1="605" y1="174" x2="605" y2="246" marker-end="url(#arrowSpecies)"></line>
+            <line class="arrow" x1="690" y1="294" x2="748" y2="294" marker-end="url(#arrowSpecies)"></line>
+
+            <text class="smallText" x="460" y="378" text-anchor="middle">The point is not to identify all outputs, but to specify which formulas, mutations, and observables justify a comparison.</text>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card">
+            <h3>Species</h3>
+            <p>
+              A species is a pair consisting of a 0-species of objects and a 1-species of
+              morphisms acting on them. Each side is given by formulas whose specimens are
+              realized inside a chosen ZFC-model.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 3.1</span><span class="tag">objects/morphisms</span></div>
+          </div>
+          <div class="card">
+            <h3>Model-free specimens</h3>
+            <p>
+              A model-free specimen is described by a formula that gives the same
+              specimen when interpreted after passing to a larger universe. This is the
+              formal meaning of "inter-universal" in IUT IV Section 3.
+            </p>
+            <div class="tagRow"><span class="tag violet">Remarks 3.1.2-3.1.4</span><span class="tag">ZFCG</span></div>
+          </div>
+          <div class="card">
+            <h3>Mutations</h3>
+            <p>
+              A mutation is a formula-defined transformation from one species to another,
+              compatible with identities and composites. In a fixed ZFC-model it behaves
+              like a functor between the corresponding categories.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 3.3(i)</span><span class="tag">functorial</span></div>
+          </div>
+          <div class="card">
+            <h3>Mutation equivalence</h3>
+            <p>
+              A mutation-equivalence has a mutation quasi-inverse up to isomorphism of
+              mutations. Mochizuki uses this to express reconstruction-style equivalence
+              without choosing one privileged concrete representative.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 3.3(iii)</span><span class="tag">quasi-inverse</span></div>
+          </div>
+          <div class="card">
+            <h3>Mutation histories</h3>
+            <p>
+              A mutation history is an oriented graph whose vertices carry species and
+              whose edges carry mutations. This is the species-theoretic analogue of a
+              diagram of categories.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 3.3(iv)</span><span class="tag">graph</span></div>
+          </div>
+          <div class="card">
+            <h3>Observables and cores</h3>
+            <p>
+              An observable reads a mutation history into a fixed target species. A core
+              is a covariant observable whose transition morphisms are isomorphisms, so it
+              records an invariant portion of the history.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 3.3(v)</span><span class="tag">coricity</span></div>
+          </div>
+        </div>
+        <table>
+          <tr><th>Example in IUT IV</th><th>What it illustrates</th><th>Wiki link</th></tr>
+          <tr>
+            <td>Topological spaces and fundamental groups</td>
+            <td>The fundamental group can be treated as a mutation from universal-cover data to group data.</td>
+            <td><a href="#tempered-fundamental-group">fundamental group</a></td>
+          </tr>
+          <tr>
+            <td>Absolute anabelian geometry</td>
+            <td>Anabelian reconstruction is expressed as a mutation quasi-inverse to the fundamental-group mutation.</td>
+            <td><a href="#anabelian-background">anabelian background</a></td>
+          </tr>
+          <tr>
+            <td>Frobenius and etale sites</td>
+            <td>The etale site and perfection are cores of Frobenius-type mutation histories.</td>
+            <td><a href="#log-theta-lattice">log-theta lattice</a></td>
+          </tr>
+          <tr>
+            <td>Monoid Frobenius</td>
+            <td>Coric versus non-coric observables motivate the log-link and theta-link distinction.</td>
+            <td><a href="#theta-log-links">theta/log links</a></td>
+          </tr>
+          <tr>
+            <td>IUT copies</td>
+            <td>The framework prevents an uncontrolled collapse of alien copies into one ambient representation.</td>
+            <td><a href="#set-theoretic-copies">set-theoretic copies</a></td>
+          </tr>
+        </table>
+        <div class="callout violet">
+          Formalization warning: a species-level assertion should not be encoded merely as
+          an isomorphism between final objects. The relevant data includes the formulas
+          defining the species, the mutation history, and the observable or core that
+          authorizes the comparison.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV</a>
+          Related: <a href="#iut-iv-atlas">IUT IV atlas</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
         </div>
       </section>
 
