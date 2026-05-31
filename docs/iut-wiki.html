@@ -657,7 +657,12 @@
         <a href="#theta-nf-f-side-kummer-localization-ii48">ThetaNF F-side localization 4.8</a>
         <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization 4.8</a>
         <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips 4.9</a>
+        <a href="#kummer-structure-orbits-ii49">Kummer structure orbits 4.9</a>
+        <a href="#placewise-fperp-times-mu-ii49">Placewise F⊢×μ construction 4.9</a>
+        <a href="#f-times-mu-pilot-object-ii49">F×μ pilot object 4.9</a>
         <a href="#theta-times-mu-frobenius-pictures-ii410">Theta×μ Frobenius-pictures 4.10</a>
+        <a href="#theta-xmu-links-ii410">Theta×μ links 4.10</a>
+        <a href="#frobenius-picture-chain-ii410">Frobenius-picture chain 4.10</a>
         <a href="#d-theta-etale-pictures-ii411">D-Theta etale-pictures 4.11</a>
         <a href="#theta-evaluation-kummer-route">Theta evaluation route</a>
         <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
@@ -1760,9 +1765,14 @@
               <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization</a>,
               <a href="#realified-localization-functor-481">realified localization functor</a>,
               <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips</a>,
+              <a href="#kummer-structure-orbits-ii49">Kummer structure orbits 4.9</a>,
+              <a href="#placewise-fperp-times-mu-ii49">placewise F⊢×μ construction 4.9</a>,
+              <a href="#f-times-mu-pilot-object-ii49">F×μ pilot object page 4.9</a>,
               <a href="#times-mu-submodules-49">×μ submodule invariant</a>,
               <a href="#f-times-mu-pilot-object-49">F×μ pilot object</a>,
               <a href="#theta-times-mu-frobenius-pictures-ii410">Theta×μ Frobenius-pictures</a>,
+              <a href="#theta-xmu-links-ii410">Theta×μ links 4.10</a>,
+              <a href="#frobenius-picture-chain-ii410">Frobenius-picture chain page 4.10</a>,
               <a href="#coric-fperp-times-mu-invariant-410">coric F⊢×μ invariant</a>,
               <a href="#frobenius-picture-chain-410">Frobenius-picture chain</a>,
               <a href="#d-theta-etale-pictures-ii411">D-Theta etale-pictures</a>,
@@ -20561,6 +20571,299 @@
         </div>
       </section>
 
+      <section id="kummer-structure-orbits-ii49">
+        <h2>IUT II Definition 4.9(i): Kummer Structure Orbits</h2>
+        <p class="lede">
+          Definition 4.9(i) starts from a Frobenioid over a base category equivalent
+          to connected finite etale covers of a local or archimedean field. After
+          choosing a universal covering pro-object <span class="math">A</span>, the
+          automorphism group <span class="math">G = Aut(A)</span> acts on unit and
+          torsion-quotient monoids. Kummer structures are not arbitrary extra labels:
+          they are specified orbits of <span class="math">G</span>-equivariant
+          unit-isomorphisms reconstructed from <span class="math">G</span>.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Definition 4.9 Kummer structure orbits">
+          <div class="diagramHeader">
+            <strong>From universal cover to Kummer orbit</strong>
+            <span>Definition 4.9(i)</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowKumOrbit49" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="64" width="220" height="82"></rect>
+            <text class="nodeTitle" x="180" y="94" text-anchor="middle">Frobenioid C</text>
+            <text class="tinyText" x="180" y="118" text-anchor="middle">base category D</text>
+            <text class="tinyText" x="180" y="136" text-anchor="middle">MLF or CAF cover category</text>
+
+            <rect class="nodeBox gold" x="350" y="64" width="220" height="82"></rect>
+            <text class="nodeTitle" x="460" y="94" text-anchor="middle">universal cover A</text>
+            <text class="tinyText" x="460" y="118" text-anchor="middle">G = Aut(A)</text>
+            <text class="tinyText" x="460" y="136" text-anchor="middle">evaluate O at A</text>
+
+            <rect class="nodeBox green" x="630" y="64" width="220" height="82"></rect>
+            <text class="nodeTitle" x="740" y="94" text-anchor="middle">unit modules</text>
+            <text class="tinyText" x="740" y="118" text-anchor="middle">O×(A), O×μ(A)</text>
+            <text class="tinyText" x="740" y="136" text-anchor="middle">with G-action</text>
+
+            <rect class="nodeBox violet" x="350" y="250" width="220" height="82"></rect>
+            <text class="nodeTitle" x="460" y="280" text-anchor="middle">×-Kummer orbit</text>
+            <text class="tinyText" x="460" y="304" text-anchor="middle">Z× orbit of O×(G) -> O×(A)</text>
+            <text class="tinyText" x="460" y="322" text-anchor="middle">unique in this context</text>
+
+            <rect class="nodeBox red" x="630" y="250" width="260" height="82"></rect>
+            <text class="nodeTitle" x="760" y="280" text-anchor="middle">×μ-Kummer orbit</text>
+            <text class="tinyText" x="760" y="304" text-anchor="middle">Ism orbit of O×μ(G) -> O×μ(A)</text>
+            <text class="tinyText" x="760" y="322" text-anchor="middle">determined by I_H^kappa(A)</text>
+
+            <path d="M292 105 H348" class="edge blue" marker-end="url(#arrowKumOrbit49)"></path>
+            <path d="M572 105 H628" class="edge gold" marker-end="url(#arrowKumOrbit49)"></path>
+            <path d="M740 148 C700 198 610 230 506 248" class="edge violet" marker-end="url(#arrowKumOrbit49)"></path>
+            <path d="M740 148 C764 196 772 226 766 248" class="edge red" marker-end="url(#arrowKumOrbit49)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Item</th><th>Source definition</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Universal cover</td>
+            <td>
+              Choose a universal covering pro-object <span class="math">A</span> of
+              the base category and set <span class="math">G = Aut(A)</span>.
+            </td>
+            <td>
+              The construction is invariant under the choice of
+              <span class="math">A</span>, because any two such pro-objects are
+              isomorphic.
+            </td>
+          </tr>
+          <tr>
+            <td>× structure</td>
+            <td>
+              A <span class="math">×</span>-Kummer structure is a
+              <span class="math">Z×</span>-orbit of
+              <span class="math">G</span>-equivariant isomorphisms from
+              reconstructed units to <span class="math">O×(A)</span>.
+            </td>
+            <td>
+              This unit interface is unique in the setting cited by Mochizuki, so it
+              should not be modeled as a free choice downstream.
+            </td>
+          </tr>
+          <tr>
+            <td>×μ structure</td>
+            <td>
+              A <span class="math">×μ</span>-Kummer structure is an
+              <span class="math">Ism</span>-orbit of isomorphisms to
+              <span class="math">O×μ(A)</span>, equivalently the family of
+              submodules <span class="math">I_H^kappa(A)</span> for open
+              <span class="math">H ⊆ G</span>.
+            </td>
+            <td>
+              The submodule family is the audit handle for the torsion-quotient
+              Kummer data used in the modified theta links.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Definition 4.9(i)</a>
+          Related: <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips</a>
+          <a href="#placewise-fperp-times-mu-ii49">placewise F⊢×μ construction</a>
+          <a href="#theta-xmu-links-ii410">Theta×μ links</a>
+        </div>
+      </section>
+
+      <section id="placewise-fperp-times-mu-ii49">
+        <h2>IUT II Definition 4.9(ii)-(vi): Placewise F⊢×μ Construction</h2>
+        <p class="lede">
+          The weakened <span class="math">F⊢ ×μ</span> data is assembled
+          place by place. Bad nonarchimedean places include the
+          <span class="math">2l</span>-torsion generator, good nonarchimedean
+          places use the splitting image alone, and archimedean places use an
+          inductive torsion-quotient system. The common output is a unit-sensitive,
+          place-indexed Kummer interface.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Definition 4.9 placewise F-perp times mu construction">
+          <div class="diagramHeader">
+            <strong>Three local recipes, one weakened prime-strip layer</strong>
+            <span>Definition 4.9(ii)-(vi)</span>
+          </div>
+          <svg viewBox="0 0 1120 510" role="img">
+            <defs>
+              <marker id="arrowPlaceFperp49" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox red" x="72" y="70" width="270" height="92"></rect>
+            <text class="nodeTitle" x="207" y="100" text-anchor="middle">bad nonarchimedean</text>
+            <text class="tinyText" x="207" y="126" text-anchor="middle">mu_2l plus splitting images</text>
+            <text class="tinyText" x="207" y="146" text-anchor="middle">O_perp / mu_2l</text>
+
+            <rect class="nodeBox green" x="426" y="70" width="270" height="92"></rect>
+            <text class="nodeTitle" x="561" y="100" text-anchor="middle">good nonarchimedean</text>
+            <text class="tinyText" x="561" y="126" text-anchor="middle">splitting image submonoid</text>
+            <text class="tinyText" x="561" y="146" text-anchor="middle">O_perp = splitting image</text>
+
+            <rect class="nodeBox blue" x="780" y="70" width="270" height="92"></rect>
+            <text class="nodeTitle" x="915" y="100" text-anchor="middle">archimedean</text>
+            <text class="tinyText" x="915" y="126" text-anchor="middle">quotients by N-torsion</text>
+            <text class="tinyText" x="915" y="146" text-anchor="middle">cofinal inductive system</text>
+
+            <rect class="nodeBox gold" x="230" y="278" width="300" height="92"></rect>
+            <text class="nodeTitle" x="380" y="308" text-anchor="middle">O ×μ(A)</text>
+            <text class="tinyText" x="380" y="334" text-anchor="middle">O(A) x O×μ(A)</text>
+            <text class="tinyText" x="380" y="354" text-anchor="middle">placewise G-action</text>
+
+            <rect class="nodeBox violet" x="600" y="278" width="300" height="92"></rect>
+            <text class="nodeTitle" x="750" y="308" text-anchor="middle">F⊢ ×μ collection</text>
+            <text class="tinyText" x="750" y="334" text-anchor="middle">indexed by all v in V</text>
+            <text class="tinyText" x="750" y="354" text-anchor="middle">unit/isometry sublayers F⊢×, F⊢×μ</text>
+
+            <path d="M207 164 C226 216 296 248 360 276" class="edge red" marker-end="url(#arrowPlaceFperp49)"></path>
+            <path d="M561 164 C520 216 442 248 396 276" class="edge green" marker-end="url(#arrowPlaceFperp49)"></path>
+            <path d="M915 164 C842 228 812 246 770 276" class="edge blue" marker-end="url(#arrowPlaceFperp49)"></path>
+            <path d="M532 324 H598" class="edge gold" marker-end="url(#arrowPlaceFperp49)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Place</th><th>Construction</th><th>Formal role</th></tr>
+          <tr>
+            <td><span class="math">Vbad</span></td>
+            <td>
+              Generate <span class="math">O_perp(A)</span> from
+              <span class="math">mu_2l(A)</span> and splitting images, then quotient
+              by <span class="math">mu_2l(A)</span>.
+            </td>
+            <td>
+              Records the bad-place theta torsion used by the later pilot-object
+              comparison.
+            </td>
+          </tr>
+          <tr>
+            <td>Good nonarchimedean</td>
+            <td>
+              Use the image of the split Frobenioid splitting to define
+              <span class="math">O_perp(A)</span>, then form the same
+              <span class="math">O ×μ(A)</span> direct product.
+            </td>
+            <td>
+              Keeps the construction uniform without importing bad-place
+              <span class="math">2l</span>-torsion.
+            </td>
+          </tr>
+          <tr>
+            <td>Archimedean</td>
+            <td>
+              Replace the split Frobenioid by an inductive system over
+              torsion quotients, modulo the nontrivial automorphism of the unit
+              circle.
+            </td>
+            <td>
+              Supplies the archimedean analogue of the Kummer quotient interface.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Definition 4.9(ii)-(vi)</a>
+          Related: <a href="#kummer-structure-orbits-ii49">Kummer structure orbits</a>
+          <a href="#f-times-mu-pilot-object-ii49">F×μ pilot object</a>
+          <a href="#theta-xmu-links-ii410">Theta×μ links</a>
+        </div>
+      </section>
+
+      <section id="f-times-mu-pilot-object-ii49">
+        <h2>IUT II Definition 4.9(vii)-(viii): F×μ Prime-Strips and Pilot Object</h2>
+        <p class="lede">
+          Definition 4.9(vii)-(viii) turns the placewise Kummer data into prime-strip
+          types. An <span class="math">F×μ</span>-prime-strip is an
+          <span class="math">F</span>-prime-strip whose mono-analytic
+          <span class="math">F⊢</span> portion is replaced by
+          <span class="math">F⊢ ×μ</span>. At bad places, the generators of the
+          value monoids and the comparison maps determine the associated pilot
+          object of negative arithmetic degree.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Definition 4.9 F times mu pilot object">
+          <div class="diagramHeader">
+            <strong>Prime-strip upgrade to a pilot object</strong>
+            <span>Definition 4.9(vii)-(viii)</span>
+          </div>
+          <svg viewBox="0 0 1120 420" role="img">
+            <defs>
+              <marker id="arrowPilot49" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="80" y="74" width="250" height="86"></rect>
+            <text class="nodeTitle" x="205" y="104" text-anchor="middle">F⊢ ×μ prime-strip</text>
+            <text class="tinyText" x="205" y="128" text-anchor="middle">placewise Kummer data</text>
+            <text class="tinyText" x="205" y="146" text-anchor="middle">Definition 4.9(vii)</text>
+
+            <rect class="nodeBox green" x="432" y="74" width="250" height="86"></rect>
+            <text class="nodeTitle" x="557" y="104" text-anchor="middle">F×μ prime-strip</text>
+            <text class="tinyText" x="557" y="128" text-anchor="middle">global C, primes, rho_v</text>
+            <text class="tinyText" x="557" y="146" text-anchor="middle">F⊢ replaced by F⊢ ×μ</text>
+
+            <rect class="nodeBox gold" x="784" y="74" width="250" height="86"></rect>
+            <text class="nodeTitle" x="909" y="104" text-anchor="middle">bad-place generators</text>
+            <text class="tinyText" x="909" y="128" text-anchor="middle">O(A) generators at Vbad</text>
+            <text class="tinyText" x="909" y="146" text-anchor="middle">with rho_v comparisons</text>
+
+            <rect class="nodeBox red" x="432" y="258" width="300" height="86"></rect>
+            <text class="nodeTitle" x="582" y="288" text-anchor="middle">pilot object</text>
+            <text class="tinyText" x="582" y="312" text-anchor="middle">global realified Frobenioid object</text>
+            <text class="tinyText" x="582" y="330" text-anchor="middle">negative arithmetic degree</text>
+
+            <path d="M332 117 H430" class="edge blue" marker-end="url(#arrowPilot49)"></path>
+            <path d="M684 117 H782" class="edge green" marker-end="url(#arrowPilot49)"></path>
+            <path d="M909 162 C874 216 736 246 650 256" class="edge gold" marker-end="url(#arrowPilot49)"></path>
+            <path d="M557 162 C552 206 562 232 574 256" class="edge green" marker-end="url(#arrowPilot49)"></path>
+          </svg>
+        </div>
+        <div class="callout warn">
+          Formalization warning: the pilot object is not a free field of a
+          prime-strip record. In the source definition it is determined, up to
+          isomorphism, by bad-place generators together with the
+          <span class="math">rho_v</span> comparison data.
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Layer</th><th>Definition</th><th>Use downstream</th></tr>
+          <tr>
+            <td><span class="math">F⊢</span> variants</td>
+            <td>
+              For <span class="math">⊢ ∈ {⊢×, ⊢×μ, ⊢ ×μ}</span>, a prime-strip is
+              a place-indexed collection isomorphic to the constructed weakened
+              placewise data.
+            </td>
+            <td>Supplies the coric unit-sensitive interface preserved by modified theta links.</td>
+          </tr>
+          <tr>
+            <td><span class="math">F×μ</span></td>
+            <td>
+              Replace the <span class="math">F⊢</span> component of an
+              <span class="math">F</span>-prime-strip by an
+              <span class="math">F⊢ ×μ</span>-prime-strip.
+            </td>
+            <td>Gives the domain/codomain class for <span class="math">Theta×μ</span> links.</td>
+          </tr>
+          <tr>
+            <td>Pilot object</td>
+            <td>
+              Bad-place generators of <span class="math">O(A)</span> and the
+              <span class="math">rho_v</span> maps determine an object of the
+              global realified Frobenioid of negative arithmetic degree.
+            </td>
+            <td>Feeds the later theta-pilot comparison and log-volume corridor.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Definition 4.9(vii)-(viii)</a>
+          Related: <a href="#placewise-fperp-times-mu-ii49">placewise F⊢×μ construction</a>
+          <a href="#theta-xmu-links-ii410">Theta×μ links</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
       <section id="theta-times-mu-frobenius-pictures-ii410">
         <h2>Theta×μ Frobenius-Pictures in IUT II 4.10</h2>
         <p class="lede">
@@ -20828,6 +21131,197 @@
           <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
           <a href="#frobenioids-log-shells">Frobenioids/log-shells</a>
           <a href="#theta-log-links">theta/log links</a>
+        </div>
+      </section>
+
+      <section id="theta-xmu-links-ii410">
+        <h2>IUT II Corollary 4.10(iii)-(v): Theta×μ and Theta×μ-gau Links</h2>
+        <p class="lede">
+          Corollary 4.10 applies Definition 4.9 functorially to constant, theta,
+          and Gaussian prime-strips. The resulting full poly-isomorphisms are the
+          <span class="math">Theta×μ</span> and
+          <span class="math">Theta×μ_gau</span> links. Their shared coric
+          <span class="math">F⊢×μ</span> portion and the associated
+          <span class="math">D⊢</span> prime-strip are invariant through the link.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Corollary 4.10 theta times mu links">
+          <div class="diagramHeader">
+            <strong>Modified theta links preserve the coric unit layer</strong>
+            <span>Corollary 4.10(iii)-(v)</span>
+          </div>
+          <svg viewBox="0 0 1120 500" role="img">
+            <defs>
+              <marker id="arrowXmuLink410" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="86" y="70" width="250" height="82"></rect>
+            <text class="nodeTitle" x="211" y="100" text-anchor="middle">constant F△</text>
+            <text class="tinyText" x="211" y="124" text-anchor="middle">identified with Fmod</text>
+            <text class="tinyText" x="211" y="142" text-anchor="middle">target side</text>
+
+            <rect class="nodeBox green" x="434" y="70" width="250" height="82"></rect>
+            <text class="nodeTitle" x="559" y="100" text-anchor="middle">theta Fenv</text>
+            <text class="tinyText" x="559" y="124" text-anchor="middle">theta environment data</text>
+            <text class="tinyText" x="559" y="142" text-anchor="middle">Theta×μ source</text>
+
+            <rect class="nodeBox gold" x="782" y="70" width="250" height="82"></rect>
+            <text class="nodeTitle" x="907" y="100" text-anchor="middle">Gaussian Fgau</text>
+            <text class="tinyText" x="907" y="124" text-anchor="middle">obtained by evaluation</text>
+            <text class="tinyText" x="907" y="142" text-anchor="middle">Theta×μ_gau source</text>
+
+            <rect class="nodeBox violet" x="236" y="266" width="280" height="82"></rect>
+            <text class="nodeTitle" x="376" y="296" text-anchor="middle">Theta×μ link</text>
+            <text class="tinyText" x="376" y="320" text-anchor="middle">F×μ_env -> F×μ_△</text>
+            <text class="tinyText" x="376" y="338" text-anchor="middle">full poly-isomorphism</text>
+
+            <rect class="nodeBox violet" x="606" y="266" width="280" height="82"></rect>
+            <text class="nodeTitle" x="746" y="296" text-anchor="middle">Theta×μ_gau link</text>
+            <text class="tinyText" x="746" y="320" text-anchor="middle">F×μ_gau -> F×μ_△</text>
+            <text class="tinyText" x="746" y="338" text-anchor="middle">via evaluation</text>
+
+            <rect class="nodeBox red" x="390" y="402" width="340" height="60"></rect>
+            <text class="nodeTitle" x="560" y="428" text-anchor="middle">coric F⊢×μ_△ and D⊢_△ invariants</text>
+            <text class="tinyText" x="560" y="448" text-anchor="middle">common unit/coric data and associated D-prime-strip</text>
+
+            <path d="M559 154 C516 198 438 232 390 264" class="edge green" marker-end="url(#arrowXmuLink410)"></path>
+            <path d="M211 154 C250 198 320 232 366 264" class="edge blue" marker-end="url(#arrowXmuLink410)"></path>
+            <path d="M907 154 C864 198 786 232 756 264" class="edge gold" marker-end="url(#arrowXmuLink410)"></path>
+            <path d="M211 154 C318 220 626 220 732 264" class="edge blue" marker-end="url(#arrowXmuLink410)"></path>
+            <path d="M376 350 C416 376 486 394 542 400" class="edge violet" marker-end="url(#arrowXmuLink410)"></path>
+            <path d="M746 350 C706 376 636 394 578 400" class="edge violet" marker-end="url(#arrowXmuLink410)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Clause</th><th>Construction</th><th>Consequence</th></tr>
+          <tr>
+            <td>4.10(iii)</td>
+            <td>
+              Functoriality of Definition 4.9 sends F-prime-strip isomorphisms to
+              <span class="math">F×μ</span>-prime-strip poly-isomorphisms.
+            </td>
+            <td>Defines the two modified theta links between Θ±ellNF-Hodge theaters.</td>
+          </tr>
+          <tr>
+            <td>4.10(iv)</td>
+            <td>
+              The unit portions give natural isomorphisms between
+              <span class="math">F⊢×μ_△</span>,
+              <span class="math">F⊢×μ_env</span>, and
+              <span class="math">F⊢×μ_gau</span>.
+            </td>
+            <td>
+              The common <span class="math">F⊢×μ_△</span> portion is coric for both
+              modified links and induces the <span class="math">D⊢_△</span> link.
+            </td>
+          </tr>
+          <tr>
+            <td>4.10(v)</td>
+            <td>
+              The <span class="math">D⊢_△</span> poly-isomorphism induces compatible
+              isomorphisms of global realified Frobenioids, modulo
+              <span class="math">R&gt;0</span>-degree scaling.
+            </td>
+            <td>
+              The realified global comparison is controlled by the coric D-side
+              invariant, not by a raw identification of source histories.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.10(iii)-(v)</a>
+          Related: <a href="#f-times-mu-pilot-object-ii49">F×μ pilot object</a>
+          <a href="#frobenius-picture-chain-ii410">Frobenius-picture chain</a>
+          <a href="#d-theta-etale-pictures-ii411">D-Theta etale-pictures</a>
+        </div>
+      </section>
+
+      <section id="frobenius-picture-chain-ii410">
+        <h2>IUT II Corollary 4.10(vi): Oriented Frobenius-Picture Chain</h2>
+        <p class="lede">
+          Iterating the modified theta links gives an infinite chain of
+          Θ±ellNF-Hodge theaters indexed by the integers. Mochizuki emphasizes that
+          the chain has a translation symmetry but not arbitrary permutation
+          symmetry: the order of adjacent theaters is part of the picture.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Corollary 4.10 Frobenius picture chain">
+          <div class="diagramHeader">
+            <strong>Ordered chain, not an unordered family</strong>
+            <span>Corollary 4.10(vi), Remarks 4.10.2-4.10.3</span>
+          </div>
+          <svg viewBox="0 0 1120 330" role="img">
+            <defs>
+              <marker id="arrowFrobChain410" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <text class="smallText" x="72" y="78">...</text>
+            <rect class="nodeBox blue" x="130" y="46" width="190" height="78"></rect>
+            <text class="nodeTitle" x="225" y="76" text-anchor="middle">HT_{n-1}</text>
+            <text class="tinyText" x="225" y="100" text-anchor="middle">Theta±ellNF theater</text>
+
+            <rect class="nodeBox green" x="450" y="46" width="190" height="78"></rect>
+            <text class="nodeTitle" x="545" y="76" text-anchor="middle">HT_n</text>
+            <text class="tinyText" x="545" y="100" text-anchor="middle">integer-indexed spoke</text>
+
+            <rect class="nodeBox gold" x="770" y="46" width="190" height="78"></rect>
+            <text class="nodeTitle" x="865" y="76" text-anchor="middle">HT_{n+1}</text>
+            <text class="tinyText" x="865" y="100" text-anchor="middle">next theater</text>
+            <text class="smallText" x="1004" y="78">...</text>
+
+            <path d="M322 85 H448" class="edge violet" marker-end="url(#arrowFrobChain410)"></path>
+            <path d="M642 85 H768" class="edge violet" marker-end="url(#arrowFrobChain410)"></path>
+            <text class="edgeLabel" x="385" y="48" text-anchor="middle">Theta×μ</text>
+            <text class="tinyText" x="385" y="64" text-anchor="middle">or Theta×μ_gau</text>
+            <text class="edgeLabel" x="705" y="48" text-anchor="middle">same link type</text>
+
+            <rect class="nodeBox red" x="258" y="206" width="604" height="74"></rect>
+            <text class="nodeTitle" x="560" y="236" text-anchor="middle">order-conscious Frobenius-picture</text>
+            <text class="tinyText" x="560" y="260" text-anchor="middle">translation by Z is allowed; adjacent theater exchange is not an automorphism</text>
+
+            <path d="M545 126 V204" class="edge red" marker-end="url(#arrowFrobChain410)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Feature</th><th>Source content</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Infinite chain</td>
+            <td>
+              A collection <span class="math">{HT_n}_{n in Z}</span> of distinct
+              Θ±ellNF-Hodge theaters is linked by repeated
+              <span class="math">Theta×μ</span> or
+              <span class="math">Theta×μ_gau</span> arrows.
+            </td>
+            <td>The chain is the modified Frobenius-picture analogue used before the etale-picture passage.</td>
+          </tr>
+          <tr>
+            <td>Order consciousness</td>
+            <td>
+              The picture admits integer translation symmetry, but it is not
+              symmetric under arbitrary transpositions of adjacent theaters.
+            </td>
+            <td>
+              This prevents treating the modified theta-link direction as a mere
+              undirected equivalence relation.
+            </td>
+          </tr>
+          <tr>
+            <td>Next transition</td>
+            <td>
+              Corollary 4.11 passes from these Frobenius-pictures to D-Θ±ellNF
+              etale-pictures.
+            </td>
+            <td>
+              The wiki keeps the ordered Frobenius chain separate from the later
+              etale-picture full poly-isomorphism class.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.10(vi) and Remarks 4.10.2-4.10.3</a>
+          Related: <a href="#theta-xmu-links-ii410">Theta×μ links</a>
+          <a href="#d-theta-etale-pictures-ii411">D-Theta etale-pictures</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
         </div>
       </section>
 
