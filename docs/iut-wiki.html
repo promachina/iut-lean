@@ -588,6 +588,7 @@
         <a href="#iut-iv-arithmetic-divisors-19">IUT IV arithmetic divisors 1.9</a>
         <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV theta-pilot estimate 1.10</a>
         <a href="#iut-iv-suitable-initial-theta-data-22">IUT IV suitable theta data 2.2</a>
+        <a href="#iut-iv-diophantine-inequalities-23">IUT IV Diophantine inequalities 2.3</a>
         <a href="#iut-iv">IUT IV and consequences</a>
         <a href="#iut-iv-diophantine-output">IUT IV output route</a>
         <a href="#probabilistic-szpiro">Probabilistic Szpiro</a>
@@ -22880,10 +22881,271 @@
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Corollary 2.2</a>
           Related: <a href="#iut-iv-theorem-110-theta-pilot-estimate">Theorem 1.10</a>
+          <a href="#iut-iv-diophantine-inequalities-23">Diophantine inequalities</a>
           <a href="#iut-iv-diophantine-output">IUT IV output route</a>
           <a href="#initial-theta-data">initial theta data</a>
           <a href="#iut-iv-elliptic-torsion-18">elliptic torsion input</a>
           <a href="#iut-iv">IUT IV overview</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-diophantine-inequalities-23">
+        <h2>IUT IV Corollary 2.3: Diophantine Inequalities</h2>
+        <p class="lede">
+          Corollary 2.3 is the stated Diophantine output of IUT IV. It takes the
+          suitable-theta-data estimate from Corollary 2.2, applies the reduction theorem
+          from GenEll, and states a bounded-discrepancy Vojta-type inequality for
+          hyperbolic curves. In Mochizuki's presentation, the abc and Szpiro consequences
+          are reached through this output route.
+        </p>
+        <div class="diagram fit" aria-label="IUT IV Corollary 2.3 Diophantine inequality route">
+          <div class="diagramHeader">
+            <strong>Corollary 2.3 dependency route</strong>
+            <span>Corollary 2.2 plus GenEll gives the Vojta-form inequality</span>
+          </div>
+          <svg viewBox="0 0 1120 600" role="img">
+            <defs>
+              <marker id="arrowIUTIVCor23" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox violet" x="58" y="64" width="222" height="88"></rect>
+            <text class="nodeTitle" x="169" y="94" text-anchor="middle">Theorem 1.10</text>
+            <text class="tinyText" x="169" y="118" text-anchor="middle">theta-pilot q estimate</text>
+            <text class="tinyText" x="169" y="136" text-anchor="middle">uses Cor. 3.12</text>
+
+            <rect class="nodeBox blue" x="450" y="64" width="222" height="88"></rect>
+            <text class="nodeTitle" x="561" y="94" text-anchor="middle">Corollary 2.2</text>
+            <text class="tinyText" x="561" y="118" text-anchor="middle">suitable initial theta data</text>
+            <text class="tinyText" x="561" y="136" text-anchor="middle">C1/C2 estimate</text>
+
+            <rect class="nodeBox green" x="842" y="64" width="222" height="88"></rect>
+            <text class="nodeTitle" x="953" y="94" text-anchor="middle">GenEll Theorem 2.1</text>
+            <text class="tinyText" x="953" y="118" text-anchor="middle">reduce to lambda line</text>
+            <text class="tinyText" x="953" y="136" text-anchor="middle">Belyi/analytic continuation route</text>
+
+            <rect class="nodeBox gold" x="160" y="274" width="248" height="94"></rect>
+            <text class="nodeTitle" x="284" y="304" text-anchor="middle">general input</text>
+            <text class="tinyText" x="284" y="328" text-anchor="middle">smooth proper curve X</text>
+            <text class="tinyText" x="284" y="346" text-anchor="middle">reduced divisor D, hyperbolic UX</text>
+
+            <rect class="nodeBox red" x="472" y="274" width="248" height="94"></rect>
+            <text class="nodeTitle" x="596" y="304" text-anchor="middle">bounded-degree domain</text>
+            <text class="tinyText" x="596" y="328" text-anchor="middle">points in U_X(Q)_<=d</text>
+            <text class="tinyText" x="596" y="346" text-anchor="middle">bounded discrepancy classes</text>
+
+            <rect class="nodeBox blue" x="784" y="274" width="248" height="94"></rect>
+            <text class="nodeTitle" x="908" y="304" text-anchor="middle">Vojta-form inequality</text>
+            <text class="tinyText" x="908" y="328" text-anchor="middle">height <= (1+epsilon)</text>
+            <text class="tinyText" x="908" y="346" text-anchor="middle">times diff + conductor</text>
+
+            <rect class="nodeBox green" x="314" y="474" width="230" height="74"></rect>
+            <text class="nodeTitle" x="429" y="504" text-anchor="middle">abc consequence</text>
+            <text class="tinyText" x="429" y="528" text-anchor="middle">special hyperbolic case</text>
+
+            <rect class="nodeBox violet" x="616" y="474" width="230" height="74"></rect>
+            <text class="nodeTitle" x="731" y="504" text-anchor="middle">Szpiro consequence</text>
+            <text class="tinyText" x="731" y="528" text-anchor="middle">elliptic-curve special case</text>
+
+            <path d="M282 108 H448" class="edge violet" marker-end="url(#arrowIUTIVCor23)"></path>
+            <path d="M674 108 H840" class="edge blue" marker-end="url(#arrowIUTIVCor23)"></path>
+            <path d="M953 154 C920 216 804 244 632 272" class="edge green" marker-end="url(#arrowIUTIVCor23)"></path>
+            <path d="M284 370 C348 408 456 424 550 444" class="edge gold" marker-end="url(#arrowIUTIVCor23)"></path>
+            <path d="M596 370 V444" class="edge red" marker-end="url(#arrowIUTIVCor23)"></path>
+            <path d="M908 370 C840 408 720 424 642 444" class="edge blue" marker-end="url(#arrowIUTIVCor23)"></path>
+            <path d="M548 512 H614" class="edge green" marker-end="url(#arrowIUTIVCor23)"></path>
+            <path d="M596 444 C544 462 484 468 436 472" class="edge green" marker-end="url(#arrowIUTIVCor23)"></path>
+            <path d="M596 444 C642 462 690 468 724 472" class="edge violet" marker-end="url(#arrowIUTIVCor23)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Corollary 2.3 item</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Curve</td>
+            <td>
+              Let <span class="math">X</span> be a smooth, proper, geometrically
+              connected curve over a number field, let <span class="math">D</span> be
+              a reduced divisor, and set <span class="math">U_X = X \\ D</span>.
+            </td>
+            <td>
+              The output is not only a lambda-line statement; GenEll transfers the
+              lambda-line application to general hyperbolic curves.
+            </td>
+          </tr>
+          <tr>
+            <td>Hyp.</td>
+            <td>
+              The line bundle <span class="math">omega_X(D)</span> must have positive
+              degree. This is the hyperbolic-curve condition in the statement.
+            </td>
+            <td>
+              A formal page should keep the hyperbolicity hypothesis explicit rather than
+              folding it into the word "curve".
+            </td>
+          </tr>
+          <tr>
+            <td>Degree d</td>
+            <td>
+              The inequality is stated on <span class="math">U_X(Q)_{<=d}</span>, the
+              points defined over extensions of degree at most <span class="math">d</span>.
+            </td>
+            <td>
+              Bounded degree is part of the theorem's quantifier structure and must be
+              represented separately from compact-boundedness.
+            </td>
+          </tr>
+          <tr>
+            <td>BD bound</td>
+            <td>
+              The conclusion is an inequality of bounded-discrepancy classes:
+              <span class="math">ht_{omega_X(D)}</span> is bounded by
+              <span class="math">(1+epsilon)(log-diff_X+log-cond_D)</span>, up to an
+              additive bounded term.
+            </td>
+            <td>
+              The conclusion is not pointwise equality; it is a lower bound for the
+              difference between the right-hand side and the height.
+            </td>
+          </tr>
+          <tr>
+            <td>GenEll</td>
+            <td>
+              The proof says the statement is exactly GenEll Theorem 2.1(i), so it
+              suffices by GenEll to verify the lambda-line case of Theorem 2.1(ii).
+            </td>
+            <td>
+              The wiki records this as a dependency boundary: Corollary 2.3 relies on
+              GenEll plus Corollary 2.2, not on a fresh IUT construction.
+            </td>
+          </tr>
+          <tr>
+            <td>Lambda case</td>
+            <td>
+              In the reduced case, one assumes <span class="math">X=P^1_Q</span>,
+              <span class="math">D={0,1,infty}</span>, a compactly bounded
+              <span class="math">KV</span> whose support includes 2, and the
+              <span class="math">(*j-inv)</span> condition.
+            </td>
+            <td>
+              This is exactly where Corollary 2.2 supplies the needed bounded-discrepancy
+              class equality and C2 estimate.
+            </td>
+          </tr>
+          <tr>
+            <td>Consequences</td>
+            <td>
+              Mochizuki identifies the Vojta statement for hyperbolic curves, abc, and
+              Szpiro-type statements as consequences of this Diophantine inequality
+              route.
+            </td>
+            <td>
+              These consequences remain downstream of the Corollary 3.12 corridor through
+              Theorem 1.10 and Corollary 2.2.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="cor23-hyperbolic-input">
+            <h3>Hyperbolic input</h3>
+            <p>
+              The statement applies to <span class="math">U_X=X-D</span> when
+              <span class="math">deg(omega_X(D)) &gt; 0</span>. This includes the
+              thrice-punctured projective line and the hyperbolic curves to which GenEll
+              reduces the problem.
+            </p>
+            <div class="tagRow"><span class="tag blue">Cor. 2.3</span><span class="tag">hyperbolic</span></div>
+          </div>
+          <div class="card" id="cor23-bounded-degree">
+            <h3>Bounded-degree points</h3>
+            <p>
+              The quantifier <span class="math">d</span> fixes the degree of the
+              number fields over which the points are defined. The bounded-discrepancy
+              constant may depend on the theorem's fixed parameters.
+            </p>
+            <div class="tagRow"><span class="tag green">domain</span><span class="tag">U_X(Q)_{&lt;=d}</span></div>
+          </div>
+          <div class="card" id="cor23-bd-class-meaning">
+            <h3>Bounded discrepancy</h3>
+            <p>
+              The notation records a comparison up to an additive bounded term. In
+              Corollary 2.3, this means the right-hand side minus the height is bounded
+              below on the bounded-degree domain.
+            </p>
+            <div class="tagRow"><span class="tag gold">BD class</span><span class="tag">not pointwise</span></div>
+          </div>
+          <div class="card" id="cor23-genell-boundary">
+            <h3>GenEll boundary</h3>
+            <p>
+              The proof invokes the equivalence in GenEll Theorem 2.1. Therefore the
+              IUT IV contribution at this stage is to verify the lambda-line statement
+              via Corollary 2.2, then let GenEll propagate it.
+            </p>
+            <div class="tagRow"><span class="tag violet">GenEll</span><span class="tag">reduction</span></div>
+          </div>
+          <div class="card" id="cor23-compact-bounded-correction">
+            <h3>Compact-bounded correction</h3>
+            <p>
+              Remark 2.3.1 clarifies that a compactly bounded subset of an open curve
+              must have its local compact domains contained in the open complement, both
+              archimedean and nonarchimedean.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 2.3.1</span><span class="tag">domain control</span></div>
+          </div>
+          <div class="card" id="cor23-constant-one">
+            <h3>Coefficient one</h3>
+            <p>
+              Remark 2.3.2 says the coefficient 1 in the displayed Corollary 2.3
+              inequality cannot be improved in the framework under discussion, referring
+              back to the asymptotic examples and the theta-power discussion near
+              Corollary 3.12.
+            </p>
+            <div class="tagRow"><span class="tag green">Remark 2.3.2</span><span class="tag">sharpness</span></div>
+          </div>
+          <div class="card" id="cor23-faltings-comparison">
+            <h3>Faltings comparison</h3>
+            <p>
+              Remark 2.3.3 compares Corollary 2.3 with Faltings' proof of Mordell:
+              Faltings stays scheme-theoretic and arithmetically holomorphic, whereas
+              IUT claims to work by dismantling that structure into multiradial and
+              mono-analytic data.
+            </p>
+            <div class="tagRow"><span class="tag blue">Remark 2.3.3</span><span class="tag">Mordell</span></div>
+          </div>
+          <div class="card" id="cor23-bogomolov-parshin">
+            <h3>Bogomolov and Parshin</h3>
+            <p>
+              Remarks 2.3.4 and 2.3.5 compare the IUT output with Bogomolov's geometric
+              Szpiro proof and Parshin's function-field Mordell proof, emphasizing the
+              real-analytic versus holomorphic contrast.
+            </p>
+            <div class="tagRow"><span class="tag violet">Remarks 2.3.4-2.3.5</span><span class="tag">analogies</span></div>
+          </div>
+          <div class="card" id="cor23-abc-szpiro-output">
+            <h3>abc and Szpiro output</h3>
+            <p>
+              The wiki treats abc and Szpiro as downstream consequences of the Vojta-form
+              bounded-discrepancy inequality, not as separate proofs detached from the
+              IUT III/IV corridor.
+            </p>
+            <div class="tagRow"><span class="tag red">output</span><span class="tag">abc/Szpiro</span></div>
+          </div>
+        </div>
+        <div class="callout violet">
+          Formalization warning: Corollary 2.3 has two distinct dependency layers.
+          The inter-universal layer supplies Corollary 2.2 through Theorem 1.10 and
+          Corollary 3.12; the propagation from the lambda-line statement to arbitrary
+          hyperbolic curves is delegated to GenEll Theorem 2.1. These should be separate
+          modules or theorem interfaces in a proof assistant.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Corollary 2.3 and Remarks 2.3.1-2.3.5</a>
+          Related: <a href="#iut-iv-suitable-initial-theta-data-22">suitable theta data</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">Theorem 1.10</a>
+          <a href="#iut-iv-diophantine-output">IUT IV output route</a>
+          <a href="#bogomolov-szpiro-analogy">Bogomolov-Szpiro analogy</a>
+          <a href="#probabilistic-szpiro">probabilistic Szpiro route</a>
+          <a href="#dispute">Scholze-Stix and responses</a>
         </div>
       </section>
 
@@ -22999,7 +23261,8 @@
           <div class="card">
             <h3>Diophantine inequalities</h3>
             <p>
-              Corollary 2.3 applies the estimate to Vojta-type inequalities for
+              <a href="#iut-iv-diophantine-inequalities-23">Corollary 2.3</a>
+              applies the estimate to Vojta-type inequalities for
               hyperbolic curves; the IUT series identifies abc and Szpiro-type statements
               as consequences through this route.
             </p>
@@ -23028,6 +23291,7 @@
             <td>Construction of suitable initial theta data and extraction of Diophantine inequalities.</td>
             <td>
               <a href="#iut-iv-suitable-initial-theta-data-22">suitable initial theta data</a>,
+              <a href="#iut-iv-diophantine-inequalities-23">Diophantine inequalities</a>,
               <a href="#compactly-bounded-lambda-line">lambda-line setup</a>,
               <a href="#corollary-22-prime-choice">prime choice</a>,
               <a href="#corollary-23-genell-reduction">GenEll reduction</a>
@@ -23139,7 +23403,7 @@
           <tr>
             <td>Corollary 2.3</td>
             <td>Transfers the output to bounded-discrepancy Vojta-type inequalities for hyperbolic curves.</td>
-            <td><a href="#bd-class-inequality">expanded below</a></td>
+            <td><a href="#iut-iv-diophantine-inequalities-23">standalone page</a></td>
           </tr>
           <tr>
             <td>GenEll reduction</td>
