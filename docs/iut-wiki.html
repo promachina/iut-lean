@@ -946,6 +946,11 @@
               <a href="#distinguished-valuations">distinguished valuations</a>,
               <a href="#theorem-110-local-bound">Theorem 1.10 local bounds</a>,
               <a href="#theorem-110-final-bound">Theorem 1.10 final bound</a>,
+              <a href="#well-known-estimates-iut-iv">well-known estimates</a>,
+              <a href="#compactly-bounded-lambda-line">compact lambda-line setup</a>,
+              <a href="#corollary-22-height-comparison">q-height comparison</a>,
+              <a href="#corollary-22-prime-choice">auxiliary prime choice</a>,
+              <a href="#corollary-22-exception-sets">exceptional sets</a>,
               <a href="#diophantine-inequalities">Diophantine inequalities</a>
             </td>
             <td>IUT IV, Sections 1-2</td>
@@ -2209,6 +2214,8 @@
             </td>
             <td>
               <a href="#suitable-initial-theta-data">suitable initial theta data</a>,
+              <a href="#compactly-bounded-lambda-line">lambda-line setup</a>,
+              <a href="#corollary-22-prime-choice">auxiliary prime choice</a>,
               <a href="#diophantine-inequalities">Diophantine inequalities</a>,
               <a href="#iut-iv">applications</a>
             </td>
@@ -2437,7 +2444,71 @@
               punctured projective line, outside an exceptional finite set, with controlled
               q-parameter and height behavior.
             </p>
+            <p>
+              The constructed data satisfies the hypotheses of Theorem 1.10 after choosing
+              the auxiliary prime <span class="math">l</span>, the field
+              <span class="math">F_tpd</span>, the bad-place set, the covering data, the
+              valuation section, and the distinguished cusp.
+            </p>
             <div class="tagRow"><span class="tag green">Corollary 2.2</span><span class="tag">application input</span></div>
+          </div>
+          <div class="card" id="well-known-estimates-iut-iv">
+            <h3>Well-known estimates</h3>
+            <p>
+              Proposition 2.1 supplies two elementary inputs for §2: the inequality
+              <span class="math">log(x) <= x</span> for <span class="math">x >= 1</span>,
+              and a prime-number-theorem bound for
+              <span class="math">theta(x)=sum_{p<=x} log(p)</span>. The latter is used
+              to find a prime outside a finite forbidden set with an explicit size bound.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 2.1</span><span class="tag">PNT</span></div>
+          </div>
+          <div class="card" id="compactly-bounded-lambda-line">
+            <h3>Compact lambda-line setup</h3>
+            <p>
+              Corollary 2.2 specializes to
+              <span class="math">X=P1_Q</span> with
+              <span class="math">D={0,1,infty}</span>, viewed as the
+              <span class="math">lambda</span>-line for Legendre elliptic curves. The
+              compactly bounded set <span class="math">K_V</span> must include the prime
+              2 in its support and satisfy a boundedness condition on the 2-adic
+              j-invariant image.
+            </p>
+            <div class="tagRow"><span class="tag green">Corollary 2.2</span><span class="tag">lambda-line</span></div>
+          </div>
+          <div class="card" id="corollary-22-height-comparison">
+            <h3>q-parameter and height comparison</h3>
+            <p>
+              Corollary 2.2(i) identifies, up to bounded discrepancy on
+              <span class="math">K_V</span>, the q-parameter degree away from 2, the
+              total q-parameter degree, the height associated to the divisor at infinity
+              on the compactified elliptic moduli stack, and the height attached to
+              <span class="math">omega_X(D)</span> with the factor <span class="math">1/6</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Corollary 2.2(i)</span><span class="tag">BD classes</span></div>
+          </div>
+          <div class="card" id="corollary-22-prime-choice">
+            <h3>Auxiliary prime choice</h3>
+            <p>
+              In Corollary 2.2(ii), after discarding a finite exceptional set, one chooses
+              a prime <span class="math">l</span> of size roughly the square root of the
+              total q-height, with logarithmic and degree factors. The chosen
+              <span class="math">l</span> avoids local height divisibility obstructions,
+              avoids cyclic subgroup obstructions, leaves a nonempty bad-place set, and
+              forces a large l-torsion Galois image.
+            </p>
+            <div class="tagRow"><span class="tag green">Corollary 2.2(ii)</span><span class="tag">l selection</span></div>
+          </div>
+          <div class="card" id="corollary-22-exception-sets">
+            <h3>Exceptional sets</h3>
+            <p>
+              Corollary 2.2 constructs finite sets of exceptional algebraic points
+              depending on the compact set, degree bound, and epsilon parameters. On the
+              complement, the resulting error term <span class="math">epsilon_E</span>
+              can be made at most the prescribed <span class="math">epsilon</span>, while
+              the exceptional points have explicitly bounded q-height.
+            </p>
+            <div class="tagRow"><span class="tag green">Corollary 2.2(ii)-(iii)</span><span class="tag">finite exceptions</span></div>
           </div>
           <div class="card" id="diophantine-inequalities">
             <h3>Diophantine inequalities</h3>
@@ -2446,7 +2517,36 @@
               for hyperbolic curves; this is the route by which the series claims abc and
               Szpiro-type consequences.
             </p>
+            <p>
+              The statement bounds the height attached to
+              <span class="math">omega_X(D)</span> by
+              <span class="math">(1+epsilon)</span> times the sum of log-different and
+              log-conductor, up to bounded discrepancy on points of degree at most
+              <span class="math">d</span>.
+            </p>
             <div class="tagRow"><span class="tag green">Corollary 2.3</span><span class="tag">Vojta/abc</span></div>
+          </div>
+          <div class="card" id="corollary-23-genell-reduction">
+            <h3>GenEll reduction</h3>
+            <p>
+              The proof of Corollary 2.3 invokes the equivalence in GenEll Theorem 2.1:
+              it is enough to prove the inequality on compactly bounded subsets of the
+              thrice punctured projective line. Corollary 2.2 supplies exactly that input,
+              and Belyi-map analytic continuation carries the result back to general
+              hyperbolic curves.
+            </p>
+            <div class="tagRow"><span class="tag green">Corollary 2.3</span><span class="tag">GenEll</span></div>
+          </div>
+          <div class="card" id="prime-two-restriction">
+            <h3>Prime 2 restriction</h3>
+            <p>
+              Remark 1.10.6 explains why bad multiplicative places over residue
+              characteristic 2 are excluded from <span class="math">Vbad_mod</span>: the
+              etale theta-function rigidity used for multiradiality depends on odd
+              residue characteristic, and the relevant integral structures separate at
+              <span class="math">p=2</span>.
+            </p>
+            <div class="tagRow"><span class="tag gold">Remark 1.10.6</span><span class="tag">odd primes</span></div>
           </div>
           <div class="card" id="species">
             <h3>Species</h3>
@@ -7309,7 +7409,12 @@
           <tr>
             <td>Corollaries 2.2-2.3</td>
             <td>Construction of suitable initial theta data and extraction of Diophantine inequalities.</td>
-            <td><a href="#suitable-initial-theta-data">initial theta data</a>, <a href="#diophantine-inequalities">Diophantine inequalities</a></td>
+            <td>
+              <a href="#suitable-initial-theta-data">initial theta data</a>,
+              <a href="#compactly-bounded-lambda-line">lambda-line setup</a>,
+              <a href="#corollary-22-prime-choice">prime choice</a>,
+              <a href="#corollary-23-genell-reduction">GenEll reduction</a>
+            </td>
           </tr>
           <tr>
             <td>Section 3</td>
