@@ -493,6 +493,7 @@
         <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
         <a href="#theta-link-frobenius-etale-pictures">Theta/Frobenius pictures</a>
         <a href="#multiplicative-combinatorial-teichmuller">Multiplicative combinatorics</a>
+        <a href="#iut-i-global-frobenioids-example51">Global Frobenioids 5.1</a>
         <a href="#gms-gcg-motivation">GMS/GCG motivation</a>
         <a href="#projective-line-gluing-analogy">Projective-line gluing</a>
         <a href="#iut-i-gluing-models">IUT I gluing models</a>
@@ -1410,6 +1411,12 @@
             <td>IUT I</td>
             <td>ThetaNF and additive theory</td>
             <td>
+              <a href="#iut-i-global-frobenioids-example51">global Frobenioids 5.1</a>,
+              <a href="#m-star-field-reconstruction">M* field reconstruction</a>,
+              <a href="#f-star-model-frobenioid">F* model Frobenioid</a>,
+              <a href="#kappa-sol-conjugate-synchronization">κ-sol conjugate synchronization</a>,
+              <a href="#kummer-ready-blind-split">Kummer-ready/blind split</a>,
+              <a href="#constant-distributions-vj">constant distributions</a>,
               <a href="#theta-nf-hodge-theater">ThetaNF-Hodge theater</a>,
               <a href="#nf-bridge-frobenioid-lift">NF bridge</a>,
               <a href="#theta-bridge-frobenioid-lift">Theta bridge</a>,
@@ -7761,6 +7768,217 @@
           <a href="#multiplicative-additive-bridges">multiplicative/additive bridges</a>
           <a href="#theta-evaluation-kummer-route">theta evaluation route</a>
           <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+        </div>
+      </section>
+
+      <section id="iut-i-global-frobenioids-example51">
+        <h2>Global Frobenioids in IUT I 5.1</h2>
+        <p class="lede">
+          Example 5.1 is the first Frobenioid lift of the Section 4 bridge machinery.
+          Starting from the global base object <span class="math">D°</span> of a
+          D-ThetaNF-Hodge theater, it reconstructs field data, global model
+          Frobenioids, κ-coric pseudo-monoids, κ-solvable quotients, and diagonal versus
+          arbitrary distributions over the capsule labels.
+        </p>
+        <div class="diagram" aria-label="IUT I Example 5.1 global Frobenioids">
+          <div class="diagramHeader">
+            <strong>From <span class="math">D°</span> to global Frobenioid data</strong>
+            <span>IUT I Example 5.1</span>
+          </div>
+          <svg viewBox="0 0 1080 560" role="img">
+            <defs>
+              <marker id="arrowExample51" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="54" y="62" width="220" height="86"></rect>
+            <text class="nodeTitle" x="164" y="92" text-anchor="middle">D°</text>
+            <text class="tinyText" x="164" y="116" text-anchor="middle">global base category</text>
+            <text class="tinyText" x="164" y="134" text-anchor="middle">pi_1(D°)</text>
+
+            <rect class="nodeBox green" x="430" y="62" width="220" height="86"></rect>
+            <text class="nodeTitle" x="540" y="92" text-anchor="middle">D*</text>
+            <text class="tinyText" x="540" y="116" text-anchor="middle">model C_Fmod group</text>
+            <text class="tinyText" x="540" y="134" text-anchor="middle">open over D°</text>
+
+            <rect class="nodeBox gold" x="806" y="62" width="220" height="86"></rect>
+            <text class="nodeTitle" x="916" y="92" text-anchor="middle">M* and Fmod</text>
+            <text class="tinyText" x="916" y="116" text-anchor="middle">field/unit reconstruction</text>
+            <text class="tinyText" x="916" y="134" text-anchor="middle">invariants give M*_mod</text>
+
+            <rect class="nodeBox violet" x="226" y="246" width="245" height="88"></rect>
+            <text class="nodeTitle" x="348" y="276" text-anchor="middle">F* Frobenioid</text>
+            <text class="tinyText" x="348" y="300" text-anchor="middle">stack-theoretic divisors</text>
+            <text class="tinyText" x="348" y="318" text-anchor="middle">F°, F*_mod restrictions</text>
+
+            <rect class="nodeBox red" x="610" y="246" width="245" height="88"></rect>
+            <text class="nodeTitle" x="732" y="276" text-anchor="middle">κ-coric/Kummer layer</text>
+            <text class="tinyText" x="732" y="300" text-anchor="middle">∞κ and ∞κ× structures</text>
+            <text class="tinyText" x="732" y="318" text-anchor="middle">κ-sol quotient</text>
+
+            <rect class="nodeBox green" x="226" y="428" width="245" height="82"></rect>
+            <text class="nodeTitle" x="348" y="458" text-anchor="middle">constant distributions</text>
+            <text class="tinyText" x="348" y="482" text-anchor="middle">F*_<J> inside product F*_J</text>
+
+            <rect class="nodeBox blue" x="610" y="428" width="245" height="82"></rect>
+            <text class="nodeTitle" x="732" y="458" text-anchor="middle">Kummer-ready/blind split</text>
+            <text class="tinyText" x="732" y="482" text-anchor="middle">F*, M*, M_sol ready</text>
+            <text class="tinyText" x="732" y="500" text-anchor="middle">F*_mod, M_mod, M_κ blind</text>
+
+            <path d="M276 105 H428" class="edge blue" marker-end="url(#arrowExample51)"></path>
+            <path d="M652 105 H804" class="edge green" marker-end="url(#arrowExample51)"></path>
+            <path d="M540 150 C518 202 424 220 354 244" class="edge violet" marker-end="url(#arrowExample51)"></path>
+            <path d="M916 150 C898 204 808 220 736 244" class="edge red" marker-end="url(#arrowExample51)"></path>
+            <path d="M348 336 V426" class="edge green" marker-end="url(#arrowExample51)"></path>
+            <path d="M732 336 V426" class="edge blue" marker-end="url(#arrowExample51)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="m-star-field-reconstruction">
+            <h3><span class="math">M*</span> field reconstruction</h3>
+            <p>
+              Example 5.1(i) applies the theta-approach to
+              <span class="math">pi_1(D°)</span> to reconstruct an isomorph of
+              <span class="math">F^x</span>, denoted <span class="math">M*(D°)</span>,
+              together with the field structure on <span class="math">M* union {0}</span>.
+              Extending the action to <span class="math">D*</span> and taking invariants
+              gives the <span class="math">Fmod</span> part.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 5.1(i)</span><span class="tag">AbsTopIII 1.9</span></div>
+          </div>
+          <div class="card" id="dstar-cfmod-model">
+            <h3><span class="math">D*</span> and <span class="math">C_Fmod</span></h3>
+            <p>
+              The same construction recovers a profinite group corresponding to the
+              model <span class="math">C_Fmod</span>. The category
+              <span class="math">D*</span> is the connected-object category for this
+              group and contains <span class="math">D°</span> as an open-subgroup layer.
+            </p>
+            <div class="tagRow"><span class="tag blue">Example 5.1(i)</span><span class="tag">C_Fmod</span></div>
+          </div>
+          <div class="card" id="global-kappa-pseudomonoids">
+            <h3>Global κ-coric pseudo-monoids</h3>
+            <p>
+              Example 5.1(i) reconstructs the rational function-field Galois group and
+              the pseudo-monoids <span class="math">M_κ*</span>,
+              <span class="math">M_∞κ*</span>, and
+              <span class="math">M_∞κ×*</span>. These are the global analogues of the
+              κ-coric objects introduced in Remark 3.1.7.
+            </p>
+            <div class="tagRow"><span class="tag gold">Example 5.1(i)</span><span class="tag">κ-coric</span></div>
+          </div>
+          <div class="card" id="kappa-sol-quotient-example51">
+            <h3>κ-solvable quotient</h3>
+            <p>
+              The quotient <span class="math">pi_1^rat(D*) -> pi_1^{κ-sol}(D*)</span>
+              is built from the kernel of the ∞κ action and the maximal solvable quotient
+              over <span class="math">Fmod</span>. The resulting objects include
+              <span class="math">M_κ-sol*</span> and <span class="math">M_sol*</span>.
+            </p>
+            <div class="tagRow"><span class="tag violet">Example 5.1(i)</span><span class="tag">κ-sol</span></div>
+          </div>
+          <div class="card" id="kappa-sol-conjugate-synchronization">
+            <h3>κ-sol conjugate synchronization</h3>
+            <p>
+              Although the <span class="math">F_l^⋇</span> poly-action on
+              <span class="math">pi_1^rat(D*)</span> is initially only defined up to
+              conjugacy, the linear-disjointness input from Remark 3.1.7 makes the
+              induced action on the κ-sol outer representation well-defined without
+              conjugacy indeterminacy, and in fact trivial.
+            </p>
+            <div class="tagRow"><span class="tag red">Example 5.1(i)</span><span class="tag">synchronization</span></div>
+          </div>
+          <div class="card" id="f-star-model-frobenioid">
+            <h3><span class="math">F*</span> model Frobenioid</h3>
+            <p>
+              Example 5.1(ii)-(iii) reconstructs the valuation set and stack-theoretic
+              arithmetic divisor monoid, then applies Frobenioid theory to obtain the
+              model Frobenioid <span class="math">F*(D°)</span>. Its restrictions are
+              <span class="math">F°</span> over <span class="math">D°</span> and
+              <span class="math">F*_mod</span> over terminal objects.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 5.1(ii)-(iii)</span><span class="tag">Frobenioid</span></div>
+          </div>
+          <div class="card" id="birational-monoid-decomposition-groups">
+            <h3>Birational monoids and decomposition groups</h3>
+            <p>
+              Example 5.1(iv) uses birationalizations of the Frobenioids to recover
+              nonzero field elements, integral submonoids at primes, unit submonoids, and
+              decomposition subgroups <span class="math">Pi_p</span> inside
+              <span class="math">pi_1(D*)</span>.
+            </p>
+            <div class="tagRow"><span class="tag blue">Example 5.1(iv)</span><span class="tag">decomposition</span></div>
+          </div>
+          <div class="card" id="unique-infinity-kappa-structure">
+            <h3>Unique ∞κ structures</h3>
+            <p>
+              Example 5.1(v) defines ∞κ-coric and ∞κ×-coric structures on
+              <span class="math">F*</span> and proves they exist uniquely up to unique
+              isomorphism. Kummer classes identify the relevant cyclotomes and recover
+              <span class="math">M*</span>, <span class="math">M_sol*</span>, and
+              <span class="math">M_mod*</span>.
+            </p>
+            <div class="tagRow"><span class="tag gold">Example 5.1(v)</span><span class="tag">Kummer</span></div>
+          </div>
+          <div class="card" id="strict-critical-recover-infinity-kappa">
+            <h3>Strict critical test for ∞κ</h3>
+            <p>
+              An ∞κ structure is recovered from an ∞κ× structure by requiring that the
+              Kummer class restricts to torsion at decomposition groups of strictly
+              critical points. This is the Example 5.1 version of the root-of-unity
+              condition in Remark 3.1.7.
+            </p>
+            <div class="tagRow"><span class="tag red">Example 5.1(v)</span><span class="tag">critical points</span></div>
+          </div>
+          <div class="card" id="constant-distributions-vj">
+            <h3>Constant distributions over labels</h3>
+            <p>
+              Example 5.1(vii) forms <span class="math">F*_j</span> for each capsule
+              label and the diagonal category <span class="math">F*_{&lt;J&gt;}</span>
+              inside the product <span class="math">F*_J</span>. Remark 5.1.1 reads
+              this as constant distributions versus arbitrary distributions over the
+              label product.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 5.1(vii)</span><span class="tag">distributions</span></div>
+          </div>
+          <div class="card" id="kummer-ready-blind-split">
+            <h3>Kummer-ready versus Kummer-blind</h3>
+            <p>
+              Remark 5.1.3 says Kummer theory can be performed with
+              <span class="math">F°</span>, <span class="math">F*</span>,
+              <span class="math">M*</span>, <span class="math">M_sol*</span>,
+              <span class="math">M_∞κ*</span>, <span class="math">M_∞κ×*</span>, and
+              <span class="math">M_κ-sol*</span>, but not with
+              <span class="math">F*_mod</span>, <span class="math">M_mod*</span>, or
+              <span class="math">M_κ*</span> alone.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 5.1.3</span><span class="tag">black-out</span></div>
+          </div>
+          <div class="card" id="belyi-cuspidalization-analytic-continuation">
+            <h3>Belyi cuspidalization viewpoint</h3>
+            <p>
+              Remark 5.1.4 frames number-field elements as geometrically represented by
+              Belyi maps and the later local logarithm theory as arithmetic analytic
+              continuation. This is explanatory context for why the reconstruction is
+              tied to hyperbolic curve data.
+            </p>
+            <div class="tagRow"><span class="tag blue">Remark 5.1.4</span><span class="tag">Belyi</span></div>
+          </div>
+        </div>
+        <div class="callout warn">
+          Formalization warning: <span class="math">F*_mod</span> should not be treated
+          as a standalone field object with all structure recoverable internally. The
+          source explicitly says its additive/ring structure is recovered only through
+          the extra embedding into the Kummer-ready <span class="math">F*</span> layer.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
+          Related: <a href="#kappa-coric-functions">κ-coric functions</a>
+          <a href="#multiplicative-combinatorial-teichmuller">multiplicative combinatorics</a>
+          <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
+          <a href="#frobenioids-log-shells">Frobenioids/log-shells</a>
+          <a href="#log-kummer-correspondences">log-Kummer correspondences</a>
         </div>
       </section>
 
