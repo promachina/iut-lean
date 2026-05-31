@@ -580,6 +580,7 @@
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         <a href="#iut-iv-local-log-volume-estimates-11-15">IUT IV local estimates 1.1-1.5</a>
         <a href="#iut-iv-prime-averaging-16-17">IUT IV prime/averaging 1.6-1.7</a>
+        <a href="#iut-iv-elliptic-torsion-18">IUT IV elliptic torsion 1.8</a>
         <a href="#iut-iv">IUT IV and consequences</a>
         <a href="#iut-iv-diophantine-output">IUT IV output route</a>
         <a href="#probabilistic-szpiro">Probabilistic Szpiro</a>
@@ -5626,6 +5627,7 @@
               <a href="#multiple-tensor-products">tensor products</a>,
               <a href="#iut-iv-local-log-volume-estimates-11-15">local estimates</a>,
               <a href="#iut-iv-prime-averaging-16-17">prime/averaging input</a>,
+              <a href="#iut-iv-elliptic-torsion-18">elliptic torsion input</a>,
               <a href="#elliptic-torsion-input">elliptic torsion</a>,
               <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a>,
               <a href="#iut-iv">estimate pipeline</a>
@@ -21822,6 +21824,261 @@
         </div>
       </section>
 
+      <section id="iut-iv-elliptic-torsion-18">
+        <h2>IUT IV Proposition 1.8: Elliptic Torsion Input</h2>
+        <p class="lede">
+          Proposition 1.8 collects the elliptic-curve facts needed before the explicit
+          theta-pilot estimate: torsion detects automorphisms, descent data is expressed
+          by sections over Galois subgroups, rational torsion forces uniqueness and
+          semistability, 2-torsion gives the Legendre form, and reduction type controls
+          ramification on torsion.
+        </p>
+        <div class="diagram fit" aria-label="IUT IV Proposition 1.8 elliptic torsion and descent route">
+          <div class="diagramHeader">
+            <strong>Elliptic input route</strong>
+            <span>torsion, descent, Legendre form, and ramification constraints</span>
+          </div>
+          <svg viewBox="0 0 1120 590" role="img">
+            <defs>
+              <marker id="arrowIUTIVEllTors18" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="62" y="68" width="220" height="88"></rect>
+            <text class="nodeTitle" x="172" y="94" text-anchor="middle">torsion detects</text>
+            <text class="nodeTitle" x="172" y="112" text-anchor="middle">automorphisms</text>
+            <text class="tinyText" x="172" y="132" text-anchor="middle">Aut(A,lambda) -> Aut(A[l])</text>
+            <text class="tinyText" x="172" y="148" text-anchor="middle">Prop. 1.8(i)</text>
+
+            <rect class="nodeBox green" x="450" y="68" width="220" height="88"></rect>
+            <text class="nodeTitle" x="560" y="98" text-anchor="middle">descent as sections</text>
+            <text class="tinyText" x="560" y="122" text-anchor="middle">Aut(E_kbar) -> G_k</text>
+            <text class="tinyText" x="560" y="140" text-anchor="middle">Prop. 1.8(ii)</text>
+
+            <rect class="nodeBox gold" x="838" y="68" width="220" height="88"></rect>
+            <text class="nodeTitle" x="948" y="98" text-anchor="middle">rational l-torsion</text>
+            <text class="tinyText" x="948" y="122" text-anchor="middle">unique model; semistable</text>
+            <text class="tinyText" x="948" y="140" text-anchor="middle">Prop. 1.8(iv),(v)</text>
+
+            <rect class="nodeBox violet" x="220" y="272" width="250" height="92"></rect>
+            <text class="nodeTitle" x="345" y="302" text-anchor="middle">2-torsion representation</text>
+            <text class="tinyText" x="345" y="326" text-anchor="middle">Aut(E) = {+/-1}</text>
+            <text class="tinyText" x="345" y="344" text-anchor="middle">Prop. 1.8(iii)</text>
+
+            <rect class="nodeBox red" x="650" y="272" width="250" height="92"></rect>
+            <text class="nodeTitle" x="775" y="302" text-anchor="middle">Legendre descent</text>
+            <text class="tinyText" x="775" y="326" text-anchor="middle">trivial 2-torsion action</text>
+            <text class="tinyText" x="775" y="344" text-anchor="middle">Prop. 1.8(vi)</text>
+
+            <rect class="nodeBox green" x="202" y="454" width="270" height="88"></rect>
+            <text class="nodeTitle" x="337" y="484" text-anchor="middle">good reduction</text>
+            <text class="tinyText" x="337" y="508" text-anchor="middle">torsion action unramified</text>
+            <text class="tinyText" x="337" y="526" text-anchor="middle">Prop. 1.8(vii)</text>
+
+            <rect class="nodeBox blue" x="648" y="454" width="270" height="88"></rect>
+            <text class="nodeTitle" x="783" y="484" text-anchor="middle">bad multiplicative reduction</text>
+            <text class="tinyText" x="783" y="508" text-anchor="middle">torsion action tamely ramified</text>
+            <text class="tinyText" x="783" y="526" text-anchor="middle">Prop. 1.8(vii)</text>
+
+            <path d="M284 112 H448" class="edge blue" marker-end="url(#arrowIUTIVEllTors18)"></path>
+            <path d="M672 112 H836" class="edge green" marker-end="url(#arrowIUTIVEllTors18)"></path>
+            <path d="M560 158 C520 210 430 236 360 270" class="edge violet" marker-end="url(#arrowIUTIVEllTors18)"></path>
+            <path d="M948 158 C920 214 838 238 790 270" class="edge gold" marker-end="url(#arrowIUTIVEllTors18)"></path>
+            <path d="M472 318 H648" class="edge violet" marker-end="url(#arrowIUTIVEllTors18)"></path>
+            <path d="M726 366 C660 416 496 432 360 452" class="edge green" marker-end="url(#arrowIUTIVEllTors18)"></path>
+            <path d="M790 366 C796 410 792 430 786 452" class="edge blue" marker-end="url(#arrowIUTIVEllTors18)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Statement</th><th>Role in IUT IV</th></tr>
+          <tr>
+            <td>Proposition 1.8(i)</td>
+            <td>
+              For <span class="math">l >= 3</span>, the action of automorphisms of a
+              polarized abelian variety on <span class="math">l</span>-torsion is
+              injective.
+            </td>
+            <td>
+              This makes torsion-level structure rigid enough to control models and
+              descent in the later application.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.8(ii)</td>
+            <td>
+              For an elliptic curve over a perfect field, automorphisms over the
+              algebraic closure fit into an exact sequence over
+              <span class="math">G_k</span>; models over extensions are equivalent to
+              sections over the corresponding closed subgroups.
+            </td>
+            <td>
+              The proposition translates model/descent questions into Galois-section
+              data, matching the anabelian style of the surrounding IUT machinery.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.8(iii)</td>
+            <td>
+              If the geometric automorphism group is
+              <span class="math">{+/-1}</span>, then the 2-torsion representation
+              factors through the field-of-moduli Galois image.
+            </td>
+            <td>
+              This isolates the 2-torsion information used to pass to a Legendre-form
+              model in the application setup.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.8(iv)</td>
+            <td>
+              If two descents to <span class="math">k</span> have all
+              <span class="math">l</span>-torsion rational over
+              <span class="math">k</span>, then the descended elliptic curves are
+              isomorphic over <span class="math">k</span>.
+            </td>
+            <td>
+              Rational torsion eliminates a model ambiguity that would otherwise affect
+              the initial-theta-data construction.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.8(v)</td>
+            <td>
+              Over a complete discrete valuation field, rational
+              <span class="math">l</span>-torsion with <span class="math">l >= 3</span>
+              and <span class="math">l</span> invertible implies semistable reduction.
+            </td>
+            <td>
+              This supplies the reduction-type control required by the later bad/good
+              place estimates.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.8(vi)</td>
+            <td>
+              If the field-of-moduli image is all of <span class="math">G_k</span> and
+              the 2-torsion action is trivial, then the curve descends to a
+              Legendre-form model; over a discrete valuation field, semistability is
+              reached after an extension of degree at most two.
+            </td>
+            <td>
+              This is the local source for the lambda-line/Legendre model used in IUT
+              IV Corollary 2.2.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.8(vii)</td>
+            <td>
+              For torsion prime to the residue characteristic, good reduction gives
+              unramified Galois action on torsion, while bad multiplicative reduction
+              gives tame ramification.
+            </td>
+            <td>
+              These ramification alternatives feed the explicit prime and different
+              estimates in Theorem 1.10 and Section 2.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="serre-criterion-torsion-injectivity-iv18">
+            <h3>Serre criterion</h3>
+            <p>
+              The first assertion is a rigidity statement: a nontrivial automorphism of
+              a polarized abelian variety cannot act trivially on
+              <span class="math">l</span>-torsion for <span class="math">l >= 3</span>.
+            </p>
+            <div class="tagRow"><span class="tag blue">Prop. 1.8(i)</span><span class="tag">torsion</span></div>
+          </div>
+          <div class="card" id="descent-sections-elliptic-models-iv18">
+            <h3>Descent via sections</h3>
+            <p>
+              A model over an extension field is the same as a section of the
+              automorphism-to-Galois map over the corresponding subgroup. This keeps
+              descent explicit instead of treating the model as a label.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 1.8(ii)</span><span class="tag">sections</span></div>
+          </div>
+          <div class="card" id="field-of-moduli-image-iv18">
+            <h3>Field-of-moduli image</h3>
+            <p>
+              The finite extension determined by the Galois image is the field generated
+              by the <span class="math">j</span>-invariant. This is why the later
+              field-of-moduli notation is tied to actual descent data.
+            </p>
+            <div class="tagRow"><span class="tag gold">Prop. 1.8(ii)</span><span class="tag">j</span></div>
+          </div>
+          <div class="card" id="two-torsion-factorization-iv18">
+            <h3>2-torsion factorization</h3>
+            <p>
+              When the only geometric automorphisms are
+              <span class="math">+/-1</span>, their action on 2-torsion is trivial, so
+              the 2-torsion representation descends to the field-of-moduli Galois image.
+            </p>
+            <div class="tagRow"><span class="tag violet">Prop. 1.8(iii)</span><span class="tag">E[2]</span></div>
+          </div>
+          <div class="card" id="rational-torsion-unique-descent-iv18">
+            <h3>Rational torsion uniqueness</h3>
+            <p>
+              If all <span class="math">l</span>-torsion is rational, the section is
+              forced by lying in the kernel of the torsion representation. This gives
+              uniqueness of the descended model.
+            </p>
+            <div class="tagRow"><span class="tag red">Prop. 1.8(iv)</span><span class="tag">unique model</span></div>
+          </div>
+          <div class="card" id="semistable-reduction-from-level-iv18">
+            <h3>Semistable reduction from level</h3>
+            <p>
+              Full rational <span class="math">l</span>-torsion for
+              <span class="math">l >= 3</span> gives an integral point on a proper
+              level cover of the compactified elliptic moduli stack, hence semistable
+              reduction.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 1.8(v)</span><span class="tag">level</span></div>
+          </div>
+          <div class="card" id="legendre-form-descent-iv18">
+            <h3>Legendre-form descent</h3>
+            <p>
+              Trivial 2-torsion action gives rational 2-torsion, hence a Legendre
+              equation after at most a quadratic twist. This is the source for the
+              lambda-line model in the IUT IV application.
+            </p>
+            <div class="tagRow"><span class="tag gold">Prop. 1.8(vi)</span><span class="tag">Legendre</span></div>
+          </div>
+          <div class="card" id="good-reduction-unramified-torsion-iv18">
+            <h3>Good reduction</h3>
+            <p>
+              For torsion order invertible in the valuation ring, good reduction makes
+              the Galois action on torsion unramified. This becomes a clean local input
+              at good places.
+            </p>
+            <div class="tagRow"><span class="tag blue">Prop. 1.8(vii)</span><span class="tag">unramified</span></div>
+          </div>
+          <div class="card" id="multiplicative-reduction-tame-torsion-iv18">
+            <h3>Multiplicative reduction</h3>
+            <p>
+              Bad multiplicative reduction gives a tamely ramified torsion action. This
+              separates the bad multiplicative places from the good ones in the
+              arithmetic estimates.
+            </p>
+            <div class="tagRow"><span class="tag red">Prop. 1.8(vii)</span><span class="tag">tame</span></div>
+          </div>
+        </div>
+        <div class="callout violet">
+          Formalization warning: Proposition 1.8 is not just background elliptic-curve
+          folklore. It supplies named gates for uniqueness of models, field-of-moduli
+          descent, Legendre-form input, and ramification cases used by the later
+          construction of suitable initial theta data.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Proposition 1.8</a>
+          Related: <a href="#iut-iv-prime-averaging-16-17">prime/averaging input</a>
+          <a href="#arithmetic-divisors">arithmetic divisors</a>
+          <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a>
+          <a href="#iut-iv-diophantine-output">IUT IV output route</a>
+        </div>
+      </section>
+
       <section id="iut-iv">
         <h2>IUT IV and Consequences</h2>
         <p class="lede">
@@ -21956,7 +22213,7 @@
           <tr>
             <td>Definition 1.9 and Theorem 1.10</td>
             <td>Arithmetic divisors and the explicit theta-pilot log-volume estimate.</td>
-            <td><a href="#arithmetic-divisors">arithmetic divisors</a>, <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a></td>
+            <td><a href="#iut-iv-elliptic-torsion-18">elliptic torsion input</a>, <a href="#arithmetic-divisors">arithmetic divisors</a>, <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a></td>
           </tr>
           <tr>
             <td>Corollaries 2.2-2.3</td>
