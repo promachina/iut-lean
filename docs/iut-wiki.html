@@ -2401,7 +2401,7 @@
           an interpretive map for reading the source papers; the definitions and proof
           obligations still come from Mochizuki's IUT papers.
         </p>
-        <div class="diagram" aria-label="Collas category-theoretic perspective on IUT">
+        <div class="diagram fit" aria-label="Collas category-theoretic perspective on IUT">
           <div class="diagramHeader">
             <strong>From schemes to category-theoretic containers</strong>
             <span>Collas's expository route into IUT</span>
@@ -2520,6 +2520,33 @@
             </p>
             <div class="tagRow"><span class="tag blue">Collas §3.1.3</span><span class="tag">species</span></div>
           </div>
+          <div class="card" id="collas-bgt-models">
+            <h3>BGT combinatorial models</h3>
+            <p>
+              Collas's 2026 GT paper treats Belyi-Galois-Teichmuller diagrams as
+              combinatorial anabelian containers from which field operations on
+              realizations of <span class="math">Qbar</span> are reconstructed.
+            </p>
+            <div class="tagRow"><span class="tag green">Collas GT §4.2</span><span class="tag">field reconstruction</span></div>
+          </div>
+          <div class="card" id="collas-dm-curves">
+            <h3>Deligne-Mumford curves</h3>
+            <p>
+              Collas-Philip-Yamaguchi extend the reconstruction viewpoint to stacky
+              curves by tracking stack inertia, rigidification, and low-step solvable
+              quotients of etale fundamental groups.
+            </p>
+            <div class="tagRow"><span class="tag violet">CPY 2026</span><span class="tag">stack inertia</span></div>
+          </div>
+          <div class="card" id="collas-methodological-status">
+            <h3>Status for IUT reading</h3>
+            <p>
+              The Collas corpus is best used as a category-theoretic orientation layer:
+              it explains why IUT isolates containers, reconstructions, and species,
+              but Mochizuki's IUT I-IV remain the source for formal definitions.
+            </p>
+            <div class="tagRow"><span class="tag red">scope</span><span class="tag">orientation only</span></div>
+          </div>
         </div>
         <table>
           <tr><th>Collas checkpoint</th><th>Category-theoretic reading</th><th>Wiki consequence</th></tr>
@@ -2577,6 +2604,67 @@
             <td><a href="#species-mutations">species and mutations</a></td>
           </tr>
         </table>
+        <table class="sourceTable3">
+          <tr><th>Collas source</th><th>Category-theoretic contribution</th><th>Use in this wiki</th></tr>
+          <tr>
+            <td>
+              <a href="papers/collas-anabelian-arithmetic-geometry-iut.pdf" target="_blank">Anabelian arithmetic geometry and IUT</a>
+            </td>
+            <td>
+              Presents IUT as categorification of a Diophantine problem: Hodge theaters
+              simulate the missing global multiplicative subspace, while theta/log
+              links separate incompatible ring structures.
+            </td>
+            <td>
+              Orientation for <a href="#gms-gcg-motivation">GMS/GCG</a>,
+              <a href="#hodge-theaters">Hodge theaters</a>, and
+              <a href="#log-theta-lattice">log-theta lattice</a>.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="papers/collas-anabelian-perspectives-galois-teichmuller.pdf" target="_blank">Anabelian perspectives in GT theory</a>
+            </td>
+            <td>
+              Develops the GT side as a passage from braid computations to functorial
+              and algorithmic anabelian reconstruction, including BGT models of
+              <span class="math">Qbar</span> from Belyi diagrams.
+            </td>
+            <td>
+              Context for <a href="#gt-species-perspective">GT species</a>,
+              <a href="#anabelian-background">anabelian background</a>, and
+              the wiki's insistence on reconstruction algorithms rather than labels.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="papers/collas-murotani-yamaguchi-symmetries-anabelian-geometry.pdf" target="_blank">Symmetries and anabelian geometry</a>
+            </td>
+            <td>
+              Gives a short route from symmetry groups to reconstruction of arithmetic
+              and geometric spaces, with contemporary emphasis on canonicity and
+              categorification.
+            </td>
+            <td>
+              Background for <a href="#anabelian-background">anabelian reconstruction</a>
+              and for explaining why IUT depends on canonical, source-independent
+              recovery procedures.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="papers/collas-philip-yamaguchi-anabelian-deligne-mumford-curves-2026.pdf" target="_blank">Anabelian geometry for Deligne-Mumford curves</a>
+            </td>
+            <td>
+              Extends reconstruction to stacky curves by combining stack inertia,
+              rigidification, and low-step solvable quotients of fundamental groups.
+            </td>
+            <td>
+              Current anabelian context for IUT's orbicurve/Hodge-theater background;
+              not a replacement for the IUT proof corridor.
+            </td>
+          </tr>
+        </table>
         <div class="callout">
           <strong>Scope.</strong> Collas's text is highly useful for orientation and for
           designing human-auditable Lean interfaces, but it does not replace the exact
@@ -2587,6 +2675,7 @@
           Sources: <a href="papers/collas-anabelian-arithmetic-geometry-iut.pdf" target="_blank">Collas overview</a>
           <a href="papers/collas-anabelian-perspectives-galois-teichmuller.pdf" target="_blank">Collas GT perspectives</a>
           <a href="papers/collas-murotani-yamaguchi-symmetries-anabelian-geometry.pdf" target="_blank">Collas-Murotani-Yamaguchi</a>
+          <a href="papers/collas-philip-yamaguchi-anabelian-deligne-mumford-curves-2026.pdf" target="_blank">Collas-Philip-Yamaguchi 2026</a>
           Related: <a href="#anabelian-background">anabelian background</a>
           <a href="#frobenioids-log-shells">Frobenioids</a>
           <a href="#hodge-theaters">Hodge theaters</a>
