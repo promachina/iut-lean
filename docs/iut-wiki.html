@@ -529,6 +529,7 @@
         <a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids 4.1</a>
         <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids 4.5</a>
         <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift 4.6</a>
+        <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry 4.7</a>
         <a href="#theta-evaluation-kummer-route">Theta evaluation route</a>
         <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
         <a href="#frobenioids-log-shells">Frobenioids and log-shells</a>
@@ -1519,6 +1520,8 @@
               <a href="#global-fpm-synchronization-453">global F_l± synchronization</a>,
               <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift</a>,
               <a href="#cenv-cgau-global-frobenioids-46">Cenv/Cgau</a>,
+              <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry</a>,
+              <a href="#fl-symmetry-no-conjugate-sync-472">Fl without conjugate synchronization</a>,
               <a href="#gaussian-monoids">Gaussian monoids</a>,
               <a href="#tempered-gaussian-frobenioids">tempered Gaussian Frobenioids</a>,
               <a href="#split-theta-monoids">split theta monoids</a>,
@@ -4537,7 +4540,7 @@
           <tr>
             <td>§4</td>
             <td>Global Gaussian Frobenioids and the modified theta-link variants <span class="math">Theta×μ</span> and <span class="math">Theta×μ_gau</span>.</td>
-            <td><a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids</a>, <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids</a>, <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift</a>, <a href="#theta-log-links">theta/log links</a>, <a href="#log-theta-lattice">log-theta lattice</a></td>
+            <td><a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids</a>, <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids</a>, <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift</a>, <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry</a>, <a href="#theta-log-links">theta/log links</a>, <a href="#log-theta-lattice">log-theta lattice</a></td>
           </tr>
         </table>
         <table>
@@ -11488,6 +11491,261 @@
           <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges</a>
           <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
           <a href="#iut-i-frobenioid-prime-strips-52">Frobenioid prime-strips</a>
+        </div>
+      </section>
+
+      <section id="theta-nf-fl-symmetry-ii47">
+        <h2>ThetaNF Fl Symmetry in IUT II 4.7</h2>
+        <p class="lede">
+          Corollary 4.7 studies the D-ThetaNF side glued to the D-Theta±ell side. It
+          constructs non-realified global objects, labels them by
+          <span class="math">F_l</span>, forms formal diagonal structures, and then
+          localizes them. The accompanying remarks stress the source distinction:
+          unlike <span class="math">F_l^±</span>, the <span class="math">F_l</span>
+          symmetry does not support conjugate synchronization, but it does support the
+          multiplicative/multiradial structure needed for Gaussian distributions.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Corollary 4.7 ThetaNF Fl symmetry route">
+          <div class="diagramHeader">
+            <strong>ThetaNF and Fl-symmetry</strong>
+            <span>multiplicative symmetry, formal diagonals, and localization</span>
+          </div>
+          <svg viewBox="0 0 1120 610" role="img">
+            <defs>
+              <marker id="arrowThetaNFFl47" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="80" y="58" width="250" height="82"></rect>
+            <text class="nodeTitle" x="205" y="88" text-anchor="middle">D-ThetaNF theater</text>
+            <text class="tinyText" x="205" y="112" text-anchor="middle">glued to D-Theta±ell</text>
+            <text class="tinyText" x="205" y="130" text-anchor="middle">Corollary 4.7 input</text>
+
+            <rect class="nodeBox gold" x="438" y="58" width="250" height="82"></rect>
+            <text class="nodeTitle" x="563" y="88" text-anchor="middle">non-realified global structures</text>
+            <text class="tinyText" x="563" y="112" text-anchor="middle">M, Mmod, Msol, Fmod</text>
+            <text class="tinyText" x="563" y="130" text-anchor="middle">Corollary 4.7(i)</text>
+
+            <rect class="nodeBox violet" x="796" y="58" width="250" height="82"></rect>
+            <text class="nodeTitle" x="921" y="88" text-anchor="middle">Fl labels and symmetry</text>
+            <text class="tinyText" x="921" y="112" text-anchor="middle">F(D)|j and formal diagonals</text>
+            <text class="tinyText" x="921" y="130" text-anchor="middle">Corollary 4.7(ii)</text>
+
+            <rect class="nodeBox green" x="178" y="262" width="250" height="82"></rect>
+            <text class="nodeTitle" x="303" y="292" text-anchor="middle">localization functors</text>
+            <text class="tinyText" x="303" y="316" text-anchor="middle">Fmod_j -> F(D)|j</text>
+            <text class="tinyText" x="303" y="334" text-anchor="middle">global to local F-data</text>
+
+            <rect class="nodeBox red" x="538" y="262" width="250" height="82"></rect>
+            <text class="nodeTitle" x="663" y="292" text-anchor="middle">no conjugate synchronization</text>
+            <text class="tinyText" x="663" y="316" text-anchor="middle">arithmetic Galois conjugacy</text>
+            <text class="tinyText" x="663" y="334" text-anchor="middle">Remark 4.7.2</text>
+
+            <rect class="nodeBox blue" x="376" y="454" width="260" height="82"></rect>
+            <text class="nodeTitle" x="506" y="484" text-anchor="middle">Fl as multiplicative dimension</text>
+            <text class="tinyText" x="506" y="508" text-anchor="middle">zero separated from nonzero labels</text>
+            <text class="tinyText" x="506" y="526" text-anchor="middle">multiradial combinatorics</text>
+
+            <rect class="nodeBox green" x="738" y="454" width="260" height="82"></rect>
+            <text class="nodeTitle" x="868" y="484" text-anchor="middle">ring-translation apparatus</text>
+            <text class="tinyText" x="868" y="508" text-anchor="middle">mod/sol/kappa objects</text>
+            <text class="tinyText" x="868" y="526" text-anchor="middle">used later in IUT III</text>
+
+            <path d="M332 99 H436" class="edge blue" marker-end="url(#arrowThetaNFFl47)"></path>
+            <path d="M690 99 H794" class="edge gold" marker-end="url(#arrowThetaNFFl47)"></path>
+            <path d="M563 142 C498 192 388 224 316 260" class="edge green" marker-end="url(#arrowThetaNFFl47)"></path>
+            <path d="M921 142 C862 190 740 226 675 260" class="edge red" marker-end="url(#arrowThetaNFFl47)"></path>
+            <path d="M663 346 C636 386 572 424 518 452" class="edge blue" marker-end="url(#arrowThetaNFFl47)"></path>
+            <path d="M788 304 C844 350 866 404 868 452" class="edge green" marker-end="url(#arrowThetaNFFl47)"></path>
+            <path d="M636 495 H736" class="edge violet" marker-end="url(#arrowThetaNFFl47)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Source item</th><th>Construction</th><th>Interpretation</th></tr>
+          <tr>
+            <td>Corollary 4.7(i)</td>
+            <td>
+              From the category <span class="math">D</span>, construct the morphism
+              <span class="math">D -> D</span>, global monoids/fields/pseudo-monoids
+              <span class="math">M</span>, <span class="math">Mmod</span>,
+              <span class="math">Msol</span>, <span class="math">Mκ</span>,
+              <span class="math">M∞κ</span>, and Frobenioids
+              <span class="math">Fmod</span>, <span class="math">F</span>, plus the
+              realification functor.
+            </td>
+            <td>
+              This is the non-realified global arithmetic side; it only appears in the
+              <span class="math">F_l</span>-symmetry context.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 4.7(ii)</td>
+            <td>
+              A label <span class="math">j</span> gives an F-prime-strip
+              <span class="math">F(D)|j</span>. The <span class="math">F_l</span>
+              action induces symmetrizing isomorphisms and formal diagonal
+              F-prime-strips, submonoids, subrings, pseudo-monoids, and subcategories.
+            </td>
+            <td>
+              These diagonals are formal shorthand for the symmetrizing isomorphisms,
+              not synchronized diagonal Galois data.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 4.7(iii)</td>
+            <td>
+              Localization functors and poly-morphisms map global model data to
+              <span class="math">F(D)|j</span> and to local
+              <span class="math">∞κ</span>-coric data. Realified global structures
+              identify <span class="math">D(D⊢_j)</span> with
+              <span class="math">Fmod(D)^R_j</span>.
+            </td>
+            <td>
+              This is the passage from global ThetaNF data to the local F-prime-strip
+              data used downstream.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 4.7.2</td>
+            <td>
+              Unlike <span class="math">F_l^±</span>, the
+              <span class="math">F_l</span> symmetry arises from the arithmetic portion
+              of global arithmetic fundamental groups. Therefore it does not establish
+              conjugate synchronization.
+            </td>
+            <td>
+              This forces the use of F-prime-strips and mod/sol/kappa objects rather
+              than raw ind-topological monoids with synchronized Galois actions.
+            </td>
+          </tr>
+          <tr>
+            <td>Remarks 4.7.3-4.7.5</td>
+            <td>
+              <span class="math">F_l^±</span> represents the additive dimension and
+              includes the zero label; <span class="math">F_l</span> represents the
+              multiplicative dimension and separates zero from nonzero labels. The
+              nonzero labels carry weight <span class="math">1/l</span> in weighted
+              volume computation.
+            </td>
+            <td>
+              This is the source explanation for why additive and multiplicative label
+              symmetries cannot be merged.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 4.7.6</td>
+            <td>
+              Non-realified global Frobenioids make sense only in the
+              <span class="math">F_l</span>-symmetry context. Quotienting by the
+              <span class="math">F_l</span> indeterminacy would crush labels and
+              destroy the Gaussian construction.
+            </td>
+            <td>
+              Label preservation is a structural requirement, not presentational
+              bookkeeping.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="theta-nf-nonrealified-global-471">
+            <h3>Non-realified global structures</h3>
+            <p>
+              Corollary 4.7(i) constructs the model field and Frobenioid side,
+              including <span class="math">Fmod</span>, before realification. This is
+              possible in the <span class="math">F_l</span>-symmetry setting.
+            </p>
+            <div class="tagRow"><span class="tag blue">Cor. 4.7(i)</span><span class="tag">Fmod</span></div>
+          </div>
+          <div class="card" id="theta-nf-fl-labels-472">
+            <h3>Fl labels</h3>
+            <p>
+              A cusp label <span class="math">j</span> determines an F-prime-strip
+              <span class="math">F(D)|j</span>. The <span class="math">F_l</span>
+              action moves between labeled objects but introduces independent conjugacy
+              indeterminacies.
+            </p>
+            <div class="tagRow"><span class="tag violet">Cor. 4.7(ii)</span><span class="tag">labels</span></div>
+          </div>
+          <div class="card" id="formal-diagonal-fl-data-472">
+            <h3>Formal diagonal Fl data</h3>
+            <p>
+              The diagonal subobjects in Corollary 4.7(ii) are explicitly formal
+              shorthand for the <span class="math">F_l</span>-symmetrizing isomorphisms.
+              They should not be read as a conjugate-synchronized diagonal.
+            </p>
+            <div class="tagRow"><span class="tag gold">Cor. 4.7(ii)</span><span class="tag">formal</span></div>
+          </div>
+          <div class="card" id="theta-nf-localization-473">
+            <h3>Localization</h3>
+            <p>
+              Corollary 4.7(iii) localizes global model Frobenioids and
+              <span class="math">∞κ</span>-coric structures to the labeled local
+              F-prime-strip data.
+            </p>
+            <div class="tagRow"><span class="tag green">Cor. 4.7(iii)</span><span class="tag">localization</span></div>
+          </div>
+          <div class="card" id="fl-symmetry-no-conjugate-sync-472">
+            <h3>Fl without conjugate synchronization</h3>
+            <p>
+              Remark 4.7.2 says <span class="math">F_l</span>-symmetry cannot establish
+              the conjugate synchronization of Corollary 4.5 because it arises from
+              arithmetic Galois conjugacy.
+            </p>
+            <div class="tagRow"><span class="tag red">Rem. 4.7.2</span><span class="tag">no sync</span></div>
+          </div>
+          <div class="card" id="fpm-versus-fl-symmetry-473">
+            <h3>F_l± versus Fl</h3>
+            <p>
+              Remark 4.7.3 identifies <span class="math">F_l^±</span> with the
+              additive side and <span class="math">F_l</span> with the multiplicative
+              side. The former includes zero and is suited to units; the latter
+              separates zero from nonzero labels.
+            </p>
+            <div class="tagRow"><span class="tag blue">Rem. 4.7.3</span><span class="tag">two dimensions</span></div>
+          </div>
+          <div class="card" id="fl-multiradial-combinatorics-474">
+            <h3>Multiradial Fl combinatorics</h3>
+            <p>
+              Remark 4.7.4 models <span class="math">F_l</span>-actions on distinct
+              spokes as commuting and compatible with spoke permutations, a prototype of
+              multiradiality.
+            </p>
+            <div class="tagRow"><span class="tag green">Rem. 4.7.4</span><span class="tag">multiradial</span></div>
+          </div>
+          <div class="card" id="label-crushing-warning-476">
+            <h3>Label-crushing warning</h3>
+            <p>
+              Remark 4.7.6 says one cannot quotient by the
+              <span class="math">F_l</span> indeterminacy, since that would identify
+              distinct labels and destroy the Gaussian monoid construction.
+            </p>
+            <div class="tagRow"><span class="tag red">Rem. 4.7.6</span><span class="tag">labels</span></div>
+          </div>
+          <div class="card" id="mod-objects-translation-apparatus-472">
+            <h3>Mod objects as translation apparatus</h3>
+            <p>
+              Remark 4.7.2 says the ring structure on the
+              <span class="math">mod</span>-subscripted objects will later translate
+              between additive and multiplicative interpretations of arithmetic line
+              bundles.
+            </p>
+            <div class="tagRow"><span class="tag violet">Rem. 4.7.2</span><span class="tag">IUT III input</span></div>
+          </div>
+        </div>
+        <div class="callout warn">
+          Source warning: <span class="math">F_l^±</span> and
+          <span class="math">F_l</span> are not interchangeable symmetry notations.
+          The former is tied to single-basepoint conjugate synchronization and units;
+          the latter is tied to multiplicative label separation and multiradial
+          Gaussian structure.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.7 and Remarks 4.7.1-4.7.7</a>
+          Related: <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>
+          <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift</a>
+          <a href="#theta-plus-minus-ell-nf-613">Theta±ellNF</a>
+          <a href="#multiradiality">multiradiality</a>
         </div>
       </section>
 
