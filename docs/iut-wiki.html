@@ -3223,6 +3223,48 @@
           if a common container is supplied, Lean should still ask what numerical chart,
           transport, calibration, or bound converts it into the final signed inequality.
         </p>
+        <div class="grid2">
+          <div class="card">
+            <h3>Communication role</h3>
+            <p>
+              Mochizuki's report emphasizes LeanForm not only as verification but also as
+              a precise communication medium. The stated aim is to expose the logical
+              structure of IUT in a form that can be checked without relying on informal
+              agreement about hidden identifications.
+            </p>
+            <div class="tagRow"><span class="tag blue">LeanForm</span><span class="tag">communication</span></div>
+          </div>
+          <div class="card">
+            <h3>Species without full ZFC</h3>
+            <p>
+              The report treats species/mutations as the conceptual language of
+              functorial algorithms, but concludes that a full Lean formalization of ZFC
+              as a first-order theory is probably unnecessary for Stages 1-2. Standard
+              Lean records and componentwise data can express the needed early logic.
+            </p>
+            <div class="tagRow"><span class="tag green">Stages 1-2</span><span class="tag">species</span></div>
+          </div>
+          <div class="card">
+            <h3>3.11.5 convention</h3>
+            <p>
+              The label "3.11.5" is introduced as a Lean-facing decomposition, not as a
+              theorem number in IUT I-IV. It moves the hull-and-determinant work before
+              the final 3.12 comparison so the last step can focus on simultaneous
+              comparison in a common container.
+            </p>
+            <div class="tagRow"><span class="tag gold">3.11.5</span><span class="tag">hull + det</span></div>
+          </div>
+          <div class="card">
+            <h3>APT and IPL</h3>
+            <p>
+              The report identifies algorithmic parallel transport and input prime-strip
+              linkage as central obligations before the final signed inequality. The wiki
+              therefore treats APT/IPL as source obligations, not as cosmetic labels on
+              an already available ordered-real proof.
+            </p>
+            <div class="tagRow"><span class="tag red">APT</span><span class="tag red">IPL</span></div>
+          </div>
+        </div>
         <table>
           <tr><th>Stage</th><th>Mochizuki's stated target</th><th>Wiki/formalization reading</th></tr>
           <tr>
@@ -3255,6 +3297,7 @@
           Sources: <a href="papers/mochizuki-formalization-iut-2026-04.pdf" target="_blank">Mochizuki 2026 Lean report</a>
           <a href="papers/mochizuki-essential-logical-structure.pdf" target="_blank">Essential Logical Structure</a>
           Related: <a href="#lana">LANA</a>
+          <a href="#species-mutations">species and mutations</a>
           <a href="#corollary-312">Corollary 3.12</a>
         </div>
       </section>
