@@ -490,6 +490,7 @@
         <h2>Core IUT</h2>
         <a href="#initial-theta-data">Initial theta data</a>
         <a href="#kappa-coric-functions">Kappa-coric functions</a>
+        <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
         <a href="#gms-gcg-motivation">GMS/GCG motivation</a>
         <a href="#projective-line-gluing-analogy">Projective-line gluing</a>
         <a href="#iut-i-gluing-models">IUT I gluing models</a>
@@ -1364,6 +1365,22 @@
               <a href="#kappa-sol-outer-automorphisms">κ-sol outer automorphisms</a>
             </td>
             <td>IUT I, Remark 3.1.7</td>
+          </tr>
+          <tr>
+            <td>IUT I</td>
+            <td>Local and global Frobenioids for theta-Hodge theaters</td>
+            <td>
+              <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>,
+              <a href="#bad-nonarchimedean-frobenioids">bad nonarchimedean Frobenioids</a>,
+              <a href="#theta-function-frobenioid">Frobenioid-theoretic theta function</a>,
+              <a href="#bad-split-frobenioids">bad-prime split Frobenioids</a>,
+              <a href="#good-nonarchimedean-frobenioids">good nonarchimedean Frobenioids</a>,
+              <a href="#archimedean-frobenioids">archimedean Frobenioids</a>,
+              <a href="#global-realified-fmod">global realified Fmod</a>,
+              <a href="#d-log-shell-global-version">D/log-shell version</a>,
+              <a href="#theta-hodge-theater-definition-36-page">Definition 3.6 theater package</a>
+            </td>
+            <td>IUT I, Examples 3.2-3.5 and Definition 3.6</td>
           </tr>
           <tr>
             <td>IUT I</td>
@@ -5988,6 +6005,252 @@
           <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
           <a href="#frobenioids-log-shells">Frobenioids/log-shells</a>
           <a href="#log-kummer-correspondences">log-Kummer correspondences</a>
+        </div>
+      </section>
+
+      <section id="iut-i-frobenioid-package">
+        <h2>IUT I Frobenioid Package</h2>
+        <p class="lede">
+          IUT I Examples 3.2-3.5 construct the local and global Frobenioid data that
+          Definition 3.6 packages into a theta-Hodge theater. The split is valuation
+          sensitive: bad nonarchimedean, good nonarchimedean, and archimedean places
+          have different local constructions, while the global realified Frobenioids act
+          as currency-exchange devices for the local divisor monoids.
+        </p>
+        <div class="diagram" aria-label="IUT I local and global Frobenioid package">
+          <div class="diagramHeader">
+            <strong>Examples 3.2-3.5 into Definition 3.6</strong>
+            <span>local strata, theta versions, global realification</span>
+          </div>
+          <svg viewBox="0 0 1080 560" role="img">
+            <defs>
+              <marker id="arrowFrobPkg" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox red" x="42" y="64" width="245" height="92"></rect>
+            <text class="nodeTitle" x="164" y="94" text-anchor="middle">bad nonarchimedean</text>
+            <text class="tinyText" x="164" y="118" text-anchor="middle">tempered Frobenioid F_v</text>
+            <text class="tinyText" x="164" y="136" text-anchor="middle">theta value Theta_v</text>
+
+            <rect class="nodeBox green" x="418" y="64" width="245" height="92"></rect>
+            <text class="nodeTitle" x="540" y="94" text-anchor="middle">good nonarchimedean</text>
+            <text class="tinyText" x="540" y="118" text-anchor="middle">p_v-adic Frobenioids</text>
+            <text class="tinyText" x="540" y="136" text-anchor="middle">formal log(p_v) log(Theta)</text>
+
+            <rect class="nodeBox blue" x="794" y="64" width="245" height="92"></rect>
+            <text class="nodeTitle" x="916" y="94" text-anchor="middle">archimedean</text>
+            <text class="tinyText" x="916" y="118" text-anchor="middle">Aut-holomorphic orbispace</text>
+            <text class="tinyText" x="916" y="136" text-anchor="middle">Kummer structure kappa_v</text>
+
+            <rect class="nodeBox gold" x="178" y="258" width="255" height="96"></rect>
+            <text class="nodeTitle" x="306" y="288" text-anchor="middle">split Frobenioids</text>
+            <text class="tinyText" x="306" y="312" text-anchor="middle">F_v^⊢ and F_v^Theta</text>
+            <text class="tinyText" x="306" y="330" text-anchor="middle">characteristic splittings</text>
+
+            <rect class="nodeBox violet" x="648" y="258" width="255" height="96"></rect>
+            <text class="nodeTitle" x="776" y="288" text-anchor="middle">global realified data</text>
+            <text class="tinyText" x="776" y="312" text-anchor="middle">F_mod, F_tht, F_D</text>
+            <text class="tinyText" x="776" y="330" text-anchor="middle">rho_v comparison maps</text>
+
+            <rect class="nodeBox green" x="386" y="430" width="310" height="82"></rect>
+            <text class="nodeTitle" x="541" y="462" text-anchor="middle">Theta-Hodge theater</text>
+            <text class="tinyText" x="541" y="486" text-anchor="middle">({F_v}_{v in V}, F_mod)</text>
+
+            <path d="M164 158 C170 214 244 226 300 256" class="edge red" marker-end="url(#arrowFrobPkg)"></path>
+            <path d="M540 158 C520 214 390 224 318 256" class="edge green" marker-end="url(#arrowFrobPkg)"></path>
+            <path d="M916 158 C894 216 834 226 778 256" class="edge blue" marker-end="url(#arrowFrobPkg)"></path>
+            <path d="M433 306 H646" class="edge gold" marker-end="url(#arrowFrobPkg)"></path>
+            <path d="M306 354 C328 404 418 412 500 428" class="edge gold" marker-end="url(#arrowFrobPkg)"></path>
+            <path d="M776 354 C752 404 662 412 584 428" class="edge violet" marker-end="url(#arrowFrobPkg)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="bad-nonarchimedean-frobenioids">
+            <h3>Bad nonarchimedean Frobenioids</h3>
+            <p>
+              For <span class="math">v in V_bad</span>, Example 3.2 starts from the
+              hyperbolic curve <span class="math">X_v</span> and constructs a tempered
+              Frobenioid <span class="math">F_v</span> over the base category
+              <span class="math">D_v</span> of connected tempered coverings. The
+              subcategory <span class="math">D_v^⊢</span> is pulled back from the
+              base field and has a left-adjoint inclusion into <span class="math">D_v</span>.
+            </p>
+            <div class="tagRow"><span class="tag red">Example 3.2(i)</span><span class="tag">tempered</span></div>
+          </div>
+          <div class="card" id="theta-function-frobenioid">
+            <h3>Frobenioid-theoretic theta function</h3>
+            <p>
+              Example 3.2(ii) recalls the birationalization
+              <span class="math">F_v^div</span> and a Frobenioid-theoretic
+              <span class="math">ell</span>-th root of the theta function on the
+              covering <span class="math">Y_v</span>. Its reciprocal
+              <span class="math">Theta_v</span> is reconstructed only up to
+              <span class="math">mu_2ell</span> and <span class="math">ell Z</span>
+              indeterminacies.
+            </p>
+            <div class="tagRow"><span class="tag gold">Example 3.2(ii)</span><span class="tag">theta value</span></div>
+          </div>
+          <div class="card" id="bad-split-frobenioids">
+            <h3>Bad-prime split Frobenioids</h3>
+            <p>
+              The bad-place package forms <span class="math">C_v^⊢</span> from the
+              monoid generated by the logarithmic divisor of the chosen
+              <span class="math">q_v^(1/2ell)</span>, and forms
+              <span class="math">C_v^Theta</span> from theta values on products with
+              <span class="math">Y_v</span>. The two split Frobenioids are naturally
+              equivalent.
+            </p>
+            <div class="tagRow"><span class="tag red">Example 3.2(iv)-(v)</span><span class="tag">split</span></div>
+          </div>
+          <div class="card" id="category-theoretic-reconstruction-frobenioids">
+            <h3>Category-theoretic reconstruction</h3>
+            <p>
+              Example 3.2(vi) lists what is reconstructible from the relevant
+              categories: the base categories, the theta-side category, the tempered
+              Frobenioid, and the split Frobenioids. Remark 3.2.1 stresses that these
+              reconstructions should be read algorithmically, not as choices from a fixed
+              scheme model.
+            </p>
+            <div class="tagRow"><span class="tag blue">Example 3.2(vi)</span><span class="tag">mono-anabelian</span></div>
+          </div>
+          <div class="card" id="etth-tempered-oversight">
+            <h3>Tempered-meromorphic correction</h3>
+            <p>
+              Remark 3.2.4 records a correction to the earlier EtTh discussion of
+              tempered Frobenioids: for the present series, "tempered Frobenioid" is read
+              with the stronger root-existence condition needed for arbitrary positive
+              roots. Theta functions lie in the required range.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 3.2.4</span><span class="tag">EtTh</span></div>
+          </div>
+          <div class="card" id="good-nonarchimedean-frobenioids">
+            <h3>Good nonarchimedean Frobenioids</h3>
+            <p>
+              For <span class="math">v in V_good cap V_non</span>, Example 3.3 builds
+              <span class="math">p_v</span>-adic Frobenioids from valuation monoids
+              <span class="math">ord(O_L^triangleright)</span> and the absolutely
+              primitive submonoid generated by <span class="math">p_v</span>. The
+              theta version replaces <span class="math">log(p_v)</span> by the formal
+              symbol <span class="math">log(p_v) log(Theta)</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 3.3</span><span class="tag">good places</span></div>
+          </div>
+          <div class="card" id="archimedean-frobenioids">
+            <h3>Archimedean Frobenioids</h3>
+            <p>
+              For archimedean <span class="math">v</span>, Example 3.4 replaces
+              p-adic categories by Aut-holomorphic orbispaces and an archimedean
+              Frobenioid representing <span class="math">O_Kv^triangleright</span>.
+              The split topological monoid separates the compact unit factor from the
+              noncompact <span class="math">R_ge0</span> factor.
+            </p>
+            <div class="tagRow"><span class="tag blue">Example 3.4(i)-(ii)</span><span class="tag">CAF</span></div>
+          </div>
+          <div class="card" id="archimedean-kummer-structure">
+            <h3>Archimedean Kummer structure</h3>
+            <p>
+              The Kummer structure is the inclusion
+              <span class="math">kappa_v : O^triangleright(C_v) -> A_Dv</span>.
+              Remark 3.4.2 explains that it is equivalent to an Aut-holomorphic
+              structure on the groupification plus a co-holomorphicization; this is the
+              part compatible with the logarithm operation.
+            </p>
+            <div class="tagRow"><span class="tag blue">Remark 3.4.2</span><span class="tag">log-compatible</span></div>
+          </div>
+          <div class="card" id="theta-versions-local-frobenioids">
+            <h3>Local theta versions</h3>
+            <p>
+              At good and archimedean places, the theta-side split Frobenioid is obtained
+              by adjoining the formal factor <span class="math">log(Theta)</span> to
+              the generator <span class="math">log(p_v)</span>. At bad places, the
+              actual theta value <span class="math">Theta_v</span> supplies the
+              corresponding divisor data.
+            </p>
+            <div class="tagRow"><span class="tag gold">Examples 3.2-3.4</span><span class="tag">Theta version</span></div>
+          </div>
+          <div class="card" id="global-realified-fmod">
+            <h3>Global realified <span class="math">Fmod</span></h3>
+            <p>
+              Example 3.5 constructs the realified Frobenioid
+              <span class="math">C_mod^real</span> associated to
+              <span class="math">Fmod</span>. Its prime set is naturally identified with
+              <span class="math">V_mod</span>, and each local prime component maps to
+              the realification of <span class="math">C_v^⊢</span> by a comparison
+              isomorphism <span class="math">rho_v</span>.
+            </p>
+            <div class="tagRow"><span class="tag violet">Example 3.5(i)</span><span class="tag">realification</span></div>
+          </div>
+          <div class="card" id="theta-version-global-frobenioid">
+            <h3>Global theta version</h3>
+            <p>
+              The theta version <span class="math">C_tht^real</span> is an isomorphic
+              copy generated by a formal <span class="math">log(Theta)</span>. At bad
+              places, <span class="math">rho_v^Theta</span> uses the quotient
+              <span class="math">log_Phi(Theta_v) / log_Phi(q_v)</span>; at good places
+              it uses the formal <span class="math">log(p_v) log(Theta)</span>.
+            </p>
+            <div class="tagRow"><span class="tag violet">Example 3.5(ii)</span><span class="tag">theta currency</span></div>
+          </div>
+          <div class="card" id="d-log-shell-global-version">
+            <h3>D/log-shell version</h3>
+            <p>
+              Example 3.5(iii) constructs <span class="math">F_D^real</span> from a
+              copy of the global realified Frobenioid and the
+              <span class="math">D_v^⊢</span> data. Mochizuki explicitly says this
+              may be viewed as the log-shell version of the global package.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 3.5(iii)</span><span class="tag">log-shell</span></div>
+          </div>
+          <div class="card" id="currency-exchange-frobenioids">
+            <h3>Currency-exchange role</h3>
+            <p>
+              Remark 3.5.1 describes the global Frobenioids as devices for currency
+              exchange between the local divisor-monoid currencies at the various
+              valuations. This is the source-level reason the wiki keeps the local
+              packages and the global realified comparison maps separate.
+            </p>
+            <div class="tagRow"><span class="tag gold">Remark 3.5.1(ii)</span><span class="tag">local/global</span></div>
+          </div>
+          <div class="card" id="theta-hodge-theater-definition-36-page">
+            <h3>Definition 3.6 theater package</h3>
+            <p>
+              A theta-Hodge theater is the collection
+              <span class="math">({F_v}_{v in V}, F_mod^real)</span>. At
+              nonarchimedean places <span class="math">F_v</span> is a category
+              equivalent to the local Frobenioid; at archimedean places it is a triple
+              with an Aut-holomorphic orbispace and Kummer structure; globally it carries
+              the prime bijection, split local Frobenioids, and maps
+              <span class="math">rho_v</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 3.6</span><span class="tag">theater input</span></div>
+          </div>
+          <div class="card" id="theta-link-target-ftht">
+            <h3>Input for the first theta link</h3>
+            <p>
+              Definition 3.6 also constructs <span class="math">F_tht^real</span> and
+              <span class="math">F_D^real</span> algorithmically from
+              <span class="math">F_mod^real</span>. Corollary 3.7 then defines the
+              theta link as the full poly-isomorphism from the theta-side global package
+              of one theater to the mod-side global package of another.
+            </p>
+            <div class="tagRow"><span class="tag red">Corollary 3.7</span><span class="tag">theta link</span></div>
+          </div>
+        </div>
+        <div class="callout warn">
+          Formalization warning: this package should not be collapsed into one generic
+          "local Frobenioid" field. The source construction depends on the valuation
+          stratum, the split Frobenioid, the theta version, and the global realified
+          comparison maps.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
+          Related: <a href="#initial-theta-data">initial theta data</a>
+          <a href="#kappa-coric-functions">kappa-coric functions</a>
+          <a href="#hodge-theaters">Hodge theaters</a>
+          <a href="#theta-log-links">theta/log links</a>
+          <a href="#frobenioids-log-shells">Frobenioids/log-shells</a>
         </div>
       </section>
 
