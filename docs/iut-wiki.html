@@ -581,6 +581,7 @@
         <a href="#iut-iv-local-log-volume-estimates-11-15">IUT IV local estimates 1.1-1.5</a>
         <a href="#iut-iv-prime-averaging-16-17">IUT IV prime/averaging 1.6-1.7</a>
         <a href="#iut-iv-elliptic-torsion-18">IUT IV elliptic torsion 1.8</a>
+        <a href="#iut-iv-arithmetic-divisors-19">IUT IV arithmetic divisors 1.9</a>
         <a href="#iut-iv">IUT IV and consequences</a>
         <a href="#iut-iv-diophantine-output">IUT IV output route</a>
         <a href="#probabilistic-szpiro">Probabilistic Szpiro</a>
@@ -5629,6 +5630,7 @@
               <a href="#iut-iv-prime-averaging-16-17">prime/averaging input</a>,
               <a href="#iut-iv-elliptic-torsion-18">elliptic torsion input</a>,
               <a href="#elliptic-torsion-input">elliptic torsion</a>,
+              <a href="#iut-iv-arithmetic-divisors-19">arithmetic divisors</a>,
               <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a>,
               <a href="#iut-iv">estimate pipeline</a>
             </td>
@@ -22079,6 +22081,214 @@
         </div>
       </section>
 
+      <section id="iut-iv-arithmetic-divisors-19">
+        <h2>IUT IV Definition 1.9: Arithmetic Divisors</h2>
+        <p class="lede">
+          Definition 1.9 fixes the global bookkeeping language used in Theorem 1.10:
+          arithmetic divisors on a number field, support and effectivity, the degree and
+          normalized degree maps, and the localized normalized <span class="math">E</span>-degree
+          over a rational valuation.
+        </p>
+        <div class="diagram fit" aria-label="IUT IV Definition 1.9 arithmetic divisor bookkeeping">
+          <div class="diagramHeader">
+            <strong>Arithmetic divisor bookkeeping</strong>
+            <span>global valuation sums and base-extension-invariant degrees</span>
+          </div>
+          <svg viewBox="0 0 1080 500" role="img">
+            <defs>
+              <marker id="arrowIUTIVADiv19" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="54" y="74" width="220" height="86"></rect>
+            <text class="nodeTitle" x="164" y="104" text-anchor="middle">number field F</text>
+            <text class="tinyText" x="164" y="128" text-anchor="middle">valuations V(F)</text>
+            <text class="tinyText" x="164" y="146" text-anchor="middle">nonarch + arch</text>
+
+            <rect class="nodeBox green" x="430" y="74" width="220" height="86"></rect>
+            <text class="nodeTitle" x="540" y="104" text-anchor="middle">arithmetic divisor</text>
+            <text class="tinyText" x="540" y="128" text-anchor="middle">finite sum c_v v</text>
+            <text class="tinyText" x="540" y="146" text-anchor="middle">support, effective</text>
+
+            <rect class="nodeBox gold" x="806" y="74" width="220" height="86"></rect>
+            <text class="nodeTitle" x="916" y="104" text-anchor="middle">degree map</text>
+            <text class="tinyText" x="916" y="128" text-anchor="middle">log(q_v), arch weight 1</text>
+            <text class="tinyText" x="916" y="146" text-anchor="middle">deg_F -> deg</text>
+
+            <rect class="nodeBox violet" x="254" y="286" width="250" height="88"></rect>
+            <text class="nodeTitle" x="379" y="316" text-anchor="middle">base extension K/F</text>
+            <text class="tinyText" x="379" y="340" text-anchor="middle">pull back a|K</text>
+            <text class="tinyText" x="379" y="358" text-anchor="middle">normalized degree invariant</text>
+
+            <rect class="nodeBox red" x="610" y="286" width="250" height="88"></rect>
+            <text class="nodeTitle" x="735" y="316" text-anchor="middle">localized E-degree</text>
+            <text class="tinyText" x="735" y="340" text-anchor="middle">E over one v_Q</text>
+            <text class="tinyText" x="735" y="358" text-anchor="middle">base-extension invariant</text>
+
+            <path d="M276 117 H428" class="edge blue" marker-end="url(#arrowIUTIVADiv19)"></path>
+            <path d="M652 117 H804" class="edge green" marker-end="url(#arrowIUTIVADiv19)"></path>
+            <path d="M916 162 C890 232 800 256 746 284" class="edge gold" marker-end="url(#arrowIUTIVADiv19)"></path>
+            <path d="M540 162 C512 222 438 252 392 284" class="edge violet" marker-end="url(#arrowIUTIVADiv19)"></path>
+            <path d="M506 330 H608" class="edge red" marker-end="url(#arrowIUTIVADiv19)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Definition</th><th>Use in IUT IV</th></tr>
+          <tr>
+            <td>Definition 1.9 setup</td>
+            <td>
+              For a number field <span class="math">F</span>, valuations split into
+              nonarchimedean and archimedean parts. At nonarchimedean
+              <span class="math">v</span>, the notation includes
+              <span class="math">ord_v</span>, ramification index
+              <span class="math">e_v</span>, and residue cardinality
+              <span class="math">q_v</span>.
+            </td>
+            <td>
+              This is the valuation language used by the later different, conductor,
+              and q-parameter divisors.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 1.9(i)</td>
+            <td>
+              An <span class="math">R</span>-arithmetic divisor is a finite formal sum
+              <span class="math">sum c_v v</span> over valuations. Its support is where
+              <span class="math">c_v != 0</span>; it is effective if all coefficients are
+              nonnegative.
+            </td>
+            <td>
+              The theorem can speak uniformly about finite and archimedean height data
+              without leaving the divisor formalism.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 1.9(i)</td>
+            <td>
+              The degree map weights nonarchimedean valuations by
+              <span class="math">log(q_v)</span> and archimedean valuations by
+              <span class="math">1</span>. The normalized degree divides by
+              <span class="math">[F:Q]</span>.
+            </td>
+            <td>
+              This fixes the global scale for the explicit estimates in Theorem 1.10
+              and Section 2.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 1.9(i)</td>
+            <td>
+              For every finite extension <span class="math">K/F</span>, normalized
+              degree is invariant under pullback:
+              <span class="math">deg(a|K)=deg(a)</span>.
+            </td>
+            <td>
+              This allows the proof to move through the field extensions appearing in
+              initial theta data without changing the normalized degree scale.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 1.9(ii)</td>
+            <td>
+              If <span class="math">E</span> is a nonempty set of valuations of
+              <span class="math">F</span> above one rational valuation
+              <span class="math">v_Q</span>, then
+              <span class="math">a_E</span> is the supported part and
+              <span class="math">deg_E(a)</span> is the normalized
+              <span class="math">E</span>-degree.
+            </td>
+            <td>
+              This is the local-over-global degree used when estimates are localized at
+              a chosen rational place.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 1.9(ii)</td>
+            <td>
+              The localized degree is also stable under finite base extension:
+              <span class="math">deg_{E|K}(a|K)=deg_E(a)</span>.
+            </td>
+            <td>
+              This preserves the local contribution when passing from
+              <span class="math">F</span> to larger fields in the theta-data tower.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="valuation-split-adiv-iv19">
+            <h3>Valuation split</h3>
+            <p>
+              Definition 1.9 starts by separating nonarchimedean and archimedean
+              valuations. Only nonarchimedean valuations carry
+              <span class="math">ord_v</span>, <span class="math">e_v</span>, and
+              <span class="math">q_v</span>; archimedean valuations enter through the
+              degree weight <span class="math">1</span>.
+            </p>
+            <div class="tagRow"><span class="tag blue">Def. 1.9</span><span class="tag">V(F)</span></div>
+          </div>
+          <div class="card" id="finite-formal-sum-adiv-iv19">
+            <h3>Finite formal sum</h3>
+            <p>
+              Arithmetic divisors are finite sums over all valuations, not ideals alone.
+              This is why the same object can carry finite q-parameter data and
+              archimedean contributions.
+            </p>
+            <div class="tagRow"><span class="tag green">Def. 1.9(i)</span><span class="tag">ADiv</span></div>
+          </div>
+          <div class="card" id="support-effectivity-adiv-iv19">
+            <h3>Support and effectivity</h3>
+            <p>
+              Support records the valuations with nonzero coefficient. Effectivity is
+              coefficientwise nonnegativity and later applies to q-parameter and
+              conductor-like divisors.
+            </p>
+            <div class="tagRow"><span class="tag gold">Def. 1.9(i)</span><span class="tag">effective</span></div>
+          </div>
+          <div class="card" id="global-degree-map-adiv-iv19">
+            <h3>Degree map</h3>
+            <p>
+              The degree map sends nonarchimedean <span class="math">v</span> to
+              <span class="math">log(q_v)</span> and archimedean
+              <span class="math">v</span> to <span class="math">1</span>. The normalized
+              version divides by <span class="math">[F:Q]</span>.
+            </p>
+            <div class="tagRow"><span class="tag red">Def. 1.9(i)</span><span class="tag">degree</span></div>
+          </div>
+          <div class="card" id="base-extension-degree-invariance-iv19">
+            <h3>Base-extension invariance</h3>
+            <p>
+              Pulling an arithmetic divisor from <span class="math">F</span> to a finite
+              extension <span class="math">K</span> preserves normalized degree. This
+              is a scaling convention, not an automatic property of unnormalized degree.
+            </p>
+            <div class="tagRow"><span class="tag violet">Def. 1.9(i)</span><span class="tag">pullback</span></div>
+          </div>
+          <div class="card" id="localized-e-degree-iv19">
+            <h3>Localized <span class="math">E</span>-degree</h3>
+            <p>
+              The <span class="math">E</span>-degree isolates the contribution from
+              valuations above a fixed rational valuation. It is the bookkeeping device
+              for localizing global divisor estimates.
+            </p>
+            <div class="tagRow"><span class="tag green">Def. 1.9(ii)</span><span class="tag">local</span></div>
+          </div>
+        </div>
+        <div class="callout violet">
+          Formalization warning: arithmetic divisors in Definition 1.9 combine finite
+          and archimedean valuation data and use normalized degrees. A formalization
+          should not silently replace them by fractional ideals or by unnormalized
+          divisor degrees.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Definition 1.9</a>
+          Related: <a href="#iut-iv-elliptic-torsion-18">elliptic torsion input</a>
+          <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a>
+          <a href="#iut-iv">IUT IV overview</a>
+          <a href="#iut-iv-diophantine-output">IUT IV output route</a>
+        </div>
+      </section>
+
       <section id="iut-iv">
         <h2>IUT IV and Consequences</h2>
         <p class="lede">
@@ -22213,7 +22423,7 @@
           <tr>
             <td>Definition 1.9 and Theorem 1.10</td>
             <td>Arithmetic divisors and the explicit theta-pilot log-volume estimate.</td>
-            <td><a href="#iut-iv-elliptic-torsion-18">elliptic torsion input</a>, <a href="#arithmetic-divisors">arithmetic divisors</a>, <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a></td>
+            <td><a href="#iut-iv-elliptic-torsion-18">elliptic torsion input</a>, <a href="#iut-iv-arithmetic-divisors-19">arithmetic divisor route</a>, <a href="#arithmetic-divisors">arithmetic divisors</a>, <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a></td>
           </tr>
           <tr>
             <td>Corollaries 2.2-2.3</td>
