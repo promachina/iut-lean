@@ -485,6 +485,7 @@
         <a href="#mutually-alien-copies">Mutually alien copies</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
         <a href="#multiplicative-additive-bridges">Multiplicative/additive bridges</a>
+        <a href="#theta-plus-minus-ell-relay">Theta±ell relay</a>
         <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
         <a href="#frobenioids-log-shells">Frobenioids and log-shells</a>
         <a href="#theta-log-links">Theta and log links</a>
@@ -1052,7 +1053,9 @@
               <a href="#nf-bridge">NF bridge</a>,
               <a href="#theta-plus-minus-bridge">Theta-plus-minus bridge</a>,
               <a href="#theta-ell-bridge">Theta-ell bridge</a>,
-              <a href="#theta-plus-minus-ell-nf-theater">Theta-plus-minus-ellNF theater</a>
+              <a href="#theta-plus-minus-ell-nf-theater">Theta-plus-minus-ellNF theater</a>,
+              <a href="#global-plus-minus-synchronization">global ± synchronization</a>,
+              <a href="#zero-nonzero-label-relation">zero/nonzero label relation</a>
             </td>
             <td>IUT I, Sections 5-6</td>
           </tr>
@@ -5030,6 +5033,254 @@
           <a href="#theta-log-links">theta/log links</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="theta-plus-minus-ell-relay">
+        <h2>Theta±ell Relay</h2>
+        <p class="lede">
+          The additive side of IUT I is not merely the multiplicative bridge with signs
+          attached. Section 6 introduces signed additive torsors, zero-labeled
+          prime-strips, global ±-synchronization, and a geometric basepoint tied to
+          <span class="math">X_K</span>. These features are later needed for
+          Hodge-Arakelov theta evaluation.
+        </p>
+
+        <div class="diagram" aria-label="Theta plus-minus ell relay">
+          <div class="diagramHeader">
+            <strong>Additive and multiplicative basepoints</strong>
+            <span>Section 6 separates the geometric and arithmetic roles</span>
+          </div>
+          <svg viewBox="0 0 960 430" role="img">
+            <defs>
+              <marker id="arrowThetaPMRelay" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox gold" x="54" y="58" width="216" height="88"></rect>
+            <text class="nodeTitle" x="162" y="87" text-anchor="middle">Additive side</text>
+            <text class="smallText" x="162" y="111" text-anchor="middle">F_l ⋊ {±1}</text>
+            <text class="tinyText" x="162" y="130" text-anchor="middle">labels include 0</text>
+
+            <rect class="nodeBox blue" x="54" y="246" width="216" height="88"></rect>
+            <text class="nodeTitle" x="162" y="275" text-anchor="middle">Geometric basepoint</text>
+            <text class="smallText" x="162" y="299" text-anchor="middle">D_o± = B(X_K)^0</text>
+            <text class="tinyText" x="162" y="318" text-anchor="middle">single cusp component</text>
+
+            <rect class="nodeBox violet" x="372" y="60" width="216" height="86"></rect>
+            <text class="nodeTitle" x="480" y="89" text-anchor="middle">Global ± sync</text>
+            <text class="smallText" x="480" y="113" text-anchor="middle">same sign across V</text>
+            <text class="tinyText" x="480" y="132" text-anchor="middle">precondition for translations</text>
+
+            <rect class="nodeBox green" x="372" y="246" width="216" height="88"></rect>
+            <text class="nodeTitle" x="480" y="275" text-anchor="middle">Arithmetic side</text>
+            <text class="smallText" x="480" y="299" text-anchor="middle">F_l^*/± on F_mod</text>
+            <text class="tinyText" x="480" y="318" text-anchor="middle">number-field construction</text>
+
+            <rect class="nodeBox red" x="686" y="140" width="218" height="104"></rect>
+            <text class="nodeTitle" x="795" y="171" text-anchor="middle">Theta±ellNF relay</text>
+            <text class="smallText" x="795" y="196" text-anchor="middle">glues additive and</text>
+            <text class="smallText" x="795" y="215" text-anchor="middle">multiplicative theaters</text>
+
+            <path d="M270 102 H370" class="edge gold" marker-end="url(#arrowThetaPMRelay)"></path>
+            <path d="M162 146 V244" class="edge blue" marker-end="url(#arrowThetaPMRelay)"></path>
+            <path d="M270 290 H370" class="edge blue" marker-end="url(#arrowThetaPMRelay)"></path>
+            <path d="M588 103 C646 116 666 145 686 169" class="edge violet" marker-end="url(#arrowThetaPMRelay)"></path>
+            <path d="M588 290 C646 274 666 242 686 218" class="edge green" marker-end="url(#arrowThetaPMRelay)"></path>
+
+            <rect class="nodeBox gold" x="138" y="370" width="214" height="42"></rect>
+            <text class="smallText" x="245" y="396" text-anchor="middle">zero label can be compared to nonzero labels</text>
+            <rect class="nodeBox green" x="608" y="370" width="214" height="42"></rect>
+            <text class="smallText" x="715" y="396" text-anchor="middle">nonzero labels feed Gaussian Frobenioids</text>
+            <path d="M245 334 V368" class="edge gold" marker-end="url(#arrowThetaPMRelay)"></path>
+            <path d="M715 244 V368" class="edge green" marker-end="url(#arrowThetaPMRelay)"></path>
+          </svg>
+        </div>
+
+        <table>
+          <tr>
+            <th>IUT I source item</th>
+            <th>Precise role</th>
+            <th>Formalization consequence</th>
+          </tr>
+          <tr>
+            <td>Definition 6.1(i)</td>
+            <td>
+              <span class="math">F_l ⋊ {±1}</span> acts on
+              <span class="math">F_l</span> by affine maps
+              <span class="math">z -> ±z + lambda</span>. Positive automorphisms are
+              the translation part; full signed automorphisms also include the sign.
+            </td>
+            <td>
+              The additive symmetry should be typed as an affine signed action, not as
+              a cyclic multiplicative torsor with an added Boolean.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 6.1(iii)</td>
+            <td>
+              <span class="math">LabCusp±(D_v)</span> has a zero element and a
+              ±-canonical element. Removing zero and quotienting by ± recovers the
+              ordinary cusp-label set.
+            </td>
+            <td>
+              The zero label must remain explicit until the theory deliberately passes
+              to nonzero/quotiented labels.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 6.1(v)</td>
+            <td>
+              The global additive object is
+              <span class="math">D_o± = B(X_K)^0</span>, a finite etale double cover of
+              <span class="math">D_o = B(C_K)^0</span>. Its automorphisms reconstruct
+              the relevant signed affine structure using the distinguished cusp.
+            </td>
+            <td>
+              Additive labels are anchored in the elliptic cover and its cusp data,
+              while multiplicative labels are anchored in the orbicurve/field-of-moduli
+              side.
+            </td>
+          </tr>
+          <tr>
+            <td>Examples 6.2-6.3</td>
+            <td>
+              The model D-Theta± bridge carries signed full poly-isomorphisms, while
+              the D-Thetaell bridge carries a poly-action of
+              <span class="math">F_l ⋊ {±1}</span> on both the capsule and
+              <span class="math">D_o±</span>.
+            </td>
+            <td>
+              The additive bridge has two interacting layers: signs at places and
+              affine translations of labels.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 6.12.4</td>
+            <td>
+              Synchronization of labels comes from a single global component/basepoint,
+              via bijections between capsule indices and global ±-label classes of cusps.
+            </td>
+            <td>
+              Independent local relabelings are not source-accurate. A model must
+              express the global origin of the label bijections.
+            </td>
+          </tr>
+          <tr>
+            <td>Remarks 6.12.5-6.12.6</td>
+            <td>
+              The additive symmetry relates the zero-labeled strip to nonzero-labeled
+              strips, but this also means it does not insulate the nonzero labels from
+              the zero label. The glued theater relays between this geometric basepoint
+              and the arithmetic basepoint used to construct <span class="math">F_mod</span>.
+            </td>
+            <td>
+              The later Gaussian layer must remember that nonzero theta values depend on
+              both the additive relation to zero and the multiplicative number-field
+              structure.
+            </td>
+          </tr>
+        </table>
+
+        <div class="grid3">
+          <div class="card" id="signed-affine-action">
+            <h3>Signed affine action</h3>
+            <p>
+              The additive symmetry acts by <span class="math">z -> ±z + lambda</span>.
+              Positive automorphisms are translations; negative automorphisms include
+              the sign reversal.
+            </p>
+            <div class="tagRow"><span class="tag gold">Def. 6.1(i)</span><span class="tag">affine</span></div>
+          </div>
+          <div class="card" id="plus-minus-label-classes">
+            <h3>±-label classes</h3>
+            <p>
+              A ±-label class is a cusp class of a D-prime-strip lying over a single
+              cusp of the additive cover. It remembers both a zero class and a
+              ±-canonical class.
+            </p>
+            <div class="tagRow"><span class="tag blue">Def. 6.1(iii)</span><span class="tag">cusps</span></div>
+          </div>
+          <div class="card" id="additive-global-object">
+            <h3>Global additive object</h3>
+            <p>
+              <span class="math">D_o± = B(X_K)^0</span> replaces the multiplicative
+              <span class="math">B(C_K)^0</span> base. The choice of cusp supplies the
+              signed affine structure on global cusp labels.
+            </p>
+            <div class="tagRow"><span class="tag blue">Def. 6.1(v)</span><span class="tag">X_K</span></div>
+          </div>
+          <div class="card" id="global-plus-minus-synchronization">
+            <h3>Global ± synchronization</h3>
+            <p>
+              Remark 6.12.4 says the ±-indeterminacies over the various
+              <span class="math">v in V</span> are globally synchronized. This is a
+              prerequisite for the additive translation action to compare labels
+              coherently.
+            </p>
+            <div class="tagRow"><span class="tag violet">Rem. 6.12.4</span><span class="tag">global sign</span></div>
+          </div>
+          <div class="card" id="zero-nonzero-label-relation">
+            <h3>Zero/nonzero relation</h3>
+            <p>
+              Remark 6.12.5 identifies the zero label as the feature that lets the
+              additive network compare zero-labeled and nonzero-labeled prime-strips.
+              It is also the source of a later insulation problem for Gaussian data.
+            </p>
+            <div class="tagRow"><span class="tag red">Rem. 6.12.5</span><span class="tag">zero label</span></div>
+          </div>
+          <div class="card" id="gaussian-insulation-issue">
+            <h3>Gaussian insulation issue</h3>
+            <p>
+              The Gaussian Frobenioids of IUT II use nonzero theta values. The additive
+              theory can relate zero and nonzero strips, but the later multiplicative
+              theory is needed to keep the nonzero Gaussian package from being confused
+              with the zero strip.
+            </p>
+            <div class="tagRow"><span class="tag red">Rem. 6.12.5</span><span class="tag">IUT II input</span></div>
+          </div>
+          <div class="card" id="geometric-basepoint">
+            <h3>Geometric basepoint</h3>
+            <p>
+              The additive side uses one geometric basepoint: a single connected
+              component of the local elliptic object. This is why it is suited to
+              Hodge-Arakelov theta evaluation.
+            </p>
+            <div class="tagRow"><span class="tag gold">Rem. 6.12.6(ii)</span><span class="tag">theta evaluation</span></div>
+          </div>
+          <div class="card" id="arithmetic-basepoint">
+            <h3>Arithmetic basepoint</h3>
+            <p>
+              The multiplicative side uses an arithmetic basepoint and
+              <span class="math">F_l^*/±</span> symmetry. This is why it is suited to
+              constructing <span class="math">F_mod</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Rem. 6.12.6(iii)</span><span class="tag">F_mod</span></div>
+          </div>
+          <div class="card" id="combinatorial-z-resolution">
+            <h3>Combinatorial resolution of Z</h3>
+            <p>
+              Remark 6.12.6 summarizes the glued theater as a relay between additive
+              and multiplicative basepoints, or as a global combinatorial resolution of
+              the two operations on the ring <span class="math">Z</span>.
+            </p>
+            <div class="tagRow"><span class="tag violet">Rem. 6.12.6(v)</span><span class="tag">add/mult split</span></div>
+          </div>
+        </div>
+
+        <div class="callout gold">
+          Source warning: the nonzero labels used by the multiplicative side are not
+          simply a subset of the additive theory in ordinary set-theoretic memory.
+          Section 6 relates them through signed torsors, quotienting by ±, and a later
+          gluing to the ThetaNF theater.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Section 6 and Remarks 6.12.4-6.12.6</a>
+          Related: <a href="#multiplicative-additive-bridges">multiplicative/additive bridges</a>
+          <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
+          <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
+          <a href="#theta-log-links">theta/log links</a>
         </div>
       </section>
 
