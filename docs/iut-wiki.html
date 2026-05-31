@@ -621,6 +621,11 @@
         <a href="#etale-picture-cor39">Etale-picture 3.9</a>
         <a href="#multiplicative-combinatorial-teichmuller">Multiplicative combinatorics</a>
         <a href="#d-prime-strips-labels-41-42">D-prime strips 4.1-4.2</a>
+        <a href="#d-prime-strip-definition-iut-i41">D-prime-strip definition 4.1</a>
+        <a href="#d-cusp-label-torsors-iut-i41">Cusp label torsors 4.1</a>
+        <a href="#d-monoanalytic-prime-strips-iut-i41">D⊢ prime-strips 4.1</a>
+        <a href="#d-global-polymorphisms-iut-i41">Global D poly-morphisms 4.1</a>
+        <a href="#d-label-synchronization-iut-i42">Label synchronization 4.2</a>
         <a href="#local-analytic-sections-43">Local analytic sections 4.3</a>
         <a href="#theta-evaluation-sections-44-45">Theta evaluation sections 4.4-4.5</a>
         <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges 4.6-4.7</a>
@@ -14228,6 +14233,313 @@
           <a href="#local-analytic-sections-43">local analytic sections</a>
           <a href="#theta-evaluation-sections-44-45">theta evaluation sections</a>
           <a href="#prime-strips-bridges">prime strips and bridges</a>
+        </div>
+      </section>
+
+      <section id="d-prime-strip-definition-iut-i41" data-filter="iut i definition 4.1 d prime strip holomorphic base prime strip nonarchimedean archimedean valuation indexed">
+        <h2>IUT I Definition 4.1(i): D-Prime-Strip</h2>
+        <p class="lede">
+          A holomorphic base-prime-strip is the D-side local package used before the
+          Frobenioid enhancements of Section 5. It is a valuation-indexed family
+          <span class="math">D = {D_v}_{v in V}</span>, with different local types at
+          nonarchimedean and archimedean valuations.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Definition 4.1 D-prime-strip">
+          <div class="diagramHeader">
+            <strong>Valuation-indexed D-side local data</strong>
+            <span>IUT I, Definition 4.1(i)</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowDDef41" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="78" y="82" width="260" height="98"></rect>
+            <text class="nodeTitle" x="208" y="112" text-anchor="middle">D-prime-strip</text>
+            <text class="tinyText" x="208" y="138" text-anchor="middle">{D_v}_{v in V}</text>
+            <text class="tinyText" x="208" y="158" text-anchor="middle">holomorphic base-prime-strip</text>
+            <rect class="nodeBox green" x="444" y="64" width="260" height="98"></rect>
+            <text class="nodeTitle" x="574" y="94" text-anchor="middle">v nonarchimedean</text>
+            <text class="tinyText" x="574" y="120" text-anchor="middle">category equivalent to D_v</text>
+            <text class="tinyText" x="574" y="140" text-anchor="middle">Examples 3.2(i), 3.3(i)</text>
+            <rect class="nodeBox violet" x="444" y="222" width="260" height="98"></rect>
+            <text class="nodeTitle" x="574" y="252" text-anchor="middle">v archimedean</text>
+            <text class="tinyText" x="574" y="278" text-anchor="middle">Aut-holomorphic orbispace</text>
+            <text class="tinyText" x="574" y="298" text-anchor="middle">Example 3.4(i)</text>
+            <rect class="nodeBox gold" x="810" y="142" width="240" height="98"></rect>
+            <text class="nodeTitle" x="930" y="172" text-anchor="middle">functorial D_v</text>
+            <text class="tinyText" x="930" y="198" text-anchor="middle">associated C_v-side object</text>
+            <text class="tinyText" x="930" y="218" text-anchor="middle">natural morphism to D_v</text>
+            <path class="edge blue" d="M338 128 H442" marker-end="url(#arrowDDef41)"></path>
+            <path class="edge blue" d="M338 144 C390 202 404 246 442 270" marker-end="url(#arrowDDef41)"></path>
+            <path class="edge green" d="M704 113 C752 128 780 150 808 172" marker-end="url(#arrowDDef41)"></path>
+            <path class="edge violet" d="M704 270 C752 250 780 220 808 198" marker-end="url(#arrowDDef41)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Valuation class</th><th>Definition 4.1(i) content</th><th>Precision point</th></tr>
+          <tr>
+            <td>Nonarchimedean</td>
+            <td><span class="math">D_v</span> is a category equivalent to the local <span class="math">D_v</span> of Examples 3.2(i) or 3.3(i).</td>
+            <td>The local object is categorical D-side data, not a chosen field embedding.</td>
+          </tr>
+          <tr>
+            <td>Archimedean</td>
+            <td><span class="math">D_v</span> is an Aut-holomorphic orbispace isomorphic to the archimedean source <span class="math">D_v</span>.</td>
+            <td>Archimedean entries retain their own Aut-holomorphic type.</td>
+          </tr>
+          <tr>
+            <td>Associated object</td>
+            <td>Each local entry functorially determines a corresponding <span class="math">D_v</span> associated to the curve/orbicurve side, with a natural morphism.</td>
+            <td>This is the local setup used for later prime-strip morphisms.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 4.1(i)</a>
+          Related: <a href="#d-cusp-label-torsors-iut-i41">cusp label torsors</a>
+          <a href="#d-prime-strips-labels-41-42">D-prime strips overview</a>
+        </div>
+      </section>
+
+      <section id="d-cusp-label-torsors-iut-i41" data-filter="iut i definition 4.1 cusp label classes labcusp epsilon fl torsor">
+        <h2>IUT I Definition 4.1(ii): Cusp Label Torsors</h2>
+        <p class="lede">
+          From each local component <span class="math">D_v</span>, Mochizuki reconstructs
+          cusps and groups them into label classes. These label classes form an
+          <span class="math">F_l^x/{±1}</span>-torsor and contain a canonical class
+          determined by the initial cusp <span class="math">epsilon_v</span>.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Definition 4.1 cusp label torsors">
+          <div class="diagramHeader">
+            <strong>Local cusps to label-class torsor</strong>
+            <span>IUT I, Definition 4.1(ii)</span>
+          </div>
+          <svg viewBox="0 0 1120 400" role="img">
+            <defs>
+              <marker id="arrowCusp41" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="92" y="112" width="238" height="92"></rect>
+            <text class="nodeTitle" x="211" y="142" text-anchor="middle">local D_v</text>
+            <text class="tinyText" x="211" y="168" text-anchor="middle">group-theoretic or topological cusp recovery</text>
+            <rect class="nodeBox green" x="442" y="112" width="238" height="92"></rect>
+            <text class="nodeTitle" x="561" y="142" text-anchor="middle">cusps over nonzero cusp</text>
+            <text class="tinyText" x="561" y="168" text-anchor="middle">LabCusp(D_v)</text>
+            <rect class="nodeBox gold" x="792" y="112" width="238" height="92"></rect>
+            <text class="nodeTitle" x="911" y="142" text-anchor="middle">F_l torsor + eta_v</text>
+            <text class="tinyText" x="911" y="168" text-anchor="middle">canonical epsilon class</text>
+            <path class="edge blue" d="M330 158 H440" marker-end="url(#arrowCusp41)"></path>
+            <path class="edge green" d="M680 158 H790" marker-end="url(#arrowCusp41)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Input</th><th>Construction</th><th>Source dependence</th></tr>
+          <tr>
+            <td><span class="math">v in V_non</span></td>
+            <td>Cusps are reconstructed from cuspidal decomposition groups of <span class="math">pi_1(D_v)</span>.</td>
+            <td>Uses AbsTopI Lemma 4.5 as cited in Definition 4.1(ii).</td>
+          </tr>
+          <tr>
+            <td><span class="math">v in V_arc</span></td>
+            <td>Cusps are reconstructed from connected components of neighborhoods of infinity.</td>
+            <td>Uses the Aut-holomorphic orbispace topology.</td>
+          </tr>
+          <tr>
+            <td><span class="math">LabCusp(D_v)</span></td>
+            <td>Label classes over a nonzero cusp carry the natural <span class="math">F_l</span>-torsor structure and canonical <span class="math">eta_v</span>.</td>
+            <td>The label is reconstructed from local geometry, not assigned externally.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 4.1(ii)</a>
+          Related: <a href="#d-label-synchronization-iut-i42">label synchronization</a>
+          <a href="#initial-theta-cusp-covers-iut-i31">initial cusp/covers</a>
+        </div>
+      </section>
+
+      <section id="d-monoanalytic-prime-strips-iut-i41" data-filter="iut i definition 4.1 mono analytic d perpendicular prime strip mono analyticization morphisms capsules">
+        <h2>IUT I Definition 4.1(iii)-(iv): <span class="math">D^⊢</span>-Prime-Strips</h2>
+        <p class="lede">
+          The mono-analytic base-prime-strip is a separate typed layer. It is obtained
+          directly by specifying the mono-analytic local objects, and every D-prime-strip
+          has a natural mono-analyticization.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Definition 4.1 mono-analytic prime strips">
+          <div class="diagramHeader">
+            <strong>D to D^⊢</strong>
+            <span>IUT I, Definition 4.1(iii)-(iv)</span>
+          </div>
+          <svg viewBox="0 0 1120 400" role="img">
+            <defs>
+              <marker id="arrowDPerp41" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="92" y="104" width="238" height="100"></rect>
+            <text class="nodeTitle" x="211" y="136" text-anchor="middle">D-prime-strip</text>
+            <text class="tinyText" x="211" y="162" text-anchor="middle">holomorphic local D-data</text>
+            <rect class="nodeBox violet" x="442" y="104" width="238" height="100"></rect>
+            <text class="nodeTitle" x="561" y="136" text-anchor="middle">mono-analyticization</text>
+            <text class="tinyText" x="561" y="162" text-anchor="middle">subcategories or TM^⊢ construction</text>
+            <rect class="nodeBox green" x="792" y="104" width="238" height="100"></rect>
+            <text class="nodeTitle" x="911" y="136" text-anchor="middle">D^⊢-prime-strip</text>
+            <text class="tinyText" x="911" y="162" text-anchor="middle">{D_v^⊢}_{v in V}</text>
+            <path class="edge blue" d="M330 154 H440" marker-end="url(#arrowDPerp41)"></path>
+            <path class="edge violet" d="M680 154 H790" marker-end="url(#arrowDPerp41)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Layer</th><th>Definition 4.1 content</th><th>Guardrail</th></tr>
+          <tr>
+            <td><span class="math">D^⊢</span> at nonarchimedean places</td>
+            <td>Categories equivalent to <span class="math">D_v^⊢</span> from Examples 3.2(i), 3.3(i).</td>
+            <td>Do not reuse the holomorphic <span class="math">D_v</span> type.</td>
+          </tr>
+          <tr>
+            <td><span class="math">D^⊢</span> at archimedean places</td>
+            <td>Objects of <span class="math">TM^⊢</span> isomorphic to Example 3.4(ii).</td>
+            <td>The archimedean mono-analytic layer is a split topological monoid object.</td>
+          </tr>
+          <tr>
+            <td>Morphisms/capsules</td>
+            <td>Morphisms are valuation-indexed collections; capsules use the conventions of Section 0.</td>
+            <td>Capsules keep multiple prime-strips visible as a family, not as one product object.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 4.1(iii)-(iv)</a>
+          Related: <a href="#etale-picture-cor39">etale-picture core</a>
+          <a href="#d-prime-strip-definition-iut-i41">D-prime-strip definition</a>
+        </div>
+      </section>
+
+      <section id="d-global-polymorphisms-iut-i41" data-filter="iut i definition 4.1 global d category polymorphism valuations aut holomorphic archimedean labcusp">
+        <h2>IUT I Definition 4.1(v)-(vi): Global <span class="math">D</span> and Poly-Morphisms</h2>
+        <p class="lede">
+          Definition 4.1 also fixes a global base category
+          <span class="math">D = B(C_K)^0</span>. From a category equivalent to this
+          global object, one reconstructs valuations, archimedean Aut-holomorphic
+          orbispaces, cusp labels, and finally poly-morphisms from prime-strips to the
+          global base.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Definition 4.1 global D poly-morphisms">
+          <div class="diagramHeader">
+            <strong>Local D-prime-strips to global D</strong>
+            <span>IUT I, Definition 4.1(v)-(vi)</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowDGlobal41" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="86" y="90" width="250" height="96"></rect>
+            <text class="nodeTitle" x="211" y="120" text-anchor="middle">global D = B(C_K)^0</text>
+            <text class="tinyText" x="211" y="146" text-anchor="middle">pi_1 reconstructs F and V(F)</text>
+            <rect class="nodeBox green" x="434" y="90" width="250" height="96"></rect>
+            <text class="nodeTitle" x="559" y="120" text-anchor="middle">global cusp labels</text>
+            <text class="tinyText" x="559" y="146" text-anchor="middle">LabCusp(D), F_l torsor</text>
+            <rect class="nodeBox gold" x="782" y="90" width="250" height="96"></rect>
+            <text class="nodeTitle" x="907" y="120" text-anchor="middle">poly-morphisms</text>
+            <text class="tinyText" x="907" y="146" text-anchor="middle">D_v -> D and D -> D</text>
+            <rect class="nodeBox violet" x="434" y="282" width="250" height="86"></rect>
+            <text class="nodeTitle" x="559" y="312" text-anchor="middle">capsules</text>
+            <text class="tinyText" x="559" y="338" text-anchor="middle">{eD}_e -> D as families of poly-morphisms</text>
+            <path class="edge blue" d="M336 138 H432" marker-end="url(#arrowDGlobal41)"></path>
+            <path class="edge green" d="M684 138 H780" marker-end="url(#arrowDGlobal41)"></path>
+            <path class="edge gold" d="M907 188 C846 250 704 262 584 280" marker-end="url(#arrowDGlobal41)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Object</th><th>Definition 4.1(v)-(vi) content</th><th>Role</th></tr>
+          <tr>
+            <td><span class="math">D</span></td>
+            <td><span class="math">B(C_K)^0</span>; from <span class="math">pi_1(D)</span> one reconstructs the algebraic closure, valuations, and archimedean orbispaces.</td>
+            <td>Provides the global target for model base-NF-bridges.</td>
+          </tr>
+          <tr>
+            <td><span class="math">LabCusp(D)</span></td>
+            <td>The global category has cusp label classes with a natural <span class="math">F_l</span>-torsor structure.</td>
+            <td>Aligns the global side with local label torsors.</td>
+          </tr>
+          <tr>
+            <td>Poly-morphism</td>
+            <td>A local poly-morphism <span class="math">D_v -> D</span> is a collection of morphisms; a prime-strip poly-morphism is the family over all valuations.</td>
+            <td>Section 4 uses relation-like poly-data, not a single chosen map.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 4.1(v)-(vi)</a>
+          Related: <a href="#local-analytic-sections-43">local analytic sections</a>
+          <a href="#d-label-synchronization-iut-i42">label synchronization</a>
+        </div>
+      </section>
+
+      <section id="d-label-synchronization-iut-i42" data-filter="iut i proposition 4.2 label classes cusps synchronization epsilon fl torsor remark 4.2.1">
+        <h2>IUT I Proposition 4.2: Label Synchronization</h2>
+        <p class="lede">
+          Proposition 4.2 synchronizes the local label torsors of a D-prime-strip.
+          For any two valuations, the bijection between label classes is uniquely
+          determined by compatibility with the canonical <span class="math">eta_v</span>
+          classes and the <span class="math">F_l</span>-torsor structures.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Proposition 4.2 label synchronization">
+          <div class="diagramHeader">
+            <strong>Local torsors become one global label torsor</strong>
+            <span>IUT I, Proposition 4.2 and Remark 4.2.1</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowLabel42" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="84" y="96" width="250" height="96"></rect>
+            <text class="nodeTitle" x="209" y="126" text-anchor="middle">LabCusp(D_v)</text>
+            <text class="tinyText" x="209" y="152" text-anchor="middle">eta_v and F_l torsor</text>
+            <rect class="nodeBox blue" x="434" y="96" width="250" height="96"></rect>
+            <text class="nodeTitle" x="559" y="126" text-anchor="middle">LabCusp(D_w)</text>
+            <text class="tinyText" x="559" y="152" text-anchor="middle">eta_w and F_l torsor</text>
+            <rect class="nodeBox green" x="784" y="96" width="250" height="96"></rect>
+            <text class="nodeTitle" x="909" y="126" text-anchor="middle">LabCusp(D)</text>
+            <text class="tinyText" x="909" y="152" text-anchor="middle">canonical element and F_l torsor</text>
+            <rect class="nodeBox red" x="360" y="286" width="400" height="86"></rect>
+            <text class="nodeTitle" x="560" y="316" text-anchor="middle">Remark 4.2.1 warning</text>
+            <text class="tinyText" x="560" y="342" text-anchor="middle">good-place D_v must be built from arrow-decorated X_v data</text>
+            <path class="edge blue" d="M334 144 H432" marker-end="url(#arrowLabel42)"></path>
+            <path class="edge blue" d="M684 144 H782" marker-end="url(#arrowLabel42)"></path>
+            <path class="edge red" d="M560 194 V284" marker-end="url(#arrowLabel42)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Assertion</th><th>Proposition 4.2 content</th><th>Use</th></tr>
+          <tr>
+            <td>Unique local bijections</td>
+            <td>For any <span class="math">v,w in V</span>, <span class="math">LabCusp(D_v) -> LabCusp(D_w)</span> is uniquely determined by <span class="math">eta_v -> eta_w</span> and torsor compatibility.</td>
+            <td>Turns local label classes into one synchronized torsor.</td>
+          </tr>
+          <tr>
+            <td>Isomorphism invariance</td>
+            <td>The bijections are preserved by arbitrary isomorphisms of D-prime-strips.</td>
+            <td>The labels are intrinsic to the D-prime-strip structure.</td>
+          </tr>
+          <tr>
+            <td>Natural bijection</td>
+            <td>The canonical element and torsor structure identify <span class="math">LabCusp(D)</span> with <span class="math">F_l</span>.</td>
+            <td>Supplies the Section 4 label set used by later bridges.</td>
+          </tr>
+          <tr>
+            <td>Remark 4.2.1</td>
+            <td>If good-place <span class="math">D_v</span> were defined from <span class="math">C_v</span> instead of arrow-decorated <span class="math">X_v</span>, the required bijection system need not exist.</td>
+            <td>The source object choice is active mathematical data.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Proposition 4.2 and Remark 4.2.1</a>
+          Related: <a href="#d-cusp-label-torsors-iut-i41">cusp label torsors</a>
+          <a href="#local-analytic-sections-43">local analytic sections</a>
         </div>
       </section>
 
