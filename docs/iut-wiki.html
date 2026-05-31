@@ -581,6 +581,8 @@
         <a href="#d-prime-strips-labels-41-42">D-prime strips 4.1-4.2</a>
         <a href="#local-analytic-sections-43">Local analytic sections 4.3</a>
         <a href="#theta-evaluation-sections-44-45">Theta evaluation sections 4.4-4.5</a>
+        <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges 4.6-4.7</a>
+        <a href="#section4-symmetries-processions-48-412">Symmetries/processions 4.8-4.12</a>
         <a href="#iut-i-global-frobenioids-example51">Global Frobenioids 5.1</a>
         <a href="#iut-i-frobenioid-prime-strips-52">Frobenioid prime-strips 5.2</a>
         <a href="#iut-i-pivotal-distributions-54">Pivotal distributions 5.4</a>
@@ -1577,6 +1579,8 @@
               <a href="#d-prime-strips-labels-41-42">D-prime strips 4.1-4.2</a>,
               <a href="#local-analytic-sections-43">local analytic sections 4.3</a>,
               <a href="#theta-evaluation-sections-44-45">theta evaluation sections 4.4-4.5</a>,
+              <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges 4.6-4.7</a>,
+              <a href="#section4-symmetries-processions-48-412">symmetries/processions 4.8-4.12</a>,
               <a href="#iut-i-base-bridges-evaluation-sections">base bridges/evaluation sections</a>
             </td>
             <td>IUT I, Definition 4.1 through Definition 4.6</td>
@@ -10575,6 +10579,270 @@
           <a href="#local-analytic-sections-43">local analytic sections 4.3</a>
           <a href="#theta-evaluation-kummer-route">theta evaluation route</a>
           <a href="#global-kummer-noninterference-iii310">global Kummer noninterference</a>
+        </div>
+      </section>
+
+      <section id="d-theta-nf-bridges-46-47">
+        <h2>IUT I Definition 4.6 and Proposition 4.7: D-ThetaNF Bridges</h2>
+        <p class="lede">
+          Definition 4.6 packages the Section 4 bridge machinery into D-NF bridges,
+          D-Theta bridges, and D-ThetaNF-Hodge theaters. Proposition 4.7 then proves
+          that the bridge package transports cusp-label torsors and produces the crucial
+          bijection <span class="math">zeta : LabCusp(D) -> J</span> from global cusp
+          labels to capsule indices.
+        </p>
+        <div class="diagram" aria-label="D-ThetaNF bridge package and zeta bijection">
+          <div class="diagramHeader">
+            <strong>Shared capsule bridge package</strong>
+            <span>Definition 4.6 and Proposition 4.7</span>
+          </div>
+          <svg viewBox="0 0 1120 560" role="img">
+            <defs>
+              <marker id="arrowDThetaNF46" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="74" y="84" width="250" height="90"></rect>
+            <text class="nodeTitle" x="199" y="116" text-anchor="middle">D-NF bridge</text>
+            <text class="tinyText" x="199" y="140" text-anchor="middle">D <- D_J</text>
+            <text class="tinyText" x="199" y="158" text-anchor="middle">global base side</text>
+
+            <rect class="nodeBox gold" x="436" y="62" width="250" height="116"></rect>
+            <text class="nodeTitle" x="561" y="96" text-anchor="middle">capsule D_J</text>
+            <text class="tinyText" x="561" y="122" text-anchor="middle">finite index set J</text>
+            <text class="tinyText" x="561" y="142" text-anchor="middle">same index bijection required</text>
+            <text class="tinyText" x="561" y="162" text-anchor="middle">for both bridge morphisms</text>
+
+            <rect class="nodeBox red" x="798" y="84" width="250" height="90"></rect>
+            <text class="nodeTitle" x="923" y="116" text-anchor="middle">D-Theta bridge</text>
+            <text class="tinyText" x="923" y="140" text-anchor="middle">D_J -> D_></text>
+            <text class="tinyText" x="923" y="158" text-anchor="middle">theta/evaluation side</text>
+
+            <rect class="nodeBox violet" x="350" y="270" width="420" height="92"></rect>
+            <text class="nodeTitle" x="560" y="302" text-anchor="middle">D-ThetaNF-Hodge theater</text>
+            <text class="tinyText" x="560" y="328" text-anchor="middle">(D <- D_J -> D_>) with compatible bridge morphisms</text>
+            <text class="tinyText" x="560" y="348" text-anchor="middle">isomorphisms induce the same bijection on J</text>
+
+            <rect class="nodeBox green" x="178" y="430" width="280" height="78"></rect>
+            <text class="nodeTitle" x="318" y="460" text-anchor="middle">chi : J -> F_l^x/{+/-1}</text>
+            <text class="tinyText" x="318" y="484" text-anchor="middle">labels from bad-place theta bridge</text>
+
+            <rect class="nodeBox green" x="662" y="430" width="280" height="78"></rect>
+            <text class="nodeTitle" x="802" y="460" text-anchor="middle">zeta : LabCusp(D) -> J</text>
+            <text class="tinyText" x="802" y="484" text-anchor="middle">global cusp labels become capsule indices</text>
+
+            <path d="M326 128 H434" class="edge blue" marker-end="url(#arrowDThetaNF46)"></path>
+            <path d="M688 128 H796" class="edge red" marker-end="url(#arrowDThetaNF46)"></path>
+            <path d="M561 180 V268" class="edge violet" marker-end="url(#arrowDThetaNF46)"></path>
+            <path d="M492 362 C438 386 378 406 328 428" class="edge green" marker-end="url(#arrowDThetaNF46)"></path>
+            <path d="M628 362 C682 386 742 406 792 428" class="edge green" marker-end="url(#arrowDThetaNF46)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Def. 4.6(i)</td>
+            <td>
+              A D-NF bridge is a poly-morphism
+              <span class="math">D_J -> D</span>, modeled on Example 4.3, from a
+              capsule of D-prime-strips to a global base object.
+            </td>
+            <td>It is the global-number-field bridge, not the theta-evaluation bridge.</td>
+          </tr>
+          <tr>
+            <td>Def. 4.6(ii)</td>
+            <td>
+              A D-Theta bridge is a poly-morphism
+              <span class="math">D_J -> D_></span>, modeled on Example 4.4, from a
+              capsule of D-prime-strips to a theta-side target strip.
+            </td>
+            <td>It carries the evaluation-section input from bad places.</td>
+          </tr>
+          <tr>
+            <td>Def. 4.6(iii)</td>
+            <td>
+              A D-ThetaNF-Hodge theater is
+              <span class="math">D <- D_J -> D_></span>; its isomorphisms are bridge
+              morphisms inducing the same bijection on capsule indices.
+            </td>
+            <td>Shared capsule-index compatibility is part of the object definition.</td>
+          </tr>
+          <tr>
+            <td>Prop. 4.7(i)</td>
+            <td>
+              The bad-place structure of the D-Theta bridge determines
+              <span class="math">chi : J -> F_l^x/{±1}</span>.
+            </td>
+            <td>The labels of capsule constituents are recovered from the bridge, not chosen freely.</td>
+          </tr>
+          <tr>
+            <td>Prop. 4.7(ii)-(iii)</td>
+            <td>
+              Bridge restrictions determine torsor isomorphisms
+              <span class="math">phi_j^LC : LabCusp(D) -> LabCusp(D_>)</span> and a
+              unique epsilon class yielding
+              <span class="math">zeta : LabCusp(D) -> J</span>.
+            </td>
+            <td>This is the source of global cusp labels native to <span class="math">D</span>.</td>
+          </tr>
+          <tr>
+            <td>Remark 4.7.2</td>
+            <td>
+              The inverse of <span class="math">zeta</span> is described as a
+              combinatorial Kodaira-Spencer morphism relating arithmetic capsule indices
+              to geometric cusp labels.
+            </td>
+            <td>The bridge is not only bookkeeping; it is the Section 4 arithmetic/geometric label interface.</td>
+          </tr>
+        </table>
+        <div class="callout good">
+          The crucial point for later formalization is the shared capsule: the NF and
+          theta bridge morphisms must agree on the capsule-index bijection before the
+          <span class="math">zeta</span> bijection can serve as a global label interface.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 4.6, Proposition 4.7, Remarks 4.7.1-4.7.2</a>
+          Related: <a href="#theta-evaluation-sections-44-45">theta evaluation sections</a>
+          <a href="#section4-symmetries-processions-48-412">symmetries/processions</a>
+          <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+        </div>
+      </section>
+
+      <section id="section4-symmetries-processions-48-412">
+        <h2>IUT I Propositions 4.8-4.11 and Corollary 4.12: Symmetries and Processions</h2>
+        <p class="lede">
+          The last part of Section 4 explains why unlabeled output data matters.
+          Proposition 4.9 separates cyclic label symmetry from full symmetric-group
+          symmetry; Definition 4.10 and Proposition 4.11 introduce processions to reduce
+          label indeterminacy; Corollary 4.12 extracts the D-ThetaNF etale-picture.
+        </p>
+        <div class="diagram" aria-label="Section 4 symmetries processions and etale-picture">
+          <div class="diagramHeader">
+            <strong>From labels to comparison data</strong>
+            <span>Propositions 4.8-4.11 and Corollary 4.12</span>
+          </div>
+          <svg viewBox="0 0 1120 580" role="img">
+            <defs>
+              <marker id="arrowSec4Proc" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="72" width="250" height="86"></rect>
+            <text class="nodeTitle" x="195" y="104" text-anchor="middle">D-ThetaNF theater</text>
+            <text class="tinyText" x="195" y="128" text-anchor="middle">labeled bridge package</text>
+
+            <rect class="nodeBox gold" x="436" y="50" width="250" height="82"></rect>
+            <text class="nodeTitle" x="561" y="80" text-anchor="middle">D-NF output</text>
+            <text class="tinyText" x="561" y="104" text-anchor="middle">F_l^x/{+/-1} cyclic symmetry</text>
+
+            <rect class="nodeBox green" x="436" y="164" width="250" height="82"></rect>
+            <text class="nodeTitle" x="561" y="194" text-anchor="middle">capsule output</text>
+            <text class="tinyText" x="561" y="218" text-anchor="middle">full symmetric-group symmetry</text>
+
+            <rect class="nodeBox violet" x="804" y="112" width="250" height="92"></rect>
+            <text class="nodeTitle" x="929" y="144" text-anchor="middle">absolute comparison</text>
+            <text class="tinyText" x="929" y="168" text-anchor="middle">forget cyclic structure on J</text>
+            <text class="tinyText" x="929" y="186" text-anchor="middle">compare unrelated prime-strips</text>
+
+            <rect class="nodeBox red" x="220" y="356" width="300" height="92"></rect>
+            <text class="nodeTitle" x="370" y="388" text-anchor="middle">procession</text>
+            <text class="tinyText" x="370" y="412" text-anchor="middle">P_1 -> P_2 -> ... -> P_l*</text>
+            <text class="tinyText" x="370" y="430" text-anchor="middle">indeterminacy drops from (l*)^(l*) to l*!</text>
+
+            <rect class="nodeBox green" x="640" y="356" width="300" height="92"></rect>
+            <text class="nodeTitle" x="790" y="388" text-anchor="middle">D-ThetaNF etale-picture</text>
+            <text class="tinyText" x="790" y="412" text-anchor="middle">constant mono-analytic core D_>^perp</text>
+            <text class="tinyText" x="790" y="430" text-anchor="middle">arbitrary spoke permutations</text>
+
+            <path d="M322 104 H434" class="edge gold" marker-end="url(#arrowSec4Proc)"></path>
+            <path d="M322 136 C374 160 394 180 434 202" class="edge green" marker-end="url(#arrowSec4Proc)"></path>
+            <path d="M688 92 C750 104 786 126 802 144" class="edge gold" marker-end="url(#arrowSec4Proc)"></path>
+            <path d="M688 204 C750 194 786 178 802 164" class="edge green" marker-end="url(#arrowSec4Proc)"></path>
+            <path d="M520 246 C470 282 410 318 382 354" class="edge red" marker-end="url(#arrowSec4Proc)"></path>
+            <path d="M606 246 C654 290 730 314 778 354" class="edge green" marker-end="url(#arrowSec4Proc)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Prop. 4.8</td>
+            <td>
+              D-NF bridge isomorphisms form an
+              <span class="math">F_l^x/{±1}</span>-torsor; D-Theta bridge and
+              D-ThetaNF theater isomorphism sets have cardinality one; gluing choices
+              again form an <span class="math">F_l^x/{±1}</span>-torsor.
+            </td>
+            <td>There are two different uniqueness/indeterminacy regimes in the same bridge package.</td>
+          </tr>
+          <tr>
+            <td>Prop. 4.9(i)</td>
+            <td>
+              Forgetting to the underlying D-NF bridge gives output with cyclic
+              <span class="math">F_l^x/{±1}</span>-symmetry acting simply transitively
+              on capsule indices.
+            </td>
+            <td>Cyclic symmetry preserves the NF bridge's global label structure.</td>
+          </tr>
+          <tr>
+            <td>Prop. 4.9(ii)-(iii)</td>
+            <td>
+              Forgetting to the holomorphic or mono-analytic capsule gives full
+              symmetric-group symmetry and forgets the bijection
+              <span class="math">J -> F_l^x/{±1}</span>.
+            </td>
+            <td>Absolute comparison requires forgetting the cyclic structure.</td>
+          </tr>
+          <tr>
+            <td>Remark 4.9.1</td>
+            <td>
+              Non-labeled output data is needed to compare objects, including later
+              log-volumes, constructed relative to different labels.
+            </td>
+            <td>This is a direct upstream source for log-volume comparability in IUT III.</td>
+          </tr>
+          <tr>
+            <td>Remark 4.9.2</td>
+            <td>
+              A single global <span class="math">D</span> synchronizes labels. If each
+              prime-strip had an independent globalization, nonsynchronized labels would
+              be incompatible with the <span class="math">zeta</span> bijection.
+            </td>
+            <td>The one-base-object design is mathematically load-bearing.</td>
+          </tr>
+          <tr>
+            <td>Def. 4.10; Prop. 4.11</td>
+            <td>
+              A procession is a nested capsule diagram
+              <span class="math">P_1 -> ... -> P_n</span>. For Section 4, processions
+              reduce label indeterminacy from
+              <span class="math">(l*)^(l*)</span> to <span class="math">l*!</span>.
+            </td>
+            <td>Processions retain comparison symmetry while minimizing label ambiguity.</td>
+          </tr>
+          <tr>
+            <td>Cor. 4.12</td>
+            <td>
+              The D-ThetaNF link is the full poly-isomorphism between the
+              mono-analyticized targets <span class="math">D_>^⊢</span>. In an infinite
+              chain, these form a constant mono-analytic core with arbitrary permutation
+              symmetries among spokes.
+            </td>
+            <td>This extends the Corollary 3.9 etale-picture pattern to D-ThetaNF theaters.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Later log-volume experiments must distinguish three comparison levels:
+          cyclic <span class="math">F_l^x/{±1}</span> comparison, full symmetric
+          comparison after forgetting labels, and procession comparison with reduced
+          indeterminacy.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Propositions 4.8-4.11 and Corollary 4.12</a>
+          Related: <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a>
+          <a href="#etale-picture-cor39">etale-picture 3.9</a>
+          <a href="#packet-procession-log-volume-iii39">packet/procession log-volume</a>
+          <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         </div>
       </section>
 
