@@ -627,6 +627,10 @@
         <a href="#d-global-polymorphisms-iut-i41">Global D poly-morphisms 4.1</a>
         <a href="#d-label-synchronization-iut-i42">Label synchronization 4.2</a>
         <a href="#local-analytic-sections-43">Local analytic sections 4.3</a>
+        <a href="#nf-automorphism-subgroups-iut-i43">NF automorphism groups 4.3</a>
+        <a href="#nf-local-polymorphisms-iut-i43">NF local poly-morphisms 4.3</a>
+        <a href="#nf-d-capsule-fl-action-iut-i43">NF D-capsule action 4.3</a>
+        <a href="#prime-strip-section-obstructions-iut-i431">Prime-strip obstructions 4.3.1</a>
         <a href="#theta-evaluation-sections-44-45">Theta evaluation sections 4.4-4.5</a>
         <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges 4.6-4.7</a>
         <a href="#section4-symmetries-processions-48-412">Symmetries/processions 4.8-4.12</a>
@@ -14683,6 +14687,154 @@
           <a href="#collas-category-perspective">Collas category view</a>
           <a href="#topological-fundamental-group-mutation">fundamental group mutation</a>
         </div>
+      </section>
+
+      <section id="nf-automorphism-subgroups-iut-i43" data-filter="iut i example 4.3 aut epsilon ck borel semi unipotent fl model nf bridge">
+        <h2>IUT I Example 4.3(i): NF Automorphism Subgroups</h2>
+        <p class="lede">
+          Example 4.3 starts the model base-NF-bridge by isolating automorphisms of
+          <span class="math">C_K</span> that fix the cusp <span class="math">epsilon</span>.
+          Modulo sign, their image inside the torsion action is semi-unipotent inside a
+          Borel subgroup; the quotient supplies the <span class="math">F_l</span> action.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Example 4.3 automorphism subgroups">
+          <div class="diagramHeader"><strong>Automorphism subgroups behind the NF bridge</strong><span>IUT I, Example 4.3(i)</span></div>
+          <svg viewBox="0 0 1120 410" role="img">
+            <defs><marker id="arrowNFAut43" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path></marker></defs>
+            <rect class="nodeBox blue" x="86" y="104" width="250" height="92"></rect>
+            <text class="nodeTitle" x="211" y="134" text-anchor="middle">Aut_epsilon(C_K)</text>
+            <text class="tinyText" x="211" y="160" text-anchor="middle">cusp-fixing automorphisms</text>
+            <rect class="nodeBox green" x="434" y="80" width="250" height="92"></rect>
+            <text class="nodeTitle" x="559" y="110" text-anchor="middle">semi-unipotent image</text>
+            <text class="tinyText" x="559" y="136" text-anchor="middle">inside GL_2(F_l)/±</text>
+            <rect class="nodeBox gold" x="784" y="80" width="250" height="92"></rect>
+            <text class="nodeTitle" x="909" y="110" text-anchor="middle">Aut(C_K)</text>
+            <text class="tinyText" x="909" y="136" text-anchor="middle">Borel image</text>
+            <rect class="nodeBox violet" x="434" y="250" width="250" height="86"></rect>
+            <text class="nodeTitle" x="559" y="280" text-anchor="middle">quotient ≃ F_l</text>
+            <text class="tinyText" x="559" y="306" text-anchor="middle">poly-action on global D</text>
+            <path class="edge blue" d="M336 150 H432" marker-end="url(#arrowNFAut43)"></path>
+            <path class="edge green" d="M684 126 H782" marker-end="url(#arrowNFAut43)"></path>
+            <path class="edge gold" d="M910 174 C830 238 704 254 586 250" marker-end="url(#arrowNFAut43)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Object</th><th>Example 4.3(i) content</th><th>Use</th></tr>
+          <tr><td><span class="math">Aut_epsilon(C_K)</span></td><td>Subgroup of automorphisms fixing the cusp <span class="math">epsilon</span>.</td><td>Stabilizes the base NF poly-morphism for label <span class="math">1</span>.</td></tr>
+          <tr><td>Images in torsion action</td><td><span class="math">Aut_epsilon(C_K)</span> maps to a semi-unipotent subgroup; <span class="math">Aut(C_K)</span> maps to a Borel subgroup.</td><td>Controls how labels act on the global base.</td></tr>
+          <tr><td><span class="math">F_l</span> quotient</td><td>The quotient <span class="math">Aut(C_K)/Aut_epsilon(C_K)</span> is naturally identified with <span class="math">F_l</span>.</td><td>Supplies the label action used in Example 4.3(iv).</td></tr>
+        </table>
+        <div class="related">Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 4.3(i)</a> Related: <a href="#nf-d-capsule-fl-action-iut-i43">NF D-capsule action</a> <a href="#d-global-polymorphisms-iut-i41">global D poly-morphisms</a></div>
+      </section>
+
+      <section id="nf-local-polymorphisms-iut-i43" data-filter="iut i example 4.3 local polymorphism phi nf v nonarchimedean archimedean aut epsilon">
+        <h2>IUT I Example 4.3(ii)-(iii): Local NF Poly-Morphisms</h2>
+        <p class="lede">
+          For each valuation, Example 4.3 constructs a poly-morphism
+          <span class="math">phi_v^NF : D_v -> D</span>. It starts from a tautological
+          local morphism to the global base and then closes under local automorphisms
+          and cusp-fixing global automorphisms.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Example 4.3 local NF poly-morphisms">
+          <div class="diagramHeader"><strong>Local morphism closed under allowed automorphisms</strong><span>IUT I, Example 4.3(ii)-(iii)</span></div>
+          <svg viewBox="0 0 1120 400" role="img">
+            <defs><marker id="arrowNFLocal43" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path></marker></defs>
+            <rect class="nodeBox blue" x="90" y="112" width="240" height="92"></rect>
+            <text class="nodeTitle" x="210" y="142" text-anchor="middle">D_v</text>
+            <text class="tinyText" x="210" y="168" text-anchor="middle">local D-prime-strip component</text>
+            <rect class="nodeBox green" x="440" y="112" width="240" height="92"></rect>
+            <text class="nodeTitle" x="560" y="142" text-anchor="middle">phi_*v^NF</text>
+            <text class="tinyText" x="560" y="168" text-anchor="middle">tautological morphism to D</text>
+            <rect class="nodeBox gold" x="790" y="112" width="240" height="92"></rect>
+            <text class="nodeTitle" x="910" y="142" text-anchor="middle">phi_v^NF</text>
+            <text class="tinyText" x="910" y="168" text-anchor="middle">{ beta phi_* alpha }</text>
+            <path class="edge blue" d="M330 158 H438" marker-end="url(#arrowNFLocal43)"></path>
+            <path class="edge green" d="M680 158 H788" marker-end="url(#arrowNFLocal43)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Valuation</th><th>Construction</th><th>Allowed variation</th></tr>
+          <tr><td>Nonarchimedean</td><td>Restriction along <span class="math">X_v -> C_v -> C_K</span> or its bad-place variant gives <span class="math">phi_*v^NF</span>.</td><td>Precompose by <span class="math">Aut(D_v)</span>; postcompose by <span class="math">Aut_epsilon(D)</span>.</td></tr>
+          <tr><td>Archimedean</td><td>The tautological map <span class="math">D_v = X_v -> C_v -> C(D,v)</span> gives <span class="math">phi_*v^NF</span>.</td><td>Same poly-morphism closure under local and cusp-fixing global automorphisms.</td></tr>
+        </table>
+        <div class="related">Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 4.3(ii)-(iii)</a> Related: <a href="#nf-automorphism-subgroups-iut-i43">NF automorphism groups</a> <a href="#d-global-polymorphisms-iut-i41">global D poly-morphisms</a></div>
+      </section>
+
+      <section id="nf-d-capsule-fl-action-iut-i43" data-filter="iut i example 4.3 d capsule fl action phi nf j base nf bridge">
+        <h2>IUT I Example 4.3(iv): <span class="math">F_l</span>-Indexed D-Capsule</h2>
+        <p class="lede">
+          Example 4.3 then copies the tautological D-prime-strip once for each
+          <span class="math">j in F_l</span>. The label <span class="math">j</span>
+          acts by post-composition on the global base, producing a poly-morphism
+          <span class="math">phi_j^NF : D_j -> D</span> and a capsule-level
+          <span class="math">phi^NF : D -> D</span>.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Example 4.3 F_l indexed D capsule">
+          <div class="diagramHeader"><strong>Model base-NF bridge capsule</strong><span>IUT I, Example 4.3(iv)</span></div>
+          <svg viewBox="0 0 1120 420" role="img">
+            <defs><marker id="arrowNFCaps43" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path></marker></defs>
+            <rect class="nodeBox blue" x="78" y="104" width="250" height="96"></rect>
+            <text class="nodeTitle" x="203" y="134" text-anchor="middle">D_j</text>
+            <text class="tinyText" x="203" y="160" text-anchor="middle">copy of tautological D-prime-strip</text>
+            <rect class="nodeBox green" x="434" y="104" width="250" height="96"></rect>
+            <text class="nodeTitle" x="559" y="134" text-anchor="middle">phi_j^NF</text>
+            <text class="tinyText" x="559" y="160" text-anchor="middle">from j-action on global D</text>
+            <rect class="nodeBox gold" x="790" y="104" width="250" height="96"></rect>
+            <text class="nodeTitle" x="915" y="134" text-anchor="middle">phi^NF : capsule D -> D</text>
+            <text class="tinyText" x="915" y="160" text-anchor="middle">equivariant for F_l poly-actions</text>
+            <path class="edge blue" d="M328 152 H432" marker-end="url(#arrowNFCaps43)"></path>
+            <path class="edge green" d="M684 152 H788" marker-end="url(#arrowNFCaps43)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Layer</th><th>Example 4.3(iv) content</th><th>Use</th></tr>
+          <tr><td><span class="math">D_j</span></td><td>For each <span class="math">j in F_l</span>, take a copy of the tautological D-prime-strip.</td><td>Creates the label-indexed capsule used by base-NF bridges.</td></tr>
+          <tr><td><span class="math">phi_j^NF</span></td><td>Transport <span class="math">phi_1^NF</span> using the <span class="math">F_l</span> poly-action on the global base.</td><td>Keeps labels attached to poly-morphisms rather than to external names.</td></tr>
+          <tr><td>Equivariance</td><td><span class="math">phi^NF</span> is equivariant for the natural <span class="math">F_l</span> poly-action on the data.</td><td>Prepares Definition 4.6’s D-NF bridge model.</td></tr>
+        </table>
+        <div class="related">Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 4.3(iv)</a> Related: <a href="#nf-local-polymorphisms-iut-i43">NF local poly-morphisms</a> <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a></div>
+      </section>
+
+      <section id="prime-strip-section-obstructions-iut-i431" data-filter="iut i remark 4.3.1 local analytic sections obstruction global multiplicative subspace prime decomposition trees">
+        <h2>IUT I Remark 4.3.1: Prime-Strips as Local Analytic Sections</h2>
+        <p class="lede">
+          Remark 4.3.1 explains the conceptual meaning of Example 4.3: D-prime-strips
+          behave like arithmetic collections of local analytic sections of
+          <span class="math">Spec(K) -> Spec(F)</span>. They simulate local
+          multiplicative subspaces, but fail to be globally arithmetically holomorphic.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Remark 4.3.1 prime-strip obstructions">
+          <div class="diagramHeader"><strong>Three failures of global holomorphicity</strong><span>IUT I, Remark 4.3.1</span></div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs><marker id="arrowObs431" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path></marker></defs>
+            <rect class="nodeBox blue" x="80" y="72" width="250" height="94"></rect>
+            <text class="nodeTitle" x="205" y="102" text-anchor="middle">local analytic sections</text>
+            <text class="tinyText" x="205" y="128" text-anchor="middle">D-prime-strips</text>
+            <rect class="nodeBox red" x="435" y="48" width="260" height="88"></rect>
+            <text class="nodeTitle" x="565" y="78" text-anchor="middle">no ring section</text>
+            <text class="tinyText" x="565" y="102" text-anchor="middle">no K -> F homomorphism</text>
+            <rect class="nodeBox gold" x="435" y="172" width="260" height="88"></rect>
+            <text class="nodeTitle" x="565" y="202" text-anchor="middle">prime trees disagree</text>
+            <text class="tinyText" x="565" y="226" text-anchor="middle">local prime identification does not extend</text>
+            <rect class="nodeBox violet" x="435" y="296" width="260" height="88"></rect>
+            <text class="nodeTitle" x="565" y="326" text-anchor="middle">no global Galois section</text>
+            <text class="tinyText" x="565" y="350" text-anchor="middle">local Galois isomorphisms do not globalize</text>
+            <rect class="nodeBox green" x="805" y="172" width="250" height="88"></rect>
+            <text class="nodeTitle" x="930" y="202" text-anchor="middle">motivates panalocalization</text>
+            <text class="tinyText" x="930" y="226" text-anchor="middle">IUT III / AbsTopIII geometry</text>
+            <path class="edge blue" d="M330 118 C376 92 394 78 433 84" marker-end="url(#arrowObs431)"></path>
+            <path class="edge blue" d="M330 118 C386 150 402 190 433 214" marker-end="url(#arrowObs431)"></path>
+            <path class="edge blue" d="M330 118 C378 236 402 306 433 340" marker-end="url(#arrowObs431)"></path>
+            <path class="edge gold" d="M696 216 H803" marker-end="url(#arrowObs431)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Failure mode</th><th>Remark 4.3.1 content</th><th>Later need</th></tr>
+          <tr><td>No ring section</td><td>The local analytic sections fail to extend to ring homomorphisms <span class="math">K -> F</span>.</td><td>Explains why a genuine global multiplicative subspace is unavailable.</td></tr>
+          <tr><td>Prime decomposition trees</td><td>A local identification of primes does not extend to an isomorphism of full prime decomposition trees.</td><td>Connects the obstruction to Neukirch-Uchida-style global arithmetic.</td></tr>
+          <tr><td>No global Galois section</td><td>Local absolute Galois group isomorphisms do not extend to a section of global absolute Galois groups.</td><td>Motivates later mono-anabelian panalocalization.</td></tr>
+        </table>
+        <div class="related">Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Remark 4.3.1</a> Related: <a href="#nf-d-capsule-fl-action-iut-i43">NF D-capsule action</a> <a href="#prime-strips-bridges">prime strips and bridges</a></div>
       </section>
 
       <section id="theta-evaluation-sections-44-45">
