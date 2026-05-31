@@ -915,6 +915,10 @@
               <a href="#procession-average-forced">forced procession average</a>,
               <a href="#log-link-log-volume-compatibility">log-link/log-volume compatibility</a>,
               <a href="#q-power-log-volume">q-power log-volume</a>,
+              <a href="#global-kummer-noninterference">global Kummer non-interference</a>,
+              <a href="#fmod-fmod-bias">FMOD/Fmod bias</a>,
+              <a href="#fperp-prime-strip-compatibility">F⊥ prime-strip compatibility</a>,
+              <a href="#f-times-mu-square">F×μ prime-strip square</a>,
               <a href="#log-kummer-correspondence">log-Kummer correspondence</a>,
               <a href="#upper-semi-compatibility">upper semi-compatibility</a>,
               <a href="#packet-normalization">packet log-volume</a>,
@@ -5632,6 +5636,16 @@
             <td>Integral-structure discrepancy, forced averaging, and realified semi-simplification.</td>
             <td>Explains how the holomorphic/mono-analytic discrepancy is computed from initial theta data and why log-link compatibility must avoid circular real-valued ambiguity.</td>
           </tr>
+          <tr>
+            <td>Proposition 3.10</td>
+            <td>Global Kummer theory and non-interference with local integers.</td>
+            <td>Globalizes the log-Kummer correspondence and separates precise <span class="math">FMOD</span> compatibility from upper-semi-compatible <span class="math">Fmod</span> behavior.</td>
+          </tr>
+          <tr>
+            <td>Remarks 3.10.1-3.10.2</td>
+            <td><span class="math">FMOD/LGP</span> versus <span class="math">Fmod/lgp</span>, and the <span class="math">F×μ</span>-prime-strip diagram.</td>
+            <td>Explains why LGP is used for Kummer detachment, why Fmod is used for estimates, and how horizontal links are obtained by conjugating etale-like arrows by Kummer isomorphisms.</td>
+          </tr>
         </table>
 
         <div class="grid2">
@@ -6137,6 +6151,108 @@
 
             <path d="M359 126 C360 156 398 172 438 193" stroke="#9a3f35" stroke-width="1.4" fill="none" marker-end="url(#arrowProp39)"></path>
             <path d="M585 126 C576 156 524 172 482 193" stroke="#9a3f35" stroke-width="1.4" fill="none" marker-end="url(#arrowProp39)"></path>
+          </svg>
+        </div>
+
+        <div class="grid2">
+          <div class="card" id="global-kummer-noninterference">
+            <h3>Global Kummer non-interference</h3>
+            <p>
+              Proposition 3.10(i) constructs vertically coric global fields, monoids,
+              Frobenioids, and LGP/lgp F-prime-strips from the vertical
+              <span class="math">D-Θ±ellNF</span>-Hodge theater. For every
+              <span class="math">n,m</span>, Kummer isomorphisms compare the ordinary
+              global data with this vertically coric target.
+            </p>
+            <p>
+              Proposition 3.10(ii) then identifies the intersection of the global
+              multiplicative field with all local packet integer monoids as the finite
+              group of roots of unity. This is the non-interference statement that makes
+              adjacent log-link ambiguity harmless.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Proposition 3.10(i),(ii)</span><span class="tag">roots of unity</span></div>
+          </div>
+          <div class="card" id="fmod-fmod-bias">
+            <h3>FMOD/Fmod bias</h3>
+            <p>
+              Remark 3.10.1 distinguishes two roles. The multiplicative
+              <span class="math">FMOD</span> side admits precise log-Kummer
+              compatibility with vertical log-links and is suited to computing
+              Kummer-detachment indeterminacies.
+            </p>
+            <p>
+              The additive/local fractional-ideal <span class="math">Fmod</span> side is
+              tied to mono-analytic log-shells and log-volume estimates, but its local
+              monoids are governed by upper semi-compatibility rather than precise
+              equality. This is why it is suited to estimates, not to precise
+              Kummer-detachment isomorphisms.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Remark 3.10.1</span><span class="tag">Fig. 3.2</span></div>
+          </div>
+          <div class="card" id="fperp-prime-strip-compatibility">
+            <h3>F⊥ prime-strip compatibility</h3>
+            <p>
+              Proposition 3.10(iii) uses the global log-Kummer correspondence and the
+              splitting-monoid part of Proposition 3.5 to obtain isomorphisms of
+              associated <span class="math">F⊥</span>-prime-strips. These isomorphisms
+              are mutually compatible as <span class="math">m</span> varies along the
+              vertical log-links.
+            </p>
+            <p>
+              This precise compatibility applies to the <span class="math">MOD</span>
+              side. The source explicitly excludes the corresponding
+              <span class="math">mod</span> side from this precise conclusion.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Proposition 3.10(iii)</span><span class="tag">Kummer detachment</span></div>
+          </div>
+          <div class="card" id="f-times-mu-square">
+            <h3>F×μ prime-strip square</h3>
+            <p>
+              Remark 3.10.2 reviews the commutative diagram of
+              <span class="math">F×μ</span>-prime-strips connecting the environment,
+              Gaussian, LGP, and lgp variants in the ordinary <span class="math">n,m</span>
+              row and the vertically coric <span class="math">n,◦</span> row.
+            </p>
+            <p>
+              The lower horizontal arrows used in the horizontal links are obtained by
+              conjugating the corresponding etale-like upper arrows by the vertical
+              Kummer isomorphisms. This keeps the source of the horizontal
+              <span class="math">Θ×μ</span> links explicit.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Remark 3.10.2</span><span class="tag">F×μ</span></div>
+          </div>
+        </div>
+
+        <div class="diagram" aria-label="FMOD and Fmod bias in Proposition 3.10">
+          <div class="diagramHeader">
+            <strong>Proposition 3.10</strong>
+            <span>precise Kummer compatibility versus estimate-oriented additivity</span>
+          </div>
+          <svg viewBox="0 0 920 300" role="img">
+            <defs>
+              <marker id="arrowProp310" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox gold" x="74" y="62" width="194" height="72"></rect>
+            <text class="nodeTitle" x="171" y="90" text-anchor="middle">FMOD / LGP</text>
+            <text class="tinyText" x="171" y="110" text-anchor="middle">multiplicative, precise log-Kummer</text>
+
+            <rect class="nodeBox green" x="652" y="62" width="194" height="72"></rect>
+            <text class="nodeTitle" x="749" y="90" text-anchor="middle">Fmod / lgp</text>
+            <text class="tinyText" x="749" y="110" text-anchor="middle">additive, estimate-oriented</text>
+
+            <rect class="nodeBox violet" x="360" y="50" width="200" height="54"></rect>
+            <text class="nodeTitle" x="460" y="82" text-anchor="middle">global ring structure</text>
+
+            <rect class="nodeBox red" x="340" y="196" width="240" height="58"></rect>
+            <text class="nodeTitle" x="460" y="220" text-anchor="middle">upper-semi local monoids</text>
+            <text class="tinyText" x="460" y="240" text-anchor="middle">distortion accounted by log-volume estimates</text>
+
+            <path d="M268 98 H358" stroke="#8b6b24" stroke-width="1.5" fill="none" marker-end="url(#arrowProp310)"></path>
+            <path d="M560 98 H650" stroke="#2f6b4f" stroke-width="1.5" fill="none" marker-end="url(#arrowProp310)"></path>
+            <path d="M749 136 C728 178 624 199 582 220" stroke="#2f6b4f" stroke-width="1.4" fill="none" marker-end="url(#arrowProp310)"></path>
+            <path d="M171 136 C194 178 294 199 338 220" stroke="#9a3f35" stroke-width="1.4" fill="none" marker-end="url(#arrowProp310)"></path>
           </svg>
         </div>
 
