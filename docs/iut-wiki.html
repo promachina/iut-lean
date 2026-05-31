@@ -674,6 +674,9 @@
         <a href="#local-log-link-mechanism-iii11">Local log-link mechanism 1.1</a>
         <a href="#vertical-horizontal-coricity-page-iii">Vertical/horizontal coricity</a>
         <a href="#upper-semi-log-kummer-iii">Upper-semi Log-Kummer</a>
+        <a href="#tautological-full-log-link-page-iii112">Tautological/full log-link</a>
+        <a href="#log-shell-variants-prop12-iii">Log-shell variants 1.2</a>
+        <a href="#bi-cores-log-theta-lattice-iii15">Bi-cores 1.5</a>
         <a href="#essential-logical-structure">Logical structure</a>
         <a href="#indeterminacies">Indeterminacies</a>
         <a href="#log-kummer-correspondences">Log-Kummer correspondences</a>
@@ -1818,6 +1821,9 @@
               <a href="#local-log-link-mechanism-iii11">local log-link mechanism page</a>,
               <a href="#vertical-horizontal-coricity-page-iii">vertical/horizontal coricity page</a>,
               <a href="#upper-semi-log-kummer-iii">upper-semi Log-Kummer page</a>,
+              <a href="#tautological-full-log-link-page-iii112">tautological/full log-link page</a>,
+              <a href="#log-shell-variants-prop12-iii">log-shell variants page</a>,
+              <a href="#bi-cores-log-theta-lattice-iii15">bi-cores page</a>,
               <a href="#local-log-link">local log-link</a>,
               <a href="#log-shell-containment">log-shell containment</a>,
               <a href="#log-link-kummer-incompatibility">log-link/Kummer incompatibility</a>,
@@ -24114,6 +24120,342 @@
           Related: <a href="#log-kummer-correspondences">Log-Kummer correspondences</a>
           <a href="#indeterminacies">Indeterminacies</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="tautological-full-log-link-page-iii112">
+        <h2>IUT III Remark 1.1.2: Tautological and Full Log-Links</h2>
+        <p class="lede">
+          Definition 1.1 first constructs a tautological log-link by applying the local
+          logarithm inside a fixed Frobenius-like structure. Remark 1.1.2 then explains
+          why the later multiradial theory mainly uses the full log-link: the full link
+          replaces the specific Frobenius-dependent path by a tautologically
+          indeterminate etale-like isomorphism of the local fundamental groups.
+        </p>
+        <div class="diagram fit" aria-label="Tautological and full log-link distinction">
+          <div class="diagramHeader">
+            <strong>Two log-link modes</strong>
+            <span>Definition 1.1 and Remark 1.1.2</span>
+          </div>
+          <svg viewBox="0 0 1120 560" role="img">
+            <defs>
+              <marker id="arrowFullLog112" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="70" y="70" width="250" height="88"></rect>
+            <text class="nodeTitle" x="195" y="100" text-anchor="middle">F_v</text>
+            <text class="tinyText" x="195" y="124" text-anchor="middle">domain Frobenius-like monoid</text>
+            <text class="tinyText" x="195" y="142" text-anchor="middle">local ring structure present</text>
+
+            <rect class="nodeBox green" x="435" y="70" width="250" height="88"></rect>
+            <text class="nodeTitle" x="560" y="100" text-anchor="middle">log(F_v)</text>
+            <text class="tinyText" x="560" y="124" text-anchor="middle">tautological codomain</text>
+            <text class="tinyText" x="560" y="142" text-anchor="middle">specific rigidifying path</text>
+
+            <rect class="nodeBox gold" x="800" y="70" width="250" height="88"></rect>
+            <text class="nodeTitle" x="925" y="100" text-anchor="middle">F'_v</text>
+            <text class="tinyText" x="925" y="124" text-anchor="middle">full poly-isomorphic target</text>
+            <text class="tinyText" x="925" y="142" text-anchor="middle">etale-like description</text>
+
+            <rect class="nodeBox violet" x="210" y="300" width="300" height="92"></rect>
+            <text class="nodeTitle" x="360" y="330" text-anchor="middle">tautological link</text>
+            <text class="tinyText" x="360" y="356" text-anchor="middle">identifies the Pi_v's through</text>
+            <text class="tinyText" x="360" y="376" text-anchor="middle">the logarithmic monoid construction</text>
+
+            <rect class="nodeBox red" x="610" y="300" width="300" height="92"></rect>
+            <text class="nodeTitle" x="760" y="330" text-anchor="middle">full log-link</text>
+            <text class="tinyText" x="760" y="356" text-anchor="middle">post-composes with full poly-isomorphism</text>
+            <text class="tinyText" x="760" y="376" text-anchor="middle">removes dependence on chosen path</text>
+
+            <path d="M322 114 H433" class="edge blue" marker-end="url(#arrowFullLog112)"></path>
+            <text class="edgeLabel" x="378" y="96" text-anchor="middle">local log</text>
+            <path d="M687 114 H798" class="edge green" marker-end="url(#arrowFullLog112)"></path>
+            <text class="edgeLabel" x="742" y="96" text-anchor="middle">poly-isomorphism</text>
+            <path d="M560 160 C514 222 432 254 374 298" class="edge violet" marker-end="url(#arrowFullLog112)"></path>
+            <path d="M925 160 C880 222 804 254 766 298" class="edge red" marker-end="url(#arrowFullLog112)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Statement</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Definition 1.1(i),(ii)</td>
+            <td>
+              The tautological log-link constructs <span class="math">log(F_v)</span>
+              from the local logarithm and carries a specific relationship between the
+              fundamental groups in the domain and codomain.
+            </td>
+            <td>
+              It is the local construction that produces log-shells, but it still uses
+              Frobenius-like monoids in an essential way.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 1.1(iii)</td>
+            <td>
+              A full log-link is obtained by post-composing the tautological log-link
+              with the full poly-isomorphism <span class="math">log(F) ≃ F'</span>.
+            </td>
+            <td>
+              This is the form used when the target must be described without a chosen
+              Frobenius-like rigidifying path.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 1.1.2(i)</td>
+            <td>
+              The tautological log-link gives a specific "rigidifying path"; the full
+              log-link replaces it by the tautologically indeterminate isomorphism
+              needed for etale-like multiradial algorithms.
+            </td>
+            <td>
+              The wiki and formal models must distinguish "constructed by log" from
+              "available up to full poly-isomorphism".
+            </td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Audit rule: the full log-link is not extra decoration. It is the source
+          device that lets later algorithms speak in etale-like terms rather than in
+          terms of a specific Frobenius-like monoid path.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Definition 1.1 and Remark 1.1.2</a>
+          Related: <a href="#local-log-link-mechanism-iii11">local log-link mechanism</a>
+          <a href="#log-kummer-correspondences">Log-Kummer correspondences</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+        </div>
+      </section>
+
+      <section id="log-shell-variants-prop12-iii">
+        <h2>IUT III Proposition 1.2: Log-Shell Variants</h2>
+        <p class="lede">
+          Proposition 1.2 packages the log-link output into several log-shell forms:
+          holomorphic log-shells attached to an <span class="math">F</span>-prime-strip,
+          mono-analytic log-shells attached to <span class="math">D⊢</span>-data, and
+          coric holomorphic log-shells constructed from a <span class="math">D</span>
+          prime-strip. The theorem also records which compatibilities are actual
+          isomorphisms and which are only upper-semi containment phenomena.
+        </p>
+        <div class="diagram fit" aria-label="IUT III Proposition 1.2 log-shell variants">
+          <div class="diagramHeader">
+            <strong>Three log-shell roles</strong>
+            <span>holomorphic, mono-analytic, and coric holomorphic</span>
+          </div>
+          <svg viewBox="0 0 1120 620" role="img">
+            <defs>
+              <marker id="arrowLogShell12" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="74" y="66" width="246" height="88"></rect>
+            <text class="nodeTitle" x="197" y="96" text-anchor="middle">F-prime-strip</text>
+            <text class="tinyText" x="197" y="120" text-anchor="middle">F_v and log(F_v)</text>
+            <text class="tinyText" x="197" y="138" text-anchor="middle">Definition 1.1</text>
+
+            <rect class="nodeBox green" x="438" y="66" width="246" height="88"></rect>
+            <text class="nodeTitle" x="561" y="96" text-anchor="middle">holomorphic log-shell</text>
+            <text class="tinyText" x="561" y="120" text-anchor="middle">I_Fv inside log(F_v)</text>
+            <text class="tinyText" x="561" y="138" text-anchor="middle">finite log-volume container</text>
+
+            <rect class="nodeBox violet" x="800" y="66" width="246" height="88"></rect>
+            <text class="nodeTitle" x="923" y="96" text-anchor="middle">Kummer images</text>
+            <text class="tinyText" x="923" y="120" text-anchor="middle">domain and codomain data</text>
+            <text class="tinyText" x="923" y="138" text-anchor="middle">contained, not identified</text>
+
+            <rect class="nodeBox gold" x="168" y="302" width="262" height="92"></rect>
+            <text class="nodeTitle" x="299" y="332" text-anchor="middle">D⊢ mono-analytic log-shell</text>
+            <text class="tinyText" x="299" y="358" text-anchor="middle">constructed functorially from D⊢</text>
+            <text class="tinyText" x="299" y="378" text-anchor="middle">nonarch and arch clauses differ</text>
+
+            <rect class="nodeBox red" x="534" y="302" width="262" height="92"></rect>
+            <text class="nodeTitle" x="665" y="332" text-anchor="middle">coric holomorphic log-shell</text>
+            <text class="tinyText" x="665" y="358" text-anchor="middle">built from D-prime-strip</text>
+            <text class="tinyText" x="665" y="378" text-anchor="middle">supports Z-translation invariants</text>
+
+            <rect class="nodeBox green" x="350" y="480" width="420" height="70"></rect>
+            <text class="nodeTitle" x="560" y="508" text-anchor="middle">log-volume compatibility</text>
+            <text class="tinyText" x="560" y="532" text-anchor="middle">commutative for volume, not for all elements</text>
+
+            <path d="M322 110 H436" class="edge blue" marker-end="url(#arrowLogShell12)"></path>
+            <path d="M686 110 H798" class="edge green" marker-end="url(#arrowLogShell12)"></path>
+            <path d="M561 156 C510 220 392 254 312 300" class="edge gold" marker-end="url(#arrowLogShell12)"></path>
+            <path d="M561 156 C604 220 648 252 664 300" class="edge red" marker-end="url(#arrowLogShell12)"></path>
+            <path d="M434 348 H532" class="edge violet" marker-end="url(#arrowLogShell12)"></path>
+            <path d="M299 396 C346 440 412 458 500 478" class="edge gold" marker-end="url(#arrowLogShell12)"></path>
+            <path d="M665 396 C646 436 614 460 584 478" class="edge red" marker-end="url(#arrowLogShell12)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Clause</th><th>Content</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td>Proposition 1.2(iii)</td>
+            <td>
+              The log-link is compatible with the relevant nonarchimedean and
+              archimedean log-volume conventions.
+            </td>
+            <td>Volume compatibility may be modeled separately from elementwise commutation.</td>
+          </tr>
+          <tr>
+            <td>Proposition 1.2(iv)</td>
+            <td>
+              Kummer isomorphisms fail to be compatible with the coric comparison at
+              the level of the diagrams <span class="math">(*)_non</span> and
+              <span class="math">(*)_arc</span>.
+            </td>
+            <td>This is the precise warning against replacing the log-Kummer interface by equality.</td>
+          </tr>
+          <tr>
+            <td>Proposition 1.2(v)</td>
+            <td>
+              Holomorphic log-shells are compact and contain the relevant unit-side
+              images. Remark 1.2.2 makes this concrete as
+              <span class="math">p_v^{-1}log(O_k^*)</span> nonarchimedeanly and a
+              radius-<span class="math">pi</span> archimedean container.
+            </td>
+            <td>The upper container has different local analytic forms at different place types.</td>
+          </tr>
+          <tr>
+            <td>Proposition 1.2(vi)-(viii)</td>
+            <td>
+              Mono-analytic log-shells are constructed functorially from
+              <span class="math">D⊢</span>-data and are poly-isomorphic to the
+              associated <span class="math">F⊢×mu</span> and holomorphic log-shells.
+            </td>
+            <td>The etale-like container side is not optional; it is the multiradial interface.</td>
+          </tr>
+          <tr>
+            <td>Proposition 1.2(ix),(x)</td>
+            <td>
+              Coric holomorphic log-shells are constructed from a
+              <span class="math">D</span>-prime-strip; iterated full log-links form a
+              Frobenius-picture graph with translation symmetry but no arbitrary
+              adjacent-vertex swaps.
+            </td>
+            <td>Coric invariants are tied to the oriented chain, not to a symmetric quotient.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 1.2 and Remark 1.2.2</a>
+          Related: <a href="#upper-semi-log-kummer-iii">upper-semi Log-Kummer</a>
+          <a href="#log-kummer-correspondences">Log-Kummer correspondences</a>
+          <a href="#theorem-311-lgp-algorithms">Theorem 3.11 algorithms</a>
+        </div>
+      </section>
+
+      <section id="bi-cores-log-theta-lattice-iii15">
+        <h2>IUT III Theorem 1.5: Bi-Cores of the Log-Theta-Lattice</h2>
+        <p class="lede">
+          Theorem 1.5 collects the first major invariance package of IUT III. Vertical
+          log-links identify the associated <span class="math">D</span>-Hodge theaters;
+          horizontal Gaussian links identify the associated
+          <span class="math">F⊢×mu</span>-prime-strips; combining the two produces
+          bi-coric prime-strips, mono-analytic log-shells, and realified global
+          Frobenioids.
+        </p>
+        <div class="diagram fit" aria-label="Theorem 1.5 bi-cores of the log-theta-lattice">
+          <div class="diagramHeader">
+            <strong>Bi-core package</strong>
+            <span>vertical, horizontal, and combined coricity</span>
+          </div>
+          <svg viewBox="0 0 1120 620" role="img">
+            <defs>
+              <marker id="arrowBiCore15" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="118" y="86" width="196" height="76"></rect>
+            <text class="nodeTitle" x="216" y="116" text-anchor="middle">HT n,m+1</text>
+            <text class="tinyText" x="216" y="140" text-anchor="middle">D-side vertical target</text>
+
+            <rect class="nodeBox blue" x="118" y="286" width="196" height="76"></rect>
+            <text class="nodeTitle" x="216" y="316" text-anchor="middle">HT n,m</text>
+            <text class="tinyText" x="216" y="340" text-anchor="middle">base vertex</text>
+
+            <rect class="nodeBox gold" x="772" y="286" width="196" height="76"></rect>
+            <text class="nodeTitle" x="870" y="316" text-anchor="middle">HT n+1,m</text>
+            <text class="tinyText" x="870" y="340" text-anchor="middle">horizontal target</text>
+
+            <rect class="nodeBox green" x="434" y="86" width="250" height="76"></rect>
+            <text class="nodeTitle" x="559" y="116" text-anchor="middle">D-Hodge theater core</text>
+            <text class="tinyText" x="559" y="140" text-anchor="middle">Theorem 1.5(i)</text>
+
+            <rect class="nodeBox violet" x="434" y="286" width="250" height="76"></rect>
+            <text class="nodeTitle" x="559" y="316" text-anchor="middle">F⊢×mu prime-strip core</text>
+            <text class="tinyText" x="559" y="340" text-anchor="middle">Theorem 1.5(ii),(iii)</text>
+
+            <rect class="nodeBox red" x="340" y="462" width="440" height="86"></rect>
+            <text class="nodeTitle" x="560" y="492" text-anchor="middle">bi-coric output</text>
+            <text class="tinyText" x="560" y="518" text-anchor="middle">mono-analytic log-shells plus realified Frobenioids</text>
+            <text class="tinyText" x="560" y="538" text-anchor="middle">Theorem 1.5(iv),(v)</text>
+
+            <path d="M216 284 V164" class="edge green" marker-end="url(#arrowBiCore15)"></path>
+            <path d="M316 124 H432" class="edge green" marker-end="url(#arrowBiCore15)"></path>
+            <path d="M316 324 H432" class="edge violet" marker-end="url(#arrowBiCore15)"></path>
+            <path d="M686 324 H770" class="edge violet" marker-end="url(#arrowBiCore15)"></path>
+            <path d="M559 364 V460" class="edge red" marker-end="url(#arrowBiCore15)"></path>
+            <path d="M559 164 V284" class="edge green" marker-end="url(#arrowBiCore15)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Clause</th><th>Statement</th><th>Use downstream</th></tr>
+          <tr>
+            <td>Theorem 1.5(i)</td>
+            <td>
+              Vertical arrows induce full poly-isomorphisms between the associated
+              <span class="math">D-Theta±ellNF</span> Hodge theaters in a fixed column.
+            </td>
+            <td>Provides the vertical coric core later used for log-shell invariance.</td>
+          </tr>
+          <tr>
+            <td>Theorem 1.5(ii)</td>
+            <td>
+              Horizontal arrows induce full poly-isomorphisms between the associated
+              <span class="math">F⊢×mu</span>-prime-strips along a fixed row.
+            </td>
+            <td>Provides the horizontal coric side of the Gaussian log-theta-lattice.</td>
+          </tr>
+          <tr>
+            <td>Theorem 1.5(iii)</td>
+            <td>
+              Certain <span class="math">F⊢×mu</span>-prime-strips constructed from
+              <span class="math">D⊢</span>-data are invariant, up to the specified
+              poly-isomorphisms, in both lattice directions.
+            </td>
+            <td>This is the source of the bi-coric prime-strip object used in LGP construction.</td>
+          </tr>
+          <tr>
+            <td>Theorem 1.5(iv)</td>
+            <td>
+              The bi-coric prime-strip isomorphisms induce corresponding
+              mono-analytic log-shell isomorphisms, compatible with the holomorphic
+              log-shells produced from the source data.
+            </td>
+            <td>This is the log-shell layer used in tensor packets and log-volume estimates.</td>
+          </tr>
+          <tr>
+            <td>Theorem 1.5(v)</td>
+            <td>
+              The same poly-isomorphisms induce compatible isomorphisms of the
+              associated global realified Frobenioid data.
+            </td>
+            <td>Feeds the global LGP/lgp Frobenioid and pilot-object pages.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          Theorem 1.5 is the transition from local log-link technology to lattice-level
+          reusable objects. It does not prove Corollary 3.12, but it supplies the
+          bi-coric log-shell and Frobenioid objects that Theorem 3.11 later acts on.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Theorem 1.5</a>
+          Related: <a href="#vertical-horizontal-coricity-page-iii">vertical/horizontal coricity</a>
+          <a href="#theta-monoid-vertical-coricity-iii21">theta monoid vertical coricity</a>
+          <a href="#tensor-packets-iii31-33">tensor packets</a>
+          <a href="#vertically-coric-lgp-iii35">vertically coric LGP</a>
         </div>
       </section>
 
