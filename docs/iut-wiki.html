@@ -70,6 +70,7 @@
       line-height: 1.05;
       letter-spacing: 0;
     }
+    .brand { margin-bottom: 14px; }
 
     .searchBox {
       margin: 0 0 16px;
@@ -194,6 +195,7 @@
       scroll-margin-top: 14px;
     }
     section[hidden] { display: none !important; }
+    body.wiki-ready main section:not(.active-page) { display: none !important; }
     main section.active-page,
     body:not(.wiki-ready) main section#home { display: block; }
     main section.active-page.hero,
@@ -572,6 +574,9 @@
         <a href="#good-arch-frobenioids-33-34">Good/arch Frobenioids 3.3-3.4</a>
         <a href="#global-realified-theater-35-36">Global realified theater 3.5-3.6</a>
         <a href="#theta-link-frobenius-etale-pictures">Theta/Frobenius pictures</a>
+        <a href="#theta-links-cor37">Theta links 3.7</a>
+        <a href="#frobenius-picture-cor38">Frobenius-picture 3.8</a>
+        <a href="#etale-picture-cor39">Etale-picture 3.9</a>
         <a href="#multiplicative-combinatorial-teichmuller">Multiplicative combinatorics</a>
         <a href="#iut-i-global-frobenioids-example51">Global Frobenioids 5.1</a>
         <a href="#iut-i-frobenioid-prime-strips-52">Frobenioid prime-strips 5.2</a>
@@ -1547,6 +1552,9 @@
             <td>Theta links, Frobenius-pictures, and etale-pictures</td>
             <td>
               <a href="#theta-link-frobenius-etale-pictures">theta/Frobenius pictures</a>,
+              <a href="#theta-links-cor37">theta links 3.7</a>,
+              <a href="#frobenius-picture-cor38">Frobenius-picture 3.8</a>,
+              <a href="#etale-picture-cor39">etale-picture 3.9</a>,
               <a href="#theta-link-37-source">Corollary 3.7 theta link</a>,
               <a href="#full-poly-isomorphism-no-distinguished">no distinguished isomorphism</a>,
               <a href="#d-perp-preservation-cor37">D⊢ preservation</a>,
@@ -8506,6 +8514,387 @@
           <a href="#basepoints-inter-universality">basepoints/inter-universality</a>
           <a href="#theta-log-links">theta/log links</a>
           <a href="#teichmuller-analogy-iut-i">Teichmuller analogy</a>
+        </div>
+      </section>
+
+      <section id="theta-links-cor37">
+        <h2>IUT I Corollary 3.7: Theta Links</h2>
+        <p class="lede">
+          Corollary 3.7 is the first explicit horizontal move between distinct
+          theta-Hodge theaters. It starts with two theaters over the same initial theta
+          data, forms a full poly-isomorphism from the theta-side global package of the
+          first theater to the mod-side global package of the second, and records exactly
+          which mono-analytic structures are preserved.
+        </p>
+        <div class="diagram" aria-label="Corollary 3.7 theta link and preserved structures">
+          <div class="diagramHeader">
+            <strong>Theta link interface</strong>
+            <span>full poly-isomorphism plus mono-analytic preservation</span>
+          </div>
+          <svg viewBox="0 0 1080 520" role="img">
+            <defs>
+              <marker id="arrowTheta37" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="56" y="62" width="260" height="94"></rect>
+            <text class="nodeTitle" x="186" y="94" text-anchor="middle">†HT^Theta</text>
+            <text class="tinyText" x="186" y="118" text-anchor="middle">source theta-Hodge theater</text>
+            <text class="tinyText" x="186" y="138" text-anchor="middle">contains †F_tht, †D_v^⊢, †O^x</text>
+
+            <rect class="nodeBox green" x="764" y="62" width="260" height="94"></rect>
+            <text class="nodeTitle" x="894" y="94" text-anchor="middle">‡HT^Theta</text>
+            <text class="tinyText" x="894" y="118" text-anchor="middle">target theta-Hodge theater</text>
+            <text class="tinyText" x="894" y="138" text-anchor="middle">contains ‡F_mod, ‡D_v^⊢, ‡O^x</text>
+
+            <rect class="nodeBox gold" x="390" y="48" width="300" height="124"></rect>
+            <text class="nodeTitle" x="540" y="84" text-anchor="middle">Theta link</text>
+            <text class="tinyText" x="540" y="110" text-anchor="middle">nonempty full poly-isomorphism</text>
+            <text class="tinyText" x="540" y="130" text-anchor="middle">†F_tht  ~&gt;  ‡F_mod</text>
+            <text class="tinyText" x="540" y="150" text-anchor="middle">no distinguished member</text>
+
+            <path d="M318 109 H388" class="edge gold" marker-end="url(#arrowTheta37)"></path>
+            <path d="M692 109 H762" class="edge gold" marker-end="url(#arrowTheta37)"></path>
+
+            <rect class="nodeBox violet" x="118" y="282" width="270" height="88"></rect>
+            <text class="nodeTitle" x="253" y="313" text-anchor="middle">†D_v^⊢ -> ‡D_v^⊢</text>
+            <text class="tinyText" x="253" y="338" text-anchor="middle">via tautological D^⊢ ~ D^Theta</text>
+            <text class="tinyText" x="253" y="356" text-anchor="middle">and theta-link transport</text>
+
+            <rect class="nodeBox red" x="692" y="282" width="270" height="88"></rect>
+            <text class="nodeTitle" x="827" y="313" text-anchor="middle">†O^x -> ‡O^x</text>
+            <text class="tinyText" x="827" y="338" text-anchor="middle">unit monoids preserved</text>
+            <text class="tinyText" x="827" y="356" text-anchor="middle">not full ring-history identification</text>
+
+            <path d="M481 172 C430 222 340 238 266 280" class="edge violet" marker-end="url(#arrowTheta37)"></path>
+            <path d="M599 172 C650 222 740 238 814 280" class="edge red" marker-end="url(#arrowTheta37)"></path>
+
+            <text class="smallText" x="540" y="448" text-anchor="middle">
+              Corollary 3.7 supplies a relation between alien theater packages, not a chosen morphism inside one scheme theory.
+            </text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Inputs</td>
+            <td>
+              Two theta-Hodge theaters
+              <span class="math">†HT^Theta</span> and
+              <span class="math">‡HT^Theta</span> attached to the same initial theta
+              data.
+            </td>
+            <td>The page treats the link as a cross-theater construction, not as internal self-map.</td>
+          </tr>
+          <tr>
+            <td>Cor. 3.7(i)</td>
+            <td>
+              A nonempty full poly-isomorphism
+              <span class="math">†F_tht ~&gt; ‡F_mod</span>, called the theta link.
+            </td>
+            <td>Use relation/poly-map language; do not choose a privileged representative.</td>
+          </tr>
+          <tr>
+            <td>Cor. 3.7(ii)</td>
+            <td>
+              For each <span class="math">v in V</span>, the tautological
+              <span class="math">D_v^⊢ ~ D_v^Theta</span> identifications give a full
+              poly-isomorphism <span class="math">†D_v^⊢ ~&gt; ‡D_v^⊢</span>.
+            </td>
+            <td>The mono-analytic core is the first preserved layer across the link.</td>
+          </tr>
+          <tr>
+            <td>Cor. 3.7(iii)</td>
+            <td>
+              The same procedure gives a full poly-isomorphism of unit monoids
+              <span class="math">O^x_{†C_v^⊢} ~&gt; O^x_{‡C_v^⊢}</span>.
+            </td>
+            <td>Unit preservation is local and mono-analytic; it is not a scheme-history equality.</td>
+          </tr>
+          <tr>
+            <td>Remark 3.7.1</td>
+            <td>
+              There are many distinct isomorphisms in the theta-link poly-isomorphism,
+              with no distinguished member analogous to the internal
+              <span class="math">F_mod ~ F_tht</span> equivalence.
+            </td>
+            <td>The wiki marks the theta link as an indeterminate relation rather than a selected function.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Guardrail: a theta link should not be rendered as a conventional function
+          between two ringed spaces. Mochizuki's statement is a full poly-isomorphism
+          between theater packages, with preserved mono-analytic outputs.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Corollary 3.7 and Remark 3.7.1</a>
+          Related: <a href="#global-realified-theater-35-36">global realified theater</a>
+          <a href="#frobenius-picture-cor38">Frobenius-picture 3.8</a>
+          <a href="#etale-picture-cor39">etale-picture 3.9</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+        </div>
+      </section>
+
+      <section id="frobenius-picture-cor38">
+        <h2>IUT I Corollary 3.8: Frobenius-Picture</h2>
+        <p class="lede">
+          Corollary 3.8 repeats the theta link along an integer-indexed family of
+          distinct theta-Hodge theaters. The resulting Frobenius-picture is an oriented
+          chain: it admits translation by <span class="math">Z</span>, but not arbitrary
+          permutations of adjacent theaters.
+        </p>
+        <div class="diagram" aria-label="Corollary 3.8 Frobenius-picture chain">
+          <div class="diagramHeader">
+            <strong>Order-conscious chain of theaters</strong>
+            <span>theta at one label maps to q at the next label</span>
+          </div>
+          <svg viewBox="0 0 1120 520" role="img">
+            <defs>
+              <marker id="arrowFrob38" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+              <marker id="arrowFrob38Red" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#9a3f35"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="64" y="74" width="190" height="84"></rect>
+            <text class="nodeTitle" x="159" y="105" text-anchor="middle">(n-1)HT^Theta</text>
+            <text class="tinyText" x="159" y="130" text-anchor="middle">(n-1)Theta_v, (n-1)q_v</text>
+
+            <rect class="nodeBox blue" x="342" y="74" width="190" height="84"></rect>
+            <text class="nodeTitle" x="437" y="105" text-anchor="middle">nHT^Theta</text>
+            <text class="tinyText" x="437" y="130" text-anchor="middle">nTheta_v, nq_v</text>
+
+            <rect class="nodeBox blue" x="620" y="74" width="190" height="84"></rect>
+            <text class="nodeTitle" x="715" y="105" text-anchor="middle">(n+1)HT^Theta</text>
+            <text class="tinyText" x="715" y="130" text-anchor="middle">(n+1)Theta_v, (n+1)q_v</text>
+
+            <rect class="nodeBox blue" x="898" y="74" width="190" height="84"></rect>
+            <text class="nodeTitle" x="993" y="105" text-anchor="middle">(n+2)HT^Theta</text>
+            <text class="tinyText" x="993" y="130" text-anchor="middle">continues by translation</text>
+
+            <path d="M256 116 H340" class="edge gold" marker-end="url(#arrowFrob38)"></path>
+            <path d="M534 116 H618" class="edge gold" marker-end="url(#arrowFrob38)"></path>
+            <path d="M812 116 H896" class="edge gold" marker-end="url(#arrowFrob38)"></path>
+            <text class="edgeLabel" x="298" y="96" text-anchor="middle">theta link</text>
+            <text class="edgeLabel" x="576" y="96" text-anchor="middle">theta link</text>
+            <text class="edgeLabel" x="854" y="96" text-anchor="middle">theta link</text>
+
+            <rect class="nodeBox gold" x="398" y="272" width="324" height="94"></rect>
+            <text class="nodeTitle" x="560" y="306" text-anchor="middle">central bad-place movement</text>
+            <text class="tinyText" x="560" y="332" text-anchor="middle">nTheta_v  ->  (n+1)q_v</text>
+            <text class="tinyText" x="560" y="352" text-anchor="middle">source and target belong to distinct scheme theories</text>
+
+            <path d="M437 158 C448 208 490 232 532 270" class="edge gold" marker-end="url(#arrowFrob38)"></path>
+            <path d="M715 158 C702 208 632 232 588 270" class="edge gold" marker-end="url(#arrowFrob38)"></path>
+
+            <rect class="nodeBox green" x="118" y="306" width="210" height="84"></rect>
+            <text class="nodeTitle" x="223" y="337" text-anchor="middle">allowed symmetry</text>
+            <text class="tinyText" x="223" y="362" text-anchor="middle">integer translation</text>
+
+            <rect class="nodeBox red" x="794" y="306" width="230" height="84"></rect>
+            <text class="nodeTitle" x="909" y="337" text-anchor="middle">forbidden symmetry</text>
+            <text class="tinyText" x="909" y="362" text-anchor="middle">swap adjacent labels and fix rest</text>
+
+            <path d="M222 306 C292 236 354 190 433 158" class="edge green" marker-end="url(#arrowFrob38)"></path>
+            <path d="M910 306 C856 236 792 190 719 158" class="edge red" marker-end="url(#arrowFrob38Red)"></path>
+
+            <text class="smallText" x="560" y="452" text-anchor="middle">
+              The Frobenius-picture remembers the ordered chain. Its etale splitting is a different picture, not the same symmetry structure.
+            </text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Cor. 3.8</td>
+            <td>
+              An integer-indexed family
+              <span class="math">{nHT^Theta}_{n in Z}</span> is linked successively by
+              Corollary 3.7.
+            </td>
+            <td>Represent as a labeled chain, not as an unordered collection of theaters.</td>
+          </tr>
+          <tr>
+            <td>Graph</td>
+            <td>
+              The displayed graph has arrows
+              <span class="math">... -> (n-1)HT^Theta -> nHT^Theta -> (n+1)HT^Theta -> ...</span>.
+            </td>
+            <td>Translation by <span class="math">Z</span> is allowed; arbitrary permutation symmetry is not.</td>
+          </tr>
+          <tr>
+            <td>Remark 3.8.1(i)</td>
+            <td>
+              At bad places, the theta link maps
+              <span class="math">nTheta_v</span> to
+              <span class="math">(n+1)q_v</span>.
+            </td>
+            <td>The value lives in the next theater's scheme theory.</td>
+          </tr>
+          <tr>
+            <td>Remark 3.8.1(ii)</td>
+            <td>
+              The Frobenius-like part comes from divisor monoids, while
+              <span class="math">D_v^⊢</span> and units are invariant up to
+              isomorphism at this stage.
+            </td>
+            <td>Keep divisor/value-group movement separate from mono-analytic preservation.</td>
+          </tr>
+          <tr>
+            <td>Remark 3.8.1(iii)-(iv)</td>
+            <td>
+              Across labels, quotient group or topological-field isomorphs are related
+              by indeterminate isomorphisms that obliterate the ring or holomorphic
+              structure attached to a particular label.
+            </td>
+            <td>The page records the exact place where scheme-history erasure begins.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          The Frobenius-picture is order-conscious. The etale-picture of Corollary 3.9
+          is extracted by passing to the mono-analytic core; its permutation symmetry
+          should not be imported back into the Frobenius-picture.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Corollary 3.8 and Remark 3.8.1</a>
+          Related: <a href="#theta-links-cor37">theta links 3.7</a>
+          <a href="#etale-picture-cor39">etale-picture 3.9</a>
+          <a href="#theta-to-q-cross-theater">theta-to-q cross-theater assignment</a>
+          <a href="#mutually-alien-copies">mutually alien copies</a>
+        </div>
+      </section>
+
+      <section id="etale-picture-cor39">
+        <h2>IUT I Corollary 3.9: Etale-Picture Core</h2>
+        <p class="lede">
+          Corollary 3.9 extracts a canonical splitting of the Frobenius-picture by
+          centering the comparison at the mono-analytic object
+          <span class="math">D_v^⊢</span>. This etale-picture admits arbitrary
+          permutations of labels, and its unit-enhanced version is explicitly temporary:
+          IUT III later destroys this invariance when addition and multiplication are
+          rotated.
+        </p>
+        <div class="diagram" aria-label="Corollary 3.9 etale-picture centered on mono-analytic core">
+          <div class="diagramHeader">
+            <strong>Permutation-symmetric mono-analytic core</strong>
+            <span>D^⊢ hub, optional unit layer, and later warning</span>
+          </div>
+          <svg viewBox="0 0 1120 560" role="img">
+            <defs>
+              <marker id="arrowEtale39" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <circle cx="560" cy="244" r="92" fill="#e8f3ec" stroke="#2f6b4f" stroke-width="1.4"></circle>
+            <text class="nodeTitle" x="560" y="228" text-anchor="middle">D_v^⊢</text>
+            <text class="tinyText" x="560" y="252" text-anchor="middle">mono-analytic core</text>
+            <text class="tinyText" x="560" y="272" text-anchor="middle">arbitrary label permutations</text>
+
+            <rect class="nodeBox blue" x="96" y="68" width="180" height="74"></rect>
+            <text class="nodeTitle" x="186" y="98" text-anchor="middle">(n-1)D_v</text>
+            <text class="tinyText" x="186" y="120" text-anchor="middle">one labeled isomorph</text>
+
+            <rect class="nodeBox blue" x="470" y="48" width="180" height="74"></rect>
+            <text class="nodeTitle" x="560" y="78" text-anchor="middle">nD_v</text>
+            <text class="tinyText" x="560" y="100" text-anchor="middle">one labeled isomorph</text>
+
+            <rect class="nodeBox blue" x="844" y="68" width="180" height="74"></rect>
+            <text class="nodeTitle" x="934" y="98" text-anchor="middle">(n+1)D_v</text>
+            <text class="tinyText" x="934" y="120" text-anchor="middle">one labeled isomorph</text>
+
+            <rect class="nodeBox violet" x="186" y="396" width="250" height="84"></rect>
+            <text class="nodeTitle" x="311" y="428" text-anchor="middle">D_v^⊢ + O^x</text>
+            <text class="tinyText" x="311" y="452" text-anchor="middle">unit-enhanced etale picture</text>
+
+            <rect class="nodeBox red" x="684" y="396" width="250" height="84"></rect>
+            <text class="nodeTitle" x="809" y="428" text-anchor="middle">IUT III warning</text>
+            <text class="tinyText" x="809" y="452" text-anchor="middle">units cease to be constant invariant</text>
+
+            <path d="M258 142 C346 178 424 206 468 226" class="edge blue" marker-end="url(#arrowEtale39)"></path>
+            <path d="M560 122 V150" class="edge blue" marker-end="url(#arrowEtale39)"></path>
+            <path d="M862 142 C774 178 696 206 652 226" class="edge blue" marker-end="url(#arrowEtale39)"></path>
+            <path d="M506 319 C454 356 398 378 334 394" class="edge violet" marker-end="url(#arrowEtale39)"></path>
+            <path d="M614 319 C666 356 722 378 786 394" class="edge red" marker-end="url(#arrowEtale39)"></path>
+
+            <path d="M238 68 C392 8 728 8 882 68" stroke="#66508a" stroke-width="1.3" fill="none" stroke-dasharray="7 6" marker-end="url(#arrowEtale39)"></path>
+            <text class="edgeLabel" x="560" y="28" text-anchor="middle">permutation symmetry belongs to etale-picture</text>
+
+            <text class="smallText" x="560" y="522" text-anchor="middle">
+              The symbol ⊢ abbreviates the mono-analytic layer: the part designed to survive cross-theater comparison.
+            </text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Cor. 3.9(i)</td>
+            <td>
+              The diagrams centered on <span class="math">D_v^⊢</span> give an
+              etale-picture that admits arbitrary permutations of the labels
+              <span class="math">n in Z</span>.
+            </td>
+            <td>Encode the etale-picture as the permutation-symmetric core, distinct from the ordered Frobenius-picture.</td>
+          </tr>
+          <tr>
+            <td>Cor. 3.9(ii)</td>
+            <td>
+              A second etale-picture includes the pair
+              <span class="math">(D_v^⊢, O^x_{C_v^⊢})</span>. At nonarchimedean
+              places this is a category plus a group-like monoid; at archimedean places
+              it is an object of <span class="math">TM^⊢</span> plus a topological
+              group.
+            </td>
+            <td>Keep the unit-enhanced core typed by place class.</td>
+          </tr>
+          <tr>
+            <td>Remark 3.9.1</td>
+            <td>
+              <span class="math">D_v^⊢</span> is identified with the mono-analytic
+              core; the notation <span class="math">⊢</span> abbreviates this
+              mono-analytic viewpoint.
+            </td>
+            <td>The page uses “core” only for this mono-analytic layer.</td>
+          </tr>
+          <tr>
+            <td>Remark 3.9.2</td>
+            <td>
+              The unit-group invariance of Corollary 3.9(ii) does not persist in later
+              enhanced Frobenius-pictures of IUT III.
+            </td>
+            <td>Do not treat unit preservation in IUT I as a global invariant of the whole theory.</td>
+          </tr>
+          <tr>
+            <td>Remark 3.9.3</td>
+            <td>
+              Mochizuki compares the situation to a fixed real-analytic surface carrying
+              varying holomorphic structures; value groups move by theta-dilations while
+              units resemble a fixed dimension.
+            </td>
+            <td>The Teichmuller analogy is explanatory, not a substitute definition.</td>
+          </tr>
+          <tr>
+            <td>Remark 3.9.4</td>
+            <td>
+              The assignment <span class="math">nTheta_v -> (n+1)q_v</span> is not
+              ordinary evaluation inside one scheme theory: source theta and target
+              q-value belong to adjacent theaters.
+            </td>
+            <td>This is the core non-identification rule feeding later 3.11-3.12 diagnostics.</td>
+          </tr>
+        </table>
+        <div class="callout good">
+          Collas's category-theoretic reading is useful here: the etale-picture behaves
+          like a reconstruction-stable categorical container, while the Frobenius-picture
+          retains the ordered multiplicative movement. The source definitions remain
+          Mochizuki's Corollaries 3.7-3.9.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Corollary 3.9 and Remarks 3.9.1-3.9.4</a>
+          Related: <a href="#theta-links-cor37">theta links 3.7</a>
+          <a href="#frobenius-picture-cor38">Frobenius-picture 3.8</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+          <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         </div>
       </section>
 
