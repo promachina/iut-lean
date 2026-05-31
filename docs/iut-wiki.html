@@ -671,6 +671,9 @@
         <a href="#frobenioids-log-shells">Frobenioids and log-shells</a>
         <a href="#theta-log-links">Theta and log links</a>
         <a href="#log-theta-lattice">Log-theta lattice</a>
+        <a href="#local-log-link-mechanism-iii11">Local log-link mechanism 1.1</a>
+        <a href="#vertical-horizontal-coricity-page-iii">Vertical/horizontal coricity</a>
+        <a href="#upper-semi-log-kummer-iii">Upper-semi Log-Kummer</a>
         <a href="#essential-logical-structure">Logical structure</a>
         <a href="#indeterminacies">Indeterminacies</a>
         <a href="#log-kummer-correspondences">Log-Kummer correspondences</a>
@@ -1812,6 +1815,9 @@
               <a href="#theta-cyclotome">theta cyclotome</a>,
               <a href="#tautological-log-link">tautological log-link</a>,
               <a href="#gaussian-log-theta-lattice">Gaussian log-theta lattice</a>,
+              <a href="#local-log-link-mechanism-iii11">local log-link mechanism page</a>,
+              <a href="#vertical-horizontal-coricity-page-iii">vertical/horizontal coricity page</a>,
+              <a href="#upper-semi-log-kummer-iii">upper-semi Log-Kummer page</a>,
               <a href="#local-log-link">local log-link</a>,
               <a href="#log-shell-containment">log-shell containment</a>,
               <a href="#log-link-kummer-incompatibility">log-link/Kummer incompatibility</a>,
@@ -23849,6 +23855,265 @@
           <a href="#multiradiality">multiradiality</a>
           <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
           <a href="#dispute">dispute</a>
+        </div>
+      </section>
+
+      <section id="local-log-link-mechanism-iii11">
+        <h2>IUT III Definition 1.1 and Proposition 1.2: Local Log-Link Mechanism</h2>
+        <p class="lede">
+          The local log-link is the vertical move of the log-theta-lattice. At
+          nonarchimedean places it applies the local <span class="math">p_v</span>-adic
+          logarithm to unit quotient data; at archimedean places it uses a
+          universal-cover and torsion-quotient version of the complex logarithm. The
+          output is not a map of full Frobenioid monoids, but a controlled route to
+          log-shell modules.
+        </p>
+        <div class="diagram fit" aria-label="IUT III local log-link mechanism">
+          <div class="diagramHeader">
+            <strong>From units to log-shells</strong>
+            <span>Definition 1.1, Proposition 1.2</span>
+          </div>
+          <svg viewBox="0 0 1120 520" role="img">
+            <defs>
+              <marker id="arrowLocalLog111" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="80" y="70" width="250" height="90"></rect>
+            <text class="nodeTitle" x="205" y="100" text-anchor="middle">local F-prime-strip</text>
+            <text class="tinyText" x="205" y="126" text-anchor="middle">F_v with Pi_v action</text>
+            <text class="tinyText" x="205" y="146" text-anchor="middle">unit quotient visible</text>
+
+            <rect class="nodeBox green" x="435" y="70" width="250" height="90"></rect>
+            <text class="nodeTitle" x="560" y="100" text-anchor="middle">logarithm step</text>
+            <text class="tinyText" x="560" y="126" text-anchor="middle">p-adic or archimedean log</text>
+            <text class="tinyText" x="560" y="146" text-anchor="middle">defined inside one vertical line</text>
+
+            <rect class="nodeBox gold" x="790" y="70" width="250" height="90"></rect>
+            <text class="nodeTitle" x="915" y="100" text-anchor="middle">log(F_v)</text>
+            <text class="tinyText" x="915" y="126" text-anchor="middle">codomain of tautological log-link</text>
+            <text class="tinyText" x="915" y="146" text-anchor="middle">same D-side group core</text>
+
+            <rect class="nodeBox violet" x="260" y="300" width="260" height="92"></rect>
+            <text class="nodeTitle" x="390" y="330" text-anchor="middle">log-shell I_v</text>
+            <text class="tinyText" x="390" y="356" text-anchor="middle">compact additive container</text>
+            <text class="tinyText" x="390" y="376" text-anchor="middle">contains Kummer images</text>
+
+            <rect class="nodeBox red" x="610" y="300" width="260" height="92"></rect>
+            <text class="nodeTitle" x="740" y="330" text-anchor="middle">full log-link</text>
+            <text class="tinyText" x="740" y="356" text-anchor="middle">tautological link plus</text>
+            <text class="tinyText" x="740" y="376" text-anchor="middle">poly-isomorphism to target F'</text>
+
+            <path d="M332 115 H433" class="edge blue" marker-end="url(#arrowLocalLog111)"></path>
+            <path d="M687 115 H788" class="edge green" marker-end="url(#arrowLocalLog111)"></path>
+            <path d="M560 162 C516 224 448 262 404 298" class="edge violet" marker-end="url(#arrowLocalLog111)"></path>
+            <path d="M915 162 C886 224 812 262 752 298" class="edge red" marker-end="url(#arrowLocalLog111)"></path>
+            <path d="M522 346 H608" class="edge violet" marker-end="url(#arrowLocalLog111)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Construction</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>Definition 1.1(i)</td>
+            <td>
+              At nonarchimedean places, the local logarithm acts on the perfected unit
+              quotient and gives the tautological log-link and scaled log-shell.
+            </td>
+            <td>The log-link is unit-facing; value-group data is not transported by the same formula.</td>
+          </tr>
+          <tr>
+            <td>Definition 1.1(ii)</td>
+            <td>
+              At archimedean places, a pointed universal cover and quotients by roots
+              of unity produce an analogous logarithmic object.
+            </td>
+            <td>The archimedean construction has its own topological/Kummer shape.</td>
+          </tr>
+          <tr>
+            <td>Definition 1.1(iii)</td>
+            <td>
+              A full log-link is the tautological log-link followed by a
+              poly-isomorphism <span class="math">log(F) -> F'</span>.
+            </td>
+            <td>Multiradial use depends on the full-link formulation, not just the tautological path.</td>
+          </tr>
+          <tr>
+            <td>Proposition 1.2</td>
+            <td>
+              Log-links preserve the D-side core and log-volume compatibility, but
+              Kummer isomorphisms fail to commute elementwise with the coric comparison.
+            </td>
+            <td>This is the local source of upper-semi log-Kummer behavior.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Definition 1.1 and Proposition 1.2</a>
+          Related: <a href="#theta-log-links">theta/log links</a>
+          <a href="#log-shell-containment">log-shell containment</a>
+          <a href="#upper-semi-log-kummer-iii">upper-semi Log-Kummer</a>
+        </div>
+      </section>
+
+      <section id="vertical-horizontal-coricity-page-iii">
+        <h2>IUT III Introduction: Vertical, Horizontal, and Bi-Coricity</h2>
+        <p class="lede">
+          IUT III introduces a directional vocabulary for invariance in the
+          log-theta-lattice. Vertical coricity means invariance under log-links;
+          horizontal coricity means invariance under theta-type links; bi-coricity
+          means compatibility with both directions. The distinction is needed because
+          the two directions use different pieces of arithmetic structure.
+        </p>
+        <div class="diagram fit" aria-label="Vertical horizontal and bi-coricity">
+          <div class="diagramHeader">
+            <strong>Directional invariance in the lattice</strong>
+            <span>IUT III Introduction</span>
+          </div>
+          <svg viewBox="0 0 1120 470" role="img">
+            <defs>
+              <marker id="arrowCoricityIII" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="130" y="70" width="190" height="74"></rect>
+            <text class="nodeTitle" x="225" y="100" text-anchor="middle">HT_{n,m+1}</text>
+            <text class="tinyText" x="225" y="124" text-anchor="middle">same vertical line</text>
+
+            <rect class="nodeBox blue" x="130" y="260" width="190" height="74"></rect>
+            <text class="nodeTitle" x="225" y="290" text-anchor="middle">HT_{n,m}</text>
+            <text class="tinyText" x="225" y="314" text-anchor="middle">log-link source</text>
+
+            <rect class="nodeBox gold" x="760" y="260" width="190" height="74"></rect>
+            <text class="nodeTitle" x="855" y="290" text-anchor="middle">HT_{n+1,m}</text>
+            <text class="tinyText" x="855" y="314" text-anchor="middle">theta-link target</text>
+
+            <rect class="nodeBox green" x="440" y="70" width="240" height="74"></rect>
+            <text class="nodeTitle" x="560" y="100" text-anchor="middle">vertical coricity</text>
+            <text class="tinyText" x="560" y="124" text-anchor="middle">invariant under log shifts</text>
+
+            <rect class="nodeBox violet" x="440" y="260" width="240" height="74"></rect>
+            <text class="nodeTitle" x="560" y="290" text-anchor="middle">horizontal coricity</text>
+            <text class="tinyText" x="560" y="314" text-anchor="middle">invariant under theta-type links</text>
+
+            <rect class="nodeBox red" x="440" y="380" width="240" height="58"></rect>
+            <text class="nodeTitle" x="560" y="406" text-anchor="middle">bi-coricity</text>
+            <text class="tinyText" x="560" y="426" text-anchor="middle">survives both directions</text>
+
+            <path d="M225 258 V146" class="edge green" marker-end="url(#arrowCoricityIII)"></path>
+            <path d="M322 297 H438" class="edge violet" marker-end="url(#arrowCoricityIII)"></path>
+            <path d="M682 297 H758" class="edge violet" marker-end="url(#arrowCoricityIII)"></path>
+            <path d="M560 336 V378" class="edge red" marker-end="url(#arrowCoricityIII)"></path>
+            <path d="M560 146 V258" class="edge green" marker-end="url(#arrowCoricityIII)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Term</th><th>Meaning</th><th>Use in the wiki</th></tr>
+          <tr>
+            <td>Vertical coricity</td>
+            <td>Invariance under log-links, i.e. vertical arrows of the log-theta-lattice.</td>
+            <td>Used for log-shell and LGP objects constructed along a fixed vertical line.</td>
+          </tr>
+          <tr>
+            <td>Horizontal coricity</td>
+            <td>Invariance under theta-type links, including Gaussian, LGP, and lgp variants.</td>
+            <td>Used for objects meant to be read from alien horizontal viewpoints.</td>
+          </tr>
+          <tr>
+            <td>Bi-coricity</td>
+            <td>Coricity with respect to all arrows of the relevant log-theta-lattice.</td>
+            <td>Critical for mono-analytic log-shells and containers used in Theorem 3.11.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Introduction</a>
+          Related: <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#vertical-bicoric-log-shells">bi-coric log-shells</a>
+          <a href="#theorem-311-lgp-algorithms">Theorem 3.11 algorithms</a>
+        </div>
+      </section>
+
+      <section id="upper-semi-log-kummer-iii">
+        <h2>IUT III Introduction: Upper-Semi Log-Kummer Compatibility</h2>
+        <p class="lede">
+          The log-link and Kummer isomorphisms do not form an elementwise commuting
+          square. IUT III instead uses log-shells as upper containers for Kummer images
+          from both sides of the log-link. This one-sided compatibility is the source
+          of <span class="math">Ind3</span> in Theorem 3.11 and the later Corollary
+          3.12 proof route.
+        </p>
+        <div class="diagram fit" aria-label="Upper-semi Log-Kummer compatibility">
+          <div class="diagramHeader">
+            <strong>Compatibility by containment, not equality</strong>
+            <span>IUT III Introduction and Theorem 3.11(ii)</span>
+          </div>
+          <svg viewBox="0 0 1120 520" role="img">
+            <defs>
+              <marker id="arrowUpperSemiIII" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="96" y="76" width="240" height="86"></rect>
+            <text class="nodeTitle" x="216" y="106" text-anchor="middle">domain Kummer image</text>
+            <text class="tinyText" x="216" y="130" text-anchor="middle">from Frobenius-like side</text>
+            <text class="tinyText" x="216" y="148" text-anchor="middle">not elementwise coric</text>
+
+            <rect class="nodeBox gold" x="784" y="76" width="240" height="86"></rect>
+            <text class="nodeTitle" x="904" y="106" text-anchor="middle">codomain Kummer image</text>
+            <text class="tinyText" x="904" y="130" text-anchor="middle">after log-link</text>
+            <text class="tinyText" x="904" y="148" text-anchor="middle">same upper receptacle</text>
+
+            <rect class="nodeBox green" x="414" y="240" width="292" height="96"></rect>
+            <text class="nodeTitle" x="560" y="270" text-anchor="middle">log-shell container</text>
+            <text class="tinyText" x="560" y="296" text-anchor="middle">contains both images</text>
+            <text class="tinyText" x="560" y="316" text-anchor="middle">controls log-volume upper bound</text>
+
+            <rect class="nodeBox red" x="414" y="390" width="292" height="70"></rect>
+            <text class="nodeTitle" x="560" y="418" text-anchor="middle">Ind3</text>
+            <text class="tinyText" x="560" y="442" text-anchor="middle">inclusions/surjections, not equalities</text>
+
+            <path d="M338 120 C430 152 512 194 548 238" class="edge blue" marker-end="url(#arrowUpperSemiIII)"></path>
+            <path d="M782 120 C690 152 608 194 572 238" class="edge gold" marker-end="url(#arrowUpperSemiIII)"></path>
+            <path d="M560 338 V388" class="edge red" marker-end="url(#arrowUpperSemiIII)"></path>
+            <path d="M336 108 H782" class="arrow"></path>
+            <text class="edgeLabel" x="560" y="92" text-anchor="middle">not a commuting elementwise equality</text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source point</th><th>Statement</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td>Intro log-shell paragraph</td>
+            <td>
+              <span class="math">I_v</span> contains the Kummer images associated to
+              both the domain and codomain of the log-link.
+            </td>
+            <td>Model the log-shell as an upper container, not as an equality quotient.</td>
+          </tr>
+          <tr>
+            <td>Intro upper-semi paragraph</td>
+            <td>
+              Iterated log-links and Kummer isomorphisms give upper
+              semi-compatibility of diagrams.
+            </td>
+            <td>Use direction-sensitive containment or surjection data.</td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(ii)</td>
+            <td>
+              <span class="math">Ind3</span> is expressed through local inclusion and
+              surjection clauses in the log-Kummer correspondence.
+            </td>
+            <td>The Corollary 3.12 corridor must retain this one-sidedness.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          This page is a guardrail for the Scholze-Stix/Mochizuki-sensitive corridor:
+          replacing upper-semi containment by equality would strengthen the source
+          claim and change the formal object being audited.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Introduction and Theorem 3.11(ii)</a>
+          Related: <a href="#log-kummer-correspondences">Log-Kummer correspondences</a>
+          <a href="#indeterminacies">Indeterminacies</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
         </div>
       </section>
 
