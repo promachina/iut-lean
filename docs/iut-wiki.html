@@ -369,6 +369,12 @@
     }
     table.sourceTable3 > tbody {
       table-layout: fixed;
+      min-width: 940px;
+    }
+    table.sourceTable3 th,
+    table.sourceTable3 td {
+      overflow-wrap: normal;
+      word-break: normal;
     }
     table.sourceTable3 th:first-child,
     table.sourceTable3 td:first-child {
@@ -456,6 +462,46 @@
       .hero h2 { font-size: clamp(3rem, 7vw, 4.8rem); }
       .hero .diagram { max-width: 720px; }
       .grid3, .grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      table.sourceTable3 {
+        overflow-x: visible;
+      }
+      table.sourceTable3 > tbody {
+        display: block;
+        min-width: 0;
+      }
+      table.sourceTable3 tr:first-child {
+        display: none;
+      }
+      table.sourceTable3 tr {
+        display: block;
+        border-bottom: 1px solid var(--line);
+        padding: 10px 12px;
+      }
+      table.sourceTable3 tr:last-child {
+        border-bottom: none;
+      }
+      table.sourceTable3 td,
+      table.sourceTable3 td:first-child,
+      table.sourceTable3 td:nth-child(2),
+      table.sourceTable3 td:last-child {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        border-bottom: none;
+        padding: 4px 0 10px;
+      }
+      table.sourceTable3 td::before {
+        display: block;
+        margin-bottom: 2px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 760;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+      }
+      table.sourceTable3 td:nth-child(1)::before { content: "Item"; }
+      table.sourceTable3 td:nth-child(2)::before { content: "Paper content"; }
+      table.sourceTable3 td:nth-child(3)::before { content: "Wiki consequence"; }
     }
 
     @media (max-width: 760px) {
@@ -23747,7 +23793,94 @@
             <text class="smallText" x="460" y="378" text-anchor="middle">The point is not to identify all outputs, but to specify which formulas, mutations, and observables justify a comparison.</text>
           </svg>
         </div>
+        <table class="sourceTable3">
+          <tr><th>IUT IV Section 3 item</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>ZFC-models and universes</td>
+            <td>
+              Section 3 begins by working with ZFC-models and Grothendieck universes.
+              The additional ZFCG existence axiom says that every set is contained in
+              some universe; this implies that indexed families of universes can be
+              placed inside a larger universe.
+            </td>
+            <td>
+              Universe enlargement is explicit background for the formalism, not an
+              informal metaphor. A formal model should state which construction is
+              invariant under universe extension.
+            </td>
+          </tr>
+          <tr>
+            <td>Formula absoluteness</td>
+            <td>
+              The set-theoretic formulas used for species are required to be absolute:
+              validity for data in one universe agrees with validity after interpreting
+              the same data in a larger universe.
+            </td>
+            <td>
+              This is the technical gate behind model-free specimens and behind using
+              the same construction across alien universes.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 3.1</td>
+            <td>
+              A 0-species is a formula for object data; a 1-species adds formula-defined
+              morphism data, composition, associativity, and identities; a species is the
+              pair of object and morphism species.
+            </td>
+            <td>
+              "Type of object" in this page means formula-governed object and morphism
+              data, not a single category chosen in one set-theoretic universe.
+            </td>
+          </tr>
+          <tr>
+            <td>Remarks 3.1.2-3.1.4</td>
+            <td>
+              The essence of a species is the rule or program given by formulas, not the
+              particular sets output in a ZFC-model. This is compared with schemes
+              versus point sets and abstract groups versus matrix representations.
+            </td>
+            <td>
+              The wiki should avoid collapsing species-level assertions into statements
+              about one representative object.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 3.3</td>
+            <td>
+              Mutations, morphisms of mutations, mutation-equivalences,
+              mutation-histories, observables, and cores are defined by set-theoretic
+              formulas. In a fixed model, mutations behave like functors and morphisms
+              of mutations like natural transformations.
+            </td>
+            <td>
+              A proof-assistant interface should track the history and the observable or
+              core that authorizes comparison, not merely the final isomorphism.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 3.3.1</td>
+            <td>
+              Species allow comparisons between objects occurring at different levels of
+              the membership hierarchy, thereby simulating membership loops without
+              violating the axiom of foundation.
+            </td>
+            <td>
+              This explains why species are used to compare outputs of iterated
+              constructions without identifying their set-theoretic histories.
+            </td>
+          </tr>
+        </table>
         <div class="grid3">
+          <div class="card" id="zfcg-universe-assumption">
+            <h3>ZFCG universe assumption</h3>
+            <p>
+              Section 3 distinguishes ordinary ZFC-models from ZFCG-models satisfying
+              the Grothendieck-school universe existence axiom. This lets one enlarge to
+              a universe containing a whole indexed family of smaller universes.
+            </p>
+            <div class="tagRow"><span class="tag blue">Section 3 setup</span><span class="tag">universes</span></div>
+          </div>
           <div class="card" id="zero-one-species">
             <h3>0-species and 1-species</h3>
             <p>
@@ -23758,6 +23891,16 @@
             </p>
             <div class="tagRow"><span class="tag green">Definition 3.1(i)-(iii)</span><span class="tag">formulas</span></div>
           </div>
+          <div class="card" id="programs-not-output-data">
+            <h3>Programs, not output data</h3>
+            <p>
+              Remark 3.1.2 says the point of a species is the formula-program that
+              constructs specimens, not the particular sets obtained in one model. This
+              is the species-level analogue of using equations or functors instead of one
+              chosen point set.
+            </p>
+            <div class="tagRow"><span class="tag gold">Remark 3.1.2</span><span class="tag">rules</span></div>
+          </div>
           <div class="card" id="formula-absoluteness">
             <h3>Formula absoluteness</h3>
             <p>
@@ -23767,6 +23910,16 @@
               discipline behind model-free specimens.
             </p>
             <div class="tagRow"><span class="tag violet">Definition 3.1 setup</span><span class="tag">universes</span></div>
+          </div>
+          <div class="card" id="choice-free-canonicality">
+            <h3>Choice-free canonicality</h3>
+            <p>
+              Remark 3.1.3 warns that conventional descriptions are acceptable only when
+              they do not depend on arbitrary choices unavailable as set-theoretic
+              formulas. Formula-defined species give a way to measure deviation from a
+              canonical norm.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 3.1.3</span><span class="tag">canonicality</span></div>
           </div>
           <div class="card">
             <h3>Species</h3>
@@ -23874,6 +24027,15 @@
               iterated mutation histories.
             </p>
             <div class="tagRow"><span class="tag gold">Remark 3.3.1</span><span class="tag">foundation</span></div>
+          </div>
+          <div class="card" id="core-versus-non-coric-observable">
+            <h3>Cores versus non-coric observables</h3>
+            <p>
+              Remark 3.3.1 explains why cores matter: mutations may alter mathematical
+              structure, but a core records the invariant portion that can be used to
+              describe altered non-coric observables.
+            </p>
+            <div class="tagRow"><span class="tag violet">Remark 3.3.1</span><span class="tag">coricity</span></div>
           </div>
         </div>
         <table>
