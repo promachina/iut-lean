@@ -551,6 +551,7 @@
         <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization 4.8</a>
         <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips 4.9</a>
         <a href="#theta-times-mu-frobenius-pictures-ii410">Theta×μ Frobenius-pictures 4.10</a>
+        <a href="#d-theta-etale-pictures-ii411">D-Theta etale-pictures 4.11</a>
         <a href="#theta-evaluation-kummer-route">Theta evaluation route</a>
         <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
         <a href="#frobenioids-log-shells">Frobenioids and log-shells</a>
@@ -1551,6 +1552,9 @@
               <a href="#theta-times-mu-frobenius-pictures-ii410">Theta×μ Frobenius-pictures</a>,
               <a href="#coric-fperp-times-mu-invariant-410">coric F⊢×μ invariant</a>,
               <a href="#frobenius-picture-chain-410">Frobenius-picture chain</a>,
+              <a href="#d-theta-etale-pictures-ii411">D-Theta etale-pictures</a>,
+              <a href="#d-prime-strip-monoanalytic-core-411">D⊢ mono-analytic core</a>,
+              <a href="#theta-exponent-commutativity-4111">theta-exponent commutativity</a>,
               <a href="#gaussian-monoids">Gaussian monoids</a>,
               <a href="#tempered-gaussian-frobenioids">tempered Gaussian Frobenioids</a>,
               <a href="#split-theta-monoids">split theta monoids</a>,
@@ -4569,7 +4573,7 @@
           <tr>
             <td>§4</td>
             <td>Global Gaussian Frobenioids and the modified theta-link variants <span class="math">Theta×μ</span> and <span class="math">Theta×μ_gau</span>.</td>
-            <td><a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids</a>, <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids</a>, <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift</a>, <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry</a>, <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization</a>, <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips</a>, <a href="#theta-times-mu-frobenius-pictures-ii410">Theta×μ Frobenius-pictures</a>, <a href="#theta-log-links">theta/log links</a>, <a href="#log-theta-lattice">log-theta lattice</a></td>
+            <td><a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids</a>, <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids</a>, <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift</a>, <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry</a>, <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization</a>, <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips</a>, <a href="#theta-times-mu-frobenius-pictures-ii410">Theta×μ Frobenius-pictures</a>, <a href="#d-theta-etale-pictures-ii411">D-Theta etale-pictures</a>, <a href="#theta-log-links">theta/log links</a>, <a href="#log-theta-lattice">log-theta lattice</a></td>
           </tr>
         </table>
         <table>
@@ -12569,6 +12573,235 @@
           <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
           <a href="#frobenioids-log-shells">Frobenioids/log-shells</a>
           <a href="#theta-log-links">theta/log links</a>
+        </div>
+      </section>
+
+      <section id="d-theta-etale-pictures-ii411">
+        <h2>D-Theta Etale-Pictures in IUT II 4.11</h2>
+        <p class="lede">
+          Corollary 4.11 converts the oriented Frobenius-picture chains of
+          Corollary 4.10 into D-side etale-pictures. The preserved
+          <span class="math">D⊢_△</span> prime-strip becomes a common
+          mono-analytic core, and the surrounding D-Theta±ellNF-Hodge theaters
+          become spokes that admit arbitrary permutation symmetries. This is the
+          clean contrast with the ordered <span class="math">Theta×μ</span> chain.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Corollary 4.11 D-theta etale-picture">
+          <div class="diagramHeader">
+            <strong>From Frobenius-picture to etale-picture</strong>
+            <span>same D⊢ core, permutable D-Hodge-theater spokes</span>
+          </div>
+          <svg viewBox="0 0 1120 640" role="img">
+            <defs>
+              <marker id="arrowEtale411" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox red" x="74" y="72" width="270" height="82"></rect>
+            <text class="nodeTitle" x="209" y="102" text-anchor="middle">Frobenius-picture chain</text>
+            <text class="tinyText" x="209" y="126" text-anchor="middle">... -> HT_n -> HT_{n+1} -> ...</text>
+            <text class="tinyText" x="209" y="144" text-anchor="middle">ordered Theta×μ motion</text>
+
+            <rect class="nodeBox green" x="426" y="72" width="270" height="82"></rect>
+            <text class="nodeTitle" x="561" y="102" text-anchor="middle">constant D⊢_△ invariant</text>
+            <text class="tinyText" x="561" y="126" text-anchor="middle">full poly-isomorphism chain</text>
+            <text class="tinyText" x="561" y="144" text-anchor="middle">Corollary 4.11(i)</text>
+
+            <rect class="nodeBox blue" x="778" y="72" width="270" height="82"></rect>
+            <text class="nodeTitle" x="913" y="102" text-anchor="middle">etale-picture spokes</text>
+            <text class="tinyText" x="913" y="126" text-anchor="middle">D-Theta±ellNF theaters</text>
+            <text class="tinyText" x="913" y="144" text-anchor="middle">arbitrary permutations</text>
+
+            <circle cx="561" cy="378" r="74" fill="#e8f3ec" stroke="#2f6b4f" stroke-width="1.5"></circle>
+            <text class="nodeTitle" x="561" y="370" text-anchor="middle">D⊢_△</text>
+            <text class="tinyText" x="561" y="394" text-anchor="middle">mono-analytic core</text>
+
+            <rect class="nodeBox violet" x="262" y="286" width="150" height="58"></rect>
+            <text class="tinyText" x="337" y="320" text-anchor="middle">n HT_D</text>
+            <rect class="nodeBox violet" x="712" y="286" width="150" height="58"></rect>
+            <text class="tinyText" x="787" y="320" text-anchor="middle">n' HT_D</text>
+            <rect class="nodeBox violet" x="262" y="470" width="150" height="58"></rect>
+            <text class="tinyText" x="337" y="504" text-anchor="middle">n'' HT_D</text>
+            <rect class="nodeBox violet" x="712" y="470" width="150" height="58"></rect>
+            <text class="tinyText" x="787" y="504" text-anchor="middle">n''' HT_D</text>
+
+            <rect class="nodeBox gold" x="410" y="548" width="300" height="58"></rect>
+            <text class="nodeTitle" x="560" y="574" text-anchor="middle">theta-exponent commutativity</text>
+            <text class="tinyText" x="560" y="594" text-anchor="middle">permutation-symmetric Gaussian exponent bookkeeping</text>
+
+            <path d="M346 113 H424" class="edge red" marker-end="url(#arrowEtale411)"></path>
+            <path d="M698 113 H776" class="edge green" marker-end="url(#arrowEtale411)"></path>
+            <path d="M913 156 C860 216 710 282 624 337" class="edge blue" marker-end="url(#arrowEtale411)"></path>
+            <path d="M487 378 H414" class="edge violet" marker-end="url(#arrowEtale411)"></path>
+            <path d="M635 378 H710" class="edge violet" marker-end="url(#arrowEtale411)"></path>
+            <path d="M507 430 L413 470" class="edge violet" marker-end="url(#arrowEtale411)"></path>
+            <path d="M615 430 L712 470" class="edge violet" marker-end="url(#arrowEtale411)"></path>
+            <path d="M561 452 V546" class="edge gold" marker-end="url(#arrowEtale411)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Construction</th><th>Meaning</th></tr>
+          <tr>
+            <td>Corollary 4.11(i)</td>
+            <td>
+              The D-Theta±ellNF-linked chain induced by Corollary 4.10 gives a
+              chain of full poly-isomorphisms
+              <span class="math">... -> D⊢_△ -> D⊢_△ -> ...</span>. Thus
+              <span class="math">D⊢_△</span> is constant through the chain.
+            </td>
+            <td>
+              This is the mono-analytic core shared by the D-side theaters.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 4.11(ii)</td>
+            <td>
+              Each D-Theta±ellNF-Hodge theater is regarded as a spoke emanating
+              from the common <span class="math">D⊢_△</span> core.
+            </td>
+            <td>
+              Unlike the oriented Frobenius-picture chain, this etale-picture
+              admits arbitrary permutation symmetries among the spokes.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 4.11(iii)</td>
+            <td>
+              The construction is compatible with the earlier IUT I etale-pictures
+              after identifying the relevant <span class="math">D⊢</span> data.
+            </td>
+            <td>
+              The enhanced IUT II picture refines, rather than replaces, the base
+              Hodge-theater etale-picture.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 4.11.1</td>
+            <td>
+              The Frobenius-picture is order-conscious iteration of Gaussian
+              theta-exponent transformations, whereas the etale-picture corresponds
+              to commutativity of the same exponent data under arbitrary
+              permutations.
+            </td>
+            <td>
+              Mochizuki compares this to cartesian versus polar-coordinate
+              representations of the Gaussian integral.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 4.11.2</td>
+            <td>
+              The review explains how Gaussian distributions bridge theta functions
+              and number fields, why conjugate synchronization is needed for units,
+              why the post-anabelian Gaussian side constructs the link, and why the
+              anabelian side is needed for the later log-wall.
+            </td>
+            <td>
+              This is the local source of the wiki distinction between
+              <span class="math">F_l^±</span> unit/conjugate-synchronized behavior
+              and <span class="math">F_l</span> value-group/multiradial behavior.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="d-prime-strip-monoanalytic-core-411">
+            <h3>D⊢ mono-analytic core</h3>
+            <p>
+              Corollary 4.11(i) makes <span class="math">D⊢_△</span> the common
+              invariant across the D-Theta±ellNF-linked chain. It is not a full
+              holomorphic structure; it is the D-side mono-analytic core.
+            </p>
+            <div class="tagRow"><span class="tag green">Cor. 4.11(i)</span><span class="tag">core</span></div>
+          </div>
+          <div class="card" id="permutable-d-theater-spokes-411">
+            <h3>Permutable D-theater spokes</h3>
+            <p>
+              Corollary 4.11(ii) treats the D-Hodge theaters as spokes around the
+              common core. Arbitrary permutation symmetries are available at this
+              D-side etale-picture level.
+            </p>
+            <div class="tagRow"><span class="tag blue">Cor. 4.11(ii)</span><span class="tag">spokes</span></div>
+          </div>
+          <div class="card" id="frobenius-versus-etale-order-411">
+            <h3>Frobenius versus etale order</h3>
+            <p>
+              The Frobenius-picture remembers an ordered
+              <span class="math">Z</span>-chain; the etale-picture forgets this
+              order enough to permit spoke permutations around the common core.
+            </p>
+            <div class="tagRow"><span class="tag red">Cor. 4.10-4.11</span><span class="tag">symmetry</span></div>
+          </div>
+          <div class="card" id="theta-exponent-commutativity-4111">
+            <h3>Theta-exponent commutativity</h3>
+            <p>
+              Remark 4.11.1 reads the etale-picture as commutativity among the
+              theta-exponent factors that appear in iterated Gaussian
+              <span class="math">q -> q^{j^2}</span>-type transformations.
+            </p>
+            <div class="tagRow"><span class="tag gold">Rem. 4.11.1</span><span class="tag">Gaussian analogy</span></div>
+          </div>
+          <div class="card" id="gaussian-bridge-review-4112">
+            <h3>Gaussian bridge review</h3>
+            <p>
+              Remark 4.11.2 describes the Gaussian distribution as the bridge between
+              theta functions at bad primes and number fields, and as the source of
+              the non-scheme-theoretic <span class="math">Theta×μ_gau</span> link.
+            </p>
+            <div class="tagRow"><span class="tag violet">Rem. 4.11.2(i)</span><span class="tag">bridge</span></div>
+          </div>
+          <div class="card" id="conjugate-synchronization-units-4112">
+            <h3>Conjugate synchronization for units</h3>
+            <p>
+              The connected Kummer-compatible theta-evaluation theater establishes
+              conjugate synchronization compatible with
+              <span class="math">F_l^±</span>-symmetry, enabling coricity of units.
+            </p>
+            <div class="tagRow"><span class="tag green">Rem. 4.11.2(ii)</span><span class="tag">units</span></div>
+          </div>
+          <div class="card" id="post-anabelian-versus-anabelian-gaussian-4112">
+            <h3>Post-anabelian and anabelian Gaussian sides</h3>
+            <p>
+              The post-anabelian Gaussian representation constructs the
+              <span class="math">Theta×μ_gau</span> link; the anabelian
+              representation is retained for the IUT III log-wall.
+            </p>
+            <div class="tagRow"><span class="tag blue">Rem. 4.11.2(ii)</span><span class="tag">two representations</span></div>
+          </div>
+          <div class="card" id="fl-versus-fpm-role-4112">
+            <h3>F_l versus F_l± roles</h3>
+            <p>
+              Remark 4.11.2 contrasts <span class="math">F_l^±</span> as
+              unit-side/uniradial and compatible with conjugate synchronization
+              with <span class="math">F_l</span> as value-group/multiradial and tied
+              to global NF-bridge bookkeeping.
+            </p>
+            <div class="tagRow"><span class="tag red">Rem. 4.11.2(iii)</span><span class="tag">two symmetries</span></div>
+          </div>
+          <div class="card" id="prime-tree-dismantling-4112">
+            <h3>Prime-tree dismantling</h3>
+            <p>
+              The review says the number-field obstruction is the prime-tree
+              structure that blocks conjugate synchronization; labelled
+              prime-strips are finite approximations used to dismantle this
+              obstruction.
+            </p>
+            <div class="tagRow"><span class="tag violet">Rem. 4.11.2(iv)</span><span class="tag">prime-strips</span></div>
+          </div>
+        </div>
+        <div class="callout violet">
+          Source warning: etale-picture permutation symmetry is D-side and
+          mono-analytic. It should not be imported back into the ordered
+          Frobenius-picture chain of <span class="math">Theta×μ</span> or
+          <span class="math">Theta×μ_gau</span> links.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.11 and Remarks 4.11.1-4.11.2</a>
+          Related: <a href="#theta-times-mu-frobenius-pictures-ii410">Theta×μ Frobenius-pictures</a>
+          <a href="#theta-link-frobenius-etale-pictures">IUT I theta/Frobenius pictures</a>
+          <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry</a>
+          <a href="#multiradiality">multiradiality</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
         </div>
       </section>
 
