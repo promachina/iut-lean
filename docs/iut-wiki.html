@@ -329,6 +329,7 @@
     table {
       border-collapse: collapse;
       width: 100%;
+      min-width: 720px;
       margin: 16px 0;
       background: var(--panel);
       border: 1px solid var(--line);
@@ -1533,6 +1534,48 @@
           Theta links come from Hodge-Arakelov-theoretic evaluation of theta values;
           log links come from applying local logarithms and passing through log-shells.
         </p>
+        <div class="diagram" aria-label="Theta and log link comparison">
+          <div class="diagramHeader">
+            <strong>Two link directions</strong>
+            <span>horizontal theta motion versus vertical logarithmic motion</span>
+          </div>
+          <svg viewBox="0 0 820 340" role="img">
+            <defs>
+              <marker id="arrowLink" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="76" y="54" width="160" height="66"></rect>
+            <text class="nodeTitle" x="156" y="81" text-anchor="middle">theater n,m</text>
+            <text class="tinyText" x="156" y="101" text-anchor="middle">local ring history active</text>
+
+            <rect class="nodeBox gold" x="584" y="54" width="160" height="66"></rect>
+            <text class="nodeTitle" x="664" y="81" text-anchor="middle">theater n+1,m</text>
+            <text class="tinyText" x="664" y="101" text-anchor="middle">theta-linked alien view</text>
+
+            <rect class="nodeBox green" x="76" y="230" width="160" height="66"></rect>
+            <text class="nodeTitle" x="156" y="257" text-anchor="middle">log codomain</text>
+            <text class="tinyText" x="156" y="277" text-anchor="middle">log-shell viewpoint</text>
+
+            <rect class="nodeBox violet" x="584" y="230" width="160" height="66"></rect>
+            <text class="nodeTitle" x="664" y="257" text-anchor="middle">log codomain</text>
+            <text class="tinyText" x="664" y="277" text-anchor="middle">vertical core target</text>
+
+            <path d="M236 87 H582" stroke="#8b6b24" stroke-width="1.7" fill="none" marker-end="url(#arrowLink)"></path>
+            <text class="edgeLabel" x="410" y="72" text-anchor="middle">Theta^xmu / Theta^xmu_gau link</text>
+            <text class="tinyText" x="410" y="105" text-anchor="middle">theta and Gaussian prime-strip comparison</text>
+
+            <path d="M156 120 V228" stroke="#2f6b4f" stroke-width="1.7" fill="none" marker-end="url(#arrowLink)"></path>
+            <path d="M664 120 V228" stroke="#2f6b4f" stroke-width="1.7" fill="none" marker-end="url(#arrowLink)"></path>
+            <text class="edgeLabel" x="186" y="177">log link</text>
+            <text class="edgeLabel" x="694" y="177">log link</text>
+
+            <path d="M238 263 H582" stroke="#66508a" stroke-width="1.2" stroke-dasharray="6 5" fill="none" marker-end="url(#arrowLink)"></path>
+            <text class="tinyText" x="410" y="286" text-anchor="middle">shared coric data is obtained only after the allowed weakening</text>
+
+            <text class="smallText" x="410" y="320" text-anchor="middle">Horizontal and vertical arrows are not treated as a commuting square of schemes.</text>
+          </svg>
+        </div>
         <table>
           <tr><th>Link</th><th>Source</th><th>Function in the theory</th><th>Risk if misread</th></tr>
           <tr>
@@ -1548,6 +1591,57 @@
             <td>Forgetting calibration can destroy the intended comparison meaning.</td>
           </tr>
         </table>
+        <div class="grid3">
+          <div class="card">
+            <h3>Theta and Gaussian prime-strips</h3>
+            <p>
+              IUT II Corollary 4.10 constructs environment and Gaussian F-prime-strips
+              from theta/Gaussian monoids, then compares their associated
+              <span class="math">F^|xmu</span>-prime-strips by full poly-isomorphisms.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Coric unit portion</h3>
+            <p>
+              The <span class="math">F^|xmu</span> and associated <span class="math">D^|</span>
+              material is coric across the theta and Gaussian links. This is the source
+              for later claims that selected weakened data can be treated independently
+              of a particular holomorphic history.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Vertical obligation</h3>
+            <p>
+              IUT III Remark 1.4.1 says that executing a horizontal theta arrow obligates
+              subsequent vertical log motion if one wants the log-shell tools used in the
+              multiradial representation.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Noncommutativity</h3>
+            <p>
+              Horizontal links are incompatible with local ring structures in a different
+              way from vertical log links. The lattice square is therefore not a commuting
+              square of ordinary schemes or rings.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Translation symmetry</h3>
+            <p>
+              The Frobenius-picture chains admit integer translation symmetry, but not
+              arbitrary permutation symmetry. Adjacent alien copies cannot simply be
+              swapped while leaving the rest fixed.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Formalization pressure</h3>
+            <p>
+              A Lean interface must say whether a map is a theta link, Gaussian theta
+              link, log link, or induced coric prime-strip comparison. Reusing one
+              generic arrow type would hide essential source distinctions.
+            </p>
+          </div>
+        </div>
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II</a>
           <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III</a>
