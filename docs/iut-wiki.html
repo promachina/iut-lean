@@ -1952,6 +1952,68 @@
             </p>
           </div>
         </div>
+        <div class="grid3">
+          <div class="card">
+            <h3>Theta-pilot quantity</h3>
+            <p>
+              Corollary 3.12 defines <span class="math">-|log(Theta)|</span> as the
+              procession-normalized mono-analytic log-volume of the holomorphic hull of
+              the union of possible images of a theta-pilot object, subject to
+              <span class="math">Ind1</span>, <span class="math">Ind2</span>, and
+              <span class="math">Ind3</span>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>q-pilot quantity</h3>
+            <p>
+              The q-pilot quantity <span class="math">-|log(q)|</span> is the
+              procession-normalized mono-analytic log-volume of the image of a q-pilot
+              object. In the corollary statement it is not regarded as subject to the
+              three indeterminacies.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Stated numerical output</h3>
+            <p>
+              The asserted comparison is <span class="math">-|log(Theta)| >= -|log(q)|</span>.
+              Equivalently, for any <span class="math">C_Theta</span> with
+              <span class="math">-|log(Theta)| <= C_Theta * |log(q)|</span>, the conclusion is
+              <span class="math">C_Theta >= -1</span>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Step (xi-e)</h3>
+            <p>
+              Mochizuki describes the output possible log-volumes
+              <span class="math">R_{<= -|log(Theta)|}</span> as linked by IPL to the input
+              q-pilot log-volume <span class="math">-|log(q)|</span>, while the construction
+              remains expressible under SHE relative to the chosen holomorphic structure.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Step (xi-f)</h3>
+            <p>
+              The formal conclusion is that the constructed output possibilities include
+              the q-pilot log-volume. This is the exact place where a wiki or Lean model
+              must expose the bridge from source data to numerical membership.
+            </p>
+          </div>
+          <div class="card">
+            <h3>3.11.5 convention</h3>
+            <p>
+              Mochizuki's 2026 formalization report uses "3.11.5" for a reorganized
+              interface that moves hull-and-determinant work out of the final algebraic
+              comparison. The label is a formalization convention, not an original
+              theorem number in IUT I-IV.
+            </p>
+          </div>
+        </div>
+        <div class="callout warn">
+          Audit rule for this wiki: the final inequality is not the hard part. The hard
+          part is the source-valid membership assertion
+          <span class="math">-|log(q)| in R_{<= -|log(Theta)|}</span> after the allowed
+          weakening, hull, determinant, log-volume, and indeterminacy operations.
+        </div>
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III</a>
           <a href="papers/higuchi-formal-negative-result-step-xi.pdf" target="_blank">Higuchi 2026</a>
@@ -2017,6 +2079,27 @@
             <div class="tagRow"><span class="tag gold">response</span><span class="tag">Hodge theaters</span></div>
           </div>
         </div>
+        <table>
+          <tr><th>Issue</th><th>Scholze-Stix emphasis</th><th>Mochizuki-side emphasis</th><th>Wiki treatment</th></tr>
+          <tr>
+            <td>Real-line copies</td>
+            <td>All identifications of ordered one-dimensional real vector spaces must be explicit and consistent.</td>
+            <td>Different arithmetic holomorphic structures must not be collapsed before the permitted weakening.</td>
+            <td>Track real-line charts, source histories, and charted inequalities as separate interfaces.</td>
+          </tr>
+          <tr>
+            <td>j^2 weights</td>
+            <td>With consistent identifications, the weights that would give the nontrivial inequality disappear or create monodromy.</td>
+            <td>The relevant weighted theta data is handled through the IUT label and indeterminacy machinery.</td>
+            <td>Do not model weights as ordinary scalar equalities unless the source route supplies that chart.</td>
+          </tr>
+          <tr>
+            <td>Indeterminacy</td>
+            <td>Blurring by indeterminacy is not enough if it does not produce a numerical inequality.</td>
+            <td>Indeterminacies are part of the legitimate comparison apparatus, especially after weakening history.</td>
+            <td>Separate equality-like invariance from one-sided upper-semi data and final numerical membership.</td>
+          </tr>
+        </table>
         <div class="callout violet">
           Formalization reframes the dispute into exact interfaces: what source data is
           present, which histories are erased, which transports are allowed, and which
