@@ -821,7 +821,13 @@
         <a href="#mono-theta-frobenioid-route-ii12">Frobenioid route 1.2</a>
         <a href="#mono-theta-cyclotomic-compatibility-ii13">Cyclotomic compatibility 1.3</a>
         <a href="#mono-theta-construction-routes-ii12-15">Mono-theta construction 1.2-1.5</a>
+        <a href="#etale-theta-standard-type-ii14">Etale theta standard type</a>
+        <a href="#pointed-inversion-automorphism-ii141">Pointed inversion 1.4.1</a>
+        <a href="#projective-mono-theta-systems-ii15">Projective MTheta systems</a>
+        <a href="#theta-env-kummer-package-ii15">Theta_env package 1.5</a>
         <a href="#cores-cuspidalizations-ii16">Cores/cuspidalizations 1.6</a>
+        <a href="#core-group-algorithm-ii16">Core group algorithm</a>
+        <a href="#elliptic-cuspidalization-ii16">Elliptic cuspidalization</a>
         <a href="#radial-coric-framework-ii17-19">Radial/coric framework 1.7-1.9</a>
         <a href="#iut-ii-mono-theta-rigidity-110-112">Mono-theta rigidity 1.10-1.12</a>
         <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation 2</a>
@@ -23165,8 +23171,204 @@
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Propositions 1.2-1.5</a>
           Related: <a href="#mono-theta-environments-ii11">mono-theta environment</a>
+          <a href="#etale-theta-standard-type-ii14">etale theta standard type</a>
+          <a href="#projective-mono-theta-systems-ii15">projective systems</a>
           <a href="#cores-cuspidalizations-ii16">cores and cuspidalizations</a>
           <a href="#iut-ii-mono-theta-rigidity-110-112">mono-theta rigidity</a>
+          <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-standard-type-ii14" data-filter="iut ii proposition 1.4 etale theta functions standard type Pi_Ydd lDeltaTheta H1 theta Pi">
+        <h2>Etale Theta Functions of Standard Type</h2>
+        <p class="lede">
+          Proposition 1.4 constructs, from a group
+          <span class="math">Pi ~= Pi_X^tp</span>, the open subgroup
+          <span class="math">Pi_Ydd(Pi)</span>, the subquotient
+          <span class="math">l·DeltaTheta(Pi)</span>, and a set
+          <span class="math">theta(Pi)</span> inside
+          <span class="math">H^1(Pi_Ydd(Pi), l·DeltaTheta(Pi))</span>. This set is the
+          group-theoretic version of the reciprocal of the standard etale theta function
+          orbit, up to <span class="math">mu_l</span>-multiples.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Algorithm</th><th>Output</th><th>Role</th></tr>
+          <tr>
+            <td><span class="math">Pi -> Pi_Ydd(Pi)</span></td>
+            <td>Open subgroup corresponding to the tempered covering <span class="math">Ydd</span>.</td>
+            <td>Domain for the cohomological theta function.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Pi -> l·DeltaTheta(Pi)</span></td>
+            <td>The theta-side cyclotomic subquotient.</td>
+            <td>Coefficient object for <span class="math">H^1</span>.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Pi -> theta(Pi)</span></td>
+            <td>Set of <span class="math">mu_l</span>-multiples of the reciprocal standard etale theta function orbit.</td>
+            <td>Input for projective and exterior-cyclotome theta packages.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 1.4</a>
+          Related: <a href="#pointed-inversion-automorphism-ii141">pointed inversion</a>
+          <a href="#theta-env-kummer-package-ii15">theta_env package</a>
+        </div>
+      </section>
+
+      <section id="pointed-inversion-automorphism-ii141" data-filter="iut ii remark 1.4.1 pointed inversion automorphism mu minus decomposition group standard type theta function">
+        <h2>Pointed Inversion Automorphism</h2>
+        <p class="lede">
+          Remark 1.4.1 recalls the normalization behind standard etale theta functions.
+          The unique two-torsion point <span class="math">mu-</span> lying on the same
+          special-fiber component as the zero cusp is lifted through the tempered
+          covering, and the relevant order-two inversion automorphism determines a
+          decomposition group <span class="math">D_{mu-}</span>.
+        </p>
+        <div class="diagram fit" aria-label="pointed inversion automorphism normalization">
+          <div class="diagramHeader">
+            <strong>Standard-type normalization</strong>
+            <span>restriction to D_mu- is a 2ell-th root of unity</span>
+          </div>
+          <svg viewBox="0 0 980 360" role="img">
+            <defs>
+              <marker id="arrowPointedInversion141" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="72" width="230" height="78"></rect>
+            <text class="nodeTitle" x="185" y="102" text-anchor="middle">zero cusp and mu-</text>
+            <text class="tinyText" x="185" y="128" text-anchor="middle">same special-fiber component</text>
+            <rect class="nodeBox gold" x="380" y="72" width="230" height="78"></rect>
+            <text class="nodeTitle" x="495" y="102" text-anchor="middle">covering lift</text>
+            <text class="tinyText" x="495" y="128" text-anchor="middle">mu- in Ydd and X</text>
+            <rect class="nodeBox violet" x="690" y="72" width="230" height="78"></rect>
+            <text class="nodeTitle" x="805" y="102" text-anchor="middle">inversion automorphism</text>
+            <text class="tinyText" x="805" y="128" text-anchor="middle">order two, unique up to stated ambiguity</text>
+            <rect class="nodeBox green" x="250" y="236" width="230" height="70"></rect>
+            <text class="nodeTitle" x="365" y="264" text-anchor="middle">D_mu-</text>
+            <text class="tinyText" x="365" y="288" text-anchor="middle">decomposition group</text>
+            <rect class="nodeBox red" x="560" y="236" width="230" height="70"></rect>
+            <text class="nodeTitle" x="675" y="264" text-anchor="middle">standard theta condition</text>
+            <text class="tinyText" x="675" y="288" text-anchor="middle">restriction is 2ell-th root of unity</text>
+            <path class="edge blue" d="M302 111 H378" marker-end="url(#arrowPointedInversion141)"></path>
+            <path class="edge gold" d="M612 111 H688" marker-end="url(#arrowPointedInversion141)"></path>
+            <path class="edge violet" d="M805 152 C770 200 724 226 690 236" marker-end="url(#arrowPointedInversion141)"></path>
+            <path class="edge green" d="M482 271 H558" marker-end="url(#arrowPointedInversion141)"></path>
+          </svg>
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 1.4.1</a>
+          Related: <a href="#etale-theta-standard-type-ii14">etale theta standard type</a>
+          <a href="#theta-evaluation-points-iut-i44">theta evaluation points</a>
+        </div>
+      </section>
+
+      <section id="projective-mono-theta-systems-ii15" data-filter="iut ii proposition 1.5 projective systems mono theta environments MTheta star discrete rigidity transition isomorphisms">
+        <h2>Projective Systems of Mono-Theta Environments</h2>
+        <p class="lede">
+          Proposition 1.5 passes from individual mod-
+          <span class="math">M</span> mono-theta environments to a projective system
+          <span class="math">MTheta_*</span>. The system is uniquely determined up to
+          isomorphism by the curve, its recovered <span class="math">Pi_X</span> groups
+          are identified through transition isomorphisms, and its exterior cyclotomes
+          admit a projective limit.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Proposition 1.5 item</th><th>Statement</th><th>Consequence</th></tr>
+          <tr>
+            <td>(i)</td>
+            <td>The projective system is uniquely determined up to isomorphism by <span class="math">X_k</span>.</td>
+            <td>Uses discrete rigidity to prevent uncontrolled system choices.</td>
+          </tr>
+          <tr>
+            <td>(ii)</td>
+            <td>The transition morphisms on <span class="math">Pi_X(MTheta_M)</span> are all isomorphisms.</td>
+            <td>One may write a single <span class="math">Pi_X(MTheta_*)</span>.</td>
+          </tr>
+          <tr>
+            <td>(iii)</td>
+            <td>The exterior cyclotomes have a projective limit <span class="math">Pi_mu(MTheta_*)</span> and a unique rigidity isomorphism from <span class="math">l·DeltaTheta(MTheta_*)</span>.</td>
+            <td>Provides the stable exterior-cyclotome target for theta classes.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 1.5(i)-(iii)</a>
+          Related: <a href="#theta-env-kummer-package-ii15">theta_env package</a>
+          <a href="#mono-theta-cyclotomes-ii11">cyclotomes</a>
+        </div>
+      </section>
+
+      <section id="theta-env-kummer-package-ii15" data-filter="iut ii proposition 1.5 theta_env infinity theta_env Kummer compatible exterior cyclotome Frobenioid">
+        <h2>Theta_env and Kummer Compatibility</h2>
+        <p class="lede">
+          Proposition 1.5(iii)-(iv) transports the standard etale theta package along
+          the projective cyclotomic rigidity isomorphism, producing
+          <span class="math">theta_env(MTheta_*)</span> and
+          <span class="math">infty theta_env(MTheta_*)</span> with exterior-cyclotome
+          coefficients. If the system arises from a tempered Frobenioid, this agrees
+          with the Kummer construction from roots of the Frobenioid-theoretic theta
+          function.
+        </p>
+        <div class="callout green">
+          <strong>Remark 1.5.2.</strong> Tautological Kummer classes give a natural
+          <span class="math">Pi_X(MTheta_*)</span>-equivariant injection
+          <span class="math">Pi_mu(MTheta_*) tensor Q/Z</span> into the direct-limit
+          cohomology group, with image equal to the torsion subgroup. This records the
+          torsion control needed for the pro-level theta package.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 1.5(iii)-(iv), Remark 1.5.2</a>
+          Related: <a href="#etale-theta-standard-type-ii14">etale theta standard type</a>
+          <a href="#frobenius-etale-versions-ii-intro">Frobenius/etale versions</a>
+        </div>
+      </section>
+
+      <section id="core-group-algorithm-ii16" data-filter="iut ii proposition 1.6 core group algorithm Pi_C centralizers outer automorphism groups Delta">
+        <h2>Core Group Algorithm</h2>
+        <p class="lede">
+          Proposition 1.6(i) constructs, from the local tempered group
+          <span class="math">Pi</span>, a topological group
+          <span class="math">Pi_C(Pi)</span> containing <span class="math">Pi</span> as
+          an open subgroup and augmented to <span class="math">Pi/Delta</span>. In the
+          model case this recovers the inclusion
+          <span class="math">Pi_X^tp subset Pi_C^tp</span>.
+        </p>
+        <div class="callout">
+          <strong>Remark 1.6.1.</strong> Mochizuki describes the construction as
+          computing centralizers of images of open subgroups of
+          <span class="math">Pi/Delta</span> in outer automorphism groups of open
+          subgroups of <span class="math">Delta</span>. This should be represented as a
+          group-theoretic algorithm, not as an existential black box.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 1.6(i), Remark 1.6.1</a>
+          Related: <a href="#cores-cuspidalizations-ii16">cores/cuspidalizations</a>
+          <a href="#elliptic-cuspidalization-ii16">elliptic cuspidalization</a>
+        </div>
+      </section>
+
+      <section id="elliptic-cuspidalization-ii16" data-filter="iut ii proposition 1.6 elliptic cuspidalization Pi_U_N N torsion points outer isomorphisms">
+        <h2>Elliptic Cuspidalization Algorithm</h2>
+        <p class="lede">
+          Proposition 1.6(ii) constructs, for every positive integer
+          <span class="math">N</span>, a group
+          <span class="math">Pi_U_N(Pi)</span> surjecting to
+          <span class="math">Pi</span>. In the model case this is the elliptic
+          cuspidalization coming from the open immersion determined by the
+          <span class="math">N</span>-torsion points of a once-punctured elliptic curve
+          double-covering <span class="math">C_k</span>.
+        </p>
+        <div class="callout">
+          <strong>Remark 1.6.1.</strong> The cuspidalization construction is described
+          by compatible outer isomorphisms between subquotients of
+          <span class="math">Delta</span>, compatible with outer actions of open
+          subgroups of <span class="math">Pi/Delta</span>. This is the group-theoretic
+          input for later recovery of evaluation-point decomposition groups.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 1.6(ii), Remark 1.6.1</a>
+          Related: <a href="#core-group-algorithm-ii16">core group algorithm</a>
           <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation</a>
         </div>
       </section>
