@@ -478,6 +478,7 @@
         <a href="#multiradiality">Multiradiality</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
+        <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         <a href="#iut-iv">IUT IV and consequences</a>
         <a href="#species-mutations">Species and mutations</a>
         <h2>Context</h2>
@@ -2795,6 +2796,129 @@
           <a href="papers/pajo-scale-free-common-container-comparisons.pdf" target="_blank">Pajo 2026</a>
           Related: <a href="#dispute">dispute</a>
           <a href="#formalization">formalization</a>
+        </div>
+      </section>
+
+      <section id="corollary-312-diagnostics">
+        <h2>Formal Diagnostics Around Corollary 3.12</h2>
+        <p class="lede">
+          Several recent papers isolate narrow formalization tasks around the 3.12
+          corridor. They are not substitutes for IUT III, and they do not by themselves
+          prove or disprove IUT. Their value for this wiki is diagnostic: they identify
+          which data must be present before a common-container or qualitative comparison
+          can be read as a numerical ordered-real inequality.
+        </p>
+        <div class="diagram" aria-label="Corollary 3.12 diagnostic bridge">
+          <div class="diagramHeader">
+            <strong>Diagnostic bridge test</strong>
+            <span>what must be present before the final inequality is validly read</span>
+          </div>
+          <svg viewBox="0 0 900 350" role="img">
+            <defs>
+              <marker id="arrowDiag312" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="46" y="70" width="150" height="82"></rect>
+            <text class="nodeTitle" x="121" y="101" text-anchor="middle">initial theta data</text>
+            <text class="tinyText" x="121" y="124" text-anchor="middle">hypothesis side</text>
+            <text class="tinyText" x="121" y="142" text-anchor="middle">Dupuy-Hilado</text>
+
+            <rect class="nodeBox green" x="260" y="70" width="160" height="82"></rect>
+            <text class="nodeTitle" x="340" y="101" text-anchor="middle">qualitative package</text>
+            <text class="tinyText" x="340" y="124" text-anchor="middle">IPL, SHE, APT</text>
+            <text class="tinyText" x="340" y="142" text-anchor="middle">common container</text>
+
+            <rect class="nodeBox red" x="488" y="70" width="150" height="82"></rect>
+            <text class="nodeTitle" x="563" y="101" text-anchor="middle">bridge data</text>
+            <text class="tinyText" x="563" y="124" text-anchor="middle">chart, transport,</text>
+            <text class="tinyText" x="563" y="142" text-anchor="middle">calibration, relation</text>
+
+            <rect class="nodeBox gold" x="704" y="70" width="150" height="82"></rect>
+            <text class="nodeTitle" x="779" y="101" text-anchor="middle">real inequality</text>
+            <text class="tinyText" x="779" y="124" text-anchor="middle">membership in</text>
+            <text class="tinyText" x="779" y="142" text-anchor="middle">closed upper ray</text>
+
+            <line class="arrow" x1="196" y1="111" x2="260" y2="111" marker-end="url(#arrowDiag312)"></line>
+            <line class="arrow" x1="420" y1="111" x2="488" y2="111" marker-end="url(#arrowDiag312)"></line>
+            <line class="arrow" x1="638" y1="111" x2="704" y2="111" marker-end="url(#arrowDiag312)"></line>
+
+            <rect class="nodeBox violet" x="260" y="218" width="378" height="70"></rect>
+            <text class="nodeTitle" x="449" y="245" text-anchor="middle">negative tests</text>
+            <text class="tinyText" x="449" y="264" text-anchor="middle">qualitative or scale-free abstractions alone</text>
+            <text class="tinyText" x="449" y="282" text-anchor="middle">do not force the numerical conclusion</text>
+            <line class="arrow" x1="449" y1="218" x2="563" y2="152" marker-end="url(#arrowDiag312)"></line>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card">
+            <h3>Initial theta data</h3>
+            <p>
+              Dupuy-Hilado isolate the hypothesis side of Corollary 3.12 by explaining
+              initial theta data and constructing it explicitly for the elliptic curve
+              11a1. This supports the wiki's separation between input construction and
+              the later multiradial log-volume comparison.
+            </p>
+            <div class="tagRow"><span class="tag blue">input side</span><span class="tag">11a1</span></div>
+          </div>
+          <div class="card">
+            <h3>Step (xi-e) to (xi-f)</h3>
+            <p>
+              Higuchi formalizes a qualitative package consisting of IPL, SHE, APT,
+              common-container passage, and output closed-half-line data, then gives a
+              countermodel showing that this package alone does not imply the required
+              numerical membership statement.
+            </p>
+            <div class="tagRow"><span class="tag red">negative test</span><span class="tag">bridge axiom</span></div>
+          </div>
+          <div class="card">
+            <h3>Scale-free containers</h3>
+            <p>
+              Pajo studies a typed common-container abstraction with monoid, hull,
+              log-volume, embedding, comparison, and final numerical maps. A relative
+              rescaling countermodel shows that scale-free container data alone does not
+              entail the final numerical inequality.
+            </p>
+            <div class="tagRow"><span class="tag red">no-go</span><span class="tag">scale retention</span></div>
+          </div>
+          <div class="card">
+            <h3>Approximation is not enough</h3>
+            <p>
+              In the closed-half-line setting, Higuchi's note observes that approximation
+              language does not remove the need for membership: approximate realization
+              from below collapses to exact inclusion in the relevant upper ray.
+            </p>
+            <div class="tagRow"><span class="tag gold">closed ray</span><span class="tag">membership</span></div>
+          </div>
+          <div class="card">
+            <h3>Bridge certificates</h3>
+            <p>
+              Pajo lists families of additional bridge mechanisms that would defeat the
+              scale-free countermodel, such as numerical charts, scale-preserving
+              transport, certified relations, interval bridges, sandwich estimates, and
+              calibration plus comparison-realization.
+            </p>
+            <div class="tagRow"><span class="tag green">audit target</span><span class="tag">certificates</span></div>
+          </div>
+          <div class="card">
+            <h3>Wiki policy</h3>
+            <p>
+              The wiki treats these papers as formal lower-bound diagnostics. A page or
+              Lean module may use their abstractions to test whether enough bridge data has
+              been supplied, but not as a replacement for the source IUT construction.
+            </p>
+            <div class="tagRow"><span class="tag violet">scope control</span><span class="tag">formalization</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources:
+          <a href="papers/dupuy-hilado-corollary-312-initial-theta-indeterminacies.pdf" target="_blank">Dupuy-Hilado initial theta data</a>
+          <a href="papers/higuchi-formal-negative-result-step-xi.pdf" target="_blank">Higuchi 2026</a>
+          <a href="papers/pajo-scale-free-common-container-comparisons.pdf" target="_blank">Pajo 2026</a>
+          Related: <a href="#corollary-312">Corollary 3.12 corridor</a>
+          <a href="#formalization">formalization</a>
+          <a href="#iut-iv">IUT IV consequences</a>
         </div>
       </section>
 
