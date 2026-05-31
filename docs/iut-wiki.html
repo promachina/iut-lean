@@ -483,6 +483,7 @@
         <a href="#frobenioids-log-shells">Frobenioids and log-shells</a>
         <a href="#theta-log-links">Theta and log links</a>
         <a href="#log-theta-lattice">Log-theta lattice</a>
+        <a href="#essential-logical-structure">Logical structure</a>
         <a href="#indeterminacies">Indeterminacies</a>
         <a href="#multiradiality">Multiradiality</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
@@ -997,6 +998,19 @@
               <a href="#collas-indeterminacies">Collas indeterminacy map</a>
             </td>
             <td>Collas, anabelian overview</td>
+          </tr>
+          <tr>
+            <td>Essential Logical Structure</td>
+            <td>Boolean-logical route</td>
+            <td>
+              <a href="#and-xor-chain">AND/XOR chain</a>,
+              <a href="#redundant-copy-warning">redundant-copy warning</a>,
+              <a href="#step-chain-stp1-stp8">Stp1-Stp8</a>,
+              <a href="#log-kummer-centrality">log-Kummer centrality</a>,
+              <a href="#common-container-chain">common-container chain</a>,
+              <a href="#label-reconstruction">label reconstruction</a>
+            </td>
+            <td>Essential Logical Structure, Section 3</td>
           </tr>
         </table>
         <div class="grid4">
@@ -7837,6 +7851,236 @@
           Related: <a href="#iut-iv-atlas">IUT IV atlas</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="essential-logical-structure">
+        <h2>Essential Logical Structure</h2>
+        <p class="lede">
+          Mochizuki's 2024 logical-structure report presents IUT as a chain of
+          simultaneous theta-link relations together with controlled enlargements by
+          indeterminacies. The source slogan is not that all copies become one copy, but
+          that one maintains an AND relation while replacing one side by larger
+          collections of possibilities.
+        </p>
+
+        <div class="diagram" aria-label="AND XOR chain in the essential logical structure">
+          <div class="diagramHeader">
+            <strong>Boolean skeleton</strong>
+            <span>theta-link AND plus indeterminacy XOR</span>
+          </div>
+          <svg viewBox="0 0 940 380" role="img">
+            <defs>
+              <marker id="arrowLogic" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="42" y="52" width="178" height="78"></rect>
+            <text class="nodeTitle" x="131" y="81" text-anchor="middle">A AND B</text>
+            <text class="tinyText" x="131" y="103" text-anchor="middle">initial theta-link relation</text>
+
+            <rect class="nodeBox green" x="302" y="52" width="246" height="78"></rect>
+            <text class="nodeTitle" x="425" y="81" text-anchor="middle">A AND (B1 XOR B2 ...)</text>
+            <text class="tinyText" x="425" y="103" text-anchor="middle">first possibility container</text>
+
+            <rect class="nodeBox gold" x="630" y="52" width="268" height="78"></rect>
+            <text class="nodeTitle" x="764" y="81" text-anchor="middle">A AND (B1 XOR ... XOR B'1 ...)</text>
+            <text class="tinyText" x="764" y="103" text-anchor="middle">expanded indeterminacy container</text>
+
+            <path d="M220 91 H300" class="edge blue" marker-end="url(#arrowLogic)"></path>
+            <path d="M548 91 H628" class="edge green" marker-end="url(#arrowLogic)"></path>
+
+            <rect class="nodeBox violet" x="108" y="240" width="258" height="82"></rect>
+            <text class="nodeTitle" x="237" y="269" text-anchor="middle">AND source</text>
+            <text class="tinyText" x="237" y="291" text-anchor="middle">Theta-link and common multiplicative data</text>
+
+            <rect class="nodeBox red" x="574" y="240" width="258" height="82"></rect>
+            <text class="nodeTitle" x="703" y="269" text-anchor="middle">XOR source</text>
+            <text class="tinyText" x="703" y="291" text-anchor="middle">log-Kummer possibilities and indeterminacies</text>
+
+            <path d="M425 130 C425 182 237 185 237 238" stroke="#66508a" stroke-width="1.3" fill="none" marker-end="url(#arrowLogic)"></path>
+            <path d="M764 130 C764 183 703 188 703 238" stroke="#9a3f35" stroke-width="1.3" fill="none" marker-end="url(#arrowLogic)"></path>
+            <text class="edgeLabel" x="474" y="196" text-anchor="middle">Section 3.10: AND/XOR chain</text>
+          </svg>
+        </div>
+
+        <div class="grid3">
+          <div class="card" id="and-xor-chain">
+            <h3>AND/XOR chain</h3>
+            <p>
+              Section 3.10 summarizes the proof architecture as a chain
+              <span class="math">A ∧ (B1 ⊻ B2 ...)</span> enlarged by later
+              possibility terms. The AND terms correspond to simultaneous theta-link
+              execution; the XOR terms correspond to alternatives produced by
+              indeterminacy and projection/subquotient operations.
+            </p>
+            <div class="tagRow"><span class="tag green">§3.10</span><span class="tag">∧/⊻</span></div>
+          </div>
+          <div class="card" id="redundant-copy-warning">
+            <h3>Redundant-copy warning</h3>
+            <p>
+              The report's central warning is that arbitrarily identifying copies of
+              Frobenius-like, etale-like, log-linked, or theta-linked objects changes the
+              logical form of IUT. Such identifications can make coricity look trivial
+              while erasing the labels that make the comparison meaningful.
+            </p>
+            <div class="tagRow"><span class="tag red">§3.1-3.4</span><span class="tag">labels</span></div>
+          </div>
+          <div class="card" id="boolean-carry-analogy">
+            <h3>Boolean carry analogy</h3>
+            <p>
+              Mochizuki compares the AND/XOR pattern to carry addition for truncated
+              Witt vectors: multiplication-like common structure and addition-like
+              non-common structure are intertwined. The analogy is explanatory; the wiki
+              treats it as a guide to the logical shape, not as a substitute for the
+              source constructions.
+            </p>
+            <div class="tagRow"><span class="tag blue">Introduction</span><span class="tag">Witt-vector analogy</span></div>
+          </div>
+        </div>
+
+        <table>
+          <tr><th>Source label</th><th>Meaning in the report</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td><span class="math">RC-FrEt</span></td>
+            <td>Claim that Frobenius-like and etale-like versions are redundant.</td>
+            <td>Keep Frobenius-like labels and etale-like coricity as distinct entries.</td>
+          </tr>
+          <tr>
+            <td><span class="math">RC-log</span></td>
+            <td>Claim that Hodge theaters on the two sides of a log-link may be identified.</td>
+            <td>Represent log-links as structural moves, not as erasure of the source theater.</td>
+          </tr>
+          <tr>
+            <td><span class="math">RC-Theta</span></td>
+            <td>Claim that the two sides of the theta-link may be identified.</td>
+            <td>Do not collapse theta-pilot and q-pilot labels before the licensed descent route.</td>
+          </tr>
+          <tr>
+            <td><span class="math">ORAch</span></td>
+            <td>A diagram-commutativity reading that tries to put both sides in one external container too early.</td>
+            <td>Use the container chain below instead of a one-shot commutative square.</td>
+          </tr>
+        </table>
+
+        <div class="diagram" aria-label="Stp1 to Stp8 route">
+          <div class="diagramHeader">
+            <strong>Stp1-Stp8 route</strong>
+            <span>descent, hulls, determinant, log-shift, log-volume</span>
+          </div>
+          <svg viewBox="0 0 980 430" role="img">
+            <defs>
+              <marker id="arrowStp" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="34" y="56" width="128" height="74"></rect>
+            <text class="nodeTitle" x="98" y="84" text-anchor="middle">Stp1</text>
+            <text class="tinyText" x="98" y="105" text-anchor="middle">log-Kummer</text>
+
+            <rect class="nodeBox green" x="198" y="56" width="128" height="74"></rect>
+            <text class="nodeTitle" x="262" y="84" text-anchor="middle">Stp2</text>
+            <text class="tinyText" x="262" y="105" text-anchor="middle">Ind1 descent</text>
+
+            <rect class="nodeBox green" x="362" y="56" width="128" height="74"></rect>
+            <text class="nodeTitle" x="426" y="84" text-anchor="middle">Stp3</text>
+            <text class="tinyText" x="426" y="105" text-anchor="middle">Ind2 descent</text>
+
+            <rect class="nodeBox gold" x="526" y="56" width="128" height="74"></rect>
+            <text class="nodeTitle" x="590" y="84" text-anchor="middle">Stp4</text>
+            <text class="tinyText" x="590" y="105" text-anchor="middle">holomorphic hull</text>
+
+            <rect class="nodeBox gold" x="690" y="56" width="128" height="74"></rect>
+            <text class="nodeTitle" x="754" y="84" text-anchor="middle">Stp5</text>
+            <text class="tinyText" x="754" y="105" text-anchor="middle">hull approximants</text>
+
+            <rect class="nodeBox violet" x="198" y="244" width="128" height="74"></rect>
+            <text class="nodeTitle" x="262" y="272" text-anchor="middle">Stp6</text>
+            <text class="tinyText" x="262" y="293" text-anchor="middle">determinant</text>
+
+            <rect class="nodeBox violet" x="362" y="244" width="128" height="74"></rect>
+            <text class="nodeTitle" x="426" y="272" text-anchor="middle">Stp7</text>
+            <text class="tinyText" x="426" y="293" text-anchor="middle">log-shift loop</text>
+
+            <rect class="nodeBox red" x="526" y="244" width="128" height="74"></rect>
+            <text class="nodeTitle" x="590" y="272" text-anchor="middle">Stp8</text>
+            <text class="tinyText" x="590" y="293" text-anchor="middle">log-volume</text>
+
+            <rect class="nodeBox red" x="690" y="244" width="188" height="74"></rect>
+            <text class="nodeTitle" x="784" y="272" text-anchor="middle">3.12 inequality</text>
+            <text class="tinyText" x="784" y="293" text-anchor="middle">signed common-container bound</text>
+
+            <path d="M162 93 H196" class="edge blue" marker-end="url(#arrowStp)"></path>
+            <path d="M326 93 H360" class="edge green" marker-end="url(#arrowStp)"></path>
+            <path d="M490 93 H524" class="edge green" marker-end="url(#arrowStp)"></path>
+            <path d="M654 93 H688" class="edge gold" marker-end="url(#arrowStp)"></path>
+            <path d="M754 130 C754 190 262 188 262 242" class="edge gold" marker-end="url(#arrowStp)"></path>
+            <path d="M326 281 H360" class="edge violet" marker-end="url(#arrowStp)"></path>
+            <path d="M490 281 H524" class="edge violet" marker-end="url(#arrowStp)"></path>
+            <path d="M654 281 H688" class="edge red" marker-end="url(#arrowStp)"></path>
+            <text class="edgeLabel" x="470" y="380" text-anchor="middle">The nontrivial input is Stp1; later steps organize and preserve the logical relation.</text>
+          </svg>
+        </div>
+
+        <div class="grid4">
+          <div class="card" id="step-chain-stp1-stp8">
+            <h3>Stp1-Stp8</h3>
+            <p>
+              Section 3.10 decomposes the route into eight steps: log-Kummer/Galois
+              evaluation, descent to mono-analytic etale-like data, descent to
+              mono-analytic Frobenius-like data, holomorphic hull, hull-approximants,
+              determinant, log-shift adjustment, and log-volume.
+            </p>
+            <div class="tagRow"><span class="tag green">§3.10</span><span class="tag">route map</span></div>
+          </div>
+          <div class="card" id="log-kummer-centrality">
+            <h3>Log-Kummer centrality</h3>
+            <p>
+              Section 3.11 emphasizes that Stp1 is the technically heavy part: it uses
+              log-Kummer correspondence and Galois evaluation to place the theta-pilot
+              in a collection of possibilities. Ind1 and Ind2 are described as
+              subordinate to the Ind3/log-Kummer stabilization.
+            </p>
+            <div class="tagRow"><span class="tag red">§3.11</span><span class="tag">Ind3</span></div>
+          </div>
+          <div class="card" id="common-container-chain">
+            <h3>Common-container chain</h3>
+            <p>
+              Instead of a single commutative square into a container, the report uses a
+              chain in which the theta-pilot side is embedded into larger containers
+              until the q-pilot side is engulfed. This is compared to using sufficiently
+              large thickenings in the theory of crystals.
+            </p>
+            <div class="tagRow"><span class="tag gold">§3.10</span><span class="tag">containers</span></div>
+          </div>
+          <div class="card" id="label-reconstruction">
+            <h3>Label reconstruction</h3>
+            <p>
+              The reconstruction algorithms do not recover labels such as
+              <span class="math">(0,0)</span> by literal set-theoretic equality. The
+              point is instead that the forgetting operation can be inverted up to
+              suitable indeterminacies and that only the weakened prime-strip data is
+              glued to the other column.
+            </p>
+            <div class="tagRow"><span class="tag blue">§3.11</span><span class="tag">labels</span></div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          Formalization warning: a Lean interface for this page should not replace the
+          chain of labeled descents by a single equality in a fixed ambient type. The
+          source claim is about preserving a logical AND relation through specified
+          enlargements, descents, and log-volume passage.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-essential-logical-structure.pdf" target="_blank">Essential Logical Structure</a>
+          <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III</a>
+          <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies</a>
+          Related: <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#indeterminacies">indeterminacies</a>
+          <a href="#multiradiality">multiradiality</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+          <a href="#formalization">RIMS Lean effort</a>
         </div>
       </section>
 
