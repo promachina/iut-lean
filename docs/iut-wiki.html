@@ -621,6 +621,9 @@
         <a href="#theta-plus-minus-ell-lift-611-612">Theta±ell lift 6.11-6.12</a>
         <a href="#theta-plus-minus-ell-nf-gluing-613">Theta±ellNF gluing 6.13</a>
         <a href="#mono-theta-environments-ii11">Mono-theta environments 1.1</a>
+        <a href="#mono-theta-construction-routes-ii12-15">Mono-theta construction 1.2-1.5</a>
+        <a href="#cores-cuspidalizations-ii16">Cores/cuspidalizations 1.6</a>
+        <a href="#radial-coric-framework-ii17-19">Radial/coric framework 1.7-1.9</a>
         <a href="#iut-ii-mono-theta-rigidity-110-112">Mono-theta rigidity 1.10-1.12</a>
         <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation 2</a>
         <a href="#iut-ii-distinguished-subgraph-263">Distinguished subgraph 2.6.3</a>
@@ -1656,6 +1659,9 @@
               <a href="#mono-theta-environment">mono-theta environment</a>,
               <a href="#mono-theta-environments-ii11">mono-theta environments 1.1</a>,
               <a href="#mono-theta-reconstruction">mono-theta reconstruction</a>,
+              <a href="#mono-theta-construction-routes-ii12-15">construction routes 1.2-1.5</a>,
+              <a href="#cores-cuspidalizations-ii16">cores and cuspidalizations 1.6</a>,
+              <a href="#radial-coric-framework-ii17-19">radial/coric framework 1.7-1.9</a>,
               <a href="#galois-theoretic-theta-evaluation-ii2">Galois-theoretic theta evaluation</a>,
               <a href="#two-torsion-translates-24">two-torsion translates</a>,
               <a href="#conjugate-synchronization-261">conjugate synchronization</a>,
@@ -14807,6 +14813,392 @@
           <a href="#theta-plus-minus-ell-nf-613">Theta±ellNF theaters</a>
           <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
           <a href="#multiradiality">multiradiality</a>
+        </div>
+      </section>
+
+      <section id="mono-theta-construction-routes-ii12-15">
+        <h2>IUT II Propositions 1.2-1.5: Mono-Theta Construction Routes</h2>
+        <p class="lede">
+          After Definition 1.1, Mochizuki records two ways to construct the
+          mono-theta package, checks cyclotome compatibility, isolates the etale theta
+          functions of standard type, and passes to projective systems. These results
+          are the local input for the later multiradial theta-evaluation machinery.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Propositions 1.2 through 1.5 mono-theta construction routes">
+          <div class="diagramHeader">
+            <strong>From local data to projective mono-theta environments</strong>
+            <span>Propositions 1.2-1.5</span>
+          </div>
+          <svg viewBox="0 0 1120 560" role="img">
+            <defs>
+              <marker id="arrowMonoThetaRoutes1215" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="72" y="64" width="250" height="90"></rect>
+            <text class="nodeTitle" x="197" y="94" text-anchor="middle">topological group route</text>
+            <text class="tinyText" x="197" y="120" text-anchor="middle">Pi isomorphic to Pi_X^tp</text>
+            <text class="tinyText" x="197" y="140" text-anchor="middle">Prop. 1.2(i)</text>
+
+            <rect class="nodeBox green" x="72" y="326" width="250" height="90"></rect>
+            <text class="nodeTitle" x="197" y="356" text-anchor="middle">tempered Frobenioid route</text>
+            <text class="tinyText" x="197" y="382" text-anchor="middle">category C over Btemp(Pi_X)^0</text>
+            <text class="tinyText" x="197" y="402" text-anchor="middle">Prop. 1.2(ii)</text>
+
+            <rect class="nodeBox violet" x="428" y="182" width="264" height="96"></rect>
+            <text class="nodeTitle" x="560" y="214" text-anchor="middle">MTheta(Pi) or MTheta(C)</text>
+            <text class="tinyText" x="560" y="240" text-anchor="middle">mono-theta environment</text>
+            <text class="tinyText" x="560" y="260" text-anchor="middle">recovers Pi_X and cyclotomes</text>
+
+            <rect class="nodeBox gold" x="820" y="56" width="250" height="102"></rect>
+            <text class="nodeTitle" x="945" y="88" text-anchor="middle">cyclotome compatibility</text>
+            <text class="tinyText" x="945" y="114" text-anchor="middle">mono-theta rigidity equals</text>
+            <text class="tinyText" x="945" y="134" text-anchor="middle">base-field/Galois rigidity</text>
+            <text class="tinyText" x="945" y="152" text-anchor="middle">Prop. 1.3</text>
+
+            <rect class="nodeBox red" x="820" y="214" width="250" height="102"></rect>
+            <text class="nodeTitle" x="945" y="246" text-anchor="middle">standard etale theta</text>
+            <text class="tinyText" x="945" y="272" text-anchor="middle">theta(Pi) in H^1(Pi_Ydd, lDeltaTheta)</text>
+            <text class="tinyText" x="945" y="292" text-anchor="middle">Prop. 1.4</text>
+
+            <rect class="nodeBox blue" x="820" y="374" width="250" height="102"></rect>
+            <text class="nodeTitle" x="945" y="406" text-anchor="middle">projective system</text>
+            <text class="tinyText" x="945" y="432" text-anchor="middle">MTheta_* and Pi_mu(MTheta_*)</text>
+            <text class="tinyText" x="945" y="452" text-anchor="middle">Prop. 1.5</text>
+
+            <rect class="nodeBox green" x="356" y="432" width="346" height="70"></rect>
+            <text class="nodeTitle" x="529" y="462" text-anchor="middle">Kummer-compatible theta package</text>
+            <text class="tinyText" x="529" y="486" text-anchor="middle">theta_env and infinity-theta_env in projective cohomology</text>
+
+            <path d="M322 109 C378 128 410 170 426 214" class="edge blue" marker-end="url(#arrowMonoThetaRoutes1215)"></path>
+            <path d="M322 371 C388 348 418 292 426 250" class="edge green" marker-end="url(#arrowMonoThetaRoutes1215)"></path>
+            <path d="M692 216 C756 178 800 126 818 108" class="edge gold" marker-end="url(#arrowMonoThetaRoutes1215)"></path>
+            <path d="M692 238 H818" class="edge red" marker-end="url(#arrowMonoThetaRoutes1215)"></path>
+            <path d="M692 260 C760 304 800 370 818 424" class="edge blue" marker-end="url(#arrowMonoThetaRoutes1215)"></path>
+            <path d="M820 425 C764 448 718 456 704 464" class="edge green" marker-end="url(#arrowMonoThetaRoutes1215)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source result</th><th>Construction</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Proposition 1.2(i)</td>
+            <td>
+              A functorial group-theoretic algorithm constructs a mod
+              <span class="math">N</span> mono-theta environment from a topological
+              group <span class="math">Pi</span> isomorphic to
+              <span class="math">Pi_X^tp</span>, with only the stated
+              <span class="math">mu_N</span>-conjugacy indeterminacy.
+            </td>
+            <td>
+              The group route is not a placeholder for geometry; it is a named
+              reconstruction algorithm with controlled automorphism ambiguity.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.2(ii)</td>
+            <td>
+              A tempered Frobenioid category <span class="math">C</span> associated
+              to <span class="math">X_k</span> also functorially constructs a
+              mono-theta environment, recovering the base tempered category.
+            </td>
+            <td>
+              The wiki separates group and Frobenioid access routes because later
+              Kummer squares compare etale-like and Frobenioid-like structures.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.3</td>
+            <td>
+              The mono-theta cyclotomic rigidity isomorphism agrees with the
+              base-field/Galois cyclotomic rigidity isomorphism under the
+              Frobenioid/MLF-Galois pair correspondences.
+            </td>
+            <td>
+              This fixes the cyclotome convention before theta evaluation begins.
+              Two routes are compatible because both coincide with the ordinary
+              scheme-theoretic identification in the model case.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.4 and Remark 1.4.1</td>
+            <td>
+              From <span class="math">Pi</span> one constructs
+              <span class="math">Pi_Ydd(Pi)</span>, <span class="math">lDeltaTheta(Pi)</span>,
+              and the set of etale theta functions of standard type. Standard type is
+              characterized by the value condition at the pointed inversion data over
+              <span class="math">mu-</span>.
+            </td>
+            <td>
+              The normalization data is part of the construction. It cannot be replaced
+              by an arbitrary ring-dependent unit choice.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.5</td>
+            <td>
+              A projective system <span class="math">MTheta_*</span> is uniquely
+              determined up to isomorphism, has constant
+              <span class="math">Pi_X</span>, and yields a projective exterior
+              cyclotome and the exterior theta package
+              <span class="math">theta_env</span>, <span class="math">infty theta_env</span>.
+            </td>
+            <td>
+              Later pages should refer to the projective system when working with
+              pro-level Kummer classes and constant-multiple rigidity.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Propositions 1.2-1.5</a>
+          Related: <a href="#mono-theta-environments-ii11">mono-theta environment</a>
+          <a href="#cores-cuspidalizations-ii16">cores and cuspidalizations</a>
+          <a href="#iut-ii-mono-theta-rigidity-110-112">mono-theta rigidity</a>
+          <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation</a>
+        </div>
+      </section>
+
+      <section id="cores-cuspidalizations-ii16">
+        <h2>IUT II Proposition 1.6: Cores and Elliptic Cuspidalizations</h2>
+        <p class="lede">
+          Proposition 1.6 recalls the group-theoretic reconstruction of the core
+          group and elliptic cuspidalizations from a local tempered group. These
+          constructions are later used to recover evaluation points and decomposition
+          groups without choosing a scheme-theoretic coordinate system.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Proposition 1.6 cores and cuspidalizations">
+          <div class="diagramHeader">
+            <strong>Group-theoretic elementary operations</strong>
+            <span>Proposition 1.6 and Remark 1.6.1</span>
+          </div>
+          <svg viewBox="0 0 1060 430" role="img">
+            <defs>
+              <marker id="arrowCoreCusp16" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox violet" x="410" y="50" width="240" height="88"></rect>
+            <text class="nodeTitle" x="530" y="80" text-anchor="middle">Pi</text>
+            <text class="tinyText" x="530" y="106" text-anchor="middle">local tempered group</text>
+            <text class="tinyText" x="530" y="126" text-anchor="middle">Delta reconstructed inside Pi</text>
+
+            <rect class="nodeBox blue" x="86" y="232" width="280" height="98"></rect>
+            <text class="nodeTitle" x="226" y="264" text-anchor="middle">core construction</text>
+            <text class="tinyText" x="226" y="290" text-anchor="middle">Pi -> Pi_C(Pi) -> Pi/Delta</text>
+            <text class="tinyText" x="226" y="312" text-anchor="middle">matches Pi_X^tp subset Pi_C^tp</text>
+
+            <rect class="nodeBox gold" x="694" y="232" width="280" height="98"></rect>
+            <text class="nodeTitle" x="834" y="264" text-anchor="middle">elliptic cuspidalization</text>
+            <text class="tinyText" x="834" y="290" text-anchor="middle">Pi -> Pi_U_N(Pi) -> Pi</text>
+            <text class="tinyText" x="834" y="312" text-anchor="middle">open immersion from N-torsion points</text>
+
+            <rect class="nodeBox green" x="360" y="338" width="340" height="56"></rect>
+            <text class="nodeTitle" x="530" y="366" text-anchor="middle">chains of elementary operations</text>
+            <text class="tinyText" x="530" y="384" text-anchor="middle">centralizers, outer isomorphisms, Belyi cuspidalizations</text>
+
+            <path d="M456 140 C370 174 292 206 236 230" class="edge blue" marker-end="url(#arrowCoreCusp16)"></path>
+            <path d="M604 140 C688 174 772 206 824 230" class="edge gold" marker-end="url(#arrowCoreCusp16)"></path>
+            <path d="M366 294 C420 322 472 334 512 338" class="edge blue" marker-end="url(#arrowCoreCusp16)"></path>
+            <path d="M694 294 C640 322 588 334 548 338" class="edge gold" marker-end="url(#arrowCoreCusp16)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Construction</th><th>Use downstream</th></tr>
+          <tr>
+            <td>Proposition 1.6(i)</td>
+            <td>
+              From <span class="math">Pi</span>, construct a topological group
+              <span class="math">Pi_C(Pi)</span> containing
+              <span class="math">Pi</span> as an open subgroup and augmented to
+              <span class="math">Pi/Delta</span>. In the model case this is the core
+              inclusion <span class="math">Pi_X^tp</span> into
+              <span class="math">Pi_C^tp</span>.
+            </td>
+            <td>
+              This gives the core group needed for comparing local curve data through
+              the group alone.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.6(ii)</td>
+            <td>
+              For each positive integer <span class="math">N</span>, construct
+              <span class="math">Pi_U_N(Pi)</span> with a surjection to
+              <span class="math">Pi</span>; in the model case this is the elliptic
+              cuspidalization associated to <span class="math">N</span>-torsion points.
+            </td>
+            <td>
+              This is later used in the theta-evaluation route to reconstruct the
+              decomposition groups attached to evaluation points.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 1.6.1</td>
+            <td>
+              The core algorithm is described in terms of centralizers of images of
+              open subgroups in outer automorphism groups. Cuspidalization is described
+              through compatible outer isomorphisms between subquotients of
+              <span class="math">Delta</span>.
+            </td>
+            <td>
+              The page treats these as specific group-theoretic algorithms, not as an
+              abstract existence assertion. This matters for later formalization.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 1.6</a>
+          Related: <a href="#mono-theta-construction-routes-ii12-15">mono-theta construction routes</a>
+          <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation</a>
+          <a href="#evaluation-decomposition-groups">evaluation decomposition groups</a>
+          <a href="#radial-coric-framework-ii17-19">radial/coric framework</a>
+        </div>
+      </section>
+
+      <section id="radial-coric-framework-ii17-19">
+        <h2>IUT II Examples 1.7-1.9: Radial, Coric, and Multiradial Data</h2>
+        <p class="lede">
+          Examples 1.7-1.9 introduce the language used to say when constructions can
+          be transported across alien arithmetic holomorphic structures through a
+          shared mono-analytic core. This is the formal source of the later
+          multiradial/uniradial distinction.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Examples 1.7 through 1.9 radial coric framework">
+          <div class="diagramHeader">
+            <strong>Radial data over a common coric core</strong>
+            <span>Examples 1.7-1.9 and Remarks 1.7.1, 1.9.1, 1.9.2</span>
+          </div>
+          <svg viewBox="0 0 1120 560" role="img">
+            <defs>
+              <marker id="arrowRadialCoric1719" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox gold" x="84" y="54" width="220" height="84"></rect>
+            <text class="nodeTitle" x="194" y="84" text-anchor="middle">R_i</text>
+            <text class="tinyText" x="194" y="110" text-anchor="middle">radial data</text>
+            <text class="tinyText" x="194" y="128" text-anchor="middle">one holomorphic spoke</text>
+
+            <rect class="nodeBox gold" x="84" y="236" width="220" height="84"></rect>
+            <text class="nodeTitle" x="194" y="266" text-anchor="middle">R_j</text>
+            <text class="tinyText" x="194" y="292" text-anchor="middle">another spoke</text>
+            <text class="tinyText" x="194" y="310" text-anchor="middle">alien holomorphic structure</text>
+
+            <rect class="nodeBox blue" x="450" y="145" width="250" height="104"></rect>
+            <text class="nodeTitle" x="575" y="178" text-anchor="middle">C</text>
+            <text class="tinyText" x="575" y="206" text-anchor="middle">coric data</text>
+            <text class="tinyText" x="575" y="226" text-anchor="middle">shared mono-analytic core</text>
+
+            <rect class="nodeBox green" x="820" y="54" width="230" height="84"></rect>
+            <text class="nodeTitle" x="935" y="84" text-anchor="middle">multiradial functor</text>
+            <text class="tinyText" x="935" y="110" text-anchor="middle">full radial functor</text>
+            <text class="tinyText" x="935" y="128" text-anchor="middle">parallel transport possible</text>
+
+            <rect class="nodeBox red" x="820" y="236" width="230" height="84"></rect>
+            <text class="nodeTitle" x="935" y="266" text-anchor="middle">uniradial functor</text>
+            <text class="tinyText" x="935" y="292" text-anchor="middle">depends on one spoke</text>
+            <text class="tinyText" x="935" y="310" text-anchor="middle">no arbitrary coric gluing</text>
+
+            <rect class="nodeBox violet" x="294" y="410" width="252" height="86"></rect>
+            <text class="nodeTitle" x="420" y="440" text-anchor="middle">concrete coric choices</text>
+            <text class="tinyText" x="420" y="466" text-anchor="middle">G, G O^x, G O^xmu, log-shell</text>
+            <text class="tinyText" x="420" y="486" text-anchor="middle">Example 1.8</text>
+
+            <rect class="nodeBox blue" x="626" y="410" width="252" height="86"></rect>
+            <text class="nodeTitle" x="752" y="440" text-anchor="middle">graphs of algorithms</text>
+            <text class="tinyText" x="752" y="466" text-anchor="middle">functorial algorithm -> graph category</text>
+            <text class="tinyText" x="752" y="486" text-anchor="middle">Example 1.9</text>
+
+            <path d="M304 96 C372 120 414 154 448 184" class="edge gold" marker-end="url(#arrowRadialCoric1719)"></path>
+            <path d="M304 278 C372 254 414 224 448 204" class="edge gold" marker-end="url(#arrowRadialCoric1719)"></path>
+            <path d="M700 178 C762 142 800 106 818 96" class="edge green" marker-end="url(#arrowRadialCoric1719)"></path>
+            <path d="M700 218 C762 246 800 278 818 278" class="edge red" marker-end="url(#arrowRadialCoric1719)"></path>
+            <path d="M575 250 C532 318 472 370 432 408" class="edge violet" marker-end="url(#arrowRadialCoric1719)"></path>
+            <path d="M575 250 C630 320 700 370 742 408" class="edge blue" marker-end="url(#arrowRadialCoric1719)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Definition or example</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Example 1.7(i)-(ii)</td>
+            <td>
+              A radial environment is a category of radial data
+              <span class="math">R</span>, a category of coric data
+              <span class="math">C</span>, and an essentially surjective functor
+              <span class="math">Phi : R -> C</span>. It is multiradial when
+              <span class="math">Phi</span> is full, and uniradial otherwise.
+            </td>
+            <td>
+              Fullness is the precise condition that the radial algorithm loses no
+              rigidity relevant to gluing over the coric core.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 1.7(iii)-(v), Remark 1.7.1</td>
+            <td>
+              Multiradiality allows switching and parallel transport between fibers
+              over the same coric data. Mochizuki compares this to a fibration equipped
+              with a connection.
+            </td>
+            <td>
+              The wiki uses this page as the reference for "parallel transport across
+              alien spokes"; it is not informal metaphor but source terminology.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 1.8</td>
+            <td>
+              Concrete radial environments include the basic
+              <span class="math">(Pi,G,alpha) -> G</span> environment, TM-pair and
+              unit-pair versions, cyclotomic and co-cyclotomic quotients
+              <span class="math">O^mu</span>, <span class="math">O^xmu</span>, and
+              log-shell versions.
+            </td>
+            <td>
+              These are the actual coric interfaces later used by Corollaries 1.10-1.12
+              and by the IUT III log-shell machinery.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 1.9</td>
+            <td>
+              A functorial group-theoretic algorithm can be represented by its graph.
+              Depending on the radial environment chosen, the same algorithm may be
+              regarded tautologically as multiradial or as uniradial.
+            </td>
+            <td>
+              This explains why Mochizuki later emphasizes the content of an algorithm,
+              not merely the existence of some reconstruction theorem.
+            </td>
+          </tr>
+          <tr>
+            <td>Remarks 1.9.1-1.9.2</td>
+            <td>
+              The purpose is to compute which output data depends essentially on an
+              arithmetic holomorphic structure and which portion depends only on the
+              mono-analytic core, possibly after explicit indeterminacies are allowed.
+            </td>
+            <td>
+              This is the source-level framework for the debated "history-erasure" or
+              "alien comparison" issues: forgetting is only allowed with a specified
+              radial/coric account of what survives.
+            </td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Guardrail: a multiradial statement is not a claim that all radial structures
+          are identical. It is a claim that the relevant gluing isomorphisms over the
+          coric core can be lifted or transported in the specified category, with the
+          specified indeterminacy.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Examples 1.7-1.9</a>
+          Related: <a href="#iut-ii-mono-theta-rigidity-110-112">mono-theta rigidity</a>
+          <a href="#multiradiality">multiradiality</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
         </div>
       </section>
 
