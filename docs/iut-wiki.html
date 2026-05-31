@@ -2637,6 +2637,96 @@
           </tr>
         </table>
 
+        <table>
+          <tr>
+            <th>Additive source item</th>
+            <th>Data or conclusion</th>
+            <th>Why it is not the same as the multiplicative side</th>
+          </tr>
+          <tr>
+            <td>Definition 6.1(i): <span class="math">F_l^±</span></td>
+            <td>
+              <span class="math">F_l^±</span> is the semidirect product
+              <span class="math">F_l ⋊ {±1}</span>. An
+              <span class="math">F_l^±</span>-group has a natural
+              <span class="math">F_l</span>-module structure; an
+              <span class="math">F_l^±</span>-torsor is acted on by affine maps
+              <span class="math">z -> ±z + lambda</span>.
+            </td>
+            <td>
+              The additive side has signs and translations. Its automorphisms include
+              positive automorphisms and full signed automorphisms, not only the
+              multiplicative <span class="math">F_l</span>-torsor action.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 6.1(iii): ±-label classes</td>
+            <td>
+              <span class="math">LabCusp±(D_v)</span> contains a zero class and a
+              ±-canonical class; after removing zero and quotienting by ±, it maps to
+              <span class="math">LabCusp(D_v)</span>.
+            </td>
+            <td>
+              The zero label is real data. Forgetting it collapses the additive bridge
+              to a multiplicative-looking object too early.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 6.4(i): D-Theta± bridge</td>
+            <td>
+              A poly-morphism <span class="math">D_T -> D≻</span>, where
+              <span class="math">T</span> is an <span class="math">F_l^±</span>-group.
+              It also defines <span class="math">D_|T|</span> by quotienting indices by
+              ± and <span class="math">D_T</span> from the nonzero part.
+            </td>
+            <td>
+              The quotient capsule keeps track of the passage from signed additive labels
+              to the nonzero unsigned labels used by later comparison with the
+              multiplicative side.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 6.4(ii): D-Thetaell bridge</td>
+            <td>
+              A poly-morphism <span class="math">D_T -> D±</span>, where
+              <span class="math">T</span> is an <span class="math">F_l^±</span>-torsor
+              and <span class="math">D± = B(X_K)^0</span>.
+            </td>
+            <td>
+              This is the elliptic side; its target is tied to the double-cover and
+              additive cusp-label structure rather than to <span class="math">C_K</span>
+              alone.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 6.4(iii): D-Theta±ell theater</td>
+            <td>
+              A compatible span
+              <span class="math">D≻ <- D_T -> D±</span> whose two arrows are the
+              D-Theta± and D-Thetaell bridges and whose morphisms induce the same
+              poly-isomorphism of capsules.
+            </td>
+            <td>
+              The compatibility condition is stronger than sharing labels: it ties the
+              signed group structure and the torsor structure through one capsule.
+            </td>
+          </tr>
+          <tr>
+            <td>Propositions 6.5 and 6.6</td>
+            <td>
+              Proposition 6.5 transports ±-label classes through the two additive bridges.
+              Proposition 6.6 locates the remaining ambiguity: D-Theta± bridge
+              isomorphisms form a <span class="math">{±1} × {±1}^V</span>-torsor,
+              D-Thetaell bridge isomorphisms form an <span class="math">F_l^±</span>-torsor,
+              and D-Theta±ell theater isomorphisms form a <span class="math">{±1}</span>-torsor.
+            </td>
+            <td>
+              These torsors explain why the additive bridge cannot be formalized by
+              reusing the multiplicative D-ThetaNF interface with an extra sign flag.
+            </td>
+          </tr>
+        </table>
+
         <div class="grid2">
           <div class="card">
             <h3>Multiplicative side: D-ThetaNF</h3>
