@@ -623,8 +623,11 @@
         <a href="#iut-i-cusp-edge-vertex-recognizers">Cusp/edge/vertex recognizers 1.2</a>
         <a href="#tempered-covering-complements">Tempered covering complements</a>
         <a href="#iut-i-tempered-terminality-21-22">Tempered terminality 2.1-2.2</a>
+        <a href="#compact-conjugator-test-iut-i21">Compact conjugator test 2.1</a>
+        <a href="#commensurable-terminality-iut-i22">Commensurable terminality 2.2</a>
         <a href="#iut-i-subsemigraph-arithmetic-subgroups-23">Subgraph arithmetic groups 2.3</a>
         <a href="#iut-i-arithmetic-tempered-recognition-24-25">Arithmetic tempered recognition 2.4-2.5</a>
+        <a href="#cusp-inertia-recognition-iut-i25">Cusp inertia recognition 2.5</a>
         <a href="#iut-i-discrete-topological-analogue-26-28">Discrete/topological analogue 2.6-2.8</a>
         <a href="#galois-countability-repairs">Galois-countability repairs</a>
         <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
@@ -6733,6 +6736,165 @@
         </div>
       </section>
 
+      <section id="compact-conjugator-test-iut-i21" data-filter="iut i proposition 2.1 compact subgroup conjugator tempered vertex pro-sigma graph">
+        <h2>Compact Conjugator Test in IUT I Proposition 2.1</h2>
+        <p class="lede">
+          Proposition 2.1 is the local detector behind Section 2. If a nontrivial
+          compact subgroup of the tempered fundamental group is moved by a profinite
+          element and lands back inside the tempered group, then the moving element was
+          already tempered. The proof reads compact subgroup data through verticial
+          subgroups in universal tempered and pro-<span class="math">Sigma</span>
+          covering graphs.
+        </p>
+        <div class="diagram fit" aria-label="Compact subgroup conjugator test">
+          <div class="diagramHeader">
+            <strong>Landing back in the tempered group forces a tempered conjugator</strong>
+            <span>IUT I Proposition 2.1</span>
+          </div>
+          <svg viewBox="0 0 1040 420" role="img">
+            <defs>
+              <marker id="arrowCompactConjugatorI21" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="76" width="220" height="86"></rect>
+            <text class="nodeTitle" x="180" y="106" text-anchor="middle">Lambda in Pi_G^tp</text>
+            <text class="tinyText" x="180" y="130" text-anchor="middle">nontrivial compact subgroup</text>
+            <text class="tinyText" x="180" y="148" text-anchor="middle">contained in verticial subgroup</text>
+
+            <rect class="nodeBox green" x="410" y="76" width="220" height="86"></rect>
+            <text class="nodeTitle" x="520" y="106" text-anchor="middle">gamma in Pi_G</text>
+            <text class="tinyText" x="520" y="130" text-anchor="middle">pro-Sigma conjugator</text>
+            <text class="tinyText" x="520" y="148" text-anchor="middle">a priori not tempered</text>
+
+            <rect class="nodeBox gold" x="750" y="76" width="220" height="86"></rect>
+            <text class="nodeTitle" x="860" y="106" text-anchor="middle">gamma Lambda gamma^-1</text>
+            <text class="tinyText" x="860" y="130" text-anchor="middle">again inside Pi_G^tp</text>
+            <text class="tinyText" x="860" y="148" text-anchor="middle">second verticial subgroup</text>
+
+            <rect class="nodeBox violet" x="224" y="280" width="250" height="84"></rect>
+            <text class="nodeTitle" x="349" y="310" text-anchor="middle">equal/adjacent vertices</text>
+            <text class="tinyText" x="349" y="334" text-anchor="middle">nontrivial intersection criterion</text>
+            <text class="tinyText" x="349" y="352" text-anchor="middle">in pro-Sigma graph</text>
+
+            <rect class="nodeBox red" x="566" y="280" width="250" height="84"></rect>
+            <text class="nodeTitle" x="691" y="310" text-anchor="middle">gamma in Pi_G^tp</text>
+            <text class="tinyText" x="691" y="334" text-anchor="middle">conjugated vertex is tempered</text>
+            <text class="tinyText" x="691" y="352" text-anchor="middle">Proposition 2.1 conclusion</text>
+
+            <path class="edge blue" d="M292 119 H408" marker-end="url(#arrowCompactConjugatorI21)"></path>
+            <path class="edge green" d="M632 119 H748" marker-end="url(#arrowCompactConjugatorI21)"></path>
+            <path class="edge violet" d="M520 164 C475 224 394 250 356 278" marker-end="url(#arrowCompactConjugatorI21)"></path>
+            <path class="edge red" d="M474 322 H564" marker-end="url(#arrowCompactConjugatorI21)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Hypothesis</th><th>Meaning</th><th>Used for</th></tr>
+          <tr>
+            <td>Nontrivial compact subgroup</td>
+            <td><span class="math">Lambda subset Pi_G^tp</span> is compact and not the trivial subgroup.</td>
+            <td>Places <span class="math">Lambda</span> inside a verticial subgroup of the tempered covering.</td>
+          </tr>
+          <tr>
+            <td>Profinite conjugator</td>
+            <td><span class="math">gamma in Pi_G</span> and <span class="math">gamma Lambda gamma^-1 subset Pi_G^tp</span>.</td>
+            <td>Creates two verticial subgroups whose images intersect nontrivially.</td>
+          </tr>
+          <tr>
+            <td>Vertex criterion</td>
+            <td>The corresponding pro-<span class="math">Sigma</span> vertices are equal or adjacent.</td>
+            <td>Shows the conjugated vertex is tempered, hence <span class="math">gamma</span> is tempered.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          The theorem is not a generic conjugacy-closedness statement. Its detector is
+          the nontrivial compact subgroup and the proof depends on verticial subgroup
+          containment in the universal covering graphs.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Proposition 2.1</a>
+          Related: <a href="#iut-i-tempered-terminality-21-22">tempered terminality</a>
+          <a href="#commensurable-terminality-iut-i22">commensurable terminality</a>
+          <a href="#iut-i-arithmetic-tempered-recognition-24-25">arithmetic tempered recognition</a>
+        </div>
+      </section>
+
+      <section id="commensurable-terminality-iut-i22" data-filter="iut i proposition 2.2 commensurably terminal commensurator decomposition subgroup pi h tempered">
+        <h2>Commensurable Terminality in IUT I Proposition 2.2</h2>
+        <p class="lede">
+          Proposition 2.2 turns the compact conjugator test into commensurator control.
+          For a connected sub-semi-graph <span class="math">H</span>, the associated
+          decomposition subgroups <span class="math">Pi_H</span> and
+          <span class="math">Pi_H^tp</span> are commensurably terminal in their ambient
+          completed and tempered groups.
+        </p>
+        <div class="diagram fit" aria-label="Commensurable terminality route">
+          <div class="diagramHeader">
+            <strong>Commensurator chains collapse to the subgroup itself</strong>
+            <span>IUT I Proposition 2.2</span>
+          </div>
+          <svg viewBox="0 0 1040 420" role="img">
+            <defs>
+              <marker id="arrowCommensurableTermI22" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="80" y="76" width="240" height="86"></rect>
+            <text class="nodeTitle" x="200" y="106" text-anchor="middle">sub-semi-graph H</text>
+            <text class="tinyText" x="200" y="130" text-anchor="middle">connected inside G</text>
+            <text class="tinyText" x="200" y="148" text-anchor="middle">decomposition subgroup source</text>
+
+            <rect class="nodeBox green" x="400" y="76" width="240" height="86"></rect>
+            <text class="nodeTitle" x="520" y="106" text-anchor="middle">Pi_H^tp subset Pi_H</text>
+            <text class="tinyText" x="520" y="130" text-anchor="middle">tempered and pro-Sigma groups</text>
+            <text class="tinyText" x="520" y="148" text-anchor="middle">well-defined up to conjugacy</text>
+
+            <rect class="nodeBox gold" x="720" y="76" width="240" height="86"></rect>
+            <text class="nodeTitle" x="840" y="106" text-anchor="middle">commensurator chain</text>
+            <text class="tinyText" x="840" y="130" text-anchor="middle">C(Pi_H^tp) inside C(Pi_H)</text>
+            <text class="tinyText" x="840" y="148" text-anchor="middle">computed in ambient group</text>
+
+            <rect class="nodeBox violet" x="250" y="280" width="240" height="84"></rect>
+            <text class="nodeTitle" x="370" y="310" text-anchor="middle">Proposition 2.1 input</text>
+            <text class="tinyText" x="370" y="334" text-anchor="middle">open subgroups of verticial groups</text>
+            <text class="tinyText" x="370" y="352" text-anchor="middle">force tempered conjugators</text>
+
+            <rect class="nodeBox red" x="570" y="280" width="240" height="84"></rect>
+            <text class="nodeTitle" x="690" y="310" text-anchor="middle">terminal output</text>
+            <text class="tinyText" x="690" y="334" text-anchor="middle">C(Pi_H^tp)=Pi_H^tp</text>
+            <text class="tinyText" x="690" y="352" text-anchor="middle">and C(Pi_H)=Pi_H</text>
+
+            <path class="edge blue" d="M322 119 H398" marker-end="url(#arrowCommensurableTermI22)"></path>
+            <path class="edge green" d="M642 119 H718" marker-end="url(#arrowCommensurableTermI22)"></path>
+            <path class="edge violet" d="M520 164 C482 224 408 250 376 278" marker-end="url(#arrowCommensurableTermI22)"></path>
+            <path class="edge red" d="M490 322 H568" marker-end="url(#arrowCommensurableTermI22)"></path>
+          </svg>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <h3>Stronger than normalizer control</h3>
+            <p>
+              The proposition controls commensurators, not only normalizers. This matters
+              because the subgroup boundary is being tested up to finite-index overlap.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Subgroup source discipline</h3>
+            <p>
+              <span class="math">Pi_H^tp</span> and <span class="math">Pi_H</span> are
+              not arbitrary subgroups; they come from a connected sub-semi-graph and
+              are treated as decomposition subgroups inside <span class="math">Pi_G</span>.
+            </p>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Proposition 2.2</a>
+          Related: <a href="#compact-conjugator-test-iut-i21">compact conjugator test</a>
+          <a href="#iut-i-subsemigraph-arithmetic-subgroups-23">subgraph arithmetic groups</a>
+          <a href="#tempered-covering-complements">tempered covering complements</a>
+        </div>
+      </section>
+
       <section id="iut-i-subsemigraph-arithmetic-subgroups-23">
         <h2>IUT I Corollary 2.3: Sub-Semi-Graph Arithmetic Subgroups</h2>
         <p class="lede">
@@ -7075,6 +7237,93 @@
           Related: <a href="#iut-i-tempered-terminality-21-22">tempered terminality</a>
           <a href="#iut-i-subsemigraph-arithmetic-subgroups-23">subgraph arithmetic groups</a>
           <a href="#galois-countability-repairs">Galois-countability repairs</a>
+        </div>
+      </section>
+
+      <section id="cusp-inertia-recognition-iut-i25" data-filter="iut i corollary 2.5 remark 2.5.2 cusp inertia tempered recognition proposition 2.4">
+        <h2>Cusp Inertia Recognition in IUT I Corollary 2.5</h2>
+        <p class="lede">
+          Corollary 2.5 recognizes when a profinite inertia group associated to a cusp
+          is already a tempered inertia group. Remark 2.5.2 then narrows the later IUT
+          dependency: the series only needs this cusp-inertia portion, whose proof uses
+          Proposition 2.4(i), hence ultimately the compact conjugator test of
+          Proposition 2.1.
+        </p>
+        <div class="diagram fit" aria-label="Cusp inertia recognition dependency">
+          <div class="diagramHeader">
+            <strong>The later IUT dependency is the cusp-inertia branch</strong>
+            <span>IUT I Corollary 2.5 and Remark 2.5.2</span>
+          </div>
+          <svg viewBox="0 0 1040 420" role="img">
+            <defs>
+              <marker id="arrowCuspInertiaI25" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="78" y="76" width="230" height="86"></rect>
+            <text class="nodeTitle" x="193" y="106" text-anchor="middle">cusp inertia I_x</text>
+            <text class="tinyText" x="193" y="130" text-anchor="middle">inside profinite Pi_X</text>
+            <text class="tinyText" x="193" y="148" text-anchor="middle">associated to a cusp</text>
+
+            <rect class="nodeBox green" x="405" y="76" width="230" height="86"></rect>
+            <text class="nodeTitle" x="520" y="106" text-anchor="middle">contained in Pi_X^tp?</text>
+            <text class="tinyText" x="520" y="130" text-anchor="middle">recognition question</text>
+            <text class="tinyText" x="520" y="148" text-anchor="middle">Corollary 2.5</text>
+
+            <rect class="nodeBox gold" x="732" y="76" width="230" height="86"></rect>
+            <text class="nodeTitle" x="847" y="106" text-anchor="middle">tempered inertia</text>
+            <text class="tinyText" x="847" y="130" text-anchor="middle">iff it is the tempered group</text>
+            <text class="tinyText" x="847" y="148" text-anchor="middle">not merely contained by name</text>
+
+            <rect class="nodeBox violet" x="244" y="280" width="250" height="84"></rect>
+            <text class="nodeTitle" x="369" y="310" text-anchor="middle">Proposition 2.4(i)</text>
+            <text class="tinyText" x="369" y="334" text-anchor="middle">unique maximal pro-Sigma part</text>
+            <text class="tinyText" x="369" y="352" text-anchor="middle">compact subgroup route</text>
+
+            <rect class="nodeBox red" x="568" y="280" width="250" height="84"></rect>
+            <text class="nodeTitle" x="693" y="310" text-anchor="middle">IUT priority</text>
+            <text class="tinyText" x="693" y="334" text-anchor="middle">Remark 2.5.2</text>
+            <text class="tinyText" x="693" y="352" text-anchor="middle">later papers need this branch</text>
+
+            <path class="edge blue" d="M310 119 H403" marker-end="url(#arrowCuspInertiaI25)"></path>
+            <path class="edge green" d="M637 119 H730" marker-end="url(#arrowCuspInertiaI25)"></path>
+            <path class="edge violet" d="M520 164 C482 224 408 250 376 278" marker-end="url(#arrowCuspInertiaI25)"></path>
+            <path class="edge red" d="M494 322 H566" marker-end="url(#arrowCuspInertiaI25)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Statement</th><th>Content</th><th>Priority</th></tr>
+          <tr>
+            <td>Corollary 2.5, inertia branch</td>
+            <td>
+              A profinite inertia group associated to a cusp is contained in
+              <span class="math">Pi_X^tp</span> exactly when it is the corresponding
+              tempered inertia group.
+            </td>
+            <td>Recognizes cusp inertia internally in the tempered/profinite interface.</td>
+          </tr>
+          <tr>
+            <td>Conjugate criterion</td>
+            <td>
+              A profinite conjugate of <span class="math">Pi_X^tp</span> containing
+              such a cusp inertia group must be equal to <span class="math">Pi_X^tp</span>.
+            </td>
+            <td>Prevents a different profinite copy from carrying the same cusp inertia signal.</td>
+          </tr>
+          <tr>
+            <td>Remark 2.5.2</td>
+            <td>
+              Later IUT use requires the cusp-inertia portion, whose proof only uses
+              Proposition 2.4(i).
+            </td>
+            <td>Formalize this branch before the full closed-point decomposition branch.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Corollary 2.5</a>
+          Related: <a href="#iut-i-arithmetic-tempered-recognition-24-25">arithmetic tempered recognition</a>
+          <a href="#compact-conjugator-test-iut-i21">compact conjugator test</a>
+          <a href="#iut-i-cusp-edge-vertex-recognizers">cusp/edge/vertex recognizers</a>
         </div>
       </section>
 
