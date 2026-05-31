@@ -527,6 +527,7 @@
         <a href="#tempered-gaussian-monoids-ii3">Tempered Gaussian monoids 3</a>
         <a href="#gaussian-frobenioid-categories-ii38">Gaussian Frobenioid categories 3.8</a>
         <a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids 4.1</a>
+        <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids 4.5</a>
         <a href="#theta-evaluation-kummer-route">Theta evaluation route</a>
         <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
         <a href="#frobenioids-log-shells">Frobenioids and log-shells</a>
@@ -1513,6 +1514,8 @@
               <a href="#conjugate-synchronization-gain-383">conjugate synchronization gain</a>,
               <a href="#good-prime-gaussian-monoids-ii41">good-prime Gaussian monoids</a>,
               <a href="#archimedean-gaussian-monoids-43">archimedean Gaussian monoids</a>,
+              <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>,
+              <a href="#global-fpm-synchronization-453">global F_l± synchronization</a>,
               <a href="#gaussian-monoids">Gaussian monoids</a>,
               <a href="#tempered-gaussian-frobenioids">tempered Gaussian Frobenioids</a>,
               <a href="#split-theta-monoids">split theta monoids</a>,
@@ -4531,7 +4534,7 @@
           <tr>
             <td>§4</td>
             <td>Global Gaussian Frobenioids and the modified theta-link variants <span class="math">Theta×μ</span> and <span class="math">Theta×μ_gau</span>.</td>
-            <td><a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids</a>, <a href="#theta-log-links">theta/log links</a>, <a href="#log-theta-lattice">log-theta lattice</a></td>
+            <td><a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids</a>, <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids</a>, <a href="#theta-log-links">theta/log links</a>, <a href="#log-theta-lattice">log-theta lattice</a></td>
           </tr>
         </table>
         <table>
@@ -10991,6 +10994,267 @@
           <a href="#gaussian-frobenioid-categories-ii38">Gaussian Frobenioid categories</a>
           <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
           <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
+        </div>
+      </section>
+
+      <section id="global-gaussian-frobenioids-ii45">
+        <h2>Global Gaussian Frobenioids in IUT II 4.5</h2>
+        <p class="lede">
+          Corollary 4.5 assembles the local Gaussian constructions into global data
+          attached to a <span class="math">D-Theta±ell</span>-Hodge theater. It builds
+          global constant monoids, semi-simplified realified data, global
+          <span class="math">F_l^±</span>-symmetrizing isomorphisms, local theta and
+          Gaussian monoid assignments, and finally the global realified Frobenioids
+          <span class="math">Denv</span> and <span class="math">Dgau</span> connected
+          by a global formal evaluation isomorphism.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Corollary 4.5 global Gaussian Frobenioid assembly">
+          <div class="diagramHeader">
+            <strong>Corollary 4.5 global assembly</strong>
+            <span>from a D-Theta±ell theater to Denv and Dgau</span>
+          </div>
+          <svg viewBox="0 0 1120 620" role="img">
+            <defs>
+              <marker id="arrowGlobalGauss45" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="70" y="58" width="240" height="82"></rect>
+            <text class="nodeTitle" x="190" y="88" text-anchor="middle">D-Theta±ell theater</text>
+            <text class="tinyText" x="190" y="112" text-anchor="middle">D-prime-strip and D⊢-prime-strip</text>
+            <text class="tinyText" x="190" y="130" text-anchor="middle">source of the global algorithm</text>
+
+            <rect class="nodeBox gold" x="442" y="58" width="236" height="82"></rect>
+            <text class="nodeTitle" x="560" y="88" text-anchor="middle">global constant monoids</text>
+            <text class="tinyText" x="560" y="112" text-anchor="middle">Psi_cns(D)</text>
+            <text class="tinyText" x="560" y="130" text-anchor="middle">placewise over V</text>
+
+            <rect class="nodeBox green" x="810" y="58" width="240" height="82"></rect>
+            <text class="nodeTitle" x="930" y="88" text-anchor="middle">semi-simplified realification</text>
+            <text class="tinyText" x="930" y="112" text-anchor="middle">units x R>=0 with log(p_v)</text>
+            <text class="tinyText" x="930" y="130" text-anchor="middle">constructs D(D⊢)</text>
+
+            <rect class="nodeBox violet" x="108" y="244" width="244" height="84"></rect>
+            <text class="nodeTitle" x="230" y="274" text-anchor="middle">global F_l± symmetry</text>
+            <text class="tinyText" x="230" y="298" text-anchor="middle">labels synchronized by ζ≻</text>
+            <text class="tinyText" x="230" y="316" text-anchor="middle">diagonal and zero-label monoids</text>
+
+            <rect class="nodeBox blue" x="438" y="244" width="244" height="84"></rect>
+            <text class="nodeTitle" x="560" y="274" text-anchor="middle">local theta/Gaussian assignments</text>
+            <text class="tinyText" x="560" y="298" text-anchor="middle">Psi_env, Psi_gau, infinity versions</text>
+            <text class="tinyText" x="560" y="316" text-anchor="middle">local evaluation isomorphisms</text>
+
+            <rect class="nodeBox red" x="768" y="244" width="244" height="84"></rect>
+            <text class="nodeTitle" x="890" y="274" text-anchor="middle">global realified Frobenioids</text>
+            <text class="tinyText" x="890" y="298" text-anchor="middle">Denv(D⊢) and Dgau(D⊢)</text>
+            <text class="tinyText" x="890" y="316" text-anchor="middle">Prime ≃ V and local R>=0 maps</text>
+
+            <rect class="nodeBox gold" x="270" y="448" width="260" height="82"></rect>
+            <text class="nodeTitle" x="400" y="478" text-anchor="middle">global formal evaluation</text>
+            <text class="tinyText" x="400" y="502" text-anchor="middle">Denv -> Dgau</text>
+            <text class="tinyText" x="400" y="520" text-anchor="middle">compatible with local evaluations</text>
+
+            <rect class="nodeBox green" x="664" y="448" width="260" height="82"></rect>
+            <text class="nodeTitle" x="794" y="478" text-anchor="middle">globalization guardrail</text>
+            <text class="tinyText" x="794" y="502" text-anchor="middle">single-basepoint F_l±, not F_l</text>
+            <text class="tinyText" x="794" y="520" text-anchor="middle">global portion synchronizes ± choices</text>
+
+            <path d="M312 99 H440" class="edge blue" marker-end="url(#arrowGlobalGauss45)"></path>
+            <path d="M680 99 H808" class="edge gold" marker-end="url(#arrowGlobalGauss45)"></path>
+            <path d="M930 142 C914 190 898 218 890 242" class="edge green" marker-end="url(#arrowGlobalGauss45)"></path>
+            <path d="M560 142 C474 176 320 202 238 242" class="edge violet" marker-end="url(#arrowGlobalGauss45)"></path>
+            <path d="M560 142 V242" class="edge blue" marker-end="url(#arrowGlobalGauss45)"></path>
+            <path d="M682 286 H766" class="edge red" marker-end="url(#arrowGlobalGauss45)"></path>
+            <path d="M560 330 C520 378 454 420 408 446" class="edge gold" marker-end="url(#arrowGlobalGauss45)"></path>
+            <path d="M890 330 C850 378 812 420 798 446" class="edge green" marker-end="url(#arrowGlobalGauss45)"></path>
+            <path d="M530 489 H662" class="edge red" marker-end="url(#arrowGlobalGauss45)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Source item</th><th>Global construction</th><th>Formal role</th></tr>
+          <tr>
+            <td>Corollary 4.5(i)</td>
+            <td>
+              From a D-prime-strip <span class="math">D</span>, construct the
+              placewise assignment <span class="math">Psi_cns(D)</span>: at
+              nonarchimedean places this includes a local Galois action; at archimedean
+              places it is the Aut-holomorphic constant monoid.
+            </td>
+            <td>
+              This is the global list of constant monoids over all valuations.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 4.5(ii)</td>
+            <td>
+              From the mono-analyticized D-prime-strip
+              <span class="math">D⊢</span>, construct semi-simplifications
+              <span class="math">Psi_ss_cns(D⊢)_v = units × R>=0</span>, each with
+              <span class="math">log(p_v)</span>, plus the global realified Frobenioid
+              <span class="math">D(D⊢)</span> with primes bijective to
+              <span class="math">V</span>.
+            </td>
+            <td>
+              This is the realified global degree container under the later
+              <span class="math">Denv</span> and <span class="math">Dgau</span>
+              constructions.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 4.5(iii)</td>
+            <td>
+              The global label bijection <span class="math">ζ≻</span> aligns local
+              <span class="math">F_l^±</span> symmetries to produce global
+              symmetrizing isomorphisms, diagonal monoids, and the zero-label to
+              nonzero-diagonal isomorphism.
+            </td>
+            <td>
+              This is the global conjugate synchronization layer. It depends on the
+              global portion of the D-Theta±ell theater.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 4.5(iv)</td>
+            <td>
+              Construct placewise theta and Gaussian assignments
+              <span class="math">Psi_env(D≻)</span>,
+              <span class="math">Psi_gau(D≻)</span>, and their infinity versions,
+              with local evaluation isomorphisms.
+            </td>
+            <td>
+              This packages the bad, good nonarchimedean, and archimedean local
+              Gaussian monoids into one global assignment.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 4.5(v)</td>
+            <td>
+              Construct the global realified Frobenioid
+              <span class="math">Denv(D⊢≻)</span> and the sub-Frobenioid
+              <span class="math">Dgau(D⊢≻)</span> inside a product over
+              <span class="math">F_l</span>, with divisor and rational-function monoids
+              determined by the vector of <span class="math">j^2</span>-ratios.
+            </td>
+            <td>
+              The global formal evaluation isomorphism
+              <span class="math">Denv -> Dgau</span> is compatible with all local
+              evaluation isomorphisms.
+            </td>
+          </tr>
+          <tr>
+            <td>Remarks 4.5.1-4.5.3</td>
+            <td>
+              Frobenioid formulations are useful for realified/global degree data but
+              monoid formulations are better for conjugate synchronization; the
+              <span class="math">F_l^±</span> symmetry is single-basepoint and
+              connected, unlike the relevant <span class="math">F_l</span> or
+              multi-basepoint symmetries.
+            </td>
+            <td>
+              The global page keeps both formulations visible to avoid conflating
+              realified degree transport with label-synchronized Kummer data.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="global-constant-monoids-45">
+            <h3>Global constant monoids</h3>
+            <p>
+              Corollary 4.5(i) assigns a constant monoid to every valuation. The
+              nonarchimedean entries retain group action and conjugacy ambiguity; the
+              archimedean entries use the Aut-holomorphic monoid.
+            </p>
+            <div class="tagRow"><span class="tag gold">Cor. 4.5(i)</span><span class="tag">all places</span></div>
+          </div>
+          <div class="card" id="global-semi-simplifications-45">
+            <h3>Global semi-simplifications</h3>
+            <p>
+              Corollary 4.5(ii) forms the unit/value split
+              <span class="math">units × R>=0</span> at every place and packages the
+              realified value monoids into a global Frobenioid with
+              <span class="math">Prime ≃ V</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Cor. 4.5(ii)</span><span class="tag">realified</span></div>
+          </div>
+          <div class="card" id="global-fpm-synchronization-453">
+            <h3>Global F_l± synchronization</h3>
+            <p>
+              The local <span class="math">F_l^±</span> symmetries are glued by the
+              global portion of the D-Theta±ell theater, synchronizing the
+              <span class="math">±</span>-indeterminacies at every valuation.
+            </p>
+            <div class="tagRow"><span class="tag violet">Cor. 4.5(iii)</span><span class="tag">single basepoint</span></div>
+          </div>
+          <div class="card" id="global-local-theta-gaussian-assignments-45">
+            <h3>Local theta/Gaussian assignments</h3>
+            <p>
+              Corollary 4.5(iv) bundles the local theta and Gaussian monoids, including
+              infinity variants, and records evaluation isomorphisms place by place.
+            </p>
+            <div class="tagRow"><span class="tag blue">Cor. 4.5(iv)</span><span class="tag">Psi_env/Psi_gau</span></div>
+          </div>
+          <div class="card" id="denv-global-realified-frobenioid-45">
+            <h3>Denv</h3>
+            <p>
+              <span class="math">Denv(D⊢≻)</span> is a copy of the global realified
+              Frobenioid multiplied by the theta formal symbol. Its local divisor
+              monoids match the realified theta-environment monoids.
+            </p>
+            <div class="tagRow"><span class="tag green">Cor. 4.5(v)</span><span class="tag">theta side</span></div>
+          </div>
+          <div class="card" id="dgau-global-realified-frobenioid-45">
+            <h3>Dgau</h3>
+            <p>
+              <span class="math">Dgau(D⊢≻)</span> is constructed inside the product
+              over <span class="math">F_l</span>; its divisor and rational-function
+              monoids are determined by the vector of <span class="math">j^2</span>
+              ratios.
+            </p>
+            <div class="tagRow"><span class="tag red">Cor. 4.5(v)</span><span class="tag">Gaussian side</span></div>
+          </div>
+          <div class="card" id="global-formal-evaluation-45">
+            <h3>Global formal evaluation</h3>
+            <p>
+              The isomorphism <span class="math">Denv -> Dgau</span> globalizes the
+              local formal evaluation maps and is compatible with the local realified
+              monoid identifications.
+            </p>
+            <div class="tagRow"><span class="tag blue">Cor. 4.5(v)</span><span class="tag">global evaluation</span></div>
+          </div>
+          <div class="card" id="frobenioid-versus-monoid-formulation-451">
+            <h3>Frobenioid versus monoid formulation</h3>
+            <p>
+              Remark 4.5.1 says Frobenioids are technically convenient for global
+              realified degree data, while monoids remain better for discussing
+              conjugate synchronization.
+            </p>
+            <div class="tagRow"><span class="tag gold">Rem. 4.5.1</span><span class="tag">formulation</span></div>
+          </div>
+          <div class="card" id="single-versus-multibasepoint-453">
+            <h3>Single versus multi-basepoint symmetry</h3>
+            <p>
+              Remark 4.5.3 distinguishes the single-basepoint
+              <span class="math">F_l^±</span> symmetry from multi-basepoint
+              processions and D-Thetaell-bridge symmetries. The single-basepoint form is
+              what supports conjugate synchronization.
+            </p>
+            <div class="tagRow"><span class="tag red">Rem. 4.5.3</span><span class="tag">guardrail</span></div>
+          </div>
+        </div>
+        <div class="callout violet">
+          Formalization warning: <span class="math">Denv</span> and
+          <span class="math">Dgau</span> are global realified Frobenioids, while
+          conjugate synchronization is most naturally stated at the monoid level. A
+          clean implementation should not force one formulation to do both jobs.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5</a>
+          Related: <a href="#good-prime-gaussian-monoids-ii41">good-prime Gaussian monoids</a>
+          <a href="#gaussian-frobenioid-categories-ii38">Gaussian Frobenioid categories</a>
+          <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges</a>
+          <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
         </div>
       </section>
 
