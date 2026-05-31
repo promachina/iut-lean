@@ -730,6 +730,8 @@
         <a href="#current-situation-reports">Current situation reports</a>
         <a href="#dispute">Scholze-Stix and responses</a>
         <a href="#formalization">RIMS Lean effort</a>
+        <a href="#leanform-communication-page">LeanForm communication</a>
+        <a href="#leanform-species-mutations-page">LeanForm species/mutations</a>
         <a href="#rims-lean-stage-plan-2026">RIMS Lean stages 2026</a>
         <a href="#rims-four-triangle-route-2026">Four-triangle 3.11→3.12 route</a>
         <a href="#lana">LANA</a>
@@ -34952,6 +34954,150 @@
           <a href="#lana">LANA</a>
           <a href="#species-mutations">species and mutations</a>
           <a href="#corollary-312">Corollary 3.12</a>
+        </div>
+      </section>
+
+      <section id="leanform-communication-page" data-filter="mochizuki formalization iut leanform communication verification confidence logical structure social accountability">
+        <h2>LeanForm Communication</h2>
+        <p class="lede">
+          Mochizuki's 2026 report frames LeanForm not only as machine verification, but
+          as a communication tool. The stated aim is to make the logical structure of
+          the final IUT corridor precise, machine-checkable, and resistant to false
+          interpretations. The wiki records this as a source claim about the role of
+          formalization, not as a mathematical proof by itself.
+        </p>
+        <div class="diagram fit" aria-label="LeanForm communication role">
+          <div class="diagramHeader">
+            <strong>Verification plus communication</strong>
+            <span>formalization report §1</span>
+          </div>
+          <svg viewBox="0 0 1000 420" role="img">
+            <defs>
+              <marker id="arrowLeanComm" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="74" width="230" height="86"></rect>
+            <text class="nodeTitle" x="185" y="104" text-anchor="middle">ordinary Lean role</text>
+            <text class="tinyText" x="185" y="128" text-anchor="middle">verify logical correctness</text>
+            <text class="tinyText" x="185" y="146" text-anchor="middle">machine checks proof terms</text>
+
+            <rect class="nodeBox green" x="385" y="74" width="230" height="86"></rect>
+            <text class="nodeTitle" x="500" y="104" text-anchor="middle">IUT communication role</text>
+            <text class="tinyText" x="500" y="128" text-anchor="middle">precise logical record</text>
+            <text class="tinyText" x="500" y="146" text-anchor="middle">immune to misreading</text>
+
+            <rect class="nodeBox violet" x="700" y="74" width="230" height="86"></rect>
+            <text class="nodeTitle" x="815" y="104" text-anchor="middle">wiki consequence</text>
+            <text class="tinyText" x="815" y="128" text-anchor="middle">separate source obligations</text>
+            <text class="tinyText" x="815" y="146" text-anchor="middle">from checked route algebra</text>
+
+            <rect class="nodeBox gold" x="230" y="268" width="245" height="84"></rect>
+            <text class="nodeTitle" x="352" y="298" text-anchor="middle">confidence cycle</text>
+            <text class="tinyText" x="352" y="322" text-anchor="middle">hard to study without confidence</text>
+            <text class="tinyText" x="352" y="340" text-anchor="middle">hard to gain confidence without study</text>
+
+            <rect class="nodeBox red" x="525" y="268" width="245" height="84"></rect>
+            <text class="nodeTitle" x="648" y="298" text-anchor="middle">LeanForm output</text>
+            <text class="tinyText" x="648" y="322" text-anchor="middle">nonnegatable route record</text>
+            <text class="tinyText" x="648" y="340" text-anchor="middle">publicly inspectable when fleshed out</text>
+
+            <path class="edge blue" d="M302 117 H383" marker-end="url(#arrowLeanComm)"></path>
+            <path class="edge green" d="M617 117 H698" marker-end="url(#arrowLeanComm)"></path>
+            <path class="edge gold" d="M500 162 C458 220 392 244 360 266" marker-end="url(#arrowLeanComm)"></path>
+            <path class="edge red" d="M500 162 C542 220 608 244 640 266" marker-end="url(#arrowLeanComm)"></path>
+            <path class="edge violet" d="M476 310 H523" marker-end="url(#arrowLeanComm)"></path>
+          </svg>
+        </div>
+        <div class="callout">
+          <strong>Status.</strong> The report says the available Lean code is skeletal
+          and not yet public-release quality. The wiki should therefore describe the
+          communication strategy and staged obligations without implying that a complete
+          formal proof has already been released.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-formalization-iut-2026-04.pdf" target="_blank">Mochizuki 2026 Lean report §1</a>
+          Related: <a href="#formalization">RIMS Lean effort</a>
+          <a href="#rims-lean-stage-plan-2026">RIMS Lean stages</a>
+          <a href="#rims-four-triangle-route-2026">four-triangle route</a>
+        </div>
+      </section>
+
+      <section id="leanform-species-mutations-page" data-filter="mochizuki formalization iut species mutations functorial algorithm zfc first order lean mathlib stage 1 stage 2">
+        <h2>LeanForm Species and Mutations</h2>
+        <p class="lede">
+          The 2026 report says that a faithful formalization should begin with the
+          basic definitions of the theory. For IUT this means species and mutations,
+          viewed as the formal version of functorial algorithms. The report also says a
+          full LeanForm of ZFC as a first-order theory would make this abstract
+          treatment natural, but is probably unnecessary for early Stages 1 and 2.
+        </p>
+        <div class="diagram fit" aria-label="LeanForm species and mutations">
+          <div class="diagramHeader">
+            <strong>Species/mutations as formalization discipline</strong>
+            <span>formalization report §2</span>
+          </div>
+          <svg viewBox="0 0 1030 430" role="img">
+            <defs>
+              <marker id="arrowLeanSpecies" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="66" y="74" width="230" height="88"></rect>
+            <text class="nodeTitle" x="181" y="106" text-anchor="middle">species</text>
+            <text class="tinyText" x="181" y="130" text-anchor="middle">formula-defined object type</text>
+            <text class="tinyText" x="181" y="148" text-anchor="middle">model-independent rule</text>
+
+            <rect class="nodeBox green" x="400" y="74" width="230" height="88"></rect>
+            <text class="nodeTitle" x="515" y="106" text-anchor="middle">mutation</text>
+            <text class="tinyText" x="515" y="130" text-anchor="middle">formula-defined construction</text>
+            <text class="tinyText" x="515" y="148" text-anchor="middle">functorial algorithm</text>
+
+            <rect class="nodeBox violet" x="734" y="74" width="230" height="88"></rect>
+            <text class="nodeTitle" x="849" y="106" text-anchor="middle">Lean interface</text>
+            <text class="tinyText" x="849" y="130" text-anchor="middle">component data and relations</text>
+            <text class="tinyText" x="849" y="148" text-anchor="middle">enough for early stages</text>
+
+            <rect class="nodeBox gold" x="215" y="274" width="270" height="86"></rect>
+            <text class="nodeTitle" x="350" y="304" text-anchor="middle">ZFC LeanForm</text>
+            <text class="tinyText" x="350" y="328" text-anchor="middle">desirable for arbitrary formulas</text>
+            <text class="tinyText" x="350" y="346" text-anchor="middle">not currently Mathlib baseline</text>
+
+            <rect class="nodeBox red" x="555" y="274" width="270" height="86"></rect>
+            <text class="nodeTitle" x="690" y="304" text-anchor="middle">Stages 1-2</text>
+            <text class="tinyText" x="690" y="328" text-anchor="middle">standard Lean records suffice</text>
+            <text class="tinyText" x="690" y="346" text-anchor="middle">for route logic and components</text>
+
+            <path class="edge blue" d="M298 118 H398" marker-end="url(#arrowLeanSpecies)"></path>
+            <path class="edge green" d="M632 118 H732" marker-end="url(#arrowLeanSpecies)"></path>
+            <path class="edge gold" d="M515 164 C470 222 398 250 356 272" marker-end="url(#arrowLeanSpecies)"></path>
+            <path class="edge red" d="M515 164 C560 222 642 250 684 272" marker-end="url(#arrowLeanSpecies)"></path>
+            <path class="edge violet" d="M486 317 H553" marker-end="url(#arrowLeanSpecies)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Report item</th><th>Meaning</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Species</td>
+            <td>Type of object defined by a set-theoretic formula, independent of a chosen ZFC model.</td>
+            <td>Link to IUT IV §3 and keep type information explicit.</td>
+          </tr>
+          <tr>
+            <td>Mutation</td>
+            <td>Formula-defined construction from one species to another.</td>
+            <td>Model formalization interfaces as structured transformations, not labels.</td>
+          </tr>
+          <tr>
+            <td>ZFC LeanForm</td>
+            <td>Useful for arbitrary formulas, but not required for early Stage 1-2 work.</td>
+            <td>Do not block the wiki or Lean project on full set-theory formalization.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-formalization-iut-2026-04.pdf" target="_blank">Mochizuki 2026 Lean report §2</a>
+          Related: <a href="#species-vs-categories-iv31">species vs categories</a>
+          <a href="#mutation-histories-cores-iv33">mutation histories/cores</a>
+          <a href="#rims-lean-stage-plan-2026">RIMS Lean stages</a>
         </div>
       </section>
 
