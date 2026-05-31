@@ -2772,32 +2772,114 @@
         <p class="lede">
           Indeterminacies are controlled ambiguities that arise because IUT compares
           weakened data across non-scheme-theoretic links. In the Theorem 3.11 to
-          Corollary 3.12 corridor, the important distinction is between invariance under
-          the first two indeterminacies and a one-sided upper-semi relation for the third.
+          Corollary 3.12 corridor, the key point is that the three indeterminacies have
+          different mathematical shapes and should not be collapsed into a single quotient.
         </p>
+
+        <div class="diagram" aria-label="Three indeterminacies in Theorem 3.11">
+          <div class="diagramHeader">
+            <strong>Indeterminacy channels</strong>
+            <span>processions, unit-quotient automorphisms, and upper-semi log-Kummer data</span>
+          </div>
+          <svg viewBox="0 0 900 390" role="img">
+            <defs>
+              <marker id="arrowInd" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="60" y="58" width="205" height="86"></rect>
+            <text class="nodeTitle" x="162" y="86" text-anchor="middle">Ind1</text>
+            <text class="tinyText" x="162" y="107" text-anchor="middle">automorphisms of processions</text>
+            <text class="tinyText" x="162" y="126" text-anchor="middle">D^|-prime-strip containers</text>
+
+            <rect class="nodeBox green" x="348" y="58" width="205" height="86"></rect>
+            <text class="nodeTitle" x="450" y="86" text-anchor="middle">Ind2</text>
+            <text class="tinyText" x="450" y="107" text-anchor="middle">non-Ind1 automorphisms</text>
+            <text class="tinyText" x="450" y="126" text-anchor="middle">F^|xmu and Z^x effects</text>
+
+            <rect class="nodeBox gold" x="636" y="58" width="205" height="86"></rect>
+            <text class="nodeTitle" x="738" y="86" text-anchor="middle">Ind3</text>
+            <text class="tinyText" x="738" y="107" text-anchor="middle">upper semi-compatibility</text>
+            <text class="tinyText" x="738" y="126" text-anchor="middle">log-Kummer correspondences</text>
+
+            <rect class="nodeBox violet" x="198" y="256" width="214" height="76"></rect>
+            <text class="nodeTitle" x="305" y="283" text-anchor="middle">automorphism-invariant</text>
+            <text class="tinyText" x="305" y="304" text-anchor="middle">handled by arbitrary phi in IUT IV</text>
+
+            <rect class="nodeBox red" x="492" y="256" width="214" height="76"></rect>
+            <text class="nodeTitle" x="599" y="283" text-anchor="middle">one-sided container</text>
+            <text class="tinyText" x="599" y="304" text-anchor="middle">upper bounds, inclusions, surjections</text>
+
+            <path d="M162 144 C162 206 305 206 305 254" stroke="#315b8f" stroke-width="1.4" fill="none" marker-end="url(#arrowInd)"></path>
+            <path d="M450 144 C450 206 305 206 305 254" stroke="#2f6b4f" stroke-width="1.4" fill="none" marker-end="url(#arrowInd)"></path>
+            <path d="M738 144 C738 206 599 206 599 254" stroke="#8b6b24" stroke-width="1.4" fill="none" marker-end="url(#arrowInd)"></path>
+            <text class="edgeLabel" x="450" y="366" text-anchor="middle">The formal corridor must preserve this asymmetry.</text>
+          </svg>
+        </div>
+
         <div class="grid3">
           <div class="card">
             <h3>Ind1</h3>
-            <p>Procession-type symmetry. In the current Lean route, it is modeled by preservation of the relevant normalized log-volume expression.</p>
+            <p>
+              The automorphism ambiguity of the processions of
+              <span class="math">D^|</span>-prime-strips used to form tensor packets.
+              Concretely, this includes permutation automorphisms of the nested label
+              containers <span class="math">S_{j+1}^{±}</span> and automorphisms of the
+              mono-analytic prime-strips in those processions.
+            </p>
           </div>
           <div class="card">
             <h3>Ind2</h3>
-            <p>Local tensor or symmetry-type ambiguity. The corridor again treats the relevant normalized quantity as invariant.</p>
+            <p>
+              The non-Ind1 part of the automorphism ambiguity coming from
+              <span class="math">F^|xmu</span>-prime-strips in the theta, Gaussian, LGP,
+              and lgp links. At nonarchimedean places this includes the
+              <span class="math">Z^x</span>-indeterminacies acting on local
+              <span class="math">O^xmu</span> copies.
+            </p>
           </div>
           <div class="card">
             <h3>Ind3</h3>
-            <p>Upper-semi ambiguity. This is not modeled as equality in the source-facing route; it supplies one-sided containment or inequality data.</p>
+            <p>
+              The upper-semi compatibility of tensor-packet log-shell Kummer
+              isomorphisms along a fixed vertical line of the log-theta lattice. IUT III
+              describes this by inclusions at nonarchimedean rational valuations and
+              natural surjections at archimedean rational valuations.
+            </p>
           </div>
         </div>
+        <table>
+          <tr><th>Indeterminacy</th><th>Source location</th><th>Effect in estimates</th></tr>
+          <tr>
+            <td>Ind1</td>
+            <td>Theorem 3.11(i), processions of <span class="math">D^|</span>-prime-strips.</td>
+            <td>Handled in IUT IV by allowing arbitrary automorphisms in the local estimate input.</td>
+          </tr>
+          <tr>
+            <td>Ind2</td>
+            <td>Theorem 3.11(i),(iii), <span class="math">F^|xmu</span> prime-strip link automorphisms.</td>
+            <td>Handled together with Ind1 by automorphism-invariant containers and log-volume bounds.</td>
+          </tr>
+          <tr>
+            <td>Ind3</td>
+            <td>Theorem 3.11(ii), upper-semi log-Kummer compatibility.</td>
+            <td>Handled by upper bounds: containers contain possible images rather than identify them by equality.</td>
+          </tr>
+        </table>
         <div class="callout warn">
           The most dangerous simplification is to turn one-sided upper-semi data into
           equality of possible-image regions without proving that this stronger relation is
-          licensed by the source construction.
+          licensed by the source construction. This is precisely the distinction the wiki
+          and the Lean corridor must keep visible.
         </div>
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III</a>
+          <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV</a>
           <a href="papers/dupuy-hilado-probabilistic-szpiro.pdf" target="_blank">Dupuy-Hilado probabilistic Szpiro</a>
+          <a href="papers/higuchi-formal-negative-result-step-xi.pdf" target="_blank">Higuchi 2026</a>
           Related: <a href="#corollary-312">Corollary 3.12</a>
+          <a href="#multiradiality">multiradiality</a>
+          <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
           <a href="#dispute">dispute</a>
         </div>
       </section>
