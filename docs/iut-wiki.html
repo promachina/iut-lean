@@ -481,6 +481,7 @@
         <a href="#iut-iv-atlas">IUT IV atlas</a>
         <h2>Core IUT</h2>
         <a href="#initial-theta-data">Initial theta data</a>
+        <a href="#gms-gcg-motivation">GMS/GCG motivation</a>
         <a href="#iut-i-coverings-symmetries">IUT I coverings/symmetries</a>
         <a href="#tempered-covering-complements">Tempered covering complements</a>
         <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
@@ -1296,6 +1297,7 @@
             <td>
               <a href="#alien-two-copy-method">two-copy method</a>,
               <a href="#gaussian-integral-analogy">Gaussian analogy</a>,
+              <a href="#gms-gcg-motivation">GMS/GCG motivation</a>,
               <a href="#theta-link-q-power-model">q-power model</a>,
               <a href="#mono-anabelian-transport-page">mono-anabelian transport</a>,
               <a href="#closed-loop-prime-strip">closed-loop prime-strip</a>,
@@ -2063,6 +2065,192 @@
           Related: <a href="#anabelian-background">anabelian background</a>
           <a href="#species-mutations">species and mutations</a>
           <a href="#essential-logical-structure">logical structure</a>
+          <a href="#multiradiality">multiradiality</a>
+        </div>
+      </section>
+
+      <section id="gms-gcg-motivation">
+        <h2>GMS/GCG Motivation</h2>
+        <p class="lede">
+          Mochizuki's survey and logical-structure notes use global multiplicative
+          subspaces and global canonical generators as the elementary model for why IUT
+          has to build Hodge theaters, theta links, log links, and multiradial
+          representations. In the special case where a global multiplicative subspace
+          exists, height control is visible through an isogeny; in the general case, IUT
+          is described as simulating the missing GMS/GCG package.
+        </p>
+        <div class="diagram" aria-label="Global multiplicative subspace motivation for IUT">
+          <div class="diagramHeader">
+            <strong>From actual GMS to simulated GMS/GCG</strong>
+            <span>motivation for Hodge theaters and theta/log machinery</span>
+          </div>
+          <svg viewBox="0 0 980 420" role="img">
+            <defs>
+              <marker id="arrowGMSGCG" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="48" y="58" width="186" height="82"></rect>
+            <text class="nodeTitle" x="141" y="88" text-anchor="middle">actual GMS</text>
+            <text class="tinyText" x="141" y="112" text-anchor="middle">rank-one l-torsion subspace</text>
+            <text class="tinyText" x="141" y="130" text-anchor="middle">multiplicative at bad places</text>
+
+            <rect class="nodeBox green" x="304" y="58" width="186" height="82"></rect>
+            <text class="nodeTitle" x="397" y="88" text-anchor="middle">isogenous curve</text>
+            <text class="tinyText" x="397" y="112" text-anchor="middle">q maps to q^l</text>
+            <text class="tinyText" x="397" y="130" text-anchor="middle">dlog scales by l</text>
+
+            <rect class="nodeBox gold" x="560" y="58" width="186" height="82"></rect>
+            <text class="nodeTitle" x="653" y="88" text-anchor="middle">height bound</text>
+            <text class="tinyText" x="653" y="112" text-anchor="middle">l*h <= h + C</text>
+            <text class="tinyText" x="653" y="130" text-anchor="middle">special case</text>
+
+            <line class="arrow" x1="234" y1="99" x2="304" y2="99" marker-end="url(#arrowGMSGCG)"></line>
+            <line class="arrow" x1="490" y1="99" x2="560" y2="99" marker-end="url(#arrowGMSGCG)"></line>
+
+            <rect class="nodeBox red" x="48" y="250" width="186" height="86"></rect>
+            <text class="nodeTitle" x="141" y="280" text-anchor="middle">general case</text>
+            <text class="tinyText" x="141" y="304" text-anchor="middle">no actual global GMS</text>
+            <text class="tinyText" x="141" y="322" text-anchor="middle">need GCG simulation</text>
+
+            <rect class="nodeBox violet" x="304" y="250" width="186" height="86"></rect>
+            <text class="nodeTitle" x="397" y="280" text-anchor="middle">IUT machinery</text>
+            <text class="tinyText" x="397" y="304" text-anchor="middle">Hodge theaters, theta link</text>
+            <text class="tinyText" x="397" y="322" text-anchor="middle">anabelian + Kummer</text>
+
+            <rect class="nodeBox green" x="560" y="250" width="186" height="86"></rect>
+            <text class="nodeTitle" x="653" y="280" text-anchor="middle">multiradial output</text>
+            <text class="tinyText" x="653" y="304" text-anchor="middle">theta-pilot container</text>
+            <text class="tinyText" x="653" y="322" text-anchor="middle">log-shell upper bound</text>
+
+            <line class="arrow" x1="234" y1="293" x2="304" y2="293" marker-end="url(#arrowGMSGCG)"></line>
+            <line class="arrow" x1="490" y1="293" x2="560" y2="293" marker-end="url(#arrowGMSGCG)"></line>
+            <path class="arrow" d="M653 140 C832 190 832 292 746 292" marker-end="url(#arrowGMSGCG)"></path>
+
+            <text class="tinyText" x="490" y="386" text-anchor="middle">
+              The GMS argument is a motivating special case; IUT replaces the missing global subspace by typed inter-universal machinery.
+            </text>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Source</th><th>Point</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Mutually Alien Copies §2.3</td>
+            <td>
+              A global multiplicative subspace is a rank-one
+              <span class="math">l</span>-torsion subspace defined globally and matching
+              the multiplicative Tate-uniformization subspace at bad multiplicative
+              places.
+            </td>
+            <td>
+              It is a special extra structure, not generally available for arbitrary
+              elliptic curves.
+            </td>
+          </tr>
+          <tr>
+            <td>Mutually Alien Copies §2.3</td>
+            <td>
+              Quotienting by such a subspace makes the new q-parameters behave like
+              <span class="math">q -> q^l</span>, while
+              <span class="math">dlog(q)</span> scales by <span class="math">l</span>.
+            </td>
+            <td>
+              This gives the prototype for inequalities of the form
+              <span class="math">l*h <= h + C</span>.
+            </td>
+          </tr>
+          <tr>
+            <td>Logical Structure I-V §1</td>
+            <td>
+              Mochizuki summarizes IUT as an attempt to simulate global multiplicative
+              subspaces and global canonical generators by theta functions and
+              anabelian geometry.
+            </td>
+            <td>
+              The later Hodge-theater and theta-link layers should be read as replacing
+              a missing global geometric convenience, not as arbitrary bookkeeping.
+            </td>
+          </tr>
+          <tr>
+            <td>Anabelian Gateway 2025 §2</td>
+            <td>
+              The <span class="math">N</span>-th power map model separates common
+              multiplicative/abstract-group data from incompatible ring structures.
+            </td>
+            <td>
+              This explains why deleting labels too early turns a simultaneous AND
+              relation into an unhelpful OR ambiguity.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="global-multiplicative-subspace">
+            <h3>Global multiplicative subspace</h3>
+            <p>
+              In the motivating special case, a rank-one subspace of
+              <span class="math">E[l]</span> is globally defined and agrees locally with
+              the multiplicative subgroup from Tate uniformization at the bad
+              multiplicative places.
+            </p>
+            <div class="tagRow"><span class="tag green">Alien §2.3</span><span class="tag">GMS</span></div>
+          </div>
+          <div class="card" id="global-canonical-generators">
+            <h3>Global canonical generators</h3>
+            <p>
+              The logical-structure notes state that the theta-function route needs not
+              only a GMS simulation but also global canonical generators. In IUT these
+              are represented through label/cusp and theta-value machinery rather than a
+              literal global section.
+            </p>
+            <div class="tagRow"><span class="tag gold">Logical I-V §1</span><span class="tag">GCG</span></div>
+          </div>
+          <div class="card" id="q-parameter-l-power">
+            <h3>q-parameter l-th power</h3>
+            <p>
+              The quotient by an actual GMS changes bad-place q-parameters by an
+              <span class="math">l</span>-th power. Mochizuki repeatedly uses this as the
+              prototype for the Frobenius-like dilation that IUT tries to simulate.
+            </p>
+            <div class="tagRow"><span class="tag blue">q -> q^l</span><span class="tag">Frobenius-like</span></div>
+          </div>
+          <div class="card" id="dlog-height-container">
+            <h3>dlog height container</h3>
+            <p>
+              The differential relation
+              <span class="math">dlog(q) -> l*dlog(q)</span> supplies the common
+              container in the special isogeny argument. In IUT the analogous role is
+              played by logarithmic/anabelian machinery and log-shells.
+            </p>
+            <div class="tagRow"><span class="tag green">dlog</span><span class="tag">log link</span></div>
+          </div>
+          <div class="card" id="simulation-problem">
+            <h3>Simulation problem</h3>
+            <p>
+              For arbitrary elliptic curves the required GMS generally does not exist.
+              This absence is one reason IUT introduces distinct Hodge-theater copies,
+              non-ring-theoretic theta links, log links, and multiradial algorithms.
+            </p>
+            <div class="tagRow"><span class="tag red">general case</span><span class="tag">Hodge theaters</span></div>
+          </div>
+          <div class="card" id="gms-gcg-lean-obligation">
+            <h3>Formalization obligation</h3>
+            <p>
+              A Lean model should not assume a hidden global multiplicative subspace in
+              the general IUT case. The source route requires explicit replacement data:
+              labels, theta values, Kummer comparison, log-shell containment, and
+              multiradial invariance.
+            </p>
+            <div class="tagRow"><span class="tag violet">Lean</span><span class="tag">no hidden GMS</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies</a>
+          <a href="papers/mochizuki-essential-logical-structure-i-v-2021.pdf" target="_blank">Logical Structure I-V</a>
+          <a href="papers/mochizuki-anabelian-gateway-iut-summit-2025.pdf" target="_blank">Anabelian Gateway 2025</a>
+          Related: <a href="#initial-theta-data">initial theta data</a>
+          <a href="#hodge-theaters">Hodge theaters</a>
+          <a href="#theta-log-links">theta/log links</a>
           <a href="#multiradiality">multiradiality</a>
         </div>
       </section>
