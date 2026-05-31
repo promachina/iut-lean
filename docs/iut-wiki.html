@@ -479,6 +479,7 @@
         <a href="#iut-iv-atlas">IUT IV atlas</a>
         <h2>Core IUT</h2>
         <a href="#initial-theta-data">Initial theta data</a>
+        <a href="#iut-i-coverings-symmetries">IUT I coverings/symmetries</a>
         <a href="#hodge-theaters">Hodge theaters</a>
         <a href="#mutually-alien-copies">Mutually alien copies</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
@@ -3532,6 +3533,208 @@
           Related: <a href="#hodge-theaters">Hodge theaters</a>
           <a href="#iut-i-atlas">IUT I atlas</a>
           <a href="#corollary-312">Corollary 3.12</a>
+        </div>
+      </section>
+
+      <section id="iut-i-coverings-symmetries">
+        <h2>IUT I Coverings and Symmetries</h2>
+        <p class="lede">
+          Before Hodge theaters are built, IUT I constructs a web of finite etale
+          coverings of the initial elliptic-curve and orbicurve data. The important
+          point is that two different finite-field symmetries appear: the multiplicative
+          symmetry <span class="math">F_l^*</span> modulo sign on the orbicurve side,
+          and the additive signed symmetry <span class="math">F_l ⋊ {±1}</span> on the
+          elliptic side. Their mismatch is the source of much of the later bookkeeping.
+        </p>
+        <div class="diagram" aria-label="IUT I covering and symmetry route">
+          <div class="diagramHeader">
+            <strong>Coverings before theaters</strong>
+            <span>finite etale covers, local covers, and two symmetry sources</span>
+          </div>
+          <svg viewBox="0 0 960 420" role="img">
+            <defs>
+              <marker id="arrowIUTICover" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="46" y="74" width="155" height="78"></rect>
+            <text class="nodeTitle" x="123" y="102" text-anchor="middle">X_F</text>
+            <text class="tinyText" x="123" y="124" text-anchor="middle">punctured elliptic</text>
+            <text class="tinyText" x="123" y="141" text-anchor="middle">curve</text>
+
+            <rect class="nodeBox green" x="262" y="74" width="155" height="78"></rect>
+            <text class="nodeTitle" x="339" y="102" text-anchor="middle">C_F</text>
+            <text class="tinyText" x="339" y="124" text-anchor="middle">quotient by ±1</text>
+            <text class="tinyText" x="339" y="141" text-anchor="middle">hyperbolic orbicurve</text>
+
+            <rect class="nodeBox gold" x="478" y="74" width="155" height="78"></rect>
+            <text class="nodeTitle" x="555" y="102" text-anchor="middle">C_K -> C_K</text>
+            <text class="tinyText" x="555" y="124" text-anchor="middle">degree l cover</text>
+            <text class="tinyText" x="555" y="141" text-anchor="middle">rank-one quotient</text>
+
+            <rect class="nodeBox violet" x="700" y="48" width="178" height="68"></rect>
+            <text class="nodeTitle" x="789" y="75" text-anchor="middle">F_l^*/±</text>
+            <text class="tinyText" x="789" y="96" text-anchor="middle">arithmetic symmetry</text>
+
+            <rect class="nodeBox red" x="700" y="150" width="178" height="68"></rect>
+            <text class="nodeTitle" x="789" y="177" text-anchor="middle">F_l ⋊ {±1}</text>
+            <text class="tinyText" x="789" y="198" text-anchor="middle">geometric symmetry</text>
+
+            <rect class="nodeBox blue" x="260" y="286" width="180" height="72"></rect>
+            <text class="nodeTitle" x="350" y="313" text-anchor="middle">bad-place X_v</text>
+            <text class="tinyText" x="350" y="335" text-anchor="middle">theta-function roots</text>
+
+            <rect class="nodeBox green" x="516" y="286" width="180" height="72"></rect>
+            <text class="nodeTitle" x="606" y="313" text-anchor="middle">good-place X_v</text>
+            <text class="tinyText" x="606" y="335" text-anchor="middle">cover from epsilon</text>
+
+            <line class="arrow" x1="201" y1="113" x2="262" y2="113" marker-end="url(#arrowIUTICover)"></line>
+            <line class="arrow" x1="417" y1="113" x2="478" y2="113" marker-end="url(#arrowIUTICover)"></line>
+            <path class="edge violet" d="M633 103 C665 82 670 82 700 82" marker-end="url(#arrowIUTICover)"></path>
+            <path class="edge red" d="M201 132 C406 218 622 191 700 184" marker-end="url(#arrowIUTICover)"></path>
+            <path class="edge blue" d="M555 152 C524 222 434 238 370 286" marker-end="url(#arrowIUTICover)"></path>
+            <path class="edge green" d="M555 152 C574 224 600 238 606 286" marker-end="url(#arrowIUTICover)"></path>
+
+            <text class="smallText" x="481" y="392" text-anchor="middle">The local covers inherit only small remnants of the global symmetries, forcing explicit label and bridge bookkeeping.</text>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="xf-to-cf-orbicurve">
+            <h3>From <span class="math">X_F</span> to <span class="math">C_F</span></h3>
+            <p>
+              The initial elliptic curve gives the once-punctured curve
+              <span class="math">X_F</span>. Quotienting by the natural
+              <span class="math">{±1}</span>-action gives the hyperbolic orbicurve
+              <span class="math">C_F</span>. This is the curve/orbicurve base on which
+              the first Hodge-theater data is built.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT I Intro</span><span class="tag">orbicurve</span></div>
+          </div>
+          <div class="card" id="ck-degree-l-cover">
+            <h3>Degree-<span class="math">l</span> cover of <span class="math">C_K</span></h3>
+            <p>
+              The initial data determines a finite etale degree-<span class="math">l</span>
+              cover of <span class="math">C_K</span>. It is controlled by a rank-one
+              quotient of the <span class="math">l</span>-torsion module of
+              <span class="math">E_K</span>, and at bad places it matches the quotient
+              coming from the loop in the special-fiber dual graph.
+            </p>
+            <div class="tagRow"><span class="tag blue">IUT I §I1</span><span class="tag">l-torsion</span></div>
+          </div>
+          <div class="card" id="canonical-cusp-epsilon">
+            <h3>Canonical cusp datum</h3>
+            <p>
+              The same construction determines a cusp <span class="math">epsilon</span>
+              of the cover. At bad places it corresponds to the canonical generator,
+              up to sign, of the quotient determined by the unique loop of the
+              special-fiber dual graph.
+            </p>
+            <div class="tagRow"><span class="tag gold">IUT I Def. 3.1</span><span class="tag">cusp</span></div>
+          </div>
+          <div class="card" id="bad-place-theta-cover">
+            <h3>Bad-place theta cover</h3>
+            <p>
+              For <span class="math">v in V_bad</span>, IUT I obtains a local finite
+              etale cover <span class="math">X_v -> X_v</span> by extracting
+              <span class="math">l</span>-th roots of the theta function. These are the
+              bad-place covers later feeding theta evaluation.
+            </p>
+            <div class="tagRow"><span class="tag red">IUT I §I1</span><span class="tag">theta roots</span></div>
+          </div>
+          <div class="card" id="good-place-epsilon-cover">
+            <h3>Good-place epsilon cover</h3>
+            <p>
+              For <span class="math">v in V_good</span>, the analogous local cover is
+              determined by the distinguished cusp <span class="math">epsilon</span>.
+              Thus good and bad places enter the same prime-strip machinery through
+              different covering origins.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT I §I1</span><span class="tag">good places</span></div>
+          </div>
+          <div class="card" id="multiplicative-fl-star-symmetry">
+            <h3>Multiplicative symmetry</h3>
+            <p>
+              The quotient <span class="math">F_l^* / {±1}</span> acts as an arithmetic
+              poly-symmetry on <span class="math">C_K</span>. Mochizuki presents it as
+              induced through Galois action on the rank-one quotient, hence suited for
+              descent toward the field of moduli.
+            </p>
+            <div class="tagRow"><span class="tag violet">F_l^*</span><span class="tag">arithmetic</span></div>
+          </div>
+          <div class="card" id="additive-fl-pm-symmetry">
+            <h3>Additive signed symmetry</h3>
+            <p>
+              The group <span class="math">F_l ⋊ {±1}</span> acts as a geometric
+              poly-symmetry on <span class="math">X_K</span>, through automorphisms of
+              the scheme and its cusps. This side is later used for additive label
+              bookkeeping and conjugate synchronization.
+            </p>
+            <div class="tagRow"><span class="tag blue">F_l ⋊ ±</span><span class="tag">geometric</span></div>
+          </div>
+          <div class="card" id="symmetry-failure-local-covers">
+            <h3>Symmetry failure on local covers</h3>
+            <p>
+              IUT I stresses that the global multiplicative symmetry only extends to a
+              trivial remnant on the local covers, while the global additive signed
+              symmetry only extends to a sign remnant. This is why local covers cannot be
+              treated as if they carried the full global symmetry.
+            </p>
+            <div class="tagRow"><span class="tag red">Fig. I1.1</span><span class="tag">local loss</span></div>
+          </div>
+          <div class="card" id="conjugate-synchronization-iut-i">
+            <h3>Conjugate synchronization</h3>
+            <p>
+              The additive signed symmetry can permute copies of local Galois groups
+              associated to distinct labels without introducing conjugacy
+              indeterminacies. Mochizuki calls this conjugate synchronization and uses it
+              later in Hodge-Arakelov theta evaluation.
+            </p>
+            <div class="tagRow"><span class="tag gold">IUT I §I1</span><span class="tag">synchronization</span></div>
+          </div>
+          <div class="card" id="fmod-descent-symmetry">
+            <h3>Descent-oriented symmetry</h3>
+            <p>
+              The multiplicative symmetry is better suited to descending from
+              <span class="math">K</span> to <span class="math">F_mod</span>, especially
+              for reconstructing the number field from the etale fundamental group of
+              <span class="math">C_K</span>. That descent comes with global Galois
+              permutation and conjugacy ambiguity.
+            </p>
+            <div class="tagRow"><span class="tag violet">F_mod</span><span class="tag">descent</span></div>
+          </div>
+          <div class="card" id="finite-field-disentangling">
+            <h3>Finite-field disentangling</h3>
+            <p>
+              Mochizuki treats large <span class="math">l</span> as making arithmetic in
+              <span class="math">F_l</span> roughly approximate arithmetic in
+              <span class="math">Z</span>. The split between additive and multiplicative
+              finite-field symmetries is therefore the first approximation to separating
+              additive and multiplicative ring structures.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT I §I1</span><span class="tag">add/mult split</span></div>
+          </div>
+          <div class="card" id="prime-strip-taxonomy-source">
+            <h3>Prime-strip taxonomy source</h3>
+            <p>
+              Figure I1.2 introduces the main prime-strip types: D, D⊢, F, F⊢, later
+              weakened F⊢× and F⊢×μ forms, and realified F⊩ variants. The taxonomy is
+              built from this covering-and-symmetry layer, not added afterward.
+            </p>
+            <div class="tagRow"><span class="tag blue">Fig. I1.2</span><span class="tag">taxonomy</span></div>
+          </div>
+        </div>
+        <div class="callout gold">
+          Formalization warning: the two symmetries should not be encoded as one generic
+          label action. The multiplicative side is arithmetic and descent-oriented; the
+          additive signed side is geometric and supports conjugate synchronization.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Introduction §I1</a>
+          Related: <a href="#initial-theta-data">initial theta data</a>
+          <a href="#hodge-theaters">Hodge theaters</a>
+          <a href="#prime-strips-bridges">prime strips</a>
+          <a href="#multiplicative-additive-bridges">bridge theory</a>
         </div>
       </section>
 
