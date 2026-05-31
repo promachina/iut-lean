@@ -565,6 +565,8 @@
         <a href="#gt-common-container-analogy-page">GT common containers</a>
         <a href="#gt-n-power-iut-analogy-page">GT N-power IUT analogy</a>
         <a href="#gt-ficsp-decomposition-page">GT FICSP/decomposition</a>
+        <a href="#cat-idempotent-function-page">CAT idempotents</a>
+        <a href="#cat-miraculous-rotation-page">CAT miraculous rotation</a>
         <a href="#hoshi-introduction-route">Hoshi introduction route</a>
         <a href="#hoshi-cyclotome-synchronization-page">Hoshi cyclotomes</a>
         <a href="#hoshi-kummer-transport-page">Hoshi Kummer transport</a>
@@ -4882,6 +4884,187 @@
           <a href="#theta-log-links">theta/log links</a>
           <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="cat-idempotent-function-page" data-filter="cat combinatorial algebraization theory idempotent function theory finite etale galois covering active subset transitive q action">
+        <h2>CAT Idempotent Function Theory</h2>
+        <p class="lede">
+          In Varying Hues §3, Mochizuki states an elementary idempotent lemma for
+          combinatorial algebraization theory. Starting from a finite etale Galois cover
+          and several algebra copies inside a function algebra on an infinite active
+          point set, one may restrict to an infinite subset so that the nonzero
+          idempotents form a maximal orthogonal family and the Galois group acts
+          transitively on them.
+        </p>
+        <div class="diagram fit" aria-label="CAT idempotent function theory">
+          <div class="diagramHeader">
+            <strong>Idempotents after restricting the active set</strong>
+            <span>Varying Hues §3, source lemma for CAT</span>
+          </div>
+          <svg viewBox="0 0 1030 430" role="img">
+            <defs>
+              <marker id="arrowCATIdem" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="62" y="72" width="220" height="88"></rect>
+            <text class="nodeTitle" x="172" y="104" text-anchor="middle">finite etale cover</text>
+            <text class="tinyText" x="172" y="128" text-anchor="middle">Y -> X with group Q</text>
+            <text class="tinyText" x="172" y="146" text-anchor="middle">active point set</text>
+
+            <rect class="nodeBox green" x="405" y="72" width="220" height="88"></rect>
+            <text class="nodeTitle" x="515" y="104" text-anchor="middle">function algebra</text>
+            <text class="tinyText" x="515" y="128" text-anchor="middle">Fn(Y_act, K)</text>
+            <text class="tinyText" x="515" y="146" text-anchor="middle">subalgebras R_alpha</text>
+
+            <rect class="nodeBox violet" x="748" y="72" width="220" height="88"></rect>
+            <text class="nodeTitle" x="858" y="104" text-anchor="middle">idempotents</text>
+            <text class="tinyText" x="858" y="128" text-anchor="middle">connected components</text>
+            <text class="tinyText" x="858" y="146" text-anchor="middle">maximal orthogonal family</text>
+
+            <rect class="nodeBox gold" x="260" y="270" width="250" height="86"></rect>
+            <text class="nodeTitle" x="385" y="300" text-anchor="middle">restrict active set</text>
+            <text class="tinyText" x="385" y="324" text-anchor="middle">keep an infinite subset</text>
+            <text class="tinyText" x="385" y="342" text-anchor="middle">discard finitely many points</text>
+
+            <rect class="nodeBox red" x="575" y="270" width="250" height="86"></rect>
+            <text class="nodeTitle" x="700" y="300" text-anchor="middle">transitive Q-action</text>
+            <text class="tinyText" x="700" y="324" text-anchor="middle">supports in Q-torsors</text>
+            <text class="tinyText" x="700" y="342" text-anchor="middle">subsets q H y</text>
+
+            <path class="edge blue" d="M284 116 H403" marker-end="url(#arrowCATIdem)"></path>
+            <path class="edge green" d="M627 116 H746" marker-end="url(#arrowCATIdem)"></path>
+            <path class="edge gold" d="M515 162 C492 220 430 244 392 268" marker-end="url(#arrowCATIdem)"></path>
+            <path class="edge red" d="M858 162 C826 222 752 246 708 268" marker-end="url(#arrowCATIdem)"></path>
+            <path class="edge violet" d="M511 313 H573" marker-end="url(#arrowCATIdem)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Lemma component</th><th>Content</th><th>CAT use</th></tr>
+          <tr>
+            <td>Finite etale Galois cover</td>
+            <td>Provides the finite group <span class="math">Q</span> acting on the function space.</td>
+            <td>Finite quotient side of the later CAT rotation.</td>
+          </tr>
+          <tr>
+            <td>Active infinite subset</td>
+            <td>The construction may restrict to an infinite subset after excluding finitely many points.</td>
+            <td>Stabilizes the idempotent pattern used for algebraization.</td>
+          </tr>
+          <tr>
+            <td>Maximal orthogonal idempotents</td>
+            <td>Nonzero idempotents correspond to connected components after restriction.</td>
+            <td>Converts algebra copies into combinatorial component data.</td>
+          </tr>
+          <tr>
+            <td>Transitive action</td>
+            <td><span class="math">Q</span> acts transitively; supports look like cosets <span class="math">qHy</span>.</td>
+            <td>Feeds the finite-quotient side of the CAT comparison.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          <strong>Status.</strong> This page records a lemma from an ICMS 2025 talk
+          note connected to manuscripts in preparation. It is current adjacent source
+          material, not a dependency of the published IUT I-IV proof.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-teichmuller-dilations-varying-hues-2025-marked.pdf" target="_blank">Varying Hues §3</a>
+          Related: <a href="#cat-miraculous-rotation-page">CAT miraculous rotation</a>
+          <a href="#gt-common-container-analogy-page">GT common containers</a>
+          <a href="#gt-species-perspective">GT species perspective</a>
+        </div>
+      </section>
+
+      <section id="cat-miraculous-rotation-page" data-filter="cat miraculous rotation gt varying hues tensor direct sum chebotarev hilbertian belyi cuspidalization combinatorial anabelian">
+        <h2>CAT Miraculous Rotation</h2>
+        <p class="lede">
+          Varying Hues §4 presents combinatorial algebraization theory as another
+          Teichmuller-type theory, now for conjugates of arithmetic groups inside
+          <span class="math">GT</span> or <span class="math">Out(Pi_X)</span>. The
+          source compares CAT's rotation from a mysterious gap between distinct ring
+          theories to a harmless finite-quotient gap with IUT's rotation from the
+          theta-link gap to the log-link gap.
+        </p>
+        <div class="diagram fit" aria-label="CAT miraculous rotation">
+          <div class="diagramHeader">
+            <strong>CAT rotation compared with IUT rotation</strong>
+            <span>Varying Hues §4</span>
+          </div>
+          <svg viewBox="0 0 1060 430" role="img">
+            <defs>
+              <marker id="arrowCATRotation" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox red" x="54" y="72" width="250" height="90"></rect>
+            <text class="nodeTitle" x="179" y="104" text-anchor="middle">mysterious gap</text>
+            <text class="tinyText" x="179" y="128" text-anchor="middle">distinct GT conjugate ring theories</text>
+            <text class="tinyText" x="179" y="146" text-anchor="middle">non-algebraic sigma tau^{-1}</text>
+
+            <rect class="nodeBox green" x="405" y="72" width="250" height="90"></rect>
+            <text class="nodeTitle" x="530" y="104" text-anchor="middle">CAT analysis</text>
+            <text class="tinyText" x="530" y="128" text-anchor="middle">idempotents, Chb, Hlb</text>
+            <text class="tinyText" x="530" y="146" text-anchor="middle">combinatorial anabelian geometry</text>
+
+            <rect class="nodeBox blue" x="756" y="72" width="250" height="90"></rect>
+            <text class="nodeTitle" x="881" y="104" text-anchor="middle">harmless finite gap</text>
+            <text class="tinyText" x="881" y="128" text-anchor="middle">Q-conjugates</text>
+            <text class="tinyText" x="881" y="146" text-anchor="middle">finite center-free quotient</text>
+
+            <rect class="nodeBox gold" x="228" y="276" width="250" height="84"></rect>
+            <text class="nodeTitle" x="353" y="306" text-anchor="middle">additive side</text>
+            <text class="tinyText" x="353" y="330" text-anchor="middle">direct-sum components</text>
+            <text class="tinyText" x="353" y="348" text-anchor="middle">scheme-theoretic action</text>
+
+            <rect class="nodeBox violet" x="582" y="276" width="250" height="84"></rect>
+            <text class="nodeTitle" x="707" y="306" text-anchor="middle">multiplicative side</text>
+            <text class="tinyText" x="707" y="330" text-anchor="middle">tensor-product actions</text>
+            <text class="tinyText" x="707" y="348" text-anchor="middle">computed at decomposition subgroups</text>
+
+            <path class="edge red" d="M306 117 H403" marker-end="url(#arrowCATRotation)"></path>
+            <path class="edge green" d="M657 117 H754" marker-end="url(#arrowCATRotation)"></path>
+            <path class="edge gold" d="M530 164 C492 224 418 248 360 274" marker-end="url(#arrowCATRotation)"></path>
+            <path class="edge violet" d="M530 164 C570 224 652 248 699 274" marker-end="url(#arrowCATRotation)"></path>
+            <path class="edge green" d="M480 318 H580" marker-end="url(#arrowCATRotation)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card">
+            <h3>CAT input</h3>
+            <p>
+              The source studies conjugates of <span class="math">G_Q</span> or
+              mapping-class-group images inside <span class="math">GT</span> or
+              <span class="math">Out(Pi_X)</span>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Technical tools</h3>
+            <p>
+              Chebotarev and Hilbertian inputs compute tensor-product actions at
+              decomposition subgroups; combinatorial anabelian geometry supplies the
+              configuration-space transition.
+            </p>
+          </div>
+          <div class="card">
+            <h3>IUT analogy</h3>
+            <p>
+              The analogy is structural: CAT rotates a difficult GT-conjugate gap to a
+              finite-quotient gap, while IUT rotates the theta-link gap to the log-link
+              gap.
+            </p>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Wiki handling.</strong> CAT is a useful comparison lens for the
+          common-container theme. The page should remain linked to GT context and not
+          be folded into the core IUT I-IV proof spine.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-teichmuller-dilations-varying-hues-2025-marked.pdf" target="_blank">Varying Hues §4</a>
+          Related: <a href="#cat-idempotent-function-page">CAT idempotents</a>
+          <a href="#gt-ficsp-decomposition-page">GT FICSP/decomposition</a>
+          <a href="#collas-log-theta-wandering-page">Collas log-theta wandering</a>
         </div>
       </section>
 
