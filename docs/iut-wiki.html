@@ -643,6 +643,9 @@
         <a href="#conjugate-synchronization-logwall-ii383">Synchronization/log-wall 3.8.3</a>
         <a href="#gaussian-frobenioid-categories-ii38">Gaussian Frobenioid categories 3.8</a>
         <a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids 4.1</a>
+        <a href="#good-nonarch-gaussian-monoids-ii41">Good nonarch Gaussians 4.1</a>
+        <a href="#good-nonarch-frobenioid-gaussians-ii42">Good nonarch Frobenioids 4.2</a>
+        <a href="#archimedean-gaussian-monoids-ii43-44">Archimedean Gaussians 4.3-4.4</a>
         <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids 4.5</a>
         <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift 4.6</a>
         <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry 4.7</a>
@@ -1730,6 +1733,9 @@
               <a href="#frobenioid-gaussian-monoids-36">Frobenioid Gaussian monoids</a>,
               <a href="#group-to-post-anabelian-gaussians-37">group-to-post-anabelian Gaussian monoids</a>,
               <a href="#local-frobenioids-from-monoids-38">local Frobenioids from monoids</a>,
+              <a href="#good-nonarch-gaussian-monoids-ii41">good nonarchimedean Gaussians 4.1</a>,
+              <a href="#good-nonarch-frobenioid-gaussians-ii42">good nonarchimedean Frobenioids 4.2</a>,
+              <a href="#archimedean-gaussian-monoids-ii43-44">archimedean Gaussians 4.3-4.4</a>,
               <a href="#conjugate-synchronization-gain-383">conjugate synchronization gain</a>,
               <a href="#good-prime-gaussian-monoids-ii41">good-prime Gaussian monoids</a>,
               <a href="#archimedean-gaussian-monoids-43">archimedean Gaussian monoids</a>,
@@ -18287,6 +18293,313 @@
           <a href="#gaussian-frobenioid-categories-ii38">Gaussian Frobenioid categories</a>
           <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
           <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
+        </div>
+      </section>
+
+      <section id="good-nonarch-gaussian-monoids-ii41">
+        <h2>IUT II Proposition 4.1: Good Nonarchimedean Gaussian Monoids</h2>
+        <p class="lede">
+          Proposition 4.1 formally extends the bad-prime Gaussian monoid pattern to
+          good nonarchimedean primes. The construction is mostly tautological, but it
+          is needed so that the later global theory has compatible local inputs at
+          every nonarchimedean place.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Proposition 4.1 good nonarchimedean Gaussian monoids">
+          <div class="diagramHeader">
+            <strong>Good nonarchimedean local package</strong>
+            <span>Proposition 4.1 and Remark 4.1.1</span>
+          </div>
+          <svg viewBox="0 0 1120 520" role="img">
+            <defs>
+              <marker id="arrowGoodNonarch41" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="72" y="70" width="238" height="92"></rect>
+            <text class="nodeTitle" x="191" y="100" text-anchor="middle">Pi_v -> Pi_v± -> Pi_vcor</text>
+            <text class="tinyText" x="191" y="126" text-anchor="middle">good nonarchimedean v</text>
+            <text class="tinyText" x="191" y="146" text-anchor="middle">group-theoretic reconstruction</text>
+
+            <rect class="nodeBox gold" x="440" y="70" width="240" height="92"></rect>
+            <text class="nodeTitle" x="560" y="100" text-anchor="middle">constant monoid</text>
+            <text class="tinyText" x="560" y="126" text-anchor="middle">Psi_cns(Pi_v)</text>
+            <text class="tinyText" x="560" y="146" text-anchor="middle">uniradial input</text>
+
+            <rect class="nodeBox green" x="812" y="70" width="238" height="92"></rect>
+            <text class="nodeTitle" x="931" y="100" text-anchor="middle">semi-simplification</text>
+            <text class="tinyText" x="931" y="126" text-anchor="middle">Psi_ss = units x R>=0</text>
+            <text class="tinyText" x="931" y="146" text-anchor="middle">distinguished log(p_v)</text>
+
+            <rect class="nodeBox violet" x="252" y="300" width="260" height="92"></rect>
+            <text class="nodeTitle" x="382" y="330" text-anchor="middle">F_l± label symmetry</text>
+            <text class="tinyText" x="382" y="356" text-anchor="middle">diagonal constants</text>
+            <text class="tinyText" x="382" y="376" text-anchor="middle">zero-label to diagonal</text>
+
+            <rect class="nodeBox red" x="642" y="300" width="260" height="92"></rect>
+            <text class="nodeTitle" x="772" y="330" text-anchor="middle">theta/Gaussian monoids</text>
+            <text class="tinyText" x="772" y="356" text-anchor="middle">Psi_env, Psi_gau</text>
+            <text class="tinyText" x="772" y="376" text-anchor="middle">formal evaluation isomorphism</text>
+
+            <path d="M312 116 H438" class="edge blue" marker-end="url(#arrowGoodNonarch41)"></path>
+            <path d="M682 116 H810" class="edge gold" marker-end="url(#arrowGoodNonarch41)"></path>
+            <path d="M560 164 C514 222 446 268 398 298" class="edge violet" marker-end="url(#arrowGoodNonarch41)"></path>
+            <path d="M930 164 C902 226 830 268 790 298" class="edge green" marker-end="url(#arrowGoodNonarch41)"></path>
+            <path d="M514 346 H640" class="edge violet" marker-end="url(#arrowGoodNonarch41)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Clause</th><th>Construction</th><th>Status</th></tr>
+          <tr>
+            <td>4.1(i)</td>
+            <td>
+              Constructs <span class="math">Psi_cns(Pi_v)</span> from
+              <span class="math">G_v</span> via the cohomological algorithm for
+              <span class="math">mu_Z(G_v)</span>.
+            </td>
+            <td>
+              This is the good-prime analogue of the constant monoids used at bad
+              primes.
+            </td>
+          </tr>
+          <tr>
+            <td>4.1(ii)</td>
+            <td>
+              Constructs <span class="math">R>=0(G_v)</span>, the distinguished
+              element <span class="math">log(p_v)</span>, and the semi-simplified
+              monoid <span class="math">Psi_ss_cns = units x R>=0</span>.
+            </td>
+            <td>
+              This provides the realified value-group side needed for the formal
+              Gaussian expression.
+            </td>
+          </tr>
+          <tr>
+            <td>4.1(iii)-(iv)</td>
+            <td>
+              The <span class="math">F_l^±</span> action gives symmetrizing
+              isomorphisms, diagonal constants, and the formal evaluation
+              <span class="math">Psi_env(Pi_v) -> Psi_gau(Pi_v)</span>.
+            </td>
+            <td>
+              Remark 4.1.1 says this good-prime construction is formally multiradial
+              after semi-simplification, while the raw constants are uniradial.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.1 and Remark 4.1.1</a>
+          Related: <a href="#good-prime-gaussian-monoids-ii41">Section 4 atlas</a>
+          <a href="#good-nonarch-frobenioid-gaussians-ii42">good nonarchimedean Frobenioids</a>
+          <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>
+        </div>
+      </section>
+
+      <section id="good-nonarch-frobenioid-gaussians-ii42">
+        <h2>IUT II Proposition 4.2: Frobenioid Gaussian Monoids at Good Nonarchimedean Primes</h2>
+        <p class="lede">
+          Proposition 4.2 transfers the good nonarchimedean group-theoretic monoids of
+          Proposition 4.1 to the Frobenioid side of a theta-Hodge theater. It is the
+          good-prime analogue of the Corollary 3.6 Frobenioid Gaussian comparison at
+          bad primes.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Proposition 4.2 good nonarchimedean Frobenioid Gaussian monoids">
+          <div class="diagramHeader">
+            <strong>Good nonarchimedean Frobenioid transfer</strong>
+            <span>Proposition 4.2 and Remark 4.2.1</span>
+          </div>
+          <svg viewBox="0 0 1120 500" role="img">
+            <defs>
+              <marker id="arrowGoodFrob42" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox violet" x="70" y="78" width="250" height="92"></rect>
+            <text class="nodeTitle" x="195" y="108" text-anchor="middle">p_v-adic Frobenioid F_v</text>
+            <text class="tinyText" x="195" y="134" text-anchor="middle">theta-Hodge theater local piece</text>
+            <text class="tinyText" x="195" y="154" text-anchor="middle">up to inner automorphism</text>
+
+            <rect class="nodeBox gold" x="438" y="58" width="250" height="92"></rect>
+            <text class="nodeTitle" x="563" y="88" text-anchor="middle">constant comparison</text>
+            <text class="tinyText" x="563" y="114" text-anchor="middle">Psi_F -> Psi_cns(Pi_v)</text>
+            <text class="tinyText" x="563" y="134" text-anchor="middle">unique equivariant isomorphism</text>
+
+            <rect class="nodeBox green" x="438" y="238" width="250" height="92"></rect>
+            <text class="nodeTitle" x="563" y="268" text-anchor="middle">semi-simplified comparison</text>
+            <text class="tinyText" x="563" y="294" text-anchor="middle">units and realified divisor</text>
+            <text class="tinyText" x="563" y="314" text-anchor="middle">poly-isomorphism</text>
+
+            <rect class="nodeBox blue" x="812" y="148" width="238" height="92"></rect>
+            <text class="nodeTitle" x="931" y="178" text-anchor="middle">Frobenioid theta/Gaussian</text>
+            <text class="tinyText" x="931" y="204" text-anchor="middle">Psi_FTheta, Psi_Fgau</text>
+            <text class="tinyText" x="931" y="224" text-anchor="middle">formal evaluation chain</text>
+
+            <rect class="nodeBox red" x="486" y="392" width="300" height="60"></rect>
+            <text class="nodeTitle" x="636" y="418" text-anchor="middle">same notation extended to bad primes</text>
+            <text class="tinyText" x="636" y="438" text-anchor="middle">Remark 4.2.1 aligns Section 3 and Section 4 conventions</text>
+
+            <path d="M322 124 H436" class="edge violet" marker-end="url(#arrowGoodFrob42)"></path>
+            <path d="M320 156 C376 210 408 262 436 282" class="edge green" marker-end="url(#arrowGoodFrob42)"></path>
+            <path d="M690 104 C756 122 798 150 810 172" class="edge gold" marker-end="url(#arrowGoodFrob42)"></path>
+            <path d="M690 284 C758 268 798 230 810 206" class="edge green" marker-end="url(#arrowGoodFrob42)"></path>
+            <path d="M636 332 V390" class="edge red" marker-end="url(#arrowGoodFrob42)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Clause</th><th>Construction</th><th>Role</th></tr>
+          <tr>
+            <td>4.2(i)</td>
+            <td>
+              A <span class="math">p_v</span>-adic Frobenioid in a theta-Hodge theater
+              determines <span class="math">Psi_F</span>, uniquely identified with
+              <span class="math">Psi_cns(Pi_v)</span>.
+            </td>
+            <td>
+              Moves the good-prime constant monoid from group-theoretic to
+              Frobenioid-theoretic language.
+            </td>
+          </tr>
+          <tr>
+            <td>4.2(ii)</td>
+            <td>
+              The mono-analytic prime-strip gives unit and realified-divisor
+              comparisons, hence a semi-simplified poly-isomorphism compatible with
+              splittings.
+            </td>
+            <td>
+              Supplies the realified Frobenioid side used by theta/Gaussian monoids.
+            </td>
+          </tr>
+          <tr>
+            <td>4.2(iii)-(iv)</td>
+            <td>
+              The label symmetries and formal evaluation isomorphism produce
+              <span class="math">Psi_FTheta</span> and
+              <span class="math">Psi_Fgau</span> for the good nonarchimedean place.
+            </td>
+            <td>
+              Gives the good-prime Frobenioid analogue of Corollary 3.6.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 4.2.1</td>
+            <td>
+              Extends the semi-simplified notation back to bad primes and sets
+              <span class="math">infty Psi_env = Psi_env</span> at good
+              nonarchimedean primes because those monoids are already divisible.
+            </td>
+            <td>
+              Aligns Section 3 and Section 4 notation for the global step.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.2 and Remark 4.2.1</a>
+          Related: <a href="#good-nonarch-gaussian-monoids-ii41">good nonarchimedean Gaussians</a>
+          <a href="#frobenioid-gaussian-monoids-ii36">bad-prime Frobenioid Gaussians</a>
+          <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>
+        </div>
+      </section>
+
+      <section id="archimedean-gaussian-monoids-ii43-44">
+        <h2>IUT II Propositions 4.3-4.4: Archimedean Gaussian Monoids</h2>
+        <p class="lede">
+          Propositions 4.3 and 4.4 repeat the good-prime pattern for archimedean
+          places, replacing tempered groups by Aut-holomorphic orbispaces and then
+          transferring the resulting monoids to the archimedean Frobenioid data of a
+          theta-Hodge theater.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Propositions 4.3 and 4.4 archimedean Gaussian monoids">
+          <div class="diagramHeader">
+            <strong>Archimedean local analogue</strong>
+            <span>Propositions 4.3-4.4</span>
+          </div>
+          <svg viewBox="0 0 1120 500" role="img">
+            <defs>
+              <marker id="arrowArch4344" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="72" y="70" width="250" height="92"></rect>
+            <text class="nodeTitle" x="197" y="100" text-anchor="middle">Aut-holomorphic orbispaces</text>
+            <text class="tinyText" x="197" y="126" text-anchor="middle">U_v -> U_v± -> U_vcor</text>
+            <text class="tinyText" x="197" y="146" text-anchor="middle">archimedean v</text>
+
+            <rect class="nodeBox gold" x="438" y="70" width="250" height="92"></rect>
+            <text class="nodeTitle" x="563" y="100" text-anchor="middle">constant and semi-simple monoids</text>
+            <text class="tinyText" x="563" y="126" text-anchor="middle">A_U^triangleright, units x R>=0</text>
+            <text class="tinyText" x="563" y="146" text-anchor="middle">distinguished log(e)</text>
+
+            <rect class="nodeBox green" x="812" y="70" width="238" height="92"></rect>
+            <text class="nodeTitle" x="931" y="100" text-anchor="middle">archimedean Gaussian</text>
+            <text class="tinyText" x="931" y="126" text-anchor="middle">Psi_env(U_v), Psi_gau(U_v)</text>
+            <text class="tinyText" x="931" y="146" text-anchor="middle">formal evaluation</text>
+
+            <rect class="nodeBox violet" x="250" y="302" width="270" height="92"></rect>
+            <text class="nodeTitle" x="385" y="332" text-anchor="middle">F_l± cusp-label symmetry</text>
+            <text class="tinyText" x="385" y="358" text-anchor="middle">diagonal constants</text>
+            <text class="tinyText" x="385" y="378" text-anchor="middle">zero-label to diagonal</text>
+
+            <rect class="nodeBox red" x="642" y="302" width="270" height="92"></rect>
+            <text class="nodeTitle" x="777" y="332" text-anchor="middle">archimedean Frobenioid transfer</text>
+            <text class="tinyText" x="777" y="358" text-anchor="middle">Psi_F -> Psi_cns(U_v)</text>
+            <text class="tinyText" x="777" y="378" text-anchor="middle">Psi_FTheta -> Psi_Fgau</text>
+
+            <path d="M324 116 H436" class="edge blue" marker-end="url(#arrowArch4344)"></path>
+            <path d="M690 116 H810" class="edge gold" marker-end="url(#arrowArch4344)"></path>
+            <path d="M563 164 C512 224 448 270 400 300" class="edge violet" marker-end="url(#arrowArch4344)"></path>
+            <path d="M932 164 C906 226 836 270 792 300" class="edge green" marker-end="url(#arrowArch4344)"></path>
+            <path d="M522 348 H640" class="edge violet" marker-end="url(#arrowArch4344)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source</th><th>Construction</th><th>Analogue</th></tr>
+          <tr>
+            <td>4.3(i)-(ii)</td>
+            <td>
+              Builds <span class="math">Psi_cns(U_v)</span> from the archimedean
+              Aut-holomorphic space and constructs the semi-simplified monoid
+              <span class="math">units x R>=0</span> with distinguished
+              <span class="math">log(p_v)</span>.
+            </td>
+            <td>
+              This is the archimedean replacement for the good nonarchimedean
+              cohomological constant monoid.
+            </td>
+          </tr>
+          <tr>
+            <td>4.3(iii)-(iv)</td>
+            <td>
+              The <span class="math">F_l^±</span>-symmetry of cusp-label orbits gives
+              diagonal constants and the formal evaluation
+              <span class="math">Psi_env(U_v) -> Psi_gau(U_v)</span>.
+            </td>
+            <td>
+              The same formal Gaussian shape is obtained without a nonarchimedean
+              tempered group.
+            </td>
+          </tr>
+          <tr>
+            <td>4.4(i)-(iv)</td>
+            <td>
+              The archimedean Frobenioid data of the theta-Hodge theater identifies
+              its constant monoid with <span class="math">Psi_cns(U_v)</span> and
+              transfers the theta/Gaussian formal evaluation to
+              <span class="math">Psi_FTheta -> Psi_Fgau</span>.
+            </td>
+            <td>
+              This completes the local good-prime inputs before the global
+              Frobenioid construction of Corollary 4.5.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Propositions 4.3-4.4</a>
+          Related: <a href="#good-nonarch-gaussian-monoids-ii41">good nonarchimedean Gaussians</a>
+          <a href="#good-nonarch-frobenioid-gaussians-ii42">good nonarchimedean Frobenioids</a>
+          <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>
         </div>
       </section>
 
