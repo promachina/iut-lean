@@ -492,6 +492,7 @@
         <a href="#kappa-coric-functions">Kappa-coric functions</a>
         <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
         <a href="#theta-link-frobenius-etale-pictures">Theta/Frobenius pictures</a>
+        <a href="#multiplicative-combinatorial-teichmuller">Multiplicative combinatorics</a>
         <a href="#gms-gcg-motivation">GMS/GCG motivation</a>
         <a href="#projective-line-gluing-analogy">Projective-line gluing</a>
         <a href="#iut-i-gluing-models">IUT I gluing models</a>
@@ -1330,12 +1331,18 @@
             <td>IUT I</td>
             <td>Multiplicative combinatorial Teichmuller theory</td>
             <td>
+              <a href="#multiplicative-combinatorial-teichmuller">multiplicative combinatorics</a>,
               <a href="#d-prime-strip">D-prime-strip</a>,
               <a href="#label-classes-cusps">label classes of cusps</a>,
+              <a href="#fstar-labels">F⋇ labels</a>,
+              <a href="#labcusp-globalization">LabCusp globalization</a>,
               <a href="#model-base-nf-bridge">model base-NF bridge</a>,
               <a href="#model-base-theta-bridge">model base-Theta bridge</a>,
               <a href="#d-theta-nf-theater">D-ThetaNF-Hodge theater</a>,
-              <a href="#holomorphic-procession">holomorphic procession</a>
+              <a href="#synchronized-labels-single-dcircle">synchronized labels</a>,
+              <a href="#cyclic-versus-symmetric-labels">cyclic vs symmetric labels</a>,
+              <a href="#holomorphic-procession">holomorphic procession</a>,
+              <a href="#d-theta-nf-etale-picture-source">D-ThetaNF etale-picture</a>
             </td>
             <td>IUT I, Section 4</td>
           </tr>
@@ -7539,6 +7546,221 @@
           <a href="#theta-log-links">theta and log links</a>
           <a href="#multiradiality">multiradiality</a>
           <a href="#corollary-312">Corollary 3.12</a>
+        </div>
+      </section>
+
+      <section id="multiplicative-combinatorial-teichmuller">
+        <h2>Multiplicative Combinatorial Teichmuller Theory</h2>
+        <p class="lede">
+          IUT I Section 4 develops the D-side combinatorics needed before theta
+          evaluation. Its purpose is to control labels
+          <span class="math">F_l^⋇ = F_l^x/{±1}</span>, local prime-strip sections,
+          model NF/Theta bridges, label-class transport, and processions. This is the
+          first source layer where label comparison and label indeterminacy are measured
+          explicitly.
+        </p>
+        <div class="diagram" aria-label="Multiplicative combinatorial Teichmuller theory">
+          <div class="diagramHeader">
+            <strong>D-side label dynamics</strong>
+            <span>IUT I Section 4</span>
+          </div>
+          <svg viewBox="0 0 1080 580" role="img">
+            <defs>
+              <marker id="arrowMultComb" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="50" y="66" width="220" height="86"></rect>
+            <text class="nodeTitle" x="160" y="96" text-anchor="middle">D-prime-strip</text>
+            <text class="tinyText" x="160" y="120" text-anchor="middle">{D_v}_{v in V}</text>
+            <text class="tinyText" x="160" y="138" text-anchor="middle">local analytic section</text>
+
+            <rect class="nodeBox green" x="430" y="66" width="220" height="86"></rect>
+            <text class="nodeTitle" x="540" y="96" text-anchor="middle">capsule D_J</text>
+            <text class="tinyText" x="540" y="120" text-anchor="middle">indexed by J</text>
+            <text class="tinyText" x="540" y="138" text-anchor="middle">labels recovered by χ</text>
+
+            <rect class="nodeBox violet" x="810" y="66" width="220" height="86"></rect>
+            <text class="nodeTitle" x="920" y="96" text-anchor="middle">single D°</text>
+            <text class="tinyText" x="920" y="120" text-anchor="middle">global base object</text>
+            <text class="tinyText" x="920" y="138" text-anchor="middle">synchronizes labels</text>
+
+            <rect class="nodeBox gold" x="236" y="248" width="230" height="90"></rect>
+            <text class="nodeTitle" x="351" y="278" text-anchor="middle">D-Theta bridge</text>
+            <text class="tinyText" x="351" y="302" text-anchor="middle">evaluation sections</text>
+            <text class="tinyText" x="351" y="320" text-anchor="middle">bad-place labels</text>
+
+            <rect class="nodeBox blue" x="614" y="248" width="230" height="90"></rect>
+            <text class="nodeTitle" x="729" y="278" text-anchor="middle">D-NF bridge</text>
+            <text class="tinyText" x="729" y="302" text-anchor="middle">global cusp labels</text>
+            <text class="tinyText" x="729" y="320" text-anchor="middle">F_l^⋇ torsor ambiguity</text>
+
+            <rect class="nodeBox red" x="250" y="438" width="245" height="86"></rect>
+            <text class="nodeTitle" x="372" y="468" text-anchor="middle">processions</text>
+            <text class="tinyText" x="372" y="492" text-anchor="middle">nested capsules</text>
+            <text class="tinyText" x="372" y="510" text-anchor="middle">reduce label possibilities to l⋇!</text>
+
+            <rect class="nodeBox green" x="590" y="438" width="245" height="86"></rect>
+            <text class="nodeTitle" x="712" y="468" text-anchor="middle">D-ThetaNF etale-picture</text>
+            <text class="tinyText" x="712" y="492" text-anchor="middle">mono-analytic core D_>^⊢</text>
+            <text class="tinyText" x="712" y="510" text-anchor="middle">permutable spokes</text>
+
+            <path d="M272 109 H428" class="edge blue" marker-end="url(#arrowMultComb)"></path>
+            <path d="M652 109 H808" class="edge green" marker-end="url(#arrowMultComb)"></path>
+            <path d="M482 154 C420 188 374 214 354 246" class="edge gold" marker-end="url(#arrowMultComb)"></path>
+            <path d="M650 154 C690 188 718 214 728 246" class="edge blue" marker-end="url(#arrowMultComb)"></path>
+            <path d="M466 292 H612" class="edge violet" marker-end="url(#arrowMultComb)"></path>
+            <path d="M352 338 C354 386 366 410 372 436" class="edge red" marker-end="url(#arrowMultComb)"></path>
+            <path d="M728 338 C724 386 718 410 714 436" class="edge green" marker-end="url(#arrowMultComb)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="fstar-labels">
+            <h3><span class="math">F_l^⋇</span> labels</h3>
+            <p>
+              Section 4 begins with labels in
+              <span class="math">F_l^⋇ = F_l^x/{±1}</span>, of cardinality
+              <span class="math">l⋇ = (l-1)/2</span>. These labels are the torsion
+              labels at which IUT II will evaluate the etale theta function.
+            </p>
+            <div class="tagRow"><span class="tag green">§4 opening</span><span class="tag">labels</span></div>
+          </div>
+          <div class="card" id="d-prime-strip-section4-page">
+            <h3>D-prime-strips as local sections</h3>
+            <p>
+              Definition 4.1 defines a D-prime-strip as valuation-indexed D-data. Remark
+              4.3.1 interprets model D-prime-strips as arithmetic local-analytic
+              sections of <span class="math">Spec(K) -> Spec(F)</span>, simulating a
+              global multiplicative subspace without a global ring-theoretic section.
+            </p>
+            <div class="tagRow"><span class="tag blue">Def. 4.1; Rem. 4.3.1</span><span class="tag">local sections</span></div>
+          </div>
+          <div class="card" id="label-classes-section4-page">
+            <h3>Label classes of cusps</h3>
+            <p>
+              For each local component, Definition 4.1 constructs
+              <span class="math">LabCusp(D_v)</span>, an
+              <span class="math">F_l^⋇</span>-torsor with a canonical element from
+              <span class="math">epsilon_v</span>. Proposition 4.2 identifies these
+              local torsors across all valuations of a D-prime-strip.
+            </p>
+            <div class="tagRow"><span class="tag green">Def. 4.1(ii); Prop. 4.2</span><span class="tag">LabCusp</span></div>
+          </div>
+          <div class="card" id="why-x-arrow-v-not-cv">
+            <h3>Why <span class="math">X_arrow_v</span>, not <span class="math">C_v</span></h3>
+            <p>
+              Remark 4.2.1 explains that using <span class="math">C_v</span> instead
+              of <span class="math">X_arrow_v</span> at good places breaks the uniform
+              label-class bijections. The obstruction is global and uses decomposition
+              behavior in <span class="math">Gal(K/F)</span>.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 4.2.1</span><span class="tag">good places</span></div>
+          </div>
+          <div class="card" id="model-nf-bridge-section4-page">
+            <h3>Model base-NF bridge</h3>
+            <p>
+              Example 4.3 constructs <span class="math">D⋇ -> D°</span> by using the
+              global object <span class="math">D° = B(C_K)^0</span>, the subgroup
+              fixing the cusp <span class="math">epsilon</span>, and the induced
+              poly-action of <span class="math">F_l^⋇</span> on the capsule.
+            </p>
+            <div class="tagRow"><span class="tag blue">Example 4.3</span><span class="tag">NF bridge</span></div>
+          </div>
+          <div class="card" id="model-theta-bridge-section4-page">
+            <h3>Model base-Theta bridge</h3>
+            <p>
+              Example 4.4 constructs <span class="math">D⋇ -> D_&gt;</span>. At bad
+              places, the morphisms are built from evaluation sections labeled by
+              <span class="math">j in F_l^⋇</span>; at good places they are full
+              poly-isomorphisms.
+            </p>
+            <div class="tagRow"><span class="tag gold">Example 4.4</span><span class="tag">Theta bridge</span></div>
+          </div>
+          <div class="card" id="outer-factorization-nonsynchronization">
+            <h3>No synchronization shortcut</h3>
+            <p>
+              Remark 4.5.1 analyzes inclusions <span class="math">J -> H -> G</span>
+              known only up to independent conjugacy. At bad places, the desired
+              factorization is determined without imposing an artificial synchronization
+              of local and global Galois indeterminacies.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 4.5.1</span><span class="tag">conjugacy</span></div>
+          </div>
+          <div class="card" id="d-theta-nf-theater-section4-page">
+            <h3>D-ThetaNF-Hodge theater</h3>
+            <p>
+              Definition 4.6 glues a D-NF bridge and a D-Theta bridge along the same
+              capsule of D-prime-strips. A morphism of D-ThetaNF theaters requires the
+              two bridge morphisms to induce the same bijection on capsule indices.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 4.6</span><span class="tag">bridge pair</span></div>
+          </div>
+          <div class="card" id="labcusp-globalization">
+            <h3>Globalizing labels through <span class="math">LabCusp(D°)</span></h3>
+            <p>
+              Proposition 4.7 constructs a unique class
+              <span class="math">[epsilon] in LabCusp(D°)</span> and an isomorphism
+              from global cusp labels to capsule indices. This replaces fragile local
+              label choices by data native to the global side.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 4.7</span><span class="tag">global labels</span></div>
+          </div>
+          <div class="card" id="synchronized-labels-single-dcircle">
+            <h3>Synchronized labels from one <span class="math">D°</span></h3>
+            <p>
+              Remark 4.9.2 says label cohesion is an important consequence of using a
+              single global <span class="math">D°</span>. Independent globalizations for
+              each strip would yield nonsynchronized labels and destroy the global
+              bijection of Proposition 4.7.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 4.9.2</span><span class="tag">one basepoint</span></div>
+          </div>
+          <div class="card" id="cyclic-versus-symmetric-labels">
+            <h3>Cyclic versus symmetric label comparison</h3>
+            <p>
+              Proposition 4.9 distinguishes the cyclic
+              <span class="math">F_l^⋇</span>-symmetry of D-NF bridge output from the
+              full symmetric-group symmetry after forgetting the cyclic structure. The
+              latter is needed for absolute comparison of unrelated D-prime-strips.
+            </p>
+            <div class="tagRow"><span class="tag violet">Proposition 4.9</span><span class="tag">forgetful functors</span></div>
+          </div>
+          <div class="card" id="procession-indeterminacy-count">
+            <h3>Procession indeterminacy count</h3>
+            <p>
+              Proposition 4.11 uses nested capsules
+              <span class="math">P_1 -> ... -> P_l⋇</span>. The source explicitly
+              records the gain: the possible label assignments drop from
+              <span class="math">(l⋇)^(l⋇)</span> to <span class="math">l⋇!</span>.
+            </p>
+            <div class="tagRow"><span class="tag gold">Prop. 4.11</span><span class="tag">processions</span></div>
+          </div>
+          <div class="card" id="d-theta-nf-etale-picture-source">
+            <h3>D-ThetaNF etale-picture</h3>
+            <p>
+              Corollary 4.12 defines the D-ThetaNF link by passing a D-ThetaNF theater
+              to the mono-analyticized target strip <span class="math">D_&gt;^⊢</span>.
+              In an infinite chain this becomes a constant mono-analytic core with
+              freely permutable spokes.
+            </p>
+            <div class="tagRow"><span class="tag blue">Corollary 4.12</span><span class="tag">etale-picture</span></div>
+          </div>
+        </div>
+        <div class="callout warn">
+          Formalization warning: Section 4 should not be modeled as a plain finite
+          index set with labels. The source distinguishes global cusp-label torsors,
+          capsule indices, cyclic <span class="math">F_l^⋇</span>-symmetry, full
+          symmetric freedom after forgetting labels, and procession-level reduction of
+          indeterminacy.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
+          Related: <a href="#prime-strips-bridges">prime strips and bridges</a>
+          <a href="#theta-link-frobenius-etale-pictures">theta/Frobenius pictures</a>
+          <a href="#multiplicative-additive-bridges">multiplicative/additive bridges</a>
+          <a href="#theta-evaluation-kummer-route">theta evaluation route</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
         </div>
       </section>
 
