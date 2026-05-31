@@ -304,6 +304,9 @@
     .diagram svg {
       min-width: 640px;
     }
+    .diagram.fit svg {
+      min-width: 0;
+    }
     .hero .diagram svg {
       min-width: 0;
     }
@@ -521,6 +524,7 @@
         <a href="#theta-plus-minus-ell-relay">Theta±ell relay</a>
         <a href="#mono-theta-environments-ii11">Mono-theta environments 1.1</a>
         <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation 2</a>
+        <a href="#tempered-gaussian-monoids-ii3">Tempered Gaussian monoids 3</a>
         <a href="#theta-evaluation-kummer-route">Theta evaluation route</a>
         <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
         <a href="#frobenioids-log-shells">Frobenioids and log-shells</a>
@@ -1486,7 +1490,10 @@
               <a href="#conjugate-synchronization-source">conjugate synchronization</a>,
               <a href="#mono-theta-theta-evaluation">mono-theta theta evaluation</a>,
               <a href="#base-field-theta-evaluation">base-field theta evaluation</a>,
-              <a href="#theta-monoids">theta monoids</a>
+              <a href="#theta-monoids">theta monoids</a>,
+              <a href="#tempered-gaussian-monoids-ii3">tempered Gaussian monoids</a>,
+              <a href="#kummer-theta-monoid-isomorphisms-33">Kummer theta-monoid isomorphisms</a>,
+              <a href="#multiradial-split-theta-34">multiradial split theta monoids</a>
             </td>
             <td>IUT II, Sections 1-3</td>
           </tr>
@@ -1494,6 +1501,9 @@
             <td>IUT II</td>
             <td>Gaussian and global Frobenioids</td>
             <td>
+              <a href="#tempered-gaussian-monoids-ii3">tempered Gaussian monoids</a>,
+              <a href="#value-profiles-35">value profiles</a>,
+              <a href="#frobenioid-gaussian-monoids-36">Frobenioid Gaussian monoids</a>,
               <a href="#gaussian-monoids">Gaussian monoids</a>,
               <a href="#tempered-gaussian-frobenioids">tempered Gaussian Frobenioids</a>,
               <a href="#split-theta-monoids">split theta monoids</a>,
@@ -4507,7 +4517,7 @@
           <tr>
             <td>§3</td>
             <td>Tempered Gaussian Frobenioids: theta monoids, Gaussian monoids, Kummer/Galois comparison, post-anabelian forgetting.</td>
-            <td><a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>, <a href="#frobenioids-log-shells">Frobenioids/log-shells</a></td>
+            <td><a href="#tempered-gaussian-monoids-ii3">Tempered Gaussian monoids</a>, <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>, <a href="#frobenioids-log-shells">Frobenioids/log-shells</a></td>
           </tr>
           <tr>
             <td>§4</td>
@@ -10127,6 +10137,304 @@
           <a href="#theta-evaluation-kummer-route">theta evaluation route</a>
           <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges</a>
           <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
+        </div>
+      </section>
+
+      <section id="tempered-gaussian-monoids-ii3">
+        <h2>Tempered Gaussian Monoids in IUT II 3</h2>
+        <p class="lede">
+          IUT II Section 3 converts the synchronized theta-value data of Section 2 into
+          theta monoids, constant monoids, value-profile-indexed Gaussian monoids, and
+          Frobenioid-theoretic Gaussian monoids. The section is also where Mochizuki
+          explicitly separates the multiradial split-theta route from the uniradial
+          constant-monoid route.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Section 3 tempered Gaussian monoid route">
+          <div class="diagramHeader">
+            <strong>Section 3 monoid route</strong>
+            <span>theta monoids, constant monoids, and Gaussian value-profiles</span>
+          </div>
+          <svg viewBox="0 0 1120 610" role="img">
+            <defs>
+              <marker id="arrowTempGaussII3" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="56" y="62" width="210" height="80"></rect>
+            <text class="nodeTitle" x="161" y="91" text-anchor="middle">MTheta_* system</text>
+            <text class="tinyText" x="161" y="114" text-anchor="middle">mono-theta environments</text>
+            <text class="tinyText" x="161" y="131" text-anchor="middle">Proposition 3.1</text>
+
+            <rect class="nodeBox green" x="346" y="42" width="230" height="86"></rect>
+            <text class="nodeTitle" x="461" y="72" text-anchor="middle">split theta monoids</text>
+            <text class="tinyText" x="461" y="96" text-anchor="middle">Psi_env, infty Psi_env</text>
+            <text class="tinyText" x="461" y="114" text-anchor="middle">splittings up to torsion</text>
+
+            <rect class="nodeBox gold" x="346" y="164" width="230" height="86"></rect>
+            <text class="nodeTitle" x="461" y="194" text-anchor="middle">constant monoids</text>
+            <text class="tinyText" x="461" y="218" text-anchor="middle">Psi_cns ~= O_Fv^triangleright</text>
+            <text class="tinyText" x="461" y="236" text-anchor="middle">base-field cyclotome route</text>
+
+            <rect class="nodeBox violet" x="660" y="62" width="226" height="80"></rect>
+            <text class="nodeTitle" x="773" y="91" text-anchor="middle">tempered Frobenioid</text>
+            <text class="tinyText" x="773" y="114" text-anchor="middle">Frobenioid theta monoids</text>
+            <text class="tinyText" x="773" y="131" text-anchor="middle">Example 3.2, Prop. 3.3</text>
+
+            <rect class="nodeBox red" x="660" y="184" width="226" height="84"></rect>
+            <text class="nodeTitle" x="773" y="214" text-anchor="middle">multiradial boundary</text>
+            <text class="tinyText" x="773" y="237" text-anchor="middle">split theta: multiradial</text>
+            <text class="tinyText" x="773" y="255" text-anchor="middle">constant: only uniradial</text>
+
+            <rect class="nodeBox green" x="122" y="364" width="244" height="88"></rect>
+            <text class="nodeTitle" x="244" y="394" text-anchor="middle">F_l^± symmetries</text>
+            <text class="tinyText" x="244" y="418" text-anchor="middle">symmetrizing isomorphisms</text>
+            <text class="tinyText" x="244" y="436" text-anchor="middle">labels are synchronized, not crushed</text>
+
+            <rect class="nodeBox gold" x="438" y="364" width="244" height="88"></rect>
+            <text class="nodeTitle" x="560" y="394" text-anchor="middle">value profiles xi</text>
+            <text class="tinyText" x="560" y="418" text-anchor="middle">product over |t| in F_l</text>
+            <text class="tinyText" x="560" y="436" text-anchor="middle">cardinality (2l)^l</text>
+
+            <rect class="nodeBox violet" x="754" y="364" width="244" height="88"></rect>
+            <text class="nodeTitle" x="876" y="394" text-anchor="middle">Gaussian monoids</text>
+            <text class="tinyText" x="876" y="418" text-anchor="middle">Psi_xi and infty Psi_xi</text>
+            <text class="tinyText" x="876" y="436" text-anchor="middle">Corollary 3.5</text>
+
+            <rect class="nodeBox blue" x="438" y="508" width="244" height="74"></rect>
+            <text class="nodeTitle" x="560" y="537" text-anchor="middle">Frobenioid Gaussian monoids</text>
+            <text class="tinyText" x="560" y="560" text-anchor="middle">Psi^{F xi}, Corollary 3.6</text>
+
+            <path d="M268 92 H344" class="edge blue" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M244 143 C270 180 306 203 344 207" class="edge gold" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M578 86 H658" class="edge green" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M578 207 H658" class="edge gold" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M773 144 V182" class="edge red" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M459 252 C402 296 316 326 252 362" class="edge green" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M461 252 C490 292 535 326 555 362" class="edge gold" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M682 225 C760 276 838 316 876 362" class="edge violet" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M366 408 H436" class="edge green" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M682 408 H752" class="edge gold" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M816 454 C754 492 684 516 626 532" class="edge violet" marker-end="url(#arrowTempGaussII3)"></path>
+            <path d="M560 454 V506" class="edge blue" marker-end="url(#arrowTempGaussII3)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Source item</th><th>Construction</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Proposition 3.1(i)</td>
+            <td>
+              A projective system of mono-theta environments gives split theta monoids
+              <span class="math">Psi_env</span> and
+              <span class="math">infty Psi_env</span>, together with conjugation
+              actions and splittings up to torsion.
+            </td>
+            <td>
+              These are the multiradial-friendly theta containers that should not be
+              collapsed to bare numerical values.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.1(ii)</td>
+            <td>
+              The same system gives a constant monoid
+              <span class="math">Psi_cns</span>, naturally identified with the local
+              base-field monoid <span class="math">O_Fv^triangleright</span>.
+            </td>
+            <td>
+              This supplies the constant part used by value-profiles, but it is the
+              route that later carries the uniradial warning.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 3.2, Proposition 3.3</td>
+            <td>
+              A tempered Frobenioid gives Frobenioid-theoretic theta monoids and
+              constant monoids. Kummer classes identify these with the corresponding
+              mono-theta-theoretic monoids.
+            </td>
+            <td>
+              The wiki keeps the Frobenioid and mono-theta routes separate until the
+              Kummer identification is invoked.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.4</td>
+            <td>
+              Split theta monoids admit a multiradial formulation compatible with the
+              <span class="math">O×mu</span>-theta link. Constant monoids, as
+              constructed here, only admit a uniradial formulation.
+            </td>
+            <td>
+              This is the source-level boundary that later log-shell machinery must
+              address before constant data can participate safely in multiradial
+              comparison.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 3.5(i)</td>
+            <td>
+              The <span class="math">F_l^±</span> symmetries provide symmetrizing
+              isomorphisms among label-indexed copies, identifying
+              <span class="math">t</span> and <span class="math">-t</span> while
+              retaining the label discipline.
+            </td>
+            <td>
+              Label synchronization is not label erasure; the value-profile product
+              still ranges over the relevant label classes.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 3.5(ii)</td>
+            <td>
+              A value profile <span class="math">xi</span> is a label-indexed element
+              of the product of theta-value monoids. The Gaussian monoids
+              <span class="math">Psi_xi</span> and
+              <span class="math">infty Psi_xi</span> are generated from the diagonal
+              constant part and powers or rational powers of <span class="math">xi</span>.
+            </td>
+            <td>
+              This is the local Gaussian object that later feeds global Gaussian
+              Frobenioids and log-volume comparison.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 3.5(iii), 3.6</td>
+            <td>
+              The zero-label/constant diagonal gives compatible splittings up to
+              torsion. Corollary 3.6 transfers the construction to Frobenioid-theoretic
+              Gaussian monoids <span class="math">Psi^{F xi}</span>.
+            </td>
+            <td>
+              The Frobenioid Gaussian object is not a new axiom: it is the image of the
+              mono-theta Gaussian construction under the previous comparison data.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="split-theta-monoids-31">
+            <h3>Split theta monoids</h3>
+            <p>
+              Proposition 3.1 constructs split theta monoids from the theta subsets and
+              constant part of the mono-theta environment. Their splittings are only
+              canonical after quotienting by torsion.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 3.1(i)</span><span class="tag">split</span></div>
+          </div>
+          <div class="card" id="constant-monoids-31">
+            <h3>Constant monoids</h3>
+            <p>
+              Constant monoids record the base-field monoid side of the same data. They
+              are indispensable for Gaussian profiles, but Proposition 3.4 marks their
+              initial formulation as uniradial.
+            </p>
+            <div class="tagRow"><span class="tag gold">Prop. 3.1(ii)</span><span class="tag">constant</span></div>
+          </div>
+          <div class="card" id="frobenioid-theta-monoids-32">
+            <h3>Frobenioid theta monoids</h3>
+            <p>
+              Example 3.2 constructs theta monoids from the Frobenioid-theoretic theta
+              function and the base-field-theoretic hull. This is the Hodge-theater
+              source route before group-theoretic reconstruction.
+            </p>
+            <div class="tagRow"><span class="tag blue">Example 3.2</span><span class="tag">Frobenioid</span></div>
+          </div>
+          <div class="card" id="kummer-theta-monoid-isomorphisms-33">
+            <h3>Kummer theta-monoid isomorphisms</h3>
+            <p>
+              Proposition 3.3 uses Kummer classes to identify Frobenioid-theoretic
+              theta and constant monoids with the mono-theta versions, compatibly with
+              the relevant actions and splittings.
+            </p>
+            <div class="tagRow"><span class="tag violet">Prop. 3.3</span><span class="tag">Kummer</span></div>
+          </div>
+          <div class="card" id="multiradial-split-theta-34">
+            <h3>Multiradial split-theta route</h3>
+            <p>
+              Proposition 3.4 says the split theta monoids are multiradial and
+              compatible with the <span class="math">O×mu</span>-version of the theta
+              link.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 3.4(i)</span><span class="tag">multiradial</span></div>
+          </div>
+          <div class="card" id="uniradial-constant-monoids-34">
+            <h3>Uniradial constant route</h3>
+            <p>
+              The constant monoids are only uniradial at this stage because they depend
+              on the base-field cyclotomic rigidity route. Later log-shell machinery is
+              introduced precisely to change this situation.
+            </p>
+            <div class="tagRow"><span class="tag red">Prop. 3.4(ii)</span><span class="tag">warning</span></div>
+          </div>
+          <div class="card" id="symmetrizing-isomorphisms-35">
+            <h3>Symmetrizing isomorphisms</h3>
+            <p>
+              Corollary 3.5 synchronizes label-indexed copies by the
+              <span class="math">F_l^±</span> action. The point is controlled symmetry,
+              not a collapse of all labels to one undifferentiated copy.
+            </p>
+            <div class="tagRow"><span class="tag blue">Cor. 3.5(i)</span><span class="tag">labels</span></div>
+          </div>
+          <div class="card" id="value-profiles-35">
+            <h3>Value profiles</h3>
+            <p>
+              A profile <span class="math">xi</span> records one theta-value element
+              for each absolute label class. Mochizuki records the finite cardinality
+              of the value-profile set as <span class="math">(2l)^l</span>.
+            </p>
+            <div class="tagRow"><span class="tag gold">Cor. 3.5(ii)</span><span class="tag">profiles</span></div>
+          </div>
+          <div class="card" id="gaussian-monoids-35">
+            <h3>Gaussian monoids</h3>
+            <p>
+              The monoids <span class="math">Psi_xi</span> and
+              <span class="math">infty Psi_xi</span> are generated by the diagonal
+              constant part and powers or rational powers of the value profile.
+            </p>
+            <div class="tagRow"><span class="tag violet">Cor. 3.5(ii)</span><span class="tag">Gaussian</span></div>
+          </div>
+          <div class="card" id="zero-label-gaussian-splittings-35">
+            <h3>Zero-label splittings</h3>
+            <p>
+              Corollary 3.5(iii) uses the zero label and constant diagonal to obtain
+              splittings up to torsion, compatible with the splittings from
+              Proposition 3.1.
+            </p>
+            <div class="tagRow"><span class="tag green">Cor. 3.5(iii)</span><span class="tag">splitting</span></div>
+          </div>
+          <div class="card" id="frobenioid-gaussian-monoids-36">
+            <h3>Frobenioid Gaussian monoids</h3>
+            <p>
+              Corollary 3.6 defines <span class="math">Psi^{F xi}</span> as the
+              Frobenioid-theoretic image of the mono-theta Gaussian construction. The
+              diagram realizes the Galois evaluation principle from Remark 1.12.4.
+            </p>
+            <div class="tagRow"><span class="tag blue">Cor. 3.6</span><span class="tag">Frobenioid</span></div>
+          </div>
+          <div class="card" id="post-anabelian-gaussian-forgetting-362">
+            <h3>Post-anabelian forgetting</h3>
+            <p>
+              Remark 3.6.2 identifies the displayed comparison as the concrete
+              realization of Galois evaluation. Only after this construction is in
+              place does the post-anabelian forgetting of construction history become
+              meaningful.
+            </p>
+            <div class="tagRow"><span class="tag red">Rem. 3.6.2</span><span class="tag">forgetful step</span></div>
+          </div>
+        </div>
+        <div class="callout violet">
+          Formalization warning: the Section 3 route has two distinct axes. The
+          split-theta axis is the multiradial route compatible with the
+          <span class="math">O×mu</span>-theta link; the constant-monoid axis is needed
+          for Gaussian value-profiles but is only uniradial at this point of the paper.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Section 3</a>
+          Related: <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation</a>
+          <a href="#mono-theta-environments-ii11">mono-theta environments</a>
+          <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
+          <a href="#theta-log-links">theta/log links</a>
+          <a href="#multiradiality">multiradiality</a>
         </div>
       </section>
 
