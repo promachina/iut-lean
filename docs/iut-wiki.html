@@ -576,6 +576,9 @@
         <a href="#hoshi-kummer-transport-page">Hoshi Kummer transport</a>
         <a href="#hoshi-link-indeterminacy-page">Hoshi link/indeterminacy route</a>
         <a href="#iut-i-notation-primitives">IUT I notation primitives</a>
+        <a href="#pseudo-monoids-iut-i0">Pseudo-monoids §0</a>
+        <a href="#poly-isomorphisms-iut-i0">Poly-isomorphisms §0</a>
+        <a href="#capsules-temperoids-iut-i0">Capsules/temperoids §0</a>
         <a href="#iut-i-atlas">IUT I atlas</a>
         <a href="#iut-i-orbicurve-cover-package">IUT I orbicurve covers 1</a>
         <a href="#iut-ii-atlas">IUT II atlas</a>
@@ -5647,6 +5650,280 @@
           <a href="#theta-log-links">theta/log links</a>
           <a href="#anabelian-background">anabelian background</a>
           <a href="#species-mutations">species and mutations</a>
+        </div>
+      </section>
+
+      <section id="pseudo-monoids-iut-i0" data-filter="iut i section 0 pseudo-monoid divisible cyclotomic torsion q/z ambient abelian group">
+        <h2>Pseudo-Monoids in IUT I §0</h2>
+        <p class="lede">
+          IUT I begins by allowing monoid-like objects that are only partially closed
+          under multiplication. A pseudo-monoid is represented inside an ambient abelian
+          group, and multiplication is defined only when the product remains inside the
+          chosen subset. This is the source convention behind later rational-function
+          pseudo-monoids and coric function packages.
+        </p>
+        <div class="diagram fit" aria-label="Pseudo-monoid source convention">
+          <div class="diagramHeader">
+            <strong>Partial multiplication inside an ambient group</strong>
+            <span>IUT I §0, monoids and categories</span>
+          </div>
+          <svg viewBox="0 0 1000 420" role="img">
+            <defs>
+              <marker id="arrowPseudoMonoidI0" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="78" width="230" height="88"></rect>
+            <text class="nodeTitle" x="185" y="110" text-anchor="middle">ambient group M</text>
+            <text class="tinyText" x="185" y="134" text-anchor="middle">topological abelian group</text>
+            <text class="tinyText" x="185" y="152" text-anchor="middle">ordinary group law</text>
+
+            <rect class="nodeBox green" x="385" y="78" width="230" height="88"></rect>
+            <text class="nodeTitle" x="500" y="110" text-anchor="middle">embedded subset P</text>
+            <text class="tinyText" x="500" y="134" text-anchor="middle">partial product inherited</text>
+            <text class="tinyText" x="500" y="152" text-anchor="middle">only if product stays in P</text>
+
+            <rect class="nodeBox violet" x="700" y="78" width="230" height="88"></rect>
+            <text class="nodeTitle" x="815" y="110" text-anchor="middle">pseudo-monoid</text>
+            <text class="tinyText" x="815" y="134" text-anchor="middle">not necessarily globally closed</text>
+            <text class="tinyText" x="815" y="152" text-anchor="middle">used for coric functions</text>
+
+            <rect class="nodeBox gold" x="228" y="270" width="250" height="84"></rect>
+            <text class="nodeTitle" x="353" y="300" text-anchor="middle">divisible</text>
+            <text class="tinyText" x="353" y="324" text-anchor="middle">compatible roots in M</text>
+            <text class="tinyText" x="353" y="342" text-anchor="middle">a in P iff a^n in P</text>
+
+            <rect class="nodeBox red" x="552" y="270" width="250" height="84"></rect>
+            <text class="nodeTitle" x="677" y="300" text-anchor="middle">cyclotomic</text>
+            <text class="tinyText" x="677" y="324" text-anchor="middle">torsion subgroup Q/Z</text>
+            <text class="tinyText" x="677" y="342" text-anchor="middle">stable with P</text>
+
+            <path class="edge blue" d="M302 122 H383" marker-end="url(#arrowPseudoMonoidI0)"></path>
+            <path class="edge green" d="M617 122 H698" marker-end="url(#arrowPseudoMonoidI0)"></path>
+            <path class="edge gold" d="M500 168 C470 224 402 246 360 268" marker-end="url(#arrowPseudoMonoidI0)"></path>
+            <path class="edge red" d="M500 168 C545 224 626 246 670 268" marker-end="url(#arrowPseudoMonoidI0)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Term</th><th>Source meaning</th><th>Downstream role</th></tr>
+          <tr>
+            <td>Pseudo-monoid</td>
+            <td>
+              A subset embedded in an ambient topological abelian group, with
+              multiplication defined by the ambient law only when the product remains in
+              the subset.
+            </td>
+            <td>Models later partially closed function and monoid packages.</td>
+          </tr>
+          <tr>
+            <td>Divisible</td>
+            <td>
+              Root extraction is compatible with membership: an element belongs exactly
+              when its relevant powers belong, in the ambient group.
+            </td>
+            <td>Prepares the divisibility conditions used in coric rational functions.</td>
+          </tr>
+          <tr>
+            <td>Cyclotomic</td>
+            <td>
+              The ambient group may be chosen with torsion subgroup isomorphic to
+              <span class="math">Q/Z</span>, stable under multiplication with the
+              pseudo-monoid.
+            </td>
+            <td>Connects pseudo-monoids to cyclotomic rigidity and Kummer data.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          <strong>Formalization consequence.</strong> A pseudo-monoid should not be
+          encoded as an ordinary monoid unless the source has supplied global closure.
+          The ambient group and the membership condition are part of the structure.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I §0</a>
+          Related: <a href="#iut-i-notation-primitives">notation primitives</a>
+          <a href="#kappa-coric-functions">kappa-coric functions</a>
+          <a href="#frobenioids-log-shells">Frobenioids/log-shells</a>
+        </div>
+      </section>
+
+      <section id="poly-isomorphisms-iut-i0" data-filter="iut i section 0 poly-morphism poly-isomorphism full poly-isomorphism poly-automorphism multiplicity ignored">
+        <h2>Poly-Isomorphisms in IUT I §0</h2>
+        <p class="lede">
+          A poly-morphism is a set of morphisms between two objects. A
+          poly-isomorphism is a set of isomorphisms, and the full poly-isomorphism is
+          the set of all isomorphisms. Composing poly-morphisms means taking all
+          pairwise composites and ignoring multiplicity. This convention is essential in
+          theta links, bridge morphisms, and Hodge-theater comparisons.
+        </p>
+        <div class="diagram fit" aria-label="Poly-isomorphism convention">
+          <div class="diagramHeader">
+            <strong>Sets of possible maps, not chosen maps</strong>
+            <span>IUT I §0</span>
+          </div>
+          <svg viewBox="0 0 1020 430" role="img">
+            <defs>
+              <marker id="arrowPolyIsoI0" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="80" y="78" width="220" height="86"></rect>
+            <text class="nodeTitle" x="190" y="108" text-anchor="middle">objects A, B</text>
+            <text class="tinyText" x="190" y="132" text-anchor="middle">inside a category C</text>
+            <text class="tinyText" x="190" y="150" text-anchor="middle">ordinary morphism set exists</text>
+
+            <rect class="nodeBox green" x="400" y="78" width="220" height="86"></rect>
+            <text class="nodeTitle" x="510" y="108" text-anchor="middle">poly-morphism</text>
+            <text class="tinyText" x="510" y="132" text-anchor="middle">subset of Hom(A,B)</text>
+            <text class="tinyText" x="510" y="150" text-anchor="middle">possibly many maps</text>
+
+            <rect class="nodeBox violet" x="720" y="78" width="220" height="86"></rect>
+            <text class="nodeTitle" x="830" y="108" text-anchor="middle">full poly-isomorphism</text>
+            <text class="tinyText" x="830" y="132" text-anchor="middle">all isomorphisms A -> B</text>
+            <text class="tinyText" x="830" y="150" text-anchor="middle">no preferred representative</text>
+
+            <rect class="nodeBox gold" x="250" y="280" width="230" height="82"></rect>
+            <text class="nodeTitle" x="365" y="310" text-anchor="middle">composition</text>
+            <text class="tinyText" x="365" y="334" text-anchor="middle">all pairwise composites</text>
+            <text class="tinyText" x="365" y="352" text-anchor="middle">multiplicity ignored</text>
+
+            <rect class="nodeBox red" x="560" y="280" width="230" height="82"></rect>
+            <text class="nodeTitle" x="675" y="310" text-anchor="middle">IUT use</text>
+            <text class="tinyText" x="675" y="334" text-anchor="middle">theta links and bridges</text>
+            <text class="tinyText" x="675" y="352" text-anchor="middle">compare without choosing maps</text>
+
+            <path class="edge blue" d="M302 121 H398" marker-end="url(#arrowPolyIsoI0)"></path>
+            <path class="edge green" d="M622 121 H718" marker-end="url(#arrowPolyIsoI0)"></path>
+            <path class="edge gold" d="M510 166 C475 222 406 252 372 278" marker-end="url(#arrowPolyIsoI0)"></path>
+            <path class="edge red" d="M510 166 C552 222 634 252 670 278" marker-end="url(#arrowPolyIsoI0)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Convention</th><th>Definition</th><th>Guardrail</th></tr>
+          <tr>
+            <td>Poly-morphism</td>
+            <td>A collection of morphisms <span class="math">A -> B</span>.</td>
+            <td>Do not replace by one selected morphism unless the source chooses one.</td>
+          </tr>
+          <tr>
+            <td>Poly-isomorphism</td>
+            <td>A poly-morphism all of whose members are isomorphisms.</td>
+            <td>The data is a set of possible isomorphisms.</td>
+          </tr>
+          <tr>
+            <td>Full poly-isomorphism</td>
+            <td>The collection of all isomorphisms between the two objects.</td>
+            <td>This is common in theta-link and bridge statements.</td>
+          </tr>
+          <tr>
+            <td>Composition</td>
+            <td>All composites <span class="math">g_j o f_i</span>, with multiplicity ignored.</td>
+            <td>Set-level composition changes proof obligations in Lean.</td>
+          </tr>
+        </table>
+        <div class="callout red">
+          <strong>Failure mode.</strong> Many incorrect simplifications of IUT-style
+          interfaces start by replacing a full poly-isomorphism with a canonical-looking
+          single isomorphism. The source convention explicitly avoids that move.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I §0</a>
+          Related: <a href="#theta-links-cor37">theta links</a>
+          <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a>
+          <a href="#section4-symmetries-processions-48-412">symmetries/processions</a>
+        </div>
+      </section>
+
+      <section id="capsules-temperoids-iut-i0" data-filter="iut i section 0 capsules capsule-full poly-isomorphism finite etale coverings btemp connected temperoid outer homomorphism">
+        <h2>Capsules and Temperoids in IUT I §0</h2>
+        <p class="lede">
+          Section 0 defines two categorical devices that recur throughout IUT I:
+          capsules, which are finite indexed families of objects, and connected
+          temperoids, which encode countable discrete sets with continuous action by a
+          tempered topological group. These conventions control later prime-strip
+          capsules and anabelian reconstruction interfaces.
+        </p>
+        <div class="diagram fit" aria-label="Capsules and temperoids in IUT I section zero">
+          <div class="diagramHeader">
+            <strong>Finite indexed families and reconstructible action categories</strong>
+            <span>IUT I §0</span>
+          </div>
+          <svg viewBox="0 0 1060 450" role="img">
+            <defs>
+              <marker id="arrowCapsTempI0" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="72" y="74" width="230" height="90"></rect>
+            <text class="nodeTitle" x="187" y="106" text-anchor="middle">capsule</text>
+            <text class="tinyText" x="187" y="130" text-anchor="middle">finite indexed family</text>
+            <text class="tinyText" x="187" y="148" text-anchor="middle">pi_0 records index set</text>
+
+            <rect class="nodeBox green" x="408" y="74" width="230" height="90"></rect>
+            <text class="nodeTitle" x="523" y="106" text-anchor="middle">capsule morphism</text>
+            <text class="tinyText" x="523" y="130" text-anchor="middle">index injection plus maps</text>
+            <text class="tinyText" x="523" y="148" text-anchor="middle">bijection for full poly-iso</text>
+
+            <rect class="nodeBox violet" x="744" y="74" width="230" height="90"></rect>
+            <text class="nodeTitle" x="859" y="106" text-anchor="middle">prime-strip capsules</text>
+            <text class="tinyText" x="859" y="130" text-anchor="middle">labels, processions, bridges</text>
+            <text class="tinyText" x="859" y="148" text-anchor="middle">later IUT I Sections 4-6</text>
+
+            <rect class="nodeBox gold" x="164" y="286" width="250" height="92"></rect>
+            <text class="nodeTitle" x="289" y="316" text-anchor="middle">Btemp(Pi)</text>
+            <text class="tinyText" x="289" y="340" text-anchor="middle">countable discrete Pi-sets</text>
+            <text class="tinyText" x="289" y="358" text-anchor="middle">continuous action</text>
+
+            <rect class="nodeBox red" x="530" y="286" width="250" height="92"></rect>
+            <text class="nodeTitle" x="655" y="316" text-anchor="middle">connected temperoid</text>
+            <text class="tinyText" x="655" y="340" text-anchor="middle">category equivalent to Btemp(Pi)</text>
+            <text class="tinyText" x="655" y="358" text-anchor="middle">Pi reconstructed if Galois-countable</text>
+
+            <path class="edge blue" d="M304 119 H406" marker-end="url(#arrowCapsTempI0)"></path>
+            <path class="edge green" d="M640 119 H742" marker-end="url(#arrowCapsTempI0)"></path>
+            <path class="edge gold" d="M414 332 H528" marker-end="url(#arrowCapsTempI0)"></path>
+            <path class="edge violet" d="M523 166 C488 224 350 242 300 284" marker-end="url(#arrowCapsTempI0)"></path>
+            <path class="edge red" d="M859 166 C815 224 708 242 666 284" marker-end="url(#arrowCapsTempI0)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Device</th><th>Source definition</th><th>Downstream role</th></tr>
+          <tr>
+            <td>Capsule</td>
+            <td>A finite indexed family <span class="math">{A_j}_{j in J}</span> of objects of a category.</td>
+            <td>Used for labeled families of D-prime-strips and Hodge-theater components.</td>
+          </tr>
+          <tr>
+            <td>Capsule morphism</td>
+            <td>An injection of index sets plus component morphisms.</td>
+            <td>Index movement is explicit; labels are not erased.</td>
+          </tr>
+          <tr>
+            <td>Capsule-full poly-isomorphism</td>
+            <td>A capsule-full poly-morphism whose index injection is a bijection.</td>
+            <td>Controls later processions and full bridge comparison data.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Btemp(Pi)</span></td>
+            <td>Countable discrete sets with continuous <span class="math">Pi</span>-action.</td>
+            <td>Provides the category-theoretic language for tempered fundamental groups.</td>
+          </tr>
+          <tr>
+            <td>Connected temperoid</td>
+            <td>A category equivalent to <span class="math">Btemp(Pi)</span> for a tempered topological group.</td>
+            <td>For Galois-countable cases, <span class="math">Pi</span> is reconstructible up to inner automorphism.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          <strong>Formalization consequence.</strong> Capsule index sets and temperoid
+          reconstruction hypotheses are part of the mathematical interface. Later pages
+          should link here whenever they use labeled capsules or recovered topological
+          groups.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I §0</a>
+          Related: <a href="#d-prime-strips-labels-41-42">D-prime strips and labels</a>
+          <a href="#section4-symmetries-processions-48-412">symmetries/processions</a>
+          <a href="#galois-countability-repairs">Galois-countability repairs</a>
         </div>
       </section>
 
