@@ -775,6 +775,12 @@
         <a href="#pmell-isomorphism-torsors-iut-i66">Additive isomorphism torsors 6.6</a>
         <a href="#pmell-gluing-algorithm-iut-i66">Additive gluing algorithm 6.6</a>
         <a href="#additive-to-multiplicative-67-610">Additive to D-Theta 6.7-6.10</a>
+        <a href="#theta-bridge-from-pm-iut-i67">D-Theta from Theta± 6.7</a>
+        <a href="#forgetful-thetaell-symmetry-iut-i68">Thetaell forgetful symmetry 6.8</a>
+        <a href="#holomorphic-capsule-symmetry-iut-i68">Capsule symmetry 6.8</a>
+        <a href="#additive-processions-iut-i69">Additive processions 6.9</a>
+        <a href="#additive-procession-compat-iut-i69">Procession compatibility 6.9</a>
+        <a href="#d-theta-pmell-link-iut-i610">D-Theta±ell link 6.10</a>
         <a href="#multiplicative-additive-bridges">Multiplicative/additive bridges</a>
         <a href="#theta-plus-minus-ell-relay">Theta±ell relay</a>
         <a href="#theta-plus-minus-ell-lift-611-612">Theta±ell lift 6.11-6.12</a>
@@ -20563,6 +20569,186 @@
           <a href="#section4-symmetries-processions-48-412">Section 4 processions</a>
           <a href="#multiplicative-additive-bridges">multiplicative/additive bridge comparison</a>
           <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges 6.11</a>
+        </div>
+      </section>
+
+      <section id="theta-bridge-from-pm-iut-i67">
+        <h2>D-Theta from Theta± in IUT I 6.7</h2>
+        <p class="lede">
+          Proposition 6.7 constructs an ordinary D-Theta bridge from a D-Theta± bridge.
+          The algorithm passes from the additive capsule to the nonzero quotient
+          capsule, identifies <span class="math">D≻</span> with the zero component
+          <span class="math">D_0</span>, and replaces the local +-full maps by the
+          full or evaluation maps required by Definition 4.6(ii).
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Step</th><th>Proposition 6.7</th><th>Meaning</th></tr>
+          <tr>
+            <td>Nonzero quotient</td>
+            <td>Replace the signed additive capsule by the nonzero quotient capsule.</td>
+            <td>Returns from additive labels to Section 4 multiplicative labels.</td>
+          </tr>
+          <tr>
+            <td>Target identification</td>
+            <td>Use <span class="math">phi^{Theta±}_0</span> to identify <span class="math">D≻</span> with <span class="math">D_0</span>, forming <span class="math">D_&gt;</span>.</td>
+            <td>The target is not arbitrarily chosen; it is tied to the zero label.</td>
+          </tr>
+          <tr>
+            <td>Local replacement</td>
+            <td>At good places use full poly-morphisms; at bad places use the group-theoretic maps of Example 4.4.</td>
+            <td>This is a real bridge back to the Section 4 D-Theta construction.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Proposition 6.7</a>
+          Related: <a href="#d-theta-pm-bridge-iut-i64">D-Theta± bridge</a>
+          <a href="#theta-bridge-bad-place-iut-i44">bad-place theta bridge</a>
+          <a href="#d-theta-bridge-definition-iut-i46">D-Theta bridge</a>
+        </div>
+      </section>
+
+      <section id="forgetful-thetaell-symmetry-iut-i68">
+        <h2>Thetaell Forgetful Symmetry in IUT I 6.8</h2>
+        <p class="lede">
+          Proposition 6.8(i) sends a D-Theta±ell-Hodge theater to its underlying
+          D-Thetaell bridge. The output admits an <span class="math">F_l^±</span>
+          symmetry, more precisely a finite group with natural outer isomorphism to
+          <span class="math">F_l^±</span>, acting doubly transitively on the capsule
+          index set.
+        </p>
+        <div class="callout good">
+          This is the symmetry before forgetting to the quotient capsule. It remembers
+          the full signed affine label motion on <span class="math">T</span>.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Proposition 6.8(i)</a>
+          Related: <a href="#d-thetaell-bridge-iut-i64">D-Thetaell bridge</a>
+          <a href="#flpm-groups-torsors-iut-i61">F_l± groups/torsors</a>
+          <a href="#holomorphic-capsule-symmetry-iut-i68">capsule symmetry</a>
+        </div>
+      </section>
+
+      <section id="holomorphic-capsule-symmetry-iut-i68">
+        <h2>Capsule Symmetry in IUT I 6.8</h2>
+        <p class="lede">
+          Proposition 6.8(ii)-(iii) forgets labels from a D-Theta±ell-Hodge theater to
+          the <span class="math">l±</span>-capsule <span class="math">D_|T|</span>,
+          and then to its mono-analyticization. The output has full symmetric-group
+          symmetry <span class="math">S_{l±}</span> on the quotient index set
+          <span class="math">|T|</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Output</th><th>Symmetry</th><th>Indeterminacy statement</th></tr>
+          <tr>
+            <td>Holomorphic <span class="math">l±</span>-capsule</td>
+            <td><span class="math">S_{l±}</span></td>
+            <td>Before the functor, a given quotient index has precisely <span class="math">l±</span> possible labels.</td>
+          </tr>
+          <tr>
+            <td>Mono-analytic <span class="math">l±</span>-capsule</td>
+            <td>Same label symmetry as the holomorphic output.</td>
+            <td>Mono-analyticization does not repair the forgotten label information.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Proposition 6.8(ii)-(iii)</a>
+          Related: <a href="#forgetful-thetaell-symmetry-iut-i68">Thetaell forgetful symmetry</a>
+          <a href="#additive-processions-iut-i69">additive processions</a>
+          <a href="#forgetful-functor-symmetry-iut-i49">Section 4 forgetful symmetries</a>
+        </div>
+      </section>
+
+      <section id="additive-processions-iut-i69">
+        <h2>Additive Processions in IUT I 6.9</h2>
+        <p class="lede">
+          Proposition 6.9(i)-(ii) builds <span class="math">l±</span>-processions from
+          nested subcapsules of the quotient capsule
+          <span class="math">D_|T|</span>. For the holomorphic procession, the subsets
+          are <span class="math">S_t^± = {0,1,...,t-1}</span>. The same construction
+          has a mono-analytic version after applying mono-analyticization.
+        </p>
+        <div class="grid2">
+          <div class="card">
+            <h3>Holomorphic procession</h3>
+            <p>
+              Nested subcapsules of <span class="math">D_|T|</span> are indexed by
+              the initial segments <span class="math">S_t^±</span>.
+            </p>
+            <div class="tagRow"><span class="tag gold">6.9(i)</span><span class="tag">holomorphic</span></div>
+          </div>
+          <div class="card">
+            <h3>Mono-analytic procession</h3>
+            <p>
+              Applying mono-analyticization gives the corresponding procession of
+              <span class="math">D⊢</span>-prime-strips with the same label
+              indeterminacy behavior.
+            </p>
+            <div class="tagRow"><span class="tag blue">6.9(ii)</span><span class="tag">mono-analytic</span></div>
+          </div>
+        </div>
+        <div class="callout gold">
+          The source records the numerical gain: processions reduce the displayed
+          label indeterminacy from <span class="math">(l±)^(l±)</span> possibilities
+          to <span class="math">l±!</span> possibilities.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Proposition 6.9(i)-(ii)</a>
+          Related: <a href="#holomorphic-capsule-symmetry-iut-i68">capsule symmetry</a>
+          <a href="#processions-definition-iut-i410">Section 4 processions</a>
+          <a href="#additive-procession-compat-iut-i69">procession compatibility</a>
+        </div>
+      </section>
+
+      <section id="additive-procession-compat-iut-i69">
+        <h2>Procession Compatibility in IUT I 6.9</h2>
+        <p class="lede">
+          Proposition 6.9(iii) states that the additive procession functors are
+          compatible with the multiplicative procession functors of Proposition 4.11,
+          relative to the D-Theta bridge construction of Proposition 6.7. The natural
+          inclusions <span class="math">{1,...,j} -> {0,1,...,t-1}</span>, with
+          <span class="math">t = j + 1</span>, give the corresponding natural
+          transformations.
+        </p>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Proposition 6.9(iii)</a>
+          Related: <a href="#theta-bridge-from-pm-iut-i67">D-Theta from Theta±</a>
+          <a href="#additive-processions-iut-i69">additive processions</a>
+          <a href="#procession-indeterminacy-iut-i411">Section 4 procession indeterminacy</a>
+        </div>
+      </section>
+
+      <section id="d-theta-pmell-link-iut-i610">
+        <h2>D-Theta±ell Link in IUT I 6.10</h2>
+        <p class="lede">
+          Corollary 6.10 defines the D-Theta±ell link. First one assigns to a
+          D-Theta±ell-Hodge theater the D-prime-strip <span class="math">D_&gt;</span>
+          obtained from Proposition 6.7, then passes to the mono-analyticized
+          <span class="math">D_&gt;^⊢</span>. A link between two theaters is the full
+          poly-isomorphism between these mono-analytic cores.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Corollary 6.10</th><th>Statement</th><th>Picture</th></tr>
+          <tr>
+            <td>Link</td>
+            <td><span class="math">HT_{D-Theta±ell} -> D_&gt; -> D_&gt;^⊢</span>; links are full poly-isomorphisms between the <span class="math">D_&gt;^⊢</span> outputs.</td>
+            <td>Mono-analytic core.</td>
+          </tr>
+          <tr>
+            <td>Infinite chain</td>
+            <td>The output <span class="math">D_&gt;^⊢</span> forms a constant invariant of a chain of linked theaters.</td>
+            <td>Core with spokes.</td>
+          </tr>
+          <tr>
+            <td>Etale-picture</td>
+            <td>The holomorphic processions remain on spokes; arbitrary permutations of spokes preserve the core.</td>
+            <td>Additive analogue of the Section 4 etale-picture.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Corollary 6.10</a>
+          Related: <a href="#d-theta-nf-etale-picture-iut-i412">Section 4 etale-picture</a>
+          <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridge lift</a>
+          <a href="#theta-link-frobenius-etale-pictures">Frobenius/etale pictures</a>
         </div>
       </section>
 
