@@ -534,6 +534,7 @@
         <a href="#mutually-alien-copies">Mutually alien copies</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
         <a href="#iut-i-base-bridges-evaluation-sections">Base bridges/evaluation sections</a>
+        <a href="#iut-i-additive-base-bridges-61-610">Additive base bridges 6.1-6.10</a>
         <a href="#multiplicative-additive-bridges">Multiplicative/additive bridges</a>
         <a href="#theta-plus-minus-ell-relay">Theta±ell relay</a>
         <a href="#mono-theta-environments-ii11">Mono-theta environments 1.1</a>
@@ -9377,8 +9378,264 @@
           Related: <a href="#prime-strips-bridges">prime strips and bridges</a>
           <a href="#theta-evaluation-kummer-route">theta evaluation route</a>
           <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation</a>
+          <a href="#iut-i-additive-base-bridges-61-610">additive base bridges</a>
           <a href="#multiplicative-additive-bridges">multiplicative/additive bridges</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="iut-i-additive-base-bridges-61-610">
+        <h2>IUT I Section 6: Additive Base Bridges</h2>
+        <p class="lede">
+          Section 6 starts the additive combinatorial Teichmuller theory. Before the
+          Frobenioid lift of Definition 6.11, Mochizuki defines signed additive label
+          structures, D-Theta± bridges, D-Thetaell bridges, their theater, and the
+          functorial route back to ordinary D-Theta bridges.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Section 6 additive base bridge route">
+          <div class="diagramHeader">
+            <strong>Additive base route</strong>
+            <span>Definition 6.1 through Corollary 6.10</span>
+          </div>
+          <svg viewBox="0 0 1120 570" role="img">
+            <defs>
+              <marker id="arrowAdditiveBase610" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox gold" x="48" y="62" width="230" height="84"></rect>
+            <text class="nodeTitle" x="163" y="91" text-anchor="middle">F_l^± labels</text>
+            <text class="tinyText" x="163" y="116" text-anchor="middle">F_l ⋊ {±1}</text>
+            <text class="tinyText" x="163" y="134" text-anchor="middle">zero plus signed motion</text>
+
+            <rect class="nodeBox blue" x="338" y="62" width="230" height="84"></rect>
+            <text class="nodeTitle" x="453" y="91" text-anchor="middle">D± = B(X_K)^0</text>
+            <text class="tinyText" x="453" y="116" text-anchor="middle">global elliptic target</text>
+            <text class="tinyText" x="453" y="134" text-anchor="middle">LabCusp±(D±)</text>
+
+            <rect class="nodeBox violet" x="628" y="62" width="230" height="84"></rect>
+            <text class="nodeTitle" x="743" y="91" text-anchor="middle">D_T capsule</text>
+            <text class="tinyText" x="743" y="116" text-anchor="middle">T an F_l^± group/torsor</text>
+            <text class="tinyText" x="743" y="134" text-anchor="middle">quotient |T| and nonzero part</text>
+
+            <rect class="nodeBox green" x="900" y="62" width="178" height="84"></rect>
+            <text class="nodeTitle" x="989" y="91" text-anchor="middle">D≻</text>
+            <text class="tinyText" x="989" y="116" text-anchor="middle">Theta± target</text>
+            <text class="tinyText" x="989" y="134" text-anchor="middle">positive +-full maps</text>
+
+            <rect class="nodeBox gold" x="158" y="248" width="250" height="96"></rect>
+            <text class="nodeTitle" x="283" y="278" text-anchor="middle">D-Thetaell bridge</text>
+            <text class="smallText" x="283" y="303" text-anchor="middle">D_T -> D±</text>
+            <text class="tinyText" x="283" y="325" text-anchor="middle">F_l^± torsor equivariance</text>
+
+            <rect class="nodeBox green" x="712" y="248" width="250" height="96"></rect>
+            <text class="nodeTitle" x="837" y="278" text-anchor="middle">D-Theta± bridge</text>
+            <text class="smallText" x="837" y="303" text-anchor="middle">D_T -> D≻</text>
+            <text class="tinyText" x="837" y="325" text-anchor="middle">signed +-full isomorphisms</text>
+
+            <rect class="nodeBox red" x="444" y="382" width="250" height="96"></rect>
+            <text class="nodeTitle" x="569" y="412" text-anchor="middle">D-Theta±ell theater</text>
+            <text class="smallText" x="569" y="437" text-anchor="middle">D≻ <- D_T -> D±</text>
+            <text class="tinyText" x="569" y="459" text-anchor="middle">shared capsule poly-isomorphism</text>
+
+            <rect class="nodeBox blue" x="48" y="458" width="250" height="74"></rect>
+            <text class="nodeTitle" x="173" y="488" text-anchor="middle">D-Theta bridge</text>
+            <text class="tinyText" x="173" y="512" text-anchor="middle">Proposition 6.7 removes zero/sign</text>
+
+            <rect class="nodeBox violet" x="822" y="458" width="250" height="74"></rect>
+            <text class="nodeTitle" x="947" y="488" text-anchor="middle">etale picture</text>
+            <text class="tinyText" x="947" y="512" text-anchor="middle">Corollary 6.10 mono-analytic core</text>
+
+            <path d="M278 104 H336" class="edge gold" marker-end="url(#arrowAdditiveBase610)"></path>
+            <path d="M568 104 H626" class="edge blue" marker-end="url(#arrowAdditiveBase610)"></path>
+            <path d="M858 104 H898" class="edge violet" marker-end="url(#arrowAdditiveBase610)"></path>
+            <path d="M453 147 C408 190 348 214 300 246" class="edge blue" marker-end="url(#arrowAdditiveBase610)"></path>
+            <path d="M743 148 C770 188 810 214 830 246" class="edge violet" marker-end="url(#arrowAdditiveBase610)"></path>
+            <path d="M989 148 C968 194 914 216 852 246" class="edge green" marker-end="url(#arrowAdditiveBase610)"></path>
+            <path d="M408 296 C470 318 524 346 555 380" class="edge gold" marker-end="url(#arrowAdditiveBase610)"></path>
+            <path d="M712 296 C650 318 596 346 580 380" class="edge green" marker-end="url(#arrowAdditiveBase610)"></path>
+            <path d="M470 478 C374 500 322 502 300 497" class="edge blue" marker-end="url(#arrowAdditiveBase610)"></path>
+            <path d="M694 438 C776 444 824 462 852 486" class="edge violet" marker-end="url(#arrowAdditiveBase610)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Definition or result</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td>Definition 6.1(i)</td>
+            <td>
+              <span class="math">F_l^± = F_l ⋊ {±1}</span>. An
+              <span class="math">F_l^±</span>-group is a signed additive group object;
+              an <span class="math">F_l^±</span>-torsor is acted on by affine maps
+              <span class="math">z -> ±z + lambda</span>.
+            </td>
+            <td>
+              The group/torsor distinction is typed data. Translations, signs, and
+              positive automorphisms are separate interfaces.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 6.1(iii)</td>
+            <td>
+              <span class="math">LabCusp±(D_v)</span> has a zero element and a
+              ±-canonical element. Removing zero and quotienting by ± recovers
+              <span class="math">LabCusp(D_v)</span>.
+            </td>
+            <td>
+              The zero label is not cosmetic. It must remain present until the explicit
+              nonzero/quotient step.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 6.1(v)</td>
+            <td>
+              <span class="math">D± = B(X_K)^0</span>. From this category one
+              reconstructs the relevant automorphism quotients, the
+              <span class="math">F_l^±</span> torsor of ±-label classes, and
+              <span class="math">V±</span>; Remark 6.1.1 identifies
+              <span class="math">V± = V±un</span>.
+            </td>
+            <td>
+              The additive target is global elliptic geometry, not an arbitrary
+              relabeled D-prime-strip.
+            </td>
+          </tr>
+          <tr>
+            <td>Examples 6.2 and 6.3</td>
+            <td>
+              The model D-Theta± bridge uses positive +-full maps
+              <span class="math">D_t -> D≻</span>. The model D-Thetaell bridge maps
+              <span class="math">D_t -> D±</span> and carries the natural
+              <span class="math">F_l^±</span> poly-action.
+            </td>
+            <td>
+              The two bridge models have the same capsule but different target logic:
+              signed positive maps on one side, elliptic torsor equivariance on the
+              other.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 6.4</td>
+            <td>
+              A D-Theta±ell theater is the compatible span
+              <span class="math">D≻ <- D_T -> D±</span>. The construction also forms
+              the quotient capsule <span class="math">D_|T|</span> and the nonzero
+              subcapsule used later.
+            </td>
+            <td>
+              A formal model needs the full capsule, the ± quotient, and the nonzero
+              subcapsule as related but distinct objects.
+            </td>
+          </tr>
+          <tr>
+            <td>Propositions 6.5 and 6.6</td>
+            <td>
+              Proposition 6.5 transports ±-label classes through both bridges.
+              Proposition 6.6 identifies the isomorphism and gluing torsors:
+              <span class="math">{±1} x {±1}^V</span>,
+              <span class="math">F_l^±</span>, <span class="math">{±1}</span>, and
+              <span class="math">F_l^± x {±1}^V</span>.
+            </td>
+            <td>
+              These torsor sizes are audit targets: they locate exactly which
+              indeterminacy is supposed to remain.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 6.7</td>
+            <td>
+              From a D-Theta± bridge one functorially constructs an ordinary
+              D-Theta bridge by passing to the nonzero quotient part, identifying
+              <span class="math">D_0</span> and <span class="math">D≻</span>, and
+              replacing +-full maps by the appropriate full/evaluation maps.
+            </td>
+            <td>
+              This is the formal hinge between additive and multiplicative bridge
+              theory; it cannot be replaced by a bare forgetful map.
+            </td>
+          </tr>
+          <tr>
+            <td>Propositions 6.8-6.9, Corollary 6.10</td>
+            <td>
+              Forgetful functors expose <span class="math">F_l^±</span> and symmetric
+              group symmetries, processions reduce the
+              <span class="math">(l±)^(l±)</span> ambiguity to
+              <span class="math">l±!</span>, and D-Theta±ell links produce an etale
+              picture with a mono-analytic core.
+            </td>
+            <td>
+              The wiki keeps labels, quotient capsules, processions, and
+              mono-analytic cores as separate pages because later comparison arguments
+              use different forgetful levels.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="fl-plus-minus-group-torsor">
+            <h3>Group versus torsor</h3>
+            <p>
+              In Definition 6.4, <span class="math">T</span> is an
+              <span class="math">F_l^±</span>-group for the D-Theta± bridge, but an
+              <span class="math">F_l^±</span>-torsor for the D-Thetaell bridge. The
+              theater uses the torsor structure determined by the group structure.
+            </p>
+            <div class="tagRow"><span class="tag gold">Definition 6.4</span><span class="tag">typed labels</span></div>
+          </div>
+          <div class="card" id="additive-zero-label">
+            <h3>Zero label</h3>
+            <p>
+              The zero label is the point that lets Section 6 compare zero-labeled
+              and nonzero-labeled prime-strips before the nonzero labels are matched
+              with the multiplicative Section 4 system.
+            </p>
+            <div class="tagRow"><span class="tag red">Definition 6.1</span><span class="tag">zero/nonzero</span></div>
+          </div>
+          <div class="card" id="d-theta-plus-minus-to-theta">
+            <h3>Functorial hinge</h3>
+            <p>
+              Proposition 6.7 is the step that turns the signed additive bridge into
+              a D-Theta bridge. It uses both the quotient capsule and the evaluation
+              maps of Section 4 at bad places.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 6.7</span><span class="tag">bridge conversion</span></div>
+          </div>
+          <div class="card" id="additive-processions">
+            <h3>Additive processions</h3>
+            <p>
+              Proposition 6.9 builds processions from the ordered subsets
+              <span class="math">{0,...,t-1}</span> of <span class="math">|F_l|</span>.
+              This is the additive counterpart of the Section 4 procession discipline.
+            </p>
+            <div class="tagRow"><span class="tag violet">Proposition 6.9</span><span class="tag">l±!</span></div>
+          </div>
+          <div class="card" id="additive-etale-picture-610">
+            <h3>Additive etale-picture</h3>
+            <p>
+              Corollary 6.10 sends linked D-Theta±ell theaters to full
+              poly-isomorphisms between the associated mono-analytic
+              <span class="math">D_>^⊢</span> cores. The spokes retain distinct
+              holomorphic structures.
+            </p>
+            <div class="tagRow"><span class="tag blue">Corollary 6.10</span><span class="tag">mono-analytic core</span></div>
+          </div>
+          <div class="card" id="additive-base-warning">
+            <h3>Modeling warning</h3>
+            <p>
+              A generic signed capsule misses the source distinction between
+              positive +-full maps, the global <span class="math">D±</span> target,
+              the <span class="math">F_l^±</span> torsor action, and the later
+              nonzero quotient used by Proposition 6.7.
+            </p>
+            <div class="tagRow"><span class="tag red">formalization boundary</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Section 6</a>
+          Related: <a href="#multiplicative-additive-bridges">multiplicative/additive bridges</a>
+          <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges 6.11</a>
+          <a href="#theta-plus-minus-ell-nf-613">Theta±ellNF 6.13</a>
+          <a href="#iut-i-base-bridges-evaluation-sections">base bridges/evaluation sections</a>
+          <a href="#theta-plus-minus-ell-relay">Theta±ell relay</a>
         </div>
       </section>
 
