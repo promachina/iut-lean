@@ -499,6 +499,7 @@
         <a href="#multiplicative-combinatorial-teichmuller">Multiplicative combinatorics</a>
         <a href="#iut-i-global-frobenioids-example51">Global Frobenioids 5.1</a>
         <a href="#iut-i-frobenioid-prime-strips-52">Frobenioid prime-strips 5.2</a>
+        <a href="#iut-i-pivotal-distributions-54">Pivotal distributions 5.4</a>
         <a href="#gms-gcg-motivation">GMS/GCG motivation</a>
         <a href="#projective-line-gluing-analogy">Projective-line gluing</a>
         <a href="#iut-i-gluing-models">IUT I gluing models</a>
@@ -1428,6 +1429,9 @@
               <a href="#f-realified-prime-strip-definition52">F⊩-prime-strip definition</a>,
               <a href="#local-kappa-coric-structures52">local κ-coric structures</a>,
               <a href="#corollary-53-rigidity">Corollary 5.3 rigidity</a>,
+              <a href="#iut-i-pivotal-distributions-54">pivotal distributions 5.4</a>,
+              <a href="#delta-valuations-example54">δ-valuations</a>,
+              <a href="#log-volume-average-sum54">average/sum log-volume convention</a>,
               <a href="#theta-nf-hodge-theater">ThetaNF-Hodge theater</a>,
               <a href="#nf-bridge-frobenioid-lift">NF bridge</a>,
               <a href="#theta-bridge-frobenioid-lift">Theta bridge</a>,
@@ -7026,7 +7030,7 @@
               Isomorphisms of Theta-Hodge theaters, NF-bridges, Theta-bridges, and
               ThetaNF-Hodge theaters are controlled by the associated D-prime-strip or
               D-bridge isomorphisms; compatible gluings form an
-              <span class="math">F_l^*/±</span>-torsor.
+              <span class="math">F_l</span>-torsor.
             </td>
             <td>
               The Frobenioid lift preserves the functorial dynamics of Section 4.
@@ -8185,6 +8189,192 @@
           <a href="#kappa-coric-functions">κ-coric functions</a>
           <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
           <a href="#log-kummer-correspondences">log-Kummer correspondences</a>
+        </div>
+      </section>
+
+      <section id="iut-i-pivotal-distributions-54">
+        <h2>Pivotal Distributions in IUT I 5.4</h2>
+        <p class="lede">
+          Example 5.4 is the Frobenioid-level passage from the Section 4
+          D-ThetaNF bridge to localized F-prime-strip data. It constructs labeled
+          copies, theta-side poly-morphisms, delta-valuations, NF-side poly-morphisms,
+          restriction functors, realifications, and finally the pivotal distribution
+          at the label <span class="math">j = 1</span>.
+        </p>
+        <div class="diagram" aria-label="IUT I Example 5.4 pivotal distributions">
+          <div class="diagramHeader">
+            <strong>Example 5.4 source route</strong>
+            <span>labeled F-strips to pivotal distributions</span>
+          </div>
+          <svg viewBox="0 0 1080 510" role="img">
+            <defs>
+              <marker id="arrowPivotal54" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="48" y="62" width="198" height="78"></rect>
+            <text class="nodeTitle" x="147" y="91" text-anchor="middle">F_J capsule</text>
+            <text class="tinyText" x="147" y="114" text-anchor="middle">copies F_j over labels j</text>
+            <text class="tinyText" x="147" y="132" text-anchor="middle">Example 5.4(i)</text>
+
+            <rect class="nodeBox green" x="318" y="62" width="198" height="78"></rect>
+            <text class="nodeTitle" x="417" y="91" text-anchor="middle">F_&lt;J&gt; diagonal</text>
+            <text class="tinyText" x="417" y="114" text-anchor="middle">full poly-isom to F_></text>
+            <text class="tinyText" x="417" y="132" text-anchor="middle">diagonal arrow to F_J</text>
+
+            <rect class="nodeBox gold" x="588" y="62" width="198" height="78"></rect>
+            <text class="nodeTitle" x="687" y="91" text-anchor="middle">theta arrows</text>
+            <text class="tinyText" x="687" y="114" text-anchor="middle">psiTheta_j : F_j -> F_></text>
+            <text class="tinyText" x="687" y="132" text-anchor="middle">lying over phiTheta_j</text>
+
+            <rect class="nodeBox violet" x="858" y="62" width="178" height="78"></rect>
+            <text class="nodeTitle" x="947" y="91" text-anchor="middle">Theta side</text>
+            <text class="tinyText" x="947" y="114" text-anchor="middle">uses D-Theta bridge</text>
+            <text class="tinyText" x="947" y="132" text-anchor="middle">Remark 5.4.1</text>
+
+            <rect class="nodeBox red" x="80" y="250" width="210" height="88"></rect>
+            <text class="nodeTitle" x="185" y="280" text-anchor="middle">delta-valuations</text>
+            <text class="tinyText" x="185" y="304" text-anchor="middle">cusp label delta</text>
+            <text class="tinyText" x="185" y="322" text-anchor="middle">unique label-1 source</text>
+
+            <rect class="nodeBox green" x="366" y="250" width="210" height="88"></rect>
+            <text class="nodeTitle" x="471" y="280" text-anchor="middle">localized F|delta</text>
+            <text class="tinyText" x="471" y="304" text-anchor="middle">well-defined up to iso</text>
+            <text class="tinyText" x="471" y="322" text-anchor="middle">compatible with infinity-kappa</text>
+
+            <rect class="nodeBox blue" x="652" y="250" width="210" height="88"></rect>
+            <text class="nodeTitle" x="757" y="280" text-anchor="middle">NF arrow psiNF</text>
+            <text class="tinyText" x="757" y="304" text-anchor="middle">unique over phiNF</text>
+            <text class="tinyText" x="757" y="322" text-anchor="middle">Corollary 5.3(ii)</text>
+
+            <rect class="nodeBox gold" x="238" y="408" width="250" height="72"></rect>
+            <text class="nodeTitle" x="363" y="436" text-anchor="middle">restriction functors</text>
+            <text class="tinyText" x="363" y="458" text-anchor="middle">F_mod -> F_&lt;J&gt; -> local factors</text>
+
+            <rect class="nodeBox violet" x="594" y="408" width="250" height="72"></rect>
+            <text class="nodeTitle" x="719" y="436" text-anchor="middle">pivotal distribution</text>
+            <text class="tinyText" x="719" y="458" text-anchor="middle">label j = 1, plus realification</text>
+
+            <path d="M248 101 H316" class="edge blue" marker-end="url(#arrowPivotal54)"></path>
+            <path d="M518 101 H586" class="edge green" marker-end="url(#arrowPivotal54)"></path>
+            <path d="M788 101 H856" class="edge gold" marker-end="url(#arrowPivotal54)"></path>
+            <path d="M417 142 C360 184 258 202 194 248" class="edge red" marker-end="url(#arrowPivotal54)"></path>
+            <path d="M292 294 H364" class="edge red" marker-end="url(#arrowPivotal54)"></path>
+            <path d="M578 294 H650" class="edge green" marker-end="url(#arrowPivotal54)"></path>
+            <path d="M470 340 C438 368 398 382 370 406" class="edge gold" marker-end="url(#arrowPivotal54)"></path>
+            <path d="M758 340 C744 370 732 388 724 406" class="edge violet" marker-end="url(#arrowPivotal54)"></path>
+            <path d="M490 444 H592" class="edge gold" marker-end="url(#arrowPivotal54)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="labeled-f-capsule-example54">
+            <h3>Labeled F-capsule</h3>
+            <p>
+              Example 5.4(i) starts with labeled copies
+              <span class="math">F_j</span> of the theta-side
+              <span class="math">F_></span> over the capsule labels
+              <span class="math">j in J</span>. The diagonal object
+              <span class="math">F_&lt;J&gt;</span> maps diagonally to
+              <span class="math">F_J</span> and is fully poly-isomorphic to
+              <span class="math">F_></span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 5.4(i)</span><span class="tag">labels</span></div>
+          </div>
+          <div class="card" id="theta-polymorphisms-example54">
+            <h3>Theta poly-morphisms</h3>
+            <p>
+              Example 5.4(ii) also regards each <span class="math">F_j</span> as
+              related to <span class="math">F_></span> by a poly-morphism
+              <span class="math">psiTheta_j : F_j -> F_></span>, uniquely determined
+              by the D-theta arrow <span class="math">phiTheta_j</span>.
+            </p>
+            <div class="tagRow"><span class="tag gold">Example 5.4(ii)</span><span class="tag">theta side</span></div>
+          </div>
+          <div class="card" id="delta-valuations-example54">
+            <h3>Delta-valuations</h3>
+            <p>
+              Example 5.4(iii) defines a <span class="math">delta</span>-valuation
+              from a cusp label <span class="math">delta in LabCusp(D)</span>. It may
+              be read intrinsically from the D-NF bridge by selecting the unique
+              capsule constituent whose induced cusp label is the label
+              <span class="math">1</span>.
+            </p>
+            <div class="tagRow"><span class="tag red">Example 5.4(iii)</span><span class="tag">cusps</span></div>
+          </div>
+          <div class="card" id="localized-fdelta-example54">
+            <h3>Localized <span class="math">F|delta</span></h3>
+            <p>
+              Example 5.4(iv) localizes <span class="math">F</span> at the
+              <span class="math">delta</span>-valuations to construct an
+              F-prime-strip <span class="math">F|delta</span>, well-defined only up to
+              isomorphism because different elements above the same model valuation
+              must be related without a canonical choice.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 5.4(iv)</span><span class="tag">localization</span></div>
+          </div>
+          <div class="card" id="polymorphism-over-d-example54">
+            <h3>Poly-morphisms over D</h3>
+            <p>
+              A poly-morphism <span class="math">F' -> F</span> is represented by a
+              full poly-isomorphism <span class="math">F' ~= F|delta</span> for some
+              cusp label. It lies over the induced D-prime-strip poly-morphism and is
+              compatible with the local and global infinity-kappa coric structures.
+            </p>
+            <div class="tagRow"><span class="tag blue">Example 5.4(iv)</span><span class="tag">over D</span></div>
+          </div>
+          <div class="card" id="unique-psinf-example54">
+            <h3>Unique NF poly-morphism</h3>
+            <p>
+              Example 5.4(v) applies Corollary 5.3(ii) to obtain a unique
+              poly-morphism <span class="math">psiNF : F_J -> F</span> lying over the
+              D-NF bridge <span class="math">phiNF</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 5.4(v)</span><span class="tag">NF side</span></div>
+          </div>
+          <div class="card" id="restriction-functors-example54">
+            <h3>Restriction functors</h3>
+            <p>
+              Example 5.4(vi) obtains isomorphism classes of restriction functors from
+              <span class="math">F_mod</span> through <span class="math">F_&lt;J&gt;</span>
+              to the local factors. These classes are independent of the chosen
+              poly-morphism among its <span class="math">F_l</span>-conjugates.
+            </p>
+            <div class="tagRow"><span class="tag gold">Example 5.4(vi)</span><span class="tag">restriction</span></div>
+          </div>
+          <div class="card" id="pivotal-distribution-card54">
+            <h3>Pivotal distribution</h3>
+            <p>
+              Example 5.4(vii) names the objects from the restriction construction at
+              the label <span class="math">j = 1</span> the pivotal distributions,
+              together with their realified versions.
+            </p>
+            <div class="tagRow"><span class="tag violet">Example 5.4(vii)</span><span class="tag">j = 1</span></div>
+          </div>
+          <div class="card" id="log-volume-average-sum54">
+            <h3>Average versus sum</h3>
+            <p>
+              Remark 5.4.2 records the log-volume convention: one may read
+              <span class="math">F_&lt;J&gt;</span> degrees as averages over
+              <span class="math">J ~= F_l</span>, or, when using Frobenioid
+              isomorphisms, as sums over the labels without dividing by
+              <span class="math">l</span>.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 5.4.2</span><span class="tag">log-volume</span></div>
+          </div>
+        </div>
+        <div class="callout gold">
+          Source separation: Remark 5.4.1 says the labeled theta-side constructions use
+          the D-Theta bridge portion, while the delta-valuation, localization,
+          restriction, and pivotal-distribution constructions use the D-NF bridge
+          portion. A formal model should keep these bridge dependencies separate.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
+          Related: <a href="#iut-i-frobenioid-prime-strips-52">Frobenioid prime-strips 5.2</a>
+          <a href="#iut-i-global-frobenioids-example51">global Frobenioids 5.1</a>
+          <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
         </div>
       </section>
 
