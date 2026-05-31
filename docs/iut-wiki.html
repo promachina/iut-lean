@@ -2183,6 +2183,38 @@
           the standpoint of a theater related by a non-ring/scheme-theoretic link. This is
           why the theory has to track histories, labels, and comparison levels explicitly.
         </p>
+        <table>
+          <tr>
+            <th>Hodge-theater layer</th>
+            <th>Source description</th>
+            <th>Formalization meaning</th>
+          </tr>
+          <tr>
+            <td><span class="math">Theta±ell</span> side</td>
+            <td>Tracks <span class="math">F_l^±</span>-symmetry on labels <span class="math">-l < ... < -1 < 0 < 1 < ... < l</span> using finite etale coverings of <span class="math">XK</span>.</td>
+            <td>Source of additive plus/minus label bookkeeping and conjugate synchronization constraints.</td>
+          </tr>
+          <tr>
+            <td><span class="math">ThetaNF</span> side</td>
+            <td>Tracks <span class="math">F_l</span>-symmetry on labels <span class="math">1 < ... < l</span> using finite etale coverings of <span class="math">CK</span>.</td>
+            <td>Source of number-field descent and <span class="math">Fmod</span>-reconstruction bookkeeping.</td>
+          </tr>
+          <tr>
+            <td>Gluing</td>
+            <td>The combined <span class="math">Theta±ellNF</span>-Hodge theater is obtained by gluing the two sides along D-prime-strips, identifying <span class="math">0 != ±t</span> with the corresponding <span class="math">j</span>.</td>
+            <td>Prevents additive and multiplicative labels from being treated as one undifferentiated index.</td>
+          </tr>
+          <tr>
+            <td>D-Hodge theater</td>
+            <td>The associated D-theater is the system of base categories attached to the Frobenioid system.</td>
+            <td>Provides the etale/mono-analytic comparison layer used by later prime-strip and log-link constructions.</td>
+          </tr>
+          <tr>
+            <td>Frobenius and etale pictures</td>
+            <td>Integer-indexed chains of theta-linked theaters form the Frobenius-picture; D-theaters share a mono-analytic core in the etale-picture.</td>
+            <td>The wiki and Lean interfaces must distinguish same-type theaters from same-history theaters.</td>
+          </tr>
+        </table>
         <div class="grid3">
           <div class="card">
             <h3>Theta-Hodge theaters</h3>
