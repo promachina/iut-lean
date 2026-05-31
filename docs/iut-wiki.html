@@ -493,6 +493,7 @@
         <a href="#corollary-312">Corollary 3.12 corridor</a>
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         <a href="#iut-iv">IUT IV and consequences</a>
+        <a href="#probabilistic-szpiro">Probabilistic Szpiro</a>
         <a href="#species-mutations">Species and mutations</a>
         <h2>Context</h2>
         <a href="#dispute">Scholze-Stix and responses</a>
@@ -8075,6 +8076,167 @@
           Related: <a href="#iut-iv-atlas">IUT IV atlas</a>
           <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
           <a href="#source-library">source library</a>
+        </div>
+      </section>
+
+      <section id="probabilistic-szpiro">
+        <h2>Probabilistic Szpiro Route</h2>
+        <p class="lede">
+          Dupuy and Hilado recast the output of Mochizuki's Corollary 3.12 as a
+          probabilistic inequality for random measurable sets attached to multiradial
+          theta-pilot hulls. Their paper is useful for this wiki because it separates
+          two layers: the assumed IUT input, namely Corollary 3.12 plus an archimedean
+          claim, and the subsequent elementary bounding route toward Szpiro-type
+          inequalities.
+        </p>
+        <div class="diagram" aria-label="Probabilistic Szpiro route">
+          <div class="diagramHeader">
+            <strong>Conditional downstream route</strong>
+            <span>from Corollary 3.12 to Szpiro-style estimates</span>
+          </div>
+          <svg viewBox="0 0 960 360" role="img">
+            <defs>
+              <marker id="arrowProbSzpiro" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox violet" x="35" y="54" width="170" height="88"></rect>
+            <text class="nodeTitle" x="120" y="84" text-anchor="middle">assumed IUT input</text>
+            <text class="tinyText" x="120" y="108" text-anchor="middle">Cor. 3.12</text>
+            <text class="tinyText" x="120" y="126" text-anchor="middle">plus Claim 5.0.1</text>
+
+            <rect class="nodeBox blue" x="260" y="54" width="170" height="88"></rect>
+            <text class="nodeTitle" x="345" y="84" text-anchor="middle">random set form</text>
+            <text class="tinyText" x="345" y="108" text-anchor="middle">expected log-radius</text>
+            <text class="tinyText" x="345" y="126" text-anchor="middle">Theorem 7.5.1</text>
+
+            <rect class="nodeBox green" x="505" y="54" width="170" height="88"></rect>
+            <text class="nodeTitle" x="590" y="84" text-anchor="middle">hull estimates</text>
+            <text class="tinyText" x="590" y="108" text-anchor="middle">differents, logs</text>
+            <text class="tinyText" x="590" y="126" text-anchor="middle">Sections 2-6</text>
+
+            <rect class="nodeBox gold" x="755" y="54" width="170" height="88"></rect>
+            <text class="nodeTitle" x="840" y="84" text-anchor="middle">probabilistic Szpiro</text>
+            <text class="tinyText" x="840" y="108" text-anchor="middle">average ramification</text>
+            <text class="tinyText" x="840" y="126" text-anchor="middle">Theorem 7.12.1</text>
+
+            <rect class="nodeBox red" x="218" y="232" width="170" height="72"></rect>
+            <text class="nodeTitle" x="303" y="260" text-anchor="middle">Baby Szpiro</text>
+            <text class="tinyText" x="303" y="282" text-anchor="middle">division-field bound</text>
+
+            <rect class="nodeBox red" x="572" y="232" width="170" height="72"></rect>
+            <text class="nodeTitle" x="657" y="260" text-anchor="middle">Explicit Szpiro</text>
+            <text class="tinyText" x="657" y="282" text-anchor="middle">conductor/discriminant</text>
+
+            <line class="arrow" x1="205" y1="98" x2="260" y2="98" marker-end="url(#arrowProbSzpiro)"></line>
+            <line class="arrow" x1="430" y1="98" x2="505" y2="98" marker-end="url(#arrowProbSzpiro)"></line>
+            <line class="arrow" x1="675" y1="98" x2="755" y2="98" marker-end="url(#arrowProbSzpiro)"></line>
+            <path class="edge red" d="M840 142 C790 198 392 190 318 232" marker-end="url(#arrowProbSzpiro)"></path>
+            <path class="edge red" d="M840 142 C815 196 704 198 666 232" marker-end="url(#arrowProbSzpiro)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="probabilistic-iut-input">
+            <h3>Assumed input</h3>
+            <p>
+              The paper explicitly assumes Mochizuki's Corollary 3.12 and an additional
+              archimedean assertion labeled Claim 5.0.1. The wiki therefore treats the
+              paper as a conditional downstream analysis, not as a source for resolving
+              the Corollary 3.12 dispute.
+            </p>
+            <div class="tagRow"><span class="tag red">conditional</span><span class="tag">Cor. 3.12</span></div>
+          </div>
+          <div class="card" id="probabilistic-initial-theta-field-moduli">
+            <h3>Field-of-moduli theta data</h3>
+            <p>
+              The elliptic curve is required to sit in initial theta data built from the
+              field of moduli. This specializes the general IUT input to a form where the
+              l-division field, bad multiplicative places, and valuation section can be
+              used in explicit ramification averages.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 1.0.1</span><span class="tag">initial theta data</span></div>
+          </div>
+          <div class="card" id="random-measurable-sets">
+            <h3>Random measurable sets</h3>
+            <p>
+              The multiradial theta-pilot hull is represented through random measurable
+              sets indexed by places and procession labels. The main probabilistic
+              inequality bounds the normalized q-degree by expected logarithmic radii of
+              these hull components.
+            </p>
+            <div class="tagRow"><span class="tag blue">Theorem 7.5.1</span><span class="tag">expectation</span></div>
+          </div>
+          <div class="card" id="hull-radius-estimate">
+            <h3>Hull radius estimate</h3>
+            <p>
+              Sections 2-6 estimate the radius of a polydisc containing a stand-in for
+              the multiradial hull. The bound uses tensor-product integral closures,
+              different orders, p-adic logarithm estimates, archimedean log-shell
+              estimates, and automorphisms modeling the indeterminacy action.
+            </p>
+            <div class="tagRow"><span class="tag green">Sections 2-6</span><span class="tag">hulls</span></div>
+          </div>
+          <div class="card" id="probabilistic-szpiro-inequality">
+            <h3>Probabilistic Szpiro</h3>
+            <p>
+              Theorem 7.12.1 derives a Szpiro-type inequality whose right side records
+              the average different, average ramification degree, unramified probability,
+              and an archimedean contribution. The coefficient on the minimal
+              discriminant is <span class="math">1/6 + epsilon_l</span>, with
+              <span class="math">epsilon_l</span> tending to zero as
+              <span class="math">l</span> grows.
+            </p>
+            <div class="tagRow"><span class="tag gold">Theorem 7.12.1</span><span class="tag">average data</span></div>
+          </div>
+          <div class="card" id="baby-szpiro">
+            <h3>Baby Szpiro</h3>
+            <p>
+              Theorem 7.13.1 gives a coarser consequence that depends only on the degree
+              and discriminant of the relevant division field. Its value in the wiki is
+              expository: it shows how the probabilistic inequality collapses to a simpler
+              but weaker field-invariant bound.
+            </p>
+            <div class="tagRow"><span class="tag blue">Theorem 7.13.1</span><span class="tag">division field</span></div>
+          </div>
+          <div class="card" id="explicit-szpiro-dh">
+            <h3>Explicit Szpiro</h3>
+            <p>
+              Section 8 refines the estimates by separating infinite, large finite, and
+              small finite primes. The final theorem gives an explicit bound for the
+              minimal discriminant in terms of conductor and field discriminant, with
+              large numerical constants.
+            </p>
+            <div class="tagRow"><span class="tag green">Theorem 8.2.1</span><span class="tag">explicit constants</span></div>
+          </div>
+          <div class="card" id="ramification-breakdown">
+            <h3>Ramification breakdown</h3>
+            <p>
+              The explicit argument divides rational primes by size relative to a bound
+              depending on <span class="math">l</span> and the field-of-moduli degree.
+              This isolates where tame, wild, and small-prime behavior must be controlled
+              in the conductor/discriminant comparison.
+            </p>
+            <div class="tagRow"><span class="tag green">Section 8.1</span><span class="tag">ramification</span></div>
+          </div>
+          <div class="card" id="probabilistic-szpiro-formalization-use">
+            <h3>Formalization use</h3>
+            <p>
+              For Lean work, this paper suggests a clean downstream module boundary:
+              assume a typed Corollary 3.12 inequality and archimedean input, then
+              formalize the probabilistic and local-field estimates separately. Failure
+              or success in this downstream layer would not by itself decide the IUT
+              comparison step.
+            </p>
+            <div class="tagRow"><span class="tag violet">module boundary</span><span class="tag">Lean</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/dupuy-hilado-probabilistic-szpiro.pdf" target="_blank">Dupuy-Hilado probabilistic Szpiro</a>
+          <a href="papers/dupuy-hilado-corollary-312-initial-theta-indeterminacies.pdf" target="_blank">Dupuy-Hilado initial theta data</a>
+          Related: <a href="#iut-iv">IUT IV consequences</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+          <a href="#initial-theta-data">initial theta data</a>
         </div>
       </section>
 
