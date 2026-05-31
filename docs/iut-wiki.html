@@ -491,6 +491,7 @@
         <a href="#projective-line-gluing-analogy">Projective-line gluing</a>
         <a href="#iut-i-gluing-models">IUT I gluing models</a>
         <a href="#basepoints-inter-universality">Basepoints/inter-universality</a>
+        <a href="#teichmuller-analogy-iut-i">Teichmuller analogy</a>
         <a href="#iut-i-coverings-symmetries">IUT I coverings/symmetries</a>
         <a href="#tempered-covering-complements">Tempered covering complements</a>
         <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
@@ -1285,6 +1286,20 @@
               <a href="#conjugate-synchronization-basepoints">conjugate synchronization</a>
             </td>
             <td>IUT I, Introduction §I3</td>
+          </tr>
+          <tr>
+            <td>IUT I</td>
+            <td>Teichmuller analogy and p-adic comparison</td>
+            <td>
+              <a href="#teichmuller-analogy-iut-i">Teichmuller analogy</a>,
+              <a href="#complex-teichmuller-template">complex template</a>,
+              <a href="#arithmetic-combinatorial-dimensions">additive/multiplicative dimensions</a>,
+              <a href="#theta-dilation-value-groups">theta dilation</a>,
+              <a href="#log-theta-two-dimensions-source">theta/log dimensions</a>,
+              <a href="#padic-teichmuller-correspondence">p-adic correspondence</a>,
+              <a href="#canonical-bound-container">canonical bound container</a>
+            </td>
+            <td>IUT I, Introduction §I4</td>
           </tr>
           <tr>
             <td>IUT I</td>
@@ -3241,6 +3256,190 @@
           <a href="#theta-evaluation-kummer-route">theta evaluation route</a>
           <a href="#species-mutations">species and mutations</a>
           <a href="#collas-category-perspective">Collas category view</a>
+        </div>
+      </section>
+
+      <section id="teichmuller-analogy-iut-i">
+        <h2>IUT I Teichmuller Analogy</h2>
+        <p class="lede">
+          IUT I Introduction §I4 explains the word "Teichmuller" in the theory's name.
+          The analogy is not merely decorative: complex Teichmuller theory varies a
+          holomorphic structure inside a fixed real-analytic container, while IUT varies
+          an arithmetic holomorphic structure inside mono-analytic containers. The
+          theta direction dilates value-group data; the log direction rotates the
+          additive and multiplicative dimensions.
+        </p>
+        <div class="diagram" aria-label="Teichmuller analogy in IUT I">
+          <div class="diagramHeader">
+            <strong>From complex dilation to log-theta lattice</strong>
+            <span>IUT I §I4: fixed containers, varied holomorphic structures</span>
+          </div>
+          <svg viewBox="0 0 1100 640" role="img">
+            <defs>
+              <marker id="arrowTeichIUTI" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox gold" x="56" y="64" width="260" height="94"></rect>
+            <text class="nodeTitle" x="186" y="94" text-anchor="middle">complex Teichmuller</text>
+            <text class="tinyText" x="186" y="120" text-anchor="middle">z = x + iy maps to Kx + iy</text>
+            <text class="tinyText" x="186" y="138" text-anchor="middle">one real direction dilated</text>
+
+            <rect class="nodeBox blue" x="420" y="64" width="260" height="94"></rect>
+            <text class="nodeTitle" x="550" y="94" text-anchor="middle">arithmetic holomorphic</text>
+            <text class="tinyText" x="550" y="120" text-anchor="middle">number field ring structure</text>
+            <text class="tinyText" x="550" y="138" text-anchor="middle">addition plus multiplication</text>
+
+            <rect class="nodeBox green" x="784" y="64" width="260" height="94"></rect>
+            <text class="nodeTitle" x="914" y="94" text-anchor="middle">theta deformation</text>
+            <text class="tinyText" x="914" y="120" text-anchor="middle">value groups dilated</text>
+            <text class="tinyText" x="914" y="138" text-anchor="middle">unit groups fixed up to iso</text>
+
+            <path d="M318 111 H418" class="edge gold" marker-end="url(#arrowTeichIUTI)"></path>
+            <path d="M682 111 H782" class="edge green" marker-end="url(#arrowTeichIUTI)"></path>
+
+            <rect class="nodeBox blue" x="128" y="270" width="220" height="88"></rect>
+            <text class="nodeTitle" x="238" y="300" text-anchor="middle">theta dimension</text>
+            <text class="tinyText" x="238" y="324" text-anchor="middle">Frobenius-picture</text>
+            <text class="tinyText" x="238" y="342" text-anchor="middle">deformation of arithmetic holomorphic structure</text>
+
+            <rect class="nodeBox violet" x="440" y="270" width="220" height="88"></rect>
+            <text class="nodeTitle" x="550" y="300" text-anchor="middle">log dimension</text>
+            <text class="tinyText" x="550" y="324" text-anchor="middle">iterated log-links</text>
+            <text class="tinyText" x="550" y="342" text-anchor="middle">rotation of + and x dimensions</text>
+
+            <rect class="nodeBox red" x="752" y="270" width="220" height="88"></rect>
+            <text class="nodeTitle" x="862" y="300" text-anchor="middle">canonical bound</text>
+            <text class="tinyText" x="862" y="324" text-anchor="middle">Theorem 3.11 container</text>
+            <text class="tinyText" x="862" y="342" text-anchor="middle">Corollary 3.12 estimate</text>
+
+            <path d="M914 160 C780 210 620 238 348 286" class="edge blue" marker-end="url(#arrowTeichIUTI)"></path>
+            <path d="M550 160 V268" class="edge violet" marker-end="url(#arrowTeichIUTI)"></path>
+            <path d="M862 160 V268" class="edge red" marker-end="url(#arrowTeichIUTI)"></path>
+
+            <rect class="nodeBox gold" x="102" y="474" width="274" height="86"></rect>
+            <text class="nodeTitle" x="239" y="504" text-anchor="middle">p-adic Teichmuller side</text>
+            <text class="tinyText" x="239" y="528" text-anchor="middle">hyperbolic curve + indigenous bundle</text>
+            <text class="tinyText" x="239" y="546" text-anchor="middle">canonical lifting with Frobenius action</text>
+
+            <rect class="nodeBox green" x="414" y="474" width="274" height="86"></rect>
+            <text class="nodeTitle" x="551" y="504" text-anchor="middle">Witt-vector analogy</text>
+            <text class="tinyText" x="551" y="528" text-anchor="middle">theta arrows: mixed-characteristic extension</text>
+            <text class="tinyText" x="551" y="546" text-anchor="middle">log arrows: positive-characteristic Frobenius</text>
+
+            <rect class="nodeBox blue" x="726" y="474" width="274" height="86"></rect>
+            <text class="nodeTitle" x="863" y="504" text-anchor="middle">IUT side</text>
+            <text class="tinyText" x="863" y="528" text-anchor="middle">number field + punctured elliptic curve</text>
+            <text class="tinyText" x="863" y="546" text-anchor="middle">log-theta lattice and alien structures</text>
+
+            <path d="M348 358 C320 404 274 430 246 472" class="edge gold" marker-end="url(#arrowTeichIUTI)"></path>
+            <path d="M550 358 V472" class="edge green" marker-end="url(#arrowTeichIUTI)"></path>
+            <path d="M862 358 V472" class="edge blue" marker-end="url(#arrowTeichIUTI)"></path>
+            <path d="M378 517 H412" class="edge gold" marker-end="url(#arrowTeichIUTI)"></path>
+            <path d="M690 517 H724" class="edge green" marker-end="url(#arrowTeichIUTI)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="complex-teichmuller-template">
+            <h3>Complex template</h3>
+            <p>
+              IUT I recalls the classical deformation
+              <span class="math">z = x + iy -> Kx + iy</span>: one real-analytic
+              dimension is dilated while the other is held fixed. The varying object is
+              the holomorphic structure; the fixed object is the real-analytic container.
+            </p>
+            <div class="tagRow"><span class="tag gold">IUT I §I4</span><span class="tag">complex template</span></div>
+          </div>
+          <div class="card" id="arithmetic-combinatorial-dimensions">
+            <h3>Arithmetic combinatorial dimensions</h3>
+            <p>
+              Mochizuki interprets a number-field ring structure as one arithmetic
+              holomorphic dimension made from two combinatorial dimensions: addition and
+              multiplication. Locally, these are read through unit groups and value
+              groups.
+            </p>
+            <div class="tagRow"><span class="tag blue">IUT I §I4</span><span class="tag">+ / x</span></div>
+          </div>
+          <div class="card" id="theta-dilation-value-groups">
+            <h3>Theta dilation of value groups</h3>
+            <p>
+              The theta-link is described as a Teichmuller deformation relative to a
+              theta factor: value-group data are dilated by theta/q data, while local
+              unit groups remain fixed up to isomorphism. This is the source-level
+              reason the wiki separates unit and value-group interfaces.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT I §I4</span><span class="tag">theta-link</span></div>
+          </div>
+          <div class="card" id="log-theta-two-dimensions-source">
+            <h3>Theta and log dimensions</h3>
+            <p>
+              IUT I says the later log-theta lattice has two dimensions matching the two
+              combinatorial dimensions of a ring. The theta direction is made of
+              Frobenius-picture deformations; the log direction rotates the additive and
+              multiplicative dimensions while the arithmetic holomorphic structure is
+              held fixed.
+            </p>
+            <div class="tagRow"><span class="tag violet">IUT I §I4</span><span class="tag">lattice</span></div>
+          </div>
+          <div class="card" id="canonical-bound-container">
+            <h3>Canonical bound in a fixed container</h3>
+            <p>
+              The same section points forward to Theorem 3.11 and Corollary 3.12:
+              a priori unbounded theta deformations should admit canonical bounds once
+              described inside a fixed mono-analytic container.
+            </p>
+            <div class="tagRow"><span class="tag red">IUT I §I4</span><span class="tag">3.11 / 3.12</span></div>
+          </div>
+          <div class="card" id="padic-teichmuller-correspondence">
+            <h3>p-adic Teichmuller correspondence</h3>
+            <p>
+              Figure I4.1 compares IUT with p-adic Teichmuller theory: number field with
+              punctured elliptic curve corresponds to a hyperbolic curve with nilpotent
+              ordinary indigenous bundle; the log-theta lattice corresponds to canonical
+              lifting data equipped with Frobenius action.
+            </p>
+            <div class="tagRow"><span class="tag blue">IUT I Fig. I4.1</span><span class="tag">p-adic analogy</span></div>
+          </div>
+          <div class="card" id="witt-vector-arrow-analogy">
+            <h3>Witt-vector arrow analogy</h3>
+            <p>
+              IUT I identifies theta arrows with the mixed-characteristic extension
+              structure of a ring of Witt vectors, and log arrows with the Frobenius
+              morphism in positive characteristic. Their failure to commute models the
+              noncommutativity of theta and log links.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT I §I4</span><span class="tag">Witt/Frobenius</span></div>
+          </div>
+          <div class="card" id="anabelian-reconstruction-canonical-lifting">
+            <h3>Anabelian reconstruction contrast</h3>
+            <p>
+              Mochizuki contrasts the relatively straightforward construction of
+              canonical liftings with their nontrivial absolute-anabelian reconstruction.
+              This mirrors IUT: constructing the log-theta lattice is not the hard part;
+              describing an alien arithmetic holomorphic structure is.
+            </p>
+            <div class="tagRow"><span class="tag violet">IUT I §I4</span><span class="tag">reconstruction</span></div>
+          </div>
+          <div class="card" id="formalization-teichmuller-rule">
+            <h3>Formalization rule</h3>
+            <p>
+              A formal model should keep separate the fixed mono-analytic container,
+              the arithmetic holomorphic structures being deformed, and the numerical
+              bound extracted from the container. This is the type-level analogue of the
+              complex Teichmuller fixed-container/varying-structure pattern.
+            </p>
+            <div class="tagRow"><span class="tag red">Lean guardrail</span><span class="tag">container vs structure</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
+          Related: <a href="#classical-roots-route">classical roots route</a>
+          <a href="#invitation-teichmuller-deformation">Invitation deformation</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#theta-log-links">theta/log links</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
         </div>
       </section>
 
