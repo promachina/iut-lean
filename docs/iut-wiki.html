@@ -1771,34 +1771,152 @@
       <section id="initial-theta-data">
         <h2>Initial Theta Data</h2>
         <p class="lede">
-          Initial theta data is the input package for the four-paper series. In IUT I,
-          it includes an elliptic curve over a number field, a prime <span class="math">l >= 5</span>,
-          selected places, torsion data, and technical hypotheses that allow Hodge theaters
-          and theta-link structures to be built.
+          Initial theta data is the input package for the four-paper series. IUT I,
+          Definition 3.1 fixes an algebraic closure over a number field, a
+          once-punctured elliptic curve, a prime <span class="math">l >= 5</span>, a
+          torsion-cover/orbicurve package, a valuation section, a nonempty set of bad
+          multiplicative places, and a distinguished cusp. The point of the definition is
+          not only to name constants, but to create the environment in which the later
+          anabelian, Frobenioid, Hodge-theater, and theta-link constructions can run.
         </p>
-        <div class="grid2">
+        <div class="diagram" aria-label="Initial theta data package">
+          <div class="diagramHeader">
+            <strong>Initial theta data package</strong>
+            <span>the source input before Hodge theaters are built</span>
+          </div>
+          <svg viewBox="0 0 900 360" role="img">
+            <defs>
+              <marker id="arrowInitTheta" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="42" y="72" width="150" height="82"></rect>
+            <text class="nodeTitle" x="117" y="103" text-anchor="middle">number field data</text>
+            <text class="tinyText" x="117" y="126" text-anchor="middle">Fbar/F, Fmod, K</text>
+            <text class="tinyText" x="117" y="144" text-anchor="middle">Galois constraints</text>
+
+            <rect class="nodeBox green" x="255" y="72" width="150" height="82"></rect>
+            <text class="nodeTitle" x="330" y="103" text-anchor="middle">elliptic curve</text>
+            <text class="tinyText" x="330" y="126" text-anchor="middle">X_F subset E_F</text>
+            <text class="tinyText" x="330" y="144" text-anchor="middle">prime l >= 5</text>
+
+            <rect class="nodeBox gold" x="468" y="72" width="150" height="82"></rect>
+            <text class="nodeTitle" x="543" y="103" text-anchor="middle">covers</text>
+            <text class="tinyText" x="543" y="126" text-anchor="middle">C_K and X_K</text>
+            <text class="tinyText" x="543" y="144" text-anchor="middle">l-torsion quotient</text>
+
+            <rect class="nodeBox violet" x="681" y="72" width="150" height="82"></rect>
+            <text class="nodeTitle" x="756" y="103" text-anchor="middle">valuation section</text>
+            <text class="tinyText" x="756" y="126" text-anchor="middle">V over Vmod</text>
+            <text class="tinyText" x="756" y="144" text-anchor="middle">bad/good split</text>
+
+            <rect class="nodeBox red" x="260" y="225" width="380" height="72"></rect>
+            <text class="nodeTitle" x="450" y="253" text-anchor="middle">distinguished cusp epsilon</text>
+            <text class="tinyText" x="450" y="275" text-anchor="middle">chosen nonzero torsion cusp; canonical at bad places</text>
+
+            <line class="arrow" x1="192" y1="113" x2="255" y2="113" marker-end="url(#arrowInitTheta)"></line>
+            <line class="arrow" x1="405" y1="113" x2="468" y2="113" marker-end="url(#arrowInitTheta)"></line>
+            <line class="arrow" x1="618" y1="113" x2="681" y2="113" marker-end="url(#arrowInitTheta)"></line>
+            <line class="arrow" x1="543" y1="154" x2="478" y2="225" marker-end="url(#arrowInitTheta)"></line>
+            <line class="arrow" x1="756" y1="154" x2="558" y2="225" marker-end="url(#arrowInitTheta)"></line>
+          </svg>
+        </div>
+        <div class="grid3">
           <div class="card">
-            <h3>Why it matters</h3>
+            <h3>Field and moduli layer</h3>
             <p>
-              Initial theta data fixes the arithmetic environment before the theory starts
-              moving between copies. Later comparisons must remember which objects are
-              input data, which are transported, and which have had their ring/scheme
-              history weakened.
+              The data includes a number field with algebraic closure, the field of
+              moduli <span class="math">Fmod</span> of the elliptic curve, and a finite
+              Galois extension <span class="math">K</span> tied to the
+              <span class="math">l</span>-torsion representation.
             </p>
+            <div class="tagRow"><span class="tag green">IUT I Def. 3.1</span><span class="tag">Fmod/K</span></div>
+          </div>
+          <div class="card">
+            <h3>Elliptic curve layer</h3>
+            <p>
+              The curve <span class="math">X_F</span> is a once-punctured elliptic curve
+              inside <span class="math">E_F</span>. The quotient by the involution gives
+              the orbicurve <span class="math">C_F</span>, and the prime
+              <span class="math">l</span> controls the torsion and label symmetries.
+            </p>
+            <div class="tagRow"><span class="tag blue">elliptic input</span><span class="tag">l-torsion</span></div>
+          </div>
+          <div class="card">
+            <h3>Cover and quotient layer</h3>
+            <p>
+              The orbicurve <span class="math">C_K</span> over <span class="math">K</span>
+              has <span class="math">C_F ×_F K</span> as its core and determines the
+              associated cover <span class="math">X_K</span>. This is where the later
+              label-class and cusp geometry starts.
+            </p>
+            <div class="tagRow"><span class="tag gold">orbicurves</span><span class="tag">covers</span></div>
+          </div>
+          <div class="card">
+            <h3>Valuation section</h3>
+            <p>
+              The subset <span class="math">V</span> of valuations of <span class="math">K</span>
+              is chosen as a section over the valuations of <span class="math">Fmod</span>.
+              It separates archimedean/nonarchimedean and bad/good places for the local
+              prime-strip and log-volume constructions.
+            </p>
+            <div class="tagRow"><span class="tag violet">V</span><span class="tag">localization</span></div>
+          </div>
+          <div class="card">
+            <h3>Bad multiplicative places</h3>
+            <p>
+              <span class="math">Vbad_mod</span> is a nonempty set of nonarchimedean
+              places of odd residue characteristic where the elliptic curve has bad
+              multiplicative behavior. These places anchor the Tate-curve and theta
+              evaluation side of the theory.
+            </p>
+            <div class="tagRow"><span class="tag red">bad places</span><span class="tag">Tate curve</span></div>
+          </div>
+          <div class="card">
+            <h3>Distinguished cusp</h3>
+            <p>
+              The cusp <span class="math">epsilon</span> is a nonzero cusp of
+              <span class="math">C_K</span>. At bad places it is required to match the
+              canonical generator determined by the relevant torsion quotient.
+            </p>
+            <div class="tagRow"><span class="tag red">cusp</span><span class="tag">generator</span></div>
+          </div>
+          <div class="card">
+            <h3>Dupuy-Hilado decomposition</h3>
+            <p>
+              Dupuy-Hilado split the construction into pre-theta data
+              <span class="math">(F,l,E,S)</span> and auxiliary data
+              <span class="math">(V,M,epsilon)</span> that simulates a global
+              multiplicative subspace and generator.
+            </p>
+            <div class="tagRow"><span class="tag blue">exposition</span><span class="tag">global multiplicative subspace</span></div>
+          </div>
+          <div class="card">
+            <h3>Computable examples</h3>
+            <p>
+              Their 2025 paper proves an algorithm for generating initial theta data from
+              elliptic-curve databases over <span class="math">Q</span> and works out the
+              case of the Cremona curve 11a1.
+            </p>
+            <div class="tagRow"><span class="tag green">11a1</span><span class="tag">algorithm</span></div>
           </div>
           <div class="card">
             <h3>Formalization role</h3>
             <p>
-              This is one of the first places where a Lean development must choose between
-              a faithful construction and a typed record interface. Dupuy-Hilado show how
-              parts of the initial theta data can be made explicit for the curve 11a1.
+              In Lean, this object should begin as a structured input record but should not
+              remain a mere label: the long-term target is to replace fields such as
+              valuation sections, covers, torsion quotients, and cusp compatibility by
+              explicit constructions or cited theorem interfaces.
             </p>
+            <div class="tagRow"><span class="tag gold">Lean interface</span><span class="tag">source obligations</span></div>
           </div>
         </div>
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
           <a href="papers/dupuy-hilado-corollary-312-initial-theta-indeterminacies.pdf" target="_blank">Dupuy-Hilado initial theta data</a>
           Related: <a href="#hodge-theaters">Hodge theaters</a>
+          <a href="#iut-i-atlas">IUT I atlas</a>
           <a href="#corollary-312">Corollary 3.12</a>
         </div>
       </section>
