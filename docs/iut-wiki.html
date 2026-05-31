@@ -531,6 +531,7 @@
         <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift 4.6</a>
         <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry 4.7</a>
         <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization 4.8</a>
+        <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips 4.9</a>
         <a href="#theta-evaluation-kummer-route">Theta evaluation route</a>
         <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
         <a href="#frobenioids-log-shells">Frobenioids and log-shells</a>
@@ -1525,6 +1526,9 @@
               <a href="#fl-symmetry-no-conjugate-sync-472">Fl without conjugate synchronization</a>,
               <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization</a>,
               <a href="#realified-localization-functor-481">realified localization functor</a>,
+              <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips</a>,
+              <a href="#times-mu-submodules-49">×μ submodule invariant</a>,
+              <a href="#f-times-mu-pilot-object-49">F×μ pilot object</a>,
               <a href="#gaussian-monoids">Gaussian monoids</a>,
               <a href="#tempered-gaussian-frobenioids">tempered Gaussian Frobenioids</a>,
               <a href="#split-theta-monoids">split theta monoids</a>,
@@ -4543,7 +4547,7 @@
           <tr>
             <td>§4</td>
             <td>Global Gaussian Frobenioids and the modified theta-link variants <span class="math">Theta×μ</span> and <span class="math">Theta×μ_gau</span>.</td>
-            <td><a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids</a>, <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids</a>, <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift</a>, <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry</a>, <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization</a>, <a href="#theta-log-links">theta/log links</a>, <a href="#log-theta-lattice">log-theta lattice</a></td>
+            <td><a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids</a>, <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids</a>, <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift</a>, <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry</a>, <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization</a>, <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips</a>, <a href="#theta-log-links">theta/log links</a>, <a href="#log-theta-lattice">log-theta lattice</a></td>
           </tr>
         </table>
         <table>
@@ -12006,6 +12010,273 @@
           <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>
           <a href="#theta-log-links">theta/log links</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
+        </div>
+      </section>
+
+      <section id="f-times-mu-kummer-prime-strips-ii49">
+        <h2>F×μ Kummer Prime-Strips in IUT II 4.9</h2>
+        <p class="lede">
+          Definition 4.9 creates the weakened Kummer interfaces used by the
+          modified theta links. It starts from a Frobenioid over the category of
+          connected finite etale covers of a local or archimedean field, extracts
+          unit and torsion-quotient data at a universal covering pro-object, and
+          packages the result into <span class="math">F⊢×</span>,
+          <span class="math">F⊢×μ</span>, <span class="math">F⊢ ×μ</span>, and
+          <span class="math">F×μ</span> prime-strips.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Definition 4.9 Kummer prime-strip construction">
+          <div class="diagramHeader">
+            <strong>Definition 4.9 construction route</strong>
+            <span>unit quotients and place-sensitive weakened prime-strips</span>
+          </div>
+          <svg viewBox="0 0 1120 620" role="img">
+            <defs>
+              <marker id="arrowFtimesMu49" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="74" y="58" width="250" height="84"></rect>
+            <text class="nodeTitle" x="199" y="88" text-anchor="middle">Frobenioid C over D</text>
+            <text class="tinyText" x="199" y="112" text-anchor="middle">D finite etale cover category</text>
+            <text class="tinyText" x="199" y="130" text-anchor="middle">MLF or CAF base</text>
+
+            <rect class="nodeBox gold" x="436" y="58" width="250" height="84"></rect>
+            <text class="nodeTitle" x="561" y="88" text-anchor="middle">universal cover A</text>
+            <text class="tinyText" x="561" y="112" text-anchor="middle">G = Aut(A)</text>
+            <text class="tinyText" x="561" y="130" text-anchor="middle">evaluate O-triangle at A</text>
+
+            <rect class="nodeBox violet" x="798" y="58" width="250" height="84"></rect>
+            <text class="nodeTitle" x="923" y="88" text-anchor="middle">× and ×μ Kummer structures</text>
+            <text class="tinyText" x="923" y="112" text-anchor="middle">unit isomorphism orbits</text>
+            <text class="tinyText" x="923" y="130" text-anchor="middle">I_H^kappa submodules</text>
+
+            <rect class="nodeBox red" x="74" y="260" width="250" height="84"></rect>
+            <text class="nodeTitle" x="199" y="290" text-anchor="middle">bad places</text>
+            <text class="tinyText" x="199" y="314" text-anchor="middle">2l-torsion plus splittings</text>
+            <text class="tinyText" x="199" y="332" text-anchor="middle">O_perp / mu_2l</text>
+
+            <rect class="nodeBox green" x="436" y="260" width="250" height="84"></rect>
+            <text class="nodeTitle" x="561" y="290" text-anchor="middle">good nonarchimedean places</text>
+            <text class="tinyText" x="561" y="314" text-anchor="middle">splitting image submonoid</text>
+            <text class="tinyText" x="561" y="332" text-anchor="middle">direct product with units mod torsion</text>
+
+            <rect class="nodeBox blue" x="798" y="260" width="250" height="84"></rect>
+            <text class="nodeTitle" x="923" y="290" text-anchor="middle">archimedean places</text>
+            <text class="tinyText" x="923" y="314" text-anchor="middle">inductive system over N</text>
+            <text class="tinyText" x="923" y="332" text-anchor="middle">torsion-quotient Kummer data</text>
+
+            <rect class="nodeBox green" x="228" y="458" width="290" height="84"></rect>
+            <text class="nodeTitle" x="373" y="488" text-anchor="middle">F⊢×μ prime-strip</text>
+            <text class="tinyText" x="373" y="512" text-anchor="middle">place-indexed weakened data</text>
+            <text class="tinyText" x="373" y="530" text-anchor="middle">Definition 4.9(vii)</text>
+
+            <rect class="nodeBox gold" x="604" y="458" width="290" height="84"></rect>
+            <text class="nodeTitle" x="749" y="488" text-anchor="middle">F×μ prime-strip</text>
+            <text class="tinyText" x="749" y="512" text-anchor="middle">global C plus F⊢ ×μ data</text>
+            <text class="tinyText" x="749" y="530" text-anchor="middle">pilot object of negative degree</text>
+
+            <path d="M326 100 H434" class="edge blue" marker-end="url(#arrowFtimesMu49)"></path>
+            <path d="M688 100 H796" class="edge gold" marker-end="url(#arrowFtimesMu49)"></path>
+            <path d="M923 144 C850 202 416 210 214 258" class="edge red" marker-end="url(#arrowFtimesMu49)"></path>
+            <path d="M923 144 C826 198 646 222 574 258" class="edge green" marker-end="url(#arrowFtimesMu49)"></path>
+            <path d="M923 144 V258" class="edge blue" marker-end="url(#arrowFtimesMu49)"></path>
+            <path d="M199 346 C230 392 300 432 356 456" class="edge red" marker-end="url(#arrowFtimesMu49)"></path>
+            <path d="M561 346 C520 392 438 424 388 456" class="edge green" marker-end="url(#arrowFtimesMu49)"></path>
+            <path d="M923 346 C870 394 794 426 758 456" class="edge blue" marker-end="url(#arrowFtimesMu49)"></path>
+            <path d="M520 500 H602" class="edge gold" marker-end="url(#arrowFtimesMu49)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Source item</th><th>Definition</th><th>Formal meaning</th></tr>
+          <tr>
+            <td>Definition 4.9(i)</td>
+            <td>
+              For a Frobenioid <span class="math">C</span> with universal covering
+              pro-object <span class="math">A</span> and
+              <span class="math">G = Aut(A)</span>, define
+              <span class="math">×</span>- and <span class="math">×μ</span>-Kummer
+              structures as orbits of isomorphisms from group-theoretically
+              reconstructed units to units evaluated at <span class="math">A</span>.
+            </td>
+            <td>
+              This is the unit-side interface. The <span class="math">×</span>
+              structure is unique; the <span class="math">×μ</span> structure is
+              determined by the invariant submodules
+              <span class="math">I_H^κ(A)</span> for open subgroups
+              <span class="math">H ⊆ G</span>.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 4.9(ii)-(iii)</td>
+            <td>
+              At bad nonarchimedean places, the <span class="math">2l</span>-torsion
+              and splitting images generate <span class="math">O_perp(A)</span>.
+              The quotient by <span class="math">μ_2l(A)</span>, together with
+              units modulo torsion, builds a split
+              <span class="math">×μ</span>-Kummer Frobenioid.
+            </td>
+            <td>
+              The bad-place construction is where the theta-level
+              <span class="math">2l</span>-torsion enters the weakened link domain.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 4.9(iv)</td>
+            <td>
+              At good nonarchimedean places, the splitting image alone determines
+              <span class="math">O_perp(A)</span>. The same unit-quotient mechanism
+              produces the split <span class="math">×μ</span>-Kummer Frobenioid.
+            </td>
+            <td>
+              Good places have no theta <span class="math">2l</span>-torsion
+              generator in this definition; the source is the splitting image.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 4.9(v)</td>
+            <td>
+              At archimedean places, replace the split Frobenioid by an inductive
+              system of quotients by <span class="math">N</span>-torsion, indexed by
+              a multiplicatively cofinal subset of <span class="math">N≥1</span>.
+            </td>
+            <td>
+              The archimedean Kummer structure is reconstructed from compatible
+              torsion-quotient systems, up to the unique nontrivial automorphism of
+              the circle-like unit group.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 4.9(vi)-(vii)</td>
+            <td>
+              Assemble the placewise constructions into
+              <span class="math">F⊢ ×μ</span>, and define the weakened
+              <span class="math">F⊢×</span>, <span class="math">F⊢×μ</span>, and
+              <span class="math">F⊢ ×μ</span>-prime-strips by place-indexed
+              isomorphism classes.
+            </td>
+            <td>
+              This gives the coric, unit-sensitive prime-strip type preserved by
+              the modified theta links.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 4.9(viii)</td>
+            <td>
+              An <span class="math">F×μ</span>-prime-strip is an
+              <span class="math">F</span>-prime-strip whose
+              <span class="math">F⊢</span> portion is replaced by
+              <span class="math">F⊢ ×μ</span>. Bad-place generators and global
+              comparison maps determine a pilot object of negative arithmetic degree.
+            </td>
+            <td>
+              This is the object class on which Corollary 4.10 defines the
+              <span class="math">Theta×μ</span> and
+              <span class="math">Theta×μ_gau</span> full poly-isomorphisms.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="times-kummer-structure-49">
+            <h3>×-Kummer structure</h3>
+            <p>
+              The <span class="math">×</span>-structure is a
+              <span class="math">Z×</span>-orbit of G-equivariant unit
+              isomorphisms <span class="math">O×(G) -> O×(A)</span>. Mochizuki
+              cites uniqueness from the preceding rigidity theory.
+            </p>
+            <div class="tagRow"><span class="tag blue">Def. 4.9(i)</span><span class="tag">unique</span></div>
+          </div>
+          <div class="card" id="times-mu-submodules-49">
+            <h3>×μ submodule invariant</h3>
+            <p>
+              A <span class="math">×μ</span>-structure is equivalently the family
+              <span class="math">{I_H^κ(A)}</span> inside
+              <span class="math">O×μ(A)</span> as
+              <span class="math">H</span> ranges over open subgroups of
+              <span class="math">G</span>.
+            </p>
+            <div class="tagRow"><span class="tag violet">Def. 4.9(i)</span><span class="tag">torsion quotient</span></div>
+          </div>
+          <div class="card" id="bad-place-fperp-times-mu-49">
+            <h3>Bad-place construction</h3>
+            <p>
+              At <span class="math">Vbad</span>, the monoid generated by
+              <span class="math">μ_2l(A)</span> and splitting images is quotiented
+              by <span class="math">μ_2l(A)</span>. This supplies the value part of
+              the direct product with units modulo torsion.
+            </p>
+            <div class="tagRow"><span class="tag red">Def. 4.9(ii)-(iii)</span><span class="tag">2l torsion</span></div>
+          </div>
+          <div class="card" id="good-place-fperp-times-mu-49">
+            <h3>Good-place construction</h3>
+            <p>
+              At good nonarchimedean places, the splitting image determines
+              <span class="math">O_perp(A)</span>; no additional
+              <span class="math">2l</span>-torsion generator is inserted.
+            </p>
+            <div class="tagRow"><span class="tag green">Def. 4.9(iv)</span><span class="tag">splitting</span></div>
+          </div>
+          <div class="card" id="archimedean-torsion-system-49">
+            <h3>Archimedean torsion system</h3>
+            <p>
+              At archimedean places, <span class="math">F⊢ ×μ</span> is an
+              inductive system of split Frobenioids obtained by quotienting units
+              by <span class="math">N</span>-torsion.
+            </p>
+            <div class="tagRow"><span class="tag blue">Def. 4.9(v)</span><span class="tag">inductive</span></div>
+          </div>
+          <div class="card" id="fperp-prime-strip-49">
+            <h3>F⊢×μ prime-strip</h3>
+            <p>
+              Definition 4.9(vii) defines the weakened
+              <span class="math">F⊢</span>-prime-strip variants as placewise
+              collections isomorphic to the data constructed in 4.9(vi).
+            </p>
+            <div class="tagRow"><span class="tag green">Def. 4.9(vii)</span><span class="tag">placewise</span></div>
+          </div>
+          <div class="card" id="f-times-mu-pilot-object-49">
+            <h3>F×μ pilot object</h3>
+            <p>
+              In an <span class="math">F×μ</span>-prime-strip, bad-place
+              generators and the comparison maps determine a well-defined global
+              realified Frobenioid object of negative arithmetic degree.
+            </p>
+            <div class="tagRow"><span class="tag gold">Def. 4.9(viii)</span><span class="tag">pilot</span></div>
+          </div>
+          <div class="card" id="weakened-link-domain-49">
+            <h3>Weakened link domain</h3>
+            <p>
+              The definition keeps enough unit/Kummer information for later
+              log-wall comparison while deliberately weakening the full
+              Frobenioid data that theta links do not preserve.
+            </p>
+            <div class="tagRow"><span class="tag red">link domain</span><span class="tag">coric</span></div>
+          </div>
+          <div class="card" id="f-times-mu-to-theta-links-49">
+            <h3>Input to modified theta links</h3>
+            <p>
+              Corollary 4.10 immediately applies Definition 4.9 to constant,
+              theta, and Gaussian F-prime-strips before defining the
+              <span class="math">Theta×μ</span> and
+              <span class="math">Theta×μ_gau</span> links.
+            </p>
+            <div class="tagRow"><span class="tag violet">Cor. 4.10</span><span class="tag">next step</span></div>
+          </div>
+        </div>
+        <div class="callout warn">
+          Source warning: <span class="math">F⊢×μ</span> is not a decorative
+          suffix on an <span class="math">F⊢</span>-prime-strip. It records exactly
+          the unit-quotient/Kummer interface whose coricity survives the modified
+          theta links; the divisor/value-group component is treated separately.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Definition 4.9</a>
+          Related: <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization</a>
+          <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
+          <a href="#theta-xmu-link">Theta×μ link</a>
+          <a href="#theta-xmu-gau-link">Theta×μ-gau link</a>
+          <a href="#frobenioids-log-shells">Frobenioids/log-shells</a>
         </div>
       </section>
 
