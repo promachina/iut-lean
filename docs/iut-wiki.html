@@ -559,6 +559,7 @@
         <a href="#log-kummer-correspondences">Log-Kummer correspondences</a>
         <a href="#theta-monoid-vertical-coricity-iii21">Theta monoid vertical coricity 2.1</a>
         <a href="#theta-monoid-multiradiality-iii22">Theta monoid multiradiality 2.2</a>
+        <a href="#f-perp-prime-strips-pilot-iii24">F-perp prime-strips 2.4</a>
         <a href="#multiradiality">Multiradiality</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
@@ -1607,6 +1608,9 @@
               <a href="#bad-prime-zero-map-21">bad-prime zero map source</a>,
               <a href="#theta-monoid-multiradiality-iii22">theta monoid multiradiality</a>,
               <a href="#radial-coric-etale-picture-23">radial/coric etale picture</a>,
+              <a href="#f-perp-prime-strips-pilot-iii24">F-perp/F prime-strip variants</a>,
+              <a href="#pilot-object-common-container-242">pilot-object common container</a>,
+              <a href="#positive-negative-pilot-warning-242">positive/negative pilot warning</a>,
               <a href="#vertical-coric-theta-monoids">vertical coric theta monoids</a>,
               <a href="#theta-monoid-kummer-isomorphisms">theta-monoid Kummer isomorphisms</a>,
               <a href="#bad-prime-kummer-zero-map">bad-prime zero map</a>,
@@ -15666,6 +15670,247 @@
           <a href="#multiradiality">multiradiality overview</a>
           <a href="#log-kummer-correspondences">log-Kummer correspondences</a>
           <a href="#theta-times-mu-frobenius-pictures-ii410">Theta×μ Frobenius-pictures</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="f-perp-prime-strips-pilot-iii24">
+        <h2>F-perp Prime-Strips and Pilot Objects in IUT III 2.4</h2>
+        <p class="lede">
+          Definition 2.4 is the short but important transition from the theta-monoid
+          radial/coric picture of Corollary 2.3 to the Gaussian and log-volume
+          machinery of §3. It introduces prime-strip variants built from
+          <span class="math">O⊥</span> submonoids and records how pilot objects in
+          global realified Frobenioids can be reconstructed from ordered real monoids.
+        </p>
+        <div class="diagram fit" aria-label="IUT III Definition 2.4 and Remark 2.4.2 prime-strip and pilot-object route">
+          <div class="diagramHeader">
+            <strong>Definition 2.4 and Remark 2.4.2</strong>
+            <span>subquotient Frobenioids, pilot element, and positivity constraint</span>
+          </div>
+          <svg viewBox="0 0 1120 640" role="img">
+            <defs>
+              <marker id="arrowFPerp24" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="58" y="62" width="230" height="88"></rect>
+            <text class="nodeTitle" x="173" y="92" text-anchor="middle">F⊢ prime-strip</text>
+            <text class="tinyText" x="173" y="116" text-anchor="middle">split Frobenioids over V</text>
+            <text class="tinyText" x="173" y="134" text-anchor="middle">input to Definition 2.4(i)</text>
+
+            <rect class="nodeBox green" x="370" y="62" width="230" height="88"></rect>
+            <text class="nodeTitle" x="485" y="92" text-anchor="middle">O⊥ subquotients</text>
+            <text class="tinyText" x="485" y="116" text-anchor="middle">bad: O⊥ ⊆ O◃, quotient by torsion</text>
+            <text class="tinyText" x="485" y="134" text-anchor="middle">good: O = O⊥</text>
+
+            <rect class="nodeBox gold" x="682" y="62" width="230" height="88"></rect>
+            <text class="nodeTitle" x="797" y="92" text-anchor="middle">F⊢⊥ and F⊢ variants</text>
+            <text class="tinyText" x="797" y="116" text-anchor="middle">local Frobenioids plus TM⊢ at arc places</text>
+            <text class="tinyText" x="797" y="134" text-anchor="middle">Definition 2.4(ii)</text>
+
+            <rect class="nodeBox violet" x="214" y="252" width="260" height="90"></rect>
+            <text class="nodeTitle" x="344" y="282" text-anchor="middle">F⊥ and F prime-strips</text>
+            <text class="tinyText" x="344" y="306" text-anchor="middle">C, Prime(C) ≃ V, local strip, rho_v</text>
+            <text class="tinyText" x="344" y="324" text-anchor="middle">Definition 2.4(iii)</text>
+
+            <rect class="nodeBox red" x="610" y="252" width="260" height="90"></rect>
+            <text class="nodeTitle" x="740" y="282" text-anchor="middle">multiradiality inherited</text>
+            <text class="tinyText" x="740" y="306" text-anchor="middle">Fenv(D&gt;) gives F⊥env(D&gt;)</text>
+            <text class="tinyText" x="740" y="324" text-anchor="middle">Remark 2.4.1</text>
+
+            <rect class="nodeBox green" x="96" y="454" width="240" height="88"></rect>
+            <text class="nodeTitle" x="216" y="484" text-anchor="middle">ordered monoid M ≃ R</text>
+            <text class="tinyText" x="216" y="508" text-anchor="middle">local copies M_v and maps rho</text>
+            <text class="tinyText" x="216" y="526" text-anchor="middle">weights r_v</text>
+
+            <rect class="nodeBox blue" x="438" y="454" width="240" height="88"></rect>
+            <text class="nodeTitle" x="558" y="484" text-anchor="middle">negative pilot element</text>
+            <text class="tinyText" x="558" y="508" text-anchor="middle">eta_M &lt; 0</text>
+            <text class="tinyText" x="558" y="526" text-anchor="middle">rho_v(eta_v) = r_v eta_M</text>
+
+            <rect class="nodeBox gold" x="780" y="454" width="240" height="88"></rect>
+            <text class="nodeTitle" x="900" y="484" text-anchor="middle">common container C</text>
+            <text class="tinyText" x="900" y="508" text-anchor="middle">Pic(C) reconstructs C, Prime(C)</text>
+            <text class="tinyText" x="900" y="526" text-anchor="middle">pilot choices compared inside C</text>
+
+            <path d="M290 106 H368" class="edge blue" marker-end="url(#arrowFPerp24)"></path>
+            <path d="M602 106 H680" class="edge green" marker-end="url(#arrowFPerp24)"></path>
+            <path d="M793 152 C740 208 524 226 384 250" class="edge gold" marker-end="url(#arrowFPerp24)"></path>
+            <path d="M476 297 H608" class="edge red" marker-end="url(#arrowFPerp24)"></path>
+            <path d="M216 452 C240 404 308 370 344 344" class="edge violet" marker-end="url(#arrowFPerp24)"></path>
+            <path d="M338 498 H436" class="edge green" marker-end="url(#arrowFPerp24)"></path>
+            <path d="M680 498 H778" class="edge blue" marker-end="url(#arrowFPerp24)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Construction</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Definition 2.4(i)</td>
+            <td>
+              From an <span class="math">F⊢</span>-prime-strip, replace the split
+              Frobenioid portion at bad primes by Frobenioids determined by
+              <span class="math">O⊥ ⊆ O◃</span> and by the torsion quotient
+              <span class="math">O</span>. At good primes the unit subgroup is trivial,
+              so <span class="math">O = O⊥</span>.
+            </td>
+            <td>
+              This isolates the subquotient Frobenioid structures used to pass from
+              theta-monoid radial data toward Gaussian/log-shell objects.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 2.4(ii)</td>
+            <td>
+              Defines <span class="math">F⊢⊥</span>- and
+              <span class="math">F⊢</span>-prime-strips as local collections over
+              <span class="math">V</span>, using Frobenioids at nonarchimedean places
+              and Frobenioid plus <span class="math">TM⊢</span> data at archimedean
+              places. Morphisms are indexed collections of isomorphisms.
+            </td>
+            <td>
+              This keeps the local type distinction explicit instead of treating
+              "prime-strip" as a single untyped label.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 2.4(iii)</td>
+            <td>
+              Defines <span class="math">F⊥</span>- and
+              <span class="math">F</span>-prime-strips by replacing the local
+              <span class="math">F⊢</span> portion in the usual global
+              <span class="math">F</span>-prime-strip package
+              <span class="math">(C, Prime(C) ≃ V, local strip, ρ_v)</span>.
+            </td>
+            <td>
+              These are the global prime-strip variants that carry the later pilot
+              objects and realified Frobenioid comparisons.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 2.4.1</td>
+            <td>
+              Applying Definition 2.4(i) to the
+              <span class="math">F_env(D&gt;)</span> prime-strips of Corollary 2.3 gives
+              multiradiality for the associated
+              <span class="math">F⊥_env(D&gt;)</span>. At bad primes, the
+              <span class="math">O⊥</span> submonoids sit naturally inside the
+              <span class="math">∞Ψ⊥_env(D&gt;)_v</span> monoids of Theorem 2.2(ii).
+            </td>
+            <td>
+              This ties the new <span class="math">F⊥</span> interface back to the
+              theta-monoid multiradiality already established in §2.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 2.4.2(ii)-(iv)</td>
+            <td>
+              The weights <span class="math">r_v</span> are defined from local degree
+              factors and either <span class="math">log(p_v)</span> at good primes or
+              <span class="math">ord_v(q_v)log(p_v)</span> at bad primes. An ordered
+              monoid <span class="math">M ≃ R</span> gives local copies
+              <span class="math">M_v</span>; a negative pilot element
+              <span class="math">η_M</span> gives submonoids with
+              <span class="math">ρ_v(η_{M_v}) = r_v η_M</span>.
+            </td>
+            <td>
+              This is the numerical skeleton behind the pilot-object comparison and
+              later weighted log-volume conventions.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 2.4.2(v)-(vi)</td>
+            <td>
+              Taking <span class="math">M = Pic(C)</span> reconstructs
+              <span class="math">(C, Prime(C) ≃ V)</span>. Adding the negative pilot
+              element reconstructs the further rigidification by local constant divisor
+              monoids and the maps <span class="math">ρ_v</span>.
+            </td>
+            <td>
+              Distinct negative pilot choices can be compared inside the common
+              Frobenioid container <span class="math">C</span>; comparing positive and
+              negative choices would reverse the order structure and destroy the
+              meaningful height distinction.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="f-perp-subquotient-frobenioids-24">
+            <h3>Subquotient Frobenioids</h3>
+            <p>
+              Definition 2.4 starts with local split Frobenioids and replaces their
+              relevant portions by Frobenioids attached to
+              <span class="math">O⊥</span> and to its torsion quotient. The good-prime
+              case is simpler because the unit subgroup is trivial.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 2.4(i)</span><span class="tag">O⊥</span></div>
+          </div>
+          <div class="card" id="f-perp-global-prime-strip-24">
+            <h3>Global F⊥ and F variants</h3>
+            <p>
+              The global <span class="math">F⊥</span> and
+              <span class="math">F</span> variants keep the same global spine:
+              a global realified Frobenioid <span class="math">C</span>, a prime
+              identification with <span class="math">V</span>, local strip data, and
+              comparison maps <span class="math">ρ_v</span>.
+            </p>
+            <div class="tagRow"><span class="tag blue">Definition 2.4(iii)</span><span class="tag">global strip</span></div>
+          </div>
+          <div class="card" id="multiradial-f-perp-env-241">
+            <h3>Inherited multiradiality</h3>
+            <p>
+              Remark 2.4.1 says that the theta-monoid multiradiality of Corollary 2.3
+              passes to associated <span class="math">F⊥</span>-prime-strips. This
+              prevents §2.4 from becoming a fresh unproved bridge.
+            </p>
+            <div class="tagRow"><span class="tag violet">Remark 2.4.1</span><span class="tag">inheritance</span></div>
+          </div>
+          <div class="card" id="pilot-object-common-container-242">
+            <h3>Pilot-object common container</h3>
+            <p>
+              Remark 2.4.2 reconstructs the common Frobenioid container from
+              <span class="math">Pic(C)</span> as an ordered monoid. Different negative
+              pilot elements then produce different rigidifications that remain
+              comparable inside the same <span class="math">C</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Remark 2.4.2(v)-(vi)</span><span class="tag">common container</span></div>
+          </div>
+          <div class="card" id="pilot-weights-rv-242">
+            <h3>Weights r_v</h3>
+            <p>
+              The local weights combine residue degree factors with either
+              <span class="math">log(p_v)</span> or
+              <span class="math">ord_v(q_v)log(p_v)</span>. They make the local
+              pilot-element images satisfy <span class="math">ρ_v(η_v)=r_vη</span>.
+            </p>
+            <div class="tagRow"><span class="tag gold">Remark 2.4.2(ii)-(iv)</span><span class="tag">weights</span></div>
+          </div>
+          <div class="card" id="positive-negative-pilot-warning-242">
+            <h3>Positive/negative warning</h3>
+            <p>
+              Remark 2.4.2 warns that comparing positive and negative pilot choices
+              reverses the order on <span class="math">M</span>. The resulting
+              Frobenioids have pre-steps in opposite directions; embedding them in an
+              ambient category that inverts those pre-steps makes the height distinction
+              meaningless.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 2.4.2(vi)</span><span class="tag">positivity</span></div>
+          </div>
+        </div>
+        <div class="callout warn">
+          <strong>Formalization warning.</strong> The pilot-object discussion is not a
+          generic "compare any two real numbers" interface. The source requires a fixed
+          ordered-monoid orientation and negative pilot elements; allowing a positive
+          versus negative comparison would erase precisely the arithmetic degree
+          distinction the Frobenioid container is meant to preserve.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Definition 2.4 and Remarks 2.4.1-2.4.2</a>
+          Related: <a href="#theta-monoid-multiradiality-iii22">theta monoid multiradiality</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+          <a href="#theta-pilot-q-pilot">theta/q pilot objects</a>
+          <a href="#weighted-log-volume-measure">weighted log-volume measure</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
         </div>
       </section>
