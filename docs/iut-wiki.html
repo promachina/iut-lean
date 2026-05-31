@@ -784,6 +784,11 @@
         <a href="#multiplicative-additive-bridges">Multiplicative/additive bridges</a>
         <a href="#theta-plus-minus-ell-relay">Theta±ell relay</a>
         <a href="#theta-plus-minus-ell-lift-611-612">Theta±ell lift 6.11-6.12</a>
+        <a href="#theta-pm-bridge-lift-iut-i611">Theta± bridge lift 6.11</a>
+        <a href="#thetaell-bridge-lift-iut-i611">Thetaell bridge lift 6.11</a>
+        <a href="#theta-pmell-theater-lift-iut-i611">Theta±ell theater lift 6.11</a>
+        <a href="#theta-pmell-isomorphism-rigidity-iut-i612">Theta±ell rigidity 6.12</a>
+        <a href="#theta-pmell-gluing-torsor-iut-i612">Theta±ell gluing torsor 6.12</a>
         <a href="#theta-plus-minus-ell-nf-gluing-613">Theta±ellNF gluing 6.13</a>
         <a href="#mono-theta-environments-ii11">Mono-theta environments 1.1</a>
         <a href="#mono-theta-construction-routes-ii12-15">Mono-theta construction 1.2-1.5</a>
@@ -21398,6 +21403,150 @@
           Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.11 and Corollary 6.12</a>
           Related: <a href="#d-theta-plus-minus-ell-64-66">D-Theta±ell base</a>
           <a href="#additive-to-multiplicative-67-610">Proposition 6.7 hinge</a>
+          <a href="#theta-plus-minus-ell-nf-gluing-613">Theta±ellNF gluing</a>
+        </div>
+      </section>
+
+      <section id="theta-pm-bridge-lift-iut-i611">
+        <h2>Theta± Bridge Lift in IUT I 6.11</h2>
+        <p class="lede">
+          Definition 6.11(i) defines a Theta± bridge as an F-prime-strip
+          poly-morphism <span class="math">F_T -> F_≻</span> that lifts a D-Theta±
+          bridge by Corollary 5.3(ii). The index set <span class="math">T</span> is an
+          <span class="math">F_l^±</span>-group, and the quotient capsule
+          <span class="math">F_|T|</span> is formed by identifying sign-paired
+          components through the bridge morphisms.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Lifted datum</th><th>Definition 6.11(i)</th><th>Consequence</th></tr>
+          <tr>
+            <td><span class="math">F_T</span></td>
+            <td>Capsule of F-prime-strips indexed by an <span class="math">F_l^±</span>-group.</td>
+            <td>The additive index structure is preserved at F-level.</td>
+          </tr>
+          <tr>
+            <td><span class="math">F_|T|</span></td>
+            <td>The quotient by <span class="math">{±1}</span>; constituents are well-defined up to positive automorphism.</td>
+            <td>The same sign-pairing ambiguity from Definition 6.4 appears after lift.</td>
+          </tr>
+          <tr>
+            <td>Morphisms</td>
+            <td>Pairs of poly-isomorphisms lifting morphisms of associated D-Theta± bridges.</td>
+            <td>F-level isomorphisms are constrained by the D-level bridge.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.11(i)</a>
+          Related: <a href="#d-theta-pm-bridge-iut-i64">D-Theta± bridge</a>
+          <a href="#theta-pmell-isomorphism-rigidity-iut-i612">Theta±ell rigidity</a>
+          <a href="#theta-pmell-theater-lift-iut-i611">Theta±ell theater lift</a>
+        </div>
+      </section>
+
+      <section id="thetaell-bridge-lift-iut-i611">
+        <h2>Thetaell Bridge Lift in IUT I 6.11</h2>
+        <p class="lede">
+          Definition 6.11(ii) defines a Thetaell bridge. It keeps an
+          F-prime-strip capsule <span class="math">F_T</span> indexed by an
+          <span class="math">F_l^±</span>-torsor, but its target remains the D-level
+          category <span class="math">D ±</span>. Its associated D-prime-strip capsule
+          supplies the D-Thetaell bridge.
+        </p>
+        <div class="callout warn">
+          The right-hand target of a Thetaell bridge is not an F-prime-strip. It is the
+          global <span class="math">D ±</span> category. This is an important typing
+          distinction in Definition 6.11(ii).
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.11(ii)</a>
+          Related: <a href="#d-thetaell-bridge-iut-i64">D-Thetaell bridge</a>
+          <a href="#thetaell-model-iut-i63">Thetaell model</a>
+          <a href="#theta-pmell-theater-lift-iut-i611">Theta±ell theater lift</a>
+        </div>
+      </section>
+
+      <section id="theta-pmell-theater-lift-iut-i611">
+        <h2>Theta±ell Theater Lift in IUT I 6.11</h2>
+        <p class="lede">
+          Definition 6.11(iii) glues a Theta± bridge and a Thetaell bridge into a
+          Theta±ell-Hodge theater
+          <span class="math">F_≻ <- F_T -> D ±</span>. The associated D-data must form
+          a D-Theta±ell-Hodge theater, and morphisms must induce the same
+          poly-isomorphism on the F-prime-strip capsule.
+        </p>
+        <div class="flowDiagram" aria-label="Theta plus-minus ell lifted theater">
+          <div class="flowStep">
+            <strong>1. Theta± bridge</strong>
+            <p><span class="math">F_T -> F_≻</span> lifts the D-Theta± bridge.</p>
+          </div>
+          <div class="flowStep">
+            <strong>2. Thetaell bridge</strong>
+            <p><span class="math">F_T -> D ±</span> carries the F-capsule to the global D-target.</p>
+          </div>
+          <div class="flowStep">
+            <strong>3. D-theater check</strong>
+            <p>The associated D-data must be a D-Theta±ell-Hodge theater.</p>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.11(iii)</a>
+          Related: <a href="#theta-pm-bridge-lift-iut-i611">Theta± bridge lift</a>
+          <a href="#thetaell-bridge-lift-iut-i611">Thetaell bridge lift</a>
+          <a href="#d-theta-pmell-theater-iut-i64">D-Theta±ell theater</a>
+        </div>
+      </section>
+
+      <section id="theta-pmell-isomorphism-rigidity-iut-i612">
+        <h2>Theta±ell Rigidity in IUT I 6.12</h2>
+        <p class="lede">
+          Corollary 6.12(i) states that isomorphisms of Theta± bridges, Thetaell
+          bridges, and Theta±ell-Hodge theaters map bijectively to isomorphisms of
+          their associated D-Theta± bridges, D-Thetaell bridges, and
+          D-Theta±ell-Hodge theaters.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Lifted object</th><th>D-level controller</th><th>Consequence</th></tr>
+          <tr>
+            <td>Theta± bridge</td>
+            <td>D-Theta± bridge</td>
+            <td>F-level signed bridge isomorphisms are read through D-level data.</td>
+          </tr>
+          <tr>
+            <td>Thetaell bridge</td>
+            <td>D-Thetaell bridge</td>
+            <td>The mixed F-capsule/D-target type remains rigid over the D bridge.</td>
+          </tr>
+          <tr>
+            <td>Theta±ell-Hodge theater</td>
+            <td>D-Theta±ell-Hodge theater</td>
+            <td>The lifted theater has no hidden independent isomorphism freedom.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Corollary 6.12(i)</a>
+          Related: <a href="#theta-pmell-theater-lift-iut-i611">Theta±ell theater lift</a>
+          <a href="#bridge-isomorphism-rigidity-iut-i56">Section 5 bridge rigidity</a>
+          <a href="#pmell-isomorphism-torsors-iut-i66">D-level additive torsors</a>
+        </div>
+      </section>
+
+      <section id="theta-pmell-gluing-torsor-iut-i612">
+        <h2>Theta±ell Gluing Torsor in IUT I 6.12</h2>
+        <p class="lede">
+          Corollary 6.12(ii) states that, given a Theta± bridge and a Thetaell bridge,
+          the capsule-+-full poly-isomorphisms between their F-prime-strip capsules
+          that glue them into a Theta±ell-Hodge theater form a torsor over
+          <span class="math">F_l^± x {±1}^V</span>.
+        </p>
+        <div class="callout gold">
+          This is the F-level analogue of Proposition 6.6(iv). The first factor
+          corresponds to isomorphisms of <span class="math">F_l^±</span>-torsors
+          between capsule index sets; the second factor records valuation-wise signs.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Corollary 6.12(ii)</a>
+          Related: <a href="#theta-pmell-isomorphism-rigidity-iut-i612">Theta±ell rigidity</a>
+          <a href="#pmell-gluing-algorithm-iut-i66">D-level gluing algorithm</a>
           <a href="#theta-plus-minus-ell-nf-gluing-613">Theta±ellNF gluing</a>
         </div>
       </section>
