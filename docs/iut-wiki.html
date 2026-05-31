@@ -556,6 +556,10 @@
         <a href="#concept-index">Concept index</a>
         <a href="#anabelian-background">Anabelian background</a>
         <a href="#collas-category-perspective">Collas category view</a>
+        <a href="#collas-gms-categorification-page">Collas GMS categorification</a>
+        <a href="#collas-hodge-synchronization-page">Collas Hodge synchronization</a>
+        <a href="#collas-log-theta-wandering-page">Collas log-theta wandering</a>
+        <a href="#collas-universes-species-page">Collas universes/species</a>
         <a href="#collas-current-anabelian-work">Collas current anabelian work</a>
         <a href="#gt-species-perspective">GT species perspective</a>
         <a href="#hoshi-introduction-route">Hoshi introduction route</a>
@@ -3041,6 +3045,374 @@
           <a href="#gms-gcg-motivation">GMS/GCG motivation</a>
           <a href="#projective-line-gluing-analogy">projective-line gluing</a>
           <a href="#essential-logical-structure">logical structure</a>
+        </div>
+      </section>
+
+      <section id="collas-gms-categorification-page" data-filter="collas gms categorification global multiplicative subspace diophantine problem hodge theaters monoid geometry">
+        <h2>Collas GMS Categorification</h2>
+        <p class="lede">
+          Collas's IUT overview presents the first entrance to IUT as a Diophantine
+          categorification problem. The motivating object is a global
+          <span class="math">ell</span>-torsion multiplicative subspace for an elliptic
+          curve. Local versions exist at suitable places, but the global subspace needed
+          for the desired height argument is not available in general. IUT replaces that
+          absent global object by Hodge-theater and Frobenioid containers.
+        </p>
+        <div class="diagram fit" aria-label="Collas global multiplicative subspace categorification">
+          <div class="diagramHeader">
+            <strong>Local multiplicative data, categorical global simulation</strong>
+            <span>Collas §3.1 as a navigation layer for IUT I-IV</span>
+          </div>
+          <svg viewBox="0 0 1000 430" role="img">
+            <defs>
+              <marker id="arrowCollasGmsPage" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="52" y="70" width="210" height="82"></rect>
+            <text class="nodeTitle" x="157" y="100" text-anchor="middle">local data</text>
+            <text class="tinyText" x="157" y="124" text-anchor="middle">mu_ell below E_v</text>
+            <text class="tinyText" x="157" y="142" text-anchor="middle">at selected places v</text>
+
+            <rect class="nodeBox red" x="396" y="70" width="210" height="82"></rect>
+            <text class="nodeTitle" x="501" y="100" text-anchor="middle">global obstruction</text>
+            <text class="tinyText" x="501" y="124" text-anchor="middle">no single global GMS</text>
+            <text class="tinyText" x="501" y="142" text-anchor="middle">in the ordinary scheme setting</text>
+
+            <rect class="nodeBox green" x="740" y="70" width="210" height="82"></rect>
+            <text class="nodeTitle" x="845" y="100" text-anchor="middle">categorical replacement</text>
+            <text class="tinyText" x="845" y="124" text-anchor="middle">Hodge theaters</text>
+            <text class="tinyText" x="845" y="142" text-anchor="middle">Frobenioid packages</text>
+
+            <path class="edge blue" d="M264 111 H394" marker-end="url(#arrowCollasGmsPage)"></path>
+            <path class="edge green" d="M608 111 H738" marker-end="url(#arrowCollasGmsPage)"></path>
+
+            <rect class="nodeBox gold" x="158" y="252" width="260" height="86"></rect>
+            <text class="nodeTitle" x="288" y="282" text-anchor="middle">height inequality target</text>
+            <text class="tinyText" x="288" y="306" text-anchor="middle">Vojta or abc type estimate</text>
+            <text class="tinyText" x="288" y="324" text-anchor="middle">via elliptic-curve data</text>
+
+            <rect class="nodeBox violet" x="582" y="252" width="260" height="86"></rect>
+            <text class="nodeTitle" x="712" y="282" text-anchor="middle">source definitions</text>
+            <text class="tinyText" x="712" y="306" text-anchor="middle">IUT I Hodge theaters</text>
+            <text class="tinyText" x="712" y="324" text-anchor="middle">IUT III and IV comparisons</text>
+
+            <path class="edge gold" d="M501 154 C490 202 386 222 304 250" marker-end="url(#arrowCollasGmsPage)"></path>
+            <path class="edge violet" d="M845 154 C840 210 762 222 721 250" marker-end="url(#arrowCollasGmsPage)"></path>
+            <path class="edge green" d="M420 295 H580" marker-end="url(#arrowCollasGmsPage)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Collas point</th><th>Technical reading</th><th>Wiki target</th></tr>
+          <tr>
+            <td>Local existence</td>
+            <td>
+              At suitable local fields, elliptic curves admit the relevant
+              <span class="math">ell</span>-torsion multiplicative subspaces.
+            </td>
+            <td><a href="#gms-gcg-motivation">GMS/GCG motivation</a></td>
+          </tr>
+          <tr>
+            <td>Global failure</td>
+            <td>
+              The desired global multiplicative subspace is generally absent, so a
+              direct scheme-theoretic proof route is unavailable.
+            </td>
+            <td><a href="#hodge-theaters">Hodge theaters</a></td>
+          </tr>
+          <tr>
+            <td>Categorification</td>
+            <td>
+              IUT simulates the missing global object by category-theoretic containers,
+              especially Frobenioids and Hodge theaters.
+            </td>
+            <td><a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a></td>
+          </tr>
+          <tr>
+            <td>Formalization guardrail</td>
+            <td>
+              A Lean object should not merely name a global multiplicative subspace; it
+              must distinguish local availability from the categorical substitute.
+            </td>
+            <td><a href="#rims-four-triangle-route-2026">four-triangle route</a></td>
+          </tr>
+        </table>
+        <div class="callout green">
+          <strong>Use in this wiki.</strong> This page is interpretive. The exact objects
+          to formalize remain Mochizuki's Hodge-theater, Frobenioid, prime-strip, and
+          theta/log-link constructions, not Collas's expository shorthand.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/collas-anabelian-arithmetic-geometry-iut.pdf" target="_blank">Collas overview §3.1</a>
+          <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
+          <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III</a>
+          Related: <a href="#collas-category-perspective">Collas category view</a>
+          <a href="#collas-hodge-synchronization-page">Hodge synchronization</a>
+          <a href="#collas-log-theta-wandering-page">log-theta wandering</a>
+        </div>
+      </section>
+
+      <section id="collas-hodge-synchronization-page" data-filter="collas hodge theater synchronization theta nf theta plus minus ell arithmetic geometry symmetries basepoints">
+        <h2>Collas Hodge Synchronization</h2>
+        <p class="lede">
+          Collas describes a Hodge theater as a synchronization device. It combines the
+          arithmetic symmetries of the base field with the geometric symmetries of a
+          pointed genus-one curve. The result is not one ordinary scheme copied many
+          times, but a typed container in which multiplicative and additive information
+          can be separated before later comparison.
+        </p>
+        <div class="diagram fit" aria-label="Hodge theater synchronization in Collas's account">
+          <div class="diagramHeader">
+            <strong>Theater as synchronized container</strong>
+            <span>arithmetic and geometric symmetries remain typed</span>
+          </div>
+          <svg viewBox="0 0 980 430" role="img">
+            <defs>
+              <marker id="arrowCollasHodgeSync" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="72" width="245" height="86"></rect>
+            <text class="nodeTitle" x="192" y="102" text-anchor="middle">geometric symmetries</text>
+            <text class="tinyText" x="192" y="126" text-anchor="middle">cover of pointed genus-one curve</text>
+            <text class="tinyText" x="192" y="144" text-anchor="middle">additive side</text>
+
+            <rect class="nodeBox green" x="665" y="72" width="245" height="86"></rect>
+            <text class="nodeTitle" x="788" y="102" text-anchor="middle">arithmetic symmetries</text>
+            <text class="tinyText" x="788" y="126" text-anchor="middle">base number field</text>
+            <text class="tinyText" x="788" y="144" text-anchor="middle">multiplicative side</text>
+
+            <rect class="nodeBox violet" x="365" y="238" width="250" height="96"></rect>
+            <text class="nodeTitle" x="490" y="270" text-anchor="middle">Theta±ellNF theater</text>
+            <text class="tinyText" x="490" y="294" text-anchor="middle">ThetaNF + Theta±ell parts</text>
+            <text class="tinyText" x="490" y="314" text-anchor="middle">glued with labels and basepoints</text>
+
+            <path class="edge blue" d="M242 160 C285 212 346 242 363 269" marker-end="url(#arrowCollasHodgeSync)"></path>
+            <path class="edge green" d="M740 160 C694 212 631 242 617 269" marker-end="url(#arrowCollasHodgeSync)"></path>
+            <path class="edge red" d="M491 236 V172" marker-end="url(#arrowCollasHodgeSync)"></path>
+
+            <rect class="nodeBox gold" x="365" y="68" width="250" height="88"></rect>
+            <text class="nodeTitle" x="490" y="98" text-anchor="middle">label discipline</text>
+            <text class="tinyText" x="490" y="122" text-anchor="middle">isomorphic but non-identical</text>
+            <text class="tinyText" x="490" y="140" text-anchor="middle">ring histories not collapsed</text>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card">
+            <h3>ThetaNF part</h3>
+            <p>
+              In Collas's account, this part is arithmetic and multiplicative. It points
+              back to the number-field and Frobenioid side of the Hodge theater.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Theta±ell part</h3>
+            <p>
+              This part carries the geometric and additive side, tied to the curve and to
+              the covering/symmetry data used to synchronize conjugates.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Multiple basepoints</h3>
+            <p>
+              Collas stresses that IUT does not operate with one unified basepoint. The
+              labels and basepoint choices record genuinely different ring histories.
+            </p>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Formalization consequence.</strong> The theater interface should carry
+          synchronization data, labels, and side information. A record that only stores
+          an undifferentiated "copy of a curve" misses the point of this layer.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/collas-anabelian-arithmetic-geometry-iut.pdf" target="_blank">Collas overview §3.1.1</a>
+          <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
+          Related: <a href="#hodge-theaters">Hodge theaters</a>
+          <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges</a>
+          <a href="#basepoints-inter-universality">basepoints</a>
+        </div>
+      </section>
+
+      <section id="collas-log-theta-wandering-page" data-filter="collas log theta wandering multiradial algorithm indeterminacies ind1 ind2 ind3 theorem 3.11 corollary 3.12">
+        <h2>Collas Log-Theta Wandering</h2>
+        <p class="lede">
+          Collas reads the log-theta lattice as the setting in which IUT relates
+          distinct Frobenius-like objects by multiradial algorithms. The important point
+          for this wiki is not the picture alone, but the audit discipline it suggests:
+          movement through theta links, log links, Kummer correspondences, and
+          indeterminacies must preserve the exact type of the data being compared.
+        </p>
+        <div class="diagram fit" aria-label="Log-theta wandering route">
+          <div class="diagramHeader">
+            <strong>From alien theaters to a common container</strong>
+            <span>Collas §3.1.2, aligned with IUT III Theorem 3.11</span>
+          </div>
+          <svg viewBox="0 0 1040 440" role="img">
+            <defs>
+              <marker id="arrowCollasWandering" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="72" y="72" width="210" height="82"></rect>
+            <text class="nodeTitle" x="177" y="102" text-anchor="middle">source theater</text>
+            <text class="tinyText" x="177" y="126" text-anchor="middle">Frobenius-like data</text>
+            <text class="tinyText" x="177" y="144" text-anchor="middle">one ring history</text>
+
+            <rect class="nodeBox red" x="416" y="72" width="210" height="82"></rect>
+            <text class="nodeTitle" x="521" y="102" text-anchor="middle">theta/log wandering</text>
+            <text class="tinyText" x="521" y="126" text-anchor="middle">noncommuting links</text>
+            <text class="tinyText" x="521" y="144" text-anchor="middle">Ind1, Ind2, Ind3</text>
+
+            <rect class="nodeBox green" x="760" y="72" width="210" height="82"></rect>
+            <text class="nodeTitle" x="865" y="102" text-anchor="middle">target theater</text>
+            <text class="tinyText" x="865" y="126" text-anchor="middle">alien Frobenius-like data</text>
+            <text class="tinyText" x="865" y="144" text-anchor="middle">different ring history</text>
+
+            <rect class="nodeBox violet" x="345" y="270" width="350" height="92"></rect>
+            <text class="nodeTitle" x="520" y="302" text-anchor="middle">multiradial common container</text>
+            <text class="tinyText" x="520" y="326" text-anchor="middle">etale-like output for comparison</text>
+            <text class="tinyText" x="520" y="344" text-anchor="middle">source of the 3.11 to 3.12 corridor</text>
+
+            <path class="edge blue" d="M284 113 H414" marker-end="url(#arrowCollasWandering)"></path>
+            <path class="edge green" d="M628 113 H758" marker-end="url(#arrowCollasWandering)"></path>
+            <path class="edge red" d="M520 156 V268" marker-end="url(#arrowCollasWandering)"></path>
+            <path class="edge violet" d="M397 270 C305 235 230 198 181 156" marker-end="url(#arrowCollasWandering)"></path>
+            <path class="edge violet" d="M643 270 C735 235 810 198 859 156" marker-end="url(#arrowCollasWandering)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Layer</th><th>Role</th><th>Source target</th></tr>
+          <tr>
+            <td>Theta link</td>
+            <td>
+              Moves between distinct Hodge-theater labels and is compatible with the
+              multiplicative side, not with one fixed full ring structure.
+            </td>
+            <td><a href="#theta-links-cor37">IUT I Corollary 3.7</a></td>
+          </tr>
+          <tr>
+            <td>Log link</td>
+            <td>
+              Relates multiplicative source data to additive target data through
+              log-shell containers.
+            </td>
+            <td><a href="#local-log-link-mechanism-iii11">IUT III 1.1</a></td>
+          </tr>
+          <tr>
+            <td>Kummer route</td>
+            <td>
+              Provides the etale-like access path between Frobenius-like data and the
+              common container, subject to indeterminacies.
+            </td>
+            <td><a href="#log-kummer-correspondences">Log-Kummer correspondences</a></td>
+          </tr>
+          <tr>
+            <td>Ind3</td>
+            <td>
+              Collas identifies this as the essential indeterminacy for the main
+              theorem and the height comparison application.
+            </td>
+            <td><a href="#indeterminacies">Indeterminacies</a></td>
+          </tr>
+        </table>
+        <div class="callout red">
+          <strong>3.12 relevance.</strong> This is the Collas-side explanation of why
+          the wiki treats the Theorem 3.11 output as a typed multiradial construction,
+          not as a bare equality between objects in one ambient scheme category.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/collas-anabelian-arithmetic-geometry-iut.pdf" target="_blank">Collas overview §3.1.2</a>
+          <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III</a>
+          Related: <a href="#theorem-311-lgp-algorithms">Theorem 3.11 algorithms</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+          <a href="#multiradiality">multiradiality</a>
+        </div>
+      </section>
+
+      <section id="collas-universes-species-page" data-filter="collas universes species mutations logical structure zfc model category functor height comparison">
+        <h2>Collas Universes and Species</h2>
+        <p class="lede">
+          Collas separates an external logical layer from an internal category-theoretic
+          layer. The external layer concerns how statements are connected by AND/OR
+          structure. The internal layer concerns categories, functors, objects,
+          universes, species, and mutations. This distinction is useful for the wiki and
+          for Lean work because the height comparison is not meant to be read inside one
+          unchanged universe with one unchanged real line attached to all local data.
+        </p>
+        <div class="diagram fit" aria-label="Universes species and logical structure">
+          <div class="diagramHeader">
+            <strong>Logical structure and species discipline</strong>
+            <span>Collas §3.1.3 points back to IUT IV §3</span>
+          </div>
+          <svg viewBox="0 0 1000 430" role="img">
+            <defs>
+              <marker id="arrowCollasUniverses" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="72" width="230" height="84"></rect>
+            <text class="nodeTitle" x="185" y="102" text-anchor="middle">external logic</text>
+            <text class="tinyText" x="185" y="126" text-anchor="middle">AND and OR articulation</text>
+            <text class="tinyText" x="185" y="144" text-anchor="middle">proof route structure</text>
+
+            <rect class="nodeBox green" x="385" y="72" width="230" height="84"></rect>
+            <text class="nodeTitle" x="500" y="102" text-anchor="middle">internal species</text>
+            <text class="tinyText" x="500" y="126" text-anchor="middle">formula-defined programs</text>
+            <text class="tinyText" x="500" y="144" text-anchor="middle">mutations and cores</text>
+
+            <rect class="nodeBox violet" x="700" y="72" width="230" height="84"></rect>
+            <text class="nodeTitle" x="815" y="102" text-anchor="middle">universe movement</text>
+            <text class="tinyText" x="815" y="126" text-anchor="middle">possible ZFC enlargement</text>
+            <text class="tinyText" x="815" y="144" text-anchor="middle">shared comparison portion</text>
+
+            <rect class="nodeBox gold" x="270" y="260" width="460" height="88"></rect>
+            <text class="nodeTitle" x="500" y="292" text-anchor="middle">height comparison discipline</text>
+            <text class="tinyText" x="500" y="316" text-anchor="middle">local real copies require a common comparison setting</text>
+            <text class="tinyText" x="500" y="334" text-anchor="middle">IUT IV species/mutations formalize this guardrail</text>
+
+            <path class="edge blue" d="M302 114 H383" marker-end="url(#arrowCollasUniverses)"></path>
+            <path class="edge green" d="M617 114 H698" marker-end="url(#arrowCollasUniverses)"></path>
+            <path class="edge violet" d="M500 158 V258" marker-end="url(#arrowCollasUniverses)"></path>
+            <path class="edge red" d="M815 158 C790 224 718 246 637 260" marker-end="url(#arrowCollasUniverses)"></path>
+            <path class="edge blue" d="M185 158 C225 226 310 246 394 260" marker-end="url(#arrowCollasUniverses)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card">
+            <h3>External layer</h3>
+            <p>
+              Collas points to Mochizuki's logical analyses for the sequence of
+              statements. The wiki uses this only as proof-route orientation.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Internal layer</h3>
+            <p>
+              Species and mutations are the IUT IV mechanism for controlling typed
+              objects and transformations without identifying all outputs in one raw set.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Height comparison</h3>
+            <p>
+              Local heights may be attached to different reconstruction contexts. The
+              common comparison setting is an output of the IUT apparatus, not a default.
+            </p>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Formalization consequence.</strong> This page supports keeping species,
+          mutations, and comparison universes explicit. It also explains why the wiki
+          links Collas's interpretation directly to IUT IV §3 rather than treating it as
+          independent formal source material.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/collas-anabelian-arithmetic-geometry-iut.pdf" target="_blank">Collas overview §3.1.3</a>
+          <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV §3</a>
+          Related: <a href="#species-vs-categories-iv31">species vs categories</a>
+          <a href="#mutation-histories-cores-iv33">mutation histories/cores</a>
+          <a href="#same-species-parity-iv36">same-species parity</a>
         </div>
       </section>
 
