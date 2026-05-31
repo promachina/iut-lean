@@ -27,7 +27,10 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
     body {
       margin: 0;
       background: var(--bg);
@@ -55,6 +58,8 @@
       grid-template-columns: 286px minmax(0, 1fr);
       min-height: 100vh;
       min-width: 0;
+      max-width: 100vw;
+      overflow-x: hidden;
     }
 
     aside {
@@ -511,26 +516,32 @@
     }
 
     @media (max-width: 760px) {
-      .layout { grid-template-columns: 1fr; }
+      .layout { grid-template-columns: minmax(172px, 43vw) minmax(0, 1fr); }
       aside {
-        position: relative;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        border-right: 1px solid var(--line);
+        border-bottom: none;
+        padding: 18px 12px;
       }
-      nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 10px; }
-      nav h2 { grid-column: 1 / -1; }
-      main { padding: 24px 18px 70px; }
+      .brand h1 { font-size: 1.16rem; }
+      .searchBox { padding: 8px; }
+      .searchBox label { font-size: 0.68rem; }
+      .searchBox input { font-size: 0.82rem; padding: 7px; }
+      nav a { font-size: 0.78rem; padding: 6px 6px; }
+      nav h2 { font-size: 0.66rem; }
+      main { padding: 24px 14px 70px; }
       .hero { min-height: auto; padding: 30px 0; }
       .heroGrid, .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
       .sourceCard { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 620px) {
-      aside { padding: 20px 16px; }
-      nav { grid-template-columns: 1fr; }
-      nav a { font-size: 1rem; }
-      .hero h2 { font-size: clamp(2.35rem, 15vw, 3.35rem); }
+      .layout { grid-template-columns: minmax(158px, 42vw) minmax(0, 1fr); }
+      aside { padding: 16px 10px; }
+      nav a { font-size: 0.74rem; }
+      .hero h2 { font-size: clamp(1.9rem, 8vw, 2.45rem); }
       .hero p { font-size: 1rem; }
       .heroActions { flex-direction: column; align-items: stretch; }
       .button { text-align: center; }
@@ -632,6 +643,11 @@
         <a href="#nf-d-capsule-fl-action-iut-i43">NF D-capsule action 4.3</a>
         <a href="#prime-strip-section-obstructions-iut-i431">Prime-strip obstructions 4.3.1</a>
         <a href="#theta-evaluation-sections-44-45">Theta evaluation sections 4.4-4.5</a>
+        <a href="#theta-evaluation-points-iut-i44">Theta evaluation points 4.4</a>
+        <a href="#theta-bridge-bad-place-iut-i44">Bad-place theta bridge 4.4</a>
+        <a href="#theta-bridge-good-place-iut-i44">Good-place theta bridge 4.4</a>
+        <a href="#label-transport-base-bridges-iut-i45">Label transport 4.5</a>
+        <a href="#outer-factorization-indeterminacy-iut-i451">Outer factorization 4.5.1</a>
         <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges 4.6-4.7</a>
         <a href="#section4-symmetries-processions-48-412">Symmetries/processions 4.8-4.12</a>
         <a href="#iut-i-global-frobenioids-example51">Global Frobenioids 5.1</a>
@@ -14966,6 +14982,344 @@
           <a href="#local-analytic-sections-43">local analytic sections 4.3</a>
           <a href="#theta-evaluation-kummer-route">theta evaluation route</a>
           <a href="#global-kummer-noninterference-iii310">global Kummer noninterference</a>
+        </div>
+      </section>
+
+      <section id="theta-evaluation-points-iut-i44" data-filter="iut i example 4.4 theta evaluation points bad places cusps mu minus q_v j squared">
+        <h2>IUT I Example 4.4(i): Theta Evaluation Points</h2>
+        <p class="lede">
+          The model base-Theta bridge begins at bad multiplicative places. Labels in
+          <span class="math">|F_l|</span> identify cusps of
+          <span class="math">C_v</span>; translation by the distinguished two-torsion
+          point <span class="math">mu_-</span> produces evaluation points of
+          <span class="math">X_v</span>. The theta value at label
+          <span class="math">j</span> lies in a
+          <span class="math">mu_{2l}</span>-orbit of
+          <span class="math">q_v^{j^2}</span>.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Example 4.4 theta evaluation points">
+          <div class="diagramHeader">
+            <strong>Bad-place labels become theta values</strong>
+            <span>IUT I, Example 4.4(i)</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowThetaPoint44" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="82" y="92" width="230" height="90"></rect>
+            <text class="nodeTitle" x="197" y="124" text-anchor="middle">cusps of C_v</text>
+            <text class="tinyText" x="197" y="150" text-anchor="middle">labeled by |F_l|</text>
+            <rect class="nodeBox gold" x="446" y="92" width="230" height="90"></rect>
+            <text class="nodeTitle" x="561" y="124" text-anchor="middle">mu_- translates</text>
+            <text class="tinyText" x="561" y="150" text-anchor="middle">evaluation points on X_v</text>
+            <rect class="nodeBox red" x="810" y="92" width="230" height="90"></rect>
+            <text class="nodeTitle" x="925" y="124" text-anchor="middle">Theta_v value</text>
+            <text class="tinyText" x="925" y="150" text-anchor="middle">mu_{2l}-orbit of q_v^{j^2}</text>
+            <rect class="nodeBox green" x="326" y="278" width="468" height="76"></rect>
+            <text class="nodeTitle" x="560" y="308" text-anchor="middle">theta-cover points are K_v-rational</text>
+            <text class="tinyText" x="560" y="332" text-anchor="middle">they determine sections G_v -> Pi_v</text>
+            <path class="edge blue" d="M314 137 H444" marker-end="url(#arrowThetaPoint44)"></path>
+            <path class="edge gold" d="M678 137 H808" marker-end="url(#arrowThetaPoint44)"></path>
+            <path class="edge red" d="M925 184 C856 240 738 264 626 276" marker-end="url(#arrowThetaPoint44)"></path>
+            <path class="edge green" d="M561 184 V276" marker-end="url(#arrowThetaPoint44)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source datum</th><th>Example 4.4(i) content</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td>Cusp labels</td>
+            <td>At <span class="math">v in V_bad</span>, the labels in <span class="math">|F_l|</span> correspond to cusps of <span class="math">C_v</span>.</td>
+            <td>Evaluation labels are attached to source cusps before any bridge target is chosen.</td>
+          </tr>
+          <tr>
+            <td><span class="math">mu_-</span></td>
+            <td>The distinguished order-two torsion point whose closure meets the same special-fiber component as the zero cusp translates cusps to evaluation points.</td>
+            <td>The evaluation point is not an arbitrary point of <span class="math">X_v</span>.</td>
+          </tr>
+          <tr>
+            <td>Theta value</td>
+            <td>The theta value over label <span class="math">j</span> is in the <span class="math">mu_{2l}</span>-orbit of <span class="math">q_v^{j^2}</span>.</td>
+            <td>The square of the label is source-side arithmetic data that later bookkeeping must preserve.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 4.4(i)</a>
+          Related: <a href="#theta-bridge-bad-place-iut-i44">bad-place theta bridge</a>
+          <a href="#theta-evaluation-sections-44-45">theta evaluation overview</a>
+          <a href="#theta-evaluation-kummer-route">IUT II theta evaluation route</a>
+        </div>
+      </section>
+
+      <section id="theta-bridge-bad-place-iut-i44" data-filter="iut i example 4.4 bad place theta bridge evaluation sections g_v pi_v outer action d_j d_greater">
+        <h2>IUT I Example 4.4(ii): Bad-Place Theta Bridge</h2>
+        <p class="lede">
+          At bad places, the model base-Theta bridge is built from the evaluation
+          sections supplied by Example 4.4(i). For each label
+          <span class="math">j in F_l</span>, the local morphism
+          <span class="math">phi^Theta_{v,j} : D_{v,j} -> D_{>,v}</span> is compatible
+          with the induced outer actions on the geometric tempered fundamental groups.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Example 4.4 bad-place theta bridge">
+          <div class="diagramHeader">
+            <strong>Evaluation sections define the bad-place bridge</strong>
+            <span>IUT I, Example 4.4(ii)</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowThetaBad44" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="86" y="94" width="250" height="96"></rect>
+            <text class="nodeTitle" x="211" y="126" text-anchor="middle">D_{v,j}</text>
+            <text class="tinyText" x="211" y="152" text-anchor="middle">labeled bad-place source strip</text>
+            <rect class="nodeBox gold" x="436" y="94" width="250" height="96"></rect>
+            <text class="nodeTitle" x="561" y="126" text-anchor="middle">evaluation section</text>
+            <text class="tinyText" x="561" y="152" text-anchor="middle">G_v -> Pi_v, from theta cover</text>
+            <rect class="nodeBox green" x="786" y="94" width="250" height="96"></rect>
+            <text class="nodeTitle" x="911" y="126" text-anchor="middle">D_{>,v}</text>
+            <text class="tinyText" x="911" y="152" text-anchor="middle">bad-place target strip</text>
+            <rect class="nodeBox violet" x="344" y="284" width="432" height="74"></rect>
+            <text class="nodeTitle" x="560" y="314" text-anchor="middle">outer-action compatibility</text>
+            <text class="tinyText" x="560" y="338" text-anchor="middle">finite ambiguity remains; no arbitrary synchronization is inserted</text>
+            <path class="edge blue" d="M338 142 H434" marker-end="url(#arrowThetaBad44)"></path>
+            <path class="edge gold" d="M688 142 H784" marker-end="url(#arrowThetaBad44)"></path>
+            <path class="edge violet" d="M561 192 V282" marker-end="url(#arrowThetaBad44)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Bridge layer</th><th>Example 4.4(ii) content</th><th>Guardrail</th></tr>
+          <tr>
+            <td>Local map</td>
+            <td>For <span class="math">v in V_bad</span> and <span class="math">j in F_l</span>, the construction gives <span class="math">phi^Theta_{v,j}: D_{v,j} -> D_{>,v}</span>.</td>
+            <td>Bad-place theta bridges are not generic strip isomorphisms.</td>
+          </tr>
+          <tr>
+            <td>Evaluation sections</td>
+            <td>The map is obtained from the group-theoretically reconstructible sections <span class="math">G_v -> Pi_v</span>.</td>
+            <td>The anabelian reconstruction route is part of the bridge data.</td>
+          </tr>
+          <tr>
+            <td>Compatibility</td>
+            <td>The construction is compatible with outer actions on geometric tempered fundamental groups, with finite ambiguity.</td>
+            <td>Lean pages should model the compatibility and ambiguity separately.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 4.4(ii)</a>
+          Related: <a href="#theta-evaluation-points-iut-i44">theta evaluation points</a>
+          <a href="#outer-factorization-indeterminacy-iut-i451">outer factorization indeterminacy</a>
+          <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a>
+        </div>
+      </section>
+
+      <section id="theta-bridge-good-place-iut-i44" data-filter="iut i example 4.4 good places theta bridge full poly isomorphism capsule fl action">
+        <h2>IUT I Example 4.4(iii)-(iv): Good-Place and Global Theta Bridge</h2>
+        <p class="lede">
+          At good nonarchimedean and archimedean places, the model base-Theta bridge
+          uses full poly-isomorphisms
+          <span class="math">phi^Theta_{v,j}: D_{v,j} ≃ D_{>,v}</span>. These local
+          components assemble into the global bridge
+          <span class="math">phi^Theta: D_J -> D_></span>, and the capsule
+          <span class="math">D_J</span> carries the natural
+          <span class="math">F_l</span> permutation poly-action.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Example 4.4 good-place and global theta bridge">
+          <div class="diagramHeader">
+            <strong>Good-place isomorphisms assemble with bad-place evaluation</strong>
+            <span>IUT I, Example 4.4(iii)-(iv)</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowThetaGood44" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="94" y="86" width="236" height="92"></rect>
+            <text class="nodeTitle" x="212" y="118" text-anchor="middle">good-place components</text>
+            <text class="tinyText" x="212" y="144" text-anchor="middle">full poly-isomorphisms</text>
+            <rect class="nodeBox gold" x="442" y="86" width="236" height="92"></rect>
+            <text class="nodeTitle" x="560" y="118" text-anchor="middle">bad-place components</text>
+            <text class="tinyText" x="560" y="144" text-anchor="middle">evaluation-section morphisms</text>
+            <rect class="nodeBox green" x="790" y="86" width="236" height="92"></rect>
+            <text class="nodeTitle" x="908" y="118" text-anchor="middle">phi^Theta_j</text>
+            <text class="tinyText" x="908" y="144" text-anchor="middle">D_j -> D_> across all v</text>
+            <rect class="nodeBox violet" x="380" y="276" width="360" height="82"></rect>
+            <text class="nodeTitle" x="560" y="308" text-anchor="middle">capsule bridge phi^Theta</text>
+            <text class="tinyText" x="560" y="332" text-anchor="middle">D_J -> D_>, with F_l poly-action on D_J</text>
+            <path class="edge blue" d="M332 132 H440" marker-end="url(#arrowThetaGood44)"></path>
+            <path class="edge gold" d="M680 132 H788" marker-end="url(#arrowThetaGood44)"></path>
+            <path class="edge green" d="M908 180 C840 236 714 258 600 274" marker-end="url(#arrowThetaGood44)"></path>
+            <path class="edge violet" d="M560 180 V274" marker-end="url(#arrowThetaGood44)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Assembly step</th><th>Example 4.4 content</th><th>Consequence</th></tr>
+          <tr>
+            <td>Good places</td>
+            <td>For <span class="math">v in V_good</span>, <span class="math">phi^Theta_{v,j}</span> is a full poly-isomorphism.</td>
+            <td>The place class determines whether the bridge is evaluation-built or isomorphic.</td>
+          </tr>
+          <tr>
+            <td>Global component</td>
+            <td>The local data assemble to <span class="math">phi^Theta_j : D_j -> D_></span>.</td>
+            <td>One label gives one global source strip mapped to the theta target.</td>
+          </tr>
+          <tr>
+            <td>Capsule bridge</td>
+            <td>The full bridge <span class="math">phi^Theta : D_J -> D_></span> is compatible with the natural <span class="math">F_l</span> permutation poly-action on the capsule.</td>
+            <td>Label action is structural, not decorative sidebar data.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 4.4(iii)-(iv)</a>
+          Related: <a href="#theta-bridge-bad-place-iut-i44">bad-place theta bridge</a>
+          <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a>
+          <a href="#section4-symmetries-processions-48-412">Section 4 symmetries</a>
+        </div>
+      </section>
+
+      <section id="label-transport-base-bridges-iut-i45" data-filter="iut i example 4.5 label transport base bridges phi lc labcusp epsilon fl torsor">
+        <h2>IUT I Example 4.5: Label Transport Through Base Bridges</h2>
+        <p class="lede">
+          Example 4.5 transports cusp-label classes through the model base-NF and
+          model base-Theta bridges. For each label
+          <span class="math">j</span>, restrictions through
+          <span class="math">phi^NF_j</span> and
+          <span class="math">phi^Theta_j</span> induce an
+          <span class="math">F_l</span>-torsor isomorphism
+          <span class="math">phi^LC_j : LabCusp(D) -> LabCusp(D_>)</span>.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Example 4.5 label transport">
+          <div class="diagramHeader">
+            <strong>NF and Theta bridges transport the same label class</strong>
+            <span>IUT I, Example 4.5</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowLabelTransport45" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="74" y="86" width="230" height="96"></rect>
+            <text class="nodeTitle" x="189" y="118" text-anchor="middle">LabCusp(D)</text>
+            <text class="tinyText" x="189" y="144" text-anchor="middle">global cusp labels</text>
+            <rect class="nodeBox gold" x="446" y="66" width="230" height="82"></rect>
+            <text class="nodeTitle" x="561" y="96" text-anchor="middle">phi^NF_j</text>
+            <text class="tinyText" x="561" y="122" text-anchor="middle">restriction through global side</text>
+            <rect class="nodeBox red" x="446" y="208" width="230" height="82"></rect>
+            <text class="nodeTitle" x="561" y="238" text-anchor="middle">phi^Theta_j</text>
+            <text class="tinyText" x="561" y="264" text-anchor="middle">restriction through theta side</text>
+            <rect class="nodeBox green" x="818" y="86" width="230" height="96"></rect>
+            <text class="nodeTitle" x="933" y="118" text-anchor="middle">LabCusp(D_>)</text>
+            <text class="tinyText" x="933" y="144" text-anchor="middle">target label torsor</text>
+            <rect class="nodeBox violet" x="372" y="330" width="376" height="66"></rect>
+            <text class="nodeTitle" x="560" y="358" text-anchor="middle">unique [epsilon]</text>
+            <text class="tinyText" x="560" y="380" text-anchor="middle">characterized by phi^LC_j([epsilon]) mapping to j</text>
+            <path class="edge gold" d="M306 122 C362 104 394 102 444 106" marker-end="url(#arrowLabelTransport45)"></path>
+            <path class="edge red" d="M306 146 C362 206 394 228 444 246" marker-end="url(#arrowLabelTransport45)"></path>
+            <path class="edge gold" d="M678 106 C738 104 778 106 816 122" marker-end="url(#arrowLabelTransport45)"></path>
+            <path class="edge red" d="M678 246 C738 220 778 178 816 146" marker-end="url(#arrowLabelTransport45)"></path>
+            <path class="edge violet" d="M561 292 V328" marker-end="url(#arrowLabelTransport45)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Transport item</th><th>Example 4.5 content</th><th>Use downstream</th></tr>
+          <tr>
+            <td><span class="math">phi^LC_j</span></td>
+            <td>NF and Theta bridge restrictions induce <span class="math">LabCusp(D) -> LabCusp(D_>)</span>.</td>
+            <td>This is the label-transport interface used in Proposition 4.7.</td>
+          </tr>
+          <tr>
+            <td>Label action</td>
+            <td><span class="math">phi^LC_j</span> is obtained from the <span class="math">j=1</span> case by composing with the action by <span class="math">j</span>.</td>
+            <td>The torsor action, not a chosen enumeration, controls label movement.</td>
+          </tr>
+          <tr>
+            <td><span class="math">[epsilon]</span></td>
+            <td>The unique class <span class="math">[epsilon] in LabCusp(D)</span> is characterized by the condition that evaluation sends <span class="math">phi^LC_j([epsilon])</span> to <span class="math">j</span>.</td>
+            <td>This becomes the global label class used to identify <span class="math">LabCusp(D)</span> with capsule indices.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 4.5</a>
+          Related: <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a>
+          <a href="#outer-factorization-indeterminacy-iut-i451">outer factorization indeterminacy</a>
+          <a href="#d-label-synchronization-iut-i42">label synchronization</a>
+        </div>
+      </section>
+
+      <section id="outer-factorization-indeterminacy-iut-i451" data-filter="iut i remark 4.5.1 outer factorization indeterminacy j h g conjugacy synchronization bad archimedean">
+        <h2>IUT I Remark 4.5.1: Outer Factorization Indeterminacy</h2>
+        <p class="lede">
+          Remark 4.5.1 is a guardrail for all later bridge formalization. It analyzes
+          factorizations <span class="math">J -> H -> G</span> known only up to
+          conjugacy and warns that specifying intermediate inclusions independently
+          imposes an artificial partial synchronization of indeterminacies.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Remark 4.5.1 outer factorization indeterminacy">
+          <div class="diagramHeader">
+            <strong>Composite data without artificial synchronization</strong>
+            <span>IUT I, Remark 4.5.1</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowOuter451" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="96" y="96" width="210" height="88"></rect>
+            <text class="nodeTitle" x="201" y="128" text-anchor="middle">J</text>
+            <text class="tinyText" x="201" y="154" text-anchor="middle">cuspidal inertia subgroup</text>
+            <rect class="nodeBox gold" x="456" y="96" width="210" height="88"></rect>
+            <text class="nodeTitle" x="561" y="128" text-anchor="middle">H</text>
+            <text class="tinyText" x="561" y="154" text-anchor="middle">image of local pi_1</text>
+            <rect class="nodeBox green" x="816" y="96" width="210" height="88"></rect>
+            <text class="nodeTitle" x="921" y="128" text-anchor="middle">G</text>
+            <text class="tinyText" x="921" y="154" text-anchor="middle">global pi_1 target</text>
+            <rect class="nodeBox red" x="198" y="292" width="300" height="74"></rect>
+            <text class="nodeTitle" x="348" y="322" text-anchor="middle">bad places</text>
+            <text class="tinyText" x="348" y="346" text-anchor="middle">factorization determined by composite J -> G</text>
+            <rect class="nodeBox violet" x="622" y="292" width="300" height="74"></rect>
+            <text class="nodeTitle" x="772" y="322" text-anchor="middle">archimedean places</text>
+            <text class="tinyText" x="772" y="346" text-anchor="middle">H-conjugacy class is determined</text>
+            <path class="edge blue" d="M308 140 H454" marker-end="url(#arrowOuter451)"></path>
+            <path class="edge gold" d="M668 140 H814" marker-end="url(#arrowOuter451)"></path>
+            <path class="edge red" d="M201 186 C240 244 292 268 340 290" marker-end="url(#arrowOuter451)"></path>
+            <path class="edge violet" d="M921 186 C892 244 832 268 780 290" marker-end="url(#arrowOuter451)"></path>
+            <path class="edge red" d="M226 188 C388 242 682 242 896 188" marker-end="url(#arrowOuter451)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Case</th><th>Remark 4.5.1 content</th><th>Wiki guardrail</th></tr>
+          <tr>
+            <td>General warning</td>
+            <td>Choosing the inclusion <span class="math">J -> H</span> independently of the composite <span class="math">J -> G</span> partially deactivates independent conjugacy indeterminacies.</td>
+            <td>Do not formalize bridge compatibility by adding synchronized representatives unless the source supplies them.</td>
+          </tr>
+          <tr>
+            <td>Bad places</td>
+            <td>Using Corollary 2.5, the factorization is uniquely determined by the composite <span class="math">J -> G</span> without prior synchronization.</td>
+            <td>This is the strong form needed for Hodge-Arakelov evaluation in IUT II.</td>
+          </tr>
+          <tr>
+            <td>Archimedean places</td>
+            <td>Using Corollary 2.8, the <span class="math">H</span>-conjugacy class of the image of <span class="math">J</span> is determined, a weaker property than the bad-place result.</td>
+            <td>Do not transfer the bad-place uniqueness statement unchanged to archimedean places.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          This page is directly relevant to the 3.12 corridor: a common-container or
+          comparison model must preserve the source's nonsynchronization discipline
+          instead of silently choosing representatives in one global coordinate system.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Remark 4.5.1</a>
+          Related: <a href="#theta-bridge-bad-place-iut-i44">bad-place theta bridge</a>
+          <a href="#label-transport-base-bridges-iut-i45">label transport</a>
+          <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         </div>
       </section>
 
