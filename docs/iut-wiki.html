@@ -578,6 +578,7 @@
         <a href="#corollary-312">Corollary 3.12 corridor</a>
         <a href="#corollary-312-proof-steps">3.12 proof steps</a>
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
+        <a href="#iut-iv-local-log-volume-estimates-11-15">IUT IV local estimates 1.1-1.5</a>
         <a href="#iut-iv">IUT IV and consequences</a>
         <a href="#iut-iv-diophantine-output">IUT IV output route</a>
         <a href="#probabilistic-szpiro">Probabilistic Szpiro</a>
@@ -21337,6 +21338,286 @@
         </div>
       </section>
 
+      <section id="iut-iv-local-log-volume-estimates-11-15">
+        <h2>IUT IV Section 1: Local Log-Volume Estimates</h2>
+        <p class="lede">
+          IUT IV Propositions 1.1 through 1.5 are the local numerical substrate for
+          Theorem 1.10. They estimate tensor products of local rings, different ideals,
+          p-adic logarithms, normalized nonarchimedean log-volume, and archimedean
+          tensor-product metrics before any Diophantine application is made.
+        </p>
+        <div class="diagram fit" aria-label="IUT IV local log-volume estimate route">
+          <div class="diagramHeader">
+            <strong>Local estimate route</strong>
+            <span>from tensor products to nonarchimedean and archimedean containers</span>
+          </div>
+          <svg viewBox="0 0 1120 610" role="img">
+            <defs>
+              <marker id="arrowIUTIVLocal15" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="62" y="72" width="220" height="86"></rect>
+            <text class="nodeTitle" x="172" y="102" text-anchor="middle">local tensor product</text>
+            <text class="tinyText" x="172" y="126" text-anchor="middle">R_I and normalization</text>
+            <text class="tinyText" x="172" y="144" text-anchor="middle">Proposition 1.1</text>
+
+            <rect class="nodeBox green" x="450" y="72" width="220" height="86"></rect>
+            <text class="nodeTitle" x="560" y="102" text-anchor="middle">p-adic logarithm lattice</text>
+            <text class="tinyText" x="560" y="126" text-anchor="middle">log_p(R_i^x), a_i, b_i</text>
+            <text class="tinyText" x="560" y="144" text-anchor="middle">Proposition 1.2</text>
+
+            <rect class="nodeBox gold" x="838" y="72" width="220" height="86"></rect>
+            <text class="nodeTitle" x="948" y="102" text-anchor="middle">different bounds</text>
+            <text class="tinyText" x="948" y="126" text-anchor="middle">relative ramification</text>
+            <text class="tinyText" x="948" y="144" text-anchor="middle">Proposition 1.3</text>
+
+            <rect class="nodeBox red" x="218" y="272" width="252" height="92"></rect>
+            <text class="nodeTitle" x="344" y="302" text-anchor="middle">normalized log-volume</text>
+            <text class="tinyText" x="344" y="326" text-anchor="middle">mu_log, torsion quotient</text>
+            <text class="tinyText" x="344" y="344" text-anchor="middle">Proposition 1.4(i),(ii)</text>
+
+            <rect class="nodeBox violet" x="650" y="272" width="252" height="92"></rect>
+            <text class="nodeTitle" x="776" y="302" text-anchor="middle">automorphism bound</text>
+            <text class="tinyText" x="776" y="326" text-anchor="middle">phi((R_I)^~) in hulls</text>
+            <text class="tinyText" x="776" y="344" text-anchor="middle">Proposition 1.4(iii),(iv)</text>
+
+            <rect class="nodeBox green" x="158" y="466" width="272" height="88"></rect>
+            <text class="nodeTitle" x="294" y="496" text-anchor="middle">archimedean metrics</text>
+            <text class="tinyText" x="294" y="520" text-anchor="middle">C tensor_R C vs C plus C</text>
+            <text class="tinyText" x="294" y="538" text-anchor="middle">Proposition 1.5(i),(ii)</text>
+
+            <rect class="nodeBox blue" x="690" y="466" width="272" height="88"></rect>
+            <text class="nodeTitle" x="826" y="496" text-anchor="middle">archimedean tensor ball</text>
+            <text class="tinyText" x="826" y="520" text-anchor="middle">B_I and lambda^|I| containment</text>
+            <text class="tinyText" x="826" y="538" text-anchor="middle">Proposition 1.5(iii),(iv)</text>
+
+            <path d="M284 115 H448" class="edge blue" marker-end="url(#arrowIUTIVLocal15)"></path>
+            <path d="M672 115 H836" class="edge green" marker-end="url(#arrowIUTIVLocal15)"></path>
+            <path d="M560 160 C520 210 430 238 356 270" class="edge green" marker-end="url(#arrowIUTIVLocal15)"></path>
+            <path d="M948 160 C910 214 842 238 790 270" class="edge gold" marker-end="url(#arrowIUTIVLocal15)"></path>
+            <path d="M472 318 H648" class="edge red" marker-end="url(#arrowIUTIVLocal15)"></path>
+            <path d="M344 366 C326 410 306 432 296 464" class="edge green" marker-end="url(#arrowIUTIVLocal15)"></path>
+            <path d="M776 366 C776 416 806 432 822 464" class="edge violet" marker-end="url(#arrowIUTIVLocal15)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Local statement</th><th>Why it matters downstream</th></tr>
+          <tr>
+            <td>Proposition 1.1</td>
+            <td>
+              For a finite tensor product <span class="math">R_I</span> of rings of
+              integers over <span class="math">Z_p</span>, normalization satisfies
+              <span class="math">R_I subset (R_I)^~</span>, and a power controlled by
+              the different of <span class="math">I_*</span> carries the normalization
+              back into <span class="math">R_I</span>.
+            </td>
+            <td>
+              This is the first local containment used to turn tensor-product
+              indeterminacy into explicit powers of <span class="math">p</span>.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.2(i)</td>
+            <td>
+              The p-adic logarithm image <span class="math">log_p(R_i^x)</span> lies
+              between fractional ideals <span class="math">p^{a_i}R_i</span> and
+              <span class="math">p^{-b_i}R_i</span>, with equality in the tame small
+              ramification range.
+            </td>
+            <td>
+              The logarithm layer becomes a bounded lattice rather than an uncontrolled
+              analytic operation.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.2(ii)-(iv)</td>
+            <td>
+              Any automorphism <span class="math">phi</span> of the rationalized
+              logarithm space that preserves <span class="math">log_p(R_I^x)</span>
+              sends fractional ideal pieces into explicitly shifted logarithmic and
+              normalized tensor-product regions.
+            </td>
+            <td>
+              This is the source of the later automorphism-tolerant containment used
+              when bounding log-volume under indeterminacy.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.3</td>
+            <td>
+              Relative different exponents are bounded below by tame ramification
+              terms and, under a Galois/tame intermediate hypothesis, bounded above by
+              a wild-degree term plus a base contribution.
+            </td>
+            <td>
+              The different terms in Theorem 1.10 are not placeholders; they come from
+              explicit ramification estimates.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.4(i)-(ii)</td>
+            <td>
+              The log-volume <span class="math">mu_log</span> is normalized so that
+              <span class="math">mu_log(R_i)=0</span> and
+              <span class="math">mu_log(pR_i)=-log(p)</span>; it also computes
+              <span class="math">mu_log(log_p(R_i^x))</span> after quotienting torsion.
+            </td>
+            <td>
+              This fixes the numerical scale used later by packet and theta-pilot
+              log-volumes.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.4(iii)-(iv)</td>
+            <td>
+              Combining Propositions 1.2 and 1.3 gives explicit upper bounds for the
+              log-volume of the images of automorphism-distorted local regions; in the
+              unramified odd case, <span class="math">phi((R_I)^~)</span> stays inside
+              <span class="math">(R_I)^~</span>.
+            </td>
+            <td>
+              This is the nonarchimedean local estimate that feeds the Step (x)
+              log-volume bounds in IUT III/IV.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.5</td>
+            <td>
+              At archimedean places, tensor-product and direct-sum metrics differ by
+              controlled powers of <span class="math">2</span>; primitive automorphisms
+              preserve the decompositions and the integral ball
+              <span class="math">B_I</span>, and equal-length tensor vectors lie in
+              <span class="math">lambda^{|I|}B_I</span>.
+            </td>
+            <td>
+              This supplies the archimedean counterpart to the p-adic hull estimates
+              and explains the metric factors that later enter Theorem 1.10.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="multiple-tensor-products-differents-iv11">
+            <h3>Tensor products and differents</h3>
+            <p>
+              Proposition 1.1 works over <span class="math">Z_p</span> with finitely
+              many local integer rings. Its output is an inclusion of the normalization
+              back into the original tensor product after multiplying by a ceiling of
+              the summed different exponent.
+            </p>
+            <div class="tagRow"><span class="tag blue">Prop. 1.1</span><span class="tag">normalization</span></div>
+          </div>
+          <div class="card" id="p-adic-logarithm-lattice-iv12">
+            <h3>p-adic logarithm lattice</h3>
+            <p>
+              The constants <span class="math">a_i</span> and
+              <span class="math">b_i</span> encode the valuation loss when passing
+              between units and their p-adic logarithms. They are the local source of
+              the later ceiling/floor terms.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 1.2</span><span class="tag">logarithm</span></div>
+          </div>
+          <div class="card" id="automorphism-tolerant-local-containment-iv12">
+            <h3>Automorphism-tolerant containment</h3>
+            <p>
+              The automorphism <span class="math">phi</span> is arbitrary subject to
+              preserving the logarithm submodule. The result is therefore not a
+              calculation in one chosen coordinate system; it is a containment stable
+              under the permitted local ambiguity.
+            </p>
+            <div class="tagRow"><span class="tag violet">Prop. 1.2(ii)</span><span class="tag">phi</span></div>
+          </div>
+          <div class="card" id="relative-different-estimates-iv13">
+            <h3>Relative different estimates</h3>
+            <p>
+              Proposition 1.3 separates tame and wild behavior. The lower bound is
+              exact in the tame case; the upper bound uses a Galois extension over a
+              tamely ramified intermediate field and the p-primary degree exponent.
+            </p>
+            <div class="tagRow"><span class="tag gold">Prop. 1.3</span><span class="tag">ramification</span></div>
+          </div>
+          <div class="card" id="normalized-log-volume-scale-iv14">
+            <h3>Normalized log-volume scale</h3>
+            <p>
+              Proposition 1.4 normalizes log-volume by field degree. The basic scale is
+              fixed by <span class="math">mu_log(R_i)=0</span> and
+              <span class="math">mu_log(pR_i)=-log(p)</span>.
+            </p>
+            <div class="tagRow"><span class="tag red">Prop. 1.4(i)</span><span class="tag">scale</span></div>
+          </div>
+          <div class="card" id="torsion-quotient-log-volume-iv14">
+            <h3>Torsion quotient</h3>
+            <p>
+              The computation of <span class="math">mu_log(log_p(R_i^x))</span> uses
+              the quotient of units by torsion. This is why the residue-degree and
+              p-power torsion terms appear explicitly in the local estimate.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 1.4(ii)</span><span class="tag">units</span></div>
+          </div>
+          <div class="card" id="nonarchimedean-hull-bound-iv14">
+            <h3>Nonarchimedean hull bound</h3>
+            <p>
+              Proposition 1.4(iii) gives the explicit log-volume bounds for
+              automorphism images of fractional ideal regions. This is the local
+              numerical version of "upper-semi" containment.
+            </p>
+            <div class="tagRow"><span class="tag violet">Prop. 1.4(iii)</span><span class="tag">upper bound</span></div>
+          </div>
+          <div class="card" id="unramified-odd-local-stability-iv14">
+            <h3>Unramified odd stability</h3>
+            <p>
+              In the case <span class="math">p&gt;2</span> and all ramification indices
+              equal one, the automorphism image of the normalized tensor product remains
+              inside the same normalized region and the log-volume is zero.
+            </p>
+            <div class="tagRow"><span class="tag blue">Prop. 1.4(iv)</span><span class="tag">unramified</span></div>
+          </div>
+          <div class="card" id="archimedean-direct-sum-tensor-metric-iv15">
+            <h3>Direct-sum/tensor metric</h3>
+            <p>
+              Proposition 1.5 compares <span class="math">C tensor_R C</span> with
+              <span class="math">C plus C</span>. The Chinese-remainder isomorphism is
+              metric-compatible up to the stated factor, and primitive automorphisms
+              preserve the relevant decomposition.
+            </p>
+            <div class="tagRow"><span class="tag gold">Prop. 1.5(i),(ii)</span><span class="tag">archimedean</span></div>
+          </div>
+          <div class="card" id="archimedean-integral-ball-bi-iv15">
+            <h3>Integral ball <span class="math">B_I</span></h3>
+            <p>
+              For multiple copies, the topological ring decomposition gives
+              <span class="math">2^{|I|-1}|V|^{|I|}</span> copies of
+              <span class="math">C</span>. Their unit balls define
+              <span class="math">B_I</span>, preserved by primitive automorphisms.
+            </p>
+            <div class="tagRow"><span class="tag blue">Prop. 1.5(iii)</span><span class="tag">B_I</span></div>
+          </div>
+          <div class="card" id="lambda-tensor-ball-containment-iv15">
+            <h3>Equal-length tensor containment</h3>
+            <p>
+              If each component vector has length <span class="math">lambda</span>,
+              their tensor lies in <span class="math">lambda^{|I|}B_I</span>. This is
+              the archimedean counterpart of the local p-adic hull containment.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 1.5(iv)</span><span class="tag">lambda</span></div>
+          </div>
+        </div>
+        <div class="callout violet">
+          Formalization warning: these propositions should not be replaced by a single
+          "local estimate" axiom. The different exponent, logarithm lattice, torsion
+          quotient, automorphism action, normalization scale, and archimedean metric
+          factor are separate pieces of numerical data used later by Theorem 1.10.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Propositions 1.1-1.5</a>
+          Related: <a href="#iut-iv">IUT IV overview</a>
+          <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a>
+          <a href="#packet-procession-log-volume-iii39">IUT III packet log-volume</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+        </div>
+      </section>
+
       <section id="iut-iv">
         <h2>IUT IV and Consequences</h2>
         <p class="lede">
@@ -21461,7 +21742,7 @@
           <tr>
             <td>Propositions 1.1-1.5</td>
             <td>Local estimates for differents, logarithms, and nonarchimedean/archimedean log-volume containers.</td>
-            <td><a href="#different-estimates">different estimates</a>, <a href="#normalized-log-volume-estimates">normalized log-volume</a></td>
+            <td><a href="#iut-iv-local-log-volume-estimates-11-15">local estimate route</a>, <a href="#different-estimates">different estimates</a>, <a href="#normalized-log-volume-estimates">normalized log-volume</a></td>
           </tr>
           <tr>
             <td>Propositions 1.6-1.7</td>
