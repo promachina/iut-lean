@@ -579,6 +579,7 @@
         <a href="#corollary-312-proof-steps">3.12 proof steps</a>
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         <a href="#iut-iv-local-log-volume-estimates-11-15">IUT IV local estimates 1.1-1.5</a>
+        <a href="#iut-iv-prime-averaging-16-17">IUT IV prime/averaging 1.6-1.7</a>
         <a href="#iut-iv">IUT IV and consequences</a>
         <a href="#iut-iv-diophantine-output">IUT IV output route</a>
         <a href="#probabilistic-szpiro">Probabilistic Szpiro</a>
@@ -5623,6 +5624,8 @@
             </td>
             <td>
               <a href="#multiple-tensor-products">tensor products</a>,
+              <a href="#iut-iv-local-log-volume-estimates-11-15">local estimates</a>,
+              <a href="#iut-iv-prime-averaging-16-17">prime/averaging input</a>,
               <a href="#elliptic-torsion-input">elliptic torsion</a>,
               <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a>,
               <a href="#iut-iv">estimate pipeline</a>
@@ -21618,6 +21621,207 @@
         </div>
       </section>
 
+      <section id="iut-iv-prime-averaging-16-17">
+        <h2>IUT IV Section 1: Prime and Averaging Input</h2>
+        <p class="lede">
+          Propositions 1.6 and 1.7 supply the elementary global numerical tools that
+          connect the local log-volume estimates to Theorem 1.10: a prime-number
+          estimate producing <span class="math">eta_prm</span>, and a weighted-average
+          identity for packet-normalized log-volumes.
+        </p>
+        <div class="diagram fit" aria-label="IUT IV prime number theorem and weighted average route">
+          <div class="diagramHeader">
+            <strong>Global averaging route</strong>
+            <span>from local weights to packet-normalized theta-pilot estimates</span>
+          </div>
+          <svg viewBox="0 0 1080 470" role="img">
+            <defs>
+              <marker id="arrowIUTIVPrimeAvg" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="52" y="68" width="220" height="86"></rect>
+            <text class="nodeTitle" x="162" y="98" text-anchor="middle">prime counting input</text>
+            <text class="tinyText" x="162" y="122" text-anchor="middle">n <= 4 p_n/(3 log p_n)</text>
+            <text class="tinyText" x="162" y="140" text-anchor="middle">Proposition 1.6</text>
+
+            <rect class="nodeBox green" x="426" y="68" width="228" height="86"></rect>
+            <text class="nodeTitle" x="540" y="98" text-anchor="middle">eta_prm threshold</text>
+            <text class="tinyText" x="540" y="122" text-anchor="middle">prime sum >= 1</text>
+            <text class="tinyText" x="540" y="140" text-anchor="middle">large-bound analytic input</text>
+
+            <rect class="nodeBox gold" x="808" y="68" width="220" height="86"></rect>
+            <text class="nodeTitle" x="918" y="98" text-anchor="middle">Theorem 1.10 prime terms</text>
+            <text class="tinyText" x="918" y="122" text-anchor="middle">distinguished-prime sum</text>
+            <text class="tinyText" x="918" y="140" text-anchor="middle">explicit estimate</text>
+
+            <rect class="nodeBox red" x="108" y="274" width="230" height="88"></rect>
+            <text class="nodeTitle" x="223" y="304" text-anchor="middle">finite label set E</text>
+            <text class="tinyText" x="223" y="328" text-anchor="middle">lambda_e and beta_e</text>
+            <text class="tinyText" x="223" y="346" text-anchor="middle">Proposition 1.7</text>
+
+            <rect class="nodeBox violet" x="424" y="274" width="232" height="88"></rect>
+            <text class="nodeTitle" x="540" y="304" text-anchor="middle">n-fold packet average</text>
+            <text class="tinyText" x="540" y="328" text-anchor="middle">tuples e in E^n</text>
+            <text class="tinyText" x="540" y="346" text-anchor="middle">n beta_avg identity</text>
+
+            <rect class="nodeBox green" x="742" y="274" width="250" height="88"></rect>
+            <text class="nodeTitle" x="867" y="304" text-anchor="middle">normalized log-volume weights</text>
+            <text class="tinyText" x="867" y="328" text-anchor="middle">[(F_mod)_v : Q_vQ]</text>
+            <text class="tinyText" x="867" y="346" text-anchor="middle">Remark 1.7.1</text>
+
+            <path d="M274 111 H424" class="edge blue" marker-end="url(#arrowIUTIVPrimeAvg)"></path>
+            <path d="M656 111 H806" class="edge green" marker-end="url(#arrowIUTIVPrimeAvg)"></path>
+            <path d="M340 318 H422" class="edge red" marker-end="url(#arrowIUTIVPrimeAvg)"></path>
+            <path d="M658 318 H740" class="edge violet" marker-end="url(#arrowIUTIVPrimeAvg)"></path>
+            <path d="M867 274 C880 218 906 190 916 156" class="edge green" marker-end="url(#arrowIUTIVPrimeAvg)"></path>
+            <path d="M540 156 C526 210 528 240 536 272" class="edge gold" marker-end="url(#arrowIUTIVPrimeAvg)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Statement</th><th>Use in Theorem 1.10</th></tr>
+          <tr>
+            <td>Proposition 1.6</td>
+            <td>
+              From the prime number theorem, for sufficiently large
+              <span class="math">n</span>, the <span class="math">n</span>-th prime
+              satisfies <span class="math">n <= 4p_n/(3 log(p_n))</span>.
+            </td>
+            <td>
+              This turns prime counting into an explicit reciprocal-log estimate that
+              can be inserted into the final theta-pilot bound.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.6</td>
+            <td>
+              There is a positive real threshold
+              <span class="math">eta_prm</span> such that the weighted sum over primes
+              <span class="math">p <= eta</span> is at least one for all
+              <span class="math">eta >= eta_prm</span>.
+            </td>
+            <td>
+              The constant <span class="math">eta_prm</span> is later referenced as a
+              concrete large-prime cutoff, not as an unspecified analytic assumption.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 1.7</td>
+            <td>
+              For a finite set <span class="math">E</span>, positive weights
+              <span class="math">lambda_e</span>, and real values
+              <span class="math">beta_e</span>, the weighted average over
+              <span class="math">E^n</span> of the tuple sum
+              <span class="math">beta_vec_e</span> equals
+              <span class="math">n beta_avg</span>.
+            </td>
+            <td>
+              This is the elementary identity that lets packet-normalized local
+              log-volumes be averaged over repeated label choices.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 1.7.1</td>
+            <td>
+              When using the normalized log-volumes of Proposition 1.4, the weights from
+              IUT III Remark 3.1.1 must be replaced by local degree weights
+              <span class="math">[(F_mod)_v : Q_vQ]</span>.
+            </td>
+            <td>
+              This prevents mixing normalized and non-normalized log-volume conventions
+              in Theorem 1.10.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 1.7.1</td>
+            <td>
+              The proposition is applied with <span class="math">E</span> the set of
+              valuations over a fixed rational place, <span class="math">n=|A|</span>,
+              <span class="math">lambda_e</span> the local degree, and
+              <span class="math">beta_e</span> a normalized local log-volume.
+            </td>
+            <td>
+              The abstract averaging formula is tied to the actual valuation-indexed
+              packet data used in the IUT IV estimate.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="prime-number-theorem-bound-iv16">
+            <h3>Prime-number bound</h3>
+            <p>
+              Proposition 1.6 uses only the standard prime number theorem, but fixes an
+              explicit inequality strong enough for the later proof. The wiki records it
+              because it is where analytic prime distribution first enters IUT IV.
+            </p>
+            <div class="tagRow"><span class="tag blue">Prop. 1.6</span><span class="tag">PNT</span></div>
+          </div>
+          <div class="card" id="eta-prm-threshold-iv16">
+            <h3><span class="math">eta_prm</span> threshold</h3>
+            <p>
+              The threshold <span class="math">eta_prm</span> packages the sufficiently
+              large range of the prime-number estimate. Later estimates can refer to
+              this number instead of reopening the analytic proof.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 1.6</span><span class="tag">large bound</span></div>
+          </div>
+          <div class="card" id="finite-weight-set-iv17">
+            <h3>Finite weight set</h3>
+            <p>
+              Proposition 1.7 starts with a finite nonempty set
+              <span class="math">E</span>, positive weights
+              <span class="math">lambda_e</span>, and real values
+              <span class="math">beta_e</span>. This abstraction is deliberately
+              elementary, so the later packet averaging is a transparent calculation.
+            </p>
+            <div class="tagRow"><span class="tag red">Prop. 1.7</span><span class="tag">finite set</span></div>
+          </div>
+          <div class="card" id="tuple-weight-product-iv17">
+            <h3>Tuple weight product</h3>
+            <p>
+              For a tuple <span class="math">vec e in E^n</span>, the product
+              <span class="math">lambda_Pi_vec_e</span> multiplies the component
+              weights, while <span class="math">beta_vec_e</span> sums the component
+              values. The identity computes their normalized average.
+            </p>
+            <div class="tagRow"><span class="tag violet">Prop. 1.7</span><span class="tag">E^n</span></div>
+          </div>
+          <div class="card" id="normalized-weight-replacement-171">
+            <h3>Normalized-weight replacement</h3>
+            <p>
+              Remark 1.7.1 is a convention checkpoint: because IUT IV uses normalized
+              log-volume, the degree weights used in IUT III's non-normalized setting
+              must be replaced by normalized local degree weights.
+            </p>
+            <div class="tagRow"><span class="tag gold">Rem. 1.7.1</span><span class="tag">normalization</span></div>
+          </div>
+          <div class="card" id="packet-log-volume-application-171">
+            <h3>Packet log-volume application</h3>
+            <p>
+              In Theorem 1.10, <span class="math">E</span> is the set of local
+              valuations over a rational place, and <span class="math">beta_e</span>
+              is a normalized log-volume of a compact open subset. This is where the
+              elementary average becomes a packet-normalized log-volume computation.
+            </p>
+            <div class="tagRow"><span class="tag green">Rem. 1.7.1</span><span class="tag">packets</span></div>
+          </div>
+        </div>
+        <div class="callout violet">
+          Formalization warning: the averaging formula is elementary, but its use is
+          convention-sensitive. A formal model must state whether log-volumes are
+          normalized as in Proposition 1.4; otherwise the weights imported from IUT III
+          Remark 3.1.1 have the wrong scale.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Propositions 1.6-1.7 and Remark 1.7.1</a>
+          Related: <a href="#iut-iv-local-log-volume-estimates-11-15">local estimates</a>
+          <a href="#weighted-averages">weighted averages atlas card</a>
+          <a href="#prime-number-theorem-source">prime-number estimate atlas card</a>
+          <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a>
+        </div>
+      </section>
+
       <section id="iut-iv">
         <h2>IUT IV and Consequences</h2>
         <p class="lede">
@@ -21747,7 +21951,7 @@
           <tr>
             <td>Propositions 1.6-1.7</td>
             <td>Analytic and averaging input used to assemble local estimates into global bounds.</td>
-            <td><a href="#prime-number-theorem-input">prime number theorem input</a>, <a href="#weighted-averages">weighted averages</a></td>
+            <td><a href="#iut-iv-prime-averaging-16-17">prime/averaging route</a>, <a href="#prime-number-theorem-input">prime number theorem input</a>, <a href="#weighted-averages">weighted averages</a></td>
           </tr>
           <tr>
             <td>Definition 1.9 and Theorem 1.10</td>
