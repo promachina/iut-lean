@@ -560,6 +560,7 @@
         <a href="#essential-logical-structure">Logical structure</a>
         <a href="#indeterminacies">Indeterminacies</a>
         <a href="#log-kummer-correspondences">Log-Kummer correspondences</a>
+        <a href="#theta-monoid-vertical-coricity-iii21">Theta monoid vertical coricity 2.1</a>
         <a href="#multiradiality">Multiradiality</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
@@ -1603,6 +1604,9 @@
               <a href="#vertical-bicoric-log-shells">bi-coric log-shells</a>,
               <a href="#vertical-cores">vertical cores</a>,
               <a href="#multiradial-theta-monoids">multiradial theta monoids</a>,
+              <a href="#theta-monoid-vertical-coricity-iii21">theta monoid vertical coricity</a>,
+              <a href="#mono-theta-rigidity-five-properties-211">mono-theta rigidity five properties</a>,
+              <a href="#bad-prime-zero-map-21">bad-prime zero map source</a>,
               <a href="#vertical-coric-theta-monoids">vertical coric theta monoids</a>,
               <a href="#theta-monoid-kummer-isomorphisms">theta-monoid Kummer isomorphisms</a>,
               <a href="#bad-prime-kummer-zero-map">bad-prime zero map</a>,
@@ -15090,6 +15094,272 @@
           <a href="#multiradiality">multiradiality</a>
           <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="theta-monoid-vertical-coricity-iii21">
+        <h2>Theta Monoid Vertical Coricity in IUT III 2.1</h2>
+        <p class="lede">
+          Proposition 2.1 globalizes the multiradial local theory of theta monoids
+          to the Gaussian log-theta lattice. It constructs theta-environment monoids
+          and realified Frobenioids from D-side prime-strips, identifies their
+          Frobenioid-theoretic versions by Kummer isomorphisms, and records the
+          bad-prime, good-prime, archimedean, and constant-monoid compatibility
+          clauses needed before Theorem 2.2 and Corollary 2.3.
+        </p>
+        <div class="diagram fit" aria-label="IUT III Proposition 2.1 theta monoid vertical coricity route">
+          <div class="diagramHeader">
+            <strong>Proposition 2.1 route</strong>
+            <span>D-side vertical coricity, Kummer readout, and local compatibility</span>
+          </div>
+          <svg viewBox="0 0 1120 650" role="img">
+            <defs>
+              <marker id="arrowThetaMonoids21" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="70" y="60" width="250" height="84"></rect>
+            <text class="nodeTitle" x="195" y="90" text-anchor="middle">D and D⊢ prime-strips</text>
+            <text class="tinyText" x="195" y="114" text-anchor="middle">from Theta±ellNF theater</text>
+            <text class="tinyText" x="195" y="132" text-anchor="middle">Proposition 2.1(i)</text>
+
+            <rect class="nodeBox green" x="436" y="60" width="250" height="84"></rect>
+            <text class="nodeTitle" x="561" y="90" text-anchor="middle">theta environment data</text>
+            <text class="tinyText" x="561" y="114" text-anchor="middle">Psi_env, infty Psi_env</text>
+            <text class="tinyText" x="561" y="132" text-anchor="middle">Denv realified Frobenioid</text>
+
+            <rect class="nodeBox gold" x="802" y="60" width="250" height="84"></rect>
+            <text class="nodeTitle" x="927" y="90" text-anchor="middle">vertical log-link transport</text>
+            <text class="tinyText" x="927" y="114" text-anchor="middle">m -> m+1 in fixed column</text>
+            <text class="tinyText" x="927" y="132" text-anchor="middle">compatible isomorphisms</text>
+
+            <rect class="nodeBox violet" x="246" y="256" width="250" height="84"></rect>
+            <text class="nodeTitle" x="371" y="286" text-anchor="middle">Frobenioid theta data</text>
+            <text class="tinyText" x="371" y="310" text-anchor="middle">Psi_Fenv and Cenv</text>
+            <text class="tinyText" x="371" y="328" text-anchor="middle">Corollary 4.6 input</text>
+
+            <rect class="nodeBox red" x="626" y="256" width="250" height="84"></rect>
+            <text class="nodeTitle" x="751" y="286" text-anchor="middle">Kummer isomorphisms</text>
+            <text class="tinyText" x="751" y="310" text-anchor="middle">Frobenioid side -> D-side</text>
+            <text class="tinyText" x="751" y="328" text-anchor="middle">F⊢ and F-prime-strip readout</text>
+
+            <rect class="nodeBox red" x="70" y="456" width="230" height="84"></rect>
+            <text class="nodeTitle" x="185" y="486" text-anchor="middle">bad primes</text>
+            <text class="tinyText" x="185" y="510" text-anchor="middle">mono-theta environments</text>
+            <text class="tinyText" x="185" y="528" text-anchor="middle">zero map into ×μ quotient</text>
+
+            <rect class="nodeBox green" x="334" y="456" width="230" height="84"></rect>
+            <text class="nodeTitle" x="449" y="486" text-anchor="middle">good nonarchimedean</text>
+            <text class="tinyText" x="449" y="510" text-anchor="middle">labeled Kummer</text>
+            <text class="tinyText" x="449" y="528" text-anchor="middle">semi-simplifications</text>
+
+            <rect class="nodeBox blue" x="598" y="456" width="230" height="84"></rect>
+            <text class="nodeTitle" x="713" y="486" text-anchor="middle">archimedean</text>
+            <text class="tinyText" x="713" y="510" text-anchor="middle">labeled topological monoids</text>
+            <text class="tinyText" x="713" y="528" text-anchor="middle">Kummer semi-simplifications</text>
+
+            <rect class="nodeBox gold" x="862" y="456" width="230" height="84"></rect>
+            <text class="nodeTitle" x="977" y="486" text-anchor="middle">constant compatibility</text>
+            <text class="tinyText" x="977" y="510" text-anchor="middle">F⊢×_△ ≃ F⊢×_env</text>
+            <text class="tinyText" x="977" y="528" text-anchor="middle">Theorem 1.5(iii)</text>
+
+            <path d="M322 102 H434" class="edge blue" marker-end="url(#arrowThetaMonoids21)"></path>
+            <path d="M688 102 H800" class="edge green" marker-end="url(#arrowThetaMonoids21)"></path>
+            <path d="M560 146 C524 192 438 220 386 254" class="edge violet" marker-end="url(#arrowThetaMonoids21)"></path>
+            <path d="M496 298 H624" class="edge red" marker-end="url(#arrowThetaMonoids21)"></path>
+            <path d="M751 342 C650 390 318 414 198 454" class="edge red" marker-end="url(#arrowThetaMonoids21)"></path>
+            <path d="M751 342 C665 394 514 416 456 454" class="edge green" marker-end="url(#arrowThetaMonoids21)"></path>
+            <path d="M751 342 C746 394 724 416 716 454" class="edge blue" marker-end="url(#arrowThetaMonoids21)"></path>
+            <path d="M876 298 C938 348 976 398 977 454" class="edge gold" marker-end="url(#arrowThetaMonoids21)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Construction</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Proposition 2.1(i)</td>
+            <td>
+              Functorial algorithms in the associated
+              <span class="math">D_&gt;</span> and
+              <span class="math">D⊢_&gt;</span> prime-strips construct
+              <span class="math">Psi_env(D_&gt;)</span>,
+              <span class="math">∞Psi_env(D_&gt;)</span>, and the global realified
+              Frobenioid <span class="math">Denv(D⊢_&gt;)</span>. Vertical arrows of
+              the Gaussian log-theta lattice induce compatible isomorphisms.
+            </td>
+            <td>
+              This gives the theta-environment monoids vertical coricity before the
+              §2 multiradial theta-monoid construction continues.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 2.1(ii)</td>
+            <td>
+              Frobenioid-theoretic theta-environment data
+              <span class="math">Psi_Fenv</span>, <span class="math">∞Psi_Fenv</span>,
+              and <span class="math">Cenv</span> are constructed from the
+              Θ±ellNF-Hodge theater and then identified with the D-side environment
+              data by Kummer isomorphisms.
+            </td>
+            <td>
+              This is the controlled Frobenius-like to D/etale-like readout for
+              theta-environment monoids and F-prime-strips.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 2.1(iii)</td>
+            <td>
+              At bad primes, Kummer isomorphisms are obtained through mono-theta
+              environments arising from tempered Frobenioids and from the tempered
+              fundamental group. The exterior-cyclotome map tensored with
+              <span class="math">Q/Z</span> maps trivially into the relevant
+              <span class="math">×μ</span> quotient.
+            </td>
+            <td>
+              This zero-map clause insulates mono-theta rigidity from the
+              <span class="math">Z×</span>-type indeterminacies acting on coric
+              unit-quotient data.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 2.1(iv)</td>
+            <td>
+              At good nonarchimedean primes, the unit portion is obtained from a
+              labelled version of the relevant MLF-Galois topological-monoid
+              isomorphism and from Kummer poly-isomorphisms of semi-simplifications.
+            </td>
+            <td>
+              Good-prime compatibility uses the semi-simplification route already
+              built in IUT II §4, rather than the bad-prime mono-theta route.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 2.1(v)</td>
+            <td>
+              At archimedean primes, the unit portion is obtained from a labelled
+              version of the archimedean topological-monoid isomorphism and its
+              Kummer semi-simplification orbit.
+            </td>
+            <td>
+              The archimedean clause is separate from both the bad-prime and good
+              nonarchimedean constructions.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 2.1(vi)</td>
+            <td>
+              The unit portion of the theta monoids gives natural isomorphisms
+              between the constant and environment
+              <span class="math">F⊢×</span>-prime-strip data, compatible with the
+              Kummer isomorphisms and Theorem 1.5(iii).
+            </td>
+            <td>
+              This ties the §2 theta-environment route back to the constant
+              <span class="math">F⊢×μ_△</span> interface preserved by the modified
+              theta links.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="d-side-theta-environment-21">
+            <h3>D-side theta environment</h3>
+            <p>
+              The D-side prime-strips reconstruct
+              <span class="math">Psi_env</span>, <span class="math">∞Psi_env</span>,
+              and <span class="math">Denv</span>. This is the vertically coric
+              environment data transported along log-links.
+            </p>
+            <div class="tagRow"><span class="tag blue">Prop. 2.1(i)</span><span class="tag">D-side</span></div>
+          </div>
+          <div class="card" id="f-side-kummer-readout-21">
+            <h3>F-side Kummer readout</h3>
+            <p>
+              The Frobenioid-theoretic data
+              <span class="math">Psi_Fenv</span> and <span class="math">Cenv</span>
+              are identified with the D-side data by Kummer isomorphisms and read as
+              F-prime-strip isomorphisms.
+            </p>
+            <div class="tagRow"><span class="tag violet">Prop. 2.1(ii)</span><span class="tag">Kummer</span></div>
+          </div>
+          <div class="card" id="bad-prime-zero-map-21">
+            <h3>Bad-prime zero map</h3>
+            <p>
+              The exterior-cyclotome contribution, after tensoring by
+              <span class="math">Q/Z</span> and projecting to the
+              <span class="math">×μ</span> quotient, is the zero map.
+            </p>
+            <div class="tagRow"><span class="tag red">Prop. 2.1(iii)</span><span class="tag">insulation</span></div>
+          </div>
+          <div class="card" id="good-prime-labelled-semisimplification-21">
+            <h3>Good-prime labelled semi-simplification</h3>
+            <p>
+              At good nonarchimedean places, the Kummer data is supplied by labelled
+              versions of MLF-Galois topological-monoid isomorphisms and
+              semi-simplification poly-isomorphisms.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 2.1(iv)</span><span class="tag">good primes</span></div>
+          </div>
+          <div class="card" id="archimedean-labelled-semisimplification-21">
+            <h3>Archimedean labelled semi-simplification</h3>
+            <p>
+              At archimedean places, the construction uses labelled versions of the
+              archimedean topological-monoid isomorphism and the associated Kummer
+              semi-simplification orbit.
+            </p>
+            <div class="tagRow"><span class="tag blue">Prop. 2.1(v)</span><span class="tag">archimedean</span></div>
+          </div>
+          <div class="card" id="constant-environment-compatibility-21">
+            <h3>Constant/environment compatibility</h3>
+            <p>
+              The unit part of the theta monoids identifies constant and environment
+              <span class="math">F⊢×</span> data and matches the
+              <span class="math">F⊢×μ</span> isomorphism of IUT II Corollary 4.10.
+            </p>
+            <div class="tagRow"><span class="tag gold">Prop. 2.1(vi)</span><span class="tag">constant side</span></div>
+          </div>
+          <div class="card" id="mono-theta-rigidity-five-properties-211">
+            <h3>Five mono-theta rigidity properties</h3>
+            <p>
+              Remark 2.1.1 lists cyclotomic rigidity, discrete rigidity, constant
+              multiple rigidity, isomorphism class compatibility, and Frobenioid
+              structure compatibility as the source rigidity package used in §2.
+            </p>
+            <div class="tagRow"><span class="tag violet">Rem. 2.1.1</span><span class="tag">rigidity</span></div>
+          </div>
+          <div class="card" id="first-power-cyclotomic-rigidity-211">
+            <h3>First-power cyclotomic rigidity</h3>
+            <p>
+              Remark 2.1.1 emphasizes that cyclotomic rigidity is nonlinear and
+              distinguished at the first power. Composing it with arbitrary
+              <span class="math">N</span>-power morphisms sacrifices constant
+              multiple rigidity.
+            </p>
+            <div class="tagRow"><span class="tag red">Rem. 2.1.1(iv)</span><span class="tag">first power</span></div>
+          </div>
+          <div class="card" id="discrete-rigidity-no-z-completion-211">
+            <h3>Discrete rigidity and positivity</h3>
+            <p>
+              Remark 2.1.1 says discrete rigidity restricts attention to
+              <span class="math">Z</span>-multiples or powers, not a
+              <span class="math">Zhat</span>-style completion that would lose
+              positivity and confuse effective with negative divisors.
+            </p>
+            <div class="tagRow"><span class="tag green">Rem. 2.1.1(v)</span><span class="tag">positivity</span></div>
+          </div>
+        </div>
+        <div class="callout violet">
+          Source warning: Proposition 2.1 is not just a generic Kummer compatibility
+          statement. Its local clauses differ by place type, and the bad-prime
+          mono-theta zero-map clause is the mechanism that keeps theta monoids much
+          more exact than the later Gaussian multiradial formulation.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 2.1 and Remark 2.1.1</a>
+          Related: <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#theta-times-mu-frobenius-pictures-ii410">Theta×μ Frobenius-pictures</a>
+          <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips</a>
+          <a href="#multiradiality">multiradiality</a>
+          <a href="#log-kummer-correspondences">log-Kummer correspondences</a>
         </div>
       </section>
 
