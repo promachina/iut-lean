@@ -468,6 +468,7 @@
         <a href="#orientation">Orientation</a>
         <a href="#reading-map">Reading map</a>
         <a href="#official-corpus">Official corpus</a>
+        <a href="#panoramic-route">Panoramic route</a>
         <a href="#concept-index">Concept index</a>
         <a href="#anabelian-background">Anabelian background</a>
         <a href="#iut-i-atlas">IUT I atlas</a>
@@ -755,6 +756,131 @@
           Related: <a href="#source-library">full source library</a>
           <a href="#formalization">formalization route</a>
           <a href="#iut-i-atlas">paper atlases</a>
+        </div>
+      </section>
+
+      <section id="panoramic-route">
+        <h2>Panoramic Route</h2>
+        <p class="lede">
+          The 2012 panoramic overview presents IUT as a response to a precise obstacle:
+          scheme-theoretic Hodge-Arakelov theory suggests the needed height estimate, but
+          its useful "global multiplicative subspace" picture is not generally available.
+          IUT replaces that unavailable scheme-theoretic situation by non-scheme-theoretic
+          deformations and then measures the resulting distortion.
+        </p>
+        <div class="diagram" aria-label="Panoramic route through IUT">
+          <div class="diagramHeader">
+            <strong>Four-part route</strong>
+            <span>from Hodge-Arakelov motivation to Diophantine output</span>
+          </div>
+          <svg viewBox="0 0 920 330" role="img">
+            <defs>
+              <marker id="arrowPano" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="34" y="72" width="180" height="82"></rect>
+            <text class="nodeTitle" x="124" y="101" text-anchor="middle">Hodge-Arakelov</text>
+            <text class="tinyText" x="124" y="123" text-anchor="middle">q^{j^2} height heuristic</text>
+
+            <rect class="nodeBox green" x="270" y="72" width="180" height="82"></rect>
+            <text class="nodeTitle" x="360" y="101" text-anchor="middle">Deformation</text>
+            <text class="tinyText" x="360" y="122" text-anchor="middle">distinct holomorphic</text>
+            <text class="tinyText" x="360" y="140" text-anchor="middle">arithmetic structures</text>
+
+            <rect class="nodeBox gold" x="506" y="72" width="180" height="82"></rect>
+            <text class="nodeTitle" x="596" y="101" text-anchor="middle">Log-theta lattice</text>
+            <text class="tinyText" x="596" y="123" text-anchor="middle">theta/log links and coricity</text>
+
+            <rect class="nodeBox violet" x="742" y="72" width="144" height="82"></rect>
+            <text class="nodeTitle" x="814" y="101" text-anchor="middle">Output</text>
+            <text class="tinyText" x="814" y="123" text-anchor="middle">height inequalities</text>
+
+            <path d="M214 113 H268" class="edge blue" marker-end="url(#arrowPano)"></path>
+            <path d="M450 113 H504" class="edge green" marker-end="url(#arrowPano)"></path>
+            <path d="M686 113 H740" class="edge gold" marker-end="url(#arrowPano)"></path>
+
+            <rect class="nodeBox red" x="244" y="232" width="414" height="58"></rect>
+            <text class="nodeTitle" x="451" y="256" text-anchor="middle">anabelian and Frobenioid machinery</text>
+            <text class="tinyText" x="451" y="276" text-anchor="middle">reconstructs selected structures after ring histories are weakened</text>
+            <path d="M451 232 C451 188 596 187 596 156" class="edge red" marker-end="url(#arrowPano)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="hodge-arakelov-obstruction">
+            <h3>Hodge-Arakelov obstruction</h3>
+            <p>
+              Section 1 reviews an idealized Hodge-Arakelov theorem whose codomain
+              contains factors weighted by <span class="math">q^{j^2}</span>. If global
+              multiplicative subspaces and canonical generators existed generally, a
+              height bound would follow by conventional arithmetic line-bundle arguments.
+            </p>
+            <div class="tagRow"><span class="tag blue">Pano §1</span><span class="tag">motivation</span></div>
+          </div>
+          <div class="card" id="key-assignment">
+            <h3>Key assignment</h3>
+            <p>
+              The overview isolates the assignment from the family
+              <span class="math">{q^{j^2}}</span> to <span class="math">q</span> as the
+              central computational problem. Since it is not a ring homomorphism inside
+              one conventional scheme theory, IUT treats the two sides as living in
+              distinct arithmetic holomorphic structures.
+            </p>
+            <div class="tagRow"><span class="tag gold">Pano §1</span><span class="tag">KEY</span></div>
+          </div>
+          <div class="card" id="coricity-panoramic">
+            <h3>Coricity</h3>
+            <p>
+              Coricity is the invariance of selected structures under the deformation.
+              The overview compares it to the underlying real-analytic surface in
+              classical Teichmuller theory: it is the part that remains usable while
+              holomorphic structure is changed.
+            </p>
+            <div class="tagRow"><span class="tag green">Pano §1</span><span class="tag">core</span></div>
+          </div>
+          <div class="card" id="prime-strips-as-sections">
+            <h3>Prime-strips as sections</h3>
+            <p>
+              Section 3 explains prime-strips as valuation-indexed sections of
+              <span class="math">Spec(K) → Spec(F)</span>. This simulates the missing
+              global multiplicative subspace and global generator data, while forcing
+              explicit bookkeeping of arithmetic line-bundle and Frobenioid structures.
+            </p>
+            <div class="tagRow"><span class="tag violet">Pano §3</span><span class="tag">prime-strips</span></div>
+          </div>
+          <div class="card" id="theta-link-non-ring-map">
+            <h3>Theta-link non-ring map</h3>
+            <p>
+              In the overview, the theta-link at bad places is an isomorphism of abstract
+              monoids sending the theta-value family to the q-parameter side. Its
+              compatibility with local Galois groups is by an unspecified abstract
+              isomorphism, not by an identity map of one ambient ring.
+            </p>
+            <div class="tagRow"><span class="tag red">Pano §3</span><span class="tag">non-ring</span></div>
+          </div>
+          <div class="card" id="jacobi-gaussian-analogy">
+            <h3>Jacobi/Gaussian analogy</h3>
+            <p>
+              The overview relates multiradiality of the etale theta function to the
+              invariance of the Gaussian under Fourier transform and to Jacobi's identity.
+              The analogy marks the role of quadratic theta data and logarithmic unit
+              geometry in the final log-volume calculation.
+            </p>
+            <div class="tagRow"><span class="tag blue">Pano §4</span><span class="tag">theta analogy</span></div>
+          </div>
+        </div>
+        <div class="callout">
+          This panoramic route is a navigation layer. The detailed source objects are
+          still the Hodge-theater, prime-strip, theta-link, log-link, multiradial, and
+          log-volume constructions in the four IUT papers.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-panorama.pdf" target="_blank">Panoramic Overview</a>
+          Related: <a href="#mutually-alien-copies">mutually alien copies</a>
+          <a href="#hodge-theaters">Hodge theaters</a>
+          <a href="#prime-strips-bridges">prime-strips</a>
+          <a href="#theta-log-links">theta/log links</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
         </div>
       </section>
 
