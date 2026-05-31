@@ -493,6 +493,7 @@
         <a href="#log-theta-lattice">Log-theta lattice</a>
         <a href="#essential-logical-structure">Logical structure</a>
         <a href="#indeterminacies">Indeterminacies</a>
+        <a href="#log-kummer-correspondences">Log-Kummer correspondences</a>
         <a href="#multiradiality">Multiradiality</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
@@ -1179,6 +1180,7 @@
               <a href="#ipl-she-apt-his">IPL/SHE/APT/HIS</a>,
               <a href="#label-procession-transitions">label-to-procession transitions</a>,
               <a href="#log-volume-coarse-space">log-volume coarse space</a>,
+              <a href="#log-kummer-correspondences">log-Kummer concept page</a>,
               <a href="#log-kummer-correspondence">log-Kummer correspondence</a>,
               <a href="#upper-semi-compatibility">upper semi-compatibility</a>,
               <a href="#packet-normalization">packet log-volume</a>,
@@ -7369,6 +7371,206 @@
           <a href="#multiradiality">multiradiality</a>
           <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
           <a href="#dispute">dispute</a>
+        </div>
+      </section>
+
+      <section id="log-kummer-correspondences">
+        <h2>Log-Kummer Correspondences</h2>
+        <p class="lede">
+          IUT III uses log-Kummer correspondences to compare Frobenius-like objects
+          carried by Hodge-theater Frobenioids with etale-like objects that form
+          multiradial containers. The comparison is deliberately upper-semi: log-shells
+          contain the relevant images, but the source does not assert elementwise
+          equality of all possible images.
+        </p>
+
+        <div class="diagram" aria-label="Log-Kummer correspondence">
+          <div class="diagramHeader">
+            <strong>From two versions to an upper container</strong>
+            <span>Frobenius-like data, etale-like data, and log-shell containment</span>
+          </div>
+          <svg viewBox="0 0 930 410" role="img">
+            <defs>
+              <marker id="arrowLogKummer" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox green" x="58" y="66" width="210" height="82"></rect>
+            <text class="nodeTitle" x="163" y="94" text-anchor="middle">Frobenius-like side</text>
+            <text class="tinyText" x="163" y="116" text-anchor="middle">monoids, Frobenioids</text>
+            <text class="tinyText" x="163" y="134" text-anchor="middle">theta/LGP data</text>
+
+            <rect class="nodeBox blue" x="360" y="66" width="210" height="82"></rect>
+            <text class="nodeTitle" x="465" y="94" text-anchor="middle">Etale-like side</text>
+            <text class="tinyText" x="465" y="116" text-anchor="middle">Galois/Kummer data</text>
+            <text class="tinyText" x="465" y="134" text-anchor="middle">multiradial container</text>
+
+            <rect class="nodeBox gold" x="662" y="66" width="210" height="82"></rect>
+            <text class="nodeTitle" x="767" y="94" text-anchor="middle">Log-shell container</text>
+            <text class="tinyText" x="767" y="116" text-anchor="middle">contains both images</text>
+            <text class="tinyText" x="767" y="134" text-anchor="middle">upper-semi comparison</text>
+
+            <path d="M268 107 H358" class="edge green" marker-end="url(#arrowLogKummer)"></path>
+            <path d="M570 107 H660" class="edge blue" marker-end="url(#arrowLogKummer)"></path>
+            <text class="edgeLabel" x="314" y="88" text-anchor="middle">Kummer iso</text>
+            <text class="edgeLabel" x="616" y="88" text-anchor="middle">log-shell</text>
+
+            <rect class="nodeBox red" x="190" y="262" width="230" height="82"></rect>
+            <text class="nodeTitle" x="305" y="290" text-anchor="middle">Elementwise failure</text>
+            <text class="tinyText" x="305" y="312" text-anchor="middle">not compatible with coric data</text>
+            <text class="tinyText" x="305" y="330" text-anchor="middle">at the level of elements</text>
+
+            <rect class="nodeBox violet" x="520" y="262" width="230" height="82"></rect>
+            <text class="nodeTitle" x="635" y="290" text-anchor="middle">Ind3</text>
+            <text class="tinyText" x="635" y="312" text-anchor="middle">inclusions / surjections</text>
+            <text class="tinyText" x="635" y="330" text-anchor="middle">for tensor-packet log-shells</text>
+
+            <path d="M465 148 C430 198 358 215 305 260" class="edge red" marker-end="url(#arrowLogKummer)"></path>
+            <path d="M767 148 C742 202 678 216 635 260" class="edge violet" marker-end="url(#arrowLogKummer)"></path>
+            <text class="smallText" x="465" y="382" text-anchor="middle">The source route gives containers and bounds, not a hidden equality of all histories.</text>
+          </svg>
+        </div>
+
+        <table>
+          <tr>
+            <th>IUT III source item</th>
+            <th>Content</th>
+            <th>Consequence for the 3.12 corridor</th>
+          </tr>
+          <tr>
+            <td>Introduction, log-link discussion</td>
+            <td>
+              Kummer isomorphisms relate the coric version of local
+              <span class="math">Pi_v ↷ O_Fv</span> data to copies appearing on both
+              sides of a log-link, but these isomorphisms are not compatible with
+              coricity at element level.
+            </td>
+            <td>
+              The log-link cannot be audited as an equality-preserving transport of all
+              local ring data.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 1.1 and Proposition 1.2</td>
+            <td>
+              The log-shell contains images from the domain and codomain of the log-link
+              and carries compatible log-volume data across the permitted
+              poly-isomorphisms.
+            </td>
+            <td>
+              The comparison target is a container with log-volume control, not the
+              original local unit set itself.
+            </td>
+          </tr>
+          <tr>
+            <td>Introduction, upper-semi paragraph</td>
+            <td>
+              Iterating log-links and Kummer isomorphisms yields diagrams that are only
+              upper semi-compatible. This is presented as the source of
+              <span class="math">Ind3</span>.
+            </td>
+            <td>
+              The later inequality arises from one-sided containment/interference, not
+              from a symmetric quotient argument.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 3.12.2</td>
+            <td>
+              Multiradial containers arise from etale-like versions of objects but are
+              applied as containers for Frobenius-like versions. The theory must track
+              the consequences of identifying these two versions.
+            </td>
+            <td>
+              A formal model must mark where Frobenius-like and etale-like objects are
+              distinct labels and where they are deliberately compared.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(ii)</td>
+            <td>
+              The log-Kummer correspondence relates tensor-packet log-shells, splitting
+              monoids, and global Frobenioids through Kummer isomorphisms; the local
+              clauses include inclusions at nonarchimedean rational valuations and
+              surjections at archimedean rational valuations.
+            </td>
+            <td>
+              This is the typed source of <span class="math">Ind3</span>; it should not
+              be replaced by a generic equivalence relation.
+            </td>
+          </tr>
+        </table>
+
+        <div class="grid3">
+          <div class="card" id="frobenius-like-label">
+            <h3>Frobenius-like label</h3>
+            <p>
+              Frobenius-like objects are the monoidal/Frobenioid objects carried by a
+              Hodge theater: theta monoids, LGP monoids, and global realified
+              Frobenioids before etale readout.
+            </p>
+            <div class="tagRow"><span class="tag green">Frobenioid</span><span class="tag">monoid</span></div>
+          </div>
+          <div class="card" id="etale-like-label">
+            <h3>Etale-like label</h3>
+            <p>
+              Etale-like objects are read through Galois/Kummer constructions and supply
+              the multiradial containers. They are comparable to Frobenius-like objects
+              only through specified Kummer isomorphisms.
+            </p>
+            <div class="tagRow"><span class="tag blue">Galois</span><span class="tag">Kummer</span></div>
+          </div>
+          <div class="card" id="log-shell-upper-container">
+            <h3>Upper container</h3>
+            <p>
+              The log-shell is large enough to contain Kummer images from both sides of
+              a log-link. Its function in the proof corridor is containment and
+              log-volume control.
+            </p>
+            <div class="tagRow"><span class="tag gold">log-shell</span><span class="tag">upper bound</span></div>
+          </div>
+          <div class="card" id="upper-semi-nonarchimedean">
+            <h3>Nonarchimedean clause</h3>
+            <p>
+              In the source statement of Theorem 3.11(ii), the upper-semi local behavior
+              at nonarchimedean rational valuations is expressed by inclusions of
+              possible images into the relevant log-shell packet.
+            </p>
+            <div class="tagRow"><span class="tag red">Ind3</span><span class="tag">inclusion</span></div>
+          </div>
+          <div class="card" id="upper-semi-archimedean">
+            <h3>Archimedean clause</h3>
+            <p>
+              At archimedean rational valuations, the corresponding upper-semi behavior
+              is expressed by natural surjections. This is a different local shape from
+              the nonarchimedean inclusion clause.
+            </p>
+            <div class="tagRow"><span class="tag red">Ind3</span><span class="tag">surjection</span></div>
+          </div>
+          <div class="card" id="no-loop-discipline">
+            <h3>No-loop discipline</h3>
+            <p>
+              IUT III avoids vicious loops while the Frobenius-like and etale-like
+              versions remain distinct labels. The delicate step is using etale-like
+              containers for Frobenius-like objects without erasing that distinction.
+            </p>
+            <div class="tagRow"><span class="tag violet">Remark 3.12.2</span><span class="tag">labels</span></div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          Audit rule: any wiki or Lean formulation that turns the log-Kummer
+          correspondence into equality of all possible images has strengthened the
+          source. The source gives upper-semi container behavior, and that asymmetry is
+          part of the route to Corollary 3.12.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Introduction and Theorem 3.11(ii)</a>
+          Related: <a href="#indeterminacies">indeterminacies</a>
+          <a href="#multiradiality">multiradiality</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
         </div>
       </section>
 
