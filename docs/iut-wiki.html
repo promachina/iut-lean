@@ -639,6 +639,10 @@
         <a href="#iut-iv-diophantine-output">IUT IV output route</a>
         <a href="#probabilistic-szpiro">Probabilistic Szpiro</a>
         <a href="#species-mutations">Species and mutations</a>
+        <a href="#topological-fundamental-group-mutation">Fundamental group mutation 3.4</a>
+        <a href="#absolute-anabelian-mutation-35">Absolute anabelian mutation 3.5</a>
+        <a href="#frobenius-etale-mutation-36">Frobenius/etale mutation 3.6</a>
+        <a href="#iut-coric-noncoric-principle-361">Coric/non-coric principle 3.6</a>
         <h2>Context</h2>
         <a href="#current-situation-reports">Current situation reports</a>
         <a href="#dispute">Scholze-Stix and responses</a>
@@ -23992,6 +23996,7 @@
               classes of functors as species-morphisms. This gives the first template for
               reading ordinary category-level constructions as species-level data.
             </p>
+            <p><a href="#topological-fundamental-group-mutation">Next example: fundamental groups as mutations</a></p>
             <div class="tagRow"><span class="tag green">Example 3.2</span><span class="tag">categories</span></div>
           </div>
           <div class="card" id="absolute-anabelian-species">
@@ -24002,6 +24007,7 @@
               with a quasi-inverse mutation back to schemes. This records reconstruction
               algorithmically, not only as a fully faithful comparison.
             </p>
+            <p><a href="#absolute-anabelian-mutation-35">Open the Example 3.5 page</a></p>
             <div class="tagRow"><span class="tag green">Example 3.5</span><span class="tag">anabelian</span></div>
           </div>
           <div class="card" id="frobenius-etale-core">
@@ -24016,6 +24022,7 @@
               and p-perfection, is the formal model for the coric/non-coric distinction
               later used to read log-links and theta-links.
             </p>
+            <p><a href="#frobenius-etale-mutation-36">Open the Example 3.6 page</a></p>
             <div class="tagRow"><span class="tag green">Example 3.6</span><span class="tag">coric/non-coric</span></div>
           </div>
           <div class="card" id="simulate-membership-loops">
@@ -24053,22 +24060,22 @@
           <tr>
             <td>Topological spaces and fundamental groups</td>
             <td>The fundamental group can be treated as a mutation from universal-cover data to group data.</td>
-            <td><a href="#tempered-fundamental-group">fundamental group</a></td>
+            <td><a href="#topological-fundamental-group-mutation">fundamental group mutation</a></td>
           </tr>
           <tr>
             <td>Absolute anabelian geometry</td>
             <td>Anabelian reconstruction is expressed as a mutation quasi-inverse to the fundamental-group mutation.</td>
-            <td><a href="#absolute-anabelian-species">absolute anabelian species</a></td>
+            <td><a href="#absolute-anabelian-mutation-35">absolute anabelian mutation</a></td>
           </tr>
           <tr>
             <td>Frobenius and etale sites</td>
             <td>The etale site and perfection are cores of Frobenius-type mutation histories.</td>
-            <td><a href="#frobenius-etale-core">Frobenius/etale core</a></td>
+            <td><a href="#frobenius-etale-mutation-36">Frobenius/etale mutation</a></td>
           </tr>
           <tr>
             <td>Monoid Frobenius</td>
             <td>Coric versus non-coric observables motivate the log-link and theta-link distinction.</td>
-            <td><a href="#theta-log-links">theta/log links</a></td>
+            <td><a href="#iut-coric-noncoric-principle-361">coric/non-coric principle</a></td>
           </tr>
           <tr>
             <td>IUT copies</td>
@@ -24087,6 +24094,436 @@
           Related: <a href="#iut-iv-atlas">IUT IV atlas</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="topological-fundamental-group-mutation">
+        <h2>Topological Spaces and the Fundamental Group Mutation</h2>
+        <p class="lede">
+          IUT IV Example 3.4 is the elementary model for later species-theoretic
+          reconstruction. It packages topological spaces, universal covers, and
+          groups as species, then reads the deck-transformation group of a universal
+          cover as a mutation.
+        </p>
+        <div class="diagram" aria-label="Fundamental group mutation">
+          <div class="diagramHeader">
+            <strong>Example 3.4</strong>
+            <span>universal-cover species to group species</span>
+          </div>
+          <svg viewBox="0 0 900 360" role="img">
+            <defs>
+              <marker id="arrow-example34" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox green" x="60" y="72" width="220" height="92"></rect>
+            <text class="nodeTitle" x="170" y="105" text-anchor="middle">S<tspan baseline-shift="sub">u-top</tspan></text>
+            <text class="smallText" x="170" y="130" text-anchor="middle">universal coverings</text>
+            <text class="tinyText" x="170" y="150" text-anchor="middle">maps modulo deck transformations</text>
+
+            <rect class="nodeBox blue" x="620" y="72" width="220" height="92"></rect>
+            <text class="nodeTitle" x="730" y="105" text-anchor="middle">S<tspan baseline-shift="sub">gp</tspan></text>
+            <text class="smallText" x="730" y="130" text-anchor="middle">groups</text>
+            <text class="tinyText" x="730" y="150" text-anchor="middle">outer homomorphisms</text>
+
+            <line class="edge" x1="282" y1="118" x2="610" y2="118" marker-end="url(#arrow-example34)"></line>
+            <text class="edgeLabel" x="446" y="96" text-anchor="middle">Aut(X~/X)</text>
+            <text class="smallText" x="446" y="140" text-anchor="middle">fundamental group as mutation</text>
+
+            <rect class="nodeBox violet" x="338" y="220" width="224" height="72"></rect>
+            <text class="nodeTitle" x="450" y="249" text-anchor="middle">set-theoretic formulas</text>
+            <text class="tinyText" x="450" y="270" text-anchor="middle">define objects, morphisms, and quotienting</text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>IUT IV item</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Example 3.4(i)</td>
+            <td>
+              Topological spaces and continuous maps form a species. Universal covers
+              of pathwise connected spaces form another species, with morphisms taken
+              modulo deck transformations of the codomain cover.
+            </td>
+            <td>
+              The quotient by deck transformations is part of the species-morphism
+              interface, not an after-the-fact equality of selected maps.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 3.4(ii)</td>
+            <td>
+              Groups and outer homomorphisms form a species; morphisms are homomorphism
+              classes modulo inner automorphisms of the codomain group.
+            </td>
+            <td>
+              This is the group-side prototype for later absolute Galois group
+              comparisons, where outer structure is the natural level.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 3.4(iii)</td>
+            <td>
+              The assignment from a universal cover to its deck-transformation group
+              defines a mutation from the universal-cover species to the group species.
+            </td>
+            <td>
+              The fundamental group is represented as a formula-defined transformation
+              between species, setting up the anabelian example that follows.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card">
+            <h3>Universal-cover species</h3>
+            <p>
+              A specimen contains a cover <span class="math">X~ -> X</span>. Morphisms
+              are compatible maps of covers, but they are identified after composition
+              with a deck transformation on the target.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Outer group species</h3>
+            <p>
+              The group species records homomorphisms only up to inner automorphism.
+              This matches the intrinsic ambiguity in recovering groups from covering
+              theory without chosen basepoints.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Mutation reading</h3>
+            <p>
+              The mutation sends a cover to its deck group. This is intentionally more
+              structured than saying that a particular fundamental group exists.
+            </p>
+          </div>
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Example 3.4</a>
+          Related: <a href="#species-mutations">species and mutations</a>
+          <a href="#absolute-anabelian-mutation-35">absolute anabelian mutation</a>
+          <a href="#tempered-fundamental-group">tempered fundamental group</a>
+        </div>
+      </section>
+
+      <section id="absolute-anabelian-mutation-35">
+        <h2>Absolute Anabelian Geometry as a Mutation Quasi-Inverse</h2>
+        <p class="lede">
+          IUT IV Example 3.5 recasts absolute anabelian reconstruction as a pair of
+          mutations. The fundamental-group mutation goes from a species of universal
+          profinite etale covers of schemes to a species of topological groups; an
+          anabelian reconstruction algorithm is a quasi-inverse mutation back to schemes.
+        </p>
+        <div class="diagram" aria-label="Absolute anabelian mutation quasi-inverse">
+          <div class="diagramHeader">
+            <strong>Example 3.5</strong>
+            <span>algorithmic reconstruction, not only full faithfulness</span>
+          </div>
+          <svg viewBox="0 0 900 370" role="img">
+            <defs>
+              <marker id="arrow-example35" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox green" x="70" y="92" width="230" height="100"></rect>
+            <text class="nodeTitle" x="185" y="124" text-anchor="middle">S<tspan baseline-shift="sub">S</tspan></text>
+            <text class="smallText" x="185" y="149" text-anchor="middle">universal profinite</text>
+            <text class="smallText" x="185" y="169" text-anchor="middle">etale covers of schemes</text>
+
+            <rect class="nodeBox blue" x="600" y="92" width="230" height="100"></rect>
+            <text class="nodeTitle" x="715" y="124" text-anchor="middle">S<tspan baseline-shift="sub">G</tspan></text>
+            <text class="smallText" x="715" y="149" text-anchor="middle">topological groups</text>
+            <text class="smallText" x="715" y="169" text-anchor="middle">outer isomorphisms</text>
+
+            <line class="edge green" x1="302" y1="125" x2="590" y2="125" marker-end="url(#arrow-example35)"></line>
+            <text class="edgeLabel" x="446" y="103" text-anchor="middle">Pi</text>
+            <text class="smallText" x="446" y="146" text-anchor="middle">deck group mutation</text>
+
+            <line class="edge blue" x1="598" y1="174" x2="310" y2="174" marker-end="url(#arrow-example35)"></line>
+            <text class="edgeLabel" x="446" y="205" text-anchor="middle">A</text>
+            <text class="smallText" x="446" y="226" text-anchor="middle">reconstruction mutation</text>
+
+            <rect class="nodeBox gold" x="300" y="264" width="300" height="64"></rect>
+            <text class="nodeTitle" x="450" y="291" text-anchor="middle">mutation-quasi-inverse</text>
+            <text class="tinyText" x="450" y="311" text-anchor="middle">explicit algorithmic formulation of anabelianity</text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>IUT IV item</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Example 3.5(i)</td>
+            <td>
+              A class of connected normal schemes, closed under isomorphism and
+              represented by a formula-describable set, gives a species of universal
+              profinite etale coverings.
+            </td>
+            <td>
+              The scheme side is not arbitrary: the class must have formula-describable
+              representatives, so the reconstruction problem remains species-level.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 3.5(ii)</td>
+            <td>
+              A class of topological groups, closed under isomorphism and represented
+              by a formula-describable set, gives a group species with bicontinuous
+              outer isomorphisms.
+            </td>
+            <td>
+              The group species is designed to receive fundamental groups without
+              smuggling in basepoint choices.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 3.5(iii)</td>
+            <td>
+              The deck-group assignment defines a mutation <span class="math">Pi</span>.
+              Absolute anabelianity may be formulated by specifying a quasi-inverse
+              mutation <span class="math">A</span>.
+            </td>
+            <td>
+              The paper emphasizes an algorithmic reconstruction mutation, not merely
+              the existence of bijections between Hom-sets.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 3.5(iv)</td>
+            <td>
+              A profinite group considered only as a profinite group differs from the
+              same group equipped with data arising from its construction as an etale
+              fundamental group.
+            </td>
+            <td>
+              This is a direct warning for the wiki and the Lean project: do not collapse
+              construction history into a bare final group when the history is relevant.
+            </td>
+          </tr>
+        </table>
+        <div class="callout green">
+          Collas' categorical perspective is useful here: the key object is not just a
+          global subspace of group elements, but the categorical data that records which
+          labels, basepoints, and reconstruction algorithms authorize a comparison.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Example 3.5</a>
+          Related: <a href="#collas-category-perspective">Collas category view</a>
+          <a href="#topological-fundamental-group-mutation">fundamental group mutation</a>
+          <a href="#basepoints-inter-universality">basepoints and inter-universality</a>
+        </div>
+      </section>
+
+      <section id="frobenius-etale-mutation-36">
+        <h2>Etale Sites, Perfections, and Frobenius Mutation Histories</h2>
+        <p class="lede">
+          IUT IV Example 3.6 supplies the motivating species-theoretic model for the
+          later log-theta-lattice: Frobenius changes the underlying ring-theoretic
+          structure, while the etale site and perfection provide coric observables.
+        </p>
+        <div class="diagram" aria-label="Frobenius mutation history with coric observables">
+          <div class="diagramHeader">
+            <strong>Example 3.6</strong>
+            <span>Frobenius mutation history and invariant observables</span>
+          </div>
+          <svg viewBox="0 0 940 430" role="img">
+            <defs>
+              <marker id="arrow-example36" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox red" x="70" y="80" width="150" height="62"></rect>
+            <text class="nodeTitle" x="145" y="106" text-anchor="middle">S</text>
+            <text class="tinyText" x="145" y="126" text-anchor="middle">reduced Fp-scheme</text>
+            <rect class="nodeBox red" x="310" y="80" width="150" height="62"></rect>
+            <text class="nodeTitle" x="385" y="106" text-anchor="middle">S(p)</text>
+            <text class="tinyText" x="385" y="126" text-anchor="middle">p-th power sheaf</text>
+            <rect class="nodeBox red" x="550" y="80" width="150" height="62"></rect>
+            <text class="nodeTitle" x="625" y="106" text-anchor="middle">S(p2)</text>
+            <text class="tinyText" x="625" y="126" text-anchor="middle">iterate</text>
+            <line class="edge red" x1="222" y1="111" x2="300" y2="111" marker-end="url(#arrow-example36)"></line>
+            <line class="edge red" x1="462" y1="111" x2="540" y2="111" marker-end="url(#arrow-example36)"></line>
+            <text class="edgeLabel" x="265" y="91" text-anchor="middle">F</text>
+            <text class="edgeLabel" x="505" y="91" text-anchor="middle">F</text>
+
+            <rect class="nodeBox blue" x="70" y="235" width="180" height="70"></rect>
+            <text class="nodeTitle" x="160" y="263" text-anchor="middle">S_et</text>
+            <text class="tinyText" x="160" y="284" text-anchor="middle">small etale site</text>
+            <rect class="nodeBox blue" x="390" y="235" width="180" height="70"></rect>
+            <text class="nodeTitle" x="480" y="263" text-anchor="middle">Scat core</text>
+            <text class="tinyText" x="480" y="284" text-anchor="middle">invariant under Frobenius</text>
+            <line class="edge blue" x1="252" y1="270" x2="380" y2="270" marker-end="url(#arrow-example36)"></line>
+
+            <rect class="nodeBox green" x="690" y="224" width="180" height="92"></rect>
+            <text class="nodeTitle" x="780" y="253" text-anchor="middle">S_pf</text>
+            <text class="smallText" x="780" y="276" text-anchor="middle">perfection core</text>
+            <text class="tinyText" x="780" y="296" text-anchor="middle">relates non-coric data</text>
+            <line class="edge green" x1="674" y1="142" x2="760" y2="216" marker-end="url(#arrow-example36)"></line>
+
+            <text class="smallText" x="260" y="354" text-anchor="middle">non-coric observable</text>
+            <text class="tinyText" x="260" y="374" text-anchor="middle">natural S -> S(p), not usually an isomorphism</text>
+            <text class="smallText" x="690" y="354" text-anchor="middle">coric observables</text>
+            <text class="tinyText" x="690" y="374" text-anchor="middle">etale site and perfection</text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>IUT IV item</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Example 3.6(i)</td>
+            <td>
+              For a reduced scheme over <span class="math">F_p</span>, the scheme
+              <span class="math">S(p)</span> has the same topological space and
+              structure sheaf of p-th powers. The small etale site and the perfection
+              are formula-defined mutations.
+            </td>
+            <td>
+              The etale-site mutation lands in the category species, while the
+              perfection mutation remains on the scheme species.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 3.6(ii)</td>
+            <td>
+              The Frobenius mutation history is generated by repeated
+              <span class="math">S -> S(p)</span>. The etale-site mutation and
+              perfection mutation are cores; the natural Frobenius morphism is a
+              non-coric observable.
+            </td>
+            <td>
+              This is the cleanest source for the wiki distinction between invariant
+              data and data altered by a mutation.
+            </td>
+          </tr>
+          <tr>
+            <td>Example 3.6(iii)</td>
+            <td>
+              The monoid version uses torsion-free abelian monoids, the submonoid
+              <span class="math">pM</span>, and p-perfection as a core of the
+              monoid-Frobenius mutation history.
+            </td>
+            <td>
+              The monoid model is the closest bridge from this example to the
+              log-link and theta-link language later used in IUT III.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Example 3.6</a>
+          Related: <a href="#iut-coric-noncoric-principle-361">coric/non-coric principle</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#theta-log-links">theta and log links</a>
+        </div>
+      </section>
+
+      <section id="iut-coric-noncoric-principle-361">
+        <h2>Coric Descriptions of Non-Coric Data</h2>
+        <p class="lede">
+          Remarks 3.6.1-3.6.3 explain why the Frobenius example is not incidental.
+          It is Mochizuki's model for the vertical and horizontal lines of the
+          log-theta-lattice: altered, non-coric data must be described through
+          formula-defined coric containers that remain meaningful from alien
+          arithmetic holomorphic structures.
+        </p>
+        <div class="grid2">
+          <div class="card">
+            <h3>Etale-type versus Frobenius-type</h3>
+            <p>
+              Remark 3.6.1 reads invariance of etale sites and perfections under
+              Frobenius as a species-theoretic distinction between coric observables
+              and non-coric observables. Mochizuki explicitly points to this as the
+              motivating pattern for both vertical log-links and horizontal
+              theta-type links.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Formula-defined calculation across universes</h3>
+            <p>
+              Remark 3.6.2 says arbitrary choices inside one model do not let one
+              calculate operations performed in an alien universe. The required
+              descriptions must come from specific set-theoretic formulas or
+              conventional descriptions that determine such formulas.
+            </p>
+          </div>
+          <div class="card">
+            <h3>No ring-homomorphic bridge</h3>
+            <p>
+              Remark 3.6.3 says vertical and horizontal arrows of the log-theta-lattice
+              are fundamentally unlike ring or scheme morphisms. The only natural
+              formula-defined correspondence between local Galois groups across such
+              arrows is an indeterminate isomorphism of topological groups.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Vertical versus horizontal distinction</h3>
+            <p>
+              For vertical arrows, the full arithmetic fundamental group is identified
+              up to isomorphism. For horizontal arrows, the geometric groups attached
+              to labels are kept distinct while local base-field Galois groups are
+              identified up to isomorphism.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>IUT IV item</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Remark 3.6.1</td>
+            <td>
+              Frobenius mutation histories are the underlying motivating examples for
+              the vertical lines of log-links and the horizontal theta-type links of the
+              log-theta-lattice.
+            </td>
+            <td>
+              Pages on the log-theta-lattice should reference this species-theoretic
+              prototype instead of presenting the lattice as isolated notation.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 3.6.2</td>
+            <td>
+              Calculations across alien universes require formula-defined algorithms.
+              The paper explicitly says it will rely on conventional mathematical
+              descriptions, with the reader responsible for checking well-definedness
+              and choice-independence.
+            </td>
+            <td>
+              This is a precise source for treating species data as audit obligations in
+              our Lean work: the formulas may be implicit, but the obligation is real.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 3.6.3(i)</td>
+            <td>
+              Galois groups are automorphism groups of rings or fields, but the
+              log-theta-lattice arrows are not ring homomorphisms. Across such arrows,
+              the natural correspondence is an indeterminate isomorphism of topological
+              groups.
+            </td>
+            <td>
+              This is the paper's local reason that ring/scheme history cannot simply be
+              carried across the disputed comparison.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 3.6.3(ii)</td>
+            <td>
+              Vertical arrows identify full arithmetic fundamental groups; horizontal
+              arrows distinguish geometric groups attached to labels while identifying
+              local base-field Galois groups up to isomorphism.
+            </td>
+            <td>
+              The distinction is directly relevant to the Corollary 3.12 corridor,
+              where label-dependent theta values and label-free data are compared.
+            </td>
+          </tr>
+        </table>
+        <div class="callout red">
+          For the Scholze-Stix/Mochizuki dispute, this page isolates one exact hinge:
+          whether the comparison is allowed to pass through formula-defined coric
+          containers after forgetting ring/scheme history, or whether that passage
+          collapses the data to a trivial common object.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Remarks 3.6.1-3.6.3</a>
+          Related: <a href="#corollary-312">Corollary 3.12 corridor</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#collas-category-perspective">Collas category view</a>
         </div>
       </section>
 
