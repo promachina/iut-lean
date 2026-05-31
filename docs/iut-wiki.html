@@ -791,6 +791,10 @@
             <td>ThetaNF and additive theory</td>
             <td>
               <a href="#theta-nf-hodge-theater">ThetaNF-Hodge theater</a>,
+              <a href="#theta-hodge-theater-source">theta-Hodge theater</a>,
+              <a href="#theta-link-poly-isomorphism">theta-link poly-isomorphism</a>,
+              <a href="#fmod-global-frobenioid">Fmod</a>,
+              <a href="#ftht-theta-target">Ftht</a>,
               <a href="#theta-bridge">Theta bridge</a>,
               <a href="#nf-bridge">NF bridge</a>,
               <a href="#theta-plus-minus-bridge">Theta-plus-minus bridge</a>,
@@ -830,6 +834,8 @@
             <td>Log-theta and multiradial objects</td>
             <td>
               <a href="#f-prime-strip">F-prime-strip</a>,
+              <a href="#kappa-coric-structure">kappa-coric structures</a>,
+              <a href="#theta-cyclotome">theta cyclotome</a>,
               <a href="#tautological-log-link">tautological log-link</a>,
               <a href="#gaussian-log-theta-lattice">Gaussian log-theta lattice</a>,
               <a href="#vertical-cores">vertical cores</a>,
@@ -941,6 +947,14 @@
               A ThetaNF-Hodge theater glues theta and number-field bridge structures
               into a combined Hodge-theater interface. It prepares the later additive
               constructions.
+            </p>
+          </div>
+          <div class="card" id="theta-cyclotome">
+            <h3>Theta cyclotome</h3>
+            <p>
+              Definition 5.2 uses theta-side cyclotomes to compare Kummer classes of
+              coric rational functions with roots of unity attached to the Frobenioid
+              side.
             </p>
           </div>
           <div class="card" id="theta-bridge">
@@ -2215,8 +2229,79 @@
             <td>The wiki and Lean interfaces must distinguish same-type theaters from same-history theaters.</td>
           </tr>
         </table>
+        <table>
+          <tr>
+            <th>IUT I source item</th>
+            <th>Theater/link data</th>
+            <th>Why the distinction matters</th>
+          </tr>
+          <tr>
+            <td>Definition 3.6(a)-(b)</td>
+            <td>
+              A theta-Hodge theater has local Frobenioid data
+              <span class="math">{F_v}_{v in V}</span>. Nonarchimedean components are
+              categories equivalent to the local Frobenioid categories; archimedean
+              components also carry Aut-holomorphic orbispaces and Kummer structures.
+            </td>
+            <td>
+              Local objects are not bare valuations: they carry the structure from
+              which the D, D⊢, DTheta, F⊢, and FTheta variants are reconstructed.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 3.6(c)</td>
+            <td>
+              The global part <span class="math">Fmod</span> consists of a Frobenioid
+              category <span class="math">Cmod</span>, a prime-to-valuation bijection,
+              the local <span class="math">F⊢_v</span> data, and comparison maps
+              <span class="math">rho_v</span> between global and local realified divisor
+              monoids.
+            </td>
+            <td>
+              This is the global currency-exchange device: it relates local divisor
+              monoids without restoring one global ring-history across all later links.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 3.6(c), Example 3.5</td>
+            <td>
+              From <span class="math">Fmod</span> one algorithmically constructs
+              <span class="math">Ftht</span> and <span class="math">F_D</span>, the
+              theta-side and D-side objects used in theta-Hodge-theater comparison.
+            </td>
+            <td>
+              The first theta link is an isomorphism between these constructed
+              collections of data, not an isomorphism of schemes.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 3.7(i)</td>
+            <td>
+              For two theta-Hodge theaters, the full poly-isomorphism
+              <span class="math">Ftht -> Fmod</span> is nonempty and is called the
+              theta link.
+            </td>
+            <td>
+              The link has no distinguished member. This is the first source-level
+              warning that later comparison must track poly-isomorphisms and
+              indeterminacy, not a canonical transport map.
+            </td>
+          </tr>
+          <tr>
+            <td>Corollary 3.7(ii)-(iii)</td>
+            <td>
+              The theta link preserves the relevant <span class="math">D⊢</span> data
+              and the unit groups <span class="math">O^x</span> after composing with
+              the tautological <span class="math">D⊢ <-> DTheta</span> identifications.
+            </td>
+            <td>
+              Preservation lives at the mono-analytic/unit level. It is not preservation
+              of the full arithmetic holomorphic structure.
+            </td>
+          </tr>
+        </table>
         <div class="grid3">
-          <div class="card">
+          <div class="card" id="theta-hodge-theater-source">
             <h3>Theta-Hodge theaters</h3>
             <p>
               IUT I Section 3 constructs chains of theta-Hodge theaters from the initial
@@ -2225,7 +2310,7 @@
             </p>
             <div class="tagRow"><span class="tag green">Definition 3.6</span><span class="tag">theta theater</span></div>
           </div>
-          <div class="card">
+          <div class="card" id="theta-link-poly-isomorphism">
             <h3>Theta links</h3>
             <p>
               Corollary 3.7 defines theta links between theta-Hodge theaters. Corollary
@@ -2233,6 +2318,34 @@
               Frobenius-picture.
             </p>
             <div class="tagRow"><span class="tag green">Cor. 3.7-3.8</span><span class="tag">Frobenius-picture</span></div>
+          </div>
+          <div class="card" id="theta-link-preservation">
+            <h3>Theta-link preservation</h3>
+            <p>
+              The first theta link preserves <span class="math">D⊢</span> and
+              <span class="math">O^x</span> through the tautological theta-side
+              identifications. It does not identify the two theaters as the same
+              arithmetic holomorphic universe.
+            </p>
+            <div class="tagRow"><span class="tag green">Cor. 3.7(ii)-(iii)</span><span class="tag">mono-analytic</span></div>
+          </div>
+          <div class="card" id="fmod-global-frobenioid">
+            <h3>Fmod global Frobenioid</h3>
+            <p>
+              The object <span class="math">Fmod</span> packages the global Frobenioid
+              category, its prime set, local mono-analytic Frobenioid data, and the
+              realified comparison maps used to relate local divisor monoids.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 3.6(c)</span><span class="tag">global</span></div>
+          </div>
+          <div class="card" id="ftht-theta-target">
+            <h3>Ftht theta target</h3>
+            <p>
+              <span class="math">Ftht</span> is constructed algorithmically from
+              <span class="math">Fmod</span> and serves as the theta-side collection of
+              data in the source theta link <span class="math">Ftht -> Fmod</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 3.5</span><span class="tag">theta link</span></div>
           </div>
           <div class="card">
             <h3>D and D⊢ layers</h3>
@@ -3077,6 +3190,35 @@
             </td>
           </tr>
           <tr>
+            <td>Definition 5.2(v)-(vi)</td>
+            <td>
+              At nonarchimedean places, the D-side fundamental group reconstructs
+              rational-function pseudo-monoids
+              <span class="math">M^∞κ</span> and <span class="math">M^∞κ×</span>.
+              Kummer classes determine cyclotomic identifications and the uniquely
+              determined coric structures attached to an F-prime-strip.
+            </td>
+            <td>
+              This is one source of the later distinction between Kummer-ready
+              Frobenioid data and data visible only after mono-analytic weakening.
+            </td>
+          </tr>
+          <tr>
+            <td>Definition 5.2(vii)-(viii)</td>
+            <td>
+              At archimedean places, Aut-holomorphic reconstruction supplies
+              meromorphic-function pseudo-monoids and Kummer-structure cyclotomic
+              isomorphisms; the <span class="math">∞κ</span> structure is recovered
+              from <span class="math">∞κ×</span> by testing torsion at strictly critical
+              points.
+            </td>
+            <td>
+              The archimedean side has its own reconstruction mechanism. Treating all
+              places as if they were nonarchimedean would lose a source distinction in
+              the paper.
+            </td>
+          </tr>
+          <tr>
             <td>Corollary 5.3</td>
             <td>
               Isomorphisms of F-prime-strips are determined by the associated
@@ -3172,6 +3314,22 @@
               well-defined up to isomorphism.
             </p>
             <div class="tagRow"><span class="tag green">Example 5.4(iv)</span><span class="tag">F-prime-strip</span></div>
+          </div>
+          <div class="card" id="kappa-coric-structure">
+            <h3>Kappa-coric structures</h3>
+            <p>
+              Definition 5.2 attaches <span class="math">∞κ</span> and
+              <span class="math">∞κ×</span> pseudo-monoid structures to F-prime-strips.
+              Nonarchimedean components use group-theoretic reconstruction and Kummer
+              cohomology; archimedean components use Aut-holomorphic meromorphic
+              functions.
+            </p>
+            <p>
+              The <span class="math">∞κ</span> structure is extracted from
+              <span class="math">∞κ×</span> by imposing torsion/root-of-unity behavior
+              at strictly critical points.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 5.2(vi),(viii)</span><span class="tag">Kummer</span></div>
           </div>
           <div class="card" id="pivotal-distributions">
             <h3>Pivotal distributions</h3>
