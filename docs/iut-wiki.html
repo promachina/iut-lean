@@ -204,6 +204,7 @@
       scroll-margin-top: 14px;
     }
     section[hidden] { display: none !important; }
+    body:not(.wiki-ready) main section:not(#home),
     body.wiki-ready main section:not(.active-page) { display: none !important; }
     main section.active-page,
     body:not(.wiki-ready) main section#home { display: block; }
@@ -314,6 +315,31 @@
     }
     .hero .diagram svg {
       min-width: 0;
+    }
+    .flowDiagram {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .flowStep {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+    .flowStep strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+      line-height: 1.25;
+    }
+    .flowStep p {
+      margin: 0;
+      color: #3d454a;
+      font-size: 0.92rem;
+      line-height: 1.45;
     }
     svg text {
       font-family: inherit;
@@ -534,6 +560,7 @@
       main { padding: 24px 14px 70px; }
       .hero { min-height: auto; padding: 30px 0; }
       .heroGrid, .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+      .flowDiagram { grid-template-columns: 1fr; }
       .sourceCard { grid-template-columns: 1fr; }
     }
 
@@ -684,6 +711,14 @@
         <a href="#d-morphism-lift-iut-i531">D-morphism lift 5.3.1</a>
         <a href="#iut-i-pivotal-distributions-54">Pivotal distributions 5.4</a>
         <a href="#delta-valuations-localization-54">Delta-valuations 5.4</a>
+        <a href="#labeled-f-copies-iut-i54">Labeled F-copies 5.4</a>
+        <a href="#theta-polymorphisms-iut-i54">Theta poly-morphisms 5.4</a>
+        <a href="#delta-valuations-intrinsic-iut-i54">Intrinsic delta-valuations 5.4</a>
+        <a href="#f-localization-delta-iut-i54">F|delta localization 5.4</a>
+        <a href="#nf-polymorphism-psinf-iut-i54">NF poly-morphism 5.4</a>
+        <a href="#restriction-functors-iut-i54">Restriction functors 5.4</a>
+        <a href="#pivotal-distribution-iut-i54">Pivotal distribution 5.4</a>
+        <a href="#log-volume-average-sum-iut-i542">Average/sum convention 5.4.2</a>
         <a href="#theta-nf-bridges-definition-55-56">ThetaNF bridges 5.5-5.6</a>
         <a href="#gms-gcg-motivation">GMS/GCG motivation</a>
         <a href="#projective-line-gluing-analogy">Projective-line gluing</a>
@@ -1762,8 +1797,9 @@
               <a href="#corollary-53-rigidity">Corollary 5.3 rigidity</a>,
               <a href="#iut-i-pivotal-distributions-54">pivotal distributions 5.4</a>,
               <a href="#delta-valuations-localization-54">delta-valuations/localization 5.4</a>,
-              <a href="#delta-valuations-example54">δ-valuations</a>,
-              <a href="#log-volume-average-sum54">average/sum log-volume convention</a>,
+              <a href="#delta-valuations-intrinsic-iut-i54">δ-valuations</a>,
+              <a href="#restriction-functors-iut-i54">restriction functors</a>,
+              <a href="#log-volume-average-sum-iut-i542">average/sum log-volume convention</a>,
               <a href="#theta-nf-bridges-definition-55-56">ThetaNF bridges 5.5-5.6</a>,
               <a href="#theta-nf-hodge-theater">ThetaNF-Hodge theater</a>,
               <a href="#nf-bridge-frobenioid-lift">NF bridge</a>,
@@ -17944,6 +17980,343 @@
           Related: <a href="#iut-i-pivotal-distributions-54">pivotal distributions</a>
           <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a>
           <a href="#global-reconstruction-51">global reconstruction</a>
+          <a href="#packet-procession-log-volume-iii39">packet/procession log-volume</a>
+        </div>
+      </section>
+
+      <section id="labeled-f-copies-iut-i54">
+        <h2>Labeled F-Copies in IUT I 5.4</h2>
+        <p class="lede">
+          Example 5.4(i) lifts the Section 4 capsule labels from D-prime-strips to
+          F-prime-strips. For each label <span class="math">j in J</span>, one has an
+          F-prime-strip <span class="math">F_j</span> with associated
+          D-prime-strip <span class="math">D_j</span>. Their product
+          <span class="math">F_J</span> is the labeled capsule, while
+          <span class="math">F_&lt;J&gt;</span> is the diagonal copy distributed across
+          all labels.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Object</th><th>Paper role</th><th>Modeling consequence</th></tr>
+          <tr>
+            <td><span class="math">F_j</span></td>
+            <td>A copy of the theta-side <span class="math">F_&gt;</span> situated at the label <span class="math">j</span>.</td>
+            <td>Keep the label as part of the object, not as a later annotation.</td>
+          </tr>
+          <tr>
+            <td><span class="math">F_J</span></td>
+            <td>The capsule/product of all <span class="math">F_j</span>.</td>
+            <td>Comparisons can speak about the whole label family at once.</td>
+          </tr>
+          <tr>
+            <td><span class="math">F_&lt;J&gt;</span></td>
+            <td>A diagonal object mapped to <span class="math">F_J</span> and fully poly-isomorphic to <span class="math">F_&gt;</span>.</td>
+            <td>Diagonal and product distributions must remain distinct.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Remark 5.4.1 assigns this part to the D-Theta side of the bridge. The
+          construction does not yet require the D-NF bridge used for delta-valuations.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 5.4(i)</a>
+          Related: <a href="#theta-polymorphisms-iut-i54">theta poly-morphisms</a>
+          <a href="#delta-valuations-intrinsic-iut-i54">delta-valuations</a>
+          <a href="#log-volume-average-sum-iut-i542">average/sum convention</a>
+        </div>
+      </section>
+
+      <section id="theta-polymorphisms-iut-i54">
+        <h2>Theta Poly-Morphisms in IUT I 5.4</h2>
+        <p class="lede">
+          Example 5.4(ii) associates to each labeled copy
+          <span class="math">F_j</span> a poly-morphism
+          <span class="math">psi^Theta_j : F_j -> F_&gt;</span>. It is uniquely
+          determined by the D-theta arrow <span class="math">phi^Theta_j</span>, and
+          the family <span class="math">psi^Theta</span> from
+          <span class="math">F_J</span> to <span class="math">F_&gt;</span> lies over
+          the D-side family <span class="math">phi^Theta</span>.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Source</h3>
+            <p>
+              The arrow is not selected independently at the F-level. It is the
+              Frobenioid lift of the already specified D-theta bridge component.
+            </p>
+            <div class="tagRow"><span class="tag gold">Example 5.4(ii)</span><span class="tag">D-Theta</span></div>
+          </div>
+          <div class="card">
+            <h3>Family</h3>
+            <p>
+              The collection over all labels forms the capsule morphism
+              <span class="math">psi^Theta : F_J -> F_&gt;</span>.
+            </p>
+            <div class="tagRow"><span class="tag blue">capsule</span><span class="tag">labels</span></div>
+          </div>
+          <div class="card">
+            <h3>Constraint</h3>
+            <p>
+              A formalization should expose the statement "lies over
+              <span class="math">phi^Theta</span>" as a typed compatibility, not as a
+              naming convention.
+            </p>
+            <div class="tagRow"><span class="tag red">compatibility</span><span class="tag">audit</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 5.4(ii)</a>
+          Related: <a href="#labeled-f-copies-iut-i54">labeled F-copies</a>
+          <a href="#nf-polymorphism-psinf-iut-i54">NF poly-morphism</a>
+          <a href="#theta-evaluation-sections-44-45">theta evaluation sections</a>
+        </div>
+      </section>
+
+      <section id="delta-valuations-intrinsic-iut-i54">
+        <h2>Intrinsic Delta-Valuations in IUT I 5.4</h2>
+        <p class="lede">
+          Example 5.4(iii) defines a delta-valuation from a global cusp label
+          <span class="math">delta in LabCusp(D)</span>. The paper gives both an
+          orbit formulation using the unique <span class="math">Aut_epsilon(D)</span>
+          orbit sending <span class="math">delta</span> to
+          <span class="math">[epsilon]</span>, and an intrinsic D-NF-bridge
+          formulation using the unique constituent whose label maps to
+          <span class="math">1</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Definition route</th><th>Paper content</th><th>What must not be lost</th></tr>
+          <tr>
+            <td>Orbit route</td>
+            <td>
+              Delta-valuations are those mapping through the distinguished
+              <span class="math">V^±un</span> orbit associated to the cusp-label
+              transport.
+            </td>
+            <td>The definition depends on cusp-label transport, not merely on a place.</td>
+          </tr>
+          <tr>
+            <td>D-NF route</td>
+            <td>
+              The same valuations are read from the unique
+              <span class="math">D_j</span> whose label torsor sends
+              <span class="math">delta</span> to label <span class="math">1</span>.
+            </td>
+            <td>This is the bridge-native formulation needed for later localization.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Delta-valuations are not an arbitrary chosen subset of valuations. They are
+          reconstructed from the D-NF bridge and the global cusp-label torsor.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 5.4(iii)</a>
+          Related: <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a>
+          <a href="#f-localization-delta-iut-i54">F|delta localization</a>
+          <a href="#global-label-kodaira-spencer-iut-i471">global cusp labels</a>
+        </div>
+      </section>
+
+      <section id="f-localization-delta-iut-i54">
+        <h2>F|delta Localization in IUT I 5.4</h2>
+        <p class="lede">
+          Example 5.4(iv) localizes an F-prime-strip at delta-valuations to construct
+          <span class="math">F|delta</span>. The resulting object is well-defined only
+          up to isomorphism, because the map from the universal valuation set to the
+          model valuation set is not injective and no canonical representative is
+          specified.
+        </p>
+        <div class="flowDiagram" aria-label="F delta localization dependencies">
+          <div class="flowStep">
+            <strong>1. Delta-valuations</strong>
+            <p>
+              The valuation subset is read from the D-NF bridge and cusp-label data;
+              no fiber representative is selected.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>2. Localized <span class="math">F|delta</span></strong>
+            <p>
+              Localizing at that subset gives an F-prime-strip well-defined up to
+              isomorphism.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>3. ∞κ compatibility</strong>
+            <p>
+              Associated Kummer classes restrict to the local/global coric structures
+              across the induced D-side poly-morphism.
+            </p>
+          </div>
+        </div>
+        <div class="callout warn">
+          This page is the guardrail against turning localization into a function that
+          chooses representatives. The paper's construction is relational up to
+          isomorphism.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 5.4(iv)</a>
+          Related: <a href="#delta-valuations-intrinsic-iut-i54">delta-valuations</a>
+          <a href="#nf-polymorphism-psinf-iut-i54">NF poly-morphism</a>
+          <a href="#local-nonarch-kappa-coric-iut-i52">local κ-coric structures</a>
+        </div>
+      </section>
+
+      <section id="nf-polymorphism-psinf-iut-i54">
+        <h2>NF Poly-Morphism in IUT I 5.4</h2>
+        <p class="lede">
+          Example 5.4(v) applies Corollary 5.3(ii) to obtain a unique poly-morphism
+          <span class="math">psi^NF : F_J -> F</span> lying over the D-NF bridge
+          <span class="math">phi^NF</span>. The uniqueness is inherited from the
+          D-prime-strip-to-F-prime-strip rigidity already established in Corollary 5.3.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Input</th><th>Output</th><th>Dependency</th></tr>
+          <tr>
+            <td><span class="math">phi^NF</span> on D-prime-strips</td>
+            <td><span class="math">psi^NF</span> on F-prime-strips</td>
+            <td>Corollary 5.3(ii)</td>
+          </tr>
+          <tr>
+            <td>Capsule <span class="math">F_J</span></td>
+            <td>Target <span class="math">F</span></td>
+            <td>D-NF bridge, not D-Theta alone</td>
+          </tr>
+        </table>
+        <div class="callout good">
+          Formalization consequence: this is a good boundary for replacing an oracle
+          arrow by a theorem using the earlier rigidity interface.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 5.4(v)</a>
+          Related: <a href="#corollary-53-rigidity-page">Corollary 5.3 rigidity</a>
+          <a href="#theta-polymorphisms-iut-i54">theta poly-morphisms</a>
+          <a href="#restriction-functors-iut-i54">restriction functors</a>
+        </div>
+      </section>
+
+      <section id="restriction-functors-iut-i54">
+        <h2>Restriction Functors in IUT I 5.4</h2>
+        <p class="lede">
+          Example 5.4(vi) extracts isomorphism classes of restriction functors from
+          the poly-morphism data. The construction is independent of the chosen
+          poly-morphism inside its <span class="math">F_l</span>-conjugacy class; the
+          output is therefore an isomorphism class rather than a selected functor.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Diagonal route</h3>
+            <p>
+              A poly-morphism <span class="math">F_&lt;J&gt; -> F</span> induces
+              restriction from the global/model Frobenioid toward the local
+              constituents.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 5.4(vi)</span><span class="tag">diagonal</span></div>
+          </div>
+          <div class="card">
+            <h3>Capsule route</h3>
+            <p>
+              The same construction is stated for
+              <span class="math">F_J -> F_J</span> and for each
+              <span class="math">F_j -> F_j</span>.
+            </p>
+            <div class="tagRow"><span class="tag blue">capsule</span><span class="tag">local factors</span></div>
+          </div>
+          <div class="card">
+            <h3>Realification</h3>
+            <p>
+              The paper also records the analogous realified restriction functors,
+              matching the realified Frobenioid prime-strip layer.
+            </p>
+            <div class="tagRow"><span class="tag violet">realified</span><span class="tag">F⊩</span></div>
+          </div>
+        </div>
+        <div class="callout warn">
+          The independence from <span class="math">F_l</span>-conjugate choices is
+          part of the statement. A model with a chosen representative has added
+          structure unless it also quotients or proves independence.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 5.4(vi)</a>
+          Related: <a href="#f-localization-delta-iut-i54">F|delta localization</a>
+          <a href="#pivotal-distribution-iut-i54">pivotal distribution</a>
+          <a href="#f-realified-prime-strip-definition-iut-i52">realified strips</a>
+        </div>
+      </section>
+
+      <section id="pivotal-distribution-iut-i54">
+        <h2>Pivotal Distribution in IUT I 5.4</h2>
+        <p class="lede">
+          Example 5.4(vii) names the restriction-functor objects at the distinguished
+          label <span class="math">j = 1</span> the pivotal distributions, together
+          with their realified versions. The definition depends on the preceding
+          capsule, localization, NF poly-morphism, and restriction-functor stages.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Stage</th><th>Needed before pivotal distribution</th><th>Reason</th></tr>
+          <tr>
+            <td>Labels</td>
+            <td><span class="math">F_j</span>, <span class="math">F_J</span>, <span class="math">F_&lt;J&gt;</span></td>
+            <td>The distinguished label <span class="math">1</span> must live in the capsule structure.</td>
+          </tr>
+          <tr>
+            <td>Localization</td>
+            <td><span class="math">F|delta</span> up to isomorphism</td>
+            <td>The local Frobenioid strip is obtained from delta-valuations.</td>
+          </tr>
+          <tr>
+            <td>Restriction</td>
+            <td>Isomorphism classes of restriction functors</td>
+            <td>The pivotal distribution is one named output of this restriction machinery.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 5.4(vii)</a>
+          Related: <a href="#restriction-functors-iut-i54">restriction functors</a>
+          <a href="#labeled-f-copies-iut-i54">labeled F-copies</a>
+          <a href="#theta-nf-bridges-definition-55-56">ThetaNF bridges</a>
+        </div>
+      </section>
+
+      <section id="log-volume-average-sum-iut-i542">
+        <h2>Average/Sum Convention in IUT I 5.4.2</h2>
+        <p class="lede">
+          Remark 5.4.2 fixes a sign-sensitive bookkeeping convention for log-volume
+          computations. One may read degrees attached to
+          <span class="math">F_&lt;J&gt;</span> as averages over
+          <span class="math">J ~= F_l</span>, producing a factor of
+          <span class="math">l</span> relative to a single
+          <span class="math">F_j</span>. When the Frobenioid isomorphisms are used
+          directly, the same comparison is read as a sum over labels, without dividing
+          by <span class="math">l</span>.
+        </p>
+        <div class="grid2">
+          <div class="card">
+            <h3>Average reading</h3>
+            <p>
+              The diagonal object records degree data as an average over the label
+              set. This is the convention that displays the factor relative to one
+              labeled component.
+            </p>
+            <div class="tagRow"><span class="tag gold">average</span><span class="tag">degrees</span></div>
+          </div>
+          <div class="card">
+            <h3>Sum reading</h3>
+            <p>
+              Under Frobenioid isomorphisms, the comparison may be written as a sum
+              over the labels. The paper explicitly says not to divide by
+              <span class="math">l</span> in this reading.
+            </p>
+            <div class="tagRow"><span class="tag red">sum</span><span class="tag">log-volume</span></div>
+          </div>
+        </div>
+        <div class="callout gold">
+          This convention is important downstream: log-volume pages should state
+          whether a displayed expression uses the averaged diagonal convention or the
+          summed Frobenioid-isomorphism convention.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Remark 5.4.2</a>
+          Related: <a href="#pivotal-distribution-iut-i54">pivotal distribution</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
           <a href="#packet-procession-log-volume-iii39">packet/procession log-volume</a>
         </div>
       </section>
