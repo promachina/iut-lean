@@ -578,6 +578,9 @@
         <a href="#frobenius-picture-cor38">Frobenius-picture 3.8</a>
         <a href="#etale-picture-cor39">Etale-picture 3.9</a>
         <a href="#multiplicative-combinatorial-teichmuller">Multiplicative combinatorics</a>
+        <a href="#d-prime-strips-labels-41-42">D-prime strips 4.1-4.2</a>
+        <a href="#local-analytic-sections-43">Local analytic sections 4.3</a>
+        <a href="#theta-evaluation-sections-44-45">Theta evaluation sections 4.4-4.5</a>
         <a href="#iut-i-global-frobenioids-example51">Global Frobenioids 5.1</a>
         <a href="#iut-i-frobenioid-prime-strips-52">Frobenioid prime-strips 5.2</a>
         <a href="#iut-i-pivotal-distributions-54">Pivotal distributions 5.4</a>
@@ -1565,6 +1568,18 @@
               <a href="#scheme-theory-distinctness-394">distinct scheme theories</a>
             </td>
             <td>IUT I, Corollaries 3.7-3.9 and Remarks 3.7.1-3.9.4</td>
+          </tr>
+          <tr>
+            <td>IUT I</td>
+            <td>Multiplicative combinatorial Teichmuller theory</td>
+            <td>
+              <a href="#multiplicative-combinatorial-teichmuller">multiplicative combinatorics</a>,
+              <a href="#d-prime-strips-labels-41-42">D-prime strips 4.1-4.2</a>,
+              <a href="#local-analytic-sections-43">local analytic sections 4.3</a>,
+              <a href="#theta-evaluation-sections-44-45">theta evaluation sections 4.4-4.5</a>,
+              <a href="#iut-i-base-bridges-evaluation-sections">base bridges/evaluation sections</a>
+            </td>
+            <td>IUT I, Definition 4.1 through Definition 4.6</td>
           </tr>
           <tr>
             <td>IUT I</td>
@@ -10165,6 +10180,401 @@
           <a href="#theta-log-links">theta and log links</a>
           <a href="#multiradiality">multiradiality</a>
           <a href="#corollary-312">Corollary 3.12</a>
+        </div>
+      </section>
+
+      <section id="d-prime-strips-labels-41-42">
+        <h2>IUT I Definition 4.1 and Proposition 4.2: D-Prime Strips and Labels</h2>
+        <p class="lede">
+          Section 4 begins by isolating the D-side, or base-category side, of later
+          Hodge-theater enhancements. A D-prime-strip is a valuation-indexed package of
+          local D-data; from each local component Mochizuki reconstructs cusp label
+          classes, then Proposition 4.2 identifies these labels across all valuations.
+        </p>
+        <div class="diagram" aria-label="D-prime-strip and label-class reconstruction">
+          <div class="diagramHeader">
+            <strong>Local D-data to global label torsor</strong>
+            <span>IUT I Definition 4.1 and Proposition 4.2</span>
+          </div>
+          <svg viewBox="0 0 1100 540" role="img">
+            <defs>
+              <marker id="arrowDPrime41" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="78" width="220" height="86"></rect>
+            <text class="nodeTitle" x="180" y="108" text-anchor="middle">D-prime-strip</text>
+            <text class="tinyText" x="180" y="132" text-anchor="middle">{D_v}_{v in V}</text>
+            <text class="tinyText" x="180" y="150" text-anchor="middle">holomorphic base-prime-strip</text>
+
+            <rect class="nodeBox green" x="438" y="54" width="240" height="78"></rect>
+            <text class="nodeTitle" x="558" y="84" text-anchor="middle">v nonarchimedean</text>
+            <text class="tinyText" x="558" y="108" text-anchor="middle">category equivalent to D_v</text>
+
+            <rect class="nodeBox green" x="438" y="160" width="240" height="78"></rect>
+            <text class="nodeTitle" x="558" y="190" text-anchor="middle">v archimedean</text>
+            <text class="tinyText" x="558" y="214" text-anchor="middle">Aut-holomorphic orbispace</text>
+
+            <rect class="nodeBox gold" x="800" y="98" width="230" height="96"></rect>
+            <text class="nodeTitle" x="915" y="130" text-anchor="middle">LabCusp(D_v)</text>
+            <text class="tinyText" x="915" y="154" text-anchor="middle">F_l^x/{+/-1}-torsor</text>
+            <text class="tinyText" x="915" y="172" text-anchor="middle">canonical epsilon class</text>
+
+            <rect class="nodeBox violet" x="250" y="330" width="250" height="86"></rect>
+            <text class="nodeTitle" x="375" y="360" text-anchor="middle">mono-analyticization</text>
+            <text class="tinyText" x="375" y="384" text-anchor="middle">D -> D^perp</text>
+            <text class="tinyText" x="375" y="402" text-anchor="middle">subcategories or TM^perp objects</text>
+
+            <rect class="nodeBox red" x="610" y="330" width="250" height="86"></rect>
+            <text class="nodeTitle" x="735" y="360" text-anchor="middle">LabCusp(D)</text>
+            <text class="tinyText" x="735" y="384" text-anchor="middle">local torsors canonically identified</text>
+            <text class="tinyText" x="735" y="402" text-anchor="middle">natural bijection with F_l^x/{+/-1}</text>
+
+            <path d="M292 110 H436" class="edge blue" marker-end="url(#arrowDPrime41)"></path>
+            <path d="M292 132 C358 160 390 176 436 196" class="edge blue" marker-end="url(#arrowDPrime41)"></path>
+            <path d="M680 94 C730 104 762 118 798 132" class="edge green" marker-end="url(#arrowDPrime41)"></path>
+            <path d="M680 200 C734 190 766 176 798 158" class="edge green" marker-end="url(#arrowDPrime41)"></path>
+            <path d="M224 166 C260 226 318 274 366 328" class="edge violet" marker-end="url(#arrowDPrime41)"></path>
+            <path d="M914 196 C884 260 810 300 744 328" class="edge red" marker-end="url(#arrowDPrime41)"></path>
+            <text class="smallText" x="550" y="490" text-anchor="middle">
+              Remark 4.2.1: the good-place source must retain the arrow-decorated X_v data; using only C_v breaks the canonical label identifications.
+            </text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Def. 4.1(i)</td>
+            <td>
+              A holomorphic base-prime-strip
+              <span class="math">D = {D_v}_{v in V}</span> has nonarchimedean entries
+              equivalent to the local D-categories and archimedean entries given by
+              Aut-holomorphic orbispaces.
+            </td>
+            <td>Prime-strips are place-indexed local objects, not bare labels.</td>
+          </tr>
+          <tr>
+            <td>Def. 4.1(ii)</td>
+            <td>
+              From each <span class="math">D_v</span>, one reconstructs cusp label
+              classes <span class="math">LabCusp(D_v)</span>, an
+              <span class="math">F_l^x/{±1}</span>-torsor with a canonical element
+              determined by <span class="math">epsilon_v</span>.
+            </td>
+            <td>The label set is reconstructed from local structure; it is not an external index set.</td>
+          </tr>
+          <tr>
+            <td>Def. 4.1(iii)-(iv)</td>
+            <td>
+              A mono-analytic <span class="math">D^⊢</span>-prime-strip is defined
+              separately, and any D-prime-strip has a natural mono-analyticization.
+            </td>
+            <td>The D and <span class="math">D^⊢</span> layers must remain separately typed.</td>
+          </tr>
+          <tr>
+            <td>Prop. 4.2</td>
+            <td>
+              The local <span class="math">LabCusp(D_v)</span> torsors are canonically
+              identified across valuations by compatibility with epsilon classes and
+              torsor structures, giving <span class="math">LabCusp(D)</span>.
+            </td>
+            <td>This is the first Section 4 global label synchronization mechanism.</td>
+          </tr>
+          <tr>
+            <td>Remark 4.2.1</td>
+            <td>
+              If the good-place local object were defined by
+              <span class="math">C_v</span> rather than the arrow-decorated
+              <span class="math">X_v</span> data, these bijections need not exist.
+            </td>
+            <td>The source choice at good places is mathematically active, not cosmetic.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Formalization guardrail: do not collapse Section 4 labels into a generic finite
+          type. The paper reconstructs labels from cusp data and then proves a canonical
+          cross-place torsor identification.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 4.1, Proposition 4.2, Remark 4.2.1</a>
+          Related: <a href="#multiplicative-combinatorial-teichmuller">multiplicative combinatorics</a>
+          <a href="#local-analytic-sections-43">local analytic sections</a>
+          <a href="#theta-evaluation-sections-44-45">theta evaluation sections</a>
+          <a href="#prime-strips-bridges">prime strips and bridges</a>
+        </div>
+      </section>
+
+      <section id="local-analytic-sections-43">
+        <h2>IUT I Example 4.3: Local Analytic Sections</h2>
+        <p class="lede">
+          Example 4.3 constructs model base-NF bridges. Remark 4.3.1 gives the
+          conceptual point: D-prime-strips behave like arithmetic local-analytic sections
+          of <span class="math">Spec(K) -> Spec(F)</span>, precisely because no global
+          multiplicative section exists in ordinary scheme theory.
+        </p>
+        <div class="diagram" aria-label="D-prime-strips as local analytic sections and their failures">
+          <div class="diagramHeader">
+            <strong>Local sections without global holomorphicity</strong>
+            <span>Example 4.3 and Remarks 4.3.1-4.3.2</span>
+          </div>
+          <svg viewBox="0 0 1120 560" role="img">
+            <defs>
+              <marker id="arrowLocal43" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="72" y="80" width="230" height="86"></rect>
+            <text class="nodeTitle" x="187" y="110" text-anchor="middle">Spec(K) -> Spec(F)</text>
+            <text class="tinyText" x="187" y="134" text-anchor="middle">no global section</text>
+            <text class="tinyText" x="187" y="152" text-anchor="middle">no global multiplicative subspace</text>
+
+            <rect class="nodeBox gold" x="448" y="56" width="250" height="92"></rect>
+            <text class="nodeTitle" x="573" y="88" text-anchor="middle">D_j -> D</text>
+            <text class="tinyText" x="573" y="112" text-anchor="middle">model base-NF bridge</text>
+            <text class="tinyText" x="573" y="132" text-anchor="middle">j in F_l^x/{+/-1}</text>
+
+            <rect class="nodeBox green" x="820" y="80" width="230" height="86"></rect>
+            <text class="nodeTitle" x="935" y="110" text-anchor="middle">local analytic sections</text>
+            <text class="tinyText" x="935" y="134" text-anchor="middle">one prime-strip per label</text>
+            <text class="tinyText" x="935" y="152" text-anchor="middle">arithmetic but not globally holomorphic</text>
+
+            <rect class="nodeBox red" x="80" y="318" width="260" height="92"></rect>
+            <text class="nodeTitle" x="210" y="350" text-anchor="middle">failure (a)</text>
+            <text class="tinyText" x="210" y="374" text-anchor="middle">no ring homomorphism K -> F</text>
+
+            <rect class="nodeBox red" x="430" y="318" width="260" height="92"></rect>
+            <text class="nodeTitle" x="560" y="350" text-anchor="middle">failure (b)</text>
+            <text class="tinyText" x="560" y="374" text-anchor="middle">no prime-decomposition tree splitting</text>
+
+            <rect class="nodeBox red" x="780" y="318" width="260" height="92"></rect>
+            <text class="nodeTitle" x="910" y="350" text-anchor="middle">failure (c)</text>
+            <text class="tinyText" x="910" y="374" text-anchor="middle">no global Galois section</text>
+
+            <path d="M304 122 H446" class="edge blue" marker-end="url(#arrowLocal43)"></path>
+            <path d="M700 102 H818" class="edge gold" marker-end="url(#arrowLocal43)"></path>
+            <path d="M932 168 C878 238 724 280 564 316" class="edge green" marker-end="url(#arrowLocal43)"></path>
+            <path d="M932 168 C812 258 430 276 220 316" class="edge green" marker-end="url(#arrowLocal43)"></path>
+            <path d="M932 168 C940 236 928 278 916 316" class="edge green" marker-end="url(#arrowLocal43)"></path>
+
+            <rect class="nodeBox violet" x="245" y="462" width="630" height="54"></rect>
+            <text class="nodeTitle" x="560" y="487" text-anchor="middle">desired mono-anabelian geometry: local independence + globalizability + etale-like structures</text>
+            <text class="tinyText" x="560" y="505" text-anchor="middle">Remark 4.3.2 explains why panalocalization and etale splittings become necessary later.</text>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="example-43-aut-epsilon">
+            <h3>Automorphisms fixing epsilon</h3>
+            <p>
+              Example 4.3 uses the subgroup
+              <span class="math">Aut_epsilon(C_K)</span> of automorphisms fixing the
+              distinguished cusp. The quotient by this subgroup supplies the
+              <span class="math">F_l^x/{±1}</span> label action on the model bridge.
+            </p>
+            <div class="tagRow"><span class="tag gold">Example 4.3(i)</span><span class="tag">NF bridge</span></div>
+          </div>
+          <div class="card" id="example-43-local-morphisms">
+            <h3>Local morphisms to the global base</h3>
+            <p>
+              For nonarchimedean and archimedean valuations, Example 4.3 constructs
+              poly-morphisms <span class="math">D_v -> D</span> by composing natural
+              local-to-global morphisms with local automorphisms and the epsilon-fixing
+              global automorphism group.
+            </p>
+            <div class="tagRow"><span class="tag blue">Example 4.3(ii)-(iii)</span><span class="tag">local/global</span></div>
+          </div>
+          <div class="card" id="example-43-capsule-action">
+            <h3>Capsule poly-action</h3>
+            <p>
+              Copies <span class="math">D_j</span> of the tautological D-prime-strip
+              form a capsule indexed by <span class="math">j in F_l^x/{±1}</span>.
+              The resulting <span class="math">phi^NF</span> is equivariant for the
+              label poly-action.
+            </p>
+            <div class="tagRow"><span class="tag green">Example 4.3(iv)</span><span class="tag">capsule</span></div>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Remark 4.3.1(i)</td>
+            <td>
+              The D-prime-strips are interpreted as arithmetic local-analytic sections
+              of <span class="math">Spec(K) -> Spec(F)</span> and as local-analytic
+              global multiplicative subspaces.
+            </td>
+            <td>They simulate the missing global section without becoming a ring-theoretic section.</td>
+          </tr>
+          <tr>
+            <td>Remark 4.3.1(ii)</td>
+            <td>
+              These sections fail to extend to ring homomorphisms
+              <span class="math">K -> F</span>, to splittings of prime-decomposition
+              trees, or to sections of global absolute Galois groups.
+            </td>
+            <td>This explains why local prime-strip comparisons cannot be collapsed into ordinary global geometry.</td>
+          </tr>
+          <tr>
+            <td>Remark 4.3.2</td>
+            <td>
+              The desired geometry must have local independence from global structures,
+              globalizability independent of local structures, and etale-like structures
+              that support canonical splittings.
+            </td>
+            <td>This is the source-side motivation for panalocalization and mono-anabelian machinery in later IUT.</td>
+          </tr>
+          <tr>
+            <td>Remark 4.3.3</td>
+            <td>
+              Mochizuki compares mono-anabelian geometry with Frobenius-invariant
+              p-adic Teichmuller structures and with the upper-half-plane metric analogy.
+            </td>
+            <td>The analogy belongs to orientation; formal pages still use the D-prime-strip definitions.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Collas's categorification viewpoint fits this page: IUT replaces a missing
+          scheme-theoretic section by categorical local containers. The decisive source
+          claim, however, is Mochizuki's three-part failure of global holomorphicity in
+          Remark 4.3.1.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 4.3 and Remarks 4.3.1-4.3.3</a>
+          Related: <a href="#d-prime-strips-labels-41-42">D-prime strips 4.1-4.2</a>
+          <a href="#theta-evaluation-sections-44-45">theta evaluation sections</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+          <a href="#topological-fundamental-group-mutation">fundamental group mutation</a>
+        </div>
+      </section>
+
+      <section id="theta-evaluation-sections-44-45">
+        <h2>IUT I Examples 4.4-4.5: Theta Evaluation Sections</h2>
+        <p class="lede">
+          Example 4.4 constructs model base-theta bridges. At bad places, the bridge is
+          built from evaluation points obtained by translating labeled cusps, and the
+          theta value at label <span class="math">j</span> lies in the
+          <span class="math">mu_{2l}</span>-orbit of
+          <span class="math">q_v^{j^2}</span>. Example 4.5 then transports cusp labels
+          through the NF and theta bridges.
+        </p>
+        <div class="diagram" aria-label="Bad-place evaluation sections and theta bridge">
+          <div class="diagramHeader">
+            <strong>Bad-place theta evaluation route</strong>
+            <span>labels, translated cusps, evaluation sections, and label transport</span>
+          </div>
+          <svg viewBox="0 0 1120 560" role="img">
+            <defs>
+              <marker id="arrowThetaEval44" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="72" y="72" width="220" height="84"></rect>
+            <text class="nodeTitle" x="182" y="104" text-anchor="middle">cusps of C_v</text>
+            <text class="tinyText" x="182" y="128" text-anchor="middle">labels in |F_l|</text>
+
+            <rect class="nodeBox gold" x="444" y="72" width="230" height="84"></rect>
+            <text class="nodeTitle" x="559" y="104" text-anchor="middle">mu_- translates</text>
+            <text class="tinyText" x="559" y="128" text-anchor="middle">evaluation points of X_v</text>
+
+            <rect class="nodeBox red" x="824" y="72" width="230" height="84"></rect>
+            <text class="nodeTitle" x="939" y="104" text-anchor="middle">theta value</text>
+            <text class="tinyText" x="939" y="128" text-anchor="middle">in mu_{2l}-orbit of q_v^{j^2}</text>
+
+            <rect class="nodeBox green" x="246" y="264" width="250" height="92"></rect>
+            <text class="nodeTitle" x="371" y="296" text-anchor="middle">evaluation sections</text>
+            <text class="tinyText" x="371" y="320" text-anchor="middle">G_v -> Pi_v</text>
+            <text class="tinyText" x="371" y="338" text-anchor="middle">group-theoretically reconstructible</text>
+
+            <rect class="nodeBox violet" x="626" y="264" width="250" height="92"></rect>
+            <text class="nodeTitle" x="751" y="296" text-anchor="middle">base-theta bridge</text>
+            <text class="tinyText" x="751" y="320" text-anchor="middle">D_j -> D_></text>
+            <text class="tinyText" x="751" y="338" text-anchor="middle">bad evaluation, good full poly-isomorphism</text>
+
+            <rect class="nodeBox green" x="410" y="432" width="300" height="72"></rect>
+            <text class="nodeTitle" x="560" y="462" text-anchor="middle">phi_j^LC : LabCusp(D) -> LabCusp(D_>)</text>
+            <text class="tinyText" x="560" y="486" text-anchor="middle">epsilon class characterized by j -> j</text>
+
+            <path d="M294 114 H442" class="edge blue" marker-end="url(#arrowThetaEval44)"></path>
+            <path d="M676 114 H822" class="edge gold" marker-end="url(#arrowThetaEval44)"></path>
+            <path d="M559 158 C502 204 432 226 382 262" class="edge gold" marker-end="url(#arrowThetaEval44)"></path>
+            <path d="M496 310 H624" class="edge green" marker-end="url(#arrowThetaEval44)"></path>
+            <path d="M751 358 C718 392 652 414 594 430" class="edge violet" marker-end="url(#arrowThetaEval44)"></path>
+            <path d="M371 358 C402 398 478 416 530 430" class="edge green" marker-end="url(#arrowThetaEval44)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Example 4.4(i)</td>
+            <td>
+              At <span class="math">v in V_bad</span>, labels in
+              <span class="math">|F_l|</span> label cusps of
+              <span class="math">C_v</span>; translating by
+              <span class="math">mu_-</span> gives evaluation points of
+              <span class="math">X_v</span>.
+            </td>
+            <td>Bad-prime evaluation is label-sensitive before any global bridge is formed.</td>
+          </tr>
+          <tr>
+            <td>Theta value</td>
+            <td>
+              The value of <span class="math">Theta_v</span> over the evaluation point
+              of label <span class="math">j</span> lies in the
+              <span class="math">mu_{2l}</span>-orbit of
+              <span class="math">q_v^{j^2}</span>.
+            </td>
+            <td>The squared label is the source-level reason later theta-value bookkeeping is label-arithmetic, not just indexing.</td>
+          </tr>
+          <tr>
+            <td>Evaluation sections</td>
+            <td>
+              Points above the evaluation points in the theta cover are
+              <span class="math">K_v</span>-rational and determine sections
+              <span class="math">G_v -> Pi_v</span>, reconstructible from
+              isomorphs of <span class="math">Pi_v</span>.
+            </td>
+            <td>Evaluation sections are part of the anabelian reconstruction interface.</td>
+          </tr>
+          <tr>
+            <td>Example 4.4(ii)-(iv)</td>
+            <td>
+              The base-theta bridge <span class="math">D_j -> D_></span> uses these
+              evaluation sections at bad places and full poly-isomorphisms at good
+              places.
+            </td>
+            <td>The bridge has different local definitions by place class.</td>
+          </tr>
+          <tr>
+            <td>Example 4.5</td>
+            <td>
+              Restriction through <span class="math">phi_j^NF</span> and
+              <span class="math">phi_j^Theta</span> yields
+              <span class="math">phi_j^LC : LabCusp(D) -> LabCusp(D_>)</span>, with
+              the epsilon class characterized by evaluation <span class="math">j -> j</span>.
+            </td>
+            <td>Label transport is a theorem-level interface, not a chosen alignment of local labels.</td>
+          </tr>
+          <tr>
+            <td>Remark 4.5.1</td>
+            <td>
+              Independent local/global conjugacy indeterminacies must not be partially
+              synchronized. At bad places, the required factorization is determined
+              without such an arbitrary synchronization.
+            </td>
+            <td>This becomes a direct guardrail for later theta-link and 3.12 corridor modeling.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          The bridge must retain the bad-place evaluation-section route. Replacing it by
+          an abstract label map would lose the source connection between
+          <span class="math">j</span>, <span class="math">q_v^{j^2}</span>, and the
+          reconstructed section <span class="math">G_v -> Pi_v</span>.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Examples 4.4-4.5 and Remark 4.5.1</a>
+          Related: <a href="#d-prime-strips-labels-41-42">D-prime strips 4.1-4.2</a>
+          <a href="#local-analytic-sections-43">local analytic sections 4.3</a>
+          <a href="#theta-evaluation-kummer-route">theta evaluation route</a>
+          <a href="#global-kummer-noninterference-iii310">global Kummer noninterference</a>
         </div>
       </section>
 
