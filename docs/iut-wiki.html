@@ -1524,6 +1524,8 @@
               <a href="#complex-common-container">complex common container</a>,
               <a href="#n-power-gluing-model">N-th power gluing model</a>,
               <a href="#projective-line-gluing-analogy">projective-line gluing analogy</a>,
+              <a href="#cat-idempotent-function-theory">CAT idempotent function theory</a>,
+              <a href="#cat-miraculous-rotation">CAT miraculous rotation</a>,
               <a href="#gt-genus-zero-quotient">GT genus-zero quotient</a>,
               <a href="#ficsp-conjugate-synchronization">FICSP synchronization</a>
             </td>
@@ -2405,6 +2407,19 @@
               rigidity, with the source's expected-status caveat intact.
             </td>
           </tr>
+          <tr>
+            <td>Varying Hues §3-4</td>
+            <td>
+              Combinatorial algebraization theory uses idempotents in function algebras,
+              Chebotarev/Hilbertian inputs, and combinatorial anabelian geometry to
+              compare conjugates of arithmetic groups inside <span class="math">GT</span>
+              or <span class="math">Out(Pi_X)</span>.
+            </td>
+            <td>
+              This extends the common-container pattern from IUT toward a GT-side
+              Teichmuller theory; it is recorded as joint work in progress in the source.
+            </td>
+          </tr>
         </table>
         <div class="grid3">
           <div class="card" id="complex-common-container">
@@ -2446,6 +2461,26 @@
             </p>
             <div class="tagRow"><span class="tag gold">§3</span><span class="tag">expected</span></div>
           </div>
+          <div class="card" id="cat-idempotent-function-theory">
+            <h3>CAT idempotent function theory</h3>
+            <p>
+              Varying Hues §3 states an idempotent lemma for subalgebras of function
+              spaces on finite etale covers. After restricting to an infinite active
+              subset, the nonzero idempotents form a maximal orthogonal family with
+              transitive action by the cover's Galois group.
+            </p>
+            <div class="tagRow"><span class="tag blue">Varying Hues §3</span><span class="tag">CAT</span></div>
+          </div>
+          <div class="card" id="cat-miraculous-rotation">
+            <h3>CAT miraculous rotation</h3>
+            <p>
+              Varying Hues §4 compares CAT with IUT's theta-link-to-log-link rotation:
+              a mysterious gap between distinct ring theories attached to GT conjugates
+              is rotated to a harmless gap between conjugates of finite characteristic
+              quotients.
+            </p>
+            <div class="tagRow"><span class="tag green">Varying Hues §4</span><span class="tag">GT analogy</span></div>
+          </div>
           <div class="card" id="ficsp-conjugate-synchronization">
             <h3>FICSP synchronization</h3>
             <p>
@@ -2474,6 +2509,7 @@
         </div>
         <div class="related">
           Sources: <a href="papers/mochizuki-gt-theory-species-teichmuller-2025.pdf" target="_blank">GT species paper</a>
+          <a href="papers/mochizuki-teichmuller-dilations-varying-hues-2025-marked.pdf" target="_blank">Varying Hues</a>
           Related: <a href="#anabelian-background">anabelian background</a>
           <a href="#species-mutations">species and mutations</a>
           <a href="#essential-logical-structure">logical structure</a>
@@ -12164,6 +12200,10 @@
             <div><h3>GT as a Species of Teichmuller Theory</h3><div class="sourceMeta">Shinichi Mochizuki, joint work in progress with Tsujimura, October 2025, 14 pp.</div><p>Compares classical Teichmuller theory, IUT, and Grothendieck-Teichmuller theory through common-container and anabelian reconstruction patterns.</p></div>
             <a class="pdf" href="papers/mochizuki-gt-theory-species-teichmuller-2025.pdf" target="_blank">PDF</a>
           </div>
+          <div class="card sourceCard" data-filter="mochizuki teichmuller dilations varying hues cat iut gt 2025">
+            <div><h3>Teichmuller Dilations of Varying Hues</h3><div class="sourceMeta">Shinichi Mochizuki, ICMS 2025 marked-up version, 14 pp.</div><p>Compares complex Teichmuller theory, IUT, and GT via common containers, N-th power gluing, CAT idempotent function theory, and GT-side rotation.</p></div>
+            <a class="pdf" href="papers/mochizuki-teichmuller-dilations-varying-hues-2025-marked.pdf" target="_blank">PDF</a>
+          </div>
           <div class="card sourceCard" data-filter="collas anabelian arithmetic geometry iut grothendieck monoids overview">
             <div><h3>Collas: Anabelian Arithmetic Geometry and IUT</h3><div class="sourceMeta">Benjamin Collas, revised overview, 24 pp.</div><p>Conceptual overview of IUT through Grothendieckian anabelian geometry and the geometry of monoids.</p></div>
             <a class="pdf" href="papers/collas-anabelian-arithmetic-geometry-iut.pdf" target="_blank">PDF</a>
@@ -12249,15 +12289,17 @@
     const navLinks = Array.from(document.querySelectorAll("nav a"));
     const sectionIds = new Set(sections.map(section => section.id));
     const idOwners = new Map();
+    const idElements = new Map();
     document.querySelectorAll("main [id]").forEach(el => {
+      idElements.set(el.id, el);
       const owner = el.closest("section[id]");
       if (owner) idOwners.set(el.id, owner);
     });
 
     function setActivePage(hash, shouldScroll = true) {
       const requested = (hash || "#home").slice(1);
-      const target = idOwners.get(requested) || document.getElementById("home");
-      const page = target.matches("section[id]") ? target : target.closest("section[id]");
+      const target = idElements.get(requested) || document.getElementById("home");
+      const page = idOwners.get(requested) || document.getElementById("home");
       sections.forEach(section => { section.hidden = section !== page; });
 
       navLinks.forEach(a => a.classList.remove("active"));
@@ -12269,8 +12311,10 @@
       }
       if (shouldScroll) {
         requestAnimationFrame(() => {
-          const scrollTarget = idOwners.get(requested) || page;
-          scrollTarget.scrollIntoView({ block: scrollTarget === page ? "start" : "center" });
+          const scrollTarget = idElements.get(requested) || page;
+          setTimeout(() => {
+            scrollTarget.scrollIntoView({ block: scrollTarget === page ? "start" : "center" });
+          }, 0);
         });
       }
     }
@@ -12287,6 +12331,8 @@
 
     window.addEventListener("popstate", () => setActivePage(location.hash));
     setActivePage(location.hash, Boolean(location.hash));
+    window.addEventListener("load", () => setActivePage(location.hash, Boolean(location.hash)));
+    setTimeout(() => setActivePage(location.hash, Boolean(location.hash)), 120);
 
     const search = document.getElementById("wiki-search");
     const filterTargets = Array.from(document.querySelectorAll("[data-filter]"));
