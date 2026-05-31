@@ -6558,11 +6558,11 @@
 
             <rect class="nodeBox red" x="360" y="226" width="196" height="64"></rect>
             <text class="nodeTitle" x="458" y="251" text-anchor="middle">Theta upper ray</text>
-            <text class="tinyText" x="458" y="270" text-anchor="middle">R_{<= -|log(Theta)|}</text>
+            <text class="tinyText" x="458" y="270" text-anchor="middle">R <= -|log Theta|</text>
 
             <rect class="nodeBox blue" x="628" y="226" width="196" height="64"></rect>
             <text class="nodeTitle" x="726" y="251" text-anchor="middle">C_Theta bound</text>
-            <text class="tinyText" x="726" y="270" text-anchor="middle">-1 <= C_Theta</text>
+            <text class="tinyText" x="726" y="270" text-anchor="middle">-1 <= CTheta</text>
 
             <path class="edge violet" d="M687 114 C682 162 498 168 458 224"></path>
             <text class="edgeLabel" x="586" y="167" text-anchor="middle">bridge needing source construction</text>
@@ -6570,6 +6570,39 @@
             <path class="edge blue" d="M556 258 H626"></path>
           </svg>
         </div>
+        <table>
+          <tr><th>IUT III source</th><th>Content</th><th>Role in the 3.12 corridor</th></tr>
+          <tr>
+            <td>Corollary 3.12 statement</td>
+            <td>Defines <span class="math">-|log(Θ)|</span> from the holomorphic hull of possible theta-pilot images and <span class="math">-|log(q)|</span> from the q-pilot image.</td>
+            <td>States <span class="math">-|log(Θ)| ≥ -|log(q)|</span>, equivalently <span class="math">C_Θ ≥ -1</span> for the displayed upper-bound convention.</td>
+          </tr>
+          <tr>
+            <td>Proof before Step (i)</td>
+            <td>Introduces possible-image regions, their holomorphic hulls, and the finiteness of <span class="math">-|log(Θ)|</span>.</td>
+            <td>Restricts attention to possible images interpretable as F-prime-strip data before applying the later comparison.</td>
+          </tr>
+          <tr>
+            <td>Steps (i)-(vi)</td>
+            <td>Fixes a single <span class="math">Θ×μ_LGP</span> link and explains why unit/value portions must be treated through one horizontal link plus vertical log-Kummer correspondences.</td>
+            <td>Accounts for bi-coric log-shell containers, Kummer detachment, and the need for Ind3.</td>
+          </tr>
+          <tr>
+            <td>Step (x)</td>
+            <td>Interprets Ind1/Ind2/Ind3 as a formal quotient and uses procession-normalized log-volume as a coarse numerical object.</td>
+            <td>Ind1/Ind2 become invariant; Ind3 becomes an inequality from above.</td>
+          </tr>
+          <tr>
+            <td>Step (xi)</td>
+            <td>Applies IPL, SHE, APT, holomorphic hulls, determinants, and log-volume to compare theta output possibilities with the q-pilot value.</td>
+            <td>Yields the membership <span class="math">-|log(q)| ∈ R≤-|log(Θ)|</span>, hence the final inequality.</td>
+          </tr>
+          <tr>
+            <td>Remarks 3.12.1-3.12.4</td>
+            <td>Discuss generalized links, intertwining of unit/value dimensions, 0-column/1-column differences, and Teichmuller analogies.</td>
+            <td>Clarifies why weakened data, distinct labels, holomorphic hulls, and log-volumes are not optional decorations.</td>
+          </tr>
+        </table>
         <div class="grid2">
           <div class="card">
             <h3>What is formal algebra</h3>
@@ -6590,6 +6623,170 @@
               levels.
             </p>
           </div>
+        </div>
+        <div class="grid2">
+          <div class="card" id="cor312-statement">
+            <h3>Corollary 3.12 statement</h3>
+            <p>
+              The source defines <span class="math">-|log(Θ)|</span> as the
+              procession-normalized mono-analytic log-volume of the holomorphic hull of
+              the union of possible images of a theta-pilot object, subject to Ind1,
+              Ind2, and Ind3. The q-pilot value <span class="math">-|log(q)|</span> is
+              computed from the image of a q-pilot object and is not treated as subject
+              to those three indeterminacies.
+            </p>
+            <p>
+              The asserted inequality is <span class="math">-|log(Θ)| ≥ -|log(q)|</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Corollary 3.12</span><span class="tag">statement</span></div>
+          </div>
+          <div class="card" id="cor312-possible-images-hull">
+            <h3>Possible images and hulls</h3>
+            <p>
+              At the start of the proof, the possible theta-pilot images are collected in
+              packet regions <span class="math">U</span>; their holomorphic hulls are
+              denoted by the corresponding barred regions. Compactness and the definition
+              of log-volume give finiteness of <span class="math">-|log(Θ)|</span>.
+            </p>
+            <p>
+              The proof then restricts attention to possible images that can be
+              interpreted as F-prime-strip data.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Cor. 3.12 proof</span><span class="tag">holomorphic hull</span></div>
+          </div>
+          <div class="card" id="cor312-step-x">
+            <h3>Step (x): numerical coarse object</h3>
+            <p>
+              Step (x) says the multiradial representation is subject to Ind1, Ind2, and
+              Ind3. Procession-normalized log-volume behaves like a coarse numerical
+              quotient: it is invariant under Ind1 and Ind2 and converts Ind3 into an
+              upper-bound inequality.
+            </p>
+            <p>
+              The log-link compatibility of Proposition 3.9(iv) keeps this numerical
+              object compatible with the arrows of the log-Kummer correspondence.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Cor. 3.12 Step (x)</span><span class="tag red">Ind3 -> inequality</span></div>
+          </div>
+          <div class="card" id="cor312-step-xi">
+            <h3>Step (xi): comparison route</h3>
+            <p>
+              Step (xi) uses one <span class="math">Θ×μ_LGP</span> link from
+              <span class="math">(0,0)</span> to <span class="math">(1,0)</span>. The
+              theta-pilot object in the domain is related to the q-pilot object in the
+              codomain through the value-group portion, while the unit portions are
+              handled by bi-coric log-shells and the 0-column log-Kummer correspondence.
+            </p>
+            <p>
+              After applying IPL, SHE, APT, holomorphic hulls, determinants, and
+              log-volume, the output possibilities form an upper ray
+              <span class="math">R≤-|log(Θ)|</span> that must contain the q-pilot
+              log-volume <span class="math">-|log(q)|</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Cor. 3.12 Step (xi)</span><span class="tag">IPL/SHE/APT</span></div>
+          </div>
+          <div class="card" id="cor312-two-computations">
+            <h3>Two computations of the q-pilot</h3>
+            <p>
+              Step (xi-g) summarizes the argument as two tautologically equivalent ways
+              to compute the q-pilot log-volume at <span class="math">(1,0)</span>: via
+              the theta-pilot side transported through the multiradial representation and
+              via the q-pilot side in the fixed codomain arithmetic holomorphic
+              structure.
+            </p>
+            <p>
+              The proof then reads membership of the q-pilot value in the theta upper
+              ray, yielding <span class="math">-|log(q)| ≤ -|log(Θ)|</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Fig. 3.8</span><span class="tag">membership</span></div>
+          </div>
+          <div class="card" id="cor312-global-frobenioids-required">
+            <h3>Why global Frobenioids remain required</h3>
+            <p>
+              Step (xii) warns against replacing the global realified Frobenioids by only
+              local Frobenioids. Local Frobenioid objects have endomorphisms that are not
+              automorphisms, creating uncontrolled local scaling ambiguity such as
+              <span class="math">p_v^N</span>-multiples.
+            </p>
+            <p>
+              That ambiguity would make the precise log-volume computation in Step (xi)
+              meaningless.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Cor. 3.12 Step (xii)</span><span class="tag">global data</span></div>
+          </div>
+          <div class="card" id="remark-3122-intertwining">
+            <h3>Remark 3.12.2: intertwining</h3>
+            <p>
+              Remark 3.12.2 describes the proof as dismantling and reassembling the unit
+              and value-group dimensions of a number field. The weakened
+              <span class="math">F×μ</span>-prime-strip data are weak enough that theta
+              and q pilot objects cannot be distinguished there; the distinction returns
+              only when one chooses an arithmetic holomorphic structure.
+            </p>
+            <p>
+              In logical form, Mochizuki describes the q-intertwining as giving a
+              simultaneous construction of the theta-intertwining up to indeterminacies,
+              which formally yields the Corollary 3.12 inequality after the quotient and
+              log-volume operations.
+            </p>
+            <div class="tagRow"><span class="tag gold">IUT III, Remark 3.12.2</span><span class="tag">intertwining</span></div>
+          </div>
+          <div class="card" id="columns-zero-one-difference">
+            <h3>0-column and 1-column differ</h3>
+            <p>
+              Remark 3.12.2(iv),(v) stresses that both the Frobenius-like
+              <span class="math">•0</span> and etale-like <span class="math">◦</span>
+              roles are essential in each column. The 0-column uses log-shells as
+              containers for theta-side regions and therefore incurs Ind3.
+            </p>
+            <p>
+              The 1-column holds its arithmetic holomorphic structure fixed. There,
+              log-shells document the logarithmic relation between ring structures, while
+              holomorphic hulls and log-volumes absorb the remaining choices; this gives
+              equalities on the q side rather than only upper bounds.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Fig. 3.9</span><span class="tag">0/1 columns</span></div>
+          </div>
+        </div>
+        <div class="diagram" aria-label="Corollary 3.12 source proof route">
+          <div class="diagramHeader">
+            <strong>Corollary 3.12 Source Route</strong>
+            <span>from possible images to the ordered-real inequality</span>
+          </div>
+          <svg viewBox="0 0 940 360" role="img">
+            <defs>
+              <marker id="arrowCor312Source" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="44" y="54" width="164" height="68"></rect>
+            <text class="nodeTitle" x="126" y="82" text-anchor="middle">possible images</text>
+            <text class="tinyText" x="126" y="102" text-anchor="middle">theta-pilot regions</text>
+
+            <rect class="nodeBox green" x="260" y="54" width="152" height="68"></rect>
+            <text class="nodeTitle" x="336" y="82" text-anchor="middle">holomorphic hull</text>
+            <text class="tinyText" x="336" y="102" text-anchor="middle">comparable objects</text>
+
+            <rect class="nodeBox gold" x="464" y="54" width="152" height="68"></rect>
+            <text class="nodeTitle" x="540" y="82" text-anchor="middle">determinant</text>
+            <text class="tinyText" x="540" y="102" text-anchor="middle">rank > 1 to line</text>
+
+            <rect class="nodeBox violet" x="668" y="54" width="162" height="68"></rect>
+            <text class="nodeTitle" x="749" y="82" text-anchor="middle">log-volume</text>
+            <text class="tinyText" x="749" y="102" text-anchor="middle">upper ray in R</text>
+
+            <path d="M208 88 H258" stroke="#315b8f" stroke-width="1.5" fill="none" marker-end="url(#arrowCor312Source)"></path>
+            <path d="M412 88 H462" stroke="#2f6b4f" stroke-width="1.5" fill="none" marker-end="url(#arrowCor312Source)"></path>
+            <path d="M616 88 H666" stroke="#8b6b24" stroke-width="1.5" fill="none" marker-end="url(#arrowCor312Source)"></path>
+
+            <rect class="nodeBox red" x="274" y="226" width="392" height="64"></rect>
+            <text class="nodeTitle" x="470" y="252" text-anchor="middle">-|log(q)| ∈ R≤-|log(Θ)|</text>
+            <text class="tinyText" x="470" y="272" text-anchor="middle">membership is the nontrivial source assertion</text>
+
+            <path d="M749 124 C720 172 584 196 500 224" stroke="#9a3f35" stroke-width="1.4" fill="none" marker-end="url(#arrowCor312Source)"></path>
+            <path d="M470 290 C488 314 578 318 646 300" stroke="#5f676d" stroke-width="1.3" fill="none" marker-end="url(#arrowCor312Source)"></path>
+            <text class="smallText" x="705" y="308" text-anchor="middle">then -|log(q)| ≤ -|log(Θ)|</text>
+          </svg>
         </div>
         <div class="grid3">
           <div class="card">
