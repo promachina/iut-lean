@@ -616,6 +616,10 @@
         <a href="#teichmuller-analogy-iut-i">Teichmuller analogy</a>
         <a href="#iut-i-coverings-symmetries">IUT I coverings/symmetries</a>
         <a href="#cyclic-cover-reconstruction">Cyclic cover reconstruction</a>
+        <a href="#epsilon-quotient-iut-i1">Epsilon quotient 1.1</a>
+        <a href="#iota-eigenspaces-iut-i1">Iota eigenspaces 1.1</a>
+        <a href="#two-epsilon-section-iut-i1">2 epsilon section 1.1</a>
+        <a href="#arrow-torsion-types-iut-i1">Arrow torsion types 1.1</a>
         <a href="#iut-i-cusp-edge-vertex-recognizers">Cusp/edge/vertex recognizers 1.2</a>
         <a href="#tempered-covering-complements">Tempered covering complements</a>
         <a href="#iut-i-tempered-terminality-21-22">Tempered terminality 2.1-2.2</a>
@@ -10717,6 +10721,342 @@
           <a href="#tempered-covering-complements">tempered covering complements</a>
           <a href="#initial-theta-data">initial theta data</a>
           <a href="#anabelian-background">anabelian background</a>
+        </div>
+      </section>
+
+      <section id="epsilon-quotient-iut-i1" data-filter="iut i section 1 epsilon quotient exact sequence cusp inertia delta elliptic torsion">
+        <h2>Epsilon Quotient in IUT I §1</h2>
+        <p class="lede">
+          The cyclic-cover construction starts from a nonzero cusp
+          <span class="math">epsilon</span> of the signed torsion orbicurve
+          <span class="math">C</span>. Its two inverse-image cusps on
+          <span class="math">X</span> determine a quotient of the mod-
+          <span class="math">ell</span> geometric fundamental group that isolates the
+          selected cusp pair from the other nonzero cusps.
+        </p>
+        <div class="diagram fit" aria-label="Epsilon quotient exact sequence">
+          <div class="diagramHeader">
+            <strong>Selected cusp pair and quotient group</strong>
+            <span>IUT I §1 before Definition 1.1</span>
+          </div>
+          <svg viewBox="0 0 1080 430" role="img">
+            <defs>
+              <marker id="arrowEpsilonQuotientI1" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="78" width="220" height="86"></rect>
+            <text class="nodeTitle" x="180" y="108" text-anchor="middle">nonzero cusp epsilon</text>
+            <text class="tinyText" x="180" y="132" text-anchor="middle">cusp of C</text>
+            <text class="tinyText" x="180" y="150" text-anchor="middle">chosen source label</text>
+
+            <rect class="nodeBox green" x="380" y="78" width="220" height="86"></rect>
+            <text class="nodeTitle" x="490" y="108" text-anchor="middle">epsilon', epsilon''</text>
+            <text class="tinyText" x="490" y="132" text-anchor="middle">two cusps over epsilon</text>
+            <text class="tinyText" x="490" y="150" text-anchor="middle">on X</text>
+
+            <rect class="nodeBox violet" x="690" y="78" width="270" height="86"></rect>
+            <text class="nodeTitle" x="825" y="108" text-anchor="middle">quotient Delta_epsilon</text>
+            <text class="tinyText" x="825" y="132" text-anchor="middle">kill other nonzero cusp inertia</text>
+            <text class="tinyText" x="825" y="150" text-anchor="middle">retain selected pair</text>
+
+            <rect class="nodeBox gold" x="210" y="278" width="280" height="84"></rect>
+            <text class="nodeTitle" x="350" y="308" text-anchor="middle">I_epsilon' x I_epsilon''</text>
+            <text class="tinyText" x="350" y="332" text-anchor="middle">inertia term</text>
+            <text class="tinyText" x="350" y="350" text-anchor="middle">noncanonically Z/ellZ factors</text>
+
+            <rect class="nodeBox red" x="590" y="278" width="280" height="84"></rect>
+            <text class="nodeTitle" x="730" y="308" text-anchor="middle">Delta_E tensor Z/ellZ</text>
+            <text class="tinyText" x="730" y="332" text-anchor="middle">elliptic compactification quotient</text>
+            <text class="tinyText" x="730" y="350" text-anchor="middle">exact sequence target</text>
+
+            <path class="edge blue" d="M292 121 H378" marker-end="url(#arrowEpsilonQuotientI1)"></path>
+            <path class="edge green" d="M602 121 H688" marker-end="url(#arrowEpsilonQuotientI1)"></path>
+            <path class="edge gold" d="M825 166 C760 226 470 242 362 276" marker-end="url(#arrowEpsilonQuotientI1)"></path>
+            <path class="edge red" d="M825 166 C806 220 756 246 736 276" marker-end="url(#arrowEpsilonQuotientI1)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Item</th><th>Source role</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Chosen cusp</td>
+            <td>A nonzero cusp <span class="math">epsilon</span> of the type <span class="math">(1,ell-tors)^±</span> orbicurve.</td>
+            <td>It fixes the ordered-label source used by the arrow notation.</td>
+          </tr>
+          <tr>
+            <td>Lifted cusps</td>
+            <td>The two cusps <span class="math">epsilon'</span>, <span class="math">epsilon''</span> of <span class="math">X</span> lying over <span class="math">epsilon</span>.</td>
+            <td>Their inertia groups form the retained cusp term in the quotient.</td>
+          </tr>
+          <tr>
+            <td>Quotient group</td>
+            <td>The group <span class="math">Delta_epsilon</span>, obtained from <span class="math">Delta_X^{ab} tensor Z/ellZ</span> by inertia from the other nonzero cusps.</td>
+            <td>It is the group on which the involution later yields plus/minus eigenspaces.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          The quotient is not a generic mod-<span class="math">ell</span> abelianization.
+          Its definition depends on retaining exactly the two cusp inertia images over
+          the chosen <span class="math">epsilon</span> and killing the other nonzero
+          cusp inertia images.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I §1</a>
+          Related: <a href="#cyclic-cover-reconstruction">cyclic cover reconstruction</a>
+          <a href="#iota-eigenspaces-iut-i1">iota eigenspaces</a>
+          <a href="#arrow-torsion-types-iut-i1">arrow torsion types</a>
+        </div>
+      </section>
+
+      <section id="iota-eigenspaces-iut-i1" data-filter="iut i section 1 involution iota plus minus eigenspaces gal x c delta epsilon jx jc">
+        <h2>Iota Eigenspaces in IUT I §1</h2>
+        <p class="lede">
+          The nontrivial element <span class="math">iota</span> of
+          <span class="math">Gal(X/C)</span> switches the two selected cusp inertia
+          factors and acts as multiplication by <span class="math">-1</span> on the
+          elliptic <span class="math">ell</span>-torsion quotient. Because
+          <span class="math">ell</span> is odd, this gives a plus/minus decomposition of
+          <span class="math">Delta_epsilon</span>.
+        </p>
+        <div class="diagram fit" aria-label="Iota eigenspace decomposition">
+          <div class="diagramHeader">
+            <strong>Involution action on the epsilon quotient</strong>
+            <span>IUT I §1</span>
+          </div>
+          <svg viewBox="0 0 1040 420" role="img">
+            <defs>
+              <marker id="arrowIotaEigenspacesI1" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="78" y="76" width="220" height="86"></rect>
+            <text class="nodeTitle" x="188" y="106" text-anchor="middle">iota in Gal(X/C)</text>
+            <text class="tinyText" x="188" y="130" text-anchor="middle">unique nontrivial element</text>
+            <text class="tinyText" x="188" y="148" text-anchor="middle">order two</text>
+
+            <rect class="nodeBox green" x="410" y="76" width="220" height="86"></rect>
+            <text class="nodeTitle" x="520" y="106" text-anchor="middle">cusp inertia term</text>
+            <text class="tinyText" x="520" y="130" text-anchor="middle">switches the two factors</text>
+            <text class="tinyText" x="520" y="148" text-anchor="middle">I_e' x I_e''</text>
+
+            <rect class="nodeBox gold" x="742" y="76" width="220" height="86"></rect>
+            <text class="nodeTitle" x="852" y="106" text-anchor="middle">elliptic quotient</text>
+            <text class="tinyText" x="852" y="130" text-anchor="middle">acts by -1</text>
+            <text class="tinyText" x="852" y="148" text-anchor="middle">Delta_E tensor Z/ellZ</text>
+
+            <rect class="nodeBox violet" x="246" y="282" width="220" height="84"></rect>
+            <text class="nodeTitle" x="356" y="312" text-anchor="middle">Delta_epsilon^+</text>
+            <text class="tinyText" x="356" y="336" text-anchor="middle">+1 eigenspace</text>
+            <text class="tinyText" x="356" y="354" text-anchor="middle">receives selected inertia</text>
+
+            <rect class="nodeBox red" x="574" y="282" width="220" height="84"></rect>
+            <text class="nodeTitle" x="684" y="312" text-anchor="middle">Delta_epsilon^-</text>
+            <text class="tinyText" x="684" y="336" text-anchor="middle">-1 eigenspace</text>
+            <text class="tinyText" x="684" y="354" text-anchor="middle">elliptic quotient direction</text>
+
+            <path class="edge blue" d="M300 119 H408" marker-end="url(#arrowIotaEigenspacesI1)"></path>
+            <path class="edge green" d="M632 119 H740" marker-end="url(#arrowIotaEigenspacesI1)"></path>
+            <path class="edge violet" d="M520 164 C484 220 402 252 364 280" marker-end="url(#arrowIotaEigenspacesI1)"></path>
+            <path class="edge red" d="M520 164 C560 220 640 252 676 280" marker-end="url(#arrowIotaEigenspacesI1)"></path>
+          </svg>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <h3>Plus direction</h3>
+            <p>
+              The selected cusp inertia maps isomorphically to the plus eigenspace.
+              Mochizuki uses this plus quotient to define later quotient groups
+              <span class="math">J_X</span> and <span class="math">J_C</span>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Minus direction</h3>
+            <p>
+              The elliptic compactification quotient is where the involution acts by
+              <span class="math">-1</span>. This separation depends on
+              <span class="math">ell</span> being odd.
+            </p>
+          </div>
+        </div>
+        <div class="callout">
+          Formalization should record the involution action and the odd-prime
+          hypothesis; the plus/minus splitting is a theorem about this action, not a
+          free decomposition label.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I §1</a>
+          Related: <a href="#epsilon-quotient-iut-i1">epsilon quotient</a>
+          <a href="#two-epsilon-section-iut-i1">2 epsilon section</a>
+          <a href="#cyclic-cover-reconstruction">cyclic cover reconstruction</a>
+        </div>
+      </section>
+
+      <section id="two-epsilon-section-iut-i1" data-filter="iut i section 1 two epsilon cusp section gk jc normal image jx cyclic covers">
+        <h2>The 2 Epsilon Section in IUT I §1</h2>
+        <p class="lede">
+          After the plus quotient has been formed, the cusp
+          <span class="math">2 epsilon</span> of <span class="math">C</span> determines
+          a section <span class="math">G_k -> J_C</span>. The assumptions
+          <span class="math">ell >= 5</span> and triviality of the relevant mod-
+          <span class="math">ell</span> Galois action ensure that the section image is
+          determined by this cusp and is normal in <span class="math">J_C</span>.
+        </p>
+        <div class="diagram fit" aria-label="Two epsilon section route">
+          <div class="diagramHeader">
+            <strong>From the doubled cusp to cyclic arrow covers</strong>
+            <span>IUT I §1</span>
+          </div>
+          <svg viewBox="0 0 1050 420" role="img">
+            <defs>
+              <marker id="arrowTwoEpsilonI1" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="80" y="78" width="220" height="86"></rect>
+            <text class="nodeTitle" x="190" y="108" text-anchor="middle">cusp 2 epsilon</text>
+            <text class="tinyText" x="190" y="132" text-anchor="middle">doubling on elliptic group law</text>
+            <text class="tinyText" x="190" y="150" text-anchor="middle">2 not +/-1 mod ell</text>
+
+            <rect class="nodeBox green" x="415" y="78" width="220" height="86"></rect>
+            <text class="nodeTitle" x="525" y="108" text-anchor="middle">section sigma</text>
+            <text class="tinyText" x="525" y="132" text-anchor="middle">G_k -> J_C</text>
+            <text class="tinyText" x="525" y="150" text-anchor="middle">determined by 2 epsilon</text>
+
+            <rect class="nodeBox gold" x="750" y="78" width="220" height="86"></rect>
+            <text class="nodeTitle" x="860" y="108" text-anchor="middle">normal image</text>
+            <text class="tinyText" x="860" y="132" text-anchor="middle">inside J_C</text>
+            <text class="tinyText" x="860" y="150" text-anchor="middle">and lies in J_X</text>
+
+            <rect class="nodeBox violet" x="250" y="280" width="250" height="84"></rect>
+            <text class="nodeTitle" x="375" y="310" text-anchor="middle">cartesian diagrams</text>
+            <text class="tinyText" x="375" y="334" text-anchor="middle">finite etale cyclic coverings</text>
+            <text class="tinyText" x="375" y="352" text-anchor="middle">open profinite group immersions</text>
+
+            <rect class="nodeBox red" x="590" y="280" width="250" height="84"></rect>
+            <text class="nodeTitle" x="715" y="310" text-anchor="middle">cyclic Galois groups</text>
+            <text class="tinyText" x="715" y="334" text-anchor="middle">Z/ellZ, Z/2Z, Z/2ellZ</text>
+            <text class="tinyText" x="715" y="352" text-anchor="middle">arrow-cover hierarchy</text>
+
+            <path class="edge blue" d="M302 121 H413" marker-end="url(#arrowTwoEpsilonI1)"></path>
+            <path class="edge green" d="M637 121 H748" marker-end="url(#arrowTwoEpsilonI1)"></path>
+            <path class="edge violet" d="M860 166 C794 224 506 246 386 278" marker-end="url(#arrowTwoEpsilonI1)"></path>
+            <path class="edge red" d="M860 166 C832 222 760 246 724 278" marker-end="url(#arrowTwoEpsilonI1)"></path>
+          </svg>
+        </div>
+        <table>
+          <tr><th>Step</th><th>Source constraint</th><th>Output</th></tr>
+          <tr>
+            <td>Choose <span class="math">2 epsilon</span></td>
+            <td><span class="math">ell >= 5</span>, hence <span class="math">2 != +/-1 mod ell</span>.</td>
+            <td>A cusp distinct enough to determine the required section.</td>
+          </tr>
+          <tr>
+            <td>Form <span class="math">sigma : G_k -> J_C</span></td>
+            <td>The relevant outer Galois action is trivial by the standing hypothesis.</td>
+            <td>The image is determined by <span class="math">2 epsilon</span> and normal in <span class="math">J_C</span>.</td>
+          </tr>
+          <tr>
+            <td>Use the section image</td>
+            <td>The section image lies in <span class="math">J_X</span>.</td>
+            <td>Finite etale cyclic arrow-cover diagrams with specified Galois groups.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I §1</a>
+          Related: <a href="#iota-eigenspaces-iut-i1">iota eigenspaces</a>
+          <a href="#arrow-torsion-types-iut-i1">arrow torsion types</a>
+          <a href="#initial-theta-data">initial theta data</a>
+        </div>
+      </section>
+
+      <section id="arrow-torsion-types-iut-i1" data-filter="iut i definition 1.1 arrow torsion orbicurve ordered labels nonzero cusp epsilon">
+        <h2>Arrow Torsion Types in IUT I Definition 1.1</h2>
+        <p class="lede">
+          Definition 1.1 names the cyclic covers constructed from the preceding
+          epsilon-quotient and section machinery. A hyperbolic orbicurve is of type
+          <span class="math">(1,ell-tors arrow)</span>, or signed type
+          <span class="math">(1,ell-tors arrow)^±</span>, when it arises from that
+          construction for some <span class="math">ell</span> and chosen nonzero cusp.
+        </p>
+        <div class="diagram fit" aria-label="Arrow torsion type definition">
+          <div class="diagramHeader">
+            <strong>Definition by construction, not by informal decoration</strong>
+            <span>IUT I Definition 1.1 and Remarks 1.1.1-1.1.2</span>
+          </div>
+          <svg viewBox="0 0 980 410" role="img">
+            <defs>
+              <marker id="arrowTorsionTypesI1" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="80" width="220" height="86"></rect>
+            <text class="nodeTitle" x="180" y="110" text-anchor="middle">source data</text>
+            <text class="tinyText" x="180" y="134" text-anchor="middle">X/k, C, epsilon</text>
+            <text class="tinyText" x="180" y="152" text-anchor="middle">ell and cusp choice</text>
+
+            <rect class="nodeBox green" x="380" y="80" width="220" height="86"></rect>
+            <text class="nodeTitle" x="490" y="110" text-anchor="middle">cyclic cover output</text>
+            <text class="tinyText" x="490" y="134" text-anchor="middle">X-arrow and C-arrow</text>
+            <text class="tinyText" x="490" y="152" text-anchor="middle">finite etale hierarchy</text>
+
+            <rect class="nodeBox violet" x="690" y="80" width="220" height="86"></rect>
+            <text class="nodeTitle" x="800" y="110" text-anchor="middle">arrow torsion type</text>
+            <text class="tinyText" x="800" y="134" text-anchor="middle">(1,ell-tors arrow)</text>
+            <text class="tinyText" x="800" y="152" text-anchor="middle">and signed variant</text>
+
+            <rect class="nodeBox gold" x="222" y="282" width="250" height="84"></rect>
+            <text class="nodeTitle" x="347" y="312" text-anchor="middle">ordered labels</text>
+            <text class="tinyText" x="347" y="336" text-anchor="middle">arrow means archimedean order</text>
+            <text class="tinyText" x="347" y="354" text-anchor="middle">determined by epsilon</text>
+
+            <rect class="nodeBox red" x="548" y="282" width="250" height="84"></rect>
+            <text class="nodeTitle" x="673" y="312" text-anchor="middle">canonical relative to data</text>
+            <text class="tinyText" x="673" y="336" text-anchor="middle">determined up to k-isomorphism</text>
+            <text class="tinyText" x="673" y="354" text-anchor="middle">by X/k, C, epsilon</text>
+
+            <path class="edge blue" d="M292 123 H378" marker-end="url(#arrowTorsionTypesI1)"></path>
+            <path class="edge green" d="M602 123 H688" marker-end="url(#arrowTorsionTypesI1)"></path>
+            <path class="edge gold" d="M490 168 C450 224 380 250 354 280" marker-end="url(#arrowTorsionTypesI1)"></path>
+            <path class="edge red" d="M490 168 C530 224 620 250 666 280" marker-end="url(#arrowTorsionTypesI1)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card">
+            <h3>Definition 1.1</h3>
+            <p>
+              The phrase "type <span class="math">(1,ell-tors arrow)</span>" refers to
+              arising, up to isomorphism, from Mochizuki's cyclic covering construction.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Remark 1.1.1</h3>
+            <p>
+              The arrow records the archimedean ordered labels
+              <span class="math">1,2,...</span> on the relevant
+              <span class="math">{+/-1}</span>-orbits, as determined by
+              <span class="math">epsilon</span>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Remark 1.1.2</h3>
+            <p>
+              The arrow covers are determined, up to <span class="math">k</span>
+              isomorphism, by the source triple
+              <span class="math">(X/k, C, epsilon)</span>.
+            </p>
+          </div>
+        </div>
+        <div class="callout">
+          The arrow is not decorative notation. It records ordered label data produced
+          by the chosen cusp and therefore belongs to the typed source object used
+          later by initial theta data and Hodge-theater labels.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Definition 1.1</a>
+          Related: <a href="#two-epsilon-section-iut-i1">2 epsilon section</a>
+          <a href="#cyclic-cover-reconstruction">cyclic cover reconstruction</a>
+          <a href="#initial-theta-data">initial theta data</a>
+          <a href="#d-prime-strips-labels-41-42">D-prime strips and labels</a>
         </div>
       </section>
 
