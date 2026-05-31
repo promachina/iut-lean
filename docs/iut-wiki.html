@@ -568,6 +568,7 @@
         <a href="#lgp-lgp-log-theta-lattice-iii38">LGP/lgp lattice 3.8</a>
         <a href="#packet-procession-log-volume-iii39">Packet log-volume 3.9</a>
         <a href="#global-kummer-noninterference-iii310">Global Kummer 3.10</a>
+        <a href="#theorem-311-lgp-algorithms">Theorem 3.11 algorithms</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
@@ -1657,6 +1658,10 @@
               <a href="#global-kummer-noninterference-iii310">global Kummer source page</a>,
               <a href="#roots-of-unity-noninterference-310">roots-of-unity non-interference</a>,
               <a href="#fmod-fmod-bias-310">FMOD/Fmod bias</a>,
+              <a href="#theorem-311-lgp-algorithms">Theorem 3.11 source page</a>,
+              <a href="#theorem-311-data-abc">Theorem 3.11 data (a),(b),(c)</a>,
+              <a href="#ind1-ind2-ind3-311">Ind1/Ind2/Ind3 in Theorem 3.11</a>,
+              <a href="#ipl-she-apt-source-311">source IPL/SHE/APT</a>,
               <a href="#local-packet-frobenioids">local packet Frobenioids</a>,
               <a href="#local-lgp-monoids-source">local LGP monoids</a>,
               <a href="#vertically-coric-lgp">vertically coric LGP monoids</a>,
@@ -17659,6 +17664,317 @@
           <a href="#global-kummer-noninterference">global Kummer card</a>
           <a href="#fmod-fmod-bias">FMOD/Fmod bias card</a>
           <a href="#theorem-311-multiradial-representation">Theorem 3.11</a>
+        </div>
+      </section>
+
+      <section id="theorem-311-lgp-algorithms">
+        <h2>Theorem 3.11: Multiradial Algorithms via LGP-Monoids/Frobenioids</h2>
+        <p class="lede">
+          Theorem 3.11 is the main construction theorem of IUT III. It starts from
+          initial theta data and an LGP-Gaussian log-theta lattice, fixes the vertically
+          coric D-theater <span class="math">n,◦HT_D-Theta±ellNF</span> for each
+          column, constructs the multiradial representation
+          <span class="math">n,◦R_LGP</span>, and then records how this representation
+          is related to every <span class="math">n,m</span> Hodge theater by
+          log-Kummer correspondences and horizontal
+          <span class="math">Theta×mu_LGP</span>-link compatibility.
+        </p>
+
+        <div class="diagram fit" aria-label="Theorem 3.11 multiradial algorithm structure">
+          <div class="diagramHeader">
+            <strong>Theorem 3.11</strong>
+            <span>vertical coric input, multiradial output, log-Kummer comparison, and horizontal compatibility</span>
+          </div>
+          <svg viewBox="0 0 1120 690" role="img">
+            <defs>
+              <marker id="arrowThm311Source" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="60" y="68" width="238" height="92"></rect>
+            <text class="nodeTitle" x="179" y="100" text-anchor="middle">initial theta data</text>
+            <text class="tinyText" x="179" y="124" text-anchor="middle">IUT I Def. 3.1</text>
+            <text class="tinyText" x="179" y="142" text-anchor="middle">LGP-Gaussian lattice</text>
+
+            <rect class="nodeBox green" x="442" y="68" width="238" height="92"></rect>
+            <text class="nodeTitle" x="561" y="100" text-anchor="middle">n,◦ D-theater</text>
+            <text class="tinyText" x="561" y="124" text-anchor="middle">vertical coricity</text>
+            <text class="tinyText" x="561" y="142" text-anchor="middle">Theorem 1.5(i)</text>
+
+            <rect class="nodeBox gold" x="824" y="68" width="238" height="92"></rect>
+            <text class="nodeTitle" x="943" y="100" text-anchor="middle">D⊢ procession</text>
+            <text class="tinyText" x="943" y="124" text-anchor="middle">Prc(n,◦D⊢_T)</text>
+            <text class="tinyText" x="943" y="142" text-anchor="middle">IUT I Prop. 6.9(ii)</text>
+
+            <rect class="nodeBox blue" x="126" y="296" width="238" height="96"></rect>
+            <text class="nodeTitle" x="245" y="328" text-anchor="middle">data (a)</text>
+            <text class="tinyText" x="245" y="352" text-anchor="middle">mono-analytic tensor packets</text>
+            <text class="tinyText" x="245" y="370" text-anchor="middle">with procession log-volumes</text>
+
+            <rect class="nodeBox green" x="442" y="296" width="238" height="96"></rect>
+            <text class="nodeTitle" x="561" y="328" text-anchor="middle">data (b)</text>
+            <text class="tinyText" x="561" y="352" text-anchor="middle">bad-prime LGP splitting monoids</text>
+            <text class="tinyText" x="561" y="370" text-anchor="middle">acting on packet modules</text>
+
+            <rect class="nodeBox gold" x="758" y="296" width="238" height="96"></rect>
+            <text class="nodeTitle" x="877" y="328" text-anchor="middle">data (c)</text>
+            <text class="tinyText" x="877" y="352" text-anchor="middle">number fields and FMOD/Fmod</text>
+            <text class="tinyText" x="877" y="370" text-anchor="middle">global degrees by log-volume</text>
+
+            <rect class="nodeBox violet" x="442" y="496" width="238" height="96"></rect>
+            <text class="nodeTitle" x="561" y="528" text-anchor="middle">n,◦R_LGP</text>
+            <text class="tinyText" x="561" y="552" text-anchor="middle">modulo Ind1 and Ind2</text>
+            <text class="tinyText" x="561" y="570" text-anchor="middle">functorial for processions</text>
+
+            <rect class="nodeBox red" x="82" y="514" width="238" height="92"></rect>
+            <text class="nodeTitle" x="201" y="546" text-anchor="middle">log-Kummer</text>
+            <text class="tinyText" x="201" y="570" text-anchor="middle">comparison with every n,m</text>
+            <text class="tinyText" x="201" y="588" text-anchor="middle">Ind3 for local packets</text>
+
+            <rect class="nodeBox blue" x="800" y="514" width="238" height="92"></rect>
+            <text class="nodeTitle" x="919" y="546" text-anchor="middle">Theta×mu_LGP links</text>
+            <text class="tinyText" x="919" y="570" text-anchor="middle">horizontal compatibility</text>
+            <text class="tinyText" x="919" y="588" text-anchor="middle">stabilized/equivariant/functorial</text>
+
+            <path d="M300 114 H440" class="edge blue" marker-end="url(#arrowThm311Source)"></path>
+            <path d="M682 114 H822" class="edge green" marker-end="url(#arrowThm311Source)"></path>
+            <path d="M943 162 C920 232 820 254 646 294" class="edge gold" marker-end="url(#arrowThm311Source)"></path>
+            <path d="M943 162 C846 248 462 254 282 294" class="edge gold" marker-end="url(#arrowThm311Source)"></path>
+            <path d="M943 162 C928 242 918 256 894 294" class="edge gold" marker-end="url(#arrowThm311Source)"></path>
+            <path d="M246 394 C300 454 436 456 520 494" class="edge blue" marker-end="url(#arrowThm311Source)"></path>
+            <path d="M561 394 V494" class="edge green" marker-end="url(#arrowThm311Source)"></path>
+            <path d="M877 394 C820 454 686 456 604 494" class="edge gold" marker-end="url(#arrowThm311Source)"></path>
+            <path d="M440 552 H322" class="edge red" marker-end="url(#arrowThm311Source)"></path>
+            <path d="M682 552 H798" class="edge blue" marker-end="url(#arrowThm311Source)"></path>
+          </svg>
+        </div>
+
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Construction or statement</th><th>What the wiki must preserve</th></tr>
+          <tr>
+            <td>Theorem 3.11 setup</td>
+            <td>
+              Fix initial theta data and a family of distinct
+              <span class="math">Theta±ellNF</span>-Hodge theaters
+              <span class="math">n,mHT</span>. For each column
+              <span class="math">n</span>, use vertical coricity to obtain
+              <span class="math">n,◦HT_D-Theta±ellNF</span>.
+            </td>
+            <td>
+              The theorem is columnwise: the vertically coric object is determined only
+              up to isomorphism from all theaters in that column.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(i), procession</td>
+            <td>
+              Apply the natural functor of IUT I Proposition 6.9(ii) to obtain the
+              procession of <span class="math">D⊢</span>-prime-strips
+              <span class="math">Prc(n,◦D⊢_T)</span>.
+            </td>
+            <td>
+              The multiradial representation is built from the procession, not from a
+              free list of labels.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(i)(a)</td>
+            <td>
+              Use the mono-analytic tensor packets and Q-spans of Proposition 3.2(ii),
+              equipped with the procession-normalized mono-analytic log-volumes of
+              Proposition 3.9(ii).
+            </td>
+            <td>
+              The local log-shell packet layer and its log-volume are part of the same
+              theorem interface.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(i)(b)</td>
+            <td>
+              At bad primes, include the LGP splitting monoid of Proposition 3.5(ii)(c)
+              as a subset of the relevant packet Q-spans and with its multiplicative
+              action on the product of those packet modules.
+            </td>
+            <td>
+              Bad-prime splitting monoids are active operators on the packet
+              containers, not merely labels attached to them.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(i)(c)</td>
+            <td>
+              For each <span class="math">j∈F_l</span>, include the global number
+              field/monoid data and the associated
+              <span class="math">FMOD/Fmod</span> and realified Frobenioids whose global
+              degrees are computed by the log-volumes from (a).
+            </td>
+            <td>
+              The global Frobenioid layer is tied back to the packet log-volume layer.
+            </td>
+          </tr>
+          <tr>
+            <td>Ind1 and Ind2</td>
+            <td>
+              The representation <span class="math">n,◦R_LGP</span> is taken up to
+              automorphisms of the <span class="math">D⊢</span>-prime-strip procession
+              and independent local automorphism actions on tensor-product summands.
+            </td>
+            <td>
+              These indeterminacies act before the log-Kummer comparison with ordinary
+              <span class="math">n,m</span> theaters.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(i), final paragraph</td>
+            <td>
+              <span class="math">n,◦R_LGP</span> is constructed by an algorithm
+              functorial for isomorphisms of processions, and etale-picture permutation
+              symmetries induce compatible poly-isomorphisms between columns.
+            </td>
+            <td>
+              The construction is algorithmic and functorial; cross-column comparison
+              uses etale-picture symmetries.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(ii)(a)</td>
+            <td>
+              Kummer isomorphisms compare the vertically coric local mono-analytic
+              tensor packets and Q-spans with the corresponding local packets in each
+              <span class="math">n,m</span> Hodge theater, compatibly with log-volumes.
+            </td>
+            <td>
+              This is the local packet comparison; it is the place where Ind3 later
+              appears.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(ii)(b),(c)</td>
+            <td>
+              The same log-Kummer framework compares bad-prime LGP splitting monoids,
+              number fields, global <span class="math">FMOD/Fmod</span> Frobenioids, and
+              realified Frobenioids.
+            </td>
+            <td>
+              The comparison has three layers: local packets, bad-prime splitting
+              monoids, and global Frobenioids.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(ii), final paragraph</td>
+            <td>
+              As <span class="math">m</span> varies, splitting monoids and
+              <span class="math">MOD</span>-subscripted global Frobenioids are mutually
+              compatible up to roots of unity; the local packet isomorphisms are only
+              upper-semi-compatible, by inclusions at nonarchimedean places and
+              surjections at archimedean places.
+            </td>
+            <td>
+              This is the precise split between harmless torsion, exact MOD behavior,
+              and Ind3 upper-semi packet behavior.
+            </td>
+          </tr>
+          <tr>
+            <td>Theorem 3.11(iii)</td>
+            <td>
+              Kummer isomorphisms satisfy compatibility with the horizontal
+              <span class="math">Theta×mu_LGP</span> links: for
+              <span class="math">F⊢×mu</span> prime-strips, environment prime-strips,
+              mono-theta projective systems, poly-isomorphisms, and evaluation maps.
+            </td>
+            <td>
+              Horizontal compatibility is stated as stabilization/equivariance/
+              functoriality under arbitrary automorphisms of the horizontal-arrow
+              domains and codomains, modulo the named indeterminacies where applicable.
+            </td>
+          </tr>
+        </table>
+
+        <div class="grid3">
+          <div class="card" id="theorem-311-data-abc">
+            <h3>Data (a),(b),(c)</h3>
+            <p>
+              The theorem's multiradial representation has three visible layers:
+              local mono-analytic tensor packets with log-volumes, bad-prime LGP
+              splitting monoids acting on packet modules, and global number-field/
+              Frobenioid data with degrees measured by the packet log-volumes.
+            </p>
+            <div class="tagRow"><span class="tag green">3.11(i)</span><span class="tag">source interface</span></div>
+          </div>
+          <div class="card" id="ind1-ind2-ind3-311">
+            <h3>Ind1, Ind2, Ind3</h3>
+            <p>
+              Ind1 comes from automorphisms of the procession. Ind2 comes from
+              independent automorphism actions on tensor-product summands. Ind3 is
+              not another quotient of global Frobenioids; it is the upper-semi
+              compatibility of local packet Kummer isomorphisms as the horizontal
+              index varies.
+            </p>
+            <div class="tagRow"><span class="tag red">3.11(i),(ii)</span><span class="tag">indeterminacy</span></div>
+          </div>
+          <div class="card" id="mod-versus-mod-311">
+            <h3>MOD versus mod</h3>
+            <p>
+              Theorem 3.11(ii) explicitly transfers exact mutual compatibility from
+              roots-of-unity non-interference to the <span class="math">MOD</span>
+              global Frobenioids, while warning that this does not apply in the same
+              way to <span class="math">mod</span>-subscripted isomorphisms.
+            </p>
+            <div class="tagRow"><span class="tag gold">3.11(ii)</span><span class="tag">FMOD/Fmod</span></div>
+          </div>
+          <div class="card" id="theta-link-compatibility-source-311">
+            <h3>Horizontal compatibility</h3>
+            <p>
+              Part (iii) says that the Kummer constructions, projective systems, and
+              evaluation maps are compatible with horizontal
+              <span class="math">Theta×mu_LGP</span> arrows in the stabilized,
+              equivariant, functorial sense specified by the source.
+            </p>
+            <div class="tagRow"><span class="tag blue">3.11(iii)</span><span class="tag">horizontal arrows</span></div>
+          </div>
+          <div class="card" id="ipl-she-apt-source-311">
+            <h3>IPL, SHE, APT</h3>
+            <p>
+              Remark 3.11.1 recasts the theorem as an algorithm whose input is an
+              <span class="math">F×mu</span>-prime-strip, whose output is linked to
+              that input by full poly-isomorphisms, and whose construction is
+              simultaneously executable relative to the domain and codomain
+              holomorphic structures. Its transport is algorithmic, not a direct map
+              of set-theoretic regions.
+            </p>
+            <div class="tagRow"><span class="tag violet">Remark 3.11.1</span><span class="tag">IPL/SHE/APT</span></div>
+          </div>
+          <div class="card" id="label-discipline-311">
+            <h3>Label discipline</h3>
+            <p>
+              Remark 3.11.2 emphasizes that the label transitions require all labels
+              in the relevant <span class="math">F_l</span> and
+              <span class="math">|F_l|</span> systems. The procession index sets used
+              in the multiradial representation are naked finite sets; they are not
+              arbitrary omissions of arithmetic labels.
+            </p>
+            <div class="tagRow"><span class="tag green">Remark 3.11.2</span><span class="tag">labels</span></div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          The source theorem does not identify adjacent Hodge theaters by a shared ring
+          structure. Its comparison route is: vertically coric target, multiradial
+          representation modulo Ind1/Ind2, log-Kummer correspondence with Ind3 for
+          local packets, and horizontal link compatibility in the stabilized/equivariant/
+          functorial sense.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Theorem 3.11 and Remarks 3.11.1-3.11.4</a>
+          Related: <a href="#global-kummer-noninterference-iii310">global Kummer 3.10</a>
+          <a href="#multiradiality">multiradiality overview</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+          <a href="#theorem-311-multiradial-representation">3.11 representation card</a>
+          <a href="#theorem-311-log-kummer">3.11 log-Kummer card</a>
+          <a href="#theta-link-compatibility">Theta-link compatibility card</a>
+          <a href="#corollary-312">Corollary 3.12</a>
         </div>
       </section>
 
