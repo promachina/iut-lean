@@ -584,8 +584,12 @@
         <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges 4.6-4.7</a>
         <a href="#section4-symmetries-processions-48-412">Symmetries/processions 4.8-4.12</a>
         <a href="#iut-i-global-frobenioids-example51">Global Frobenioids 5.1</a>
+        <a href="#global-reconstruction-51">Global reconstruction 5.1</a>
+        <a href="#kummer-ready-blind-51-52">Kummer-ready/blind 5.1-5.2</a>
         <a href="#iut-i-frobenioid-prime-strips-52">Frobenioid prime-strips 5.2</a>
         <a href="#iut-i-pivotal-distributions-54">Pivotal distributions 5.4</a>
+        <a href="#delta-valuations-localization-54">Delta-valuations 5.4</a>
+        <a href="#theta-nf-bridges-definition-55-56">ThetaNF bridges 5.5-5.6</a>
         <a href="#gms-gcg-motivation">GMS/GCG motivation</a>
         <a href="#projective-line-gluing-analogy">Projective-line gluing</a>
         <a href="#iut-i-gluing-models">IUT I gluing models</a>
@@ -1590,6 +1594,8 @@
             <td>ThetaNF and additive theory</td>
             <td>
               <a href="#iut-i-global-frobenioids-example51">global Frobenioids 5.1</a>,
+              <a href="#global-reconstruction-51">global reconstruction 5.1</a>,
+              <a href="#kummer-ready-blind-51-52">Kummer-ready/blind 5.1-5.2</a>,
               <a href="#m-star-field-reconstruction">M* field reconstruction</a>,
               <a href="#f-star-model-frobenioid">F* model Frobenioid</a>,
               <a href="#kappa-sol-conjugate-synchronization">κ-sol conjugate synchronization</a>,
@@ -1602,8 +1608,10 @@
               <a href="#local-kappa-coric-structures52">local κ-coric structures</a>,
               <a href="#corollary-53-rigidity">Corollary 5.3 rigidity</a>,
               <a href="#iut-i-pivotal-distributions-54">pivotal distributions 5.4</a>,
+              <a href="#delta-valuations-localization-54">delta-valuations/localization 5.4</a>,
               <a href="#delta-valuations-example54">δ-valuations</a>,
               <a href="#log-volume-average-sum54">average/sum log-volume convention</a>,
+              <a href="#theta-nf-bridges-definition-55-56">ThetaNF bridges 5.5-5.6</a>,
               <a href="#theta-nf-hodge-theater">ThetaNF-Hodge theater</a>,
               <a href="#nf-bridge-frobenioid-lift">NF bridge</a>,
               <a href="#theta-bridge-frobenioid-lift">Theta bridge</a>,
@@ -11109,7 +11117,7 @@
 
             <rect class="nodeBox green" x="226" y="428" width="245" height="82"></rect>
             <text class="nodeTitle" x="348" y="458" text-anchor="middle">constant distributions</text>
-            <text class="tinyText" x="348" y="482" text-anchor="middle">F*_<J> inside product F*_J</text>
+            <text class="tinyText" x="348" y="482" text-anchor="middle">F*_&lt;J&gt; inside product F*_J</text>
 
             <rect class="nodeBox blue" x="610" y="428" width="245" height="82"></rect>
             <text class="nodeTitle" x="732" y="458" text-anchor="middle">Kummer-ready/blind split</text>
@@ -11269,6 +11277,236 @@
           <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
           <a href="#frobenioids-log-shells">Frobenioids/log-shells</a>
           <a href="#log-kummer-correspondences">log-Kummer correspondences</a>
+        </div>
+      </section>
+
+      <section id="global-reconstruction-51">
+        <h2>IUT I Example 5.1: Global Reconstruction from D</h2>
+        <p class="lede">
+          Example 5.1 reconstructs the global number-field and Frobenioid layers from
+          the global D-side base category. It is the source block behind the later
+          <span class="math">F*</span>, <span class="math">F_mod</span>,
+          κ-coric pseudo-monoids, κ-sol quotient, and global-to-local distribution
+          interfaces.
+        </p>
+        <div class="diagram" aria-label="Example 5.1 reconstruction route from global D to Frobenioid data">
+          <div class="diagramHeader">
+            <strong>Global reconstruction route</strong>
+            <span>Example 5.1(i)-(vii) and Remark 5.1.5</span>
+          </div>
+          <svg viewBox="0 0 1120 570" role="img">
+            <defs>
+              <marker id="arrowGlobal51" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="62" y="76" width="220" height="88"></rect>
+            <text class="nodeTitle" x="172" y="108" text-anchor="middle">global D</text>
+            <text class="tinyText" x="172" y="132" text-anchor="middle">pi_1(D)</text>
+            <text class="tinyText" x="172" y="150" text-anchor="middle">theta-approach input</text>
+
+            <rect class="nodeBox green" x="442" y="62" width="240" height="86"></rect>
+            <text class="nodeTitle" x="562" y="94" text-anchor="middle">M(D), M_mod(D)</text>
+            <text class="tinyText" x="562" y="118" text-anchor="middle">F^x and F_mod^x</text>
+            <text class="tinyText" x="562" y="136" text-anchor="middle">field structure on union with 0</text>
+
+            <rect class="nodeBox gold" x="824" y="76" width="240" height="88"></rect>
+            <text class="nodeTitle" x="944" y="108" text-anchor="middle">pi_1^rat and κ-coric data</text>
+            <text class="tinyText" x="944" y="132" text-anchor="middle">M_κ, M_∞κ, M_∞κ×</text>
+            <text class="tinyText" x="944" y="150" text-anchor="middle">pseudo-monoids with actions</text>
+
+            <rect class="nodeBox violet" x="250" y="264" width="250" height="86"></rect>
+            <text class="nodeTitle" x="375" y="296" text-anchor="middle">Frobenioid F(D)</text>
+            <text class="tinyText" x="375" y="320" text-anchor="middle">divisor monoids from valuations</text>
+            <text class="tinyText" x="375" y="338" text-anchor="middle">restrictions F and F_mod</text>
+
+            <rect class="nodeBox red" x="620" y="264" width="250" height="86"></rect>
+            <text class="nodeTitle" x="745" y="296" text-anchor="middle">κ-sol quotient</text>
+            <text class="tinyText" x="745" y="320" text-anchor="middle">pi_1^rat -> pi_1^κ-sol</text>
+            <text class="tinyText" x="745" y="338" text-anchor="middle">conjugate synchronization</text>
+
+            <rect class="nodeBox green" x="178" y="450" width="270" height="76"></rect>
+            <text class="nodeTitle" x="313" y="480" text-anchor="middle">constant distributions</text>
+            <text class="tinyText" x="313" y="504" text-anchor="middle">F_&lt;J&gt; inside product F_J</text>
+
+            <rect class="nodeBox red" x="672" y="450" width="270" height="76"></rect>
+            <text class="nodeTitle" x="807" y="480" text-anchor="middle">no solvable shortcut</text>
+            <text class="tinyText" x="807" y="504" text-anchor="middle">Remark 5.1.5 rejects solvable-Uchida replacement</text>
+
+            <path d="M284 118 H440" class="edge blue" marker-end="url(#arrowGlobal51)"></path>
+            <path d="M684 118 H822" class="edge green" marker-end="url(#arrowGlobal51)"></path>
+            <path d="M562 150 C528 206 438 228 386 262" class="edge violet" marker-end="url(#arrowGlobal51)"></path>
+            <path d="M944 166 C900 218 806 236 754 262" class="edge red" marker-end="url(#arrowGlobal51)"></path>
+            <path d="M376 352 C356 392 334 420 318 448" class="edge green" marker-end="url(#arrowGlobal51)"></path>
+            <path d="M746 352 C764 392 790 420 804 448" class="edge red" marker-end="url(#arrowGlobal51)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Example 5.1(i)</td>
+            <td>
+              From <span class="math">pi_1(D)</span>, the theta-approach reconstructs
+              an isomorph of <span class="math">F^x</span>, the model
+              <span class="math">C_Fmod</span> group, <span class="math">F_mod</span>
+              invariants, <span class="math">pi_1^rat</span>, and κ-coric
+              pseudo-monoids.
+            </td>
+            <td>The global field layer is an output of anabelian reconstruction, not a primitive field parameter.</td>
+          </tr>
+          <tr>
+            <td>κ-sol quotient</td>
+            <td>
+              The quotient <span class="math">pi_1^rat -> pi_1^κ-sol</span> is built
+              using the ∞κ action and a maximal solvable quotient over
+              <span class="math">F_mod</span>.
+            </td>
+            <td>κ-sol data is an intermediate Kummer interface, not a replacement for full anabelian reconstruction.</td>
+          </tr>
+          <tr>
+            <td>Example 5.1(ii)-(iii)</td>
+            <td>
+              Valuations and divisor monoids reconstructed from the field structure
+              determine the model Frobenioid <span class="math">F(D)</span>, with
+              restrictions to <span class="math">D</span> and terminal objects.
+            </td>
+            <td>This is where field/unit data becomes Frobenioid data.</td>
+          </tr>
+          <tr>
+            <td>Example 5.1(iv)-(v)</td>
+            <td>
+              Birational monoids recover decomposition groups, integral submonoids,
+              unique ∞κ/∞κ× structures, and cyclotomic identifications via Kummer
+              classes.
+            </td>
+            <td>The reconstruction depends on Kummer readiness and cyclotome rigidity.</td>
+          </tr>
+          <tr>
+            <td>Example 5.1(vii)</td>
+            <td>
+              <span class="math">F_j</span> and diagonal
+              <span class="math">F_&lt;J&gt;</span> are copies of
+              <span class="math">F_mod</span> placed over label-indexed valuation
+              products; Remark 5.1.1 reads these as arbitrary versus constant
+              distributions.
+            </td>
+            <td>This is the first Section 5 distribution layer over the label capsule.</td>
+          </tr>
+          <tr>
+            <td>Remark 5.1.5</td>
+            <td>
+              Mochizuki rejects replacing this machinery by a solvable-Uchida-style
+              ring reconstruction, because such a reconstruction is incompatible with
+              localization operations in D-ThetaNF-Hodge theaters.
+            </td>
+            <td>The wiki marks solvable reconstruction as a prohibited shortcut for IUT's local/global interface.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Guardrail: the source does not allow the global ring structure to be recovered
+          by a solvable shortcut that ignores localization. The reconstruction must stay
+          compatible with D-ThetaNF localizations.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 5.1 and Remarks 5.1.1-5.1.5</a>
+          Related: <a href="#iut-i-global-frobenioids-example51">global Frobenioids overview</a>
+          <a href="#kummer-ready-blind-51-52">Kummer-ready/blind</a>
+          <a href="#local-analytic-sections-43">local analytic sections</a>
+          <a href="#delta-valuations-localization-54">delta-valuations</a>
+        </div>
+      </section>
+
+      <section id="kummer-ready-blind-51-52">
+        <h2>IUT I Remarks 5.1.3 and 5.2.2: Kummer-Ready and Kummer-Blind Interfaces</h2>
+        <p class="lede">
+          Mochizuki explicitly distinguishes interfaces where Kummer theory can be
+          performed from interfaces where it cannot. This distinction is a structural
+          rule for the wiki: an <span class="math">F</span>-prime-strip carries
+          Kummer-ready Frobenioid data, while the weakened mono-analytic
+          <span class="math">F^⊢</span> interface is Kummer-blind.
+        </p>
+        <div class="diagram" aria-label="Kummer-ready and Kummer-blind interfaces in IUT I">
+          <div class="diagramHeader">
+            <strong>Where Kummer theory is available</strong>
+            <span>Remarks 5.1.3 and 5.2.2</span>
+          </div>
+          <svg viewBox="0 0 1120 540" role="img">
+            <defs>
+              <marker id="arrowKummerReady" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox green" x="86" y="88" width="300" height="112"></rect>
+            <text class="nodeTitle" x="236" y="124" text-anchor="middle">Kummer-ready</text>
+            <text class="tinyText" x="236" y="150" text-anchor="middle">F, F*, M, M_sol, M_∞κ, M_∞κ×, M_κ-sol</text>
+            <text class="tinyText" x="236" y="170" text-anchor="middle">roots/Kummer classes available</text>
+
+            <rect class="nodeBox red" x="734" y="88" width="300" height="112"></rect>
+            <text class="nodeTitle" x="884" y="124" text-anchor="middle">Kummer-blind</text>
+            <text class="tinyText" x="884" y="150" text-anchor="middle">F_mod, M_mod, M_κ and F^⊢</text>
+            <text class="tinyText" x="884" y="170" text-anchor="middle">no standalone extraction of roots</text>
+
+            <rect class="nodeBox gold" x="410" y="302" width="300" height="90"></rect>
+            <text class="nodeTitle" x="560" y="334" text-anchor="middle">embedding into ready layer</text>
+            <text class="tinyText" x="560" y="360" text-anchor="middle">F_mod -> F is needed to recover additive/ring structure</text>
+
+            <path d="M386 150 C474 176 516 230 552 300" class="edge green" marker-end="url(#arrowKummerReady)"></path>
+            <path d="M734 150 C646 176 604 230 568 300" class="edge red" marker-end="url(#arrowKummerReady)"></path>
+            <text class="smallText" x="560" y="462" text-anchor="middle">
+              Encoding rule: never infer Kummer classes or additive structure from the blind interface alone.
+            </text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Remark 5.1.3</td>
+            <td>
+              Kummer theory may be performed with
+              <span class="math">F</span>, <span class="math">F*</span>,
+              <span class="math">M</span>, <span class="math">M_sol</span>,
+              <span class="math">M_∞κ</span>, <span class="math">M_∞κ×</span>, and
+              <span class="math">M_κ-sol</span>.
+            </td>
+            <td>These are Kummer-ready interfaces.</td>
+          </tr>
+          <tr>
+            <td>Remark 5.1.3</td>
+            <td>
+              Kummer theory cannot be performed with
+              <span class="math">F_mod</span>, <span class="math">M_mod</span>, or
+              <span class="math">M_κ</span> alone.
+            </td>
+            <td>These are Kummer-blind unless embedded into a ready layer.</td>
+          </tr>
+          <tr>
+            <td>Additive structure</td>
+            <td>
+              The additive or ring structure on the birational monoid portion of
+              <span class="math">F_mod</span> is recovered only with the additional
+              datum of the embedding <span class="math">F_mod -> F</span>.
+            </td>
+            <td>The wiki must not describe <span class="math">F_mod</span> as self-sufficient field data.</td>
+          </tr>
+          <tr>
+            <td>Remark 5.2.2</td>
+            <td>
+              F-prime-strips are Kummer-ready, whereas
+              <span class="math">F^⊢</span>-prime-strips are Kummer-blind.
+            </td>
+            <td>This distinction controls how mono-analyticization may be used in later comparisons.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          The Kummer-blind interface can be useful for mono-analytic comparison, but it
+          cannot supply Kummer roots or recovered ring structure by itself.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Remarks 5.1.3 and 5.2.2</a>
+          Related: <a href="#global-reconstruction-51">global reconstruction</a>
+          <a href="#iut-i-frobenioid-prime-strips-52">Frobenioid prime-strips</a>
+          <a href="#log-kummer-correspondences">log-Kummer correspondences</a>
+          <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         </div>
       </section>
 
@@ -11650,6 +11888,250 @@
           <a href="#iut-i-global-frobenioids-example51">global Frobenioids 5.1</a>
           <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="delta-valuations-localization-54">
+        <h2>IUT I Example 5.4: Delta-Valuations and Localization</h2>
+        <p class="lede">
+          Example 5.4 turns the global label interface into localized Frobenioid data.
+          A cusp label <span class="math">delta in LabCusp(D)</span> determines
+          delta-valuations, and localization at those valuations constructs the
+          F-prime-strip <span class="math">F|delta</span>, well-defined up to
+          isomorphism and compatible with local/global ∞κ-coric structures.
+        </p>
+        <div class="diagram" aria-label="Delta-valuations and localization in Example 5.4">
+          <div class="diagramHeader">
+            <strong>From global cusp label to local F-strip</strong>
+            <span>Example 5.4(iii)-(iv)</span>
+          </div>
+          <svg viewBox="0 0 1120 540" role="img">
+            <defs>
+              <marker id="arrowDelta54" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="82" width="250" height="88"></rect>
+            <text class="nodeTitle" x="195" y="114" text-anchor="middle">delta in LabCusp(D)</text>
+            <text class="tinyText" x="195" y="138" text-anchor="middle">global cusp label</text>
+            <text class="tinyText" x="195" y="156" text-anchor="middle">read via D-NF bridge</text>
+
+            <rect class="nodeBox gold" x="438" y="82" width="250" height="88"></rect>
+            <text class="nodeTitle" x="563" y="114" text-anchor="middle">delta-valuations</text>
+            <text class="tinyText" x="563" y="138" text-anchor="middle">valuations mapping through V^un</text>
+            <text class="tinyText" x="563" y="156" text-anchor="middle">unique label-1 constituent</text>
+
+            <rect class="nodeBox green" x="806" y="82" width="250" height="88"></rect>
+            <text class="nodeTitle" x="931" y="114" text-anchor="middle">localized F|delta</text>
+            <text class="tinyText" x="931" y="138" text-anchor="middle">F-prime-strip from localizations</text>
+            <text class="tinyText" x="931" y="156" text-anchor="middle">well-defined up to isomorphism</text>
+
+            <rect class="nodeBox red" x="238" y="304" width="280" height="88"></rect>
+            <text class="nodeTitle" x="378" y="336" text-anchor="middle">noncanonical fibers</text>
+            <text class="tinyText" x="378" y="360" text-anchor="middle">V^un -> V_mod not injective</text>
+            <text class="tinyText" x="378" y="378" text-anchor="middle">no chosen representative</text>
+
+            <rect class="nodeBox violet" x="602" y="304" width="280" height="88"></rect>
+            <text class="nodeTitle" x="742" y="336" text-anchor="middle">∞κ compatibility</text>
+            <text class="tinyText" x="742" y="360" text-anchor="middle">restriction of global Kummer classes</text>
+            <text class="tinyText" x="742" y="378" text-anchor="middle">to local pseudo-monoids</text>
+
+            <path d="M322 126 H436" class="edge blue" marker-end="url(#arrowDelta54)"></path>
+            <path d="M690 126 H804" class="edge gold" marker-end="url(#arrowDelta54)"></path>
+            <path d="M562 172 C516 226 440 256 386 302" class="edge red" marker-end="url(#arrowDelta54)"></path>
+            <path d="M932 172 C886 226 800 256 750 302" class="edge violet" marker-end="url(#arrowDelta54)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Example 5.4(iii)</td>
+            <td>
+              A <span class="math">delta</span>-valuation may be defined through the
+              Aut-epsilon orbit mapping <span class="math">delta</span> to
+              <span class="math">[epsilon]</span>, or intrinsically through the D-NF
+              bridge and the unique capsule constituent whose label is
+              <span class="math">1</span>.
+            </td>
+            <td>The valuation is bridge-native; it is not an arbitrary local choice.</td>
+          </tr>
+          <tr>
+            <td>Example 5.4(iv)</td>
+            <td>
+              Localizing <span class="math">F</span> at delta-valuations constructs an
+              F-prime-strip <span class="math">F|delta</span>.
+            </td>
+            <td>This is the Frobenioid lift of the D-side poly-morphism interface.</td>
+          </tr>
+          <tr>
+            <td>Indeterminacy</td>
+            <td>
+              Since <span class="math">V^un -> V_mod</span> is not injective, different
+              elements above one model valuation cannot be related by a canonical
+              choice; <span class="math">F|delta</span> is well-defined only up to
+              isomorphism.
+            </td>
+            <td>Do not turn localization into a selected function.</td>
+          </tr>
+          <tr>
+            <td>∞κ compatibility</td>
+            <td>
+              The poly-morphism is compatible with local and global ∞κ-coric
+              structures via restriction of associated Kummer classes and induced
+              homomorphisms of rational fundamental groups.
+            </td>
+            <td>Localization must preserve the Kummer/coric bookkeeping, modulo the stated indeterminacies.</td>
+          </tr>
+          <tr>
+            <td>Example 5.4(v)</td>
+            <td>
+              Corollary 5.3(ii) supplies the unique
+              <span class="math">psi^NF : F_J -> F</span> lying over
+              <span class="math">phi^NF</span>.
+            </td>
+            <td>The NF-side lift is controlled by D-side rigidity.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Delta-localization is a relation up to isomorphism. A page or formal model
+          that chooses one valuation in each fiber silently adds data not present in the
+          paper.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 5.4(iii)-(v)</a>
+          Related: <a href="#iut-i-pivotal-distributions-54">pivotal distributions</a>
+          <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a>
+          <a href="#global-reconstruction-51">global reconstruction</a>
+          <a href="#packet-procession-log-volume-iii39">packet/procession log-volume</a>
+        </div>
+      </section>
+
+      <section id="theta-nf-bridges-definition-55-56">
+        <h2>IUT I Definition 5.5 and Corollary 5.6: ThetaNF Bridges</h2>
+        <p class="lede">
+          Definition 5.5 is the Frobenioid-theoretic lift of Definition 4.6. It defines
+          NF-bridges, Theta-bridges, and ThetaNF-Hodge theaters over a shared capsule of
+          F-prime-strips. Corollary 5.6 proves that their isomorphism theory is governed
+          by the associated D-level bridges.
+        </p>
+        <div class="diagram" aria-label="Definition 5.5 ThetaNF bridge package">
+          <div class="diagramHeader">
+            <strong>Frobenioid lift of D-ThetaNF</strong>
+            <span>Definition 5.5 and Corollary 5.6</span>
+          </div>
+          <svg viewBox="0 0 1120 560" role="img">
+            <defs>
+              <marker id="arrowThetaNF55" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="72" y="84" width="250" height="88"></rect>
+            <text class="nodeTitle" x="197" y="116" text-anchor="middle">NF-bridge</text>
+            <text class="tinyText" x="197" y="140" text-anchor="middle">F_J -> F with F -> F*</text>
+            <text class="tinyText" x="197" y="158" text-anchor="middle">lifts D-NF bridge</text>
+
+            <rect class="nodeBox gold" x="436" y="64" width="250" height="108"></rect>
+            <text class="nodeTitle" x="561" y="98" text-anchor="middle">shared F_J capsule</text>
+            <text class="tinyText" x="561" y="124" text-anchor="middle">associated D_J capsule</text>
+            <text class="tinyText" x="561" y="144" text-anchor="middle">same index bijection required</text>
+
+            <rect class="nodeBox red" x="800" y="84" width="250" height="88"></rect>
+            <text class="nodeTitle" x="925" y="116" text-anchor="middle">Theta-bridge</text>
+            <text class="tinyText" x="925" y="140" text-anchor="middle">F_J -> F_> -> HT^Theta</text>
+            <text class="tinyText" x="925" y="158" text-anchor="middle">lifts D-Theta bridge</text>
+
+            <rect class="nodeBox violet" x="348" y="296" width="426" height="90"></rect>
+            <text class="nodeTitle" x="561" y="328" text-anchor="middle">ThetaNF-Hodge theater</text>
+            <text class="tinyText" x="561" y="352" text-anchor="middle">F <- F_J -> F_> plus Theta-Hodge theater</text>
+            <text class="tinyText" x="561" y="370" text-anchor="middle">associated D-data must form a D-ThetaNF-Hodge theater</text>
+
+            <rect class="nodeBox green" x="404" y="448" width="314" height="70"></rect>
+            <text class="nodeTitle" x="561" y="476" text-anchor="middle">Corollary 5.6</text>
+            <text class="tinyText" x="561" y="498" text-anchor="middle">isomorphisms and gluing controlled by D-level data</text>
+
+            <path d="M324 128 H434" class="edge blue" marker-end="url(#arrowThetaNF55)"></path>
+            <path d="M688 128 H798" class="edge red" marker-end="url(#arrowThetaNF55)"></path>
+            <path d="M561 174 V294" class="edge violet" marker-end="url(#arrowThetaNF55)"></path>
+            <path d="M561 388 V446" class="edge green" marker-end="url(#arrowThetaNF55)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Def. 5.5(i)</td>
+            <td>
+              An NF-bridge consists of an F-prime-strip capsule
+              <span class="math">F_J</span>, Frobenioid categories
+              <span class="math">F</span> and <span class="math">F*</span>, the
+              morphism <span class="math">F -> F*</span>, and a poly-morphism lifting a
+              D-NF bridge.
+            </td>
+            <td>This is the Frobenioid lift of the number-field side.</td>
+          </tr>
+          <tr>
+            <td>Def. 5.5(ii)</td>
+            <td>
+              A Theta-bridge consists of <span class="math">F_J</span>,
+              <span class="math">F_></span>, a Theta-Hodge theater, and
+              poly-morphisms determined by a D-Theta bridge.
+            </td>
+            <td>This is the Frobenioid lift of the theta/evaluation side.</td>
+          </tr>
+          <tr>
+            <td>Def. 5.5(iii)</td>
+            <td>
+              A ThetaNF-Hodge theater glues the NF and Theta bridges, requiring their
+              associated D-data to form a D-ThetaNF-Hodge theater and requiring
+              morphisms to induce the same bijection on F-capsule indices.
+            </td>
+            <td>The shared capsule condition survives the Frobenioid lift.</td>
+          </tr>
+          <tr>
+            <td>Cor. 5.6(i)</td>
+            <td>
+              Isomorphisms of Theta-Hodge theaters are bijective with isomorphisms of
+              their associated D-prime-strips.
+            </td>
+            <td>The underlying D-layer controls theater isomorphism.</td>
+          </tr>
+          <tr>
+            <td>Cor. 5.6(ii)</td>
+            <td>
+              Isomorphisms of NF-bridges, Theta-bridges, and ThetaNF-Hodge theaters are
+              bijective with isomorphisms of the associated D-NF, D-Theta, and
+              D-ThetaNF bridge data.
+            </td>
+            <td>The F-level bridge package is rigid over the D-level bridge package.</td>
+          </tr>
+          <tr>
+            <td>Cor. 5.6(iii)</td>
+            <td>
+              Compatible gluing poly-isomorphisms between the F-prime-strip capsules of
+              an NF-bridge and Theta-bridge form an
+              <span class="math">F_l^x/{±1}</span>-torsor.
+            </td>
+            <td>Gluing indeterminacy is inherited from Section 4.</td>
+          </tr>
+          <tr>
+            <td>Remark 5.6.1</td>
+            <td>
+              The functorial dynamics of Section 4 have analogues for the Section 5
+              NF-bridges, Theta-bridges, and ThetaNF-Hodge theaters.
+            </td>
+            <td>Section 5 is a controlled lift, not a separate combinatorial theory.</td>
+          </tr>
+        </table>
+        <div class="callout good">
+          Encoding rule: every ThetaNF-Hodge theater page should expose the associated
+          D-ThetaNF-Hodge theater. Corollary 5.6 makes that associated D-data the
+          controlling isomorphism layer.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 5.5, Corollary 5.6, Remark 5.6.1</a>
+          Related: <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
+          <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges</a>
+          <a href="#section4-symmetries-processions-48-412">Section 4 symmetries/processions</a>
+          <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges</a>
         </div>
       </section>
 
