@@ -940,8 +940,12 @@
               <a href="#normalized-log-volume-estimates">normalized log-volume estimates</a>,
               <a href="#archimedean-metric-estimates">archimedean metric estimates</a>,
               <a href="#prime-number-theorem-input">prime number theorem input</a>,
-              <a href="#arithmetic-divisors">arithmetic divisors</a>,
+              <a href="#elliptic-torsion-input">elliptic torsion input</a>,
+              <a href="#arithmetic-divisors-iut-iv">arithmetic divisor bookkeeping</a>,
               <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a>,
+              <a href="#distinguished-valuations">distinguished valuations</a>,
+              <a href="#theorem-110-local-bound">Theorem 1.10 local bounds</a>,
+              <a href="#theorem-110-final-bound">Theorem 1.10 final bound</a>,
               <a href="#diophantine-inequalities">Diophantine inequalities</a>
             </td>
             <td>IUT IV, Sections 1-2</td>
@@ -2191,6 +2195,7 @@
             </td>
             <td>
               <a href="#multiple-tensor-products">tensor products</a>,
+              <a href="#elliptic-torsion-input">elliptic torsion</a>,
               <a href="#theta-pilot-log-volume-estimate">theta-pilot estimate</a>,
               <a href="#iut-iv">estimate pipeline</a>
             </td>
@@ -2316,6 +2321,22 @@
             </p>
             <div class="tagRow"><span class="tag green">Proposition 1.7</span><span class="tag">averaging</span></div>
           </div>
+          <div class="card" id="elliptic-torsion-input">
+            <h3>Elliptic torsion input</h3>
+            <p>
+              Proposition 1.8 records the elliptic-curve facts used later in the global
+              estimate: automorphisms of a polarized abelian variety inject into their
+              action on l-torsion for <span class="math">l >= 3</span>, models of an
+              elliptic curve are controlled by sections of the automorphism-to-Galois
+              sequence, and rational torsion constrains descent and reduction.
+            </p>
+            <p>
+              The final parts supply the Legendre-form descent and the good/multiplicative
+              reduction ramification statements used when bounding the distinguished
+              primes in Theorem 1.10.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 1.8</span><span class="tag">torsion/descent</span></div>
+          </div>
           <div class="card" id="prime-number-theorem-source">
             <h3>Prime-number estimate</h3>
             <p>
@@ -2326,6 +2347,25 @@
             </p>
             <div class="tagRow"><span class="tag green">Proposition 1.6</span><span class="tag">PNT</span></div>
           </div>
+          <div class="card" id="arithmetic-divisors-iut-iv">
+            <h3>Arithmetic divisor bookkeeping</h3>
+            <p>
+              Definition 1.9 defines real arithmetic divisors on a number field as finite
+              formal sums over all valuations. Finite valuations are weighted by
+              <span class="math">log(q_v)</span>, archimedean valuations by
+              <span class="math">1</span>, and the normalized degree is divided by
+              <span class="math">[F:Q]</span>.
+            </p>
+            <p>
+              The same definition isolates the portion supported over a fixed set
+              <span class="math">E</span> of valuations and gives normalized
+              <span class="math">E</span>-degrees. These degrees are stable under finite
+              base extension, which is why the later estimates can move between
+              <span class="math">Fmod</span>, <span class="math">F_tpd</span>,
+              <span class="math">F</span>, and <span class="math">K</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Definition 1.9</span><span class="tag">degrees</span></div>
+          </div>
           <div class="card" id="theta-pilot-log-volume-estimate">
             <h3>Theta-pilot log-volume estimate</h3>
             <p>
@@ -2333,7 +2373,53 @@
               the situation of IUT III Corollary 3.12. It is the bridge from the abstract
               corridor to numerical inequalities.
             </p>
+            <p>
+              Its inputs include the tripodal field
+              <span class="math">F_tpd = Fmod(E[2])</span>, the extension obtained by
+              adjoining <span class="math">sqrt(-1)</span> and the 3- and 5-torsion,
+              different and conductor divisors, and the q-divisor supported at bad
+              multiplicative places.
+            </p>
             <div class="tagRow"><span class="tag green">Theorem 1.10</span><span class="tag">theta-pilot</span></div>
+          </div>
+          <div class="card" id="distinguished-valuations">
+            <h3>Distinguished valuations</h3>
+            <p>
+              In the proof of Theorem 1.10, distinguished nonarchimedean valuations are
+              those that extend to valuations of <span class="math">K</span> ramified
+              over <span class="math">Q</span>. The proof identifies this condition with
+              divisibility by <span class="math">2*3*5*l</span> or membership in the
+              support of the q- and different-divisors.
+            </p>
+            <p>
+              This is the sieve separating places with nonzero local correction terms
+              from non-distinguished places, where the local upper bound is zero.
+            </p>
+            <div class="tagRow"><span class="tag green">Theorem 1.10 (iii)</span><span class="tag">ramified primes</span></div>
+          </div>
+          <div class="card" id="theorem-110-local-bound">
+            <h3>Local upper-bound computation</h3>
+            <p>
+              For a fixed rational valuation and a fixed procession index, the proof
+              estimates the component of the holomorphic hull of possible theta-pilot
+              images in the relevant tensor-product log-shell space. At distinguished
+              nonarchimedean valuations it applies Proposition 1.4; at nondistinguished
+              valuations the bound is zero; at archimedean valuations it applies
+              Proposition 1.5.
+            </p>
+            <div class="tagRow"><span class="tag green">Theorem 1.10 (iv)-(vii)</span><span class="tag">local bounds</span></div>
+          </div>
+          <div class="card" id="theorem-110-final-bound">
+            <h3>Final Theorem 1.10 bound</h3>
+            <p>
+              After weighted averaging over valuation choices and procession averaging
+              over the label index, the local bounds give an explicit admissible value of
+              <span class="math">CTheta</span>. Combining this value with
+              <a href="#corollary-312">Corollary 3.12</a> yields the stated inequality
+              bounding <span class="math">(1/6) log(q)</span> by different, conductor,
+              torsion, and prime-counting terms.
+            </p>
+            <div class="tagRow"><span class="tag gold">Theorem 1.10 (viii)</span><span class="tag">CTheta</span></div>
           </div>
           <div class="card" id="tripodal-field">
             <h3>Tripodal intermediate field</h3>
@@ -2398,6 +2484,51 @@
             </p>
             <div class="tagRow"><span class="tag red">copy discipline</span><span class="tag">history</span></div>
           </div>
+        </div>
+        <div class="diagram" aria-label="Theorem 1.10 computation route">
+          <div class="diagramHeader">
+            <strong>Theorem 1.10 computation route</strong>
+            <span>how IUT IV §1 converts the Corollary 3.12 corridor into numbers</span>
+          </div>
+          <svg viewBox="0 0 940 300" role="img">
+            <defs>
+              <marker id="arrowThm110" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox violet" x="34" y="78" width="150" height="80"></rect>
+            <text class="nodeTitle" x="109" y="107" text-anchor="middle">Cor. 3.12</text>
+            <text class="tinyText" x="109" y="130" text-anchor="middle">theta-pilot hull</text>
+            <text class="tinyText" x="109" y="148" text-anchor="middle">CTheta inequality</text>
+
+            <rect class="nodeBox blue" x="236" y="42" width="158" height="74"></rect>
+            <text class="nodeTitle" x="315" y="70" text-anchor="middle">local estimates</text>
+            <text class="tinyText" x="315" y="93" text-anchor="middle">Props. 1.1-1.5</text>
+
+            <rect class="nodeBox green" x="236" y="170" width="158" height="74"></rect>
+            <text class="nodeTitle" x="315" y="198" text-anchor="middle">elliptic input</text>
+            <text class="tinyText" x="315" y="221" text-anchor="middle">Prop. 1.8, F_tpd</text>
+
+            <rect class="nodeBox gold" x="454" y="80" width="170" height="86"></rect>
+            <text class="nodeTitle" x="539" y="109" text-anchor="middle">local components</text>
+            <text class="tinyText" x="539" y="132" text-anchor="middle">distinguished, zero,</text>
+            <text class="tinyText" x="539" y="150" text-anchor="middle">archimedean cases</text>
+
+            <rect class="nodeBox red" x="680" y="42" width="170" height="74"></rect>
+            <text class="nodeTitle" x="765" y="70" text-anchor="middle">averaging</text>
+            <text class="tinyText" x="765" y="93" text-anchor="middle">Prop. 1.7 + E1/E2</text>
+
+            <rect class="nodeBox blue" x="680" y="178" width="170" height="74"></rect>
+            <text class="nodeTitle" x="765" y="206" text-anchor="middle">global bound</text>
+            <text class="tinyText" x="765" y="229" text-anchor="middle">PNT, CTheta, log(q)</text>
+
+            <line class="arrow" x1="184" y1="104" x2="236" y2="79" marker-end="url(#arrowThm110)"></line>
+            <line class="arrow" x1="184" y1="137" x2="236" y2="205" marker-end="url(#arrowThm110)"></line>
+            <line class="arrow" x1="394" y1="80" x2="454" y2="111" marker-end="url(#arrowThm110)"></line>
+            <line class="arrow" x1="394" y1="204" x2="454" y2="144" marker-end="url(#arrowThm110)"></line>
+            <line class="arrow" x1="624" y1="112" x2="680" y2="80" marker-end="url(#arrowThm110)"></line>
+            <line class="arrow" x1="765" y1="116" x2="765" y2="178" marker-end="url(#arrowThm110)"></line>
+          </svg>
         </div>
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV</a>
