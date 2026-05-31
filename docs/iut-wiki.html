@@ -647,6 +647,9 @@
         <a href="#good-nonarch-frobenioid-gaussians-ii42">Good nonarch Frobenioids 4.2</a>
         <a href="#archimedean-gaussian-monoids-ii43-44">Archimedean Gaussians 4.3-4.4</a>
         <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids 4.5</a>
+        <a href="#d-side-global-constants-realifications-ii45">D-side constants/realifications 4.5</a>
+        <a href="#d-side-global-synchronization-evaluation-ii45">D-side synchronization/evaluation 4.5</a>
+        <a href="#theta-plus-minus-f-side-lift-ii46">Theta±ell F-side lift 4.6</a>
         <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift 4.6</a>
         <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry 4.7</a>
         <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization 4.8</a>
@@ -1740,6 +1743,9 @@
               <a href="#good-prime-gaussian-monoids-ii41">good-prime Gaussian monoids</a>,
               <a href="#archimedean-gaussian-monoids-43">archimedean Gaussian monoids</a>,
               <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>,
+              <a href="#d-side-global-constants-realifications-ii45">D-side constants/realifications 4.5</a>,
+              <a href="#d-side-global-synchronization-evaluation-ii45">D-side synchronization/evaluation 4.5</a>,
+              <a href="#theta-plus-minus-f-side-lift-ii46">Theta±ell F-side lift 4.6</a>,
               <a href="#global-fpm-synchronization-453">global F_l± synchronization</a>,
               <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift</a>,
               <a href="#cenv-cgau-global-frobenioids-46">Cenv/Cgau</a>,
@@ -18861,6 +18867,355 @@
           <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges</a>
           <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
+        </div>
+      </section>
+
+      <section id="d-side-global-constants-realifications-ii45">
+        <h2>IUT II Corollary 4.5(i)-(ii): D-Side Global Constants and Realifications</h2>
+        <p class="lede">
+          The first half of Corollary 4.5 builds the D-side global container: a
+          placewise constant-monoid assignment over all valuations, its mono-analytic
+          semi-simplification, and the global realified Frobenioid whose primes are
+          identified with the valuation set.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Corollary 4.5 D-side constants and realifications">
+          <div class="diagramHeader">
+            <strong>D-side global constant infrastructure</strong>
+            <span>Corollary 4.5(i)-(ii)</span>
+          </div>
+          <svg viewBox="0 0 1120 510" role="img">
+            <defs>
+              <marker id="arrowDConst45" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="70" y="76" width="250" height="92"></rect>
+            <text class="nodeTitle" x="195" y="106" text-anchor="middle">D-prime-strip D</text>
+            <text class="tinyText" x="195" y="132" text-anchor="middle">places v in V</text>
+            <text class="tinyText" x="195" y="152" text-anchor="middle">nonarchimedean and archimedean local data</text>
+
+            <rect class="nodeBox gold" x="438" y="76" width="250" height="92"></rect>
+            <text class="nodeTitle" x="563" y="106" text-anchor="middle">Psi_cns(D)_v</text>
+            <text class="tinyText" x="563" y="132" text-anchor="middle">constant monoid assignment</text>
+            <text class="tinyText" x="563" y="152" text-anchor="middle">G_v-action when v is nonarchimedean</text>
+
+            <rect class="nodeBox green" x="812" y="76" width="240" height="92"></rect>
+            <text class="nodeTitle" x="932" y="106" text-anchor="middle">D⊢ semi-simplification</text>
+            <text class="tinyText" x="932" y="132" text-anchor="middle">units x R>=0</text>
+            <text class="tinyText" x="932" y="152" text-anchor="middle">distinguished log(p_v)</text>
+
+            <rect class="nodeBox violet" x="272" y="302" width="270" height="92"></rect>
+            <text class="nodeTitle" x="407" y="332" text-anchor="middle">unit comparison</text>
+            <text class="tinyText" x="407" y="358" text-anchor="middle">Psi_cns(D)^x -> Psi_ss_cns(D⊢)^x</text>
+            <text class="tinyText" x="407" y="378" text-anchor="middle">placewise, equivariant where needed</text>
+
+            <rect class="nodeBox red" x="654" y="302" width="270" height="92"></rect>
+            <text class="nodeTitle" x="789" y="332" text-anchor="middle">global Frobenioid D(D⊢)</text>
+            <text class="tinyText" x="789" y="358" text-anchor="middle">Prime(D(D⊢)) ~= V</text>
+            <text class="tinyText" x="789" y="378" text-anchor="middle">local divisor maps rho_D,v</text>
+
+            <path d="M322 122 H436" class="edge blue" marker-end="url(#arrowDConst45)"></path>
+            <path d="M690 122 H810" class="edge gold" marker-end="url(#arrowDConst45)"></path>
+            <path d="M563 170 C516 224 454 268 420 300" class="edge violet" marker-end="url(#arrowDConst45)"></path>
+            <path d="M932 170 C894 232 830 270 802 300" class="edge green" marker-end="url(#arrowDConst45)"></path>
+            <path d="M544 348 H652" class="edge violet" marker-end="url(#arrowDConst45)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source</th><th>Construction</th><th>Purpose</th></tr>
+          <tr>
+            <td>4.5(i)</td>
+            <td>
+              Defines the assignment <span class="math">Psi_cns(D)</span> place by
+              place: nonarchimedean places use the reconstructed Galois-action pair
+              <span class="math">G_v(Pi_v) acts Psi_cns(Pi_v)</span>; archimedean
+              places use the Aut-holomorphic constant monoid.
+            </td>
+            <td>
+              Gives one global index set of constant monoids over all valuations.
+            </td>
+          </tr>
+          <tr>
+            <td>4.5(ii)</td>
+            <td>
+              Constructs <span class="math">Psi_ss_cns(D⊢)_v = units x R>=0</span>
+              with distinguished <span class="math">log(p_v)</span>, plus unit
+              comparison isomorphisms from the D-side constants.
+            </td>
+            <td>
+              Separates the unit part from the realified value part before global
+              degree comparison.
+            </td>
+          </tr>
+          <tr>
+            <td>4.5(ii)</td>
+            <td>
+              Constructs the global realified Frobenioid
+              <span class="math">D(D⊢)</span>, with
+              <span class="math">Prime(D(D⊢)) ~= V</span> and local divisor monoid
+              maps <span class="math">rho_D,v</span>.
+            </td>
+            <td>
+              Provides the global realified container from which
+              <span class="math">Denv</span> and <span class="math">Dgau</span> are
+              built.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5(i)-(ii)</a>
+          Related: <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>
+          <a href="#d-side-global-synchronization-evaluation-ii45">D-side synchronization/evaluation</a>
+          <a href="#theta-plus-minus-f-side-lift-ii46">Theta±ell F-side lift</a>
+        </div>
+      </section>
+
+      <section id="d-side-global-synchronization-evaluation-ii45">
+        <h2>IUT II Corollary 4.5(iii)-(v): D-Side Synchronization and Global Evaluation</h2>
+        <p class="lede">
+          The second half of Corollary 4.5 glues the local
+          <span class="math">F_l^±</span>-symmetries into a global synchronization
+          system, packages local theta/Gaussian monoids, and constructs the realified
+          Frobenioids <span class="math">Denv</span> and
+          <span class="math">Dgau</span> joined by the global formal evaluation map.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Corollary 4.5 D-side synchronization and global evaluation">
+          <div class="diagramHeader">
+            <strong>Global D-side synchronization and evaluation</strong>
+            <span>Corollary 4.5(iii)-(v), Remarks 4.5.2-4.5.4</span>
+          </div>
+          <svg viewBox="0 0 1120 560" role="img">
+            <defs>
+              <marker id="arrowDSyncEval45" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="72" y="68" width="246" height="92"></rect>
+            <text class="nodeTitle" x="195" y="98" text-anchor="middle">global label bijection zeta≻</text>
+            <text class="tinyText" x="195" y="124" text-anchor="middle">LabCusp±(D≻) -> T</text>
+            <text class="tinyText" x="195" y="144" text-anchor="middle">from IUT I Proposition 6.5</text>
+
+            <rect class="nodeBox green" x="442" y="68" width="246" height="92"></rect>
+            <text class="nodeTitle" x="565" y="98" text-anchor="middle">global F_l± symmetrization</text>
+            <text class="tinyText" x="565" y="124" text-anchor="middle">diagonal constants</text>
+            <text class="tinyText" x="565" y="144" text-anchor="middle">zero-label to diagonal</text>
+
+            <rect class="nodeBox gold" x="812" y="68" width="246" height="92"></rect>
+            <text class="nodeTitle" x="935" y="98" text-anchor="middle">local Psi_env/Psi_gau</text>
+            <text class="tinyText" x="935" y="124" text-anchor="middle">placewise assignments</text>
+            <text class="tinyText" x="935" y="144" text-anchor="middle">local evaluation isomorphisms</text>
+
+            <rect class="nodeBox violet" x="258" y="302" width="262" height="94"></rect>
+            <text class="nodeTitle" x="389" y="332" text-anchor="middle">Denv(D⊢≻)</text>
+            <text class="tinyText" x="389" y="358" text-anchor="middle">theta-side realified Frobenioid</text>
+            <text class="tinyText" x="389" y="378" text-anchor="middle">formal log(Theta) factor</text>
+
+            <rect class="nodeBox red" x="640" y="302" width="262" height="94"></rect>
+            <text class="nodeTitle" x="771" y="332" text-anchor="middle">Dgau(D⊢≻)</text>
+            <text class="tinyText" x="771" y="358" text-anchor="middle">weighted diagonal sub-Frobenioid</text>
+            <text class="tinyText" x="771" y="378" text-anchor="middle">vector (..., j^2, ...)</text>
+
+            <rect class="nodeBox green" x="422" y="466" width="320" height="58"></rect>
+            <text class="nodeTitle" x="582" y="492" text-anchor="middle">global formal evaluation</text>
+            <text class="tinyText" x="582" y="512" text-anchor="middle">Denv -> Dgau, compatible with local evaluations</text>
+
+            <path d="M320 114 H440" class="edge blue" marker-end="url(#arrowDSyncEval45)"></path>
+            <path d="M690 114 H810" class="edge green" marker-end="url(#arrowDSyncEval45)"></path>
+            <path d="M565 162 C506 222 432 268 398 300" class="edge violet" marker-end="url(#arrowDSyncEval45)"></path>
+            <path d="M935 162 C890 226 812 268 780 300" class="edge gold" marker-end="url(#arrowDSyncEval45)"></path>
+            <path d="M522 350 H638" class="edge red" marker-end="url(#arrowDSyncEval45)"></path>
+            <path d="M389 398 C424 438 494 460 554 466" class="edge violet" marker-end="url(#arrowDSyncEval45)"></path>
+            <path d="M771 398 C736 438 666 460 610 466" class="edge red" marker-end="url(#arrowDSyncEval45)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source</th><th>Construction</th><th>Guardrail</th></tr>
+          <tr>
+            <td>4.5(iii)</td>
+            <td>
+              Uses <span class="math">zeta≻</span> and the global portion of the
+              D-Theta±ell theater to glue local <span class="math">F_l^±</span>
+              symmetries into global symmetrizing isomorphisms.
+            </td>
+            <td>
+              Remark 4.5.3 says this global portion synchronizes the local
+              <span class="math">±</span>-indeterminacies.
+            </td>
+          </tr>
+          <tr>
+            <td>4.5(iv)</td>
+            <td>
+              Constructs the global assignments
+              <span class="math">Psi_env(D≻)</span>,
+              <span class="math">Psi_gau(D≻)</span>, and their infinity versions,
+              with compatible local evaluation isomorphisms.
+            </td>
+            <td>
+              This bundles bad, good nonarchimedean, and archimedean local Gaussian
+              monoids without identifying their construction mechanisms.
+            </td>
+          </tr>
+          <tr>
+            <td>4.5(v)</td>
+            <td>
+              Constructs <span class="math">Denv(D⊢≻)</span> and
+              <span class="math">Dgau(D⊢≻)</span>, with
+              <span class="math">Dgau</span> determined by the weighted diagonal
+              vector <span class="math">(..., j^2, ...)</span>.
+            </td>
+            <td>
+              Remark 4.5.4 makes the weighted-diagonal interpretation explicit.
+            </td>
+          </tr>
+          <tr>
+            <td>4.5.1-4.5.3</td>
+            <td>
+              Frobenioids are convenient for realified global degree data; monoids are
+              technically better for conjugate synchronization. Single-basepoint
+              <span class="math">F_l^±</span>-symmetry, not multi-basepoint symmetry,
+              supports synchronization.
+            </td>
+            <td>
+              The wiki keeps the realified Frobenioid and monoid synchronization
+              stories adjacent but distinct.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5(iii)-(v) and Remarks 4.5.1-4.5.4</a>
+          Related: <a href="#d-side-global-constants-realifications-ii45">D-side constants/realifications</a>
+          <a href="#global-fpm-synchronization-453">global F_l± synchronization</a>
+          <a href="#theta-plus-minus-f-side-lift-ii46">Theta±ell F-side lift</a>
+        </div>
+      </section>
+
+      <section id="theta-plus-minus-f-side-lift-ii46">
+        <h2>IUT II Corollary 4.6: Theta±ell F-Side Lift and Currency Exchange</h2>
+        <p class="lede">
+          Corollary 4.6 transfers the D-side constructions of Corollary 4.5 to the
+          F-prime-strip side of a Theta±ell-Hodge theater. The transfer is
+          Kummer-theoretic locally and uses the global Frobenioid as a currency
+          exchange device, especially for the archimedean distinguished elements.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Corollary 4.6 Theta plus-minus ell F-side lift">
+          <div class="diagramHeader">
+            <strong>From D-side global data to F-side global Frobenioids</strong>
+            <span>Corollary 4.6 and Remark 4.6.1</span>
+          </div>
+          <svg viewBox="0 0 1120 550" role="img">
+            <defs>
+              <marker id="arrowFSide46" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="70" y="66" width="250" height="92"></rect>
+            <text class="nodeTitle" x="195" y="96" text-anchor="middle">Theta±ell-Hodge theater</text>
+            <text class="tinyText" x="195" y="122" text-anchor="middle">F-prime-strip F</text>
+            <text class="tinyText" x="195" y="142" text-anchor="middle">associated D-side theater</text>
+
+            <rect class="nodeBox gold" x="438" y="66" width="250" height="92"></rect>
+            <text class="nodeTitle" x="563" y="96" text-anchor="middle">Kummer comparisons</text>
+            <text class="tinyText" x="563" y="122" text-anchor="middle">Psi_cns(F) -> Psi_cns(D)</text>
+            <text class="tinyText" x="563" y="142" text-anchor="middle">Psi_ss(F⊢) -> Psi_ss(D⊢)</text>
+
+            <rect class="nodeBox green" x="812" y="66" width="250" height="92"></rect>
+            <text class="nodeTitle" x="937" y="96" text-anchor="middle">global F_l± synchronization</text>
+            <text class="tinyText" x="937" y="122" text-anchor="middle">F-side diagonal constants</text>
+            <text class="tinyText" x="937" y="142" text-anchor="middle">indeterminacy independent of label</text>
+
+            <rect class="nodeBox violet" x="240" y="280" width="270" height="92"></rect>
+            <text class="nodeTitle" x="375" y="310" text-anchor="middle">local F-theta/Gaussian monoids</text>
+            <text class="tinyText" x="375" y="336" text-anchor="middle">Psi_Fenv, Psi_Fgau</text>
+            <text class="tinyText" x="375" y="356" text-anchor="middle">via glued Theta-bridge</text>
+
+            <rect class="nodeBox red" x="642" y="280" width="270" height="92"></rect>
+            <text class="nodeTitle" x="777" y="310" text-anchor="middle">Cenv and Cgau</text>
+            <text class="tinyText" x="777" y="336" text-anchor="middle">global F-side realified Frobenioids</text>
+            <text class="tinyText" x="777" y="356" text-anchor="middle">evaluation Cenv -> Denv -> Dgau -> Cgau</text>
+
+            <rect class="nodeBox gold" x="410" y="444" width="350" height="58"></rect>
+            <text class="nodeTitle" x="585" y="470" text-anchor="middle">currency exchange across local divisor monoids</text>
+            <text class="tinyText" x="585" y="490" text-anchor="middle">Remark 4.6.1: global Frobenioids coordinate archimedean distinguished elements</text>
+
+            <path d="M322 112 H436" class="edge blue" marker-end="url(#arrowFSide46)"></path>
+            <path d="M690 112 H810" class="edge gold" marker-end="url(#arrowFSide46)"></path>
+            <path d="M563 160 C510 218 430 250 386 278" class="edge violet" marker-end="url(#arrowFSide46)"></path>
+            <path d="M937 160 C902 224 826 256 790 278" class="edge green" marker-end="url(#arrowFSide46)"></path>
+            <path d="M512 326 H640" class="edge violet" marker-end="url(#arrowFSide46)"></path>
+            <path d="M777 374 C730 416 654 438 610 444" class="edge red" marker-end="url(#arrowFSide46)"></path>
+            <path d="M375 374 C420 416 500 438 562 444" class="edge violet" marker-end="url(#arrowFSide46)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source</th><th>Construction</th><th>Why it matters</th></tr>
+          <tr>
+            <td>4.6(i)-(ii)</td>
+            <td>
+              Constructs F-side constant and semi-simplified assignments and identifies
+              them with the D-side assignments by Kummer-theoretic isomorphisms.
+            </td>
+            <td>
+              Moves from the D-side global data of Corollary 4.5 to the F-prime-strip
+              side of a Theta±ell-Hodge theater.
+            </td>
+          </tr>
+          <tr>
+            <td>4.6(iii)</td>
+            <td>
+              Transfers global <span class="math">F_l^±</span>-symmetrizing
+              isomorphisms to <span class="math">Psi_cns(F≻)</span>, with
+              nonarchimedean conjugacy indeterminacy independent of the label.
+            </td>
+            <td>
+              Preserves the conjugate synchronization discipline after the F-side lift.
+            </td>
+          </tr>
+          <tr>
+            <td>4.6(iv)</td>
+            <td>
+              Builds local F-theta and F-Gaussian assignments from the glued
+              Theta-bridge, with evaluation chains through the D-side monoids.
+            </td>
+            <td>
+              Connects the F-side theta-Hodge theater to the local evaluation
+              machinery already constructed on the D-side.
+            </td>
+          </tr>
+          <tr>
+            <td>4.6(v)</td>
+            <td>
+              Constructs global F-side realified Frobenioids
+              <span class="math">Cenv</span> and <span class="math">Cgau</span>,
+              with evaluation
+              <span class="math">Cenv -> Denv -> Dgau -> Cgau</span>.
+            </td>
+            <td>
+              This is the F-side global realified Gaussian object used by later
+              theta-link variants.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 4.6.1</td>
+            <td>
+              At archimedean places the distinguished non-unit element is not recovered
+              from the local F-side mono-analytic object alone; compatible global
+              Frobenioids act as currency-exchange devices across local divisor
+              monoids.
+            </td>
+            <td>
+              The wiki records this as a genuine global-dependence point, not a local
+              reconstruction theorem.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.6 and Remarks 4.6.1-4.6.2</a>
+          Related: <a href="#d-side-global-synchronization-evaluation-ii45">D-side synchronization/evaluation</a>
+          <a href="#theta-plus-minus-ell-gaussian-lift-ii46">Theta±ell Gaussian lift atlas</a>
+          <a href="#theta-nf-fl-symmetry-ii47">ThetaNF Fl symmetry</a>
         </div>
       </section>
 
