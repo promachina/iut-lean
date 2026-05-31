@@ -912,6 +912,15 @@
         <a href="#good-nonarch-frobenioid-gaussians-ii42">Good nonarch Frobenioids 4.2</a>
         <a href="#archimedean-gaussian-monoids-ii43-44">Archimedean Gaussians 4.3-4.4</a>
         <a href="#global-gaussian-frobenioids-ii45">Global Gaussian Frobenioids 4.5</a>
+        <a href="#global-constant-monoids-45">Global constants 4.5</a>
+        <a href="#global-semi-simplifications-45">Global semi-simplifications 4.5</a>
+        <a href="#global-fpm-synchronization-453">Global Fl± synchronization 4.5</a>
+        <a href="#global-local-theta-gaussian-assignments-45">Global theta/Gaussian assignments</a>
+        <a href="#denv-global-realified-frobenioid-45">Denv 4.5</a>
+        <a href="#dgau-global-realified-frobenioid-45">Dgau 4.5</a>
+        <a href="#global-formal-evaluation-45">Global formal evaluation 4.5</a>
+        <a href="#frobenioid-versus-monoid-formulation-451">Frobenioid vs monoid formulation</a>
+        <a href="#single-versus-multibasepoint-453">Single vs multi-basepoint</a>
         <a href="#d-side-global-constants-realifications-ii45">D-side constants/realifications 4.5</a>
         <a href="#d-side-global-synchronization-evaluation-ii45">D-side synchronization/evaluation 4.5</a>
         <a href="#theta-plus-minus-f-side-lift-ii46">Theta±ell F-side lift 4.6</a>
@@ -30080,7 +30089,7 @@
           </tr>
         </table>
         <div class="grid3">
-          <div class="card" id="global-constant-monoids-45">
+          <div class="card" id="global-constant-monoids-45-card">
             <h3>Global constant monoids</h3>
             <p>
               Corollary 4.5(i) assigns a constant monoid to every valuation. The
@@ -30089,7 +30098,7 @@
             </p>
             <div class="tagRow"><span class="tag gold">Cor. 4.5(i)</span><span class="tag">all places</span></div>
           </div>
-          <div class="card" id="global-semi-simplifications-45">
+          <div class="card" id="global-semi-simplifications-45-card">
             <h3>Global semi-simplifications</h3>
             <p>
               Corollary 4.5(ii) forms the unit/value split
@@ -30099,7 +30108,7 @@
             </p>
             <div class="tagRow"><span class="tag green">Cor. 4.5(ii)</span><span class="tag">realified</span></div>
           </div>
-          <div class="card" id="global-fpm-synchronization-453">
+          <div class="card" id="global-fpm-synchronization-453-card">
             <h3>Global F_l± synchronization</h3>
             <p>
               The local <span class="math">F_l^±</span> symmetries are glued by the
@@ -30108,7 +30117,7 @@
             </p>
             <div class="tagRow"><span class="tag violet">Cor. 4.5(iii)</span><span class="tag">single basepoint</span></div>
           </div>
-          <div class="card" id="global-local-theta-gaussian-assignments-45">
+          <div class="card" id="global-local-theta-gaussian-assignments-45-card">
             <h3>Local theta/Gaussian assignments</h3>
             <p>
               Corollary 4.5(iv) bundles the local theta and Gaussian monoids, including
@@ -30116,7 +30125,7 @@
             </p>
             <div class="tagRow"><span class="tag blue">Cor. 4.5(iv)</span><span class="tag">Psi_env/Psi_gau</span></div>
           </div>
-          <div class="card" id="denv-global-realified-frobenioid-45">
+          <div class="card" id="denv-global-realified-frobenioid-45-card">
             <h3>Denv</h3>
             <p>
               <span class="math">Denv(D⊢≻)</span> is a copy of the global realified
@@ -30125,7 +30134,7 @@
             </p>
             <div class="tagRow"><span class="tag green">Cor. 4.5(v)</span><span class="tag">theta side</span></div>
           </div>
-          <div class="card" id="dgau-global-realified-frobenioid-45">
+          <div class="card" id="dgau-global-realified-frobenioid-45-card">
             <h3>Dgau</h3>
             <p>
               <span class="math">Dgau(D⊢≻)</span> is constructed inside the product
@@ -30135,7 +30144,7 @@
             </p>
             <div class="tagRow"><span class="tag red">Cor. 4.5(v)</span><span class="tag">Gaussian side</span></div>
           </div>
-          <div class="card" id="global-formal-evaluation-45">
+          <div class="card" id="global-formal-evaluation-45-card">
             <h3>Global formal evaluation</h3>
             <p>
               The isomorphism <span class="math">Denv -> Dgau</span> globalizes the
@@ -30144,7 +30153,7 @@
             </p>
             <div class="tagRow"><span class="tag blue">Cor. 4.5(v)</span><span class="tag">global evaluation</span></div>
           </div>
-          <div class="card" id="frobenioid-versus-monoid-formulation-451">
+          <div class="card" id="frobenioid-versus-monoid-formulation-451-card">
             <h3>Frobenioid versus monoid formulation</h3>
             <p>
               Remark 4.5.1 says Frobenioids are technically convenient for global
@@ -30153,7 +30162,7 @@
             </p>
             <div class="tagRow"><span class="tag gold">Rem. 4.5.1</span><span class="tag">formulation</span></div>
           </div>
-          <div class="card" id="single-versus-multibasepoint-453">
+          <div class="card" id="single-versus-multibasepoint-453-card">
             <h3>Single versus multi-basepoint symmetry</h3>
             <p>
               Remark 4.5.3 distinguishes the single-basepoint
@@ -30177,6 +30186,385 @@
           <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges</a>
           <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
+        </div>
+      </section>
+
+      <section id="global-constant-monoids-45">
+        <h2>IUT II 4.5(i): Global Constant Monoids</h2>
+        <p class="lede">
+          Corollary 4.5(i) globalizes the local constant-monoid constructions by
+          assigning one constant monoid to each valuation in <span class="math">V</span>.
+          Nonarchimedean entries carry the reconstructed Galois-action pair; archimedean
+          entries use the Aut-holomorphic constant monoid.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Place</th><th>Assigned data</th><th>Indeterminacy</th></tr>
+          <tr>
+            <td>Nonarchimedean</td>
+            <td>
+              <span class="math">G_v(Pi_v)</span> acting on
+              <span class="math">Psi_cns(Pi_v)</span>, using the bad-place and
+              good-place constructions already developed.
+            </td>
+            <td>Well-defined only up to the relevant <span class="math">Pi_v</span>-conjugacy.</td>
+          </tr>
+          <tr>
+            <td>Archimedean</td>
+            <td>
+              <span class="math">Psi_cns(D_v)</span>, the Aut-holomorphic constant
+              monoid from Proposition 4.3(i).
+            </td>
+            <td>No nonarchimedean Galois action is present; the source type is different.</td>
+          </tr>
+          <tr>
+            <td>Global assignment</td>
+            <td><span class="math">v |-> Psi_cns(D)_v</span> over all valuations.</td>
+            <td>Provides the constant layer for later diagonal synchronization.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5(i)</a>
+          Related: <a href="#d-side-global-constants-realifications-ii45">D-side constants/realifications</a>
+          <a href="#good-prime-constant-monoid-algorithm-ii41-page">good-prime constants</a>
+          <a href="#archimedean-aut-holomorphic-constants-ii43-page">archimedean constants</a>
+        </div>
+      </section>
+
+      <section id="global-semi-simplifications-45">
+        <h2>IUT II 4.5(ii): Global Semi-Simplifications</h2>
+        <p class="lede">
+          Corollary 4.5(ii) applies the mono-analyticization
+          <span class="math">D^⊢</span> to separate units from realified value monoids
+          at every valuation. It also constructs the global realified Frobenioid
+          <span class="math">D(D^⊢)</span>, whose primes are identified with
+          <span class="math">V</span>.
+        </p>
+        <div class="diagram fit" aria-label="Global semi-simplifications in Corollary 4.5">
+          <div class="diagramHeader">
+            <strong>Placewise realification to global Frobenioid</strong>
+            <span>Corollary 4.5(ii)</span>
+          </div>
+          <svg viewBox="0 0 1120 380" role="img">
+            <defs>
+              <marker id="arrowGlobalSemi45" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="90" y="82" width="250" height="90"></rect>
+            <text class="nodeTitle" x="215" y="114" text-anchor="middle">D^⊢-prime-strip</text>
+            <text class="tinyText" x="215" y="140" text-anchor="middle">mono-analyticized D-data</text>
+            <rect class="nodeBox green" x="435" y="82" width="250" height="90"></rect>
+            <text class="nodeTitle" x="560" y="114" text-anchor="middle">Psi_ss_cns(D^⊢)_v</text>
+            <text class="tinyText" x="560" y="140" text-anchor="middle">units x R>=0, log(p_v)</text>
+            <rect class="nodeBox red" x="780" y="82" width="250" height="90"></rect>
+            <text class="nodeTitle" x="905" y="114" text-anchor="middle">D(D^⊢)</text>
+            <text class="tinyText" x="905" y="140" text-anchor="middle">Prime ~= V, local rho_D,v</text>
+            <rect class="nodeBox gold" x="310" y="262" width="500" height="62"></rect>
+            <text class="nodeTitle" x="560" y="288" text-anchor="middle">unit comparison from D to D^⊢</text>
+            <text class="tinyText" x="560" y="308" text-anchor="middle">Psi_cns(D)_v^x -> Psi_ss_cns(D^⊢)_v^x</text>
+            <path d="M342 127 H433" class="edge blue" marker-end="url(#arrowGlobalSemi45)"></path>
+            <path d="M687 127 H778" class="edge green" marker-end="url(#arrowGlobalSemi45)"></path>
+            <path d="M560 174 V260" class="edge gold" marker-end="url(#arrowGlobalSemi45)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Object</th><th>Source role</th><th>Later use</th></tr>
+          <tr>
+            <td><span class="math">Psi_ss_cns(D^⊢)_v</span></td>
+            <td>Placewise split into units and <span class="math">R>=0</span>.</td>
+            <td>Supplies the realified local data used by theta/Gaussian environments.</td>
+          </tr>
+          <tr>
+            <td><span class="math">log(p_v)</span></td>
+            <td>Distinguished element in the value part at each valuation.</td>
+            <td>Becomes the scalar measured by the Gaussian <span class="math">j^2</span> profile.</td>
+          </tr>
+          <tr>
+            <td><span class="math">D(D^⊢)</span></td>
+            <td>Global realified Frobenioid with primes bijective to valuations.</td>
+            <td>Base object for <span class="math">Denv</span> and <span class="math">Dgau</span>.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5(ii)</a>
+          Related: <a href="#global-constant-monoids-45">global constants</a>
+          <a href="#denv-global-realified-frobenioid-45">Denv</a>
+          <a href="#dgau-global-realified-frobenioid-45">Dgau</a>
+        </div>
+      </section>
+
+      <section id="global-fpm-synchronization-453">
+        <h2>IUT II 4.5(iii): Global Fl± Synchronization</h2>
+        <p class="lede">
+          Corollary 4.5(iii) glues the local <span class="math">F_l^±</span>
+          symmetrizing isomorphisms from bad, good nonarchimedean, and archimedean
+          places. The global label bijection <span class="math">zeta^≻</span> is the
+          mechanism that coordinates the local label systems.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Input</th><th>Construction</th><th>Guardrail</th></tr>
+          <tr>
+            <td><span class="math">zeta^≻ : LabCusp^±(D^≻) -> T</span></td>
+            <td>Composes the label bijections from IUT I Proposition 6.5.</td>
+            <td>Provides one global label coordinate system.</td>
+          </tr>
+          <tr>
+            <td>Local <span class="math">F_l^±</span> actions</td>
+            <td>Induce isomorphisms between labeled <span class="math">Psi_cns(D^≻)_t</span>.</td>
+            <td>The construction uses the global portion of the D-Theta±ell theater.</td>
+          </tr>
+          <tr>
+            <td>Diagonal constants</td>
+            <td>Determine <span class="math">|F_l|</span>- and <span class="math">F_l</span>-diagonal submonoids.</td>
+            <td>The zero-label-to-diagonal map is built from local maps, not chosen independently.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          Remark 4.5.3 says the global portion <span class="math">D^±</span> synchronizes
+          the local <span class="math">±</span>-indeterminacies. This is why the page
+          treats the global theater structure as part of the mathematics, not as
+          bookkeeping.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5(iii), Remark 4.5.3</a>
+          Related: <a href="#good-prime-flpm-symmetrizing-ii41-page">good-prime Fl± symmetry</a>
+          <a href="#symmetrizing-isomorphisms-labels-ii352-page">bad-prime symmetrizing isomorphisms</a>
+          <a href="#single-versus-multibasepoint-453">single vs multi-basepoint</a>
+        </div>
+      </section>
+
+      <section id="global-local-theta-gaussian-assignments-45">
+        <h2>IUT II 4.5(iv): Global Local Theta/Gaussian Assignments</h2>
+        <p class="lede">
+          Corollary 4.5(iv) bundles the placewise theta and Gaussian monoids into
+          global assignments over <span class="math">V</span>. It includes the ordinary
+          and infinity versions and keeps the local evaluation isomorphisms compatible
+          with the preceding bad, good nonarchimedean, and archimedean constructions.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Assignment</th><th>Meaning</th><th>Source dependency</th></tr>
+          <tr>
+            <td><span class="math">Psi_env(D^≻)</span></td>
+            <td>The placewise theta-environment monoid assignment.</td>
+            <td>Corollary 3.5, Proposition 4.1, Proposition 4.3.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Psi_gau(D^≻)</span></td>
+            <td>The placewise Gaussian monoid assignment.</td>
+            <td>Local formal evaluations at bad, good nonarchimedean, and archimedean places.</td>
+          </tr>
+          <tr>
+            <td>Infinity versions</td>
+            <td><span class="math">infty Psi_env</span> and <span class="math">infty Psi_gau</span>.</td>
+            <td>Remarks 4.2.1 and 4.4.1 align the notation across place types.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5(iv)</a>
+          Related: <a href="#good-prime-formal-evaluation-ii41-page">good-prime formal evaluation</a>
+          <a href="#archimedean-aut-holomorphic-constants-ii43-page">archimedean formal evaluation</a>
+          <a href="#global-formal-evaluation-45">global formal evaluation</a>
+        </div>
+      </section>
+
+      <section id="denv-global-realified-frobenioid-45">
+        <h2>IUT II 4.5(v): Denv</h2>
+        <p class="lede">
+          <span class="math">Denv(D^⊢≻)</span> is the theta-side global realified
+          Frobenioid. Mochizuki defines it as a copy of
+          <span class="math">D(D^⊢≻)</span> multiplied by the formal theta symbol
+          <span class="math">log(Theta)</span>, with prime set identified with
+          <span class="math">V</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Feature</th><th>Source statement</th><th>Interpretation</th></tr>
+          <tr>
+            <td>Underlying Frobenioid</td>
+            <td>Copy of <span class="math">D(D^⊢≻)</span> multiplied by <span class="math">log(Theta)</span>.</td>
+            <td>Global theta environment at the realified divisor level.</td>
+          </tr>
+          <tr>
+            <td>Primes</td>
+            <td><span class="math">Prime(Denv) ~= V</span>.</td>
+            <td>Every valuation remains visible as a global prime of the Frobenioid.</td>
+          </tr>
+          <tr>
+            <td>Local comparison</td>
+            <td><span class="math">Phi_Denv,v -> Psi_env(D^⊢≻)^R_v</span>.</td>
+            <td>Identifies local divisor monoids with realified local theta environments.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5(v)</a>
+          Related: <a href="#global-semi-simplifications-45">global semi-simplifications</a>
+          <a href="#dgau-global-realified-frobenioid-45">Dgau</a>
+          <a href="#global-formal-evaluation-45">global formal evaluation</a>
+        </div>
+      </section>
+
+      <section id="dgau-global-realified-frobenioid-45">
+        <h2>IUT II 4.5(v): Dgau</h2>
+        <p class="lede">
+          <span class="math">Dgau(D^⊢≻)</span> is the Gaussian-side global realified
+          Frobenioid. It is built as a sub-Frobenioid of the product over
+          <span class="math">F_l</span>, with divisor and rational-function monoids
+          determined by the weighted diagonal vector
+          <span class="math">(..., j^2, ...)</span>.
+        </p>
+        <div class="diagram fit" aria-label="Dgau weighted diagonal in Corollary 4.5">
+          <div class="diagramHeader">
+            <strong>Weighted diagonal</strong>
+            <span>Corollary 4.5(v), Remark 4.5.4</span>
+          </div>
+          <svg viewBox="0 0 1120 340" role="img">
+            <defs>
+              <marker id="arrowDgau45" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="90" y="92" width="260" height="82"></rect>
+            <text class="nodeTitle" x="220" y="122" text-anchor="middle">D(D^⊢≻)</text>
+            <text class="tinyText" x="220" y="146" text-anchor="middle">base global realified Frobenioid</text>
+            <rect class="nodeBox gold" x="430" y="92" width="260" height="82"></rect>
+            <text class="nodeTitle" x="560" y="122" text-anchor="middle">product over F_l</text>
+            <text class="tinyText" x="560" y="146" text-anchor="middle">copies indexed by j</text>
+            <rect class="nodeBox red" x="770" y="92" width="260" height="82"></rect>
+            <text class="nodeTitle" x="900" y="122" text-anchor="middle">Dgau</text>
+            <text class="tinyText" x="900" y="146" text-anchor="middle">(1^2 phi, 2^2 phi, ..., j^2 phi, ...)</text>
+            <path d="M352 133 H428" class="edge blue" marker-end="url(#arrowDgau45)"></path>
+            <path d="M692 133 H768" class="edge red" marker-end="url(#arrowDgau45)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Feature</th><th>Source statement</th><th>Interpretation</th></tr>
+          <tr>
+            <td>Product placement</td>
+            <td><span class="math">Dgau subset product_j D(D^⊢≻)_j</span>.</td>
+            <td>Gaussian side is not a fresh unrelated Frobenioid; it is cut out in the product.</td>
+          </tr>
+          <tr>
+            <td>Weighted diagonal</td>
+            <td>Elements have form <span class="math">(1^2 phi, 2^2 phi, ..., j^2 phi, ...)</span>.</td>
+            <td>Remark 4.5.4 makes the square-weight profile explicit.</td>
+          </tr>
+          <tr>
+            <td>Local comparison</td>
+            <td><span class="math">Phi_Dgau,v -> Psi_gau(D^⊢≻)^R_v</span>.</td>
+            <td>Identifies local divisor monoids with realified local Gaussian monoids.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5(v), Remark 4.5.4</a>
+          Related: <a href="#denv-global-realified-frobenioid-45">Denv</a>
+          <a href="#square-weight-exponent-ii251">square-weight exponent</a>
+          <a href="#global-formal-evaluation-45">global formal evaluation</a>
+        </div>
+      </section>
+
+      <section id="global-formal-evaluation-45">
+        <h2>IUT II 4.5(v): Global Formal Evaluation</h2>
+        <p class="lede">
+          The final assertion of Corollary 4.5(v) constructs a global formal evaluation
+          isomorphism <span class="math">Denv(D^⊢≻) -> Dgau(D^⊢≻)</span>. It is
+          required to be compatible with the prime bijections and the local topological
+          monoid isomorphisms attached to each valuation.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Source condition</th><th>Meaning</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Frobenioid isomorphism</td>
+            <td><span class="math">Denv -> Dgau</span>.</td>
+            <td>Globalizes the local theta-to-Gaussian evaluation maps.</td>
+          </tr>
+          <tr>
+            <td>Prime compatibility</td>
+            <td>Both sides have primes identified with <span class="math">V</span>.</td>
+            <td>The map must preserve the valuation-indexed bookkeeping.</td>
+          </tr>
+          <tr>
+            <td>Local compatibility</td>
+            <td>Commuting with local <span class="math">Psi_env -> Psi_gau</span> realified comparisons.</td>
+            <td>Prevents a purely global map from drifting away from local Gaussian evaluation.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.5(v)</a>
+          Related: <a href="#global-local-theta-gaussian-assignments-45">local theta/Gaussian assignments</a>
+          <a href="#denv-global-realified-frobenioid-45">Denv</a>
+          <a href="#dgau-global-realified-frobenioid-45">Dgau</a>
+        </div>
+      </section>
+
+      <section id="frobenioid-versus-monoid-formulation-451">
+        <h2>IUT II Remark 4.5.1: Frobenioid Versus Monoid Formulation</h2>
+        <p class="lede">
+          Remark 4.5.1 separates two useful languages. Frobenioids are technically
+          convenient for realified global degree data, especially where Picard groups
+          have nontorsion elements; monoids are better suited for conjugate
+          synchronization.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Language</th><th>Strength</th><th>Weak point</th></tr>
+          <tr>
+            <td>Monoid formulation</td>
+            <td>Better for tracking labeled copies and conjugate synchronization.</td>
+            <td>Less convenient for global degree and Picard-group bookkeeping.</td>
+          </tr>
+          <tr>
+            <td>Frobenioid formulation</td>
+            <td>Better for global realified divisor data and degree-theoretic structure.</td>
+            <td>Technically ill-suited to the synchronization discussion.</td>
+          </tr>
+          <tr>
+            <td>Formalization consequence</td>
+            <td>Keep both interfaces visible.</td>
+            <td>Do not force one representation to express every part of Corollary 4.5.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 4.5.1</a>
+          Related: <a href="#frobenioid-category-packaging-ii38-page">Frobenioid category packaging</a>
+          <a href="#global-fpm-synchronization-453">global Fl± synchronization</a>
+          <a href="#global-semi-simplifications-45">global semi-simplifications</a>
+        </div>
+      </section>
+
+      <section id="single-versus-multibasepoint-453">
+        <h2>IUT II Remarks 4.5.2-4.5.3: Single Versus Multi-Basepoint Symmetry</h2>
+        <p class="lede">
+          Remarks 4.5.2-4.5.3 explain why the single-basepoint
+          <span class="math">F_l^±</span> symmetry used in Corollary 4.5(iii) is not
+          interchangeable with the multi-basepoint symmetries of capsules, processions,
+          or D-Thetaell-bridges.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Comparison</th><th>What remains intact</th><th>What fails or changes</th></tr>
+          <tr>
+            <td>Single-basepoint <span class="math">F_l^±</span></td>
+            <td>Conjugate synchronization and the bijective link to cusp labels.</td>
+            <td>Requires connected local components and global synchronization of <span class="math">±</span>-choices.</td>
+          </tr>
+          <tr>
+            <td>Mono-analytic capsules/processions</td>
+            <td>Multi-basepoint transport.</td>
+            <td>The arithmetic holomorphic ring structure needed for the log-wall is not intact in the same way.</td>
+          </tr>
+          <tr>
+            <td>D-Thetaell bridge symmetries</td>
+            <td>Can preserve a label bijection.</td>
+            <td>The multi-basepoint nature does not establish conjugate synchronization.</td>
+          </tr>
+        </table>
+        <div class="callout violet">
+          This distinction is directly relevant to the disputed corridor: the
+          synchronization mechanism depends on retaining the correct single-basepoint
+          structure, not merely on having an abstract label symmetry.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remarks 4.5.2-4.5.3</a>
+          Related: <a href="#global-fpm-synchronization-453">global Fl± synchronization</a>
+          <a href="#basepoint-filter-warning-ii363-page">basepoint filter warning</a>
+          <a href="#conjugate-synchronization-logwall-ii383">log-wall</a>
         </div>
       </section>
 
