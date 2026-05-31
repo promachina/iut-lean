@@ -649,6 +649,11 @@
         <a href="#label-transport-base-bridges-iut-i45">Label transport 4.5</a>
         <a href="#outer-factorization-indeterminacy-iut-i451">Outer factorization 4.5.1</a>
         <a href="#d-theta-nf-bridges-46-47">D-ThetaNF bridges 4.6-4.7</a>
+        <a href="#d-nf-bridge-definition-iut-i46">D-NF bridge 4.6</a>
+        <a href="#d-theta-bridge-definition-iut-i46">D-Theta bridge 4.6</a>
+        <a href="#d-theta-nf-theater-definition-iut-i46">D-ThetaNF theater 4.6</a>
+        <a href="#bridge-label-transport-iut-i47">Bridge label transport 4.7</a>
+        <a href="#global-label-kodaira-spencer-iut-i471">Global labels/Kodaira-Spencer 4.7</a>
         <a href="#section4-symmetries-processions-48-412">Symmetries/processions 4.8-4.12</a>
         <a href="#iut-i-global-frobenioids-example51">Global Frobenioids 5.1</a>
         <a href="#global-reconstruction-51">Global reconstruction 5.1</a>
@@ -15447,6 +15452,239 @@
           <a href="#section4-symmetries-processions-48-412">symmetries/processions</a>
           <a href="#theta-nf-frobenioid-lift">ThetaNF Frobenioid lift</a>
           <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+        </div>
+      </section>
+
+      <section id="d-nf-bridge-definition-iut-i46" data-filter="iut i definition 4.6 base nf bridge d nf bridge poly morphism capsule aut epsilon orbit">
+        <h2>IUT I Definition 4.6(i): D-NF Bridge</h2>
+        <p class="lede">
+          A base-NF-bridge is the global-number-field side of the Section 4 bridge
+          package. It is a poly-morphism from a capsule of D-prime-strips
+          <span class="math">D_J = {D_j}_{j in J}</span> to a category equivalent to
+          the global object <span class="math">D</span>, modeled on Example 4.3.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Field</th><th>Definition 4.6(i) content</th><th>Guardrail</th></tr>
+          <tr>
+            <td>Object</td>
+            <td>A poly-morphism <span class="math">D_J -> D</span>, with <span class="math">D</span> equivalent to the global category and <span class="math">D_J</span> a finite capsule of D-prime-strips.</td>
+            <td>This is the NF/global side, not the theta-evaluation target.</td>
+          </tr>
+          <tr>
+            <td>Model condition</td>
+            <td>There exist isomorphisms from the model objects whose conjugation carries the model <span class="math">phi^NF</span> to the given bridge.</td>
+            <td>Definition 4.6 packages copies of the Example 4.3 bridge.</td>
+          </tr>
+          <tr>
+            <td>Morphisms</td>
+            <td>A morphism consists of a capsule-full poly-isomorphism and an <span class="math">Aut_epsilon(D)</span>-orbit of isomorphisms on the global target, compatible with the bridge.</td>
+            <td>The epsilon-fixing orbit is part of the isomorphism notion.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 4.6(i)</a>
+          Related: <a href="#nf-d-capsule-fl-action-iut-i43">NF D-capsule action</a>
+          <a href="#d-theta-nf-theater-definition-iut-i46">D-ThetaNF theater</a>
+          <a href="#bridge-label-transport-iut-i47">bridge label transport</a>
+        </div>
+      </section>
+
+      <section id="d-theta-bridge-definition-iut-i46" data-filter="iut i definition 4.6 base theta bridge d theta bridge capsule target d greater full poly isomorphism">
+        <h2>IUT I Definition 4.6(ii): D-Theta Bridge</h2>
+        <p class="lede">
+          A base-Theta-bridge is the theta-evaluation side of the Section 4 bridge
+          package. It is a poly-morphism
+          <span class="math">D_J -> D_></span> from a capsule of D-prime-strips to a
+          target D-prime-strip equivalent to the model target of Example 4.4.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Field</th><th>Definition 4.6(ii) content</th><th>Guardrail</th></tr>
+          <tr>
+            <td>Object</td>
+            <td>A poly-morphism <span class="math">D_J -> D_></span>, where <span class="math">D_></span> is a D-prime-strip and <span class="math">D_J</span> is a finite capsule.</td>
+            <td>The target is a theta-side D-prime-strip, not the global category <span class="math">D</span>.</td>
+          </tr>
+          <tr>
+            <td>Model condition</td>
+            <td>Model isomorphisms conjugate the Example 4.4 bridge <span class="math">phi^Theta</span> to the given bridge.</td>
+            <td>The bad-place evaluation-section construction remains the source model.</td>
+          </tr>
+          <tr>
+            <td>Morphisms</td>
+            <td>A morphism uses a capsule-full poly-isomorphism and the full poly-isomorphism on <span class="math">D_></span>, compatible with <span class="math">phi^Theta</span>.</td>
+            <td>Unlike the NF side, the target component is the full poly-isomorphism.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 4.6(ii)</a>
+          Related: <a href="#theta-bridge-bad-place-iut-i44">bad-place theta bridge</a>
+          <a href="#theta-bridge-good-place-iut-i44">good-place theta bridge</a>
+          <a href="#d-theta-nf-theater-definition-iut-i46">D-ThetaNF theater</a>
+        </div>
+      </section>
+
+      <section id="d-theta-nf-theater-definition-iut-i46" data-filter="iut i definition 4.6 d theta nf hodge theater compatible bridge morphisms same capsule index bijection">
+        <h2>IUT I Definition 4.6(iii): D-ThetaNF-Hodge Theater</h2>
+        <p class="lede">
+          A D-ThetaNF-Hodge theater glues a D-NF bridge and a D-Theta bridge along
+          one shared capsule. Its morphisms are pairs of bridge morphisms that induce
+          the same bijection between capsule index sets.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Definition 4.6 D-ThetaNF-Hodge theater">
+          <div class="diagramHeader">
+            <strong>One capsule, two bridge directions</strong>
+            <span>IUT I, Definition 4.6(iii)</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowDThetaNFDef46" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="82" y="100" width="236" height="92"></rect>
+            <text class="nodeTitle" x="200" y="132" text-anchor="middle">D</text>
+            <text class="tinyText" x="200" y="158" text-anchor="middle">global NF side</text>
+            <rect class="nodeBox gold" x="442" y="86" width="236" height="120"></rect>
+            <text class="nodeTitle" x="560" y="118" text-anchor="middle">D_J</text>
+            <text class="tinyText" x="560" y="144" text-anchor="middle">shared capsule</text>
+            <text class="tinyText" x="560" y="164" text-anchor="middle">finite index set J</text>
+            <rect class="nodeBox red" x="802" y="100" width="236" height="92"></rect>
+            <text class="nodeTitle" x="920" y="132" text-anchor="middle">D_></text>
+            <text class="tinyText" x="920" y="158" text-anchor="middle">theta target side</text>
+            <rect class="nodeBox green" x="336" y="290" width="448" height="74"></rect>
+            <text class="nodeTitle" x="560" y="320" text-anchor="middle">isomorphism condition</text>
+            <text class="tinyText" x="560" y="344" text-anchor="middle">NF and Theta bridge morphisms induce the same bijection on J</text>
+            <path class="edge blue" d="M440 146 H320" marker-end="url(#arrowDThetaNFDef46)"></path>
+            <path class="edge red" d="M680 146 H800" marker-end="url(#arrowDThetaNFDef46)"></path>
+            <path class="edge green" d="M560 208 V288" marker-end="url(#arrowDThetaNFDef46)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Layer</th><th>Definition 4.6(iii) content</th><th>Guardrail</th></tr>
+          <tr>
+            <td>Theater object</td>
+            <td>A collection <span class="math">D <- D_J -> D_></span> consisting of a D-NF bridge and a D-Theta bridge.</td>
+            <td>The object is a bridge pair, not a single merged category.</td>
+          </tr>
+          <tr>
+            <td>Model condition</td>
+            <td>Model isomorphisms from <span class="math">D</span>, <span class="math">D_J</span>, and <span class="math">D_></span> conjugate both bridge directions to the given data.</td>
+            <td>Both sides must be modeled simultaneously.</td>
+          </tr>
+          <tr>
+            <td>Morphisms</td>
+            <td>The NF and Theta bridge morphisms must induce the same bijection on capsule index sets.</td>
+            <td>Shared-index compatibility is the central type-level condition.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 4.6(iii)</a>
+          Related: <a href="#d-nf-bridge-definition-iut-i46">D-NF bridge</a>
+          <a href="#d-theta-bridge-definition-iut-i46">D-Theta bridge</a>
+          <a href="#bridge-label-transport-iut-i47">bridge label transport</a>
+        </div>
+      </section>
+
+      <section id="bridge-label-transport-iut-i47" data-filter="iut i proposition 4.7 transport label classes cusps base bridges chi phi lc zeta labcusp">
+        <h2>IUT I Proposition 4.7: Bridge Label Transport</h2>
+        <p class="lede">
+          Proposition 4.7 extracts labels from a D-ThetaNF-Hodge theater. The
+          bad-place structure of the D-Theta bridge determines
+          <span class="math">chi : J -> F_l</span>; then the NF and Theta bridge
+          restrictions determine label-class torsor isomorphisms and a unique global
+          epsilon class.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Assertion</th><th>Proposition 4.7 content</th><th>Downstream role</th></tr>
+          <tr>
+            <td>(i)</td>
+            <td>The bad-place D-Theta bridge determines <span class="math">chi : pi_0(D_J)=J -> F_l</span>.</td>
+            <td>Capsule labels are recovered from theta-evaluation structure.</td>
+          </tr>
+          <tr>
+            <td>(ii)</td>
+            <td>For each <span class="math">j</span>, bridge restrictions determine <span class="math">phi^LC_j : LabCusp(D) -> LabCusp(D_>)</span>, with the <span class="math">j</span>-case obtained from the unit case by action by <span class="math">chi(j)</span>.</td>
+            <td>The torsor action controls all label transports.</td>
+          </tr>
+          <tr>
+            <td>(iii)</td>
+            <td>There is a unique <span class="math">[epsilon] in LabCusp(D)</span> such that <span class="math">phi^LC_j([epsilon])</span> maps to <span class="math">chi(j)</span>, yielding <span class="math">zeta : LabCusp(D) -> J</span>.</td>
+            <td>Global cusp labels become the capsule index set.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Proposition 4.7</a>
+          Related: <a href="#label-transport-base-bridges-iut-i45">Example 4.5 label transport</a>
+          <a href="#global-label-kodaira-spencer-iut-i471">global labels/Kodaira-Spencer</a>
+          <a href="#section4-symmetries-processions-48-412">Section 4 symmetries</a>
+        </div>
+      </section>
+
+      <section id="global-label-kodaira-spencer-iut-i471" data-filter="iut i remarks 4.7.1 4.7.2 global labels native d kodaira spencer arithmetic geometry common ground">
+        <h2>IUT I Remarks 4.7.1-4.7.2: Global Labels and Kodaira-Spencer Analogy</h2>
+        <p class="lede">
+          Remarks 4.7.1-4.7.2 explain why Proposition 4.7 matters. Replacing the
+          capsule index set by <span class="math">LabCusp(D)</span> via
+          <span class="math">zeta</span> gives a global object native to
+          <span class="math">D</span>, resistant to the label-collapse phenomena
+          caused by global prime-decomposition trees.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Remarks 4.7.1 and 4.7.2 global labels">
+          <div class="diagramHeader">
+            <strong>Arithmetic indices meet geometric cusp labels</strong>
+            <span>IUT I, Remarks 4.7.1-4.7.2</span>
+          </div>
+          <svg viewBox="0 0 1120 430" role="img">
+            <defs>
+              <marker id="arrowRemark471" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox red" x="72" y="82" width="260" height="92"></rect>
+            <text class="nodeTitle" x="202" y="114" text-anchor="middle">D_> labels</text>
+            <text class="tinyText" x="202" y="140" text-anchor="middle">geometric, additive, archimedean</text>
+            <rect class="nodeBox gold" x="430" y="82" width="260" height="92"></rect>
+            <text class="nodeTitle" x="560" y="114" text-anchor="middle">D_J common ground</text>
+            <text class="tinyText" x="560" y="140" text-anchor="middle">underlying set of cardinality l</text>
+            <rect class="nodeBox blue" x="788" y="82" width="260" height="92"></rect>
+            <text class="nodeTitle" x="918" y="114" text-anchor="middle">D labels</text>
+            <text class="tinyText" x="918" y="140" text-anchor="middle">arithmetic, multiplicative, etale-like</text>
+            <rect class="nodeBox green" x="330" y="286" width="460" height="74"></rect>
+            <text class="nodeTitle" x="560" y="316" text-anchor="middle">zeta^{-1} : J -> LabCusp(D)</text>
+            <text class="tinyText" x="560" y="340" text-anchor="middle">combinatorial Kodaira-Spencer morphism: arithmetic to geometry</text>
+            <path class="edge red" d="M334 128 H428" marker-end="url(#arrowRemark471)"></path>
+            <path class="edge blue" d="M692 128 H786" marker-end="url(#arrowRemark471)"></path>
+            <path class="edge green" d="M560 176 V284" marker-end="url(#arrowRemark471)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Remark</th><th>Source content</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td>4.7.1</td>
+            <td>Via <span class="math">zeta</span>, one may replace the capsule index set by <span class="math">LabCusp(D)</span>, an object native to the global data <span class="math">D</span>.</td>
+            <td>Global labels should be represented as global cusp-label data, not just as imported finite indices.</td>
+          </tr>
+          <tr>
+            <td>4.7.1</td>
+            <td>This replacement is immune to the collapse of <span class="math">F_l</span>-orbits of certain valuation sets caused by global prime-decomposition trees.</td>
+            <td>The label model must not assume free global label action where the source warns it may fail.</td>
+          </tr>
+          <tr>
+            <td>4.7.2(ii)</td>
+            <td>The <span class="math">D_></span> side is geometric, additive, archimedean, and Frobenius-like; the <span class="math">D</span> side is arithmetic, multiplicative, nonarchimedean, and etale-like.</td>
+            <td>The shared capsule is common ground only as a finite underlying label set.</td>
+          </tr>
+          <tr>
+            <td>4.7.2(iii)</td>
+            <td>The inverse <span class="math">zeta^{-1}: J -> LabCusp(D)</span> may be regarded as a combinatorial Kodaira-Spencer morphism.</td>
+            <td>This page records the arithmetic-to-geometric interpretation without turning it into a literal differential-geometric map.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Remarks 4.7.1-4.7.2</a>
+          Related: <a href="#bridge-label-transport-iut-i47">bridge label transport</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+          <a href="#iut-coric-noncoric-principle-361">coric/non-coric principle</a>
         </div>
       </section>
 
