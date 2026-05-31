@@ -900,6 +900,14 @@
         <a href="#frobenioid-category-packaging-ii38-page">Frobenioid category packaging 3.8</a>
         <a href="#sync-gains-logwall-ii383-page">Synchronization gains 3.8.3</a>
         <a href="#good-prime-gaussian-monoids-ii41">Good-prime Gaussian monoids 4.1</a>
+        <a href="#good-prime-topological-tower-ii41-page">Good-prime topological tower 4.1</a>
+        <a href="#good-prime-constant-monoid-algorithm-ii41-page">Good-prime constants 4.1</a>
+        <a href="#good-prime-semisimplified-value-monoid-ii41-page">Good-prime value monoid 4.1</a>
+        <a href="#good-prime-flpm-symmetrizing-ii41-page">Good-prime Fl± symmetry 4.1</a>
+        <a href="#good-prime-formal-evaluation-ii41-page">Good-prime formal evaluation 4.1</a>
+        <a href="#good-prime-frobenioid-transfer-ii42-page">Good Frobenioid transfer 4.2</a>
+        <a href="#archimedean-aut-holomorphic-constants-ii43-page">Archimedean constants 4.3</a>
+        <a href="#archimedean-frobenioid-transfer-ii44-page">Archimedean Frobenioid transfer 4.4</a>
         <a href="#good-nonarch-gaussian-monoids-ii41">Good nonarch Gaussians 4.1</a>
         <a href="#good-nonarch-frobenioid-gaussians-ii42">Good nonarch Frobenioids 4.2</a>
         <a href="#archimedean-gaussian-monoids-ii43-44">Archimedean Gaussians 4.3-4.4</a>
@@ -29114,6 +29122,493 @@
           <a href="#gaussian-frobenioid-categories-ii38">Gaussian Frobenioid categories</a>
           <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
           <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
+        </div>
+      </section>
+
+      <section id="good-prime-topological-tower-ii41-page">
+        <h2>IUT II 4.1: Good-Prime Topological Tower</h2>
+        <p class="lede">
+          Proposition 4.1 begins with the good nonarchimedean analogue of the bad-prime
+          tempered tower. For <span class="math">v in Vgood ∩ Vnon</span>, the
+          topological group data are arranged as
+          <span class="math">Pi_v -> Pi_v^± -> Pi_v^cor</span>, with corresponding
+          quotients and kernels reconstructed group-theoretically from
+          <span class="math">Pi_v</span>.
+        </p>
+        <div class="diagram fit" aria-label="Good nonarchimedean topological tower in IUT II Proposition 4.1">
+          <div class="diagramHeader">
+            <strong>Good-place tower</strong>
+            <span>the formal input before Gaussian monoids</span>
+          </div>
+          <svg viewBox="0 0 1120 400" role="img">
+            <defs>
+              <marker id="arrowGoodTower41" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="86" y="86" width="230" height="92"></rect>
+            <text class="nodeTitle" x="201" y="116" text-anchor="middle">Pi_v</text>
+            <text class="tinyText" x="201" y="142" text-anchor="middle">good nonarchimedean local group</text>
+            <text class="tinyText" x="201" y="162" text-anchor="middle">source of reconstruction</text>
+            <rect class="nodeBox green" x="445" y="86" width="230" height="92"></rect>
+            <text class="nodeTitle" x="560" y="116" text-anchor="middle">Pi_v^±</text>
+            <text class="tinyText" x="560" y="142" text-anchor="middle">intermediate quotient</text>
+            <text class="tinyText" x="560" y="162" text-anchor="middle">F_l^± action layer</text>
+            <rect class="nodeBox gold" x="804" y="86" width="230" height="92"></rect>
+            <text class="nodeTitle" x="919" y="116" text-anchor="middle">Pi_v^cor</text>
+            <text class="tinyText" x="919" y="142" text-anchor="middle">coric/topological endpoint</text>
+            <text class="tinyText" x="919" y="162" text-anchor="middle">quotient G_v</text>
+            <rect class="nodeBox violet" x="325" y="266" width="470" height="70"></rect>
+            <text class="nodeTitle" x="560" y="294" text-anchor="middle">algorithmic reconstruction from Pi_v</text>
+            <text class="tinyText" x="560" y="316" text-anchor="middle">Pi_v^±, Pi_v^cor, G_v(-), and kernel data</text>
+            <path d="M318 132 H443" class="edge blue" marker-end="url(#arrowGoodTower41)"></path>
+            <path d="M677 132 H802" class="edge green" marker-end="url(#arrowGoodTower41)"></path>
+            <path d="M201 180 C260 232 354 252 432 264" class="edge violet" marker-end="url(#arrowGoodTower41)"></path>
+            <path d="M560 180 V264" class="edge violet" marker-end="url(#arrowGoodTower41)"></path>
+            <path d="M919 180 C860 232 766 252 688 264" class="edge violet" marker-end="url(#arrowGoodTower41)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Input</th><th>Reconstructed data</th><th>Why it matters</th></tr>
+          <tr>
+            <td><span class="math">Pi_v</span></td>
+            <td>
+              The tower <span class="math">Pi_v, Pi_v^±, Pi_v^cor</span>, the quotients
+              <span class="math">G_v(Pi_v)</span>, <span class="math">G_v(Pi_v^±)</span>,
+              <span class="math">G_v(Pi_v^cor)</span>, and their kernels.
+            </td>
+            <td>
+              The good-prime construction is stated as a functorial algorithm in the
+              topological group, matching the anabelian style of the bad-prime pages.
+            </td>
+          </tr>
+          <tr>
+            <td><span class="math">Pi_v^± / Pi_v</span> and <span class="math">Pi_v^cor / Pi_v^±</span></td>
+            <td>
+              The cyclic and <span class="math">F_l^±</span> quotient layers used to
+              transport cusp labels and define symmetrizing isomorphisms.
+            </td>
+            <td>
+              This is the structural source of the label synchronization in
+              Proposition 4.1(iii).
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.1 opening paragraph</a>
+          Related: <a href="#good-prime-constant-monoid-algorithm-ii41-page">good-prime constants</a>
+          <a href="#good-prime-flpm-symmetrizing-ii41-page">Fl± symmetry</a>
+          <a href="#good-prime-gaussian-monoids-ii41">Section 4 atlas</a>
+        </div>
+      </section>
+
+      <section id="good-prime-constant-monoid-algorithm-ii41-page">
+        <h2>IUT II 4.1(i): Good-Prime Constant Monoid Algorithm</h2>
+        <p class="lede">
+          Proposition 4.1(i) constructs the good nonarchimedean constant monoid
+          <span class="math">Psi_cns(Pi_v)</span> from the group-theoretically
+          recovered quotient <span class="math">G_v(Pi_v)</span>. Mochizuki presents
+          this as the good-prime analogue of the bad-prime constant monoids used in
+          Section 3.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Clause</th><th>Content</th><th>Formalization note</th></tr>
+          <tr>
+            <td>Construction</td>
+            <td>
+              Use the cohomological algorithm for <span class="math">mu_Z(G_v)</span>
+              to obtain an ind-topological submonoid inside a direct limit of
+              <span class="math">H^1</span>-groups over open subgroups.
+            </td>
+            <td>
+              In the wiki this remains a sourced concept page; in Lean it should become
+              an interface only after the relevant profinite/cohomological APIs are
+              available.
+            </td>
+          </tr>
+          <tr>
+            <td>Action</td>
+            <td>
+              The monoid carries its natural <span class="math">G_v(Pi_v)</span>-action.
+            </td>
+            <td>
+              The action is not decoration: it is later part of the compatibility data
+              for label transport and Frobenioid comparison.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 4.1.1</td>
+            <td>
+              The construction of <span class="math">Psi_cns(Pi_v)</span> is the
+              good-prime uniradial part of the formal generalization.
+            </td>
+            <td>
+              This separates constants from the multiradial Gaussian/evaluation layer.
+            </td>
+          </tr>
+        </table>
+        <div class="callout">
+          The word "formal" here is source-faithful: Remark 4.1.1 says the good-prime
+          generalization is mostly tautological, introduced so bad and good local data
+          can be glued globally.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.1(i), Remark 4.1.1</a>
+          Related: <a href="#good-prime-topological-tower-ii41-page">topological tower</a>
+          <a href="#good-prime-semisimplified-value-monoid-ii41-page">value monoid</a>
+          <a href="#good-nonarch-gaussian-monoids-ii41">good nonarch Gaussians</a>
+        </div>
+      </section>
+
+      <section id="good-prime-semisimplified-value-monoid-ii41-page">
+        <h2>IUT II 4.1(ii): Good-Prime Semi-Simplified Value Monoid</h2>
+        <p class="lede">
+          Proposition 4.1(ii) passes from the constant monoid to a mono-analytic
+          semi-simplification. The relevant value component is
+          <span class="math">R>=0(G_v)</span>, with distinguished element
+          <span class="math">log_Gv(p_v)</span>, and the semi-simplified monoid is
+          <span class="math">Psi_cns(Pi_v)^x x R>=0(Pi_v)</span>.
+        </p>
+        <div class="diagram fit" aria-label="Semi-simplified good-prime value monoid">
+          <div class="diagramHeader">
+            <strong>Units plus realified value</strong>
+            <span>Proposition 4.1(ii)</span>
+          </div>
+          <svg viewBox="0 0 1120 360" role="img">
+            <defs>
+              <marker id="arrowGoodValue41" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox gold" x="92" y="92" width="250" height="88"></rect>
+            <text class="nodeTitle" x="217" y="124" text-anchor="middle">Psi_cns(G_v)</text>
+            <text class="tinyText" x="217" y="150" text-anchor="middle">constant monoid</text>
+            <rect class="nodeBox blue" x="438" y="70" width="244" height="88"></rect>
+            <text class="nodeTitle" x="560" y="102" text-anchor="middle">unit part</text>
+            <text class="tinyText" x="560" y="128" text-anchor="middle">Psi_cns(G_v)^x</text>
+            <rect class="nodeBox green" x="438" y="206" width="244" height="88"></rect>
+            <text class="nodeTitle" x="560" y="238" text-anchor="middle">realified value part</text>
+            <text class="tinyText" x="560" y="264" text-anchor="middle">R>=0 with log(p_v)</text>
+            <rect class="nodeBox violet" x="780" y="118" width="250" height="88"></rect>
+            <text class="nodeTitle" x="905" y="150" text-anchor="middle">Psi_ss_cns</text>
+            <text class="tinyText" x="905" y="176" text-anchor="middle">units x R>=0</text>
+            <path d="M344 128 H436" class="edge gold" marker-end="url(#arrowGoodValue41)"></path>
+            <path d="M344 150 C382 188 406 224 436 240" class="edge green" marker-end="url(#arrowGoodValue41)"></path>
+            <path d="M684 114 C724 126 754 142 778 154" class="edge blue" marker-end="url(#arrowGoodValue41)"></path>
+            <path d="M684 250 C724 222 754 190 778 168" class="edge green" marker-end="url(#arrowGoodValue41)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Object</th><th>Source description</th><th>Use downstream</th></tr>
+          <tr>
+            <td><span class="math">R>=0(G_v)</span></td>
+            <td>Functorially constructed from <span class="math">G_v</span>.</td>
+            <td>Receives the distinguished good-prime value <span class="math">log(p_v)</span>.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Psi_cns^R</span></td>
+            <td>The realification of <span class="math">Psi_cns / Psi_cns^x</span>.</td>
+            <td>Identified with the value monoid in the semi-simplified package.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Psi_ss_cns</span></td>
+            <td>Defined as the product of units and <span class="math">R>=0</span>.</td>
+            <td>Feeds the formal Gaussian tuple in Proposition 4.1(iv).</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.1(ii)</a>
+          Related: <a href="#good-prime-constant-monoid-algorithm-ii41-page">constant algorithm</a>
+          <a href="#good-prime-formal-evaluation-ii41-page">formal evaluation</a>
+          <a href="#d-side-global-constants-realifications-ii45">global realifications</a>
+        </div>
+      </section>
+
+      <section id="good-prime-flpm-symmetrizing-ii41-page">
+        <h2>IUT II 4.1(iii): Good-Prime Fl± Symmetrizing Isomorphisms</h2>
+        <p class="lede">
+          Proposition 4.1(iii) uses cusp-label data
+          <span class="math">t in LabCusp^±(Pi_v)</span> and the outer
+          <span class="math">F_l^±</span>-action on <span class="math">Pi_v^±</span>
+          to identify labeled copies of the constant monoid. These isomorphisms then
+          define diagonal submonoids and a zero-label-to-diagonal isomorphism.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Layer</th><th>Construction</th><th>Guardrail</th></tr>
+          <tr>
+            <td>Cusp labels</td>
+            <td>
+              Label copies <span class="math">G_v(Pi_v)_t, Psi_cns(Pi_v)_t</span>
+              by <span class="math">LabCusp^±(Pi_v)</span>.
+            </td>
+            <td>Labels are not arbitrary tags; they are induced by cuspidal inertia data.</td>
+          </tr>
+          <tr>
+            <td><span class="math">F_l^±</span> action</td>
+            <td>
+              The quotient <span class="math">Delta_v^cor / Delta_v^±</span> induces
+              symmetrizing isomorphisms between distinct labeled copies.
+            </td>
+            <td>
+              This is the good-prime analogue of conjugate synchronization at bad
+              primes, not a new independent symmetry.
+            </td>
+          </tr>
+          <tr>
+            <td>Diagonal constants</td>
+            <td>
+              The symmetrizing maps determine
+              <span class="math">Psi_cns(Pi_v)^<|F_l|></span> and
+              <span class="math">Psi_cns(Pi_v)^<F_l></span>.
+            </td>
+            <td>
+              These diagonals are the constant submonoids preserved by the later
+              Gaussian evaluation.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.1(iii), Remark 4.1.1(ii)</a>
+          Related: <a href="#good-prime-topological-tower-ii41-page">topological tower</a>
+          <a href="#symmetrizing-isomorphisms-labels-ii352-page">bad-prime symmetrizing isomorphisms</a>
+          <a href="#global-gaussian-frobenioids-ii45">global synchronization</a>
+        </div>
+      </section>
+
+      <section id="good-prime-formal-evaluation-ii41-page">
+        <h2>IUT II 4.1(iv): Good-Prime Formal Evaluation</h2>
+        <p class="lede">
+          Proposition 4.1(iv) defines the good nonarchimedean theta and Gaussian
+          monoids and the formal evaluation isomorphism between them. The theta
+          formal symbol <span class="math">log(p_v) log(Theta)</span> is sent to the
+          Gaussian profile with entries weighted by <span class="math">j^2 log(p_v)</span>.
+        </p>
+        <div class="diagram fit" aria-label="Good-prime formal theta to Gaussian evaluation">
+          <div class="diagramHeader">
+            <strong>Theta symbol to Gaussian profile</strong>
+            <span>Proposition 4.1(iv)</span>
+          </div>
+          <svg viewBox="0 0 1120 360" role="img">
+            <defs>
+              <marker id="arrowGoodEval41" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="88" y="98" width="310" height="98"></rect>
+            <text class="nodeTitle" x="243" y="130" text-anchor="middle">Psi_env(Pi_v)</text>
+            <text class="tinyText" x="243" y="156" text-anchor="middle">units x R>=0 log(p_v) log(Theta)</text>
+            <text class="tinyText" x="243" y="176" text-anchor="middle">theta formal symbol</text>
+            <rect class="nodeBox red" x="722" y="98" width="310" height="98"></rect>
+            <text class="nodeTitle" x="877" y="130" text-anchor="middle">Psi_gau(Pi_v)</text>
+            <text class="tinyText" x="877" y="156" text-anchor="middle">diagonal units x j^2 log(p_v) tuple</text>
+            <text class="tinyText" x="877" y="176" text-anchor="middle">Gaussian formal profile</text>
+            <rect class="nodeBox gold" x="454" y="232" width="212" height="70"></rect>
+            <text class="nodeTitle" x="560" y="260" text-anchor="middle">identity on units</text>
+            <text class="tinyText" x="560" y="282" text-anchor="middle">compatible with splittings/actions</text>
+            <path d="M400 147 H720" class="edge red" marker-end="url(#arrowGoodEval41)"></path>
+            <text class="tinyText" x="560" y="128" text-anchor="middle">formal evaluation isomorphism</text>
+            <path d="M246 198 C318 246 392 264 452 266" class="edge gold" marker-end="url(#arrowGoodEval41)"></path>
+            <path d="M874 198 C802 246 728 264 668 266" class="edge gold" marker-end="url(#arrowGoodEval41)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Side</th><th>Definition</th><th>Compatibility</th></tr>
+          <tr>
+            <td>Theta environment</td>
+            <td><span class="math">Psi_cns(Pi_v)^x x R>=0 . log(p_v) . log(Theta)</span></td>
+            <td>Equipped with natural <span class="math">G_v(Pi_v)</span>-action and splitting.</td>
+          </tr>
+          <tr>
+            <td>Gaussian monoid</td>
+            <td>
+              Diagonal units with an <span class="math">F_l</span>-indexed
+              <span class="math">j^2 log(p_v)</span> realified value tuple.
+            </td>
+            <td>Lives inside the product of semi-simplified constant monoids.</td>
+          </tr>
+          <tr>
+            <td>Formal evaluation</td>
+            <td>Maps the theta symbol to the Gaussian <span class="math">j^2</span> profile.</td>
+            <td>Restricts to identity on units and respects actions and splittings.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.1(iv)</a>
+          Related: <a href="#theta-evaluation-orbits-ii25">theta evaluation orbits</a>
+          <a href="#square-weight-exponent-ii251">square-weight exponent</a>
+          <a href="#good-prime-frobenioid-transfer-ii42-page">Frobenioid transfer</a>
+        </div>
+      </section>
+
+      <section id="good-prime-frobenioid-transfer-ii42-page">
+        <h2>IUT II 4.2: Good-Prime Frobenioid Transfer</h2>
+        <p class="lede">
+          Proposition 4.2 transports the group-theoretic good-prime monoids of
+          Proposition 4.1 to the Frobenioid data of a theta-Hodge theater. It supplies
+          constant comparisons, semi-simplified poly-isomorphisms, label synchronization,
+          and the Frobenioid theta/Gaussian formal evaluation chain.
+        </p>
+        <table>
+          <tr><th>Clause</th><th>Transfer</th><th>Precision point</th></tr>
+          <tr>
+            <td>4.2(i)</td>
+            <td>
+              <span class="math">Psi_Fv</span> is uniquely identified with
+              <span class="math">Psi_cns(dagger Pi_v)</span> equivariantly for
+              <span class="math">G_v(dagger Pi_v)</span>.
+            </td>
+            <td>The local Frobenioid determines the action only up to inner automorphism.</td>
+          </tr>
+          <tr>
+            <td>4.2(ii)</td>
+            <td>
+              The mono-analytic prime-strip gives a unit comparison and a realified
+              divisor comparison mapping the generator to
+              <span class="math">log(p_v)</span>.
+            </td>
+            <td>The result is a poly-isomorphism for the semi-simplified monoids.</td>
+          </tr>
+          <tr>
+            <td>4.2(iii)</td>
+            <td>
+              The constant comparison induces labeled isomorphisms and
+              <span class="math">F_l^±</span>-symmetrizing isomorphisms.
+            </td>
+            <td>The ambiguity is an inner automorphism independent of the label.</td>
+          </tr>
+          <tr>
+            <td>4.2(iv)</td>
+            <td>
+              The chain <span class="math">Psi_FTheta -> Psi_env -> Psi_gau -> Psi_Fgau</span>
+              carries the good-prime formal evaluation to the Frobenioid side.
+            </td>
+            <td>It preserves units, actions, and splittings by construction.</td>
+          </tr>
+        </table>
+        <div class="callout violet">
+          Remark 4.2.1 is a notation bridge: it extends semi-simplified notation back
+          to bad primes and sets infinity-versions equal to ordinary versions at good
+          nonarchimedean primes, where the relevant monoids are already divisible.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.2, Remark 4.2.1</a>
+          Related: <a href="#good-prime-formal-evaluation-ii41-page">good-prime formal evaluation</a>
+          <a href="#frobenioid-gaussian-transport-ii36-page">bad-prime Frobenioid transport</a>
+          <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>
+        </div>
+      </section>
+
+      <section id="archimedean-aut-holomorphic-constants-ii43-page">
+        <h2>IUT II 4.3: Archimedean Aut-Holomorphic Constants</h2>
+        <p class="lede">
+          Proposition 4.3 repeats the good-prime Gaussian pattern at archimedean
+          valuations, replacing topological groups by Aut-holomorphic orbispaces
+          <span class="math">U_v -> U_v^± -> U_v^cor</span>. The constant monoid is
+          the nonzero closed unit-ball monoid of the complex archimedean field attached
+          to <span class="math">U_v</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Clause</th><th>Archimedean construction</th><th>Analogue</th></tr>
+          <tr>
+            <td>4.3(i)</td>
+            <td>
+              <span class="math">Psi_cns(U_v) = A_Uv^triangleright</span>, identified
+              tautologically with the underlying monoid of <span class="math">D_v^⊢</span>.
+            </td>
+            <td>Replaces the good nonarchimedean cohomological constant monoid.</td>
+          </tr>
+          <tr>
+            <td>4.3(ii)</td>
+            <td>
+              The object <span class="math">D_v^⊢</span> constructs
+              <span class="math">R>=0(D_v^⊢)</span> and
+              <span class="math">log_D(p_v)</span>, yielding
+              <span class="math">Psi_ss_cns = units x R>=0</span>.
+            </td>
+            <td>Provides the same value-monoid shape used in the nonarchimedean case.</td>
+          </tr>
+          <tr>
+            <td>4.3(iii)-(iv)</td>
+            <td>
+              <span class="math">F_l^± = Gal(U_v^±/U_v^cor)</span> synchronizes cusp
+              labels and gives the formal evaluation
+              <span class="math">Psi_env(U_v) -> Psi_gau(U_v)</span>.
+            </td>
+            <td>The Gaussian profile is again the <span class="math">j^2 log(p_v)</span> tuple.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.3, Remark 4.3.1</a>
+          Related: <a href="#archimedean-gaussian-monoids-ii43-44">archimedean overview</a>
+          <a href="#good-prime-semisimplified-value-monoid-ii41-page">good-prime value monoid</a>
+          <a href="#archimedean-frobenioid-transfer-ii44-page">archimedean Frobenioid transfer</a>
+        </div>
+      </section>
+
+      <section id="archimedean-frobenioid-transfer-ii44-page">
+        <h2>IUT II 4.4: Archimedean Frobenioid Transfer</h2>
+        <p class="lede">
+          Proposition 4.4 moves the archimedean Aut-holomorphic construction to the
+          Frobenioid side of a theta-Hodge theater. The Kummer structure identifies
+          the Frobenioid constant monoid with <span class="math">Psi_cns(dagger U_v)</span>,
+          and the formal evaluation is transported to
+          <span class="math">Psi_FTheta -> Psi_Fgau</span>.
+        </p>
+        <div class="diagram fit" aria-label="Archimedean Frobenioid transfer in IUT II Proposition 4.4">
+          <div class="diagramHeader">
+            <strong>Archimedean Frobenioid comparison</strong>
+            <span>Kummer structure plus Aut-holomorphic equality</span>
+          </div>
+          <svg viewBox="0 0 1120 400" role="img">
+            <defs>
+              <marker id="arrowArchFrob44" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox violet" x="88" y="86" width="260" height="92"></rect>
+            <text class="nodeTitle" x="218" y="116" text-anchor="middle">dagger F_v</text>
+            <text class="tinyText" x="218" y="142" text-anchor="middle">archimedean Hodge-theater data</text>
+            <text class="tinyText" x="218" y="162" text-anchor="middle">Kummer structure</text>
+            <rect class="nodeBox gold" x="430" y="86" width="260" height="92"></rect>
+            <text class="nodeTitle" x="560" y="116" text-anchor="middle">Psi_cns(dagger U_v)</text>
+            <text class="tinyText" x="560" y="142" text-anchor="middle">constant comparison</text>
+            <text class="tinyText" x="560" y="162" text-anchor="middle">unique isomorphism</text>
+            <rect class="nodeBox green" x="772" y="86" width="260" height="92"></rect>
+            <text class="nodeTitle" x="902" y="116" text-anchor="middle">semi-simplified comparison</text>
+            <text class="tinyText" x="902" y="142" text-anchor="middle">{±1}-orbit on units</text>
+            <text class="tinyText" x="902" y="162" text-anchor="middle">realified monoid maps e to log(p_v)</text>
+            <rect class="nodeBox red" x="344" y="266" width="432" height="70"></rect>
+            <text class="nodeTitle" x="560" y="294" text-anchor="middle">Psi_FTheta -> Psi_env -> Psi_gau -> Psi_Fgau</text>
+            <text class="tinyText" x="560" y="316" text-anchor="middle">compatible with splittings and unit identifications</text>
+            <path d="M350 132 H428" class="edge violet" marker-end="url(#arrowArchFrob44)"></path>
+            <path d="M692 132 H770" class="edge gold" marker-end="url(#arrowArchFrob44)"></path>
+            <path d="M560 180 V264" class="edge red" marker-end="url(#arrowArchFrob44)"></path>
+            <path d="M902 180 C860 232 760 258 676 264" class="edge green" marker-end="url(#arrowArchFrob44)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Clause</th><th>Transfer</th><th>Detail</th></tr>
+          <tr>
+            <td>4.4(i)</td>
+            <td>Unique comparison <span class="math">Psi_Fv -> Psi_cns(dagger U_v)</span>.</td>
+            <td>Uses the Kummer structure and the equality of Aut-holomorphic spaces.</td>
+          </tr>
+          <tr>
+            <td>4.4(ii)</td>
+            <td>Unit and realified comparisons for <span class="math">Psi_Fv^⊢</span>.</td>
+            <td>The archimedean generator is represented by <span class="math">p_v = e</span>, whose logarithm is 1.</td>
+          </tr>
+          <tr>
+            <td>4.4(iii)-(iv)</td>
+            <td>Label symmetry and formal evaluation are transported to the Frobenioid side.</td>
+            <td>The chain restricts to identity or the constant comparison on units.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Proposition 4.4, Remark 4.4.1</a>
+          Related: <a href="#archimedean-aut-holomorphic-constants-ii43-page">archimedean constants</a>
+          <a href="#good-prime-frobenioid-transfer-ii42-page">good nonarchimedean Frobenioid transfer</a>
+          <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>
         </div>
       </section>
 
