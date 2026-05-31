@@ -756,6 +756,12 @@
         <a href="#iut-i-base-bridges-evaluation-sections">Base bridges/evaluation sections</a>
         <a href="#iut-i-additive-base-bridges-61-610">Additive base bridges 6.1-6.10</a>
         <a href="#additive-labels-61">Additive labels 6.1</a>
+        <a href="#flpm-groups-torsors-iut-i61">F_l± groups/torsors 6.1</a>
+        <a href="#dpm-local-reconstruction-iut-i61">D_v± reconstruction 6.1</a>
+        <a href="#pm-cusp-labels-iut-i61">± cusp labels 6.1</a>
+        <a href="#positive-full-polyisom-iut-i61">+-full poly-isomorphisms 6.1</a>
+        <a href="#global-dpm-cover-iut-i61">Global D± cover 6.1</a>
+        <a href="#dpm-valuation-arch-reconstruction-iut-i61">D± valuations/arch 6.1</a>
         <a href="#model-theta-plus-minus-62-63">Theta±/Thetaell models 6.2-6.3</a>
         <a href="#d-theta-plus-minus-ell-64-66">D-Theta±ell base 6.4-6.6</a>
         <a href="#additive-to-multiplicative-67-610">Additive to D-Theta 6.7-6.10</a>
@@ -19611,6 +19617,239 @@
           <a href="#model-theta-plus-minus-62-63">Theta±/Thetaell models</a>
           <a href="#d-theta-plus-minus-ell-64-66">D-Theta±ell base theater</a>
           <a href="#zero-nonzero-label-relation">zero/nonzero relation</a>
+        </div>
+      </section>
+
+      <section id="flpm-groups-torsors-iut-i61">
+        <h2>F_l± Groups and Torsors in IUT I 6.1</h2>
+        <p class="lede">
+          Definition 6.1(i) introduces
+          <span class="math">F_l^± = F_l ⋊ {±1}</span>. An
+          <span class="math">F_l^±</span>-group is a set equipped with a
+          <span class="math">{±1}</span>-orbit of bijections to
+          <span class="math">F_l</span>; an <span class="math">F_l^±</span>-torsor is
+          a set equipped with an <span class="math">F_l^±</span>-orbit of bijections
+          to <span class="math">F_l</span>, where the action is affine:
+          <span class="math">z -> ±z + lambda</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Structure</th><th>Definition 6.1(i)</th><th>Why separate it</th></tr>
+          <tr>
+            <td><span class="math">F_l^±</span>-group</td>
+            <td>Signed linear coordinate ambiguity; it induces an <span class="math">F_l</span>-module structure.</td>
+            <td>Used for automorphism groups and sign-sensitive linear data.</td>
+          </tr>
+          <tr>
+            <td><span class="math">F_l^±</span>-torsor</td>
+            <td>Signed affine coordinate ambiguity <span class="math">z -> ±z + lambda</span>.</td>
+            <td>Used for label sets where there is no preferred origin.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Aut^+(T)</span></td>
+            <td>The translation subgroup <span class="math">z -> z + lambda</span>, with <span class="math">Aut^+(T) subset Aut^±(T)</span> of index two.</td>
+            <td>Positive automorphisms define the later +-full poly-isomorphism interface.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.1(i)</a>
+          Related: <a href="#pm-cusp-labels-iut-i61">± cusp labels</a>
+          <a href="#positive-full-polyisom-iut-i61">+-full poly-isomorphisms</a>
+          <a href="#model-theta-plus-minus-62-63">model additive bridges</a>
+        </div>
+      </section>
+
+      <section id="dpm-local-reconstruction-iut-i61">
+        <h2>D_v± Reconstruction in IUT I 6.1</h2>
+        <p class="lede">
+          Definition 6.1(ii) assigns to a D-prime-strip
+          <span class="math">D = {D_v}_{v in V}</span> a collection
+          <span class="math">D^± = {D_v^±}_{v in V}</span>, functorially determined by
+          <span class="math">D</span>. At nonarchimedean places this is obtained from
+          the topological group corresponding to <span class="math">X_v</span>; at
+          archimedean places it is obtained as an Aut-holomorphic orbispace.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Nonarchimedean</h3>
+            <p>
+              <span class="math">pi_1(D_v)</span> determines the larger topological
+              group corresponding to <span class="math">X_v</span>, and hence
+              <span class="math">D_v^±</span>.
+            </p>
+            <div class="tagRow"><span class="tag blue">6.1(ii)</span><span class="tag">V_non</span></div>
+          </div>
+          <div class="card">
+            <h3>Archimedean</h3>
+            <p>
+              The Aut-holomorphic reconstruction uses the
+              <span class="math">K_v</span>-core argument to obtain the orbispace
+              corresponding to <span class="math">X_v</span>.
+            </p>
+            <div class="tagRow"><span class="tag gold">6.1(ii)</span><span class="tag">V_arc</span></div>
+          </div>
+          <div class="card">
+            <h3>Natural morphism</h3>
+            <p>
+              The source records natural morphisms
+              <span class="math">D_v -> D_v^±</span>, assembled across
+              <span class="math">V</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">functorial</span><span class="tag">local</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.1(ii)</a>
+          Related: <a href="#additive-labels-61">additive labels</a>
+          <a href="#d-prime-strip-definition-iut-i41">D-prime-strips</a>
+          <a href="#pm-cusp-labels-iut-i61">± cusp labels</a>
+        </div>
+      </section>
+
+      <section id="pm-cusp-labels-iut-i61">
+        <h2>± Cusp Labels in IUT I 6.1</h2>
+        <p class="lede">
+          Definition 6.1(iii) defines <span class="math">LabCusp±(D_v)</span> as
+          ±-label classes of cusps of <span class="math">D_v</span> lying over a
+          single cusp of <span class="math">D_v^±</span>. These label classes carry a
+          zero element, a ±-canonical element well-defined up to sign, and a natural
+          <span class="math">F_l^±</span>-group structure.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Label datum</th><th>Definition 6.1(iii)</th><th>Consequence</th></tr>
+          <tr>
+            <td>Zero element</td>
+            <td><span class="math">eta_v^0 in LabCusp±(D_v)</span>.</td>
+            <td>The additive label set includes a distinguished zero class.</td>
+          </tr>
+          <tr>
+            <td>±-canonical element</td>
+            <td><span class="math">eta_v^±</span> is well-defined up to multiplication by <span class="math">±1</span>.</td>
+            <td>The sign ambiguity is part of the object, not a notation issue.</td>
+          </tr>
+          <tr>
+            <td>Relation to Section 4 labels</td>
+            <td><span class="math">(LabCusp±(D_v) minus {eta_v^0})/{±1} ≃ LabCusp(D_v)</span>.</td>
+            <td>The additive labels refine the earlier nonzero quotient labels.</td>
+          </tr>
+          <tr>
+            <td>Automorphism signs</td>
+            <td><span class="math">Aut(D_v)</span> maps to <span class="math">{±1}</span>, defining positive and negative automorphisms.</td>
+            <td>Sign classes feed directly into +-full poly-isomorphisms.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.1(iii)</a>
+          Related: <a href="#flpm-groups-torsors-iut-i61">F_l± groups/torsors</a>
+          <a href="#d-cusp-label-torsors-iut-i41">Section 4 cusp labels</a>
+          <a href="#positive-full-polyisom-iut-i61">+-full poly-isomorphisms</a>
+        </div>
+      </section>
+
+      <section id="positive-full-polyisom-iut-i61">
+        <h2>+-Full Poly-Isomorphisms in IUT I 6.1</h2>
+        <p class="lede">
+          Definition 6.1(iv) defines a +-full poly-isomorphism as the orbit of an
+          isomorphism under positive automorphisms. For one local component, the
+          self-case has exactly two such poly-isomorphisms, positive and negative. For
+          a full D-prime-strip, self +-full poly-isomorphisms are indexed by
+          <span class="math">{±1}^V</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Level</th><th>Definition 6.1(iv)</th><th>Formal guardrail</th></tr>
+          <tr>
+            <td>Local component</td>
+            <td>Orbit under <span class="math">Aut^+(D_v)</span>; in the self-case there are positive and non-positive classes.</td>
+            <td>Do not identify all full poly-isomorphisms with positive ones.</td>
+          </tr>
+          <tr>
+            <td>Whole strip</td>
+            <td>Self +-full poly-isomorphisms correspond naturally to <span class="math">{±1}^V</span>.</td>
+            <td>Signs vary by valuation.</td>
+          </tr>
+          <tr>
+            <td>Capsules</td>
+            <td>Capsule-+-full poly-morphisms use +-full poly-isomorphisms between corresponding constituents relative to an injection of index sets.</td>
+            <td>Index motion and sign motion are distinct fields.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.1(iv)</a>
+          Related: <a href="#pm-cusp-labels-iut-i61">± cusp labels</a>
+          <a href="#model-theta-plus-minus-62-63">Theta± model bridge</a>
+          <a href="#d-theta-plus-minus-ell-64-66">D-Theta±ell base</a>
+        </div>
+      </section>
+
+      <section id="global-dpm-cover-iut-i61">
+        <h2>Global D± Cover in IUT I 6.1</h2>
+        <p class="lede">
+          Definition 6.1(v) defines <span class="math">D± = B(X_K)^0</span>, a finite
+          etale double covering of <span class="math">D = B(C_K)^0</span>. From
+          <span class="math">D±</span>, the source reconstructs the outer homomorphism
+          to <span class="math">GL_2(F_l)/{±1}</span>, the rank-one quotient associated
+          to the covering <span class="math">X_K -> X_K</span>, and the subgroup
+          <span class="math">Aut^±(D±)</span>.
+        </p>
+        <div class="flowDiagram" aria-label="Global D plus-minus cover reconstruction">
+          <div class="flowStep">
+            <strong>1. Double cover</strong>
+            <p><span class="math">D± -> D</span> is the category-theoretic cover attached to <span class="math">X_K -> C_K</span>.</p>
+          </div>
+          <div class="flowStep">
+            <strong>2. Torsion action</strong>
+            <p>The l-torsion Galois action gives <span class="math">Aut(D±) -> GL_2(F_l)/{±1}</span>.</p>
+          </div>
+          <div class="flowStep">
+            <strong>3. Cusp choice</strong>
+            <p>The chosen cusp <span class="math">epsilon</span> supplies the <span class="math">F_l^±</span>-structure on global cusp labels.</p>
+          </div>
+        </div>
+        <div class="callout gold">
+          Definition 6.1(v) is global and cusp-sensitive. The
+          <span class="math">F_l^±</span>-torsor on
+          <span class="math">LabCusp±(D±)</span> is reconstructed from
+          <span class="math">D±</span> together with the initial cusp datum.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.1(v)</a>
+          Related: <a href="#cyclic-cover-reconstruction">cyclic cover reconstruction</a>
+          <a href="#epsilon-quotient-iut-i1">epsilon quotient</a>
+          <a href="#model-theta-plus-minus-62-63">Thetaell model bridge</a>
+        </div>
+      </section>
+
+      <section id="dpm-valuation-arch-reconstruction-iut-i61">
+        <h2>D± Valuations and Archimedean Targets in IUT I 6.1</h2>
+        <p class="lede">
+          Definition 6.1(vi)-(vii) extends the global
+          <span class="math">D±</span> package to arbitrary categories isomorphic to
+          it. The source reconstructs cusp classes, the algebraic closure of the base
+          field, valuation sets, quotient valuation sets, and archimedean
+          Aut-holomorphic orbispaces from <span class="math">pi_1(D±)</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Object</th><th>Definition 6.1(vi)-(vii)</th><th>Use downstream</th></tr>
+          <tr>
+            <td><span class="math">LabCusp±(D±)</span></td>
+            <td>For any category isomorphic to <span class="math">D±</span>, cusp and ±-cusp-label classes make sense.</td>
+            <td>Thetaell bridges can target global ± labels without choosing a model copy.</td>
+          </tr>
+          <tr>
+            <td><span class="math">V(D±)</span></td>
+            <td>Valuations of the reconstructed algebraic closure, with natural fundamental-group action.</td>
+            <td>Controls valuation-indexed components of additive bridge data.</td>
+          </tr>
+          <tr>
+            <td><span class="math">X(D±, w)</span></td>
+            <td>For archimedean <span class="math">w</span>, an Aut-holomorphic orbispace reconstructed from <span class="math">pi_1(D±)</span>.</td>
+            <td>Defines morphisms from arbitrary Aut-holomorphic orbispaces to <span class="math">D±</span>.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 6.1(vi)-(vii), Remark 6.1.1</a>
+          Related: <a href="#global-dpm-cover-iut-i61">global D± cover</a>
+          <a href="#arch-aut-holomorphic-frobenioids-iut-i34">arch Aut-holomorphic Frobenioids</a>
+          <a href="#d-theta-plus-minus-ell-64-66">D-Theta±ell base</a>
         </div>
       </section>
 
