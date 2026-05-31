@@ -472,6 +472,7 @@
         <a href="#orientation">Orientation</a>
         <a href="#reading-map">Reading map</a>
         <a href="#official-corpus">Official corpus</a>
+        <a href="#invitation-expanded-route">Invitation route</a>
         <a href="#panoramic-route">Panoramic route</a>
         <a href="#bogomolov-szpiro-analogy">Bogomolov-Szpiro analogy</a>
         <a href="#classical-roots-route">Classical roots route</a>
@@ -776,6 +777,107 @@
           Related: <a href="#source-library">full source library</a>
           <a href="#formalization">formalization route</a>
           <a href="#iut-i-atlas">paper atlases</a>
+        </div>
+      </section>
+
+      <section id="invitation-expanded-route">
+        <h2>Invitation Route</h2>
+        <p class="lede">
+          The expanded Invitation notes give a compact route into IUT before the four
+          main papers: Hodge-Arakelov motivation, Teichmuller-style deformation,
+          log-theta-lattice structure, and the need for anabelian reconstruction across
+          non-ring-compatible links.
+        </p>
+        <div class="diagram" aria-label="Expanded Invitation route into IUT">
+          <div class="diagramHeader">
+            <strong>Four-section route</strong>
+            <span>from Hodge-Arakelov motivation to inter-universality</span>
+          </div>
+          <svg viewBox="0 0 980 360" role="img">
+            <defs>
+              <marker id="arrowInvitation" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="40" y="72" width="196" height="82"></rect>
+            <text class="nodeTitle" x="138" y="102" text-anchor="middle">Hodge-Arakelov</text>
+            <text class="tinyText" x="138" y="126" text-anchor="middle">q^{j^2} to q heuristic</text>
+            <text class="tinyText" x="138" y="144" text-anchor="middle">height estimate target</text>
+
+            <rect class="nodeBox gold" x="286" y="72" width="196" height="82"></rect>
+            <text class="nodeTitle" x="384" y="102" text-anchor="middle">Teichmuller deformation</text>
+            <text class="tinyText" x="384" y="126" text-anchor="middle">two underlying dimensions</text>
+            <text class="tinyText" x="384" y="144" text-anchor="middle">value groups dilated</text>
+
+            <rect class="nodeBox green" x="532" y="72" width="196" height="82"></rect>
+            <text class="nodeTitle" x="630" y="102" text-anchor="middle">Log-theta lattice</text>
+            <text class="tinyText" x="630" y="126" text-anchor="middle">log and theta links</text>
+            <text class="tinyText" x="630" y="144" text-anchor="middle">Hodge theaters</text>
+
+            <rect class="nodeBox violet" x="778" y="72" width="160" height="82"></rect>
+            <text class="nodeTitle" x="858" y="102" text-anchor="middle">Anabelian step</text>
+            <text class="tinyText" x="858" y="126" text-anchor="middle">abstract groups</text>
+            <text class="tinyText" x="858" y="144" text-anchor="middle">algorithmic description</text>
+
+            <path d="M236 113 H284" class="edge blue" marker-end="url(#arrowInvitation)"></path>
+            <path d="M482 113 H530" class="edge gold" marker-end="url(#arrowInvitation)"></path>
+            <path d="M728 113 H776" class="edge green" marker-end="url(#arrowInvitation)"></path>
+
+            <rect class="nodeBox red" x="334" y="238" width="312" height="70"></rect>
+            <text class="nodeTitle" x="490" y="266" text-anchor="middle">Szpiro / abc target</text>
+            <text class="tinyText" x="490" y="290" text-anchor="middle">volume computation yields inequality, not equality</text>
+            <path d="M858 154 C810 210 690 226 646 254" class="edge violet" marker-end="url(#arrowInvitation)"></path>
+          </svg>
+        </div>
+        <div class="grid4">
+          <div class="card" id="invitation-hodge-arakelov">
+            <h3>Hodge-Arakelov motivation</h3>
+            <p>
+              The notes start from a hypothetical global multiplicative subspace and
+              generators for an elliptic curve. The Hodge-Arakelov calculation suggests
+              the assignment <span class="math">{q^{j^2}} -> q</span> and motivates the
+              desired height estimate.
+            </p>
+            <div class="tagRow"><span class="tag blue">Invitation §1</span><span class="tag">height</span></div>
+          </div>
+          <div class="card" id="invitation-teichmuller-deformation">
+            <h3>Teichmuller-style deformation</h3>
+            <p>
+              Mochizuki compares IUT to Teichmuller deformation: one keeps a common
+              underlying structure while dilating one dimension. In the arithmetic
+              setting, value groups are dilated by theta-function data while unit data is
+              left undilated.
+            </p>
+            <div class="tagRow"><span class="tag gold">Invitation §2</span><span class="tag">dilation</span></div>
+          </div>
+          <div class="card" id="invitation-log-theta-lattice">
+            <h3>Log-theta lattice sketch</h3>
+            <p>
+              Section 3 presents the log-theta lattice as a noncommutative
+              two-dimensional diagram of Hodge theaters. Vertical log links and
+              horizontal theta links correspond to the two combinatorial dimensions of
+              local arithmetic structure.
+            </p>
+            <div class="tagRow"><span class="tag green">Invitation §3</span><span class="tag">lattice</span></div>
+          </div>
+          <div class="card" id="invitation-inter-universality">
+            <h3>Inter-universality and anabelian geometry</h3>
+            <p>
+              The log and theta links are not compatible with ring structures. On the
+              opposite side of such a link, local fundamental groups and Galois groups
+              make sense as abstract topological groups, so anabelian reconstruction is
+              required to compare the alien ring structures.
+            </p>
+            <div class="tagRow"><span class="tag violet">Invitation §4</span><span class="tag">anabelian</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-invitation-iut-expanded.pdf" target="_blank">Invitation to IUT, expanded</a>
+          Related: <a href="#classical-roots-route">classical roots route</a>
+          <a href="#hodge-theaters">Hodge theaters</a>
+          <a href="#theta-log-links">theta/log links</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#anabelian-background">anabelian background</a>
         </div>
       </section>
 
@@ -1368,6 +1470,18 @@
               <a href="#classical-jacobi-theta">Jacobi theta identity</a>
             </td>
             <td>Classical Roots, Sections 1-4</td>
+          </tr>
+          <tr>
+            <td>Invitation Expanded</td>
+            <td>Pedagogical route into IUT</td>
+            <td>
+              <a href="#invitation-expanded-route">Invitation route</a>,
+              <a href="#invitation-hodge-arakelov">Hodge-Arakelov motivation</a>,
+              <a href="#invitation-teichmuller-deformation">Teichmuller deformation</a>,
+              <a href="#invitation-log-theta-lattice">log-theta lattice sketch</a>,
+              <a href="#invitation-inter-universality">inter-universality/anabelian geometry</a>
+            </td>
+            <td>Invitation Expanded, Sections 1-4</td>
           </tr>
           <tr>
             <td>IUT IV</td>
@@ -11993,6 +12107,10 @@
           <div class="card sourceCard" data-filter="mochizuki panorama overview inter-universal teichmuller theory">
             <div><h3>Panoramic Overview</h3><div class="sourceMeta">Shinichi Mochizuki, survey, 45 pp.</div><p>Accessible survey of the motivation, non-scheme-theoretic deformation, and components of the log-theta lattice.</p></div>
             <a class="pdf" href="papers/mochizuki-panorama.pdf" target="_blank">PDF</a>
+          </div>
+          <div class="card sourceCard" data-filter="mochizuki invitation expanded iut hodge arakelov log theta lattice anabelian">
+            <div><h3>Invitation to IUT, Expanded Version</h3><div class="sourceMeta">Shinichi Mochizuki, lecture notes, 15 pp.</div><p>Compact pedagogical route through Hodge-Arakelov motivation, Teichmuller deformation, the log-theta lattice, and anabelian inter-universality.</p></div>
+            <a class="pdf" href="papers/mochizuki-invitation-iut-expanded.pdf" target="_blank">PDF</a>
           </div>
           <div class="card sourceCard" data-filter="mochizuki mutually alien copies gaussian integrals analogy">
             <div><h3>Mutually Alien Copies</h3><div class="sourceMeta">Shinichi Mochizuki, 170 pp.</div><p>Survey organized around analogies with Gaussian integrals and the role of mutually alien copies.</p></div>
