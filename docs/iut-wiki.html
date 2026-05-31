@@ -909,6 +909,12 @@
               <a href="#theta-pilot-q-pilot">theta/q pilot objects</a>,
               <a href="#lgp-gaussian-log-theta-lattice">LGP Gaussian log-theta lattice</a>,
               <a href="#log-shells-not-enough">why log-shells alone are not enough</a>,
+              <a href="#packet-log-volume-definition">packet log-volume definition</a>,
+              <a href="#mono-analytic-log-volume-compatibility">mono-analytic log-volume compatibility</a>,
+              <a href="#global-log-volume-compatibility">global log-volume compatibility</a>,
+              <a href="#procession-average-forced">forced procession average</a>,
+              <a href="#log-link-log-volume-compatibility">log-link/log-volume compatibility</a>,
+              <a href="#q-power-log-volume">q-power log-volume</a>,
               <a href="#log-kummer-correspondence">log-Kummer correspondence</a>,
               <a href="#upper-semi-compatibility">upper semi-compatibility</a>,
               <a href="#packet-normalization">packet log-volume</a>,
@@ -5616,6 +5622,16 @@
             <td>Theta/q pilot objects and LGP/lgp Gaussian log-theta lattices.</td>
             <td>Defines the pilot objects and warns that replacing the unit portions by log-shells alone loses necessary Kummer-theoretic Galois action.</td>
           </tr>
+          <tr>
+            <td>Proposition 3.9</td>
+            <td>Packet-normalized, procession-normalized, mono-analytic, and global log-volumes.</td>
+            <td>Defines the numerical log-volume layer that remains compatible with tensor packets, processions, global Frobenioids, and vertical log-links.</td>
+          </tr>
+          <tr>
+            <td>Remarks 3.9.1-3.9.4</td>
+            <td>Integral-structure discrepancy, forced averaging, and realified semi-simplification.</td>
+            <td>Explains how the holomorphic/mono-analytic discrepancy is computed from initial theta data and why log-link compatibility must avoid circular real-valued ambiguity.</td>
+          </tr>
         </table>
 
         <div class="grid2">
@@ -5987,6 +6003,140 @@
 
             <path d="M390 124 C390 160 410 176 446 207" stroke="#9a3f35" stroke-width="1.4" fill="none" marker-end="url(#arrowFmodModels)"></path>
             <path d="M631 124 C620 160 560 176 490 207" stroke="#9a3f35" stroke-width="1.4" fill="none" marker-end="url(#arrowFmodModels)"></path>
+          </svg>
+        </div>
+
+        <div class="grid2">
+          <div class="card" id="packet-log-volume-definition">
+            <h3>Packet log-volume definition</h3>
+            <p>
+              Proposition 3.9(i) defines log-volumes on compact regions in the rational
+              spans of local holomorphic tensor packets. At nonarchimedean places,
+              multiplication by <span class="math">p_v</span> adds
+              <span class="math">-log(p_v)</span>; at archimedean places,
+              multiplication by <span class="math">e</span> adds
+              <span class="math">1</span>.
+            </p>
+            <p>
+              In both cases the local holomorphic integral structures have log-volume
+              zero, and the packet log-volume is invariant under permutations of the
+              tensor labels.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Proposition 3.9(i)</span><span class="tag">packet-normalization</span></div>
+          </div>
+          <div class="card" id="mono-analytic-log-volume-compatibility">
+            <h3>Mono-analytic log-volume compatibility</h3>
+            <p>
+              Proposition 3.9(ii) transports the log-volume theory to the mono-analytic
+              log-shell packets. The construction adjusts for the discrepancy between
+              holomorphic integral structures and mono-analytic log-shell integral
+              structures, then remains compatible with the holomorphic side through the
+              poly-isomorphisms of Proposition 3.2.
+            </p>
+            <p>
+              The same construction applies to the corresponding
+              <span class="math">F⊢×μ</span> objects.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Proposition 3.9(ii)</span><span class="tag">log-shells</span></div>
+          </div>
+          <div class="card" id="global-log-volume-compatibility">
+            <h3>Global log-volume compatibility</h3>
+            <p>
+              Proposition 3.9(iii) defines the global packet log-volume by summing the
+              local log-volumes over <span class="math">v_Q</span>, with all but finitely
+              many terms zero. This global log-volume is invariant under multiplication
+              by elements of the labeled global field and under permutation of packet
+              labels.
+            </p>
+            <p>
+              For objects coming from the local fractional-ideal model, the global
+              log-volume agrees, up to the stated normalization, with the degree of the
+              corresponding arithmetic line bundle.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Proposition 3.9(iii)</span><span class="tag">global degree</span></div>
+          </div>
+          <div class="card" id="procession-average-forced">
+            <h3>Forced procession average</h3>
+            <p>
+              Proposition 3.9(i),(ii) normalizes procession log-volumes by averaging over
+              the capsules in the procession. Remark 3.9.3 says more general weighted
+              averages are not available: the same log-shell label can occur in multiple
+              capsules, so compatibility with the inclusion morphisms forces equal
+              weights.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Remark 3.9.3</span><span class="tag red">no arbitrary weights</span></div>
+          </div>
+          <div class="card" id="log-link-log-volume-compatibility">
+            <h3>Log-link/log-volume compatibility</h3>
+            <p>
+              Proposition 3.9(iv) states that the log-volumes attached to the LGP/lgp
+              objects are compatible along vertical log-links at the level of the rational
+              spans of log-shells. Remark 3.9.4 reformulates this using realified
+              semi-simplifications of measure spaces.
+            </p>
+            <p>
+              The point of the reformulation is to rule out a nontrivial dilation factor:
+              otherwise the comparison would only be valued modulo a period
+              <span class="math">log(λ)</span>, which would not support the real-valued
+              estimates needed later.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Proposition 3.9(iv)</span><span class="tag green">Remark 3.9.4</span></div>
+          </div>
+          <div class="card" id="q-power-log-volume">
+            <h3>q-power log-volume</h3>
+            <p>
+              Remark 3.9.4(iv) interprets the bad-prime log-Kummer correspondence as
+              passing from a local field to the submonoid
+              <span class="math">O× · q^N</span>, then to units, then through the local
+              logarithm and back to the additive field. The normalized log-volume sends
+              the generator of <span class="math">q^N</span> to
+              <span class="math">-log(q)</span>.
+            </p>
+            <p>
+              This is the local numerical interface between the q-pilot side and the
+              later theta-pilot estimate.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT III, Remark 3.9.4(iv)</span><span class="tag">q-pilot</span></div>
+          </div>
+        </div>
+
+        <div class="diagram" aria-label="Proposition 3.9 log-volume normalization">
+          <div class="diagramHeader">
+            <strong>Proposition 3.9</strong>
+            <span>from packet regions to real-valued log-volume</span>
+          </div>
+          <svg viewBox="0 0 920 300" role="img">
+            <defs>
+              <marker id="arrowProp39" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="52" y="58" width="166" height="66"></rect>
+            <text class="nodeTitle" x="135" y="84" text-anchor="middle">local packets</text>
+            <text class="tinyText" x="135" y="104" text-anchor="middle">holomorphic and log-shell</text>
+
+            <rect class="nodeBox green" x="274" y="58" width="170" height="66"></rect>
+            <text class="nodeTitle" x="359" y="84" text-anchor="middle">packet log-volume</text>
+            <text class="tinyText" x="359" y="104" text-anchor="middle">integral structures at 0</text>
+
+            <rect class="nodeBox gold" x="500" y="58" width="170" height="66"></rect>
+            <text class="nodeTitle" x="585" y="84" text-anchor="middle">procession average</text>
+            <text class="tinyText" x="585" y="104" text-anchor="middle">equal weights forced</text>
+
+            <rect class="nodeBox violet" x="726" y="58" width="140" height="66"></rect>
+            <text class="nodeTitle" x="796" y="84" text-anchor="middle">global sum</text>
+            <text class="tinyText" x="796" y="104" text-anchor="middle">finite support</text>
+
+            <path d="M218 91 H272" stroke="#315b8f" stroke-width="1.5" fill="none" marker-end="url(#arrowProp39)"></path>
+            <path d="M444 91 H498" stroke="#2f6b4f" stroke-width="1.5" fill="none" marker-end="url(#arrowProp39)"></path>
+            <path d="M670 91 H724" stroke="#8b6b24" stroke-width="1.5" fill="none" marker-end="url(#arrowProp39)"></path>
+
+            <rect class="nodeBox red" x="286" y="196" width="348" height="58"></rect>
+            <text class="nodeTitle" x="460" y="220" text-anchor="middle">vertical log-link compatibility</text>
+            <text class="tinyText" x="460" y="240" text-anchor="middle">no nontrivial dilation ambiguity in R</text>
+
+            <path d="M359 126 C360 156 398 172 438 193" stroke="#9a3f35" stroke-width="1.4" fill="none" marker-end="url(#arrowProp39)"></path>
+            <path d="M585 126 C576 156 524 172 482 193" stroke="#9a3f35" stroke-width="1.4" fill="none" marker-end="url(#arrowProp39)"></path>
           </svg>
         </div>
 
