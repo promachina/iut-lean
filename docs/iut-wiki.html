@@ -562,6 +562,7 @@
         <a href="#f-perp-prime-strips-pilot-iii24">F-perp prime-strips 2.4</a>
         <a href="#multiradiality">Multiradiality</a>
         <a href="#tensor-packets-iii31-33">Tensor packets 3.1-3.3</a>
+        <a href="#local-lgp-monoids-iii34">Local LGP monoids 3.4</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
@@ -1634,6 +1635,9 @@
               <a href="#tensor-packets-iii31-33">tensor packets source page</a>,
               <a href="#holomorphic-n-packet-formula-31">holomorphic n-packet formula</a>,
               <a href="#mono-analytic-packet-compatibility-32">mono-analytic packet compatibility</a>,
+              <a href="#local-lgp-monoids-iii34">local LGP monoids source page</a>,
+              <a href="#single-packet-monoids-34">single packet monoids</a>,
+              <a href="#lgp-splitting-monoids-act-on-packets-34">LGP splitting monoids act on packets</a>,
               <a href="#local-packet-frobenioids">local packet Frobenioids</a>,
               <a href="#local-lgp-monoids-source">local LGP monoids</a>,
               <a href="#vertically-coric-lgp">vertically coric LGP monoids</a>,
@@ -16154,6 +16158,233 @@
           <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
           <a href="#local-packet-frobenioids">local packet Frobenioids</a>
           <a href="#weighted-log-volume-measure">weighted log-volume measure</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="local-lgp-monoids-iii34">
+        <h2>Local Packet Frobenioids and LGP Monoids in IUT III 3.4</h2>
+        <p class="lede">
+          Proposition 3.4 turns tensor-packet data into local packet-theoretic
+          Frobenioids and logarithmic Gaussian procession monoids. This is the first
+          point in §3 where the packet formalism directly produces monoids that act on
+          packet containers and carry the splitting data later used in the
+          log-Kummer and log-volume arguments.
+        </p>
+        <div class="diagram fit" aria-label="IUT III Proposition 3.4 local packet Frobenioids and LGP monoids">
+          <div class="diagramHeader">
+            <strong>Proposition 3.4</strong>
+            <span>single packet monoids, processions, log-link pullback, and local LGP monoids</span>
+          </div>
+          <svg viewBox="0 0 1120 640" role="img">
+            <defs>
+              <marker id="arrowLGP34" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="64" y="64" width="230" height="88"></rect>
+            <text class="nodeTitle" x="179" y="94" text-anchor="middle">factor log(αF_v)</text>
+            <text class="tinyText" x="179" y="118" text-anchor="middle">Psi_log, units, realification</text>
+            <text class="tinyText" x="179" y="136" text-anchor="middle">Proposition 3.4(i)</text>
+
+            <rect class="nodeBox green" x="396" y="64" width="230" height="88"></rect>
+            <text class="nodeTitle" x="511" y="94" text-anchor="middle">packet summand</text>
+            <text class="tinyText" x="511" y="118" text-anchor="middle">log(A, alpha F_v)</text>
+            <text class="tinyText" x="511" y="136" text-anchor="middle">image of factor monoids</text>
+
+            <rect class="nodeBox gold" x="728" y="64" width="230" height="88"></rect>
+            <text class="nodeTitle" x="843" y="94" text-anchor="middle">packet Frobenioid data</text>
+            <text class="tinyText" x="843" y="118" text-anchor="middle">G_v-action or Aut-holomorphic data</text>
+            <text class="tinyText" x="843" y="136" text-anchor="middle">acts multiplicatively on packet</text>
+
+            <rect class="nodeBox violet" x="126" y="262" width="250" height="94"></rect>
+            <text class="nodeTitle" x="251" y="292" text-anchor="middle">Theta±ellNF log-link</text>
+            <text class="tinyText" x="251" y="316" text-anchor="middle">‡HT -> †HT</text>
+            <text class="tinyText" x="251" y="334" text-anchor="middle">compatible with F_l^± symmetries</text>
+
+            <rect class="nodeBox red" x="476" y="262" width="250" height="94"></rect>
+            <text class="nodeTitle" x="601" y="292" text-anchor="middle">F-prime-strip procession</text>
+            <text class="tinyText" x="601" y="316" text-anchor="middle">capsules indexed by S_{j+1}^±</text>
+            <text class="tinyText" x="601" y="334" text-anchor="middle">labels j = 1,...,l*</text>
+
+            <rect class="nodeBox green" x="826" y="262" width="230" height="94"></rect>
+            <text class="nodeTitle" x="941" y="292" text-anchor="middle">pull back Gaussian monoids</text>
+            <text class="tinyText" x="941" y="316" text-anchor="middle">Psi_Fgau, infty Psi_Fgau</text>
+            <text class="tinyText" x="941" y="334" text-anchor="middle">via log-link poly-isomorphisms</text>
+
+            <rect class="nodeBox blue" x="230" y="472" width="260" height="90"></rect>
+            <text class="nodeTitle" x="360" y="502" text-anchor="middle">local LGP monoids</text>
+            <text class="tinyText" x="360" y="526" text-anchor="middle">Psi_FLGP, infty Psi_FLGP</text>
+            <text class="tinyText" x="360" y="544" text-anchor="middle">with actions and bad-prime splittings</text>
+
+            <rect class="nodeBox gold" x="630" y="472" width="260" height="90"></rect>
+            <text class="nodeTitle" x="760" y="502" text-anchor="middle">acts on IQ packet pieces</text>
+            <text class="tinyText" x="760" y="526" text-anchor="middle">IQ(S_{j+1}^±,j; ‡F_v)</text>
+            <text class="tinyText" x="760" y="544" text-anchor="middle">whole monoid and unit portion</text>
+
+            <path d="M296 108 H394" class="edge blue" marker-end="url(#arrowLGP34)"></path>
+            <path d="M628 108 H726" class="edge green" marker-end="url(#arrowLGP34)"></path>
+            <path d="M512 154 C470 210 340 234 264 260" class="edge violet" marker-end="url(#arrowLGP34)"></path>
+            <path d="M378 309 H474" class="edge red" marker-end="url(#arrowLGP34)"></path>
+            <path d="M728 309 H824" class="edge green" marker-end="url(#arrowLGP34)"></path>
+            <path d="M941 358 C828 410 514 422 374 470" class="edge blue" marker-end="url(#arrowLGP34)"></path>
+            <path d="M492 517 H628" class="edge gold" marker-end="url(#arrowLGP34)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Construction</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Remark 3.3.2</td>
+            <td>
+              Local images of global tensor packets are considered for holomorphic and
+              mono-analytic processions. In the <span class="math">|F_l|</span>
+              processions, the zero label is identified with the diagonal label by the
+              isomorphisms cited from IUT II Corollaries 4.6 and 4.5.
+            </td>
+            <td>
+              These local packet images are the packet-level inputs to Proposition 3.4
+              and later global Frobenioid constructions.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.4(i)</td>
+            <td>
+              The factor-to-packet map sends the logarithmic monoid of one factor,
+              its units, and its realification to the corresponding packet monoid,
+              packet unit monoid, and realified packet monoid inside the selected
+              packet summand.
+            </td>
+            <td>
+              This converts one factor's monoid data into monoids acting on the packet
+              summand where later LGP actions are defined.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.4(i), local place clauses</td>
+            <td>
+              At nonarchimedean places, these monoids carry
+              <span class="math">G_v(αΠ_v)</span>-actions and determine Frobenioids
+              naturally isomorphic to <span class="math">log(αF_v)</span>. At
+              archimedean places, the analogous data are an Aut-holomorphic orbispace
+              and a Kummer structure.
+            </td>
+            <td>
+              The local construction keeps the nonarchimedean and archimedean types
+              separate while preserving the packet action interpretation.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.4(ii)</td>
+            <td>
+              Given a log-link of <span class="math">Θ±ellNF</span>-Hodge theaters,
+              apply the single packet monoid construction to the
+              <span class="math">F</span>-prime-strip processions associated to the
+              corresponding <span class="math">Θ±</span>-bridges, then pull back the
+              Gaussian monoids <span class="math">Ψ_Fgau</span> and
+              <span class="math">∞Ψ_Fgau</span> along the log-link poly-isomorphisms.
+            </td>
+            <td>
+              This produces the local logarithmic Gaussian procession monoids
+              <span class="math">Ψ_FLGP</span> and
+              <span class="math">∞Ψ_FLGP</span>.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.4(ii), symmetry condition</td>
+            <td>
+              The functorial algorithm requires compatibility of the log-link with the
+              <span class="math">F_l^±</span>-symmetrizing isomorphisms.
+            </td>
+            <td>
+              This prevents LGP monoids from being a purely formal relabeling of
+              Gaussian monoids; the procession symmetry is part of the construction.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.4(ii), packet action</td>
+            <td>
+              For bad primes, the component labelled
+              <span class="math">j</span> of the Galois-invariant submonoid sits inside
+              <span class="math">I_Q(S_{j+1}^±,j;‡F_v)</span> and acts
+              multiplicatively. For every place, the unit portion has the analogous
+              action on the same packet piece.
+            </td>
+            <td>
+              This is the explicit "splitting monoids of LGP-monoids acting on tensor
+              packets" interface shown in Fig. 3.1.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="single-packet-monoids-34">
+            <h3>Single packet monoids</h3>
+            <p>
+              Proposition 3.4(i) takes the monoid, unit submonoid, and realification
+              from one packet factor and views their images inside
+              <span class="math">log(A,αF_v)</span>. These images are the local packet
+              monoids.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 3.4(i)</span><span class="tag">packet monoids</span></div>
+          </div>
+          <div class="card" id="packet-frobenioid-local-place-types-34">
+            <h3>Local place types</h3>
+            <p>
+              Nonarchimedean places use group actions and Frobenioids; archimedean
+              places use Aut-holomorphic orbispace and Kummer data. The page keeps
+              these source clauses separate because they are not interchangeable.
+            </p>
+            <div class="tagRow"><span class="tag blue">Proposition 3.4(i)</span><span class="tag">local clauses</span></div>
+          </div>
+          <div class="card" id="lgp-splitting-monoids-act-on-packets-34">
+            <h3>LGP monoids act on packets</h3>
+            <p>
+              The local LGP monoids and their unit portions act on rational spans
+              <span class="math">I_Q(S_{j+1}^±,j;‡F_v)</span> of the packet integral
+              structures. This is the source-level content behind Fig. 3.1.
+            </p>
+            <div class="tagRow"><span class="tag gold">Proposition 3.4(ii)</span><span class="tag">action</span></div>
+          </div>
+          <div class="card" id="log-link-pullback-lgp-34">
+            <h3>Log-link pullback</h3>
+            <p>
+              The Gaussian monoids from IUT II are pulled back through the log-link
+              poly-isomorphisms before becoming LGP monoids. This is why the
+              construction depends on the log-link, not only on a procession label.
+            </p>
+            <div class="tagRow"><span class="tag violet">Proposition 3.4(ii)</span><span class="tag">log-link</span></div>
+          </div>
+          <div class="card" id="fl-symmetry-lgp-34">
+            <h3>F_l^± symmetry condition</h3>
+            <p>
+              Proposition 3.4(ii) explicitly invokes compatibility with the
+              <span class="math">F_l^±</span>-symmetrizing isomorphisms. This links the
+              LGP construction back to the procession combinatorics of IUT I.
+            </p>
+            <div class="tagRow"><span class="tag red">symmetry</span><span class="tag">processions</span></div>
+          </div>
+          <div class="card" id="bad-prime-lgp-splittings-34">
+            <h3>Bad-prime splittings</h3>
+            <p>
+              At bad primes, the local LGP monoids carry splittings up to torsion.
+              These are the local objects that Proposition 3.5 will make vertically
+              coric and Kummer-compatible.
+            </p>
+            <div class="tagRow"><span class="tag red">Vbad</span><span class="tag">to Prop. 3.5</span></div>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Use for formalization.</strong> A local LGP-monoid interface should
+          store the packet action target, the place type, the log-link used to pull back
+          Gaussian data, and the procession label. Treating it as only a named monoid
+          would lose the action-on-packets data needed for later log-volume estimates.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.4 and Remarks 3.3.2-3.3.3</a>
+          Related: <a href="#tensor-packets-iii31-33">tensor packets</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+          <a href="#vertically-coric-lgp">vertically coric LGP monoids</a>
+          <a href="#log-kummer-totality">log-Kummer totality</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
         </div>
       </section>
