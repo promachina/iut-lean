@@ -515,6 +515,7 @@
         <a href="#dispute">Scholze-Stix and responses</a>
         <a href="#formalization">RIMS Lean effort</a>
         <a href="#lana">LANA</a>
+        <a href="#galois-orbit-iut-preview">Galois-orbit IUT preview</a>
         <a href="#source-library">Source library</a>
         <a href="#glossary">Glossary</a>
       </nav>
@@ -1298,6 +1299,17 @@
               <a href="#label-reconstruction">label reconstruction</a>
             </td>
             <td>Essential Logical Structure, Section 3</td>
+          </tr>
+          <tr>
+            <td>Anabelian Gateway 2025</td>
+            <td>Enhanced IUT preview</td>
+            <td>
+              <a href="#galois-orbit-iut-preview">Galois-orbit IUT preview</a>,
+              <a href="#galorb-section-conjecture">section-conjecture condition</a>,
+              <a href="#galorb-siegel-zeroes">Siegel-zero application</a>,
+              <a href="#galorb-stronger-abc">stronger abc/Szpiro preview</a>
+            </td>
+            <td>Anabelian Gateway 2025, Section 4</td>
           </tr>
           <tr>
             <td>Mutually Alien Copies</td>
@@ -11320,6 +11332,128 @@
           <a href="#multiradiality">multiradiality</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
           <a href="#formalization">RIMS Lean effort</a>
+        </div>
+      </section>
+
+      <section id="galois-orbit-iut-preview">
+        <h2>Galois-Orbit IUT Preview</h2>
+        <p class="lede">
+          The 2025 Anabelian Gateway notes briefly preview a Galois-orbit version of
+          IUT. Mochizuki presents it as part of new enhanced versions related to ongoing
+          work on the Section Conjecture and Grothendieck-Teichmuller theory. The wiki
+          records the source claim and dependency shape, while marking the page as
+          preview material rather than established core IUT I-IV infrastructure.
+        </p>
+        <div class="diagram" aria-label="Galois-orbit IUT preview applications">
+          <div class="diagramHeader">
+            <strong>One height-bounding theme, three application directions</strong>
+            <span>Gateway 2025 Section 4</span>
+          </div>
+          <svg viewBox="0 0 1040 410" role="img">
+            <defs>
+              <marker id="arrowGalOrb" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox gold" x="44" y="152" width="246" height="86"></rect>
+            <text class="nodeTitle" x="167" y="182" text-anchor="middle">Galois-orbit IUT</text>
+            <text class="tinyText" x="167" y="206" text-anchor="middle">enhanced version; work in progress</text>
+            <text class="tinyText" x="167" y="224" text-anchor="middle">not core IUT I-IV infrastructure</text>
+
+            <rect class="nodeBox violet" x="372" y="152" width="248" height="86"></rect>
+            <text class="nodeTitle" x="496" y="182" text-anchor="middle">height-bounding theme</text>
+            <text class="tinyText" x="496" y="206" text-anchor="middle">local denominators</text>
+            <text class="tinyText" x="496" y="224" text-anchor="middle">one phenomenon, multiple outputs</text>
+
+            <rect class="nodeBox blue" x="714" y="38" width="270" height="78"></rect>
+            <text class="nodeTitle" x="849" y="66" text-anchor="middle">Anabelian geometry</text>
+            <text class="tinyText" x="849" y="90" text-anchor="middle">local-global Section Conjecture</text>
+            <text class="tinyText" x="849" y="108" text-anchor="middle">intersection-finiteness condition</text>
+
+            <rect class="nodeBox green" x="714" y="158" width="270" height="78"></rect>
+            <text class="nodeTitle" x="849" y="186" text-anchor="middle">Analytic number theory</text>
+            <text class="tinyText" x="849" y="210" text-anchor="middle">imaginary-quadratic Dirichlet L-functions</text>
+            <text class="tinyText" x="849" y="228" text-anchor="middle">nonexistence of Siegel zeroes</text>
+
+            <rect class="nodeBox red" x="714" y="278" width="270" height="78"></rect>
+            <text class="nodeTitle" x="849" y="306" text-anchor="middle">Diophantine geometry</text>
+            <text class="tinyText" x="849" y="330" text-anchor="middle">stronger abc/Szpiro preview</text>
+            <text class="tinyText" x="849" y="348" text-anchor="middle">same height-bounding phenomenon</text>
+
+            <path d="M290 195 H370" class="edge gold" marker-end="url(#arrowGalOrb)"></path>
+            <path d="M620 195 C656 195 668 78 712 78" class="edge blue" marker-end="url(#arrowGalOrb)"></path>
+            <path d="M620 195 H712" class="edge green" marker-end="url(#arrowGalOrb)"></path>
+            <path d="M620 195 C656 195 668 318 712 318" class="edge red" marker-end="url(#arrowGalOrb)"></path>
+          </svg>
+        </div>
+        <div class="grid3">
+          <div class="card" id="galorb-status">
+            <h3>Status in the source</h3>
+            <p>
+              Gateway 2025 explicitly presents this as a brief preview of new enhanced
+              versions of IUT, closely related to manuscripts in preparation and recent
+              progress. The wiki therefore records it as current source context, not as
+              a completed theorem page.
+            </p>
+            <div class="tagRow"><span class="tag gold">Gateway 2025 §4</span><span class="tag">preview</span></div>
+          </div>
+          <div class="card" id="galorb-section-conjecture">
+            <h3>Section-conjecture route</h3>
+            <p>
+              The source states that local geometricity at nonarchimedean primes plus
+              three global conditions should reduce geometricity of Galois sections in
+              the indicated hyperbolic-curve setting. Galois-orbit IUT is said to imply
+              the intersection-finiteness condition among these global conditions.
+            </p>
+            <div class="tagRow"><span class="tag blue">SC</span><span class="tag">intersection-finiteness</span></div>
+          </div>
+          <div class="card" id="galorb-siegel-zeroes">
+            <h3>Siegel-zero application</h3>
+            <p>
+              Mochizuki states that GalOrbIUT implies nonexistence of Siegel zeroes for
+              Dirichlet L-functions associated to imaginary quadratic number fields, via
+              work of Colmez, Granville-Stark, and Tafula.
+            </p>
+            <div class="tagRow"><span class="tag green">analytic number theory</span><span class="tag">source claim</span></div>
+          </div>
+          <div class="card" id="galorb-stronger-abc">
+            <h3>Stronger abc/Szpiro preview</h3>
+            <p>
+              The same page lists a numerically stronger version of abc/Szpiro
+              inequalities as another consequence. This should be kept distinct from
+              the published IUT IV route until the enhanced version has a precise source
+              text available for formalization.
+            </p>
+            <div class="tagRow"><span class="tag red">abc/Szpiro</span><span class="tag">enhanced route</span></div>
+          </div>
+          <div class="card" id="galorb-height-theme">
+            <h3>Shared height theme</h3>
+            <p>
+              Mochizuki describes the three application directions as essentially the
+              same mathematical phenomenon of bounding heights, or local denominators.
+              This is why the page belongs near IUT's log-volume and height-estimate
+              material even though it is not part of the four-paper proof spine.
+            </p>
+            <div class="tagRow"><span class="tag violet">height bounds</span><span class="tag">local denominators</span></div>
+          </div>
+          <div class="card" id="galorb-wiki-obligation">
+            <h3>Wiki and Lean obligation</h3>
+            <p>
+              A future formal page would need exact statements of GalOrbIUT, the
+              intersection-finiteness condition, and the analytic-number-theory bridge.
+              Until then, Lean work should treat this as an external roadmap, not as a
+              verified dependency for Corollary 3.12.
+            </p>
+            <div class="tagRow"><span class="tag blue">formalization</span><span class="tag">not core dependency</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-anabelian-gateway-iut-summit-2025.pdf" target="_blank">Anabelian Gateway 2025</a>
+          <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies</a>
+          Related: <a href="#iut-iv-diophantine-output">IUT IV output route</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+          <a href="#formalization">formalization</a>
         </div>
       </section>
 
