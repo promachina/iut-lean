@@ -470,6 +470,7 @@
         <a href="#hodge-theaters">Hodge theaters</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
         <a href="#multiplicative-additive-bridges">Multiplicative/additive bridges</a>
+        <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
         <a href="#frobenioids-log-shells">Frobenioids and log-shells</a>
         <a href="#theta-log-links">Theta and log links</a>
         <a href="#log-theta-lattice">Log-theta lattice</a>
@@ -2091,6 +2092,142 @@
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, §§4, 6</a>
           Related: <a href="#prime-strips-bridges">prime strips</a>
+          <a href="#theta-log-links">theta/log links</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="gaussian-frobenioid-theory">
+        <h2>Gaussian Monoids and Frobenioids</h2>
+        <p class="lede">
+          IUT II turns theta values into Gaussian monoids and then into local and global
+          Frobenioid data. This is the source of the <span class="math">j^2</span>
+          weighting and of the Theta×mu/Theta×mu-gau links that feed the later
+          log-theta-lattice and log-volume arguments.
+        </p>
+        <div class="diagram" aria-label="Gaussian monoid and Frobenioid pipeline">
+          <div class="diagramHeader">
+            <strong>IUT II Gaussian pipeline</strong>
+            <span>from theta evaluation to coric prime-strips</span>
+          </div>
+          <svg viewBox="0 0 900 360" role="img">
+            <defs>
+              <marker id="arrowGaussian" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="32" y="66" width="158" height="72"></rect>
+            <text class="nodeTitle" x="111" y="93" text-anchor="middle">mono-theta</text>
+            <text class="tinyText" x="111" y="113" text-anchor="middle">rigidity, theta sections</text>
+
+            <rect class="nodeBox green" x="236" y="66" width="160" height="72"></rect>
+            <text class="nodeTitle" x="316" y="93" text-anchor="middle">theta monoids</text>
+            <text class="tinyText" x="316" y="113" text-anchor="middle">Psi_env, constant monoids</text>
+
+            <rect class="nodeBox gold" x="442" y="66" width="166" height="72"></rect>
+            <text class="nodeTitle" x="525" y="93" text-anchor="middle">Gaussian monoids</text>
+            <text class="tinyText" x="525" y="113" text-anchor="middle">value profiles, j^2 weights</text>
+
+            <rect class="nodeBox violet" x="654" y="66" width="196" height="72"></rect>
+            <text class="nodeTitle" x="752" y="93" text-anchor="middle">global Frobenioids</text>
+            <text class="tinyText" x="752" y="113" text-anchor="middle">Denv, Dgau, realified degrees</text>
+
+            <path d="M190 102 H234" stroke="#315b8f" stroke-width="1.5" fill="none" marker-end="url(#arrowGaussian)"></path>
+            <path d="M396 102 H440" stroke="#2f6b4f" stroke-width="1.5" fill="none" marker-end="url(#arrowGaussian)"></path>
+            <path d="M608 102 H652" stroke="#8b6b24" stroke-width="1.5" fill="none" marker-end="url(#arrowGaussian)"></path>
+
+            <rect class="nodeBox red" x="214" y="226" width="208" height="76"></rect>
+            <text class="nodeTitle" x="318" y="253" text-anchor="middle">Theta×mu link</text>
+            <text class="tinyText" x="318" y="273" text-anchor="middle">theta-side F×mu transport</text>
+
+            <rect class="nodeBox red" x="478" y="226" width="208" height="76"></rect>
+            <text class="nodeTitle" x="582" y="253" text-anchor="middle">Theta×mu-gau link</text>
+            <text class="tinyText" x="582" y="273" text-anchor="middle">Gaussian-side F×mu transport</text>
+
+            <path d="M752 139 C742 190 692 224 686 250" stroke="#66508a" stroke-width="1.5" fill="none" marker-end="url(#arrowGaussian)"></path>
+            <path d="M654 122 C560 168 438 210 422 250" stroke="#66508a" stroke-width="1.5" fill="none" marker-end="url(#arrowGaussian)"></path>
+            <path d="M422 264 H476" stroke="#9a3f35" stroke-width="1.5" fill="none" marker-end="url(#arrowGaussian)"></path>
+
+            <text class="edgeLabel" x="450" y="325" text-anchor="middle">shared coric F^|×mu and D^| prime-strip invariants</text>
+          </svg>
+        </div>
+
+        <div class="grid2">
+          <div class="card">
+            <h3>Theta monoids before Gaussian monoids</h3>
+            <p>
+              IUT II Proposition 3.1 constructs theta monoids and constant monoids from
+              projective systems of mono-theta environments. Propositions 3.3 and 3.4
+              compare the mono-theta, Frobenioid-theoretic, and group-theoretic
+              versions using Kummer classes and rigidity isomorphisms.
+            </p>
+            <p>
+              This is the local algebraic input for the later Gaussian construction:
+              theta data is first made into monoids that can be acted on, compared, and
+              stripped to unit/value-group components.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT II, Proposition 3.1</span><span class="tag green">Proposition 3.4</span></div>
+          </div>
+          <div class="card">
+            <h3>Gaussian monoids and value-profiles</h3>
+            <p>
+              Corollary 3.5 defines value-profiles and Gaussian monoids from
+              symmetrized labeled constant monoids. The construction depends on
+              <span class="math">F_l^±</span>-symmetrizing isomorphisms and on preserving
+              a bijective relationship with the label set; Remark 3.5.2 contrasts this
+              with crushing labels to a single quotient point.
+            </p>
+            <p>
+              Corollary 3.6 gives the corresponding Frobenioid-theoretic Gaussian
+              monoids when the mono-theta environment comes from a tempered
+              Frobenioid.
+            </p>
+            <div class="tagRow"><span class="tag green">Corollary 3.5</span><span class="tag green">Corollary 3.6</span><span class="tag">value-profile</span></div>
+          </div>
+          <div class="card">
+            <h3>Globalization over all places</h3>
+            <p>
+              IUT II §4 extends the Gaussian construction from bad places to good
+              nonarchimedean and archimedean places. Corollary 4.5 then attaches
+              constant monoids, semi-simplifications, local theta/Gaussian monoids, and
+              global realified theta/Gaussian Frobenioids to a D-Theta±ell-Hodge theater.
+            </p>
+            <p>
+              The global Frobenioids <span class="math">D_env</span> and
+              <span class="math">D_gau</span> carry realified divisor data, so this layer
+              is already preparing the objects whose log-volumes are estimated later.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT II §4</span><span class="tag green">Corollary 4.5</span></div>
+          </div>
+          <div class="card">
+            <h3>Theta×mu and Theta×mu-gau links</h3>
+            <p>
+              Corollary 4.10 constructs F-prime-strips from constant, theta, and
+              Gaussian data, passes them to <span class="math">F^|×mu</span>-prime-strips,
+              and defines the Theta×mu and Theta×mu-gau links between Theta±ellNF
+              theaters.
+            </p>
+            <p>
+              The coric output is the invariant <span class="math">F^|×mu_△</span> and
+              the associated <span class="math">D^|_△</span> prime-strip. The divisor or
+              value-group part is not preserved by these links; Remark 4.10.3 identifies
+              that distortion as the arithmetic Teichmuller deformation whose volume
+              effect is later computed.
+            </p>
+            <div class="tagRow"><span class="tag green">Corollary 4.10</span><span class="tag green">Remark 4.10.3</span></div>
+          </div>
+        </div>
+        <div class="callout">
+          Link to Corollary 3.12: the Gaussian layer explains where the square-weighted
+          theta-value distribution enters the later log-volume inequality. It also
+          clarifies why the wiki keeps unit/coric information distinct from divisor or
+          value-group information.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, §§3-4</a>
+          Related: <a href="#multiplicative-additive-bridges">multiplicative/additive bridges</a>
           <a href="#theta-log-links">theta/log links</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
