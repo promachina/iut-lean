@@ -561,6 +561,7 @@
         <a href="#theta-monoid-multiradiality-iii22">Theta monoid multiradiality 2.2</a>
         <a href="#f-perp-prime-strips-pilot-iii24">F-perp prime-strips 2.4</a>
         <a href="#multiradiality">Multiradiality</a>
+        <a href="#tensor-packets-iii31-33">Tensor packets 3.1-3.3</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
@@ -1630,6 +1631,9 @@
               <a href="#global-tensor-packet">global tensor packet</a>,
               <a href="#tensor-packet-integral-structures">tensor-packet integral structures</a>,
               <a href="#weighted-log-volume-measure">weighted log-volume measure</a>,
+              <a href="#tensor-packets-iii31-33">tensor packets source page</a>,
+              <a href="#holomorphic-n-packet-formula-31">holomorphic n-packet formula</a>,
+              <a href="#mono-analytic-packet-compatibility-32">mono-analytic packet compatibility</a>,
               <a href="#local-packet-frobenioids">local packet Frobenioids</a>,
               <a href="#local-lgp-monoids-source">local LGP monoids</a>,
               <a href="#vertically-coric-lgp">vertically coric LGP monoids</a>,
@@ -15910,6 +15914,245 @@
           Related: <a href="#theta-monoid-multiradiality-iii22">theta monoid multiradiality</a>
           <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
           <a href="#theta-pilot-q-pilot">theta/q pilot objects</a>
+          <a href="#weighted-log-volume-measure">weighted log-volume measure</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="tensor-packets-iii31-33">
+        <h2>Tensor Packets in IUT III 3.1-3.3</h2>
+        <p class="lede">
+          Propositions 3.1-3.3 introduce tensor packets as the §3 amalgam of
+          log-shells and processions. They first construct local holomorphic packets
+          from <span class="math">F</span>-prime-strip capsules, then local
+          mono-analytic packets from <span class="math">D⊢</span>-prime-strip
+          capsules, and finally global tensor packets from labeled
+          <span class="math">M_mod</span> fields.
+        </p>
+        <div class="diagram fit" aria-label="IUT III Propositions 3.1 to 3.3 tensor packet construction">
+          <div class="diagramHeader">
+            <strong>Local and global tensor packets</strong>
+            <span>holomorphic packets, mono-analytic packets, and log-linked localization</span>
+          </div>
+          <svg viewBox="0 0 1120 650" role="img">
+            <defs>
+              <marker id="arrowTensor3133" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="60" y="62" width="238" height="88"></rect>
+            <text class="nodeTitle" x="179" y="92" text-anchor="middle">F-prime-strip n-capsule</text>
+            <text class="tinyText" x="179" y="116" text-anchor="middle">{alpha F}_{alpha in A}</text>
+            <text class="tinyText" x="179" y="134" text-anchor="middle">Proposition 3.1 input</text>
+
+            <rect class="nodeBox green" x="430" y="62" width="238" height="88"></rect>
+            <text class="nodeTitle" x="549" y="92" text-anchor="middle">local holomorphic packet</text>
+            <text class="tinyText" x="549" y="116" text-anchor="middle">direct sum over v | v_Q</text>
+            <text class="tinyText" x="549" y="134" text-anchor="middle">tensor over alpha in A</text>
+
+            <rect class="nodeBox gold" x="800" y="62" width="238" height="88"></rect>
+            <text class="nodeTitle" x="919" y="92" text-anchor="middle">ring and integral structures</text>
+            <text class="tinyText" x="919" y="116" text-anchor="middle">field-summand decomposition</text>
+            <text class="tinyText" x="919" y="134" text-anchor="middle">Psi_log integral structures</text>
+
+            <rect class="nodeBox violet" x="166" y="270" width="254" height="92"></rect>
+            <text class="nodeTitle" x="293" y="300" text-anchor="middle">D⊢ mono-analytic capsule</text>
+            <text class="tinyText" x="293" y="324" text-anchor="middle">log-shell integral structures I(-)</text>
+            <text class="tinyText" x="293" y="342" text-anchor="middle">Proposition 3.2</text>
+
+            <rect class="nodeBox red" x="516" y="270" width="254" height="92"></rect>
+            <text class="nodeTitle" x="643" y="300" text-anchor="middle">poly-isomorphic packets</text>
+            <text class="tinyText" x="643" y="324" text-anchor="middle">D⊢ -> F⊢×μ -> F</text>
+            <text class="tinyText" x="643" y="342" text-anchor="middle">holomorphic / mono-analytic compatibility</text>
+
+            <rect class="nodeBox green" x="106" y="474" width="254" height="90"></rect>
+            <text class="nodeTitle" x="233" y="504" text-anchor="middle">global packet (M_mod)_A</text>
+            <text class="tinyText" x="233" y="528" text-anchor="middle">tensor of labeled global fields</text>
+            <text class="tinyText" x="233" y="546" text-anchor="middle">Proposition 3.3</text>
+
+            <rect class="nodeBox blue" x="436" y="474" width="254" height="90"></rect>
+            <text class="nodeTitle" x="563" y="504" text-anchor="middle">log-linked localization</text>
+            <text class="tinyText" x="563" y="528" text-anchor="middle">global packet injects into product</text>
+            <text class="tinyText" x="563" y="546" text-anchor="middle">of local holomorphic packets</text>
+
+            <rect class="nodeBox gold" x="766" y="474" width="254" height="90"></rect>
+            <text class="nodeTitle" x="893" y="504" text-anchor="middle">weighted log-volume stage</text>
+            <text class="tinyText" x="893" y="528" text-anchor="middle">Remark 3.1.1 weights</text>
+            <text class="tinyText" x="893" y="546" text-anchor="middle">feeds Proposition 3.9</text>
+
+            <path d="M300 106 H428" class="edge blue" marker-end="url(#arrowTensor3133)"></path>
+            <path d="M670 106 H798" class="edge green" marker-end="url(#arrowTensor3133)"></path>
+            <path d="M550 152 C512 210 394 238 306 268" class="edge violet" marker-end="url(#arrowTensor3133)"></path>
+            <path d="M422 316 H514" class="edge red" marker-end="url(#arrowTensor3133)"></path>
+            <path d="M294 364 C280 404 252 436 238 472" class="edge green" marker-end="url(#arrowTensor3133)"></path>
+            <path d="M362 519 H434" class="edge blue" marker-end="url(#arrowTensor3133)"></path>
+            <path d="M692 519 H764" class="edge gold" marker-end="url(#arrowTensor3133)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Construction</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Proposition 3.1 setup</td>
+            <td>
+              For an <span class="math">n</span>-capsule
+              <span class="math">{αF}_{α∈A}</span>, the one-packet over
+              <span class="math">v_Q</span> is the direct sum of
+              <span class="math">log(αF_v)</span> over all
+              <span class="math">v|v_Q</span>. The
+              <span class="math">n</span>-packet is the tensor product over
+              <span class="math">α∈A</span>, equivalently a direct sum over all choices
+              of places <span class="math">{v_α}</span> over <span class="math">v_Q</span>.
+            </td>
+            <td>
+              This is the basic packet container used by the later procession and
+              log-volume machinery.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.1(i)</td>
+            <td>
+              The ind-topological field structures on the factors determine an
+              ind-topological ring structure on the packet. Decompositions as direct
+              sums of fields are determined by that ring structure and are compatible
+              with the local group actions on the relevant summands.
+            </td>
+            <td>
+              The packet is not merely a formal tensor product; its ring structure
+              recovers its field-summand decomposition.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.1(ii)</td>
+            <td>
+              For fixed <span class="math">α</span> and
+              <span class="math">v|v_Q</span>, the summand
+              <span class="math">log(A,αF_v)</span> uses the
+              <span class="math">v</span>-summand in the
+              <span class="math">α</span> factor and all other factors. Tensoring with
+              <span class="math">1</span>'s gives
+              <span class="math">log(αF_v) → log(A,αF_v)</span>, transporting
+              integral structures to packet summands.
+            </td>
+            <td>
+              This is the local holomorphic integral structure that later has to be
+              compared with mono-analytic log-shell integral structures.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 3.1.1</td>
+            <td>
+              Locally, <span class="math">log(αF_v)</span> behaves like an algebraic
+              closure <span class="math">kbar</span> and its integral structure like
+              <span class="math">O_kbar</span>. The remark fixes normalized weights
+              for log-volumes over the chosen set <span class="math">V⊆V(K)</span> and
+              warns that weighted sums need not be logarithms of ordinary measures.
+            </td>
+            <td>
+              This fixes the normalization convention before the log-volume estimates
+              of Proposition 3.9 and Corollary 3.12.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.2</td>
+            <td>
+              Repeats the packet construction for
+              <span class="math">D⊢</span>-prime-strip capsules. If the capsule comes
+              from <span class="math">F</span>-data, the poly-isomorphisms
+              <span class="math">D⊢ → F⊢×μ → F</span> induce compatible
+              identifications with the holomorphic packets. Integral structures are
+              built from mono-analytic log-shells, or Hermitian unit balls at
+              archimedean places.
+            </td>
+            <td>
+              This is the packet-level bridge from holomorphic data to the
+              mono-analytic/log-shell side.
+            </td>
+          </tr>
+          <tr>
+            <td>Proposition 3.3</td>
+            <td>
+              For a subset <span class="math">A</span> of Hodge-theater labels, the
+              global packet <span class="math">(†M_mod)_A</span> is the tensor product
+              of the labeled global fields. Localization functors, composed with the
+              chosen log-links, inject this global packet into the product of local
+              holomorphic packets.
+            </td>
+            <td>
+              This supplies the global object whose local images are measured in the
+              packet/log-volume corridor.
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card" id="holomorphic-n-packet-formula-31">
+            <h3>Holomorphic n-packet formula</h3>
+            <p>
+              The <span class="math">n</span>-packet over
+              <span class="math">v_Q</span> is a tensor over labels and a direct sum
+              over all choices of places above <span class="math">v_Q</span>. This is
+              why packet log-volumes later require normalized sums over those choices.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 3.1</span><span class="tag">local packet</span></div>
+          </div>
+          <div class="card" id="packet-field-decomposition-31">
+            <h3>Field-summand decomposition</h3>
+            <p>
+              Proposition 3.1(i) says the ind-topological ring structure determines the
+              decomposition into direct sums of ind-topological fields. This prevents
+              the packet from being treated as an unstructured product of modules.
+            </p>
+            <div class="tagRow"><span class="tag blue">Proposition 3.1(i)</span><span class="tag">ring structure</span></div>
+          </div>
+          <div class="card" id="packet-integral-structure-31">
+            <h3>Holomorphic integral structures</h3>
+            <p>
+              The injection <span class="math">log(αF_v) → log(A,αF_v)</span> carries
+              the integral structure of the factor into each field summand of the packet.
+              This is one side of the discrepancy later estimated in IUT IV.
+            </p>
+            <div class="tagRow"><span class="tag gold">Proposition 3.1(ii)</span><span class="tag">integers</span></div>
+          </div>
+          <div class="card" id="weighted-volume-caution-311">
+            <h3>Weighted-volume caution</h3>
+            <p>
+              Remark 3.1.1 says the weighted log-volume sum is not generally the log of
+              an ordinary measure. Direct product regions are straightforward; an
+              auxiliary weighted-measure construction handles broader Borel sets.
+            </p>
+            <div class="tagRow"><span class="tag red">Remark 3.1.1</span><span class="tag">measure</span></div>
+          </div>
+          <div class="card" id="mono-analytic-packet-compatibility-32">
+            <h3>Mono-analytic packet compatibility</h3>
+            <p>
+              Proposition 3.2 makes the same packet construction for
+              <span class="math">D⊢</span> data and identifies it with
+              <span class="math">F⊢×μ</span> and <span class="math">F</span> packets
+              when the data arise from an <span class="math">F</span>-capsule.
+            </p>
+            <div class="tagRow"><span class="tag violet">Proposition 3.2(i)</span><span class="tag">poly-isomorphism</span></div>
+          </div>
+          <div class="card" id="global-packet-localization-33">
+            <h3>Global packet localization</h3>
+            <p>
+              Proposition 3.3 links the global tensor packet
+              <span class="math">(†M_mod)_A</span> to local holomorphic packets by
+              composing localization functors with the selected log-links.
+            </p>
+            <div class="tagRow"><span class="tag green">Proposition 3.3</span><span class="tag">global to local</span></div>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Use for formalization.</strong> Tensor packets should be represented
+          with their index set, place fibers, field-summand decomposition, and integral
+          structures explicit. A bare tensor-product type would miss the decomposition
+          and weighting data that are later used in log-volume comparisons.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Propositions 3.1-3.3 and Remark 3.1.1</a>
+          Related: <a href="#f-perp-prime-strips-pilot-iii24">F-perp prime-strips and pilot objects</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+          <a href="#local-packet-frobenioids">local packet Frobenioids</a>
           <a href="#weighted-log-volume-measure">weighted log-volume measure</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
         </div>
