@@ -820,6 +820,12 @@
         <a href="#alien-corollary-312-estimate-372">Alien 3.12 estimate 3.7(ii)</a>
         <a href="#alien-stewart-yu-comparison-373">Alien Stewart-Yu comparison 3.7(iii)</a>
         <a href="#alien-leading-term-computation-374">Alien leading term 3.7(iv)</a>
+        <a href="#alien-gaussian-comparison-38">Alien Gaussian comparison 3.8</a>
+        <a href="#alien-gaussian-theta-link-381">Alien Gaussian/theta-link 3.8(1-4)</a>
+        <a href="#alien-gaussian-transport-382">Alien Gaussian transport 3.8(5-8)</a>
+        <a href="#alien-gaussian-radial-angular-383">Alien radial/angular 3.8(9-10)</a>
+        <a href="#alien-gaussian-error-factor-384">Alien error factor 3.8(11)</a>
+        <a href="#alien-gaussian-left-right-rigidity-385">Alien left/right rigidity 3.8</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
         <a href="#iut-i-base-bridges-evaluation-sections">Base bridges/evaluation sections</a>
         <a href="#iut-i-additive-base-bridges-61-610">Additive base bridges 6.1-6.10</a>
@@ -17118,6 +17124,263 @@
           Related: <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV theorem 1.10</a>
           <a href="#iut-iv-suitable-initial-theta-data-22">suitable initial theta data</a>
           <a href="#effective-abc-szpiro">Szpiro to ABC</a>
+        </div>
+      </section>
+
+      <section id="alien-gaussian-comparison-38" data-filter="mutually alien copies 3.8 comparison gaussian integral arithmetic changes coordinates multiradial representations">
+        <h2>Alien Copies 3.8: Gaussian Comparison</h2>
+        <p class="lede">
+          §3.8 compares the arithmetic coordinate changes and multiradial
+          representations of §2-§3 with the classical computation of the Gaussian
+          integral. The comparison is not a proof step by itself; it is Mochizuki's
+          structural guide for why alien copies, coordinate changes, radial/angular
+          decoupling, and error factors appear in the IUT architecture.
+        </p>
+        <div class="diagram fit" aria-label="Gaussian integral comparison map">
+          <div class="diagramHeader">
+            <strong>Gaussian computation as structural analogy</strong>
+            <span>Mutually Alien Copies §3.8</span>
+          </div>
+          <svg viewBox="0 0 1080 470" role="img">
+            <defs>
+              <marker id="arrowAlienGaussian38" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="64" y="62" width="250" height="84"></rect>
+            <text class="nodeTitle" x="189" y="92" text-anchor="middle">Gaussian side</text>
+            <text class="tinyText" x="189" y="118" text-anchor="middle">two copies of integral</text>
+            <text class="tinyText" x="189" y="136" text-anchor="middle">cartesian to polar coordinates</text>
+
+            <rect class="nodeBox green" x="414" y="62" width="250" height="84"></rect>
+            <text class="nodeTitle" x="539" y="92" text-anchor="middle">IUT side</text>
+            <text class="tinyText" x="539" y="118" text-anchor="middle">domain/codomain Hodge theaters</text>
+            <text class="tinyText" x="539" y="136" text-anchor="middle">log-theta to etale picture</text>
+
+            <rect class="nodeBox gold" x="764" y="62" width="250" height="84"></rect>
+            <text class="nodeTitle" x="889" y="92" text-anchor="middle">3.12 relevance</text>
+            <text class="tinyText" x="889" y="118" text-anchor="middle">log-shell error factors</text>
+            <text class="tinyText" x="889" y="136" text-anchor="middle">Ind1/Ind2/Ind3 control</text>
+
+            <path d="M316 104 H412" class="edge blue" marker-end="url(#arrowAlienGaussian38)"></path>
+            <path d="M666 104 H762" class="edge green" marker-end="url(#arrowAlienGaussian38)"></path>
+
+            <rect class="nodeBox violet" x="100" y="248" width="240" height="88"></rect>
+            <text class="nodeTitle" x="220" y="278" text-anchor="middle">Naive substitution</text>
+            <text class="tinyText" x="220" y="304" text-anchor="middle">e^(-x^2) -> u</text>
+            <text class="tinyText" x="220" y="322" text-anchor="middle">{q^(j^2)} -> q</text>
+
+            <rect class="nodeBox green" x="420" y="248" width="240" height="88"></rect>
+            <text class="nodeTitle" x="540" y="278" text-anchor="middle">Decoupling</text>
+            <text class="tinyText" x="540" y="304" text-anchor="middle">radial/angular coordinates</text>
+            <text class="tinyText" x="540" y="322" text-anchor="middle">Kummer/cyclotomic rigidity</text>
+
+            <rect class="nodeBox red" x="740" y="248" width="240" height="88"></rect>
+            <text class="nodeTitle" x="860" y="278" text-anchor="middle">Justification cost</text>
+            <text class="tinyText" x="860" y="304" text-anchor="middle">sqrt angular integral</text>
+            <text class="tinyText" x="860" y="322" text-anchor="middle">log-different error factor</text>
+
+            <path d="M340 292 H418" class="edge violet" marker-end="url(#arrowAlienGaussian38)"></path>
+            <path d="M660 292 H738" class="edge green" marker-end="url(#arrowAlienGaussian38)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source cluster</th><th>Content</th><th>Page</th></tr>
+          <tr><td>(1gau)-(4gau)</td><td>Naive coordinate change, two alien copies, two dimensions, and infinitesimal/net-mass interpretation.</td><td><a href="#alien-gaussian-theta-link-381">theta-link comparison</a></td></tr>
+          <tr><td>(5gau)-(8gau)</td><td>Local coordinate changes, MLF examples, passage to polar coordinates, and Kummer decoupling.</td><td><a href="#alien-gaussian-transport-382">transport comparison</a></td></tr>
+          <tr><td>(9gau)-(10gau)</td><td>Radial evaluation by quadraticity and angular evaluation by logarithms on units.</td><td><a href="#alien-gaussian-radial-angular-383">radial/angular comparison</a></td></tr>
+          <tr><td>(11gau)</td><td>The final Gaussian error factor is compared with the 3.7 log-different error factor from indeterminacies on log-shells.</td><td><a href="#alien-gaussian-error-factor-384">error factor</a></td></tr>
+          <tr><td>Final paragraph</td><td>The left side of <span class="math">{q^(j^2)} -> q</span> is rigid in a way the right side is not.</td><td><a href="#alien-gaussian-left-right-rigidity-385">left/right rigidity</a></td></tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.8</a>
+          Related: <a href="#alien-error-factor-17">Gaussian error-factor review</a>
+          <a href="#alien-corollary-312-estimate-372">3.12 estimate</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+        </div>
+      </section>
+
+      <section id="alien-gaussian-theta-link-381" data-filter="mutually alien copies 3.8 1gau 2gau 3gau 4gau theta link q j squared two copies log theta lattice prime strips net mass infinitesimals">
+        <h2>Alien Copies 3.8(1-4): Gaussian and Theta-Link Setup</h2>
+        <p class="lede">
+          The first four Gaussian comparison points align the elementary-looking
+          substitution <span class="math">e^(-x^2) -> u</span> with the theta-link
+          assignment <span class="math">{q^(j^2)} -> q</span>. They also match the
+          doubled Gaussian integral, the two dimensions of the Euclidean plane, and
+          the net-mass view of integration with the basic alien-copy architecture.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Gaussian step</th><th>IUT-side comparison</th><th>Reading</th></tr>
+          <tr>
+            <td>(1gau) naive substitution</td>
+            <td>The theta-link assignment from theta values <span class="math">q^(j^2)</span> to <span class="math">q</span>.</td>
+            <td>The analogy starts with an apparently illegitimate coordinate change that later receives a controlled correction.</td>
+          </tr>
+          <tr>
+            <td>(2gau) two alien copies</td>
+            <td>The two theta-Hodge theaters in the domain and codomain of the theta-link.</td>
+            <td>One does not identify two copies inside one fixed conventional scheme theory.</td>
+          </tr>
+          <tr>
+            <td>(3gau) two plane dimensions</td>
+            <td>The two dimensions of the log-theta-lattice and the two combinatorial dimensions of a ring.</td>
+            <td>This is where the MLF/NF/ring-dimension discussion of §2.11 re-enters.</td>
+          </tr>
+          <tr>
+            <td>(4gau) net mass from zero-mass pieces</td>
+            <td>Prime-strips, heights as log-volumes, and the Frobenius-like/etale-like dichotomy.</td>
+            <td>Local summation and infinitesimal/limit behavior are separated conceptually.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.8(1gau)-(4gau)</a>
+          Related: <a href="#alien-theta-links-337">theta-links</a>
+          <a href="#alien-ring-dimensions-211">ring dimensions</a>
+          <a href="#alien-arithmetic-degrees-22">heights/log-volumes</a>
+        </div>
+      </section>
+
+      <section id="alien-gaussian-transport-382" data-filter="mutually alien copies 3.8 5gau 6gau 7gau 8gau mono anabelian transport arithmetic changes coordinates MLF polar radial angular Kummer cyclotomic rigidity">
+        <h2>Alien Copies 3.8(5-8): Transport and Decoupling</h2>
+        <p class="lede">
+          The middle comparison points treat coordinate change as the main mechanism.
+          Local Euclidean coordinate changes correspond to mono-anabelian transport;
+          linear changes in the plane correspond to arithmetic coordinate changes for
+          MLFs; and passage to polar coordinates corresponds to multiradial transport
+          from the log-theta lattice to the etale-picture.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Gaussian feature</th><th>IUT feature</th><th>Dependency</th></tr>
+          <tr>
+            <td>Effect of local coordinate changes on integrals</td>
+            <td>Computing arithmetic coordinate-change effects by mono-anabelian transport.</td>
+            <td>Uses the §2.7-§2.11 transport viewpoint.</td>
+          </tr>
+          <tr>
+            <td>Unipotent maps, toral dilations, rotations</td>
+            <td>MLF examples of arithmetic coordinate changes.</td>
+            <td>Connects §2.12 with the theta-link context.</td>
+          </tr>
+          <tr>
+            <td>Cartesian-to-polar passage</td>
+            <td>Parallel transport between radial data collections, especially log-theta lattice to etale-picture.</td>
+            <td>Feeds the §3.7 multiradial representation.</td>
+          </tr>
+          <tr>
+            <td>Radial/angular decoupling</td>
+            <td>Kummer theory for functions via multiradial decoupling and cyclotomic rigidity.</td>
+            <td>Uses §3.4 rigidity before log-volume estimates are applied.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.8(5gau)-(8gau)</a>
+          Related: <a href="#alien-mono-anabelian-transport-27">mono-anabelian transport</a>
+          <a href="#alien-mlf-transport-212">MLF transport</a>
+          <a href="#alien-kummer-decoupling-34">Kummer decoupling</a>
+        </div>
+      </section>
+
+      <section id="alien-gaussian-radial-angular-383" data-filter="mutually alien copies 3.8 9gau 10gau radial integral angular integral quadratic exponent theta group commutators log shells log link unit group natural logarithm">
+        <h2>Alien Copies 3.8(9-10): Radial and Angular Evaluation</h2>
+        <p class="lede">
+          In the Gaussian computation, the radial integral is tractable because of the
+          quadratic exponent, while the angular integral is evaluated over complex
+          units using the logarithm. Mochizuki compares these two facts to theta-group
+          commutator quadraticity and to log-shells as containers for Galois-evaluation
+          output.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Gaussian side</th><th>IUT-side comparison</th><th>3.12 corridor relevance</th></tr>
+          <tr>
+            <td>Radial integral</td>
+            <td>Formal rigidity of mono-theta environments arising from quadratic commutator structure in theta groups.</td>
+            <td>Controls the value-group side of the theta-link.</td>
+          </tr>
+          <tr>
+            <td>Angular integral over units</td>
+            <td>Galois evaluation and log-shells, including iterated log-link actions on local units.</td>
+            <td>Places the unit-group side into the log-shell containers where indeterminacies act.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.8(9gau)-(10gau)</a>
+          Related: <a href="#alien-theta-function-rigidity-343">theta rigidity</a>
+          <a href="#alien-galois-evaluation-36">Galois evaluation</a>
+          <a href="#alien-log-shell-actions-364">log-shell actions</a>
+        </div>
+      </section>
+
+      <section id="alien-gaussian-error-factor-384" data-filter="mutually alien copies 3.8 11gau error factor square root angular integral log different indeterminacies Ind1 Ind2 Ind3 log shells corollary 3.12">
+        <h2>Alien Copies 3.8(11): Error Factor Interpretation</h2>
+        <p class="lede">
+          The final Gaussian step says the naive substitution can be justified after
+          paying an error factor from the angular integral. Mochizuki compares this to
+          the §3.7 computation: a naive Frobenius-style height bound over number fields
+          is justified only after allowing the log-different error factor arising from
+          <span class="math">Ind1</span>, <span class="math">Ind2</span>, and
+          <span class="math">Ind3</span> acting on log-shells.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Component</th><th>Gaussian role</th><th>IUT comparison</th></tr>
+          <tr>
+            <td>Naive change</td>
+            <td><span class="math">e^(-x^2) -> u</span> is not accepted without correction.</td>
+            <td>Naive Gaussian-Frobenius height bounding is not accepted without indeterminacy control.</td>
+          </tr>
+          <tr>
+            <td>Error factor</td>
+            <td>Square root of the angular integral.</td>
+            <td>Log-different term produced by the log-shell indeterminacies.</td>
+          </tr>
+          <tr>
+            <td>Traceability warning</td>
+            <td>One should not expect explicit portions of the original integral to match radial/angular pieces.</td>
+            <td>Mochizuki likewise warns that tracing the original value-group portions through tensor packets of log-shells is not readily computable.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.8(11gau)</a>
+          Related: <a href="#alien-corollary-312-estimate-372">3.12 log-volume estimate</a>
+          <a href="#alien-theorem-311-representation-371">3.11 representation</a>
+          <a href="#scholze-stix-critique-page">Scholze-Stix critique page</a>
+        </div>
+      </section>
+
+      <section id="alien-gaussian-left-right-rigidity-385" data-filter="mutually alien copies 3.8 left right rigidity q lambda q N j squared theta functions mono theta environments Galois evaluation false stronger Szpiro">
+        <h2>Alien Copies 3.8: Left/Right Rigidity of the Theta-Link</h2>
+        <p class="lede">
+          The closing observation of §3.8 separates the two sides of the theta-link
+          assignment. The left side <span class="math">{q^(j^2)}</span> cannot be
+          freely replaced by <span class="math">q^lambda</span> or
+          <span class="math">{q^(N*j^2)}</span>, while the right side
+          <span class="math">q</span> can be replaced by a rational power without
+          materially improving the estimates.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Attempted replacement</th><th>Source reason it is not allowed or not useful</th></tr>
+          <tr>
+            <td>Replace left side by <span class="math">q^lambda</span></td>
+            <td>No corresponding theory of multiradial decoupling/cyclotomic rigidity of the kind available for theta functions and mono-theta environments.</td>
+          </tr>
+          <tr>
+            <td>Replace left side by <span class="math">q^(N*j^2)</span>, <span class="math">N >= 2</span></td>
+            <td>The first power of reciprocal theta functions and the Galois-evaluation passage from abstract functions to values play a special role.</td>
+          </tr>
+          <tr>
+            <td>Replace right side by <span class="math">q^lambda</span></td>
+            <td>Mochizuki says this has no substantive effect and gives no substantive improvement in the §3.7 estimates.</td>
+          </tr>
+        </table>
+        <p>
+          For the wiki and Lean project, this page marks a constraint on any simplified
+          model: the two sides of the theta-link cannot be treated as formally symmetric
+          parameter slots.
+        </p>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.8 final discussion</a>
+          Related: <a href="#alien-theta-function-rigidity-343">theta-function rigidity</a>
+          <a href="#alien-galois-evaluation-36">Galois evaluation</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV estimates</a>
         </div>
       </section>
 
