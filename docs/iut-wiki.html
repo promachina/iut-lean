@@ -7019,7 +7019,7 @@
           theta-values to q-parameters. This page records the source analogies because
           they are a guardrail against modeling theta-links as ring homomorphisms.
         </p>
-        <div class="diagram" aria-label="IUT I gluing models outside conventional scheme theory">
+        <div class="diagram fit" aria-label="IUT I gluing models outside conventional scheme theory">
           <div class="diagramHeader">
             <strong>Gluing miniature scheme worlds</strong>
             <span>IUT I §I2 analogies for non-scheme-theoretic comparison</span>
@@ -7107,6 +7107,16 @@
             </p>
             <div class="tagRow"><span class="tag green">IUT I §I2</span><span class="tag">not ring maps</span></div>
           </div>
+          <div class="card" id="frobenius-like-simplicity-gluing">
+            <h3>Why gluing is possible</h3>
+            <p>
+              The source text explains that the gluing is possible because the
+              Frobenius-like structures in the relevant F-prime-strips are much simpler
+              than rings: in essence, collections of monoids such as
+              <span class="math">N</span> or <span class="math">R_{\geq 0}</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">IUT I §I2</span><span class="tag">F-prime-strips</span></div>
+          </div>
           <div class="card" id="topological-surface-gluing">
             <h3>Topological surface analogy</h3>
             <p>
@@ -7150,6 +7160,17 @@
             </p>
             <div class="tagRow"><span class="tag red">AbsTopIII input</span><span class="tag">surjection</span></div>
           </div>
+          <div class="card" id="cyclotomic-rigidity-zstar-obstruction">
+            <h3>Cyclotomic rigidity obstruction</h3>
+            <p>
+              The unit-monoid ambiguity matters because the natural cyclotomic rigidity
+              isomorphism for torsion in <span class="math">O-delta</span> is not
+              preserved by the natural <span class="math">Zhat^x</span>-action on
+              <span class="math">O^x</span>. This is the technical analogue behind the
+              alien-structure warning.
+            </p>
+            <div class="tagRow"><span class="tag red">IUT I §I2</span><span class="tag">cyclotomic rigidity</span></div>
+          </div>
           <div class="card" id="kummer-gluing-cycle">
             <h3>Kummer gluing cycle</h3>
             <p>
@@ -7160,6 +7181,38 @@
               specification mechanism.
             </p>
             <div class="tagRow"><span class="tag blue">IUT I §I2</span><span class="tag">Kummer</span></div>
+          </div>
+          <div class="card" id="alien-holomorphic-structure-problem">
+            <h3>Alien holomorphic structure problem</h3>
+            <p>
+              After constructing the Frobenius-picture, the main problem is to describe
+              the alien arithmetic holomorphic structure of one Hodge theater in terms
+              of a known structure in another. IUT I says this is later approached
+              through absolute anabelian geometry applied to tempered and etale
+              fundamental groups.
+            </p>
+            <div class="tagRow"><span class="tag blue">IUT I §I2</span><span class="tag">anabelian input</span></div>
+          </div>
+          <div class="card" id="arithmetic-tangent-h1-analogy">
+            <h3>H0 versus H1 analogy</h3>
+            <p>
+              Conventional anabelian reconstruction is compared to computing
+              <span class="math">H^0</span> of an arithmetic tangent bundle. The
+              Frobenius-picture problem is compared to <span class="math">H^1</span>:
+              deformations of arithmetic holomorphic structure rather than recovery of
+              one already fixed scheme object.
+            </p>
+            <div class="tagRow"><span class="tag violet">IUT I §I2</span><span class="tag">deformation</span></div>
+          </div>
+          <div class="card" id="hodge-name-variation-source">
+            <h3>Why "Hodge" theater</h3>
+            <p>
+              Mochizuki ties the name to variation of Hodge structure: a Hodge
+              structure selects a holomorphic structure on an underlying real analytic
+              object. Later, a theater's position in the log-theta lattice selects an
+              arithmetic holomorphic structure under deformation.
+            </p>
+            <div class="tagRow"><span class="tag gold">IUT I §I2</span><span class="tag">Hodge analogy</span></div>
           </div>
           <div class="card" id="formalization-gluing-obligation">
             <h3>Formalization obligation</h3>
@@ -7172,6 +7225,29 @@
             <div class="tagRow"><span class="tag violet">Lean guardrail</span><span class="tag">typed histories</span></div>
           </div>
         </div>
+        <table class="sourceTable3">
+          <tr><th>Grouped source unit</th><th>What §I2 contributes</th><th>Why this is a hub</th></tr>
+          <tr>
+            <td>Non-scheme theta-link</td>
+            <td>Theater-to-theater correspondences are not ring homomorphisms, even though each individual theater is built inside conventional scheme theory.</td>
+            <td>This is the basic type boundary for all later theta-link pages.</td>
+          </tr>
+          <tr>
+            <td>Analogies</td>
+            <td>Topological surface gluing, Cantor-function gluing, and the <span class="math">O-delta/O^x</span> forgetful contrast describe why alien structures cannot be read through the wrong ring history.</td>
+            <td>The analogies belong together because they explain the same modeling constraint at increasing technical precision.</td>
+          </tr>
+          <tr>
+            <td>Kummer specification</td>
+            <td>Kummer theory specifies the gluing cycle on each side; Galois-compatible rigidity rules out arbitrary replacement correspondences.</td>
+            <td>This links the conceptual gluing page to the later Kummer and multiradiality pages.</td>
+          </tr>
+          <tr>
+            <td>Anabelian reconstruction under deformation</td>
+            <td>The later task is not ordinary reconstruction of a known scheme object, but analysis of an alien arithmetic holomorphic structure through etale/tempered fundamental groups.</td>
+            <td>This prevents the section from being read as just metaphor; it points to the concrete later proof machinery.</td>
+          </tr>
+        </table>
         <div class="callout gold">
           <strong>Scope.</strong> These examples are explanatory analogies from IUT I,
           not independent proofs of the later inequalities. Their role in the wiki is
