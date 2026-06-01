@@ -674,6 +674,12 @@
       table.auditTable3 td:nth-child(1)::before { content: "Theme"; }
       table.auditTable3 td:nth-child(2)::before { content: "Audit reading"; }
       table.auditTable3 td:nth-child(3)::before { content: "Formal source"; }
+      table.coverageTable3 td:nth-child(1)::before { content: "Cluster"; }
+      table.coverageTable3 td:nth-child(2)::before { content: "Current state"; }
+      table.coverageTable3 td:nth-child(3)::before { content: "Main holes"; }
+      table.sourceRoleTable3 td:nth-child(1)::before { content: "Item"; }
+      table.sourceRoleTable3 td:nth-child(2)::before { content: "Source role"; }
+      table.sourceRoleTable3 td:nth-child(3)::before { content: "Consequence"; }
     }
 
     @media (max-width: 760px) {
@@ -804,6 +810,13 @@
         <a href="#pseudo-monoids-iut-i0">Pseudo-monoids §0</a>
         <a href="#poly-isomorphisms-iut-i0">Poly-isomorphisms §0</a>
         <a href="#capsules-temperoids-iut-i0">Capsules/temperoids §0</a>
+        <h2>Source Maps</h2>
+        <a href="#source-coverage-map">Coverage map</a>
+        <a href="#iut-i-initial-theta-cluster">IUT I initial theta cluster</a>
+        <a href="#iut-i-frobenioid-theater-cluster">IUT I Frobenioid/theater cluster</a>
+        <a href="#iut-i-prime-strip-bridge-cluster">IUT I prime-strip/bridge cluster</a>
+        <a href="#cor312-log-theta-cluster">Corollary 3.12 corridor cluster</a>
+        <h2>Paper Atlases</h2>
         <a href="#iut-i-atlas">IUT I atlas</a>
         <a href="#iut-i-orbicurve-cover-package">IUT I orbicurve covers 1</a>
         <a href="#iut-ii-atlas">IUT II atlas</a>
@@ -824,6 +837,10 @@
         <a href="#theta-approach-pixk-recovery-iut-i312">Pi_XK recovery 3.1.2</a>
         <a href="#theta-approach-function-field-iut-i312">Function-field recovery 3.1.2</a>
         <a href="#theta-approach-cyclotome-iut-i312">Cyclotome comparison 3.1.2</a>
+        <a href="#initial-theta-data-redundancy-iut-i313">Theta data redundancy 3.1.3</a>
+        <a href="#initial-theta-stable-models-iut-i314">Stable models 3.1.4</a>
+        <a href="#smod-stack-frobenioids-iut-i315">Smod stack Frobenioids 3.1.5</a>
+        <a href="#etth-odd-ell-correction-iut-i316">Odd-ell EtTh correction 3.1.6</a>
         <a href="#kappa-coric-functions">Kappa-coric functions</a>
         <a href="#cfmod-critical-points-iut-i317">C_Fmod critical points 3.1.7</a>
         <a href="#kappa-coric-definition-iut-i317">Kappa-coric definition 3.1.7</a>
@@ -1444,7 +1461,7 @@
         <a href="#iut-iv-theorem-110-local-steps">Theorem 1.10 local steps</a>
         <a href="#iut-iv-theorem-110-final-bound">Theorem 1.10 final bound</a>
         <a href="#iut-iv-proposition-21-estimates">Prop. 2.1 estimates</a>
-        <a href="#iut-iv-suitable-initial-theta-data-22">IUT IV suitable theta data 2.2</a>
+        <a href="#iut-iv-suitable-initial-theta-data-22">Cor. 2.2 unified gate</a>
         <a href="#iut-iv-corollary-22-lambda-j">Cor. 2.2 lambda/j gate</a>
         <a href="#iut-iv-corollary-22-bd-heights">Cor. 2.2 BD heights</a>
         <a href="#iut-iv-corollary-22-exceptions">Cor. 2.2 exceptions</a>
@@ -8924,6 +8941,474 @@
         </div>
       </section>
 
+      <section id="source-coverage-map" data-filter="iut wiki coverage map source clusters holes mochizuki papers progress">
+        <h2>Source Coverage Map</h2>
+        <p class="lede">
+          This page groups the detailed wiki pages into larger source units. It is a
+          navigation device and an audit device: it shows which parts already have
+          concept-level pages and which parts still need page-by-page expansion against
+          the source papers.
+        </p>
+        <div class="diagram fit" aria-label="IUT source coverage map">
+          <div class="diagramHeader">
+            <strong>Current source-map layer</strong>
+            <span>hub pages organize the detailed concept pages below them</span>
+          </div>
+          <svg viewBox="0 0 1080 430" role="img">
+            <defs>
+              <marker id="arrowCoverageMap" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="74" width="230" height="90"></rect>
+            <text class="nodeTitle" x="185" y="104" text-anchor="middle">IUT I §3.1</text>
+            <text class="tinyText" x="185" y="128" text-anchor="middle">initial theta data</text>
+            <text class="tinyText" x="185" y="146" text-anchor="middle">theta approach, kappa-coricity</text>
+
+            <rect class="nodeBox green" x="425" y="74" width="230" height="90"></rect>
+            <text class="nodeTitle" x="540" y="104" text-anchor="middle">IUT I §3.2-3.9</text>
+            <text class="tinyText" x="540" y="128" text-anchor="middle">Frobenioids and theaters</text>
+            <text class="tinyText" x="540" y="146" text-anchor="middle">theta/Frobenius/etale pictures</text>
+
+            <rect class="nodeBox gold" x="780" y="74" width="230" height="90"></rect>
+            <text class="nodeTitle" x="895" y="104" text-anchor="middle">IUT I §4-5</text>
+            <text class="tinyText" x="895" y="128" text-anchor="middle">prime strips and bridges</text>
+            <text class="tinyText" x="895" y="146" text-anchor="middle">Kummer/Frobenioid transport</text>
+
+            <rect class="nodeBox violet" x="245" y="288" width="250" height="88"></rect>
+            <text class="nodeTitle" x="370" y="318" text-anchor="middle">IUT II-III corridor</text>
+            <text class="tinyText" x="370" y="342" text-anchor="middle">theta values, log-theta lattice</text>
+            <text class="tinyText" x="370" y="360" text-anchor="middle">Theorem 3.11 to Cor. 3.12</text>
+
+            <rect class="nodeBox red" x="585" y="288" width="250" height="88"></rect>
+            <text class="nodeTitle" x="710" y="318" text-anchor="middle">IUT IV and context</text>
+            <text class="tinyText" x="710" y="342" text-anchor="middle">log-volume estimates</text>
+            <text class="tinyText" x="710" y="360" text-anchor="middle">species, Lean, critique/response</text>
+
+            <path class="edge blue" d="M300 119 H423" marker-end="url(#arrowCoverageMap)"></path>
+            <path class="edge green" d="M657 119 H778" marker-end="url(#arrowCoverageMap)"></path>
+            <path class="edge violet" d="M540 166 C506 224 414 252 378 286" marker-end="url(#arrowCoverageMap)"></path>
+            <path class="edge red" d="M895 166 C850 226 750 254 716 286" marker-end="url(#arrowCoverageMap)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3 coverageTable3">
+          <tr><th>Cluster</th><th>Current state</th><th>Main holes still visible</th></tr>
+          <tr>
+            <td><a href="#iut-i-initial-theta-cluster">IUT I initial theta cluster</a></td>
+            <td>Detailed pages exist for Definition 3.1, Remark 3.1.2, Remarks 3.1.3-3.1.6, and Remark 3.1.7.</td>
+            <td>Needs continued cross-checking against later uses in IUT I §4-5 and against EtTh/AbsTopIII source dependencies.</td>
+          </tr>
+          <tr>
+            <td><a href="#iut-i-frobenioid-theater-cluster">IUT I Frobenioid/theater cluster</a></td>
+            <td>Pages exist for bad, good, archimedean, global realified, theta-side, and theater/link constructions.</td>
+            <td>Needs finer pages for every reconstruction claim and every correction remark in Examples 3.2-3.5 and Definition 3.6.</td>
+          </tr>
+          <tr>
+            <td><a href="#iut-i-prime-strip-bridge-cluster">IUT I prime-strip/bridge cluster</a></td>
+            <td>Pages exist for D-prime-strips, labels, local analytic sections, theta evaluation, and D-ThetaNF bridges.</td>
+            <td>Needs systematic source-order expansion through all bridge propositions and their indeterminacy constraints.</td>
+          </tr>
+          <tr>
+            <td><a href="#cor312-log-theta-cluster">Corollary 3.12 corridor cluster</a></td>
+            <td>The wiki has a diagnostic corridor, proof-step pages, and supporting pages for Hodge theaters, log-links, Kummer correspondences, and IUT IV consequences.</td>
+            <td>IUT II and IUT III still need much denser page-by-page coverage before the corridor can be called source-complete.</td>
+          </tr>
+          <tr>
+            <td>Context papers and formalization</td>
+            <td>Local PDF library and pages for Mochizuki formalization, RIMS route, LANA, Scholze-Stix, Mochizuki response, Collas, Hoshi, and related papers exist.</td>
+            <td>Needs deeper extraction of each paper's distinct contribution and tighter links from context pages back to exact IUT source concepts.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
+          <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II</a>
+          <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III</a>
+          <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV</a>
+          Related: <a href="#source-library">source library</a>
+          <a href="#concept-index">concept index</a>
+          <a href="#cor312-log-theta-cluster">3.12 corridor cluster</a>
+        </div>
+      </section>
+
+      <section id="iut-i-initial-theta-cluster" data-filter="iut i source cluster initial theta data theta approach kappa coric remarks 3.1">
+        <h2>IUT I §3.1 Source Cluster: Initial Theta Data</h2>
+        <p class="lede">
+          This cluster groups the pages that explain the input package for the IUT
+          series. The unit starts with Definition 3.1, then records the theta-approach
+          reconstruction route, the dependency remarks, the stable-model and
+          stack-theoretic checks, the odd-<span class="math">ell</span> correction, and
+          the κ-coric function package.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Definition 3.1 package</h3>
+            <p>
+              Field/moduli data, valuation section, bad/good split, cover data, and the
+              distinguished cusp.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#initial-theta-data">overview</a>
+              <a class="tag" href="#initial-theta-field-moduli-iut-i31">field/moduli</a>
+              <a class="tag" href="#initial-theta-valuations-iut-i31">valuations</a>
+              <a class="tag" href="#initial-theta-cusp-covers-iut-i31">cusp/covers</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Theta approach</h3>
+            <p>
+              Recover <span class="math">Pi_XK</span> from
+              <span class="math">Pi_CK</span>, apply AbsTopIII through that subgroup,
+              and identify the cyclotome output.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#theta-approach-abs-top-319">overview</a>
+              <a class="tag" href="#theta-approach-pixk-recovery-iut-i312">Pi_XK</a>
+              <a class="tag" href="#theta-approach-function-field-iut-i312">function field</a>
+              <a class="tag" href="#theta-approach-cyclotome-iut-i312">cyclotome</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Dependency and hygiene remarks</h3>
+            <p>
+              Remarks 3.1.3-3.1.6 control which named data are independent and which
+              local or EtTh hypotheses must be carried forward.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#initial-theta-data-redundancy-iut-i313">3.1.3</a>
+              <a class="tag" href="#initial-theta-stable-models-iut-i314">3.1.4</a>
+              <a class="tag" href="#smod-stack-frobenioids-iut-i315">3.1.5</a>
+              <a class="tag" href="#etth-odd-ell-correction-iut-i316">3.1.6</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>κ-coric function layer</h3>
+            <p>
+              The function-field side introduces critical points, κ-coric rational
+              functions, infinity variants, κ-solvable elements, and automorphism
+              control.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#kappa-coric-functions">overview</a>
+              <a class="tag" href="#cfmod-critical-points-iut-i317">critical points</a>
+              <a class="tag" href="#kappa-coric-definition-iut-i317">definition</a>
+              <a class="tag" href="#infinity-kappa-pseudomonoids-iut-i317">infinity variants</a>
+              <a class="tag" href="#kappa-solvable-disjointness-iut-i317">disjointness</a>
+              <a class="tag" href="#kappa-sol-automorphisms-iut-i317">automorphisms</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Why this is one unit</h3>
+            <p>
+              The later Hodge-theater construction does not start from a bare elliptic
+              curve. It starts from this package of fields, valuations, covers,
+              reconstructible groups, local models, and Kummer-compatible functions.
+            </p>
+            <div class="tagRow"><span class="tag red">source guardrail</span><span class="tag">input package</span></div>
+          </div>
+          <div class="card">
+            <h3>Next expansion target</h3>
+            <p>
+              Each external dependency cited here, especially AbsTopIII, EtTh, FrdI,
+              and FrdII, should eventually have a linked dependency page explaining the
+              exact theorem interface used by this source cluster.
+            </p>
+            <div class="tagRow"><span class="tag gold">hole</span><span class="tag">dependency interfaces</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I §3.1</a>
+          Related: <a href="#source-coverage-map">coverage map</a>
+          <a href="#iut-i-frobenioid-theater-cluster">Frobenioid/theater cluster</a>
+        </div>
+      </section>
+
+      <section id="iut-i-frobenioid-theater-cluster" data-filter="iut i source cluster frobenioids hodge theater theta link examples 3.2 3.6">
+        <h2>IUT I §3.2-§3.9 Source Cluster: Frobenioids and Theta-Hodge Theaters</h2>
+        <p class="lede">
+          This cluster groups the local and global Frobenioid pages that turn initial
+          theta data into theta-Hodge theaters and chains of theaters. It keeps the
+          valuation strata separate because the source construction differs at bad
+          nonarchimedean, good nonarchimedean, and archimedean places.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Bad-place package</h3>
+            <p>
+              Bad nonarchimedean places use the Tate-curve theta-function theory of
+              EtTh, including the theta value and split Frobenioid indeterminacies.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#bad-nonarch-frobenioids-32">overview</a>
+              <a class="tag" href="#bad-frobenioid-base-category-iut-i32">base category</a>
+              <a class="tag" href="#theta-value-indeterminacy-iut-i32">theta value</a>
+              <a class="tag" href="#bad-split-frobenioids-iut-i32">split Frobenioids</a>
+              <a class="tag" href="#bad-frobenioid-reconstruction-iut-i32">reconstruction</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Good and archimedean packages</h3>
+            <p>
+              Good nonarchimedean places use valuation-monoid Frobenioids; archimedean
+              places use Aut-holomorphic orbispaces, Kummer structures, and log
+              compatibility.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#good-arch-frobenioids-33-34">overview</a>
+              <a class="tag" href="#good-nonarch-base-frobenioids-iut-i33">good base</a>
+              <a class="tag" href="#good-formal-theta-frobenioids-iut-i33">formal theta</a>
+              <a class="tag" href="#arch-aut-holomorphic-frobenioids-iut-i34">Aut-holomorphic</a>
+              <a class="tag" href="#arch-kummer-log-frobenioids-iut-i34">Kummer/log</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Global realified package</h3>
+            <p>
+              Example 3.5 builds global realified Frobenioids and theta/log-shell
+              versions that exchange local divisor currencies across valuations.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#global-realified-theater-35-36">overview</a>
+              <a class="tag" href="#global-realified-cmod-iut-i35">Cmod realification</a>
+              <a class="tag" href="#global-theta-version-iut-i35">theta version</a>
+              <a class="tag" href="#global-d-log-shell-version-iut-i35">D/log-shell version</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Theater and link output</h3>
+            <p>
+              Definition 3.6 packages the local/global data into a theta-Hodge theater;
+              Corollaries 3.7-3.9 organize theta links and Frobenius/etale pictures.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#theta-hodge-theater-definition-iut-i36">theater</a>
+              <a class="tag" href="#theta-link-frobenius-etale-pictures">pictures</a>
+              <a class="tag" href="#theta-links-cor37">theta links</a>
+              <a class="tag" href="#frobenius-picture-cor38">Frobenius</a>
+              <a class="tag" href="#etale-picture-cor39">etale</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Why this is one unit</h3>
+            <p>
+              These pages explain the construction of the first Hodge-theater worlds:
+              local categories, divisor monoids, Kummer structures, realifications, and
+              link pictures are assembled before the Section 4 prime-strip machinery.
+            </p>
+            <div class="tagRow"><span class="tag red">construction chain</span><span class="tag">theater output</span></div>
+          </div>
+          <div class="card">
+            <h3>Next expansion target</h3>
+            <p>
+              The remaining holes are the theorem-interface details behind each
+              reconstructibility assertion and the exact source dependencies on FrdI,
+              FrdII, and EtTh.
+            </p>
+            <div class="tagRow"><span class="tag gold">hole</span><span class="tag">reconstruction proofs</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I §3.2-§3.9</a>
+          Related: <a href="#iut-i-initial-theta-cluster">initial theta cluster</a>
+          <a href="#iut-i-prime-strip-bridge-cluster">prime-strip/bridge cluster</a>
+        </div>
+      </section>
+
+      <section id="iut-i-prime-strip-bridge-cluster" data-filter="iut i source cluster prime strips bridges labels theta evaluation d theta nf sections 4 5">
+        <h2>IUT I §4-§5 Source Cluster: Prime-Strips, Labels, and Bridges</h2>
+        <p class="lede">
+          This cluster groups the pages where theta-Hodge theaters are converted into
+          prime-strip interfaces, label torsors, local analytic sections, theta
+          evaluation sections, and bridge constructions. This is the part of IUT I that
+          prepares the later log-Kummer and theta-link transport machinery.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>D-prime-strips and labels</h3>
+            <p>
+              Section 4 starts by extracting valuation-indexed prime-strip objects and
+              synchronizing cusp label classes.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#d-prime-strips-labels-41-42">overview</a>
+              <a class="tag" href="#d-prime-strip-definition-iut-i41">definition</a>
+              <a class="tag" href="#d-cusp-label-torsors-iut-i41">label torsors</a>
+              <a class="tag" href="#d-monoanalytic-prime-strips-iut-i41">monoanalytic</a>
+              <a class="tag" href="#d-global-polymorphisms-iut-i41">global polymorphisms</a>
+              <a class="tag" href="#d-label-synchronization-iut-i42">synchronization</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Local analytic sections</h3>
+            <p>
+              Local section data introduces NF automorphism groups, local
+              poly-morphisms, D-capsule actions, and obstruction warnings.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#local-analytic-sections-43">overview</a>
+              <a class="tag" href="#nf-automorphism-subgroups-iut-i43">NF automorphisms</a>
+              <a class="tag" href="#nf-local-polymorphisms-iut-i43">local polymorphisms</a>
+              <a class="tag" href="#nf-d-capsule-fl-action-iut-i43">D-capsule action</a>
+              <a class="tag" href="#prime-strip-section-obstructions-iut-i431">obstructions</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Theta evaluation and label transport</h3>
+            <p>
+              The theta evaluation pages distinguish bad-place and good-place bridges
+              and then track how labels move through base-bridge interfaces.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#theta-evaluation-sections-44-45">overview</a>
+              <a class="tag" href="#theta-evaluation-points-iut-i44">evaluation points</a>
+              <a class="tag" href="#theta-bridge-bad-place-iut-i44">bad bridge</a>
+              <a class="tag" href="#theta-bridge-good-place-iut-i44">good bridge</a>
+              <a class="tag" href="#label-transport-base-bridges-iut-i45">label transport</a>
+              <a class="tag" href="#outer-factorization-indeterminacy-iut-i451">outer factorization</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>D-ThetaNF bridges</h3>
+            <p>
+              The later bridge pages introduce the D-NF bridge, the D-Theta bridge, the
+              D-ThetaNF theater, bridge label transport, and global label/Kodaira-Spencer
+              bookkeeping.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#d-theta-nf-bridges-46-47">overview</a>
+              <a class="tag" href="#d-nf-bridge-definition-iut-i46">D-NF bridge</a>
+              <a class="tag" href="#d-theta-bridge-definition-iut-i46">D-Theta bridge</a>
+              <a class="tag" href="#d-theta-nf-theater-definition-iut-i46">D-ThetaNF theater</a>
+              <a class="tag" href="#bridge-label-transport-iut-i47">bridge labels</a>
+              <a class="tag" href="#global-label-kodaira-spencer-iut-i471">global labels</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Why this is one unit</h3>
+            <p>
+              These pages form the interface layer between constructed Hodge theaters
+              and later inter-theater comparisons. The repeated issue is which
+              structures survive after holomorphic or ring/scheme history is discarded.
+            </p>
+            <div class="tagRow"><span class="tag red">interface layer</span><span class="tag">survival of structure</span></div>
+          </div>
+          <div class="card">
+            <h3>Next expansion target</h3>
+            <p>
+              The source still needs page-by-page treatment through the later Section 5
+              Kummer/Frobenioid bridge material, with each indeterminacy and
+              reconstructibility assertion linked back to its exact proposition.
+            </p>
+            <div class="tagRow"><span class="tag gold">hole</span><span class="tag">Section 5 details</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I §4-§5</a>
+          Related: <a href="#iut-i-frobenioid-theater-cluster">Frobenioid/theater cluster</a>
+          <a href="#cor312-log-theta-cluster">3.12 corridor cluster</a>
+        </div>
+      </section>
+
+      <section id="cor312-log-theta-cluster" data-filter="iut iii corollary 3.12 source cluster log theta lattice hodge theaters log links kummer theorem 3.11">
+        <h2>Corollary 3.12 Corridor Source Cluster</h2>
+        <p class="lede">
+          This cluster groups the pages most directly relevant to the disputed
+          Theorem 3.11 to Corollary 3.12 corridor. It is not a claim that the corridor
+          is source-complete; it is a map of the current pages that should be read
+          together when auditing how the wiki explains the passage from Hodge-theater
+          transport to log-volume comparison.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Hodge-theater and link background</h3>
+            <p>
+              These pages explain why Hodge theaters, theta/log links, and
+              Kummer-compatible transport are central to the intended comparison.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#hodge-theaters">Hodge theaters</a>
+              <a class="tag" href="#theta-log-links">theta/log links</a>
+              <a class="tag" href="#log-kummer-correspondences">log-Kummer</a>
+              <a class="tag" href="#indeterminacies">indeterminacies</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>IUT II and IUT III inputs</h3>
+            <p>
+              Current pages cover the Kummer evaluation square, theta values
+              <span class="math">q^{j^2}</span>, Frobenius/etale versions, and radial
+              taxonomy, but this remains a sparse layer compared with the source papers.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#iut-ii-atlas">IUT II atlas</a>
+              <a class="tag" href="#iut-ii-kummer-evaluation-square-intro">evaluation square</a>
+              <a class="tag" href="#theta-values-q-j-squared-intro-ii">theta values</a>
+              <a class="tag" href="#coric-uniradial-multiradial-taxonomy-ii-intro">radial taxonomy</a>
+              <a class="tag" href="#iut-iii-atlas">IUT III atlas</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>The 3.12 corridor pages</h3>
+            <p>
+              These pages are the current diagnostic center: they separate the stated
+              corridor, its proof steps, and the formalization diagnostics used to avoid
+              silently assuming the disputed comparison.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#corollary-312">Corollary 3.12</a>
+              <a class="tag" href="#corollary-312-proof-steps">proof steps</a>
+              <a class="tag" href="#corollary-312-diagnostics">diagnostics</a>
+              <a class="tag" href="#theorem-311-lgp-algorithms">Theorem 3.11</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>IUT IV output side</h3>
+            <p>
+              IUT IV pages explain how Corollary 3.12 is used in log-volume estimates,
+              explicit consequences, and set-theoretic species/foundation pages.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#iut-iv-atlas">IUT IV atlas</a>
+              <a class="tag" href="#iut-iv">IUT IV consequences</a>
+              <a class="tag" href="#iut-iv-choice-free-canonicality-313">canonicality</a>
+              <a class="tag" href="#iut-iv-category-nspecies-321">N-species</a>
+              <a class="tag" href="#iut-iv-monoid-frobenius-36">monoid Frobenius</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Critique and response context</h3>
+            <p>
+              The corridor should be read with the Scholze-Stix critique, Mochizuki's
+              response material, and the formalization pages, but these are context
+              layers rather than replacements for the source proof.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#scholze-stix-critique-page">Scholze-Stix</a>
+              <a class="tag" href="#mochizuki-response-page">Mochizuki response</a>
+              <a class="tag" href="#formalization">formalization</a>
+              <a class="tag" href="#rims-lean-stage-plan-2026">RIMS Lean</a>
+              <a class="tag" href="#lana">LANA</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Next expansion target</h3>
+            <p>
+              The biggest visible hole is source density in IUT II and IUT III. The
+              cluster needs many more pages before it can support a serious claim that
+              every local step in the 3.11-to-3.12 passage has been represented.
+            </p>
+            <div class="tagRow"><span class="tag red">hole</span><span class="tag">IUT II/III density</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II</a>
+          <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III</a>
+          <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV</a>
+          Related: <a href="#source-coverage-map">coverage map</a>
+          <a href="#dispute">dispute overview</a>
+          <a href="#formalization">formalization overview</a>
+        </div>
+      </section>
+
       <section id="tempered-covering-complements">
         <h2>Tempered Covering Complements</h2>
         <p class="lede">
@@ -12526,6 +13011,263 @@
           <a href="#initial-theta-valuations-iut-i31">valuation layer</a>
           <a href="#theta-approach-abs-top-319">theta approach</a>
           <a href="#theta-evaluation-sections-44-45">theta evaluation sections</a>
+        </div>
+      </section>
+
+      <section id="initial-theta-data-redundancy-iut-i313" data-filter="iut i remark 3.1.3 initial theta data redundancy determined ck v vbad epsilon choices">
+        <h2>IUT I Remark 3.1.3: Redundancy in Initial Theta Data</h2>
+        <p class="lede">
+          Remark 3.1.3 records that the tuple in Definition 3.1 contains deliberately
+          named components that are not all independent. Since
+          <span class="math">Vbad_mod</span> is nonempty, the data
+          <span class="math">(F/Fbar, X_F, l, C_K, V, Vbad_mod, epsilon)</span> is
+          determined by <span class="math">(F/Fbar, X_F, C_K, V, Vbad_mod)</span>, and
+          <span class="math">C_K</span> itself is determined up to
+          <span class="math">K</span>-isomorphism by
+          <span class="math">(F/Fbar, X_F, l, V)</span>.
+        </p>
+        <div class="diagram fit" aria-label="Initial theta data redundancy">
+          <div class="diagramHeader">
+            <strong>Dependent components in Definition 3.1</strong>
+            <span>IUT I Remark 3.1.3</span>
+          </div>
+          <svg viewBox="0 0 1040 410" role="img">
+            <defs>
+              <marker id="arrowThetaRedundI313" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="76" width="250" height="90"></rect>
+            <text class="nodeTitle" x="195" y="106" text-anchor="middle">base independent package</text>
+            <text class="tinyText" x="195" y="130" text-anchor="middle">F/Fbar, X_F, l, V</text>
+            <text class="tinyText" x="195" y="148" text-anchor="middle">plus nonempty bad set</text>
+
+            <rect class="nodeBox green" x="395" y="76" width="250" height="90"></rect>
+            <text class="nodeTitle" x="520" y="106" text-anchor="middle">C_K</text>
+            <text class="tinyText" x="520" y="130" text-anchor="middle">determined up to K-isomorphism</text>
+            <text class="tinyText" x="520" y="148" text-anchor="middle">from F/Fbar, X_F, ell, V</text>
+
+            <rect class="nodeBox gold" x="720" y="76" width="250" height="90"></rect>
+            <text class="nodeTitle" x="845" y="106" text-anchor="middle">full theta tuple</text>
+            <text class="tinyText" x="845" y="130" text-anchor="middle">l, C_K, epsilon recovered</text>
+            <text class="tinyText" x="845" y="148" text-anchor="middle">once bad places are present</text>
+
+            <rect class="nodeBox violet" x="250" y="282" width="250" height="82"></rect>
+            <text class="nodeTitle" x="375" y="312" text-anchor="middle">choice of V</text>
+            <text class="tinyText" x="375" y="336" text-anchor="middle">different sections allowed</text>
+            <text class="tinyText" x="375" y="354" text-anchor="middle">no significant effect on theory</text>
+
+            <rect class="nodeBox red" x="560" y="282" width="250" height="82"></rect>
+            <text class="nodeTitle" x="685" y="312" text-anchor="middle">formalization guardrail</text>
+            <text class="tinyText" x="685" y="336" text-anchor="middle">separate names from independence</text>
+            <text class="tinyText" x="685" y="354" text-anchor="middle">record derived status explicitly</text>
+
+            <path class="edge blue" d="M322 121 H393" marker-end="url(#arrowThetaRedundI313)"></path>
+            <path class="edge green" d="M647 121 H718" marker-end="url(#arrowThetaRedundI313)"></path>
+            <path class="edge violet" d="M195 168 C210 226 320 250 366 280" marker-end="url(#arrowThetaRedundI313)"></path>
+            <path class="edge red" d="M520 168 C548 226 640 250 680 280" marker-end="url(#arrowThetaRedundI313)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3 sourceRoleTable3">
+          <tr><th>Statement</th><th>Source content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>Nonempty bad set</td>
+            <td><span class="math">Vbad_mod != empty</span> lets Definition 3.1(d)-(f) recover named data from a smaller package.</td>
+            <td>Do not count every named component as an independent degree of freedom.</td>
+          </tr>
+          <tr>
+            <td><span class="math">C_K</span> dependence</td>
+            <td><span class="math">C_K</span> is determined up to <span class="math">K</span>-isomorphism by <span class="math">(F/Fbar, X_F, l, V)</span>.</td>
+            <td>Pages that introduce <span class="math">C_K</span> should link it back to the field, curve, prime, and valuation section data.</td>
+          </tr>
+          <tr>
+            <td>Choice of <span class="math">V</span></td>
+            <td>For fixed <span class="math">(X_F,l,Vbad_mod)</span>, distinct choices of <span class="math">V</span> do not affect the theory in a significant way.</td>
+            <td>The valuation section is still part of the interface, but the source treats its variation as harmless for the ensuing theory.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Remark 3.1.3</a>
+          Related: <a href="#initial-theta-data">initial theta data</a>
+          <a href="#initial-theta-field-moduli-iut-i31">field/moduli layer</a>
+          <a href="#initial-theta-valuations-iut-i31">valuation layer</a>
+          <a href="#initial-theta-cusp-covers-iut-i31">cusp/covers layer</a>
+        </div>
+      </section>
+
+      <section id="initial-theta-stable-models-iut-i314" data-filter="iut i remark 3.1.4 stable model bad good nonarchimedean local curve xv x arrow">
+        <h2>IUT I Remark 3.1.4: Stable Models at Local Places</h2>
+        <p class="lede">
+          Remark 3.1.4 extracts an immediate local consequence of the initial theta
+          definitions: the relevant local curves admit stable models over the rings of
+          integers of the local fields. The statement is stratified by bad
+          nonarchimedean places, good nonarchimedean places prime to
+          <span class="math">ell</span>, and good nonarchimedean places in general.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Bad places</h3>
+            <p>
+              If <span class="math">v in Vbad</span>, then <span class="math">v</span>
+              is necessarily prime to <span class="math">ell</span>, and
+              <span class="math">X_v</span> admits a stable model over the ring of
+              integers of <span class="math">K_v</span>.
+            </p>
+            <div class="tagRow"><span class="tag red">bad</span><span class="tag">prime to ell</span></div>
+          </div>
+          <div class="card">
+            <h3>Good prime-to-ell places</h3>
+            <p>
+              For <span class="math">v in Vgood_non</span> that is prime to
+              <span class="math">ell</span>, the arrow version
+              <span class="math">X_v arrow</span> admits the corresponding stable
+              model.
+            </p>
+            <div class="tagRow"><span class="tag green">good</span><span class="tag">arrow curve</span></div>
+          </div>
+          <div class="card">
+            <h3>Good nonarchimedean places</h3>
+            <p>
+              For each <span class="math">v in Vgood_non</span>, the local curve
+              <span class="math">X_v</span> itself admits a stable model. These local
+              stable models support later special-fiber and reduction arguments.
+            </p>
+            <div class="tagRow"><span class="tag blue">local geometry</span><span class="tag">stable model</span></div>
+          </div>
+        </div>
+        <div class="callout">
+          This remark is a local existence checkpoint. It is not the construction of a
+          Hodge theater, but it explains why the local geometric objects used by the
+          later Frobenioid and anabelian machinery have stable-model input available.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Remark 3.1.4</a>
+          Related: <a href="#initial-theta-valuations-iut-i31">valuation layer</a>
+          <a href="#bad-nonarch-frobenioids-32">bad nonarch Frobenioids</a>
+          <a href="#good-nonarch-base-frobenioids-iut-i33">good nonarch Frobenioids</a>
+          <a href="#iut-i-orbicurve-cover-package">orbicurve cover package</a>
+        </div>
+      </section>
+
+      <section id="smod-stack-frobenioids-iut-i315" data-filter="iut i remark 3.1.5 smod stack quotient spec ok galois k fmod arithmetic line bundles frobenioid perfection realification">
+        <h2>IUT I Remark 3.1.5: Smod and Stack-Theoretic Frobenioids</h2>
+        <p class="lede">
+          Remark 3.1.5 introduces the stack
+          <span class="math">Smod = Spec(O_K) // Gal(K/Fmod)</span>. Finite extensions
+          of <span class="math">Fmod</span> inside the chosen algebraic closure give
+          stacks <span class="math">Smod,L</span>, and arithmetic line bundles on these
+          stacks feed a stack-theoretic version of the Frobenioid construction of
+          <span class="math">FrdI</span> Example 6.3.
+        </p>
+        <div class="diagram fit" aria-label="Smod stack Frobenioid route">
+          <div class="diagramHeader">
+            <strong>Stack quotient route to Frobenioids</strong>
+            <span>IUT I Remark 3.1.5</span>
+          </div>
+          <svg viewBox="0 0 1080 450" role="img">
+            <defs>
+              <marker id="arrowSmodI315" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="60" y="78" width="250" height="90"></rect>
+            <text class="nodeTitle" x="185" y="108" text-anchor="middle">K/Fmod is Galois</text>
+            <text class="tinyText" x="185" y="132" text-anchor="middle">from 3-torsion rationality</text>
+            <text class="tinyText" x="185" y="150" text-anchor="middle">and Definition 3.1 data</text>
+
+            <rect class="nodeBox green" x="405" y="78" width="250" height="90"></rect>
+            <text class="nodeTitle" x="530" y="108" text-anchor="middle">Smod</text>
+            <text class="tinyText" x="530" y="132" text-anchor="middle">Spec(O_K) // Gal(K/Fmod)</text>
+            <text class="tinyText" x="530" y="150" text-anchor="middle">stack quotient</text>
+
+            <rect class="nodeBox gold" x="750" y="78" width="250" height="90"></rect>
+            <text class="nodeTitle" x="875" y="108" text-anchor="middle">Smod,L</text>
+            <text class="tinyText" x="875" y="132" text-anchor="middle">integral closure in finite L</text>
+            <text class="tinyText" x="875" y="150" text-anchor="middle">over Smod</text>
+
+            <rect class="nodeBox violet" x="240" y="296" width="260" height="88"></rect>
+            <text class="nodeTitle" x="370" y="326" text-anchor="middle">arithmetic line bundles</text>
+            <text class="tinyText" x="370" y="350" text-anchor="middle">on stack-theoretic bases</text>
+            <text class="tinyText" x="370" y="368" text-anchor="middle">FrdI Example 6.3 analogue</text>
+
+            <rect class="nodeBox red" x="585" y="296" width="260" height="88"></rect>
+            <text class="nodeTitle" x="715" y="326" text-anchor="middle">perfection / realification</text>
+            <text class="tinyText" x="715" y="350" text-anchor="middle">naturally isomorphic</text>
+            <text class="tinyText" x="715" y="368" text-anchor="middle">to non-stack versions</text>
+
+            <path class="edge blue" d="M312 123 H403" marker-end="url(#arrowSmodI315)"></path>
+            <path class="edge green" d="M657 123 H748" marker-end="url(#arrowSmodI315)"></path>
+            <path class="edge violet" d="M530 170 C494 230 410 260 376 294" marker-end="url(#arrowSmodI315)"></path>
+            <path class="edge red" d="M875 170 C838 230 748 260 720 294" marker-end="url(#arrowSmodI315)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3 sourceRoleTable3">
+          <tr><th>Object</th><th>Source role</th><th>Why it matters later</th></tr>
+          <tr>
+            <td><span class="math">Smod</span></td>
+            <td>Stack quotient of <span class="math">Spec(O_K)</span> by <span class="math">Gal(K/Fmod)</span>.</td>
+            <td>Gives a moduli-field base on which arithmetic line bundles can be treated stack-theoretically.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Smod,L</span></td>
+            <td>Integral closure of <span class="math">Smod</span> in a finite extension <span class="math">L</span> of <span class="math">Fmod</span>.</td>
+            <td>Provides the finite-extension input for stack-theoretic Frobenioids.</td>
+          </tr>
+          <tr>
+            <td>Perfection/realification</td>
+            <td>After passing to either operation, the stack-theoretic Frobenioids become naturally isomorphic to the non-stack versions.</td>
+            <td>Explains why later realified Frobenioid pages can move between stack and non-stack descriptions without changing the perfected/realified object.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Remark 3.1.5</a>
+          Related: <a href="#initial-theta-field-moduli-iut-i31">field/moduli layer</a>
+          <a href="#global-realified-cmod-iut-i35">global Cmod realification</a>
+          <a href="#frobenioids-log-shells">Frobenioids/log-shells</a>
+          <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
+        </div>
+      </section>
+
+      <section id="etth-odd-ell-correction-iut-i316" data-filter="iut i remark 3.1.6 etth correction odd ell quotient delta x even l orbicurves x">
+        <h2>IUT I Remark 3.1.6: Odd-ell Correction to EtTh</h2>
+        <p class="lede">
+          Remark 3.1.6 corrects an error in <span class="math">EtTh</span>: before
+          <span class="math">EtTh</span> Definition 2.1, the integer
+          <span class="math">ell</span> must be assumed odd for the quotient
+          <span class="math">Delta_X</span> to be well-defined. Mochizuki states that
+          this is irrelevant to the IUT series because the applications ultimately use
+          the curves <span class="math">X</span> and require only the odd
+          <span class="math">ell</span> case.
+        </p>
+        <table class="sourceTable3 sourceRoleTable3">
+          <tr><th>Correction point</th><th>Source statement</th><th>Consequence for this wiki</th></tr>
+          <tr>
+            <td>Missing hypothesis</td>
+            <td>The setup preceding <span class="math">EtTh</span> Definition 2.1 must assume <span class="math">ell</span> is odd.</td>
+            <td>Any page relying on EtTh orbicurves should preserve the odd-<span class="math">ell</span> restriction.</td>
+          </tr>
+          <tr>
+            <td>Deleted case</td>
+            <td><span class="math">EtTh</span> Remark 2.2.1 must be deleted, and Proposition 2.12 excludes the dotted <span class="math">C</span> orbicurve case.</td>
+            <td>The wiki should not treat the even-<span class="math">ell</span> orbicurve branch as available input for IUT.</td>
+          </tr>
+          <tr>
+            <td>No claimed damage</td>
+            <td>The later theory in <span class="math">EtTh</span> and the IUT series applies only after the point where the curves <span class="math">X</span> are used, requiring only odd <span class="math">ell</span>.</td>
+            <td>This belongs to source hygiene, not to the Scholze-Stix dispute page.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          This page records a source-level correction, not an independent criticism. In
+          the IUT input package, <span class="math">ell >= 5</span>, so the corrected
+          odd-<span class="math">ell</span> condition is already satisfied.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Remark 3.1.6</a>
+          Related: <a href="#initial-theta-field-moduli-iut-i31">field/moduli layer</a>
+          <a href="#theta-approach-pixk-recovery-iut-i312">Pi_XK recovery</a>
+          <a href="#bad-nonarch-frobenioids-32">bad nonarch Frobenioids</a>
+          <a href="#prime-two-restriction">prime 2 restriction</a>
         </div>
       </section>
 
@@ -56777,6 +57519,45 @@
           a large auxiliary prime <span class="math">ell</span>, and produces initial
           theta data satisfying the hypotheses of Theorem 1.10.
         </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Section index</h3>
+            <p>
+              Read this page as the unified route through Corollary 2.2. The linked
+              subpages remain searchable and individually addressable.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#iut-iv-corollary-22-lambda-j">lambda/j gate</a>
+              <a class="tag" href="#iut-iv-corollary-22-bd-heights">BD heights</a>
+              <a class="tag" href="#iut-iv-corollary-22-exceptions">exceptions</a>
+              <a class="tag" href="#iut-iv-corollary-22-prime-galois">prime/Galois</a>
+              <a class="tag" href="#iut-iv-corollary-22-c1-c2">C1/C2</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Adjacent remarks</h3>
+            <p>
+              The following remarks explain how the estimate interacts with
+              Riemann-hypothesis style weights, semi-twists, uniform abc language, and
+              p-adic Teichmuller analogies.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#iut-iv-remark-221-rh-weight">2.2.1</a>
+              <a class="tag" href="#iut-iv-remark-222-semitwist">2.2.2</a>
+              <a class="tag" href="#iut-iv-remark-223-uniform-abc">2.2.3</a>
+              <a class="tag" href="#iut-iv-remark-224-padic-teich">2.2.4</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Reading rule</h3>
+            <p>
+              The parent page gives the whole proof route at once; the child pages
+              isolate details that are easy to lose, such as bounded-discrepancy
+              equality, exceptional-set enlargement, and auxiliary-prime selection.
+            </p>
+            <div class="tagRow"><span class="tag red">grouped unit</span><span class="tag">IUT IV §2</span></div>
+          </div>
+        </div>
         <div class="diagram fit" aria-label="IUT IV Corollary 2.2 suitable initial theta data route">
           <div class="diagramHeader">
             <strong>Corollary 2.2 application gate</strong>
