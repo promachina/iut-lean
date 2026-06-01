@@ -761,6 +761,8 @@
         <a href="#invitation-expanded-route">Invitation route</a>
         <a href="#invitation-hodge-arakelov-obstruction-page">Invitation HA obstruction</a>
         <a href="#invitation-quasiconformal-distortion-page">Invitation distortion</a>
+        <a href="#invitation-hodge-theater-bookkeeping-page">Invitation HT bookkeeping</a>
+        <a href="#invitation-kummer-cyclotome-page">Invitation Kummer bridge</a>
         <a href="#panoramic-route">Panoramic route</a>
         <a href="#bogomolov-szpiro-analogy">Bogomolov-Szpiro analogy</a>
         <a href="#classical-roots-route">Classical roots route</a>
@@ -2731,6 +2733,94 @@
           Related: <a href="#progress-report-expected-results-2010">2010 expected results</a>
           <a href="#corollary-312">Corollary 3.12</a>
           <a href="#scholze-stix-critique-page">Scholze-Stix critique</a>
+        </div>
+      </section>
+
+      <section id="invitation-hodge-theater-bookkeeping-page" data-filter="invitation hodge theater bookkeeping apparatus l torsion global multiplicative subspace generators fl symmetries theta ell nf">
+        <h2>Invitation Hodge-Theater Bookkeeping</h2>
+        <p class="lede">
+          Invitation §3 describes a Theta±ellNF-Hodge theater as a model of the usual
+          scheme-theoretic arithmetic geometry around an elliptic curve over a number
+          field, but rebuilt from abstract monoids, Galois groups, and arithmetic
+          fundamental groups. Its stated purpose is bookkeeping for
+          <span class="math">l</span>-torsion labels, so that IUT can simulate the global
+          multiplicative subspace and generators that were unavailable in §1.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Source curve</strong>
+            <p>An elliptic curve over a number field and its localizations provide the ordinary arithmetic-geometric input.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Abstract package</strong>
+            <p>The theater stores monoids, Galois groups, arithmetic fundamental groups, and finite-label symmetries.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Simulation role</strong>
+            <p>The package simulates the missing global multiplicative subspace/generator data without asserting that such data exist globally.</p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Label symmetry</th><th>Invitation role</th><th>Later source route</th></tr>
+          <tr>
+            <td><span class="math">F_l^* / {+/-1}</span></td>
+            <td>Multiplicative label symmetry for the half-indexed nonzero labels.</td>
+            <td><a href="#fpm-versus-fl-symmetry-473">multiplicative versus additive symmetry</a></td>
+          </tr>
+          <tr>
+            <td><span class="math">F_l rtimes {+/-1}</span></td>
+            <td>Additive signed label symmetry around the ordered torsion-label array.</td>
+            <td><a href="#flpm-groups-torsors-iut-i61">F_l± groups and torsors</a></td>
+          </tr>
+          <tr>
+            <td>Basepoint rearrangement</td>
+            <td>The notes compare the construction to a p-adic-Hodge-theoretic tensor rearrangement of basepoints.</td>
+            <td><a href="#basepoints-inter-universality">basepoints and inter-universality</a></td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-invitation-iut-expanded.pdf" target="_blank">Invitation to IUT, expanded, §3</a>
+          Related: <a href="#hodge-theaters">Hodge theaters</a>
+          <a href="#theta-hodge-theater-definition-iut-i36">theta-Hodge theaters</a>
+          <a href="#invitation-hodge-arakelov-obstruction-page">HA obstruction</a>
+        </div>
+      </section>
+
+      <section id="invitation-kummer-cyclotome-page" data-filter="invitation kummer theory frobenius like etale like cyclotomic rigidity theta values realification gaussian integral polar coordinates">
+        <h2>Invitation Kummer Bridge</h2>
+        <p class="lede">
+          Invitation §§3-4 identifies Kummer theory as the bridge between
+          Frobenius-like monoid data and etale-like fundamental-group/Galois data.
+          This bridge is needed because log and theta links form walls from the viewpoint
+          of ring structure, while etale-like group data can pass through as abstract
+          topological groups. Cyclotomic rigidity protects the cyclotome inside the
+          monoids where theta values and realified number-field data appear.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Frobenius-like side</h3>
+            <p>Abstract monoids contain unit data, theta values at torsion labels, and realified number-field information.</p>
+          </div>
+          <div class="card">
+            <h3>Etale-like side</h3>
+            <p>Arithmetic fundamental groups and Galois groups provide the group-theoretic data that can cross link walls.</p>
+          </div>
+          <div class="card">
+            <h3>Cyclotomic rigidity</h3>
+            <p>The theory must protect the cyclotome from unit indeterminacy when theta-value and realified data are compared.</p>
+          </div>
+        </div>
+        <div class="callout">
+          The Invitation compares this passage to moving from Cartesian to polar
+          coordinates in the Gaussian integral. The analogy is only structural: it marks
+          a coordinate change from directly visible monoid data to a group-theoretic
+          algorithmic description.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-invitation-iut-expanded.pdf" target="_blank">Invitation to IUT, expanded, §§3-4</a>
+          Related: <a href="#alien-kummer-role-341">Kummer theory</a>
+          <a href="#cyclotomic-rigidity">cyclotomic rigidity</a>
+          <a href="#gaussian-log-theta-lattice-source">Gaussian log-theta lattice</a>
         </div>
       </section>
 
@@ -62298,7 +62388,7 @@
             <a class="pdf" href="papers/mochizuki-invitation-iut-2012.pdf" target="_blank">PDF</a>
           </div>
           <div class="card sourceCard" data-filter="mochizuki invitation expanded iut hodge arakelov log theta lattice anabelian">
-            <div><h3>Invitation to IUT, Expanded Version</h3><div class="sourceMeta">Shinichi Mochizuki, lecture notes, 15 pp.</div><p>Compact pedagogical route through Hodge-Arakelov motivation, Teichmuller deformation, the log-theta lattice, and anabelian inter-universality.</p><p><a href="#invitation-hodge-arakelov-obstruction-page">HA obstruction</a> · <a href="#invitation-quasiconformal-distortion-page">distortion page</a></p></div>
+            <div><h3>Invitation to IUT, Expanded Version</h3><div class="sourceMeta">Shinichi Mochizuki, lecture notes, 15 pp.</div><p>Compact pedagogical route through Hodge-Arakelov motivation, Teichmuller deformation, the log-theta lattice, and anabelian inter-universality.</p><p><a href="#invitation-hodge-arakelov-obstruction-page">HA obstruction</a> · <a href="#invitation-quasiconformal-distortion-page">distortion page</a> · <a href="#invitation-hodge-theater-bookkeeping-page">HT bookkeeping</a> · <a href="#invitation-kummer-cyclotome-page">Kummer bridge</a></p></div>
             <a class="pdf" href="papers/mochizuki-invitation-iut-expanded.pdf" target="_blank">PDF</a>
           </div>
           <div class="card sourceCard" data-filter="mochizuki invitation three hour iut lecture notes">
