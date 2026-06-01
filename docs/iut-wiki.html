@@ -372,6 +372,9 @@
       gap: 12px;
       margin: 18px 0;
     }
+    .mobileOnlyDiagram {
+      display: none;
+    }
     .flowStep {
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -719,6 +722,10 @@
       .hero p { font-size: 1rem; }
       .heroActions { flex-direction: column; align-items: stretch; }
       .button { text-align: center; }
+      .desktopOnlyDiagram { display: none; }
+      .mobileOnlyDiagram {
+        display: grid;
+      }
     }
   </style>
 </head>
@@ -749,6 +756,8 @@
         <a href="#abs-anabelian-cores-telecores-page">Cores and telecores</a>
         <a href="#abs-anabelian-log-frobenius-page">Log-Frobenius compatibility</a>
         <a href="#abs-anabelian-log-shells-page">Log-shell properties</a>
+        <a href="#progress-report-dilation-2010">2010 dilation program</a>
+        <a href="#progress-report-expected-results-2010">2010 expected results</a>
         <a href="#invitation-expanded-route">Invitation route</a>
         <a href="#panoramic-route">Panoramic route</a>
         <a href="#bogomolov-szpiro-analogy">Bogomolov-Szpiro analogy</a>
@@ -2351,6 +2360,171 @@
           Related: <a href="#frobenioids-log-shells">log-shells</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
           <a href="#collas-universe-height-copies-page">Collas height universes</a>
+        </div>
+      </section>
+
+      <section id="progress-report-dilation-2010" data-filter="mochizuki 2010 progress report teichmuller theory two underlying dimensions addition multiplication units value group theta dilation log theta lattice">
+        <h2>2010 Dilation Program</h2>
+        <p class="lede">
+          Mochizuki's 2010 progress report presents IUT first as an arithmetic analogue
+          of Teichmuller deformation. A ring is viewed as a one-dimensional arithmetic
+          holomorphic structure with two underlying combinatorial dimensions: addition
+          and multiplication. The intended deformation dilates the valuation-group
+          direction by theta-function data while leaving unit data undilated.
+        </p>
+        <div class="diagram fit desktopOnlyDiagram" aria-label="2010 progress report dilation program">
+          <div class="diagramHeader">
+            <strong>Arithmetic Teichmuller analogy</strong>
+            <span>one arithmetic holomorphic structure, two underlying dimensions</span>
+          </div>
+          <svg viewBox="0 0 960 390" role="img">
+            <defs>
+              <marker id="arrowProgress2010" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="54" y="62" width="220" height="82"></rect>
+            <text class="nodeTitle" x="164" y="91" text-anchor="middle">classical Teichmuller</text>
+            <text class="tinyText" x="164" y="115" text-anchor="middle">z = x + iy, then x is dilated</text>
+            <text class="tinyText" x="164" y="132" text-anchor="middle">while y is fixed</text>
+
+            <rect class="nodeBox green" x="370" y="62" width="220" height="82"></rect>
+            <text class="nodeTitle" x="480" y="91" text-anchor="middle">arithmetic ring</text>
+            <text class="tinyText" x="480" y="115" text-anchor="middle">addition and multiplication</text>
+            <text class="tinyText" x="480" y="132" text-anchor="middle">as two combinatorial directions</text>
+
+            <rect class="nodeBox gold" x="686" y="62" width="220" height="82"></rect>
+            <text class="nodeTitle" x="796" y="91" text-anchor="middle">local field split</text>
+            <text class="tinyText" x="796" y="115" text-anchor="middle">units and value group</text>
+            <text class="tinyText" x="796" y="132" text-anchor="middle">O_k^* subset k^* -> Z</text>
+
+            <path class="edge blue" d="M274 103 H368" marker-end="url(#arrowProgress2010)"></path>
+            <path class="edge green" d="M590 103 H684" marker-end="url(#arrowProgress2010)"></path>
+
+            <rect class="nodeBox violet" x="224" y="246" width="230" height="82"></rect>
+            <text class="nodeTitle" x="339" y="275" text-anchor="middle">theta dilation</text>
+            <text class="tinyText" x="339" y="299" text-anchor="middle">valuation groups are dilated</text>
+            <text class="tinyText" x="339" y="316" text-anchor="middle">by theta-function data</text>
+
+            <rect class="nodeBox red" x="506" y="246" width="230" height="82"></rect>
+            <text class="nodeTitle" x="621" y="275" text-anchor="middle">unit core fixed</text>
+            <text class="tinyText" x="621" y="299" text-anchor="middle">unit directions remain undilated</text>
+            <text class="tinyText" x="621" y="316" text-anchor="middle">through compatible group data</text>
+
+            <path d="M796 146 C770 202 650 217 622 244" class="edge gold" marker-end="url(#arrowProgress2010)"></path>
+            <path d="M480 146 C454 201 374 218 342 244" class="edge green" marker-end="url(#arrowProgress2010)"></path>
+          </svg>
+        </div>
+        <div class="flowDiagram mobileOnlyDiagram" aria-label="2010 progress report dilation program mobile summary">
+          <div class="flowStep">
+            <strong>Classical model</strong>
+            <p>One holomorphic dimension has two real directions; one is dilated and one is fixed.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Arithmetic model</strong>
+            <p>A ring is read as addition plus multiplication, two combinatorial directions inside one arithmetic holomorphic structure.</p>
+          </div>
+          <div class="flowStep">
+            <strong>IUT deformation</strong>
+            <p>The value-group direction is theta-dilated while the unit direction remains the fixed core.</p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Progress-report item</th><th>Meaning in 2010</th><th>Later wiki target</th></tr>
+          <tr>
+            <td>Earlier Teichmuller theories</td>
+            <td>Classical and p-adic Teichmuller theories motivate deformation with one direction dilated and another fixed.</td>
+            <td><a href="#classical-roots-route">classical roots route</a>, <a href="#padic-teichmuller-correspondence">p-adic analogy</a></td>
+          </tr>
+          <tr>
+            <td>Two arithmetic dimensions</td>
+            <td>Addition and multiplication are treated as separate combinatorial directions of ring structure.</td>
+            <td><a href="#alien-ring-dimensions-211">two ring dimensions</a>, <a href="#theta-log-links">theta/log links</a></td>
+          </tr>
+          <tr>
+            <td>Units and value group</td>
+            <td>The local-field picture separates <span class="math">O_k^*</span> from the value group.</td>
+            <td><a href="#frobenioids-log-shells">log-shells</a>, <a href="#theta-evaluation-sections-44-45">theta evaluation sections</a></td>
+          </tr>
+          <tr>
+            <td>Log-theta lattice</td>
+            <td>Horizontal theta links and vertical log links organize the deformation.</td>
+            <td><a href="#log-theta-lattice">log-theta lattice</a>, <a href="#tensor-packets-iii31-33">IUT III tensor packets</a></td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-progress-report-2010.pdf" target="_blank">IUT Progress Report 2010, §§1-3</a>
+          Related: <a href="#progress-report-expected-results-2010">2010 expected results</a>
+          <a href="#invitation-expanded-route">Invitation route</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+        </div>
+      </section>
+
+      <section id="progress-report-expected-results-2010" data-filter="mochizuki 2010 progress report expected main theorem expected corollary theta link coric nature galois action szpiro abc volume computation">
+        <h2>2010 Expected Results</h2>
+        <p class="lede">
+          The 2010 report states the then-expected main theorem as an explicit
+          algorithmic description, up to mild indeterminacies, of the left side of the
+          theta link relative to the alien ring structure on the right side. It then
+          states the expected corollary: a volume computation of the algorithmic output
+          should yield the Szpiro, hence abc, inequality.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Theta-link input</strong>
+            <p>The left-hand theta values indexed by <span class="math">q^(j^2)</span> are read relative to the alien ring structure on the right.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Anabelian algorithm</strong>
+            <p>Only abstract topological groups survive direct passage through log and theta links; anabelian reconstruction supplies the comparison data.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Volume computation</strong>
+            <p>The algorithmic output is subjected to a log-volume calculation expected to imply Szpiro/abc.</p>
+          </div>
+        </div>
+        <div class="grid3">
+          <div class="card" id="progress-2010-abstract-groups">
+            <h3>Abstract groups after links</h3>
+            <p>
+              The report already stresses that log and theta links are incompatible
+              with ring structures and scheme-theoretic basepoints. Across links, one
+              can only compare local fundamental groups and Galois groups as abstract
+              topological groups before applying anabelian geometry.
+            </p>
+            <div class="tagRow"><span class="tag blue">§4</span><span class="tag">inter-universality</span></div>
+          </div>
+          <div class="card" id="progress-2010-coric-galois-action">
+            <h3>Coric Galois action</h3>
+            <p>
+              The stated key point for the expected main theorem is the coric nature of
+              the action of the local Galois group on unit data. This anticipates later
+              language about coricity, mono-anabelian reconstruction, and multiradial
+              invariance.
+            </p>
+            <div class="tagRow"><span class="tag green">§5</span><span class="tag">expected theorem</span></div>
+          </div>
+          <div class="card" id="progress-2010-volume-corollary">
+            <h3>Volume corollary</h3>
+            <p>
+              The expected corollary is not stated as a direct scheme-theoretic
+              inequality. It depends on performing a volume computation on the output of
+              the algorithms described by the expected main theorem.
+            </p>
+            <div class="tagRow"><span class="tag gold">§5</span><span class="tag">Szpiro/abc</span></div>
+          </div>
+        </div>
+        <div class="callout red">
+          <strong>3.12 relevance.</strong> The later Theorem 3.11 to Corollary 3.12
+          corridor is the mature form of this early expected-theorem-to-volume-corollary
+          pattern: first obtain a multiradial, source-faithful description of theta-side
+          data; only then pass to a log-volume comparison.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-progress-report-2010.pdf" target="_blank">IUT Progress Report 2010, §§4-5</a>
+          Related: <a href="#theorem-311-lgp-algorithms">Theorem 3.11</a>
+          <a href="#corollary-312">Corollary 3.12</a>
+          <a href="#rims-four-triangle-route-2026">2026 four-triangle route</a>
         </div>
       </section>
 
@@ -62011,7 +62185,7 @@
             <a class="pdf" href="papers/mochizuki-panorama.pdf" target="_blank">PDF</a>
           </div>
           <div class="card sourceCard" data-filter="mochizuki iut progress report 2010 log theta lattice expected main results">
-            <div><h3>IUT Progress Report 2010</h3><div class="sourceMeta">Shinichi Mochizuki, RIMS Kyoto 2010, 12 pp.</div><p>Early progress-report slides describing the comparison with earlier Teichmuller theories, the log-theta lattice, inter-universality, and expected main results.</p></div>
+            <div><h3>IUT Progress Report 2010</h3><div class="sourceMeta">Shinichi Mochizuki, RIMS Kyoto 2010, 12 pp.</div><p>Early progress-report slides describing the comparison with earlier Teichmuller theories, the log-theta lattice, inter-universality, and expected main results.</p><p><a href="#progress-report-dilation-2010">Dilation page</a> · <a href="#progress-report-expected-results-2010">expected-results page</a></p></div>
             <a class="pdf" href="papers/mochizuki-iut-progress-report-2010.pdf" target="_blank">PDF</a>
           </div>
           <div class="card sourceCard" data-filter="mochizuki invitation iut 2012 lecture notes hodge arakelov log theta lattice">
