@@ -398,12 +398,11 @@ holomorphic source product are now packaged as one source-side log-Kummer
 packet calibration object.  The object itself is still supplied source data,
 but the equality from entry source to \((\Ind3)\) source is derived from it
 together with the Kummer and forgetting maps.
-There is now a stronger packet-target constructor for this nonarchimedean
-upper-semi object.  The target-side data is no longer passed as three unrelated
-equalities: a single log-Kummer packet-target calibration object carries the
-common packet-normalized capsule value, and \Lean{} derives the direct
-theta-to-entry, theta-to-packet, and entry-to-\((\Ind3)\)-target equalities
-consumed by the upper-semi route.
+The source and target packet calibrations are now joined by a finite
+log-Kummer packet-correspondence source carrying the q-pilot column and
+non-interference guard.  Its target face carries the common packet-normalized
+capsule value, and \Lean{} derives the direct theta-to-entry, theta-to-packet,
+and entry-to-\((\Ind3)\)-target equalities consumed by the upper-semi route.
 The integrated route now composes the Hodge--Arakelov theta-value sources with
 this packet-target nonarchimedean source.  The resulting theorem derives the
 same boundary/strict \(C_\Theta\) dichotomy from source-facing Gaussian
@@ -547,10 +546,11 @@ The project currently proves the following source-facing results in \Lean{}:
   canonical bad-local \(|F_\ell|\)-label source with a source-side
   packet/product calibration object and that finite chain, deriving the
   nonarchimedean source equality.
-\item A packet-target nonarchimedean constructor now packages target-side
-  Step (x) calibration as one log-Kummer packet-target object.  Its projections
-  derive the theta-to-packet, theta-to-entry, entry-to-\((\Ind3)\)-target, and
-  packet-normalized target equalities used by the route.
+\item Source-side and target-side packet calibrations are now joined by one
+  nonarchimedean log-Kummer packet-correspondence source carrying the q-pilot
+  non-interference guard.  Its projections derive the theta-to-packet,
+  theta-to-entry, entry-to-\((\Ind3)\)-target, and packet-normalized target
+  equalities used by the route.
 \item The current integrated route composes Hodge--Arakelov theta-value sources
   with the packet-target nonarchimedean source to obtain the same
   \(C_\Theta=-1\) boundary alternative or strict \(C_\Theta>-1\) conclusion.
@@ -701,9 +701,9 @@ The practical priority order is:
 \item extend the Gaussian-derived factored \SHE{} construction beyond the
   finite degree-evaluation and canonical-label shadows toward actual
   Gaussian/Frobenioid material from \IUT{} II;
-\item construct the packet-target calibration object from the actual
+\item construct the packet-correspondence source from the actual
   log-Kummer/Frobenioid machinery of \IUT{} III, Step (x), rather than treating
-  the object itself as source-facing input;
+  this finite correspondence object itself as source-facing input;
 \item replace the hull/determinant endpoint records by the actual
   holomorphic-hull and determinant operations from Remark 3.9.5 and
   Step (xi);
