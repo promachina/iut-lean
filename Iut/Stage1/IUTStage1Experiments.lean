@@ -275,6 +275,22 @@ theorem thetaNFBridgeAveragedTarget_endpoint
       (Fintype.card J : Real) * nfBridge.targetLogVolume :=
   compat.thetaTarget_eq_card_mul_nfAveragedTarget hmode
 
+theorem thetaNFBridgeGluingTorsor_endpoint
+    {l : PrimeGeFive}
+    (source : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (t g h gluing gluing₁ gluing₂ : ZMod l.value) :
+    source.gluingTranslate t gluing = zmodLabelTranslate l t gluing ∧
+      source.gluingTranslate 0 gluing = gluing ∧
+      source.gluingTranslate (g + h) gluing =
+        source.gluingTranslate g (source.gluingTranslate h gluing) ∧
+      (∃! u : ZMod l.value,
+        source.gluingTranslate u gluing₁ = gluing₂) ∧
+      source.compatibility.indexCompatibility.nfIndexBijection =
+        source.compatibility.indexCompatibility.thetaIndexBijection ∧
+      source.nfBridge.capsuleDistribution =
+        source.thetaBridge.capsuleDistribution :=
+  source.gluingTorsor_endpoint t g h gluing gluing₁ gluing₂
+
 theorem thetaRootKummerForgettingSource_feedsNonarchimedeanEntry
     {coric : Type u}
     {audited :

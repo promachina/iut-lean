@@ -461,6 +461,12 @@ NF- and \(\Theta\)-bridge morphisms to use the same index bijection and the
 same capsule distribution.  Lean then proves that a summed NF target equals
 the \(\Theta\)-target, while an averaged NF target becomes the \(\Theta\)-target
 after multiplication by \(|J|\).
+Corollary 5.6(iii) is represented by a finite gluing torsor: once compatible
+NF and \(\Theta\) bridge halves have been fixed, the gluing parameter is modeled
+by the additive \(F_\ell\)-torsor on \(\mathbb{Z}/\ell\mathbb{Z}\).  Lean proves
+zero action, additivity of the action, existence and uniqueness of the
+translation between two gluing parameters, and preservation of the shared
+index-bijection and capsule data.
 This layer is now connected to the nonarchimedean packet correspondence:
 a realified-Frobenioid log-Kummer packet source projects the Frobenioid
 compatibility data to the Kummer \(F\to D\) transfer and to the
@@ -665,6 +671,9 @@ The project currently proves the following source-facing results in \Lean{}:
   same-index-bijection and same-capsule requirements of Definition 5.5(iii),
   and proves the corresponding \(\Theta\)-target equalities for summed and
   averaged NF modes.
+\item The finite gluing set of Corollary 5.6(iii) is modeled as the additive
+  \(F_\ell\)-torsor on \(\mathbb{Z}/\ell\mathbb{Z}\), with compatibility data
+  preserved under gluing translation.
 \item The realified Frobenioid layer now feeds the nonarchimedean
   log-Kummer packet source: Kummer and mono-analytic forgetting transfers are
   projected from Frobenioid compatibility before the packet correspondence

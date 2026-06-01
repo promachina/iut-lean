@@ -4734,6 +4734,93 @@ theorem thetaNFBridgeCompatibility_endpoint
 end IUTStage1ThetaNFBridgeRealifiedCompatibility
 
 /--
+Finite `F_l`-torsor of compatible ΘNF bridge gluings.
+
+Corollary 5.6(iii) states that, given an NF-bridge and a Θ-bridge, the
+capsule-full poly-isomorphisms that glue them into a ΘNF-Hodge theater form an
+`F_l`-torsor.  The current finite layer models the gluing parameter by the
+additive torsor on `ZMod l` and keeps the already formalized same-index and
+same-capsule compatibility attached to every gluing parameter.
+-/
+structure IUTStage1ThetaNFBridgeGluingTorsor
+    (l : PrimeGeFive) where
+  nfBridge : IUTStage1NFBridgeRealifiedLogVolume (ZMod l.value)
+  thetaBridge : IUTStage1ThetaBridgeRealifiedLogVolume (ZMod l.value)
+  compatibility :
+    IUTStage1ThetaNFBridgeRealifiedCompatibility nfBridge thetaBridge
+
+namespace IUTStage1ThetaNFBridgeGluingTorsor
+
+variable {l : PrimeGeFive}
+
+def gluingTranslate
+    (_source : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (t gluing : ZMod l.value) : ZMod l.value :=
+  zmodLabelTranslate l t gluing
+
+theorem gluingTranslate_eq_add
+    (source : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (t gluing : ZMod l.value) :
+    source.gluingTranslate t gluing = t + gluing :=
+  rfl
+
+theorem zero_gluingTranslate
+    (source : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (gluing : ZMod l.value) :
+    source.gluingTranslate 0 gluing = gluing :=
+  zmodLabelTranslate_zero l gluing
+
+theorem add_gluingTranslate
+    (source : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (g h gluing : ZMod l.value) :
+    source.gluingTranslate (g + h) gluing =
+      source.gluingTranslate g (source.gluingTranslate h gluing) :=
+  zmodLabelTranslate_add l g h gluing
+
+theorem existsUnique_gluingTranslate_eq
+    (source : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (gluing₁ gluing₂ : ZMod l.value) :
+    ∃! t : ZMod l.value,
+      source.gluingTranslate t gluing₁ = gluing₂ :=
+  zmodLabelTranslate_existsUnique l gluing₁ gluing₂
+
+theorem gluing_preserves_indexCompatibility
+    (source : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (_t _gluing : ZMod l.value) :
+    source.compatibility.indexCompatibility.nfIndexBijection =
+      source.compatibility.indexCompatibility.thetaIndexBijection :=
+  source.compatibility.indexCompatibility.nfIndex_eq_thetaIndex
+
+theorem gluing_preserves_capsule
+    (source : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (_t _gluing : ZMod l.value) :
+    source.nfBridge.capsuleDistribution =
+      source.thetaBridge.capsuleDistribution :=
+  source.compatibility.capsule_eq
+
+theorem gluingTorsor_endpoint
+    (source : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (t g h gluing gluing₁ gluing₂ : ZMod l.value) :
+    source.gluingTranslate t gluing = zmodLabelTranslate l t gluing ∧
+      source.gluingTranslate 0 gluing = gluing ∧
+      source.gluingTranslate (g + h) gluing =
+        source.gluingTranslate g (source.gluingTranslate h gluing) ∧
+      (∃! u : ZMod l.value,
+        source.gluingTranslate u gluing₁ = gluing₂) ∧
+      source.compatibility.indexCompatibility.nfIndexBijection =
+        source.compatibility.indexCompatibility.thetaIndexBijection ∧
+      source.nfBridge.capsuleDistribution =
+        source.thetaBridge.capsuleDistribution :=
+  ⟨rfl,
+    source.zero_gluingTranslate gluing,
+    source.add_gluingTranslate g h gluing,
+    source.existsUnique_gluingTranslate_eq gluing₁ gluing₂,
+    source.gluing_preserves_indexCompatibility t gluing,
+    source.gluing_preserves_capsule t gluing⟩
+
+end IUTStage1ThetaNFBridgeGluingTorsor
+
+/--
 Source-facing global realified Frobenioid calibration package.
 
 It consumes the local `p_v^N` source package but fixes the exponent selected by
