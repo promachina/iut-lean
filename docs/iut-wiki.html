@@ -809,6 +809,12 @@
         <a href="#alien-mono-theta-environments-344">Alien mono-theta env 3.4(iv)</a>
         <a href="#alien-cyclotomic-rigidity-taxonomy-345">Alien rigidity taxonomy 3.4(v)</a>
         <a href="#alien-frobenioid-use-35">Alien Frobenioid use 3.5</a>
+        <a href="#alien-galois-evaluation-36">Alien Galois evaluation 3.6</a>
+        <a href="#alien-etale-picture-symmetries-361">Alien etale-picture 3.6(i)</a>
+        <a href="#alien-theta-local-diagonals-362">Alien theta diagonals 3.6(ii)</a>
+        <a href="#alien-nf-global-diagonals-363">Alien NF diagonals 3.6(iii)</a>
+        <a href="#alien-log-shell-actions-364">Alien log-shell actions 3.6(iv)</a>
+        <a href="#alien-processions-tensor-packets-365">Alien processions 3.6(v)</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
         <a href="#iut-i-base-bridges-evaluation-sections">Base bridges/evaluation sections</a>
         <a href="#iut-i-additive-base-bridges-61-610">Additive base bridges 6.1-6.10</a>
@@ -16690,6 +16696,260 @@
           Related: <a href="#frobenioid-category-packaging-ii38-page">Frobenioid category packaging</a>
           <a href="#alien-mono-theta-environments-344">mono-theta environments</a>
           <a href="#theta-monoid-multiradiality-iii22">theta monoid multiradiality</a>
+        </div>
+      </section>
+
+      <section id="alien-galois-evaluation-36" data-filter="mutually alien copies 3.6 Galois evaluation abstract functions values Kummer decomposition subgroups theta functions kappa coric rational functions log shells labels symmetries">
+        <h2>Alien Copies 3.6: Galois Evaluation</h2>
+        <p class="lede">
+          Section 3.6 studies Galois evaluation of the κ-coric rational functions and
+          theta functions from §3.4. The basic route is
+          <span class="math">abstract functions -> values</span>: pass from Frobenius-like
+          functions to etale-like functions by Kummer theory, restrict to decomposition
+          subgroups of closed points, then use base-field Kummer theory to recover
+          Frobenius-like values.
+        </p>
+        <div class="diagram fit" aria-label="Galois evaluation pipeline">
+          <div class="diagramHeader">
+            <strong>Galois evaluation pipeline</strong>
+            <span>Kummer, decomposition groups, inverse Kummer</span>
+          </div>
+          <svg viewBox="0 0 1000 360" role="img">
+            <defs>
+              <marker id="arrowAlien36" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="72" y="76" width="215" height="78"></rect>
+            <text class="nodeTitle" x="180" y="106" text-anchor="middle">Frobenius-like</text>
+            <text class="tinyText" x="180" y="130" text-anchor="middle">abstract functions</text>
+            <rect class="nodeBox green" x="392" y="76" width="215" height="78"></rect>
+            <text class="nodeTitle" x="500" y="106" text-anchor="middle">etale-like</text>
+            <text class="tinyText" x="500" y="130" text-anchor="middle">Kummer classes</text>
+            <rect class="nodeBox green" x="712" y="76" width="215" height="78"></rect>
+            <text class="nodeTitle" x="820" y="106" text-anchor="middle">decomposition</text>
+            <text class="tinyText" x="820" y="130" text-anchor="middle">subgroup restriction</text>
+            <rect class="nodeBox red" x="392" y="238" width="215" height="78"></rect>
+            <text class="nodeTitle" x="500" y="268" text-anchor="middle">Frobenius-like</text>
+            <text class="tinyText" x="500" y="292" text-anchor="middle">values</text>
+            <path class="edge blue" d="M289 115 H390" marker-end="url(#arrowAlien36)"></path>
+            <text class="edgeLabel" x="340" y="94" text-anchor="middle">Kummer</text>
+            <path class="edge green" d="M609 115 H710" marker-end="url(#arrowAlien36)"></path>
+            <text class="edgeLabel" x="660" y="94" text-anchor="middle">evaluate</text>
+            <path class="edge red" d="M820 156 C805 245 708 277 609 277" marker-end="url(#arrowAlien36)"></path>
+            <text class="edgeLabel" x="728" y="260" text-anchor="middle">Kummer^{-1}</text>
+          </svg>
+        </div>
+        <p>
+          Mochizuki stresses that the suitable evaluation subgroups are the
+          decomposition subgroups coming from closed points; for theta functions one
+          also needs a combinatorial Section-Conjecture-type input. The full §3.6
+          analysis then has to track labels, symmetries, and log-shell containers.
+        </p>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.6</a>
+          Related: <a href="#alien-kummer-decoupling-34">Kummer decoupling</a>
+          <a href="#alien-log-shell-actions-364">log-shell actions</a>
+          <a href="#alien-processions-tensor-packets-365">processions</a>
+        </div>
+      </section>
+
+      <section id="alien-etale-picture-symmetries-361" data-filter="mutually alien copies 3.6 etale picture D theta hodge theaters vertical lines multiradiality F_l star F_l semidirect symmetries combinatorial multiradiality uniradiality">
+        <h2>Alien Copies 3.6(i): Etale-Picture Symmetries</h2>
+        <p class="lede">
+          Passage to the etale-picture makes D-Hodge theaters from distinct vertical
+          lines permutable: the radial data is a D-Hodge theater up to indeterminate
+          isomorphism, the coric data is the etale-like <span class="math">G_v</span>
+          portion of <span class="math">(a_Theta)</span> or <span class="math">(a_q)</span>.
+          This is tautologically multiradial, but still nontrivial because the
+          log-theta-lattice itself does not permute vertical lines before this passage.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Symmetry</th><th>Source behavior</th><th>Interpretation</th></tr>
+          <tr>
+            <td><span class="math">F_l^*</span></td>
+            <td>Independent actions glued at the common symbol <span class="math">0</span>.</td>
+            <td>Combinatorial prototype of multiradiality; tied to global value-group data <span class="math">(c_Theta)</span>.</td>
+          </tr>
+          <tr>
+            <td><span class="math">F_l rtimes {+/-1}</span></td>
+            <td>Mutually interfering actions glued at <span class="math">0</span>.</td>
+            <td>Combinatorial prototype of uniradiality; tied to unit data and local value-group data.</td>
+          </tr>
+          <tr>
+            <td>Formal averages</td>
+            <td><span class="math">[0]</span>, <span class="math">[|j|]</span>, <span class="math">[succ]</span>, <span class="math">[>]</span> are compatible with the gluing <span class="math">0,succ -> ></span>.</td>
+            <td>Prepares weighted log-volume averages.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.6(i)</a>
+          Related: <a href="#alien-hodge-theater-symmetries-335">Hodge-theater symmetries</a>
+          <a href="#fl-multiradial-combinatorics-474">F_l multiradial combinatorics</a>
+          <a href="#d-theta-etale-pictures-ii411">D-theta etale pictures</a>
+        </div>
+      </section>
+
+      <section id="alien-theta-local-diagonals-362" data-filter="mutually alien copies 3.6 theta values local diagonals F_l semidirect conjugate synchronization decomposition groups zero labeled evaluation points q j squared topology log link compatibility">
+        <h2>Alien Copies 3.6(ii): Theta Values and Local Diagonals</h2>
+        <p class="lede">
+          At bad valuations, the <span class="math">F_l rtimes {+/-1}</span>-symmetry
+          gives symmetrizing isomorphisms between labelled copies
+          <span class="math">(G_v)_t</span>. These isomorphisms are free of inner
+          automorphism indeterminacy and form local diagonals that contain the theta
+          values <span class="math">q^{j^2}</span> obtained by Galois evaluation.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Component</th><th>Source content</th><th>Use</th></tr>
+          <tr>
+            <td>Tempered groups</td>
+            <td><span class="math">Pi_v subset Pi_v^+- subset Pi_v^cor</span>, reconstructible from <span class="math">Pi_v</span>.</td>
+            <td>Carry cusp-label and evaluation-point structure at bad places.</td>
+          </tr>
+          <tr>
+            <td>Conjugate synchronization</td>
+            <td><span class="math">F_l rtimes {+/-1}</span> acts by conjugation in <span class="math">Pi_v^cor</span>, producing inner-indeterminacy-free symmetrizing maps.</td>
+            <td>Synchronizes labels and signs across the left-hand Hodge-theater side.</td>
+          </tr>
+          <tr>
+            <td>Evaluation route</td>
+            <td>Restrict theta Kummer classes first to line-segment decomposition groups, then to evaluation-point decomposition groups.</td>
+            <td>Produces <span class="math">q^{j^2}</span> up to <span class="math">2l</span>-th roots of unity.</td>
+          </tr>
+          <tr>
+            <td>Topology compatibility</td>
+            <td>The Kummer theory here only involves local data <span class="math">(a_Theta)</span>, <span class="math">(b_Theta)</span>.</td>
+            <td>It remains compatible with tempered/profinite topology, hence with log-link power-series comparisons.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.6(ii)</a>
+          Related: <a href="#alien-theta-function-rigidity-343">theta-function rigidity</a>
+          <a href="#theta-evaluation-orbits-ii24-26">theta evaluation orbits</a>
+          <a href="#theta-exponent-commutativity-4111">theta exponent compatibility</a>
+        </div>
+      </section>
+
+      <section id="alien-nf-global-diagonals-363" data-filter="mutually alien copies 3.6 number field values global diagonals F_l star kappa coric rational functions Fmod Fsol linear disjointness weighted copies j squared">
+        <h2>Alien Copies 3.6(iii): NF Values and Global Diagonals</h2>
+        <p class="lede">
+          The <span class="math">F_l^*</span>-symmetry handles number-field values. By
+          applying linear disjointness involving the κ-coric solvable extension and the
+          Galois closure of <span class="math">C_K</span>, elements of
+          <span class="math">F_mod</span> or <span class="math">F_sol</span> are obtained by
+          Galois evaluation of κ-coric rational functions.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Point</th><th>Theta case</th><th>NF case</th></tr>
+          <tr>
+            <td>Symmetry</td>
+            <td><span class="math">F_l rtimes {+/-1}</span>.</td>
+            <td><span class="math">F_l^*</span>, isolated from the additive symmetry.</td>
+          </tr>
+          <tr>
+            <td>Values</td>
+            <td>Label-dependent theta values <span class="math">q^{j^2}</span>.</td>
+            <td>Total multiplicative monoids <span class="math">F_mod^x</span> or <span class="math">F_sol^x</span>; label dependence appears later as mono-analytic weights <span class="math">j^2</span>.</td>
+          </tr>
+          <tr>
+            <td>Topology</td>
+            <td>Topology-compatible and needed for log-link comparison.</td>
+            <td>Not topology-compatible, but no natural-log power-series comparison is needed at this stage.</td>
+          </tr>
+          <tr>
+            <td>Weighted copy warning</td>
+            <td>Weights are attached to theta values.</td>
+            <td>A holomorphic copy <span class="math">(F_mod^x)^{j^2}</span> is not additive-structure compatible; it only makes sense mono-analytically.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.6(iii)</a>
+          Related: <a href="#alien-kappa-coric-decoupling-342">κ-coric decoupling</a>
+          <a href="#kappa-coric-functions">κ-coric functions</a>
+          <a href="#alien-cyclotomic-rigidity-taxonomy-345">rigidity taxonomy</a>
+        </div>
+      </section>
+
+      <section id="alien-log-shell-actions-364" data-filter="mutually alien copies 3.6 actions on log shells four log shell types holomorphic Frobenius etale mono analytic Ind1 Ind2 Ind3 multiradial containers">
+        <h2>Alien Copies 3.6(iv): Actions on Log-Shells</h2>
+        <p class="lede">
+          Galois-evaluation outputs are not naturally multiradial and are not generally
+          local units. The solution is to use the log-link and the four log-shell variants
+          to build multiradial containers for theta values and number-field copies.
+          This is also where the separation of <span class="math">Ind1</span>,
+          <span class="math">Ind2</span>, and <span class="math">Ind3</span> starts to appear.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Log-shell type</th><th>Indispensable role in §3.6(iv)</th></tr>
+          <tr>
+            <td>Holomorphic Frobenius-like</td>
+            <td>The log-link can be applied to it, and it remains tied to a fixed vertical position meaningful for the theta-link.</td>
+          </tr>
+          <tr>
+            <td>Holomorphic etale-like</td>
+            <td>Relates holomorphic Frobenius-like log-shells at different vertical positions while accounting for the log-link.</td>
+          </tr>
+          <tr>
+            <td>Mono-analytic Frobenius-like</td>
+            <td>Constructed directly from the horizontally coric unit data <span class="math">(a_Theta)</span>, <span class="math">(a_q)</span> and fixed at a vertical position.</td>
+          </tr>
+          <tr>
+            <td>Mono-analytic etale-like</td>
+            <td>Constructed from the bicoric <span class="math">G_k</span> data and links mono-analytic Kummer theory to holomorphic Kummer theory.</td>
+          </tr>
+        </table>
+        <p>
+          The key decoupling is to compare through vertical position zero. Without
+          mono-analytic Frobenius-like log-shells, log-link and theta-link
+          indeterminacies act simultaneously. With them, the theta-link side carries
+          <span class="math">(Ind1,Ind2)</span>, while the vertical log-link comparison
+          carries <span class="math">Ind3</span>.
+        </p>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.6(iv)</a>
+          Related: <a href="#log-shell-variants-prop12-iii">log-shell variants</a>
+          <a href="#upper-semi-log-kummer-iii">upper semi log-Kummer</a>
+          <a href="#collas-log-theta-wandering-page">Collas log-theta wandering</a>
+        </div>
+      </section>
+
+      <section id="alien-processions-tensor-packets-365" data-filter="mutually alien copies 3.6 processions tensor packets capsules mono analytic prime strips labels S plus minus j theta values Fmod log shells">
+        <h2>Alien Copies 3.6(v): Processions and Tensor Packets</h2>
+        <p class="lede">
+          Processions provide a mono-analytic substitute for labels in
+          <span class="math">F_l^*</span>, <span class="math">|F_l|</span>, or
+          <span class="math">F_l</span>, since those labels are not horizontally coric and
+          have no immediate multiradial formulation. The replacement is a nested
+          diagram of finite container sets with permutation indeterminacy.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Object</th><th>Source meaning</th><th>Use</th></tr>
+          <tr>
+            <td><span class="math">S_{j+1}^{+-}={0,...,j}</span></td>
+            <td>A container set for labels <span class="math">0,...,j</span>, subject to arbitrary permutation automorphisms.</td>
+            <td>Replaces direct label access by controlled container indeterminacy.</td>
+          </tr>
+          <tr>
+            <td>Capsule</td>
+            <td>A collection of etale-like mono-analytic prime-strips indexed by a container set.</td>
+            <td>Produces log-shells at each valuation.</td>
+          </tr>
+          <tr>
+            <td>Tensor packet</td>
+            <td>Tensor products of log-shells indexed by one container set.</td>
+            <td>Natural target for log-volume computations.</td>
+          </tr>
+          <tr>
+            <td>Actions</td>
+            <td>Theta values <span class="math">q^{j^2}</span> and copies of <span class="math">F_mod^x</span> act on these packets up to the listed indeterminacies.</td>
+            <td>Feeds directly into the §3.7 multiradial representation.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.6(v)</a>
+          Related: <a href="#processions-definition-iut-i410">processions/capsules</a>
+          <a href="#tensor-packets-iii31-33">tensor packets</a>
+          <a href="#alien-log-shell-actions-364">log-shell actions</a>
         </div>
       </section>
 
