@@ -847,6 +847,11 @@
         <a href="#alien-monoids-galois-413">Alien monoids/Galois 4.1(iii)</a>
         <a href="#alien-slim-poly-414">Alien slim/poly 4.1(iv)</a>
         <a href="#alien-notation-copies-415">Alien notation/copies 4.1(v)</a>
+        <a href="#alien-class-field-kummer-42">Alien class field/Kummer 4.2</a>
+        <a href="#alien-kummer-functoriality-421">Alien Kummer functoriality 4.2(i)</a>
+        <a href="#alien-kummer-evaluation-422">Alien Kummer evaluation 4.2(ii)</a>
+        <a href="#alien-holomorphic-monoanalytic-423">Alien holomorphic/monoanalytic 4.2(iii)</a>
+        <a href="#alien-global-reciprocity-rigidity-424">Alien reciprocity/rigidity 4.2(iv)</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
         <a href="#iut-i-base-bridges-evaluation-sections">Base bridges/evaluation sections</a>
         <a href="#iut-i-additive-base-bridges-61-610">Additive base bridges 6.1-6.10</a>
@@ -18207,6 +18212,160 @@
           Related: <a href="#alien-terminology-28">alien-copy terminology</a>
           <a href="#alien-inter-universality-210">inter-universality</a>
           <a href="#alien-and-or-multiradiality-3114">AND/OR guardrail</a>
+        </div>
+      </section>
+
+      <section id="alien-class-field-kummer-42" data-filter="mutually alien copies 4.2 class field theory Kummer theory cyclotomic rigidity mono analytic arithmetic holomorphic Jugendtraum global reciprocity">
+        <h2>Alien Copies 4.2: Class Field Theory and Kummer Theory</h2>
+        <p class="lede">
+          §4.2 explains why local class field theory is comparatively peripheral in IUT,
+          global class field theory is absent, and Kummer theory is central. The stated
+          reason is structural: Kummer theory is more functorial, works for broader
+          monoid/scheme inputs, supports evaluation of functions at points, and fits the
+          mono-analytic decouplings used in IUT.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Axis</th><th>Class field theory side</th><th>Kummer theory side</th></tr>
+          <tr><td>Input scope</td><td>Special arithmetic fields and their localizations.</td><td>General schemes and abstract multiplicative monoids under weak hypotheses.</td></tr>
+          <tr><td>Functoriality</td><td>Limited to field extensions and localization-type operations.</td><td>Strong functoriality for broad morphism classes.</td></tr>
+          <tr><td>Anabelian use</td><td>Restricted range.</td><td>Well suited to general arithmetic fundamental-group morphisms.</td></tr>
+          <tr><td>Extra difficulty</td><td>Cyclotomic rigidity is not central.</td><td>Cyclotomic rigidity is central and delicate.</td></tr>
+          <tr><td>Analytic estimate style</td><td>Dirichlet-density/coherent aggregation side.</td><td>Prime-number-theorem/log-volume side.</td></tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §4.2</a>
+          Related: <a href="#alien-kummer-decoupling-34">Kummer decoupling</a>
+          <a href="#alien-mono-anabelian-transport-27">mono-anabelian transport</a>
+          <a href="#alien-classical-connections-41">classical connections</a>
+        </div>
+      </section>
+
+      <section id="alien-kummer-functoriality-421" data-filter="mutually alien copies 4.2 i Kummer functoriality cyclotomic rigidity class field theory injective Kummer faithful projective Kummer Pop Bogomolov">
+        <h2>Alien Copies 4.2(i): Kummer Functoriality and Cyclotomic Rigidity</h2>
+        <p class="lede">
+          Mochizuki's first contrast is functoriality. Class field theory has a narrow
+          arithmetic-field domain and limited functoriality; Kummer theory applies to
+          much broader scheme and monoid contexts and is therefore better suited to
+          anabelian reconstruction and transport.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Point</th><th>Meaning in §4.2(i)</th></tr>
+          <tr>
+            <td>Evaluation problem</td>
+            <td>Evaluating functions at closed points is a basic anabelian/IUT operation where class field theory is not immediately applicable, but Kummer theory is functorial.</td>
+          </tr>
+          <tr>
+            <td>Cyclotomic rigidity</td>
+            <td>Kummer theory then requires nontrivial identification of cyclotomes built from rings, monoids, Galois groups, or arithmetic fundamental groups.</td>
+          </tr>
+          <tr>
+            <td>Kummer-faithful cases</td>
+            <td>The Kummer map on the multiplicative monoid is injective; this is the IUT-relevant regime for cyclotomic rigidity.</td>
+          </tr>
+          <tr>
+            <td>Projective Kummer contrast</td>
+            <td>In highly non-Kummer-faithful settings, such as function fields over algebraic closures of finite fields, the image behaves projectively instead.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §4.2(i)</a>
+          Related: <a href="#alien-theta-function-rigidity-343">theta/cyclotomic rigidity</a>
+          <a href="#alien-rational-function-monoids-213">rational-function monoids</a>
+        </div>
+      </section>
+
+      <section id="alien-kummer-evaluation-422" data-filter="mutually alien copies 4.2 ii evaluation special functions torsion points Kummer theory class field theory Kronecker Jugendtraum Hilbert twelfth problem">
+        <h2>Alien Copies 4.2(ii): Evaluation and Jugendtraum</h2>
+        <p class="lede">
+          §4.2(ii emphasizes evaluation of special functions at special points. In IUT,
+          this is handled through Kummer theory. Classical class field theory relates to
+          such evaluation only in restricted cases, such as exponential functions for
+          <span class="math">Q</span> or elliptic/modular functions for imaginary quadratic
+          fields.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Theme</th><th>Source reading</th></tr>
+          <tr>
+            <td>Special-function evaluation</td>
+            <td>Fundamental for the Kummer theory used in §2.13, §2.14, §3.6, and IUT IV.</td>
+          </tr>
+          <tr>
+            <td>Class field limitation</td>
+            <td>Known compatibility with such evaluation is confined to classical special cases.</td>
+          </tr>
+          <tr>
+            <td>Jugendtraum formulation</td>
+            <td>Mochizuki describes IUT as a kind of Kummer-theoretic replacement version of Kronecker's Jugendtraum/Hilbert's twelfth problem.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §4.2(ii)</a>
+          Related: <a href="#alien-galois-evaluation-36">Galois evaluation</a>
+          <a href="#alien-finite-harmonic-214">finite harmonic approximation</a>
+        </div>
+      </section>
+
+      <section id="alien-holomorphic-monoanalytic-423" data-filter="mutually alien copies 4.2 iii arithmetic holomorphic global class field theory mono analytic Kummer unit group value group decouplings Hilbert theorem 90 Prime Number Theorem Dirichlet density">
+        <h2>Alien Copies 4.2(iii): Holomorphicity and Mono-Analyticity</h2>
+        <p class="lede">
+          Mochizuki frames global class field theory as tied to arithmetic holomorphic
+          structure, while Kummer theory is suited to the mono-analytic structures of
+          IUT. The section also contrasts class field theory's global reciprocity and
+          density viewpoint with IUT's local unit/value decouplings and prime-by-prime
+          estimates.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Contrast</th><th>Class field theory</th><th>Kummer/IUT</th></tr>
+          <tr>
+            <td>Structural mode</td>
+            <td>Delicate arithmetic properties of restricted field types.</td>
+            <td>General multiplicative monoids and mono-analytic structures.</td>
+          </tr>
+          <tr>
+            <td>Unit/value relation</td>
+            <td>Global reciprocity intertwines local-unit and value-group behavior.</td>
+            <td>Unit and value group portions are split/decoupled in the IUT Kummer theory.</td>
+          </tr>
+          <tr>
+            <td>Hilbert 90</td>
+            <td>Compatible with vanishing for the full multiplicative group.</td>
+            <td>Nonvanishing for torsion/unit/split subgroups is part of the decoupled picture.</td>
+          </tr>
+          <tr>
+            <td>Prime counting</td>
+            <td>Related to coherent aggregations of primes and Dirichlet/Tchebotarev density.</td>
+            <td>Log-volume estimates use Prime Number Theorem style prime-by-prime counting.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §4.2(iii)</a>
+          Related: <a href="#alien-ring-dimensions-211">unit/value dimensions</a>
+          <a href="#alien-log-volume-estimates-37">log-volume estimates</a>
+        </div>
+      </section>
+
+      <section id="alien-global-reciprocity-rigidity-424" data-filter="mutually alien copies 4.2 iv global reciprocity law global cyclotomic rigidity cyclotomic extensions Q positive intersection profinite units product formula">
+        <h2>Alien Copies 4.2(iv): Global Reciprocity and Global Cyclotomic Rigidity</h2>
+        <p class="lede">
+          The final §4.2 contrast relates the classical use of cyclotomic extensions in
+          verifying the global reciprocity law to IUT's construction of global
+          cyclotomic rigidity isomorphisms for number-field Kummer theory.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Classical side</th><th>IUT-side comparison in §4.2(iv)</th></tr>
+          <tr>
+            <td>Cyclotomic extensions help verify that the reciprocity map vanishes on principal ideles.</td>
+            <td>Cyclotomic rigidity for number-field Kummer theory uses the elementary intersection <span class="math">Q_{>0} ∩ Zhat^x = {1}</span>.</td>
+          </tr>
+          <tr>
+            <td>Product-formula behavior is lifted to the etale/profinite Galois level through global reciprocity.</td>
+            <td>A product-formula analogue is lifted through global cyclotomic rigidity.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §4.2(iv)</a>
+          Related: <a href="#alien-kummer-functoriality-421">Kummer functoriality</a>
+          <a href="#alien-cyclotomic-rigidity-taxonomy-345">cyclotomic rigidity taxonomy</a>
         </div>
       </section>
 
