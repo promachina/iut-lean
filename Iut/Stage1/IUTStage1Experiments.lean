@@ -146,6 +146,33 @@ theorem globalRealifiedCalibrationSource_rejectsNonautomorphicLocalShift
     source.calibratedLogVolume ≠ source.localSource.shiftedLogVolume :=
   source.calibrated_ne_local_shifted_of_not_automorphism hnot hStep
 
+theorem thetaRootKummerForgettingSource_feedsNonarchimedeanEntry
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {thetaAverage : Real}
+    {logKummer : LogKummerCorrespondenceId}
+    {l : PrimeGeFive} {F : Type u} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (source :
+      NonarchimedeanThetaRootKummerForgettingSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      source.entry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        thetaAverage :=
+  ⟨source.thetaRootCanonicalFullLabel_ne_zero,
+    source.entrySource_eq_ind3Source,
+    source.packetLocalObjectFinite_le_thetaAverage⟩
+
 /-- Summary of the first diagnostic pass through the local `(Ind3)` route. -/
 structure Ind3FirstPassDashboard where
   missingRealAlignmentBlocks : Bool

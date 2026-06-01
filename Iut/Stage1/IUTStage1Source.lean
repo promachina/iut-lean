@@ -35354,6 +35354,157 @@ theorem packetLocalObjectFinite_le_thetaAverage
 end NonarchimedeanLogKummerUpperSemiCompatibility
 
 /--
+Theta-root attached Kummer/forgetting source package for a nonarchimedean
+Step (x) upper-semi entry.
+
+The package combines the bad-local theta-root cusp label source from IUT I,
+Definition 3.1(e),(f), with the IUT II Kummer-and-forgetting tensor-packet
+chain
+
+`holomorphicF -> holomorphicD -> monoAnalyticD`.
+
+The remaining real identifications are the explicit interface points still to
+be derived from deeper log-Kummer/Frobenioid geometry; the source-side
+`(Ind3)` equality itself is no longer a free field, since it is derived from
+product-log-volume preservation along the Kummer and forgetting transfers.
+-/
+structure NonarchimedeanThetaRootKummerForgettingSource
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (thetaAverage : Real)
+    (logKummer : LogKummerCorrespondenceId)
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F)
+    {j : Nat}
+    (holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j) where
+  thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C
+  kummer :
+    IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+      holomorphicF holomorphicD
+  forgetting :
+    IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+      holomorphicD monoAnalyticD
+  entry : IUTStage1NonarchimedeanInclusionData
+  entry_mem :
+    entry ∈ audited.choice.upper_semi_state.nonarchimedeanInclusions
+  packetLocalObject_eq_entrySource :
+    audited.choice.local_tensor_state.packetState.localObject =
+      entry.sourceLogVolume
+  entrySource_eq_monoAnalyticProduct :
+    entry.sourceLogVolume.finiteLogVolume =
+      monoAnalyticD.product.productLogVolume
+  ind3Source_eq_holomorphicFProduct :
+    audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume =
+      holomorphicF.product.productLogVolume
+  thetaAverage_eq_entryTarget :
+    thetaAverage = entry.targetLogVolume.finiteLogVolume
+  entryTarget_eq_ind3Target :
+    entry.targetLogVolume.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace NonarchimedeanThetaRootKummerForgettingSource
+
+variable
+  {audited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean}
+  {thetaAverage : Real}
+  {logKummer : LogKummerCorrespondenceId}
+  {l : PrimeGeFive} {F : Type v} [Field F]
+  {X C : HyperbolicOrbicurveModel F}
+  {j : Nat}
+  {holomorphicF holomorphicD monoAnalyticD :
+    IUTStage1RealizedTensorPacketProductLogVolume
+      IUTStage1PlaceKind.nonarchimedean j}
+
+theorem thetaRootCanonicalGeneratorUpToSign
+    (source :
+      NonarchimedeanThetaRootKummerForgettingSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign :=
+  source.thetaRootSource.canonicalGeneratorUpToSign
+
+theorem thetaRootCanonicalFullLabel_ne_zero
+    (source :
+      NonarchimedeanThetaRootKummerForgettingSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.thetaRootSource.canonicalFullLabel ≠
+      IUTStage1ZModCuspFullLabel.zero :=
+  source.thetaRootSource.canonicalFullLabel_ne_zero
+
+theorem entrySource_eq_ind3Source
+    (source :
+      NonarchimedeanThetaRootKummerForgettingSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.entry.sourceLogVolume.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
+  calc
+    source.entry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.product.productLogVolume :=
+      source.entrySource_eq_monoAnalyticProduct
+    _ = holomorphicD.product.productLogVolume :=
+      source.forgetting.preserves_productLogVolume
+    _ = holomorphicF.product.productLogVolume :=
+      source.kummer.preserves_productLogVolume
+    _ = audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+      source.ind3Source_eq_holomorphicFProduct.symm
+
+def toLogKummerUpperSemiCompatibility
+    (source :
+      NonarchimedeanThetaRootKummerForgettingSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    NonarchimedeanLogKummerUpperSemiCompatibility
+      audited thetaAverage logKummer :=
+  NonarchimedeanLogKummerUpperSemiCompatibility.ofQPilotEntry
+    source.entry source.entry_mem source.packetLocalObject_eq_entrySource
+    source.entrySource_eq_ind3Source source.thetaAverage_eq_entryTarget
+    source.entryTarget_eq_ind3Target
+
+theorem toCompatibility_qPilot_noninterference
+    (source :
+      NonarchimedeanThetaRootKummerForgettingSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+      true :=
+  source.toLogKummerUpperSemiCompatibility.qPilotLogKummerNonInterference
+
+theorem packetLocalObjectFinite_le_thetaAverage
+    (source :
+      NonarchimedeanThetaRootKummerForgettingSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+      thetaAverage :=
+  source.toLogKummerUpperSemiCompatibility.packetLocalObjectFinite_le_thetaAverage
+
+theorem thetaRootKummerForgetting_endpoint
+    (source :
+      NonarchimedeanThetaRootKummerForgettingSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      source.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      source.entry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        thetaAverage :=
+  ⟨source.thetaRootCanonicalGeneratorUpToSign,
+    source.thetaRootCanonicalFullLabel_ne_zero,
+    source.entrySource_eq_ind3Source,
+    source.packetLocalObjectFinite_le_thetaAverage⟩
+
+end NonarchimedeanThetaRootKummerForgettingSource
+
+/--
 Archimedean local upper-semi entry with its native surjection direction.
 
 Unlike the nonarchimedean inclusion entry, the modeled local datum proves

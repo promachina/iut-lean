@@ -31,7 +31,7 @@
 
 \title{A Lean Audit of the IUT III Corollary 3.12 Corridor}
 \author{IUT Lean formalization project}
-\date{May 29, 2026}
+\date{June 1, 2026}
 
 \begin{document}
 \maketitle
@@ -346,6 +346,15 @@ finite tensor-packet chain: Kummer transfer
 \(\mathrm{holomorphicD}\to D^\vdash\) preserve product log-volume.  Thus the
 source-side upper-semi equality may be derived from this chain rather than
 postulated as a bare equality.
+The newest source package attaches this finite Kummer/forgetting chain to the
+bad-local theta-root cusp-label source.  It carries the canonical nonzero
+\(|F_\ell|\)-label and derives the nonarchimedean \((\Ind3)\) source equality
+from product-log-volume preservation along
+\[
+  \mathrm{holomorphicF}\to\mathrm{holomorphicD}\to D^\vdash .
+\]
+The remaining target calibration and packet-to-entry identifications are still
+explicit source obligations.
 For the target side, the strongest route now uses a target-only Step (x)
 alignment
 \[
@@ -476,6 +485,10 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The source-side equality in that compatibility can be derived from
   product-log-volume preservation along the finite Kummer-plus-forgetting
   tensor-packet chain.
+\item A theta-root attached Kummer/forgetting source package now combines the
+  canonical bad-local \(|F_\ell|\)-label source with that finite chain, deriving
+  the nonarchimedean source equality while retaining the remaining target and
+  packet-entry calibrations as explicit obligations.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
