@@ -407,6 +407,10 @@ The target calibration no longer contains an independent real representative
 for this common value: all target equalities are stated directly against the
 packet-normalized capsule log-volume.  This removes one artificial
 identification layer from the Step (x) interface.
+The first-pass Gaussian route also has a one-correspondence form: it consumes
+a finite log-Kummer packet-correspondence source and projects the source
+packet/product calibration and target packet-normalized calibration from that
+single object before entering the upper-semi corridor.
 \IUT{} III, Remark 3.11.4 further says that the root-of-unity and cyclotomic
 indeterminacies arising from forgetting Frobenius-like labels are invisible
 for the objects under consideration.  The present code formalizes the finite
@@ -573,6 +577,10 @@ The project currently proves the following source-facing results in \Lean{}:
   equalities used by the route; the target calibration now refers directly to
   the packet-normalized capsule value rather than to a separate real
   representative.
+\item The strongest Gaussian first-pass route can now consume this single
+  packet-correspondence source and project both its source and target faces,
+  instead of taking source packet equalities and target calibration as separate
+  route inputs.
 \item The finite sign-unit/root-of-unity part of Remark 3.11.4 is formalized:
   sign-unit action preserves full cusp labels, full-label log-volume readings,
   Gaussian degrees, and averaged Gaussian log-volume.
