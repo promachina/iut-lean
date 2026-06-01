@@ -220,6 +220,34 @@ theorem hodgeArakelovThetaValueSources_feedFactoredSHE
         targetHA.canonicalThetaRootLabel_ne_zero,
         obligations.comparisonLevel_eq_pointwiseRepresentative⟩
 
+theorem thetaRootKummerPacketTargetSource_buildsUpperSemiCompatibility
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {thetaAverage : Real}
+    {logKummer : LogKummerCorrespondenceId}
+    {l : PrimeGeFive} {F : Type u} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (source :
+      NonarchimedeanThetaRootKummerForgettingPacketTargetSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      source.entry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      thetaAverage = source.entry.targetLogVolume.finiteLogVolume ∧
+      source.entry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        thetaAverage :=
+  source.packetTargetSource_endpoint
+
 /-- Summary of the first diagnostic pass through the local `(Ind3)` route. -/
 structure Ind3FirstPassDashboard where
   missingRealAlignmentBlocks : Bool

@@ -367,6 +367,12 @@ from product-log-volume preservation along
 \]
 The remaining target calibration and packet-to-entry identifications are still
 explicit source obligations.
+There is now a stronger packet-target constructor for this nonarchimedean
+upper-semi object.  It calibrates the theta average, the \((\Ind3)\) target, and
+the local entry target against the same packet-normalized capsule log-volume;
+from these three packet-normalized equalities \Lean{} derives the direct
+theta-to-entry and entry-to-\((\Ind3)\)-target equalities consumed by the
+upper-semi route.
 For the target side, the strongest route now uses a target-only Step (x)
 alignment
 \[
@@ -505,6 +511,9 @@ The project currently proves the following source-facing results in \Lean{}:
   canonical bad-local \(|F_\ell|\)-label source with that finite chain, deriving
   the nonarchimedean source equality while retaining the remaining target and
   packet-entry calibrations as explicit obligations.
+\item A packet-target nonarchimedean constructor now derives the direct target
+  equalities from calibration of the theta average, entry target, and
+  \((\Ind3)\) target against the same packet-normalized capsule value.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
