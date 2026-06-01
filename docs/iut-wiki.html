@@ -1472,6 +1472,9 @@
         <a href="#forced-procession-average-39">Forced procession average</a>
         <a href="#realified-semisimplification-39">Realified semi-simplification</a>
         <a href="#no-log-volume-period-39">No log-volume period</a>
+        <a href="#local-rss-loglink-394">Local Rss log-link compatibility</a>
+        <a href="#bad-prime-qpower-rss-394">Bad-prime q^N Rss embedding</a>
+        <a href="#tensor-product-rss-394">Tensor-product Rss extension</a>
         <a href="#holomorphic-hull-formalism-iii395">Holomorphic hull 3.9.5</a>
         <a href="#hull-approximants-iii395">Hull approximants 3.9.5</a>
         <a href="#nabla-hull-formalism-iii395">Nabla hull formalism</a>
@@ -51959,6 +51962,44 @@
               periodic ambiguity in the Corollary 3.12 numerical comparison.
             </td>
           </tr>
+          <tr>
+            <td>Remark 3.9.4(iii)</td>
+            <td>
+              For a local nonarchimedean field, compact ample subsets of
+              <span class="math">O_k^×</span> on which the logarithm is injective induce
+              <span class="math">R_{>0}</span>-equivariant Rss isomorphisms compatible
+              with normalized log-volume maps.
+            </td>
+            <td>
+              This is the local form of log-link/log-volume compatibility, not merely a
+              global assertion.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 3.9.4(iv)</td>
+            <td>
+              At a bad prime, the log-Kummer route passes through
+              <span class="math">O_k^× · q^N</span>, then units, then logarithms; the
+              q-power submonoid embeds by log-volume with
+              <span class="math">1 -> -log(q)</span>.
+            </td>
+            <td>
+              This is the local numerical interface for the q-pilot contribution in the
+              later 3.12 comparison.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 3.9.4(v)</td>
+            <td>
+              The same Rss/log-volume compatibility extends to tensor products
+              <span class="math">k_{i_A}</span> by treating direct summand fields as
+              product measure spaces and applying finite-extension compatibility.
+            </td>
+            <td>
+              Packet tensor products inherit the local compatibility rather than being
+              handled by an unrelated measure convention.
+            </td>
+          </tr>
         </table>
 
         <div class="grid3">
@@ -52029,6 +52070,32 @@
               because Corollary 3.12 requires real-valued estimates.
             </p>
             <div class="tagRow"><span class="tag red">Remark 3.9.4(ii)</span><span class="tag">real-valued</span></div>
+          </div>
+          <div class="card" id="local-rss-loglink-394-card">
+            <h3>Local Rss compatibility</h3>
+            <p>
+              Remark 3.9.4(iii) checks the local logarithm
+              <span class="math">O_k^× -> log_k(O_k^×)</span> on Rss quotients and
+              normalized log-volume maps.
+            </p>
+            <div class="tagRow"><span class="tag green">Remark 3.9.4(iii)</span><span class="tag">local</span></div>
+          </div>
+          <div class="card" id="bad-prime-qpower-rss-394-card">
+            <h3>Bad-prime q-power</h3>
+            <p>
+              The bad-prime submonoid <span class="math">q^N</span> maps into the
+              normalized log-volume scale by sending its generator to
+              <span class="math">-log(q)</span>.
+            </p>
+            <div class="tagRow"><span class="tag gold">Remark 3.9.4(iv)</span><span class="tag">q-pilot</span></div>
+          </div>
+          <div class="card" id="tensor-product-rss-394-card">
+            <h3>Tensor-product extension</h3>
+            <p>
+              The local Rss compatibility extends factorwise to packet tensor-product
+              fields, using product measure spaces and finite-extension compatibility.
+            </p>
+            <div class="tagRow"><span class="tag violet">Remark 3.9.4(v)</span><span class="tag">packets</span></div>
           </div>
         </div>
 
@@ -52251,6 +52318,142 @@
           Related: <a href="#realified-semisimplification-39">realified semi-simplification</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
           <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV theta-pilot estimate</a>
+        </div>
+      </section>
+
+      <section id="local-rss-loglink-394" data-filter="iut iii remark 3.9.4 iii local rss log link compatibility ok units logk compact ample injective finite extensions">
+        <h2>IUT III Remark 3.9.4(iii): Local Rss Log-Link Compatibility</h2>
+        <p class="lede">
+          Remark 3.9.4(iii) gives the local nonarchimedean form of log-link/log-volume
+          compatibility. For a finite extension <span class="math">k</span> with Haar
+          measure normalized by <span class="math">mu_k(O_k)=1</span>, compact ample
+          subsets <span class="math">S subset O_k^×</span> on which
+          <span class="math">log_k</span> is injective produce compatible
+          <span class="math">Rss</span> isomorphisms between
+          <span class="math">k</span>, <span class="math">O_k^×</span>,
+          <span class="math">S</span>, <span class="math">log_k(S)</span>, and
+          <span class="math">log_k(O_k^×)</span>. After applying ordinary logarithm to
+          <span class="math">R_{>=0}</span>, these isomorphisms are compatible with the
+          normalized log-volume maps.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Units</strong>
+            <p><span class="math">O_k^×</span> is an ample subset of the additive measure space <span class="math">k</span>.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Injective patch</strong>
+            <p>Choose compact ample <span class="math">S</span> so <span class="math">log_k:S -> log_k(S)</span> is injective.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Rss quotient</strong>
+            <p>The induced Rss maps are independent of the chosen compact patch.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Finite extensions</strong>
+            <p>For <span class="math">k_1 subset k_2</span>, Rss compatibility scales by the extension degree.</p>
+          </div>
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.9.4(iii)</a>
+          Related: <a href="#realified-semisimplification-39">realified semi-simplification</a>
+          <a href="#bad-prime-qpower-rss-394">bad-prime q-power Rss</a>
+          <a href="#tensor-product-rss-394">tensor-product Rss extension</a>
+        </div>
+      </section>
+
+      <section id="bad-prime-qpower-rss-394" data-filter="iut iii remark 3.9.4 iv bad prime q power qn rss embedding log kummer units log volume minus log q">
+        <h2>IUT III Remark 3.9.4(iv): Bad-Prime <span class="math">q^N</span> Rss Embedding</h2>
+        <p class="lede">
+          At a bad prime, Remark 3.9.4(iv) interprets the log-Kummer correspondence as
+          the sequence
+          <span class="math">k -> O_k^× · q^N -> O_k^× -> log_k(O_k^×) -> k</span>.
+          The realified semi-simplification maps for this sequence are compatible with
+          normalized log-volume maps and avoid interference, up to roots of unity, with
+          the submonoid <span class="math">q^N</span>. Applying normalized log-volume
+          to the images of <span class="math">O_k</span> under multiplication by
+          <span class="math">q^N</span> embeds
+          <span class="math">N</span> into the log-volume scale by sending
+          <span class="math">1</span> to <span class="math">-log(q)</span>.
+        </p>
+        <div class="diagram fit" aria-label="Bad prime q power Rss embedding">
+          <div class="diagramHeader">
+            <strong>Bad-Prime Log-Kummer Route</strong>
+            <span>q-power submonoid contributes the local q-pilot log-volume</span>
+          </div>
+          <svg viewBox="0 0 980 300" role="img">
+            <defs>
+              <marker id="arrowQPower394" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="48" y="72" width="130" height="72"></rect>
+            <text class="nodeTitle" x="113" y="102" text-anchor="middle">k</text>
+            <text class="tinyText" x="113" y="126" text-anchor="middle">local field</text>
+            <rect class="nodeBox gold" x="230" y="72" width="170" height="72"></rect>
+            <text class="nodeTitle" x="315" y="102" text-anchor="middle">O_k^× · q^N</text>
+            <text class="tinyText" x="315" y="126" text-anchor="middle">bad-prime submonoid</text>
+            <rect class="nodeBox green" x="452" y="72" width="130" height="72"></rect>
+            <text class="nodeTitle" x="517" y="102" text-anchor="middle">O_k^×</text>
+            <text class="tinyText" x="517" y="126" text-anchor="middle">unit portion</text>
+            <rect class="nodeBox violet" x="634" y="72" width="150" height="72"></rect>
+            <text class="nodeTitle" x="709" y="102" text-anchor="middle">log_k(O_k^×)</text>
+            <text class="tinyText" x="709" y="126" text-anchor="middle">additive log side</text>
+            <rect class="nodeBox blue" x="836" y="72" width="96" height="72"></rect>
+            <text class="nodeTitle" x="884" y="102" text-anchor="middle">k</text>
+            <text class="tinyText" x="884" y="126" text-anchor="middle">ambient</text>
+            <path d="M180 108 H228" class="edge blue" marker-end="url(#arrowQPower394)"></path>
+            <path d="M402 108 H450" class="edge gold" marker-end="url(#arrowQPower394)"></path>
+            <path d="M584 108 H632" class="edge green" marker-end="url(#arrowQPower394)"></path>
+            <path d="M786 108 H834" class="edge violet" marker-end="url(#arrowQPower394)"></path>
+            <rect class="nodeBox red" x="350" y="202" width="280" height="58"></rect>
+            <text class="nodeTitle" x="490" y="226" text-anchor="middle">N -> R union {-infty}</text>
+            <text class="tinyText" x="490" y="246" text-anchor="middle">1 maps to -log(q)</text>
+            <path d="M315 146 C340 174 388 186 430 200" class="edge red" marker-end="url(#arrowQPower394)"></path>
+          </svg>
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.9.4(iv)</a>
+          Related: <a href="#local-rss-loglink-394">local Rss compatibility</a>
+          <a href="#theta-q-pilot-objects-38">theta/q pilot objects</a>
+          <a href="#packet-procession-log-volume-iii39">packet log-volume overview</a>
+        </div>
+      </section>
+
+      <section id="tensor-product-rss-394" data-filter="iut iii remark 3.9.4 v tensor product rss extension packet fields product measure finite extension compatibility kiA">
+        <h2>IUT III Remark 3.9.4(v): Tensor-Product Rss Extension</h2>
+        <p class="lede">
+          Remark 3.9.4(v) extends the local Rss/log-volume compatibility to topological
+          tensor products of the form
+          <span class="math">k_{i_A} = tensor_{alpha in A} k_{i_alpha}</span>. Each
+          direct summand field is treated as a finite extension of the local field from
+          Remark 3.9.4(iii),(iv), and the packet field is handled as a product measure
+          space. Finite-extension compatibility and product-measure compatibility then
+          give the corresponding Rss isomorphisms for packet tensor products.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Input</th><th>Source operation</th><th>Consequence</th></tr>
+          <tr>
+            <td>Direct summand field</td>
+            <td>Apply the local Rss compatibility of Remark 3.9.4(iii),(iv).</td>
+            <td>Each factor has normalized log-volume compatibility.</td>
+          </tr>
+          <tr>
+            <td>Tensor packet <span class="math">k_{i_A}</span></td>
+            <td>Regard it as a product measure space over the direct summand fields.</td>
+            <td>Rss compatibility extends factorwise to packet regions.</td>
+          </tr>
+          <tr>
+            <td>Finite extensions</td>
+            <td>Use the extension-degree Rss compatibility from Remark 3.9.4(iii).</td>
+            <td>The packet convention remains compatible with changes of local field.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.9.4(v)</a>
+          Related: <a href="#packet-normalization-39">packet normalization</a>
+          <a href="#local-rss-loglink-394">local Rss compatibility</a>
+          <a href="#tensor-packets-iii31-33">tensor packets</a>
         </div>
       </section>
 
