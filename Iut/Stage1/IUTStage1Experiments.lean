@@ -18,6 +18,7 @@ namespace Stage1
 namespace Experiments
 
 open RealLineCopy
+open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint
 open IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit
 open FLZModCuspLabelThetaHodgeDescentPacketTransportAudit
 open FLZModCuspLabelThetaCuspClassContainerAudit
@@ -320,17 +321,11 @@ theorem hodgeSHEIPLHullPacketTargetSource_cThetaDichotomy
         coric IUTStage1PlaceKind.nonarchimedean)
     {record : IUTStage1Theorem311MultiradialSourceRecord package}
     {F : Type u} [Field F] {X C : HyperbolicOrbicurveModel F}
-    (iplTransport : IUTStage1IPLLogVolumeTransport record)
-    (sheSync : IUTStage1SHESynchronizationSource record l X C)
-    (hullConstructor :
-      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
-        record)
+    (alignment :
+      IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+        part audited record X C)
     (source_profile_eq :
       profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
-    (theta_source_eq_sync_source :
-      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
-          audited =
-        sheSync.sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility)
     {j : Nat}
     {holomorphicF holomorphicD monoAnalyticD :
       IUTStage1RealizedTensorPacketProductLogVolume
@@ -348,8 +343,8 @@ theorem hodgeSHEIPLHullPacketTargetSource_cThetaDichotomy
         package.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < cTheta :=
   part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullPacketTargetSource
-    profile audited iplTransport sheSync hullConstructor source_profile_eq
-    theta_source_eq_sync_source packetSource cTheta thetaSigned_le_cTheta_absLogQ
+    profile audited alignment source_profile_eq packetSource cTheta
+    thetaSigned_le_cTheta_absLogQ
 
 theorem theorem311MultiradialSourceRecord_endpoint
     {source target : Copy} {index : Type u}

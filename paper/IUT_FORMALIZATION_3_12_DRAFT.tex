@@ -187,7 +187,9 @@ The strongest Hodge--Arakelov packet-target route no longer takes the
 target-side log-volume equality or \(q\)-pilot positivity as independent
 inputs: target equality is derived from the \(\SHE\) synchronization constructor,
 and positivity is read from the hull/determinant constructor.  The source-side
-chart calibration against the theta average remains explicit.
+chart calibration against the theta average is now packaged in a
+Hodge/\(\SHE/\IPL\)/hull route-alignment record whose projections supply the
+source and target equality inputs.
 The final numerical step is elementary:
 \[
   -|\log(q)|\le -|\log(\Theta)|
@@ -565,8 +567,8 @@ The project currently proves the following source-facing results in \Lean{}:
   and the determinant bound yields \(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\).
 \item A Hodge/\(\SHE/\IPL\)/hull packet-target route now derives the target-side
   log-volume equality from \(\SHE\) synchronization and reads \(q\)-positivity
-  from the hull constructor; only the source-side theta-average calibration is
-  still passed as a route datum.
+  from the hull constructor; the source-side theta-average calibration is
+  contained in the route-alignment source record.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
