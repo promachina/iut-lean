@@ -1265,6 +1265,9 @@
         <a href="#iut-iv-definition-19-degree-map">Def. 1.9 degree map</a>
         <a href="#iut-iv-definition-19-localized-degree">Def. 1.9 localized degree</a>
         <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV theta-pilot estimate 1.10</a>
+        <a href="#iut-iv-theorem-110-hypotheses">Theorem 1.10 hypotheses</a>
+        <a href="#iut-iv-theorem-110-local-steps">Theorem 1.10 local steps</a>
+        <a href="#iut-iv-theorem-110-final-bound">Theorem 1.10 final bound</a>
         <a href="#iut-iv-suitable-initial-theta-data-22">IUT IV suitable theta data 2.2</a>
         <a href="#iut-iv-diophantine-inequalities-23">IUT IV Diophantine inequalities 2.3</a>
         <a href="#iut-iv">IUT IV and consequences</a>
@@ -53105,6 +53108,200 @@
           <a href="#iut-iv-arithmetic-divisors-19">arithmetic divisors</a>
           <a href="#iut-iv-suitable-initial-theta-data-22">suitable initial theta data</a>
           <a href="#iut-iv-diophantine-output">IUT IV output route</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-theorem-110-hypotheses" data-filter="iut iv theorem 1.10 hypotheses initial theta data corollary 3.12 field tower torsion tripodal fmod ftpd">
+        <h2>IUT IV Theorem 1.10: Hypotheses</h2>
+        <p class="lede">
+          Theorem 1.10 begins downstream of IUT III Corollary 3.12. Its hypotheses add
+          good-reduction, field-tower, torsion, and arithmetic-divisor data so that the
+          abstract theta-pilot log-volume comparison can be converted into explicit
+          numerical estimates.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>3.12 input</strong>
+            <p>
+              The theorem assumes initial theta data in the situation of IUT III
+              Corollary 3.12; it does not reprove the Corollary 3.12 comparison.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Field tower</strong>
+            <p>
+              It uses <span class="math">Fmod subset Ftpd subset F</span>, with
+              <span class="math">Ftpd</span> obtained from 2-torsion and
+              <span class="math">F</span> obtained by adjoining
+              <span class="math">sqrt(-1)</span> and 3,5-torsion.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Divisor package</strong>
+            <p>
+              For intermediate fields Galois over <span class="math">Fmod</span>, it
+              defines arithmetic divisors for differents, q-parameters, and the
+              bad-place conductor support.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Hypothesis block</th><th>Source content</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>Corollary 3.12 situation</td>
+            <td>Initial theta data is assumed to be in the situation of IUT III Corollary 3.12.</td>
+            <td>Theorem 1.10 is a downstream numerical application, not an independent validation of the disputed corridor.</td>
+          </tr>
+          <tr>
+            <td>Good reduction</td>
+            <td>The elliptic curve has good reduction at every good nonarchimedean valuation not dividing <span class="math">2 ell</span>.</td>
+            <td>This gates the later use of unramified local estimates.</td>
+          </tr>
+          <tr>
+            <td>Torsion fields</td>
+            <td><span class="math">Ftpd=Fmod(E[2])</span> and <span class="math">F=Ftpd(sqrt(-1),E[3*5])</span>, with the model tied to the Legendre form.</td>
+            <td>This is where Proposition 1.8 feeds into the explicit theta-data field tower.</td>
+          </tr>
+          <tr>
+            <td>Arithmetic divisors</td>
+            <td>The theorem names <span class="math">d_ADiv</span>, <span class="math">q_ADiv</span>, and <span class="math">f_ADiv</span> for differents, q-parameters, and conductor support.</td>
+            <td>All later logarithms in the estimate are normalized degrees of Definition 1.9 objects.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Theorem 1.10 statement</a>
+          Related: <a href="#corollary-312">Corollary 3.12</a>
+          <a href="#iut-iv-proposition-18-reduction-gates">Proposition 1.8 gates</a>
+          <a href="#iut-iv-definition-19-degree-map">Definition 1.9 degree map</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-theorem-110-local-steps" data-filter="iut iv theorem 1.10 local steps distinguished nondistinguished archimedean propositions 1.4 1.5 weighted average">
+        <h2>IUT IV Theorem 1.10: Local Steps</h2>
+        <p class="lede">
+          The proof of Theorem 1.10 splits the theta-pilot log-volume estimate into
+          distinguished nonarchimedean, nondistinguished nonarchimedean, and
+          archimedean cases. Each case uses a specific earlier local proposition before
+          the contributions are averaged.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Distinguished nonarchimedean</strong>
+            <p>
+              Uses Proposition 1.4(iii), hence the full different/logarithm
+              upper-bound machinery.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Nondistinguished nonarchimedean</strong>
+            <p>
+              Uses Proposition 1.4(iv), the odd unramified zero-loss case.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Archimedean</strong>
+            <p>
+              Uses Proposition 1.5(iii)-(iv) to place tensor vectors in the appropriate
+              archimedean integral ball.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Proof step</th><th>Source dependency</th><th>What must remain visible</th></tr>
+          <tr>
+            <td>Step (v)</td>
+            <td>Distinguished nonarchimedean valuations use Proposition 1.4(iii), with different and ramification terms.</td>
+            <td>This is the nonzero local upper-bound contribution; it cannot be summarized as "bounded locally".</td>
+          </tr>
+          <tr>
+            <td>Step (vi)</td>
+            <td>Nondistinguished nonarchimedean valuations use Proposition 1.4(iv).</td>
+            <td>The zero contribution depends on odd unramified hypotheses, not on a general cancellation principle.</td>
+          </tr>
+          <tr>
+            <td>Step (vii)</td>
+            <td>Archimedean valuations use Proposition 1.5 to control tensor-product metric containers.</td>
+            <td>The archimedean contribution is metric and tensorial, not p-adic.</td>
+          </tr>
+          <tr>
+            <td>Weighted sum</td>
+            <td>Proposition 1.7 and Remark 1.7.1 supply the normalized packet weights.</td>
+            <td>Normalization convention must match Proposition 1.4; otherwise the average has the wrong scale.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Theorem 1.10 proof steps</a>
+          Related: <a href="#iut-iv-proposition-14-nonarch-log-volume">nonarchimedean log-volume</a>
+          <a href="#iut-iv-proposition-15-arch-metric-estimates">archimedean metrics</a>
+          <a href="#iut-iv-proposition-17-weighted-averages">weighted averages</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-theorem-110-final-bound" data-filter="iut iv theorem 1.10 final bound log q ctheta prime absorption eta prm explicit inequality">
+        <h2>IUT IV Theorem 1.10: Final Bound</h2>
+        <p class="lede">
+          The final part of Theorem 1.10 combines the local estimates with the
+          procession average and the prime-number estimate. The role of Proposition
+          1.6 is to absorb prime-sum terms into an explicit choice of constants, while
+          Corollary 3.12 supplies the theta-pilot lower bound.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Lower bound</strong>
+            <p>
+              The starting inequality is the theta-pilot lower bound inherited from
+              IUT III Corollary 3.12.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Upper computation</strong>
+            <p>
+              Local upper estimates, normalized degrees, and weighted averages produce
+              the explicit expression involving <span class="math">log(q)</span> and
+              divisor terms.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Prime absorption</strong>
+            <p>
+              Proposition 1.6 supplies <span class="math">eta_prm</span>, allowing the
+              prime contribution to be absorbed in the final displayed inequality.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Final-bound ingredient</th><th>Paper role</th><th>Wiki/formalization reading</th></tr>
+          <tr>
+            <td>Corollary 3.12</td>
+            <td>Provides the theta-pilot comparison/lower bound used at the start of the explicit estimate.</td>
+            <td>The disputed input is upstream; Theorem 1.10 shows how it would be used numerically.</td>
+          </tr>
+          <tr>
+            <td>Local upper estimate</td>
+            <td>Steps (v)-(vii) bound local log-volume contributions from nonarchimedean and archimedean places.</td>
+            <td>The final inequality should be audited back to the exact local proposition used in each case.</td>
+          </tr>
+          <tr>
+            <td>Prime-number term</td>
+            <td>Proposition 1.6 and <span class="math">eta_prm</span> control the distinguished-prime summation.</td>
+            <td>Analytic input enters here, after the IUT comparison and local arithmetic estimates.</td>
+          </tr>
+          <tr>
+            <td>Explicit consequence</td>
+            <td>The result is an explicit theta-pilot log-volume estimate for <span class="math">log(q)</span> with constants defined from the initial-theta-data field tower.</td>
+            <td>This page is the immediate source for the Section 2 Diophantine applications.</td>
+          </tr>
+        </table>
+        <div class="callout violet">
+          Formalization checkpoint: the final bound should be represented as a theorem
+          whose inputs include the Corollary 3.12 comparison certificate and the local
+          estimates, so that the disputed upstream step remains explicitly visible.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Theorem 1.10 final estimate</a>
+          Related: <a href="#iut-iv-theorem-110-hypotheses">hypotheses</a>
+          <a href="#iut-iv-theorem-110-local-steps">local steps</a>
+          <a href="#iut-iv-diophantine-inequalities-23">Diophantine inequalities</a>
         </div>
       </section>
 
