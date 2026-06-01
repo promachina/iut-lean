@@ -1111,6 +1111,13 @@
         <a href="#coarse-space-step-x-312">3.12 coarse space Step (x)</a>
         <a href="#hull-det-logvol-step-xid-312">3.12 hull/det/log-volume</a>
         <a href="#membership-step-xif-312">3.12 membership Step (xi-f)</a>
+        <a href="#global-frobenioids-required-312">3.12 global Frobenioids required</a>
+        <a href="#tensor-power-warning-312">3.12 tensor-power warning</a>
+        <a href="#generalized-theta-links-3121">Generalized theta links 3.12.1</a>
+        <a href="#remark-3122-intertwining">3.12.2 intertwining</a>
+        <a href="#columns-zero-one-difference">0/1 column difference</a>
+        <a href="#metric-analogy-3123">Metric analogy 3.12.3</a>
+        <a href="#padic-teich-analogy-3124">p-adic Teich analogy 3.12.4</a>
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         <a href="#iut-iv-local-log-volume-estimates-11-15">IUT IV local estimates 1.1-1.5</a>
         <a href="#iut-iv-prime-averaging-16-17">IUT IV prime/averaging 1.6-1.7</a>
@@ -46162,7 +46169,7 @@
             </p>
             <div class="tagRow"><span class="tag green">IUT III, Fig. 3.8</span><span class="tag">membership</span></div>
           </div>
-          <div class="card" id="cor312-global-frobenioids-required">
+          <div class="card" id="cor312-global-frobenioids-required-card">
             <h3>Why global Frobenioids remain required</h3>
             <p>
               Step (xii) warns against replacing the global realified Frobenioids by only
@@ -46174,9 +46181,10 @@
               That ambiguity would make the precise log-volume computation in Step (xi)
               meaningless.
             </p>
+            <p><a href="#global-frobenioids-required-312">Open the global-Frobenioids page</a></p>
             <div class="tagRow"><span class="tag green">IUT III, Cor. 3.12 Step (xii)</span><span class="tag">global data</span></div>
           </div>
-          <div class="card" id="remark-3122-intertwining">
+          <div class="card" id="remark-3122-intertwining-card">
             <h3>Remark 3.12.2: intertwining</h3>
             <p>
               Remark 3.12.2 describes the proof as dismantling and reassembling the unit
@@ -46191,9 +46199,10 @@
               which formally yields the Corollary 3.12 inequality after the quotient and
               log-volume operations.
             </p>
+            <p><a href="#remark-3122-intertwining">Open the intertwining page</a></p>
             <div class="tagRow"><span class="tag gold">IUT III, Remark 3.12.2</span><span class="tag">intertwining</span></div>
           </div>
-          <div class="card" id="columns-zero-one-difference">
+          <div class="card" id="columns-zero-one-difference-card">
             <h3>0-column and 1-column differ</h3>
             <p>
               Remark 3.12.2(iv),(v) stresses that both the Frobenius-like
@@ -46207,6 +46216,7 @@
               holomorphic hulls and log-volumes absorb the remaining choices; this gives
               equalities on the q side rather than only upper bounds.
             </p>
+            <p><a href="#columns-zero-one-difference">Open the 0/1-column page</a></p>
             <div class="tagRow"><span class="tag green">IUT III, Fig. 3.9</span><span class="tag">0/1 columns</span></div>
           </div>
         </div>
@@ -46881,6 +46891,241 @@
           Related: <a href="#corollary-312-diagnostics">formal diagnostics</a>
           <a href="#hull-det-logvol-step-xid-312">hull/determinant/log-volume</a>
           <a href="#corollary-312">3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="global-frobenioids-required-312">
+        <h2>IUT III Corollary 3.12 Step (xii): Global Frobenioids Required</h2>
+        <p class="lede">
+          Step (xii) warns that the global realified Frobenioids in the
+          <span class="math">Theta×mu_LGP</span> link cannot be replaced by local
+          Frobenioids alone. Local Frobenioid objects may have non-invertible
+          endomorphisms, so one could not tell whether a local log-shell submodule had
+          been replaced by a <span class="math">p_v^N</span>-multiple.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Attempt</th><th>Failure mode</th><th>Source conclusion</th></tr>
+          <tr>
+            <td>Use only local Frobenioids because log-volume is local.</td>
+            <td>Local objects are preserved only up to isomorphism class and admit non-automorphism endomorphisms.</td>
+            <td>Precise local scale is lost.</td>
+          </tr>
+          <tr>
+            <td>Compute Step (xi) log-volumes after local-only replacement.</td>
+            <td>One cannot distinguish a given open submodule from its <span class="math">p_v^N</span>-multiple.</td>
+            <td>The precise q/theta log-volume comparison becomes meaningless.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Corollary 3.12 proof Step (xii)</a>
+          Related: <a href="#global-kummer-noninterference-iii310">global Kummer 3.10</a>
+          <a href="#hull-det-logvol-step-xid-312">Step (xi-d)</a>
+        </div>
+      </section>
+
+      <section id="tensor-power-warning-312">
+        <h2>IUT III Corollary 3.12 Step (xi-h): Tensor-Power Warning</h2>
+        <p class="lede">
+          Step (xi-h) rejects a routine extension of the argument to
+          <span class="math">N</span>-th tensor powers of theta-pilot objects for
+          <span class="math">N≥2</span>. The proof depends on the first-power
+          etale-theta-function theory; tensor powers must be handled by multiplying the
+          original log-volume by <span class="math">N</span>, not by rerunning the 3.12
+          argument to get sharper bounds.
+        </p>
+        <div class="callout warn">
+          The source explicitly notes that the sharper inequalities suggested by such a
+          routine generalization are false in IUT IV. This is a hard guardrail against
+          strengthening Corollary 3.12 by tensor-power extrapolation.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Corollary 3.12 proof Step (xi-h)</a>
+          Related: <a href="#membership-step-xif-312">Step (xi-f) membership</a>
+          <a href="#iut-iv-diophantine-inequalities-23">IUT IV final inequalities</a>
+        </div>
+      </section>
+
+      <section id="generalized-theta-links-3121">
+        <h2>IUT III Remark 3.12.1: Generalized Theta Links</h2>
+        <p class="lede">
+          Remark 3.12.1 notes that for <span class="math">λ∈Q_{&gt;0}</span> one can
+          formulate generalized <span class="math">Theta×mu_LGP</span> links that leave
+          the first-power etale theta theory unchanged but alter the q-side scaling.
+          The same proof gives <span class="math">C_Theta ≥ -λ</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Case</th><th>Statement</th><th>Importance</th></tr>
+          <tr>
+            <td><span class="math">λ=1</span></td>
+            <td>The original IUT theory and Corollary 3.12.</td>
+            <td>Gives <span class="math">C_Theta ≥ -1</span>.</td>
+          </tr>
+          <tr>
+            <td><span class="math">λ∈Q_{&gt;0}</span></td>
+            <td>A generalized theta-link variant gives <span class="math">C_Theta ≥ -λ</span>.</td>
+            <td>For <span class="math">λ&lt;1</span> this is sharper, but IUT IV estimates are too rough for this to matter.</td>
+          </tr>
+          <tr>
+            <td>First-power theta theory</td>
+            <td>Left unchanged in the generalized-link discussion.</td>
+            <td>This differs from the false tensor-power extrapolation rejected in Step (xi-h).</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.12.1</a>
+          Related: <a href="#tensor-power-warning-312">tensor-power warning</a>
+          <a href="#theta-mu-lgp-link-38">Theta×mu_LGP link</a>
+        </div>
+      </section>
+
+      <section id="remark-3122-intertwining">
+        <h2>IUT III Remark 3.12.2: Intertwining and Reassembly</h2>
+        <p class="lede">
+          Remark 3.12.2 describes IUT's dismantling and reassembly of the two
+          combinatorial dimensions of a number field: unit/value portions,
+          additive/multiplicative structures, and the two finite symmetries attached to
+          the elliptic-curve labels. Corollary 3.12 is read as an estimate arising from
+          the reassembly of these dimensions through mono-analytic log-shell
+          containers.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Theme</th><th>Source description</th><th>3.12 role</th></tr>
+          <tr>
+            <td>Dismantling</td>
+            <td>Separate unit/value portions, additive/multiplicative structures, and <span class="math">F_l</span>/<span class="math">F_l^±</span> symmetries.</td>
+            <td>Allows theta-link and log-link operations to act on weakened data.</td>
+          </tr>
+          <tr>
+            <td>Reassembly</td>
+            <td>Mono-analytic log-shells provide containers that recover the intertwining between the separated dimensions.</td>
+            <td>Produces the multiradial representation of theta-pilot objects.</td>
+          </tr>
+          <tr>
+            <td>Logical form</td>
+            <td><span class="math">q-itw => q-itw ∧ Theta-itw/indets => Theta-itw/indets</span>.</td>
+            <td>Reads q-intertwining as a special case of theta-intertwining up to indeterminacies.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.12.2(i)-(ii)</a>
+          Related: <a href="#membership-step-xif-312">membership Step (xi-f)</a>
+          <a href="#ipl-she-apt-source-311">IPL/SHE/APT</a>
+        </div>
+      </section>
+
+      <section id="columns-zero-one-difference">
+        <h2>IUT III Remark 3.12.2: 0-Column and 1-Column Difference</h2>
+        <p class="lede">
+          Remark 3.12.2(iv)-(v) compares the 0-column theta-pilot side with the
+          1-column q-pilot side. Both columns require the Frobenius-like
+          <span class="math">•0</span> and etale-like <span class="math">◦</span>
+          roles, but only the theta side has the crucial multiradiality properties of
+          Theorem 3.11(iii)(c).
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Aspect</th><th>0-column / theta</th><th>1-column / q</th></tr>
+          <tr>
+            <td>Both <span class="math">•0</span> and <span class="math">◦</span></td>
+            <td>Essential.</td>
+            <td>Essential.</td>
+          </tr>
+          <tr>
+            <td>Log-link compatibility of log-volumes</td>
+            <td>Similar.</td>
+            <td>Similar.</td>
+          </tr>
+          <tr>
+            <td>Multiradiality of pilot objects</td>
+            <td>Holds by Theorem 3.11.</td>
+            <td>No analogue for q-pilot objects.</td>
+          </tr>
+          <tr>
+            <td>Use of log-shells</td>
+            <td>Containers for regions, producing Ind3 upper bounds.</td>
+            <td>Document logarithmic relation between fixed ring structures; hulls and log-volume absorb remaining choices.</td>
+          </tr>
+          <tr>
+            <td>Log-volume output</td>
+            <td>Upper bounds.</td>
+            <td>Precise equalities.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.12.2(iv)-(v) and Fig. 3.9</a>
+          Related: <a href="#vertical-shift-cost-312">vertical-shift cost</a>
+          <a href="#hull-det-logvol-step-xid-312">hull/determinant/log-volume</a>
+        </div>
+      </section>
+
+      <section id="metric-analogy-3123">
+        <h2>IUT III Remark 3.12.3: Metric Teichmuller Analogy</h2>
+        <p class="lede">
+          Remark 3.12.3 compares Corollary 3.12 with the negativity of Euler
+          characteristic for a hyperbolic Riemann surface via Gauss-Bonnet. The analogy
+          is metric: canonical comparison between alien holomorphic structures produces
+          a controlled volume distortion.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Classical side</th><th>IUT side</th><th>Shared pattern</th></tr>
+          <tr>
+            <td>Hyperbolic Riemann surface and Poincare metric.</td>
+            <td>Log-shell metric/log-volume formalism.</td>
+            <td>Canonical geometry forces a sign/volume inequality.</td>
+          </tr>
+          <tr>
+            <td>Gauss-Bonnet gives <span class="math">χ_S &lt; 0</span>.</td>
+            <td>Corollary 3.12 gives the signed log-volume inequality.</td>
+            <td>The local positivity/incompatibility is read globally as a numerical bound.</td>
+          </tr>
+          <tr>
+            <td>Conformal distortion in classical Teichmuller theory.</td>
+            <td>Log-volume distortion under arithmetic-holomorphic deformation.</td>
+            <td>Canonical algorithms minimize or constrain distortion.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.12.3</a>
+          Related: <a href="#upper-semi-log-kummer-iii">upper semi-compatibility</a>
+          <a href="#corollary-312">Corollary 3.12</a>
+        </div>
+      </section>
+
+      <section id="padic-teich-analogy-3124">
+        <h2>IUT III Remark 3.12.4: p-adic Teichmuller Analogy</h2>
+        <p class="lede">
+          Remark 3.12.4 compares IUT's Corollary 3.12 mechanism with p-adic
+          Teichmuller theory. Bad primes correspond to the ordinary locus, good primes
+          to the supersingular locus, log-shells to multiplicative Teichmuller
+          representatives, and the upper-semi Ind3 inequality to an inclusion of line
+          bundles arising from interference between Frobenius conjugates.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>IUT item</th><th>p-adic Teichmuller analogue</th><th>Remark 3.12.4 role</th></tr>
+          <tr>
+            <td>Splitting monoids at bad primes</td>
+            <td>Canonical coordinates on the ordinary locus.</td>
+            <td>Explains why bad primes behave like the ordinary part.</td>
+          </tr>
+          <tr>
+            <td>Mono-analytic log-shells</td>
+            <td>Multiplicative Teichmuller representatives.</td>
+            <td>Records absolute comparison data but not additive compatibility.</td>
+          </tr>
+          <tr>
+            <td><span class="math">F_l</span> theta-value labels</td>
+            <td>The factor <span class="math">p</span> in the mod <span class="math">p/p^2</span> portion of Witt vectors.</td>
+            <td>Procession averaging is compared with dividing by <span class="math">p</span>.</td>
+          </tr>
+          <tr>
+            <td>Ind3 upper-semi inequality</td>
+            <td>Inclusion <span class="math">ω_{X_k} -> Φ^*ω_{X_k}</span>, not isomorphism.</td>
+            <td>Both arise from interference along a deformation/Frobenius-conjugate dimension.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.12.4 and Fig. 3.10</a>
+          Related: <a href="#metric-analogy-3123">metric analogy 3.12.3</a>
+          <a href="#ind1-ind2-ind3-311">Ind3</a>
         </div>
       </section>
 
