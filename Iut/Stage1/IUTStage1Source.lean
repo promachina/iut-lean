@@ -36852,6 +36852,104 @@ theorem realifiedFrobenioidEntry_endpoint
 end NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
 
 /--
+Theta-root attached realified-Frobenioid Step (x) entry source.
+
+This is the realified analogue of
+`NonarchimedeanThetaRootKummerForgettingPacketTargetSource`: the bad-local
+theta-root cusp-label source and the realified-Frobenioid log-Kummer entry
+source are kept in a single package.  Thus the finite Stage 1 route no longer
+has a separate theta-root source beside a separately supplied realified
+Step (x) entry.
+-/
+structure NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (thetaAverage : Real)
+    (logKummer : LogKummerCorrespondenceId)
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F)
+    (entry : IUTStage1NonarchimedeanInclusionData)
+    {j : Nat}
+    (holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j) where
+  thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C
+  realifiedEntrySource :
+    NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
+      audited thetaAverage logKummer entry
+      holomorphicF holomorphicD monoAnalyticD
+
+namespace NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+
+variable
+  {audited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean}
+  {thetaAverage : Real}
+  {logKummer : LogKummerCorrespondenceId}
+  {l : PrimeGeFive} {F : Type v} [Field F]
+  {X C : HyperbolicOrbicurveModel F}
+  {entry : IUTStage1NonarchimedeanInclusionData}
+  {j : Nat}
+  {holomorphicF holomorphicD monoAnalyticD :
+    IUTStage1RealifiedFrobenioidTensorPacketProductSource
+      IUTStage1PlaceKind.nonarchimedean j}
+
+theorem thetaRootCanonicalGeneratorUpToSign
+    (source :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign :=
+  source.thetaRootSource.canonicalGeneratorUpToSign
+
+theorem thetaRootCanonicalFullLabel_ne_zero
+    (source :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.thetaRootSource.canonicalFullLabel ≠
+      IUTStage1ZModCuspFullLabel.zero :=
+  source.thetaRootSource.canonicalFullLabel_ne_zero
+
+def toLogKummerUpperSemiCompatibility
+    (source :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    NonarchimedeanLogKummerUpperSemiCompatibility
+      audited thetaAverage logKummer :=
+  source.realifiedEntrySource.toLogKummerUpperSemiCompatibility
+
+theorem thetaRootRealifiedEntry_endpoint
+    (source :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      source.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      entry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      thetaAverage = entry.targetLogVolume.finiteLogVolume ∧
+      entry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        thetaAverage :=
+  ⟨source.thetaRootCanonicalGeneratorUpToSign,
+    source.thetaRootCanonicalFullLabel_ne_zero,
+    source.realifiedEntrySource.qPilotLogKummerNonInterference,
+    source.realifiedEntrySource.entrySource_eq_ind3Source,
+    source.realifiedEntrySource.thetaAverage_eq_entryTarget,
+    source.realifiedEntrySource.entryTarget_eq_ind3Target,
+    source.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩
+
+end NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+
+/--
 Finite-label root-of-unity invisibility for the Stage 1 log-Kummer packet
 correspondence.
 
@@ -38731,6 +38829,76 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeArakelovPacketTargetSource
     source_profile_eq source_log_volume_eq target_log_volume_eq_theta
     packetSource.toLogKummerUpperSemiCompatibility
     q_pilot_positive cTheta thetaSigned_le_cTheta_absLogQ
+
+/--
+Hodge--Arakelov Gaussian route with a theta-root attached realified Step (x)
+entry source.
+
+This is the realified counterpart of
+`boundarySignedEqualityOrStrictCTheta_of_hodgeArakelovPacketTargetSource`: the
+bad-local theta-root source, realified Frobenioid packet source, Kummer
+transfer, forgetting transfer, and packet calibrations are bundled before the
+route enters the ordered-real Corollary 3.12 schema.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeArakelovRealifiedFrobenioidEntry
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceHA targetHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (canonical_one_preserved :
+      targetHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility)
+    (target_log_volume_eq_theta :
+      targetHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (realifiedSource :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD)
+    (q_pilot_positive : 0 < -packageN.preLedger.qSigned)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_of_gaussianRealifiedFrobenioidLogKummerEntry
+    profile audited
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    sourceHA.toGaussianMonoidDegreeEvaluation
+    targetHA.toGaussianMonoidDegreeEvaluation canonical_one_preserved
+    source_profile_eq source_log_volume_eq target_log_volume_eq_theta
+    realifiedSource.realifiedEntrySource q_pilot_positive cTheta
+    thetaSigned_le_cTheta_absLogQ
 
 /--
 Source-side calibration of the theta cusp chart against the Hodge--Arakelov
