@@ -366,6 +366,31 @@ theorem sheSynchronizationSource_endpoint
     endpoint.2.2.2.2.1,
     endpoint.2.2.2.2.2⟩
 
+theorem theorem311HullDetSourceConstructor_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    (constructor :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
+        record) :
+    package.preLedger.output.Certified ∧
+      constructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  let endpoint := constructor.hullDetSource_endpoint
+  ⟨endpoint.1,
+    endpoint.2.2.1,
+    endpoint.2.2.2.1,
+    endpoint.2.2.2.2.1,
+    endpoint.2.2.2.2.2⟩
+
 /-- Summary of the first diagnostic pass through the local `(Ind3)` route. -/
 structure Ind3FirstPassDashboard where
   missingRealAlignmentBlocks : Bool

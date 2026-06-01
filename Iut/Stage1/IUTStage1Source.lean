@@ -26561,6 +26561,133 @@ theorem indeterminaciesMatchPackage
 end ThetaPilotHullEndpoint
 
 /--
+Theorem 3.11 source-facing hull plus determinant constructor.
+
+This record connects the multiradial Theorem 3.11 source record to the
+source-level hull/determinant data used in Step (xi-c)--(xi-f).  The algorithmic
+certificate and SHE alignment are read from the Theorem 3.11 record; the
+remaining inputs are exactly the current side conditions and the supplied
+hull/determinant source data.
+-/
+structure IUTStage1Theorem311HullDetSourceConstructor
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) where
+  hullDetData : IUTStage1SourceHullDetData package
+  q_pilot_positive : 0 < -package.preLedger.qSigned
+  normalization : package.preLedger.normalization
+
+namespace IUTStage1Theorem311HullDetSourceConstructor
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+
+def toSourceObligations
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    IUTStage1SourceObligations package :=
+  { algorithm_certified := record.bundle.algorithmOutputCertified,
+    she_arrow_matches_certificate := record.bundle.hodgeTheaterSHEAlignment,
+    q_pilot_positive := constructor.q_pilot_positive,
+    normalization := constructor.normalization }
+
+def toHullDetObligations
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    IUTStage1SourceHullDetObligations package :=
+  { sourceObligations := constructor.toSourceObligations,
+    hullDetData := constructor.hullDetData }
+
+def toThetaPilotHullEndpoint
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    package.ThetaPilotHullEndpoint constructor.toHullDetObligations :=
+  package.auditedThetaPilotHullEndpoint constructor.toHullDetObligations
+
+theorem algorithmCertified
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    package.preLedger.output.Certified :=
+  constructor.toHullDetObligations.algorithmCertified
+
+theorem sheArrowMatchesCertificate
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      package.preLedger.certificate.she :=
+  constructor.toHullDetObligations.sheArrowMatchesCertificate
+
+theorem possibleImagesUnion_eq_record
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    constructor.toThetaPilotHullEndpoint.possible_images.union =
+      record.thetaPossibleImages.union := by
+  calc
+    constructor.toThetaPilotHullEndpoint.possible_images.union =
+        package.preLedger.output.comparisons.targetUnion :=
+      constructor.toThetaPilotHullEndpoint.possibleImagesUnion_eq_targetUnion
+    _ = record.thetaPossibleImages.union :=
+      record.thetaImagesUnion_eq_targetUnion.symm
+
+theorem recordPossibleImagesUnion_subset_hull
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    Region.Subset record.thetaPossibleImages.union
+      (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull := by
+  rw [record.thetaImagesUnion_eq_targetUnion]
+  exact constructor.toHullDetObligations.targetUnion_subset_hull
+
+theorem determinantVolumeBound
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    RegionMeasure.HasVolumeAtMost package.preLedger.measure
+      (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull
+      package.preLedger.thetaSigned :=
+  constructor.toHullDetObligations.determinantVolumeBound
+
+theorem qSigned_le_thetaSigned
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  constructor.toThetaPilotHullEndpoint.hull_endpoint.qSignedLeThetaSigned
+
+theorem corollary312Endpoint
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  constructor.toThetaPilotHullEndpoint.corollary312Endpoint
+
+theorem hullDetSource_endpoint
+    (constructor :
+      IUTStage1Theorem311HullDetSourceConstructor record) :
+    package.preLedger.output.Certified ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+        package.preLedger.certificate.she ∧
+      constructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  ⟨constructor.algorithmCertified,
+    constructor.sheArrowMatchesCertificate,
+    constructor.possibleImagesUnion_eq_record,
+    constructor.recordPossibleImagesUnion_subset_hull,
+    constructor.determinantVolumeBound,
+    constructor.qSigned_le_thetaSigned⟩
+
+end IUTStage1Theorem311HullDetSourceConstructor
+
+/--
 Hull+det endpoint stated for multiradial Theta-pilot images.
 
 This is the source-facing endpoint that keeps the indeterminacy quotient,

@@ -177,6 +177,12 @@ the canonical one-label Hodge--Arakelov theta-value degree constructs the
 factored square/full-label preservation package used by the route.  This is a
 Stage 1 source constructor for the available finite-label shadow of \(\SHE\),
 not yet the full simultaneous-holomorphic-expressibility theorem.
+The hull/determinant layer now has a source constructor attached to the
+Theorem 3.11 record.  It reads the algorithmic certificate and \(\SHE\)
+alignment from that record, keeps the record's theta possible-image union tied
+to the hull endpoint, and derives the determinant-bound comparison
+\(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\).  The analytic
+construction of the hull and determinant remains supplied source data.
 The final numerical step is elementary:
 \[
   -|\log(q)|\le -|\log(\Theta)|
@@ -548,6 +554,10 @@ The project currently proves the following source-facing results in \Lean{}:
   preservation package from Hodge--Arakelov canonical-one synchronization,
   exposing pointwise representative comparison, transported-average equality,
   and the retained Hodge-history separation.
+\item The Step (xi) hull/determinant layer now has a Theorem 3.11 source
+  constructor: source obligations are derived from the source record where
+  possible, the record's theta possible-image union is tied to the hull endpoint,
+  and the determinant bound yields \(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\).
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
@@ -595,7 +605,8 @@ to the code:
 \item the construction of the actual \((\Ind1),(\Ind2),(\Ind3)\) data in
   Theorem 3.11;
 \item the genuine holomorphic hull and determinant constructions used in
-  Step (xi), beyond the present ordered-real upper-ray model;
+  Step (xi), beyond the present source-data constructor and ordered-real
+  upper-ray model;
 \item the full proof that the typed \SHE{} and Hodge-descent transport
   obligations follow from Mochizuki's source constructions, beyond the current
   Hodge--Arakelov canonical-one synchronization shadow;
