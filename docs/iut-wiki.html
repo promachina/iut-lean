@@ -945,6 +945,15 @@
         <a href="#fl-symmetry-indeterminacy-ii47">Fl symmetry indeterminacy 4.7</a>
         <a href="#theta-nf-f-side-kummer-localization-ii48">ThetaNF F-side localization 4.8</a>
         <a href="#theta-nf-frobenioid-localization-ii48">ThetaNF Frobenioid localization 4.8</a>
+        <a href="#theta-nf-kummer-global-isomorphisms-48">ThetaNF Kummer globals 4.8</a>
+        <a href="#theta-nf-fl-labelled-f-data-48">ThetaNF Fl-labelled F-data</a>
+        <a href="#theta-nf-localization-functors-48">ThetaNF localization functors</a>
+        <a href="#c-j-to-fmod-realified-48">C_j to Fmod^R_j</a>
+        <a href="#cgau-product-embedding-481">Cgau product embedding</a>
+        <a href="#fgau-realified-embedding-481">Fgau^R embedding</a>
+        <a href="#realified-localization-functor-481">Realified localization functor</a>
+        <a href="#log-shifted-units-482">Log-shifted units</a>
+        <a href="#nonrealified-translation-apparatus-482">Non-realified translation apparatus</a>
         <a href="#f-times-mu-kummer-prime-strips-ii49">F×μ Kummer prime-strips 4.9</a>
         <a href="#kummer-structure-orbits-ii49">Kummer structure orbits 4.9</a>
         <a href="#placewise-fperp-times-mu-ii49">Placewise F⊢×μ construction 4.9</a>
@@ -32490,7 +32499,7 @@
           </tr>
         </table>
         <div class="grid3">
-          <div class="card" id="theta-nf-kummer-global-isomorphisms-48">
+          <div class="card" id="theta-nf-kummer-global-isomorphisms-48-card">
             <h3>Global Kummer isomorphisms</h3>
             <p>
               Corollary 4.8(i) constructs Kummer isomorphisms for
@@ -32500,7 +32509,7 @@
             </p>
             <div class="tagRow"><span class="tag blue">Cor. 4.8(i)</span><span class="tag">Kummer</span></div>
           </div>
-          <div class="card" id="theta-nf-fl-labelled-f-data-48">
+          <div class="card" id="theta-nf-fl-labelled-f-data-48-card">
             <h3>Fl-labelled F-data</h3>
             <p>
               Each label <span class="math">j</span> receives a compatible
@@ -32510,7 +32519,7 @@
             </p>
             <div class="tagRow"><span class="tag violet">Cor. 4.8(ii)</span><span class="tag">labels</span></div>
           </div>
-          <div class="card" id="theta-nf-localization-functors-48">
+          <div class="card" id="theta-nf-localization-functors-48-card">
             <h3>Localization functors</h3>
             <p>
               The NF-bridge gives functors and poly-morphisms from global model
@@ -32518,7 +32527,7 @@
             </p>
             <div class="tagRow"><span class="tag green">Cor. 4.8(iii)</span><span class="tag">NF bridge</span></div>
           </div>
-          <div class="card" id="c-j-to-fmod-realified-48">
+          <div class="card" id="c-j-to-fmod-realified-48-card">
             <h3>C_j to Fmod^R_j</h3>
             <p>
               Corollary 4.8(iii) identifies the realified global Frobenioid piece
@@ -32528,7 +32537,7 @@
             </p>
             <div class="tagRow"><span class="tag red">Cor. 4.8(iii)</span><span class="tag">realified</span></div>
           </div>
-          <div class="card" id="cgau-product-embedding-481">
+          <div class="card" id="cgau-product-embedding-481-card">
             <h3>Cgau product embedding</h3>
             <p>
               Remark 4.8.1 regards <span class="math">Cgau</span> as a subcategory
@@ -32537,7 +32546,7 @@
             </p>
             <div class="tagRow"><span class="tag blue">Rem. 4.8.1</span><span class="tag">Cgau</span></div>
           </div>
-          <div class="card" id="fgau-realified-embedding-481">
+          <div class="card" id="fgau-realified-embedding-481-card">
             <h3>Fgau^R product embedding</h3>
             <p>
               The local Gaussian F-prime-strip
@@ -32547,7 +32556,7 @@
             </p>
             <div class="tagRow"><span class="tag green">Rem. 4.8.1</span><span class="tag">local</span></div>
           </div>
-          <div class="card" id="realified-localization-functor-481">
+          <div class="card" id="realified-localization-functor-481-card">
             <h3>Realified localization functor</h3>
             <p>
               Combining the two product embeddings yields
@@ -32556,7 +32565,7 @@
             </p>
             <div class="tagRow"><span class="tag gold">Rem. 4.8.1</span><span class="tag">localization</span></div>
           </div>
-          <div class="card" id="log-shifted-units-482">
+          <div class="card" id="log-shifted-units-482-card">
             <h3>Log-shifted units</h3>
             <p>
               Remark 4.8.2 says the unit part of the Gaussian monoids will be used
@@ -32565,7 +32574,7 @@
             </p>
             <div class="tagRow"><span class="tag red">Rem. 4.8.2</span><span class="tag">log-wall</span></div>
           </div>
-          <div class="card" id="nonrealified-translation-apparatus-482">
+          <div class="card" id="nonrealified-translation-apparatus-482-card">
             <h3>Non-realified translation apparatus</h3>
             <p>
               The non-realified global Frobenioids function as translation
@@ -32588,6 +32597,318 @@
           <a href="#global-gaussian-frobenioids-ii45">global Gaussian Frobenioids</a>
           <a href="#theta-log-links">theta/log links</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
+        </div>
+      </section>
+
+      <section id="theta-nf-kummer-global-isomorphisms-48">
+        <h2>IUT II 4.8(i): ThetaNF Global Kummer Isomorphisms</h2>
+        <p class="lede">
+          Corollary 4.8(i) transports the non-realified D-ThetaNF global structures
+          into the Frobenioid-theoretic ΘNF-Hodge theater. The construction uses
+          cyclotome/Kummer data to identify pseudo-monoids and then interprets the
+          result as compatible Frobenioid isomorphisms.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Layer</th><th>Kummer isomorphism</th><th>Frobenioid reading</th></tr>
+          <tr>
+            <td><span class="math">∞κ</span>, <span class="math">κ</span></td>
+            <td>Identifies ΘNF pseudo-monoid data with the corresponding D-side objects.</td>
+            <td>Controls the kappa-coric rational-function part before localization.</td>
+          </tr>
+          <tr>
+            <td><span class="math">M</span>, <span class="math">Msol</span>, <span class="math">Mmod</span></td>
+            <td>Restricts Kummer classes to obtain natural Kummer-theoretic isomorphisms.</td>
+            <td>Transfers the non-realified arithmetic field/monoid package from 4.7.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Fmod</span>, <span class="math">F</span>, <span class="math">Fmod^R</span></td>
+            <td>Interprets the monoid isomorphisms as Frobenioid isomorphisms.</td>
+            <td>Gives the ΘNF Frobenioid side needed for 4.8(ii)-(iii).</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.8(i)</a>
+          Related: <a href="#theta-nf-nonrealified-global-471">ThetaNF non-realified globals</a>
+          <a href="#mod-objects-translation-apparatus-472">mod translation apparatus</a>
+          <a href="#theta-nf-fl-labelled-f-data-48">Fl-labelled F-data</a>
+        </div>
+      </section>
+
+      <section id="theta-nf-fl-labelled-f-data-48">
+        <h2>IUT II 4.8(ii): Fl-Labelled F-Data in ΘNF</h2>
+        <p class="lede">
+          Corollary 4.8(ii) applies the global Kummer isomorphisms of 4.8(i), together
+          with the constant-monoid comparisons of 4.6(i), to every label
+          <span class="math">j in LabCusp(D)</span>. The result is labelled F-side data
+          compatible with the D-side <span class="math">F(D)|j</span> package.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Labelled object</th><th>Comparison</th><th>Indeterminacy discipline</th></tr>
+          <tr>
+            <td><span class="math">F_j</span></td>
+            <td><span class="math">F_j -> F|j -> F(D)|j</span>.</td>
+            <td>Read through the same label coordinate used in Corollary 4.7(ii).</td>
+          </tr>
+          <tr>
+            <td><span class="math">Mmod_j</span>, <span class="math">Msol_j</span>, <span class="math">M∞κ_j</span></td>
+            <td>Identified with corresponding D-side labelled structures.</td>
+            <td>Objects with fundamental-group actions retain independent labelwise conjugacy ambiguity.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Fmod_j</span>, <span class="math">Fmod^R_j</span></td>
+            <td>Identified with D-side model Frobenioids and realifications.</td>
+            <td>Compatible with the <span class="math">F_l</span>-symmetrizing isomorphisms.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.8(ii)</a>
+          Related: <a href="#theta-nf-fl-labels-472">ThetaNF Fl labels</a>
+          <a href="#formal-diagonal-fl-data-472">formal diagonal Fl data</a>
+          <a href="#theta-nf-localization-functors-48">localization functors</a>
+        </div>
+      </section>
+
+      <section id="theta-nf-localization-functors-48">
+        <h2>IUT II 4.8(iii): ΘNF Localization Functors</h2>
+        <p class="lede">
+          Corollary 4.8(iii) uses the NF-bridge to construct localization functors and
+          poly-morphisms from labelled global model data to labelled local F-prime-strip
+          data. These maps are required to be mutually compatible and compatible with
+          the D-side localizations of Corollary 4.7(iii).
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Functor or morphism</th><th>Target</th><th>Compatibility</th></tr>
+          <tr>
+            <td><span class="math">Fmod_j -> F_j</span></td>
+            <td>The labelled local F-prime-strip.</td>
+            <td>Matches the D-side localization through Kummer-theoretic isomorphisms.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Fmod^R_j -> F_j^R</span></td>
+            <td>Realified labelled local Frobenioid.</td>
+            <td>Compatible with prime bijections and local topological monoids.</td>
+          </tr>
+          <tr>
+            <td><span class="math">M∞κ_j -> M∞κ_vj</span></td>
+            <td>Local <span class="math">∞κ</span>-coric rational-function data.</td>
+            <td>Keeps the kappa-coric layer aligned with the label and valuation.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.8(iii)</a>
+          Related: <a href="#theta-nf-localization-473">D-side ThetaNF localization</a>
+          <a href="#c-j-to-fmod-realified-48">C_j to Fmod^R_j</a>
+          <a href="#realified-localization-functor-481">realified localization functor</a>
+        </div>
+      </section>
+
+      <section id="c-j-to-fmod-realified-48">
+        <h2>IUT II 4.8(iii): C_j to Fmod^R_j</h2>
+        <p class="lede">
+          Corollary 4.8(iii) identifies the realified global Frobenioid piece
+          <span class="math">C_j</span>, attached to the F-prime-strip labelled by
+          <span class="math">j</span>, with <span class="math">Fmod^R_j</span>. This
+          is the local labelled version of the F/D global realified comparison.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Compatibility requirement</th><th>Meaning</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Prime bijections</td>
+            <td>The isomorphism respects the valuation-indexed primes.</td>
+            <td>Prevents labelled global data from losing the valuation coordinate.</td>
+          </tr>
+          <tr>
+            <td>Local monoid isomorphisms</td>
+            <td>Compatible with local topological monoids of the realified Frobenioids.</td>
+            <td>Allows the comparison to feed the realified localization functor.</td>
+          </tr>
+          <tr>
+            <td>Kummer isomorphisms</td>
+            <td>Compatible with the comparisons from 4.8(i)-(ii) and 4.6(ii).</td>
+            <td>Keeps the ΘNF lift tied to the D-side source data.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 4.8(iii)</a>
+          Related: <a href="#f-semi-simplification-46">F-side semi-simplification</a>
+          <a href="#cgau-product-embedding-481">Cgau product embedding</a>
+          <a href="#theta-nf-localization-functors-48">ThetaNF localization functors</a>
+        </div>
+      </section>
+
+      <section id="cgau-product-embedding-481">
+        <h2>IUT II Remark 4.8.1(i): Cgau Product Embedding</h2>
+        <p class="lede">
+          Remark 4.8.1(i) uses the isomorphisms
+          <span class="math">C_j -> Fmod^R_j</span> to regard the global Gaussian
+          Frobenioid <span class="math">Cgau</span> of Corollary 4.6(v) as a
+          subcategory of the product over <span class="math">j in F_l</span> of the
+          realified model Frobenioids.
+        </p>
+        <div class="diagram fit" aria-label="Cgau embedded into product of labelled realified model Frobenioids">
+          <div class="diagramHeader">
+            <strong>Global Gaussian product placement</strong>
+            <span>Remark 4.8.1(i)</span>
+          </div>
+          <svg viewBox="0 0 1120 330" role="img">
+            <defs>
+              <marker id="arrowCgau481" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="110" y="98" width="250" height="82"></rect>
+            <text class="nodeTitle" x="235" y="128" text-anchor="middle">Cgau</text>
+            <text class="tinyText" x="235" y="152" text-anchor="middle">global Gaussian Frobenioid</text>
+            <rect class="nodeBox green" x="740" y="98" width="290" height="82"></rect>
+            <text class="nodeTitle" x="885" y="128" text-anchor="middle">product_j Fmod^R_j</text>
+            <text class="tinyText" x="885" y="152" text-anchor="middle">labelled realified model Frobenioids</text>
+            <rect class="nodeBox gold" x="438" y="222" width="244" height="62"></rect>
+            <text class="nodeTitle" x="560" y="248" text-anchor="middle">via C_j -> Fmod^R_j</text>
+            <text class="tinyText" x="560" y="268" text-anchor="middle">labelwise comparison</text>
+            <path d="M362 139 H738" class="edge blue" marker-end="url(#arrowCgau481)"></path>
+            <path d="M560 220 C546 190 498 164 430 146" class="edge gold" marker-end="url(#arrowCgau481)"></path>
+          </svg>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 4.8.1(i)</a>
+          Related: <a href="#cenv-cgau-global-frobenioids-46">Cenv/Cgau</a>
+          <a href="#c-j-to-fmod-realified-48">C_j to Fmod^R_j</a>
+          <a href="#realified-localization-functor-481">realified localization functor</a>
+        </div>
+      </section>
+
+      <section id="fgau-realified-embedding-481">
+        <h2>IUT II Remark 4.8.1(ii): Fgau^R Product Embedding</h2>
+        <p class="lede">
+          Remark 4.8.1(ii) constructs the local realified Gaussian side. The local data
+          of <span class="math">Psi_Fgau</span> determines an
+          <span class="math">F^⊢</span>-prime-strip <span class="math">Fgau</span>,
+          whose realification embeds place by place into a product of labelled
+          realified Frobenioids <span class="math">F_j^R</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Step</th><th>Construction</th><th>Purpose</th></tr>
+          <tr>
+            <td>Local Gaussian data</td>
+            <td><span class="math">Psi_Fgau(HT_Theta)_v</span> gives a local split Frobenioid.</td>
+            <td>Builds the F-prime-strip <span class="math">Fgau</span>.</td>
+          </tr>
+          <tr>
+            <td>Realification</td>
+            <td>Realify the underlying Frobenioid at every valuation.</td>
+            <td>Produces <span class="math">Fgau^R</span>.</td>
+          </tr>
+          <tr>
+            <td>Labelled product embedding</td>
+            <td><span class="math">Fgau^R -> product_j F_j^R</span>.</td>
+            <td>Places the local Gaussian side in the same labelled product format as <span class="math">Cgau</span>.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 4.8.1(ii)</a>
+          Related: <a href="#theta-bridge-f-gaussian-46">Theta-bridge F-Gaussians</a>
+          <a href="#cgau-product-embedding-481">Cgau product embedding</a>
+          <a href="#realified-localization-functor-481">realified localization functor</a>
+        </div>
+      </section>
+
+      <section id="realified-localization-functor-481">
+        <h2>IUT II Remark 4.8.1(iii): Realified Localization Functor</h2>
+        <p class="lede">
+          Combining the product embeddings of <span class="math">Cgau</span> and
+          <span class="math">Fgau^R</span>, Remark 4.8.1(iii) obtains a realified
+          localization functor, up to isomorphism,
+          <span class="math">Cgau -> Fgau^R</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Input</th><th>Output</th><th>Compatibility</th></tr>
+          <tr>
+            <td><span class="math">Cgau subset product_j Fmod^R_j</span></td>
+            <td>First product placement for <span class="math">Cgau</span>.</td>
+            <td>Uses the labelled <span class="math">C_j -> Fmod^R_j</span> comparisons.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Fgau^R -> product_j F_j^R</span></td>
+            <td>Second product placement for the local realified Gaussian side.</td>
+            <td>The two placements induce <span class="math">Cgau -> Fgau^R</span>, compatible with <span class="math">Phi_Cgau,v -> Psi_Fgau^R_v</span>.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          This is realified localization only. Remark 4.8.2 explicitly separates it
+          from the later treatment of unit data through logarithms.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 4.8.1(iii)</a>
+          Related: <a href="#cgau-product-embedding-481">Cgau product embedding</a>
+          <a href="#fgau-realified-embedding-481">Fgau^R embedding</a>
+          <a href="#log-shifted-units-482">log-shifted units</a>
+        </div>
+      </section>
+
+      <section id="log-shifted-units-482">
+        <h2>IUT II Remark 4.8.2: Log-Shifted Units</h2>
+        <p class="lede">
+          Remark 4.8.2 says the realified localization of 4.8.1 concerns the
+          Frobenioid-theoretic Gaussian side. The unit portion of the Gaussian monoids
+          is later used after applying <span class="math">log</span>, as an additive
+          object, while the value-group data remains non-log-shifted.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Gaussian component</th><th>Treatment</th><th>Dependency</th></tr>
+          <tr>
+            <td>Units</td>
+            <td>Used via their logarithmic images as additive objects.</td>
+            <td>Requires localization operations compatible with <span class="math">log</span>.</td>
+          </tr>
+          <tr>
+            <td>Value groups</td>
+            <td>Used without the same log-shift.</td>
+            <td>Depends on the natural splittings of Gaussian monoids.</td>
+          </tr>
+          <tr>
+            <td>Analogy</td>
+            <td>Compared to <span class="math">Phi^* tau ⊕ omega</span> in p-adic Teichmuller theory.</td>
+            <td>Explains why the split presentation is mathematically meaningful.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 4.8.2</a>
+          Related: <a href="#realified-localization-functor-481">realified localization functor</a>
+          <a href="#nonrealified-translation-apparatus-482">non-realified translation apparatus</a>
+          <a href="#line-bundle-log-wall-juggling-ii4113">line-bundle log-wall juggling</a>
+        </div>
+      </section>
+
+      <section id="nonrealified-translation-apparatus-482">
+        <h2>IUT II Remark 4.8.2: Non-Realified Translation Apparatus</h2>
+        <p class="lede">
+          Remark 4.8.2 assigns the non-realified global Frobenioids of Corollary 4.8(i)
+          a later role: they mediate between multiplicative line-bundle data and
+          additive logarithmic images of units in the log-wall theory of IUT III.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Apparatus</th><th>What it translates</th><th>Scope limit</th></tr>
+          <tr>
+            <td>Non-realified global Frobenioids</td>
+            <td>Multiplicative arithmetic line-bundle data to additive log-images of units.</td>
+            <td>Only naturally considered in the <span class="math">F_l</span>-symmetry context.</td>
+          </tr>
+          <tr>
+            <td>Localization functors/morphisms</td>
+            <td>Global model Frobenioids to local unit/value data.</td>
+            <td>Need the splittings that separate unit and value-group behavior.</td>
+          </tr>
+          <tr>
+            <td>Gaussian monoids as functions of <span class="math">j</span></td>
+            <td>Labelled nonzero components of the Gaussian distribution.</td>
+            <td>This is why the <span class="math">F_l</span> setting is not an obstacle here.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 4.8.2</a>
+          Related: <a href="#mod-objects-translation-apparatus-472">mod translation apparatus</a>
+          <a href="#log-shifted-units-482">log-shifted units</a>
+          <a href="#conjugate-synchronization-logwall-ii383">log-wall preparation</a>
         </div>
       </section>
 
