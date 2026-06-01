@@ -1085,6 +1085,12 @@
         <a href="#realified-semisimplification-39">Realified semi-simplification</a>
         <a href="#no-log-volume-period-39">No log-volume period</a>
         <a href="#global-kummer-noninterference-iii310">Global Kummer 3.10</a>
+        <a href="#vertical-global-objects-310">Vertical global objects 3.10</a>
+        <a href="#roots-of-unity-noninterference-310">Roots-of-unity non-interference</a>
+        <a href="#global-log-kummer-totality-310">Global log-Kummer totality</a>
+        <a href="#fmod-fmod-bias-310">FMOD/Fmod bias 3.10.1</a>
+        <a href="#kummer-detachment-310">Kummer detachment 3.10.1</a>
+        <a href="#kummer-conjugated-horizontal-arrows-310">Kummer-conjugated arrows</a>
         <a href="#theorem-311-lgp-algorithms">Theorem 3.11 algorithms</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
@@ -43452,33 +43458,36 @@
         </table>
 
         <div class="grid3">
-          <div class="card" id="vertical-global-objects-310">
+          <div class="card" id="vertical-global-objects-310-card">
             <h3>Vertically coric global objects</h3>
             <p>
               Proposition 3.10(i) constructs vertically coric versions of the global
               fields, monoids, Frobenioids, and LGP/lgp prime-strips introduced in
               Proposition 3.7.
             </p>
+            <p><a href="#vertical-global-objects-310">Open the vertically coric global objects page</a></p>
             <div class="tagRow"><span class="tag blue">3.10(i)</span><span class="tag">global</span></div>
           </div>
-          <div class="card" id="roots-of-unity-noninterference-310">
+          <div class="card" id="roots-of-unity-noninterference-310-card">
             <h3>Roots-of-unity non-interference</h3>
             <p>
               The intersection statement in 3.10(ii) reduces simultaneous global/local
               interference to torsion. This is why adjacent log-link ambiguity is
               described as harmless identity indeterminacy.
             </p>
+            <p><a href="#roots-of-unity-noninterference-310">Open the non-interference page</a></p>
             <div class="tagRow"><span class="tag red">3.10(ii)</span><span class="tag">torsion</span></div>
           </div>
-          <div class="card" id="global-log-kummer-totality-310">
+          <div class="card" id="global-log-kummer-totality-310-card">
             <h3>Global totality</h3>
             <p>
               As in 3.5, the action is not through a single Kummer isomorphism. It uses
               the totality of Kummer maps pre-composed with vertical log-link iterates.
             </p>
+            <p><a href="#global-log-kummer-totality-310">Open the global totality page</a></p>
             <div class="tagRow"><span class="tag violet">3.10(ii)</span><span class="tag">totality</span></div>
           </div>
-          <div class="card" id="fmod-fmod-bias-310">
+          <div class="card" id="fmod-fmod-bias-310-card">
             <h3>FMOD/Fmod bias</h3>
             <p>
               <span class="math">FMOD</span> is multiplicative and admits precise
@@ -43486,24 +43495,27 @@
               estimate-friendly but only upper-semi-compatible at the relevant local
               monoids.
             </p>
+            <p><a href="#fmod-fmod-bias-310">Open the FMOD/Fmod bias page</a></p>
             <div class="tagRow"><span class="tag gold">Remark 3.10.1</span><span class="tag">Fig. 3.2</span></div>
           </div>
-          <div class="card" id="kummer-detachment-310">
+          <div class="card" id="kummer-detachment-310-card">
             <h3>Kummer detachment</h3>
             <p>
               Remark 3.10.1 says the precise <span class="math">FMOD/LGP</span>
               compatibility is what makes Kummer-detachment indeterminacies disappear
               for the global portion of the <span class="math">Theta×mu_LGP</span> link.
             </p>
+            <p><a href="#kummer-detachment-310">Open the Kummer-detachment page</a></p>
             <div class="tagRow"><span class="tag green">Remark 3.10.1(ii)</span><span class="tag">LGP</span></div>
           </div>
-          <div class="card" id="kummer-conjugated-horizontal-arrows-310">
+          <div class="card" id="kummer-conjugated-horizontal-arrows-310-card">
             <h3>Kummer-conjugated arrows</h3>
             <p>
               Remark 3.10.2 reviews the commutative diagram in which the lower
               horizontal LGP/lgp arrows are obtained by conjugating corresponding upper
               etale-like arrows by the relevant Kummer isomorphisms.
             </p>
+            <p><a href="#kummer-conjugated-horizontal-arrows-310">Open the conjugated-arrows page</a></p>
             <div class="tagRow"><span class="tag blue">Remark 3.10.2</span><span class="tag">F×mu</span></div>
           </div>
         </div>
@@ -43523,6 +43535,316 @@
           <a href="#global-kummer-noninterference">global Kummer card</a>
           <a href="#fmod-fmod-bias">FMOD/Fmod bias card</a>
           <a href="#theorem-311-multiradial-representation">Theorem 3.11</a>
+        </div>
+      </section>
+
+      <section id="vertical-global-objects-310">
+        <h2>IUT III Proposition 3.10(i): Vertically Coric Global Objects</h2>
+        <p class="lede">
+          Proposition 3.10(i) applies the global Frobenioid constructions of
+          Proposition 3.7 to the columnwise vertically coric
+          <span class="math">D-Theta±ellNF</span> theater
+          <span class="math">n,◦HT_D-Theta±ellNF</span>. The output is a family of
+          fields, monoids, Frobenioids, and Gaussian/LGP/lgp prime-strips that are
+          vertically coric in the fixed column <span class="math">n</span>.
+        </p>
+        <div class="diagram" aria-label="Vertically coric global objects in Proposition 3.10">
+          <div class="diagramHeader">
+            <strong>3.10(i)</strong>
+            <span>global 3.7 packet objects rebuilt over the columnwise vertical target</span>
+          </div>
+          <svg viewBox="0 0 900 330" role="img">
+            <defs>
+              <marker id="arrowVerticalGlobal310" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="54" y="84" width="210" height="88"></rect>
+            <text class="nodeTitle" x="159" y="116" text-anchor="middle">LGP-Gaussian lattice</text>
+            <text class="tinyText" x="159" y="140" text-anchor="middle">all n,m theaters</text>
+            <rect class="nodeBox green" x="346" y="58" width="210" height="88"></rect>
+            <text class="nodeTitle" x="451" y="90" text-anchor="middle">n,◦ D-theater</text>
+            <text class="tinyText" x="451" y="114" text-anchor="middle">vertical coric target</text>
+            <rect class="nodeBox gold" x="636" y="58" width="210" height="88"></rect>
+            <text class="nodeTitle" x="741" y="90" text-anchor="middle">Mmod/MMOD</text>
+            <text class="tinyText" x="741" y="114" text-anchor="middle">global fields and monoids</text>
+            <rect class="nodeBox violet" x="636" y="194" width="210" height="88"></rect>
+            <text class="nodeTitle" x="741" y="226" text-anchor="middle">Fmod/FMOD</text>
+            <text class="tinyText" x="741" y="250" text-anchor="middle">Frobenioids and prime-strips</text>
+            <path d="M266 128 H344" class="edge blue" marker-end="url(#arrowVerticalGlobal310)"></path>
+            <path d="M558 102 H634" class="edge green" marker-end="url(#arrowVerticalGlobal310)"></path>
+            <path d="M452 146 C494 202 564 226 634 238" class="edge violet" marker-end="url(#arrowVerticalGlobal310)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Input</th><th>Construction</th><th>Constraint</th></tr>
+          <tr>
+            <td><span class="math">n,mHT_{Theta±ellNF}</span> for all <span class="math">m</span></td>
+            <td>Vertical coricity of Theorem 1.5(i) determines <span class="math">n,◦HT_D</span>.</td>
+            <td>The construction is columnwise; it is not a global collapse of all horizontal indices.</td>
+          </tr>
+          <tr>
+            <td>Proposition 3.7 global packet objects</td>
+            <td>Rebuild fields, monoids, <span class="math">Fmod/FMOD</span>, and prime-strips over <span class="math">n,◦</span>.</td>
+            <td>The source lists both uppercase and lowercase variants because they have different roles later.</td>
+          </tr>
+          <tr>
+            <td>Kummer displays</td>
+            <td>For each <span class="math">n,m</span>, ordinary objects map to the vertically coric <span class="math">n,◦</span> target.</td>
+            <td>The displays are compatibility data for later log-Kummer correspondences.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.10(i)</a>
+          Related: <a href="#global-kummer-noninterference-iii310">3.10 overview</a>
+          <a href="#global-packet-frobenioids-iii36-38">Proposition 3.7 global objects</a>
+          <a href="#vertical-coric-target-35">Proposition 3.5 vertical target</a>
+        </div>
+      </section>
+
+      <section id="roots-of-unity-noninterference-310">
+        <h2>IUT III Proposition 3.10(ii): Roots-of-Unity Non-Interference</h2>
+        <p class="lede">
+          Proposition 3.10(ii) identifies the overlap between the global
+          multiplicative group <span class="math">MMOD_alpha</span> and all local packet
+          integer monoids. The intersection is exactly the finite torsion subgroup,
+          i.e. roots of unity. This is the paper's global non-interference statement
+          for local integers.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Piece</th><th>Source meaning</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Global side</td>
+            <td><span class="math">(dagger MMOD)_alpha</span> is the global group of nonzero elements of the number field.</td>
+            <td>It is the group that acts in the global Kummer comparison.</td>
+          </tr>
+          <tr>
+            <td>Local integer side</td>
+            <td>The product of <span class="math">Psi_log(A,alpha F_v)</span> gives the local packet integer constraints.</td>
+            <td>These are the local regions in which unwanted global action could interfere.</td>
+          </tr>
+          <tr>
+            <td>Intersection</td>
+            <td>The simultaneous global/local overlap is <span class="math">(dagger M_MOD^mu)_alpha</span>.</td>
+            <td>The proof cites the classical fact that global elements integral at all places are roots of unity.</td>
+          </tr>
+          <tr>
+            <td>Adjacent ambiguity</td>
+            <td>Only roots of unity survive at adjacent horizontal indices.</td>
+            <td>These become harmless identity indeterminacies in the log-Kummer action.</td>
+          </tr>
+        </table>
+        <div class="callout blue">
+          The statement is not that all local ambiguity vanishes. It is that the global
+          multiplicative part cannot nontrivially interfere with all local integer
+          constraints except through torsion.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.10(ii)</a>
+          Related: <a href="#global-log-kummer-totality-310">global log-Kummer totality</a>
+          <a href="#bad-prime-root-unity-zero-35">root-of-unity zero effect in 3.5</a>
+        </div>
+      </section>
+
+      <section id="global-log-kummer-totality-310">
+        <h2>IUT III Proposition 3.10(ii): Global Log-Kummer Totality</h2>
+        <p class="lede">
+          The final paragraph of Proposition 3.10(ii) repeats the discipline already
+          visible in Proposition 3.5: the action is not through one chosen Kummer
+          isomorphism. The groups labelled <span class="math">n,m</span> act through
+          the totality of Kummer maps pre-composed with iterates of the log-links, on
+          <span class="math">n,◦</span>-labelled <span class="math">IQ</span> containers.
+        </p>
+        <div class="diagram" aria-label="Global log-Kummer totality">
+          <div class="diagramHeader">
+            <strong>Totality principle</strong>
+            <span>all horizontal labels and log-link iterates are part of the action</span>
+          </div>
+          <svg viewBox="0 0 900 300" role="img">
+            <defs>
+              <marker id="arrowGlobalTotality310" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="54" y="96" width="180" height="86"></rect>
+            <text class="nodeTitle" x="144" y="128" text-anchor="middle">n,m MMOD</text>
+            <text class="tinyText" x="144" y="152" text-anchor="middle">all m in Z</text>
+            <rect class="nodeBox gold" x="354" y="52" width="200" height="86"></rect>
+            <text class="nodeTitle" x="454" y="84" text-anchor="middle">Kummer maps</text>
+            <text class="tinyText" x="454" y="108" text-anchor="middle">pre-composed with log-links</text>
+            <rect class="nodeBox green" x="354" y="174" width="200" height="86"></rect>
+            <text class="nodeTitle" x="454" y="206" text-anchor="middle">translation symmetry</text>
+            <text class="tinyText" x="454" y="230" text-anchor="middle">n-th column invariant</text>
+            <rect class="nodeBox violet" x="668" y="96" width="180" height="86"></rect>
+            <text class="nodeTitle" x="758" y="128" text-anchor="middle">n,◦ IQ objects</text>
+            <text class="tinyText" x="758" y="152" text-anchor="middle">packet containers</text>
+            <path d="M236 138 C280 100 306 92 352 94" class="edge blue" marker-end="url(#arrowGlobalTotality310)"></path>
+            <path d="M236 142 C282 184 308 212 352 216" class="edge gold" marker-end="url(#arrowGlobalTotality310)"></path>
+            <path d="M556 96 C594 104 628 118 666 136" class="edge blue" marker-end="url(#arrowGlobalTotality310)"></path>
+            <path d="M556 214 C598 192 630 172 666 144" class="edge green" marker-end="url(#arrowGlobalTotality310)"></path>
+          </svg>
+        </div>
+        <p>
+          For formalization and exposition, this page is an anti-shortcut rule. A model
+          that selects one representative Kummer map may accidentally erase exactly the
+          horizontal/log-link dependence that Proposition 3.10(ii) keeps visible.
+        </p>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.10(ii), final paragraph</a>
+          Related: <a href="#single-kummer-map-not-enough-35">single Kummer map not enough in 3.5</a>
+          <a href="#roots-of-unity-noninterference-310">roots-of-unity non-interference</a>
+        </div>
+      </section>
+
+      <section id="fmod-fmod-bias-310">
+        <h2>IUT III Remark 3.10.1: FMOD/Fmod Bias</h2>
+        <p class="lede">
+          Remark 3.10.1 separates two roles that must not be conflated.
+          <span class="math">FMOD/LGP</span> is multiplicative, rigid, and compatible
+          with precise log-Kummer Frobenioid isomorphisms. <span class="math">Fmod/lgp</span>
+          is additive and log-shell-adjacent, hence suited to explicit estimates, but
+          only after upper-semi and holomorphic/mono-analytic distortions are accounted
+          for.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Structure</th><th>Bias</th><th>Allowed use</th></tr>
+          <tr>
+            <td><span class="math">FMOD/LGP</span></td>
+            <td>Multiplicative; constructed from the global group and valuation subquotients.</td>
+            <td>Precise log-link-compatible Frobenioid isomorphisms; Kummer-detachment analysis.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Fmod/lgp</span></td>
+            <td>Additive; depends essentially on local packet monoids inside logarithmic modules.</td>
+            <td>Explicit estimate computation through log-shells and log-volumes.</td>
+          </tr>
+          <tr>
+            <td>Upper-semi compatibility</td>
+            <td>One-sided local inclusions rather than equalities.</td>
+            <td>Permits estimates, but blocks a precise <span class="math">Fmod</span> Frobenioid isomorphism parallel to <span class="math">FMOD</span>.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          A source-faithful wiki or Lean model must not give <span class="math">Fmod</span>
+          the exact log-Kummer compatibility asserted for <span class="math">FMOD</span>.
+          The paper explicitly says this is unavailable.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.10.1 and Fig. 3.2</a>
+          Related: <a href="#kummer-detachment-310">Kummer detachment</a>
+          <a href="#global-degree-log-volume-39">global degree log-volume</a>
+          <a href="#lgp-vs-lgp-lowercase-38">LGP versus lgp</a>
+        </div>
+      </section>
+
+      <section id="kummer-detachment-310">
+        <h2>IUT III Remark 3.10.1(ii): Kummer-Detachment Role</h2>
+        <p class="lede">
+          The precise compatibility of the <span class="math">FMOD/LGP</span> side is
+          used to control Kummer-detachment indeterminacies when moving from the
+          Frobenius-like global portion of the domain of a
+          <span class="math">Theta×mu_LGP</span> link to the corresponding etale-like
+          structures.
+        </p>
+        <div class="diagram" aria-label="FMOD/LGP and Fmod/lgp roles">
+          <div class="diagramHeader">
+            <strong>Two-role split</strong>
+            <span>rigidity for detachment, distortion-tolerant additivity for estimates</span>
+          </div>
+          <svg viewBox="0 0 900 310" role="img">
+            <defs>
+              <marker id="arrowDetachment310" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="74" y="72" width="250" height="88"></rect>
+            <text class="nodeTitle" x="199" y="104" text-anchor="middle">FMOD/LGP</text>
+            <text class="tinyText" x="199" y="128" text-anchor="middle">precise global log-Kummer</text>
+            <rect class="nodeBox green" x="576" y="72" width="250" height="88"></rect>
+            <text class="nodeTitle" x="701" y="104" text-anchor="middle">detachment controlled</text>
+            <text class="tinyText" x="701" y="128" text-anchor="middle">no extra global indeterminacy</text>
+            <rect class="nodeBox gold" x="74" y="198" width="250" height="88"></rect>
+            <text class="nodeTitle" x="199" y="230" text-anchor="middle">Fmod/lgp</text>
+            <text class="tinyText" x="199" y="254" text-anchor="middle">additive/log-shell estimate side</text>
+            <rect class="nodeBox red" x="576" y="198" width="250" height="88"></rect>
+            <text class="nodeTitle" x="701" y="230" text-anchor="middle">distortion accounted for</text>
+            <text class="tinyText" x="701" y="254" text-anchor="middle">upper-semi plus log-volume</text>
+            <path d="M326 116 H574" class="edge blue" marker-end="url(#arrowDetachment310)"></path>
+            <path d="M326 242 H574" class="edge gold" marker-end="url(#arrowDetachment310)"></path>
+          </svg>
+        </div>
+        <p>
+          This explains why the LGP-Gaussian log-theta lattice is preferred for the main
+          global Kummer-detachment route, even though the additive <span class="math">lgp</span>
+          side remains necessary for concrete log-volume estimates.
+        </p>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.10.1(ii)-(iii)</a>
+          Related: <a href="#fmod-fmod-bias-310">FMOD/Fmod bias</a>
+          <a href="#packet-procession-log-volume-iii39">packet log-volume</a>
+          <a href="#corollary-312-proof-steps">Corollary 3.12 proof steps</a>
+        </div>
+      </section>
+
+      <section id="kummer-conjugated-horizontal-arrows-310">
+        <h2>IUT III Remark 3.10.2: Kummer-Conjugated Horizontal Arrows</h2>
+        <p class="lede">
+          Remark 3.10.2 reviews the <span class="math">F×mu</span>-prime-strip diagram
+          behind the <span class="math">Theta×mu_LGP</span> and
+          <span class="math">Theta×mu_lgp</span> links. The lower horizontal
+          environmental-to-Gaussian-to-LGP/lgp arrows are obtained by conjugating the
+          corresponding upper etale-like arrows by the relevant Kummer isomorphisms.
+        </p>
+        <div class="diagram" aria-label="Kummer-conjugated F x mu arrows">
+          <div class="diagramHeader">
+            <strong>Remark 3.10.2</strong>
+            <span>lower horizontal arrows are built by Kummer conjugation</span>
+          </div>
+          <svg viewBox="0 0 940 360" role="img">
+            <defs>
+              <marker id="arrowConjugated310" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox green" x="54" y="70" width="150" height="70"></rect>
+            <text class="nodeTitle" x="129" y="102" text-anchor="middle">n,◦ env</text>
+            <rect class="nodeBox green" x="284" y="70" width="150" height="70"></rect>
+            <text class="nodeTitle" x="359" y="102" text-anchor="middle">n,◦ gau</text>
+            <rect class="nodeBox green" x="514" y="70" width="150" height="70"></rect>
+            <text class="nodeTitle" x="589" y="102" text-anchor="middle">n,◦ LGP</text>
+            <rect class="nodeBox green" x="744" y="70" width="150" height="70"></rect>
+            <text class="nodeTitle" x="819" y="102" text-anchor="middle">n,◦ lgp</text>
+            <rect class="nodeBox blue" x="54" y="232" width="150" height="70"></rect>
+            <text class="nodeTitle" x="129" y="264" text-anchor="middle">n,m env</text>
+            <rect class="nodeBox blue" x="284" y="232" width="150" height="70"></rect>
+            <text class="nodeTitle" x="359" y="264" text-anchor="middle">n,m gau</text>
+            <rect class="nodeBox blue" x="514" y="232" width="150" height="70"></rect>
+            <text class="nodeTitle" x="589" y="264" text-anchor="middle">n,m LGP</text>
+            <rect class="nodeBox blue" x="744" y="232" width="150" height="70"></rect>
+            <text class="nodeTitle" x="819" y="264" text-anchor="middle">n,m lgp</text>
+            <path d="M206 105 H282" class="edge green" marker-end="url(#arrowConjugated310)"></path>
+            <path d="M436 105 H512" class="edge green" marker-end="url(#arrowConjugated310)"></path>
+            <path d="M666 105 H742" class="edge green" marker-end="url(#arrowConjugated310)"></path>
+            <path d="M206 267 H282" class="edge blue" marker-end="url(#arrowConjugated310)"></path>
+            <path d="M436 267 H512" class="edge blue" marker-end="url(#arrowConjugated310)"></path>
+            <path d="M666 267 H742" class="edge blue" marker-end="url(#arrowConjugated310)"></path>
+            <path d="M129 142 V230" class="edge violet" marker-end="url(#arrowConjugated310)"></path>
+            <path d="M359 142 V230" class="edge violet" marker-end="url(#arrowConjugated310)"></path>
+            <path d="M589 142 V230" class="edge violet" marker-end="url(#arrowConjugated310)"></path>
+            <path d="M819 142 V230" class="edge violet" marker-end="url(#arrowConjugated310)"></path>
+          </svg>
+        </div>
+        <p>
+          The diagram matters because the horizontal links used by the
+          <span class="math">Theta×mu</span> construction are not free-standing labels:
+          their lower-row construction is tied to the upper-row etale-like arrows and
+          the vertical Kummer isomorphisms.
+        </p>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.10.2</a>
+          Related: <a href="#theta-mu-lgp-link-38">Theta×mu_LGP link</a>
+          <a href="#theta-mu-lgp-lowercase-link-38">Theta×mu_lgp link</a>
+          <a href="#global-log-kummer-totality-310">global log-Kummer totality</a>
         </div>
       </section>
 
