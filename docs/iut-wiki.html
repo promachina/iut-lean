@@ -802,6 +802,10 @@
         <a href="#etale-theta-tate-covering-tower-page">EtTh §1 Tate tower</a>
         <a href="#etale-theta-classical-kummer-page">Etale theta class</a>
         <a href="#etale-theta-anabelian-rigidity-page">EtTh §1 anabelian rigidity</a>
+        <a href="#etale-theta-full-group-warning-page">EtTh full group warning</a>
+        <a href="#etale-theta-cyclotomic-envelope-page">EtTh cyclotomic envelope</a>
+        <a href="#etale-theta-environments-definition-page">EtTh theta environments</a>
+        <a href="#etale-theta-discrete-rigidity-page">EtTh discrete rigidity</a>
         <a href="#frobenioid-standard-model-page">Frobenioid standard model</a>
         <a href="#frobenioid-reconstruction-page">Frobenioid reconstruction</a>
         <a href="#frobenioid-operations-page">Frobenioid operations</a>
@@ -2069,6 +2073,10 @@
               group-theoretic constructibility and the rigidity triad.
             </td>
             <td>
+              <a href="#etale-theta-full-group-warning-page">full-group warning</a>,
+              <a href="#etale-theta-cyclotomic-envelope-page">cyclotomic envelope</a>,
+              <a href="#etale-theta-environments-definition-page">environment definitions</a>,
+              <a href="#etale-theta-discrete-rigidity-page">discrete rigidity</a>,
               <a href="#etale-theta-mono-bi-rigidity-page">mono/bi-theta tradeoff</a>,
               <a href="#etale-theta-rigidity-triad-page">rigidity triad</a>
             </td>
@@ -2419,6 +2427,196 @@
           Related: <a href="#etale-theta-classical-kummer-page">etale theta class</a>
           <a href="#etale-theta-standard-type-ii14">IUT II standard type</a>
           <a href="#explicit-mu6-evaluation-points-page">explicit μ6 evaluation</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-full-group-warning-page" data-filter="etale theta remark 1.10.3 1.10.4 full tempered fundamental group theta quotient torsion points hodge arakelov">
+        <h2>EtTh Remarks 1.10.3-1.10.4: Why the Full Tempered Group Matters</h2>
+        <p class="lede">
+          EtTh §1 ends with a warning: although the etale theta class is constructed on
+          a theta quotient, the strong rigidity of Theorem 1.10 fails if one works only
+          with that quotient. The full tempered fundamental group is needed because the
+          Hodge-Arakelov target is not just a theta-group object; it is the theta function
+          and its derivatives restricted to torsion points.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Source warning</th><th>EtTh explanation</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Theta quotient is insufficient</td>
+            <td>The etale theta class lives on a theta quotient, but automorphisms of the theta quotient alone do not preserve standard type.</td>
+            <td>Do not formalize EtTh input as only a Heisenberg/theta-group quotient.</td>
+          </tr>
+          <tr>
+            <td>Surface decomposition</td>
+            <td>The punctured elliptic surface is described as an elliptic-minus-disc part glued to a disc-minus-torsion part.</td>
+            <td>Separates theta-group behavior from torsion-point derivative behavior.</td>
+          </tr>
+          <tr>
+            <td>Cyclotomic blurring</td>
+            <td>The universal cover of the torsion-point bouquet is interpreted as a continuous or infinitesimal thickening of the torsion set.</td>
+            <td>Explains why torsion labels carry deformation information, not only point labels.</td>
+          </tr>
+          <tr>
+            <td>Kummer functions are special</td>
+            <td>Without additive field structure, functions on points are hard to construct except from Kummer classes of meromorphic functions.</td>
+            <td>Highlights why the etale theta function is a special input to IUT rather than a generic constructible function.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, Remarks 1.10.3-1.10.4</a>
+          Related: <a href="#etale-theta-classical-kummer-page">etale theta class</a>
+          <a href="#theta-kummer-line-bundles-234">IUT III theta Kummer line bundles</a>
+          <a href="#conventional-theta-limit-234">conventional theta limit</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-cyclotomic-envelope-page" data-filter="etale theta section 2 coverings l torsion theta quotient cyclotomic envelope mu n definition 2.10 proposition 2.11 proposition 2.12">
+        <h2>EtTh §2: l-Torsion Coverings and Cyclotomic Envelope</h2>
+        <p class="lede">
+          Section 2 starts from a non-arithmetic once-punctured elliptic curve and forms
+          quotient coverings that isolate an <span class="math">l</span>-torsion
+          direction and a theta-lifted direction. The purpose is to create the precise
+          group-theoretic environment in which l-th roots of the etale theta function and
+          their cyclotomic indeterminacies can be discussed.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Construction</th><th>Role</th></tr>
+          <tr>
+            <td>Definition 2.1</td>
+            <td>Orbicurves of type <span class="math">(1,l-tors)</span> and <span class="math">(1,l-tors)^±</span> from a rank-one quotient of the mod-l theta setup.</td>
+            <td>Introduces the l-torsion covering layer.</td>
+          </tr>
+          <tr>
+            <td>Proposition 2.2 and Definition 2.3</td>
+            <td>For odd <span class="math">l</span>, inversion splits the relevant rank-two module and gives types <span class="math">(1,l-torsTheta)</span> and <span class="math">(1,l-torsTheta)^±</span>.</td>
+            <td>Builds the theta-compatible covering used in the environment definitions.</td>
+          </tr>
+          <tr>
+            <td>Propositions 2.4 and 2.6</td>
+            <td>The covering diagrams are characteristic under tempered or profinite fundamental-group isomorphisms.</td>
+            <td>Ensures the covering apparatus is reconstructible from group data.</td>
+          </tr>
+          <tr>
+            <td>Corollary 2.9</td>
+            <td>Cusp labels are identified with <span class="math">(Z/lZ)^±</span> orbits in the appropriate orbicurves.</td>
+            <td>Source of the label/orbit discipline imported into IUT II theta evaluation.</td>
+          </tr>
+          <tr>
+            <td>Definition 2.10 and Propositions 2.11-2.12</td>
+            <td>The cyclotomic envelope <span class="math">Pi[mu_N]</span> is a fiber product with <span class="math">mu_N</span>; its central kernel and theta-quotient intersection properties are group-theoretically recognizable.</td>
+            <td>Supplies the ambient group in which theta and algebraic sections are compared.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          The odd-<span class="math">l</span> and covering-type restrictions are not
+          cosmetic. Remark 2.12.1 lists nearby replacement curves where the crucial
+          inclusion fails at 2 or at primes dividing <span class="math">l</span>.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, §2, Definitions 2.1, 2.3, 2.10 and Propositions 2.2, 2.4, 2.6, 2.11, 2.12</a>
+          Related: <a href="#etale-theta-anabelian-rigidity-page">anabelian rigidity</a>
+          <a href="#signed-cusp-labels-ii23">IUT II signed cusp labels</a>
+          <a href="#theta-evaluation-orbits-ii24-26">IUT II theta evaluation orbits</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-environments-definition-page" data-filter="etale theta definition 2.13 mono theta environment bi theta environment theta section algebraic section cyclotomic envelope dy">
+        <h2>EtTh Definition 2.13: Mono-Theta and Bi-Theta Environments</h2>
+        <p class="lede">
+          Definition 2.13 packages the theta construction into mod
+          <span class="math">N</span> environments. The mono-theta environment records
+          the cyclotomic-envelope group, the outer-action subgroup
+          <span class="math">D_Y</span>, and the conjugacy class of the theta section.
+          The bi-theta environment adds the conjugacy class of the algebraic section.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Package</th><th>Fields in the source definition</th><th>Mathematical effect</th></tr>
+          <tr>
+            <td>Theta section</td>
+            <td><span class="math">s^Theta_Ydot : Pi_Ydot^tp -> Pi_Y^tp[mu_N]</span>, obtained by subtracting the mod-N theta cocycle from the tautological section.</td>
+            <td>Encodes the l-th root of the etale theta function in the cyclotomic envelope.</td>
+          </tr>
+          <tr>
+            <td>Algebraic section</td>
+            <td><span class="math">s^alg_Ydot</span>, the tautological section coming from the cyclotomic envelope.</td>
+            <td>Provides the comparison partner used by bi-theta environments.</td>
+          </tr>
+          <tr>
+            <td>Mono-theta environment</td>
+            <td><span class="math">(Pi_Y^tp[mu_N],D_Y,s^Theta)</span>.</td>
+            <td>Keeps the theta section but does not choose a theta/algebraic basepoint difference.</td>
+          </tr>
+          <tr>
+            <td>Bi-theta environment</td>
+            <td><span class="math">(Pi_Y^tp[mu_N],D_Y,s^Theta,s^alg)</span>.</td>
+            <td>Remembers more section data, which later causes a different rigidity profile.</td>
+          </tr>
+          <tr>
+            <td>Morphisms for <span class="math">N'|N</span></td>
+            <td>Defined by reducing a mod-N environment to mod <span class="math">N'</span> and then taking an isomorphism.</td>
+            <td>Makes projective systems of environments meaningful.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          This definition is the direct ancestor of the mono-theta environment language
+          in IUT II. A faithful wiki/formalization should distinguish the theta section
+          from the algebraic section instead of merging them into one “theta value” map.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, Definition 2.13</a>
+          Related: <a href="#etale-theta-mono-environment-page">mono-theta environment</a>
+          <a href="#etale-theta-mono-bi-rigidity-page">mono/bi-theta tradeoff</a>
+          <a href="#mono-theta-environments-ii11">IUT II mono-theta environments</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-discrete-rigidity-page" data-filter="etale theta proposition 2.14 proposition 2.15 corollary 2.16 discrete rigidity bi theta non discrete z torsor zhat solenoid basepoint indeterminacy">
+        <h2>EtTh Propositions 2.14-2.16: Symmetry and Discrete Rigidity</h2>
+        <p class="lede">
+          The key §2 distinction is that mono-theta environments have enough shifting
+          symmetry to keep the projective-limit indeterminacy discrete, while
+          bi-theta environments retain a basepoint indeterminacy whose limit is
+          profinite. This is the source of the later emphasis on mono-theta rigidity.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Statement content</th><th>Interpretation</th></tr>
+          <tr>
+            <td>Proposition 2.14</td>
+            <td>Computes symmetries of mono- and bi-theta environments. Mono-theta automorphisms surject to <span class="math">lZ semidirect {±1}</span>; bi-theta automorphisms have a more restricted image depending on <span class="math">N</span>.</td>
+            <td>Mono-theta data has a shifting symmetry that prevents a distinguished basepoint.</td>
+          </tr>
+          <tr>
+            <td>Remark 2.14.3</td>
+            <td>The shifting automorphisms express nonexistence of a mono-theta-theoretic basepoint; bi-theta data effectively determines a basepoint modulo <span class="math">N</span>.</td>
+            <td>Explains why adding the algebraic section changes the rigidity profile.</td>
+          </tr>
+          <tr>
+            <td>Proposition 2.15</td>
+            <td>Abstracts the issue to projective systems of <span class="math">Z</span>-torsors and shows that certain systems have invariants in <span class="math">Zhat/Z</span>.</td>
+            <td>Gives the discrete versus profinite mechanism without theta notation.</td>
+          </tr>
+          <tr>
+            <td>Corollary 2.16</td>
+            <td>Applies Proposition 2.15 to projective systems of bi-theta environments, producing possible limits over <span class="math">lZhat</span>.</td>
+            <td>Bi-theta environments exhibit profinite non-discreteness.</td>
+          </tr>
+          <tr>
+            <td>Remark 2.16.2</td>
+            <td>Relates the phenomenon to the simultaneous presence of geometric <span class="math">Z</span> and global arithmetic <span class="math">Z</span>.</td>
+            <td>Early source for “mutually alien copies of <span class="math">Z</span>” language.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          This is not just a local technicality. It is an early categorical prototype for
+          the IUT rule that more explicit-looking data can introduce extra
+          indeterminacy, while a leaner mono-theta package can preserve the discrete
+          structure needed later.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, Proposition 2.14, Proposition 2.15, Corollary 2.16, Remarks 2.14.3 and 2.16.1-2.16.2</a>
+          Related: <a href="#etale-theta-environments-definition-page">environment definitions</a>
+          <a href="#etale-theta-mono-bi-rigidity-page">mono/bi-theta tradeoff</a>
+          <a href="#discrete-rigidity-no-z-completion-211">IUT III discrete rigidity</a>
         </div>
       </section>
 
