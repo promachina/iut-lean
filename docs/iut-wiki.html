@@ -808,6 +808,7 @@
         <a href="#alien-theta-function-rigidity-343">Alien theta rigidity 3.4(iii)</a>
         <a href="#alien-mono-theta-environments-344">Alien mono-theta env 3.4(iv)</a>
         <a href="#alien-cyclotomic-rigidity-taxonomy-345">Alien rigidity taxonomy 3.4(v)</a>
+        <a href="#alien-frobenioid-use-35">Alien Frobenioid use 3.5</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
         <a href="#iut-i-base-bridges-evaluation-sections">Base bridges/evaluation sections</a>
         <a href="#iut-i-additive-base-bridges-61-610">Additive base bridges 6.1-6.10</a>
@@ -16642,6 +16643,53 @@
           Related: <a href="#mono-theta-vs-mlf-rigidity-221">mono-theta vs MLF rigidity</a>
           <a href="#theta-monoid-multiradiality-iii22">theta monoid multiradiality</a>
           <a href="#alien-kummer-decoupling-34">Kummer decoupling overview</a>
+        </div>
+      </section>
+
+      <section id="alien-frobenioid-use-35" data-filter="mutually alien copies 3.5 remarks use Frobenioids model Frobenioids archimedean nonarchimedean global tempered theta monoids mono theta environments">
+        <h2>Alien Copies 3.5: Use of Frobenioids</h2>
+        <p class="lede">
+          Section 3.5 narrows the role of Frobenioids in IUT. Mochizuki says the
+          Frobenioid papers were not written as an optimally efficient extraction of just
+          the pieces later used in IUT. For the wiki, this means Frobenioids should be
+          routed to the specific IUT packages they support, not treated as an unlimited
+          prerequisite swamp.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Frobenioid class</th><th>IUT use in §3.5</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>Archimedean Frobenioids</td>
+            <td>Essentially equivalent to <span class="math">O_C^triangleright</span>, the monoid of nonzero complex numbers of norm <span class="math">&lt;=1</span>.</td>
+            <td>Can be mostly ignored at the level of this route.</td>
+          </tr>
+          <tr>
+            <td>Nonarchimedean model Frobenioids</td>
+            <td>Equivalent to data such as <span class="math">G_k acts O_k^triangleright</span>, <span class="math">Pi_X acts O_k^triangleright</span>, or subquotients.</td>
+            <td>Track the underlying ind-topological monoid/action rather than invoking general Frobenioid theory everywhere.</td>
+          </tr>
+          <tr>
+            <td>Global Frobenioids</td>
+            <td>Categories of arithmetic line bundles on number fields, possibly realified.</td>
+            <td>Important because Picard groups have non-torsion elements and arithmetic degrees can be nonzero.</td>
+          </tr>
+          <tr>
+            <td>Tempered Frobenioids</td>
+            <td>Used through theta monoids and mono-theta environments.</td>
+            <td>The needed pieces are the data <span class="math">(a_{t-F})</span> and <span class="math">(b_{t-F})</span>, not all of EtTh §3-§5.</td>
+          </tr>
+        </table>
+        <p>
+          The key practical conclusion is explicit: for IUT study, one may either
+          accept the construction of theta monoids and mono-theta environments as a
+          supplied construction or reconstruct them from the scheme-theoretic objects of
+          Etale Theta Functions §1-§2. This should prevent the wiki from over-indexing
+          on general Frobenioid theory where IUT only uses a smaller interface.
+        </p>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.5</a>
+          Related: <a href="#frobenioid-category-packaging-ii38-page">Frobenioid category packaging</a>
+          <a href="#alien-mono-theta-environments-344">mono-theta environments</a>
+          <a href="#theta-monoid-multiradiality-iii22">theta monoid multiradiality</a>
         </div>
       </section>
 
