@@ -633,6 +633,10 @@
       table.operationTable4 td:nth-child(2)::before { content: "Elementary effect"; }
       table.operationTable4 td:nth-child(3)::before { content: "Geometric reading"; }
       table.operationTable4 td:nth-child(4)::before { content: "IUT use"; }
+      table.readingMapTable td:nth-child(1)::before { content: "Pass"; }
+      table.readingMapTable td:nth-child(2)::before { content: "Theme"; }
+      table.readingMapTable td:nth-child(3)::before { content: "Sources"; }
+      table.readingMapTable td:nth-child(4)::before { content: "Goal"; }
       table.auditTable3 td:nth-child(1)::before { content: "Theme"; }
       table.auditTable3 td:nth-child(2)::before { content: "Audit reading"; }
       table.auditTable3 td:nth-child(3)::before { content: "Formal source"; }
@@ -707,6 +711,9 @@
         <a href="#frobenioid-standard-model-page">Frobenioid standard model</a>
         <a href="#frobenioid-reconstruction-page">Frobenioid reconstruction</a>
         <a href="#frobenioid-operations-page">Frobenioid operations</a>
+        <a href="#etale-theta-mono-environment-page">Etale theta mono-env</a>
+        <a href="#etale-theta-rigidity-triad-page">Etale theta rigidity</a>
+        <a href="#etale-theta-bi-kummer-page">Bi-Kummer theory</a>
         <a href="#invitation-expanded-route">Invitation route</a>
         <a href="#panoramic-route">Panoramic route</a>
         <a href="#bogomolov-szpiro-analogy">Bogomolov-Szpiro analogy</a>
@@ -1583,7 +1590,7 @@
           understand why alien copies and separated structures are introduced; then read
           the four IUT papers with the route map below in mind.
         </p>
-        <table>
+        <table class="sourceTable4 readingMapTable">
           <tr><th>Pass</th><th>Theme</th><th>Primary local sources</th><th>Goal</th></tr>
           <tr>
             <td>1</td>
@@ -1959,6 +1966,146 @@
           Related: <a href="#global-realified-cmod-iut-i35">global Cmod realification</a>
           <a href="#theta-value-indeterminacy-iut-i32">theta-value birationalization</a>
           <a href="#d-side-global-constants-realifications-ii45">D-side realifications</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-mono-environment-page" data-filter="etale theta mono theta environment kummer theoretic theta trivialization tempered fundamental group frobenioid bridge">
+        <h2>Etale Theta Mono-Environment</h2>
+        <p class="lede">
+          The etale-theta paper introduces a mono-theta environment as a
+          Kummer-theoretic version of the classical theta trivialization on a Tate
+          curve. It is designed as a common bridge between the tempered etale
+          fundamental-group route and the tempered Frobenioid route to the etale theta
+          function.
+        </p>
+        <div class="diagram fit" aria-label="Mono-theta environment as bridge">
+          <div class="diagramHeader">
+            <strong>Common core for two theta routes</strong>
+            <span>Etale Theta, Introduction and Definition 2.13</span>
+          </div>
+          <svg viewBox="0 0 1040 410" role="img">
+            <defs>
+              <marker id="arrowEtThetaMono" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="74" width="240" height="88"></rect>
+            <text class="nodeTitle" x="190" y="106" text-anchor="middle">tempered etale route</text>
+            <text class="tinyText" x="190" y="130" text-anchor="middle">tempered fundamental group</text>
+            <text class="tinyText" x="190" y="148" text-anchor="middle">Kummer class of theta</text>
+
+            <rect class="nodeBox gold" x="400" y="74" width="240" height="88"></rect>
+            <text class="nodeTitle" x="520" y="106" text-anchor="middle">mono-theta environment</text>
+            <text class="tinyText" x="520" y="130" text-anchor="middle">Kummer-theoretic theta trivialization</text>
+            <text class="tinyText" x="520" y="148" text-anchor="middle">common bridge object</text>
+
+            <rect class="nodeBox green" x="730" y="74" width="240" height="88"></rect>
+            <text class="nodeTitle" x="850" y="106" text-anchor="middle">tempered Frobenioid route</text>
+            <text class="tinyText" x="850" y="130" text-anchor="middle">extension by line bundles</text>
+            <text class="tinyText" x="850" y="148" text-anchor="middle">Frobenioid-theoretic theta</text>
+
+            <rect class="nodeBox violet" x="240" y="268" width="240" height="84"></rect>
+            <text class="nodeTitle" x="360" y="298" text-anchor="middle">group invariant</text>
+            <text class="tinyText" x="360" y="322" text-anchor="middle">Corollary 2.18</text>
+            <text class="tinyText" x="360" y="340" text-anchor="middle">tempered group constructible</text>
+
+            <rect class="nodeBox red" x="560" y="268" width="240" height="84"></rect>
+            <text class="nodeTitle" x="680" y="298" text-anchor="middle">Frobenioid invariant</text>
+            <text class="tinyText" x="680" y="322" text-anchor="middle">Theorem 5.10(iii)</text>
+            <text class="tinyText" x="680" y="340" text-anchor="middle">associated to tempered Frobenioid</text>
+
+            <path class="edge blue" d="M312 118 H398" marker-end="url(#arrowEtThetaMono)"></path>
+            <path class="edge green" d="M642 118 H728" marker-end="url(#arrowEtThetaMono)"></path>
+            <path class="edge violet" d="M520 164 C470 220 400 244 368 266" marker-end="url(#arrowEtThetaMono)"></path>
+            <path class="edge red" d="M520 164 C575 220 645 244 672 266" marker-end="url(#arrowEtThetaMono)"></path>
+          </svg>
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">Etale Theta, Introduction and Definition 2.13</a>
+          Related: <a href="#etale-theta-standard-type-ii14">IUT II standard type</a>
+          <a href="#mono-theta-environments-ii11">mono-theta environments</a>
+          <a href="#frobenioid-standard-model-page">Frobenioid standard model</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-rigidity-triad-page" data-filter="etale theta rigidity cyclotomic discrete constant multiple mono theta environment commutator first power">
+        <h2>Etale Theta Rigidity Triad</h2>
+        <p class="lede">
+          The mono-theta environment is important because it satisfies three rigidity
+          properties: cyclotomic rigidity, discrete rigidity, and constant-multiple
+          rigidity. Mochizuki stresses that the cyclotomic rigidity depends on the
+          first-power theta class and fails in the same form for higher powers.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Rigidity</th><th>Source reading</th><th>Why it matters later</th></tr>
+          <tr>
+            <td>Cyclotomic rigidity</td>
+            <td>Identifies the relevant cyclotome through the theta class and a commutator computation.</td>
+            <td>Controls cyclotomic identifications in theta/Kummer transport.</td>
+          </tr>
+          <tr>
+            <td>Discrete rigidity</td>
+            <td>Keeps the integral/discrete structure visible in the mono-theta package.</td>
+            <td>Prevents replacing the package by a purely profinite flat object.</td>
+          </tr>
+          <tr>
+            <td>Constant-multiple rigidity</td>
+            <td>Controls multiplication of theta data by constants without arbitrary choices.</td>
+            <td>Feeds IUT II constant-multiple rigidity and theta-monoid comparison.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Source warning: the paper says the cyclotomic rigidity mechanism fails in the
+          same form for an <span class="math">M</span>-th power of the
+          <span class="math">l</span>-th root of theta when <span class="math">M > 1</span>.
+          The wiki should therefore keep “first-power theta class” visible whenever this
+          rigidity is cited.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">Etale Theta, Corollary 2.19 and Remark 2.19.2</a>
+          Related: <a href="#etale-theta-mono-environment-page">mono-theta environment</a>
+          <a href="#constant-multiple-rigidity-ii112">constant-multiple rigidity</a>
+          <a href="#theta-monoid-multiradiality-iii22">theta monoid multiradiality</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-bi-kummer-page" data-filter="bi kummer theory etale theta numerator denominator pair sections line bundle frobenioid mono theta bi theta">
+        <h2>Bi-Kummer Theory</h2>
+        <p class="lede">
+          Section 4 of the etale-theta paper develops bi-Kummer theory: a
+          category-theoretic generalization of the Kummer class of a rational function
+          to Kummer data attached to a pair of sections, interpreted as numerator and
+          denominator of a rational function. Section 5 then specializes this to the
+          etale theta function.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Rational function pattern</strong>
+            <p>Ordinary Kummer theory attaches a class to a rational function.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Pair of sections</strong>
+            <p>Bi-Kummer data uses numerator and denominator sections of a line bundle.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Tempered Frobenioid</strong>
+            <p>The construction is formulated for the Frobenioid-theoretic setting.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Etale theta specialization</strong>
+            <p>The theta function becomes accessible through this categorical Kummer route.</p>
+          </div>
+        </div>
+        <div class="callout">
+          This page is a preparatory dependency page. The later IUT II pages record the
+          specific theta and Gaussian monoids; this page records the underlying
+          Kummer-theoretic construction principle.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">Etale Theta, §§4-5</a>
+          Related: <a href="#frobenioid-theta-monoids-example-ii32-page">Frobenioid theta monoids</a>
+          <a href="#iut-ii-kummer-evaluation-square-intro">Kummer evaluation square</a>
+          <a href="#etale-theta-rigidity-triad-page">etale theta rigidity</a>
         </div>
       </section>
 
