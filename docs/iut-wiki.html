@@ -897,10 +897,14 @@
         <a class="subLink" href="#kappa-sol-automorphisms-iut-i317">Kappa-sol automorphisms 3.1.7</a>
         <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
         <a href="#bad-nonarch-frobenioids-32">Bad nonarch Frobenioids 3.2</a>
-        <a href="#bad-frobenioid-base-category-iut-i32">Bad-place base category 3.2</a>
-        <a href="#theta-value-indeterminacy-iut-i32">Theta value indeterminacy 3.2</a>
-        <a href="#bad-split-frobenioids-iut-i32">Bad split Frobenioids 3.2</a>
-        <a href="#bad-frobenioid-reconstruction-iut-i32">Bad Frobenioid reconstruction 3.2</a>
+        <a class="subLink" href="#bad-frobenioid-base-category-iut-i32">Bad-place base category 3.2</a>
+        <a class="subLink" href="#bad-base-field-hull-iut-i32">Base-field hull 3.2(iii)</a>
+        <a class="subLink" href="#theta-value-indeterminacy-iut-i32">Theta value indeterminacy 3.2</a>
+        <a class="subLink" href="#bad-split-frobenioids-iut-i32">Bad split Frobenioids 3.2</a>
+        <a class="subLink" href="#bad-q-monoid-primitivity-iut-i322">q-monoid primitivity 3.2.2</a>
+        <a class="subLink" href="#theta-conjugate-split-frobenioids-iut-i323">Theta conjugates 3.2.3</a>
+        <a class="subLink" href="#bad-frobenioid-reconstruction-iut-i32">Bad Frobenioid reconstruction 3.2</a>
+        <a class="subLink" href="#tempered-meromorphic-correction-iut-i324">Tempered-meromorphic correction 3.2.4</a>
         <a href="#good-arch-frobenioids-33-34">Good/arch Frobenioids 3.3-3.4</a>
         <a href="#good-nonarch-base-frobenioids-iut-i33">Good base Frobenioids 3.3</a>
         <a href="#good-formal-theta-frobenioids-iut-i33">Good formal theta 3.3</a>
@@ -15170,7 +15174,7 @@
             <path class="edge violet" d="M772 352 H882" marker-end="url(#arrowBadFrob32)"></path>
           </svg>
         </div>
-        <table>
+        <table class="sourceTable3">
           <tr><th>Source item</th><th>Construction</th><th>Reason to keep separate</th></tr>
           <tr>
             <td>Example 3.2(i)</td>
@@ -15233,6 +15237,10 @@
           Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 3.2</a>
           Related: <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
           <a href="#theta-approach-abs-top-319">theta approach</a>
+          <a href="#bad-base-field-hull-iut-i32">base-field hull</a>
+          <a href="#bad-q-monoid-primitivity-iut-i322">q-monoid primitivity</a>
+          <a href="#theta-conjugate-split-frobenioids-iut-i323">theta conjugates</a>
+          <a href="#tempered-meromorphic-correction-iut-i324">tempered correction</a>
           <a href="#global-realified-theater-35-36">global realified theater</a>
         </div>
       </section>
@@ -15289,7 +15297,7 @@
             <path class="edge violet" d="M845 164 C812 224 724 252 692 280" marker-end="url(#arrowBadBaseI32)"></path>
           </svg>
         </div>
-        <table>
+        <table class="sourceTable3">
           <tr><th>Component</th><th>Example 3.2(i) role</th><th>Formalization guardrail</th></tr>
           <tr>
             <td><span class="math">F_v</span></td>
@@ -15312,6 +15320,41 @@
           Related: <a href="#bad-nonarch-frobenioids-32">bad nonarch Frobenioids</a>
           <a href="#theta-value-indeterminacy-iut-i32">theta value indeterminacy</a>
           <a href="#tempered-covering-complements">tempered covering complements</a>
+        </div>
+      </section>
+
+      <section id="bad-base-field-hull-iut-i32" data-filter="iut i example 3.2 iii base field theoretic hull cbs fld cv p-adic frobenioid category reconstruction">
+        <h2>Bad-Place Base-Field Hull</h2>
+        <p class="lede">
+          Example 3.2(iii) isolates the p-adic Frobenioid
+          <span class="math">C_v</span> inside the tempered Frobenioid
+          <span class="math">F_v</span>. Mochizuki identifies it with the
+          base-field-theoretic hull from EtTh and records that it is reconstructible
+          category-theoretically from <span class="math">F_v</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Component</th><th>Source role</th><th>Why it matters</th></tr>
+          <tr>
+            <td><span class="math">C_v subset F_v</span></td>
+            <td>The p-adic Frobenioid constituted by the base-field-theoretic hull, denoted <span class="math">Cbs-fld</span> in EtTh.</td>
+            <td>It bridges the tempered curve Frobenioid to the field-side divisor monoid used in the q-normalized construction.</td>
+          </tr>
+          <tr>
+            <td>Category-theoretic reconstruction</td>
+            <td>EtTh Corollary 3.8(ii) and Proposition 5.1 are cited for reconstructing <span class="math">C_v</span> from <span class="math">F_v</span>.</td>
+            <td>The hull is not an arbitrary local object; it is intrinsic to the bad-place Frobenioid package.</td>
+          </tr>
+          <tr>
+            <td>Downstream use</td>
+            <td>The divisor monoid <span class="math">Phi_{C_v}</span> receives the image of <span class="math">q_v^(1/2ell)</span>.</td>
+            <td>This prepares the split Frobenioid <span class="math">C_v^⊢</span> and its characteristic splittings.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Example 3.2(iii)</a>
+          Related: <a href="#bad-frobenioid-base-category-iut-i32">base category</a>
+          <a href="#bad-split-frobenioids-iut-i32">bad split Frobenioids</a>
+          <a href="#bad-frobenioid-reconstruction-iut-i32">reconstruction</a>
         </div>
       </section>
 
@@ -15432,7 +15475,7 @@
             <path class="edge red" d="M520 164 C550 224 640 252 682 284" marker-end="url(#arrowBadSplitI32)"></path>
           </svg>
         </div>
-        <table>
+        <table class="sourceTable3">
           <tr><th>Side</th><th>Construction</th><th>Meaning</th></tr>
           <tr>
             <td>q-normalized side</td>
@@ -15453,8 +15496,91 @@
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Example 3.2(iv)-(v)</a>
           Related: <a href="#theta-value-indeterminacy-iut-i32">theta value indeterminacy</a>
+          <a href="#bad-q-monoid-primitivity-iut-i322">q-monoid primitivity</a>
+          <a href="#theta-conjugate-split-frobenioids-iut-i323">theta conjugates</a>
           <a href="#bad-frobenioid-reconstruction-iut-i32">bad Frobenioid reconstruction</a>
           <a href="#global-realified-theater-35-36">global realified theater</a>
+        </div>
+      </section>
+
+      <section id="bad-q-monoid-primitivity-iut-i322" data-filter="iut i remark 3.2.2 q parameter divisor monoid phi c bottom absolute primitive characteristic splitting tau">
+        <h2>Bad-Place q-Monoid and Near Primitivity</h2>
+        <p class="lede">
+          Example 3.2(iv) turns the Tate parameter into a divisor-monoid generator.
+          Remark 3.2.2 then records a technical qualification: the resulting submonoid
+          is not absolutely primitive in the strict FrdII sense, but a positive multiple
+          is absolutely primitive, and the characteristic splitting reflects this
+          near-primitivity.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Step</th><th>Source content</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>Root of the q-parameter</td>
+            <td>The assumptions on 2-torsion and the definition of <span class="math">K</span> imply that <span class="math">q_v</span> admits a <span class="math">2ell</span>-th root in <span class="math">O^triangleright(TX_v)</span>.</td>
+            <td>The normalized generator is part of the initial-theta-data arithmetic, not a free choice.</td>
+          </tr>
+          <tr>
+            <td>Theta value at <span class="math">-q_v</span></td>
+            <td>The final formula of EtTh Proposition 1.4(ii) gives <span class="math">Theta_v(-q_v)=q_v^(1/2ell)</span>, up to a <span class="math">mu_2ell</span>-multiple.</td>
+            <td>This is the source equality connecting theta-function data to the Tate parameter.</td>
+          </tr>
+          <tr>
+            <td>Divisor submonoid</td>
+            <td>The image of <span class="math">q_v^(1/2ell)</span> determines the constant section <span class="math">log_Phi(q_v)</span> and the submonoid <span class="math">Phi_{C_v^⊢}=N log_Phi(q_v)|D_v^⊢</span>.</td>
+            <td>This is the generator of the q-normalized split Frobenioid.</td>
+          </tr>
+          <tr>
+            <td>Near absolute primitiveness</td>
+            <td>Remark 3.2.2 says <span class="math">Phi_{C_v^⊢}</span> is not absolutely primitive, but some positive multiple is.</td>
+            <td>The wiki should not silently replace near-primitivity by strict primitiveness.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Example 3.2(iv), Remark 3.2.2</a>
+          Related: <a href="#bad-split-frobenioids-iut-i32">bad split Frobenioids</a>
+          <a href="#theta-value-indeterminacy-iut-i32">theta value</a>
+          <a href="#bad-base-field-hull-iut-i32">base-field hull</a>
+        </div>
+      </section>
+
+      <section id="theta-conjugate-split-frobenioids-iut-i323" data-filter="iut i remark 3.2.3 theta conjugate automorphism yv split frobenioid linear morphism pullback roots">
+        <h2>Theta-Conjugate Split Frobenioids</h2>
+        <p class="lede">
+          Remark 3.2.3 explains how the <span class="math">ell Z</span>
+          indeterminacy in <span class="math">Theta_v</span> should be read at the
+          split-Frobenioid level. Automorphisms of the covering
+          <span class="math">Y_v</span> conjugate the theta function, but they also
+          induce canonical isomorphisms between the corresponding theta-side split
+          Frobenioids.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Mechanism</th><th>Source content</th><th>Use</th></tr>
+          <tr>
+            <td><span class="math">Aut_{D_v}(Y_v)</span></td>
+            <td>An automorphism <span class="math">alpha</span> of <span class="math">Y_v</span> induces an automorphism of the functor from <span class="math">D_v^⊢</span> through <span class="math">D_v^Theta</span> to <span class="math">D_v</span>.</td>
+            <td>This is the categorical form of the covering automorphism indeterminacy.</td>
+          </tr>
+          <tr>
+            <td>Conjugated theta monoid</td>
+            <td>The induced monoid isomorphism sends the theta-side monoid for <span class="math">Theta_v</span> to the one for the conjugate <span class="math">Theta_v^alpha</span>.</td>
+            <td>The theta-side split Frobenioid changes with the conjugated theta function in a controlled way.</td>
+          </tr>
+          <tr>
+            <td>Split-Frobenioid identification</td>
+            <td>Each <span class="math">alpha</span> induces an isomorphism <span class="math">F_v^Theta -> F_v^{Theta^alpha}</span> lying over the identity on <span class="math">D_v^Theta</span>.</td>
+            <td>This is what “regarded up to the <span class="math">ell Z</span> indeterminacy” means here.</td>
+          </tr>
+          <tr>
+            <td>Linear pullback</td>
+            <td>If <span class="math">psi : B -> T A</span> is linear in <span class="math">F_v</span>, it induces an injection <span class="math">O^x(T^div A) -> O^x(B^div)</span>.</td>
+            <td>This pullback is used when considering roots of <span class="math">Theta_v</span> in EtTh.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Remark 3.2.3</a>
+          Related: <a href="#theta-value-indeterminacy-iut-i32">theta indeterminacy</a>
+          <a href="#bad-split-frobenioids-iut-i32">bad split Frobenioids</a>
+          <a href="#tempered-meromorphic-correction-iut-i324">tempered-meromorphic correction</a>
         </div>
       </section>
 
@@ -15509,7 +15635,7 @@
             <path class="edge red" d="M849 164 C812 224 744 252 712 284" marker-end="url(#arrowBadReconI32)"></path>
           </svg>
         </div>
-        <table>
+        <table class="sourceTable3">
           <tr><th>Source note</th><th>Content</th><th>Wiki/formalization consequence</th></tr>
           <tr>
             <td>Example 3.2(vi)</td>
@@ -15531,7 +15657,72 @@
           Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Example 3.2(vi), Remarks 3.2.1-3.2.4</a>
           Related: <a href="#bad-split-frobenioids-iut-i32">bad split Frobenioids</a>
           <a href="#bad-frobenioid-base-category-iut-i32">bad-place base category</a>
+          <a href="#bad-base-field-hull-iut-i32">base-field hull</a>
+          <a href="#tempered-meromorphic-correction-iut-i324">tempered-meromorphic correction</a>
           <a href="#mono-anabelian-transport-page">mono-anabelian transport</a>
+        </div>
+      </section>
+
+      <section id="tempered-meromorphic-correction-iut-i324" data-filter="iut i remark 3.2.4 etth oversight log meromorphic tempered meromorphic roots log divisor condition a b c d phi ell w">
+        <h2>Tempered-Meromorphic Correction</h2>
+        <p class="lede">
+          Remark 3.2.4 records a correction to EtTh's terminology. The issue is the
+          gap between having a log-divisor and having all roots after passing to
+          tempered coverings. IUT I adopts the stronger interpretation, so later uses
+          of bad-place tempered Frobenioids rely on this corrected convention.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Condition</th><th>Source statement</th><th>Consequence</th></tr>
+          <tr>
+            <td>(a)</td>
+            <td>For every positive <span class="math">N</span>, the meromorphic function admits an <span class="math">N</span>-th root over some tempered covering.</td>
+            <td>This is the strong condition needed in the proof of EtTh Proposition 4.2(iii).</td>
+          </tr>
+          <tr>
+            <td>(b)</td>
+            <td>The same root-existence condition only for <span class="math">N</span> prime to the residue characteristic <span class="math">p</span>.</td>
+            <td>It is equivalent to the log-divisor condition below, but weaker than (a) in the unresolved direction.</td>
+          </tr>
+          <tr>
+            <td>(c)</td>
+            <td>The divisor of zeros and poles is a log-divisor.</td>
+            <td>The source proves <span class="math">(a) => (b) <=> (c)</span>, but says it is unclear whether <span class="math">(c)</span> implies <span class="math">(a)</span>.</td>
+          </tr>
+          <tr>
+            <td>Theta functions</td>
+            <td>The theta function used in EtTh satisfies condition (a).</td>
+            <td>The correction does not remove the theta functions needed for IUT.</td>
+          </tr>
+        </table>
+        <table class="sourceTable3">
+          <tr><th>Remedy</th><th>Source content</th><th>IUT convention</th></tr>
+          <tr>
+            <td>Approach A</td>
+            <td>Modify the definition of log-meromorphic functions to require condition (a), better called tempered-meromorphic.</td>
+            <td>IUT I adopts this approach for simplicity, so arbitrary rational functions in the corrected tempered Frobenioid have the needed Kummer theory.</td>
+          </tr>
+          <tr>
+            <td>Approach B</td>
+            <td>Keep the old tempered Frobenioid definition but add a Frobenioid-theoretic root condition (d): after a linear morphism pullback, every positive root exists.</td>
+            <td>This also suffices for theta functions, but narrows the range of EtTh §4 rather than changing the definition.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Phi_W^ell</span> adjustments</td>
+            <td>Remark 3.2.4(vi) lists small textual corrections concerning cusp conditions, the displayed lower arrow, and tempered admissible coverings.</td>
+            <td>The intended monoid is just large enough to include precisely the divisors needed for the EtTh theta functions.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Formalization guardrail: a Lean interface for this part should not expose a
+          generic "log-meromorphic" assumption without specifying whether it is the
+          corrected tempered-meromorphic condition (A) or the Frobenioid-theoretic
+          pullback condition (B).
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Remark 3.2.4</a>
+          Related: <a href="#bad-frobenioid-reconstruction-iut-i32">bad Frobenioid reconstruction</a>
+          <a href="#theta-conjugate-split-frobenioids-iut-i323">theta conjugates</a>
+          <a href="#bad-nonarch-frobenioids-32">bad nonarch Frobenioids</a>
         </div>
       </section>
 
