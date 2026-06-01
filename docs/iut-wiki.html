@@ -1250,6 +1250,9 @@
         <a href="#metric-analogy-3123">Metric analogy 3.12.3</a>
         <a href="#padic-teich-analogy-3124">p-adic Teich analogy 3.12.4</a>
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
+        <a href="#pajo-scale-free-no-go-page">Pajo scale-free no-go</a>
+        <a href="#higuchi-step-xif-no-go-page">Higuchi Step (xi-f)</a>
+        <a href="#dupuy-hilado-initial-theta-page">Dupuy-Hilado initial theta</a>
         <a href="#iut-iv-local-log-volume-estimates-11-15">IUT IV local estimates 1.1-1.5</a>
         <a href="#iut-iv-proposition-11-tensor-differents">Prop. 1.1 tensor/differents</a>
         <a href="#iut-iv-proposition-12-logarithm-differents">Prop. 1.2 log/differents</a>
@@ -51352,6 +51355,187 @@
           Related: <a href="#corollary-312">Corollary 3.12 corridor</a>
           <a href="#formalization">formalization</a>
           <a href="#iut-iv">IUT IV consequences</a>
+        </div>
+      </section>
+
+      <section id="pajo-scale-free-no-go-page" data-filter="pajo scale-free common container no-go theorem monoid hull log-volume numerical inequality bridge certificate rescaling countermodel">
+        <h2>Pajo Scale-Free No-Go</h2>
+        <p class="lede">
+          Pajo's 2026 note studies a deliberately weak abstraction of a common-container
+          comparison near the Theorem 3.11 to Corollary 3.12 bridge. The abstraction has
+          typed log-volume domains, monoid and hull data, common-container embeddings,
+          a container comparison certificate, and numerical evaluation maps, but it
+          excludes a scale-retaining bridge certificate.
+        </p>
+        <div class="diagram fit" aria-label="Pajo scale-free no-go abstraction">
+          <div class="diagramHeader">
+            <strong>Scale-free abstraction is too weak</strong>
+            <span>Pajo 2026</span>
+          </div>
+          <svg viewBox="0 0 1040 420" role="img">
+            <defs>
+              <marker id="arrowPajoNoGo" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="72" y="82" width="210" height="82"></rect>
+            <text class="nodeTitle" x="177" y="112" text-anchor="middle">q-domain</text>
+            <text class="tinyText" x="177" y="136" text-anchor="middle">monoid, hull, log-volume</text>
+            <text class="tinyText" x="177" y="154" text-anchor="middle">typed numerical map</text>
+
+            <rect class="nodeBox green" x="414" y="82" width="210" height="82"></rect>
+            <text class="nodeTitle" x="519" y="112" text-anchor="middle">common container</text>
+            <text class="tinyText" x="519" y="136" text-anchor="middle">embeddings and comparison</text>
+            <text class="tinyText" x="519" y="154" text-anchor="middle">scale-free certificate</text>
+
+            <rect class="nodeBox red" x="756" y="82" width="210" height="82"></rect>
+            <text class="nodeTitle" x="861" y="112" text-anchor="middle">Theta-domain</text>
+            <text class="tinyText" x="861" y="136" text-anchor="middle">monoid, hull, log-volume</text>
+            <text class="tinyText" x="861" y="154" text-anchor="middle">typed numerical map</text>
+
+            <rect class="nodeBox gold" x="312" y="280" width="250" height="80"></rect>
+            <text class="nodeTitle" x="437" y="310" text-anchor="middle">rescaling countermodel</text>
+            <text class="tinyText" x="437" y="334" text-anchor="middle">container comparison holds</text>
+            <text class="tinyText" x="437" y="352" text-anchor="middle">ordered-real inequality fails</text>
+
+            <rect class="nodeBox violet" x="632" y="280" width="250" height="80"></rect>
+            <text class="nodeTitle" x="757" y="310" text-anchor="middle">escape hatches</text>
+            <text class="tinyText" x="757" y="334" text-anchor="middle">chart, transport, relation,</text>
+            <text class="tinyText" x="757" y="352" text-anchor="middle">interval, sandwich, calibration</text>
+
+            <path class="edge blue" d="M284 123 H412" marker-end="url(#arrowPajoNoGo)"></path>
+            <path class="edge green" d="M626 123 H754" marker-end="url(#arrowPajoNoGo)"></path>
+            <path class="edge red" d="M519 166 C494 222 462 246 442 278" marker-end="url(#arrowPajoNoGo)"></path>
+            <path class="edge violet" d="M519 166 C594 222 690 246 744 278" marker-end="url(#arrowPajoNoGo)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Component</th><th>Diagnostic content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Scale-free MHL abstraction</td>
+            <td>Common-container, monoid, hull, and log-volume data are present, but no numerical bridge is included.</td>
+            <td>Do not infer ordered-real inequalities from container comparison alone.</td>
+          </tr>
+          <tr>
+            <td>Countermodel</td>
+            <td>Relative rescaling preserves the container comparison while reversing the desired numerical inequality.</td>
+            <td>A formalization must explicitly retain or reconstruct scale data.</td>
+          </tr>
+          <tr>
+            <td>Bridge certificates</td>
+            <td>Charts, scale-preserving transport, certified relations, interval/sandwich bounds, normalized valuations, or calibration can defeat the model.</td>
+            <td>Use this page as a checklist for proposed 3.12 bridge interfaces.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Scope: Pajo's theorem is a no-go result for a deliberately weak abstraction. It
+          is not a theorem about actual Hodge theaters, Frobenioids, theta links, or the
+          full multiradial algorithm.
+        </div>
+        <div class="related">
+          Source: <a href="papers/pajo-scale-free-common-container-comparisons.pdf" target="_blank">Pajo 2026</a>
+          Related: <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
+          <a href="#leanform-common-container-page">LeanForm common container</a>
+          <a href="#higuchi-step-xif-no-go-page">Higuchi Step (xi-f)</a>
+        </div>
+      </section>
+
+      <section id="higuchi-step-xif-no-go-page" data-filter="higuchi formal negative result step xi-e xi-f corollary 3.12 qualitative package IPL SHE APT closed half-line bridge axiom">
+        <h2>Higuchi Step (xi-f) Diagnostic</h2>
+        <p class="lede">
+          Higuchi's 2026 note isolates a formal implication from the qualitative package
+          of IPL, SHE, APT, common-container cohabitation, and closed-half-line output
+          data to the membership statement used at Step (xi-f) of Corollary 3.12. The
+          result is negative: without a separate numerical bridge axiom, the membership
+          statement is not a logical consequence.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Qualitative package</strong>
+            <p>Input and output share an abstract label and live in the same common container.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Closed upper ray</strong>
+            <p>The output hull has log-volume image shaped as a closed half-line.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Missing bridge</strong>
+            <p>The input real value need not lie in that half-line without an additional axiom.</p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Item</th><th>Formal role</th><th>Audit rule</th></tr>
+          <tr>
+            <td>Single-step qualitative package</td>
+            <td>Abstract labels, common container, hull operator, log-volume map, and output half-line.</td>
+            <td>Useful only as a lower-bound interface; it is not enough for the inequality.</td>
+          </tr>
+          <tr>
+            <td>Countermodel</td>
+            <td>All objects have the same abstract label, but the input real value is above the output upper ray.</td>
+            <td>Abstract cohabitation does not force numerical membership.</td>
+          </tr>
+          <tr>
+            <td>Approximation lemma</td>
+            <td>For a closed half-line, approximate realization from below is equivalent to exact membership.</td>
+            <td>Approximation language cannot be used as a weaker substitute for the bridge.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Scope: Higuchi does not claim to disprove IUT. The result says that a specified
+          qualitative extraction of Step (xi) is insufficient unless the missing numerical
+          bridge is supplied elsewhere.
+        </div>
+        <div class="related">
+          Source: <a href="papers/higuchi-formal-negative-result-step-xi.pdf" target="_blank">Higuchi 2026</a>
+          Related: <a href="#membership-step-xif-312">3.12 Step (xi-f)</a>
+          <a href="#ipl-she-apt-source-311">IPL/SHE/APT source</a>
+          <a href="#pajo-scale-free-no-go-page">Pajo scale-free no-go</a>
+        </div>
+      </section>
+
+      <section id="dupuy-hilado-initial-theta-page" data-filter="dupuy hilado initial theta data corollary 3.12 pre theta data computability elliptic curve 11a1 cremona label">
+        <h2>Dupuy-Hilado Initial Theta Data</h2>
+        <p class="lede">
+          Dupuy and Hilado unpack Mochizuki's initial theta data and show how to
+          construct examples from elliptic curves over Q. Their paper is upstream of
+          the disputed 3.12 bridge: it concerns the hypothesis environment in which
+          Corollary 3.12 is stated, not the proof of the multiradial comparison itself.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Layer</th><th>Paper content</th><th>Wiki use</th></tr>
+          <tr>
+            <td>Pre-theta data</td>
+            <td>A number field, prime, elliptic curve, and set of bad-reduction places satisfying source conditions.</td>
+            <td>Clarifies the input side before Hodge-theater construction.</td>
+          </tr>
+          <tr>
+            <td>Auxiliary data</td>
+            <td>Additional choices involving torsion fields, valuations, and a simplified replacement for the orbicurve cusp package.</td>
+            <td>Useful for explicit examples and for separating input computability from proof comparison.</td>
+          </tr>
+          <tr>
+            <td>Cremona 11a1 example</td>
+            <td>The paper constructs initial theta data for the elliptic curve labeled 11a1.</td>
+            <td>Provides a concrete test case for any future formal input-data API.</td>
+          </tr>
+          <tr>
+            <td>Algorithmic output</td>
+            <td>The paper supplies Sage-style algorithms for generating candidate data and discusses open-image conditions.</td>
+            <td>Potential source for executable input generation, separate from Lean proof obligations.</td>
+          </tr>
+        </table>
+        <div class="callout green">
+          Formalization use: this page should feed an "initial theta data constructor"
+          layer. It should not be treated as evidence that Theorem 3.11 or Corollary
+          3.12 has been established.
+        </div>
+        <div class="related">
+          Source: <a href="papers/dupuy-hilado-corollary-312-initial-theta-indeterminacies.pdf" target="_blank">Dupuy-Hilado initial theta data</a>
+          Related: <a href="#initial-theta-data">initial theta data</a>
+          <a href="#initial-theta-field-moduli-iut-i31">IUT I initial theta field/moduli</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+          <a href="#probabilistic-szpiro">probabilistic Szpiro</a>
         </div>
       </section>
 
