@@ -1419,6 +1419,7 @@
         <a href="#packet-field-decomposition-31">Packet field decomposition</a>
         <a href="#packet-integral-structure-31">Packet integral structures</a>
         <a href="#weighted-volume-caution-311">Weighted-volume caution 3.1.1</a>
+        <a href="#direct-product-weighted-measure-311">E-weighted measure 3.1.1</a>
         <a href="#mono-analytic-packet-compatibility-32">Mono-analytic packets 3.2</a>
         <a href="#global-packet-localization-33">Global packet localization 3.3</a>
         <a href="#local-lgp-monoids-iii34">Local LGP monoids 3.4</a>
@@ -49450,8 +49451,62 @@
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.1.1</a>
           Related: <a href="#packet-integral-structure-31">packet integral structures</a>
+          <a href="#direct-product-weighted-measure-311">E-weighted measure</a>
           <a href="#weighted-log-volume-measure">weighted log-volume measure</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="direct-product-weighted-measure-311" data-filter="iut iii remark 3.1.1 direct product region pre region e weighted measure borel sets tensor packet log volume">
+        <h2>IUT III Remark 3.1.1(iii)-(iv): Direct-Product Regions and E-Weighted Measure</h2>
+        <p class="lede">
+          Remark 3.1.1(iii)-(iv) separates two issues. The regions actually used in
+          the later theory are direct product pre-regions or regions, for which the
+          weighted sum of log-volumes is straightforward. Nevertheless, Mochizuki also
+          gives an elementary construction of an <span class="math">E</span>-weighted
+          measure for arbitrary Borel subsets, so the weighted convention is not
+          merely a heuristic for rectangular boxes.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Source object</th><th>Definition in Remark 3.1.1</th><th>Use</th></tr>
+          <tr>
+            <td>Direct product region</td>
+            <td>A direct product of compact subsets of positive measure in each direct summand.</td>
+            <td>The primary clean case for later packet log-volume computations.</td>
+          </tr>
+          <tr>
+            <td>Direct product pre-region</td>
+            <td>A direct product of relatively compact subsets in each direct summand.</td>
+            <td>The flexible precursor to the compact positive-measure region case.</td>
+          </tr>
+          <tr>
+            <td><span class="math">(V,E,M)</span> data</td>
+            <td>A finite index set <span class="math">V</span>, finite fibers <span class="math">E_v</span>, and measure spaces <span class="math">M_v</span>.</td>
+            <td>Encodes the local degree multiplicities used in the packet normalization.</td>
+          </tr>
+          <tr>
+            <td><span class="math">E</span>-weighted measure</td>
+            <td>For a Borel set <span class="math">S ⊆ M_V</span>, form the repeated-product set inside the constrained product <span class="math">M_{E*V}</span> and measure it there.</td>
+            <td>Extends the weighted construction beyond direct-product regions.</td>
+          </tr>
+          <tr>
+            <td>Direct product formula</td>
+            <td><span class="math">(1/N_E) log μ_E(S) = Σ_v (1/N_v) log μ_v(S_v)</span> when <span class="math">S = Π_v S_v</span>.</td>
+            <td>Shows that the abstract construction recovers the intended weighted log-volume sum in the source case.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          <strong>Formalization consequence.</strong> Region typing should distinguish
+          direct product regions, direct product pre-regions, and arbitrary Borel
+          subsets. The later IUT computations mostly use the first two, but the
+          weighted-measure construction explains how the normalization extends beyond
+          them without pretending to be an ordinary product-measure logarithm.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.1.1(iii)-(iv)</a>
+          Related: <a href="#weighted-volume-caution-311">weighted-volume caution</a>
+          <a href="#packet-integral-structure-31">packet integral structures</a>
+          <a href="#holomorphic-hull-formalism-iii395">holomorphic hull formalism</a>
         </div>
       </section>
 
