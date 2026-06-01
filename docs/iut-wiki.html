@@ -1303,6 +1303,10 @@
         <a href="#absolute-anabelian-mutation-35">Absolute anabelian mutation 3.5</a>
         <a href="#frobenius-etale-mutation-36">Frobenius/etale mutation 3.6</a>
         <a href="#iut-coric-noncoric-principle-361">Coric/non-coric principle 3.6</a>
+        <a href="#iut-iv-coric-noncoric-361">Coric describes non-coric 3.6.1</a>
+        <a href="#iut-iv-alien-algorithms-362">Alien algorithms 3.6.2</a>
+        <a href="#iut-iv-ring-incompatibility-363">Ring incompatibility 3.6.3</a>
+        <a href="#iut-iv-vertical-horizontal-galois-363">Vertical/horizontal Galois 3.6.3</a>
         <h2>Context</h2>
         <a href="#current-situation-reports">Current situation reports</a>
         <a href="#dispute">Scholze-Stix and responses</a>
@@ -56892,6 +56896,237 @@
           Related: <a href="#corollary-312">Corollary 3.12 corridor</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
           <a href="#collas-category-perspective">Collas category view</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-coric-noncoric-361" data-filter="iut iv remark 3.6.1 coric non-coric observables log-shells log-Kummer theorem 3.11 multiradial representations">
+        <h2>IUT IV Remark 3.6.1: Coric Descriptions of Non-Coric Data</h2>
+        <p class="lede">
+          Remark 3.6.1 says the Frobenius and monoid-Frobenius examples are not just
+          analogies. They are the motivating examples for the vertical log-link lines
+          and horizontal theta-type lines of the log-theta-lattice. The recurring
+          pattern is to describe non-coric data through coric data that remains
+          meaningful across mutation histories.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Content</th><th>Downstream target</th></tr>
+          <tr>
+            <td>Remark 3.6.1(i)</td>
+            <td>Etale-site and perfection invariance under Frobenius are read as coric observables; the Frobenius morphism itself is non-coric.</td>
+            <td>Model for Frobenius-like versus etale-like structure in IUT.</td>
+          </tr>
+          <tr>
+            <td>Vertical lines</td>
+            <td>Log-links in the log-theta-lattice are compared to the vertical Frobenius mutation-history pattern.</td>
+            <td><a href="#local-log-link-mechanism-iii11">IUT III log-link pages</a></td>
+          </tr>
+          <tr>
+            <td>Horizontal lines</td>
+            <td>The theta-type links are also read through the coric/non-coric observable distinction.</td>
+            <td><a href="#theta-link-frobenius-etale-pictures">theta-link pages</a></td>
+          </tr>
+          <tr>
+            <td>Log-Kummer correspondences</td>
+            <td>Vertically coric log-shells serve as a common receptacle for arrows of the log-Kummer correspondences in IUT III Theorem 3.11(ii).</td>
+            <td><a href="#theorem-311-log-kummer">Theorem 3.11 log-Kummer route</a></td>
+          </tr>
+          <tr>
+            <td>Multiradial representations</td>
+            <td>Theorem 3.11(i) describes aspects of one vertical line's arithmetic holomorphic structure from the viewpoint of another alien vertical line.</td>
+            <td><a href="#theorem-311-lgp-algorithms">Theorem 3.11 multiradial route</a></td>
+          </tr>
+        </table>
+        <div class="callout violet">
+          Formalization consequence: a theorem claiming a non-coric datum is described
+          by coric data must expose both sides. A single proposition saying "the data is
+          invariant" would erase the distinction made in the source.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Remark 3.6.1</a>
+          Related: <a href="#frobenius-etale-mutation-36">Frobenius/etale mutation</a>
+          <a href="#bi-cores-log-theta-lattice-iii15">bi-cores</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-alien-algorithms-362" data-filter="iut iv remark 3.6.2 alien universe set-theoretic formulas algorithms arbitrary choices cyclotomic rigidity">
+        <h2>IUT IV Remark 3.6.2: Algorithms Across Alien Universes</h2>
+        <p class="lede">
+          Remark 3.6.2 states a key methodological rule: arbitrary choices made inside
+          one set-theoretic model do not allow calculations in an alien universe. The
+          required descriptions must be given by set-theoretic formulas, or by
+          conventional mathematical descriptions that determine such formulas without
+          hidden arbitrary choices.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Alien operation</strong>
+            <p>
+              Vertical and horizontal arrows have distinct scheme-theoretic basepoints
+              corresponding to distinct ring theories.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Formula-defined algorithm</strong>
+            <p>
+              A specific algorithm, not merely the same final output data, lets one track
+              interrelations among components during mutations.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Cyclotomic rigidity</strong>
+            <p>
+              Mochizuki names cyclotomic rigidity isomorphisms behind
+              <span class="math">Theta x mu_LGP</span>-link compatibility as a central
+              example.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Remark item</th><th>Paper content</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>3.6.2(i)</td>
+            <td>Descriptions depending on arbitrary choices in one model do not support calculation of operations performed in an alien universe.</td>
+            <td>Wiki and Lean pages should record formula/canonicity obligations for cross-universe comparison.</td>
+          </tr>
+          <tr>
+            <td>3.6.2(i)</td>
+            <td>Different algorithms may have the same output, but specific algorithms reveal interrelations between components under mutations.</td>
+            <td>A record of only final isomorphic output is too weak for IUT's claimed comparisons.</td>
+          </tr>
+          <tr>
+            <td>3.6.2(ii)</td>
+            <td>The paper says formulas will usually remain implicit, supplied by conventional descriptions, but readers must check well-definedness and absence of arbitrary choices.</td>
+            <td>This is an explicit source for audit pages: implicit formulas are obligations, not optional commentary.</td>
+          </tr>
+          <tr>
+            <td>3.6.2(iii)</td>
+            <td>Cataloguing arbitrary choices leads to large unwieldy sets; this is compared with noncanonical p-adic integration versus canonical connections.</td>
+            <td>Choice explosion is treated as a mathematical obstruction to clean inter-universal calculation.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Remark 3.6.2</a>
+          Related: <a href="#iut-iv-model-free-specimens-31">model-free specimens</a>
+          <a href="#mono-theta-cyclotomic-compatibility-ii13">cyclotomic rigidity</a>
+          <a href="#leanform-species-mutations-page">LeanForm species/mutations</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-ring-incompatibility-363" data-filter="iut iv remark 3.6.3 inter-universality ring homomorphism galois group fundamental group log-theta-lattice">
+        <h2>IUT IV Remark 3.6.3: Ring Incompatibility</h2>
+        <p class="lede">
+          Remark 3.6.3 gives a direct reason for inter-universality: etale fundamental
+          groups are automorphism groups of field or ring structures, while the vertical
+          and horizontal arrows of the log-theta-lattice do not arise from ring
+          homomorphisms. Therefore ordinary functoriality of etale fundamental groups
+          along ring or scheme morphisms is not available.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Comparison</th><th>Ring/scheme morphism case</th><th>Log-theta arrow case</th></tr>
+          <tr>
+            <td>Underlying operation</td>
+            <td>Compatible with ring structures on domain and codomain.</td>
+            <td>Not compatible with a single ring-structure history.</td>
+          </tr>
+          <tr>
+            <td>Etale fundamental group</td>
+            <td>Functorial morphisms arise tautologically from ring/scheme morphisms.</td>
+            <td>No such functorial bridge is available.</td>
+          </tr>
+          <tr>
+            <td>Local base-field Galois groups</td>
+            <td>Compared through the induced morphism when present.</td>
+            <td>The natural formula-defined correspondence is an indeterminate isomorphism of topological groups.</td>
+          </tr>
+          <tr>
+            <td>Geometric fundamental groups</td>
+            <td>Can be transported when the geometric data is functorially tied to the morphism.</td>
+            <td>For vertical arrows, only an indeterminate topological-group isomorphism with outer action is natural; horizontal arrows behave differently.</td>
+          </tr>
+        </table>
+        <div class="callout red">
+          This is one of the wiki's central guardrails for the Corollary 3.12 dispute:
+          the source explicitly denies that the log-theta-lattice arrows are ordinary
+          ring-homomorphic transports.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Remark 3.6.3(i)</a>
+          Related: <a href="#theta-log-links">theta/log links</a>
+          <a href="#scholze-stix-critique-page">Scholze-Stix critique</a>
+          <a href="#mochizuki-response-page">Mochizuki response</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-vertical-horizontal-galois-363" data-filter="iut iv remark 3.6.3 vertical horizontal arrows Pi_v Delta_v G_v labels q j squared theta link">
+        <h2>IUT IV Remark 3.6.3: Vertical and Horizontal Galois Data</h2>
+        <p class="lede">
+          Remark 3.6.3(ii) distinguishes vertical and horizontal arrows. Vertical arrows
+          identify full local arithmetic fundamental groups up to isomorphism.
+          Horizontal arrows identify local base-field Galois groups up to isomorphism
+          but keep the geometric groups, hence label data, distinct.
+        </p>
+        <div class="diagram fit" aria-label="Vertical and horizontal Galois comparison in IUT IV Remark 3.6.3">
+          <div class="diagramHeader">
+            <strong>Vertical versus horizontal arrow data</strong>
+            <span>Remark 3.6.3(ii): what is identified, what remains distinct</span>
+          </div>
+          <svg viewBox="0 0 1040 380" role="img">
+            <defs>
+              <marker id="arrowVH363" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="80" y="64" width="250" height="78"></rect>
+            <text class="nodeTitle" x="205" y="94" text-anchor="middle">vertical arrow</text>
+            <text class="tinyText" x="205" y="118" text-anchor="middle">identify full Pi_v up to isomorphism</text>
+
+            <rect class="nodeBox green" x="710" y="64" width="250" height="78"></rect>
+            <text class="nodeTitle" x="835" y="94" text-anchor="middle">horizontal arrow</text>
+            <text class="tinyText" x="835" y="118" text-anchor="middle">identify G_v, distinguish Delta_v labels</text>
+
+            <rect class="nodeBox violet" x="180" y="246" width="250" height="74"></rect>
+            <text class="nodeTitle" x="305" y="274" text-anchor="middle">log-link construction</text>
+            <text class="tinyText" x="305" y="296" text-anchor="middle">needs local ring structure from Pi_v</text>
+
+            <rect class="nodeBox gold" x="610" y="246" width="250" height="74"></rect>
+            <text class="nodeTitle" x="735" y="274" text-anchor="middle">theta-label comparison</text>
+            <text class="tinyText" x="735" y="296" text-anchor="middle">q^{j^2} label-dependent vs q label-free</text>
+
+            <path d="M205 144 C210 190 258 214 302 244" class="edge blue" marker-end="url(#arrowVH363)"></path>
+            <path d="M835 144 C830 190 778 214 738 244" class="edge green" marker-end="url(#arrowVH363)"></path>
+            <path d="M332 102 H708" class="edge red" marker-end="url(#arrowVH363)"></path>
+            <text class="edgeLabel" x="520" y="82" text-anchor="middle">different correspondence rules</text>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Marker</th><th>Source content</th><th>Why it matters</th></tr>
+          <tr>
+            <td>(V1)</td>
+            <td>Across a vertical arrow, isomorphs of the full arithmetic fundamental group <span class="math">Pi_v</span> are identified up to isomorphism.</td>
+            <td>Vertical log-link construction needs the full local ring structure recoverable from <span class="math">Pi_v</span>.</td>
+          </tr>
+          <tr>
+            <td>(H1)</td>
+            <td>Across a horizontal arrow, the <span class="math">Delta_v</span>'s are distinguished; only local base-field Galois groups <span class="math">G_v</span> are identified up to isomorphism.</td>
+            <td>Horizontal theta comparisons must preserve the label-dependent geometric data.</td>
+          </tr>
+          <tr>
+            <td>(V2)</td>
+            <td>The p-adic logarithm at a place requires local ring structures, reconstructed from full <span class="math">Pi_v</span>, not merely <span class="math">G_v</span> stripped from its quotient context.</td>
+            <td>This explains the vertical use of full arithmetic fundamental groups.</td>
+          </tr>
+          <tr>
+            <td>(H2)</td>
+            <td>The theta correspondence compares label-dependent values <span class="math">q^{j^2}</span> with label-free <span class="math">q</span>; such an isomorphism is possible only if labels remain distinct.</td>
+            <td>This is directly relevant to the Corollary 3.12 route through theta labels and q-pilot data.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Remark 3.6.3(ii)</a>
+          Related: <a href="#theta-values-q-j-squared-intro-ii">theta values q^j^2</a>
+          <a href="#label-crushing-warning-476">label-crushing warning</a>
+          <a href="#membership-step-xif-312">Corollary 3.12 membership step</a>
         </div>
       </section>
 
