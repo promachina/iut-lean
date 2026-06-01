@@ -538,6 +538,9 @@
       table.sourceTable3 td:nth-child(1)::before { content: "Item"; }
       table.sourceTable3 td:nth-child(2)::before { content: "Paper content"; }
       table.sourceTable3 td:nth-child(3)::before { content: "Wiki consequence"; }
+      table.auditTable3 td:nth-child(1)::before { content: "Theme"; }
+      table.auditTable3 td:nth-child(2)::before { content: "Audit reading"; }
+      table.auditTable3 td:nth-child(3)::before { content: "Formal source"; }
     }
 
     @media (max-width: 760px) {
@@ -608,6 +611,7 @@
         <a href="#concept-index">Concept index</a>
         <a href="#anabelian-background">Anabelian background</a>
         <a href="#collas-category-perspective">Collas category view</a>
+        <a href="#collas-formalization-audit-page">Collas audit guide</a>
         <a href="#collas-gms-categorification-page">Collas GMS categorification</a>
         <a href="#collas-hodge-synchronization-page">Collas Hodge synchronization</a>
         <a href="#collas-log-theta-wandering-page">Collas log-theta wandering</a>
@@ -2470,6 +2474,7 @@
               <a href="#mono-anabelian-transport">mono-anabelian transport</a>,
               <a href="#iut-second-regeometrization">second regeometrization</a>,
               <a href="#collas-category-perspective">Collas category view</a>,
+              <a href="#collas-formalization-audit-page">Collas audit guide</a>,
               <a href="#collas-categorification-diophantine">categorification of a Diophantine problem</a>,
               <a href="#collas-hodge-synchronization">Hodge-theater synchronization</a>,
               <a href="#collas-indeterminacies">Collas indeterminacy map</a>,
@@ -3465,8 +3470,128 @@
           <a href="#frobenioids-log-shells">Frobenioids</a>
           <a href="#hodge-theaters">Hodge theaters</a>
           <a href="#gms-gcg-motivation">GMS/GCG motivation</a>
+          <a href="#collas-formalization-audit-page">Collas audit guide</a>
           <a href="#projective-line-gluing-analogy">projective-line gluing</a>
           <a href="#essential-logical-structure">logical structure</a>
+        </div>
+      </section>
+
+      <section id="collas-formalization-audit-page" data-filter="collas category theory audit guide formalization monoid geometry source definitions mochizuki hodge theaters frobenioids species">
+        <h2>Collas Audit Guide</h2>
+        <p class="lede">
+          Collas' category-theoretic account is best used as an audit guide for the
+          wiki and for Lean formalization. It explains why IUT repeatedly replaces one
+          ambient ring/scheme picture by typed reconstruction containers, but it is not
+          itself the source of the formal definitions. The formal source remains
+          Mochizuki's IUT I-IV and the specific later papers cited on each page.
+        </p>
+        <div class="diagram fit" aria-label="Collas category-theory audit discipline for IUT formalization">
+          <div class="diagramHeader">
+            <strong>How Collas should influence the wiki</strong>
+            <span>orientation layer, source definitions, formalization guardrails</span>
+          </div>
+          <svg viewBox="0 0 1040 430" role="img">
+            <defs>
+              <marker id="arrowCollasAudit" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="62" y="64" width="240" height="88"></rect>
+            <text class="nodeTitle" x="182" y="96" text-anchor="middle">Collas orientation</text>
+            <text class="tinyText" x="182" y="120" text-anchor="middle">categorification of Diophantine data</text>
+            <text class="tinyText" x="182" y="138" text-anchor="middle">monoid geometry and containers</text>
+
+            <rect class="nodeBox green" x="400" y="64" width="240" height="88"></rect>
+            <text class="nodeTitle" x="520" y="96" text-anchor="middle">Mochizuki source layer</text>
+            <text class="tinyText" x="520" y="120" text-anchor="middle">IUT I-IV definitions</text>
+            <text class="tinyText" x="520" y="138" text-anchor="middle">exact links and indeterminacies</text>
+
+            <rect class="nodeBox violet" x="738" y="64" width="240" height="88"></rect>
+            <text class="nodeTitle" x="858" y="96" text-anchor="middle">Lean/wiki output</text>
+            <text class="tinyText" x="858" y="120" text-anchor="middle">typed pages and interfaces</text>
+            <text class="tinyText" x="858" y="138" text-anchor="middle">no collapsed ring histories</text>
+
+            <path class="edge blue" d="M304 108 H398" marker-end="url(#arrowCollasAudit)"></path>
+            <path class="edge green" d="M642 108 H736" marker-end="url(#arrowCollasAudit)"></path>
+
+            <rect class="nodeBox gold" x="120" y="264" width="230" height="88"></rect>
+            <text class="nodeTitle" x="235" y="296" text-anchor="middle">positive use</text>
+            <text class="tinyText" x="235" y="320" text-anchor="middle">separate local and global data</text>
+            <text class="tinyText" x="235" y="338" text-anchor="middle">track categorical replacement</text>
+
+            <rect class="nodeBox red" x="405" y="264" width="230" height="88"></rect>
+            <text class="nodeTitle" x="520" y="296" text-anchor="middle">forbidden shortcut</text>
+            <text class="tinyText" x="520" y="320" text-anchor="middle">do not replace definitions</text>
+            <text class="tinyText" x="520" y="338" text-anchor="middle">by interpretive slogans</text>
+
+            <rect class="nodeBox green" x="690" y="264" width="230" height="88"></rect>
+            <text class="nodeTitle" x="805" y="296" text-anchor="middle">formal checkpoint</text>
+            <text class="tinyText" x="805" y="320" text-anchor="middle">name the source construction</text>
+            <text class="tinyText" x="805" y="338" text-anchor="middle">name the comparison target</text>
+
+            <path class="edge gold" d="M235 154 V262" marker-end="url(#arrowCollasAudit)"></path>
+            <path class="edge red" d="M520 154 V262" marker-end="url(#arrowCollasAudit)"></path>
+            <path class="edge green" d="M858 154 C858 220 820 240 807 262" marker-end="url(#arrowCollasAudit)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3 auditTable3">
+          <tr><th>Collas theme</th><th>Audit reading</th><th>Formal source to check</th></tr>
+          <tr>
+            <td>Geometry of monoids</td>
+            <td>
+              The additive and multiplicative structures should be carried separately
+              until the relevant IUT construction supplies a comparison.
+            </td>
+            <td><a href="#iut-i-frobenioid-package">Frobenioids</a>, <a href="#theta-plus-minus-ell-bridges-611">Theta±ell bridges</a></td>
+          </tr>
+          <tr>
+            <td>Categorified GMS</td>
+            <td>
+              The missing global multiplicative subspace must appear as a categorical
+              replacement process, not as an assumed global object.
+            </td>
+            <td><a href="#collas-gms-categorification-page">GMS categorification</a>, <a href="#gms-gcg-motivation">GMS/GCG motivation</a></td>
+          </tr>
+          <tr>
+            <td>Hodge-theater synchronization</td>
+            <td>
+              Basepoints, labels, and side information are structural data. Treating
+              the theater as an undifferentiated copy loses the Collas/Mochizuki point.
+            </td>
+            <td><a href="#hodge-theaters">Hodge theaters</a>, <a href="#basepoints-inter-universality">basepoints</a></td>
+          </tr>
+          <tr>
+            <td>Log-theta wandering</td>
+            <td>
+              Movement through theta and log links should preserve the type of the
+              data being compared and should expose Ind1, Ind2, and Ind3 explicitly.
+            </td>
+            <td><a href="#theorem-311-lgp-algorithms">Theorem 3.11</a>, <a href="#corollary-312">Corollary 3.12</a></td>
+          </tr>
+          <tr>
+            <td>Universes and species</td>
+            <td>
+              A comparison target is not automatically shared by all inputs. It must be
+              produced by the species, mutation, and common-container machinery.
+            </td>
+            <td><a href="#species-vs-categories-iv31">IUT IV species</a>, <a href="#mutation-histories-cores-iv33">mutation histories</a></td>
+          </tr>
+        </table>
+        <div class="callout red">
+          <strong>Boundary.</strong> Collas helps identify what must not be collapsed:
+          local/global distinctions, additive/multiplicative sides, basepoint histories,
+          and universe/species context. A page or Lean record still needs a direct
+          Mochizuki source link before it is treated as formal IUT content.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/collas-anabelian-arithmetic-geometry-iut.pdf" target="_blank">Collas overview</a>
+          <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I</a>
+          <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III</a>
+          <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV</a>
+          Related: <a href="#collas-category-perspective">Collas category view</a>
+          <a href="#collas-gms-categorification-page">GMS categorification</a>
+          <a href="#collas-log-theta-wandering-page">log-theta wandering</a>
+          <a href="#rims-four-triangle-route-2026">RIMS four-triangle route</a>
         </div>
       </section>
 
