@@ -913,10 +913,11 @@
         <a class="subLink" href="#arch-kummer-log-frobenioids-iut-i34">Arch Kummer/log 3.4</a>
         <a class="subLink" href="#arch-cuspidalization-iut-i343">Arch cuspidalization 3.4.3</a>
         <a href="#global-realified-theater-35-36">Global realified theater 3.5-3.6</a>
-        <a href="#global-realified-cmod-iut-i35">Global Cmod realification 3.5</a>
-        <a href="#global-theta-version-iut-i35">Global theta version 3.5</a>
-        <a href="#global-d-log-shell-version-iut-i35">Global D/log-shell version 3.5</a>
-        <a href="#theta-hodge-theater-definition-iut-i36">Theta-Hodge theater 3.6</a>
+        <a class="subLink" href="#global-realified-cmod-iut-i35">Global Cmod realification 3.5</a>
+        <a class="subLink" href="#global-theta-version-iut-i35">Global theta version 3.5</a>
+        <a class="subLink" href="#global-d-log-shell-version-iut-i35">Global D/log-shell version 3.5</a>
+        <a class="subLink" href="#theta-hodge-theater-definition-iut-i36">Theta-Hodge theater 3.6</a>
+        <a class="subLink" href="#theta-hodge-theater-labeling-isomorphisms-iut-i361-362">Theater labels/isomorphisms 3.6</a>
         <a href="#theta-link-frobenius-etale-pictures">Theta/Frobenius pictures</a>
         <a href="#theta-links-cor37">Theta links 3.7</a>
         <a href="#frobenius-picture-cor38">Frobenius-picture 3.8</a>
@@ -16295,6 +16296,47 @@
           divisor-monoid “currencies” across valuations. Definition 3.6 packages the
           local data and global realified data into a theta-Hodge theater.
         </p>
+        <div class="callout blue">
+          This is the grouped page for IUT I Example 3.5 and Definition 3.6. It should
+          be read as one construction: local Frobenioids are first placed into global
+          realified comparison currencies, and only then bundled into a theta-Hodge
+          theater.
+        </div>
+        <div class="grid3">
+          <div class="card">
+            <h3>Example 3.5 index</h3>
+            <p>
+              The three realified packages separate mod-side divisor data, theta-side
+              divisor data, and the D/log-shell version.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#global-realified-cmod-iut-i35">C_mod</a>
+              <a class="tag" href="#global-theta-version-iut-i35">C_tht</a>
+              <a class="tag" href="#global-d-log-shell-version-iut-i35">D/log-shell</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Definition 3.6 index</h3>
+            <p>
+              The theta-Hodge theater records nonarchimedean local categories,
+              archimedean triples, and the global <span class="math">F_mod</span>
+              package.
+            </p>
+            <div class="tagRow">
+              <a class="tag" href="#theta-hodge-theater-definition-iut-i36">theater data</a>
+              <a class="tag" href="#theta-hodge-theater-labeling-isomorphisms-iut-i361-362">labels/isomorphisms</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Why grouped</h3>
+            <p>
+              The theta link in Corollary 3.7 does not start from isolated local pages;
+              it starts from the assembled packages <span class="math">F_tht</span> and
+              <span class="math">F_mod</span>.
+            </p>
+            <div class="tagRow"><span class="tag red">source-section hub</span><span class="tag">IUT I §3</span></div>
+          </div>
+        </div>
         <div class="diagram fit" aria-label="Global realified Frobenioid and theta-Hodge theater">
           <div class="diagramHeader">
             <strong>Global currency exchange into a theta-Hodge theater</strong>
@@ -16338,7 +16380,7 @@
             <path class="edge violet" d="M512 329 H608" marker-end="url(#arrowGlobal3536)"></path>
           </svg>
         </div>
-        <table>
+        <table class="sourceTable3">
           <tr><th>Source item</th><th>Construction</th><th>Purpose</th></tr>
           <tr>
             <td>Example 3.5(i)</td>
@@ -16392,6 +16434,7 @@
           Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Example 3.5 and Definition 3.6</a>
           Related: <a href="#bad-nonarch-frobenioids-32">bad nonarch Frobenioids</a>
           <a href="#good-arch-frobenioids-33-34">good/arch Frobenioids</a>
+          <a href="#theta-hodge-theater-labeling-isomorphisms-iut-i361-362">theater labels/isomorphisms</a>
           <a href="#theta-link-frobenius-etale-pictures">theta/Frobenius pictures</a>
           <a href="#hodge-theaters">Hodge theaters</a>
         </div>
@@ -16784,8 +16827,109 @@
           Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Definition 3.6 and Remarks 3.6.1-3.6.2</a>
           Related: <a href="#global-realified-cmod-iut-i35">global Cmod realification</a>
           <a href="#global-theta-version-iut-i35">global theta version</a>
+          <a href="#theta-hodge-theater-labeling-isomorphisms-iut-i361-362">labels/isomorphisms</a>
           <a href="#theta-links-cor37">theta links</a>
           <a href="#hodge-theaters">Hodge theaters</a>
+        </div>
+      </section>
+
+      <section id="theta-hodge-theater-labeling-isomorphisms-iut-i361-362" data-filter="iut i remarks 3.6.1 3.6.2 theta hodge theater labels dagger notation isomorphism collections">
+        <h2>IUT I Remarks 3.6.1-3.6.2: Theater Labels and Isomorphisms</h2>
+        <p class="lede">
+          After Definition 3.6, Mochizuki fixes the notation discipline for families of
+          theta-Hodge theaters. Replacing the dagger in the definition by another label
+          denotes the corresponding associated objects, and isomorphisms of
+          theta-Hodge theaters are isomorphisms of the full data collections.
+        </p>
+        <div class="diagram fit" aria-label="IUT I Remarks 3.6.1 and 3.6.2 theater labels and isomorphisms">
+          <div class="diagramHeader">
+            <strong>Labeled theaters carry labeled associated objects</strong>
+            <span>IUT I, Remarks 3.6.1-3.6.2</span>
+          </div>
+          <svg viewBox="0 0 1120 420" role="img">
+            <defs>
+              <marker id="arrowHTLabels36" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="76" y="74" width="260" height="96"></rect>
+            <text class="nodeTitle" x="206" y="104" text-anchor="middle">†HT^Theta</text>
+            <text class="tinyText" x="206" y="130" text-anchor="middle">({†F_v}, †F_mod)</text>
+            <text class="tinyText" x="206" y="150" text-anchor="middle">†F_tht, †F_D, †D_v^⊢</text>
+
+            <rect class="nodeBox green" x="430" y="74" width="260" height="96"></rect>
+            <text class="nodeTitle" x="560" y="104" text-anchor="middle">label replacement</text>
+            <text class="tinyText" x="560" y="130" text-anchor="middle">‡, n, m, or another symbol</text>
+            <text class="tinyText" x="560" y="150" text-anchor="middle">same definition, new theater</text>
+
+            <rect class="nodeBox gold" x="784" y="74" width="260" height="96"></rect>
+            <text class="nodeTitle" x="914" y="104" text-anchor="middle">‡HT^Theta</text>
+            <text class="tinyText" x="914" y="130" text-anchor="middle">({‡F_v}, ‡F_mod)</text>
+            <text class="tinyText" x="914" y="150" text-anchor="middle">‡F_tht, ‡F_D, ‡D_v^⊢</text>
+
+            <rect class="nodeBox violet" x="250" y="278" width="276" height="88"></rect>
+            <text class="nodeTitle" x="388" y="308" text-anchor="middle">isomorphism notion</text>
+            <text class="tinyText" x="388" y="332" text-anchor="middle">isomorphism of collections</text>
+            <text class="tinyText" x="388" y="350" text-anchor="middle">in the sense of Remark 3.5.2</text>
+
+            <rect class="nodeBox red" x="596" y="278" width="276" height="88"></rect>
+            <text class="nodeTitle" x="734" y="308" text-anchor="middle">formal guardrail</text>
+            <text class="tinyText" x="734" y="332" text-anchor="middle">labels are indices, not extra maps</text>
+            <text class="tinyText" x="734" y="350" text-anchor="middle">associated objects follow the label</text>
+
+            <path class="edge blue" d="M336 122 H428" marker-end="url(#arrowHTLabels36)"></path>
+            <path class="edge green" d="M690 122 H782" marker-end="url(#arrowHTLabels36)"></path>
+            <path class="edge violet" d="M206 172 C238 230 322 248 384 276" marker-end="url(#arrowHTLabels36)"></path>
+            <path class="edge gold" d="M914 172 C872 232 794 250 740 276" marker-end="url(#arrowHTLabels36)"></path>
+            <path class="edge violet" d="M526 322 H594" marker-end="url(#arrowHTLabels36)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Remark</th><th>Paper content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>3.6.1</td>
+            <td>
+              In a collection of theta-Hodge theaters, replacing the dagger label in
+              Definition 3.6 by another label denotes the associated objects of that
+              labeled theater.
+            </td>
+            <td>
+              Pages should treat <span class="math">†F_mod</span>,
+              <span class="math">‡F_mod</span>, and indexed variants as label-indexed
+              copies of the same definition, not as unrelated notational inventions.
+            </td>
+          </tr>
+          <tr>
+            <td>3.6.2</td>
+            <td>
+              The evident notion of isomorphism of theta-Hodge theaters is the
+              isomorphism of collections of data described for the preceding global
+              packages.
+            </td>
+            <td>
+              Later theta links should be distinguished from ordinary theater
+              isomorphisms: the link uses the theta-side package of one theater and the
+              mod-side package of another.
+            </td>
+          </tr>
+          <tr>
+            <td>Guardrail</td>
+            <td>
+              The remarks are short, but they control how symbols propagate through
+              Corollaries 3.7-3.9.
+            </td>
+            <td>
+              The wiki keeps a separate leaf page so searches for dagger/double-dagger
+              notation land on the source rule before entering the theta-link pages.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Remarks 3.6.1-3.6.2</a>
+          Related: <a href="#theta-hodge-theater-definition-iut-i36">theta-Hodge theater definition</a>
+          <a href="#global-realified-theater-35-36">global realified theater hub</a>
+          <a href="#theta-links-cor37">theta links</a>
+          <a href="#frobenius-picture-cor38">Frobenius-picture</a>
         </div>
       </section>
 
