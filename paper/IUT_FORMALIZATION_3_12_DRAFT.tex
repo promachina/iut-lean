@@ -427,6 +427,16 @@ alignment record supplies the Hodge--Arakelov Gaussian comparison,
 canonical-one preservation, q-pilot positivity, and theta/Hodge log-volume
 calibration, while the Step (x) data enters through the single theta-root
 attached realified source.
+The Milestone 2 hull layer now contains a direct formalization of
+Remark 3.9.5(iii)'s approximant family.  For a region \(P\), an approximant
+record carries a hull \(H\), proves \(H\subseteq\phi(P)\), and proves
+\[
+  \mu_{\log}(P)\le \mu_{\log}(H)\le \mu_{\log}(\phi(P)).
+\]
+The canonical hull \(\phi(P)\) is itself an approximant, and every approximant
+is fixed by hull formation.  This is the compactness guard emphasized in the
+paper: the indeterminacy in choosing a hull approximant remains inside
+\(\phi(P)\).
 Below the packet layer, the code now has a first realified Frobenioid degree
 source.  A finite Frobenioid object carries a divisor degree, a unit
 log-volume, and their realified log-volume; a tensor-packet product may be
@@ -670,6 +680,9 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The Hodge/\(\SHE/\IPL\)/hull route now also has a realified endpoint:
   route alignment supplies the Hodge--Arakelov and q-pilot data, and Step (x)
   enters through the theta-root attached realified source.
+\item Remark 3.9.5(iii)'s hull-approximant family is now represented directly:
+  an approximant lies inside the canonical hull \(\phi(P)\), has log-volume
+  between \(P\) and \(\phi(P)\), and is fixed by hull formation.
 \item A first realified Frobenioid degree layer is present: equality of
   realified Frobenioid log-volumes now derives the product-log-volume equality
   used by the tensor-packet coric transfer, with theater histories still kept

@@ -2016,6 +2016,100 @@ theorem logVolume_hull_le_closed_of_subset
 end IUTStage1HolomorphicHullLogVolumeShadow
 
 /--
+Remark 3.9.5(iii) hull approximant.
+
+For a region `P`, Mochizuki's set `Φ(P)` consists of hulls contained in
+`φ(P)` whose log-volume lies between the log-volume of `P` and that of
+`φ(P)`.  This record formalizes exactly that order/log-volume skeleton.  The
+field `approximant_subset_hull` is the compactness guard emphasized in the
+paper: every allowed choice remains inside the canonical hull `φ(P)`.
+-/
+structure IUTStage1HullLogVolumeApproximant
+    {α : Type u}
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (region : Set α) where
+  approximant : Set α
+  approximant_closed : data.hull.IsClosed approximant
+  approximant_subset_hull : approximant ⊆ data.hullRegion region
+  region_logVolume_le :
+    data.logVolume region <= data.logVolume approximant
+  approximant_logVolume_le_hull :
+    data.logVolume approximant <= data.logVolume (data.hullRegion region)
+
+namespace IUTStage1HullLogVolumeApproximant
+
+variable {α : Type u}
+variable {data : IUTStage1HolomorphicHullLogVolumeShadow α}
+variable {region : Set α}
+
+def canonical
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (region : Set α) :
+    IUTStage1HullLogVolumeApproximant data region :=
+  { approximant := data.hullRegion region,
+    approximant_closed := data.hull.isClosed_closure region,
+    approximant_subset_hull := fun _ hx => hx,
+    region_logVolume_le := data.logVolume_le_hullLogVolume region,
+    approximant_logVolume_le_hull := le_rfl }
+
+theorem canonical_approximant_eq_hull
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (region : Set α) :
+    (canonical data region).approximant = data.hullRegion region :=
+  rfl
+
+theorem approximant_logVolume_between
+    (approximant :
+      IUTStage1HullLogVolumeApproximant data region) :
+    data.logVolume region <= data.logVolume approximant.approximant ∧
+      data.logVolume approximant.approximant <=
+        data.logVolume (data.hullRegion region) :=
+  ⟨approximant.region_logVolume_le,
+    approximant.approximant_logVolume_le_hull⟩
+
+theorem approximant_subset_compactCarrier
+    (approximant :
+      IUTStage1HullLogVolumeApproximant data region) :
+    approximant.approximant ⊆ data.hullRegion region :=
+  approximant.approximant_subset_hull
+
+theorem approximant_hull_le_canonical_hull
+    (approximant :
+      IUTStage1HullLogVolumeApproximant data region) :
+    data.hullRegion approximant.approximant ⊆ data.hullRegion region :=
+  data.hull_subset_closed_of_subset
+    approximant.approximant_subset_hull (data.hull.isClosed_closure region)
+
+theorem approximant_hull_eq_self
+    (approximant :
+      IUTStage1HullLogVolumeApproximant data region) :
+    data.hullRegion approximant.approximant = approximant.approximant :=
+  data.hull_fix_of_closed approximant.approximant_closed
+
+theorem approximant_hullLogVolume_le_canonical_hull
+    (approximant :
+      IUTStage1HullLogVolumeApproximant data region) :
+    data.logVolume (data.hullRegion approximant.approximant) <=
+      data.logVolume (data.hullRegion region) := by
+  rw [approximant.approximant_hull_eq_self]
+  exact approximant.approximant_logVolume_le_hull
+
+theorem endpoint
+    (approximant :
+      IUTStage1HullLogVolumeApproximant data region) :
+    approximant.approximant ⊆ data.hullRegion region ∧
+      data.logVolume region <= data.logVolume approximant.approximant ∧
+      data.logVolume approximant.approximant <=
+        data.logVolume (data.hullRegion region) ∧
+      data.hullRegion approximant.approximant = approximant.approximant :=
+  ⟨approximant.approximant_subset_compactCarrier,
+    approximant.region_logVolume_le,
+    approximant.approximant_logVolume_le_hull,
+    approximant.approximant_hull_eq_self⟩
+
+end IUTStage1HullLogVolumeApproximant
+
+/--
 Remark 3.9.5(v) upper-semi set quotient.
 
 For a subset `S ⊆ E`, the paper considers the quotient `E^S` that identifies

@@ -433,8 +433,21 @@ theorem realifiedFrobenioidTensorProductPacket_endpoint
           right.frobenioidDegree.realifiedLogVolume ∧
       product.toRealized.product.productLogVolume =
         left.toRealized.product.productLogVolume +
-          right.toRealized.product.productLogVolume :=
+        right.toRealized.product.productLogVolume :=
   source.tensorProductPacket_endpoint
+
+theorem hullLogVolumeApproximant_endpoint
+    {α : Type u}
+    {data : IUTStage1HolomorphicHullLogVolumeShadow α}
+    {region : Set α}
+    (approximant :
+      IUTStage1HullLogVolumeApproximant data region) :
+    approximant.approximant ⊆ data.hullRegion region ∧
+      data.logVolume region <= data.logVolume approximant.approximant ∧
+      data.logVolume approximant.approximant <=
+        data.logVolume (data.hullRegion region) ∧
+      data.hullRegion approximant.approximant = approximant.approximant :=
+  approximant.endpoint
 
 theorem realifiedFrobenioidLogKummerPacket_endpoint
     {coric : Type u}
