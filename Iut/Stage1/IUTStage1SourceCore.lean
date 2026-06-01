@@ -3087,6 +3087,8 @@ namespace IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow
 
 variable {α : Type u} {ι : Type v}
 
+open IUTStage1UpperSemiSetQuotient
+
 noncomputable def ofWeightedDeterminant
     {β : Type w} [Fintype β]
     (hullData : IUTStage1HolomorphicHullLogVolumeShadow α)
@@ -3254,6 +3256,48 @@ theorem boundedFamilyQuotient_endpoint
         data.toBoundedFamilyHullQuotientSource.quotientMap ''
           data.toBoundedFamilyHullQuotientSource.possibleRegion j :=
   data.toBoundedFamilyHullQuotientSource.endpoint i j hnei hnej
+
+theorem qPilotRegion_subset_familyHull
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι) :
+    data.qPilotRegion ⊆
+      data.toBoundedFamilyHullQuotientSource.familyHull :=
+  fun _ hx =>
+    data.approximant.approximant_subset_hull
+      (data.q_subset_approximant hx)
+
+theorem qPilot_quotientMap_image_eq_collapsed
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι)
+    (hne : data.qPilotRegion.Nonempty) :
+    data.toBoundedFamilyHullQuotientSource.quotientMap ''
+        data.qPilotRegion =
+      {IUTStage1UpperSemiSetQuotient.collapsed} := by
+  simpa [IUTStage1BoundedFamilyHullQuotientSource.quotientMap] using
+    quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+      (S := data.toBoundedFamilyHullQuotientSource.familyHull)
+      hne data.qPilotRegion_subset_familyHull
+
+theorem qPilot_quotientMap_image_eq_possibleThetaImage
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι)
+    (i : ι)
+    (hq : data.qPilotRegion.Nonempty)
+    (htheta : (data.possibleThetaImage i).Nonempty) :
+    data.toBoundedFamilyHullQuotientSource.quotientMap ''
+        data.qPilotRegion =
+      data.toBoundedFamilyHullQuotientSource.quotientMap ''
+        data.possibleThetaImage i := by
+  have hqcollapsed :=
+    data.qPilot_quotientMap_image_eq_collapsed hq
+  have hthetacollapsed :
+      data.toBoundedFamilyHullQuotientSource.quotientMap ''
+          data.possibleThetaImage i =
+        {IUTStage1UpperSemiSetQuotient.collapsed} := by
+    simpa [toBoundedFamilyHullQuotientSource] using
+      data.toBoundedFamilyHullQuotientSource
+        |>.quotientMap_image_possibleRegion_eq_collapsed i htheta
+  rw [hqcollapsed, hthetacollapsed]
 
 theorem ofWeightedDeterminant_endpoint
     {β : Type w} [Fintype β]

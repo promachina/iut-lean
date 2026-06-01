@@ -444,6 +444,10 @@ proves that any two nonempty possible regions have the same quotient image.
 The Corollary 3.12 possible-image approximant source projects to this
 family-hull quotient source, so the possible-image family used in the
 upper-ray route also carries the corresponding choice-independence theorem.
+Since the q-pilot region is contained in the chosen approximant and the
+approximant lies in the same family hull, the code also proves that a nonempty
+q-pilot region has the same family-hull quotient image as any nonempty
+possible theta-image choice.
 The same approximant now feeds the Step (xi) upper-ray constructor.  If the
 \(q\)-pilot region lies in an approximant \(H\), and if
 \(\mu_{\log}(H)\) is the determinant-normalized log-volume, then \Lean{}
@@ -740,6 +744,10 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The Corollary 3.12 possible-image approximant source now projects to
   this bounded-family quotient source, yielding the same quotient-image
   equality for nonempty possible theta-image choices.
+\item In that same source, q-pilot containment in the chosen approximant
+  implies q-pilot containment in the family hull; if the q-pilot region is
+  nonempty, its quotient image agrees with the quotient image of any nonempty
+  possible theta-image choice.
 \item Such a certified hull-approximant now also constructs the Step (xi)
   upper-ray datum: if the \(q\)-pilot region is contained in the approximant
   and the approximant log-volume is determinant-normalized, then \Lean{}

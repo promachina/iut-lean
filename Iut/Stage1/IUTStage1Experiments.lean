@@ -609,6 +609,22 @@ theorem thetaPossibleImagesBoundedFamilyQuotient_endpoint
           data.toBoundedFamilyHullQuotientSource.possibleRegion j :=
   data.boundedFamilyQuotient_endpoint i j hnei hnej
 
+theorem thetaPossibleImagesQPilotFamilyQuotient_endpoint
+    {α : Type u} {ι : Type v}
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι)
+    (i : ι)
+    (hq : data.qPilotRegion.Nonempty)
+    (htheta : (data.possibleThetaImage i).Nonempty) :
+    data.qPilotRegion ⊆
+        data.toBoundedFamilyHullQuotientSource.familyHull ∧
+      data.toBoundedFamilyHullQuotientSource.quotientMap ''
+          data.qPilotRegion =
+        data.toBoundedFamilyHullQuotientSource.quotientMap ''
+          data.possibleThetaImage i :=
+  ⟨data.qPilotRegion_subset_familyHull,
+    data.qPilot_quotientMap_image_eq_possibleThetaImage i hq htheta⟩
+
 theorem thetaPossibleImagesWeightedDeterminant_endpoint
     {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
     (hullData : IUTStage1HolomorphicHullLogVolumeShadow α)
