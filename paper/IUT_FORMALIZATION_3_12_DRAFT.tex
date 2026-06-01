@@ -403,6 +403,14 @@ At the boundary branch \(C_\Theta=-1\), the formal corridor identifies
 \[
   q_{\mathrm{pilot}}=\Theta_{\mathrm{hull}}=L_0 .
 \]
+The local shift model is now source-facing: a local Frobenioid log-shell
+submodule carries a \(p_v^N\)-action whose log-volume effect is
+\(L_0\mapsto L_0+N\delta\).  The local action records whether the
+\(p_v^N\)-endomorphism is an automorphism, and in the current model this is
+equivalent to \(N=0\).  The global realified Frobenioid calibration package
+selects exponent \(0\), hence its calibrated value is \(L_0\).  If the local
+endomorphism is not an automorphism and \(\delta\ne0\), \Lean{} proves that the
+local shifted value cannot equal the globally calibrated value.
 For the actual upper-ray quotient that collapses
 \(\{x\mid x\le \Theta_{\mathrm{hull}}\}\), \Lean{} proves the exact
 classification
@@ -480,8 +488,11 @@ The project currently proves the following source-facing results in \Lean{}:
   strict upper-ray membership, and equality constraints in the boundary case.
 \item The final route rejects the balanced sign-compatible comparison level as
   sufficient; it requires hull/log-volume comparison data.
-\item The local Frobenioid shift quotient experiment gives an exact threshold
-  for collapse versus separation in the boundary upper ray.
+\item The local Frobenioid shift model is now sourced by a \(p_v^N\)
+  log-volume action package and a global realified calibration package; a
+  non-automorphic local shift with nonzero step is separated from the calibrated
+  value, and the upper-ray quotient experiment gives the exact threshold for
+  collapse versus separation in the boundary upper ray.
 \item Several downstream \IUT{} IV numerical estimates are formalized as
   ordered-real algebra conditional on the Corollary 3.12 input.
 \end{enumerate}

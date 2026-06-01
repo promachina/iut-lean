@@ -127,6 +127,25 @@ theorem thetaRootCuspLabelSource_zmodQuotient_feedsCanonicalFullLabel
         (zmodCanonicalSignLabelQuotient l) :=
   package.canonicalFullLabel_eq_zmodCanonical_of_quotientZData_eq_zmod hquot
 
+/--
+Step (xii) local Frobenioid check: a non-automorphic `p_v^N` source action
+with nonzero local step cannot be identified with the unshifted log-shell
+submodule log-volume.
+-/
+theorem localFrobenioidSource_nonautomorphicShift_changesLogVolume
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource)
+    (hnot : ¬ source.pPowerEndomorphismIsAutomorphism)
+    (hStep : source.localPrimeStepLogVolume ≠ 0) :
+    source.shiftedLogVolume ≠ source.baseSubmodule.logVolume :=
+  source.shiftedLogVolume_ne_base_of_not_automorphism hnot hStep
+
+theorem globalRealifiedCalibrationSource_rejectsNonautomorphicLocalShift
+    (source : IUTStage1GlobalRealifiedFrobenioidCalibrationSource)
+    (hnot : ¬ source.localSource.pPowerEndomorphismIsAutomorphism)
+    (hStep : source.localSource.localPrimeStepLogVolume ≠ 0) :
+    source.calibratedLogVolume ≠ source.localSource.shiftedLogVolume :=
+  source.calibrated_ne_local_shifted_of_not_automorphism hnot hStep
+
 /-- Summary of the first diagnostic pass through the local `(Ind3)` route. -/
 structure Ind3FirstPassDashboard where
   missingRealAlignmentBlocks : Bool

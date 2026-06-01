@@ -3626,6 +3626,120 @@ theorem unshiftedLogVolume_lt_shifted_iff_shiftTerm_pos
 end IUTStage1LocalFrobenioidLogVolumeAmbiguity
 
 /--
+Source-facing local Frobenioid log-shell submodule for Step (xii).
+
+This is the local object whose log-volume is being compared.  The global
+realified Frobenioid calibration should select this object, while the local
+Frobenioid alone also admits `p_v^N` endomorphic shifts.
+-/
+structure IUTStage1LocalFrobenioidLogShellSubmodule where
+  id : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  logVolume : Real
+
+/--
+Source-facing `p_v^N` local Frobenioid action on a log-shell submodule.
+
+The action is modeled at the log-volume level by adding
+`N * localPrimeStepLogVolume`.  The automorphism predicate records the source
+distinction stressed in IUT III, Step (xii): local Frobenioid endomorphisms need
+not be automorphisms.  In this model, the only automorphic `p_v^N` shift is the
+zero exponent.
+-/
+structure IUTStage1LocalFrobenioidPVPowerLogVolumeSource where
+  baseSubmodule : IUTStage1LocalFrobenioidLogShellSubmodule
+  localExponent : Int
+  localPrimeStepLogVolume : Real
+  pPowerEndomorphismIsAutomorphism : Prop
+  pPowerEndomorphism_isAutomorphism_iff_exponent_zero :
+    pPowerEndomorphismIsAutomorphism ↔ localExponent = 0
+
+namespace IUTStage1LocalFrobenioidPVPowerLogVolumeSource
+
+open IUTStage1LocalFrobenioidLogVolumeAmbiguity
+
+def shiftedLogVolume
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource) : Real :=
+  source.baseSubmodule.logVolume +
+    (source.localExponent : Real) * source.localPrimeStepLogVolume
+
+def toLocalFrobenioidLogVolumeAmbiguity
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource) :
+    IUTStage1LocalFrobenioidLogVolumeAmbiguity :=
+  { unshiftedLogVolume := source.baseSubmodule.logVolume,
+    localExponent := source.localExponent,
+    localPrimeStepLogVolume := source.localPrimeStepLogVolume,
+    shiftedLogVolume := source.shiftedLogVolume,
+    shifted_logVolume_eq := rfl }
+
+theorem shiftedLogVolume_eq
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource) :
+    source.shiftedLogVolume =
+      source.baseSubmodule.logVolume +
+        (source.localExponent : Real) * source.localPrimeStepLogVolume :=
+  rfl
+
+theorem toAmbiguity_unshifted
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource) :
+    source.toLocalFrobenioidLogVolumeAmbiguity.unshiftedLogVolume =
+      source.baseSubmodule.logVolume :=
+  rfl
+
+theorem toAmbiguity_shifted
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource) :
+    source.toLocalFrobenioidLogVolumeAmbiguity.shiftedLogVolume =
+      source.shiftedLogVolume :=
+  rfl
+
+theorem exponent_ne_zero_of_not_automorphism
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource)
+    (hnot : ¬ source.pPowerEndomorphismIsAutomorphism) :
+    source.localExponent ≠ 0 := by
+  intro hzero
+  exact hnot
+    (source.pPowerEndomorphism_isAutomorphism_iff_exponent_zero.mpr hzero)
+
+theorem shiftedLogVolume_ne_base_of_not_automorphism
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource)
+    (hnot : ¬ source.pPowerEndomorphismIsAutomorphism)
+    (hStep : source.localPrimeStepLogVolume ≠ 0) :
+    source.shiftedLogVolume ≠ source.baseSubmodule.logVolume := by
+  exact
+    source.toLocalFrobenioidLogVolumeAmbiguity.shiftedLogVolume_ne_unshifted
+      (source.exponent_ne_zero_of_not_automorphism hnot) hStep
+
+theorem shiftedLogVolume_eq_base_iff_automorphism_or_zero_step
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource) :
+    source.shiftedLogVolume = source.baseSubmodule.logVolume ↔
+      source.pPowerEndomorphismIsAutomorphism ∨
+        source.localPrimeStepLogVolume = 0 := by
+  have hambiguity :=
+    shiftedLogVolume_eq_unshifted_iff_exponent_zero_or_step_zero
+      source.toLocalFrobenioidLogVolumeAmbiguity
+  rw [← source.toAmbiguity_shifted, ← source.toAmbiguity_unshifted,
+    hambiguity]
+  constructor
+  · rintro (hexp | hstep)
+    · exact Or.inl
+        (source.pPowerEndomorphism_isAutomorphism_iff_exponent_zero.mpr hexp)
+    · exact Or.inr hstep
+  · rintro (hauto | hstep)
+    · exact Or.inl
+        (source.pPowerEndomorphism_isAutomorphism_iff_exponent_zero.mp hauto)
+    · exact Or.inr hstep
+
+theorem localFrobenioidSource_endpoint
+    (source : IUTStage1LocalFrobenioidPVPowerLogVolumeSource) :
+    source.toLocalFrobenioidLogVolumeAmbiguity.unshiftedLogVolume =
+        source.baseSubmodule.logVolume ∧
+      source.toLocalFrobenioidLogVolumeAmbiguity.shiftedLogVolume =
+        source.baseSubmodule.logVolume +
+          (source.localExponent : Real) * source.localPrimeStepLogVolume ∧
+      (source.pPowerEndomorphismIsAutomorphism ↔ source.localExponent = 0) :=
+  ⟨rfl, rfl, source.pPowerEndomorphism_isAutomorphism_iff_exponent_zero⟩
+
+end IUTStage1LocalFrobenioidPVPowerLogVolumeSource
+
+/--
 Global realified Frobenioid calibration shadow for Step (xii).
 
 This record represents the use of global Frobenioid data to eliminate the local
@@ -3709,6 +3823,77 @@ theorem shiftedLogVolume_lt_calibrated_iff_shiftTerm_lt_zero
   exact data.localData.shiftedLogVolume_lt_unshifted_iff_shiftTerm_lt_zero
 
 end IUTStage1GlobalFrobenioidLogVolumeCalibration
+
+/--
+Source-facing global realified Frobenioid calibration package.
+
+It consumes the local `p_v^N` source package but fixes the exponent selected by
+the global realified Frobenioid to zero.  This is the source-level replacement
+for treating the calibrated real value as an unrelated primitive number.
+-/
+structure IUTStage1GlobalRealifiedFrobenioidCalibrationSource where
+  localSource : IUTStage1LocalFrobenioidPVPowerLogVolumeSource
+  globalExponent : Int
+  global_exponent_eq_zero : globalExponent = 0
+
+namespace IUTStage1GlobalRealifiedFrobenioidCalibrationSource
+
+def calibratedLogVolume
+    (source : IUTStage1GlobalRealifiedFrobenioidCalibrationSource) : Real :=
+  source.localSource.baseSubmodule.logVolume +
+    (source.globalExponent : Real) * source.localSource.localPrimeStepLogVolume
+
+def toGlobalFrobenioidLogVolumeCalibration
+    (source : IUTStage1GlobalRealifiedFrobenioidCalibrationSource) :
+    IUTStage1GlobalFrobenioidLogVolumeCalibration :=
+  { localData := source.localSource.toLocalFrobenioidLogVolumeAmbiguity,
+    globalExponent := source.globalExponent,
+    global_exponent_eq_zero := source.global_exponent_eq_zero,
+    calibratedLogVolume := source.calibratedLogVolume,
+    calibrated_logVolume_eq := rfl }
+
+theorem calibratedLogVolume_eq_base
+    (source : IUTStage1GlobalRealifiedFrobenioidCalibrationSource) :
+    source.calibratedLogVolume =
+      source.localSource.baseSubmodule.logVolume := by
+  rw [calibratedLogVolume, source.global_exponent_eq_zero]
+  simp
+
+theorem toCalibration_calibrated_eq_base
+    (source : IUTStage1GlobalRealifiedFrobenioidCalibrationSource) :
+    source.toGlobalFrobenioidLogVolumeCalibration.calibratedLogVolume =
+      source.localSource.baseSubmodule.logVolume :=
+  source.calibratedLogVolume_eq_base
+
+theorem calibrated_ne_local_shifted_of_not_automorphism
+    (source : IUTStage1GlobalRealifiedFrobenioidCalibrationSource)
+    (hnot : ¬ source.localSource.pPowerEndomorphismIsAutomorphism)
+    (hStep : source.localSource.localPrimeStepLogVolume ≠ 0) :
+    source.calibratedLogVolume ≠ source.localSource.shiftedLogVolume := by
+  rw [source.calibratedLogVolume_eq_base]
+  exact
+    (source.localSource.shiftedLogVolume_ne_base_of_not_automorphism
+      hnot hStep).symm
+
+theorem calibrated_eq_local_shifted_iff_automorphism_or_zero_step
+    (source : IUTStage1GlobalRealifiedFrobenioidCalibrationSource) :
+    source.calibratedLogVolume = source.localSource.shiftedLogVolume ↔
+      source.localSource.pPowerEndomorphismIsAutomorphism ∨
+        source.localSource.localPrimeStepLogVolume = 0 := by
+  rw [source.calibratedLogVolume_eq_base, eq_comm]
+  exact source.localSource.shiftedLogVolume_eq_base_iff_automorphism_or_zero_step
+
+theorem globalRealifiedCalibrationSource_endpoint
+    (source : IUTStage1GlobalRealifiedFrobenioidCalibrationSource) :
+    source.toGlobalFrobenioidLogVolumeCalibration.calibratedLogVolume =
+        source.localSource.baseSubmodule.logVolume ∧
+      (source.calibratedLogVolume = source.localSource.shiftedLogVolume ↔
+        source.localSource.pPowerEndomorphismIsAutomorphism ∨
+          source.localSource.localPrimeStepLogVolume = 0) :=
+  ⟨source.toCalibration_calibrated_eq_base,
+    source.calibrated_eq_local_shifted_iff_automorphism_or_zero_step⟩
+
+end IUTStage1GlobalRealifiedFrobenioidCalibrationSource
 
 theorem remark3122_ringStructureDimensionSplit_endpoint
     {kind : IUTStage1PlaceKind} {j : Nat}
