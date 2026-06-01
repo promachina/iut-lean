@@ -826,6 +826,10 @@
         <a href="#alien-gaussian-radial-angular-383">Alien radial/angular 3.8(9-10)</a>
         <a href="#alien-gaussian-error-factor-384">Alien error factor 3.8(11)</a>
         <a href="#alien-gaussian-left-right-rigidity-385">Alien left/right rigidity 3.8</a>
+        <a href="#alien-hodge-arakelov-relation-39">Alien Hodge-Arakelov 3.9</a>
+        <a href="#alien-hodge-filtration-theta-391">Alien Hodge filtration 3.9(i)</a>
+        <a href="#alien-ha-iut-comparison-392">Alien HA/IUT comparison 3.9(ii)</a>
+        <a href="#alien-analytic-torsion-393">Alien analytic torsion 3.9(iii)</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
         <a href="#iut-i-base-bridges-evaluation-sections">Base bridges/evaluation sections</a>
         <a href="#iut-i-additive-base-bridges-61-610">Additive base bridges 6.1-6.10</a>
@@ -17381,6 +17385,175 @@
           Related: <a href="#alien-theta-function-rigidity-343">theta-function rigidity</a>
           <a href="#alien-galois-evaluation-36">Galois evaluation</a>
           <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV estimates</a>
+        </div>
+      </section>
+
+      <section id="alien-hodge-arakelov-relation-39" data-filter="mutually alien copies 3.9 relation scheme theoretic Hodge Arakelov multiradial representations theta trivialization log shells analytic torsion">
+        <h2>Alien Copies 3.9: Relation to Hodge-Arakelov Theory</h2>
+        <p class="lede">
+          §3.9 rereads the §3 multiradial representation through scheme-theoretic
+          Hodge-Arakelov theory. Mochizuki presents the older Hodge-Arakelov
+          calculation as a precursor of the IUT log-volume computation, not as a
+          substitute for the theta-link and log-shell machinery.
+        </p>
+        <div class="diagram fit" aria-label="Hodge-Arakelov to IUT relation">
+          <div class="diagramHeader">
+            <strong>From Hodge-Arakelov computation to IUT log-volume computation</strong>
+            <span>Mutually Alien Copies §3.9</span>
+          </div>
+          <svg viewBox="0 0 1080 420" role="img">
+            <defs>
+              <marker id="arrowAlienHA39" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="56" y="64" width="250" height="88"></rect>
+            <text class="nodeTitle" x="181" y="94" text-anchor="middle">Hodge-Arakelov theorem</text>
+            <text class="tinyText" x="181" y="120" text-anchor="middle">sections vs torsion values</text>
+            <text class="tinyText" x="181" y="138" text-anchor="middle">theta trivialization</text>
+
+            <rect class="nodeBox gold" x="414" y="64" width="250" height="88"></rect>
+            <text class="nodeTitle" x="539" y="94" text-anchor="middle">Leading-term package</text>
+            <text class="tinyText" x="539" y="120" text-anchor="middle">q^(j^2) * (Omega_log)^j</text>
+            <text class="tinyText" x="539" y="138" text-anchor="middle">discriminant-style degree</text>
+
+            <rect class="nodeBox green" x="772" y="64" width="250" height="88"></rect>
+            <text class="nodeTitle" x="897" y="94" text-anchor="middle">IUT analogue</text>
+            <text class="tinyText" x="897" y="120" text-anchor="middle">log-shell multiradial packets</text>
+            <text class="tinyText" x="897" y="138" text-anchor="middle">3.12 log-volume estimate</text>
+
+            <path d="M308 108 H412" class="edge blue" marker-end="url(#arrowAlienHA39)"></path>
+            <path d="M666 108 H770" class="edge gold" marker-end="url(#arrowAlienHA39)"></path>
+
+            <rect class="nodeBox violet" x="235" y="248" width="250" height="80"></rect>
+            <text class="nodeTitle" x="360" y="278" text-anchor="middle">Finite discretization</text>
+            <text class="tinyText" x="360" y="304" text-anchor="middle">polynomial-theoretic analogue</text>
+
+            <rect class="nodeBox red" x="595" y="248" width="250" height="80"></rect>
+            <text class="nodeTitle" x="720" y="278" text-anchor="middle">Analytic torsion analogy</text>
+            <text class="tinyText" x="720" y="304" text-anchor="middle">holomorphic subspace in topological container</text>
+
+            <path d="M486 288 H593" class="edge violet" marker-end="url(#arrowAlienHA39)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Main content</th><th>Page</th></tr>
+          <tr><td>§3.9(i)</td><td>Hodge filtration, theta trivialization, and the rough weighted package <span class="math">q^(j^2)*(Omega_log)^j</span>.</td><td><a href="#alien-hodge-filtration-theta-391">Hodge filtration</a></td></tr>
+          <tr><td>§3.9(ii)</td><td>Log-shells as localized arithmetic analogues of logarithmic differentials, and the Hodge-Arakelov computation as precursor of the IUT leading term.</td><td><a href="#alien-ha-iut-comparison-392">HA/IUT comparison</a></td></tr>
+          <tr><td>§3.9(iii)</td><td>Analytic torsion, mono-analytic transport, and multiradial containers.</td><td><a href="#alien-analytic-torsion-393">analytic torsion</a></td></tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.9</a>
+          Related: <a href="#invitation-hodge-arakelov">Hodge-Arakelov motivation</a>
+          <a href="#alien-leading-term-computation-374">3.7 leading term</a>
+          <a href="#alien-gaussian-comparison-38">Gaussian comparison</a>
+        </div>
+      </section>
+
+      <section id="alien-hodge-filtration-theta-391" data-filter="mutually alien copies 3.9 i Hodge filtrations theta trivializations fundamental theorem Hodge Arakelov q j squared Omega log discriminant modular form">
+        <h2>Alien Copies 3.9(i): Hodge Filtration and Theta Trivialization</h2>
+        <p class="lede">
+          Mochizuki starts from the fundamental theorem of scheme-theoretic
+          Hodge-Arakelov theory: sections of a line bundle restricted to a torsion
+          subscheme are compared with torsion-value data. After theta-group
+          irreducibility removes redundant dimensions, the source and target may be
+          read roughly as <span class="math">l</span>-dimensional vector spaces.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Side</th><th>Source structure</th><th>Rough arithmetic line-bundle reading</th></tr>
+          <tr>
+            <td>Left side</td>
+            <td>Natural Hodge filtration by relative degree.</td>
+            <td>Adjacent pieces behave like tensor powers of the cotangent-line dual; with <span class="math">Omega_log = omega_E^2</span>, the relevant label <span class="math">j</span> contributes <span class="math">((Omega_log)^j)^vee</span>.</td>
+          </tr>
+          <tr>
+            <td>Right side</td>
+            <td>Theta trivialization by torsion labels.</td>
+            <td>At potentially multiplicative places, the label contributes a theta factor of the form <span class="math">q^(j^2)</span>.</td>
+          </tr>
+          <tr>
+            <td>Combined rough package</td>
+            <td>Dual of the left contribution tensored with the right contribution.</td>
+            <td>Weighted average over labels of <span class="math">q^(j^2)*(Omega_log)^j</span>.</td>
+          </tr>
+        </table>
+        <p>
+          The resulting global degree calculation has the same leading-term profile as
+          a positive tensor power of the discriminant modular form: the geometric
+          prototype behind the later log-volume leading term.
+        </p>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.9(i)</a>
+          Related: <a href="#theta-values-q-j-squared-intro-ii">theta values <span class="math">q^(j^2)</span></a>
+          <a href="#alien-leading-term-computation-374">leading-term computation</a>
+        </div>
+      </section>
+
+      <section id="alien-ha-iut-comparison-392" data-filter="mutually alien copies 3.9 ii comparison inter universal Teichmuller theory log shells localized absolute arithmetic analogues logarithmic differentials leading term">
+        <h2>Alien Copies 3.9(ii): Hodge-Arakelov/IUT Comparison</h2>
+        <p class="lede">
+          The comparison point is explicit: log-shells are treated as localized absolute
+          arithmetic analogues of logarithmic differentials. Under this reading, the
+          Hodge-Arakelov package <span class="math">q^(j^2)*(Omega_log)^j</span>
+          becomes a scheme-theoretic precursor of the <span class="math">j</span>-labeled
+          portion of the §3.7 multiradial representation.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Hodge-Arakelov item</th><th>IUT analogue in §3.9(ii)</th></tr>
+          <tr>
+            <td>Logarithmic differentials on the compactified elliptic-moduli side.</td>
+            <td>Log-shells, locally identified in tame p-adic cases with the dual fractional ideal to the different.</td>
+          </tr>
+          <tr>
+            <td>Label-wise line bundle <span class="math">q^(j^2)*(Omega_log)^j</span>.</td>
+            <td>The <span class="math">j</span>-labeled component of the multiradial representation.</td>
+          </tr>
+          <tr>
+            <td>Global degree leading-term computation.</td>
+            <td>The leading term of the log-volume on the left side of the §3.7/3.12 inequality.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.9(ii)</a>
+          Related: <a href="#frobenioids-log-shells">log-shell background</a>
+          <a href="#alien-theorem-311-representation-371">3.11 multiradial representation</a>
+          <a href="#alien-corollary-312-estimate-372">3.12 estimate</a>
+        </div>
+      </section>
+
+      <section id="alien-analytic-torsion-393" data-filter="mutually alien copies 3.9 iii analytic torsion mono analytic transport multiradial containers topological invariant holomorphic moduli finite discrete approximation">
+        <h2>Alien Copies 3.9(iii): Analytic Torsion Interpretation</h2>
+        <p class="lede">
+          Mochizuki then compares IUT with analytic torsion. In Arakelov theory,
+          analytic torsion measures how holomorphic global sections sit inside a
+          larger <span class="math">L^2</span>-type Hilbert space that is topological
+          rather than holomorphic in nature.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Classical analytic-torsion pattern</th><th>IUT-side reading</th></tr>
+          <tr>
+            <td>A holomorphic section space varies with holomorphic moduli.</td>
+            <td>Arithmetic holomorphic structures vary across Hodge-theater contexts.</td>
+          </tr>
+          <tr>
+            <td>The ambient Hilbert space is topological and insensitive to those deformations.</td>
+            <td>Log-shells serve as mono-analytic multiradial containers for the varying holomorphic structures.</td>
+          </tr>
+          <tr>
+            <td>Scheme-theoretic Hodge-Arakelov theory discretizes this picture over number fields.</td>
+            <td>IUT is presented as a global Galois-theoretic version over number fields.</td>
+          </tr>
+        </table>
+        <p>
+          This page is a conceptual bridge only. The formal corridor still has to be
+          supplied by the log-shell, theta-link, multiradiality, and log-volume
+          constructions rather than by the analogy with analytic torsion.
+        </p>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.9(iii)</a>
+          Related: <a href="#alien-mono-anabelian-transport-27">mono-anabelian transport</a>
+          <a href="#mono-analytic-log-shells">mono-analytic log-shells</a>
+          <a href="#collas-category-perspective">Collas category view</a>
         </div>
       </section>
 
