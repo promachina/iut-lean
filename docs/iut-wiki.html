@@ -1387,6 +1387,9 @@
         <a href="#mod-versus-mod-311">MOD versus mod 3.11</a>
         <a href="#theta-link-compatibility-source-311">3.11 horizontal compatibility</a>
         <a href="#ipl-she-apt-source-311">IPL/SHE/APT source</a>
+        <a href="#naive-q-power-3111">Naive q-power model</a>
+        <a href="#distinct-labels-tradeoff-3111">Distinct-labels tradeoff</a>
+        <a href="#trivial-multiradial-model-3111">Trivial multiradial model</a>
         <a href="#label-discipline-311">3.11 label discipline</a>
         <a href="#noncommutative-single-link-3113">3.11.3 single-link rule</a>
         <a href="#log-kummer-reconciliation-3113">3.11.3 log-Kummer reconciliation</a>
@@ -51053,6 +51056,157 @@
           Related: <a href="#multiradiality">multiradiality overview</a>
           <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
           <a href="#corollary-312-proof-steps">Corollary 3.12 proof steps</a>
+        </div>
+      </section>
+
+      <section id="naive-q-power-3111" data-filter="iut iii remark 3.11.1 naive q power q lambda she ipl fixed ring arithmetic holomorphic structure">
+        <h2>IUT III Remark 3.11.1: Naive q-Power Model</h2>
+        <p class="lede">
+          Remark 3.11.1(vi) tests IPL and SHE against a deliberately naive model:
+          inside one fixed arithmetic holomorphic structure, write a theta-like
+          correspondence <span class="math">q -> q<sup>lambda</sup></span> for an integer
+          <span class="math">lambda &gt; 1</span>. The construction of
+          <span class="math">q<sup>lambda</sup></span> by taking the lambda-th power of
+          <span class="math">q</span> is simultaneously executable in that fixed ring
+          context. Thus it has the analogue of SHE, but it does not identify
+          <span class="math">q</span> with <span class="math">q<sup>lambda</sup></span> as IPL
+          would require.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Feature</th><th>Naive model behavior</th><th>Source lesson</th></tr>
+          <tr>
+            <td>Single ring structure</td>
+            <td>Both <span class="math">q</span> and <span class="math">q<sup>lambda</sup></span> are computed inside one arithmetic holomorphic structure <span class="math">R</span>.</td>
+            <td>This gives simultaneous executability by construction.</td>
+          </tr>
+          <tr>
+            <td>SHE analogue</td>
+            <td>The algorithm "take the lambda-th power" is tautologically valid for both inputs in the fixed structure.</td>
+            <td>The SHE-like part is easy only because no alien holomorphic structures are being compared.</td>
+          </tr>
+          <tr>
+            <td>IPL analogue</td>
+            <td>The fixed container does not itself induce an identification between <span class="math">q</span> and <span class="math">q<sup>lambda</sup></span>.</td>
+            <td>SHE alone is not the source mechanism used by Theorem 3.11.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          <strong>Audit point.</strong> A model that keeps a single ring history can make
+          the power construction look harmless, but it has not reproduced the input
+          prime-strip link property.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.11.1(vi)</a>
+          Related: <a href="#ipl-she-apt-source-311">IPL/SHE/APT source</a>
+          <a href="#distinct-labels-tradeoff-3111">distinct-labels tradeoff</a>
+          <a href="#remark-3122-intertwining">Remark 3.12.2 intertwining</a>
+        </div>
+      </section>
+
+      <section id="distinct-labels-tradeoff-3111" data-filter="iut iii remark 3.11.1 distinct labels forced identification ipl she tradeoff formal symbol q q lambda">
+        <h2>IUT III Remark 3.11.1: Distinct-Labels Tradeoff</h2>
+        <p class="lede">
+          Remark 3.11.1(vii) makes the q-power toy model diagnostic. To force an IPL-like
+          simultaneous relationship, introduce a formal symbol standing for the abstract
+          prime-strip and map it to two labelled realizations. With distinct labels,
+          the IPL analogue is tautologically consistent, but the SHE analogue is not
+          automatic. If the two labels are forcibly identified, SHE becomes tautological,
+          but IPL degenerates into confusion between <span class="math">q</span> and
+          powers <span class="math">q<sup>lambda n</sup></span>.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Distinct labels</strong>
+            <p>Use separate dagger-like labels for the structures producing <span class="math">q</span> and <span class="math">q<sup>lambda</sup></span>.</p>
+          </div>
+          <div class="flowStep">
+            <strong>IPL holds</strong>
+            <p>The formal symbol can map to both labelled realizations without contradiction.</p>
+          </div>
+          <div class="flowStep">
+            <strong>SHE unclear</strong>
+            <p>The relationship between the two arithmetic holomorphic structures is not computed.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Forced identification</strong>
+            <p>Deleting labels restores a single-ring power algorithm but loses the meaningful IPL relation.</p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Approach</th><th>What it gains</th><th>What it loses</th></tr>
+          <tr>
+            <td>Distinct labels</td>
+            <td>Both assignments from the formal prime-strip symbol are simultaneous and consistent.</td>
+            <td>There is no a priori computation of the relation between the two labelled holomorphic structures.</td>
+          </tr>
+          <tr>
+            <td>Forced identification</td>
+            <td>The tautological power algorithm becomes available again.</td>
+            <td>To keep simultaneous assignments, <span class="math">q</span> becomes confused with <span class="math">q<sup>lambda n</sup></span> for indeterminate <span class="math">n</span>.</td>
+          </tr>
+          <tr>
+            <td>IUT solution route</td>
+            <td>Keep distinct Frobenius-like labels but compare via etale-like permutation symmetries.</td>
+            <td>This requires the full multiradial machinery; it is not a single-ring simplification.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          <strong>Do not collapse labels.</strong> The source uses this toy model to
+          show why deleting distinct arithmetic-holomorphic labels gives a trivial
+          multiradial representation, not the IUT comparison.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.11.1(vii)</a>
+          Related: <a href="#naive-q-power-3111">naive q-power model</a>
+          <a href="#trivial-multiradial-model-3111">trivial multiradial model</a>
+          <a href="#label-discipline-311">label discipline</a>
+        </div>
+      </section>
+
+      <section id="trivial-multiradial-model-3111" data-filter="iut iii remark 3.11.1 trivial multiradial representation value group unit group indeterminacy log kummer additive multiplicative intertwining">
+        <h2>IUT III Remark 3.11.1: Trivial Multiradial Model</h2>
+        <p class="lede">
+          Remark 3.11.1(viii) explains why the forced-identification toy model is only
+          a qualitative toy. The representation by the set of powers
+          <span class="math">{q<sup>lambda n</sup>}</span> is useful for seeing the logical
+          shape of IPL/SHE, but it is useless for Corollary 3.12 log-volume estimates.
+          It puts indeterminacy in the value-group part while keeping unit groups rigid,
+          whereas IUT does the opposite: value groups remain rigid and unit-group
+          portions carry Ind1, Ind2, and Ind3 through log-Kummer theory.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Aspect</th><th>Trivial model</th><th>IUT 3.11/3.12 route</th></tr>
+          <tr>
+            <td>Value group</td>
+            <td>Indeterminacy is allowed in the value group <span class="math">q<sup>Z</sup></span>.</td>
+            <td>Value-group portions of the relevant <span class="math">F</span>-prime-strips are held rigid.</td>
+          </tr>
+          <tr>
+            <td>Unit group</td>
+            <td>Unit groups are held rigid and do not carry the relevant indeterminacies.</td>
+            <td>Unit portions of <span class="math">F⊢×mu</span>-prime-strips carry Ind1, Ind2, and Ind3.</td>
+          </tr>
+          <tr>
+            <td>Ring structure</td>
+            <td>Only the multiplicative value-group structure is used; additive issues are ignored.</td>
+            <td>Log-Kummer uses the intertwining between additive and multiplicative structures.</td>
+          </tr>
+          <tr>
+            <td>Labels</td>
+            <td>Label deletion creates a trivial family of powers.</td>
+            <td>Distinct Frobenius-like Hodge-theater labels are retained; etale-like permutation symmetries mediate comparison.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          <strong>Formalization consequence.</strong> The toy model is useful only as a
+          negative control. It should not be used as the semantic content of
+          Theorem 3.11 or Corollary 3.12.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.11.1(viii)</a>
+          Related: <a href="#distinct-labels-tradeoff-3111">distinct-labels tradeoff</a>
+          <a href="#ind1-ind2-ind3-311">Ind1/Ind2/Ind3</a>
+          <a href="#remark-3122-intertwining">Remark 3.12.2 intertwining</a>
         </div>
       </section>
 
