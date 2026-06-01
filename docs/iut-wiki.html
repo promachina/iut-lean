@@ -28,7 +28,7 @@
 
     * { box-sizing: border-box; }
     html {
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
       overflow-x: hidden;
     }
     body {
@@ -80,13 +80,12 @@
       letter-spacing: 0;
     }
     .brand {
-      margin-bottom: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--line);
+      margin-bottom: 8px;
+      padding-bottom: 0;
     }
 
     .searchBox {
-      margin: 0 0 16px;
+      margin: 0 0 14px;
       padding: 10px;
       background: var(--panel);
       border: 1px solid var(--line);
@@ -1276,6 +1275,11 @@
         <a href="#iut-iv-corollary-22-prime-galois">Cor. 2.2 prime/Galois</a>
         <a href="#iut-iv-corollary-22-c1-c2">Cor. 2.2 C1/C2 output</a>
         <a href="#iut-iv-diophantine-inequalities-23">IUT IV Diophantine inequalities 2.3</a>
+        <a href="#iut-iv-corollary-23-statement">Cor. 2.3 statement</a>
+        <a href="#iut-iv-corollary-23-genell">Cor. 2.3 GenEll boundary</a>
+        <a href="#iut-iv-remark-231-corrections">Remark 2.3.1 corrections</a>
+        <a href="#iut-iv-remark-232-sharpness">Remark 2.3.2 sharpness</a>
+        <a href="#iut-iv-remarks-233-235-comparisons">Remarks 2.3.3-2.3.5</a>
         <a href="#iut-iv">IUT IV and consequences</a>
         <a href="#iut-iv-diophantine-output">IUT IV output route</a>
         <a href="#probabilistic-szpiro">Probabilistic Szpiro</a>
@@ -54169,6 +54173,303 @@
         </div>
       </section>
 
+      <section id="iut-iv-corollary-23-statement" data-filter="iut iv corollary 2.3 statement diophantine inequalities vojta hyperbolic curve bounded discrepancy">
+        <h2>IUT IV Corollary 2.3: Statement</h2>
+        <p class="lede">
+          Corollary 2.3 states the final Vojta-form Diophantine inequality of IUT IV:
+          for a hyperbolic open curve <span class="math">U_X=X-D</span> over a number
+          field, points of bounded degree satisfy a bounded-discrepancy inequality
+          comparing the height of <span class="math">omega_X(D)</span> with
+          log-different plus log-conductor.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Geometric input</strong>
+            <p>
+              <span class="math">X</span> is smooth, proper, geometrically connected;
+              <span class="math">D</span> is reduced; <span class="math">deg omega_X(D)&gt;0</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Arithmetic domain</strong>
+            <p>
+              The inequality is on <span class="math">U_X(Qbar)_{<=d}</span>, points
+              defined over extensions of degree at most <span class="math">d</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>BD inequality</strong>
+            <p>
+              <span class="math">ht_{omega_X(D)}</span> is bounded above, up to
+              bounded discrepancy, by
+              <span class="math">(1+epsilon)(log-diff_X+log-cond_D)</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Quantifier</th><th>Source content</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td><span class="math">d</span></td>
+            <td>A positive integer bounding the degree of algebraic points.</td>
+            <td>The bounded-discrepancy constant may depend on fixed degree data; the domain is not all algebraic points at once.</td>
+          </tr>
+          <tr>
+            <td><span class="math">epsilon</span></td>
+            <td>An arbitrary positive real number in the coefficient <span class="math">1+epsilon</span>.</td>
+            <td>This is obtained by the exceptional-set refinement in Corollary 2.2(iii).</td>
+          </tr>
+          <tr>
+            <td>BD class</td>
+            <td>The right-hand side minus the height is bounded below on the bounded-degree domain.</td>
+            <td>The conclusion is a bounded-discrepancy inequality, not a literal pointwise formula.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Corollary 2.3 statement</a>
+          Related: <a href="#iut-iv-corollary-23-genell">GenEll boundary</a>
+          <a href="#iut-iv-corollary-22-c1-c2">Corollary 2.2 C1/C2</a>
+          <a href="#iut-iv-diophantine-output">IUT IV output route</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-corollary-23-genell" data-filter="iut iv corollary 2.3 proof genell theorem 2.1 lambda line belyi maps analytic continuation">
+        <h2>IUT IV Corollary 2.3: GenEll Boundary</h2>
+        <p class="lede">
+          The proof of Corollary 2.3 explicitly delegates the passage from the
+          lambda-line case to general hyperbolic curves to GenEll Theorem 2.1. The IUT
+          IV contribution is to verify the lambda-line case using Corollary 2.2.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>GenEll equivalence</strong>
+            <p>
+              Mochizuki says the Corollary 2.3 statement coincides with GenEll Theorem
+              2.1(i).
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Reduced case</strong>
+            <p>
+              It suffices to prove the lambda-line case
+              <span class="math">P^1-{0,1,infty}</span> with a compactly bounded
+              <span class="math">KV</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Corollary 2.2 use</strong>
+            <p>
+              The equality of BD classes from Corollary 2.2(i) and the C2 estimate from
+              Corollary 2.2(ii)-(iii) give the required inequality.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Boundary</th><th>Paper content</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>General curve propagation</td>
+            <td>Handled by GenEll Theorem 2.1, described elsewhere as a Belyi-map analytic-continuation route.</td>
+            <td>This should be a separate imported theorem in a formalization, not hidden inside IUT IV.</td>
+          </tr>
+          <tr>
+            <td>Lambda-line verification</td>
+            <td>Uses <span class="math">X=P^1_Q</span>, <span class="math">D={0,1,infty}</span>, compactly bounded <span class="math">KV</span>, and the <span class="math">(*j-inv)</span> condition.</td>
+            <td>This is the exact place where Corollary 2.2 is consumed.</td>
+          </tr>
+          <tr>
+            <td>Fixed-degree note</td>
+            <td>The <span class="math">(*j-inv)</span> condition is vacuous in fixed-degree situations of GenEll Theorem 2.1(ii).</td>
+            <td>The wiki should not overstate <span class="math">(*j-inv)</span> as a global condition in the final Vojta statement.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, proof of Corollary 2.3</a>
+          Related: <a href="#iut-iv-corollary-22-lambda-j">lambda/j gate</a>
+          <a href="#iut-iv-corollary-22-bd-heights">BD heights</a>
+          <a href="#iut-iv-diophantine-output">IUT IV output route</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-remark-231-corrections" data-filter="iut iv remark 2.3.1 genell corrections bounded discrepancy compactly bounded subset open curve">
+        <h2>IUT IV Remark 2.3.1: GenEll Corrections</h2>
+        <p class="lede">
+          Remark 2.3.1 records corrections to GenEll and clarifies the convention for
+          compactly bounded subsets of open curves. The most relevant wiki point is
+          that compactly bounded local domains must lie inside the open curve, not only
+          inside its compactification.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>BD notation correction</strong>
+            <p>
+              The non-respective and respective items in GenEll Definition 1.2(ii) are
+              reversed.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Height comparison correction</strong>
+            <p>
+              A displayed equality in the proof of GenEll Theorem 2.1 should be an
+              inequality with an extra factor <span class="math">2</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Open-curve compactness</strong>
+            <p>
+              For <span class="math">U subset X</span>, local compact domains defining
+              a compactly bounded subset of <span class="math">U(Qbar)</span> must be
+              contained in <span class="math">U</span> locally.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Correction</th><th>Source content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>BD direction</td>
+            <td>The display in GenEll Definition 1.2(ii) has the two directions reversed.</td>
+            <td>All wiki explanations of bounded discrepancy should state the direction explicitly.</td>
+          </tr>
+          <tr>
+            <td>Compactly bounded subset</td>
+            <td>For open <span class="math">U</span>, both archimedean and nonarchimedean compact domains must lie in <span class="math">U</span>.</td>
+            <td>This prevents accidentally allowing compact domains that meet the removed divisor.</td>
+          </tr>
+          <tr>
+            <td>Height inequality</td>
+            <td>A GenEll height equality should be weakened to an inequality with a factor <span class="math">2</span>.</td>
+            <td>The final Corollary 2.3 page must avoid overstating the imported GenEll comparison.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Remark 2.3.1</a>
+          Related: <a href="#iut-iv-corollary-23-statement">Corollary 2.3 statement</a>
+          <a href="#cor23-compact-bounded-correction">compact-bounded correction card</a>
+          <a href="#iut-iv-corollary-23-genell">GenEll boundary</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-remark-232-sharpness" data-filter="iut iv remark 2.3.2 coefficient one sharpness N-th power theta function corollary 3.12">
+        <h2>IUT IV Remark 2.3.2: Sharpness and N-th Powers</h2>
+        <p class="lede">
+          Remark 2.3.2 says that stronger estimates are not pursued and that the
+          coefficient <span class="math">1</span> in Corollary 2.3 cannot be improved in
+          the framework under discussion. Mochizuki relates this to the failure of
+          replacing the first power of the etale theta function by an
+          <span class="math">N</span>-th power in the Corollary 3.12 discussion.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Possible stronger estimates</strong>
+            <p>
+              The paper notes that sharper versions of estimates in Theorem 1.10 and
+              Corollaries 2.2-2.3 are possible but outside scope.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Coefficient one</strong>
+            <p>
+              The coefficient <span class="math">1</span> in the final inequality is
+              asserted not to be improvable, citing examples and Remark 1.10.5.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>N-th power warning</strong>
+            <p>
+              The remark points back to the Step (xi)/Corollary 3.12 discussion where
+              replacing theta by an <span class="math">N</span>-th power breaks the
+              intended argument.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Theme</th><th>Paper content</th><th>3.12 relevance</th></tr>
+          <tr>
+            <td>Sharpness</td>
+            <td>The coefficient <span class="math">1</span> cannot be improved.</td>
+            <td>Prevents reading the final inequality as a loose estimate that could be arbitrarily strengthened.</td>
+          </tr>
+          <tr>
+            <td>Theta powers</td>
+            <td>Replacing the first power of the etale theta function by an <span class="math">N</span>-th power for <span class="math">N>=2</span> breaks the theory.</td>
+            <td>This is directly tied to the disputed Step (xi) / Corollary 3.12 corridor.</td>
+          </tr>
+          <tr>
+            <td>Isogeny height stability</td>
+            <td>The global height under such isogeny-like operations changes only by relatively small discrepancy.</td>
+            <td>Explains why the naive N-th power route cannot simply amplify the final inequality.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Remark 2.3.2</a>
+          Related: <a href="#tensor-power-warning-312">3.12 tensor-power warning</a>
+          <a href="#generalized-theta-links-3121">generalized theta links</a>
+          <a href="#iut-iv-corollary-23-statement">Corollary 2.3</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-remarks-233-235-comparisons" data-filter="iut iv remarks 2.3.3 2.3.4 2.3.5 faltings bogomolov parshin comparison class field theory">
+        <h2>IUT IV Remarks 2.3.3-2.3.5: Comparison Layer</h2>
+        <p class="lede">
+          Remarks 2.3.3 through 2.3.5 compare the IUT IV output with Faltings'
+          proof of Mordell, Bogomolov's geometric Szpiro proof, and Parshin's
+          function-field Mordell proof. These remarks are not new theorem steps, but
+          they clarify Mochizuki's view of how IUT differs from scheme-theoretic and
+          holomorphic methods.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Faltings comparison</strong>
+            <p>
+              Faltings is read as scheme-theoretic and arithmetically holomorphic;
+              IUT is framed as multiradial and mono-analytic after dismantling this
+              structure.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Bogomolov comparison</strong>
+            <p>
+              Bogomolov's geometric Szpiro proof is described as a useful analogue or
+              guide for portions of IUT.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Parshin comparison</strong>
+            <p>
+              Parshin's function-field proof motivates the question whether IUT could
+              avoid Belyi maps; Mochizuki's answer in the text is no.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Remark</th><th>Paper content</th><th>Wiki use</th></tr>
+          <tr>
+            <td>2.3.3</td>
+            <td>Lists ingredients in Faltings and compares them to IUT ingredients: Kummer theory, Frobenioids, anabelian geometry, prime-number estimates, and cyclotomic rigidity.</td>
+            <td>Provides a structured comparison page between classical scheme-theoretic Mordell/Szpiro methods and IUT.</td>
+          </tr>
+          <tr>
+            <td>2.3.4</td>
+            <td>Describes Bogomolov's geometric Szpiro proof as an arithmetic analogue or blueprint for aspects of IUT.</td>
+            <td>Links the wiki's Bogomolov-Szpiro analogy page to the source IUT IV remark.</td>
+          </tr>
+          <tr>
+            <td>2.3.5</td>
+            <td>Compares Parshin's function-field Mordell proof and says the number-field IUT route still needs Belyi maps as in GenEll.</td>
+            <td>Keeps the GenEll/Belyi dependency visible in the application layer.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Scope note: these remarks are interpretive source material. They should guide
+          orientation pages, but formal theorem pages should still cite the exact
+          proposition, corollary, or GenEll theorem used in the proof.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Remarks 2.3.3-2.3.5</a>
+          Related: <a href="#bogomolov-szpiro-analogy">Bogomolov-Szpiro analogy</a>
+          <a href="#iut-iv-corollary-23-genell">GenEll boundary</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+        </div>
+      </section>
+
       <section id="iut-iv">
         <h2>IUT IV and Consequences</h2>
         <p class="lede">
@@ -58315,7 +58616,7 @@
           const scrollTarget = idElements.get(requested) || page;
           setTimeout(() => {
             if (scrollTarget === page) {
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              window.scrollTo({ top: 0, behavior: "auto" });
             } else {
               scrollTarget.scrollIntoView({ block: "center" });
             }
