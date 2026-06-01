@@ -1186,6 +1186,7 @@
         <a href="#coric-unit-quotient-ii1102">Coric unit quotient 1.10.2</a>
         <a href="#mlf-galois-rigidity-indeterminacies-ii111">MLF-Galois orbits 1.11</a>
         <a href="#post-anabelian-algorithm-content-ii1113">Algorithm content 1.11.3</a>
+        <a href="#radial-coric-decoupling-ii1114">Radial/coric decoupling 1.11.4</a>
         <a href="#constant-multiple-rigidity-ii112">Constant multiple 1.12</a>
         <a href="#mu2l-normalization-ii1122">mu_2l normalization</a>
         <a href="#galois-evaluation-principle-ii1124">Galois evaluation principle</a>
@@ -32766,6 +32767,125 @@
           Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 1.11.3</a>
           Related: <a href="#graph-functorial-algorithms-ii19">graphs of algorithms</a>
           <a href="#mlf-galois-rigidity-indeterminacies-ii111">MLF-Galois orbits</a>
+        </div>
+      </section>
+
+      <section id="radial-coric-decoupling-ii1114" data-filter="iut ii remark 1.11.4 splitting decoupling purely radial purely coric label dependent label independent O times mu O times theta cyclotomic rigidity">
+        <h2>IUT II Remark 1.11.4: Radial/Coric Decoupling</h2>
+        <p class="lede">
+          Remark 1.11.4 explains the significance of Corollary 1.10 relative to the
+          more indeterminate Corollary 1.11. The strict mono-theta rigidity of
+          Corollary 1.10 acts as a splitting: it separates the radial cyclotomic data
+          from the coric unit-quotient data <span class="math">O^xmu</span>.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Remark 1.11.4 radial coric decoupling">
+          <div class="diagramHeader">
+            <strong>Decoupling label-dependent and label-independent data</strong>
+            <span>IUT II, Remark 1.11.4</span>
+          </div>
+          <svg viewBox="0 0 1120 520" role="img">
+            <defs>
+              <marker id="arrowDecouple1114" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="82" y="70" width="270" height="92"></rect>
+            <text class="nodeTitle" x="217" y="102" text-anchor="middle">Corollary 1.10</text>
+            <text class="tinyText" x="217" y="128" text-anchor="middle">strict mono-theta rigidity</text>
+            <text class="tinyText" x="217" y="146" text-anchor="middle">trivial map to O^xmu</text>
+
+            <rect class="nodeBox red" x="426" y="70" width="270" height="92"></rect>
+            <text class="nodeTitle" x="561" y="102" text-anchor="middle">Corollary 1.11</text>
+            <text class="tinyText" x="561" y="128" text-anchor="middle">base-field/Galois route</text>
+            <text class="tinyText" x="561" y="146" text-anchor="middle">Aut(G), Gamma orbits</text>
+
+            <rect class="nodeBox violet" x="770" y="70" width="270" height="92"></rect>
+            <text class="nodeTitle" x="905" y="102" text-anchor="middle">modified tautological route</text>
+            <text class="tinyText" x="905" y="128" text-anchor="middle">replace O^xmu by O^x</text>
+            <text class="tinyText" x="905" y="146" text-anchor="middle">label-dependent rigidity inside coric data</text>
+
+            <rect class="nodeBox gold" x="214" y="300" width="300" height="96"></rect>
+            <text class="nodeTitle" x="364" y="332" text-anchor="middle">purely radial component</text>
+            <text class="tinyText" x="364" y="358" text-anchor="middle">label-dependent cyclotomic data</text>
+            <text class="tinyText" x="364" y="376" text-anchor="middle">allowed to remember spoke labels</text>
+
+            <rect class="nodeBox green" x="606" y="300" width="300" height="96"></rect>
+            <text class="nodeTitle" x="756" y="332" text-anchor="middle">purely coric component</text>
+            <text class="tinyText" x="756" y="358" text-anchor="middle">O^xmu quotient</text>
+            <text class="tinyText" x="756" y="376" text-anchor="middle">free of unwanted label dependence</text>
+
+            <path class="edge blue" d="M352 116 H424" marker-end="url(#arrowDecouple1114)"></path>
+            <path class="edge red" d="M696 116 H768" marker-end="url(#arrowDecouple1114)"></path>
+            <path class="edge blue" d="M218 164 C244 230 304 260 350 298" marker-end="url(#arrowDecouple1114)"></path>
+            <path class="edge green" d="M218 164 C388 242 600 254 740 298" marker-end="url(#arrowDecouple1114)"></path>
+            <path class="edge violet" d="M905 164 C902 232 842 260 770 298" marker-end="url(#arrowDecouple1114)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Remark 1.11.4 item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>(i) decoupling</td>
+            <td>
+              The strict cyclotomic rigidity of Corollary 1.10 separates the purely
+              radial data in the rigidity isomorphism from the purely coric data
+              <span class="math">O^xmu</span>.
+            </td>
+            <td>
+              This is not just a rigidity theorem; it is a structural split used to
+              keep spoke-dependent data out of the shared coric unit quotient.
+            </td>
+          </tr>
+          <tr>
+            <td>(i) contrast</td>
+            <td>
+              Corollary 1.11 has substantial indeterminacies because the input
+              <span class="math">O^triangleright</span> is nontrivially related to the
+              coric <span class="math">O^xmu</span> data.
+            </td>
+            <td>
+              The two rigidity routes should not be merged: their indeterminacy
+              profiles are different for source-level reasons.
+            </td>
+          </tr>
+          <tr>
+            <td>(ii) label dependence</td>
+            <td>
+              Corollary 1.10 still depends on labels of possible arithmetic
+              holomorphic structures, but this dependence is confined to the purely
+              radial component.
+            </td>
+            <td>
+              The wiki must record where label dependence lives, instead of simply
+              calling the construction "label independent."
+            </td>
+          </tr>
+          <tr>
+            <td>(ii) modified route</td>
+            <td>
+              If one replaces <span class="math">O^xmu</span> by
+              <span class="math">O^x</span>, the tautological route can produce
+              rigidity without indeterminacy only by putting unwanted label-dependent
+              data inside the coric side.
+            </td>
+            <td>
+              The quotient by roots of unity is not cosmetic; it is what lets the
+              output split into a label-dependent radial part and a label-independent
+              coric part.
+            </td>
+          </tr>
+        </table>
+        <div class="callout red">
+          Formalization guardrail: a record that simply bundles a rigidity isomorphism
+          and a coric unit object misses the point of Remark 1.11.4. The model must say
+          which component is allowed to retain label dependence and which component is
+          coric after quotienting by roots of unity.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 1.11.4</a>
+          Related: <a href="#mono-theta-rigidity-isomorphism-ii110">Corollary 1.10</a>
+          <a href="#coric-unit-quotient-ii1102">coric unit quotient</a>
+          <a href="#mlf-galois-rigidity-indeterminacies-ii111">Corollary 1.11</a>
+          <a href="#multiradial-parallel-transport-ii192">multiradial parallel transport</a>
         </div>
       </section>
 
