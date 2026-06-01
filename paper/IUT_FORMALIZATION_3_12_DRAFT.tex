@@ -421,6 +421,13 @@ equality of realified Frobenioid log-volumes, while retaining the
 Hodge-theater history guard.  This is still a finite degree-level shadow, not
 a construction of Mochizuki's Frobenioids, but it moves one equality source
 below the packet-correspondence interface.
+This layer is now connected to the nonarchimedean packet correspondence:
+a realified-Frobenioid log-Kummer packet source projects the Frobenioid
+compatibility data to the Kummer \(F\to D\) transfer and to the
+mono-analytic forgetting transfer, and then feeds the existing packet
+correspondence endpoint.  Thus the Step (x) source equality used by the route
+can be obtained from realified Frobenioid log-volume compatibility plus the
+remaining packet source/target calibrations.
 \IUT{} III, Remark 3.11.4 further says that the root-of-unity and cyclotomic
 indeterminacies arising from forgetting Frobenius-like labels are invisible
 for the objects under consideration.  The present code formalizes the finite
@@ -595,6 +602,10 @@ The project currently proves the following source-facing results in \Lean{}:
   realified Frobenioid log-volumes now derives the product-log-volume equality
   used by the tensor-packet coric transfer, with theater histories still kept
   distinct.
+\item The realified Frobenioid layer now feeds the nonarchimedean
+  log-Kummer packet source: Kummer and mono-analytic forgetting transfers are
+  projected from Frobenioid compatibility before the packet correspondence
+  endpoint is applied.
 \item The finite sign-unit/root-of-unity part of Remark 3.11.4 is formalized:
   sign-unit action preserves full cusp labels, full-label log-volume readings,
   Gaussian degrees, and averaged Gaussian log-volume.

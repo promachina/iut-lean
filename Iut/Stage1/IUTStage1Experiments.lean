@@ -267,6 +267,35 @@ theorem realifiedFrobenioidKummerCompatibility_endpoint
       source.toRealized.theater.side ≠ target.toRealized.theater.side :=
   compat.frobenioidKummerCompatibility_endpoint
 
+theorem realifiedFrobenioidLogKummerPacket_endpoint
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {thetaAverage : Real}
+    {logKummer : LogKummerCorrespondenceId}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (source :
+      NonarchimedeanRealifiedFrobenioidLogKummerPacketSource
+        audited thetaAverage logKummer entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    holomorphicD.toRealized.product.productLogVolume =
+        holomorphicF.toRealized.product.productLogVolume ∧
+      monoAnalyticD.toRealized.product.productLogVolume =
+        holomorphicD.toRealized.product.productLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      entry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      thetaAverage = entry.targetLogVolume.finiteLogVolume ∧
+      entry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+  source.realifiedFrobenioidPacket_endpoint
+
 theorem hodgeArakelovThetaValueSource_constructsGaussianEvaluation
     {l : PrimeGeFive} {F : Type u} [Field F]
     {X C : HyperbolicOrbicurveModel F}
