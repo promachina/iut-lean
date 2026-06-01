@@ -629,6 +629,10 @@
       table.sourceTable4 td:nth-child(2)::before { content: "Paper"; }
       table.sourceTable4 td:nth-child(3)::before { content: "Wiki role"; }
       table.sourceTable4 td:nth-child(4)::before { content: "Local source"; }
+      table.operationTable4 td:nth-child(1)::before { content: "Operation"; }
+      table.operationTable4 td:nth-child(2)::before { content: "Elementary effect"; }
+      table.operationTable4 td:nth-child(3)::before { content: "Geometric reading"; }
+      table.operationTable4 td:nth-child(4)::before { content: "IUT use"; }
       table.auditTable3 td:nth-child(1)::before { content: "Theme"; }
       table.auditTable3 td:nth-child(2)::before { content: "Audit reading"; }
       table.auditTable3 td:nth-child(3)::before { content: "Formal source"; }
@@ -700,6 +704,9 @@
         <a href="#reading-map">Reading map</a>
         <a href="#official-corpus">Official corpus</a>
         <a href="#preparatory-corpus">Preparatory corpus</a>
+        <a href="#frobenioid-standard-model-page">Frobenioid standard model</a>
+        <a href="#frobenioid-reconstruction-page">Frobenioid reconstruction</a>
+        <a href="#frobenioid-operations-page">Frobenioid operations</a>
         <a href="#invitation-expanded-route">Invitation route</a>
         <a href="#panoramic-route">Panoramic route</a>
         <a href="#bogomolov-szpiro-analogy">Bogomolov-Szpiro analogy</a>
@@ -1771,6 +1778,187 @@
           Related: <a href="#official-corpus">official corpus</a>
           <a href="#source-library">source library</a>
           <a href="#anabelian-background">anabelian background</a>
+        </div>
+      </section>
+
+      <section id="frobenioid-standard-model-page" data-filter="frobenioid standard elementary frobenioid semidirect product monoid n greater equal one divisor line bundle category">
+        <h2>Frobenioid Standard Model</h2>
+        <p class="lede">
+          Frobenioids I begins with the elementary model
+          <span class="math">F_M = M x N_{>=1}</span>. The product law
+          <span class="math">(a_1,n_1)(a_2,n_2)=(a_1+n_1 a_2,n_1 n_2)</span>
+          is the prototype for treating divisor data and tensor-power/Frobenius-degree
+          data inside one category-theoretic object.
+        </p>
+        <div class="diagram fit" aria-label="Elementary Frobenioid standard model">
+          <div class="diagramHeader">
+            <strong>Elementary Frobenioid ingredients</strong>
+            <span>Frobenioids I, §I1 and Definition 1.1</span>
+          </div>
+          <svg viewBox="0 0 1040 410" role="img">
+            <defs>
+              <marker id="arrowFrobStd" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="66" width="230" height="88"></rect>
+            <text class="nodeTitle" x="185" y="98" text-anchor="middle">commutative monoid M</text>
+            <text class="tinyText" x="185" y="122" text-anchor="middle">divisor / line-bundle layer</text>
+            <text class="tinyText" x="185" y="140" text-anchor="middle">e.g. Z_{>=0}</text>
+
+            <rect class="nodeBox green" x="405" y="66" width="230" height="88"></rect>
+            <text class="nodeTitle" x="520" y="98" text-anchor="middle">N_{>=1}</text>
+            <text class="tinyText" x="520" y="122" text-anchor="middle">Frobenius degree</text>
+            <text class="tinyText" x="520" y="140" text-anchor="middle">tensor-power operation</text>
+
+            <rect class="nodeBox gold" x="740" y="66" width="230" height="88"></rect>
+            <text class="nodeTitle" x="855" y="98" text-anchor="middle">F_M</text>
+            <text class="tinyText" x="855" y="122" text-anchor="middle">semidirect product monoid</text>
+            <text class="tinyText" x="855" y="140" text-anchor="middle">viewed as a one-object category</text>
+
+            <rect class="nodeBox violet" x="244" y="262" width="250" height="84"></rect>
+            <text class="nodeTitle" x="369" y="292" text-anchor="middle">base category D</text>
+            <text class="tinyText" x="369" y="316" text-anchor="middle">models / covering-like base</text>
+            <text class="tinyText" x="369" y="334" text-anchor="middle">later arithmetic examples</text>
+
+            <rect class="nodeBox red" x="548" y="262" width="250" height="84"></rect>
+            <text class="nodeTitle" x="673" y="292" text-anchor="middle">elementary F_Phi</text>
+            <text class="tinyText" x="673" y="316" text-anchor="middle">family of monoids over D</text>
+            <text class="tinyText" x="673" y="334" text-anchor="middle">target of C -> F_Phi</text>
+
+            <path class="edge blue" d="M302 110 H403" marker-end="url(#arrowFrobStd)"></path>
+            <path class="edge green" d="M637 110 H738" marker-end="url(#arrowFrobStd)"></path>
+            <path class="edge violet" d="M520 156 C475 218 414 235 377 260" marker-end="url(#arrowFrobStd)"></path>
+            <path class="edge red" d="M855 156 C802 222 720 244 682 260" marker-end="url(#arrowFrobStd)"></path>
+            <path class="edge gold" d="M496 304 H546" marker-end="url(#arrowFrobStd)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Ingredient</th><th>Frobenioids I content</th><th>IUT wiki use</th></tr>
+          <tr>
+            <td><span class="math">M</span></td>
+            <td>Commutative monoid, read arithmetically as divisor or line-bundle data.</td>
+            <td>Explains why later IUT Frobenioids track divisor monoids separately from fields.</td>
+          </tr>
+          <tr>
+            <td><span class="math">N_{>=1}</span></td>
+            <td>Acts on <span class="math">M</span> by multiplication; records Frobenius degree.</td>
+            <td>Source of the tensor-power/Frobenius-like direction used in later theta data.</td>
+          </tr>
+          <tr>
+            <td><span class="math">C -> F_Phi</span></td>
+            <td>A Frobenioid is a category substantially reflected in a functor to an elementary Frobenioid.</td>
+            <td>Prevents treating a Frobenioid as just a label or ordinary category.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-frobenioids-i.pdf" target="_blank">Frobenioids I, §I1 and Definition 1.1</a>
+          Related: <a href="#preparatory-corpus">preparatory corpus</a>
+          <a href="#iut-i-frobenioid-package">IUT I Frobenioid package</a>
+          <a href="#model-frobenioid-construction-iut-i51">model Frobenioid construction</a>
+        </div>
+      </section>
+
+      <section id="frobenioid-reconstruction-page" data-filter="frobenioid reconstruction category theoreticity base frobenius degree divisor monoid slim exponentiation corollary 4.11">
+        <h2>Frobenioid Reconstruction Program</h2>
+        <p class="lede">
+          The main Frobenioids I program is reconstruction of the functor
+          <span class="math">C -> F_Phi</span> from the category
+          <span class="math">C</span> itself, under technical hypotheses. Sections 3 and
+          4 split the task into reconstruction of the base category and Frobenius degree,
+          then reconstruction of the divisor monoid.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Category C</strong>
+            <p>Start from the abstract category, not from its original scheme-theoretic construction history.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Base and degree</strong>
+            <p>Theorem 3.4 reconstructs the base category and Frobenius-degree portion.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Divisor monoid</strong>
+            <p>Theorem 4.9 reconstructs the divisor monoid under non-dilation and related conditions.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Frobenioid structure</strong>
+            <p>Corollary-level reconstruction recovers the functor that makes C a Frobenioid.</p>
+          </div>
+        </div>
+        <table>
+          <tr><th>Source component</th><th>Function</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>Irreducible morphisms</td>
+            <td>Proposition 1.14 characterizes prime-Frobenius morphisms, steps, and base irreducibles.</td>
+            <td>Later IUT code/wiki pages should keep morphism types separated.</td>
+          </tr>
+          <tr>
+            <td>Slim exponentiation</td>
+            <td>Technique used in the category-theoretic recovery of base and degree data.</td>
+            <td>Signals that Frobenioid reconstruction is not a mere projection field.</td>
+          </tr>
+          <tr>
+            <td>Technical hypotheses</td>
+            <td>Examples show that portions of the structure need not be preserved without hypotheses.</td>
+            <td>Do not turn reconstruction availability into an unconditional black box.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          This preparatory page is directly relevant to formalization: a Lean record that
+          only stores “there exists a Frobenioid” misses the reconstruction theorem's
+          content. The source distinguishes base data, Frobenius degree, divisor monoid,
+          and morphism types.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-frobenioids-i.pdf" target="_blank">Frobenioids I, §§1-4</a>
+          Related: <a href="#frobenioid-standard-model-page">standard model</a>
+          <a href="#bad-frobenioid-reconstruction-iut-i32">IUT I Frobenioid reconstruction</a>
+          <a href="#mono-theta-frobenioid-route-ii12">IUT II Frobenioid route</a>
+        </div>
+      </section>
+
+      <section id="frobenioid-operations-page" data-filter="frobenioid operations perfection realification birationalization rational functions groupification q r z monoids">
+        <h2>Frobenioid Operations</h2>
+        <p class="lede">
+          Frobenioids I uses three operation types repeatedly: perfection,
+          realification, and birationalization. In the elementary model they correspond
+          to replacing <span class="math">Z_{>=0}</span> by
+          <span class="math">Q_{>=0}</span>, <span class="math">R_{>=0}</span>, or
+          <span class="math">Z</span>. IUT later uses these operation types whenever
+          divisor monoids are rationalized, realified, or passed to rational functions.
+        </p>
+        <table class="sourceTable4 operationTable4">
+          <tr><th>Operation</th><th>Elementary effect</th><th>Geometric reading</th><th>IUT use</th></tr>
+          <tr>
+            <td>Perfection</td>
+            <td><span class="math">Z_{>=0} -> Q_{>=0}</span></td>
+            <td>Allow rational divisor scaling.</td>
+            <td>Rationalized Frobenius/divisor data.</td>
+          </tr>
+          <tr>
+            <td>Realification</td>
+            <td><span class="math">Z_{>=0} -> R_{>=0}</span></td>
+            <td>Real-valued divisor/degree container.</td>
+            <td>Log-volume and “currency exchange” among local divisor monoids.</td>
+          </tr>
+          <tr>
+            <td>Birationalization</td>
+            <td><span class="math">Z_{>=0} -> Z</span></td>
+            <td>Category-theoretic analogue of rational functions.</td>
+            <td>Frobenioid-theoretic theta functions and Kummer comparison.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          The operations are preparatory infrastructure. A later IUT page that mentions
+          a realified or birational Frobenioid should link back here when the operation,
+          rather than the specific IUT object, is the point.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-frobenioids-i.pdf" target="_blank">Frobenioids I, §I1</a>
+          Related: <a href="#global-realified-cmod-iut-i35">global Cmod realification</a>
+          <a href="#theta-value-indeterminacy-iut-i32">theta-value birationalization</a>
+          <a href="#d-side-global-constants-realifications-ii45">D-side realifications</a>
         </div>
       </section>
 
