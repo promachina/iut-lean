@@ -759,6 +759,8 @@
         <a href="#progress-report-dilation-2010">2010 dilation program</a>
         <a href="#progress-report-expected-results-2010">2010 expected results</a>
         <a href="#invitation-expanded-route">Invitation route</a>
+        <a href="#invitation-hodge-arakelov-obstruction-page">Invitation HA obstruction</a>
+        <a href="#invitation-quasiconformal-distortion-page">Invitation distortion</a>
         <a href="#panoramic-route">Panoramic route</a>
         <a href="#bogomolov-szpiro-analogy">Bogomolov-Szpiro analogy</a>
         <a href="#classical-roots-route">Classical roots route</a>
@@ -2626,6 +2628,109 @@
           <a href="#theta-log-links">theta/log links</a>
           <a href="#log-theta-lattice">log-theta lattice</a>
           <a href="#anabelian-background">anabelian background</a>
+        </div>
+      </section>
+
+      <section id="invitation-hodge-arakelov-obstruction-page" data-filter="invitation hodge arakelov obstruction l torsion tate curve multiplicative subspace generators arithmetic kodaira spencer q j squared height estimate">
+        <h2>Invitation Hodge-Arakelov Obstruction</h2>
+        <p class="lede">
+          Invitation §1 starts with a conditional calculation. Locally, a Tate curve has
+          a canonical multiplicative subspace in its <span class="math">l</span>-torsion
+          and canonical generators on the quotient. If analogous global data existed for
+          the elliptic curve over the number field, Hodge-Arakelov theory would produce
+          a height estimate by ordinary arithmetic line-bundle methods. The obstruction
+          is precisely that these global objects generally do not exist.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Local Tate input</strong>
+            <p>The Tate-curve torsion sequence supplies local multiplicative subspaces and quotient generators at bad multiplicative places.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Hypothetical global input</strong>
+            <p>Assume, only for motivation, compatible global multiplicative subspace and generator data over the number field.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Height computation</strong>
+            <p>Hodge-Arakelov evaluation and projection toward <span class="math">q^(j^2)</span> factors suggest a bound for the elliptic height.</p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Invitation ingredient</th><th>Role</th><th>Do not confuse with</th></tr>
+          <tr>
+            <td><span class="math">0 -> mu_l -> E[l] -> Z/lZ -> 0</span></td>
+            <td>Local Tate-curve model for the multiplicative subspace and generator picture.</td>
+            <td>A globally available splitting for the actual number-field curve.</td>
+          </tr>
+          <tr>
+            <td>Hodge-Arakelov evaluation</td>
+            <td>Produces a direct-sum side weighted by theta-type factors <span class="math">q^(j^2)</span>.</td>
+            <td>The later IUT theta-link itself; this is the motivational scheme-theoretic precursor.</td>
+          </tr>
+          <tr>
+            <td>Arithmetic Kodaira-Spencer morphism</td>
+            <td>Projection to the weighted factors suggests the height bound in the hypothetical setting.</td>
+            <td>A proof in the genuine global situation without further IUT machinery.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          <strong>Formalization warning.</strong> A Lean model should not encode the
+          hypothetical global multiplicative subspace as data available in the real IUT
+          situation. It is a motivating obstruction that later Hodge theaters simulate.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-invitation-iut-expanded.pdf" target="_blank">Invitation to IUT, expanded, §1</a>
+          Related: <a href="#invitation-quasiconformal-distortion-page">Invitation distortion</a>
+          <a href="#collas-gms-categorification-page">Collas GMS categorification</a>
+          <a href="#alien-global-multiplicative-subspaces-23">global multiplicative subspaces</a>
+        </div>
+      </section>
+
+      <section id="invitation-quasiconformal-distortion-page" data-filter="invitation quasiconformal arithmetic deformation distinct copies q j squared q tautological solution distortion log differentials szpiro abc">
+        <h2>Invitation Distortion</h2>
+        <p class="lede">
+          After the hypothetical Hodge-Arakelov argument fails globally, Invitation §1
+          replaces it by a deformation problem. The assignment from the theta-value
+          family to the q-parameter is treated as if it were a quasiconformal comparison
+          between distinct arithmetic holomorphic structures, not as an automorphism of
+          one number field. The task of IUT is then to compute the resulting distortion.
+        </p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Impossible automorphism</h3>
+            <p>
+              The notes first describe an impossible shortcut: if the assignment from
+              the theta-value family to <span class="math">q</span> came from a number-field
+              automorphism, degree preservation would give the desired estimate.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Distinct copies</h3>
+            <p>
+              Since no such automorphism exists, the two sides are placed in distinct
+              copies of conventional ring/scheme theory, i.e. distinct arithmetic
+              holomorphic structures.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Measured distortion</h3>
+            <p>
+              The later computation bounds the distortion attached to the
+              <span class="math">j</span>-indexed portion by log-differential data and aims
+              at the Szpiro/abc inequality.
+            </p>
+          </div>
+        </div>
+        <div class="callout red">
+          <strong>3.12 relevance.</strong> This is the informal ancestor of the dispute
+          corridor: one may not collapse the two sides into one ring-theoretic copy before
+          the permitted multiradial comparison and log-volume bound have been constructed.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-invitation-iut-expanded.pdf" target="_blank">Invitation to IUT, expanded, §1</a>
+          Related: <a href="#progress-report-expected-results-2010">2010 expected results</a>
+          <a href="#corollary-312">Corollary 3.12</a>
+          <a href="#scholze-stix-critique-page">Scholze-Stix critique</a>
         </div>
       </section>
 
@@ -62193,7 +62298,7 @@
             <a class="pdf" href="papers/mochizuki-invitation-iut-2012.pdf" target="_blank">PDF</a>
           </div>
           <div class="card sourceCard" data-filter="mochizuki invitation expanded iut hodge arakelov log theta lattice anabelian">
-            <div><h3>Invitation to IUT, Expanded Version</h3><div class="sourceMeta">Shinichi Mochizuki, lecture notes, 15 pp.</div><p>Compact pedagogical route through Hodge-Arakelov motivation, Teichmuller deformation, the log-theta lattice, and anabelian inter-universality.</p></div>
+            <div><h3>Invitation to IUT, Expanded Version</h3><div class="sourceMeta">Shinichi Mochizuki, lecture notes, 15 pp.</div><p>Compact pedagogical route through Hodge-Arakelov motivation, Teichmuller deformation, the log-theta lattice, and anabelian inter-universality.</p><p><a href="#invitation-hodge-arakelov-obstruction-page">HA obstruction</a> · <a href="#invitation-quasiconformal-distortion-page">distortion page</a></p></div>
             <a class="pdf" href="papers/mochizuki-invitation-iut-expanded.pdf" target="_blank">PDF</a>
           </div>
           <div class="card sourceCard" data-filter="mochizuki invitation three hour iut lecture notes">
