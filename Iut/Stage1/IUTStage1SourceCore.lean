@@ -1516,6 +1516,76 @@ theorem realifiedLogVolume_eq_of_degree_unit
   rw [source.realifiedLogVolume_eq, target.realifiedLogVolume_eq,
     hdegree, hunit]
 
+/--
+Finite tensor product of realified Frobenioid degree objects.
+
+This is the degree/log-volume shadow of tensor product of arithmetic line-bundle
+or divisor data in a Frobenioid: divisor degrees and unit log-volumes add, hence
+the extracted realified log-volume also adds.
+-/
+def tensorProduct
+    (source target : IUTStage1RealifiedFrobenioidDegreeObject)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    IUTStage1RealifiedFrobenioidDegreeObject :=
+  { object := object,
+    divisorDegree := source.divisorDegree + target.divisorDegree,
+    unitLogVolume := source.unitLogVolume + target.unitLogVolume,
+    realifiedLogVolume := source.realifiedLogVolume + target.realifiedLogVolume,
+    realified_logVolume_eq := by
+      calc
+        source.realifiedLogVolume + target.realifiedLogVolume =
+            ((source.divisorDegree : Real) + source.unitLogVolume) +
+              ((target.divisorDegree : Real) + target.unitLogVolume) := by
+          rw [source.realifiedLogVolume_eq, target.realifiedLogVolume_eq]
+        _ =
+            ((source.divisorDegree + target.divisorDegree : Int) : Real) +
+              (source.unitLogVolume + target.unitLogVolume) := by
+          norm_num [Int.cast_add]
+          ring }
+
+theorem tensorProduct_divisorDegree
+    (source target : IUTStage1RealifiedFrobenioidDegreeObject)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.tensorProduct target object).divisorDegree =
+      source.divisorDegree + target.divisorDegree :=
+  rfl
+
+theorem tensorProduct_unitLogVolume
+    (source target : IUTStage1RealifiedFrobenioidDegreeObject)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.tensorProduct target object).unitLogVolume =
+      source.unitLogVolume + target.unitLogVolume :=
+  rfl
+
+theorem tensorProduct_realifiedLogVolume
+    (source target : IUTStage1RealifiedFrobenioidDegreeObject)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.tensorProduct target object).realifiedLogVolume =
+      source.realifiedLogVolume + target.realifiedLogVolume :=
+  rfl
+
+theorem tensorProduct_realifiedLogVolume_eq_of_eq
+    {source₁ source₂ target₁ target₂ :
+      IUTStage1RealifiedFrobenioidDegreeObject}
+    {object₁ object₂ :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean}
+    (hsource : source₁.realifiedLogVolume = source₂.realifiedLogVolume)
+    (htarget : target₁.realifiedLogVolume = target₂.realifiedLogVolume) :
+    (source₁.tensorProduct target₁ object₁).realifiedLogVolume =
+      (source₂.tensorProduct target₂ object₂).realifiedLogVolume := by
+  simp [tensorProduct, hsource, htarget]
+
+theorem tensorProduct_endpoint
+    (source target : IUTStage1RealifiedFrobenioidDegreeObject)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.tensorProduct target object).divisorDegree =
+        source.divisorDegree + target.divisorDegree ∧
+      (source.tensorProduct target object).unitLogVolume =
+        source.unitLogVolume + target.unitLogVolume ∧
+      (source.tensorProduct target object).realifiedLogVolume =
+        source.realifiedLogVolume + target.realifiedLogVolume :=
+  ⟨rfl, rfl, rfl⟩
+
 end IUTStage1RealifiedFrobenioidDegreeObject
 
 /--

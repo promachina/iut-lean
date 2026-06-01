@@ -267,6 +267,17 @@ theorem realifiedFrobenioidKummerCompatibility_endpoint
       source.toRealized.theater.side ≠ target.toRealized.theater.side :=
   compat.frobenioidKummerCompatibility_endpoint
 
+theorem realifiedFrobenioidTensorProduct_endpoint
+    (source target : IUTStage1RealifiedFrobenioidDegreeObject)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.tensorProduct target object).divisorDegree =
+        source.divisorDegree + target.divisorDegree ∧
+      (source.tensorProduct target object).unitLogVolume =
+        source.unitLogVolume + target.unitLogVolume ∧
+      (source.tensorProduct target object).realifiedLogVolume =
+        source.realifiedLogVolume + target.realifiedLogVolume :=
+  source.tensorProduct_endpoint target object
+
 theorem realifiedFrobenioidLogKummerPacket_endpoint
     {coric : Type u}
     {audited :
