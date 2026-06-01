@@ -158,6 +158,21 @@ theorem globalToLocalRealifiedFrobenioidRestriction_endpoint
         restriction.localPrimeLogVolume :=
   restriction.restriction_endpoint
 
+theorem restrictionNormalizedLocalFrobenioidSource_endpoint
+    (source : IUTStage1RestrictionNormalizedLocalFrobenioidSource) :
+    source.localSource.shiftedLogVolume =
+        source.localSource.baseSubmodule.logVolume +
+          (source.localSource.localExponent : Real) *
+            source.restriction.restrictedGlobalPrimeLogVolume ∧
+      (source.restriction.extensionDegree : Real) *
+          source.localSource.localPrimeStepLogVolume =
+        source.restriction.localPrimeLogVolume ∧
+      (source.localSource.shiftedLogVolume =
+          source.localSource.baseSubmodule.logVolume ↔
+        source.localSource.pPowerEndomorphismIsAutomorphism ∨
+          source.restriction.restrictedGlobalPrimeLogVolume = 0) :=
+  source.restrictionNormalizedLocalSource_endpoint
+
 theorem thetaRootKummerForgettingSource_feedsNonarchimedeanEntry
     {coric : Type u}
     {audited :

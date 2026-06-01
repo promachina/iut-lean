@@ -4233,6 +4233,67 @@ theorem restriction_endpoint
 end IUTStage1GlobalToLocalRealifiedFrobenioidRestriction
 
 /--
+Local `p_v^N` Frobenioid source normalized by the global realified restriction.
+
+This connects the Step (xii) local shift model to the source-backed restriction
+factor of Example 3.5: the local prime step used in the shift is not an
+unrelated real number, but the restricted global prime log-volume.
+-/
+structure IUTStage1RestrictionNormalizedLocalFrobenioidSource where
+  localSource : IUTStage1LocalFrobenioidPVPowerLogVolumeSource
+  restriction : IUTStage1GlobalToLocalRealifiedFrobenioidRestriction
+  localPrimeStep_eq_restricted :
+    localSource.localPrimeStepLogVolume =
+      restriction.restrictedGlobalPrimeLogVolume
+
+namespace IUTStage1RestrictionNormalizedLocalFrobenioidSource
+
+theorem shiftedLogVolume_eq_restricted
+    (source : IUTStage1RestrictionNormalizedLocalFrobenioidSource) :
+    source.localSource.shiftedLogVolume =
+      source.localSource.baseSubmodule.logVolume +
+        (source.localSource.localExponent : Real) *
+          source.restriction.restrictedGlobalPrimeLogVolume := by
+  rw [source.localSource.shiftedLogVolume_eq,
+    source.localPrimeStep_eq_restricted]
+
+theorem extensionDegree_mul_localPrimeStep
+    (source : IUTStage1RestrictionNormalizedLocalFrobenioidSource) :
+    (source.restriction.extensionDegree : Real) *
+        source.localSource.localPrimeStepLogVolume =
+      source.restriction.localPrimeLogVolume := by
+  rw [source.localPrimeStep_eq_restricted]
+  exact source.restriction.extensionDegree_mul_restrictedGlobalPrimeLogVolume
+
+theorem shiftedLogVolume_eq_base_iff_automorphism_or_restricted_zero
+    (source : IUTStage1RestrictionNormalizedLocalFrobenioidSource) :
+    source.localSource.shiftedLogVolume =
+        source.localSource.baseSubmodule.logVolume ↔
+      source.localSource.pPowerEndomorphismIsAutomorphism ∨
+        source.restriction.restrictedGlobalPrimeLogVolume = 0 := by
+  rw [source.localSource.shiftedLogVolume_eq_base_iff_automorphism_or_zero_step,
+    source.localPrimeStep_eq_restricted]
+
+theorem restrictionNormalizedLocalSource_endpoint
+    (source : IUTStage1RestrictionNormalizedLocalFrobenioidSource) :
+    source.localSource.shiftedLogVolume =
+        source.localSource.baseSubmodule.logVolume +
+          (source.localSource.localExponent : Real) *
+            source.restriction.restrictedGlobalPrimeLogVolume ∧
+      (source.restriction.extensionDegree : Real) *
+          source.localSource.localPrimeStepLogVolume =
+        source.restriction.localPrimeLogVolume ∧
+      (source.localSource.shiftedLogVolume =
+          source.localSource.baseSubmodule.logVolume ↔
+        source.localSource.pPowerEndomorphismIsAutomorphism ∨
+          source.restriction.restrictedGlobalPrimeLogVolume = 0) :=
+  ⟨source.shiftedLogVolume_eq_restricted,
+    source.extensionDegree_mul_localPrimeStep,
+    source.shiftedLogVolume_eq_base_iff_automorphism_or_restricted_zero⟩
+
+end IUTStage1RestrictionNormalizedLocalFrobenioidSource
+
+/--
 Source-facing global realified Frobenioid calibration package.
 
 It consumes the local `p_v^N` source package but fixes the exponent selected by
