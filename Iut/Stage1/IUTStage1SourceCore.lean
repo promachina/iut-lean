@@ -2476,6 +2476,85 @@ theorem adjustedLogVolume_eq
 end IUTStage1ArithmeticVectorBundleLocalizationLogVolume
 
 /--
+Finite direct-summand source for a localized arithmetic vector bundle.
+
+Remark 3.9.5(vii), (Ob3-1-1), describes determinant factors attached to the
+direct summands of the tensor packet of log-shells.  This record keeps that
+finite additive skeleton: the bundle log-volume is the sum of direct-summand
+log-volumes, while the structure-sheaf adjustment and positive weight are the
+same data consumed by the older localization interface.
+-/
+structure IUTStage1ArithmeticVectorBundleLocalizationSource
+    (γ : Type u) [Fintype γ] where
+  directSummandLogVolume : γ -> Real
+  structureSheafLogVolume : Real
+  weight : Nat
+  weight_pos : 0 < weight
+  rank_gt_one : 1 < Fintype.card γ
+
+namespace IUTStage1ArithmeticVectorBundleLocalizationSource
+
+variable {γ : Type u} [Fintype γ]
+
+def rank
+    (_data : IUTStage1ArithmeticVectorBundleLocalizationSource γ) :
+    Nat :=
+  Fintype.card γ
+
+def bundleLogVolume
+    (data : IUTStage1ArithmeticVectorBundleLocalizationSource γ) :
+    Real :=
+  Finset.univ.sum data.directSummandLogVolume
+
+def toLocalizationLogVolume
+    (data : IUTStage1ArithmeticVectorBundleLocalizationSource γ) :
+    IUTStage1ArithmeticVectorBundleLocalizationLogVolume :=
+  { rank := data.rank,
+    rank_gt_one := data.rank_gt_one,
+    bundleLogVolume := data.bundleLogVolume,
+    structureSheafLogVolume := data.structureSheafLogVolume,
+    weight := data.weight,
+    weight_pos := data.weight_pos }
+
+def adjustedLogVolume
+    (data : IUTStage1ArithmeticVectorBundleLocalizationSource γ) :
+    Real :=
+  data.toLocalizationLogVolume.adjustedLogVolume
+
+theorem bundleLogVolume_eq_sum
+    (data : IUTStage1ArithmeticVectorBundleLocalizationSource γ) :
+    data.bundleLogVolume =
+      Finset.univ.sum data.directSummandLogVolume :=
+  rfl
+
+theorem toLocalizationLogVolume_bundleLogVolume_eq
+    (data : IUTStage1ArithmeticVectorBundleLocalizationSource γ) :
+    data.toLocalizationLogVolume.bundleLogVolume =
+      Finset.univ.sum data.directSummandLogVolume :=
+  rfl
+
+theorem adjustedLogVolume_eq
+    (data : IUTStage1ArithmeticVectorBundleLocalizationSource γ) :
+    data.adjustedLogVolume =
+      (data.weight : Real) *
+        ((Finset.univ.sum data.directSummandLogVolume) -
+          data.structureSheafLogVolume) :=
+  rfl
+
+theorem endpoint
+    (data : IUTStage1ArithmeticVectorBundleLocalizationSource γ) :
+    data.rank = Fintype.card γ ∧
+      1 < data.rank ∧
+      data.bundleLogVolume =
+        Finset.univ.sum data.directSummandLogVolume ∧
+      data.adjustedLogVolume =
+        (data.weight : Real) *
+          (data.bundleLogVolume - data.structureSheafLogVolume) :=
+  ⟨rfl, data.rank_gt_one, rfl, rfl⟩
+
+end IUTStage1ArithmeticVectorBundleLocalizationSource
+
+/--
 Finite determinant source for Remark 3.9.5(vii), (Ob3).
 
 The determinant log-volume is constructed as the finite weighted sum of
@@ -2493,6 +2572,19 @@ structure IUTStage1ArithmeticVectorBundleWeightedDeterminantSource
 namespace IUTStage1ArithmeticVectorBundleWeightedDeterminantSource
 
 variable {β : Type u} [Fintype β]
+
+def ofLocalizationSources
+    {γ : Type v} [Fintype γ]
+    (source : β -> IUTStage1ArithmeticVectorBundleLocalizationSource γ)
+    (anchor : β)
+    (positiveTensorPower : Nat)
+    (tensor_power_pos : 0 < positiveTensorPower) :
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β :=
+  { summand := fun index =>
+      (source index).toLocalizationLogVolume,
+    anchor := anchor,
+    positiveTensorPower := positiveTensorPower,
+    tensor_power_pos := tensor_power_pos }
 
 def determinantLogVolume
     (data :
@@ -2579,6 +2671,26 @@ theorem endpoint
     data.normalizedLogVolume_eq_determinantLogVolume,
     data.toDeterminantLogVolume_determinantLogVolume_eq,
     data.toDeterminantLogVolume_normalizedLogVolume_eq⟩
+
+theorem ofLocalizationSources_endpoint
+    {γ : Type v} [Fintype γ]
+    (source : β -> IUTStage1ArithmeticVectorBundleLocalizationSource γ)
+    (anchor : β)
+    (positiveTensorPower : Nat)
+    (tensor_power_pos : 0 < positiveTensorPower) :
+    let data :=
+      ofLocalizationSources source anchor positiveTensorPower
+        tensor_power_pos;
+    data.determinantLogVolume =
+        (Finset.univ.sum fun index =>
+          (source index).adjustedLogVolume) ∧
+      data.tensorPowerLogVolume =
+        (positiveTensorPower : Real) * data.determinantLogVolume ∧
+      data.normalizedLogVolume = data.determinantLogVolume :=
+  by
+    intro data
+    exact
+      ⟨rfl, rfl, data.normalizedLogVolume_eq_determinantLogVolume⟩
 
 end IUTStage1ArithmeticVectorBundleWeightedDeterminantSource
 

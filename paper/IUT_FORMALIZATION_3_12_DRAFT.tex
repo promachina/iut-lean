@@ -477,6 +477,11 @@ adjusted summands, then derives the positive tensor-power log-volume and the
 normalized determinant log-volume by definition.  This replaces supplied
 tensor-power and normalized values for this new route, but it remains a
 log-volume skeleton rather than a construction of arithmetic vector bundles.
+The localization input itself has been refined one step further: a finite
+direct-summand source computes the bundle log-volume as a sum of direct
+summand log-volumes before projecting to the localization summand interface.
+Thus the weighted determinant can now be built from finite direct-summand
+localization sources.
 The possible-image approximant route can now consume this weighted determinant
 source directly.  The equality between the approximant log-volume
 \(\mu_{\log}(H)\) and the weighted normalized determinant value is now carried
@@ -763,6 +768,10 @@ The project currently proves the following source-facing results in \Lean{}:
   the positive tensor-power value is derived, and normalization is proved to
   return the determinant log-volume before projecting to the older determinant
   interface.
+\item Each localization summand can now itself be produced from a finite
+  direct-summand source: the bundle log-volume is the sum of direct-summand
+  log-volumes, then the structure-sheaf adjustment and positive weight produce
+  the adjusted localization contribution.
 \item The possible-image hull-approximant endpoint now has a weighted
   determinant-source constructor.  The route consumes the weighted summand
   source and projects to the common upper-ray interface only after a named

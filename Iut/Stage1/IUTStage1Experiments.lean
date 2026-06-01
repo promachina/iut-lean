@@ -544,6 +544,36 @@ theorem weightedDeterminantSource_endpoint
         data.determinantLogVolume :=
   data.endpoint
 
+theorem localizationSource_endpoint
+    {γ : Type u} [Fintype γ]
+    (data : IUTStage1ArithmeticVectorBundleLocalizationSource γ) :
+    data.rank = Fintype.card γ ∧
+      1 < data.rank ∧
+      data.bundleLogVolume =
+        Finset.univ.sum data.directSummandLogVolume ∧
+      data.adjustedLogVolume =
+        (data.weight : Real) *
+          (data.bundleLogVolume - data.structureSheafLogVolume) :=
+  data.endpoint
+
+theorem weightedDeterminantFromLocalizationSources_endpoint
+    {β : Type u} [Fintype β] {γ : Type v} [Fintype γ]
+    (source : β -> IUTStage1ArithmeticVectorBundleLocalizationSource γ)
+    (anchor : β)
+    (positiveTensorPower : Nat)
+    (tensor_power_pos : 0 < positiveTensorPower) :
+    let data : IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β :=
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.ofLocalizationSources
+        source anchor positiveTensorPower tensor_power_pos;
+    data.determinantLogVolume =
+        (Finset.univ.sum fun index =>
+          (source index).adjustedLogVolume) ∧
+      data.tensorPowerLogVolume =
+        (positiveTensorPower : Real) * data.determinantLogVolume ∧
+      data.normalizedLogVolume = data.determinantLogVolume :=
+  IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.ofLocalizationSources_endpoint
+    source anchor positiveTensorPower tensor_power_pos
+
 theorem naiveFrobeniusTensorPowerLogVolume_endpoint
     (data : IUTStage1NaiveFrobeniusTensorPowerLogVolume) :
     data.tensorPowerLogVolume =
