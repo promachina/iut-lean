@@ -4842,6 +4842,41 @@ theorem fullLabelLogVolumeValuePreserving_refl
   intro label
   rfl
 
+theorem ext_of_fullLabelLogVolume_eq
+    (source target : IUTStage1ZModCuspLabelLogVolumeCompatibility l)
+    (hfull :
+      ∀ label : IUTStage1ZModCuspFullLabel l,
+        target.fullLabelLogVolume label = source.fullLabelLogVolume label) :
+    target = source := by
+  cases source with
+  | mk sourceNormalized sourceCusp sourceZero sourceNonzero sourceZeroEq =>
+    cases target with
+    | mk targetNormalized targetCusp targetZero targetNonzero targetZeroEq =>
+      have hzero : targetZero = sourceZero := hfull IUTStage1ZModCuspFullLabel.zero
+      have hcusp : targetCusp = sourceCusp := by
+        funext label
+        exact hfull (IUTStage1ZModCuspFullLabel.nonzero label)
+      have hnormalized : targetNormalized = sourceNormalized := by
+        funext j
+        by_cases hj : j = 0
+        · subst j
+          calc
+            targetNormalized 0 = targetZero := targetZeroEq
+            _ = sourceZero := hzero
+            _ = sourceNormalized 0 := sourceZeroEq.symm
+        · calc
+            targetNormalized j =
+                targetCusp (zmodSignLabelFromCoordinate l j hj) :=
+              targetNonzero j hj
+            _ = sourceCusp (zmodSignLabelFromCoordinate l j hj) := by
+              rw [hcusp]
+            _ = sourceNormalized j :=
+              (sourceNonzero j hj).symm
+      cases hnormalized
+      cases hcusp
+      cases hzero
+      simp
+
 end IUTStage1ZModCuspLabelLogVolumeCompatibility
 
 namespace IUTStage1LabelAveragedProcessionLogVolume
@@ -37664,6 +37699,70 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeArakelovPacketTargetSource
     source_profile_eq source_log_volume_eq target_log_volume_eq_theta
     packetSource.toLogKummerUpperSemiCompatibility
     q_pilot_positive cTheta thetaSigned_le_cTheta_absLogQ
+
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullPacketTargetSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (iplTransport : IUTStage1IPLLogVolumeTransport record)
+    (sheSync : IUTStage1SHESynchronizationSource record l X C)
+    (hullConstructor :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
+        record)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    (theta_source_eq_sync_source :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sheSync.sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (packetSource :
+      NonarchimedeanThetaRootKummerForgettingPacketTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta := by
+  have _transportEndpoint := iplTransport.transport_endpoint
+  have htarget_eq_source :
+      sheSync.targetHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility =
+        sheSync.sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility := by
+    exact
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.ext_of_fullLabelLogVolume_eq
+        sheSync.sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility
+        sheSync.targetHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility
+        sheSync.toFactoredObligations.fullLabelValue_preserved
+  have target_log_volume_eq_theta :
+      sheSync.targetHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited := by
+    exact htarget_eq_source.trans theta_source_eq_sync_source.symm
+  exact
+    part.boundarySignedEqualityOrStrictCTheta_of_hodgeArakelovPacketTargetSource
+      profile audited sheSync.sourceHA sheSync.targetHA
+      sheSync.canonicalOneDegree_preserved source_profile_eq
+      theta_source_eq_sync_source target_log_volume_eq_theta packetSource
+      hullConstructor.q_pilot_positive cTheta thetaSigned_le_cTheta_absLogQ
 
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
     (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l) :
