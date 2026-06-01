@@ -1421,6 +1421,10 @@
         <a href="#weighted-volume-caution-311">Weighted-volume caution 3.1.1</a>
         <a href="#direct-product-weighted-measure-311">E-weighted measure 3.1.1</a>
         <a href="#mono-analytic-packet-compatibility-32">Mono-analytic packets 3.2</a>
+        <a class="subLink" href="#mono-analytic-nonarch-integrals-32">Nonarch packet integrals</a>
+        <a class="subLink" href="#mono-analytic-arch-balls-32">Arch packet unit balls</a>
+        <a class="subLink" href="#packet-integral-discrepancy-321">Integral discrepancy 3.2.1</a>
+        <a class="subLink" href="#mono-analytic-procession-packets-322">Mono-analytic processions</a>
         <a href="#global-packet-localization-33">Global packet localization 3.3</a>
         <a href="#local-lgp-monoids-iii34">Local LGP monoids 3.4</a>
         <a href="#single-packet-monoids-34">Single packet monoids 3.4</a>
@@ -49525,10 +49529,58 @@
           <tr><td><span class="math">D⊢</span> capsule</td><td>Same packet formula as Proposition 3.1, but for mono-analytic data.</td><td>Builds packet containers on the log-shell side.</td></tr>
           <tr><td>Compatibility with <span class="math">F</span>-data</td><td>Uses <span class="math">D⊢ → F⊢×μ → F</span> poly-isomorphisms.</td><td>Identifies mono-analytic packets with holomorphic packets when source data permit.</td></tr>
           <tr><td>Integral structures</td><td>Mono-analytic log-shells, or Hermitian unit balls at archimedean places.</td><td>Supplies the comparison side for discrepancy estimates.</td></tr>
+          <tr><td><span class="math">I_Q((-))</span> notation</td><td>For arbitrary places, the source denotes the <span class="math">Q</span>-span of <span class="math">I((-))</span> by <span class="math">I_Q((-))</span>, and transfers this notation to <span class="math">F</span> and <span class="math">F⊢×μ</span> via the poly-isomorphisms.</td><td>This is the rational packet module used by later LGP actions.</td></tr>
         </table>
+        <div class="grid2">
+          <div class="card" id="mono-analytic-nonarch-integrals-32" data-filter="iut iii proposition 3.2 nonarchimedean mono analytic log shells topological submodules q span integral structures">
+            <h3>Nonarchimedean packet integrals</h3>
+            <p>
+              At <span class="math">v_Q ∈ V_Q^{non}</span>, Proposition 3.2(ii)
+              forms packet integral structures from the mono-analytic log-shells
+              <span class="math">I(D⊢_v)</span> of Proposition 1.2(vi), using the
+              same direct-sum and tensor-product operations as the packet construction.
+              Their <span class="math">Q</span>-spans are denoted
+              <span class="math">I_Q((-))</span>.
+            </p>
+            <div class="tagRow"><span class="tag green">Prop. 3.2(ii)</span><span class="tag">nonarch</span></div>
+          </div>
+          <div class="card" id="mono-analytic-arch-balls-32" data-filter="iut iii proposition 3.2 archimedean hermitian metric closed unit ball integral structure tensor product">
+            <h3>Archimedean unit balls</h3>
+            <p>
+              At <span class="math">v_Q ∈ V_Q^{arc}</span>, the mono-analytic
+              log-shell is read as the closed unit ball of a Hermitian metric on the
+              local log module. Proposition 3.2(ii) takes direct-sum and tensor-product
+              Hermitian metrics and uses their closed unit balls as packet integral
+              structures.
+            </p>
+            <div class="tagRow"><span class="tag blue">Prop. 3.2(ii)</span><span class="tag">arch</span></div>
+          </div>
+          <div class="card" id="packet-integral-discrepancy-321" data-filter="iut iii remark 3.2.1 discrepancy holomorphic integral structures mono analytic integral structures iut iv">
+            <h3>Integral-structure discrepancy</h3>
+            <p>
+              Remark 3.2.1 says that estimating the discrepancy between the
+              holomorphic integral structures of Proposition 3.1(ii) and the
+              mono-analytic integral structures of Proposition 3.2(ii) is a main topic
+              of IUT IV, with a local preview in Remark 3.9.1.
+            </p>
+            <div class="tagRow"><span class="tag gold">Remark 3.2.1</span><span class="tag">IUT IV input</span></div>
+          </div>
+          <div class="card" id="mono-analytic-procession-packets-322" data-filter="iut iii remark 3.2.2 mono analytic processions d perp prime strips proposition 4.11 6.9 tensor packets">
+            <h3>Mono-analytic processions</h3>
+            <p>
+              Remark 3.2.2 applies the Proposition 3.2 construction to capsules in
+              <span class="math">D⊢</span>-prime-strip processions, i.e. the
+              mono-analytic processions of IUT I Propositions 4.11(ii) and 6.9(ii).
+              This is the source transition from static local packets to the procession
+              packets used later in §3.
+            </p>
+            <div class="tagRow"><span class="tag violet">Remark 3.2.2</span><span class="tag">processions</span></div>
+          </div>
+        </div>
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.2</a>
           Related: <a href="#holomorphic-n-packet-formula-31">holomorphic packets</a>
+          <a href="#packet-integral-discrepancy-321">integral discrepancy</a>
           <a href="#mono-analytic-log-shells">mono-analytic log-shells</a>
           <a href="#packet-procession-log-volume-iii39">packet log-volume</a>
         </div>
