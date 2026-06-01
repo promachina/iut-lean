@@ -1187,6 +1187,7 @@
         <a href="#mlf-galois-rigidity-indeterminacies-ii111">MLF-Galois orbits 1.11</a>
         <a href="#post-anabelian-algorithm-content-ii1113">Algorithm content 1.11.3</a>
         <a href="#radial-coric-decoupling-ii1114">Radial/coric decoupling 1.11.4</a>
+        <a href="#kummer-surjection-cyclotome-skeleton-ii1115-1116">Kummer/cyclotome skeleton 1.11.5</a>
         <a href="#constant-multiple-rigidity-ii112">Constant multiple 1.12</a>
         <a href="#mu2l-normalization-ii1122">mu_2l normalization</a>
         <a href="#galois-evaluation-principle-ii1124">Galois evaluation principle</a>
@@ -32886,6 +32887,128 @@
           <a href="#coric-unit-quotient-ii1102">coric unit quotient</a>
           <a href="#mlf-galois-rigidity-indeterminacies-ii111">Corollary 1.11</a>
           <a href="#multiradial-parallel-transport-ii192">multiradial parallel transport</a>
+        </div>
+      </section>
+
+      <section id="kummer-surjection-cyclotome-skeleton-ii1115-1116" data-filter="iut ii remarks 1.11.5 1.11.6 kummer map h1 g mu z valuation surjection z kernel multiradial cyclotome skeleton arithmetic holomorphic structure">
+        <h2>IUT II Remarks 1.11.5-1.11.6: Kummer Surjection and Cyclotome Skeleton</h2>
+        <p class="lede">
+          Remarks 1.11.5-1.11.6 explain why cyclotomic rigidity is more than a
+          comparison of abstract modules. The functorial Kummer-theoretic surjection
+          <span class="math">H^1(G,mu_Z(G)) -> Z</span> detects the valuation subgroup,
+          and cyclotomes are treated as skeletal carriers of arithmetic holomorphic
+          structure.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Remarks 1.11.5 and 1.11.6 Kummer surjection and cyclotome skeleton">
+          <div class="diagramHeader">
+            <strong>From Kummer cohomology to cyclotomic skeleton</strong>
+            <span>IUT II, Remarks 1.11.5-1.11.6</span>
+          </div>
+          <svg viewBox="0 0 1120 520" role="img">
+            <defs>
+              <marker id="arrowKummer1115" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="72" width="260" height="90"></rect>
+            <text class="nodeTitle" x="200" y="104" text-anchor="middle">H^1(G, mu_Z(G))</text>
+            <text class="tinyText" x="200" y="130" text-anchor="middle">Kummer cohomology</text>
+            <text class="tinyText" x="200" y="148" text-anchor="middle">functorially from G</text>
+
+            <rect class="nodeBox green" x="430" y="72" width="260" height="90"></rect>
+            <text class="nodeTitle" x="560" y="104" text-anchor="middle">surjection to Z</text>
+            <text class="tinyText" x="560" y="130" text-anchor="middle">valuation of the Kummer image</text>
+            <text class="tinyText" x="560" y="148" text-anchor="middle">kernel is O_k^x-type data</text>
+
+            <rect class="nodeBox gold" x="790" y="72" width="260" height="90"></rect>
+            <text class="nodeTitle" x="920" y="104" text-anchor="middle">transport via rigidity</text>
+            <text class="tinyText" x="920" y="130" text-anchor="middle">mu_Z(M_TM), l·DeltaTheta</text>
+            <text class="tinyText" x="920" y="148" text-anchor="middle">uniradial or Z^x-indeterminate</text>
+
+            <rect class="nodeBox violet" x="230" y="306" width="290" height="92"></rect>
+            <text class="nodeTitle" x="375" y="338" text-anchor="middle">multiradial kernels</text>
+            <text class="tinyText" x="375" y="364" text-anchor="middle">kernels survive as data</text>
+            <text class="tinyText" x="375" y="382" text-anchor="middle">after allowed Z^x indeterminacy</text>
+
+            <rect class="nodeBox red" x="604" y="306" width="290" height="92"></rect>
+            <text class="nodeTitle" x="749" y="338" text-anchor="middle">cyclotome as skeleton</text>
+            <text class="tinyText" x="749" y="364" text-anchor="middle">arithmetic holomorphic structure</text>
+            <text class="tinyText" x="749" y="382" text-anchor="middle">analogous to S^1 inside C^x</text>
+
+            <path class="edge blue" d="M332 117 H428" marker-end="url(#arrowKummer1115)"></path>
+            <path class="edge green" d="M692 117 H788" marker-end="url(#arrowKummer1115)"></path>
+            <path class="edge gold" d="M920 164 C880 230 806 264 760 304" marker-end="url(#arrowKummer1115)"></path>
+            <path class="edge violet" d="M560 164 C520 232 438 264 388 304" marker-end="url(#arrowKummer1115)"></path>
+            <path class="edge red" d="M522 352 H602" marker-end="url(#arrowKummer1115)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Remark 1.11.5(i)</td>
+            <td>
+              Absolute anabelian theory constructs a natural surjection
+              <span class="math">H^1(G,mu_Z(G)) -> Z</span>. For
+              <span class="math">G=G_k</span>, it records the valuation of the image of
+              the Kummer map <span class="math">k^x -> H^1(G_k,mu_Z(G_k))</span>.
+            </td>
+            <td>
+              The valuation and its kernel are functorial group-theoretic data, not
+              extra analytic choices appended to the Galois group.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 1.11.5(ii)</td>
+            <td>
+              Applying the Corollary 1.11 rigidity isomorphisms transports this
+              surjection to versions with <span class="math">mu_Z(M_TM(Pi))</span> and
+              <span class="math">l·DeltaTheta(Pi)</span>. These are uniradial unless
+              considered up to <span class="math">Z^x</span>-indeterminacy.
+            </td>
+            <td>
+              This gives a concrete example of how a useful numerical/valuation datum
+              becomes multiradial only after permitting the specified scalar
+              indeterminacy.
+            </td>
+          </tr>
+          <tr>
+            <td>Kernel data</td>
+            <td>
+              The kernels of the transported surjections may be formulated
+              multiradially after the allowed indeterminacy.
+            </td>
+            <td>
+              The wiki should distinguish the surjection itself from the kernel data
+              that survive as multiradial objects.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 1.11.6</td>
+            <td>
+              Mochizuki emphasizes the analogy with p-adic Teichmuller theory and says
+              cyclotomes should be viewed as skeleta of arithmetic holomorphic
+              structures, analogous to <span class="math">S^1</span> inside
+              <span class="math">C^x</span>.
+            </td>
+            <td>
+              Cyclotomes are not peripheral notation. They are structural carriers that
+              explain why cyclotomic rigidity recurs in mono-theta, Galois, and
+              Frobenioid routes.
+            </td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Formalization guardrail: model the valuation surjection, its transported
+          versions, and its kernels separately. Collapsing them into a generic
+          "Kummer invariant" would erase the uniradial versus multiradial distinction
+          in Remark 1.11.5.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remarks 1.11.5-1.11.6</a>
+          Related: <a href="#mlf-galois-rigidity-indeterminacies-ii111">MLF-Galois rigidity</a>
+          <a href="#radial-coric-decoupling-ii1114">radial/coric decoupling</a>
+          <a href="#mono-theta-cyclotomes-ii11">interior/exterior cyclotomes</a>
+          <a href="#base-field-cyclotome-evaluation-ii29">base-field cyclotomes</a>
         </div>
       </section>
 
