@@ -756,6 +756,7 @@
         <a href="#concept-index">Concept index</a>
         <a href="#anabelian-background">Anabelian background</a>
         <a href="#collas-category-perspective">Collas category view</a>
+        <a href="#collas-iut-source-alignment-page">Collas source alignment</a>
         <a href="#collas-formalization-audit-page">Collas audit guide</a>
         <a href="#collas-gms-categorification-page">Collas GMS categorification</a>
         <a href="#collas-hodge-synchronization-page">Collas Hodge synchronization</a>
@@ -4750,6 +4751,124 @@
           <a href="#collas-gms-categorification-page">GMS categorification</a>
           <a href="#collas-log-theta-wandering-page">log-theta wandering</a>
           <a href="#rims-four-triangle-route-2026">RIMS four-triangle route</a>
+        </div>
+      </section>
+
+      <section id="collas-iut-source-alignment-page" data-filter="collas category theory source alignment mochizuki iut iv species mutations hodge theaters global multiplicative subspace monoids log theta wandering">
+        <h2>Collas Source Alignment</h2>
+        <p class="lede">
+          Collas is most useful in this wiki as a category-theoretic alignment layer:
+          his exposition explains why IUT moves from a missing global multiplicative
+          subspace to Hodge-theater containers, log-theta wandering, and species. The
+          formal definitions still have to be checked against Mochizuki's source
+          papers, especially IUT I for Hodge theaters, IUT III for multiradial
+          algorithms, and IUT IV §3 for species and mutations.
+        </p>
+        <div class="diagram fit" aria-label="Collas to Mochizuki source alignment">
+          <div class="diagramHeader">
+            <strong>Category-theoretic reading, source-definition targets</strong>
+            <span>Collas overview §§2.2-3.1 aligned with IUT I, III, IV</span>
+          </div>
+          <svg viewBox="0 0 1080 470" role="img">
+            <defs>
+              <marker id="arrowCollasAlign" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox red" x="66" y="68" width="235" height="86"></rect>
+            <text class="nodeTitle" x="184" y="98" text-anchor="middle">Diophantine input</text>
+            <text class="tinyText" x="184" y="122" text-anchor="middle">height problem</text>
+            <text class="tinyText" x="184" y="140" text-anchor="middle">missing global GMS</text>
+
+            <rect class="nodeBox green" x="382" y="68" width="235" height="86"></rect>
+            <text class="nodeTitle" x="500" y="98" text-anchor="middle">categorified container</text>
+            <text class="tinyText" x="500" y="122" text-anchor="middle">Frobenioids and theaters</text>
+            <text class="tinyText" x="500" y="140" text-anchor="middle">monoid geometry</text>
+
+            <rect class="nodeBox gold" x="698" y="68" width="235" height="86"></rect>
+            <text class="nodeTitle" x="816" y="98" text-anchor="middle">log-theta wandering</text>
+            <text class="tinyText" x="816" y="122" text-anchor="middle">theta and log links</text>
+            <text class="tinyText" x="816" y="140" text-anchor="middle">multiradial algorithms</text>
+
+            <rect class="nodeBox violet" x="224" y="290" width="245" height="90"></rect>
+            <text class="nodeTitle" x="347" y="322" text-anchor="middle">species formalism</text>
+            <text class="tinyText" x="347" y="346" text-anchor="middle">formula-defined object types</text>
+            <text class="tinyText" x="347" y="364" text-anchor="middle">mutations, cores, observables</text>
+
+            <rect class="nodeBox blue" x="612" y="290" width="245" height="90"></rect>
+            <text class="nodeTitle" x="735" y="322" text-anchor="middle">comparison target</text>
+            <text class="tinyText" x="735" y="346" text-anchor="middle">Theta-pilot and q-pilot</text>
+            <text class="tinyText" x="735" y="364" text-anchor="middle">log-volume estimate</text>
+
+            <path class="edge red" d="M303 111 H380" marker-end="url(#arrowCollasAlign)"></path>
+            <path class="edge green" d="M619 111 H696" marker-end="url(#arrowCollasAlign)"></path>
+            <path class="edge violet" d="M500 156 C462 224 404 260 352 288" marker-end="url(#arrowCollasAlign)"></path>
+            <path class="edge gold" d="M816 156 C798 224 762 260 740 288" marker-end="url(#arrowCollasAlign)"></path>
+            <path class="edge blue" d="M469 335 H610" marker-end="url(#arrowCollasAlign)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable4">
+          <tr><th>Collas checkpoint</th><th>Reading</th><th>Mochizuki source to verify</th><th>Wiki action</th></tr>
+          <tr>
+            <td>Missing GMS</td>
+            <td>
+              The desired global multiplicative subspace exists locally but not
+              globally in the required form; this motivates categorification.
+            </td>
+            <td>IUT I construction of Hodge theaters; Essential Logical Structure Example 3.2.1.</td>
+            <td><a href="#collas-gms-categorification-page">GMS categorification</a></td>
+          </tr>
+          <tr>
+            <td>Monoid geometry</td>
+            <td>
+              The additive and multiplicative sides of a ring are separated so that
+              non-ring-theoretic transport can be controlled.
+            </td>
+            <td>IUT I Frobenioid/Hodge-theater packages; IUT III log-Kummer constructions.</td>
+            <td><a href="#frobenioids-log-shells">Frobenioids/log-shells</a></td>
+          </tr>
+          <tr>
+            <td>Log-theta wandering</td>
+            <td>
+              The category-theoretic picture must be read as theta/log movement through
+              labeled theaters, not as an equality inside one ambient ring category.
+            </td>
+            <td>IUT III Theorem 3.11 and Introduction Theorem A.</td>
+            <td><a href="#iut-iii-theorem-a-page">IUT III Theorem A</a></td>
+          </tr>
+          <tr>
+            <td>Species and universes</td>
+            <td>
+              Object types are handled as formula-defined species, so outputs in
+              different universe levels can be compared without violating foundation.
+            </td>
+            <td>IUT IV §3, especially Definition 3.3 and Remarks 3.1.3-3.3.2.</td>
+            <td><a href="#species-vs-categories-iv31">species vs categories</a></td>
+          </tr>
+          <tr>
+            <td>Height comparison</td>
+            <td>
+              The q-pilot/Theta-pilot comparison depends on the preceding machinery;
+              it is not a default comparison in one pre-existing real line.
+            </td>
+            <td>IUT III Theorem B; IUT IV §1, Theorem 1.10 and §2 applications.</td>
+            <td><a href="#iut-iii-theorem-b-page">IUT III Theorem B</a></td>
+          </tr>
+        </table>
+        <div class="callout">
+          <strong>Use rule.</strong> Collas may supply the orientation question, but every
+          concept page should still name the Mochizuki construction that carries the
+          mathematical load. This prevents the wiki from replacing source definitions
+          by high-level category-theory paraphrase.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/collas-anabelian-arithmetic-geometry-iut.pdf" target="_blank">Collas overview §§2.2-3.1</a>
+          <a href="papers/collas-anabelian-perspectives-galois-teichmuller.pdf" target="_blank">Collas GT perspective</a>
+          <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV §3</a>
+          Related: <a href="#collas-category-perspective">Collas category view</a>
+          <a href="#collas-formalization-audit-page">Collas audit guide</a>
+          <a href="#iut-iv-mutations-33">IUT IV mutations</a>
+          <a href="#iut-iii-ab-pipeline-page">IUT III A/B pipeline</a>
         </div>
       </section>
 
