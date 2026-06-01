@@ -1268,7 +1268,13 @@
         <a href="#iut-iv-theorem-110-hypotheses">Theorem 1.10 hypotheses</a>
         <a href="#iut-iv-theorem-110-local-steps">Theorem 1.10 local steps</a>
         <a href="#iut-iv-theorem-110-final-bound">Theorem 1.10 final bound</a>
+        <a href="#iut-iv-proposition-21-estimates">Prop. 2.1 estimates</a>
         <a href="#iut-iv-suitable-initial-theta-data-22">IUT IV suitable theta data 2.2</a>
+        <a href="#iut-iv-corollary-22-lambda-j">Cor. 2.2 lambda/j gate</a>
+        <a href="#iut-iv-corollary-22-bd-heights">Cor. 2.2 BD heights</a>
+        <a href="#iut-iv-corollary-22-exceptions">Cor. 2.2 exceptions</a>
+        <a href="#iut-iv-corollary-22-prime-galois">Cor. 2.2 prime/Galois</a>
+        <a href="#iut-iv-corollary-22-c1-c2">Cor. 2.2 C1/C2 output</a>
         <a href="#iut-iv-diophantine-inequalities-23">IUT IV Diophantine inequalities 2.3</a>
         <a href="#iut-iv">IUT IV and consequences</a>
         <a href="#iut-iv-diophantine-output">IUT IV output route</a>
@@ -53305,6 +53311,65 @@
         </div>
       </section>
 
+      <section id="iut-iv-proposition-21-estimates" data-filter="iut iv proposition 2.1 well-known estimates linearization logarithms prime number theorem theta xi prm">
+        <h2>IUT IV Proposition 2.1: Well-Known Estimates</h2>
+        <p class="lede">
+          Proposition 2.1 supplies the elementary analytic estimates used in the proof
+          of Corollary 2.2. It combines the linearization
+          <span class="math">log(x) <= x</span> with a prime-number-theorem bound for
+          Chebyshev's theta function and a prime-avoidance consequence.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Log linearization</strong>
+            <p>
+              For real <span class="math">x >= 1</span>, the paper uses
+              <span class="math">log(x) <= x</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Prime theta bound</strong>
+            <p>
+              There is <span class="math">xi_prm >= 5</span> such that
+              <span class="math">(2/3)x <= theta(x) <= (4/3)x</span> for
+              <span class="math">x >= xi_prm</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Avoid finite primes</strong>
+            <p>
+              For a finite set <span class="math">A</span> of primes, one finds a
+              prime outside <span class="math">A</span> bounded by
+              <span class="math">2(theta_A+xi_prm)</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Item</th><th>Paper content</th><th>Use in Corollary 2.2</th></tr>
+          <tr>
+            <td>2.1(i)</td>
+            <td>The elementary inequality <span class="math">log(x) <= x</span> for <span class="math">x >= 1</span>.</td>
+            <td>Used repeatedly to replace logarithmic factors by polynomial-looking bounds when enlarging exceptional sets.</td>
+          </tr>
+          <tr>
+            <td>2.1(ii)</td>
+            <td>A prime-number-theorem estimate for <span class="math">theta(x)=sum_{p<=x}log(p)</span>.</td>
+            <td>Controls the size of the finite set of forbidden primes and the choice of auxiliary <span class="math">ell</span>.</td>
+          </tr>
+          <tr>
+            <td>Prime avoidance</td>
+            <td>For finite <span class="math">A</span>, some prime outside <span class="math">A</span> is at most <span class="math">2(theta_A+xi_prm)</span>.</td>
+            <td>This is the direct input to the proof properties (P1)-(P3).</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Proposition 2.1</a>
+          Related: <a href="#iut-iv-corollary-22-prime-galois">Corollary 2.2 prime/Galois gate</a>
+          <a href="#iut-iv-proposition-16-prime-number-theorem">Proposition 1.6</a>
+          <a href="#iut-iv-diophantine-inequalities-23">Corollary 2.3</a>
+        </div>
+      </section>
+
       <section id="iut-iv-suitable-initial-theta-data-22">
         <h2>IUT IV Corollary 2.2: Suitable Initial Theta Data</h2>
         <p class="lede">
@@ -53541,6 +53606,306 @@
           <a href="#initial-theta-data">initial theta data</a>
           <a href="#iut-iv-elliptic-torsion-18">elliptic torsion input</a>
           <a href="#iut-iv">IUT IV overview</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-corollary-22-lambda-j" data-filter="iut iv corollary 2.2 lambda line j invariant compactly bounded kv prime 2 legendre curve">
+        <h2>IUT IV Corollary 2.2: Lambda and j Gate</h2>
+        <p class="lede">
+          Corollary 2.2 starts in a very concrete setting: the thrice-punctured
+          lambda-line over <span class="math">Q</span>, interpreted through the
+          Legendre equation. The compactly bounded subset <span class="math">KV</span>
+          must include the prime <span class="math">2</span> in its support and satisfy
+          a 2-adic boundedness condition under the <span class="math">j</span>-invariant.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Open curve</strong>
+            <p>
+              <span class="math">X=P^1_Q</span>, <span class="math">D={0,1,infty}</span>,
+              and <span class="math">U_X=X-D</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Legendre meaning</strong>
+            <p>
+              The coordinate is <span class="math">lambda</span> in
+              <span class="math">y^2=x(x-1)(x-lambda)</span>, giving a map to the
+              elliptic moduli stack.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>2-adic j condition</strong>
+            <p>
+              The image of the local set at the prime <span class="math">2</span> under
+              the <span class="math">j</span>-invariant is bounded in
+              <span class="math">Q_2</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Gate</th><th>Source content</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Lambda-line setup</td>
+            <td>The application begins on <span class="math">P^1-{0,1,infty}</span>, not on an arbitrary curve.</td>
+            <td>GenEll later transfers this special case to general hyperbolic curves.</td>
+          </tr>
+          <tr>
+            <td>Compactly bounded subset</td>
+            <td><span class="math">KV subset U_X(Qbar)</span> is compactly bounded and has support containing the prime 2.</td>
+            <td>The compactly bounded domain controls the bounded-discrepancy constants.</td>
+          </tr>
+          <tr>
+            <td><span class="math">(*j-inv)</span></td>
+            <td>The 2-adic image under the <span class="math">j</span>-invariant lies in a bounded subset of <span class="math">Q_2</span>.</td>
+            <td>This is the local input used to compare the all-prime and away-from-2 q-height functions.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Corollary 2.2 setup</a>
+          Related: <a href="#iut-iv-corollary-22-bd-heights">bounded-discrepancy heights</a>
+          <a href="#iut-iv-proposition-18-reduction-gates">Legendre reduction gate</a>
+          <a href="#iut-iv-diophantine-inequalities-23">Corollary 2.3</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-corollary-22-bd-heights" data-filter="iut iv corollary 2.2 bounded discrepancy q height ht infinity omega x d">
+        <h2>IUT IV Corollary 2.2: Bounded-Discrepancy Heights</h2>
+        <p class="lede">
+          Part (i) of Corollary 2.2 translates q-parameter data on the lambda-line into
+          the height language needed for Vojta. The equality is an equality of
+          bounded-discrepancy classes on <span class="math">KV</span>, not a pointwise
+          identity of functions.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Away from 2</strong>
+            <p>
+              The <span class="math">(*j-inv)</span> condition gives
+              <span class="math">log(q_2) ~= log(q_all)</span> on
+              <span class="math">KV</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Height at infinity</strong>
+            <p>
+              The all-prime q-height is identified with the height from the divisor at
+              infinity on the compactified elliptic moduli stack.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Vojta height</strong>
+            <p>
+              Pullback degree gives
+              <span class="math">(1/6)ht_infty ~= ht_{omega_X(D)}</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Comparison</th><th>Paper content</th><th>Audit note</th></tr>
+          <tr>
+            <td><span class="math">q_2</span> versus <span class="math">q_all</span></td>
+            <td>The bounded 2-adic <span class="math">j</span>-condition makes their difference bounded on <span class="math">KV</span>.</td>
+            <td>This depends on the compactly bounded local condition, not on a global identity.</td>
+          </tr>
+          <tr>
+            <td><span class="math">q_all</span> versus <span class="math">ht_infty</span></td>
+            <td>The q-height is identified with the moduli height at infinity up to bounded discrepancy.</td>
+            <td>This is the passage from elliptic q-parameters to a moduli-height function.</td>
+          </tr>
+          <tr>
+            <td><span class="math">ht_infty</span> versus <span class="math">ht_{omega_X(D)}</span></td>
+            <td>The pullback of infinity has degree 6 while <span class="math">omega_X(D)</span> has degree 1.</td>
+            <td>The factor <span class="math">1/6</span> is structural and must remain visible.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Corollary 2.2(i)</a>
+          Related: <a href="#iut-iv-corollary-22-lambda-j">lambda/j gate</a>
+          <a href="#cor23-bd-class-meaning">bounded discrepancy</a>
+          <a href="#iut-iv-corollary-22-c1-c2">C1/C2 output</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-corollary-22-exceptions" data-filter="iut iv corollary 2.2 exceptional set excd automorphisms bounded height hunif hk">
+        <h2>IUT IV Corollary 2.2: Exceptional Sets</h2>
+        <p class="lede">
+          Corollary 2.2 repeatedly enlarges a finite exceptional set before applying
+          Theorem 1.10. The construction controls automorphism exceptions, low-height
+          cases, l-cyclic subgroup pathologies, and error-size failures, while tracking
+          which constants are uniform and which depend on <span class="math">KV</span>.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Automorphism exceptions</strong>
+            <p>
+              Points whose elliptic curves admit automorphisms of order greater than
+              <span class="math">2</span> are included in the finite exceptional set.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Low-height cases</strong>
+            <p>
+              If <span class="math">h^{1/2}</span> is below the prime thresholds, the
+              possible <span class="math">j</span>-invariants are finite on
+              <span class="math">KV</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Error control</strong>
+            <p>
+              Part (iii) enlarges to <span class="math">Exc_{epsilon,d}</span> so that
+              the curve-dependent <span class="math">epsilon_E</span> is at most the
+              desired <span class="math">epsilon</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Exception type</th><th>Source role</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td>Automorphism order &gt; 2</td>
+            <td>Excluded so the once-punctured elliptic curve admits the required core and no extra automorphism ambiguity remains.</td>
+            <td>Model-construction gates should expose this finite removal explicitly.</td>
+          </tr>
+          <tr>
+            <td>Bounded-height finite cases</td>
+            <td>Several estimates imply bounded <span class="math">log(q_all)</span>, hence finitely many possible <span class="math">j</span>-invariants.</td>
+            <td>The proof uses finiteness after height bounds; these are not discarded silently.</td>
+          </tr>
+          <tr>
+            <td>Uniform constants</td>
+            <td><span class="math">H_unif</span> is independent of <span class="math">KV</span>; <span class="math">C_K,H_K</span> depend on <span class="math">KV</span>.</td>
+            <td>Uniformity is part of the theorem statement and must be represented in the quantifier order.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Corollary 2.2(ii)-(iii)</a>
+          Related: <a href="#iut-iv-corollary-22-prime-galois">prime/Galois gate</a>
+          <a href="#iut-iv-corollary-22-c1-c2">C1/C2 output</a>
+          <a href="#iut-iv-diophantine-inequalities-23">Corollary 2.3</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-corollary-22-prime-galois" data-filter="iut iv corollary 2.2 auxiliary prime ell P1 P7 l cyclic subgroup galois image SL2">
+        <h2>IUT IV Corollary 2.2: Prime and Galois Gate</h2>
+        <p class="lede">
+          The proof of Corollary 2.2 chooses an auxiliary prime
+          <span class="math">ell</span> outside a finite prohibited set and then uses
+          nonexistence of l-cyclic subgroups plus a bad multiplicative place to obtain
+          the large Galois-image condition required by IUT I Definition 3.1.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Forbidden primes</strong>
+            <p>
+              The set <span class="math">A</span> contains small primes, primes
+              dividing nonzero local heights, and residue primes at large local height.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Choose ell</strong>
+            <p>
+              Proposition 2.1 gives <span class="math">ell notin A</span> satisfying
+              the lower and upper bounds recorded as (P1)-(P3).
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Large image</strong>
+            <p>
+              After excluding the l-cyclic subgroup case and retaining a bad
+              multiplicative place, GenEll gives an image containing
+              <span class="math">SL_2(F_ell)</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Proof marker</th><th>Source content</th><th>Downstream use</th></tr>
+          <tr>
+            <td>(P1)-(P3)</td>
+            <td>Bounds on <span class="math">ell</span>, nondivisibility of local heights, and avoidance of residue primes with large local height.</td>
+            <td>Supplies condition (C1) and keeps local bad-prime contributions controlled.</td>
+          </tr>
+          <tr>
+            <td>(P4)</td>
+            <td>Exclude elliptic curves admitting an <span class="math">ell</span>-cyclic subgroup scheme by enlarging the exceptional set.</td>
+            <td>Prepares the large-image argument from GenEll.</td>
+          </tr>
+          <tr>
+            <td>(P5)-(P6)</td>
+            <td>Ensure a bad multiplicative place not dividing <span class="math">2ell</span>, then obtain <span class="math">SL_2(F_ell)</span> in the l-torsion image.</td>
+            <td>This gives the Galois-theoretic part of the initial theta data conditions.</td>
+          </tr>
+          <tr>
+            <td>(P7)</td>
+            <td>The resulting data satisfy IUT I Definition 3.1 and Theorem 1.10 hypotheses.</td>
+            <td>This is the precise gate where the ordinary arithmetic setup enters IUT.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, proof of Corollary 2.2(ii), (P1)-(P7)</a>
+          Related: <a href="#iut-iv-proposition-21-estimates">Proposition 2.1</a>
+          <a href="#initial-theta-data">initial theta data</a>
+          <a href="#iut-iv-theorem-110-hypotheses">Theorem 1.10 hypotheses</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-corollary-22-c1-c2" data-filter="iut iv corollary 2.2 C1 C2 epsilon E q height log-diff log-cond">
+        <h2>IUT IV Corollary 2.2: C1 and C2 Output</h2>
+        <p class="lede">
+          Conditions (C1) and (C2) are the concrete output of Corollary 2.2(ii).
+          Condition (C1) controls the auxiliary prime in terms of the q-height, while
+          condition (C2) converts Theorem 1.10 into a bound for the all-prime q-height
+          by log-different and log-conductor terms.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>C1</strong>
+            <p>
+              <span class="math">(log(q_all))^{1/2} <= ell <= 10 delta (log(q_all))^{1/2} log(2 delta log(q_all))</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Theorem 1.10 input</strong>
+            <p>
+              Apply Theorem 1.10 to the initial theta data obtained at gate (P7).
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>C2</strong>
+            <p>
+              <span class="math">(1/6)log(q_all)</span> is bounded by
+              <span class="math">(1+epsilon_E)(log-diff+log-cond)+C_K</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Output</th><th>Source content</th><th>What to preserve</th></tr>
+          <tr>
+            <td><span class="math">epsilon_E</span></td>
+            <td>Defined from <span class="math">delta</span>, <span class="math">log(q_all)</span>, and logarithmic factors; it depends on the curve.</td>
+            <td>Do not replace it by a generic small parameter before applying part (iii).</td>
+          </tr>
+          <tr>
+            <td>Different/conductor bridge</td>
+            <td><span class="math">log-diff_X(x_E)=log(d_{Ftpd})</span> and <span class="math">log(f_{Ftpd}) <= log-cond_D(x_E) <= log(f_{Ftpd})+log(2ell)</span>.</td>
+            <td>This identifies Theorem 1.10's field-divisor terms with GenEll's Diophantine functions.</td>
+          </tr>
+          <tr>
+            <td>Part (iii)</td>
+            <td>After enlarging the exceptional set depending on <span class="math">epsilon</span>, one has <span class="math">epsilon_E <= epsilon</span>.</td>
+            <td>This is the final step needed before Corollary 2.3's arbitrary <span class="math">epsilon</span> statement.</td>
+          </tr>
+        </table>
+        <div class="callout violet">
+          Formalization checkpoint: C2 is the place where Theorem 1.10 is consumed.
+          The proof should keep a visible input theorem for Theorem 1.10 rather than
+          folding the IUT III/IV comparison into the ordinary Diophantine estimates.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Corollary 2.2(ii)-(iii), conditions (C1),(C2)</a>
+          Related: <a href="#iut-iv-theorem-110-final-bound">Theorem 1.10 final bound</a>
+          <a href="#iut-iv-corollary-22-exceptions">exceptional sets</a>
+          <a href="#iut-iv-diophantine-inequalities-23">Corollary 2.3</a>
         </div>
       </section>
 
