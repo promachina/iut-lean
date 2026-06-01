@@ -1249,7 +1249,14 @@
         <a href="#padic-teich-analogy-3124">p-adic Teich analogy 3.12.4</a>
         <a href="#corollary-312-diagnostics">3.12 diagnostics</a>
         <a href="#iut-iv-local-log-volume-estimates-11-15">IUT IV local estimates 1.1-1.5</a>
+        <a href="#iut-iv-proposition-11-tensor-differents">Prop. 1.1 tensor/differents</a>
+        <a href="#iut-iv-proposition-12-logarithm-differents">Prop. 1.2 log/differents</a>
+        <a href="#iut-iv-proposition-13-different-estimates">Prop. 1.3 different estimates</a>
+        <a href="#iut-iv-proposition-14-nonarch-log-volume">Prop. 1.4 nonarch log-volume</a>
+        <a href="#iut-iv-proposition-15-arch-metric-estimates">Prop. 1.5 arch metrics</a>
         <a href="#iut-iv-prime-averaging-16-17">IUT IV prime/averaging 1.6-1.7</a>
+        <a href="#iut-iv-proposition-16-prime-number-theorem">Prop. 1.6 prime estimate</a>
+        <a href="#iut-iv-proposition-17-weighted-averages">Prop. 1.7 weighted averages</a>
         <a href="#iut-iv-elliptic-torsion-18">IUT IV elliptic torsion 1.8</a>
         <a href="#iut-iv-arithmetic-divisors-19">IUT IV arithmetic divisors 1.9</a>
         <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV theta-pilot estimate 1.10</a>
@@ -51384,6 +51391,338 @@
         </div>
       </section>
 
+      <section id="iut-iv-proposition-11-tensor-differents" data-filter="iut iv proposition 1.1 multiple tensor products differents normalization local rings ri">
+        <h2>IUT IV Proposition 1.1: Tensor Products and Differents</h2>
+        <p class="lede">
+          Proposition 1.1 is the first local estimate in IUT IV. It controls the
+          normalization of a multiple tensor product of local integer rings over
+          <span class="math">Z_p</span> by an explicit power of <span class="math">p</span>
+          determined by different exponents.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Input</strong>
+            <p>
+              A finite set <span class="math">I</span> with
+              <span class="math">|I| >= 2</span>, finite extensions
+              <span class="math">k_i/Q_p</span>, rings of integers
+              <span class="math">R_i</span>, and different orders
+              <span class="math">d_i</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Containment</strong>
+            <p>
+              For <span class="math">R_I = tensor_{i in I} R_i</span> and a fixed
+              <span class="math">*</span>, the source states
+              <span class="math">R_I subset (R_I)^~</span> and
+              <span class="math">p^{ceil(d_{I_*})}(R_I)^~ subset R_I</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Role</strong>
+            <p>
+              This supplies the first explicit conversion from normalization error to a
+              computable different term used by Propositions 1.2 and 1.4.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Paper component</th><th>Exact content to preserve</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td>Reduced normalization</td>
+            <td>The normalization is taken in the ring of fractions of the reduced tensor product.</td>
+            <td>A formal model should distinguish the raw tensor product from its normalized reduced envelope.</td>
+          </tr>
+          <tr>
+            <td>Choice of <span class="math">*</span></td>
+            <td>The exponent uses <span class="math">d_{I_*}</span>, the sum over <span class="math">I_* = I - {*}</span>.</td>
+            <td>The estimate is not symmetric in notation, even though the construction may be applied after choosing a distinguished factor.</td>
+          </tr>
+          <tr>
+            <td>Reduction to two factors</td>
+            <td>The proof base-changes to the algebraic closure and reduces by induction to the two-factor different ideal.</td>
+            <td>The source of the bound is ordinary local different theory, not an IUT-specific black box.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Proposition 1.1</a>
+          Related: <a href="#iut-iv-local-log-volume-estimates-11-15">local estimates overview</a>
+          <a href="#iut-iv-proposition-12-logarithm-differents">Proposition 1.2</a>
+          <a href="#iut-iv-proposition-14-nonarch-log-volume">Proposition 1.4</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-proposition-12-logarithm-differents" data-filter="iut iv proposition 1.2 differents logarithms p-adic logarithm automorphism phi ai bi">
+        <h2>IUT IV Proposition 1.2: Differents and Logarithms</h2>
+        <p class="lede">
+          Proposition 1.2 bounds the image of local unit groups under the
+          <span class="math">p</span>-adic logarithm and then proves that any
+          vector-space automorphism preserving the logarithm submodule sends fractional
+          ideal regions into explicitly shifted logarithmic and normalized regions.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Logarithm lattice</strong>
+            <p>
+              Constants <span class="math">a_i</span> and <span class="math">b_i</span>
+              give <span class="math">p^{a_i}R_i subset log_p(R_i^x) subset p^{-b_i}R_i</span>,
+              with equality in the tame small-ramification range.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Automorphism</strong>
+            <p>
+              The automorphism <span class="math">phi</span> acts on the rationalized
+              logarithm vector space and is only required to preserve
+              <span class="math">log_p(R_I^x)</span> as a submodule.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Containment</strong>
+            <p>
+              Images of <span class="math">p^lambda R_i tensor (R_I)^~</span> are
+              contained in shifted logarithm modules and then in shifted
+              <span class="math">(R_I)^~</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Item</th><th>Statement component</th><th>Why it matters</th></tr>
+          <tr>
+            <td>(i)</td>
+            <td>Bounds <span class="math">log_p(R_i^x)</span> between fractional ideals using <span class="math">a_i,b_i</span>.</td>
+            <td>Fixes the local logarithm radius that later becomes a numerical loss term.</td>
+          </tr>
+          <tr>
+            <td>(ii)</td>
+            <td>Controls <span class="math">phi(p^lambda R_i tensor (R_I)^~)</span> by <span class="math">floor(lambda)-ceil(d_I)-ceil(a_I)-ceil(b_I)</span>.</td>
+            <td>Records the automorphism-tolerant containment needed for local hull bounds.</td>
+          </tr>
+          <tr>
+            <td>(iii)</td>
+            <td>When <span class="math">p&gt;2</span> and <span class="math">e_i <= p-2</span>, improves the shift to <span class="math">floor(lambda)-ceil(d_I)-1</span>.</td>
+            <td>Separates the tame-small range from the general ramified case.</td>
+          </tr>
+          <tr>
+            <td>(iv)</td>
+            <td>When <span class="math">p&gt;2</span> and all <span class="math">e_i=1</span>, <span class="math">phi((R_I)^~) subset (R_I)^~</span>.</td>
+            <td>This zero-loss unramified case is used later at nondistinguished primes.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Formalization checkpoint: <span class="math">phi</span> is not a coordinate
+          change chosen after the fact. The hypothesis is preservation of the logarithm
+          submodule; the conclusion is a uniform containment for every such
+          automorphism.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Proposition 1.2</a>
+          Related: <a href="#iut-iv-proposition-11-tensor-differents">Proposition 1.1</a>
+          <a href="#iut-iv-proposition-13-different-estimates">Proposition 1.3</a>
+          <a href="#iut-iv-proposition-14-nonarch-log-volume">Proposition 1.4</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-proposition-13-different-estimates" data-filter="iut iv proposition 1.3 estimates of differents ramification tame galois p group">
+        <h2>IUT IV Proposition 1.3: Estimates of Differents</h2>
+        <p class="lede">
+          Proposition 1.3 gives the ramification estimates that make the different terms
+          in the later log-volume bounds explicit. It separates the tame lower-bound
+          calculation from a Galois upper-bound calculation that reduces to
+          <span class="math">p</span>-power Kummer steps.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Lower bound</strong>
+            <p>
+              For <span class="math">k_0 subset k_i</span>,
+              <span class="math">d_i >= d_0 + (e_{i/0}-1)/e_i</span>, with equality
+              when <span class="math">k_i/k_0</span> is tame.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Upper bound</strong>
+            <p>
+              Under the Galois/tame-intermediate hypothesis,
+              <span class="math">d_i <= d_0 + n_i + 1/e_0</span>, where
+              <span class="math">n_i</span> is the <span class="math">p</span>-primary
+              degree exponent.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Downstream use</strong>
+            <p>
+              Theorem 1.10 repeatedly invokes these inequalities to bound the different
+              divisors of fields obtained from torsion and tripodal extensions.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Hypothesis</th><th>What it controls</th><th>Audit note</th></tr>
+          <tr>
+            <td>Tame extension</td>
+            <td>Lower-bound inequality becomes equality.</td>
+            <td>Do not collapse tame and wild cases into one unspecified error term.</td>
+          </tr>
+          <tr>
+            <td>Galois over a tame intermediate field</td>
+            <td>Wild contribution is bounded through the integer <span class="math">n_i</span>.</td>
+            <td>The proof uses solvability of <span class="math">p</span>-groups and a degree-<span class="math">p</span> Kummer step.</td>
+          </tr>
+          <tr>
+            <td>Arbitrary epsilon step</td>
+            <td>The proof enlarges fields to force <span class="math">p/e_*</span> below an arbitrary positive bound.</td>
+            <td>This is an estimate argument, not an exact formula for the wild different.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Proposition 1.3 and Remark 1.3.1</a>
+          Related: <a href="#iut-iv-proposition-12-logarithm-differents">Proposition 1.2</a>
+          <a href="#iut-iv-proposition-14-nonarch-log-volume">Proposition 1.4</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">Theorem 1.10</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-proposition-14-nonarch-log-volume" data-filter="iut iv proposition 1.4 nonarchimedean normalized log volume torsion quotient automorphism hull">
+        <h2>IUT IV Proposition 1.4: Nonarchimedean Log-Volume</h2>
+        <p class="lede">
+          Proposition 1.4 normalizes nonarchimedean log-volume, computes the log-volume
+          of <span class="math">log_p(R_i^x)</span> after quotienting torsion, and
+          combines Propositions 1.2 and 1.3 into explicit upper bounds for
+          automorphism-distorted local regions.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Scale</strong>
+            <p>
+              Normalize by field degree so that
+              <span class="math">mu_log(R_i)=0</span> and
+              <span class="math">mu_log(pR_i)=-log(p)</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Torsion quotient</strong>
+            <p>
+              Compute <span class="math">mu_log(log_p(R_i^x))</span> using
+              <span class="math">R_i^x/R_i^mu</span>, residue degree
+              <span class="math">f_i</span>, and <span class="math">p</span>-primary
+              torsion exponent <span class="math">m_i</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Upper estimates</strong>
+            <p>
+              Bound the log-volume of shifted logarithm modules and shifted
+              normalizations after applying the allowed automorphism
+              <span class="math">phi</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Item</th><th>Numerical datum</th><th>Why it must remain explicit</th></tr>
+          <tr>
+            <td>(i)</td>
+            <td>Normalized log-volume on compact opens of finite local extensions and finite tensor-product submodules.</td>
+            <td>The sign convention is fixed here; later "upper" bounds use this signed normalization.</td>
+          </tr>
+          <tr>
+            <td>(ii)</td>
+            <td>Formula for <span class="math">mu_log(log_p(R_i^x))</span> in terms of <span class="math">e_i,f_i,m_i</span>.</td>
+            <td>The torsion quotient contributes real numerical terms, not merely a qualitative compactness assertion.</td>
+          </tr>
+          <tr>
+            <td>(iii)</td>
+            <td>Two explicit upper bounds involving <span class="math">lambda,d_I,|I_*|,p,e_i</span>.</td>
+            <td>This is the local source of the "upper-semi" log-volume estimate in Theorem 1.10.</td>
+          </tr>
+          <tr>
+            <td>(iv)</td>
+            <td>Odd unramified case gives <span class="math">phi((R_I)^~) subset (R_I)^~</span> and log-volume zero.</td>
+            <td>Later nondistinguished places use this as a genuine zero-loss case.</td>
+          </tr>
+        </table>
+        <div class="callout violet">
+          Formalization checkpoint: this page is the nonarchimedean bridge between
+          local logarithm containment and real inequalities. A useful Lean model should
+          expose the normalization convention, the torsion quotient, and the two
+          displayed upper bounds as separate fields or lemmas.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Proposition 1.4</a>
+          Related: <a href="#iut-iv-proposition-12-logarithm-differents">Proposition 1.2</a>
+          <a href="#iut-iv-proposition-13-different-estimates">Proposition 1.3</a>
+          <a href="#iut-iv-proposition-17-weighted-averages">normalized averaging</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">Theorem 1.10</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-proposition-15-arch-metric-estimates" data-filter="iut iv proposition 1.5 archimedean metric estimates tensor product direct sum primitive automorphisms integral ball">
+        <h2>IUT IV Proposition 1.5: Archimedean Metric Estimates</h2>
+        <p class="lede">
+          Proposition 1.5 is the archimedean counterpart of the local
+          nonarchimedean estimates. It compares tensor-product metrics with direct-sum
+          metrics, tracks primitive automorphisms, defines the integral ball
+          <span class="math">B_I</span>, and bounds equal-length tensor vectors.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Two copies</strong>
+            <p>
+              The Chinese-remainder isomorphism
+              <span class="math">C tensor_R C ~= C plus C</span> changes the metric by
+              a factor of <span class="math">2</span>, hence lengths by
+              <span class="math">sqrt(2)</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Many copies</strong>
+            <p>
+              For <span class="math">M_I</span>, the direct-sum decomposition has
+              <span class="math">2^{|I|-1}|V|^{|I|}</span> copies of
+              <span class="math">C</span>, and defines the product unit ball
+              <span class="math">B_I</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Tensor vector bound</strong>
+            <p>
+              If each component vector has length <span class="math">lambda</span>,
+              the tensor lies in <span class="math">lambda^{|I|}B_I</span>.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Item</th><th>Preserved structure</th><th>Downstream consequence</th></tr>
+          <tr>
+            <td>(i)</td>
+            <td>Metric factor between tensor and direct-sum descriptions.</td>
+            <td>Provides the archimedean numerical factor used in Theorem 1.10.</td>
+          </tr>
+          <tr>
+            <td>(ii)</td>
+            <td>Primitive automorphisms preserve the direct-sum decomposition and Hermitian metric.</td>
+            <td>Matches the local-indeterminacy tolerance at archimedean places.</td>
+          </tr>
+          <tr>
+            <td>(iii)</td>
+            <td>Multiple-copy decomposition, tensor metric, direct-sum metric, and <span class="math">B_I</span> are preserved.</td>
+            <td>Gives a stable archimedean container for tensor packets.</td>
+          </tr>
+          <tr>
+            <td>(iv)</td>
+            <td>Equal-length tensor lies in <span class="math">lambda^{|I|}B_I</span>.</td>
+            <td>Converts component length control into a packet-level containment.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Proposition 1.5</a>
+          Related: <a href="#arch-ball-containment-35">IUT III archimedean containment</a>
+          <a href="#iut-iv-proposition-14-nonarch-log-volume">nonarchimedean log-volume</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">Theorem 1.10</a>
+        </div>
+      </section>
+
       <section id="iut-iv-prime-averaging-16-17">
         <h2>IUT IV Section 1: Prime and Averaging Input</h2>
         <p class="lede">
@@ -51582,6 +51921,132 @@
           <a href="#weighted-averages">weighted averages atlas card</a>
           <a href="#prime-number-theorem-source">prime-number estimate atlas card</a>
           <a href="#iut-iv-theorem-110-theta-pilot-estimate">theta-pilot estimate</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-proposition-16-prime-number-theorem" data-filter="iut iv proposition 1.6 prime number theorem eta prm prime estimate theta pilot">
+        <h2>IUT IV Proposition 1.6: Prime Estimate</h2>
+        <p class="lede">
+          Proposition 1.6 is the analytic-number-theory input of IUT IV Section 1. It
+          uses the prime number theorem to produce an explicit large-prime inequality
+          and a threshold <span class="math">eta_prm</span> used later in the
+          theta-pilot computation.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Prime counting</strong>
+            <p>
+              For the <span class="math">n</span>-th prime
+              <span class="math">p_n</span>, the source obtains
+              <span class="math">n <= 4p_n/(3 log(p_n))</span> for all sufficiently
+              large <span class="math">n</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Threshold</strong>
+            <p>
+              The inequality implies existence of
+              <span class="math">eta_prm &gt; 0</span> such that the corresponding
+              prime sum is at least <span class="math">1</span> whenever
+              <span class="math">eta >= eta_prm</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Theorem 1.10 use</strong>
+            <p>
+              The threshold is cited in Theorem 1.10 to absorb prime-sum contributions
+              into an explicit bound rather than a qualitative asymptotic.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Component</th><th>Source status</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td>Prime number theorem</td>
+            <td>Imported as a classical analytic estimate, cited through a standard reference.</td>
+            <td>A Lean development can initially treat this as a named analytic-number-theory theorem or imported certificate.</td>
+          </tr>
+          <tr>
+            <td>Numerical constant <span class="math">4/3</span></td>
+            <td>Chosen after passing to a sufficiently large range where the asymptotic ratio is controlled.</td>
+            <td>The exact constant should remain visible because it feeds the explicit estimate.</td>
+          </tr>
+          <tr>
+            <td><span class="math">eta_prm</span></td>
+            <td>Existence threshold for the final prime-sum inequality.</td>
+            <td>Downstream pages should reference this threshold rather than rephrasing it as "large enough" without a name.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Proposition 1.6</a>
+          Related: <a href="#iut-iv-prime-averaging-16-17">prime/averaging overview</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">Theorem 1.10</a>
+          <a href="#iut-iv-diophantine-inequalities-23">Diophantine inequalities</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-proposition-17-weighted-averages" data-filter="iut iv proposition 1.7 weighted averages packet normalized log volume remark 1.7.1">
+        <h2>IUT IV Proposition 1.7: Weighted Averages</h2>
+        <p class="lede">
+          Proposition 1.7 is elementary, but its role is structural: it computes the
+          weighted average of tuple-sums over <span class="math">E^n</span>. Remark
+          1.7.1 then identifies the correct weights when IUT IV uses normalized
+          log-volumes rather than the non-normalized convention from IUT III.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Finite data</strong>
+            <p>
+              A nonempty finite set <span class="math">E</span>, positive weights
+              <span class="math">lambda_e</span>, and real values
+              <span class="math">beta_e</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Tuple calculation</strong>
+            <p>
+              For tuples in <span class="math">E^n</span>, product weights and summed
+              <span class="math">beta</span>-values have average
+              <span class="math">n beta_avg</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>IUT specialization</strong>
+            <p>
+              In Remark 1.7.1, <span class="math">E</span> is the valuation set over a
+              fixed rational place, <span class="math">lambda_e</span> is a local
+              degree, and <span class="math">beta_e</span> is a normalized log-volume.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Item</th><th>Statement content</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>Proposition 1.7</td>
+            <td>Weighted average over <span class="math">E^n</span> of tuple-sums equals <span class="math">n beta_avg</span>.</td>
+            <td>This can be formalized as finite-sum algebra before any IUT-specific objects are introduced.</td>
+          </tr>
+          <tr>
+            <td>Remark 1.7.1</td>
+            <td>Normalized log-volume changes the weights from the IUT III non-normalized convention.</td>
+            <td>The formal interface must carry a normalization flag or separate weight construction.</td>
+          </tr>
+          <tr>
+            <td>Theorem 1.10 specialization</td>
+            <td>The set <span class="math">E</span> is valuations over <span class="math">v_Q</span>; <span class="math">n=|A|</span>; <span class="math">lambda_e=[(F_mod)_v:Q_{v_Q}]</span>.</td>
+            <td>The generic finite-sum theorem must be instantiated with valuation-indexed packet data.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Formalization checkpoint: this proposition is mathematically easy but
+          convention-sensitive. Mixing the IUT III weights with IUT IV normalized
+          log-volume would give a type-correct but source-inaccurate theorem.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Proposition 1.7 and Remark 1.7.1</a>
+          Related: <a href="#iut-iv-proposition-14-nonarch-log-volume">normalized log-volume</a>
+          <a href="#packet-normalization-39">IUT III packet normalization</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">Theorem 1.10</a>
         </div>
       </section>
 
