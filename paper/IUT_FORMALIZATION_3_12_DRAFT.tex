@@ -403,6 +403,10 @@ log-Kummer packet-correspondence source carrying the q-pilot column and
 non-interference guard.  Its target face carries the common packet-normalized
 capsule value, and \Lean{} derives the direct theta-to-entry, theta-to-packet,
 and entry-to-\((\Ind3)\)-target equalities consumed by the upper-semi route.
+The target calibration no longer contains an independent real representative
+for this common value: all target equalities are stated directly against the
+packet-normalized capsule log-volume.  This removes one artificial
+identification layer from the Step (x) interface.
 \IUT{} III, Remark 3.11.4 further says that the root-of-unity and cyclotomic
 indeterminacies arising from forgetting Frobenius-like labels are invisible
 for the objects under consideration.  The present code formalizes the finite
@@ -566,7 +570,9 @@ The project currently proves the following source-facing results in \Lean{}:
   nonarchimedean log-Kummer packet-correspondence source carrying the q-pilot
   non-interference guard.  Its projections derive the theta-to-packet,
   theta-to-entry, entry-to-\((\Ind3)\)-target, and packet-normalized target
-  equalities used by the route.
+  equalities used by the route; the target calibration now refers directly to
+  the packet-normalized capsule value rather than to a separate real
+  representative.
 \item The finite sign-unit/root-of-unity part of Remark 3.11.4 is formalized:
   sign-unit action preserves full cusp labels, full-label log-volume readings,
   Gaussian degrees, and averaged Gaussian log-volume.
