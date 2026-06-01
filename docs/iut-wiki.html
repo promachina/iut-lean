@@ -1315,6 +1315,10 @@
         <a href="#formalization">RIMS Lean effort</a>
         <a href="#leanform-communication-page">LeanForm communication</a>
         <a href="#leanform-species-mutations-page">LeanForm species/mutations</a>
+        <a href="#leanform-vicious-cycles-page">LeanForm vicious cycles</a>
+        <a href="#leanform-blackbox-decomposition-page">LeanForm blackboxes</a>
+        <a href="#leanform-zfc-mathlib-gap-page">ZFC/Mathlib gap</a>
+        <a href="#leanform-stage12-interface-page">Stage 1-2 Lean interface</a>
         <a href="#rims-lean-stage-plan-2026">RIMS Lean stages 2026</a>
         <a href="#rims-four-triangle-route-2026">Four-triangle 3.11→3.12 route</a>
         <a href="#lana">LANA</a>
@@ -59024,6 +59028,184 @@
           Related: <a href="#species-vs-categories-iv31">species vs categories</a>
           <a href="#mutation-histories-cores-iv33">mutation histories/cores</a>
           <a href="#rims-lean-stage-plan-2026">RIMS Lean stages</a>
+        </div>
+      </section>
+
+      <section id="leanform-vicious-cycles-page" data-filter="mochizuki formalization iut leanform communication vicious cycles confidence correctness social accountability">
+        <h2>LeanForm Vicious Cycles</h2>
+        <p class="lede">
+          In §1 of the 2026 report, Mochizuki frames LeanForm as a way to break a
+          communication cycle: readers want confidence before investing in IUT, but
+          gaining rigorous confidence requires studying IUT in detail. The report's
+          claim is that a machine-checkable logical record can provide a precise
+          synopsis without relying on informal social trust.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Cycle component</th><th>Report content</th><th>Wiki reading</th></tr>
+          <tr>
+            <td>Simple logic claim</td>
+            <td>Mochizuki says the logic of the disputed final portions is simple and elementary when understood correctly.</td>
+            <td>The wiki should make the exact logical interfaces inspectable instead of relying on prose reassurance.</td>
+          </tr>
+          <tr>
+            <td>Motivation barrier</td>
+            <td>Mathematicians may be reluctant to study all of IUT without prior confidence in correctness.</td>
+            <td>A source map should let readers enter the theory gradually without pretending the proof is already settled.</td>
+          </tr>
+          <tr>
+            <td>Detail requirement</td>
+            <td>The report says genuine rigorous understanding still requires detailed study of IUT I-IV.</td>
+            <td>The wiki goal remains full source coverage, not only a high-level synopsis.</td>
+          </tr>
+          <tr>
+            <td>Machine-checkable record</td>
+            <td>LeanForm is proposed as a precise, fast, nonnegatable record of logical structure.</td>
+            <td>The wiki should separate checked Lean claims from still-supplied source assumptions.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          This page records a communication claim from the report. It is not evidence
+          that the mathematical proof is complete; it explains why the RIMS project
+          prioritizes the 3.11 to 3.12 corridor.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-formalization-iut-2026-04.pdf" target="_blank">Mochizuki 2026 Lean report §1</a>
+          Related: <a href="#leanform-communication-page">LeanForm communication</a>
+          <a href="#rims-four-triangle-route-2026">four-triangle route</a>
+          <a href="#scholze-stix-critique-page">Scholze-Stix critique</a>
+        </div>
+      </section>
+
+      <section id="leanform-blackbox-decomposition-page" data-filter="mochizuki formalization iut leanform blackboxes formal combinatorial decomposition stage 1">
+        <h2>LeanForm Blackbox Decomposition</h2>
+        <p class="lede">
+          The 2026 report says the technical essence of LeanForm for IUT is a
+          reorganization of the theory into suitable purely formal or combinatorial
+          blackboxes. This is a staging device: a blackbox interface can make the route
+          logic precise while still marking the source theorem or construction that must
+          eventually fill the blackbox.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Source mathematics</strong>
+            <p>IUT I-IV and prerequisite papers provide the intended mathematical constructions.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Blackbox interface</strong>
+            <p>Lean-facing records expose the inputs, outputs, and compatibility laws needed by a route.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Checked route logic</strong>
+            <p>The formal proof can verify what follows once the blackbox obligations are supplied.</p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Report point</th><th>Meaning</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>Formal/combinatorial blackboxes</td>
+            <td>Repackage parts of IUT into interfaces suited to Lean checking.</td>
+            <td>Every wiki page should distinguish the interface from the source construction.</td>
+          </tr>
+          <tr>
+            <td>Final portion focus</td>
+            <td>The report says §4 details this reorganization for the final public-dispute corridor.</td>
+            <td>Stage 1 pages should not claim to formalize all of IUT.</td>
+          </tr>
+          <tr>
+            <td>Skeletal status</td>
+            <td>The report says the code remains skeletal and depends on recipient background.</td>
+            <td>Mark RIMS code status as early and communication-oriented, not public complete.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-formalization-iut-2026-04.pdf" target="_blank">Mochizuki 2026 Lean report §§1,4</a>
+          Related: <a href="#rims-four-triangle-route-2026">four-triangle route</a>
+          <a href="#formalization">RIMS Lean effort</a>
+          <a href="#membership-step-xif-312">3.12 membership step</a>
+        </div>
+      </section>
+
+      <section id="leanform-zfc-mathlib-gap-page" data-filter="mochizuki formalization iut zfc first order theory mathlib shogo saito species mutations syntactic category">
+        <h2>LeanForm ZFC/Mathlib Gap</h2>
+        <p class="lede">
+          In §2, Mochizuki explains why abstract species/mutations would be natural
+          after formalizing ZFC as a first-order theory: one could then quantify over
+          an indeterminate set-theoretic formula. He reports learning that Shogo Saito
+          had achieved such a Lean formalization, while Mathlib did not yet contain one.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Layer</th><th>Report statement</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Species/mutations</td>
+            <td>They may be viewed as a refinement of categories/functors, or as internal categories/functors in the syntactic category of ZFC.</td>
+            <td>This ties the 2026 report directly to IUT IV §3 species pages.</td>
+          </tr>
+          <tr>
+            <td>Indeterminate formulas</td>
+            <td>A first-order ZFC formalization is needed to work with arbitrary formulas, not only formulas natively available in Lean.</td>
+            <td>Abstract species support is a later foundational target.</td>
+          </tr>
+          <tr>
+            <td>Shogo Saito</td>
+            <td>The report says such a LeanForm had recently been achieved by Shogo Saito.</td>
+            <td>Record this as a report claim; the wiki should later link source code if it becomes available.</td>
+          </tr>
+          <tr>
+            <td>Mathlib gap</td>
+            <td>The report says Mathlib did not yet have this first-order ZFC LeanForm.</td>
+            <td>Do not assume standard Mathlib already provides abstract species machinery.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-formalization-iut-2026-04.pdf" target="_blank">Mochizuki 2026 Lean report §2</a>
+          Related: <a href="#iut-iv-zfcg-universes-31">IUT IV ZFCG universes</a>
+          <a href="#leanform-species-mutations-page">LeanForm species/mutations</a>
+          <a href="#lana">LANA</a>
+        </div>
+      </section>
+
+      <section id="leanform-stage12-interface-page" data-filter="mochizuki formalization iut stage 1 stage 2 standard lean commands records component data zfc not necessary">
+        <h2>LeanForm Stage 1-2 Interface Decision</h2>
+        <p class="lede">
+          After consulting Lean experts, Mochizuki reports that a full abstract
+          formalization of species/mutations via first-order ZFC is probably not needed
+          for Stages 1-2. Instead, standard Lean mechanisms for types of mathematical
+          objects and relationships between component data should suffice for the
+          initial logical formalization.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Decision</th><th>Report content</th><th>Project consequence</th></tr>
+          <tr>
+            <td>Do not wait for full ZFC</td>
+            <td>Full ZFC-as-first-order-theory support is theoretically desirable but not required for early stages.</td>
+            <td>The wiki and Lean project can continue with structured interfaces.</td>
+          </tr>
+          <tr>
+            <td>Use standard Lean data</td>
+            <td>Types, records, and componentwise relationships can express the early IUT logic.</td>
+            <td>This matches our current approach of explicit source obligations and typed corridor records.</td>
+          </tr>
+          <tr>
+            <td>Scope limitation</td>
+            <td>The claim is made for at least Stages 1-2, especially the code discussed in §4.</td>
+            <td>Do not generalize this to all of IUT or all prerequisite foundations.</td>
+          </tr>
+          <tr>
+            <td>Communication lesson</td>
+            <td>The absence of Mathlib ZFC support is read as reflecting how algorithmic construction viewpoints are underrepresented in existing formalized mathematics.</td>
+            <td>The wiki should keep algorithmic reconstruction as a named concept, not an implicit background habit.</td>
+          </tr>
+        </table>
+        <div class="callout green">
+          This page explains why the RIMS-style Stage 1 interface can be record-based
+          without contradicting the source's species/mutation foundations. It is a
+          pragmatic staging claim, not a denial that full species foundations matter.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-formalization-iut-2026-04.pdf" target="_blank">Mochizuki 2026 Lean report §2</a>
+          Related: <a href="#rims-lean-stage-plan-2026">RIMS Lean stages</a>
+          <a href="#rims-four-triangle-route-2026">four-triangle route</a>
+          <a href="#iut-iv-mutations-33">IUT IV mutations</a>
         </div>
       </section>
 
