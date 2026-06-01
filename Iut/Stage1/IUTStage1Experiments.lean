@@ -556,6 +556,18 @@ theorem localizationSource_endpoint
           (data.bundleLogVolume - data.structureSheafLogVolume) :=
   data.endpoint
 
+theorem structureSheafAdjustedLocalizationSource_endpoint
+    {γ : Type u} [Fintype γ]
+    (data : IUTStage1StructureSheafAdjustedLocalizationSource γ) :
+    data.toLocalizationSource.bundleLogVolume =
+        Finset.univ.sum data.directSummandLogVolume ∧
+      data.adjustedRawLogVolume =
+        data.toLocalizationSource.bundleLogVolume -
+          data.structureSheafLogVolume ∧
+      data.toLocalizationSource.adjustedLogVolume =
+        data.weightedAdjustedLogVolume :=
+  data.endpoint
+
 theorem weightedDeterminantFromLocalizationSources_endpoint
     {β : Type u} [Fintype β] {γ : Type v} [Fintype γ]
     (source : β -> IUTStage1ArithmeticVectorBundleLocalizationSource γ)
@@ -572,6 +584,24 @@ theorem weightedDeterminantFromLocalizationSources_endpoint
         (positiveTensorPower : Real) * data.determinantLogVolume ∧
       data.normalizedLogVolume = data.determinantLogVolume :=
   IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.ofLocalizationSources_endpoint
+    source anchor positiveTensorPower tensor_power_pos
+
+theorem weightedDeterminantFromAdjustedLocalizationSources_endpoint
+    {β : Type u} [Fintype β] {γ : Type v} [Fintype γ]
+    (source : β -> IUTStage1StructureSheafAdjustedLocalizationSource γ)
+    (anchor : β)
+    (positiveTensorPower : Nat)
+    (tensor_power_pos : 0 < positiveTensorPower) :
+    let data : IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β :=
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.ofAdjustedLocalizationSources
+        source anchor positiveTensorPower tensor_power_pos;
+    data.determinantLogVolume =
+        (Finset.univ.sum fun index =>
+          (source index).weightedAdjustedLogVolume) ∧
+      data.tensorPowerLogVolume =
+        (positiveTensorPower : Real) * data.determinantLogVolume ∧
+      data.normalizedLogVolume = data.determinantLogVolume :=
+  IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.ofAdjustedLocalizationSources_endpoint
     source anchor positiveTensorPower tensor_power_pos
 
 theorem naiveFrobeniusTensorPowerLogVolume_endpoint

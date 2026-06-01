@@ -482,6 +482,16 @@ direct-summand source computes the bundle log-volume as a sum of direct
 summand log-volumes before projecting to the localization summand interface.
 Thus the weighted determinant can now be built from finite direct-summand
 localization sources.
+The Ob3-1-2 structure-sheaf adjustment is also named explicitly.  A
+structure-sheaf adjusted source carries
+\[
+  L_{\mathrm{adj}}=\sum_\gamma L_\gamma-L_{\mathcal O(-)}
+\]
+and proves that its weighted value is the same adjusted summand consumed by
+the determinant source.  Thus the current determinant route separates direct
+summands, subtraction of the \(\mathcal O(-)\) contribution, positive
+weighting, tensor-power formation, and normalization as distinct Lean
+interfaces.
 The possible-image approximant route can now consume this weighted determinant
 source directly.  The equality between the approximant log-volume
 \(\mu_{\log}(H)\) and the weighted normalized determinant value is now carried
@@ -772,6 +782,11 @@ The project currently proves the following source-facing results in \Lean{}:
   direct-summand source: the bundle log-volume is the sum of direct-summand
   log-volumes, then the structure-sheaf adjustment and positive weight produce
   the adjusted localization contribution.
+\item The Ob3-1-2 structure-sheaf adjusted source makes the
+  \(\mathcal O(-)\) subtraction explicit before projection to the localization
+  summand.  A corresponding determinant constructor proves that summing these
+  weighted adjusted sources gives the determinant log-volume used by the
+  route.
 \item The possible-image hull-approximant endpoint now has a weighted
   determinant-source constructor.  The route consumes the weighted summand
   source and projects to the common upper-ray interface only after a named
