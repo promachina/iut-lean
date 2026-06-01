@@ -22302,6 +22302,136 @@ theorem hodgeTheaterDescentBridgeData_histories_not_identified
 end IUTStage1Theorem311StructuredInputsWithSHE
 
 /--
+Source-facing Theorem 3.11 multiradial record.
+
+IUT III describes Theorem 3.11 as producing a multiradial representation whose
+theta-pilot side is read through mono-analytic log-shell containers, while the
+q-pilot side is read through tautological log documentation.  This record
+collects the current formal ingredients of that source statement: structured
+IPL/SHE/APT input, coric common-container data, possible theta-pilot images,
+the 0-column/1-column pilot distinction, and the Hodge-theater history guard.
+-/
+structure IUTStage1Theorem311MultiradialSourceRecord
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) where
+  bundle : IUTStage1Theorem311StructuredInputsWithSHE package
+  coricData : IUTStage1CoricData package
+  thetaPossibleImages : IUTStage1ThetaPilotPossibleImages package
+  thetaColumn : IUTStage1LogThetaVerticalColumn
+  qColumn : IUTStage1LogThetaVerticalColumn
+  theta_column_eq : thetaColumn = IUTStage1LogThetaVerticalColumn.zeroThetaPilot
+  q_column_eq : qColumn = IUTStage1LogThetaVerticalColumn.oneQPilot
+  hodgeHistoryGuard :
+    bundle.structuredSHE.context.domainStructure.theater.side ≠
+      bundle.structuredSHE.context.codomainStructure.theater.side
+
+namespace IUTStage1Theorem311MultiradialSourceRecord
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+def ofStructuredInputsWithSHE
+    (bundle : IUTStage1Theorem311StructuredInputsWithSHE package) :
+    IUTStage1Theorem311MultiradialSourceRecord package :=
+  { bundle := bundle,
+    coricData := IUTStage1CoricData.ofPackage package,
+    thetaPossibleImages := IUTStage1ThetaPilotPossibleImages.ofPackage package,
+    thetaColumn := IUTStage1LogThetaVerticalColumn.zeroThetaPilot,
+    qColumn := IUTStage1LogThetaVerticalColumn.oneQPilot,
+    theta_column_eq := rfl,
+    q_column_eq := rfl,
+    hodgeHistoryGuard := bundle.domainHistory_ne_codomainHistory }
+
+theorem hasStructuredIPL
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family :=
+  record.bundle.hasStructuredIPL
+
+theorem hasStructuredSHE
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family :=
+  record.bundle.hasStructuredSHE
+
+theorem hasStructuredAPT
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    QualitativeData.HasStructuredAPT package.preLedger.output.family :=
+  record.bundle.hasStructuredAPT
+
+theorem multiradialOutputMatchesPackage
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    record.coricData.multiradialOutput = package.multiradialOutput :=
+  record.coricData.multiradialOutputMatchesPackage
+
+theorem thetaImagesUnion_eq_targetUnion
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    record.thetaPossibleImages.union =
+      package.preLedger.output.comparisons.targetUnion :=
+  record.thetaPossibleImages.union_eq_targetUnion
+
+theorem thetaColumn_hasMultiradiality
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    record.thetaColumn.hasPilotMultiradiality = true := by
+  rw [record.theta_column_eq]
+  exact IUTStage1LogThetaVerticalColumn.thetaPilot_hasMultiradiality
+
+theorem qColumn_lacksMultiradiality
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    record.qColumn.hasPilotMultiradiality = false := by
+  rw [record.q_column_eq]
+  exact IUTStage1LogThetaVerticalColumn.qPilot_lacksMultiradiality
+
+theorem thetaColumn_logShellTreatment
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    record.thetaColumn.logShellTreatment =
+      IUTStage1LogShellColumnTreatment.monoAnalyticContainers := by
+  rw [record.theta_column_eq]
+  exact IUTStage1LogThetaVerticalColumn.thetaPilot_logShellTreatment
+
+theorem qColumn_logShellTreatment
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    record.qColumn.logShellTreatment =
+      IUTStage1LogShellColumnTreatment.tautologicalLogDocumentation := by
+  rw [record.q_column_eq]
+  exact IUTStage1LogThetaVerticalColumn.qPilot_logShellTreatment
+
+theorem columnLogShellTreatments_distinct
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    record.thetaColumn.logShellTreatment ≠ record.qColumn.logShellTreatment := by
+  rw [record.theta_column_eq, record.q_column_eq]
+  exact IUTStage1LogThetaVerticalColumn.logShellTreatment_distinguishes_columns
+
+theorem hodgeHistories_not_identified
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+      record.bundle.structuredSHE.context.codomainStructure.theater.side :=
+  record.hodgeHistoryGuard
+
+theorem sourceRecord_endpoint
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family ∧
+      QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
+      QualitativeData.HasStructuredAPT package.preLedger.output.family ∧
+      record.coricData.multiradialOutput = package.multiradialOutput ∧
+      record.thetaPossibleImages.union =
+        package.preLedger.output.comparisons.targetUnion ∧
+      record.thetaColumn.hasPilotMultiradiality = true ∧
+      record.qColumn.hasPilotMultiradiality = false ∧
+      record.thetaColumn.logShellTreatment ≠ record.qColumn.logShellTreatment ∧
+      record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+        record.bundle.structuredSHE.context.codomainStructure.theater.side :=
+  ⟨record.hasStructuredIPL,
+    record.hasStructuredSHE,
+    record.hasStructuredAPT,
+    record.multiradialOutputMatchesPackage,
+    record.thetaImagesUnion_eq_targetUnion,
+    record.thetaColumn_hasMultiradiality,
+    record.qColumn_lacksMultiradiality,
+    record.columnLogShellTreatments_distinct,
+    record.hodgeHistories_not_identified⟩
+
+end IUTStage1Theorem311MultiradialSourceRecord
+
+/--
 Route-level wrapper for square-weighted full-label transport preservation.
 
 The underlying preservation audit from

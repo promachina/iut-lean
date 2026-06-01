@@ -303,6 +303,27 @@ theorem hodgeArakelovPacketTargetSource_cThetaDichotomy
     source_log_volume_eq target_log_volume_eq_theta packetSource
     q_pilot_positive cTheta thetaSigned_le_cTheta_absLogQ
 
+theorem theorem311MultiradialSourceRecord_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family ∧
+      QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
+      QualitativeData.HasStructuredAPT package.preLedger.output.family ∧
+      record.thetaPossibleImages.union =
+        package.preLedger.output.comparisons.targetUnion ∧
+      record.thetaColumn.hasPilotMultiradiality = true ∧
+      record.qColumn.hasPilotMultiradiality = false ∧
+      record.thetaColumn.logShellTreatment ≠ record.qColumn.logShellTreatment :=
+  let endpoint := record.sourceRecord_endpoint
+  ⟨endpoint.1,
+    endpoint.2.1,
+    endpoint.2.2.1,
+    endpoint.2.2.2.2.1,
+    endpoint.2.2.2.2.2.1,
+    endpoint.2.2.2.2.2.2.1,
+    endpoint.2.2.2.2.2.2.2.1⟩
+
 /-- Summary of the first diagnostic pass through the local `(Ind3)` route. -/
 structure Ind3FirstPassDashboard where
   missingRealAlignmentBlocks : Bool
