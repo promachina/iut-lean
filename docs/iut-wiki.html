@@ -1399,6 +1399,10 @@
         <a href="#mono-theta-vs-mlf-rigidity-221">Mono-theta vs MLF rigidity</a>
         <a href="#no-naive-power-map-222">No naive power map 2.2.2</a>
         <a href="#iut-iii-cor23-cluster">Corollary 2.3 cluster</a>
+        <a class="subLink" href="#etth-non-scheme-filters-234">EtTh non-scheme filters</a>
+        <a class="subLink" href="#theta-kummer-line-bundles-234">Theta Kummer line bundles</a>
+        <a class="subLink" href="#mono-theta-section-choice-234">Mono-theta section choice</a>
+        <a class="subLink" href="#conventional-theta-limit-234">Conventional theta limits</a>
         <a href="#radial-coric-etale-picture-23">Radial/coric etale picture 2.3</a>
         <a href="#spoke-symmetry-23">Spoke symmetry 2.3</a>
         <a href="#f-perp-prime-strips-pilot-iii24">F-perp prime-strips 2.4</a>
@@ -9087,8 +9091,8 @@
           </tr>
           <tr>
             <td><a href="#iut-iii-cor23-cluster">IUT III Corollary 2.3 cluster</a></td>
-            <td>Pages now group the radial/coric algorithm, spoke symmetry, polar-coordinate interpretation, <span class="math">∞κ</span>-coric analogue, and theta/number-field container comparison.</td>
-            <td>Needs continued expansion through Remark 2.3.4 and the transition into the F⊥/pilot-object pages.</td>
+            <td>Pages now group the radial/coric algorithm, spoke symmetry, polar-coordinate interpretation, <span class="math">∞κ</span>-coric analogue, theta/number-field container comparison, and the EtTh/mono-theta decision tree of Remark 2.3.4.</td>
+            <td>Needs continued expansion through the transition into the F⊥/pilot-object pages and later uses in Theorem 3.11.</td>
           </tr>
           <tr>
             <td><a href="#iut-iv-output-cluster">IUT IV output cluster</a></td>
@@ -48111,16 +48115,19 @@
         </div>
       </section>
 
-      <section id="iut-iii-cor23-cluster" data-filter="iut iii corollary 2.3 source cluster radial coric etale picture spokes polar coordinates infinity kappa theta number field geometric container">
+      <section id="iut-iii-cor23-cluster" data-filter="iut iii corollary 2.3 source cluster radial coric etale picture spokes polar coordinates infinity kappa theta number field geometric container etth mono theta line bundle kummer">
         <h2>IUT III Corollary 2.3 Cluster: Radial/Coric Etale-Picture</h2>
         <p class="lede">
-          Corollary 2.3 and Remarks 2.3.1-2.3.3 form one source unit. The
+          Corollary 2.3 and Remarks 2.3.1-2.3.4 form one source unit. The
           corollary states the radial-to-coric algorithm and the spoke symmetry of
           its etale-picture; the remarks explain why this is a canonical splitting
           of the theta-monoid portion of the Gaussian log-theta lattice, how an
           analogous <span class="math">∞κ</span>-coric statement fits, and why the
           theta and number-field outputs differ with respect to the
-          <span class="math">j ∈ F_l</span> labels.
+          <span class="math">j ∈ F_l</span> labels. Remark 2.3.4 then reviews the
+          essential EtTh decision: multiradial Kummer theory must use theta-function
+          line-bundle data in mono-theta environments, not ordinary rational
+          functions or conventional ring-dependent theta theory.
         </p>
         <div class="grid3">
           <div class="card">
@@ -48212,6 +48219,75 @@
               <a class="tag" href="#no-naive-power-map-222">no naive Kummer shortcut</a>
             </div>
           </div>
+          <div class="card" id="etth-non-scheme-filters-234" data-filter="iut iii remark 2.3.4 etth non scheme filters frobenius like etale like kummer multiradial containers galois evaluation">
+            <h3>EtTh and non-scheme filters</h3>
+            <p>
+              Remark 2.3.4(i) explains why EtTh enters the IUT series. Log-links and
+              theta-links are non-ring/scheme-theoretic filters between distinct
+              ring/scheme theories. Frobenius-like structures construct the filters;
+              etale-like structures relate the two sides; Kummer theory then compares
+              corresponding Frobenius-like and etale-like objects in a multiradial
+              fashion.
+            </p>
+            <div class="tagRow">
+              <span class="tag blue">Remark 2.3.4(i)</span>
+              <a class="tag" href="#log-kummer-correspondences">log-Kummer</a>
+              <a class="tag" href="#frobenius-etale-versions-ii-intro">Frobenius/etale versions</a>
+            </div>
+          </div>
+          <div class="card" id="theta-kummer-line-bundles-234" data-filter="iut iii remark 2.3.4 theta functions truncated modulo n line bundles first chern class discrete rigidity fl symmetry rational functions">
+            <h3>Theta Kummer line bundles</h3>
+            <p>
+              Remark 2.3.4(ii) rejects two simpler Kummer interfaces. Algebraic
+              rational functions are incompatible with the profinite/tempered
+              topology at bad primes. Truncated Kummer theory of theta functions is
+              topologically compatible, but in its naive form lacks the shifting
+              automorphisms needed for discrete rigidity and
+              <span class="math">F_l^{±}</span>-symmetry. The source therefore uses
+              Kummer theory of the line bundles, equivalently first Chern classes,
+              associated to theta functions.
+            </p>
+            <div class="tagRow">
+              <span class="tag green">Remark 2.3.4(ii)</span>
+              <a class="tag" href="#discrete-rigidity-no-z-completion-211">discrete rigidity</a>
+              <a class="tag" href="#theta-evaluation-kummer-route">theta evaluation</a>
+            </div>
+          </div>
+          <div class="card" id="mono-theta-section-choice-234" data-filter="iut iii remark 2.3.4 mono theta bi theta theta sections algebraic sections constant multiple cyclotomic discrete rigidity">
+            <h3>Mono-theta section choice</h3>
+            <p>
+              Remark 2.3.4(iii) is a four-way exclusion. No theta or algebraic
+              section data leaves constant-unit indeterminacy and breaks constant
+              multiple rigidity. Both theta and algebraic section data give bi-theta
+              environments and break discrete rigidity and
+              <span class="math">F_l^{±}</span>-symmetry. Algebraic sections alone do
+              not supply the commutator property needed for cyclotomic rigidity.
+              Theta sections alone give mono-theta environments, compatible with
+              tempered topology, <span class="math">F_l^{±}</span>-symmetry, and the
+              three rigidity properties listed in Remark 2.1.1.
+            </p>
+            <div class="tagRow">
+              <span class="tag violet">Remark 2.3.4(iii)</span>
+              <a class="tag" href="#mono-theta-rigidity-five-properties-211">rigidity package</a>
+              <a class="tag" href="#mono-theta-vs-mlf-rigidity-221">mono-theta route</a>
+            </div>
+          </div>
+          <div class="card" id="conventional-theta-limit-234" data-filter="iut iii remark 2.3.4 conventional theta theory explicit series representation theta groups ring structures additive multiplicative dismantling">
+            <h3>Conventional theta limits</h3>
+            <p>
+              Remark 2.3.4(iv) distinguishes the EtTh interface from classical
+              series or representation-theoretic theta theory. Explicit series use
+              addition and multiplication of functions; theta-group representations
+              use modules over rings. Both are tied to a fixed ring/scheme model,
+              whereas IUT needs multiplicative monoid data and Galois actions that
+              survive the dismantling of additive and multiplicative ring structures.
+            </p>
+            <div class="tagRow">
+              <span class="tag red">Remark 2.3.4(iv)</span>
+              <a class="tag" href="#etale-theta-mono-environment-page">EtTh mono-theta</a>
+              <a class="tag" href="#juggling-ind3-3122">dismantling</a>
+            </div>
+          </div>
         </div>
         <table class="sourceTable3">
           <tr><th>Source item</th><th>What it contributes</th><th>Why grouped here</th></tr>
@@ -48235,6 +48311,11 @@
             <td>Comparison between theta-value containers and number-field containers, including the role of Belyi cuspidalization and label dependence.</td>
             <td>It links the theta-monoid split to the broader multiradial geometry of IUT.</td>
           </tr>
+          <tr>
+            <td>Remark 2.3.4</td>
+            <td>EtTh decision tree: Frobenius-like/etale-like filters, theta-function line-bundle Kummer theory, mono-theta section choice, and rejection of conventional ring-dependent theta interfaces.</td>
+            <td>It explains which theta/Kummer structure may be transported through the non-ring links without losing rigidity or symmetry.</td>
+          </tr>
         </table>
         <div class="callout">
           <strong>Grouping rule.</strong> This page keeps the detailed pages
@@ -48244,7 +48325,7 @@
           pages.
         </div>
         <div class="related">
-          Source: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Corollary 2.3 and Remarks 2.3.1-2.3.3</a>
+          Source: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Corollary 2.3 and Remarks 2.3.1-2.3.4</a>
           Related: <a href="#theta-monoid-multiradiality-iii22">theta monoid multiradiality</a>
           <a href="#radial-coric-etale-picture-23">radial/coric etale picture</a>
           <a href="#spoke-symmetry-23">spoke symmetry</a>
