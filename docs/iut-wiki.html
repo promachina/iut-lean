@@ -1206,6 +1206,7 @@
         <a href="#signed-cusp-label-classes-ii23">Signed cusp label classes 2.3</a>
         <a href="#flpm-torsor-labels-ii23">F_l^± torsor labels 2.3</a>
         <a href="#two-torsion-translates-ii24">Two-torsion translates 2.4</a>
+        <a href="#maximal-pro-lprime-inertia-ii241">pro-l' inertia 2.4.1</a>
         <a href="#theta-evaluation-orbits-ii25">Theta evaluation orbits 2.5</a>
         <a href="#square-weight-exponent-ii251">Square-weight exponent 2.5.1</a>
         <a href="#independent-conjugacy-ii252">Independent conjugacy 2.5.2</a>
@@ -33302,6 +33303,7 @@
               <a class="tag" href="#subgraph-decomposition-groups-ii22">2.2</a>
               <a class="tag" href="#signed-cusp-label-classes-ii23">2.3</a>
               <a class="tag" href="#two-torsion-translates-ii24">2.4</a>
+              <a class="tag" href="#maximal-pro-lprime-inertia-ii241">2.4.1</a>
               <a class="tag" href="#theta-evaluation-orbits-ii25">2.5</a>
               <a class="tag" href="#subgraph-splittings-zero-label-ii26">2.6</a>
               <a class="tag" href="#mono-theta-evaluation-env-ii28">2.8</a>
@@ -34214,7 +34216,63 @@
         <div class="related">
           Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 2.4</a>
           Related: <a href="#signed-cusp-label-classes-ii23">signed cusp labels</a>
+          <a href="#maximal-pro-lprime-inertia-ii241">pro-l' inertia simplification</a>
           <a href="#theta-evaluation-orbits-ii25">theta evaluation orbits</a>
+        </div>
+      </section>
+
+      <section id="maximal-pro-lprime-inertia-ii241" data-filter="iut ii remark 2.4.1 maximal pro l prime cuspidal inertia subgroup simplification intersections closed subgroups theta evaluation">
+        <h2>IUT II Remark 2.4.1: Maximal pro-l' Inertia Simplification</h2>
+        <p class="lede">
+          Remark 2.4.1 adds a local simplification to Corollary 2.4. In arguments that
+          use the cuspidal inertia subgroup <span class="math">I_t</span>, one may
+          replace it by its maximal pro-<span class="math">l'</span> subgroup for a
+          prime <span class="math">l'</span> different from the residue characteristic
+          <span class="math">p_v</span>. The point is not to change the theta-evaluation
+          data, but to simplify intersection arguments with other closed subgroups.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Remark 2.4.1 item</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Replacement</td>
+            <td>
+              The inertia group <span class="math">I_t</span> in Corollary 2.4 may be
+              replaced by its maximal pro-<span class="math">l'</span> subgroup for
+              <span class="math">l' != p_v</span>.
+            </td>
+            <td>
+              The two-torsion translate construction is stable under this standard
+              prime-to-residue-characteristic simplification.
+            </td>
+          </tr>
+          <tr>
+            <td>Reason</td>
+            <td>
+              Closed subgroups of such a maximal pro-<span class="math">l'</span>
+              subgroup are either open or trivial.
+            </td>
+            <td>
+              This gives cleaner subgroup-intersection checks inside the
+              group-theoretic theta-evaluation algorithm.
+            </td>
+          </tr>
+          <tr>
+            <td>Boundary</td>
+            <td>
+              The remark is a technical simplification around Corollary 2.4, not a new
+              evaluation principle.
+            </td>
+            <td>
+              Keep it as a leaf page linked from the two-torsion translate page rather
+              than elevating it to a separate conceptual route.
+            </td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 2.4.1</a>
+          Related: <a href="#two-torsion-translates-ii24">two-torsion translates</a>
+          <a href="#theta-evaluation-orbits-ii25">theta evaluation orbits</a>
+          <a href="#signed-cusp-label-classes-ii23">signed cusp labels</a>
         </div>
       </section>
 
