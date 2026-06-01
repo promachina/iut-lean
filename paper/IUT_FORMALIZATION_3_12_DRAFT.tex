@@ -407,6 +407,13 @@ The target calibration no longer contains an independent real representative
 for this common value: all target equalities are stated directly against the
 packet-normalized capsule log-volume.  This removes one artificial
 identification layer from the Step (x) interface.
+The local entry target can now also be constructed from the packet-normalized
+capsule value itself.  A packet-normalized entry-target source builds a
+nonarchimedean upper-semi entry whose target finite log-volume is definitionally
+the packet-normalized capsule value.  The corresponding target calibration
+therefore no longer needs an independent proof for the entry-target equality;
+only the theta-average and \((\Ind3)\)-target identifications with the same
+packet-normalized value remain as inputs at this level.
 The first-pass Gaussian route also has a one-correspondence form: it consumes
 a finite log-Kummer packet-correspondence source and projects the source
 packet/product calibration and target packet-normalized calibration from that
@@ -831,6 +838,10 @@ The project currently proves the following source-facing results in \Lean{}:
   log-Kummer packet source: Kummer and mono-analytic forgetting transfers are
   projected from Frobenioid compatibility before the packet correspondence
   endpoint is applied.
+\item A packet-normalized Step (x) entry-target source now constructs the
+  target side of a nonarchimedean upper-semi entry from the capsule-family
+  normalized log-volume.  The target-calibration constructor derived from this
+  source removes the separate entry-target-to-packet-normalized equality.
 \item The finite sign-unit/root-of-unity part of Remark 3.11.4 is formalized:
   sign-unit action preserves full cusp labels, full-label log-volume readings,
   Gaussian degrees, and averaged Gaussian log-volume.

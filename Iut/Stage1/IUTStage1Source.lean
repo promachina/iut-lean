@@ -36319,6 +36319,108 @@ theorem thetaRootKummerForgetting_endpoint
 end NonarchimedeanThetaRootKummerForgettingSource
 
 /--
+Entry target built from the packet-normalized capsule value.
+
+Step (x) uses procession-normalized mono-analytic packet log-volumes as the
+real-line value compatible with the log-Kummer correspondence.  This source
+constructs the target side of a nonarchimedean upper-semi entry with that
+packet-normalized value, so the target-entry calibration against the packet
+normalization is no longer an independent equality.
+-/
+structure NonarchimedeanPacketNormalizedEntryTargetSource
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) where
+  place : IUTStage1PlaceId IUTStage1PlaceKind.nonarchimedean
+  sourceObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  targetObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  sourceLogVolume :
+    IUTStage1FiniteLocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean
+  targetLocalObject :
+    IUTStage1LocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean
+  placeLabel : String
+  sourceLabel : String
+  targetLabel : String
+  source_place_eq : sourceObject.place = place
+  target_place_eq : targetObject.place = place
+  source_log_volume_object_eq : sourceLogVolume.localObject.object = sourceObject
+  target_local_object_eq : targetLocalObject.object = targetObject
+  target_logVolume_eq_packetNormalized :
+    targetLocalObject.logVolume =
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume
+  source_le_packetNormalized :
+    sourceLogVolume.finiteLogVolume <=
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume
+  inclusionValid : Prop
+  inclusion_valid : inclusionValid
+
+namespace NonarchimedeanPacketNormalizedEntryTargetSource
+
+variable
+  {audited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean}
+
+def targetLogVolume
+    (source : NonarchimedeanPacketNormalizedEntryTargetSource audited) :
+    IUTStage1FiniteLocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean :=
+  { localObject := source.targetLocalObject,
+    finiteLogVolume :=
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume,
+    finite_log_volume_eq := source.target_logVolume_eq_packetNormalized }
+
+def toEntry
+    (source : NonarchimedeanPacketNormalizedEntryTargetSource audited) :
+    IUTStage1NonarchimedeanInclusionData :=
+  { place := source.place,
+    sourceObject := source.sourceObject,
+    targetObject := source.targetObject,
+    sourceLogVolume := source.sourceLogVolume,
+    targetLogVolume := source.targetLogVolume,
+    placeLabel := source.placeLabel,
+    sourceLabel := source.sourceLabel,
+    targetLabel := source.targetLabel,
+    source_place_eq := source.source_place_eq,
+    target_place_eq := source.target_place_eq,
+    source_log_volume_object_eq := source.source_log_volume_object_eq,
+    target_log_volume_object_eq := source.target_local_object_eq,
+    source_logVolume_le_target_logVolume := source.source_le_packetNormalized,
+    inclusionValid := source.inclusionValid,
+    inclusion_valid := source.inclusion_valid }
+
+theorem targetLogVolume_eq_packetNormalized
+    (source : NonarchimedeanPacketNormalizedEntryTargetSource audited) :
+    source.targetLogVolume.finiteLogVolume =
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  rfl
+
+theorem toEntry_targetLogVolume_eq_packetNormalized
+    (source : NonarchimedeanPacketNormalizedEntryTargetSource audited) :
+    source.toEntry.targetLogVolume.finiteLogVolume =
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  rfl
+
+theorem toEntry_logVolume_le
+    (source : NonarchimedeanPacketNormalizedEntryTargetSource audited) :
+    source.toEntry.sourceLogVolume.finiteLogVolume <=
+      source.toEntry.targetLogVolume.finiteLogVolume :=
+  source.source_le_packetNormalized
+
+theorem packetNormalizedEntryTarget_endpoint
+    (source : NonarchimedeanPacketNormalizedEntryTargetSource audited) :
+    source.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      source.toEntry.sourceLogVolume.finiteLogVolume <=
+        source.toEntry.targetLogVolume.finiteLogVolume ∧
+      source.toEntry.targetLogVolume.localObject.object =
+        source.toEntry.targetObject :=
+  ⟨source.toEntry_targetLogVolume_eq_packetNormalized,
+    source.toEntry_logVolume_le,
+    source.target_local_object_eq⟩
+
+end NonarchimedeanPacketNormalizedEntryTargetSource
+
+/--
 Target-side packet-normalized calibration for the nonarchimedean Step (x)
 log-Kummer corridor.
 
@@ -36375,6 +36477,26 @@ def ofPacketNormalized
     thetaAverage_eq_normalized := thetaAverage_eq_packetNormalized,
     ind3Target_eq_normalized := ind3Target_eq_packetNormalized,
     entryTarget_eq_normalized := entryTarget_eq_packetNormalized }
+
+def ofPacketNormalizedEntryTargetSource
+    (entrySource :
+      NonarchimedeanPacketNormalizedEntryTargetSource audited)
+    (thetaAverage_eq_packetNormalized :
+      thetaAverage =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (ind3Target_eq_packetNormalized :
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (calibration_source :
+      IUTStage1PacketNormalizedIdentificationSource :=
+        IUTStage1PacketNormalizedIdentificationSource.directPacketNormalization) :
+    NonarchimedeanLogKummerPacketTargetCalibration
+      audited thetaAverage logKummer entrySource.toEntry :=
+  { calibration_source := calibration_source,
+    thetaAverage_eq_normalized := thetaAverage_eq_packetNormalized,
+    ind3Target_eq_normalized := ind3Target_eq_packetNormalized,
+    entryTarget_eq_normalized :=
+      entrySource.toEntry_targetLogVolume_eq_packetNormalized }
 
 theorem thetaAverage_eq_packetNormalized
     (calibration :
@@ -36444,6 +36566,32 @@ theorem packetTargetCalibration_endpoint
     calibration.entryTarget_eq_packetNormalized,
     calibration.thetaAverage_eq_entryTarget,
     calibration.entryTarget_eq_ind3Target⟩
+
+theorem ofPacketNormalizedEntryTargetSource_endpoint
+    (entrySource :
+      NonarchimedeanPacketNormalizedEntryTargetSource audited)
+    (thetaAverage_eq_packetNormalized :
+      thetaAverage =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (ind3Target_eq_packetNormalized :
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume) :
+    let calibration :
+      NonarchimedeanLogKummerPacketTargetCalibration
+        audited thetaAverage logKummer entrySource.toEntry :=
+      ofPacketNormalizedEntryTargetSource entrySource
+        thetaAverage_eq_packetNormalized ind3Target_eq_packetNormalized;
+    calibration.entryTarget_eq_packetNormalized =
+        entrySource.toEntry_targetLogVolume_eq_packetNormalized ∧
+      calibration.thetaAverage_eq_entryTarget =
+        thetaAverage_eq_packetNormalized.trans
+          entrySource.toEntry_targetLogVolume_eq_packetNormalized.symm ∧
+      calibration.entryTarget_eq_ind3Target =
+        entrySource.toEntry_targetLogVolume_eq_packetNormalized.trans
+          ind3Target_eq_packetNormalized.symm :=
+  by
+    intro calibration
+    exact ⟨rfl, rfl, rfl⟩
 
 end NonarchimedeanLogKummerPacketTargetCalibration
 
