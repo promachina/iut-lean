@@ -714,6 +714,10 @@
         <a href="#etale-theta-mono-environment-page">Etale theta mono-env</a>
         <a href="#etale-theta-rigidity-triad-page">Etale theta rigidity</a>
         <a href="#etale-theta-bi-kummer-page">Bi-Kummer theory</a>
+        <a href="#abs-anabelian-reconstruction-page">Absolute anabelian algorithms</a>
+        <a href="#abs-anabelian-cores-telecores-page">Cores and telecores</a>
+        <a href="#abs-anabelian-log-frobenius-page">Log-Frobenius compatibility</a>
+        <a href="#abs-anabelian-log-shells-page">Log-shell properties</a>
         <a href="#invitation-expanded-route">Invitation route</a>
         <a href="#panoramic-route">Panoramic route</a>
         <a href="#bogomolov-szpiro-analogy">Bogomolov-Szpiro analogy</a>
@@ -2106,6 +2110,211 @@
           Related: <a href="#frobenioid-theta-monoids-example-ii32-page">Frobenioid theta monoids</a>
           <a href="#iut-ii-kummer-evaluation-square-intro">Kummer evaluation square</a>
           <a href="#etale-theta-rigidity-triad-page">etale theta rigidity</a>
+        </div>
+      </section>
+
+      <section id="abs-anabelian-reconstruction-page" data-filter="absolute anabelian topics iii reconstruction algorithms theorem 1.9 corollary 1.10 belyi cuspidalization mono anabelian software">
+        <h2>Absolute Anabelian Reconstruction Algorithms</h2>
+        <p class="lede">
+          Topics in Absolute Anabelian Geometry III uses “group-theoretic algorithm”
+          in a strong sense: the procedure is phrased in the language of a single
+          topological fundamental group, not by comparison with a second reference
+          scheme. Theorem 1.9 reconstructs the NF-portion of a function field by Belyi
+          cuspidalization; Corollary 1.10 extends this to the function field over mixed
+          local fields.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Input group</strong>
+            <p>A single extension or group such as <span class="math">Π_X</span>.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Belyi cuspidalization</strong>
+            <p>Construct cusps, decomposition groups, and cyclotomic identifications.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Kummer image</strong>
+            <p>Recover multiplicative function-field data inside cohomology.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Additive structure</strong>
+            <p>Recover <span class="math">K_X^× ∪ {0}</span> as a field-like object.</p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Result</th><th>Source reading</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Theorem 1.9</td>
+            <td>Reconstructs the NF-portion of the function field of a strictly Belyi-type hyperbolic orbicurve over a sub-p-adic field.</td>
+            <td>Source for “algorithm” pages: construction steps must be explicit, not only invariant under isomorphism.</td>
+          </tr>
+          <tr>
+            <td>Corollary 1.10</td>
+            <td>Reconstructs function-field and Kummer data for hyperbolic orbicurves over mixed local fields.</td>
+            <td>Connects local reconstruction to the mono-anabelian route used by log-Frobenius compatibility.</td>
+          </tr>
+          <tr>
+            <td>Remark 1.9.8</td>
+            <td>Contrasts mono-anabelian “software” with ordinary bi-anabelian preservation under isomorphism.</td>
+            <td>Prevents the wiki from treating model-comparison data as equivalent to source-free reconstruction.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-absolute-anabelian-topics-iii.pdf" target="_blank">Absolute Anabelian Topics III, Theorem 1.9 and Corollary 1.10</a>
+          Related: <a href="#theta-approach-abs-top-319">theta approach to absolute anabelian algorithms</a>
+          <a href="#collas-algorithmic-anabelian-page">Collas algorithmic anabelian</a>
+          <a href="#abs-anabelian-log-frobenius-page">log-Frobenius compatibility</a>
+        </div>
+      </section>
+
+      <section id="abs-anabelian-cores-telecores-page" data-filter="absolute anabelian topics iii definition 3.5 observable core telecore diagram categories homotopies time lag compatibility">
+        <h2>Cores and Telecores</h2>
+        <p class="lede">
+          Definition 3.5 introduces diagrams of categories, families of homotopies,
+          observables, cores, and telecores. A core records a portion of the diagram
+          that remains constant under the operations in question. A telecore is a
+          delayed or partial core structure: compatibility is recovered only after
+          returning through the core vertex.
+        </p>
+        <div class="diagram fit" aria-label="Core and telecore schematic">
+          <div class="diagramHeader">
+            <strong>Constant core and delayed telecore compatibility</strong>
+            <span>Absolute Anabelian Topics III, Definition 3.5 and Remark 3.5.1</span>
+          </div>
+          <svg viewBox="0 0 1040 430" role="img">
+            <defs>
+              <marker id="arrowAbsCore" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="78" y="78" width="210" height="84"></rect>
+            <text class="nodeTitle" x="183" y="108" text-anchor="middle">data type A</text>
+            <text class="tinyText" x="183" y="132" text-anchor="middle">operation input</text>
+
+            <rect class="nodeBox gold" x="415" y="78" width="210" height="84"></rect>
+            <text class="nodeTitle" x="520" y="108" text-anchor="middle">data type B</text>
+            <text class="tinyText" x="520" y="132" text-anchor="middle">after operation</text>
+
+            <rect class="nodeBox green" x="752" y="78" width="210" height="84"></rect>
+            <text class="nodeTitle" x="857" y="108" text-anchor="middle">data type C</text>
+            <text class="tinyText" x="857" y="132" text-anchor="middle">later operation</text>
+
+            <rect class="nodeBox violet" x="390" y="280" width="260" height="88"></rect>
+            <text class="nodeTitle" x="520" y="312" text-anchor="middle">core vertex</text>
+            <text class="tinyText" x="520" y="336" text-anchor="middle">constant observable part</text>
+            <text class="tinyText" x="520" y="354" text-anchor="middle">compatibility after return</text>
+
+            <path class="edge blue" d="M290 120 H413" marker-end="url(#arrowAbsCore)"></path>
+            <path class="edge gold" d="M627 120 H750" marker-end="url(#arrowAbsCore)"></path>
+            <path class="edge violet" d="M183 164 C230 232 344 266 434 282" marker-end="url(#arrowAbsCore)"></path>
+            <path class="edge violet" d="M520 164 V278" marker-end="url(#arrowAbsCore)"></path>
+            <path class="edge violet" d="M857 164 C810 232 696 266 606 282" marker-end="url(#arrowAbsCore)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Term</th><th>Source reading</th><th>IUT relevance</th></tr>
+          <tr>
+            <td>Observable</td>
+            <td>Projects operations between different data types into morphisms inside a single category.</td>
+            <td>Needed when a functor is categorically trivial but operationally nontrivial.</td>
+          </tr>
+          <tr>
+            <td>Core</td>
+            <td>A constant portion of a diagram, invariant up to the specified homotopies.</td>
+            <td>Models the group-theoretic part that survives log-Frobenius operations.</td>
+          </tr>
+          <tr>
+            <td>Telecore</td>
+            <td>A partial section to the core whose compatibility takes effect after a time lag.</td>
+            <td>Explains how temporary incompatibilities can be routed through the mono-anabelian core.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-absolute-anabelian-topics-iii.pdf" target="_blank">Absolute Anabelian Topics III, Definition 3.5</a>
+          Related: <a href="#abs-anabelian-log-frobenius-page">log-Frobenius compatibility</a>
+          <a href="#rims-four-triangle-route-2026">RIMS four-triangle route</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+        </div>
+      </section>
+
+      <section id="abs-anabelian-log-frobenius-page" data-filter="absolute anabelian topics iii corollary 3.6 corollary 3.7 mono anabelian bi anabelian log frobenius compatibility incompatibility">
+        <h2>Mono-Anabelian Log-Frobenius Compatibility</h2>
+        <p class="lede">
+          Corollary 3.6 formulates a mono-anabelian log-Frobenius compatibility:
+          Galois-theoretic data can remain constant through operations that obliterate
+          ring structure. Corollary 3.7 gives the corresponding bi-anabelian
+          incompatibility, where a fixed reference model cannot simultaneously be core,
+          comparable to log-subject copies, and consistently observable.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Route</th><th>What survives log</th><th>Warning</th></tr>
+          <tr>
+            <td>Mono-anabelian</td>
+            <td>The single-group reconstruction core remains available for re-running the algorithm after log.</td>
+            <td>The ring structure is still obliterated; compatibility is through the group-theoretic core.</td>
+          </tr>
+          <tr>
+            <td>Bi-anabelian</td>
+            <td>A reference-model comparison can be made in ordinary anabelian fashion.</td>
+            <td>The model-core, comparability, and log-observability requirements are not simultaneously compatible.</td>
+          </tr>
+          <tr>
+            <td>IUT reading</td>
+            <td>The later Hodge-theater route must use the source-free reconstruction logic, not an implicit reference scheme.</td>
+            <td>This is preparatory support, not by itself the Corollary 3.12 proof.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          The source explicitly says the log-Frobenius functor obliterates field or
+          ring structure. The positive statement is therefore not “log preserves
+          rings”; it is that the mono-anabelian group-theoretic core supplies a
+          log-invariant framework.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-absolute-anabelian-topics-iii.pdf" target="_blank">Absolute Anabelian Topics III, Corollaries 3.6 and 3.7</a>
+          Related: <a href="#abs-anabelian-cores-telecores-page">cores and telecores</a>
+          <a href="#scholze-stix-critique-page">Scholze-Stix critique</a>
+          <a href="#corollary-312">Corollary 3.12</a>
+        </div>
+      </section>
+
+      <section id="abs-anabelian-log-shells-page" data-filter="absolute anabelian topics iii corollary 5.10 log shells finite log volume panalocalization mono analyticization log frobenius compatibility">
+        <h2>Fundamental Properties of Log-Shells</h2>
+        <p class="lede">
+          Corollary 5.10 is the main log-shell result of Topics III. It records four
+          properties: finite log-volume, compatibility of log-volumes with the
+          log-Frobenius functor, compatibility with panalocalization, and compatibility
+          with mono-analyticization. These properties explain why log-shells function
+          as rigid local integral structures after the ring structure has been disabled.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Property</th><th>Source reading</th><th>Later use</th></tr>
+          <tr>
+            <td>Finite log-volume</td>
+            <td>Log-shells are compact enough to carry finite log-volume data.</td>
+            <td>Feeds the signed log-volume bookkeeping used by IUT III-IV.</td>
+          </tr>
+          <tr>
+            <td>Log-Frobenius compatibility</td>
+            <td>Log-volume at one lattice index is compatible with the log-volume at the next index.</td>
+            <td>Prepares the vertical log-link side of the log-theta lattice.</td>
+          </tr>
+          <tr>
+            <td>Panalocalization</td>
+            <td>Log-shell construction remains compatible after restricting to disjoint local prime data.</td>
+            <td>Allows local prime data to be treated without reintroducing global field history.</td>
+          </tr>
+          <tr>
+            <td>Mono-analyticization</td>
+            <td>Log-shells remain meaningful after disabling one combinatorial dimension of a ring.</td>
+            <td>Supports movement between arithmetic holomorphic structures and a common mono-analytic core.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-absolute-anabelian-topics-iii.pdf" target="_blank">Absolute Anabelian Topics III, Corollary 5.10</a>
+          Related: <a href="#frobenioids-log-shells">log-shells</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
+          <a href="#collas-universe-height-copies-page">Collas height universes</a>
         </div>
       </section>
 
