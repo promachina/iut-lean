@@ -10402,6 +10402,72 @@ theorem corollary312_firstPass_cThetaDichotomy_from_packetCorrespondenceKummerFo
     packetCorrespondence q_pilot_positive cTheta thetaSigned_le_cTheta_absLogQ
 
 /--
+Corollary 3.12 first-pass `C_Theta` dichotomy from one realified-Frobenioid
+log-Kummer Step (x) entry source.
+
+This is the strongest current Step (x) experiment endpoint: product-log-volume
+preservation is obtained from realified Frobenioid compatibility, while the
+source and target packet calibrations remain attached to the same log-Kummer
+entry source.
+-/
+theorem corollary312_firstPass_cThetaDichotomy_from_realifiedFrobenioidLogKummerEntry
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (sourceProfile targetProfile : IUTStage1ZModSquareWeightProfile l)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (canonical_one_preserved :
+      targetEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (source_profile_eq : profile = sourceProfile)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sourceEvaluation.toCuspLabelLogVolumeCompatibility)
+    (target_log_volume_eq_theta :
+      targetEvaluation.toCuspLabelLogVolumeCompatibility =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (realifiedSource :
+      NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
+        audited
+        (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer entry
+        holomorphicF holomorphicD monoAnalyticD)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_of_gaussianRealifiedFrobenioidLogKummerEntry
+    profile audited sourceProfile targetProfile sourceEvaluation targetEvaluation
+    canonical_one_preserved source_profile_eq source_log_volume_eq
+    target_log_volume_eq_theta realifiedSource q_pilot_positive cTheta
+    thetaSigned_le_cTheta_absLogQ
+
+/--
 Scholze-Stix-style collapse test for the representative `j^2` factors.
 
 The current finite-label model rejects a single label-independent real-line
