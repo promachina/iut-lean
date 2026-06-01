@@ -373,6 +373,11 @@ the local entry target against the same packet-normalized capsule log-volume;
 from these three packet-normalized equalities \Lean{} derives the direct
 theta-to-entry and entry-to-\((\Ind3)\)-target equalities consumed by the
 upper-semi route.
+The integrated route now composes the Hodge--Arakelov theta-value sources with
+this packet-target nonarchimedean source.  The resulting theorem derives the
+same boundary/strict \(C_\Theta\) dichotomy from source-facing Gaussian
+evaluation data and source-facing upper-semi data, rather than from two
+unrelated collections of raw equalities.
 For the target side, the strongest route now uses a target-only Step (x)
 alignment
 \[
@@ -514,6 +519,9 @@ The project currently proves the following source-facing results in \Lean{}:
 \item A packet-target nonarchimedean constructor now derives the direct target
   equalities from calibration of the theta average, entry target, and
   \((\Ind3)\) target against the same packet-normalized capsule value.
+\item The current integrated route composes Hodge--Arakelov theta-value sources
+  with the packet-target nonarchimedean source to obtain the same
+  \(C_\Theta=-1\) boundary alternative or strict \(C_\Theta>-1\) conclusion.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.

@@ -37092,6 +37092,65 @@ theorem boundarySignedEqualityOrStrictCTheta_of_gaussianKummerForgettingPacketCa
       source_log_volume_eq target_log_volume_eq_theta logKummerUpperSemi
       q_pilot_positive cTheta thetaSigned_le_cTheta_absLogQ
 
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeArakelovPacketTargetSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceHA targetHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (canonical_one_preserved :
+      targetHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility)
+    (target_log_volume_eq_theta :
+      targetHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (packetSource :
+      NonarchimedeanThetaRootKummerForgettingPacketTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD)
+    (q_pilot_positive : 0 < -packageN.preLedger.qSigned)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_of_gaussianIdentityCanonicalOneLogKummerUpperSemiEntry
+    profile audited
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    sourceHA.toGaussianMonoidDegreeEvaluation
+    targetHA.toGaussianMonoidDegreeEvaluation canonical_one_preserved
+    source_profile_eq source_log_volume_eq target_log_volume_eq_theta
+    packetSource.toLogKummerUpperSemiCompatibility
+    q_pilot_positive cTheta thetaSigned_le_cTheta_absLogQ
+
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
     (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l) :
     part.toHodgeDescentInsulatedCuspZeroBridgeAudit.classified_bridge.bridge_source =

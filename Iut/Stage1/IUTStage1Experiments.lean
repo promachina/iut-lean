@@ -248,6 +248,61 @@ theorem thetaRootKummerPacketTargetSource_buildsUpperSemiCompatibility
         thetaAverage :=
   source.packetTargetSource_endpoint
 
+theorem hodgeArakelovPacketTargetSource_cThetaDichotomy
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type u} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceHA targetHA :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (canonical_one_preserved :
+      targetHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    (source_log_volume_eq :
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility)
+    (target_log_volume_eq_theta :
+      targetHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (packetSource :
+      NonarchimedeanThetaRootKummerForgettingPacketTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_of_hodgeArakelovPacketTargetSource
+    profile audited sourceHA targetHA canonical_one_preserved source_profile_eq
+    source_log_volume_eq target_log_volume_eq_theta packetSource
+    q_pilot_positive cTheta thetaSigned_le_cTheta_absLogQ
+
 /-- Summary of the first diagnostic pass through the local `(Ind3)` route. -/
 structure Ind3FirstPassDashboard where
   missingRealAlignmentBlocks : Bool
