@@ -795,6 +795,10 @@
         <a href="#reading-map">Reading map</a>
         <a href="#official-corpus">Official corpus</a>
         <a href="#preparatory-corpus">Preparatory corpus</a>
+        <a href="#etale-theta-source-cluster">Etale theta source cluster</a>
+        <a href="#etale-theta-ha-translation-page">Etale theta HA translation</a>
+        <a href="#etale-theta-mono-bi-rigidity-page">Mono/Bi-theta rigidity tradeoff</a>
+        <a href="#etale-theta-section0-primitives-page">EtTh §0 primitives</a>
         <a href="#frobenioid-standard-model-page">Frobenioid standard model</a>
         <a href="#frobenioid-reconstruction-page">Frobenioid reconstruction</a>
         <a href="#frobenioid-operations-page">Frobenioid operations</a>
@@ -1998,6 +2002,266 @@
           Related: <a href="#official-corpus">official corpus</a>
           <a href="#source-library">source library</a>
           <a href="#anabelian-background">anabelian background</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-source-cluster" data-filter="etale theta source cluster preparatory paper hodge arakelov mono theta bi theta rigidity frobenioid tempered anabelian">
+        <h2>Etale Theta Source Cluster</h2>
+        <p class="lede">
+          Mochizuki's etale-theta paper develops the Kummer class of the formal
+          algebraic theta function of a Tate curve as a tempered-anabelian and
+          Frobenioid-theoretic object. For IUT, its main role is to replace a
+          scheme-theoretic theta-function construction by category-theoretic data
+          whose cyclotomic, discrete, and constant-multiple rigidity can be transported
+          into IUT II.
+        </p>
+        <div class="callout blue">
+          This is the grouped reading page for the preparatory EtTh source. The existing
+          IUT II pages use EtTh as an input; this cluster records the source paper's own
+          architecture so those later references are not treated as unexplained black
+          boxes.
+        </div>
+        <table class="sourceTable3">
+          <tr><th>EtTh unit</th><th>Source content</th><th>Wiki use</th></tr>
+          <tr>
+            <td>Introduction</td>
+            <td>
+              The theta function on a Tate curve is translated from the
+              scheme-theoretic Hodge-Arakelov setting into temperoid and Frobenioid
+              language. The guiding object is the mono-theta environment, a
+              Kummer-theoretic version of theta trivialization.
+            </td>
+            <td>
+              <a href="#etale-theta-ha-translation-page">Hodge-Arakelov translation</a>,
+              <a href="#etale-theta-mono-environment-page">mono-theta environment</a>
+            </td>
+          </tr>
+          <tr>
+            <td>§0</td>
+            <td>
+              Establishes monoid saturation, tempered action categories, co-free
+              subgroups, isomorphism-full functors, slice categories, and curve/log
+              conventions.
+            </td>
+            <td><a href="#etale-theta-section0-primitives-page">Section 0 primitives</a></td>
+          </tr>
+          <tr>
+            <td>§1</td>
+            <td>
+              Gives the purely tempered etale-anabelian construction of the etale theta
+              function and its preservation by tempered fundamental-group isomorphisms.
+            </td>
+            <td>
+              <a href="#theta-evaluation-kummer-route">theta evaluation route</a>,
+              <a href="#etale-theta-standard-type-ii14">standard type in IUT II</a>
+            </td>
+          </tr>
+          <tr>
+            <td>§2</td>
+            <td>
+              Introduces mono-theta and bi-theta environments and proves
+              group-theoretic constructibility and the rigidity triad.
+            </td>
+            <td>
+              <a href="#etale-theta-mono-bi-rigidity-page">mono/bi-theta tradeoff</a>,
+              <a href="#etale-theta-rigidity-triad-page">rigidity triad</a>
+            </td>
+          </tr>
+          <tr>
+            <td>§3-§5</td>
+            <td>
+              Defines the relevant tempered Frobenioids, develops general bi-Kummer
+              theory, then specializes it back to the etale theta function.
+            </td>
+            <td>
+              <a href="#etale-theta-bi-kummer-page">bi-Kummer theory</a>,
+              <a href="#mono-theta-frobenioid-route-ii12">IUT II Frobenioid route</a>
+            </td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card">
+            <h3>Core object</h3>
+            <p>
+              The etale theta function is the Kummer class of the classical formal
+              algebraic theta function on a Tate curve over a nonarchimedean
+              mixed-characteristic local field.
+            </p>
+            <div class="tagRow"><span class="tag gold">EtTh Intro</span><span class="tag">Kummer class</span></div>
+          </div>
+          <div class="card">
+            <h3>Main environment</h3>
+            <p>
+              A mono-theta environment is the common core between the tempered etale
+              fundamental-group route and the tempered Frobenioid route.
+            </p>
+            <div class="tagRow"><span class="tag blue">Definition 2.13</span><span class="tag">MTheta</span></div>
+          </div>
+          <div class="card">
+            <h3>Rigidity triad</h3>
+            <p>
+              Cyclotomic rigidity, discrete rigidity, and constant-multiple rigidity are
+              the source properties later reused when IUT II evaluates theta values.
+            </p>
+            <div class="tagRow"><span class="tag green">Cor. 2.19</span><span class="tag">rigidity</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, Introduction and Contents</a>
+          Related: <a href="#preparatory-corpus">preparatory corpus</a>
+          <a href="#etale-theta-mono-environment-page">mono-theta environment</a>
+          <a href="#galois-theoretic-theta-evaluation-ii2">IUT II theta evaluation</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-ha-translation-page" data-filter="etale theta hodge arakelov translation tate curve theta function category geometry temperoids frobenioids scheme theoretic obstruction">
+        <h2>Etale Theta: Hodge-Arakelov Translation Problem</h2>
+        <p class="lede">
+          The introduction to EtTh states the problem as a translation task: the
+          scheme-theoretic Hodge-Arakelov theta-function theory should be recast in the
+          geometry of categories, especially temperoids and Frobenioids. The paper begins
+          with Tate curves because Hodge-Arakelov theory centers on the theta function
+          at bad multiplicative reduction.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Source point</th><th>EtTh reading</th><th>IUT consequence</th></tr>
+          <tr>
+            <td>Tate curve focus</td>
+            <td>The formal algebraic theta function on a Tate curve is the local model for the Hodge-Arakelov theta function.</td>
+            <td>IUT bad-prime theta values and <span class="math">q_v^{j^2}</span> profiles inherit this source.</td>
+          </tr>
+          <tr>
+            <td>Category-theoretic reformulation</td>
+            <td>Temperoids and Frobenioids are used to avoid arbitrary scheme-theoretic choices and to expose canonicality.</td>
+            <td>Later Hodge theaters should not be read as ordinary scheme copies with informal identifications.</td>
+          </tr>
+          <tr>
+            <td>Beyond slope zero</td>
+            <td>The paper distinguishes its tempered/anabelian approach from classical formal-scheme treatments that see only the slope-zero portion.</td>
+            <td>Explains why IUT imports tempered fundamental groups rather than only classical Tate-curve formulas.</td>
+          </tr>
+          <tr>
+            <td>Extraordinary rigidity</td>
+            <td>Cyclotomes and constant multiples are not fixed by arbitrary choices; their rigidity is part of the theorem package.</td>
+            <td>Prevents treating cyclotomic and scalar identifications as free parameters in later pages.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          Formalization warning: the EtTh input should be modeled as a theorem-bearing
+          interface, not merely as a function that returns theta values. The source
+          package includes canonicality and rigidity claims about the category-theoretic
+          environment in which theta evaluation occurs.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, Introduction, pp. 1-3</a>
+          Related: <a href="#etale-theta-source-cluster">EtTh source cluster</a>
+          <a href="#theta-evaluation-kummer-route">theta evaluation route</a>
+          <a href="#bad-nonarch-frobenioids-32">bad-prime Frobenioids</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-mono-bi-rigidity-page" data-filter="etale theta mono theta bi theta rigidity cyclotomic discrete constant multiple z zhat frobenioid extension">
+        <h2>Etale Theta: Mono/Bi-Theta Rigidity Tradeoff</h2>
+        <p class="lede">
+          The introduction contrasts mono-theta and bi-theta environments. A bi-theta
+          environment packages a numerator/denominator pair of line-bundle sections and
+          makes some scalar rigidity easier, but it fails the discrete rigidity that the
+          mono-theta environment satisfies. The mono-theta environment is therefore the
+          subtler object that carries all three rigidity properties needed downstream.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Environment</th><th>Source description</th><th>Rigidity behavior</th></tr>
+          <tr>
+            <td>Mono-theta</td>
+            <td>Kummer-theoretic version of the theta trivialization.</td>
+            <td>Satisfies cyclotomic, discrete, and constant-multiple rigidity; constant-multiple rigidity is subtle and uses Frobenioid extension structure.</td>
+          </tr>
+          <tr>
+            <td>Bi-theta</td>
+            <td>Kummer-theoretic version of a pair of sections: numerator and denominator of the theta-function ratio.</td>
+            <td>Cyclotomic and scalar behavior are more evident, but discrete rigidity fails.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Z</span> versus <span class="math">Zhat</span></td>
+            <td>The discrete-rigidity issue turns on the gap between integers and their profinite completion.</td>
+            <td>This source explains why profinite-looking data alone can lose a discrete arithmetic constraint.</td>
+          </tr>
+          <tr>
+            <td>Frobenioid extension</td>
+            <td>The mono-theta environment translates the global arithmetic gap into the nontrivial local geometric extension of the tempered Frobenioid.</td>
+            <td>Links EtTh rigidity to the Frobenioid-theoretic route used later in IUT II.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          The paper's slogan that less data may yield more information belongs here:
+          extra components can introduce indeterminacies that erase the structure one
+          wants to preserve. This is a precursor to the IUT discipline of not identifying
+          histories merely because a larger-looking ambient object is available.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, Introduction, pp. 3-6</a>
+          Related: <a href="#etale-theta-rigidity-triad-page">rigidity triad</a>
+          <a href="#mono-theta-environments-ii11">IUT II mono-theta environments</a>
+          <a href="#discrete-rigidity-no-z-completion-211">IUT III discrete rigidity</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-section0-primitives-page" data-filter="etale theta section 0 notation monoid group saturation perf saturation tempered btemp co-free isomorphism-full slice category split log curve">
+        <h2>EtTh §0: Primitives Imported by Later IUT Pages</h2>
+        <p class="lede">
+          Section 0 of EtTh fixes several technical conventions that later IUT pages
+          silently rely on. The important point for the wiki is that these are not
+          decorative notations: they govern which submonoids are saturated, which group
+          actions count as tempered, how categories over an object are formed, and how
+          one recognizes essential images of faithful functors.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Primitive</th><th>EtTh §0 definition</th><th>Later use</th></tr>
+          <tr>
+            <td>Group/perf saturation</td>
+            <td>
+              For <span class="math">P subset Q</span>, the group-saturation is
+              <span class="math">P^gp cap Q</span>; the perf-saturation is
+              <span class="math">P^pf cap Q</span>.
+            </td>
+            <td>Controls when monoid subobjects are closed under groupification or perfection before Frobenioid operations.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Btemp(Pi)</span></td>
+            <td>Category of countable discrete sets with continuous <span class="math">Pi</span>-action.</td>
+            <td>Source for tempered action categories used in the etale-theoretic theta route.</td>
+          </tr>
+          <tr>
+            <td>Co-free subgroup</td>
+            <td>A normal open subgroup whose quotient is free; minimal co-free subgroups are unique and characteristic.</td>
+            <td>Marks a canonical subgroup choice, not an arbitrary auxiliary subgroup.</td>
+          </tr>
+          <tr>
+            <td><span class="math">C_A</span> and <span class="math">C[A]</span></td>
+            <td>Slice category over <span class="math">A</span> and full subcategory of objects admitting a morphism to <span class="math">A</span>.</td>
+            <td>Used whenever local categories are restricted to covers or objects over a fixed target.</td>
+          </tr>
+          <tr>
+            <td>Isomorphism-full functor</td>
+            <td>A faithful functor whose isomorphisms in the target between image objects lift from source isomorphisms.</td>
+            <td>Supplies the exact meaning of “essential image” used in categorical reconstruction contexts.</td>
+          </tr>
+          <tr>
+            <td>Split stable log curves</td>
+            <td>For a stable log curve over a field, split means irreducible components and nodes are geometrically irreducible.</td>
+            <td>Feeds the orbicurve and covering hypotheses later invoked around theta functions.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Audit checkpoint: when later wiki pages invoke saturation, temperedness, or
+          essential images in EtTh/IUT contexts, they should use these source meanings
+          rather than generic category-theory approximations.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, §0</a>
+          Related: <a href="#etale-theta-source-cluster">EtTh source cluster</a>
+          <a href="#capsules-temperoids-iut-i0">capsules/temperoids</a>
+          <a href="#frobenioid-operations-page">Frobenioid operations</a>
         </div>
       </section>
 
