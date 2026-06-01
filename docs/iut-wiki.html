@@ -1287,6 +1287,9 @@
         <a href="#iut-iv">IUT IV and consequences</a>
         <a href="#iut-iv-diophantine-output">IUT IV output route</a>
         <a href="#probabilistic-szpiro">Probabilistic Szpiro</a>
+        <a href="#iut-iv-zfcg-universes-31">ZFCG universes 3.1</a>
+        <a href="#iut-iv-zero-one-species-31">0/1-species 3.1</a>
+        <a href="#iut-iv-model-free-specimens-31">Model-free specimens 3.1</a>
         <a href="#species-vs-categories-iv31">Species vs categories 3.1</a>
         <a href="#mutation-histories-cores-iv33">Mutation histories/cores 3.3</a>
         <a href="#same-species-parity-iv36">Same-species parity 3.6</a>
@@ -55254,6 +55257,227 @@
           Related: <a href="#iut-iv">IUT IV consequences</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
           <a href="#initial-theta-data">initial theta data</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-zfcg-universes-31" data-filter="iut iv section 3 zfc zfcg grothendieck universe species model set theory inter-universal">
+        <h2>IUT IV §3: ZFCG Universes</h2>
+        <p class="lede">
+          IUT IV Section 3 begins by fixing the set-theoretic environment for species.
+          Mochizuki works with ZFC-models and allows Grothendieck universes satisfying
+          the additional universe-existence axiom used by the Grothendieck school. This
+          is the foundational stage on which species can be interpreted in different
+          models without being reduced to one chosen category of outputs.
+        </p>
+        <div class="diagram fit" aria-label="Grothendieck universe ladder for IUT IV species">
+          <div class="diagramHeader">
+            <strong>Universe ladder</strong>
+            <span>IUT IV §3 set-theoretic staging for species</span>
+          </div>
+          <svg viewBox="0 0 1040 350" role="img">
+            <defs>
+              <marker id="arrowZfcg31" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="84" width="190" height="76"></rect>
+            <text class="nodeTitle" x="165" y="112" text-anchor="middle">ZFC-model</text>
+            <text class="tinyText" x="165" y="136" text-anchor="middle">sets plus membership</text>
+
+            <rect class="nodeBox green" x="314" y="84" width="190" height="76"></rect>
+            <text class="nodeTitle" x="409" y="112" text-anchor="middle">universe V</text>
+            <text class="tinyText" x="409" y="136" text-anchor="middle">transitive, powers, unions</text>
+
+            <rect class="nodeBox gold" x="558" y="84" width="190" height="76"></rect>
+            <text class="nodeTitle" x="653" y="112" text-anchor="middle">larger universe W</text>
+            <text class="tinyText" x="653" y="136" text-anchor="middle">V is an element of W</text>
+
+            <rect class="nodeBox violet" x="802" y="84" width="170" height="76"></rect>
+            <text class="nodeTitle" x="887" y="112" text-anchor="middle">species rule</text>
+            <text class="tinyText" x="887" y="136" text-anchor="middle">absolute formula</text>
+
+            <path d="M262 122 H312" class="edge blue" marker-end="url(#arrowZfcg31)"></path>
+            <path d="M506 122 H556" class="edge green" marker-end="url(#arrowZfcg31)"></path>
+            <path d="M750 122 H800" class="edge gold" marker-end="url(#arrowZfcg31)"></path>
+
+            <rect class="nodeBox red" x="216" y="232" width="260" height="66"></rect>
+            <text class="nodeTitle" x="346" y="258" text-anchor="middle">ascending chains allowed</text>
+            <text class="tinyText" x="346" y="280" text-anchor="middle">V0 in V1 in V2 ...</text>
+
+            <rect class="nodeBox red" x="586" y="232" width="260" height="66"></rect>
+            <text class="nodeTitle" x="716" y="258" text-anchor="middle">descending chains forbidden</text>
+            <text class="tinyText" x="716" y="280" text-anchor="middle">foundation blocks membership loops</text>
+
+            <path d="M409 162 C398 196 370 212 348 230" class="edge green" marker-end="url(#arrowZfcg31)"></path>
+            <path d="M653 162 C666 196 694 212 714 230" class="edge gold" marker-end="url(#arrowZfcg31)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>ZFC-model</td>
+            <td>A model consists of sets with a membership relation satisfying standard ZFC axioms.</td>
+            <td>Species pages should distinguish the rule from its interpretation in one model.</td>
+          </tr>
+          <tr>
+            <td>Universe axioms</td>
+            <td>A Grothendieck universe is transitive, contains natural numbers, and is closed under powers, unions, and small surjective images.</td>
+            <td>Universe changes are not informal metaphors; they are part of the formal staging.</td>
+          </tr>
+          <tr>
+            <td>ZFCG axiom</td>
+            <td>Given any set, a universe containing it exists; consequently, a family of universes can be placed inside a larger universe.</td>
+            <td>This supports the comparison of species-data across enlarged ambient contexts.</td>
+          </tr>
+          <tr>
+            <td>Absoluteness proviso</td>
+            <td>Set-theoretic formulas used below are required to be absolute under universe enlargement.</td>
+            <td>This is the technical guardrail behind model-free species descriptions.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Section 3 preamble and Definition 3.1</a>
+          Related: <a href="#iut-iv-zero-one-species-31">0/1-species</a>
+          <a href="#iut-iv-model-free-specimens-31">model-free specimens</a>
+          <a href="#collas-universes-species-page">Collas universes/species</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-zero-one-species-31" data-filter="iut iv definition 3.1 zero species one species specimen species object species morphism composition identity">
+        <h2>IUT IV Definition 3.1: 0/1-Species Data</h2>
+        <p class="lede">
+          Definition 3.1 defines a species in two layers. A 0-species gives formulas
+          for object data. A 1-species gives formulas for morphism data, composition,
+          associativity, and identities. The pair is what IUT IV calls a species.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>0-species</strong>
+            <p>
+              A set-theoretic formula <span class="math">Phi_0(E)</span> defines the
+              permitted ordered collections of sets called 0-specimens.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>1-species</strong>
+            <p>
+              Formulas <span class="math">Phi_1(E,E',F)</span> and
+              <span class="math">Phi_{1 o 1}</span> define arrows and their composites.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Species</strong>
+            <p>
+              A species is the pair <span class="math">(S_0,S_1)</span>, with
+              specimens interpreted as species-objects and species-morphisms.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Definition component</th><th>Source condition</th><th>Formal reading</th></tr>
+          <tr>
+            <td>0-specimen</td>
+            <td>A concrete ordered collection of sets in a ZFC-model satisfying the object formula.</td>
+            <td>An object is an interpreted output of a formula, not an isolated label.</td>
+          </tr>
+          <tr>
+            <td>1-specimen</td>
+            <td>A concrete ordered collection of sets satisfying the morphism formula between two 0-specimens.</td>
+            <td>Morphisms carry their domain/codomain data and are also formula outputs.</td>
+          </tr>
+          <tr>
+            <td>Composite</td>
+            <td>For composable 1-specimens, the composite exists uniquely and composition is associative.</td>
+            <td>The species data must encode category-like composition explicitly.</td>
+          </tr>
+          <tr>
+            <td>Identity</td>
+            <td>Each 0-specimen has a unique identity 1-specimen with the usual unit property.</td>
+            <td>Definition 3.1 builds a category after interpretation, rather than assuming one beforehand.</td>
+          </tr>
+          <tr>
+            <td>Smallness</td>
+            <td>0-smallness and 1-smallness assert that relevant specimens form sets in any ZFC-model.</td>
+            <td>Size conditions should be visible when formalizing species categories.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          This page is deliberately mechanical. It is the source-level reason the wiki
+          treats IUT concepts as typed routes: the formula defining the kind of object
+          matters as much as any one displayed specimen.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Definition 3.1(i)-(iv)</a>
+          Related: <a href="#species-vs-categories-iv31">species versus categories</a>
+          <a href="#mutation-histories-cores-iv33">mutation histories</a>
+          <a href="#collas-category-perspective">Collas category view</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-model-free-specimens-31" data-filter="iut iv definition 3.1 model-free specimen absolute formula universe enlargement species programs">
+        <h2>IUT IV Definition 3.1: Model-Free Specimens</h2>
+        <p class="lede">
+          A model-free specimen is an interpreted species specimen described by a
+          formula that gives the same specimen after passing from one universe to a
+          larger universe. This is one precise IUT IV mechanism for preventing an
+          object from being tied to an arbitrary representative inside a single
+          set-theoretic model.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Layer</th><th>Source statement</th><th>Audit consequence</th></tr>
+          <tr>
+            <td>Formula independence</td>
+            <td>The description must be independent of the ZFC-model in the sense of compatibility for universes <span class="math">V_1 in V_2</span>.</td>
+            <td>Do not identify model-free with merely canonical-sounding prose; it is a formula-stability condition.</td>
+          </tr>
+          <tr>
+            <td>Program view</td>
+            <td>Remark 3.1.2 says the essence of a species lies in rules or deterministic algorithms, not one output set.</td>
+            <td>Wiki and Lean interfaces should expose construction rules where possible.</td>
+          </tr>
+          <tr>
+            <td>Choice warning</td>
+            <td>Remark 3.1.3 warns that conventional descriptions must not depend on arbitrary choices not encoded by formulas.</td>
+            <td>This is a direct anti-drift rule for formalization and exposition.</td>
+          </tr>
+          <tr>
+            <td>Inter-universal meaning</td>
+            <td>Remark 3.1.4 ties formula-defined species to invariance under universe extension.</td>
+            <td>The inter-universal language here is a type/formula discipline, not a license to identify all copies.</td>
+          </tr>
+        </table>
+        <div class="grid3">
+          <div class="card">
+            <h3>Good use</h3>
+            <p>
+              Use model-free terminology when the same set-theoretic formula genuinely
+              determines the same specimen after universe enlargement.
+            </p>
+            <div class="tagRow"><span class="tag green">formula</span><span class="tag">absolute</span></div>
+          </div>
+          <div class="card">
+            <h3>Bad use</h3>
+            <p>
+              Do not use it for an arbitrary chosen representative of a species-object,
+              even if all representatives are isomorphic in a later category.
+            </p>
+            <div class="tagRow"><span class="tag red">choice</span><span class="tag">not enough</span></div>
+          </div>
+          <div class="card">
+            <h3>Formalization use</h3>
+            <p>
+              A Lean development can initially expose model-free status as a hypothesis,
+              but the long-term target is a construction or theorem proving formula
+              stability.
+            </p>
+            <div class="tagRow"><span class="tag violet">Lean</span><span class="tag">audit hook</span></div>
+          </div>
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Definition 3.1(iii) and Remarks 3.1.2-3.1.4</a>
+          Related: <a href="#iut-iv-zfcg-universes-31">ZFCG universes</a>
+          <a href="#species-vs-categories-iv31">species versus categories</a>
+          <a href="#leanform-species-mutations-page">LeanForm species/mutations</a>
         </div>
       </section>
 
