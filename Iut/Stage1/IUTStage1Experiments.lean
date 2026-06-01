@@ -209,6 +209,40 @@ theorem pivotalRealifiedFrobenioidDistribution_endpoint
         (Fintype.card J : Real) * source.averagedLogVolume :=
   source.pivotalDistribution_endpoint
 
+theorem nfBridgeModeComparison_endpoint
+    {J : Type u} [Fintype J]
+    (summed averaged : IUTStage1NFBridgeRealifiedLogVolume J)
+    (hsummed : summed.mode = IUTStage1NFBridgeLogVolumeMode.summed)
+    (haveraged : averaged.mode = IUTStage1NFBridgeLogVolumeMode.averaged)
+    (hcapsule :
+      summed.capsuleDistribution = averaged.capsuleDistribution) :
+    summed.targetLogVolume =
+        summed.capsuleDistribution.totalLogVolume ∧
+      (Fintype.card J : Real) * averaged.targetLogVolume =
+        averaged.capsuleDistribution.totalLogVolume ∧
+      summed.targetLogVolume =
+        (Fintype.card J : Real) * averaged.targetLogVolume :=
+  summed.nfBridgeModeComparison_endpoint averaged hsummed haveraged hcapsule
+
+theorem nfBridgePivotalSummedTarget_endpoint
+    {J : Type u} [Fintype J]
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J)
+    (pivotal : IUTStage1PivotalRealifiedFrobenioidDistribution J)
+    (hmode : bridge.mode = IUTStage1NFBridgeLogVolumeMode.summed)
+    (hcapsule : bridge.capsuleDistribution = pivotal.distribution) :
+    bridge.targetLogVolume =
+      (Fintype.card J : Real) * pivotal.pivotalLogVolume :=
+  bridge.pivotal_summedTarget_eq_card_mul_pivotal pivotal hmode hcapsule
+
+theorem nfBridgePivotalAveragedTarget_endpoint
+    {J : Type u} [Fintype J]
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J)
+    (pivotal : IUTStage1PivotalRealifiedFrobenioidDistribution J)
+    (hmode : bridge.mode = IUTStage1NFBridgeLogVolumeMode.averaged)
+    (hcapsule : bridge.capsuleDistribution = pivotal.distribution) :
+    bridge.targetLogVolume = pivotal.pivotalLogVolume :=
+  bridge.pivotal_averagedTarget_eq_pivotal pivotal hmode hcapsule
+
 theorem thetaRootKummerForgettingSource_feedsNonarchimedeanEntry
     {coric : Type u}
     {audited :

@@ -4477,6 +4477,133 @@ theorem pivotalDistribution_endpoint
 
 end IUTStage1PivotalRealifiedFrobenioidDistribution
 
+/-- Log-volume convention for the finite NF-bridge model. -/
+inductive IUTStage1NFBridgeLogVolumeMode where
+  | summed
+  | averaged
+deriving DecidableEq, Repr
+
+/--
+Finite log-volume shadow of the NF-bridge of IUT I, Definition 5.5.
+
+The actual definition consists of a capsule of F-prime-strips, two global
+Frobenioid categories, and a poly-morphism lifting a D-NF-bridge.  At the
+present finite realified level we record the capsule distribution and the
+choice, emphasized in Remark 5.4.2, between the summed and averaged
+log-volume readings.
+-/
+structure IUTStage1NFBridgeRealifiedLogVolume
+    (J : Type u) [Fintype J] where
+  indexWitness : J
+  capsuleDistribution : IUTStage1RealifiedFrobenioidIndexDistribution J
+  mode : IUTStage1NFBridgeLogVolumeMode
+  targetLogVolume : Real
+  target_logVolume_eq :
+    targetLogVolume =
+      match mode with
+      | IUTStage1NFBridgeLogVolumeMode.summed =>
+          capsuleDistribution.totalLogVolume
+      | IUTStage1NFBridgeLogVolumeMode.averaged =>
+          (Fintype.card J : Real)⁻¹ * capsuleDistribution.totalLogVolume
+
+namespace IUTStage1NFBridgeRealifiedLogVolume
+
+variable {J : Type u} [Fintype J]
+
+noncomputable def expectedTargetLogVolume
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J) : Real :=
+  match bridge.mode with
+  | IUTStage1NFBridgeLogVolumeMode.summed =>
+      bridge.capsuleDistribution.totalLogVolume
+  | IUTStage1NFBridgeLogVolumeMode.averaged =>
+      (Fintype.card J : Real)⁻¹ * bridge.capsuleDistribution.totalLogVolume
+
+theorem targetLogVolume_eq_expected
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J) :
+    bridge.targetLogVolume = bridge.expectedTargetLogVolume := by
+  unfold expectedTargetLogVolume
+  exact bridge.target_logVolume_eq
+
+theorem card_ne_zero
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J) :
+    (Fintype.card J : Real) ≠ 0 := by
+  have hcard_pos : 0 < Fintype.card J :=
+    Fintype.card_pos_iff.mpr ⟨bridge.indexWitness⟩
+  exact_mod_cast ne_of_gt hcard_pos
+
+theorem targetLogVolume_eq_total_of_summed
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J)
+    (hmode : bridge.mode = IUTStage1NFBridgeLogVolumeMode.summed) :
+    bridge.targetLogVolume =
+      bridge.capsuleDistribution.totalLogVolume := by
+  rw [bridge.targetLogVolume_eq_expected, expectedTargetLogVolume, hmode]
+
+theorem targetLogVolume_eq_average_of_averaged
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J)
+    (hmode : bridge.mode = IUTStage1NFBridgeLogVolumeMode.averaged) :
+    bridge.targetLogVolume =
+      (Fintype.card J : Real)⁻¹ *
+        bridge.capsuleDistribution.totalLogVolume := by
+  rw [bridge.targetLogVolume_eq_expected, expectedTargetLogVolume, hmode]
+
+theorem card_mul_targetLogVolume_eq_total_of_averaged
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J)
+    (hmode : bridge.mode = IUTStage1NFBridgeLogVolumeMode.averaged) :
+    (Fintype.card J : Real) * bridge.targetLogVolume =
+      bridge.capsuleDistribution.totalLogVolume := by
+  rw [bridge.targetLogVolume_eq_average_of_averaged hmode]
+  rw [← mul_assoc, mul_inv_cancel₀ bridge.card_ne_zero, one_mul]
+
+theorem summedTarget_eq_card_mul_averagedTarget
+    (summed averaged : IUTStage1NFBridgeRealifiedLogVolume J)
+    (hsummed : summed.mode = IUTStage1NFBridgeLogVolumeMode.summed)
+    (haveraged : averaged.mode = IUTStage1NFBridgeLogVolumeMode.averaged)
+    (hcapsule :
+      summed.capsuleDistribution = averaged.capsuleDistribution) :
+    summed.targetLogVolume =
+      (Fintype.card J : Real) * averaged.targetLogVolume := by
+  rw [summed.targetLogVolume_eq_total_of_summed hsummed]
+  rw [averaged.card_mul_targetLogVolume_eq_total_of_averaged haveraged]
+  rw [hcapsule]
+
+theorem pivotal_summedTarget_eq_card_mul_pivotal
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J)
+    (pivotal : IUTStage1PivotalRealifiedFrobenioidDistribution J)
+    (hmode : bridge.mode = IUTStage1NFBridgeLogVolumeMode.summed)
+    (hcapsule : bridge.capsuleDistribution = pivotal.distribution) :
+    bridge.targetLogVolume =
+      (Fintype.card J : Real) * pivotal.pivotalLogVolume := by
+  rw [bridge.targetLogVolume_eq_total_of_summed hmode, hcapsule]
+  exact pivotal.totalLogVolume_eq_card_mul_pivotal
+
+theorem pivotal_averagedTarget_eq_pivotal
+    (bridge : IUTStage1NFBridgeRealifiedLogVolume J)
+    (pivotal : IUTStage1PivotalRealifiedFrobenioidDistribution J)
+    (hmode : bridge.mode = IUTStage1NFBridgeLogVolumeMode.averaged)
+    (hcapsule : bridge.capsuleDistribution = pivotal.distribution) :
+    bridge.targetLogVolume = pivotal.pivotalLogVolume := by
+  rw [bridge.targetLogVolume_eq_average_of_averaged hmode, hcapsule]
+  exact pivotal.averagedLogVolume_eq_pivotal
+
+theorem nfBridgeModeComparison_endpoint
+    (summed averaged : IUTStage1NFBridgeRealifiedLogVolume J)
+    (hsummed : summed.mode = IUTStage1NFBridgeLogVolumeMode.summed)
+    (haveraged : averaged.mode = IUTStage1NFBridgeLogVolumeMode.averaged)
+    (hcapsule :
+      summed.capsuleDistribution = averaged.capsuleDistribution) :
+    summed.targetLogVolume =
+        summed.capsuleDistribution.totalLogVolume ∧
+      (Fintype.card J : Real) * averaged.targetLogVolume =
+        averaged.capsuleDistribution.totalLogVolume ∧
+      summed.targetLogVolume =
+        (Fintype.card J : Real) * averaged.targetLogVolume :=
+  ⟨summed.targetLogVolume_eq_total_of_summed hsummed,
+    averaged.card_mul_targetLogVolume_eq_total_of_averaged haveraged,
+    summed.summedTarget_eq_card_mul_averagedTarget averaged hsummed
+      haveraged hcapsule⟩
+
+end IUTStage1NFBridgeRealifiedLogVolume
+
 /--
 Source-facing global realified Frobenioid calibration package.
 

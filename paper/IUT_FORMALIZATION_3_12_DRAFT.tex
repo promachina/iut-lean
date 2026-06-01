@@ -448,6 +448,12 @@ pivotal distribution object: a chosen pivotal index supplies the common
 diagonal log-volume, the summed interpretation gives total
 \(|J|\) times this pivotal value, and the averaged interpretation recovers the
 pivotal value itself.
+\IUT{} I, Definition 5.5 is now represented at finite log-volume level by an
+NF-bridge mode object: the bridge target is either the summed capsule
+log-volume or the normalized averaged capsule log-volume.  For the same
+capsule distribution, \Lean{} proves that the summed bridge target is
+\(|J|\) times the averaged bridge target; for a pivotal distribution, these
+specialize to \(|J|\) times the pivotal value and to the pivotal value itself.
 This layer is now connected to the nonarchimedean packet correspondence:
 a realified-Frobenioid log-Kummer packet source projects the Frobenioid
 compatibility data to the Kummer \(F\to D\) transfer and to the
@@ -645,6 +651,9 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The pivotal distribution of \IUT{} I, Example 5.4(vii), is modeled by a
   chosen index in a diagonal distribution; \Lean{} proves the summed
   log-volume formula and the normalized averaged formula of Remark 5.4.2.
+\item The finite NF-bridge log-volume model of \IUT{} I, Definition 5.5,
+  separates summed and averaged bridge targets and proves their \(|J|\)
+  scaling relation for a common capsule distribution.
 \item The realified Frobenioid layer now feeds the nonarchimedean
   log-Kummer packet source: Kummer and mono-analytic forgetting transfers are
   projected from Frobenioid compatibility before the packet correspondence
