@@ -906,10 +906,12 @@
         <a class="subLink" href="#bad-frobenioid-reconstruction-iut-i32">Bad Frobenioid reconstruction 3.2</a>
         <a class="subLink" href="#tempered-meromorphic-correction-iut-i324">Tempered-meromorphic correction 3.2.4</a>
         <a href="#good-arch-frobenioids-33-34">Good/arch Frobenioids 3.3-3.4</a>
-        <a href="#good-nonarch-base-frobenioids-iut-i33">Good base Frobenioids 3.3</a>
-        <a href="#good-formal-theta-frobenioids-iut-i33">Good formal theta 3.3</a>
-        <a href="#arch-aut-holomorphic-frobenioids-iut-i34">Arch Aut-holomorphic 3.4</a>
-        <a href="#arch-kummer-log-frobenioids-iut-i34">Arch Kummer/log 3.4</a>
+        <a class="subLink" href="#good-nonarch-base-frobenioids-iut-i33">Good base Frobenioids 3.3</a>
+        <a class="subLink" href="#good-formal-theta-frobenioids-iut-i33">Good formal theta 3.3</a>
+        <a class="subLink" href="#good-reconstruction-mlf-iut-i332">Good reconstruction/MLF 3.3.2</a>
+        <a class="subLink" href="#arch-aut-holomorphic-frobenioids-iut-i34">Arch Aut-holomorphic 3.4</a>
+        <a class="subLink" href="#arch-kummer-log-frobenioids-iut-i34">Arch Kummer/log 3.4</a>
+        <a class="subLink" href="#arch-cuspidalization-iut-i343">Arch cuspidalization 3.4.3</a>
         <a href="#global-realified-theater-35-36">Global realified theater 3.5-3.6</a>
         <a href="#global-realified-cmod-iut-i35">Global Cmod realification 3.5</a>
         <a href="#global-theta-version-iut-i35">Global theta version 3.5</a>
@@ -15776,7 +15778,7 @@
             <path class="edge violet" d="M426 304 H540" marker-end="url(#arrowGoodArch334)"></path>
           </svg>
         </div>
-        <table>
+        <table class="sourceTable3">
           <tr><th>Source item</th><th>Construction</th><th>Distinction</th></tr>
           <tr>
             <td>Example 3.3(i)</td>
@@ -15824,6 +15826,8 @@
         <div class="related">
           Sources: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I, Examples 3.3-3.4</a>
           Related: <a href="#bad-nonarch-frobenioids-32">bad nonarch Frobenioids</a>
+          <a href="#good-reconstruction-mlf-iut-i332">good reconstruction/MLF</a>
+          <a href="#arch-cuspidalization-iut-i343">arch cuspidalization</a>
           <a href="#global-realified-theater-35-36">global realified theater</a>
           <a href="#theta-log-links">theta/log links</a>
         </div>
@@ -16016,6 +16020,46 @@
         </div>
       </section>
 
+      <section id="good-reconstruction-mlf-iut-i332" data-filter="iut i remark 3.3.2 mlf galois tm pair strictly belyi mono analytic type kummer image field structure pv reconstruction">
+        <h2>IUT I Remark 3.3.2: Good-Prime Reconstruction and MLF-Galois TM-Pairs</h2>
+        <p class="lede">
+          Remark 3.3.2 identifies the good nonarchimedean Frobenioids of Example 3.3
+          with the same kind of data as MLF-Galois TM-pairs in AbsTopIII. This is the
+          source reason that the element <span class="math">p_v</span> and the
+          characteristic splitting may be reconstructed from <span class="math">F_v</span>
+          by using the field structure on Kummer-image data.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Source point</th><th>Content</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Strictly Belyi type</td>
+            <td>The curve <span class="math">X_F</span> is of strictly Belyi type, so the relevant Kummer-image field structure from AbsTopIII can be applied.</td>
+            <td>This justifies recovering <span class="math">p_v</span> from category/group-theoretic input rather than choosing it externally.</td>
+          </tr>
+          <tr>
+            <td>MLF-Galois TM-pair</td>
+            <td>The p-adic Frobenioid <span class="math">C_v</span> is essentially the data of an MLF-Galois TM-pair of strictly Belyi type.</td>
+            <td>Connects Example 3.3 to the absolute anabelian reconstruction machinery.</td>
+          </tr>
+          <tr>
+            <td>Mono-analytic type</td>
+            <td>The split sub-Frobenioid <span class="math">C_v^⊢</span> corresponds to the mono-analytic type variant in AbsTopIII.</td>
+            <td>Explains why the split side is the part used later as mono-analytic local data.</td>
+          </tr>
+          <tr>
+            <td>Bad-place analogue</td>
+            <td>Remark 3.3.2 says a similar description applies to the p-adic Frobenioids <span class="math">C_v</span> and <span class="math">C_v^⊢</span> of Example 3.2(iii)-(iv).</td>
+            <td>Links good-prime reconstruction to the bad-place base-field hull and q-normalized side.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Example 3.3(iii), Remarks 3.3.1-3.3.2</a>
+          Related: <a href="#good-formal-theta-frobenioids-iut-i33">good formal theta</a>
+          <a href="#bad-base-field-hull-iut-i32">bad base-field hull</a>
+          <a href="#anabelian-background">anabelian background</a>
+        </div>
+      </section>
+
       <section id="arch-aut-holomorphic-frobenioids-iut-i34" data-filter="iut i example 3.4 archimedean aut holomorphic orbispaces caf frobenioid kappa structure">
         <h2>IUT I Example 3.4(i): Archimedean Aut-Holomorphic Frobenioids</h2>
         <p class="lede">
@@ -16200,6 +16244,47 @@
           Related: <a href="#arch-aut-holomorphic-frobenioids-iut-i34">arch Aut-holomorphic data</a>
           <a href="#theta-log-links">theta/log links</a>
           <a href="#iut-i-frobenioid-prime-strips-52">Frobenioid prime-strips</a>
+        </div>
+      </section>
+
+      <section id="arch-cuspidalization-iut-i343" data-filter="iut i remark 3.4.3 archimedean theta approach holomorphic elliptic cuspidalization belyi cuspidalization nf points inertia">
+        <h2>IUT I Remark 3.4.3: Archimedean Cuspidalization and NF-Point Reconstruction</h2>
+        <p class="lede">
+          Remark 3.4.3 explains how the archimedean Aut-holomorphic field
+          <span class="math">A_{D_v}</span> should be read from the theta approach:
+          via holomorphic elliptic cuspidalization, small punctured neighborhoods,
+          and the cuspidal inertia groups of points on the compactified elliptic curve.
+          It then states the archimedean Belyi-cuspidalization consequence needed for
+          reconstructing number-field points.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Point</th><th>Source content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td><span class="math">A_X = A_{D_v}</span></td>
+            <td>Holomorphic elliptic cuspidalization gives a natural isomorphism between the CAF attached to the punctured object and the CAF attached to <span class="math">D_v</span>.</td>
+            <td>This identifies the archimedean CAF with the theta-approach local object.</td>
+          </tr>
+          <tr>
+            <td>Unit-circle inertia reading</td>
+            <td>The unit group <span class="math">A_X^x</span> acts on small punctured neighborhoods, and <span class="math">Hom(Q/Z,A_X^mu)</span> is interpreted as identifying cuspidal inertia groups.</td>
+            <td>Explains why torsion in the unit circle models an archimedean version of inertia data.</td>
+          </tr>
+          <tr>
+            <td>Holomorphic Belyi cuspidalization</td>
+            <td>The holomorphic analogue of Belyi cuspidalization reconstructs the set of NF-points of the underlying topological space of <span class="math">D_v</span>.</td>
+            <td>Provides the source for functorial reconstruction of number-field points from the abstract Aut-holomorphic space.</td>
+          </tr>
+          <tr>
+            <td>Relation to theta approach</td>
+            <td>Mochizuki explicitly says this interpretation is natural from the viewpoint of the theta approach in Remark 3.1.2(ii).</td>
+            <td>Connects the archimedean local package to the same group-theoretic recovery theme used in initial theta data.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-i.pdf" target="_blank">IUT I Remark 3.4.3</a>
+          Related: <a href="#arch-kummer-log-frobenioids-iut-i34">arch Kummer/log</a>
+          <a href="#theta-approach-abs-top-319">theta approach</a>
+          <a href="#theta-approach-cyclotome-iut-i312">cyclotome comparison</a>
         </div>
       </section>
 
