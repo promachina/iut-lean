@@ -1098,6 +1098,10 @@
         <a href="#theta-link-compatibility-source-311">3.11 horizontal compatibility</a>
         <a href="#ipl-she-apt-source-311">IPL/SHE/APT source</a>
         <a href="#label-discipline-311">3.11 label discipline</a>
+        <a href="#noncommutative-single-link-3113">3.11.3 single-link rule</a>
+        <a href="#log-kummer-reconciliation-3113">3.11.3 log-Kummer reconciliation</a>
+        <a href="#invisible-indeterminacies-3114">3.11.4 invisible indeterminacies</a>
+        <a href="#no-further-indeterminacies-3114">3.11.4 no further indeterminacies</a>
         <a href="#tensor-log-volume-corridor">Tensor/log-volume corridor</a>
         <a href="#corollary-312">Corollary 3.12 corridor</a>
         <a href="#corollary-312-proof-steps">3.12 proof steps</a>
@@ -44484,6 +44488,168 @@
           Related: <a href="#theorem-311-data-abc">3.11 data</a>
           <a href="#d-theta-nf-etale-picture-iut-i412">etale-picture symmetries</a>
           <a href="#multiradiality">multiradiality</a>
+        </div>
+      </section>
+
+      <section id="noncommutative-single-link-3113">
+        <h2>IUT III Remark 3.11.3: Single-Link Rule</h2>
+        <p class="lede">
+          Remark 3.11.3 starts from a negative fact: the squares of the
+          LGP-Gaussian log-theta lattice are far from commutative. Therefore the unit
+          and value group portions of adjacent vertical lines cannot be compared by
+          two vertically shifted theta-link positions. They must be related through one
+          <span class="math">Theta×mu_LGP</span> link.
+        </p>
+        <div class="diagram" aria-label="Single theta link rule in Remark 3.11.3">
+          <div class="diagramHeader">
+            <strong>Remark 3.11.3(ii)</strong>
+            <span>unit and value portions must use one horizontal link</span>
+          </div>
+          <svg viewBox="0 0 900 330" role="img">
+            <defs>
+              <marker id="arrowSingleLink3113" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="90" y="72" width="190" height="72"></rect>
+            <text class="nodeTitle" x="185" y="104" text-anchor="middle">(n-1,m)</text>
+            <rect class="nodeBox green" x="620" y="72" width="190" height="72"></rect>
+            <text class="nodeTitle" x="715" y="104" text-anchor="middle">(n,m)</text>
+            <rect class="nodeBox red" x="90" y="214" width="190" height="72"></rect>
+            <text class="nodeTitle" x="185" y="246" text-anchor="middle">(n-1,m-1)</text>
+            <rect class="nodeBox gold" x="620" y="214" width="190" height="72"></rect>
+            <text class="nodeTitle" x="715" y="246" text-anchor="middle">(n,m-1)</text>
+            <path d="M282 108 H618" class="edge blue" marker-end="url(#arrowSingleLink3113)"></path>
+            <text class="smallText" x="450" y="96" text-anchor="middle">one Theta×mu_LGP link</text>
+            <path d="M282 250 H618" class="edge red" marker-end="url(#arrowSingleLink3113)" stroke-dasharray="6 6"></path>
+            <text class="smallText" x="450" y="270" text-anchor="middle">shifted second link is not source-faithful</text>
+            <path d="M185 146 V212" class="edge violet" marker-end="url(#arrowSingleLink3113)"></path>
+            <path d="M715 146 V212" class="edge violet" marker-end="url(#arrowSingleLink3113)"></path>
+          </svg>
+        </div>
+        <p>
+          Bi-coric <span class="math">F⊢×mu</span> prime-strips and mono-analytic
+          log-shells are the controlled exception: the lattice squares become
+          effectively commutative for those pieces. The rest of the proof cannot assume
+          ordinary commutativity.
+        </p>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.11.3(i)-(ii)</a>
+          Related: <a href="#single-theta-link-312">3.12 single theta-link rule</a>
+          <a href="#theta-link-compatibility-source-311">3.11 horizontal compatibility</a>
+        </div>
+      </section>
+
+      <section id="log-kummer-reconciliation-3113">
+        <h2>IUT III Remark 3.11.3: Log-Kummer Reconciliation</h2>
+        <p class="lede">
+          Remark 3.11.3 explains why the final log-Kummer correspondence of Theorem
+          3.11(ii) is needed. To treat units in the vertically once-shifted way required
+          by LGP monoids, one must relate Frobenius-like units to etale-like structures
+          both by ordinary Kummer isomorphisms and by Kummer isomorphisms pre-composed
+          with a log-link iterate.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Need</th><th>Mechanism</th><th>Source consequence</th></tr>
+          <tr>
+            <td>Use one theta link for units and values.</td>
+            <td>Theorem 3.11(iii) horizontal compatibility.</td>
+            <td>Cyclotomes in etale theta/Kummer theory are insulated from <span class="math">Aut(F⊢×mu)</span> indeterminacy.</td>
+          </tr>
+          <tr>
+            <td>Treat units via bi-coric log-shells.</td>
+            <td>Kummer maps pre-composed with a log-link iterate.</td>
+            <td>Frobenius-like data must be related to etale-like data invariantly under log-link pre-composition.</td>
+          </tr>
+          <tr>
+            <td>Relate adjacent LGP monoids.</td>
+            <td>The total log-Kummer correspondence of Theorem 3.11(ii).</td>
+            <td>This reconciles the single-link constraint with the vertical shift demanded by the LGP construction.</td>
+          </tr>
+        </table>
+        <div class="callout blue">
+          This is a central 3.12 guardrail: the log-Kummer correspondence is not
+          decorative infrastructure. It is the mechanism that makes the single-link
+          theta comparison compatible with bi-coric log-shell treatment of LGP monoids.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.11.3(iii)-(iv)</a>
+          Related: <a href="#single-kummer-map-not-enough-35">total log-Kummer correspondence 3.5</a>
+          <a href="#global-log-kummer-totality-310">global totality 3.10</a>
+          <a href="#corollary-312-proof-steps">3.12 proof steps</a>
+        </div>
+      </section>
+
+      <section id="invisible-indeterminacies-3114">
+        <h2>IUT III Remark 3.11.4: Invisible Indeterminacies</h2>
+        <p class="lede">
+          Remark 3.11.4 explains the compatibility in Theorem 3.11(iii)(c),(d) after
+          forgetting Frobenius-like labels. Roots-of-unity multiplication and certain
+          cyclotomic-rigidity ambiguities are "invisible" only because the objects
+          under consideration are formulated up to the relevant orbits or whole sets
+          stabilized by these actions.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Object</th><th>A priori ambiguity</th><th>Why it is invisible</th></tr>
+          <tr>
+            <td>Theta values in data (b)</td>
+            <td>Multiplication by <span class="math">2l</span>-th roots of unity.</td>
+            <td>The theory is already invariant under this root-of-unity action.</td>
+          </tr>
+          <tr>
+            <td>Number-field copies in data (c)</td>
+            <td>Root-of-unity multiplication, and possible <span class="math">±1</span> cyclotomic ambiguity.</td>
+            <td>The associated Frobenioids use local data and the entire stabilized underlying set, not chosen elements.</td>
+          </tr>
+          <tr>
+            <td>Local nonarchimedean log-shell containers</td>
+            <td>Cyclotomic-rigidity ambiguity.</td>
+            <td>Geometric and arithmetic cyclotomes are never confused, so no vicious circle/loop arises.</td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          "Invisible" does not mean absent. It means the source construction has chosen
+          objects on which these ambiguities have no substantive effect.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.11.4(i) and Figs. 3.4-3.5</a>
+          Related: <a href="#roots-of-unity-noninterference-310">roots-of-unity non-interference</a>
+          <a href="#ind1-ind2-ind3-311">3.11 indeterminacies</a>
+        </div>
+      </section>
+
+      <section id="no-further-indeterminacies-3114">
+        <h2>IUT III Remark 3.11.4: No Further Indeterminacies</h2>
+        <p class="lede">
+          Remark 3.11.4(ii) claims completeness of the listed log-Kummer
+          indeterminacies in the final compatibility statement of Theorem
+          3.11(iii)(c),(d). The reason given is the general Kummer fact that such
+          isomorphisms are determined by cyclotome isomorphisms and the Galois action
+          on roots of monoid elements.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Determining data</th><th>Status in Remark 3.11.4</th><th>Consequence</th></tr>
+          <tr>
+            <td>Cyclotome isomorphisms</td>
+            <td>The possible effects are exactly those analyzed in Remark 3.11.4(i).</td>
+            <td>No unlisted cyclotomic ambiguity remains.</td>
+          </tr>
+          <tr>
+            <td>Galois action on roots of monoid elements</td>
+            <td>Compatibility with the relevant Galois or arithmetic fundamental groups is tautological.</td>
+            <td>No additional indeterminacy can arise from the root-action side.</td>
+          </tr>
+          <tr>
+            <td>Ind1 and Ind2 versus data (b),(c)</td>
+            <td>Multiradiality/radial-coric decoupling makes Ind1 and Ind2 ineffective on the geometric containers underlying data (b),(c).</td>
+            <td>Ind3 remains the explicit upper-semi issue for local packet data (a); invisible analogues for (b),(c) are already accounted for.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.11.4(ii)-(iii)</a>
+          Related: <a href="#invisible-indeterminacies-3114">invisible indeterminacies</a>
+          <a href="#corollary-312-proof-steps">3.12 proof steps</a>
+          <a href="#coarse-space-step-x-312">3.12 Step (x)</a>
         </div>
       </section>
 
