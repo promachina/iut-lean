@@ -569,6 +569,17 @@ theorem weightedDeterminant_tensorPower_endpoint
       ⟨tensorPower.tensor_power_eq,
         tensorPower.normalizedLogVolume_eq_base⟩
 
+theorem tensorPowerPresentationComparison_endpoint
+    (data : IUTStage1TensorPowerPresentationComparison) :
+    data.source.baseLogVolume = data.target.baseLogVolume ∧
+      data.source.normalizedLogVolume =
+        data.source.baseLogVolume ∧
+      data.target.normalizedLogVolume =
+        data.target.baseLogVolume ∧
+      data.source.normalizedLogVolume =
+        data.target.normalizedLogVolume :=
+  data.endpoint
+
 theorem thetaPossibleImagesWeightedDeterminant_endpoint
     {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
     (hullData : IUTStage1HolomorphicHullLogVolumeShadow α)

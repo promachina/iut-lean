@@ -2628,6 +2628,44 @@ theorem endpoint
 end IUTStage1NaiveFrobeniusTensorPowerLogVolume
 
 /--
+Comparison of two positive tensor-power presentations of the same
+log-volume-level Frobenioid datum.
+
+This is the finite form of the Ob4 assertion used by the present route: the
+choice of a sufficiently divisible tensor degree may change the tensor-power
+presentation, but not the normalized log-volume once the base log-volume is the
+same.
+-/
+structure IUTStage1TensorPowerPresentationComparison where
+  source : IUTStage1NaiveFrobeniusTensorPowerLogVolume
+  target : IUTStage1NaiveFrobeniusTensorPowerLogVolume
+  base_eq : source.baseLogVolume = target.baseLogVolume
+
+namespace IUTStage1TensorPowerPresentationComparison
+
+theorem normalizedLogVolume_eq
+    (data : IUTStage1TensorPowerPresentationComparison) :
+    data.source.normalizedLogVolume = data.target.normalizedLogVolume :=
+  IUTStage1NaiveFrobeniusTensorPowerLogVolume.normalizedLogVolume_eq_of_base_eq
+    data.source data.target data.base_eq
+
+theorem endpoint
+    (data : IUTStage1TensorPowerPresentationComparison) :
+    data.source.baseLogVolume = data.target.baseLogVolume ∧
+      data.source.normalizedLogVolume =
+        data.source.baseLogVolume ∧
+      data.target.normalizedLogVolume =
+        data.target.baseLogVolume ∧
+      data.source.normalizedLogVolume =
+        data.target.normalizedLogVolume :=
+  ⟨data.base_eq,
+    data.source.normalizedLogVolume_eq_base,
+    data.target.normalizedLogVolume_eq_base,
+    data.normalizedLogVolume_eq⟩
+
+end IUTStage1TensorPowerPresentationComparison
+
+/--
 Step (xi-e)/(xi-f) upper-ray comparison after hull, determinant, and normalized
 log-volume.
 
