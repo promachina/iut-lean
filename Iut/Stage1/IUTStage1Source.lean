@@ -37701,11 +37701,106 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeArakelovPacketTargetSource
     q_pilot_positive cTheta thetaSigned_le_cTheta_absLogQ
 
 /--
+Source-side calibration of the theta cusp chart against the Hodge--Arakelov
+Gaussian log-volume source.
+
+This replaces the previous route-level equality input by a full-label
+calibration certificate.  Equality of the two compatibility records is derived
+extensionally from the zero/nonzero cusp-label branches.
+-/
+structure IUTStage1SourceThetaHodgeLogVolumeCalibration
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        l X C) where
+  fullLabel_calibrated :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+      sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility
+      (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+        audited)
+
+namespace IUTStage1SourceThetaHodgeLogVolumeCalibration
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {sourceHA :
+  IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+    l X C}
+
+noncomputable def thetaLogVolume
+    (_calibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceHA) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility l :=
+  part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+    audited
+
+noncomputable def hodgeLogVolume
+    (_calibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceHA) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility l :=
+  sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility
+
+theorem fullLabelLogVolume_calibrated
+    (calibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceHA) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+      calibration.hodgeLogVolume calibration.thetaLogVolume :=
+  calibration.fullLabel_calibrated
+
+theorem sourceLogVolumeEq
+    (calibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceHA) :
+    calibration.thetaLogVolume = calibration.hodgeLogVolume :=
+  IUTStage1ZModCuspLabelLogVolumeCompatibility.ext_of_fullLabelLogVolume_eq
+    calibration.hodgeLogVolume calibration.thetaLogVolume
+    calibration.fullLabelLogVolume_calibrated
+
+theorem calibration_endpoint
+    (calibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceHA) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        calibration.hodgeLogVolume calibration.thetaLogVolume ∧
+      calibration.thetaLogVolume = calibration.hodgeLogVolume :=
+  ⟨calibration.fullLabelLogVolume_calibrated,
+    calibration.sourceLogVolumeEq⟩
+
+end IUTStage1SourceThetaHodgeLogVolumeCalibration
+
+/--
 Route-level log-volume alignment produced from Hodge/SHE/IPL/hull source data.
 
-The source-side theta-average calibration is still a chart datum.  Once this is
-paired with the SHE synchronization source, the target-side equality is derived
-by extensional equality of full-label log-volume compatibilities.
+The source-side theta-average chart is calibrated against the Hodge--Arakelov
+source by a labelwise certificate; the target-side equality is then derived
+from SHE synchronization and extensional equality of full-label log-volume
+compatibilities.
 -/
 structure IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
     {packageN :
@@ -37727,10 +37822,9 @@ structure IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
   hullConstructor :
     IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
       record
-  source_log_volume_eq :
-    part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
-        audited =
-      sheSync.sourceHA.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility
+  sourceCalibration :
+    IUTStage1SourceThetaHodgeLogVolumeCalibration
+      part audited sheSync.sourceHA
 
 namespace IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
 
@@ -37772,7 +37866,7 @@ theorem sourceLogVolumeEq
     part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
         audited =
       alignment.sourceSynchronizedLogVolume :=
-  alignment.source_log_volume_eq
+  alignment.sourceCalibration.sourceLogVolumeEq
 
 theorem targetLogVolumeEqTheta
     (alignment :
