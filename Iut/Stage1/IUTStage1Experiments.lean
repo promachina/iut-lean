@@ -544,6 +544,37 @@ theorem weightedDeterminantSource_endpoint
         data.determinantLogVolume :=
   data.endpoint
 
+theorem thetaPossibleImagesWeightedDeterminant_endpoint
+    {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (possibleThetaImage : ι -> Set α)
+    (qPilotRegion : Set α)
+    (approximant :
+      IUTStage1HullLogVolumeApproximant
+        hullData (⋃ i, possibleThetaImage i))
+    (q_subset_approximant : qPilotRegion ⊆ approximant.approximant)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (approximant_eq_weighted_normalized :
+      hullData.logVolume approximant.approximant =
+        determinantSource.normalizedLogVolume) :
+    let data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι :=
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow.ofWeightedDeterminant
+          hullData possibleThetaImage qPilotRegion
+          approximant q_subset_approximant determinantSource
+          approximant_eq_weighted_normalized;
+    data.thetaImageUnionLogVolume <= data.approximantLogVolume ∧
+      data.approximantLogVolume <= data.thetaHullLogVolume ∧
+      data.qPilotLogVolume <= data.approximantLogVolume ∧
+      data.qPilotLogVolume <= data.thetaHullLogVolume ∧
+      data.toHullDetPilotUpperRayLogVolume.qPilotLogVolume <=
+        determinantSource.determinantLogVolume :=
+  IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow.ofWeightedDeterminant_endpoint
+    hullData possibleThetaImage qPilotRegion approximant
+    q_subset_approximant determinantSource
+    approximant_eq_weighted_normalized
+
 theorem realifiedFrobenioidLogKummerPacket_endpoint
     {coric : Type u}
     {audited :
