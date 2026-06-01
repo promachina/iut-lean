@@ -796,16 +796,19 @@
         <a href="#official-corpus">Official corpus</a>
         <a href="#preparatory-corpus">Preparatory corpus</a>
         <a href="#etale-theta-source-cluster">Etale theta source cluster</a>
-        <a href="#etale-theta-ha-translation-page">Etale theta HA translation</a>
-        <a href="#etale-theta-mono-bi-rigidity-page">Mono/Bi-theta rigidity tradeoff</a>
-        <a href="#etale-theta-section0-primitives-page">EtTh §0 primitives</a>
-        <a href="#etale-theta-tate-covering-tower-page">EtTh §1 Tate tower</a>
-        <a href="#etale-theta-classical-kummer-page">Etale theta class</a>
-        <a href="#etale-theta-anabelian-rigidity-page">EtTh §1 anabelian rigidity</a>
-        <a href="#etale-theta-full-group-warning-page">EtTh full group warning</a>
-        <a href="#etale-theta-cyclotomic-envelope-page">EtTh cyclotomic envelope</a>
-        <a href="#etale-theta-environments-definition-page">EtTh theta environments</a>
-        <a href="#etale-theta-discrete-rigidity-page">EtTh discrete rigidity</a>
+        <a class="subLink" href="#etale-theta-ha-translation-page">Etale theta HA translation</a>
+        <a class="subLink" href="#etale-theta-mono-bi-rigidity-page">Mono/Bi-theta rigidity tradeoff</a>
+        <a class="subLink" href="#etale-theta-section0-primitives-page">EtTh §0 primitives</a>
+        <a class="subLink" href="#etale-theta-tate-covering-tower-page">EtTh §1 Tate tower</a>
+        <a class="subLink" href="#etale-theta-classical-kummer-page">Etale theta class</a>
+        <a class="subLink" href="#etale-theta-anabelian-rigidity-page">EtTh §1 anabelian rigidity</a>
+        <a class="subLink" href="#etale-theta-full-group-warning-page">EtTh full group warning</a>
+        <a class="subLink" href="#etale-theta-cyclotomic-envelope-page">EtTh cyclotomic envelope</a>
+        <a class="subLink" href="#etale-theta-environments-definition-page">EtTh theta environments</a>
+        <a class="subLink" href="#etale-theta-discrete-rigidity-page">EtTh discrete rigidity</a>
+        <a class="subLink" href="#etale-theta-cor218-group-construction-page">EtTh Cor. 2.18 construction</a>
+        <a class="subLink" href="#etale-theta-cor219-rigidity-package-page">EtTh Cor. 2.19 rigidity</a>
+        <a class="subLink" href="#etale-theta-first-power-origin-page">EtTh first-power origin</a>
         <a href="#frobenioid-standard-model-page">Frobenioid standard model</a>
         <a href="#frobenioid-reconstruction-page">Frobenioid reconstruction</a>
         <a href="#frobenioid-operations-page">Frobenioid operations</a>
@@ -2078,6 +2081,9 @@
               <a href="#etale-theta-cyclotomic-envelope-page">cyclotomic envelope</a>,
               <a href="#etale-theta-environments-definition-page">environment definitions</a>,
               <a href="#etale-theta-discrete-rigidity-page">discrete rigidity</a>,
+              <a href="#etale-theta-cor218-group-construction-page">Corollary 2.18 construction</a>,
+              <a href="#etale-theta-cor219-rigidity-package-page">Corollary 2.19 rigidity package</a>,
+              <a href="#etale-theta-first-power-origin-page">first-power origin</a>,
               <a href="#etale-theta-mono-bi-rigidity-page">mono/bi-theta tradeoff</a>,
               <a href="#etale-theta-rigidity-triad-page">rigidity triad</a>
             </td>
@@ -2621,6 +2627,149 @@
         </div>
       </section>
 
+      <section id="etale-theta-cor218-group-construction-page" data-filter="etale theta corollary 2.18 group theoretic construction mono theta environments pi x pi y cyclotomic envelope cusp decomposition functorial algorithm">
+        <h2>EtTh Corollary 2.18: Group-Theoretic Construction of Mono-Theta Environments</h2>
+        <p class="lede">
+          Corollary 2.18 is the source-level construction theorem for mono-theta
+          environments. Starting from the abstract tempered fundamental group of the
+          l-torsion theta orbicurve, it functorially reconstructs the theta-related
+          subquotients, builds a mod <span class="math">N</span> mono-theta environment,
+          and conversely reconstructs the ambient topological group from an abstract
+          mono-theta environment.
+        </p>
+        <div class="callout blue">
+          This page is a grouped parent for Corollary 2.18. The point is not merely
+          that a mono-theta environment exists: the source asserts algorithms using only
+          the abstract topological group or abstract mono-theta environment, functorial in
+          isomorphisms and independent of a chosen identification with the model.
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Clause</th><th>Source content</th><th>Wiki/formalization consequence</th></tr>
+          <tr>
+            <td>2.18(i)</td>
+            <td>From an abstract topological group isomorphic to <span class="math">Pi_X^tp</span>, construct theta-related subquotients, cusp-decomposition subgroups, quotient groups, and the relevant <span class="math">(Z/lZ)^±</span>-indexed data.</td>
+            <td>The Lean interface should expose a reconstruction algorithm for subquotients, not an unstructured list of supplied labels.</td>
+          </tr>
+          <tr>
+            <td>2.18(ii)</td>
+            <td>Construct a mod <span class="math">N</span> mono-theta environment <span class="math">(Pi,D_Pi,s_Theta)</span> from the abstract group, up to the specified isomorphism class over the quotient.</td>
+            <td>This is the group-to-environment direction used by the IUT II mono-theta route.</td>
+          </tr>
+          <tr>
+            <td>2.18(iii)</td>
+            <td>From an abstract mono-theta environment, reconstruct the quotient <span class="math">Pi_Y</span> and then <span class="math">Pi_X = Aut(Pi_Y) x_{Out(Pi_Y)} Im(D_Pi)</span>, with <span class="math">Pi_Y</span> open in the topology.</td>
+            <td>The mono-theta environment is not just downstream data; it retains enough structure to recover the ambient group-theoretic setting.</td>
+          </tr>
+          <tr>
+            <td>2.18(iv)</td>
+            <td>The map from <span class="math">mu_N</span>-conjugacy classes of mono-theta-environment isomorphisms to reconstructed group isomorphisms is surjective; fibers have size <span class="math">1</span> for odd <span class="math">N</span> and <span class="math">2</span> for even <span class="math">N</span>.</td>
+            <td>This controls projective-system ambiguity and is the input for the later discrete rigidity statement.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Remark 2.18.1 says the corresponding bijectivity statement fails for bi-theta
+          environments. Remark 2.18.2 identifies the mono-theta environment as common
+          ground between the tempered fundamental-group construction and the later
+          Frobenioid-theoretic construction.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, Corollary 2.18 and Remarks 2.18.1-2.18.2</a>
+          Related: <a href="#etale-theta-environments-definition-page">environment definitions</a>
+          <a href="#etale-theta-discrete-rigidity-page">discrete rigidity</a>
+          <a href="#etale-theta-mono-environment-page">mono-theta environment</a>
+          <a href="#mono-theta-environments-ii11">IUT II mono-theta environments</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-cor219-rigidity-package-page" data-filter="etale theta corollary 2.19 rigidity properties mono theta environments cyclotomic rigidity discrete rigidity constant multiple rigidity projective system bi theta standard type">
+        <h2>EtTh Corollary 2.19: Rigidity Package of Mono-Theta Environments</h2>
+        <p class="lede">
+          Corollary 2.19 packages the three rigidities that make mono-theta environments
+          useful later in IUT: cyclotomic rigidity, discrete rigidity, and constant-multiple
+          rigidity. The corollary depends on the two-way reconstruction of Corollary 2.18
+          and keeps the mono-theta environment tied to a functorial group-theoretic source.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Rigidity</th><th>Source statement</th><th>Later role</th></tr>
+          <tr>
+            <td>Cyclotomic rigidity</td>
+            <td>From an abstract mono-theta environment, construct the relevant subquotients and two splittings; their difference gives an isomorphism between <span class="math">(l·Delta_Theta) ⊗ Z/NZ</span> and the cyclotomic kernel.</td>
+            <td>Supplies the mono-theta cyclotome comparison imported by IUT II theta-value transport.</td>
+          </tr>
+          <tr>
+            <td>Discrete rigidity</td>
+            <td>Projective systems of mod <span class="math">M</span> mono-theta environments over a cofinal ordered set are isomorphic to the natural projective system, using Corollary 2.18(iv) and vanishing of the relevant <span class="math">R^1 lim</span>.</td>
+            <td>Prevents replacing the integral translate structure by arbitrary profinite translates.</td>
+          </tr>
+          <tr>
+            <td>Constant-multiple rigidity</td>
+            <td>For standard-type theta roots, construct compatible cohomology classes matching l-root multiples; together with cyclotomic rigidity and theta sections this yields a projective system of bi-theta environments of standard type.</td>
+            <td>Explains why the mono-theta package can still recover controlled scalar information without adding a bi-theta basepoint at the start.</td>
+          </tr>
+        </table>
+        <div class="callout">
+          For the wiki and formalization, these three rigidities should remain separate
+          obligations. Treating “mono-theta rigidity” as a single opaque assumption would
+          hide the exact source of cyclotome comparison, projective-system discreteness,
+          and standard-type scalar control.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, Corollary 2.19</a>
+          Related: <a href="#etale-theta-cor218-group-construction-page">Corollary 2.18 construction</a>
+          <a href="#etale-theta-rigidity-triad-page">rigidity triad</a>
+          <a href="#iut-ii-mono-theta-rigidity-110-112">IUT II mono-theta rigidity</a>
+        </div>
+      </section>
+
+      <section id="etale-theta-first-power-origin-page" data-filter="etale theta remarks 2.19.1 2.19.2 2.19.3 2.19.4 2.19.5 first power origin discrete values z zhat cyclotomic rigidity theta root">
+        <h2>EtTh Remarks 2.19.1-2.19.5: First-Power Origin and Discrete Values</h2>
+        <p class="lede">
+          The remarks after Corollary 2.19 explain what the rigidity package is meant to
+          protect. The source repeatedly warns against replacing the first power of the
+          l-th root of theta by arbitrary powers or replacing integral translates by
+          profinite translates.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Remark</th><th>Source warning</th><th>Formalization reading</th></tr>
+          <tr>
+            <td>2.19.1</td>
+            <td>Passing to all roots in an “l infinite” profinite covering would annihilate differentials for p-power levels and would likely break the main results that depend on differentials.</td>
+            <td>Do not model EtTh rigidity by an undifferentiated profinite all-roots object.</td>
+          </tr>
+          <tr>
+            <td>2.19.2</td>
+            <td>Cyclotomic rigidity uses the theta section plus the commutator property of Proposition 2.12; it fails for an <span class="math">M</span>-th power of the l-th root when <span class="math">M&gt;1</span>, leaving only partial cyclotomic control.</td>
+            <td>The first-power theta class must be a visible hypothesis, not an arbitrary representative of a power orbit.</td>
+          </tr>
+          <tr>
+            <td>2.19.3</td>
+            <td>Compatible cyclotomic rigidity gives an integral structure or origin; without it there is no intrinsic distinction between <span class="math">Delta[mu_infty]</span> and its multiples.</td>
+            <td>The “origin” is a mathematical output of rigidity, not a cosmetic label.</td>
+          </tr>
+          <tr>
+            <td>2.19.4</td>
+            <td>Discrete rigidity keeps <span class="math">Z</span>-translates rather than arbitrary <span class="math">Zhat</span>-translates, so theta values lie in <span class="math">K^x</span> rather than only <span class="math">(K^x)^hat</span>; addition then still makes sense in <span class="math">K</span>.</td>
+            <td>This is the algebraic reason the mono-theta route cannot be flattened to a profinite multiplicative package.</td>
+          </tr>
+          <tr>
+            <td>2.19.5</td>
+            <td>The cyclotomic isomorphism here combines with the earlier Hodge-Arakelov cyclotome comparison to form a two-layer cyclotome structure.</td>
+            <td>Cross-link cyclotomic rigidity with the Hodge-Arakelov and IUT II cyclotome pages instead of treating it as an isolated local lemma.</td>
+          </tr>
+        </table>
+        <div class="callout red">
+          Audit rule: first-power and discrete-translate data are not optional
+          presentation choices. They are exactly the source constraints used later to keep
+          theta values in a field-like setting where addition remains meaningful.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">EtTh, Remarks 2.19.1-2.19.5</a>
+          Related: <a href="#etale-theta-cor219-rigidity-package-page">Corollary 2.19 rigidity</a>
+          <a href="#mono-theta-cyclotomic-compatibility-ii13">IUT II cyclotomic compatibility</a>
+          <a href="#tensor-power-warning-312">3.12 tensor-power warning</a>
+        </div>
+      </section>
+
       <section id="frobenioid-standard-model-page" data-filter="frobenioid standard elementary frobenioid semidirect product monoid n greater equal one divisor line bundle category">
         <h2>Frobenioid Standard Model</h2>
         <p class="lede">
@@ -2856,6 +3005,7 @@
         <div class="related">
           Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">Etale Theta, Introduction and Definition 2.13</a>
           Related: <a href="#etale-theta-standard-type-ii14">IUT II standard type</a>
+          <a href="#etale-theta-cor218-group-construction-page">Corollary 2.18 construction</a>
           <a href="#mono-theta-environments-ii11">mono-theta environments</a>
           <a href="#frobenioid-standard-model-page">Frobenioid standard model</a>
         </div>
@@ -2896,7 +3046,9 @@
         </div>
         <div class="related">
           Source: <a href="papers/mochizuki-etale-theta-frobenioid.pdf" target="_blank">Etale Theta, Corollary 2.19 and Remark 2.19.2</a>
-          Related: <a href="#etale-theta-mono-environment-page">mono-theta environment</a>
+          Related: <a href="#etale-theta-cor219-rigidity-package-page">Corollary 2.19 package</a>
+          <a href="#etale-theta-first-power-origin-page">first-power origin</a>
+          <a href="#etale-theta-mono-environment-page">mono-theta environment</a>
           <a href="#constant-multiple-rigidity-ii112">constant-multiple rigidity</a>
           <a href="#theta-monoid-multiradiality-iii22">theta monoid multiradiality</a>
         </div>
