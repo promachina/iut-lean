@@ -36079,6 +36079,100 @@ theorem packetLocalObjectFinite_le_thetaAverage
 end NonarchimedeanLogKummerUpperSemiCompatibility
 
 /--
+Source-side packet/product calibration for the nonarchimedean Step (x)
+log-Kummer corridor.
+
+This is the source-side analogue of the packet-target calibration object.  It
+keeps the packet local object, local entry source, mono-analytic product, and
+holomorphic source product in one auditable package; the actual equality from
+entry source to `(Ind3)` source is then derived through the Kummer transfer and
+mono-analytic forgetting maps.
+-/
+structure NonarchimedeanLogKummerPacketSourceCalibration
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (logKummer : LogKummerCorrespondenceId)
+    (entry : IUTStage1NonarchimedeanInclusionData)
+    {j : Nat}
+    (holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j) where
+  calibration_source : IUTStage1LocalObjectLogVolumeIdentificationSource
+  packetLocalObject_eq_entrySource :
+    audited.choice.local_tensor_state.packetState.localObject =
+      entry.sourceLogVolume
+  entrySource_eq_monoAnalyticProduct :
+    entry.sourceLogVolume.finiteLogVolume =
+      monoAnalyticD.product.productLogVolume
+  ind3Source_eq_holomorphicFProduct :
+    audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume =
+      holomorphicF.product.productLogVolume
+
+namespace NonarchimedeanLogKummerPacketSourceCalibration
+
+variable
+  {audited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean}
+  {logKummer : LogKummerCorrespondenceId}
+  {entry : IUTStage1NonarchimedeanInclusionData}
+  {j : Nat}
+  {holomorphicF holomorphicD monoAnalyticD :
+    IUTStage1RealizedTensorPacketProductLogVolume
+      IUTStage1PlaceKind.nonarchimedean j}
+
+theorem packetLocalObjectFinite_eq_entrySource
+    (calibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummer entry holomorphicF holomorphicD monoAnalyticD) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      entry.sourceLogVolume.finiteLogVolume := by
+  rw [calibration.packetLocalObject_eq_entrySource]
+
+theorem entrySource_eq_ind3Source
+    (calibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummer entry holomorphicF holomorphicD monoAnalyticD)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD) :
+    entry.sourceLogVolume.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
+  calc
+    entry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.product.productLogVolume :=
+      calibration.entrySource_eq_monoAnalyticProduct
+    _ = holomorphicD.product.productLogVolume :=
+      forgetting.preserves_productLogVolume
+    _ = holomorphicF.product.productLogVolume :=
+      kummer.preserves_productLogVolume
+    _ = audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+      calibration.ind3Source_eq_holomorphicFProduct.symm
+
+theorem packetSourceCalibration_endpoint
+    (calibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummer entry holomorphicF holomorphicD monoAnalyticD)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        entry.sourceLogVolume.finiteLogVolume ∧
+      entry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  ⟨calibration.packetLocalObjectFinite_eq_entrySource,
+    calibration.entrySource_eq_ind3Source kummer forgetting⟩
+
+end NonarchimedeanLogKummerPacketSourceCalibration
+
+/--
 Theta-root attached Kummer/forgetting source package for a nonarchimedean
 Step (x) upper-semi entry.
 
@@ -36115,15 +36209,9 @@ structure NonarchimedeanThetaRootKummerForgettingSource
   entry : IUTStage1NonarchimedeanInclusionData
   entry_mem :
     entry ∈ audited.choice.upper_semi_state.nonarchimedeanInclusions
-  packetLocalObject_eq_entrySource :
-    audited.choice.local_tensor_state.packetState.localObject =
-      entry.sourceLogVolume
-  entrySource_eq_monoAnalyticProduct :
-    entry.sourceLogVolume.finiteLogVolume =
-      monoAnalyticD.product.productLogVolume
-  ind3Source_eq_holomorphicFProduct :
-    audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume =
-      holomorphicF.product.productLogVolume
+  sourceCalibration :
+    NonarchimedeanLogKummerPacketSourceCalibration
+      audited logKummer entry holomorphicF holomorphicD monoAnalyticD
   thetaAverage_eq_entryTarget :
     thetaAverage = entry.targetLogVolume.finiteLogVolume
   entryTarget_eq_ind3Target :
@@ -36169,16 +36257,17 @@ theorem entrySource_eq_ind3Source
         holomorphicF holomorphicD monoAnalyticD) :
     source.entry.sourceLogVolume.finiteLogVolume =
       audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
-  calc
-    source.entry.sourceLogVolume.finiteLogVolume =
-        monoAnalyticD.product.productLogVolume :=
-      source.entrySource_eq_monoAnalyticProduct
-    _ = holomorphicD.product.productLogVolume :=
-      source.forgetting.preserves_productLogVolume
-    _ = holomorphicF.product.productLogVolume :=
-      source.kummer.preserves_productLogVolume
-    _ = audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
-      source.ind3Source_eq_holomorphicFProduct.symm
+  exact source.sourceCalibration.entrySource_eq_ind3Source
+    source.kummer source.forgetting
+
+theorem packetLocalObject_eq_entrySource
+    (source :
+      NonarchimedeanThetaRootKummerForgettingSource
+        audited thetaAverage logKummer l X C
+        holomorphicF holomorphicD monoAnalyticD) :
+    audited.choice.local_tensor_state.packetState.localObject =
+      source.entry.sourceLogVolume :=
+  source.sourceCalibration.packetLocalObject_eq_entrySource
 
 def toLogKummerUpperSemiCompatibility
     (source :
@@ -36398,15 +36487,9 @@ structure NonarchimedeanThetaRootKummerForgettingPacketTargetSource
   entry : IUTStage1NonarchimedeanInclusionData
   entry_mem :
     entry ∈ audited.choice.upper_semi_state.nonarchimedeanInclusions
-  packetLocalObject_eq_entrySource :
-    audited.choice.local_tensor_state.packetState.localObject =
-      entry.sourceLogVolume
-  entrySource_eq_monoAnalyticProduct :
-    entry.sourceLogVolume.finiteLogVolume =
-      monoAnalyticD.product.productLogVolume
-  ind3Source_eq_holomorphicFProduct :
-    audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume =
-      holomorphicF.product.productLogVolume
+  sourceCalibration :
+    NonarchimedeanLogKummerPacketSourceCalibration
+      audited logKummer entry holomorphicF holomorphicD monoAnalyticD
   targetCalibration :
     NonarchimedeanLogKummerPacketTargetCalibration
       audited thetaAverage logKummer entry
@@ -36483,12 +36566,7 @@ def toThetaRootKummerForgettingSource
     forgetting := source.forgetting,
     entry := source.entry,
     entry_mem := source.entry_mem,
-    packetLocalObject_eq_entrySource :=
-      source.packetLocalObject_eq_entrySource,
-    entrySource_eq_monoAnalyticProduct :=
-      source.entrySource_eq_monoAnalyticProduct,
-    ind3Source_eq_holomorphicFProduct :=
-      source.ind3Source_eq_holomorphicFProduct,
+    sourceCalibration := source.sourceCalibration,
     thetaAverage_eq_entryTarget := source.thetaAverage_eq_entryTarget,
     entryTarget_eq_ind3Target := source.entryTarget_eq_ind3Target }
 

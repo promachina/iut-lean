@@ -393,8 +393,11 @@ from product-log-volume preservation along
 \[
   \mathrm{holomorphicF}\to\mathrm{holomorphicD}\to D^\vdash .
 \]
-The remaining target calibration and packet-to-entry identifications are still
-explicit source obligations.
+The packet local object, local entry source, mono-analytic product, and
+holomorphic source product are now packaged as one source-side log-Kummer
+packet calibration object.  The object itself is still supplied source data,
+but the equality from entry source to \((\Ind3)\) source is derived from it
+together with the Kummer and forgetting maps.
 There is now a stronger packet-target constructor for this nonarchimedean
 upper-semi object.  The target-side data is no longer passed as three unrelated
 equalities: a single log-Kummer packet-target calibration object carries the
@@ -541,8 +544,9 @@ The project currently proves the following source-facing results in \Lean{}:
   product-log-volume preservation along the finite Kummer-plus-forgetting
   tensor-packet chain.
 \item A theta-root attached Kummer/forgetting source package now combines the
-  canonical bad-local \(|F_\ell|\)-label source with that finite chain, deriving
-  the nonarchimedean source equality.
+  canonical bad-local \(|F_\ell|\)-label source with a source-side
+  packet/product calibration object and that finite chain, deriving the
+  nonarchimedean source equality.
 \item A packet-target nonarchimedean constructor now packages target-side
   Step (x) calibration as one log-Kummer packet-target object.  Its projections
   derive the theta-to-packet, theta-to-entry, entry-to-\((\Ind3)\)-target, and
