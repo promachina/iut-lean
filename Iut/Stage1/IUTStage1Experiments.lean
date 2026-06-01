@@ -232,6 +232,30 @@ theorem logKummerRootUnityInvisibility_endpoint
         evaluation.coordinateAveragedLogVolume.averageLogVolume :=
   invisibility.rootUnityInvisibility_endpoint evaluation compat j
 
+theorem logKummerNoFurtherIndeterminacy_endpoint
+    {l : PrimeGeFive}
+    (evaluation : GaussianMonoidDegreeEvaluation l)
+    (henv : evaluation.environmentDegree ≠ 0)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l)
+        (IUTStage1ZModCuspLabelLogVolumeCompatibility.zmodUnitAffineEquiv
+          l a t) ↔
+      t = 0 ∧
+        ∃ invisibility : NonarchimedeanLogKummerRootUnityInvisibility l,
+          invisibility.unit = a) ∧
+      ((∀ j : ZMod l.value,
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+          evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ↔
+        t = 0 ∧
+          ∃ invisibility : NonarchimedeanLogKummerRootUnityInvisibility l,
+            invisibility.unit = a) :=
+  NonarchimedeanLogKummerRootUnityInvisibility.noFurtherIndeterminacy_endpoint
+    evaluation henv a t
+
 theorem hodgeArakelovThetaValueSource_constructsGaussianEvaluation
     {l : PrimeGeFive} {F : Type u} [Field F]
     {X C : HyperbolicOrbicurveModel F}

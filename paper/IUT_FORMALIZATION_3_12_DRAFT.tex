@@ -412,6 +412,13 @@ label, every full-label log-volume expression, and the averaged Gaussian
 log-volume.  This is not yet a construction of the full cyclotomic rigidity
 isomorphism; it is the finite-label component that the current Stage 1
 interface can prove without an additional Frobenioid/cyclotome layer.
+The same finite-label layer now also proves the corresponding exclusion:
+an affine coordinate change \(j\mapsto t+a j\) preserves the full cusp label
+if and only if \(t=0\) and \(a\) is represented by such a sign-unit
+invisibility certificate.  For nonzero Gaussian environment degree, the same
+classification is equivalent to pointwise preservation of the Gaussian
+degree profile.  Thus the current code has a finite analogue of the
+``no further indeterminacies'' assertion of Remark 3.11.4(ii).
 The integrated route now composes the Hodge--Arakelov theta-value sources with
 this packet-target nonarchimedean source.  The resulting theorem derives the
 same boundary/strict \(C_\Theta\) dichotomy from source-facing Gaussian
@@ -563,6 +570,10 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The finite sign-unit/root-of-unity part of Remark 3.11.4 is formalized:
   sign-unit action preserves full cusp labels, full-label log-volume readings,
   Gaussian degrees, and averaged Gaussian log-volume.
+\item The same finite layer classifies the allowed unit-affine label changes:
+  full-label preservation is equivalent to zero translation plus a sign-unit
+  invisibility certificate; under nonzero Gaussian environment degree this is
+  also equivalent to pointwise Gaussian-degree preservation.
 \item The current integrated route composes Hodge--Arakelov theta-value sources
   with the packet-target nonarchimedean source to obtain the same
   \(C_\Theta=-1\) boundary alternative or strict \(C_\Theta>-1\) conclusion.

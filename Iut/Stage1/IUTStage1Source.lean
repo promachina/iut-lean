@@ -36701,6 +36701,87 @@ theorem rootUnityInvisibility_endpoint
     invisibility.gaussianDegree_eq evaluation j,
     invisibility.coordinateAveragedLogVolume_eq evaluation⟩
 
+theorem exists_iff_signSubgroup
+    (a : (ZMod l.value)ˣ) :
+    (∃ invisibility : NonarchimedeanLogKummerRootUnityInvisibility l,
+      invisibility.unit = a) ↔
+      a ∈ zmodSignUnitSubgroup l := by
+  constructor
+  · rintro ⟨invisibility, rfl⟩
+    exact invisibility.unit_mem_signSubgroup
+  · intro ha
+    exact ⟨{ unit := a, unit_mem_signSubgroup := ha }, rfl⟩
+
+theorem fullLabelMapPreserving_unitAffine_iff_noFurtherIndeterminacy
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    FullLabelMapPreserving
+        (l := l) (zmodUnitAffineEquiv l a t) ↔
+      t = 0 ∧
+        ∃ invisibility : NonarchimedeanLogKummerRootUnityInvisibility l,
+          invisibility.unit = a := by
+  constructor
+  · intro hpres
+    have hclassified :=
+      (fullLabelMapPreserving_unitAffine_iff (l := l) a t).mp hpres
+    exact
+      ⟨hclassified.1,
+        (exists_iff_signSubgroup (l := l) a).mpr hclassified.2⟩
+  · rintro ⟨ht, hinvisibility⟩
+    exact
+      (fullLabelMapPreserving_unitAffine_iff (l := l) a t).mpr
+        ⟨ht, (exists_iff_signSubgroup (l := l) a).mp hinvisibility⟩
+
+theorem gaussianPointwise_unitAffine_iff_noFurtherIndeterminacy
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (henv : evaluation.environmentDegree ≠ 0)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (∀ j : ZMod l.value,
+      evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+        evaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ↔
+      t = 0 ∧
+        ∃ invisibility : NonarchimedeanLogKummerRootUnityInvisibility l,
+          invisibility.unit = a := by
+  constructor
+  · intro hpres
+    have hclassified :=
+      (evaluation.unitAffine_pointwise_gaussian_preserving_iff
+        a t henv).mp hpres
+    exact
+      ⟨hclassified.1,
+        (exists_iff_signSubgroup (l := l) a).mpr hclassified.2⟩
+  · rintro ⟨ht, hinvisibility⟩
+    exact
+      (evaluation.unitAffine_pointwise_gaussian_preserving_iff
+        a t henv).mpr
+        ⟨ht, (exists_iff_signSubgroup (l := l) a).mp hinvisibility⟩
+
+theorem noFurtherIndeterminacy_endpoint
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l)
+    (henv : evaluation.environmentDegree ≠ 0)
+    (a : (ZMod l.value)ˣ) (t : ZMod l.value) :
+    (FullLabelMapPreserving
+        (l := l) (zmodUnitAffineEquiv l a t) ↔
+      t = 0 ∧
+        ∃ invisibility : NonarchimedeanLogKummerRootUnityInvisibility l,
+          invisibility.unit = a) ∧
+      ((∀ j : ZMod l.value,
+        evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (zmodLabelTranslate l t ((zmodUnitActionData l).smul a j))) =
+          evaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ↔
+        t = 0 ∧
+          ∃ invisibility : NonarchimedeanLogKummerRootUnityInvisibility l,
+            invisibility.unit = a) :=
+  ⟨fullLabelMapPreserving_unitAffine_iff_noFurtherIndeterminacy a t,
+    gaussianPointwise_unitAffine_iff_noFurtherIndeterminacy
+      evaluation henv a t⟩
+
 end NonarchimedeanLogKummerRootUnityInvisibility
 
 /--
