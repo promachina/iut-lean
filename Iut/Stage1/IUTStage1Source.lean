@@ -12224,6 +12224,125 @@ theorem target_allLabelBound_iff_source_allLabelBound_of_gaussianDegree_one_eq
 
 end GaussianMonoidDegreeEvaluation
 
+/--
+Source-facing degree-level Hodge--Arakelov theta-value evaluation.
+
+IUT II describes the operation of passing from theta monoids to Gaussian
+monoids by evaluation at `l`-torsion labels, with degree pattern
+`q -> (q^{j^2})_j`.  This record keeps the bad-local theta-root/cusp source
+next to the theta-monoid degree from which the Gaussian degree evaluation is
+constructed.
+-/
+structure IUTStage1HodgeArakelovThetaValueEvaluationSource
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F) where
+  thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C
+  thetaMonoidDegree : Real
+
+namespace IUTStage1HodgeArakelovThetaValueEvaluationSource
+
+variable {l : PrimeGeFive} {F : Type v} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+
+noncomputable def toGaussianMonoidDegreeEvaluation
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C) :
+    IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l :=
+  { environmentDegree := source.thetaMonoidDegree,
+    gaussianDegree := fun label =>
+      thetaExponentOnAbsLabel (l := l) label * source.thetaMonoidDegree,
+    gaussianDegree_eq_eval := by
+      intro label
+      rfl }
+
+noncomputable def thetaValueDegree
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (label : IUTStage1ZModCuspFullLabel l) : Real :=
+  thetaExponentOnAbsLabel (l := l) label * source.thetaMonoidDegree
+
+theorem gaussianDegree_eq_thetaValueDegree
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    source.toGaussianMonoidDegreeEvaluation.gaussianDegree label =
+      source.thetaValueDegree label :=
+  rfl
+
+theorem environmentDegree_eq
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C) :
+    source.toGaussianMonoidDegreeEvaluation.environmentDegree =
+      source.thetaMonoidDegree :=
+  rfl
+
+theorem zeroDegree_eq_zero
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C) :
+    source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        IUTStage1ZModCuspFullLabel.zero = 0 :=
+  source.toGaussianMonoidDegreeEvaluation.gaussianDegree_zero
+
+theorem canonicalOneDegree_eq_thetaMonoidDegree
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C) :
+    source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      source.thetaMonoidDegree :=
+  source.toGaussianMonoidDegreeEvaluation.gaussianDegree_one
+
+theorem canonicalThetaRootLabel_ne_zero
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C) :
+    source.thetaRootSource.canonicalFullLabel ≠
+      IUTStage1ZModCuspFullLabel.zero :=
+  source.thetaRootSource.canonicalFullLabel_ne_zero
+
+theorem canonicalThetaRootLabelDegree_eq_thetaMonoidDegree_of_zmodQuotient
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (hquot :
+      source.thetaRootSource.quotientZData = zmodBadLocalQuotientZData l) :
+    source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        source.thetaRootSource.canonicalFullLabel =
+      source.thetaMonoidDegree := by
+  rw [source.thetaRootSource
+    |>.canonicalFullLabel_eq_zmodCanonical_of_quotientZData_eq_zmod hquot]
+  rw [← IUTStage1ZModCuspFullLabel.fromCoordinate_one l]
+  exact source.canonicalOneDegree_eq_thetaMonoidDegree
+
+theorem environmentDegree_eq_of_canonicalOneDegree_eq
+    (source target :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (hone :
+      target.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    target.toGaussianMonoidDegreeEvaluation.environmentDegree =
+      source.toGaussianMonoidDegreeEvaluation.environmentDegree :=
+  source.toGaussianMonoidDegreeEvaluation
+    |>.environmentDegree_eq_of_gaussianDegree_one_eq
+      target.toGaussianMonoidDegreeEvaluation hone
+
+theorem thetaValueEvaluation_endpoint
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C) :
+    source.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      source.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        source.thetaMonoidDegree :=
+  ⟨source.thetaRootSource.canonicalGeneratorUpToSign,
+    source.canonicalThetaRootLabel_ne_zero,
+    source.zeroDegree_eq_zero,
+    source.canonicalOneDegree_eq_thetaMonoidDegree⟩
+
+end IUTStage1HodgeArakelovThetaValueEvaluationSource
+
 def absLabelProcessionTop (l : PrimeGeFive) : Nat :=
   l.value / 2
 
@@ -22615,6 +22734,63 @@ theorem fromGaussianDegreeEvaluations_targetLogVolume_fullLabel
         label =
       targetEvaluation.gaussianDegree label :=
   targetEvaluation.toCuspLabelLogVolumeCompatibility_fullLabelLogVolume label
+
+noncomputable def fromHodgeArakelovThetaValueEvaluations
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceHA targetHA :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (canonicalOneDegree_preserved :
+      targetHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+      package bundle l :=
+  fromGaussianDegreeEvaluations
+    (package := package) (bundle := bundle)
+    (Equiv.refl (ZMod l.value))
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    sourceHA.toGaussianMonoidDegreeEvaluation
+    targetHA.toGaussianMonoidDegreeEvaluation
+    IUTStage1ZModSquareWeightProfile.coordinateSquarePreserving_refl
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.fullLabelMapPreserving_refl
+    (sourceHA.environmentDegree_eq_of_canonicalOneDegree_eq
+      targetHA canonicalOneDegree_preserved)
+
+theorem fromHodgeArakelovThetaValueEvaluations_endpoint
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceHA targetHA :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (canonicalOneDegree_preserved :
+      targetHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    let obligations :=
+      fromHodgeArakelovThetaValueEvaluations
+        (package := package) (bundle := bundle)
+        sourceHA targetHA canonicalOneDegree_preserved;
+    sourceHA.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      targetHA.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      obligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      (∀ j : ZMod l.value,
+        obligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          obligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) :=
+  by
+    intro obligations
+    exact
+      ⟨sourceHA.canonicalThetaRootLabel_ne_zero,
+        targetHA.canonicalThetaRootLabel_ne_zero,
+        obligations.comparisonLevel_eq_pointwiseRepresentative,
+        by
+          intro j
+          simpa using obligations.fullLabelLogVolume_preserved j⟩
 
 def toCoordinateSquareWeightObligations
     (obligations :

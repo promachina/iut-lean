@@ -335,6 +335,18 @@ There is also an identity-coordinate specialization.  In that case equality of
 Gaussian degree at the canonical full label \(1\) implies preservation of the
 environment degree, so the nonarchimedean \(C_\Theta\) dichotomy no longer
 takes environment-degree preservation as an independent hypothesis.
+The Hodge--Arakelov/Gaussian bridge is now source-facing at the current
+degree level.  A theta-value evaluation source carries the bad-local theta-root
+label data and a theta-monoid degree \(d\), and constructs the Gaussian degree
+evaluation
+\[
+  \deg_{\mathrm{gau}}(\lambda)
+  = e(\lambda)\,d,
+\]
+where \(e(\lambda)\) is the absolute-label theta exponent.  The zero label has
+degree \(0\), and the canonical label \(1\) has degree \(d\).  Thus equality at
+the canonical label derives equality of the environment degree and feeds the
+factored \SHE{} square/full-label obligations.
 The raw nonarchimedean entry alignment has also been refactored through a
 source-facing nonarchimedean upper-semi object equipped with 1-column q-pilot
 log-Kummer data.  The upper-semi inequality remains the Step (x) input; the
@@ -479,6 +491,10 @@ The project currently proves the following source-facing results in \Lean{}:
 \item In the identity-coordinate Gaussian route, equality at the canonical full
   label \(1\) supplies the environment-degree preservation needed by the same
   nonarchimedean \(C_\Theta\) dichotomy.
+\item The Hodge--Arakelov theta-value evaluation source now constructs the
+  Gaussian degree evaluation from a theta-monoid degree and the bad-local
+  theta-root label source; canonical-label preservation feeds the factored
+  \SHE{} square/full-label obligations.
 \item A nonarchimedean upper-semi object equipped with 1-column q-pilot
   log-Kummer data now supplies the raw nonarchimedean \((\Ind3)\) entry
   alignment used by the canonical Gaussian route.

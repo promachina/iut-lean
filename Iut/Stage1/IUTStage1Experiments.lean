@@ -26,6 +26,7 @@ open IUTStage1ProcessionNormalizedIndeterminacyCorridor
 open IUTStage1ZModSquareWeightProfile
 open IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation
 open IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction
+open IUTStage1StructuredSHEFactoredSquareFullLabelObligations
 
 /-- First pass: no real-line/log-volume alignment has been supplied. -/
 def ind3MissingRealAlignmentReport :
@@ -172,6 +173,52 @@ theorem thetaRootKummerForgettingSource_feedsNonarchimedeanEntry
   ⟨source.thetaRootCanonicalFullLabel_ne_zero,
     source.entrySource_eq_ind3Source,
     source.packetLocalObjectFinite_le_thetaAverage⟩
+
+theorem hodgeArakelovThetaValueSource_constructsGaussianEvaluation
+    {l : PrimeGeFive} {F : Type u} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    (source :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C) :
+    source.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        source.thetaMonoidDegree :=
+  ⟨source.canonicalThetaRootLabel_ne_zero,
+    source.zeroDegree_eq_zero,
+    source.canonicalOneDegree_eq_thetaMonoidDegree⟩
+
+theorem hodgeArakelovThetaValueSources_feedFactoredSHE
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {bundle : IUTStage1Theorem311StructuredInputsWithSHE package}
+    {l : PrimeGeFive} {F : Type u} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    (sourceHA targetHA :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (canonicalOneDegree_preserved :
+      targetHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    let obligations :=
+      fromHodgeArakelovThetaValueEvaluations
+        (package := package) (bundle := bundle)
+        sourceHA targetHA canonicalOneDegree_preserved;
+    sourceHA.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      targetHA.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      obligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative :=
+  by
+    intro obligations
+    exact
+      ⟨sourceHA.canonicalThetaRootLabel_ne_zero,
+        targetHA.canonicalThetaRootLabel_ne_zero,
+        obligations.comparisonLevel_eq_pointwiseRepresentative⟩
 
 /-- Summary of the first diagnostic pass through the local `(Ind3)` route. -/
 structure Ind3FirstPassDashboard where
