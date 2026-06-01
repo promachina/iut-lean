@@ -815,6 +815,11 @@
         <a href="#alien-nf-global-diagonals-363">Alien NF diagonals 3.6(iii)</a>
         <a href="#alien-log-shell-actions-364">Alien log-shell actions 3.6(iv)</a>
         <a href="#alien-processions-tensor-packets-365">Alien processions 3.6(v)</a>
+        <a href="#alien-log-volume-estimates-37">Alien log-volume estimates 3.7</a>
+        <a href="#alien-theorem-311-representation-371">Alien 3.11 representation 3.7(i)</a>
+        <a href="#alien-corollary-312-estimate-372">Alien 3.12 estimate 3.7(ii)</a>
+        <a href="#alien-stewart-yu-comparison-373">Alien Stewart-Yu comparison 3.7(iii)</a>
+        <a href="#alien-leading-term-computation-374">Alien leading term 3.7(iv)</a>
         <a href="#prime-strips-bridges">Prime strips and bridges</a>
         <a href="#iut-i-base-bridges-evaluation-sections">Base bridges/evaluation sections</a>
         <a href="#iut-i-additive-base-bridges-61-610">Additive base bridges 6.1-6.10</a>
@@ -16950,6 +16955,169 @@
           Related: <a href="#processions-definition-iut-i410">processions/capsules</a>
           <a href="#tensor-packets-iii31-33">tensor packets</a>
           <a href="#alien-log-shell-actions-364">log-shell actions</a>
+        </div>
+      </section>
+
+      <section id="alien-log-volume-estimates-37" data-filter="mutually alien copies 3.7 log volume estimates multiradial representation theorem 3.11 corollary 3.12 theorem 1.10 theta pilot q pilot">
+        <h2>Alien Copies 3.7: Log-Volume Estimates</h2>
+        <p class="lede">
+          Section 3.7 summarizes the chain from IUT III Theorem 3.11 to Corollary
+          3.12 and onward to IUT IV. The preceding §3.4-§3.6 machinery produces a
+          multiradial representation of the theta-pilot object, and log-volume estimates
+          then compare this representation with the q-pilot object.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Source item</th><th>Role</th><th>Wiki page</th></tr>
+          <tr><td>§3.7(i)</td><td>Theorem 3.11-style multiradial representation up to Ind1/2/3.</td><td><a href="#alien-theorem-311-representation-371">3.11 representation</a></td></tr>
+          <tr><td>§3.7(ii)</td><td>Corollary 3.12-style log-volume upper-bound comparison.</td><td><a href="#alien-corollary-312-estimate-372">3.12 estimate</a></td></tr>
+          <tr><td>§3.7(iii)</td><td>Stewart-Yu comparison and vertical-shift interpretation.</td><td><a href="#alien-stewart-yu-comparison-373">Stewart-Yu comparison</a></td></tr>
+          <tr><td>§3.7(iv)</td><td>IUT IV leading-term computation and Szpiro/ABC consequences.</td><td><a href="#alien-leading-term-computation-374">leading term</a></td></tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.7</a>
+          Related: <a href="#theorem-311-lgp-algorithms">IUT III Theorem 3.11 route</a>
+          <a href="#single-theta-link-312">Corollary 3.12 single theta-link</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV Theorem 1.10</a>
+        </div>
+      </section>
+
+      <section id="alien-theorem-311-representation-371" data-filter="mutually alien copies 3.7 theorem 3.11 multiradial representation theta pilot Ind1 Ind2 Ind3 invisible indeterminacies IPL SHE APT HIS">
+        <h2>Alien Copies 3.7(i): 3.11 Representation</h2>
+        <p class="lede">
+          The §3.7(i) summary of IUT III Theorem 3.11 says that the theta-link domain
+          data <span class="math">(a_Theta,b_Theta,c_Theta)</span> can be expressed
+          multiradially, up to <span class="math">Ind1</span>, <span class="math">Ind2</span>,
+          and <span class="math">Ind3</span>, relative to the radial algorithm
+          <span class="math">(a_Theta,b_Theta,c_Theta) -> (a_Theta)</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Indeterminacy</th><th>Source description</th><th>Audit reading</th></tr>
+          <tr>
+            <td><span class="math">Ind1</span></td>
+            <td>Etale-transport indeterminacies from automorphisms of the <span class="math">G_k</span> data in <span class="math">(a_Theta)</span>.</td>
+            <td>Controls transport of etale-like structures; not a log-shell containment.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Ind2</span></td>
+            <td>Kummer-detachment indeterminacies from identifying mono-analytic Frobenius-like and etale-like log-shells; concretely isometries of <span class="math">O_k^{x,mu}</span> preserving lattices.</td>
+            <td>Acts on the mono-analytic theta-link side.</td>
+          </tr>
+          <tr>
+            <td><span class="math">Ind3</span></td>
+            <td>Kummer-detachment indeterminacies from upper semi-commutativity of the log-Kummer correspondence along one vertical line.</td>
+            <td>The one-sided upper-bound source in the 3.12 corridor.</td>
+          </tr>
+          <tr>
+            <td>Invisible</td>
+            <td>Root-of-unity and <span class="math">+/-1</span> ambiguities that are absorbed by stability of the output data.</td>
+            <td>Do not count these as new independent proof resources.</td>
+          </tr>
+        </table>
+        <p>
+          Mochizuki interprets this as stronger than merely linking the domain to the
+          codomain: any data isomorphic to the domain data can be represented through
+          the conventional scheme-like representation of the domain, compatibly with its
+          own scheme-like representation, after allowing the specified indeterminacies.
+        </p>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.7(i)</a>
+          Related: <a href="#theorem-311-lgp-algorithms">Theorem 3.11 core</a>
+          <a href="#alien-log-shell-actions-364">log-shell actions</a>
+          <a href="#alien-processions-tensor-packets-365">processions</a>
+        </div>
+      </section>
+
+      <section id="alien-corollary-312-estimate-372" data-filter="mutually alien copies 3.7 corollary 3.12 log volume estimate q pilot theta pilot holomorphic hull upper semi commutativity Ind3 upper bound">
+        <h2>Alien Copies 3.7(ii): 3.12 Log-Volume Estimate</h2>
+        <p class="lede">
+          The §3.7(ii) estimate begins on the fixed RHS arithmetic holomorphic
+          structure of the theta-link. The q-pilot object is sent through the theta-link
+          to the theta-pilot isomorphism class, then the multiradial representation and
+          log-shell log-volume comparison are applied.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Step group</th><th>Content</th><th>3.12 relevance</th></tr>
+          <tr>
+            <td>1-3</td>
+            <td>Start with RHS q-pilot, transport its isomorphism class to the LHS theta-pilot, then apply the multiradial representation.</td>
+            <td>Fixes the RHS holomorphic structure for the computation.</td>
+          </tr>
+          <tr>
+            <td>4-5</td>
+            <td>Log-volume is invariant under Ind1/Ind2 and invisible indeterminacies; Ind3 converts the theta-pilot log-volume into an upper bound.</td>
+            <td>This is the formal one-sided part of the dispute corridor.</td>
+          </tr>
+          <tr>
+            <td>6-8</td>
+            <td>Comparison is with the q-pilot isomorphism class, not fixed local trivializations; output is converted to <span class="math">O_k</span>-modules via the holomorphic hull.</td>
+            <td>Prevents reading the comparison as equality of concrete local sections.</td>
+          </tr>
+          <tr>
+            <td>9-12</td>
+            <td>Log-volume becomes arithmetic degree; log-Kummer compatibility preserves the inequality; final result bounds the q-pilot by the theta-pilot hull.</td>
+            <td>Gives the Corollary 3.12-style inequality.</td>
+          </tr>
+        </table>
+        <p>
+          In the summary formula, the log-volume of the theta-pilot object with mild
+          indeterminacies and holomorphic hull is greater than or equal to the
+          log-volume of the q-pilot object, whose value is negative and negligible
+          relative to the main left-hand terms.
+        </p>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.7(ii)</a>
+          Related: <a href="#single-theta-link-312">single theta-link rule</a>
+          <a href="#theta-q-pilot-objects-38">theta/q pilot objects</a>
+          <a href="#tensor-log-volume-corridor">tensor/log-volume corridor</a>
+        </div>
+      </section>
+
+      <section id="alien-stewart-yu-comparison-373" data-filter="mutually alien copies 3.7 Stewart Yu weak ABC exponential vertical shift Ind3 log link single iterate">
+        <h2>Alien Copies 3.7(iii): Stewart-Yu Comparison</h2>
+        <p class="lede">
+          Mochizuki compares the vertical-shift feature of IUT with the weak ABC-type
+          inequality of Stewart-Yu, where an undesired exponential appears in the upper
+          bound. In IUT, the relevant deviation is tied to the single log-link iterate
+          separating the horizontally coric data from the data of ultimate interest.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Comparison point</th><th>Meaning</th></tr>
+          <tr><td>Stewart-Yu</td><td>Weak ABC-type bound with an extra exponential operation.</td></tr>
+          <tr><td>IUT vertical shift</td><td>The horizontally coric portion differs from the target data by one log-link iterate.</td></tr>
+          <tr><td>Ind3</td><td>This same vertical shift gives the upper semi-commutativity indeterminacy used in the estimate.</td></tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.7(iii)</a>
+          Related: <a href="#alien-log-shell-actions-364">log-shell actions</a>
+          <a href="#alien-corollary-312-estimate-372">3.12 estimate</a>
+        </div>
+      </section>
+
+      <section id="alien-leading-term-computation-374" data-filter="mutually alien copies 3.7 computation log volumes leading term IUT IV theorem 1.10 Szpiro abc l square log dK log q h one half">
+        <h2>Alien Copies 3.7(iv): Leading-Term Computation</h2>
+        <p class="lede">
+          §3.7(iv) points to IUT IV Theorem 1.10 for the detailed computation of the
+          left-hand side of the 3.12 inequality. Mochizuki records the simple leading
+          term calculation that motivates the framework.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Term</th><th>Leading contribution</th></tr>
+          <tr><td>Tensor packet at label <span class="math">j</span></td><td><span class="math">(j+1) log(d_K)</span></td></tr>
+          <tr><td>Multiplication by theta value <span class="math">q^{j^2}</span></td><td><span class="math">- j^2/(2l) log(q)</span></td></tr>
+          <tr><td>Summed leading term</td><td><span class="math">l^2/48 * (6 log(d_K) - log(q))</span></td></tr>
+          <tr><td>Conjectural output route</td><td>Strong Szpiro inequality for suitable initial theta data, then Vojta/Szpiro/ABC via noncritical Belyi maps.</td></tr>
+        </table>
+        <p>
+          The point is not that the leading-term computation alone proves ABC. Rather,
+          the computation identifies the quantity that must be bounded below; IUT is
+          presented here as the framework in which this Hodge-Arakelov-inspired
+          computation can be performed after the multiradial/log-volume machinery.
+        </p>
+        <div class="related">
+          Source: <a href="papers/mochizuki-mutually-alien-copies.pdf" target="_blank">Mutually Alien Copies §3.7(iv)</a>
+          Related: <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV theorem 1.10</a>
+          <a href="#iut-iv-suitable-initial-theta-data-22">suitable initial theta data</a>
+          <a href="#effective-abc-szpiro">Szpiro to ABC</a>
         </div>
       </section>
 
