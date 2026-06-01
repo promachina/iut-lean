@@ -1050,6 +1050,12 @@
         <a href="#mono-analytic-packet-compatibility-32">Mono-analytic packets 3.2</a>
         <a href="#global-packet-localization-33">Global packet localization 3.3</a>
         <a href="#local-lgp-monoids-iii34">Local LGP monoids 3.4</a>
+        <a href="#single-packet-monoids-34">Single packet monoids 3.4</a>
+        <a href="#packet-frobenioid-local-place-types-34">Packet local place types</a>
+        <a href="#lgp-splitting-monoids-act-on-packets-34">LGP actions on packets</a>
+        <a href="#log-link-pullback-lgp-34">Log-link LGP pullback</a>
+        <a href="#fl-symmetry-lgp-34">F_l± symmetry in LGP</a>
+        <a href="#bad-prime-lgp-splittings-34">Bad-prime LGP splittings</a>
         <a href="#vertically-coric-lgp-iii35">Vertically coric LGP 3.5</a>
         <a href="#global-packet-frobenioids-iii36-38">Global packets 3.6-3.8</a>
         <a href="#lgp-lgp-log-theta-lattice-iii38">LGP/lgp lattice 3.8</a>
@@ -41110,7 +41116,7 @@
           </tr>
         </table>
         <div class="grid3">
-          <div class="card" id="single-packet-monoids-34">
+          <div class="card" id="single-packet-monoids-34-card">
             <h3>Single packet monoids</h3>
             <p>
               Proposition 3.4(i) takes the monoid, unit submonoid, and realification
@@ -41120,7 +41126,7 @@
             </p>
             <div class="tagRow"><span class="tag green">Proposition 3.4(i)</span><span class="tag">packet monoids</span></div>
           </div>
-          <div class="card" id="packet-frobenioid-local-place-types-34">
+          <div class="card" id="packet-frobenioid-local-place-types-34-card">
             <h3>Local place types</h3>
             <p>
               Nonarchimedean places use group actions and Frobenioids; archimedean
@@ -41129,7 +41135,7 @@
             </p>
             <div class="tagRow"><span class="tag blue">Proposition 3.4(i)</span><span class="tag">local clauses</span></div>
           </div>
-          <div class="card" id="lgp-splitting-monoids-act-on-packets-34">
+          <div class="card" id="lgp-splitting-monoids-act-on-packets-34-card">
             <h3>LGP monoids act on packets</h3>
             <p>
               The local LGP monoids and their unit portions act on rational spans
@@ -41138,7 +41144,7 @@
             </p>
             <div class="tagRow"><span class="tag gold">Proposition 3.4(ii)</span><span class="tag">action</span></div>
           </div>
-          <div class="card" id="log-link-pullback-lgp-34">
+          <div class="card" id="log-link-pullback-lgp-34-card">
             <h3>Log-link pullback</h3>
             <p>
               The Gaussian monoids from IUT II are pulled back through the log-link
@@ -41147,7 +41153,7 @@
             </p>
             <div class="tagRow"><span class="tag violet">Proposition 3.4(ii)</span><span class="tag">log-link</span></div>
           </div>
-          <div class="card" id="fl-symmetry-lgp-34">
+          <div class="card" id="fl-symmetry-lgp-34-card">
             <h3>F_l^± symmetry condition</h3>
             <p>
               Proposition 3.4(ii) explicitly invokes compatibility with the
@@ -41156,7 +41162,7 @@
             </p>
             <div class="tagRow"><span class="tag red">symmetry</span><span class="tag">processions</span></div>
           </div>
-          <div class="card" id="bad-prime-lgp-splittings-34">
+          <div class="card" id="bad-prime-lgp-splittings-34-card">
             <h3>Bad-prime splittings</h3>
             <p>
               At bad primes, the local LGP monoids carry splittings up to torsion.
@@ -41179,6 +41185,219 @@
           <a href="#vertically-coric-lgp">vertically coric LGP monoids</a>
           <a href="#log-kummer-totality">log-Kummer totality</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="single-packet-monoids-34" data-filter="iut iii proposition 3.4 single packet monoids psi log units realification packet summand">
+        <h2>IUT III Proposition 3.4(i): Single Packet Monoids</h2>
+        <p class="lede">
+          Proposition 3.4(i) applies the injection
+          <span class="math">log(αF_v) → log(A,αF_v)</span> from Proposition 3.1(ii)
+          to the logarithmic monoid <span class="math">Ψ_log(αF_v)</span>, its unit
+          submonoid, and its realification. Their images define packet monoids
+          <span class="math">Ψ_log(A,αF_v)</span>,
+          <span class="math">Ψ_log^×(A,αF_v)</span>, and
+          <span class="math">Ψ_log^R(A,αF_v)</span> acting on suitable subquotients
+          of the packet summand.
+        </p>
+        <div class="diagram fit" aria-label="Single packet monoid construction">
+          <div class="diagramHeader">
+            <strong>Factor Monoid to Packet Monoid</strong>
+            <span>images under the factor-to-summand injection</span>
+          </div>
+          <svg viewBox="0 0 980 300" role="img">
+            <defs>
+              <marker id="arrowSinglePacket34" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="70" width="240" height="88"></rect>
+            <text class="nodeTitle" x="190" y="102" text-anchor="middle">Ψ_log(αF_v)</text>
+            <text class="tinyText" x="190" y="130" text-anchor="middle">plus units and realification</text>
+            <rect class="nodeBox green" x="390" y="70" width="240" height="88"></rect>
+            <text class="nodeTitle" x="510" y="102" text-anchor="middle">log(αF_v) → log(A,αF_v)</text>
+            <text class="tinyText" x="510" y="130" text-anchor="middle">Proposition 3.1(ii)</text>
+            <rect class="nodeBox gold" x="710" y="70" width="220" height="88"></rect>
+            <text class="nodeTitle" x="820" y="102" text-anchor="middle">packet monoids</text>
+            <text class="tinyText" x="820" y="130" text-anchor="middle">act on packet subquotients</text>
+            <path d="M312 114 H388" class="edge blue" marker-end="url(#arrowSinglePacket34)"></path>
+            <path d="M632 114 H708" class="edge green" marker-end="url(#arrowSinglePacket34)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Factor data</th><th>Packet image</th><th>Use</th></tr>
+          <tr><td><span class="math">Ψ_log(αF_v)</span></td><td><span class="math">Ψ_log(A,αF_v)</span></td><td>Main monoid acting on the packet summand.</td></tr>
+          <tr><td>Unit submonoid</td><td><span class="math">Ψ_log^×(A,αF_v)</span></td><td>Tracks unit portions needed by Kummer theory.</td></tr>
+          <tr><td>Realification</td><td><span class="math">Ψ_log^R(A,αF_v)</span></td><td>Supplies the realified packet monoid used later.</td></tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.4(i)</a>
+          Related: <a href="#packet-integral-structure-31">packet integral structures</a>
+          <a href="#local-lgp-monoids-iii34">local LGP overview</a>
+          <a href="#lgp-splitting-monoids-act-on-packets-34">LGP packet actions</a>
+        </div>
+      </section>
+
+      <section id="packet-frobenioid-local-place-types-34" data-filter="iut iii proposition 3.4 local place types nonarchimedean archimedean frobenioid aut holomorphic orbispace kummer">
+        <h2>IUT III Proposition 3.4(i): Packet Local Place Types</h2>
+        <p class="lede">
+          Proposition 3.4(i) treats nonarchimedean and archimedean packet monoids
+          differently. At nonarchimedean places, the first packet monoid carries a
+          <span class="math">G_v(αΠ_v)</span>-action and determines a Frobenioid
+          naturally isomorphic to <span class="math">log(αF_v)</span>. At archimedean
+          places, the corresponding data are an Aut-holomorphic orbispace and a Kummer
+          structure.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Place type</th><th>Source package</th><th>Do not collapse into</th></tr>
+          <tr><td>Nonarchimedean</td><td>Packet monoid plus <span class="math">G_v(αΠ_v)</span>-action determining a Frobenioid.</td><td>A bare monoid without group action.</td></tr>
+          <tr><td>Archimedean</td><td>Packet monoid plus Aut-holomorphic orbispace and Kummer structure.</td><td>A copy of the nonarchimedean Frobenioid clause.</td></tr>
+          <tr><td>Both</td><td>Natural isomorphism to the source <span class="math">log(αF_v)</span> data.</td><td>An untyped local packet label.</td></tr>
+        </table>
+        <div class="callout">
+          <strong>Formalization guardrail.</strong> The local-place branch is part of
+          the theorem statement. A future Lean interface should have separate constructors
+          or fields for nonarchimedean group-action/Frobenioid data and archimedean
+          Aut-holomorphic/Kummer data.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.4(i)</a>
+          Related: <a href="#single-packet-monoids-34">single packet monoids</a>
+          <a href="#local-arch-kappa-coric-iut-i52">archimedean local data</a>
+          <a href="#iut-i-frobenioid-package">Frobenioid package</a>
+        </div>
+      </section>
+
+      <section id="lgp-splitting-monoids-act-on-packets-34" data-filter="iut iii proposition 3.4 lgp splitting monoids act on tensor packets iq s j plus one bad primes units">
+        <h2>IUT III Proposition 3.4(ii): LGP Actions on Packets</h2>
+        <p class="lede">
+          Proposition 3.4(ii) constructs local LGP monoids whose labelled components
+          act multiplicatively on rational packet pieces
+          <span class="math">I_Q(S_{j+1}^±,j;‡F_v)</span>. At bad primes, the
+          labelled component of the Galois-invariant submonoid of the whole LGP monoid
+          sits inside this packet piece; for every place, the labelled unit portion acts
+          on the analogous packet piece.
+        </p>
+        <div class="diagram fit" aria-label="LGP splitting monoids acting on packet pieces">
+          <div class="diagramHeader">
+            <strong>Packet Action</strong>
+            <span>the Fig. 3.1 interface: labelled LGP monoids act on tensor packets</span>
+          </div>
+          <svg viewBox="0 0 1040 330" role="img">
+            <defs>
+              <marker id="arrowLgpAction34" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox red" x="70" y="70" width="260" height="88"></rect>
+            <text class="nodeTitle" x="200" y="102" text-anchor="middle">Ψ_FLGP labelled j</text>
+            <text class="tinyText" x="200" y="130" text-anchor="middle">bad-prime invariant submonoid</text>
+            <rect class="nodeBox blue" x="390" y="70" width="260" height="88"></rect>
+            <text class="nodeTitle" x="520" y="102" text-anchor="middle">I_Q(S_{j+1}^±,j;‡F_v)</text>
+            <text class="tinyText" x="520" y="130" text-anchor="middle">rational packet piece</text>
+            <rect class="nodeBox green" x="710" y="70" width="260" height="88"></rect>
+            <text class="nodeTitle" x="840" y="102" text-anchor="middle">multiplicative action</text>
+            <text class="tinyText" x="840" y="130" text-anchor="middle">whole monoid and unit portion</text>
+            <path d="M332 114 H388" class="edge red" marker-end="url(#arrowLgpAction34)"></path>
+            <path d="M652 114 H708" class="edge blue" marker-end="url(#arrowLgpAction34)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Component</th><th>Source claim</th><th>Why it matters</th></tr>
+          <tr><td>Bad-prime whole LGP monoid</td><td>Labelled Galois-invariant component sits inside <span class="math">I_Q(S_{j+1}^±,j;‡F_v)</span>.</td><td>Source of the bad-prime packet action.</td></tr>
+          <tr><td>Unit portion</td><td>For every place, the labelled invariant unit portion acts on the same packet kind.</td><td>Unit data remain active for Kummer theory.</td></tr>
+          <tr><td>Procession label</td><td><span class="math">j∈{1,...,l*}</span>, with capsule index set <span class="math">S_{j+1}^±</span>.</td><td>Connects the packet action to procession combinatorics.</td></tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.4(ii) and Fig. 3.1</a>
+          Related: <a href="#local-lgp-monoids-iii34">local LGP overview</a>
+          <a href="#bad-prime-lgp-splittings-34">bad-prime LGP splittings</a>
+          <a href="#vertically-coric-lgp-iii35">vertically coric LGP</a>
+        </div>
+      </section>
+
+      <section id="log-link-pullback-lgp-34" data-filter="iut iii proposition 3.4 log link pullback gaussian monoids poly isomorphisms theta hodge theaters">
+        <h2>IUT III Proposition 3.4(ii): Log-Link LGP Pullback</h2>
+        <p class="lede">
+          The local LGP monoids are constructed from a log-link
+          <span class="math">‡HT → †HT</span>. Proposition 3.4(ii) applies the
+          single-packet construction to the F-prime-strip processions of the
+          <span class="math">‡</span>-side, then pulls back the Gaussian monoids
+          <span class="math">Ψ_Fgau</span> and <span class="math">∞Ψ_Fgau</span>
+          from the <span class="math">†</span>-side along the log-link
+          poly-isomorphisms.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Input</th><th>Operation</th><th>Output</th></tr>
+          <tr><td>Log-link <span class="math">‡HT → †HT</span></td><td>Use Definition 1.1(iii) poly-isomorphisms.</td><td>Context for pulling Gaussian monoids back.</td></tr>
+          <tr><td><span class="math">‡</span>-processions</td><td>Apply single packet monoid construction label-by-label.</td><td>Packet action targets.</td></tr>
+          <tr><td><span class="math">Ψ_Fgau(†HT)</span>, <span class="math">∞Ψ_Fgau(†HT)</span></td><td>Pull back via log-link poly-isomorphisms.</td><td><span class="math">Ψ_FLGP(†HT)</span>, <span class="math">∞Ψ_FLGP(†HT)</span>.</td></tr>
+        </table>
+        <div class="callout">
+          <strong>Audit rule.</strong> LGP monoids are not just renamed Gaussian monoids.
+          Their construction records the log-link and the direction of the pullback.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.4(ii)</a>
+          Related: <a href="#local-log-link-mechanism-iii11">local log-link mechanism</a>
+          <a href="#gaussian-frobenioid-theory">Gaussian Frobenioids</a>
+          <a href="#lgp-splitting-monoids-act-on-packets-34">LGP packet actions</a>
+        </div>
+      </section>
+
+      <section id="fl-symmetry-lgp-34" data-filter="iut iii proposition 3.4 f_l plus minus symmetry procession symmetrizing isomorphisms log link compatibility">
+        <h2>IUT III Proposition 3.4(ii): F_l± Symmetry in LGP</h2>
+        <p class="lede">
+          Proposition 3.4(ii) states that the functorial LGP algorithm requires
+          compatibility of the given log-link with the
+          <span class="math">F_l^±</span>-symmetrizing isomorphisms. This ties the
+          construction to the procession combinatorics of IUT I and prevents treating
+          LGP monoids as independent local gadgets.
+        </p>
+        <div class="grid2">
+          <div class="card">
+            <h3>Procession labels</h3>
+            <p>
+              The label <span class="math">j</span> appears in the
+              <span class="math">(j+1)</span>-capsule with index set
+              <span class="math">S_{j+1}^±</span>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Symmetry compatibility</h3>
+            <p>
+              The log-link must respect the symmetrizing isomorphisms; otherwise the
+              packet construction does not match the source procession data.
+            </p>
+          </div>
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.4(ii)</a>
+          Related: <a href="#d-cusp-label-torsors-iut-i41">F_l symmetry labels</a>
+          <a href="#processions-definition-iut-i410">processions</a>
+          <a href="#log-link-pullback-lgp-34">log-link pullback</a>
+        </div>
+      </section>
+
+      <section id="bad-prime-lgp-splittings-34" data-filter="iut iii proposition 3.4 bad prime lgp splittings torsion vbad infinity psi flgp">
+        <h2>IUT III Proposition 3.4(ii): Bad-Prime LGP Splittings</h2>
+        <p class="lede">
+          For <span class="math">v∈V_bad</span>, Proposition 3.4(ii) constructs LGP
+          monoids equipped with splittings up to torsion. These local splitting data
+          are the objects that Proposition 3.5 later rebuilds in a vertically coric
+          setting and subjects to upper-semi log-Kummer compatibility.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Bad-prime item</th><th>Source role</th><th>Next use</th></tr>
+          <tr><td><span class="math">Ψ_FLGP(†HT)_v</span></td><td>Local LGP monoid with action and splitting up to torsion.</td><td>Input to vertically coric reconstruction.</td></tr>
+          <tr><td><span class="math">∞Ψ_FLGP(†HT)_v</span></td><td>Realified/extended local LGP monoid data.</td><td>Used in upper-semi containment statements.</td></tr>
+          <tr><td>Labelled packet action</td><td>Acts on <span class="math">I_Q(S_{j+1}^±,j;‡F_v)</span>.</td><td>Source of bad-prime action in Fig. 3.1.</td></tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.4(ii)</a>
+          Related: <a href="#lgp-splitting-monoids-act-on-packets-34">LGP actions on packets</a>
+          <a href="#vertically-coric-lgp-iii35">vertically coric LGP</a>
+          <a href="#bad-prime-root-unity-zero-35">root-of-unity becomes zero</a>
         </div>
       </section>
 
