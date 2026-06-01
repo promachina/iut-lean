@@ -1043,6 +1043,12 @@
         <a href="#positive-negative-pilot-warning-242">Positive/negative pilot warning</a>
         <a href="#multiradiality">Multiradiality</a>
         <a href="#tensor-packets-iii31-33">Tensor packets 3.1-3.3</a>
+        <a href="#holomorphic-n-packet-formula-31">Holomorphic n-packet 3.1</a>
+        <a href="#packet-field-decomposition-31">Packet field decomposition</a>
+        <a href="#packet-integral-structure-31">Packet integral structures</a>
+        <a href="#weighted-volume-caution-311">Weighted-volume caution 3.1.1</a>
+        <a href="#mono-analytic-packet-compatibility-32">Mono-analytic packets 3.2</a>
+        <a href="#global-packet-localization-33">Global packet localization 3.3</a>
         <a href="#local-lgp-monoids-iii34">Local LGP monoids 3.4</a>
         <a href="#vertically-coric-lgp-iii35">Vertically coric LGP 3.5</a>
         <a href="#global-packet-frobenioids-iii36-38">Global packets 3.6-3.8</a>
@@ -40632,7 +40638,7 @@
           </tr>
         </table>
         <div class="grid3">
-          <div class="card" id="holomorphic-n-packet-formula-31">
+          <div class="card" id="holomorphic-n-packet-formula-31-card">
             <h3>Holomorphic n-packet formula</h3>
             <p>
               The <span class="math">n</span>-packet over
@@ -40642,7 +40648,7 @@
             </p>
             <div class="tagRow"><span class="tag green">Proposition 3.1</span><span class="tag">local packet</span></div>
           </div>
-          <div class="card" id="packet-field-decomposition-31">
+          <div class="card" id="packet-field-decomposition-31-card">
             <h3>Field-summand decomposition</h3>
             <p>
               Proposition 3.1(i) says the ind-topological ring structure determines the
@@ -40651,7 +40657,7 @@
             </p>
             <div class="tagRow"><span class="tag blue">Proposition 3.1(i)</span><span class="tag">ring structure</span></div>
           </div>
-          <div class="card" id="packet-integral-structure-31">
+          <div class="card" id="packet-integral-structure-31-card">
             <h3>Holomorphic integral structures</h3>
             <p>
               The injection <span class="math">log(αF_v) → log(A,αF_v)</span> carries
@@ -40660,7 +40666,7 @@
             </p>
             <div class="tagRow"><span class="tag gold">Proposition 3.1(ii)</span><span class="tag">integers</span></div>
           </div>
-          <div class="card" id="weighted-volume-caution-311">
+          <div class="card" id="weighted-volume-caution-311-card">
             <h3>Weighted-volume caution</h3>
             <p>
               Remark 3.1.1 says the weighted log-volume sum is not generally the log of
@@ -40669,7 +40675,7 @@
             </p>
             <div class="tagRow"><span class="tag red">Remark 3.1.1</span><span class="tag">measure</span></div>
           </div>
-          <div class="card" id="mono-analytic-packet-compatibility-32">
+          <div class="card" id="mono-analytic-packet-compatibility-32-card">
             <h3>Mono-analytic packet compatibility</h3>
             <p>
               Proposition 3.2 makes the same packet construction for
@@ -40679,7 +40685,7 @@
             </p>
             <div class="tagRow"><span class="tag violet">Proposition 3.2(i)</span><span class="tag">poly-isomorphism</span></div>
           </div>
-          <div class="card" id="global-packet-localization-33">
+          <div class="card" id="global-packet-localization-33-card">
             <h3>Global packet localization</h3>
             <p>
               Proposition 3.3 links the global tensor packet
@@ -40702,6 +40708,250 @@
           <a href="#local-packet-frobenioids">local packet Frobenioids</a>
           <a href="#weighted-log-volume-measure">weighted log-volume measure</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="holomorphic-n-packet-formula-31" data-filter="iut iii proposition 3.1 local holomorphic tensor packet n packet direct sum tensor product places above vq">
+        <h2>IUT III Proposition 3.1: Holomorphic n-Packet Formula</h2>
+        <p class="lede">
+          Proposition 3.1 defines local holomorphic tensor packets for an
+          <span class="math">n</span>-capsule of <span class="math">F</span>-prime-strips.
+          Over a rational place <span class="math">v_Q</span>, the one-packet is the
+          direct sum of <span class="math">log(αF_v)</span> over
+          <span class="math">v|v_Q</span>. The <span class="math">n</span>-packet is
+          the tensor product over labels, equivalently the direct sum over all choices
+          of places <span class="math">{v_α}</span> above <span class="math">v_Q</span>.
+        </p>
+        <div class="diagram fit" aria-label="Holomorphic n-packet formula">
+          <div class="diagramHeader">
+            <strong>Local Packet Formula</strong>
+            <span>direct sums over places, tensor products over capsule labels</span>
+          </div>
+          <svg viewBox="0 0 1040 330" role="img">
+            <defs>
+              <marker id="arrowPacket31" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="66" y="70" width="250" height="88"></rect>
+            <text class="nodeTitle" x="191" y="102" text-anchor="middle">F-prime-strip capsule</text>
+            <text class="tinyText" x="191" y="128" text-anchor="middle">{αF}_{α in A}</text>
+            <rect class="nodeBox green" x="394" y="70" width="250" height="88"></rect>
+            <text class="nodeTitle" x="519" y="102" text-anchor="middle">one-packets</text>
+            <text class="tinyText" x="519" y="128" text-anchor="middle">⊕_{v|v_Q} log(αF_v)</text>
+            <rect class="nodeBox gold" x="722" y="70" width="250" height="88"></rect>
+            <text class="nodeTitle" x="847" y="102" text-anchor="middle">n-packet</text>
+            <text class="tinyText" x="847" y="128" text-anchor="middle">⊗_{α∈A} log(αF_{v_Q})</text>
+            <rect class="nodeBox violet" x="358" y="226" width="320" height="70"></rect>
+            <text class="nodeTitle" x="518" y="254" text-anchor="middle">direct sum over {v_α | v_Q}</text>
+            <text class="tinyText" x="518" y="278" text-anchor="middle">source of packet place combinatorics</text>
+            <path d="M318 114 H392" class="edge blue" marker-end="url(#arrowPacket31)"></path>
+            <path d="M646 114 H720" class="edge green" marker-end="url(#arrowPacket31)"></path>
+            <path d="M847 160 C796 204 668 222 580 242" class="edge gold" marker-end="url(#arrowPacket31)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Object</th><th>Definition</th><th>Why it matters</th></tr>
+          <tr><td>One-packet</td><td><span class="math">log(αF_{v_Q}) = ⊕_{v|v_Q} log(αF_v)</span>.</td><td>Collects local fields above the rational place.</td></tr>
+          <tr><td><span class="math">n</span>-packet</td><td><span class="math">log(AF_{v_Q}) = ⊗_{α∈A} log(αF_{v_Q})</span>.</td><td>Creates the packet container used by processions.</td></tr>
+          <tr><td>Expanded form</td><td>Direct sum over all choices of places <span class="math">{v_α}</span> above <span class="math">v_Q</span>.</td><td>Explains later averaging and local summand bookkeeping.</td></tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.1</a>
+          Related: <a href="#tensor-packets-iii31-33">tensor packets overview</a>
+          <a href="#packet-field-decomposition-31">field decomposition</a>
+          <a href="#packet-integral-structure-31">integral structures</a>
+        </div>
+      </section>
+
+      <section id="packet-field-decomposition-31" data-filter="iut iii proposition 3.1 ring structures ind topological field direct sum decomposition packet">
+        <h2>IUT III Proposition 3.1(i): Packet Field Decomposition</h2>
+        <p class="lede">
+          Proposition 3.1(i) says that the ind-topological field structures on the
+          factors determine an ind-topological ring structure on the packet. The
+          resulting decompositions as direct sums of ind-topological fields are
+          uniquely determined by that ring structure and are compatible with the local
+          topological group actions on the relevant summands.
+        </p>
+        <div class="grid2">
+          <div class="card">
+            <h3>Ring structure is source data</h3>
+            <p>
+              The packet is not only a tensor product of modules. The source attaches
+              a ring structure built from the factor field structures.
+            </p>
+            <div class="tagRow"><span class="tag blue">3.1(i)</span><span class="tag">ring</span></div>
+          </div>
+          <div class="card">
+            <h3>Summands are recoverable</h3>
+            <p>
+              The decomposition into field summands is uniquely determined by the
+              packet ring structure. This prevents arbitrary regrouping of packet
+              factors in later comparisons.
+            </p>
+            <div class="tagRow"><span class="tag green">3.1(i)</span><span class="tag">decomposition</span></div>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Feature</th><th>Source claim</th><th>Formalization guardrail</th></tr>
+          <tr><td>Ind-topological ring</td><td>Determined by the field structures on the factors.</td><td>Do not model packets as unstructured tensor containers.</td></tr>
+          <tr><td>Field-summand decomposition</td><td>Uniquely determined by the ring structure.</td><td>Summand labels should be derivable from packet structure, not arbitrary metadata.</td></tr>
+          <tr><td>Group action compatibility</td><td>Compatible with the natural action of <span class="math">αΠ_v</span> on the corresponding summand.</td><td>The action target must be the correct label/place summand.</td></tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.1(i)</a>
+          Related: <a href="#holomorphic-n-packet-formula-31">holomorphic n-packet</a>
+          <a href="#packet-integral-structure-31">packet integral structures</a>
+          <a href="#local-lgp-monoids-iii34">local LGP monoids</a>
+        </div>
+      </section>
+
+      <section id="packet-integral-structure-31" data-filter="iut iii proposition 3.1 integral structures packet summand tensor with ones injection log alpha f v">
+        <h2>IUT III Proposition 3.1(ii): Packet Integral Structures</h2>
+        <p class="lede">
+          For a fixed label <span class="math">α</span> and place
+          <span class="math">v|v_Q</span>, Proposition 3.1(ii) defines the summand
+          <span class="math">log(A,αF_v)</span> by taking the
+          <span class="math">v</span>-summand in the <span class="math">α</span>
+          factor and all other factors. Tensoring with <span class="math">1</span>'s
+          gives an injective homomorphism
+          <span class="math">log(αF_v) → log(A,αF_v)</span> that transports integral
+          structures to packet summands.
+        </p>
+        <div class="diagram fit" aria-label="Packet integral structure injection">
+          <div class="diagramHeader">
+            <strong>Integral Structure Injection</strong>
+            <span>one factor enters a selected packet summand by tensoring with ones</span>
+          </div>
+          <svg viewBox="0 0 940 280" role="img">
+            <defs>
+              <marker id="arrowIntegral31" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="74" y="72" width="230" height="82"></rect>
+            <text class="nodeTitle" x="189" y="104" text-anchor="middle">log(αF_v)</text>
+            <text class="tinyText" x="189" y="128" text-anchor="middle">factor integral structure</text>
+            <rect class="nodeBox green" x="374" y="72" width="230" height="82"></rect>
+            <text class="nodeTitle" x="489" y="104" text-anchor="middle">tensor with 1's</text>
+            <text class="tinyText" x="489" y="128" text-anchor="middle">other labels β≠α</text>
+            <rect class="nodeBox gold" x="674" y="72" width="230" height="82"></rect>
+            <text class="nodeTitle" x="789" y="104" text-anchor="middle">log(A,αF_v)</text>
+            <text class="tinyText" x="789" y="128" text-anchor="middle">packet summand</text>
+            <path d="M306 113 H372" class="edge blue" marker-end="url(#arrowIntegral31)"></path>
+            <path d="M606 113 H672" class="edge green" marker-end="url(#arrowIntegral31)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Step</th><th>Source construction</th><th>Downstream role</th></tr>
+          <tr><td>Choose label/place</td><td>Fix <span class="math">α∈A</span>, <span class="math">v|v_Q</span>.</td><td>Selects the packet summand receiving the factor.</td></tr>
+          <tr><td>Inject by ones</td><td>Tensor <span class="math">log(αF_v)</span> with <span class="math">1</span>'s in the other factors.</td><td>Moves integral structures into packet summands.</td></tr>
+          <tr><td>Integral structures</td><td>Suitable cofinal objects induce corresponding integral structures.</td><td>These are measured in the later packet log-volume layer.</td></tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.1(ii)</a>
+          Related: <a href="#packet-field-decomposition-31">field decomposition</a>
+          <a href="#weighted-volume-caution-311">weighted-volume caution</a>
+          <a href="#packet-procession-log-volume-iii39">packet log-volume</a>
+        </div>
+      </section>
+
+      <section id="weighted-volume-caution-311" data-filter="iut iii remark 3.1.1 weighted log volume measure packet weights not ordinary measure">
+        <h2>IUT III Remark 3.1.1: Weighted-Volume Caution</h2>
+        <p class="lede">
+          Remark 3.1.1 fixes the weighted local-volume convention for packets and warns
+          that the resulting weighted log-volume sum need not be the logarithm of an
+          ordinary measure. Direct product regions behave in the expected way, but
+          broader Borel sets require a separate weighted-measure construction.
+        </p>
+        <div class="callout warn">
+          <strong>Audit rule.</strong> Do not silently replace IUT's weighted
+          log-volume convention by an ordinary product-measure logarithm. The source
+          explicitly separates direct-product behavior from the auxiliary construction
+          needed for general Borel sets.
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Volume convention</th><th>Source status</th><th>Formal consequence</th></tr>
+          <tr><td>Local packet normalization</td><td>Integral structures are normalized before global summation.</td><td>Store the normalization with the packet, not only with the final sum.</td></tr>
+          <tr><td>Weighted sum</td><td>Need not be the log of an ordinary measure.</td><td>A Lean model should keep a weighted log-volume map separate from ordinary measures.</td></tr>
+          <tr><td>Direct products</td><td>Behave naturally under the packet convention.</td><td>Safe special case, not the whole definition.</td></tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.1.1</a>
+          Related: <a href="#packet-integral-structure-31">packet integral structures</a>
+          <a href="#weighted-log-volume-measure">weighted log-volume measure</a>
+          <a href="#corollary-312">Corollary 3.12 corridor</a>
+        </div>
+      </section>
+
+      <section id="mono-analytic-packet-compatibility-32" data-filter="iut iii proposition 3.2 mono analytic tensor packets d perp prime strips f perp times mu poly isomorphism log shells hermitian balls">
+        <h2>IUT III Proposition 3.2: Mono-Analytic Packet Compatibility</h2>
+        <p class="lede">
+          Proposition 3.2 repeats the packet construction for
+          <span class="math">D⊢</span>-prime-strip capsules. When the capsule comes
+          from <span class="math">F</span>-data, the poly-isomorphisms
+          <span class="math">D⊢ → F⊢×μ → F</span> identify the mono-analytic packets
+          with the holomorphic packets. The integral structures come from
+          mono-analytic log-shells, or from Hermitian unit balls at archimedean places.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Packet side</th><th>Source construction</th><th>Role</th></tr>
+          <tr><td><span class="math">D⊢</span> capsule</td><td>Same packet formula as Proposition 3.1, but for mono-analytic data.</td><td>Builds packet containers on the log-shell side.</td></tr>
+          <tr><td>Compatibility with <span class="math">F</span>-data</td><td>Uses <span class="math">D⊢ → F⊢×μ → F</span> poly-isomorphisms.</td><td>Identifies mono-analytic packets with holomorphic packets when source data permit.</td></tr>
+          <tr><td>Integral structures</td><td>Mono-analytic log-shells, or Hermitian unit balls at archimedean places.</td><td>Supplies the comparison side for discrepancy estimates.</td></tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.2</a>
+          Related: <a href="#holomorphic-n-packet-formula-31">holomorphic packets</a>
+          <a href="#mono-analytic-log-shells">mono-analytic log-shells</a>
+          <a href="#packet-procession-log-volume-iii39">packet log-volume</a>
+        </div>
+      </section>
+
+      <section id="global-packet-localization-33" data-filter="iut iii proposition 3.3 global tensor packet m mod localization log links product local holomorphic packets">
+        <h2>IUT III Proposition 3.3: Global Packet Localization</h2>
+        <p class="lede">
+          Proposition 3.3 forms a global tensor packet
+          <span class="math">(M_mod)_A</span> from labeled global fields. Localization
+          functors, composed with the selected log-links, inject this global packet into
+          products of local holomorphic packets. This is the global-to-local bridge
+          used before local packet Frobenioids and log-volume estimates.
+        </p>
+        <div class="diagram fit" aria-label="Global packet localization">
+          <div class="diagramHeader">
+            <strong>Global to Local</strong>
+            <span>global packet localized through log-links into local packet products</span>
+          </div>
+          <svg viewBox="0 0 980 300" role="img">
+            <defs>
+              <marker id="arrowGlobalPacket33" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="70" y="72" width="240" height="84"></rect>
+            <text class="nodeTitle" x="190" y="104" text-anchor="middle">(M_mod)_A</text>
+            <text class="tinyText" x="190" y="130" text-anchor="middle">global tensor packet</text>
+            <rect class="nodeBox green" x="390" y="72" width="240" height="84"></rect>
+            <text class="nodeTitle" x="510" y="104" text-anchor="middle">localization + log-links</text>
+            <text class="tinyText" x="510" y="130" text-anchor="middle">chosen vertical links</text>
+            <rect class="nodeBox gold" x="710" y="72" width="220" height="84"></rect>
+            <text class="nodeTitle" x="820" y="104" text-anchor="middle">local packet product</text>
+            <text class="tinyText" x="820" y="130" text-anchor="middle">∏ log(AF_{v_Q})</text>
+            <path d="M312 114 H388" class="edge blue" marker-end="url(#arrowGlobalPacket33)"></path>
+            <path d="M632 114 H708" class="edge green" marker-end="url(#arrowGlobalPacket33)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Step</th><th>Source construction</th><th>Why it matters</th></tr>
+          <tr><td>Global packet</td><td>Tensor product of labeled global fields over <span class="math">A</span>.</td><td>Provides the global object before localization.</td></tr>
+          <tr><td>Localization</td><td>Composed with selected log-links.</td><td>The local image depends on the log-link context.</td></tr>
+          <tr><td>Injection into product</td><td>Maps the global packet into products of local holomorphic packets.</td><td>Prepares the local packet Frobenioid and log-volume constructions.</td></tr>
+        </table>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Proposition 3.3</a>
+          Related: <a href="#local-lgp-monoids-iii34">local LGP monoids</a>
+          <a href="#global-packet-frobenioids-iii36-38">global packet Frobenioids</a>
+          <a href="#log-theta-lattice">log-theta lattice</a>
         </div>
       </section>
 
