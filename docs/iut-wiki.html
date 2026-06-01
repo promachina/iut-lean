@@ -1019,6 +1019,10 @@
         <a href="#bicoric-realified-frobenioids">Bi-coric realified Frobenioids</a>
         <a href="#bi-cores-log-theta-lattice-iii15">Bi-cores 1.5</a>
         <a href="#essential-logical-structure">Logical structure</a>
+        <a href="#esslgc-limits-integration-21">Logic 2.1 limits/integration</a>
+        <a href="#esslgc-derivative-integral-22">Logic 2.2 derivative/integral</a>
+        <a href="#esslgc-segments-loops-23">Logic 2.3 segments/loops</a>
+        <a href="#esslgc-and-or-model-24">Logic 2.4 AND/OR model</a>
         <a href="#esslgc-two-dimensionality-31">Logic 3.1 two dimensions</a>
         <a href="#esslgc-frobenius-etale-32">Logic 3.2 Frobenius/etale</a>
         <a href="#esslgc-log-link-33">Logic 3.3 log-link copies</a>
@@ -2520,6 +2524,10 @@
               <a href="#log-kummer-centrality">log-Kummer centrality</a>,
               <a href="#common-container-chain">common-container chain</a>,
               <a href="#label-reconstruction">label reconstruction</a>,
+              <a href="#esslgc-limits-integration-21">§2.1 limits/integration</a>,
+              <a href="#esslgc-derivative-integral-22">§2.2 derivative/integral</a>,
+              <a href="#esslgc-segments-loops-23">§2.3 segments/loops</a>,
+              <a href="#esslgc-and-or-model-24">§2.4 AND/OR model</a>,
               <a href="#esslgc-two-dimensionality-31">§3.1 two dimensions</a>,
               <a href="#esslgc-log-link-33">§3.3 log-link</a>,
               <a href="#esslgc-theta-link-34">§3.4 theta-link</a>,
@@ -51003,6 +51011,152 @@
           <a href="#multiradiality">multiradiality</a>
           <a href="#corollary-312">Corollary 3.12 corridor</a>
           <a href="#formalization">RIMS Lean effort</a>
+        </div>
+      </section>
+
+      <section id="esslgc-limits-integration-21" data-filter="essential logical structure 2.1 limits integration redundant copies false contradiction Grandi series dx epsilon">
+        <h2>Essential Logic 2.1: Limits and Integration</h2>
+        <p class="lede">
+          Section 2.1 uses the history of limits and integration to separate productive
+          mathematical criticism from false contradictions caused by ignoring the
+          intended formalism. The model prepares the reader for later claims that
+          identifying symbols or copies outside their source context can manufacture
+          contradictions.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Model</th><th>Source point</th><th>IUT reading</th></tr>
+          <tr>
+            <td>Grandi/integration history</td>
+            <td>Real paradoxes led to refined definitions because the criticized claims were understood precisely.</td>
+            <td>Disagreement must target the exact formal source route, not an invented simplification.</td>
+          </tr>
+          <tr>
+            <td>Example 2.1.1</td>
+            <td>Substituting arbitrary positive real numbers for integral notation creates a fake contradiction.</td>
+            <td>Do not treat IUT labels, infinitesimals, or links as free variables detached from their definitions.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-essential-logical-structure.pdf" target="_blank">Essential Logical Structure §2.1</a>
+          Related: <a href="#esslgc-two-dimensionality-31">two-dimensionality</a>
+          <a href="#scholze-stix-critique-page">Scholze-Stix critique page</a>
+        </div>
+      </section>
+
+      <section id="esslgc-derivative-integral-22" data-filter="essential logical structure 2.2 derivatives integrals non redundant symmetry possible variation f n f 0 indeterminacy">
+        <h2>Essential Logic 2.2: Derivative/Integral Non-Redundancy</h2>
+        <p class="lede">
+          Section 2.2 argues that even when two kinds of data are interconvertible in
+          one sense, one of them may have structural properties that the other lacks.
+          The derivative example models why Frobenius-like and etale-like versions are
+          not automatically redundant.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Example</th><th>Source point</th><th>IUT reading</th></tr>
+          <tr>
+            <td>Derivative symmetry</td>
+            <td>A function may lack a symmetry that its derivative has.</td>
+            <td>Etale-like symmetry/coricity can be meaningful even if the data is related to Frobenius-like data.</td>
+          </tr>
+          <tr>
+            <td>Discrete variation bound</td>
+            <td>One bounds <span class="math">|f(n)-f(0)|</span> by accumulating allowed variations, not by identifying endpoints.</td>
+            <td>Indeterminacy enlarges containers; it is not endpoint equality.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-essential-logical-structure.pdf" target="_blank">Essential Logical Structure §2.2</a>
+          Related: <a href="#esslgc-frobenius-etale-32">Frobenius/etale copies</a>
+          <a href="#esslgc-gluings-indeterminacies-35">gluings and indeterminacies</a>
+        </div>
+      </section>
+
+      <section id="esslgc-segments-loops-23" data-filter="essential logical structure 2.3 line segments loops endpoints skeleton redundant copies fundamental group gluing">
+        <h2>Essential Logic 2.3: Segments and Loops</h2>
+        <p class="lede">
+          Section 2.3 gives a topological model for why isomorphic pieces are not
+          automatically redundant. Identifying endpoints of an interval changes the
+          space into a loop; identifying adjacent copies of an interval changes the
+          fundamental group and the orientation structure.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Construction</th><th>Source point</th><th>IUT reading</th></tr>
+          <tr>
+            <td>Interval endpoints</td>
+            <td>The endpoints are isomorphic one-point spaces, but identifying them changes an interval into a circle.</td>
+            <td>Isomorphic local labels may carry non-redundant global position.</td>
+          </tr>
+          <tr>
+            <td>Adjacent intervals</td>
+            <td>Gluing two copies into a line segment chain differs from identifying the two copies.</td>
+            <td>Theta/log-linked copies should be glued as the source prescribes, not quotient-collapsed first.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-essential-logical-structure.pdf" target="_blank">Essential Logical Structure §2.3</a>
+          Related: <a href="#esslgc-theta-link-34">theta-link copies</a>
+          <a href="#esslgc-log-link-33">log-link copies</a>
+        </div>
+      </section>
+
+      <section id="esslgc-and-or-model-24" data-filter="essential logical structure 2.4 logical AND OR adjacent oriented line segments AOL1 AOL2 AOL4 redundant copies">
+        <h2>Essential Logic 2.4: AND Versus OR</h2>
+        <p class="lede">
+          Section 2.4 reformulates the line-segment examples in Boolean language. The
+          central phenomenon is that identifying redundant-looking copies can turn a
+          valid AND relation into an OR relation while destroying the original AND
+          relation.
+        </p>
+        <div class="diagram fit" aria-label="AND versus OR model from adjacent oriented line segments">
+          <div class="diagramHeader">
+            <strong>Copy identification changes logical form</strong>
+            <span>from adjacent segments to one loop-like quotient</span>
+          </div>
+          <svg viewBox="0 0 920 330" role="img">
+            <defs>
+              <marker id="arrowEss24" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+            <rect class="nodeBox blue" x="74" y="72" width="260" height="82"></rect>
+            <text class="nodeTitle" x="204" y="102" text-anchor="middle">before identification</text>
+            <text class="tinyText" x="204" y="126" text-anchor="middle">gamma belongs to left endpoint</text>
+            <text class="tinyText" x="204" y="144" text-anchor="middle">AND right endpoint</text>
+            <rect class="nodeBox red" x="584" y="72" width="260" height="82"></rect>
+            <text class="nodeTitle" x="714" y="102" text-anchor="middle">after identification</text>
+            <text class="tinyText" x="714" y="126" text-anchor="middle">one point is alpha OR beta</text>
+            <text class="tinyText" x="714" y="144" text-anchor="middle">original AND no longer holds</text>
+            <rect class="nodeBox gold" x="330" y="214" width="260" height="72"></rect>
+            <text class="nodeTitle" x="460" y="242" text-anchor="middle">RCS warning</text>
+            <text class="tinyText" x="460" y="266" text-anchor="middle">quotienting changes the proposition</text>
+            <path class="edge blue" d="M336 113 H582" marker-end="url(#arrowEss24)"></path>
+            <path class="edge gold" d="M204 156 C250 202 330 220 390 214" marker-end="url(#arrowEss24)"></path>
+            <path class="edge red" d="M714 156 C670 202 590 220 530 214" marker-end="url(#arrowEss24)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Formula</th><th>Source meaning</th><th>IUT reading</th></tr>
+          <tr>
+            <td>AOL1</td>
+            <td>The glued point is simultaneously the endpoint of the left copy and the endpoint of the right copy.</td>
+            <td>Models a source AND relation across distinct labeled copies.</td>
+          </tr>
+          <tr>
+            <td>AOL2/AOL3</td>
+            <td>After identifying copies, the point is one endpoint or the other.</td>
+            <td>Copy identification creates an OR-style proposition.</td>
+          </tr>
+          <tr>
+            <td>AOL4</td>
+            <td>The original AND statement no longer holds after the identification.</td>
+            <td>This is the elementary model for why RCS-style collapse is not harmless.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-essential-logical-structure.pdf" target="_blank">Essential Logical Structure §2.4</a>
+          Related: <a href="#esslgc-and-chain-36">AND chain</a>
+          <a href="#esslgc-and-xor-310">AND/XOR chain</a>
+          <a href="#redundant-copy-warning">redundant-copy warning</a>
         </div>
       </section>
 
