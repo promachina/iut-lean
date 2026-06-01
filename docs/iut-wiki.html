@@ -1500,6 +1500,7 @@
         <a href="#distinct-labels-tradeoff-3111">Distinct-labels tradeoff</a>
         <a href="#trivial-multiradial-model-3111">Trivial multiradial model</a>
         <a href="#label-discipline-311">3.11 label discipline</a>
+        <a href="#realified-kummer-caveat-3112">3.11.2 realified Kummer caveat</a>
         <a href="#noncommutative-single-link-3113">3.11.3 single-link rule</a>
         <a href="#log-kummer-reconciliation-3113">3.11.3 log-Kummer reconciliation</a>
         <a href="#invisible-indeterminacies-3114">3.11.4 invisible indeterminacies</a>
@@ -54080,6 +54081,17 @@
             <p><a href="#label-discipline-311">Open the label discipline page</a></p>
             <div class="tagRow"><span class="tag green">Remark 3.11.2</span><span class="tag">labels</span></div>
           </div>
+          <div class="card" id="realified-kummer-caveat-3112-card">
+            <h3>Realified Kummer caveat</h3>
+            <p>
+              Remark 3.11.2(iii),(iv) warns that older global realified Frobenioid
+              Kummer isomorphisms do not by themselves give the required log-Kummer
+              correspondence. The compatible route uses <span class="math">FMOD</span>
+              and reconstructs localization from packet log-volume actions.
+            </p>
+            <p><a href="#realified-kummer-caveat-3112">Open the realified Kummer caveat page</a></p>
+            <div class="tagRow"><span class="tag red">Remark 3.11.2</span><span class="tag">FMOD</span></div>
+          </div>
         </div>
 
         <div class="callout warn">
@@ -54564,7 +54576,121 @@
           Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.11.2 and Fig. 3.3</a>
           Related: <a href="#theorem-311-data-abc">3.11 data</a>
           <a href="#d-theta-nf-etale-picture-iut-i412">etale-picture symmetries</a>
+          <a href="#realified-kummer-caveat-3112">realified Kummer caveat</a>
           <a href="#multiradiality">multiradiality</a>
+        </div>
+      </section>
+
+      <section id="realified-kummer-caveat-3112" data-filter="iut iii remark 3.11.2 global realified frobenioid kummer isomorphism fail log kummer local value group quotient units fmod fmod localization reconstruction log volume">
+        <h2>IUT III Remark 3.11.2: Realified Frobenioid Kummer Caveat</h2>
+        <p class="lede">
+          Remark 3.11.2(iii),(iv) separates two facts that are easy to conflate. The
+          global realified Frobenioid Kummer isomorphisms from IUT II are constructed
+          by quotienting local multiplicative groups by local unit groups. That
+          construction does not itself give the log-Kummer correspondence required in
+          Theorem 3.11(ii). The source therefore works with
+          <span class="math">FMOD</span> and <span class="math">F^R_MOD</span> copies
+          that arise from <span class="math">Fmod</span> copies satisfying the
+          log-Kummer correspondence.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Old realified Kummer</strong>
+            <p>Quotient local multiplicative groups by local units to compare value groups.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Log-link mismatch</strong>
+            <p>On the log side, quotienting by units corresponds to quotienting by logarithms of units.</p>
+          </div>
+          <div class="flowStep">
+            <strong>FMOD route</strong>
+            <p>Use global non-realified/realified <span class="math">FMOD</span> objects satisfying log-Kummer compatibility.</p>
+          </div>
+          <div class="flowStep">
+            <strong>Localization recovery</strong>
+            <p>Recover localization functors from multiplication action on local packet log-volumes.</p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source clause</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Remark 3.11.2(iii)</td>
+            <td>
+              The IUT II global realified Frobenioid Kummer isomorphisms are built from
+              local value-group isomorphisms obtained by quotienting multiplicative
+              groups by local units.
+            </td>
+            <td>
+              These isomorphisms should not be imported as a ready-made
+              log-Kummer correspondence.
+            </td>
+          </tr>
+          <tr>
+            <td>Log-link obstruction</td>
+            <td>
+              At nonarchimedean places, quotienting multiplicatively by units corresponds
+              on the opposite side of the log-link to quotienting additively by the
+              <span class="math">p_v</span>-adic logarithms of those units.
+            </td>
+            <td>
+              Mutual log-link compatibility fails unless the construction is rebuilt
+              with the log-Kummer correspondence in view.
+            </td>
+          </tr>
+          <tr>
+            <td>Chosen replacement</td>
+            <td>
+              The theorem uses global non-realified/realified
+              <span class="math">FMOD</span> and <span class="math">F^R_MOD</span>
+              arising from <span class="math">Fmod</span> copies satisfying the
+              log-Kummer correspondence.
+            </td>
+            <td>
+              This reinforces the FMOD/Fmod split: exact global compatibility is a
+              constructed route, not inherited automatically from older realified
+              Frobenioid isomorphisms.
+            </td>
+          </tr>
+          <tr>
+            <td>Remark 3.11.2(iv)</td>
+            <td>
+              Localization functors for the <span class="math">F^R_MOD</span>-based
+              global realified Frobenioids may be reconstructed by studying how
+              multiplication by non-realified global monoids affects log-volumes of
+              local mono-analytic tensor packets.
+            </td>
+            <td>
+              The localization data is tied back to packet log-volume action; it is not
+              an independent opaque field of the global object.
+            </td>
+          </tr>
+          <tr>
+            <td>Good-prime splitting monoids</td>
+            <td>
+              Mutual incompatibilities between log-shells and good-prime splitting
+              monoids explain why the statement of Theorem 3.11 omits explicit
+              good-prime splitting monoids, even though they occur in the surrounding
+              <span class="math">n,◦R</span> data.
+            </td>
+            <td>
+              The theorem statement is deliberately scoped to bad-prime splitting
+              monoids in data (b); adding explicit good-prime monoid data would not be
+              a harmless strengthening.
+            </td>
+          </tr>
+        </table>
+        <div class="callout warn">
+          Audit rule: do not conflate "global realified Frobenioid Kummer
+          isomorphism" with "log-Kummer correspondence". Remark 3.11.2 says the former
+          fails to provide the latter unless one follows the <span class="math">FMOD</span>
+          route and accounts for local packet log-volume reconstruction.
+        </div>
+        <div class="related">
+          Sources: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.11.2(iii)-(iv)</a>
+          Related: <a href="#fmod-fmod-bias-310">FMOD/Fmod bias 3.10.1</a>
+          <a href="#global-log-kummer-totality-310">global log-Kummer totality</a>
+          <a href="#log-volume-recovers-subquotients-392">log-volume recovery 3.9.2</a>
+          <a href="#theorem-311-data-abc">Theorem 3.11 data</a>
         </div>
       </section>
 
