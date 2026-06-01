@@ -39158,6 +39158,61 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullPacketTargetSourc
       alignment.sourceLogVolumeEq alignment.targetLogVolumeEqTheta packetSource
       alignment.qPilotPositive cTheta thetaSigned_le_cTheta_absLogQ
 
+/--
+Hodge/SHE/IPL/hull route through the theta-root attached realified Step (x)
+entry source.
+
+This is the current strongest finite Stage 1 corridor: the route alignment
+supplies the Hodge--Arakelov Gaussian comparison, canonical-one preservation,
+SHE/IPL/hull q-pilot positivity, and theta/Hodge log-volume calibration; the
+Step (x) side is supplied by a single realified-Frobenioid log-Kummer entry
+source.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullRealifiedFrobenioidEntry
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (alignment :
+      IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+        part audited record X C)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (realifiedSource :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta := by
+  exact
+    part.boundarySignedEqualityOrStrictCTheta_of_hodgeArakelovRealifiedFrobenioidEntry
+      profile audited alignment.sheSync.sourceHA alignment.sheSync.targetHA
+      alignment.sheSync.canonicalOneDegree_preserved source_profile_eq
+      alignment.sourceLogVolumeEq alignment.targetLogVolumeEqTheta realifiedSource
+      alignment.qPilotPositive cTheta thetaSigned_le_cTheta_absLogQ
+
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
     (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l) :
     part.toHodgeDescentInsulatedCuspZeroBridgeAudit.classified_bridge.bridge_source =
