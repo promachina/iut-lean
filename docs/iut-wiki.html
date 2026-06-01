@@ -1262,6 +1262,8 @@
         <a href="#iut-iv-proposition-18-descent-sections">Prop. 1.8 descent sections</a>
         <a href="#iut-iv-proposition-18-reduction-gates">Prop. 1.8 reduction gates</a>
         <a href="#iut-iv-arithmetic-divisors-19">IUT IV arithmetic divisors 1.9</a>
+        <a href="#iut-iv-definition-19-degree-map">Def. 1.9 degree map</a>
+        <a href="#iut-iv-definition-19-localized-degree">Def. 1.9 localized degree</a>
         <a href="#iut-iv-theorem-110-theta-pilot-estimate">IUT IV theta-pilot estimate 1.10</a>
         <a href="#iut-iv-suitable-initial-theta-data-22">IUT IV suitable theta data 2.2</a>
         <a href="#iut-iv-diophantine-inequalities-23">IUT IV Diophantine inequalities 2.3</a>
@@ -52694,6 +52696,130 @@
           Related: <a href="#iut-iv-elliptic-torsion-18">elliptic torsion input</a>
           <a href="#iut-iv-theorem-110-theta-pilot-estimate">theta-pilot estimate</a>
           <a href="#iut-iv">IUT IV overview</a>
+          <a href="#iut-iv-diophantine-output">IUT IV output route</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-definition-19-degree-map" data-filter="iut iv definition 1.9 arithmetic divisors support effectivity degree normalized degree base extension">
+        <h2>IUT IV Definition 1.9: Degree Map</h2>
+        <p class="lede">
+          Definition 1.9(i) turns valuation-indexed data into real arithmetic
+          divisors and then defines the degree and normalized degree maps used in
+          Theorem 1.10. The key point is that finite and archimedean places live in
+          one formal object, but with different degree weights.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Arithmetic divisor</strong>
+            <p>
+              An <span class="math">R</span>-arithmetic divisor on
+              <span class="math">F</span> is a finite sum
+              <span class="math">sum c_v v</span> over valuations, with support where
+              <span class="math">c_v != 0</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Degree weights</strong>
+            <p>
+              Nonarchimedean <span class="math">v</span> is weighted by
+              <span class="math">log(q_v)</span>; archimedean
+              <span class="math">v</span> is weighted by <span class="math">1</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Normalization</strong>
+            <p>
+              The normalized degree divides by <span class="math">[F:Q]</span> and is
+              invariant under finite base extension.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Definition item</th><th>Source content</th><th>Formalization consequence</th></tr>
+          <tr>
+            <td>Support/effectivity</td>
+            <td>Support is the set of valuations with nonzero coefficient; effectivity is coefficientwise nonnegativity.</td>
+            <td>Effective q-parameter, different, and conductor divisors should be represented by a predicate on coefficients.</td>
+          </tr>
+          <tr>
+            <td>Degree map</td>
+            <td><span class="math">deg_F</span> sends finite valuations to <span class="math">log(q_v)</span> and archimedean valuations to <span class="math">1</span>.</td>
+            <td>A formal model must not replace this by the degree of an ideal, because archimedean coefficients are part of the object.</td>
+          </tr>
+          <tr>
+            <td>Normalized degree</td>
+            <td><span class="math">deg(a)=deg_F(a)/[F:Q]</span> and <span class="math">deg(a|K)=deg(a)</span> for finite <span class="math">K/F</span>.</td>
+            <td>The invariant normalized scale is what allows field extensions in Theorem 1.10 without changing units.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Definition 1.9(i)</a>
+          Related: <a href="#iut-iv-arithmetic-divisors-19">arithmetic divisors overview</a>
+          <a href="#iut-iv-definition-19-localized-degree">localized degree</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">Theorem 1.10</a>
+        </div>
+      </section>
+
+      <section id="iut-iv-definition-19-localized-degree" data-filter="iut iv definition 1.9 localized e degree valuations over rational place base extension">
+        <h2>IUT IV Definition 1.9: Localized Degree</h2>
+        <p class="lede">
+          Definition 1.9(ii) localizes the normalized degree to a nonempty set of
+          valuations lying above one rational valuation. This is the bookkeeping
+          operation that lets Theorem 1.10 isolate the contribution of a specified
+          rational place while keeping the same base-extension invariance.
+        </p>
+        <div class="flowDiagram">
+          <div class="flowStep">
+            <strong>Choose a rational place</strong>
+            <p>
+              Fix <span class="math">v_Q in V(Q)</span> and a nonempty set
+              <span class="math">E subset V(F)</span> of valuations above
+              <span class="math">v_Q</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Restrict support</strong>
+            <p>
+              For <span class="math">a=sum c_v v</span>, define
+              <span class="math">a_E=sum_{v in E} c_v v</span>.
+            </p>
+          </div>
+          <div class="flowStep">
+            <strong>Normalize locally</strong>
+            <p>
+              Divide the degree of <span class="math">a_E</span> by the local degrees
+              over <span class="math">Q_{v_Q}</span>; the result is stable under
+              finite base extension.
+            </p>
+          </div>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Definition item</th><th>Source content</th><th>Use in Theorem 1.10</th></tr>
+          <tr>
+            <td><span class="math">a_E</span></td>
+            <td>The part of the arithmetic divisor supported on valuations in <span class="math">E</span>.</td>
+            <td>Allows different, conductor, and q-parameter divisors to be evaluated at one rational place.</td>
+          </tr>
+          <tr>
+            <td><span class="math">deg_E(a)</span></td>
+            <td>The normalized <span class="math">E</span>-degree of <span class="math">a</span>, using local degree denominators.</td>
+            <td>This is the notation later used for <span class="math">log(d_v)</span>, <span class="math">log(q_v)</span>, and rational-place variants.</td>
+          </tr>
+          <tr>
+            <td>Base extension</td>
+            <td>For finite <span class="math">K/F</span>, <span class="math">deg_{E|K}(a|K)=deg_E(a)</span>.</td>
+            <td>Local contributions survive passage to the field towers used in the theta-pilot estimate.</td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Formalization checkpoint: the localized degree is not a new divisor. It is a
+          projection and normalized measurement of an existing arithmetic divisor over
+          a chosen rational place.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iv.pdf" target="_blank">IUT IV, Definition 1.9(ii)</a>
+          Related: <a href="#iut-iv-definition-19-degree-map">degree map</a>
+          <a href="#iut-iv-theorem-110-theta-pilot-estimate">Theorem 1.10</a>
           <a href="#iut-iv-diophantine-output">IUT IV output route</a>
         </div>
       </section>
