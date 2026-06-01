@@ -1188,9 +1188,10 @@
         <a href="#post-anabelian-algorithm-content-ii1113">Algorithm content 1.11.3</a>
         <a href="#radial-coric-decoupling-ii1114">Radial/coric decoupling 1.11.4</a>
         <a href="#kummer-surjection-cyclotome-skeleton-ii1115-1116">Kummer/cyclotome skeleton 1.11.5</a>
-        <a href="#constant-multiple-rigidity-ii112">Constant multiple 1.12</a>
-        <a href="#mu2l-normalization-ii1122">mu_2l normalization</a>
-        <a href="#galois-evaluation-principle-ii1124">Galois evaluation principle</a>
+        <a class="subLink" href="#constant-multiple-rigidity-ii112">Constant multiple 1.12</a>
+        <a class="subLink" href="#mu2l-normalization-ii1122">mu_2l normalization</a>
+        <a class="subLink" href="#galois-evaluation-principle-ii1124">Galois evaluation principle</a>
+        <a class="subLink" href="#hodge-arakelov-gaussian-analogy-ii1125">HA Gaussian analogy 1.12.5</a>
         <a href="#galois-theoretic-theta-evaluation-ii2">IUT II §2 grouped route</a>
         <a href="#tempered-covering-ladder-ii21-22">Tempered covering ladder 2.1-2.2</a>
         <a href="#signed-cusp-labels-ii23">Signed cusp labels 2.3</a>
@@ -32578,6 +32579,19 @@
               This is the Galois-evaluation principle used in IUT II Section 2.
             </td>
           </tr>
+          <tr>
+            <td>Remark 1.12.5</td>
+            <td>
+              The Corollary 1.12 etale-picture is compared with the polar-coordinate
+              side of the Gaussian integral, while the Frobenius-picture is compared
+              with the cartesian side.
+            </td>
+            <td>
+              This is an interpretive bridge to the IUT III and IUT IV computations:
+              it explains why Frobenius-like and etale-like pictures must be related,
+              without using the analogy as a proof step.
+            </td>
+          </tr>
         </table>
         <div class="grid3">
           <div class="card" id="mono-theta-coric-unit-quotient-110">
@@ -32634,6 +32648,15 @@
               analytic choice of values.
             </p>
             <div class="tagRow"><span class="tag blue">Rem. 1.12.4</span><span class="tag">sections</span></div>
+          </div>
+          <div class="card" id="gaussian-analogy-1125">
+            <h3>Gaussian analogy</h3>
+            <p>
+              Remark 1.12.5 reads Corollary 1.12's multiradial etale theta functions as
+              the IUT analogue of the polar-coordinate side of the Gaussian integral.
+              The comparison is heuristic orientation for the later computations.
+            </p>
+            <div class="tagRow"><span class="tag gold">Rem. 1.12.5</span><span class="tag">Frobenius/etale</span></div>
           </div>
         </div>
         <div class="callout violet">
@@ -33021,6 +33044,18 @@
           <span class="math">M_TM^xmu</span> component from the theta-orbit component
           needed for constant-multiple rigidity.
         </p>
+        <div class="callout blue">
+          Read this as the source-local hub for Corollary 1.12. The corollary gives the
+          splittings; Remarks 1.12.2, 1.12.4, and 1.12.5 explain the allowed
+          normalization, the Galois-theoretic evaluation principle, and the
+          Frobenius/etale picture that motivates later IUT III and IUT IV computations.
+        </div>
+        <div class="tagRow">
+          <a class="tag" href="#mu2l-normalization-ii1122">Remark 1.12.2</a>
+          <a class="tag" href="#galois-evaluation-principle-ii1124">Remark 1.12.4</a>
+          <a class="tag" href="#hodge-arakelov-gaussian-analogy-ii1125">Remark 1.12.5</a>
+          <a class="tag" href="#galois-theoretic-theta-evaluation-ii2">Section 2 route</a>
+        </div>
         <table class="sourceTable3">
           <tr><th>Corollary 1.12 item</th><th>Content</th><th>Use</th></tr>
           <tr>
@@ -33043,6 +33078,8 @@
           Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Corollary 1.12</a>
           Related: <a href="#pointed-inversion-automorphism-ii141">pointed inversion</a>
           <a href="#theta-env-kummer-package-ii15">theta_env package</a>
+          <a href="#mu2l-normalization-ii1122">mu_2l normalization</a>
+          <a href="#hodge-arakelov-gaussian-analogy-ii1125">Gaussian analogy</a>
         </div>
       </section>
 
@@ -33082,6 +33119,150 @@
           Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 1.12.4</a>
           Related: <a href="#galois-theoretic-theta-evaluation-ii2">Galois theta evaluation</a>
           <a href="#tempered-covering-ladder-ii21-22">tempered covering ladder</a>
+        </div>
+      </section>
+
+      <section id="hodge-arakelov-gaussian-analogy-ii1125" data-filter="iut ii remark 1.12.5 hodge arakelov gaussian integral cartesian polar frobenius picture etale picture theta link multiradial etale theta functions">
+        <h2>IUT II Remark 1.12.5: Hodge-Arakelov Gaussian Analogy</h2>
+        <p class="lede">
+          Remark 1.12.5 places Corollary 1.12 in Mochizuki's recurring Gaussian
+          analogy. Scheme-theoretic Hodge-Arakelov theory is compared with the
+          cartesian-to-polar computation of the classical Gaussian integral; IUT is then
+          described as a global arithmetic and Galois-theoretic analogue in which
+          Frobenius-like and etale-like pictures must be related.
+        </p>
+        <div class="diagram fit" aria-label="IUT II Remark 1.12.5 Gaussian analogy across Hodge-Arakelov theory and IUT">
+          <div class="diagramHeader">
+            <strong>Gaussian analogy in Remark 1.12.5</strong>
+            <span>classical integral, Hodge-Arakelov comparison, and IUT pictures</span>
+          </div>
+          <svg viewBox="0 0 1120 600" role="img">
+            <defs>
+              <marker id="arrowGaussian1125" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8 Z" fill="#5f676d"></path>
+              </marker>
+            </defs>
+
+            <rect class="nodeBox blue" x="56" y="72" width="280" height="92"></rect>
+            <text class="nodeTitle" x="196" y="104" text-anchor="middle">classical Gaussian</text>
+            <text class="tinyText" x="196" y="130" text-anchor="middle">cartesian plane</text>
+            <text class="tinyText" x="196" y="148" text-anchor="middle">polar-coordinate symmetry</text>
+
+            <rect class="nodeBox green" x="420" y="72" width="280" height="92"></rect>
+            <text class="nodeTitle" x="560" y="104" text-anchor="middle">Hodge-Arakelov</text>
+            <text class="tinyText" x="560" y="130" text-anchor="middle">de Rham side with filtration</text>
+            <text class="tinyText" x="560" y="148" text-anchor="middle">etale side with GL2(F_l)</text>
+
+            <rect class="nodeBox gold" x="784" y="72" width="280" height="92"></rect>
+            <text class="nodeTitle" x="924" y="104" text-anchor="middle">IUT</text>
+            <text class="tinyText" x="924" y="130" text-anchor="middle">Frobenius-picture</text>
+            <text class="tinyText" x="924" y="148" text-anchor="middle">etale-picture</text>
+
+            <rect class="nodeBox violet" x="102" y="274" width="250" height="94"></rect>
+            <text class="nodeTitle" x="227" y="306" text-anchor="middle">ordered side</text>
+            <text class="tinyText" x="227" y="332" text-anchor="middle">cartesian coordinates</text>
+            <text class="tinyText" x="227" y="350" text-anchor="middle">step-like structure</text>
+
+            <rect class="nodeBox violet" x="434" y="274" width="250" height="94"></rect>
+            <text class="nodeTitle" x="559" y="306" text-anchor="middle">filtered side</text>
+            <text class="tinyText" x="559" y="332" text-anchor="middle">Hodge filtration</text>
+            <text class="tinyText" x="559" y="350" text-anchor="middle">Kodaira-Spencer square-root role</text>
+
+            <rect class="nodeBox violet" x="766" y="274" width="250" height="94"></rect>
+            <text class="nodeTitle" x="891" y="306" text-anchor="middle">Frobenius-like side</text>
+            <text class="tinyText" x="891" y="332" text-anchor="middle">ordered structures</text>
+            <text class="tinyText" x="891" y="350" text-anchor="middle">Frobenius-picture</text>
+
+            <rect class="nodeBox red" x="102" y="432" width="250" height="94"></rect>
+            <text class="nodeTitle" x="227" y="464" text-anchor="middle">symmetric side</text>
+            <text class="tinyText" x="227" y="490" text-anchor="middle">polar coordinates</text>
+            <text class="tinyText" x="227" y="508" text-anchor="middle">rotation symmetry</text>
+
+            <rect class="nodeBox red" x="434" y="432" width="250" height="94"></rect>
+            <text class="nodeTitle" x="559" y="464" text-anchor="middle">etale side</text>
+            <text class="tinyText" x="559" y="490" text-anchor="middle">functions on l-torsion</text>
+            <text class="tinyText" x="559" y="508" text-anchor="middle">GL2(F_l) action</text>
+
+            <rect class="nodeBox red" x="766" y="432" width="250" height="94"></rect>
+            <text class="nodeTitle" x="891" y="464" text-anchor="middle">etale-like side</text>
+            <text class="tinyText" x="891" y="490" text-anchor="middle">theta spokes from one core</text>
+            <text class="tinyText" x="891" y="508" text-anchor="middle">Corollary 1.12 etale-picture</text>
+
+            <path d="M336 118 H418" class="edge blue" marker-end="url(#arrowGaussian1125)"></path>
+            <path d="M700 118 H782" class="edge green" marker-end="url(#arrowGaussian1125)"></path>
+            <path d="M196 166 V272" class="edge violet" marker-end="url(#arrowGaussian1125)"></path>
+            <path d="M560 166 V272" class="edge violet" marker-end="url(#arrowGaussian1125)"></path>
+            <path d="M924 166 C916 210 902 242 894 272" class="edge violet" marker-end="url(#arrowGaussian1125)"></path>
+            <path d="M196 166 C170 250 186 354 220 430" class="edge red" marker-end="url(#arrowGaussian1125)"></path>
+            <path d="M560 166 C532 250 534 354 552 430" class="edge red" marker-end="url(#arrowGaussian1125)"></path>
+            <path d="M924 166 C950 250 936 354 900 430" class="edge red" marker-end="url(#arrowGaussian1125)"></path>
+          </svg>
+        </div>
+        <table class="sourceTable3">
+          <tr><th>Source comparison</th><th>Paper content</th><th>Wiki consequence</th></tr>
+          <tr>
+            <td>Classical integral</td>
+            <td>
+              The square of the Gaussian integral is computed by passing from cartesian
+              coordinates to polar coordinates.
+            </td>
+            <td>
+              This is the model for comparing an ordered coordinate picture with a
+              symmetric picture.
+            </td>
+          </tr>
+          <tr>
+            <td>Hodge-Arakelov theory</td>
+            <td>
+              The de Rham side has a Hodge filtration; the etale side consists of
+              functions on <span class="math">ell</span>-torsion points with a
+              <span class="math">GL_2(F_ell)</span> action.
+            </td>
+            <td>
+              The analogy pairs the Hodge filtration with the cartesian side and the
+              torsion/Galois symmetry with the polar side.
+            </td>
+          </tr>
+          <tr>
+            <td>IUT pictures</td>
+            <td>
+              The Frobenius-picture is compared to the ordered cartesian side, and the
+              etale-picture is compared to the polar side. Corollary 1.12 supplies an
+              etale-picture of theta functions on spokes from a common mono-analytic
+              core <span class="math">G O^xmu(G)</span>.
+            </td>
+            <td>
+              The page should be read as conceptual orientation for the IUT III
+              log-volume and IUT IV estimate computations, not as an independent
+              derivation of those computations.
+            </td>
+          </tr>
+          <tr>
+            <td>Theta-link analogy</td>
+            <td>
+              Mochizuki says the coordinate transformation
+              <span class="math">e^{-r^2} -> u</span> is formally reminiscent of the
+              theta-link <span class="math">Theta_v -> q_v</span>.
+            </td>
+            <td>
+              This is explicitly an analogy. A formalization should not replace the
+              theta-link construction by a Gaussian-coordinate argument.
+            </td>
+          </tr>
+        </table>
+        <div class="callout gold">
+          Grouping rule: keep this page with Corollary 1.12, not as a detached
+          philosophy page. In the paper it explains how the multiradial etale theta
+          functions of Corollary 1.12 fit into the later Frobenius/etale comparison
+          used in IUT III §3 and IUT IV §1.
+        </div>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-ii.pdf" target="_blank">IUT II, Remark 1.12.5</a>
+          Related: <a href="#constant-multiple-rigidity-ii112">constant multiple rigidity</a>
+          <a href="#iut-ii-mono-theta-rigidity-110-112">mono-theta rigidity hub</a>
+          <a href="#theta-evaluation-orbits-ii24-26">theta evaluation orbits</a>
+          <a href="#local-lgp-monoids-iii34">IUT III LGP monoids</a>
+          <a href="#iut-iv-local-log-volume-estimates-11-15">IUT IV estimates</a>
         </div>
       </section>
 
