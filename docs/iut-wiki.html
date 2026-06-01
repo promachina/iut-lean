@@ -1468,6 +1468,7 @@
         <a href="#packet-normalization-39">Packet normalization 3.9</a>
         <a href="#mono-analytic-transfer-39">Mono-analytic transfer 3.9</a>
         <a href="#global-degree-log-volume-39">Global degree log-volume</a>
+        <a href="#log-volume-recovers-subquotients-392">Log-volume recovers subquotients</a>
         <a href="#forced-procession-average-39">Forced procession average</a>
         <a href="#realified-semisimplification-39">Realified semi-simplification</a>
         <a href="#no-log-volume-period-39">No log-volume period</a>
@@ -51893,6 +51894,19 @@
             </td>
           </tr>
           <tr>
+            <td>Remark 3.9.2</td>
+            <td>
+              Multiplication by elements of the labeled global field on the packet
+              log-volume spaces gives mono-analytic algorithms for recovering the
+              perfection subquotient associated to a place, together with its
+              nonnegative submonoid.
+            </td>
+            <td>
+              The valuation subquotients from Remark 3.6.1 reappear as recoverable
+              structure from log-volume action, not as opaque labels.
+            </td>
+          </tr>
+          <tr>
             <td>3.9(iv)</td>
             <td>
               In an LGP-Gaussian log-theta lattice, these log-volumes apply to the
@@ -51977,6 +51991,15 @@
               the source.
             </p>
             <div class="tagRow"><span class="tag gold">3.9(iii)</span><span class="tag">degree</span></div>
+          </div>
+          <div class="card" id="log-volume-recovers-subquotients-392-card">
+            <h3>Recovering subquotients</h3>
+            <p>
+              Remark 3.9.2 says the action of global field multiplication on packet
+              log-volumes recovers the place-indexed perfection subquotients and their
+              nonnegative submonoids.
+            </p>
+            <div class="tagRow"><span class="tag green">Remark 3.9.2</span><span class="tag">perfection</span></div>
           </div>
           <div class="card" id="forced-procession-average-39-card">
             <h3>Forced procession average</h3>
@@ -52096,6 +52119,44 @@
           Related: <a href="#single-packet-global-frobenioids-37">single packet global Frobenioids</a>
           <a href="#bad-prime-to-global-37">bad-prime global objects</a>
           <a href="#theta-q-pilot-objects-38">theta/q pilot objects</a>
+        </div>
+      </section>
+
+      <section id="log-volume-recovers-subquotients-392" data-filter="iut iii remark 3.9.2 log volume recovers subquotients perfection nonnegative submonoid multiplication global field mono analytic algorithm">
+        <h2>IUT III Remark 3.9.2: Log-Volume Recovery of Perfection Subquotients</h2>
+        <p class="lede">
+          Remark 3.9.2 returns to the subquotients of the perfection mentioned in
+          Remark 3.6.1. In the global log-volume setting of Proposition 3.9(iii),
+          mono-analytic algorithms recover the subquotient of the perfection of
+          <span class="math">(Mmod)_alpha = (MMOD)_alpha</span> associated to a place
+          <span class="math">w in V</span>, together with its submonoid of nonnegative
+          elements, by studying how multiplication by global field elements acts on the
+          log-volumes of the packet spaces
+          <span class="math">IQ(A,alpha F_v) ~= IQ(A,alpha D⊢_v)</span>.
+        </p>
+        <table class="sourceTable3">
+          <tr><th>Recovered data</th><th>Source mechanism</th><th>Why it matters</th></tr>
+          <tr>
+            <td>Place-indexed perfection subquotient</td>
+            <td>Analyze multiplication by elements of <span class="math">(Mmod)_alpha</span> on packet log-volumes.</td>
+            <td>Connects valuation data to mono-analytic packet behavior.</td>
+          </tr>
+          <tr>
+            <td>Nonnegative submonoid</td>
+            <td>Recovered together with the subquotient by the same log-volume action algorithm.</td>
+            <td>Preserves the positivity/order information used by the Frobenioid model.</td>
+          </tr>
+          <tr>
+            <td>Compatibility with Remark 3.6.1</td>
+            <td>The recovered subquotients are the same kind of local data used in the FMOD torsor construction.</td>
+            <td>Prevents treating <span class="math">β_v</span>-style valuation data and log-volume data as unrelated oracles.</td>
+          </tr>
+        </table>
+        <div class="related">
+          Source: <a href="papers/mochizuki-iut-iii.pdf" target="_blank">IUT III, Remark 3.9.2</a>
+          Related: <a href="#fmod-beta-subquotients-361">β_v subquotients</a>
+          <a href="#global-degree-log-volume-39">global degree log-volume</a>
+          <a href="#mono-analytic-transfer-39">mono-analytic transfer</a>
         </div>
       </section>
 
