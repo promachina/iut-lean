@@ -648,6 +648,19 @@ theorem logShellRealifiedFrobenioidDivisorTensorProduct_endpoint
       left.logShellDivisorLogVolume + right.logShellDivisorLogVolume :=
   left.tensorProduct_logShellDivisorLogVolume_eq_add right object hprime hnorm
 
+theorem compatibleRealifiedFrobenioidDivisorCopies_endpoint
+    {π : Type u} [Fintype π]
+    (copies : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π) :
+    copies.theta.base = copies.ordinary ∧
+      copies.logShell.base = copies.ordinary ∧
+      copies.theta.thetaDivisorLogVolume =
+        copies.ordinary.realifiedLogVolume ∧
+      copies.logShell.logShellDivisorLogVolume =
+        copies.ordinary.realifiedLogVolume ∧
+      copies.theta.thetaDivisorLogVolume =
+        copies.logShell.logShellDivisorLogVolume :=
+  copies.endpoint
+
 theorem realifiedFrobenioidKummerCompatibility_endpoint
     {kind : IUTStage1PlaceKind} {j : Nat}
     {source target :

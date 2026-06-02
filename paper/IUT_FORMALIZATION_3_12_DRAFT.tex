@@ -725,7 +725,10 @@ finite level: the same divisor degree is read through a formal
 recovers the ordinary finite divisor source.
 The \(D\)-, or log-shell, version of Example 3.5(iii) is represented similarly:
 a distinguished local Frobenius/log-shell reading is divided by the extension
-degree before it is applied to the finite divisor degree.  A
+degree before it is applied to the finite divisor degree.
+The three finite copies now have a compatibility package: if they share the
+same base divisor source and the theta/log-shell readings are normalized, then
+their log-volume readings are equal.  A
 finite tensor-product operation on these degree objects adds divisor degrees
 and unit log-volumes, and \Lean{} proves that the realified log-volume of the
 tensor product is the sum of the two realified log-volumes.  This operation is
@@ -1107,6 +1110,9 @@ The project currently proves the following source-facing results in \Lean{}:
   \Lean{} normalizes a distinguished local Frobenius log-volume by the
   extension degree, recovers the ordinary source when this normalized value is
   \(1\), and proves tensor-product additivity when normalized values match.
+\item The ordinary, theta, and log-shell divisor copies now have a compatibility
+  package: shared base divisor data plus normalized readings imply equality of
+  all three finite log-volume readings.
 \item The realified Frobenioid degree layer now has finite morphisms: divisor
   and unit shifts determine the target realified log-volume, identity has zero
   shift, and composition adds both shifts.

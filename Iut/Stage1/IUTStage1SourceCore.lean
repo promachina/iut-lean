@@ -1695,6 +1695,72 @@ theorem endpoint
 end IUTStage1LogShellRealifiedFrobenioidDivisorSource
 
 /--
+Finite compatibility package for the ordinary, theta, and log-shell divisor
+copies of IUT I, Example 3.5.
+
+The source paper expresses these copies as naturally isomorphic collections of
+data.  At the current finite level, compatibility means that all three records
+use the same divisor source and that the theta/log-shell readings are normalized
+so their log-volumes agree with the ordinary realified divisor log-volume.
+-/
+structure IUTStage1CompatibleRealifiedFrobenioidDivisorCopies
+    (π : Type u) [Fintype π] where
+  ordinary : IUTStage1FiniteRealifiedFrobenioidDivisorSource π
+  theta : IUTStage1ThetaRealifiedFrobenioidDivisorSource π
+  logShell : IUTStage1LogShellRealifiedFrobenioidDivisorSource π
+  theta_base_eq : theta.base = ordinary
+  logShell_base_eq : logShell.base = ordinary
+  theta_normalized : theta.thetaGeneratorLogVolume = 1
+  logShell_normalized : logShell.normalizedFrobeniusLogVolume = 1
+
+namespace IUTStage1CompatibleRealifiedFrobenioidDivisorCopies
+
+variable {π : Type u} [Fintype π]
+
+theorem thetaLogVolume_eq_ordinary
+    (copies : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π) :
+    copies.theta.thetaDivisorLogVolume =
+      copies.ordinary.realifiedLogVolume := by
+  rw [← copies.theta_base_eq]
+  exact
+    copies.theta.thetaDivisorLogVolume_eq_base_realified_of_theta_one
+      copies.theta_normalized
+
+theorem logShellLogVolume_eq_ordinary
+    (copies : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π) :
+    copies.logShell.logShellDivisorLogVolume =
+      copies.ordinary.realifiedLogVolume := by
+  rw [← copies.logShell_base_eq]
+  exact
+    copies.logShell.logShellDivisorLogVolume_eq_base_realified_of_normalized_one
+      copies.logShell_normalized
+
+theorem thetaLogVolume_eq_logShellLogVolume
+    (copies : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π) :
+    copies.theta.thetaDivisorLogVolume =
+      copies.logShell.logShellDivisorLogVolume := by
+  rw [copies.thetaLogVolume_eq_ordinary,
+    copies.logShellLogVolume_eq_ordinary]
+
+theorem endpoint
+    (copies : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π) :
+    copies.theta.base = copies.ordinary ∧
+      copies.logShell.base = copies.ordinary ∧
+      copies.theta.thetaDivisorLogVolume =
+        copies.ordinary.realifiedLogVolume ∧
+      copies.logShell.logShellDivisorLogVolume =
+        copies.ordinary.realifiedLogVolume ∧
+      copies.theta.thetaDivisorLogVolume =
+        copies.logShell.logShellDivisorLogVolume :=
+  ⟨copies.theta_base_eq,
+    copies.logShell_base_eq,
+    copies.thetaLogVolume_eq_ordinary,
+    copies.logShellLogVolume_eq_ordinary,
+    copies.thetaLogVolume_eq_logShellLogVolume⟩
+
+end IUTStage1CompatibleRealifiedFrobenioidDivisorCopies
+
+/--
 Finite realified Frobenioid degree object.
 
 IUT III treats the relevant global/non-realified and realified Frobenioids as
