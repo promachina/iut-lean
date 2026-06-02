@@ -1743,6 +1743,36 @@ theorem packetSourceCalibrationFromPacketLocalAlignment_endpoint
     packetLocalObject_eq_entrySource entrySource_eq_monoAnalyticProduct
     packetLocalObjectFinite_eq_ind3Source kummer forgetting
 
+theorem packetLocalSourceAlignmentFromSourceCalibration_endpoint
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {logKummer : LogKummerCorrespondenceId}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (calibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummer entry holomorphicF holomorphicD monoAnalyticD)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD) :
+    let alignment :=
+      calibration.toPacketLocalSourceAlignment kummer forgetting;
+    alignment.packetLocalObject_eq_entrySource =
+        calibration.packetLocalObject_eq_entrySource ∧
+      alignment.entrySource_eq_monoAnalyticProduct =
+        calibration.entrySource_eq_monoAnalyticProduct ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  calibration.toPacketLocalSourceAlignment_endpoint kummer forgetting
+
 open NonarchimedeanLogKummerPacketCorrespondenceSource in
 theorem packetCorrespondenceFromPacketLocalAndEntryTargetThetaAlignment_endpoint
     {coric : Type u}

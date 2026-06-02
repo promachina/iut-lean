@@ -38957,6 +38957,61 @@ theorem packetSourceCalibration_endpoint
   ⟨calibration.packetLocalObjectFinite_eq_entrySource,
     calibration.entrySource_eq_ind3Source kummer forgetting⟩
 
+/--
+Recover the packet-local source-alignment object from a calibrated Step (x)
+source face.
+
+The calibration stores the packet-local/source and source/product equalities.
+The remaining source-alignment equality with the `(Ind3)` source is derived
+through the Kummer and mono-analytic forgetting product-log-volume transfers.
+-/
+def toPacketLocalSourceAlignment
+    (calibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummer entry holomorphicF holomorphicD monoAnalyticD)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD) :
+    NonarchimedeanLogKummerPacketLocalSourceAlignment
+      audited entry monoAnalyticD :=
+  { packetLocalObject_eq_entrySource :=
+      calibration.packetLocalObject_eq_entrySource,
+    entrySource_eq_monoAnalyticProduct :=
+      calibration.entrySource_eq_monoAnalyticProduct,
+    packetLocalObjectFinite_eq_ind3Source := by
+      calc
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+            entry.sourceLogVolume.finiteLogVolume :=
+          calibration.packetLocalObjectFinite_eq_entrySource
+        _ = audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+          calibration.entrySource_eq_ind3Source kummer forgetting }
+
+theorem toPacketLocalSourceAlignment_endpoint
+    (calibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummer entry holomorphicF holomorphicD monoAnalyticD)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD) :
+    let alignment :=
+      calibration.toPacketLocalSourceAlignment kummer forgetting;
+    alignment.packetLocalObject_eq_entrySource =
+        calibration.packetLocalObject_eq_entrySource ∧
+      alignment.entrySource_eq_monoAnalyticProduct =
+        calibration.entrySource_eq_monoAnalyticProduct ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  by
+    intro alignment
+    exact
+      ⟨rfl, rfl, alignment.packetLocalObjectFinite_eq_ind3Source⟩
+
 theorem ofPacketLocalSourceAlignment_endpoint
     {logKummerId : LogKummerCorrespondenceId}
     (packetLocalObject_eq_entrySource :

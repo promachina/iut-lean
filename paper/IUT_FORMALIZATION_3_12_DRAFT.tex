@@ -512,6 +512,10 @@ The packet-local source side is now bundled as a named alignment object:
 packet-local/source equality, entry-source/mono-analytic-product equality, and
 packet-local/\((\Ind3)\)-source equality travel together before constructing
 the packet source calibration.
+Conversely, a source packet/product calibration together with the Kummer and
+mono-analytic forgetting transfers reconstructs this packet-local alignment
+object; the packet-local/\((\Ind3)\)-source equality is derived through the
+transfer chain rather than supplied as a parallel datum.
 At the packet-correspondence layer, this source-alignment object and the exact
 vertical-\(IQ\) target now construct one log-Kummer correspondence source.  The
 realified-Frobenioid packet source uses this correspondence-level constructor,
@@ -1308,6 +1312,10 @@ The project currently proves the following source-facing results in \Lean{}:
   packet-local/source alignment, packet-local \((\Ind3)\)-source alignment,
   and Kummer/forgetting product-log-volume preservation.  The source
   holomorphic-product equality is derived by this constructor.
+\item A calibrated source packet/product face can now be projected back to the
+  packet-local source-alignment object once the Kummer and mono-analytic
+  forgetting transfers are supplied; the packet-local \((\Ind3)\)-source
+  equality is reconstructed through that transfer chain.
 \item The packet-correspondence constructor has a stronger alignment form:
   packet-local source alignment, packet-local \((\Ind3)\)-source alignment,
   packet-normalized entry target, and theta-target alignment generate both
