@@ -6649,6 +6649,99 @@ theorem endpoint
 end IUTStage1CoricThetaMuPrimeStripInvariant
 
 /--
+Finite coric global realified Frobenioid compatibility.
+
+IUT II, Corollary 4.7(v), passes from the coric `D^{⊢}`-link to an
+isomorphism of global realified Frobenioid data, compatible with the
+`R_{>0}`-orbits obtained by multiplying arithmetic degrees.  Since the present
+finite layer records only realified degree/log-volume data, the orbit relation
+is represented by a positive real scale.  The target local restrictions are
+required to be the scaled source restrictions; the local object and local-prime
+equalities are then derived from the existing local-global collection laws.
+-/
+structure IUTStage1CoricGlobalRealifiedFrobenioidCompatibility
+    (V : Type u) [Fintype V] where
+  source : IUTStage1LocalGlobalRealifiedFrobenioidCollection V
+  target : IUTStage1LocalGlobalRealifiedFrobenioidCollection V
+  scale : Real
+  scale_pos : 0 < scale
+  global_realified_eq_scale :
+    target.globalObject.realifiedLogVolume =
+      scale * source.globalObject.realifiedLogVolume
+  local_restriction_eq_scale :
+    ∀ v : V,
+      (target.localization v).restrictedGlobalPrimeLogVolume =
+        scale * (source.localization v).restrictedGlobalPrimeLogVolume
+
+namespace IUTStage1CoricGlobalRealifiedFrobenioidCompatibility
+
+variable {V : Type u} [Fintype V]
+
+theorem scale_ne_zero
+    (compat :
+      IUTStage1CoricGlobalRealifiedFrobenioidCompatibility V) :
+    compat.scale ≠ 0 :=
+  ne_of_gt compat.scale_pos
+
+theorem localObjectLogVolume_eq_scale
+    (compat :
+      IUTStage1CoricGlobalRealifiedFrobenioidCompatibility V)
+    (v : V) :
+    (compat.target.localObject v).realifiedLogVolume =
+      compat.scale * (compat.source.localObject v).realifiedLogVolume := by
+  rw [compat.target.localRealifiedLogVolume_eq_restricted v,
+    compat.source.localRealifiedLogVolume_eq_restricted v,
+    compat.local_restriction_eq_scale v]
+
+theorem localPrimeLogVolume_eq_scale
+    (compat :
+      IUTStage1CoricGlobalRealifiedFrobenioidCompatibility V)
+    (v : V) :
+    (compat.target.localization v).localPrimeLogVolume =
+      compat.scale * (compat.source.localization v).localPrimeLogVolume := by
+  rw [← compat.target.globalRealifiedLogVolume_eq_localPrime v,
+    ← compat.source.globalRealifiedLogVolume_eq_localPrime v,
+    compat.global_realified_eq_scale]
+
+theorem extensionDegree_rescaled_localObject
+    (compat :
+      IUTStage1CoricGlobalRealifiedFrobenioidCompatibility V)
+    (v : V) :
+    ((compat.target.localization v).extensionDegree : Real) *
+        (compat.scale * (compat.source.localObject v).realifiedLogVolume) =
+      compat.scale * compat.source.globalObject.realifiedLogVolume := by
+  rw [← compat.localObjectLogVolume_eq_scale v,
+    compat.target.extensionDegree_mul_localRealifiedLogVolume v,
+    compat.global_realified_eq_scale]
+
+theorem endpoint
+    (compat :
+      IUTStage1CoricGlobalRealifiedFrobenioidCompatibility V) :
+    0 < compat.scale ∧
+      compat.target.globalObject.realifiedLogVolume =
+        compat.scale * compat.source.globalObject.realifiedLogVolume ∧
+      ∀ v : V,
+        (compat.target.localization v).restrictedGlobalPrimeLogVolume =
+            compat.scale *
+              (compat.source.localization v).restrictedGlobalPrimeLogVolume ∧
+          (compat.target.localObject v).realifiedLogVolume =
+            compat.scale * (compat.source.localObject v).realifiedLogVolume ∧
+          (compat.target.localization v).localPrimeLogVolume =
+            compat.scale * (compat.source.localization v).localPrimeLogVolume ∧
+          ((compat.target.localization v).extensionDegree : Real) *
+              (compat.scale * (compat.source.localObject v).realifiedLogVolume) =
+            compat.scale * compat.source.globalObject.realifiedLogVolume :=
+  ⟨compat.scale_pos,
+    compat.global_realified_eq_scale,
+    fun v =>
+      ⟨compat.local_restriction_eq_scale v,
+        compat.localObjectLogVolume_eq_scale v,
+        compat.localPrimeLogVolume_eq_scale v,
+        compat.extensionDegree_rescaled_localObject v⟩⟩
+
+end IUTStage1CoricGlobalRealifiedFrobenioidCompatibility
+
+/--
 Local-global collection equipped with structure morphisms to the global object.
 
 Remark 3.9.5(ix), (cQ3), describes local Frobenioid objects equipped with

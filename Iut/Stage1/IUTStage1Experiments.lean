@@ -251,6 +251,25 @@ theorem coricThetaMuPrimeStripInvariant_endpoint
             (invariant.lift.base.primeEvaluation p) :=
   invariant.endpoint
 
+theorem coricGlobalRealifiedFrobenioidCompatibility_endpoint
+    {V : Type u} [Fintype V]
+    (compat : IUTStage1CoricGlobalRealifiedFrobenioidCompatibility V) :
+    0 < compat.scale ∧
+      compat.target.globalObject.realifiedLogVolume =
+        compat.scale * compat.source.globalObject.realifiedLogVolume ∧
+      ∀ v : V,
+        (compat.target.localization v).restrictedGlobalPrimeLogVolume =
+            compat.scale *
+              (compat.source.localization v).restrictedGlobalPrimeLogVolume ∧
+          (compat.target.localObject v).realifiedLogVolume =
+            compat.scale * (compat.source.localObject v).realifiedLogVolume ∧
+          (compat.target.localization v).localPrimeLogVolume =
+            compat.scale * (compat.source.localization v).localPrimeLogVolume ∧
+          ((compat.target.localization v).extensionDegree : Real) *
+              (compat.scale * (compat.source.localObject v).realifiedLogVolume) =
+            compat.scale * compat.source.globalObject.realifiedLogVolume :=
+  compat.endpoint
+
 theorem localGlobalFrobenioidStructureMorphismCollection_endpoint
     {V : Type u} [Fintype V]
     (source :

@@ -758,6 +758,12 @@ invariance of Corollary 4.7(iv) is represented by a common unit character on
 the valuation set \(V\).  Once the environment unit character is the pullback
 of this coric character along \(Prime(C_{\mathrm{env}})\simeq V\), \Lean{}
 derives the corresponding Gaussian equality from the prime-evaluation square.
+The coric global realified Frobenioid compatibility of Corollary 4.7(v) is
+represented by a positive real scale on finite local-global Frobenioid
+collections.  This is the finite shadow of the \(R_{>0}\)-orbit language:
+given scaled equality of the global realified log-volume and of the restricted
+local prime readings, \Lean{} derives the scaled local-object and local-prime
+log-volume equalities from the existing local-global collection laws.
 A finite tensor-product operation on these degree objects adds divisor degrees
 and unit log-volumes, and \Lean{} proves that the realified log-volume of the
 tensor product is the sum of the two realified log-volumes.  This operation is
@@ -1168,6 +1174,10 @@ The project currently proves the following source-facing results in \Lean{}:
   represented at finite level: a common unit character on \(V\) pulls back to
   the environment side, and \Lean{} derives the Gaussian-side pullback equality
   from the prime-evaluation square.
+\item The coric global realified Frobenioid compatibility of Corollary 4.7(v)
+  is now represented by a positive real scale on finite local-global
+  Frobenioid collections.  From scaled global and restricted-local readings,
+  \Lean{} derives the scaled local-object and local-prime log-volume readings.
 \item The realified Frobenioid degree layer now has finite morphisms: divisor
   and unit shifts determine the target realified log-volume, identity has zero
   shift, and composition adds both shifts.
