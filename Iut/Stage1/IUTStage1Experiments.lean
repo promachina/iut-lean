@@ -7910,6 +7910,26 @@ theorem canonicalSquareWeightProfile_weight_one
         (1 : ZMod l.value) = 1 :=
   IUTStage1ZModSquareWeightProfile.canonicalSquareWeights_weight_one
 
+/--
+IUT II, Remark 4.10.3, as a finite-label endpoint: the Gaussian value-group
+formula restricts at `j = 1` to the identity degree, its square weight is `1`,
+and this singleton restriction is not compatible with translation by `1`.
+-/
+theorem gaussianPivotalRestriction_identity_and_not_translationInvariant
+    {l : PrimeGeFive}
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.GaussianMonoidDegreeEvaluation l) :
+    evaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        evaluation.environmentDegree ∧
+      (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l).weight
+          (1 : ZMod l.value) = 1 ∧
+      ¬ ∀ j : ZMod l.value,
+          j = 1 -> zmodLabelTranslate l (1 : ZMod l.value) j = 1 :=
+  ⟨evaluation.gaussianDegree_one,
+    IUTStage1ZModSquareWeightProfile.canonicalSquareWeights_weight_one,
+    IUTStage1FLLabelTorsorModel.singletonOne_not_closed_under_translation_one l⟩
+
 theorem canonicalSquareWeightProfile_constant_average
     (l : PrimeGeFive) (c : Real) :
     ((IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l).toWeighted

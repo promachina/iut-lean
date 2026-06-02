@@ -776,6 +776,13 @@ a common \(D^{\vdash}\)-core projection for all integer-labelled spokes.
 unchanged by arbitrary permutations of the integer-labelled spokes, capturing
 the finite mono-analytic core/permutation-symmetry contrast with the
 Frobenius-picture chain.
+The value-group restriction discussed in Remark 4.10.3 is exposed as a
+combined finite-label endpoint: for a Gaussian degree evaluation, the
+canonical full label \(j=1\) has degree equal to the environment \(q\)-degree,
+the canonical square weight at \(j=1\) is \(1\), and the singleton
+restriction to \(j=1\) is not stable under translation by \(1\).  Thus the
+identity/pivotal specialization and the failure of compatibility with the
+full label symmetry are checked in the same typed statement.
 A finite tensor-product operation on these degree objects adds divisor degrees
 and unit log-volumes, and \Lean{} proves that the realified log-volume of the
 tensor product is the sum of the two realified log-volumes.  This operation is
@@ -1198,6 +1205,10 @@ The project currently proves the following source-facing results in \Lean{}:
   represented as a common core projection for all integer-labelled spokes.
   \Lean{} proves successor-step constancy and invariance under arbitrary
   permutations of the spoke labels.
+\item The value-group restriction of Remark 4.10.3 is now a single endpoint:
+  the Gaussian degree at \(j=1\) equals the environment \(q\)-degree, the
+  square weight at \(j=1\) is \(1\), and the singleton-\(1\) restriction is
+  not translation-invariant.
 \item The realified Frobenioid degree layer now has finite morphisms: divisor
   and unit shifts determine the target realified log-volume, identity has zero
   shift, and composition adds both shifts.
@@ -1553,7 +1564,7 @@ the source-facing \SHE{} and Hodge-descent preservation data.  The immediate
 route is:
 \[
 \begin{array}{c}
-q^{j^2}\text{ finite Gaussian endpoint}\\
+q^{j^2}\text{ finite Gaussian endpoint with pivotal restriction}\\
 \Downarrow\\
 \text{Gaussian and splitting monoid construction}\\
 \Downarrow\\
