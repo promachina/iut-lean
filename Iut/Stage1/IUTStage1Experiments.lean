@@ -826,6 +826,24 @@ theorem tensorPowerPresentationComparison_endpoint
         data.target.normalizedLogVolume :=
   data.endpoint
 
+theorem boundedFamilyHullDetLogVolume_endpoint
+    {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β)
+    (i j : ι)
+    (hnei : (data.possibleRegion i).Nonempty)
+    (hnej : (data.possibleRegion j).Nonempty) :
+    data.possibleRegion i ⊆ data.familyHull ∧
+      data.possibleRegion j ⊆ data.familyHull ∧
+      data.quotientMap '' data.possibleRegion i =
+        data.quotientMap '' data.possibleRegion j ∧
+      data.familyHullLogVolume =
+        data.determinantSource.determinantLogVolume ∧
+      data.tensorPower.normalizedLogVolume =
+        data.familyHullLogVolume ∧
+      data.tensorPower.tensorPowerLogVolume =
+        (data.tensorPower.tensorDegree : Real) * data.familyHullLogVolume :=
+  data.endpoint i j hnei hnej
+
 theorem boundedFamilyHullQuotient_endpoint
     {α : Type u} {ι : Type v}
     (data : IUTStage1BoundedFamilyHullQuotientSource α ι)

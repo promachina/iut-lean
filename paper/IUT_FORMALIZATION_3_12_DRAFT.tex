@@ -494,6 +494,11 @@ The bounded-family version of Remark 3.9.5(v)--(vi) is now represented by a
 family-hull quotient source.  For a family \(P_\beta\), the code forms the hull
 of the union, uses it as the collapsed subset in the upper-semi quotient, and
 proves that any two nonempty possible regions have the same quotient image.
+The Ob5 compatibility of this quotient formalism with
+\(\det^{\otimes M}(\phi(P_B))\) and \(\mu_{\log}(\phi(P_B))\) is now represented
+at finite log-volume level: the same family hull that collapses the possible
+regions is identified with the weighted determinant log-volume, and the
+associated tensor-power normalization recovers this family-hull log-volume.
 The Corollary 3.12 possible-image approximant source projects to this
 family-hull quotient source, so the possible-image family used in the
 upper-ray route also carries the corresponding choice-independence theorem.
@@ -856,6 +861,11 @@ The project currently proves the following source-facing results in \Lean{}:
   represented: each possible region lies in the hull of the family union, and
   any two nonempty possible regions have identical images in the quotient that
   collapses this family hull.
+\item The Ob5 determinant/log-volume compatibility of this family quotient is
+  represented at finite level: the same \(\phi(P_B)\) quotient source is paired
+  with a weighted determinant certificate, and \Lean{} proves that the
+  determinant log-volume and normalized tensor-power log-volume are the
+  family-hull log-volume.
 \item The Corollary 3.12 possible-image approximant source now projects to
   this bounded-family quotient source, yielding the same quotient-image
   equality for nonempty possible theta-image choices.

@@ -3043,6 +3043,139 @@ theorem endpoint
 end IUTStage1TensorPowerPresentationComparison
 
 /--
+Remark 3.9.5(vii), (Ob5), at the finite log-volume level.
+
+The source text says that the upper-semi quotient attached to the family hull
+`φ(P_B)` may also be applied compatibly to `det⊗M(φ(P_B))` and
+`μlog(φ(P_B))`.  This record keeps that compatibility in the current Stage 1
+skeleton: the family quotient is built from `φ(P_B)`, while the log-volume of
+that same canonical hull is identified with the weighted determinant source.
+-/
+structure IUTStage1BoundedFamilyHullDetLogVolumeSource
+    (α : Type u) (ι : Type v) (β : Type w) [Fintype β] where
+  hullData : IUTStage1HolomorphicHullLogVolumeShadow α
+  possibleRegion : ι -> Set α
+  determinantSource :
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β
+  compatibility :
+    IUTStage1HullApproximantWeightedDeterminantCompatibility
+      (IUTStage1HullLogVolumeApproximant.canonical
+        hullData (⋃ i, possibleRegion i))
+      determinantSource
+
+namespace IUTStage1BoundedFamilyHullDetLogVolumeSource
+
+variable {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+
+def toBoundedFamilyHullQuotientSource
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    IUTStage1BoundedFamilyHullQuotientSource α ι :=
+  { hullData := data.hullData,
+    possibleRegion := data.possibleRegion }
+
+def familyUnion
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    Set α :=
+  data.toBoundedFamilyHullQuotientSource.familyUnion
+
+def familyHull
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    Set α :=
+  data.toBoundedFamilyHullQuotientSource.familyHull
+
+def familyHullLogVolume
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    Real :=
+  data.hullData.logVolume data.familyHull
+
+noncomputable def tensorPower
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    IUTStage1NaiveFrobeniusTensorPowerLogVolume :=
+  IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+    data.determinantSource
+
+noncomputable def quotientMap
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β)
+    (x : α) :
+    IUTStage1UpperSemiSetQuotient α data.familyHull :=
+  data.toBoundedFamilyHullQuotientSource.quotientMap x
+
+theorem possibleRegion_subset_familyHull
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β)
+    (i : ι) :
+    data.possibleRegion i ⊆ data.familyHull :=
+  data.toBoundedFamilyHullQuotientSource.possibleRegion_subset_familyHull i
+
+theorem quotientMap_images_eq
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β)
+    (i j : ι)
+    (hnei : (data.possibleRegion i).Nonempty)
+    (hnej : (data.possibleRegion j).Nonempty) :
+    data.quotientMap '' data.possibleRegion i =
+      data.quotientMap '' data.possibleRegion j :=
+  data.toBoundedFamilyHullQuotientSource.quotientMap_images_eq
+    i j hnei hnej
+
+theorem familyHullLogVolume_eq_normalized
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    data.familyHullLogVolume = data.determinantSource.normalizedLogVolume := by
+  simpa [familyHullLogVolume, familyHull,
+    toBoundedFamilyHullQuotientSource, IUTStage1BoundedFamilyHullQuotientSource.familyHull,
+    IUTStage1BoundedFamilyHullQuotientSource.familyUnion] using
+    data.compatibility.approximant_eq_weighted_normalized
+
+theorem familyHullLogVolume_eq_determinant
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    data.familyHullLogVolume =
+      data.determinantSource.determinantLogVolume := by
+  rw [data.familyHullLogVolume_eq_normalized,
+    data.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+
+theorem tensorPower_baseLogVolume_eq_familyHullLogVolume
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    data.tensorPower.baseLogVolume = data.familyHullLogVolume := by
+  rw [tensorPower,
+    IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant]
+  exact data.familyHullLogVolume_eq_determinant.symm
+
+theorem tensorPower_normalizedLogVolume_eq_familyHullLogVolume
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    data.tensorPower.normalizedLogVolume = data.familyHullLogVolume := by
+  rw [data.tensorPower.normalizedLogVolume_eq_base,
+    data.tensorPower_baseLogVolume_eq_familyHullLogVolume]
+
+theorem tensorPowerLogVolume_eq_scaled_familyHullLogVolume
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
+    data.tensorPower.tensorPowerLogVolume =
+      (data.tensorPower.tensorDegree : Real) * data.familyHullLogVolume := by
+  rw [data.tensorPower.tensor_power_eq,
+    data.tensorPower_baseLogVolume_eq_familyHullLogVolume]
+
+theorem endpoint
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β)
+    (i j : ι)
+    (hnei : (data.possibleRegion i).Nonempty)
+    (hnej : (data.possibleRegion j).Nonempty) :
+    data.possibleRegion i ⊆ data.familyHull ∧
+      data.possibleRegion j ⊆ data.familyHull ∧
+      data.quotientMap '' data.possibleRegion i =
+        data.quotientMap '' data.possibleRegion j ∧
+      data.familyHullLogVolume =
+        data.determinantSource.determinantLogVolume ∧
+      data.tensorPower.normalizedLogVolume =
+        data.familyHullLogVolume ∧
+      data.tensorPower.tensorPowerLogVolume =
+        (data.tensorPower.tensorDegree : Real) * data.familyHullLogVolume :=
+  ⟨data.possibleRegion_subset_familyHull i,
+    data.possibleRegion_subset_familyHull j,
+    data.quotientMap_images_eq i j hnei hnej,
+    data.familyHullLogVolume_eq_determinant,
+    data.tensorPower_normalizedLogVolume_eq_familyHullLogVolume,
+    data.tensorPowerLogVolume_eq_scaled_familyHullLogVolume⟩
+
+end IUTStage1BoundedFamilyHullDetLogVolumeSource
+
+/--
 Step (xi-e)/(xi-f) upper-ray comparison after hull, determinant, and normalized
 log-volume.
 
