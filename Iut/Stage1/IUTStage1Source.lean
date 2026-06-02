@@ -5350,6 +5350,27 @@ structure IUTStage1StepXToHullUpperRayLogVolume
   q_eq_beforeAverage :
     qPilotLogVolume = corridor.beforeIndeterminacy.averageLogVolume
 
+/--
+Source-facing Step (x) to Step (xi) handoff.
+
+IUT III, Corollary 3.12, Step (xi-d)--(xi-f), compares the Step (x)
+procession-normalized q-pilot log-volume and `(Ind3)` theta upper bound with the
+real objects obtained from the holomorphic hull, determinant, and normalized
+log-volume.  This proposition records only that compatibility for a fixed
+corridor and a fixed hull source.
+-/
+structure IUTStage1StepXHullApproximantHandoff
+    {label : Type u} [Fintype label] {α : Type v} {ι : Type w}
+    (corridor : IUTStage1ProcessionNormalizedIndeterminacyCorridor label)
+    (hullSource :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι) :
+    Prop where
+  theta_eq_ind3Upper :
+    hullSource.approximantLogVolume = corridor.ind3UpperBound
+  q_eq_beforeAverage :
+    hullSource.qPilotLogVolume =
+      corridor.beforeIndeterminacy.averageLogVolume
+
 namespace IUTStage1StepXToHullUpperRayLogVolume
 
 variable {label : Type u} [Fintype label]
@@ -5408,6 +5429,18 @@ noncomputable def ofCorridorAndHullApproximant
       hullSource.approximantLogVolume_eq_normalized_determinant,
     qPilotLogVolume := hullSource.qPilotLogVolume,
     q_eq_beforeAverage := q_eq_beforeAverage }
+
+noncomputable def ofCorridorAndHullApproximantHandoff
+    {α : Type v} {ι : Type w}
+    (corridor : IUTStage1ProcessionNormalizedIndeterminacyCorridor label)
+    (hullSource :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι)
+    (handoff :
+      IUTStage1StepXHullApproximantHandoff corridor hullSource) :
+    IUTStage1StepXToHullUpperRayLogVolume label :=
+  ofCorridorAndHullApproximant
+    corridor hullSource handoff.theta_eq_ind3Upper
+    handoff.q_eq_beforeAverage
 
 noncomputable def ofZModCuspLabelLogVolumeCompatibilitiesAndHullApproximant
     {l : PrimeGeFive} {α : Type v} {ι : Type w}
@@ -5617,6 +5650,31 @@ theorem toUpperRay_q_mem
     data.qPilotLogVolume ∈
       data.toHullDetPilotUpperRayLogVolume.upperRay :=
   data.toHullDetPilotUpperRayLogVolume.qPilot_mem_upperRay
+
+theorem ofCorridorAndHullApproximantHandoff_endpoint
+    {α : Type v} {ι : Type w}
+    (corridor : IUTStage1ProcessionNormalizedIndeterminacyCorridor label)
+    (hullSource :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι)
+    (handoff :
+      IUTStage1StepXHullApproximantHandoff corridor hullSource) :
+    let data :=
+      ofCorridorAndHullApproximantHandoff corridor hullSource handoff
+    data.qPilotLogVolume = hullSource.qPilotLogVolume ∧
+      data.thetaHullLogVolume = hullSource.approximantLogVolume ∧
+      hullSource.thetaImageUnionLogVolume <= data.thetaHullLogVolume ∧
+      data.qPilotLogVolume <= data.thetaHullLogVolume ∧
+      data.toHullDetPilotUpperRayLogVolume.qPilotLogVolume ∈
+        data.toHullDetPilotUpperRayLogVolume.upperRay ∧
+      data.thetaHullLogVolume = hullSource.determinant.normalizedLogVolume :=
+  by
+    intro data
+    exact
+      ⟨rfl, rfl,
+        hullSource.thetaImageUnionLogVolume_le_approximantLogVolume,
+        data.qPilotLogVolume_le_thetaHullLogVolume,
+        data.toUpperRay_q_mem,
+        data.theta_eq_normalized_determinant⟩
 
 def toThetaFiniteLogVolumeEndpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :

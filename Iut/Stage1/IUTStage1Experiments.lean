@@ -7508,6 +7508,26 @@ theorem zmodCuspLabelLogVolumeCompatibility_stepXToHullApproximant_endpoint
         before afterInd1 afterInd2 ind3UpperBound hind1 hind2 hzero hcusp
         hullSource theta_eq_ind3Upper q_eq_beforeAverage
 
+theorem stepXToHullApproximantHandoff_endpoint
+    {label : Type u} [Fintype label] {α : Type v} {ι : Type w}
+    (corridor : IUTStage1ProcessionNormalizedIndeterminacyCorridor label)
+    (hullSource :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι)
+    (handoff :
+      IUTStage1StepXHullApproximantHandoff corridor hullSource) :
+    let data : IUTStage1StepXToHullUpperRayLogVolume label :=
+      IUTStage1StepXToHullUpperRayLogVolume.ofCorridorAndHullApproximantHandoff
+        corridor hullSource handoff
+    data.qPilotLogVolume = hullSource.qPilotLogVolume ∧
+      data.thetaHullLogVolume = hullSource.approximantLogVolume ∧
+      hullSource.thetaImageUnionLogVolume <= data.thetaHullLogVolume ∧
+      data.qPilotLogVolume <= data.thetaHullLogVolume ∧
+      data.toHullDetPilotUpperRayLogVolume.qPilotLogVolume ∈
+        data.toHullDetPilotUpperRayLogVolume.upperRay ∧
+      data.thetaHullLogVolume = hullSource.determinant.normalizedLogVolume :=
+  IUTStage1StepXToHullUpperRayLogVolume.ofCorridorAndHullApproximantHandoff_endpoint
+    corridor hullSource handoff
+
 theorem zmodCuspLabelLogVolumeCompatibility_stepXToHull_q_mem
     {l : PrimeGeFive}
     (before afterInd1 afterInd2 :

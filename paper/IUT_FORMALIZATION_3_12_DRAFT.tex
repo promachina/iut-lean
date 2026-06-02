@@ -550,10 +550,16 @@ derives
 \]
 Thus this part of the corridor no longer has to use only the canonical hull
 itself; it can use any certified hull-approximant inside \(\phi(P)\).
-This has now been specialized to the possible-image union in Corollary 3.12:
-one source object carries the family of possible theta images, the union
-\(P\), a certified approximant \(H\in\Phi(P)\), q-pilot containment
-\(q\subseteq H\), and determinant normalization of \(\mu_{\log}(H)\).
+This has now been specialized to the possible-image union in Corollary 3.12.
+One source object carries the family of possible theta images, the union \(P\),
+a certified approximant \(H\in\Phi(P)\), \(q\subseteq H\), and determinant
+normalization of \(\mu_{\log}(H)\).  The Step (x)-to-Step (xi) comparison is
+now expressed by a named handoff proposition over this fixed corridor and hull
+source.  Thus the two numerical identifications
+\(\mu_{\log}(H)=\Ind3_{\mathrm{upper}}\) and
+\(\mu_{\log}(q)=\overline{\mu}_{\log}(q)_{\mathrm{pre}\text{-}\Ind}\)
+are no longer loose parameters of the endpoint; they are the explicit source
+obligation required before the Step (xi-f) upper-ray datum is formed.
 \Lean{} then derives the whole chain
 \[
   \mu_{\log}(P)\le\mu_{\log}(H)\le\mu_{\log}(\phi(P)),
@@ -1220,6 +1226,10 @@ The project currently proves the following source-facing results in \Lean{}:
   from a certified possible-image hull approximant.  The determinant
   normalization is read from the approximant/determinant compatibility, rather
   than supplied as a separate equality at the bridge boundary.
+\item The Step (x)-to-Step (xi) hull comparison is now a named handoff
+  proposition over a fixed procession corridor and fixed hull source; from this
+  handoff \Lean{} derives q-pilot upper-ray membership and determinant
+  normalization at the Step (xi-f) boundary.
 \item The same upper-ray bridge now has a log-Kummer vertical-shift calibration
   endpoint: the globally calibrated Frobenioid log-volume is the hull boundary
   used in Step (xi-g), not an independently chosen real value.
