@@ -1788,6 +1788,35 @@ theorem tensorProduct_endpoint
 
 end IUTStage1RealifiedFrobenioidDegreeObject
 
+namespace IUTStage1FiniteRealifiedFrobenioidDivisorSource
+
+variable {π : Type u} [Fintype π]
+
+theorem toDegreeObject_tensorProduct_endpoint
+    (left right : IUTStage1FiniteRealifiedFrobenioidDivisorSource π)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean)
+    (hprime : left.primeDegree = right.primeDegree) :
+    (left.tensorProduct right object).toDegreeObject.divisorDegree =
+        (left.toDegreeObject.tensorProduct
+          right.toDegreeObject object).divisorDegree ∧
+      (left.tensorProduct right object).toDegreeObject.unitLogVolume =
+        (left.toDegreeObject.tensorProduct
+          right.toDegreeObject object).unitLogVolume ∧
+      (left.tensorProduct right object).toDegreeObject.realifiedLogVolume =
+        (left.toDegreeObject.tensorProduct
+          right.toDegreeObject object).realifiedLogVolume :=
+  ⟨by
+      simp [toDegreeObject, IUTStage1RealifiedFrobenioidDegreeObject.tensorProduct,
+        tensorProduct_divisorDegree_eq_add left right object hprime],
+    by
+      simp [toDegreeObject, tensorProduct,
+        IUTStage1RealifiedFrobenioidDegreeObject.tensorProduct],
+    by
+      simp [toDegreeObject, IUTStage1RealifiedFrobenioidDegreeObject.tensorProduct,
+        tensorProduct_realifiedLogVolume_eq_add left right object hprime]⟩
+
+end IUTStage1FiniteRealifiedFrobenioidDivisorSource
+
 /--
 Realified Frobenioid source for a realized tensor-packet product.
 

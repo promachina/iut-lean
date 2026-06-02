@@ -717,7 +717,8 @@ divisor-monoid source now computes this divisor degree from prime
 multiplicities and prime degrees, matching the finite shadow of the divisor
 monoid in \IUT{} I, Example 3.5.  The same source now has a divisor-level
 tensor product that adds multiplicities and realified log-volumes when the
-prime-degree data agree.  A
+prime-degree data agree; its projection to the degree-object layer agrees with
+the existing degree-object tensor product.  A
 finite tensor-product operation on these degree objects adds divisor degrees
 and unit log-volumes, and \Lean{} proves that the realified log-volume of the
 tensor product is the sum of the two realified log-volumes.  This operation is
@@ -1088,6 +1089,9 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The finite divisor-monoid source now has its own tensor product:
   multiplicities and unit log-volumes add, and \Lean{} proves additivity of the
   induced divisor degree and realified log-volume.
+\item The projection of this divisor-level tensor product to the realified
+  degree-object layer agrees with the existing degree-object tensor product,
+  preventing these two Frobenioid shadows from drifting apart.
 \item The realified Frobenioid degree layer now has finite morphisms: divisor
   and unit shifts determine the target realified log-volume, identity has zero
   shift, and composition adds both shifts.
