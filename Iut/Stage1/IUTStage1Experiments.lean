@@ -883,6 +883,27 @@ theorem compatibleRealifiedFrobenioidDivisorCopies_endpoint
         copies.logShell.logShellDivisorLogVolume :=
   copies.endpoint
 
+theorem compatibleRealifiedFrobenioidNaiveTensorPower_endpoint
+    {π : Type u} [Fintype π]
+    (copies : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (copies.naiveFrobeniusTensorPower tensorDegree object).theta.base =
+        (copies.naiveFrobeniusTensorPower tensorDegree object).ordinary ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).logShell.base =
+        (copies.naiveFrobeniusTensorPower tensorDegree object).ordinary ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).theta.thetaGeneratorLogVolume =
+        1 ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).logShell.normalizedFrobeniusLogVolume =
+        1 ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).ordinary.realifiedLogVolume =
+        (tensorDegree : Real) * copies.ordinary.realifiedLogVolume ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).theta.thetaDivisorLogVolume =
+        (tensorDegree : Real) * copies.theta.thetaDivisorLogVolume ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).logShell.logShellDivisorLogVolume =
+        (tensorDegree : Real) * copies.logShell.logShellDivisorLogVolume :=
+  copies.naiveFrobeniusTensorPower_endpoint tensorDegree object
+
 theorem environmentGaussianRealifiedFrobenioidEvaluation_endpoint
     {π : Type u} [Fintype π]
     (evaluation :

@@ -837,7 +837,11 @@ copy leaves the normalized Frobenius reading fixed and multiplies the resulting
 log-shell divisor log-volume by \(M\).
 The three finite copies now have a compatibility package: if they share the
 same base divisor source and the theta/log-shell readings are normalized, then
-their log-volume readings are equal.  The environment/Gaussian realified
+their log-volume readings are equal.  This compatibility package is now stable
+under simultaneous Ob4 tensor-powering: the ordinary, theta, and log-shell
+copies are tensor-powered over the same object, the base identifications and
+normalizations are preserved, and all three finite log-volume readings are
+multiplied by \(M\).  The environment/Gaussian realified
 Frobenioid comparison of \IUT{} II, Corollary 4.6(v), is represented at the
 same finite level by an evaluation package between two such compatible copy
 systems.  The package stores only the ordinary divisor-source identification;
@@ -1293,7 +1297,9 @@ The project currently proves the following source-facing results in \Lean{}:
   multiplies the log-shell divisor log-volume by \(M\).
 \item The ordinary, theta, and log-shell divisor copies now have a compatibility
   package: shared base divisor data plus normalized readings imply equality of
-  all three finite log-volume readings.
+  all three finite log-volume readings.  Simultaneous Ob4 tensor-powering of
+  the three copies preserves this compatibility package and multiplies all
+  three finite log-volume readings by \(M\).
 \item The finite environment/Gaussian realified Frobenioid comparison attached
   to \IUT{} II, Corollary 4.6(v), is now encoded as an evaluation package
   between two compatible copy systems.  The only stored bridge is equality of

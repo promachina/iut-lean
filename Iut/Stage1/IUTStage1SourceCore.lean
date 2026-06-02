@@ -1875,6 +1875,57 @@ theorem endpoint
     copies.logShellLogVolume_eq_ordinary,
     copies.thetaLogVolume_eq_logShellLogVolume⟩
 
+def naiveFrobeniusTensorPower
+    (copies : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π :=
+  { ordinary := copies.ordinary.naiveFrobeniusTensorPower tensorDegree object,
+    theta := copies.theta.naiveFrobeniusTensorPower tensorDegree object,
+    logShell := copies.logShell.naiveFrobeniusTensorPower tensorDegree object,
+    theta_base_eq := by
+      simp [IUTStage1ThetaRealifiedFrobenioidDivisorSource.naiveFrobeniusTensorPower,
+        copies.theta_base_eq],
+    logShell_base_eq := by
+      simp [IUTStage1LogShellRealifiedFrobenioidDivisorSource.naiveFrobeniusTensorPower,
+        copies.logShell_base_eq],
+    theta_normalized := by
+      simp [IUTStage1ThetaRealifiedFrobenioidDivisorSource.naiveFrobeniusTensorPower,
+        copies.theta_normalized],
+    logShell_normalized := by
+      rw [copies.logShell.naiveFrobeniusTensorPower_normalizedFrobeniusLogVolume_eq
+        tensorDegree object]
+      exact copies.logShell_normalized }
+
+theorem naiveFrobeniusTensorPower_endpoint
+    (copies : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (copies.naiveFrobeniusTensorPower tensorDegree object).theta.base =
+        (copies.naiveFrobeniusTensorPower tensorDegree object).ordinary ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).logShell.base =
+        (copies.naiveFrobeniusTensorPower tensorDegree object).ordinary ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).theta.thetaGeneratorLogVolume =
+        1 ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).logShell.normalizedFrobeniusLogVolume =
+        1 ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).ordinary.realifiedLogVolume =
+        (tensorDegree : Real) * copies.ordinary.realifiedLogVolume ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).theta.thetaDivisorLogVolume =
+        (tensorDegree : Real) * copies.theta.thetaDivisorLogVolume ∧
+      (copies.naiveFrobeniusTensorPower tensorDegree object).logShell.logShellDivisorLogVolume =
+        (tensorDegree : Real) * copies.logShell.logShellDivisorLogVolume :=
+  ⟨(copies.naiveFrobeniusTensorPower tensorDegree object).theta_base_eq,
+    (copies.naiveFrobeniusTensorPower tensorDegree object).logShell_base_eq,
+    (copies.naiveFrobeniusTensorPower tensorDegree object).theta_normalized,
+    (copies.naiveFrobeniusTensorPower tensorDegree object).logShell_normalized,
+    copies.ordinary.naiveFrobeniusTensorPower_realifiedLogVolume_eq_mul
+      tensorDegree object,
+    copies.theta.naiveFrobeniusTensorPower_thetaDivisorLogVolume_eq_mul
+      tensorDegree object,
+    copies.logShell.naiveFrobeniusTensorPower_logShellDivisorLogVolume_eq_mul
+      tensorDegree object⟩
+
 end IUTStage1CompatibleRealifiedFrobenioidDivisorCopies
 
 /--
