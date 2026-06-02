@@ -913,6 +913,18 @@ theorem hullLogVolumeApproximant_endpoint
       data.hullRegion approximant.approximant = approximant.approximant :=
   approximant.endpoint
 
+theorem holomorphicHullMapLaws_endpoint
+    {α : Type u}
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    {closedHull region region₁ region₂ : Set α}
+    (hclosed : data.hull.IsClosed closedHull)
+    (hsubset : region₁ ⊆ region₂) :
+    data.hullRegion closedHull = closedHull ∧
+      region ⊆ data.hullRegion region ∧
+      data.hullRegion region₁ ⊆ data.hullRegion region₂ ∧
+      data.hullRegion (data.hullRegion region) = data.hullRegion region :=
+  data.remark395_hullMap_laws hclosed hsubset
+
 theorem holomorphicHullShadowRegionBridge_endpoint
     {line : Copy}
     (data : IUTStage1HolomorphicHullLogVolumeShadow (Point line))

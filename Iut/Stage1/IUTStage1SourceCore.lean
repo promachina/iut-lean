@@ -2503,6 +2503,28 @@ theorem hull_idempotent
     data.hullRegion (data.hullRegion region) = data.hullRegion region :=
   data.hull.idempotent region
 
+/--
+Remark 3.9.5(ii) hull-map laws.
+
+For a closed hull `H`, the map `phi(P) = hullRegion P` fixes `H`,
+contains every region `P`, and preserves inclusions `P₁ ⊆ P₂`.  The final
+idempotence clause records that applying the hull map again does not enlarge
+the already formed hull.
+-/
+theorem remark395_hullMap_laws
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    {closedHull region region₁ region₂ : Set α}
+    (hclosed : data.hull.IsClosed closedHull)
+    (hsubset : region₁ ⊆ region₂) :
+    data.hullRegion closedHull = closedHull ∧
+      region ⊆ data.hullRegion region ∧
+      data.hullRegion region₁ ⊆ data.hullRegion region₂ ∧
+      data.hullRegion (data.hullRegion region) = data.hullRegion region :=
+  ⟨data.hull_fix_of_closed hclosed,
+    data.region_subset_hull region,
+    data.hull_mono hsubset,
+    data.hull_idempotent region⟩
+
 theorem logVolume_le_hullLogVolume
     (data : IUTStage1HolomorphicHullLogVolumeShadow α)
     (region : Set α) :
