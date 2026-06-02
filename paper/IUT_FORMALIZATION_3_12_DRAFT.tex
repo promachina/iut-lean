@@ -639,6 +639,11 @@ The map statement in Remark 3.9.5(v) is now lifted to this bounded-family
 source: any set map from a nonempty possible region \(P_i\) into another
 possible region \(P_j\) induces, after quotienting by the family hull, the same
 image as the quotient map on \(P_i\) itself.
+The ``formal empty set'' extension in the same remark is represented by a
+finite formal-intersection system: a family of nonempty subsets of the
+collapsed subset \(S\).  \Lean{} proves that every component has quotient image
+\(\{S\}\), that all component images agree, and that component maps induce the
+same collapsed image after quotienting.
 The Ob5 compatibility of this quotient formalism with
 \(\det^{\otimes M}(\phi(P_B))\) and \(\mu_{\log}(\phi(P_B))\) is now represented
 at finite log-volume level: the same family hull that collapses the possible

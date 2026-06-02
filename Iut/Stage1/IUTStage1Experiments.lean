@@ -1430,6 +1430,32 @@ theorem boundedFamilyHullQuotientMapBetween_endpoint
   data.quotientMap_image_under_map_between_possibleRegions
     i j f hnei hf
 
+theorem upperSemiFormalIntersection_endpoint
+    {E : Type u} {S : Set E} {κ : Type v}
+    (system :
+      IUTStage1UpperSemiSetQuotient.FormalIntersectionSystem
+        (E := E) (S := S) κ)
+    (i j : κ) :
+    system.component i ⊆ S ∧
+      system.quotientImage i =
+        {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+      system.quotientImage i = system.quotientImage j :=
+  system.endpoint i j
+
+theorem upperSemiFormalIntersectionMap_endpoint
+    {E : Type u} {S : Set E} {κ : Type v}
+    (system :
+      IUTStage1UpperSemiSetQuotient.FormalIntersectionSystem
+        (E := E) (S := S) κ)
+    (i j : κ)
+    (f : E -> E)
+    (hf :
+      ∀ x, x ∈ system.component i -> f x ∈ system.component j) :
+    (fun x => IUTStage1UpperSemiSetQuotient.quotientMap S (f x)) ''
+        system.component i =
+      system.quotientImage i :=
+  system.component_map_quotientImage_eq i j f hf
+
 theorem thetaPossibleImagesBoundedFamilyQuotient_endpoint
     {α : Type u} {ι : Type v}
     (data :

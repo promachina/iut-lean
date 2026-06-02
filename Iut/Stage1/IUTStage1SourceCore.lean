@@ -3229,6 +3229,74 @@ theorem quotientMap_eq_iff_of_not_mem
     subst y
     rfl
 
+/--
+Remark 3.9.5(v) formal intersection system.
+
+The source text extends the upper-semi quotient discussion to a "formal empty
+set" treated as an inverse system of nonempty subsets of `S`.  This finite
+skeleton records such a system: every component is nonempty and contained in
+`S`, so after quotienting every component maps to the collapsed point.
+-/
+structure FormalIntersectionSystem (κ : Type v) where
+  component : κ -> Set E
+  component_nonempty : ∀ k, (component k).Nonempty
+  component_subset : ∀ k, component k ⊆ S
+
+namespace FormalIntersectionSystem
+
+variable {κ : Type v}
+
+def quotientImage
+    (system : FormalIntersectionSystem (E := E) (S := S) κ)
+    (k : κ) :
+    Set (IUTStage1UpperSemiSetQuotient E S) :=
+  quotientMap S '' system.component k
+
+theorem quotientImage_eq_collapsed
+    (system : FormalIntersectionSystem (E := E) (S := S) κ)
+    (k : κ) :
+    system.quotientImage k = {collapsed} :=
+  quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+    (system.component_nonempty k) (system.component_subset k)
+
+theorem quotientImages_eq
+    (system : FormalIntersectionSystem (E := E) (S := S) κ)
+    (i j : κ) :
+    system.quotientImage i = system.quotientImage j := by
+  rw [system.quotientImage_eq_collapsed i,
+    system.quotientImage_eq_collapsed j]
+
+theorem component_map_quotientImage_eq
+    (system : FormalIntersectionSystem (E := E) (S := S) κ)
+    (i j : κ)
+    (f : E -> E)
+    (hf :
+      ∀ x, x ∈ system.component i -> f x ∈ system.component j) :
+    (fun x => quotientMap S (f x)) '' system.component i =
+      system.quotientImage i := by
+  simpa [quotientImage] using
+    quotientMap_image_under_map_between_subsets
+      (S := S)
+      (A := system.component i)
+      (B := system.component j)
+      (f := f)
+      (system.component_nonempty i)
+      (system.component_subset i)
+      (system.component_subset j)
+      hf
+
+theorem endpoint
+    (system : FormalIntersectionSystem (E := E) (S := S) κ)
+    (i j : κ) :
+    system.component i ⊆ S ∧
+      system.quotientImage i = {collapsed} ∧
+      system.quotientImage i = system.quotientImage j :=
+  ⟨system.component_subset i,
+    system.quotientImage_eq_collapsed i,
+    system.quotientImages_eq i j⟩
+
+end FormalIntersectionSystem
+
 end IUTStage1UpperSemiSetQuotient
 
 /--
