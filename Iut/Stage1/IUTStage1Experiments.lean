@@ -1417,6 +1417,19 @@ theorem boundedFamilyHullQuotient_endpoint
         data.quotientMap '' data.possibleRegion j :=
   data.endpoint i j hnei hnej
 
+theorem boundedFamilyHullQuotientMapBetween_endpoint
+    {α : Type u} {ι : Type v}
+    (data : IUTStage1BoundedFamilyHullQuotientSource α ι)
+    (i j : ι)
+    (f : α -> α)
+    (hnei : (data.possibleRegion i).Nonempty)
+    (hf :
+      ∀ x, x ∈ data.possibleRegion i -> f x ∈ data.possibleRegion j) :
+    (fun x => data.quotientMap (f x)) '' data.possibleRegion i =
+      data.quotientMap '' data.possibleRegion i :=
+  data.quotientMap_image_under_map_between_possibleRegions
+    i j f hnei hf
+
 theorem thetaPossibleImagesBoundedFamilyQuotient_endpoint
     {α : Type u} {ι : Type v}
     (data :

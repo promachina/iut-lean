@@ -3303,6 +3303,26 @@ theorem quotientMap_images_eq
   rw [data.quotientMap_image_possibleRegion_eq_collapsed i hnei,
     data.quotientMap_image_possibleRegion_eq_collapsed j hnej]
 
+theorem quotientMap_image_under_map_between_possibleRegions
+    (data : IUTStage1BoundedFamilyHullQuotientSource α ι)
+    (i j : ι)
+    (f : α -> α)
+    (hnei : (data.possibleRegion i).Nonempty)
+    (hf :
+      ∀ x, x ∈ data.possibleRegion i -> f x ∈ data.possibleRegion j) :
+    (fun x => data.quotientMap (f x)) '' data.possibleRegion i =
+      data.quotientMap '' data.possibleRegion i := by
+  simpa [quotientMap] using
+    quotientMap_image_under_map_between_subsets
+      (S := data.familyHull)
+      (A := data.possibleRegion i)
+      (B := data.possibleRegion j)
+      (f := f)
+      hnei
+      (data.possibleRegion_subset_familyHull i)
+      (data.possibleRegion_subset_familyHull j)
+      hf
+
 theorem endpoint
     (data : IUTStage1BoundedFamilyHullQuotientSource α ι)
     (i j : ι)
