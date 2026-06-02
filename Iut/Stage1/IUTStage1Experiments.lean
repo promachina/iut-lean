@@ -804,6 +804,22 @@ theorem finiteRealifiedFrobenioidDivisorTensorProductProjection_endpoint
           right.toDegreeObject object).realifiedLogVolume :=
   left.toDegreeObject_tensorProduct_endpoint right object hprime
 
+theorem finiteRealifiedFrobenioidNaiveTensorPowerProjection_endpoint
+    {π : Type u} [Fintype π]
+    (source : IUTStage1FiniteRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).toDegreeObject.divisorDegree =
+        (source.toDegreeObject.naiveFrobeniusTensorPower
+          tensorDegree object).divisorDegree ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).toDegreeObject.unitLogVolume =
+        (source.toDegreeObject.naiveFrobeniusTensorPower
+          tensorDegree object).unitLogVolume ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).toDegreeObject.realifiedLogVolume =
+        (source.toDegreeObject.naiveFrobeniusTensorPower
+          tensorDegree object).realifiedLogVolume :=
+  source.toDegreeObject_naiveFrobeniusTensorPower_endpoint tensorDegree object
+
 theorem thetaRealifiedFrobenioidDivisorSource_endpoint
     {π : Type u} [Fintype π]
     (source : IUTStage1ThetaRealifiedFrobenioidDivisorSource π)
@@ -960,6 +976,18 @@ theorem realifiedFrobenioidTensorProduct_endpoint
       (source.tensorProduct target object).realifiedLogVolume =
         source.realifiedLogVolume + target.realifiedLogVolume :=
   source.tensorProduct_endpoint target object
+
+theorem realifiedFrobenioidNaiveTensorPower_endpoint
+    (source : IUTStage1RealifiedFrobenioidDegreeObject)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).divisorDegree =
+        (tensorDegree : Int) * source.divisorDegree ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).unitLogVolume =
+        (tensorDegree : Real) * source.unitLogVolume ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).realifiedLogVolume =
+        (tensorDegree : Real) * source.realifiedLogVolume :=
+  source.naiveFrobeniusTensorPower_endpoint tensorDegree object
 
 theorem realifiedFrobenioidDegreeMorphism_identity_endpoint
     (source : IUTStage1RealifiedFrobenioidDegreeObject) :

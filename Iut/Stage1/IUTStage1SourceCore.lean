@@ -2292,6 +2292,32 @@ theorem tensorProduct_endpoint
         source.realifiedLogVolume + target.realifiedLogVolume :=
   ⟨rfl, rfl, rfl⟩
 
+def naiveFrobeniusTensorPower
+    (source : IUTStage1RealifiedFrobenioidDegreeObject)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    IUTStage1RealifiedFrobenioidDegreeObject :=
+  { object := object,
+    divisorDegree := (tensorDegree : Int) * source.divisorDegree,
+    unitLogVolume := (tensorDegree : Real) * source.unitLogVolume,
+    realifiedLogVolume := (tensorDegree : Real) * source.realifiedLogVolume,
+    realified_logVolume_eq := by
+      rw [source.realifiedLogVolume_eq]
+      norm_num [Int.cast_mul]
+      ring }
+
+theorem naiveFrobeniusTensorPower_endpoint
+    (source : IUTStage1RealifiedFrobenioidDegreeObject)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).divisorDegree =
+        (tensorDegree : Int) * source.divisorDegree ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).unitLogVolume =
+        (tensorDegree : Real) * source.unitLogVolume ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).realifiedLogVolume =
+        (tensorDegree : Real) * source.realifiedLogVolume :=
+  ⟨rfl, rfl, rfl⟩
+
 end IUTStage1RealifiedFrobenioidDegreeObject
 
 namespace IUTStage1FiniteRealifiedFrobenioidDivisorSource
@@ -2320,6 +2346,31 @@ theorem toDegreeObject_tensorProduct_endpoint
     by
       simp [toDegreeObject, IUTStage1RealifiedFrobenioidDegreeObject.tensorProduct,
         tensorProduct_realifiedLogVolume_eq_add left right object hprime]⟩
+
+theorem toDegreeObject_naiveFrobeniusTensorPower_endpoint
+    (source : IUTStage1FiniteRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).toDegreeObject.divisorDegree =
+        (source.toDegreeObject.naiveFrobeniusTensorPower
+          tensorDegree object).divisorDegree ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).toDegreeObject.unitLogVolume =
+        (source.toDegreeObject.naiveFrobeniusTensorPower
+          tensorDegree object).unitLogVolume ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).toDegreeObject.realifiedLogVolume =
+        (source.toDegreeObject.naiveFrobeniusTensorPower
+          tensorDegree object).realifiedLogVolume :=
+  ⟨by
+      simp [toDegreeObject,
+        IUTStage1RealifiedFrobenioidDegreeObject.naiveFrobeniusTensorPower,
+        naiveFrobeniusTensorPower_divisorDegree_eq_mul source tensorDegree object],
+    by
+      simp [toDegreeObject, naiveFrobeniusTensorPower,
+        IUTStage1RealifiedFrobenioidDegreeObject.naiveFrobeniusTensorPower],
+    by
+      simp [toDegreeObject,
+        IUTStage1RealifiedFrobenioidDegreeObject.naiveFrobeniusTensorPower,
+        naiveFrobeniusTensorPower_realifiedLogVolume_eq_mul source tensorDegree object]⟩
 
 end IUTStage1FiniteRealifiedFrobenioidDivisorSource
 
