@@ -501,10 +501,13 @@ source.  The corresponding Hodge--Arakelov route consumes one object carrying
 the canonical nonzero theta-root label, the selected upper-semi entry, and the
 realified-Frobenioid log-Kummer packet source before entering the
 \(C_\Theta\)-dichotomy.
-This theta-root attached source now has the same reduced constructor: the
-theta-root label package is combined with entry membership and the
-packet-local/target alignments, and \Lean{} projects the canonical-label facts
-together with the Step (x) upper-semi endpoint.
+This theta-root attached source now has the same source-reduced
+vertical-\(IQ\) constructor: the theta-root label package is combined with the
+upper-semi packet-normalized entry, packet-local source alignments, realified
+Kummer/forgetting compatibility, and the exact vertical-\(IQ\) target.  \Lean{}
+then projects the canonical-label facts, transfer-chain product equalities,
+target packet calibrations, q-pilot non-interference, and the Step (x)
+upper-semi inequality from this single source object.
 The Hodge/\(\SHE/\IPL\)/hull route has the same realified endpoint: its
 alignment record supplies the Hodge--Arakelov Gaussian comparison,
 canonical-one preservation, q-pilot positivity, and theta/Hodge log-volume
@@ -1145,9 +1148,12 @@ The project currently proves the following source-facing results in \Lean{}:
   packet-local equality with the entry source, entry-source equality with the
   \((\Ind3)\) source, packet-normalized equality for the theta average,
   \((\Ind3)\) target, and entry target, and q-pilot non-interference.
-\item The theta-root attached realified entry source now has the same reduced
-  constructor and projects both the canonical nonzero theta-root label facts
-  and the realified Step (x) upper-semi endpoint.
+\item The theta-root attached realified entry source now has the same
+  source-reduced vertical-\(IQ\) constructor: the upper-semi packet entry,
+  packet-local source alignments, realified Kummer/forgetting compatibility,
+  and exact vertical-\(IQ\) target construct one source object that projects
+  the canonical nonzero theta-root label facts and the realified Step (x)
+  upper-semi endpoint.
 \item The Hodge/\(\SHE/\IPL\)/hull route now consumes this reduced theta-root
   Step (x) data directly: the theorem constructs the realified source internally
   and concludes the current \(C_\Theta\) dichotomy.
