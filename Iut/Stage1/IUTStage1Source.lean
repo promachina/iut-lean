@@ -40426,6 +40426,24 @@ def toPacketCorrespondence
   NonarchimedeanLogKummerPacketCorrespondenceSource.ofCalibrations
     source.sourceCalibration source.targetCalibration
 
+/--
+Recover the packet-local source-alignment object from a single realified
+Frobenioid log-Kummer packet source.
+
+The source calibration supplies the packet-local/source and source/product
+equalities.  The realified Frobenioid compatibilities provide the Kummer and
+forgetting transfers needed to derive the packet-local `(Ind3)` source equality.
+-/
+def toPacketLocalSourceAlignment
+    (source :
+      NonarchimedeanRealifiedFrobenioidLogKummerPacketSource
+        audited thetaAverage logKummer entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    NonarchimedeanLogKummerPacketLocalSourceAlignment
+      audited entry monoAnalyticD.toRealized :=
+  source.sourceCalibration.toPacketLocalSourceAlignment
+    source.toKummerTransfer source.toForgettingTransfer
+
 def ofEntryTargetThetaAlignment
     (entrySource :
       NonarchimedeanPacketNormalizedEntryTargetSource audited)
@@ -40680,6 +40698,21 @@ theorem forgetting_preserves_productLogVolume
     monoAnalyticD.toRealized.product.productLogVolume =
       holomorphicD.toRealized.product.productLogVolume :=
   source.toForgettingTransfer.preserves_productLogVolume
+
+theorem packetLocalSourceAlignment_endpoint
+    (source :
+      NonarchimedeanRealifiedFrobenioidLogKummerPacketSource
+        audited thetaAverage logKummer entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    let alignment := source.toPacketLocalSourceAlignment;
+    alignment.packetLocalObject_eq_entrySource =
+        source.sourceCalibration.packetLocalObject_eq_entrySource ∧
+      alignment.entrySource_eq_monoAnalyticProduct =
+        source.sourceCalibration.entrySource_eq_monoAnalyticProduct ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  source.sourceCalibration.toPacketLocalSourceAlignment_endpoint
+    source.toKummerTransfer source.toForgettingTransfer
 
 theorem packetCorrespondence_endpoint
     (source :
