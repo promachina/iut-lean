@@ -49315,6 +49315,121 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeFiniteDivisorCanonicalExact
       thetaSigned_le_cTheta_absLogQ
 
 /--
+Audit form of the finite-divisor canonical exact vertical-`IQ` route.
+
+Besides the final \(C_\Theta\) dichotomy, this endpoint exposes the
+finite-divisor source-alignment equalities used to build the Step (x) source:
+packet-local equality with the entry source, entry-source equality with the
+mono-analytic realified product, divisor degree normalization, source equality
+with the `(Ind3)` source, and the upper-semi inequality.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeFiniteDivisorCanonicalExactVerticalIQ_audit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (alignment :
+      IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+        part audited record X C)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    let monoAnalyticD :=
+      divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD
+        monoAnalyticTheater;
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.toRealized.product.productLogVolume ∧
+      product.productLogVolume = divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  intro monoAnalyticD
+  rcases
+    (open NonarchimedeanLogKummerPacketLocalSourceAlignment in
+      ofFiniteDivisorTensorPacketProduct_endpoint
+          divisorPacket IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          monoAnalyticTheater packetLocalObject_eq_entrySource
+          packetLocalObjectFinite_eq_divisorRealified
+          packetLocalObjectFinite_eq_ind3Source) with
+    ⟨packet_eq_entry, entry_eq_product, product_eq_realified,
+      packet_eq_ind3, upper_semi⟩
+  exact
+    ⟨packet_eq_entry, entry_eq_product, product_eq_realified,
+      packet_eq_ind3, upper_semi, targetSource.hasPreciseFrobenioidIsomorphisms,
+      (part.boundarySignedEqualityOrStrictCTheta_of_hodgeFiniteDivisorCanonicalExactVerticalIQ
+        profile audited alignment source_profile_eq thetaRootSource upperSemiEntry
+        divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+        holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+        holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+        packetLocalObjectFinite_eq_divisorRealified
+        packetLocalObjectFinite_eq_ind3Source targetSource cTheta
+        thetaSigned_le_cTheta_absLogQ).2⟩
+
+/--
 Hodge/SHE/IPL/hull route through a packet-normalized Step (x) theta-source
 alignment.
 
