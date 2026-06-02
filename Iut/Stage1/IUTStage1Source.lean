@@ -41502,6 +41502,70 @@ theorem ofUpperSemiEntrySourceAlignedAndVerticalIQTarget_endpoint
     sourceAlignment.packetLocalObjectFinite_eq_ind3Source
     targetSource
 
+/--
+Source-aligned vertical-`IQ` Step (x) endpoint with the exact `FMOD` guard.
+
+This is the entry-level form corresponding to IUT III, Remark 3.10.1: the
+target side may be used as a precise common log-Kummer target only when the
+vertical Frobenioid comparison is the exact `FMOD` mode.  The theorem exposes
+that guard together with the Kummer/forgetting product chain, target
+packet-normalization, q-pilot non-interference, and the upper-semi inequality.
+-/
+theorem ofUpperSemiEntrySourceAlignedAndVerticalIQTarget_precise_endpoint
+    {logKummerId : LogKummerCorrespondenceId}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited thetaAverage logKummerId upperSemiEntry.toEntry) :
+    targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      holomorphicD.toRealized.product.productLogVolume =
+        holomorphicF.toRealized.product.productLogVolume ∧
+      monoAnalyticD.toRealized.product.productLogVolume =
+        holomorphicD.toRealized.product.productLogVolume ∧
+      upperSemiEntry.toEntry ∈
+        audited.choice.upper_semi_state.nonarchimedeanInclusions ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      thetaAverage =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        thetaAverage :=
+  ⟨targetSource.hasPreciseFrobenioidIsomorphisms,
+    ofUpperSemiEntrySourceAlignedAndVerticalIQTarget_endpoint
+      (logKummerId := logKummerId)
+      upperSemiEntry kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization
+      monoAnalyticD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten sourceAlignment targetSource⟩
+
 end NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
 
 /--
