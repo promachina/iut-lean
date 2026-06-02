@@ -1832,7 +1832,7 @@ transfer.
 
 This is a finite realified shadow of the IUT III statement that the
 Frobenioid-theoretic side and the vertically coric/etale side are related by
-Kummer/log-Kummer correspondences.  The theorem below projects it to the older
+Kummer/log-Kummer correspondences.  The theorem below projects it to the current
 `IUTStage1TensorPacketCoricTransfer` by deriving product-log-volume equality
 from equality of realified Frobenioid log-volumes.
 -/
@@ -2543,7 +2543,7 @@ Remark 3.9.5(vii), (Ob3-1-1), describes determinant factors attached to the
 direct summands of the tensor packet of log-shells.  This record keeps that
 finite additive skeleton: the bundle log-volume is the sum of direct-summand
 log-volumes, while the structure-sheaf adjustment and positive weight are the
-same data consumed by the older localization interface.
+same data consumed by the localization interface.
 -/
 structure IUTStage1ArithmeticVectorBundleLocalizationSource
     (γ : Type u) [Fintype γ] where
@@ -2695,7 +2695,7 @@ Finite determinant source for Remark 3.9.5(vii), (Ob3).
 The determinant log-volume is constructed as the finite weighted sum of
 structure-sheaf-normalized localization contributions.  The positive tensor
 power and normalized log-volume are then derived by definitions before being
-projected to the older determinant interface.
+projected to the determinant interface.
 -/
 structure IUTStage1ArithmeticVectorBundleWeightedDeterminantSource
     (β : Type u) [Fintype β] where

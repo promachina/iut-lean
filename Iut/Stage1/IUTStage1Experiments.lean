@@ -7948,6 +7948,23 @@ theorem stepXToHullUpperRay_logKummerVerticalShiftCalibration_endpoint
           calibration.localPrimeStepLogVolume = 0) :=
   calibration.endpoint
 
+theorem stepXToHullUpperRay_cq3Cq4ClosedLoopGuard_endpoint
+    {label : Type u} [Fintype label]
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (guard :
+      IUTStage1StepXToHullUpperRayLogVolume.CQ3CQ4ClosedLoopGuard data) :
+    guard.cq3HullDetLogVolume = guard.cq4CalibratedLogVolume ∧
+      data.qPilotLogVolume <= guard.cq3HullDetLogVolume ∧
+      data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume <=
+        guard.cq4CalibratedLogVolume ∧
+      data.toQPilotTwoComputationLogVolume.outputHullLogVolume <=
+        guard.cq4CalibratedLogVolume ∧
+      (guard.calibration.localData.shiftedLogVolume =
+          guard.cq4CalibratedLogVolume ↔
+        guard.calibration.localExponent = 0 ∨
+          guard.calibration.localPrimeStepLogVolume = 0) :=
+  guard.endpoint
+
 theorem stepXToHullUpperRay_twoComputation_fig38_endpoint
     {label : Type u} [Fintype label]
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :

@@ -6315,6 +6315,96 @@ theorem endpoint
 
 end LogKummerVerticalShiftCalibration
 
+/--
+Finite cQ3/cQ4 closed-loop guard for Remark 3.9.5(ix).
+
+The source-paper assertion is not that passing to log-volumes alone preserves
+the `F^{×μ}`-prime-strip data.  Rather, the hull/determinant passage (cQ3)
+and the log-Kummer vertical-shift adjustment (cQ4) must be traversed before
+the log-volume quotient (sQ5).  At the present finite log-volume level, this
+record ties the cQ3 hull/determinant value and the cQ4 calibrated value to the
+same Step (xi) upper-ray boundary.
+-/
+structure CQ3CQ4ClosedLoopGuard
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) where
+  calibration : LogKummerVerticalShiftCalibration data
+  cq3HullDetLogVolume : Real
+  cq3_eq_thetaHull :
+    cq3HullDetLogVolume = data.thetaHullLogVolume
+  cq4CalibratedLogVolume : Real
+  cq4_eq_calibrated :
+    cq4CalibratedLogVolume = calibration.globalData.calibratedLogVolume
+
+namespace CQ3CQ4ClosedLoopGuard
+
+theorem cq3_eq_cq4
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (guard : CQ3CQ4ClosedLoopGuard data) :
+    guard.cq3HullDetLogVolume = guard.cq4CalibratedLogVolume := by
+  calc
+    guard.cq3HullDetLogVolume = data.thetaHullLogVolume :=
+      guard.cq3_eq_thetaHull
+    _ = guard.calibration.globalData.calibratedLogVolume :=
+      guard.calibration.calibratedLogVolume_eq_thetaHull.symm
+    _ = guard.cq4CalibratedLogVolume :=
+      guard.cq4_eq_calibrated.symm
+
+theorem qPilotLogVolume_le_cq3
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (guard : CQ3CQ4ClosedLoopGuard data) :
+    data.qPilotLogVolume <= guard.cq3HullDetLogVolume := by
+  rw [guard.cq3_eq_thetaHull]
+  exact data.qPilotLogVolume_le_thetaHullLogVolume
+
+theorem twoComputation_input_le_cq4
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (guard : CQ3CQ4ClosedLoopGuard data) :
+    data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume <=
+      guard.cq4CalibratedLogVolume := by
+  rw [guard.cq4_eq_calibrated]
+  exact guard.calibration.twoComputation_input_le_calibrated
+
+theorem twoComputation_output_le_cq4
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (guard : CQ3CQ4ClosedLoopGuard data) :
+    data.toQPilotTwoComputationLogVolume.outputHullLogVolume <=
+      guard.cq4CalibratedLogVolume := by
+  rw [guard.cq4_eq_calibrated]
+  exact guard.calibration.twoComputation_output_le_calibrated
+
+theorem shiftedLocal_eq_cq4_iff_exponent_zero_or_step_zero
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (guard : CQ3CQ4ClosedLoopGuard data) :
+    guard.calibration.localData.shiftedLogVolume =
+        guard.cq4CalibratedLogVolume ↔
+      guard.calibration.localExponent = 0 ∨
+        guard.calibration.localPrimeStepLogVolume = 0 := by
+  rw [guard.cq4_eq_calibrated]
+  rw [eq_comm]
+  exact
+    guard.calibration.calibrated_eq_shifted_iff_exponent_zero_or_step_zero
+
+theorem endpoint
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (guard : CQ3CQ4ClosedLoopGuard data) :
+    guard.cq3HullDetLogVolume = guard.cq4CalibratedLogVolume ∧
+      data.qPilotLogVolume <= guard.cq3HullDetLogVolume ∧
+      data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume <=
+        guard.cq4CalibratedLogVolume ∧
+      data.toQPilotTwoComputationLogVolume.outputHullLogVolume <=
+        guard.cq4CalibratedLogVolume ∧
+      (guard.calibration.localData.shiftedLogVolume =
+          guard.cq4CalibratedLogVolume ↔
+        guard.calibration.localExponent = 0 ∨
+          guard.calibration.localPrimeStepLogVolume = 0) :=
+  ⟨guard.cq3_eq_cq4,
+    guard.qPilotLogVolume_le_cq3,
+    guard.twoComputation_input_le_cq4,
+    guard.twoComputation_output_le_cq4,
+    guard.shiftedLocal_eq_cq4_iff_exponent_zero_or_step_zero⟩
+
+end CQ3CQ4ClosedLoopGuard
+
 theorem twoComputation_determinant_endpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
     let twoComputation := data.toQPilotTwoComputationLogVolume;

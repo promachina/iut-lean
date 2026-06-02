@@ -623,8 +623,8 @@ and unit log-volumes, and \Lean{} proves that the realified log-volume of the
 tensor product is the sum of the two realified log-volumes.  This operation is
 also lifted to the tensor-packet source layer: if an existing tensor-packet
 product source is certified to carry the tensor-product Frobenioid degree,
-\Lean{} derives additivity of its packet product log-volume.  A
-Frobenioid Kummer-compatibility certificate then projects to the older coric
+\Lean{} derives additivity of its packet product log-volume.  A Frobenioid
+Kummer-compatibility certificate then projects to the coric
 tensor-packet transfer by deriving equality of product log-volumes from
 equality of realified Frobenioid log-volumes, while retaining the
 Hodge-theater history guard.  This is still a finite degree-level shadow, not
@@ -637,6 +637,14 @@ calibration.  \Lean{} proves that the calibrated value is the hull boundary
 used by the upper ray, that both q-pilot computations are bounded by this
 calibrated value, and that a shifted local value coincides with the calibrated
 value only when the shift term vanishes.
+Remark 3.9.5(ix)'s distinction between (cQ3),(cQ4) and (iQ5) is now represented
+by a finite closed-loop guard.  The guard ties the hull/determinant log-volume
+obtained from the (sQ3) route and the calibrated log-Kummer log-volume obtained
+from the (sQ4) route to the same Step (xi) boundary.  \Lean{} then proves that
+the two values coincide, while the direct shifted local log-volume agrees with
+this boundary exactly in the zero-shift case.  This does not construct
+\(F^{\times\mu}\)-prime-strips; it records the present formal boundary between
+the source-faithful route and the log-volume-only quotient.
 The global-to-local realified restriction from \IUT{} I, Example 3.5 is also
 encoded at degree level: the restricted global prime log-volume is
 \([K_v:(F_{\mathrm{mod}})_v]^{-1}\) times the local prime log-volume, and
@@ -899,7 +907,7 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The determinant input can now be produced from a finite weighted
   localization source: adjusted vector-bundle summand log-volumes are summed,
   the positive tensor-power value is derived, and normalization is proved to
-  return the determinant log-volume before projecting to the older determinant
+  return the determinant log-volume before projecting to the determinant
   interface.
 \item Each localization summand can now itself be produced from a finite
   direct-summand source: the bundle log-volume is the sum of direct-summand
@@ -939,6 +947,10 @@ The project currently proves the following source-facing results in \Lean{}:
   two-computation handoff: global realified Frobenioid calibration selects the
   hull upper-ray boundary, both q-pilot readings are bounded by it, and shifted
   local coincidence is equivalent to a zero shift term.
+\item The cQ3/cQ4 portion of Remark 3.9.5(ix) now has a finite closed-loop
+  guard: the hull/determinant value and the calibrated log-Kummer value are
+  proved equal as the same Step (xi) boundary, while the direct log-volume-only
+  shifted value agrees with that boundary only under the zero-shift condition.
 \item The global-to-local realified Frobenioid restriction factor of \IUT{} I,
   Example 3.5 is formalized as inverse-extension-degree scaling of the local
   prime log-volume, with the degree-normalization identity proved in \Lean{}.
@@ -1092,6 +1104,10 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The same upper-ray bridge now has a log-Kummer vertical-shift calibration
   endpoint: the globally calibrated Frobenioid log-volume is the hull boundary
   used in Step (xi-g), not an independently chosen real value.
+\item The Step (xi) endpoint now exposes the finite cQ3/cQ4 closed loop:
+  hull/determinant passage and log-Kummer calibration produce the same boundary,
+  and the shifted local log-volume route is equivalent to a zero-shift
+  specialization.
 \item A Hodge/\(\SHE/\IPL\)/hull packet-target route now derives the target-side
   log-volume equality from \(\SHE\) synchronization and reads \(q\)-positivity
   from the hull constructor; the source-side theta/Hodge equality is derived
