@@ -824,9 +824,10 @@ Below the packet layer, the code now has a first realified Frobenioid degree
 source.  A finite Frobenioid object carries a divisor degree, a unit
 log-volume, and their realified log-volume.  A finite divisor-product source
 now records a tensor-packet product over base valuations whose packet factors
-are the real readings of the corresponding divisor-prime contributions; from
-these local equalities, \Lean{} derives that the packet product log-volume is
-the realified divisor log-volume.  A finite divisor-monoid source computes this
+are the real readings of the corresponding divisor-prime contributions plus
+base-local unit contributions; when the unit terms sum to the divisor source's
+unit log-volume, \Lean{} derives that the packet product log-volume is the
+realified divisor log-volume.  A finite divisor-monoid source computes this
 divisor degree from prime
 multiplicities and prime degrees, matching the finite shadow of the divisor
 monoid in \IUT{} I, Example 3.5.  The same source now has a divisor-level
@@ -1311,7 +1312,9 @@ The project currently proves the following source-facing results in \Lean{}:
   \(\sum_p m_p\deg(p)\) before adding the unit log-volume.
 \item A finite divisor-product source now turns a base-valuation tensor-packet
   product into a realified Frobenioid packet source when every packet factor is
-  the real reading of its divisor-prime contribution and the unit term is zero.
+  the real reading of its divisor-prime contribution plus a base-local unit
+  contribution, and the unit contributions sum to the divisor source's unit
+  log-volume.
   The equality between packet product log-volume and realified Frobenioid
   log-volume is derived from the finite sum, not supplied as a separate field.
 \item The finite divisor-monoid source now has its own tensor product:

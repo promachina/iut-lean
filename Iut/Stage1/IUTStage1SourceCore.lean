@@ -2496,23 +2496,28 @@ structure IUTStage1FiniteDivisorTensorPacketProductSource
     (product : IUTStage1BaseValuationTensorPacketProductLogVolume kind j) where
   divisor :
     IUTStage1FiniteRealifiedFrobenioidDivisorSource (Fin product.baseCount)
-  unitLogVolume_zero : divisor.unitLogVolume = 0
+  unitContribution : Fin product.baseCount -> Real
+  unitLogVolume_eq_sum :
+    divisor.unitLogVolume =
+      Finset.univ.sum unitContribution
   packet_logVolume_eq_divisorContribution :
     ∀ base : Fin product.baseCount,
       (product.packet base).tensorPacketLogVolume =
         ((divisor.primeMultiplicity base : Int) *
-          divisor.primeDegree base : Real)
+          divisor.primeDegree base : Real) +
+          unitContribution base
 
 namespace IUTStage1FiniteDivisorTensorPacketProductSource
 
 variable {kind : IUTStage1PlaceKind} {j : Nat}
 variable {product : IUTStage1BaseValuationTensorPacketProductLogVolume kind j}
 
-theorem productLogVolume_eq_divisorDegree
+theorem productLogVolume_eq_divisorDegree_add_unit
     (source :
       IUTStage1FiniteDivisorTensorPacketProductSource product) :
     product.productLogVolume =
-      (source.divisor.divisorDegree : Real) := by
+      (source.divisor.divisorDegree : Real) +
+        Finset.univ.sum source.unitContribution := by
   calc
     product.productLogVolume =
         Finset.univ.sum fun base : Fin product.baseCount =>
@@ -2521,21 +2526,25 @@ theorem productLogVolume_eq_divisorDegree
     _ =
         Finset.univ.sum fun base : Fin product.baseCount =>
           ((source.divisor.primeMultiplicity base : Int) *
-            source.divisor.primeDegree base : Real) := by
+            source.divisor.primeDegree base : Real) +
+            source.unitContribution base := by
       apply Finset.sum_congr rfl
       intro base _hbase
       exact source.packet_logVolume_eq_divisorContribution base
-    _ = (source.divisor.divisorDegree : Real) := by
-      simp [IUTStage1FiniteRealifiedFrobenioidDivisorSource.divisorDegree]
+    _ =
+        (source.divisor.divisorDegree : Real) +
+          Finset.univ.sum source.unitContribution := by
+      simp [IUTStage1FiniteRealifiedFrobenioidDivisorSource.divisorDegree,
+        Finset.sum_add_distrib]
 
 theorem productLogVolume_eq_realified
     (source :
       IUTStage1FiniteDivisorTensorPacketProductSource product) :
     product.productLogVolume =
       source.divisor.realifiedLogVolume := by
-  rw [source.productLogVolume_eq_divisorDegree]
+  rw [source.productLogVolume_eq_divisorDegree_add_unit]
   simp [IUTStage1FiniteRealifiedFrobenioidDivisorSource.realifiedLogVolume,
-    source.unitLogVolume_zero]
+    source.unitLogVolume_eq_sum]
 
 def toRealifiedFrobenioidTensorPacketProductSource
     (source :
