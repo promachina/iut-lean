@@ -3990,6 +3990,37 @@ theorem qPilotLogVolume_le_thetaHullLogVolume
     data.qPilotLogVolume <= data.thetaHullLogVolume :=
   data.hullData.logVolume_le_of_subset_hull data.q_subset_theta_hull
 
+theorem thetaImageUnion_subset_thetaHull
+    (data : IUTStage1ThetaPossibleImagesHullLogVolumeShadow α ι) :
+    data.thetaImageUnion ⊆ data.thetaHull :=
+  data.hullData.region_subset_hull data.thetaImageUnion
+
+theorem possibleThetaImage_subset_thetaHull
+    (data : IUTStage1ThetaPossibleImagesHullLogVolumeShadow α ι)
+    (i : ι) :
+    data.possibleThetaImage i ⊆ data.thetaHull := by
+  intro x hx
+  exact data.thetaImageUnion_subset_thetaHull
+    (Set.mem_iUnion.mpr ⟨i, hx⟩)
+
+theorem thetaHull_hullRegion_eq_self
+    (data : IUTStage1ThetaPossibleImagesHullLogVolumeShadow α ι) :
+    data.hullData.hullRegion data.thetaHull = data.thetaHull := by
+  simpa [thetaHull] using
+    data.hullData.hull_idempotent data.thetaImageUnion
+
+theorem thetaHullContainment_endpoint
+    (data : IUTStage1ThetaPossibleImagesHullLogVolumeShadow α ι)
+    (i : ι) :
+    data.thetaImageUnion ⊆ data.thetaHull ∧
+      data.possibleThetaImage i ⊆ data.thetaHull ∧
+      data.qPilotRegion ⊆ data.thetaHull ∧
+      data.hullData.hullRegion data.thetaHull = data.thetaHull :=
+  ⟨data.thetaImageUnion_subset_thetaHull,
+    data.possibleThetaImage_subset_thetaHull i,
+    data.q_subset_theta_hull,
+    data.thetaHull_hullRegion_eq_self⟩
+
 theorem thetaHullLogVolume_eq_normalized_determinant
     (data : IUTStage1ThetaPossibleImagesHullLogVolumeShadow α ι) :
     data.thetaHullLogVolume = data.determinant.normalizedLogVolume := by
@@ -4218,6 +4249,57 @@ theorem qPilotLogVolume_le_approximantLogVolume
       IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι) :
     data.qPilotLogVolume <= data.approximantLogVolume :=
   data.hullData.logVolume_mono data.q_subset_approximant
+
+theorem thetaImageUnion_subset_thetaHull
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι) :
+    data.thetaImageUnion ⊆ data.thetaHull :=
+  data.hullData.region_subset_hull data.thetaImageUnion
+
+theorem possibleThetaImage_subset_thetaHull
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι)
+    (i : ι) :
+    data.possibleThetaImage i ⊆ data.thetaHull := by
+  intro x hx
+  exact data.thetaImageUnion_subset_thetaHull
+    (Set.mem_iUnion.mpr ⟨i, hx⟩)
+
+theorem approximantRegion_subset_thetaHull
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι) :
+    data.approximantRegion ⊆ data.thetaHull :=
+  data.approximant.approximant_subset_hull
+
+theorem qPilotRegion_subset_thetaHull
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι) :
+    data.qPilotRegion ⊆ data.thetaHull :=
+  fun _ hx =>
+    data.approximantRegion_subset_thetaHull
+      (data.q_subset_approximant hx)
+
+theorem thetaHull_hullRegion_eq_self
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι) :
+    data.hullData.hullRegion data.thetaHull = data.thetaHull := by
+  simpa [thetaHull] using
+    data.hullData.hull_idempotent data.thetaImageUnion
+
+theorem thetaHullContainment_endpoint
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι)
+    (i : ι) :
+    data.thetaImageUnion ⊆ data.thetaHull ∧
+      data.possibleThetaImage i ⊆ data.thetaHull ∧
+      data.approximantRegion ⊆ data.thetaHull ∧
+      data.qPilotRegion ⊆ data.thetaHull ∧
+      data.hullData.hullRegion data.thetaHull = data.thetaHull :=
+  ⟨data.thetaImageUnion_subset_thetaHull,
+    data.possibleThetaImage_subset_thetaHull i,
+    data.approximantRegion_subset_thetaHull,
+    data.qPilotRegion_subset_thetaHull,
+    data.thetaHull_hullRegion_eq_self⟩
 
 theorem qPilotLogVolume_le_thetaHullLogVolume
     (data :

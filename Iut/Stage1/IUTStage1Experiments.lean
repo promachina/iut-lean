@@ -1017,6 +1017,28 @@ theorem thetaPossibleImagesHullApproximant_endpoint
         data.determinant.determinantLogVolume :=
   data.endpoint
 
+theorem thetaPossibleImagesHullContainment_endpoint
+    {α : Type u} {ι : Type v}
+    (data : IUTStage1ThetaPossibleImagesHullLogVolumeShadow α ι)
+    (i : ι) :
+    data.thetaImageUnion ⊆ data.thetaHull ∧
+      data.possibleThetaImage i ⊆ data.thetaHull ∧
+      data.qPilotRegion ⊆ data.thetaHull ∧
+      data.hullData.hullRegion data.thetaHull = data.thetaHull :=
+  data.thetaHullContainment_endpoint i
+
+theorem thetaPossibleImagesHullApproximantContainment_endpoint
+    {α : Type u} {ι : Type v}
+    (data :
+      IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow α ι)
+    (i : ι) :
+    data.thetaImageUnion ⊆ data.thetaHull ∧
+      data.possibleThetaImage i ⊆ data.thetaHull ∧
+      data.approximantRegion ⊆ data.thetaHull ∧
+      data.qPilotRegion ⊆ data.thetaHull ∧
+      data.hullData.hullRegion data.thetaHull = data.thetaHull :=
+  data.thetaHullContainment_endpoint i
+
 theorem sourceHullDetDataFromUnionSubset_endpoint
     {source target : Copy} {index : Type u}
     {package : IUTStage1SourcePackage source target index}
