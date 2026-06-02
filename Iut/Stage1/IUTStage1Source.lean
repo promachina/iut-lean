@@ -40303,6 +40303,89 @@ theorem ofFiniteDivisorTensorPacketProduct_endpoint
 end NonarchimedeanLogKummerPacketLocalSourceAlignment
 
 /--
+Finite-divisor source for the nonarchimedean Step (x) packet-local alignment.
+
+The source keeps the finite divisor/Frobenioid tensor packet product together
+with its mono-analytic realization and the real log-volume identifications
+needed to compare the packet local object with the selected upper-semi entry
+and the `(Ind3)` source value.
+-/
+structure NonarchimedeanFiniteDivisorPacketLocalSource
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (entry : IUTStage1NonarchimedeanInclusionData)
+    {j : Nat}
+    (product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j) where
+  divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product
+  monoAnalyticTheater : QualitativeData.HodgeTheaterId
+  packetLocalObject_eq_entrySource :
+    audited.choice.local_tensor_state.packetState.localObject =
+      entry.sourceLogVolume
+  packetLocalObjectFinite_eq_divisorRealified :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      divisorPacket.divisor.realifiedLogVolume
+  packetLocalObjectFinite_eq_ind3Source :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+
+namespace NonarchimedeanFiniteDivisorPacketLocalSource
+
+variable
+  {audited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean}
+  {entry : IUTStage1NonarchimedeanInclusionData}
+  {j : Nat}
+  {product :
+    IUTStage1BaseValuationTensorPacketProductLogVolume
+      IUTStage1PlaceKind.nonarchimedean j}
+
+def toMonoAnalyticD
+    (source :
+      NonarchimedeanFiniteDivisorPacketLocalSource audited entry product) :
+    IUTStage1RealifiedFrobenioidTensorPacketProductSource
+      IUTStage1PlaceKind.nonarchimedean j :=
+  source.divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+    IUTStage1TensorPacketRealizationKind.monoAnalyticD
+    source.monoAnalyticTheater
+
+def toPacketLocalSourceAlignment
+    (source :
+      NonarchimedeanFiniteDivisorPacketLocalSource audited entry product) :
+    NonarchimedeanLogKummerPacketLocalSourceAlignment
+      audited entry source.toMonoAnalyticD.toRealized :=
+  open NonarchimedeanLogKummerPacketLocalSourceAlignment in
+  ofFiniteDivisorTensorPacketProduct
+    source.divisorPacket IUTStage1TensorPacketRealizationKind.monoAnalyticD
+    source.monoAnalyticTheater source.packetLocalObject_eq_entrySource
+    source.packetLocalObjectFinite_eq_divisorRealified
+    source.packetLocalObjectFinite_eq_ind3Source
+
+theorem source_endpoint
+    (source :
+      NonarchimedeanFiniteDivisorPacketLocalSource audited entry product) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        entry.sourceLogVolume.finiteLogVolume ∧
+      entry.sourceLogVolume.finiteLogVolume =
+        source.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+      product.productLogVolume = source.divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        entry.targetLogVolume.finiteLogVolume :=
+  (open NonarchimedeanLogKummerPacketLocalSourceAlignment in
+    ofFiniteDivisorTensorPacketProduct_endpoint
+      source.divisorPacket IUTStage1TensorPacketRealizationKind.monoAnalyticD
+      source.monoAnalyticTheater source.packetLocalObject_eq_entrySource
+      source.packetLocalObjectFinite_eq_divisorRealified
+      source.packetLocalObjectFinite_eq_ind3Source)
+
+end NonarchimedeanFiniteDivisorPacketLocalSource
+
+/--
 Source-side packet/product calibration for the nonarchimedean Step (x)
 log-Kummer corridor.
 
@@ -49315,6 +49398,81 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeFiniteDivisorCanonicalExact
       thetaSigned_le_cTheta_absLogQ
 
 /--
+Canonical exact vertical-`IQ` route through a finite divisor packet source
+object.
+
+Compared with the raw finite-divisor route, this theorem consumes one
+source-facing object for the finite divisor packet, its mono-analytic
+realification, and the Step (x) source identifications.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeFiniteDivisorSourceExactVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (alignment :
+      IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+        part audited record X C)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (finiteSource :
+      NonarchimedeanFiniteDivisorPacketLocalSource
+        audited upperSemiEntry.toEntry product)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD finiteSource.toMonoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  part.boundarySignedEqualityOrStrictCTheta_of_hodgeConstructedCanonicalExactVerticalIQ
+    profile audited alignment source_profile_eq thetaRootSource upperSemiEntry
+    kummerCompatibility forgettingCompatibility holomorphicF_realization
+    holomorphicD_realization rfl holomorphicStructureForgotten
+    holomorphic_structure_forgotten finiteSource.toPacketLocalSourceAlignment
+    targetSource cTheta thetaSigned_le_cTheta_absLogQ
+
+/--
 Audit form of the finite-divisor canonical exact vertical-`IQ` route.
 
 Besides the final \(C_\Theta\) dichotomy, this endpoint exposes the
@@ -49428,6 +49586,97 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeFiniteDivisorCanonicalExact
         packetLocalObjectFinite_eq_divisorRealified
         packetLocalObjectFinite_eq_ind3Source targetSource cTheta
         thetaSigned_le_cTheta_absLogQ).2⟩
+
+/--
+Audit form of the finite-divisor source-object canonical exact vertical-`IQ`
+route.
+
+The finite divisor packet source supplies the packet/source/product and
+`(Ind3)` source equalities as one object; the endpoint exposes these projected
+facts together with the final \(C_\Theta\) dichotomy.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeFiniteDivisorSourceExactVerticalIQ_audit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (alignment :
+      IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+        part audited record X C)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (finiteSource :
+      NonarchimedeanFiniteDivisorPacketLocalSource
+        audited upperSemiEntry.toEntry product)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD finiteSource.toMonoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+      product.productLogVolume =
+        finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  ⟨finiteSource.source_endpoint.1,
+    finiteSource.source_endpoint.2.1,
+    finiteSource.source_endpoint.2.2.1,
+    finiteSource.source_endpoint.2.2.2.1,
+    finiteSource.source_endpoint.2.2.2.2,
+    targetSource.hasPreciseFrobenioidIsomorphisms,
+    (part.boundarySignedEqualityOrStrictCTheta_of_hodgeFiniteDivisorSourceExactVerticalIQ
+      profile audited alignment source_profile_eq thetaRootSource upperSemiEntry
+      finiteSource kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten targetSource cTheta
+      thetaSigned_le_cTheta_absLogQ).2⟩
 
 /--
 Hodge/SHE/IPL/hull route through a packet-normalized Step (x) theta-source
