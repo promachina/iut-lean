@@ -512,6 +512,11 @@ The packet-local source side is now bundled as a named alignment object:
 packet-local/source equality, entry-source/mono-analytic-product equality, and
 packet-local/\((\Ind3)\)-source equality travel together before constructing
 the packet source calibration.
+At the packet-correspondence layer, this source-alignment object and the exact
+vertical-\(IQ\) target now construct one log-Kummer correspondence source.  The
+realified-Frobenioid packet source uses this correspondence-level constructor,
+so source and target Step (x) calibrations enter through a single packet source
+before the theta-root entry source is formed.
 The Hodge/\(\SHE/\IPL\)/hull route has the same realified endpoint: its
 alignment record supplies the Hodge--Arakelov Gaussian comparison,
 canonical-one preservation, q-pilot positivity, and theta/Hodge log-volume
@@ -1162,6 +1167,10 @@ The project currently proves the following source-facing results in \Lean{}:
   and exact vertical-\(IQ\) target construct one source object that projects
   the canonical nonzero theta-root label facts and the realified Step (x)
   upper-semi endpoint.
+\item The packet-correspondence source now has the same source-aligned
+  vertical-\(IQ\) constructor: a named packet-local source-alignment object and
+  an exact vertical-\(IQ\) target source construct one correspondence object
+  before the realified-Frobenioid layer is applied.
 \item The Hodge/\(\SHE/\IPL\)/hull route now consumes this reduced theta-root
   Step (x) data directly: the theorem constructs the realified source internally
   from a named packet-local source-alignment object and exact vertical-\(IQ\)
