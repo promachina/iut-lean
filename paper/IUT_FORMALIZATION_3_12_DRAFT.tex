@@ -614,6 +614,10 @@ from a bare direct real-line identification.
 The same labelled-average dependency has been lifted into the realified
 Frobenioid packet source constructor, so the realified Step (x) packet source no
 longer needs a raw packet-normalized theta-average equality at this boundary.
+It is now also lifted through the theta-root attached Step (x) entry source and
+through the Hodge/\(\SHE/\IPL\)/hull route: the route may consume the labelled
+average and its equality with the Hodge-descent theta average directly, rather
+than a constant packet-normalized \(ZMod(\ell)\) route object.
 The vertical-\(IQ\) route can now also be instantiated with a finite
 divisor/Frobenioid packet product on the mono-analytic side.  In this form the
 route constructs the theta-root attached realified log-Kummer entry source
@@ -1375,6 +1379,11 @@ The project currently proves the following source-facing results in \Lean{}:
   constructor: Kummer/forgetting compatibility, source calibration, and
   labelled Step (x) average construct the full packet source and expose the
   ordinary log-Kummer packet correspondence endpoint.
+\item The labelled-average constructor now reaches the theta-root attached
+  Step (x) entry source and the Hodge/\(\SHE/\IPL\)/hull route.  The route
+  derives the packet-normalized theta calibration by composing
+  theta-source-to-labelled-average with labelled-average-to-packet-normalized
+  equality.
 \item The theta-root attached Step (x) source can now be constructed from the
   same finite divisor-product source and an exact vertical-\(IQ\) target.  The
   endpoint exposes the canonical bad-local theta-root label, Kummer/forgetting
