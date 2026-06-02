@@ -29244,6 +29244,43 @@ noncomputable def recordCanonicalHullTensorPowerWeightedDeterminantHullDetData
     (recordThetaPossibleImage_union_eq record)
     measure_eq_hullLogVolume tensorPower_bound
 
+noncomputable def recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+    {β : Type v} [Fintype β]
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target))
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion record)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          hullData (recordThetaPossibleImageUnion record))
+        determinantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure = hullData.toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned) :
+    package.preLedger.output.HullDetBridgeData
+      package.preLedger.measure package.preLedger.thetaSigned :=
+  let q_subset_hull :
+      qPilotRegion ⊆
+        hullData.hullRegion (recordThetaPossibleImageUnion record) :=
+    fun _ hx =>
+      hullData.region_subset_hull (recordThetaPossibleImageUnion record)
+        (q_subset_recordUnion hx)
+  recordCanonicalHullTensorPowerWeightedDeterminantHullDetData
+    (record := record)
+    operation hullOperation determinantOperation hullData qPilotRegion
+    q_subset_hull determinantSource compatibility measure_eq_hullLogVolume
+    tensorPower_bound
+
 noncomputable def ofRecordCanonicalHullTensorPowerWeightedDeterminant
     {β : Type v} [Fintype β]
     (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
@@ -29285,6 +29322,50 @@ noncomputable def ofRecordCanonicalHullTensorPowerWeightedDeterminant
     (recordThetaPossibleImage_union_eq record)
     measure_eq_hullLogVolume tensorPower_bound hbridge
     q_pilot_positive normalization
+
+noncomputable def ofRecordCanonicalHullTensorPowerOfQSubsetUnion
+    {β : Type v} [Fintype β]
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target))
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion record)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          hullData (recordThetaPossibleImageUnion record))
+        determinantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure = hullData.toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hbridge :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation hullData qPilotRegion
+          q_subset_recordUnion determinantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization) :
+    IUTStage1Theorem311HullDetSourceConstructor record :=
+  let q_subset_hull :
+      qPilotRegion ⊆
+        hullData.hullRegion (recordThetaPossibleImageUnion record) :=
+    fun _ hx =>
+      hullData.region_subset_hull (recordThetaPossibleImageUnion record)
+        (q_subset_recordUnion hx)
+  ofRecordCanonicalHullTensorPowerWeightedDeterminant (record := record)
+    operation hullOperation determinantOperation hullData qPilotRegion
+    q_subset_hull determinantSource compatibility measure_eq_hullLogVolume
+    tensorPower_bound hbridge q_pilot_positive normalization
 
 def toSourceObligations
     (constructor :
@@ -29710,6 +29791,96 @@ theorem ofRecordCanonicalHullTensorPowerWeightedDeterminant_endpoint
     determinantSource compatibility (recordThetaPossibleImage_union_eq record)
     measure_eq_hullLogVolume tensorPower_bound hbridge q_pilot_positive
     normalization
+
+theorem ofRecordCanonicalHullTensorPowerOfQSubsetUnion_endpoint
+    {β : Type v} [Fintype β]
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target))
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion record)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          hullData (recordThetaPossibleImageUnion record))
+        determinantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure = hullData.toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hbridge :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation hullData qPilotRegion
+          q_subset_recordUnion determinantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization) :
+    let q_subset_hull :
+        qPilotRegion ⊆
+          hullData.hullRegion (recordThetaPossibleImageUnion record) :=
+      fun _ hx =>
+        hullData.region_subset_hull (recordThetaPossibleImageUnion record)
+          (q_subset_recordUnion hx);
+    let approximantSource :=
+      canonicalHullWeightedDeterminantApproximantSource
+        hullData (recordThetaPossibleImage record) qPilotRegion q_subset_hull
+        determinantSource compatibility;
+    let constructor :=
+      ofRecordCanonicalHullTensorPowerOfQSubsetUnion (record := record)
+        operation hullOperation determinantOperation hullData qPilotRegion
+        q_subset_recordUnion determinantSource compatibility
+        measure_eq_hullLogVolume tensorPower_bound hbridge q_pilot_positive
+        normalization;
+    qPilotRegion ⊆ recordThetaPossibleImageUnion record ∧
+      qPilotRegion ⊆ approximantSource.thetaHull ∧
+      approximantSource.thetaImageUnion =
+        record.thetaPossibleImages.union.toSet ∧
+      approximantSource.thetaImageUnion =
+        package.preLedger.output.comparisons.targetUnion.toSet ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      approximantSource.approximantRegion = approximantSource.thetaHull ∧
+      approximantSource.approximantLogVolume =
+        determinantSource.determinantLogVolume ∧
+      package.preLedger.output.Certified ∧
+      Region.Subset record.thetaPossibleImages.union
+        (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  by
+    intro q_subset_hull approximantSource constructor
+    have hendpoint :=
+      ofRecordCanonicalHullTensorPowerWeightedDeterminant_endpoint
+        (record := record)
+        operation hullOperation determinantOperation hullData qPilotRegion
+        q_subset_hull determinantSource compatibility measure_eq_hullLogVolume
+        tensorPower_bound hbridge q_pilot_positive normalization
+    exact
+      ⟨q_subset_recordUnion,
+        approximantSource.qPilotRegion_subset_thetaHull,
+        hendpoint.1,
+        hendpoint.2.1,
+        hendpoint.2.2.1,
+        hendpoint.2.2.2.1,
+        hendpoint.2.2.2.2.1,
+        hendpoint.2.2.2.2.2.1,
+        hendpoint.2.2.2.2.2.2.1,
+        hendpoint.2.2.2.2.2.2.2.1,
+        hendpoint.2.2.2.2.2.2.2.2⟩
 
 end IUTStage1Theorem311HullDetSourceConstructor
 

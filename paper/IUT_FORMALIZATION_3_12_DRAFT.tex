@@ -810,6 +810,9 @@ constructing the hull/determinant bridge.
 The same endpoint is exposed at the Theorem 3.11 source-record level, so the
 possible-image union used by the canonical hull is the record's multiradial
 theta-image union before being identified with the package target union.
+The record-native specialization now has the same \(q\subseteq P_{\mathrm{rec}}\)
+input form: the hull containment needed by Step (xi) is derived from the
+record's own possible-image union.
 A record-native specialization removes the arbitrary possible-image-family
 input: the family is \(i\mapsto P_i\) from the Theorem 3.11 source record, and
 \Lean{} proves that its set-theoretic union is the record's theta-image union.
@@ -1663,6 +1666,11 @@ The project currently proves the following source-facing results in \Lean{}:
 \item This canonical-hull Ob4 endpoint is also public for the Theorem 3.11
   source constructor: the source record's theta possible-image union is the
   hull input before the package target-union identification is applied.
+\item The record-native Theorem 3.11 Ob4 route can now consume
+  \(q\subseteq P_{\mathrm{rec}}\), where \(P_{\mathrm{rec}}\) is the record's
+  own possible-image union; \Lean{} derives
+  \(q\subseteq\phi(P_{\mathrm{rec}})\) before constructing the final
+  hull/determinant source constructor.
 \item A record-native specialization now derives that theta-image union from
   the Theorem 3.11 record's own possible-image family, instead of accepting an
   arbitrary image family plus a separate union equality.
