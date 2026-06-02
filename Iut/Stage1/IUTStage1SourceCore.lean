@@ -2986,6 +2986,15 @@ theorem ofWeightedDeterminant_normalizedLogVolume_eq
       determinantSource.determinantLogVolume :=
   (ofWeightedDeterminant determinantSource).normalizedLogVolume_eq_base
 
+theorem ofWeightedDeterminant_normalizedLogVolume_le_iff
+    {β : Type u} [Fintype β]
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (bound : Real) :
+    (ofWeightedDeterminant determinantSource).normalizedLogVolume <= bound ↔
+      determinantSource.determinantLogVolume <= bound := by
+  rw [ofWeightedDeterminant_normalizedLogVolume_eq determinantSource]
+
 theorem endpoint
     (data : IUTStage1NaiveFrobeniusTensorPowerLogVolume) :
     data.tensorPowerLogVolume =

@@ -599,6 +599,9 @@ the \(M\)-th tensor-power copy does not add a further log-volume ambiguity in
 the current corridor.  A comparison object also proves that two positive
 tensor-power presentations with the same base log-volume have the same
 normalized log-volume, even when the tensor degrees differ.
+The package hull/determinant bridge now has an Ob4-shaped input form: a bound
+on the normalized tensor-power log-volume of the weighted determinant source is
+converted by \Lean{} to the determinant bound used by the canonical hull bridge.
 Below the packet layer, the code now has a first realified Frobenioid degree
 source.  A finite Frobenioid object carries a divisor degree, a unit
 log-volume, and their realified log-volume; a tensor-packet product may be
@@ -890,6 +893,10 @@ The project currently proves the following source-facing results in \Lean{}:
   recovers the base log-volume.  The weighted determinant source projects to
   this tensor-power object, and two tensor-power presentations with the same
   base log-volume have equal normalized log-volume.
+\item The package-level hull/determinant bridge can now be built from the
+  Ob4-normalized tensor-power bound associated to a weighted determinant
+  source.  The conversion to the determinant bound is a Lean theorem, not a
+  separate bridge assumption.
 \item A first realified Frobenioid degree layer is present: equality of
   realified Frobenioid log-volumes now derives the product-log-volume equality
   used by the tensor-packet coric transfer, with theater histories still kept

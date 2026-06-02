@@ -902,6 +902,79 @@ theorem thetaPossibleImagesWeightedDeterminant_endpoint
     q_subset_approximant determinantSource
     compatibility
 
+theorem sourceHullDetDataFromTensorPowerWeightedDeterminant_endpoint
+    {source target : Copy} {index : Type u} {β : Type v} [Fintype β]
+    {package : IUTStage1SourcePackage source target index}
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target))
+    (possibleThetaImage : index -> Set (Point target))
+    (qPilotRegion : Set (Point target))
+    (approximant :
+      IUTStage1HullLogVolumeApproximant
+        hullData (⋃ i, possibleThetaImage i))
+    (q_subset_approximant :
+      qPilotRegion ⊆ approximant.approximant)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        approximant determinantSource)
+    (theta_union_eq_targetUnion :
+      (IUTStage1SourceHullDetData.canonicalWeightedDeterminantApproximantSource
+          hullData possibleThetaImage qPilotRegion approximant
+          q_subset_approximant determinantSource compatibility).thetaImageUnion =
+        package.preLedger.output.comparisons.targetUnion.toSet)
+    (approximant_eq_canonical_hull :
+      (IUTStage1SourceHullDetData.canonicalWeightedDeterminantApproximantSource
+          hullData possibleThetaImage qPilotRegion approximant
+          q_subset_approximant determinantSource compatibility).approximantRegion =
+        (IUTStage1SourceHullDetData.canonicalWeightedDeterminantApproximantSource
+          hullData possibleThetaImage qPilotRegion approximant
+          q_subset_approximant determinantSource compatibility).thetaHull)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure = hullData.toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hbridge :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourceHullDetData.canonicalTensorPowerWeightedDeterminantHullDetBridgeData
+          (package := package)
+          operation hullOperation determinantOperation hullData
+          possibleThetaImage qPilotRegion approximant q_subset_approximant
+          determinantSource compatibility theta_union_eq_targetUnion
+          approximant_eq_canonical_hull measure_eq_hullLogVolume
+          tensorPower_bound) :
+    let data :=
+      IUTStage1SourceHullDetData.ofCanonicalTensorPowerWeightedDeterminant
+        (package := package)
+        operation hullOperation determinantOperation hullData possibleThetaImage
+        qPilotRegion approximant q_subset_approximant determinantSource
+        compatibility theta_union_eq_targetUnion approximant_eq_canonical_hull
+        measure_eq_hullLogVolume tensorPower_bound hbridge;
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      Region.Subset package.preLedger.output.comparisons.targetUnion
+        (data.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (data.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull package.preLedger.thetaSigned ∧
+      RegionComparisonFamily.AllTargetsAtMost package.preLedger.measure
+        package.preLedger.output.comparisons package.preLedger.thetaSigned :=
+  by
+    intro data
+    exact
+      ⟨tensorPower_bound,
+        data.targetUnion_subset_hull,
+        data.determinantVolumeBound,
+        data.allTargetsAtMost⟩
+
 theorem packetNormalizedEntryTargetSource_endpoint
     {coric : Type u}
     {audited :
