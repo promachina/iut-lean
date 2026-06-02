@@ -728,7 +728,14 @@ a distinguished local Frobenius/log-shell reading is divided by the extension
 degree before it is applied to the finite divisor degree.
 The three finite copies now have a compatibility package: if they share the
 same base divisor source and the theta/log-shell readings are normalized, then
-their log-volume readings are equal.  A
+their log-volume readings are equal.  The environment/Gaussian realified
+Frobenioid comparison of \IUT{} II, Corollary 4.6(v), is represented at the
+same finite level by an evaluation package between two such compatible copy
+systems.  The package stores only the ordinary divisor-source identification;
+\Lean{} derives equality of the ordinary, theta, and log-shell log-volume
+readings across the environment and Gaussian sides from that identification
+and the copy-compatibility lemmas.
+A
 finite tensor-product operation on these degree objects adds divisor degrees
 and unit log-volumes, and \Lean{} proves that the realified log-volume of the
 tensor product is the sum of the two realified log-volumes.  This operation is
@@ -1113,6 +1120,11 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The ordinary, theta, and log-shell divisor copies now have a compatibility
   package: shared base divisor data plus normalized readings imply equality of
   all three finite log-volume readings.
+\item The finite environment/Gaussian realified Frobenioid comparison attached
+  to \IUT{} II, Corollary 4.6(v), is now encoded as an evaluation package
+  between two compatible copy systems.  The only stored bridge is equality of
+  the ordinary divisor source; \Lean{} derives equality of the ordinary,
+  theta, and log-shell readings across the two sides.
 \item The realified Frobenioid degree layer now has finite morphisms: divisor
   and unit shifts determine the target realified log-volume, identity has zero
   shift, and composition adds both shifts.

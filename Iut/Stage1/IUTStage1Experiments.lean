@@ -661,6 +661,23 @@ theorem compatibleRealifiedFrobenioidDivisorCopies_endpoint
         copies.logShell.logShellDivisorLogVolume :=
   copies.endpoint
 
+theorem environmentGaussianRealifiedFrobenioidEvaluation_endpoint
+    {π : Type u} [Fintype π]
+    (evaluation :
+      IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation π) :
+    evaluation.gaussian.ordinary = evaluation.environment.ordinary ∧
+      evaluation.gaussian.ordinary.realifiedLogVolume =
+        evaluation.environment.ordinary.realifiedLogVolume ∧
+      evaluation.gaussian.theta.thetaDivisorLogVolume =
+        evaluation.environment.ordinary.realifiedLogVolume ∧
+      evaluation.gaussian.logShell.logShellDivisorLogVolume =
+        evaluation.environment.ordinary.realifiedLogVolume ∧
+      evaluation.environment.theta.thetaDivisorLogVolume =
+        evaluation.gaussian.theta.thetaDivisorLogVolume ∧
+      evaluation.environment.logShell.logShellDivisorLogVolume =
+        evaluation.gaussian.logShell.logShellDivisorLogVolume :=
+  evaluation.endpoint
+
 theorem realifiedFrobenioidKummerCompatibility_endpoint
     {kind : IUTStage1PlaceKind} {j : Nat}
     {source target :

@@ -1761,6 +1761,90 @@ theorem endpoint
 end IUTStage1CompatibleRealifiedFrobenioidDivisorCopies
 
 /--
+Finite environment/Gaussian realified Frobenioid evaluation package.
+
+IUT II, Corollary 4.6(v), constructs global realified theta and Gaussian
+Frobenioids `Cenv` and `Cgau` together with evaluation isomorphisms between
+the environment and Gaussian sides, compatible with the local realified monoid
+isomorphisms.  At the current finite divisor level, this package records the
+part that is already semantic in the code: both sides carry ordinary/theta/
+log-shell compatible divisor copies, and the evaluation map identifies the
+ordinary divisor source.  The theta and log-shell equalities are then derived,
+not stored independently.
+-/
+structure IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation
+    (π : Type u) [Fintype π] where
+  environment : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π
+  gaussian : IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π
+  evaluation_ordinary_eq : gaussian.ordinary = environment.ordinary
+
+namespace IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation
+
+variable {π : Type u} [Fintype π]
+
+theorem gaussianOrdinaryLogVolume_eq_environment
+    (evaluation :
+      IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation π) :
+    evaluation.gaussian.ordinary.realifiedLogVolume =
+      evaluation.environment.ordinary.realifiedLogVolume := by
+  rw [evaluation.evaluation_ordinary_eq]
+
+theorem gaussianThetaLogVolume_eq_environment
+    (evaluation :
+      IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation π) :
+    evaluation.gaussian.theta.thetaDivisorLogVolume =
+      evaluation.environment.ordinary.realifiedLogVolume := by
+  rw [evaluation.gaussian.thetaLogVolume_eq_ordinary,
+    evaluation.gaussianOrdinaryLogVolume_eq_environment]
+
+theorem gaussianLogShellLogVolume_eq_environment
+    (evaluation :
+      IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation π) :
+    evaluation.gaussian.logShell.logShellDivisorLogVolume =
+      evaluation.environment.ordinary.realifiedLogVolume := by
+  rw [evaluation.gaussian.logShellLogVolume_eq_ordinary,
+    evaluation.gaussianOrdinaryLogVolume_eq_environment]
+
+theorem environmentThetaLogVolume_eq_gaussianThetaLogVolume
+    (evaluation :
+      IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation π) :
+    evaluation.environment.theta.thetaDivisorLogVolume =
+      evaluation.gaussian.theta.thetaDivisorLogVolume := by
+  rw [evaluation.environment.thetaLogVolume_eq_ordinary,
+    evaluation.gaussianThetaLogVolume_eq_environment]
+
+theorem environmentLogShellLogVolume_eq_gaussianLogShellLogVolume
+    (evaluation :
+      IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation π) :
+    evaluation.environment.logShell.logShellDivisorLogVolume =
+      evaluation.gaussian.logShell.logShellDivisorLogVolume := by
+  rw [evaluation.environment.logShellLogVolume_eq_ordinary,
+    evaluation.gaussianLogShellLogVolume_eq_environment]
+
+theorem endpoint
+    (evaluation :
+      IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation π) :
+    evaluation.gaussian.ordinary = evaluation.environment.ordinary ∧
+      evaluation.gaussian.ordinary.realifiedLogVolume =
+        evaluation.environment.ordinary.realifiedLogVolume ∧
+      evaluation.gaussian.theta.thetaDivisorLogVolume =
+        evaluation.environment.ordinary.realifiedLogVolume ∧
+      evaluation.gaussian.logShell.logShellDivisorLogVolume =
+        evaluation.environment.ordinary.realifiedLogVolume ∧
+      evaluation.environment.theta.thetaDivisorLogVolume =
+        evaluation.gaussian.theta.thetaDivisorLogVolume ∧
+      evaluation.environment.logShell.logShellDivisorLogVolume =
+        evaluation.gaussian.logShell.logShellDivisorLogVolume :=
+  ⟨evaluation.evaluation_ordinary_eq,
+    evaluation.gaussianOrdinaryLogVolume_eq_environment,
+    evaluation.gaussianThetaLogVolume_eq_environment,
+    evaluation.gaussianLogShellLogVolume_eq_environment,
+    evaluation.environmentThetaLogVolume_eq_gaussianThetaLogVolume,
+    evaluation.environmentLogShellLogVolume_eq_gaussianLogShellLogVolume⟩
+
+end IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation
+
+/--
 Finite realified Frobenioid degree object.
 
 IUT III treats the relevant global/non-realified and realified Frobenioids as
