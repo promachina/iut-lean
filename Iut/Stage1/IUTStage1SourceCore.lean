@@ -2318,6 +2318,59 @@ theorem naiveFrobeniusTensorPower_endpoint
         (tensorDegree : Real) * source.realifiedLogVolume :=
   ⟨rfl, rfl, rfl⟩
 
+namespace DegreeMorphism
+
+variable
+  {source target : IUTStage1RealifiedFrobenioidDegreeObject}
+
+def naiveFrobeniusTensorPower
+    (morphism : DegreeMorphism source target)
+    (tensorDegree : Nat)
+    (sourceObject targetObject :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    DegreeMorphism
+      (source.naiveFrobeniusTensorPower tensorDegree sourceObject)
+      (target.naiveFrobeniusTensorPower tensorDegree targetObject) :=
+  { divisorDegreeShift := (tensorDegree : Int) * morphism.divisorDegreeShift,
+    unitLogVolumeShift := (tensorDegree : Real) * morphism.unitLogVolumeShift,
+    target_divisorDegree_eq := by
+      simp [
+        IUTStage1RealifiedFrobenioidDegreeObject.naiveFrobeniusTensorPower,
+        morphism.target_divisorDegree_eq]
+      ring,
+    target_unitLogVolume_eq := by
+      simp [
+        IUTStage1RealifiedFrobenioidDegreeObject.naiveFrobeniusTensorPower,
+        morphism.target_unitLogVolume_eq]
+      ring }
+
+theorem naiveFrobeniusTensorPower_endpoint
+    (morphism : DegreeMorphism source target)
+    (tensorDegree : Nat)
+    (sourceObject targetObject :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (morphism.naiveFrobeniusTensorPower
+        tensorDegree sourceObject targetObject).divisorDegreeShift =
+        (tensorDegree : Int) * morphism.divisorDegreeShift ∧
+      (morphism.naiveFrobeniusTensorPower
+        tensorDegree sourceObject targetObject).unitLogVolumeShift =
+        (tensorDegree : Real) * morphism.unitLogVolumeShift ∧
+      (target.naiveFrobeniusTensorPower
+          tensorDegree targetObject).realifiedLogVolume =
+        (source.naiveFrobeniusTensorPower
+            tensorDegree sourceObject).realifiedLogVolume +
+          ((((morphism.naiveFrobeniusTensorPower
+              tensorDegree sourceObject targetObject).divisorDegreeShift :
+              Int) : Real)) +
+          (morphism.naiveFrobeniusTensorPower
+            tensorDegree sourceObject targetObject).unitLogVolumeShift :=
+  let powered :=
+    morphism.naiveFrobeniusTensorPower tensorDegree sourceObject targetObject
+  ⟨rfl, rfl,
+    powered.target_realifiedLogVolume_eq_source_plus_shifts⟩
+
+end DegreeMorphism
+
 end IUTStage1RealifiedFrobenioidDegreeObject
 
 namespace IUTStage1FiniteRealifiedFrobenioidDivisorSource

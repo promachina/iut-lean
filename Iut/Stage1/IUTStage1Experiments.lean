@@ -1020,6 +1020,31 @@ theorem realifiedFrobenioidDegreeMorphism_comp_endpoint
           (first.comp second).unitLogVolumeShift :=
   first.comp_endpoint second
 
+theorem realifiedFrobenioidDegreeMorphismNaiveTensorPower_endpoint
+    {source target : IUTStage1RealifiedFrobenioidDegreeObject}
+    (morphism :
+      IUTStage1RealifiedFrobenioidDegreeObject.DegreeMorphism source target)
+    (tensorDegree : Nat)
+    (sourceObject targetObject :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (morphism.naiveFrobeniusTensorPower
+        tensorDegree sourceObject targetObject).divisorDegreeShift =
+        (tensorDegree : Int) * morphism.divisorDegreeShift ∧
+      (morphism.naiveFrobeniusTensorPower
+        tensorDegree sourceObject targetObject).unitLogVolumeShift =
+        (tensorDegree : Real) * morphism.unitLogVolumeShift ∧
+      (target.naiveFrobeniusTensorPower
+          tensorDegree targetObject).realifiedLogVolume =
+        (source.naiveFrobeniusTensorPower
+            tensorDegree sourceObject).realifiedLogVolume +
+          ((((morphism.naiveFrobeniusTensorPower
+              tensorDegree sourceObject targetObject).divisorDegreeShift :
+              Int) : Real)) +
+          (morphism.naiveFrobeniusTensorPower
+            tensorDegree sourceObject targetObject).unitLogVolumeShift :=
+  morphism.naiveFrobeniusTensorPower_endpoint
+    tensorDegree sourceObject targetObject
+
 theorem realifiedFrobenioidTensorProductPacket_endpoint
     {kind : IUTStage1PlaceKind} {j : Nat}
     {left right product :

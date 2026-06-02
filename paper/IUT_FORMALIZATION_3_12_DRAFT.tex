@@ -931,7 +931,9 @@ the divisor-degree shift and unit-log-volume shift between two realified
 objects; \Lean{} derives the corresponding shift in realified log-volume and
 proves identity and composition laws at this degree/log-volume level.  This
 models the additive content of the pull-back and structure morphisms appearing
-in Remark 3.9.5(ix), (cQ3).
+in Remark 3.9.5(ix), (cQ3).  These morphisms now transport across Ob4
+tensor-powering: the source and target degree objects are tensor-powered, and
+the divisor and unit shifts of the induced morphism are multiplied by \(M\).
 The Ob8/Ob9 vertical-shift issue is now attached directly to the Step (xi-g)
 handoff.  A log-Kummer vertical-shift calibration pairs the
 Step (x)-to-hull upper-ray source with the global realified Frobenioid
@@ -1357,7 +1359,8 @@ The project currently proves the following source-facing results in \Lean{}:
   not translation-invariant.
 \item The realified Frobenioid degree layer now has finite morphisms: divisor
   and unit shifts determine the target realified log-volume, identity has zero
-  shift, and composition adds both shifts.
+  shift, and composition adds both shifts.  These morphisms are stable under
+  Ob4 tensor-powering, with divisor and unit shifts multiplied by \(M\).
 \item The Ob8/Ob9 vertical-shift guard is now tied to the Step (xi-g)
   two-computation handoff: global realified Frobenioid calibration selects the
   hull upper-ray boundary, both q-pilot readings are bounded by it, and shifted
