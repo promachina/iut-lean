@@ -2100,6 +2100,33 @@ theorem packetLocalSourceAlignmentFromRealifiedPacketSource_endpoint
         audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
   source.packetLocalSourceAlignment_endpoint
 
+open NonarchimedeanRealifiedFrobenioidLogKummerEntrySource in
+theorem packetLocalSourceAlignmentFromRealifiedEntrySource_endpoint
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {thetaAverage : Real}
+    {logKummer : LogKummerCorrespondenceId}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (source :
+      NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    let alignment := source.toPacketLocalSourceAlignment;
+    entry ∈ audited.choice.upper_semi_state.nonarchimedeanInclusions ∧
+      alignment.packetLocalObject_eq_entrySource =
+        source.packetSource.sourceCalibration.packetLocalObject_eq_entrySource ∧
+      alignment.entrySource_eq_monoAnalyticProduct =
+        source.packetSource.sourceCalibration.entrySource_eq_monoAnalyticProduct ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  source.packetLocalSourceAlignment_endpoint
+
 open NonarchimedeanRealifiedFrobenioidLogKummerPacketSource in
 theorem realifiedPacketFromPacketLocalAndEntryTargetThetaAlignment_endpoint
     {coric : Type u}

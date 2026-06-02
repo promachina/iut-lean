@@ -41333,6 +41333,15 @@ def ofUpperSemiEntrySourceAlignedAndVerticalIQTarget
         holomorphicStructureForgotten holomorphic_structure_forgotten
         sourceAlignment targetSource }
 
+def toPacketLocalSourceAlignment
+    (source :
+      NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    NonarchimedeanLogKummerPacketLocalSourceAlignment
+      audited entry monoAnalyticD.toRealized :=
+  source.packetSource.toPacketLocalSourceAlignment
+
 def toLogKummerUpperSemiCompatibility
     (source :
       NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
@@ -41391,6 +41400,24 @@ theorem packetLocalObjectFinite_le_thetaAverage
     audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
       thetaAverage :=
   source.toLogKummerUpperSemiCompatibility.packetLocalObjectFinite_le_thetaAverage
+
+theorem packetLocalSourceAlignment_endpoint
+    (source :
+      NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    let alignment := source.toPacketLocalSourceAlignment;
+    entry ∈ audited.choice.upper_semi_state.nonarchimedeanInclusions ∧
+      alignment.packetLocalObject_eq_entrySource =
+        source.packetSource.sourceCalibration.packetLocalObject_eq_entrySource ∧
+      alignment.entrySource_eq_monoAnalyticProduct =
+        source.packetSource.sourceCalibration.entrySource_eq_monoAnalyticProduct ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  by
+    intro alignment
+    have h := source.packetSource.packetLocalSourceAlignment_endpoint
+    exact ⟨source.entry_mem, h.1, h.2.1, h.2.2⟩
 
 theorem realifiedFrobenioidEntry_endpoint
     (source :
