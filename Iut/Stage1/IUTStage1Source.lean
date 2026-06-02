@@ -21821,6 +21821,31 @@ namespace IUTStage1SourceHullDetData
 variable {source target : Copy} {index : Type u}
 variable {package : IUTStage1SourcePackage source target index}
 
+def ofUnionSubset
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hull : Region target)
+    (hsubset :
+      Region.Subset package.preLedger.output.comparisons.targetUnion hull)
+    (hvolume :
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure hull
+        package.preLedger.thetaSigned)
+    (hbridge :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        ((RealLineCopy.AlgorithmicOutput.StructuredHullDetBridgeData.ofUnionSubset
+            (output := package.preLedger.output)
+            (measure := package.preLedger.measure)
+            (bound := package.preLedger.thetaSigned)
+            operation hullOperation determinantOperation hull hsubset hvolume)
+          |>.toHullDetHullBridgeData).toHullDetBridgeData) :
+    IUTStage1SourceHullDetData package :=
+  { sourceData :=
+      IUTStage1PreLedgerData.HullDetSourceData.ofUnionSubset
+        (data := package.preLedger)
+        operation hullOperation determinantOperation hull hsubset hvolume hbridge }
+
 def stepAudit (data : IUTStage1SourceHullDetData package) :
     data.sourceData.structuredHullDet.StepAudit package.preLedger.certificate :=
   data.sourceData.stepAudit
@@ -21858,6 +21883,46 @@ theorem allTargetsAtMost
     RegionComparisonFamily.AllTargetsAtMost package.preLedger.measure
       package.preLedger.output.comparisons package.preLedger.thetaSigned :=
   data.sourceData.allTargetsAtMost
+
+theorem ofUnionSubset_endpoint
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hull : Region target)
+    (hsubset :
+      Region.Subset package.preLedger.output.comparisons.targetUnion hull)
+    (hvolume :
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure hull
+        package.preLedger.thetaSigned)
+    (hbridge :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        ((RealLineCopy.AlgorithmicOutput.StructuredHullDetBridgeData.ofUnionSubset
+            (output := package.preLedger.output)
+            (measure := package.preLedger.measure)
+            (bound := package.preLedger.thetaSigned)
+            operation hullOperation determinantOperation hull hsubset hvolume)
+          |>.toHullDetHullBridgeData).toHullDetBridgeData) :
+    let data :=
+      ofUnionSubset (package := package)
+        operation hullOperation determinantOperation hull hsubset hvolume hbridge;
+    Region.Subset package.preLedger.output.comparisons.targetUnion
+        (data.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (data.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull package.preLedger.thetaSigned ∧
+      RegionComparisonFamily.AllTargetsAtMost package.preLedger.measure
+        package.preLedger.output.comparisons package.preLedger.thetaSigned ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        data.sourceData.structuredHullDet.toHullDetHullBridgeData.toHullDetBridgeData :=
+  by
+    intro data
+    exact
+      ⟨data.targetUnion_subset_hull,
+        data.determinantVolumeBound,
+        data.allTargetsAtMost,
+        data.hullDetBridge_eq⟩
 
 end IUTStage1SourceHullDetData
 

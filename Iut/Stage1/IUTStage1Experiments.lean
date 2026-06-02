@@ -529,6 +529,43 @@ theorem thetaPossibleImagesHullApproximant_endpoint
         data.determinant.determinantLogVolume :=
   data.endpoint
 
+theorem sourceHullDetDataFromUnionSubset_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hull : Region target)
+    (hsubset :
+      Region.Subset package.preLedger.output.comparisons.targetUnion hull)
+    (hvolume :
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure hull
+        package.preLedger.thetaSigned)
+    (hbridge :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        ((RealLineCopy.AlgorithmicOutput.StructuredHullDetBridgeData.ofUnionSubset
+            (output := package.preLedger.output)
+            (measure := package.preLedger.measure)
+            (bound := package.preLedger.thetaSigned)
+            operation hullOperation determinantOperation hull hsubset hvolume)
+          |>.toHullDetHullBridgeData).toHullDetBridgeData) :
+    let data :=
+      IUTStage1SourceHullDetData.ofUnionSubset (package := package)
+        operation hullOperation determinantOperation hull hsubset hvolume hbridge;
+    Region.Subset package.preLedger.output.comparisons.targetUnion
+        (data.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (data.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull package.preLedger.thetaSigned ∧
+      RegionComparisonFamily.AllTargetsAtMost package.preLedger.measure
+        package.preLedger.output.comparisons package.preLedger.thetaSigned ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        data.sourceData.structuredHullDet.toHullDetHullBridgeData.toHullDetBridgeData :=
+  IUTStage1SourceHullDetData.ofUnionSubset_endpoint
+    operation hullOperation determinantOperation hull hsubset hvolume hbridge
+
 theorem weightedDeterminantSource_endpoint
     {β : Type u} [Fintype β]
     (data : IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β) :

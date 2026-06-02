@@ -463,6 +463,23 @@ variable {measure : RegionMeasure target}
 variable {output : AlgorithmicOutput source target index}
 variable {bound : Real}
 
+def ofUnionSubset
+    (operation : HullDetOperationId)
+    (hullOperation : HullOperationId)
+    (determinantOperation : DeterminantLogVolumeOperationId)
+    (hull : Region target)
+    (hsubset : Region.Subset output.comparisons.targetUnion hull)
+    (hvolume : RegionMeasure.HasVolumeAtMost measure hull bound) :
+    StructuredHullDetBridgeData output measure bound :=
+  let hullBridge : output.StructuredCommonHullBridge :=
+    { build := fun _ =>
+        output.comparisons.commonTargetHullOfUnionSubset hull hsubset }
+  { operation := operation,
+    hullOperation := hullOperation,
+    determinantOperation := determinantOperation,
+    hullBridge := hullBridge,
+    determinantBridge := { bound := fun _ => hvolume } }
+
 def commonTargetHullBridge
     (data : StructuredHullDetBridgeData output measure bound) :
     output.StructuredCommonTargetHullBridge measure bound :=
@@ -503,6 +520,45 @@ theorem allTargetsAtMost
     (certificate : QualitativeData.StructuredCertificate output.family) :
     RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound :=
   (data.toHullDetHullBridgeData).allTargetsAtMost certificate
+
+theorem ofUnionSubset_applyHull_eq
+    (operation : HullDetOperationId)
+    (hullOperation : HullOperationId)
+    (determinantOperation : DeterminantLogVolumeOperationId)
+    (hull : Region target)
+    (hsubset : Region.Subset output.comparisons.targetUnion hull)
+    (hvolume : RegionMeasure.HasVolumeAtMost measure hull bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    (ofUnionSubset (output := output) (measure := measure) (bound := bound)
+      operation hullOperation determinantOperation hull hsubset hvolume).applyHull
+        certificate =
+      output.comparisons.commonTargetHullOfUnionSubset hull hsubset :=
+  rfl
+
+theorem ofUnionSubset_endpoint
+    (operation : HullDetOperationId)
+    (hullOperation : HullOperationId)
+    (determinantOperation : DeterminantLogVolumeOperationId)
+    (hull : Region target)
+    (hsubset : Region.Subset output.comparisons.targetUnion hull)
+    (hvolume : RegionMeasure.HasVolumeAtMost measure hull bound)
+    (certificate : QualitativeData.StructuredCertificate output.family) :
+    let data :=
+      ofUnionSubset (output := output) (measure := measure) (bound := bound)
+        operation hullOperation determinantOperation hull hsubset hvolume;
+    Region.Subset output.comparisons.targetUnion
+        (data.applyHull certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost measure
+        (data.applyHull certificate).hull bound ∧
+      RegionComparisonFamily.AllTargetsAtMost measure output.comparisons bound :=
+  by
+    intro data
+    exact
+      ⟨by
+        simpa [data, ofUnionSubset] using hsubset,
+      by
+        simpa [data, ofUnionSubset] using hvolume,
+      data.allTargetsAtMost certificate⟩
 
 /-- Audit view of the internal hull and determinant/log-volume split. -/
 structure StepAudit

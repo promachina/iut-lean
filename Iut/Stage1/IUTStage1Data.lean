@@ -431,6 +431,30 @@ namespace HullDetSourceData
 
 variable {data : IUTStage1PreLedgerData source target index}
 
+def ofUnionSubset
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hull : Region target)
+    (hsubset : Region.Subset data.output.comparisons.targetUnion hull)
+    (hvolume :
+      RegionMeasure.HasVolumeAtMost data.measure hull data.thetaSigned)
+    (hbridge :
+      data.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        ((RealLineCopy.AlgorithmicOutput.StructuredHullDetBridgeData.ofUnionSubset
+            (output := data.output)
+            (measure := data.measure) (bound := data.thetaSigned)
+            operation hullOperation determinantOperation hull hsubset hvolume)
+          |>.toHullDetHullBridgeData).toHullDetBridgeData) :
+    HullDetSourceData data :=
+  { structuredHullDet :=
+      RealLineCopy.AlgorithmicOutput.StructuredHullDetBridgeData.ofUnionSubset
+        (output := data.output)
+        (measure := data.measure) (bound := data.thetaSigned)
+        operation hullOperation determinantOperation hull hsubset hvolume,
+    hull_det_bridge_eq := hbridge }
+
 def stepAudit (sourceData : HullDetSourceData data) :
     sourceData.structuredHullDet.StepAudit data.certificate :=
   sourceData.structuredHullDet.stepAudit data.certificate
@@ -465,6 +489,42 @@ theorem allTargetsAtMost
     RegionComparisonFamily.AllTargetsAtMost data.measure data.output.comparisons
       data.thetaSigned :=
   sourceData.stepAudit.allTargetsAtMost
+
+theorem ofUnionSubset_endpoint
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hull : Region target)
+    (hsubset : Region.Subset data.output.comparisons.targetUnion hull)
+    (hvolume :
+      RegionMeasure.HasVolumeAtMost data.measure hull data.thetaSigned)
+    (hbridge :
+      data.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        ((RealLineCopy.AlgorithmicOutput.StructuredHullDetBridgeData.ofUnionSubset
+            (output := data.output)
+            (measure := data.measure) (bound := data.thetaSigned)
+            operation hullOperation determinantOperation hull hsubset hvolume)
+          |>.toHullDetHullBridgeData).toHullDetBridgeData) :
+    let sourceData :=
+      ofUnionSubset (data := data)
+        operation hullOperation determinantOperation hull hsubset hvolume hbridge;
+    Region.Subset data.output.comparisons.targetUnion
+        (sourceData.structuredHullDet.applyHull data.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost data.measure
+        (sourceData.structuredHullDet.applyHull data.certificate).hull
+        data.thetaSigned ∧
+      RegionComparisonFamily.AllTargetsAtMost data.measure data.output.comparisons
+        data.thetaSigned ∧
+      data.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.structuredHullDet.toHullDetHullBridgeData.toHullDetBridgeData :=
+  by
+    intro sourceData
+    exact
+      ⟨sourceData.targetUnion_subset_hull,
+        sourceData.determinantVolumeBound,
+        sourceData.allTargetsAtMost,
+        sourceData.hullDetBridge_eq⟩
 
 end HullDetSourceData
 
