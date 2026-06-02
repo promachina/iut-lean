@@ -2449,6 +2449,40 @@ theorem realifiedEntryFromUpperSemiSourceAlignedVerticalIQTarget_precise_endpoin
     holomorphic_structure_forgotten sourceAlignment targetSource
 
 open NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource in
+theorem packetLocalSourceAlignmentFromThetaRootRealifiedEntrySource_endpoint
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {thetaAverage : Real}
+    {logKummer : LogKummerCorrespondenceId}
+    {l : PrimeGeFive} {F : Type u} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (source :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    let sourceCalibration :=
+      source.realifiedEntrySource.packetSource.sourceCalibration;
+    let alignment := source.toPacketLocalSourceAlignment;
+    source.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      source.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      entry ∈ audited.choice.upper_semi_state.nonarchimedeanInclusions ∧
+      alignment.packetLocalObject_eq_entrySource =
+        sourceCalibration.packetLocalObject_eq_entrySource ∧
+      alignment.entrySource_eq_monoAnalyticProduct =
+        sourceCalibration.entrySource_eq_monoAnalyticProduct ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  source.thetaRootPacketLocalSourceAlignment_endpoint
+
+open NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource in
 theorem thetaRootRealifiedEntryFromPacketLocalAndEntryTargetThetaAlignment_endpoint
     {coric : Type u}
     {audited :

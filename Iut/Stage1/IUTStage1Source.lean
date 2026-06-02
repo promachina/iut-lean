@@ -42098,6 +42098,15 @@ def toPacketCorrespondence
       holomorphicF.toRealized holomorphicD.toRealized monoAnalyticD.toRealized :=
   source.realifiedEntrySource.packetSource.toPacketCorrespondence
 
+def toPacketLocalSourceAlignment
+    (source :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    NonarchimedeanLogKummerPacketLocalSourceAlignment
+      audited entry monoAnalyticD.toRealized :=
+  source.realifiedEntrySource.toPacketLocalSourceAlignment
+
 theorem thetaRootRealifiedEntry_endpoint
     (source :
       NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
@@ -42122,6 +42131,32 @@ theorem thetaRootRealifiedEntry_endpoint
     source.realifiedEntrySource.thetaAverage_eq_entryTarget,
     source.realifiedEntrySource.entryTarget_eq_ind3Target,
     source.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩
+
+theorem thetaRootPacketLocalSourceAlignment_endpoint
+    (source :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited thetaAverage logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    let sourceCalibration :=
+      source.realifiedEntrySource.packetSource.sourceCalibration;
+    let alignment := source.toPacketLocalSourceAlignment;
+    source.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      source.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      entry ∈ audited.choice.upper_semi_state.nonarchimedeanInclusions ∧
+      alignment.packetLocalObject_eq_entrySource =
+        sourceCalibration.packetLocalObject_eq_entrySource ∧
+      alignment.entrySource_eq_monoAnalyticProduct =
+        sourceCalibration.entrySource_eq_monoAnalyticProduct ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  by
+    intro sourceCalibration alignment
+    have h := source.realifiedEntrySource.packetLocalSourceAlignment_endpoint
+    exact
+      ⟨source.thetaRootCanonicalGeneratorUpToSign,
+        source.thetaRootCanonicalFullLabel_ne_zero,
+        h.1, h.2.1, h.2.2.1, h.2.2.2⟩
 
 /--
 Theta-root attached packet-calibration endpoint.
