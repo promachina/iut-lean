@@ -622,6 +622,10 @@ The same route now has a source-aligned form: the source packet/product
 calibration is constructed from packet-local source alignment and the
 Kummer/forgetting transfers, while the target packet calibration is constructed
 from the labelled procession average.
+A further route removes the raw theta-source-to-labelled-average real equality:
+the labelled capsule source is aligned labelwise with the theta-source
+\(ZMod(\ell)\)-average, and \Lean{} derives equality of the two averages from
+the finite averaging formula.
 The vertical-\(IQ\) route can now also be instantiated with a finite
 divisor/Frobenioid packet product on the mono-analytic side.  In this form the
 route constructs the theta-root attached realified log-Kummer entry source
@@ -1391,6 +1395,9 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The labelled-average Hodge/\(\SHE/\IPL\)/hull route now has a
   source-aligned form: packet-local source alignment and Kummer/forgetting
   transfers construct the source calibration internally.
+\item The theta-source-to-labelled-average equality can now be derived from
+  labelwise agreement between the capsule-labelled source and the
+  Hodge-descent theta-source \(ZMod(\ell)\)-average.
 \item The theta-root attached Step (x) source can now be constructed from the
   same finite divisor-product source and an exact vertical-\(IQ\) target.  The
   endpoint exposes the canonical bad-local theta-root label, Kummer/forgetting
