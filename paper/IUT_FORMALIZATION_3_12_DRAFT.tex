@@ -770,6 +770,12 @@ that translations preserve this oriented graph and that any map exchanging
 the adjacent vertices \(0\) and \(1\) cannot preserve directed edges.  This
 captures the finite order-theoretic content of the paper's statement that the
 chain has translation symmetry but not arbitrary permutation symmetry.
+The associated etale-picture core of Corollary 4.11(i),(ii) is represented by
+a common \(D^{\vdash}\)-core projection for all integer-labelled spokes.
+\Lean{} proves that this projection is constant across successor steps and is
+unchanged by arbitrary permutations of the integer-labelled spokes, capturing
+the finite mono-analytic core/permutation-symmetry contrast with the
+Frobenius-picture chain.
 A finite tensor-product operation on these degree objects adds divisor degrees
 and unit log-volumes, and \Lean{} proves that the realified log-volume of the
 tensor product is the sum of the two realified log-volumes.  This operation is
@@ -1188,6 +1194,10 @@ The project currently proves the following source-facing results in \Lean{}:
   the directed successor graph on \(\mathbb{Z}\).  \Lean{} proves translation
   invariance and rules out edge preservation by any map that swaps adjacent
   vertices \(0\) and \(1\).
+\item The etale-picture \(D^{\vdash}\)-core of Corollary 4.11(i),(ii) is now
+  represented as a common core projection for all integer-labelled spokes.
+  \Lean{} proves successor-step constancy and invariance under arbitrary
+  permutations of the spoke labels.
 \item The realified Frobenioid degree layer now has finite morphisms: divisor
   and unit shifts determine the target realified log-volume, identity has zero
   shift, and composition adds both shifts.

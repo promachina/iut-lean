@@ -286,6 +286,16 @@ theorem frobeniusPictureChain_endpoint
                   (map source) (map target)) :=
   IUTStage1FrobeniusPictureChain.endpoint shift
 
+theorem etalePictureDCore_endpoint
+    {Core Spoke : Type u}
+    (picture : IUTStage1EtalePictureDCore Core Spoke) :
+    (∀ n : Int, picture.spokeCore (n + 1) = picture.spokeCore n) ∧
+      ∀ perm : Int ≃ Int,
+        ∀ n : Int,
+          picture.spokeCore (perm n) = picture.core ∧
+            picture.spokeCore (perm n) = picture.spokeCore n :=
+  picture.endpoint
+
 theorem localGlobalFrobenioidStructureMorphismCollection_endpoint
     {V : Type u} [Fintype V]
     (source :

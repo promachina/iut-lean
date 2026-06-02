@@ -6814,6 +6814,61 @@ theorem endpoint
 end IUTStage1FrobeniusPictureChain
 
 /--
+Finite `D^{⊢}` core of the etale-picture of IUT II, Corollary 4.11.
+
+Corollary 4.11(i) says that the associated `D^{⊢}`-prime-strip is a constant
+mono-analytic core of the infinite chain.  Corollary 4.11(ii) then regards the
+various integer-labelled theaters as spokes emanating from this common core,
+with arbitrary permutation symmetries among the spokes.  This record separates
+the spoke data from its mono-analytic `D`-core projection and requires every
+projection to be the same common core.
+-/
+structure IUTStage1EtalePictureDCore
+    (Core Spoke : Type u) where
+  core : Core
+  spoke : Int -> Spoke
+  spokeCore : Int -> Core
+  spoke_core_eq : ∀ n : Int, spokeCore n = core
+
+namespace IUTStage1EtalePictureDCore
+
+variable {Core Spoke : Type u}
+
+theorem successor_spokeCore_eq
+    (picture : IUTStage1EtalePictureDCore Core Spoke)
+    (n : Int) :
+    picture.spokeCore (n + 1) = picture.spokeCore n := by
+  rw [picture.spoke_core_eq (n + 1), picture.spoke_core_eq n]
+
+theorem permuted_spokeCore_eq_core
+    (picture : IUTStage1EtalePictureDCore Core Spoke)
+    (perm : Int ≃ Int)
+    (n : Int) :
+    picture.spokeCore (perm n) = picture.core :=
+  picture.spoke_core_eq (perm n)
+
+theorem permuted_spokeCore_eq_original
+    (picture : IUTStage1EtalePictureDCore Core Spoke)
+    (perm : Int ≃ Int)
+    (n : Int) :
+    picture.spokeCore (perm n) = picture.spokeCore n := by
+  rw [picture.permuted_spokeCore_eq_core perm n, picture.spoke_core_eq n]
+
+theorem endpoint
+    (picture : IUTStage1EtalePictureDCore Core Spoke) :
+    (∀ n : Int, picture.spokeCore (n + 1) = picture.spokeCore n) ∧
+      ∀ perm : Int ≃ Int,
+        ∀ n : Int,
+          picture.spokeCore (perm n) = picture.core ∧
+            picture.spokeCore (perm n) = picture.spokeCore n :=
+  ⟨fun n => picture.successor_spokeCore_eq n,
+    fun perm n =>
+      ⟨picture.permuted_spokeCore_eq_core perm n,
+        picture.permuted_spokeCore_eq_original perm n⟩⟩
+
+end IUTStage1EtalePictureDCore
+
+/--
 Local-global collection equipped with structure morphisms to the global object.
 
 Remark 3.9.5(ix), (cQ3), describes local Frobenioid objects equipped with
