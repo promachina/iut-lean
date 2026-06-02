@@ -39844,6 +39844,32 @@ def ofEntryTargetThetaAlignment
     (NonarchimedeanLogKummerPacketTargetCalibration.ofPacketNormalizedEntryTargetAndThetaTarget
       entrySource thetaAverage_eq_packetNormalized thetaAverage_eq_ind3Target)
 
+def ofSourceAlignedEntryTargetThetaAlignment
+    (entrySource :
+      NonarchimedeanPacketNormalizedEntryTargetSource audited)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited entrySource.toEntry monoAnalyticD)
+    (thetaAverage_eq_packetNormalized :
+      thetaAverage =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (thetaAverage_eq_ind3Target :
+      thetaAverage =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD) :
+    NonarchimedeanLogKummerPacketCorrespondenceSource
+      audited thetaAverage logKummer entrySource.toEntry
+      holomorphicF holomorphicD monoAnalyticD :=
+  ofEntryTargetThetaAlignment entrySource
+    (NonarchimedeanLogKummerPacketSourceCalibration.ofPacketLocalSourceAlignmentObject
+      sourceAlignment kummer forgetting)
+    thetaAverage_eq_packetNormalized thetaAverage_eq_ind3Target
+
 def ofPacketLocalAndEntryTargetThetaAlignment
     (entrySource :
       NonarchimedeanPacketNormalizedEntryTargetSource audited)
@@ -40052,6 +40078,51 @@ theorem ofVerticalIQTargetSource_endpoint
       ⟨noninterference, source_eq, theta_eq_entry, entry_eq_target,
         targetSource.thetaAverage_eq_packetNormalized,
         targetSource.ind3Target_eq_packetNormalized⟩
+
+theorem ofSourceAlignedEntryTargetThetaAlignment_endpoint
+    {logKummerId : LogKummerCorrespondenceId}
+    (entrySource :
+      NonarchimedeanPacketNormalizedEntryTargetSource audited)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited entrySource.toEntry monoAnalyticD)
+    (thetaAverage_eq_packetNormalized :
+      thetaAverage =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (thetaAverage_eq_ind3Target :
+      thetaAverage =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD) :
+    IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      entrySource.toEntry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      thetaAverage = entrySource.toEntry.targetLogVolume.finiteLogVolume ∧
+      entrySource.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      thetaAverage =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
+  by
+    let correspondence :
+      NonarchimedeanLogKummerPacketCorrespondenceSource
+        audited thetaAverage logKummerId entrySource.toEntry
+        holomorphicF holomorphicD monoAnalyticD :=
+      ofSourceAlignedEntryTargetThetaAlignment (logKummer := logKummerId)
+        entrySource sourceAlignment thetaAverage_eq_packetNormalized
+        thetaAverage_eq_ind3Target kummer forgetting
+    rcases correspondence.packetCorrespondence_endpoint kummer forgetting with
+      ⟨noninterference, source_eq, theta_eq_entry, entry_eq_target⟩
+    exact
+      ⟨noninterference, source_eq, theta_eq_entry, entry_eq_target,
+        correspondence.targetCalibration.thetaAverage_eq_packetNormalized,
+        correspondence.targetCalibration.ind3Target_eq_packetNormalized⟩
 
 theorem ofSourceAlignedVerticalIQTargetSource_endpoint
     {logKummerId : LogKummerCorrespondenceId}
@@ -40395,19 +40466,26 @@ def ofSourceAlignedEntryTargetThetaAlignment
     NonarchimedeanRealifiedFrobenioidLogKummerPacketSource
       audited thetaAverage logKummer entrySource.toEntry
       holomorphicF holomorphicD monoAnalyticD :=
+  let correspondence :
+      NonarchimedeanLogKummerPacketCorrespondenceSource
+        audited thetaAverage logKummer entrySource.toEntry
+        holomorphicF.toRealized holomorphicD.toRealized monoAnalyticD.toRealized :=
+    NonarchimedeanLogKummerPacketCorrespondenceSource.ofSourceAlignedEntryTargetThetaAlignment
+      entrySource sourceAlignment thetaAverage_eq_packetNormalized
+      thetaAverage_eq_ind3Target
+      (kummerCompatibility.toKummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF_realization holomorphicD_realization)
+      (forgettingCompatibility.toMonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD_realization monoAnalyticD_realization
+        holomorphicStructureForgotten holomorphic_structure_forgotten)
   ofEntryTargetThetaAlignment entrySource
     kummerCompatibility forgettingCompatibility
     holomorphicF_realization holomorphicD_realization
     monoAnalyticD_realization holomorphicStructureForgotten
     holomorphic_structure_forgotten
-    (NonarchimedeanLogKummerPacketSourceCalibration.ofPacketLocalSourceAlignmentObject
-      sourceAlignment
-      (kummerCompatibility.toKummerFTensorPacketToDTensorPacketTransfer
-        holomorphicF_realization holomorphicD_realization)
-      (forgettingCompatibility.toMonoAnalyticTensorPacketForgettingTransfer
-        holomorphicD_realization monoAnalyticD_realization
-        holomorphicStructureForgotten holomorphic_structure_forgotten))
-    thetaAverage_eq_packetNormalized thetaAverage_eq_ind3Target
+    correspondence.sourceCalibration
+    correspondence.targetCalibration.thetaAverage_eq_packetNormalized
+    correspondence.targetCalibration.thetaAverage_eq_ind3Target
 
 def ofPacketLocalAndEntryTargetThetaAlignment
     (entrySource :
