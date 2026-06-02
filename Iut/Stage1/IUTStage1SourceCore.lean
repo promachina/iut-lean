@@ -6580,6 +6580,75 @@ theorem endpoint
 end IUTStage1EnvironmentGaussianThetaMuPrimeStripLift
 
 /--
+Finite coric invariant for the `F^{⊢×μ}` unit part.
+
+IUT II, Corollary 4.7(iv), states that the coric `F^{⊢×μ}`-prime-strip is an
+invariant of both the `Θ^{×μ}`- and Gaussian `Θ^{×μ}`-links.  The finite
+shadow records a common unit character indexed by the valuation set `V`.
+The environment unit character is required to be the pullback of this coric
+character along `Prime(Cenv) ≃ V`; the Gaussian equality is then derived from
+transport along the prime-strip evaluation.
+-/
+structure IUTStage1CoricThetaMuPrimeStripInvariant
+    (Penv Pgau V : Type u) (μ : Type v)
+    [Fintype Penv] [Fintype Pgau] [Fintype V] where
+  lift : IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ
+  coricUnitCharacter : V -> μ
+  environment_unit_eq_coric :
+    ∀ p : Penv,
+      lift.environmentUnitCharacter p =
+        coricUnitCharacter (lift.base.environmentPrimeToPlace p)
+
+namespace IUTStage1CoricThetaMuPrimeStripInvariant
+
+variable {Penv Pgau V : Type u} {μ : Type v}
+variable [Fintype Penv] [Fintype Pgau] [Fintype V]
+
+theorem gaussianUnitCharacter_at_evaluatedPrime_eq_coric
+    (invariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (p : Penv) :
+    invariant.lift.gaussianUnitCharacter
+        (invariant.lift.base.primeEvaluation p) =
+      invariant.coricUnitCharacter
+        (invariant.lift.base.gaussianPrimeToPlace
+          (invariant.lift.base.primeEvaluation p)) := by
+  rw [invariant.lift.gaussianUnitCharacter_at_evaluatedPrime p,
+    invariant.environment_unit_eq_coric p,
+    invariant.lift.base.gaussianPlaceOfEvaluation_eq_environmentPlace p]
+
+theorem environmentUnitCharacter_eq_gaussianUnitCharacter_at_evaluatedPrime
+    (invariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (p : Penv) :
+    invariant.lift.environmentUnitCharacter p =
+      invariant.lift.gaussianUnitCharacter
+        (invariant.lift.base.primeEvaluation p) := by
+  rw [invariant.lift.gaussianUnitCharacter_at_evaluatedPrime p]
+
+theorem endpoint
+    (invariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ) :
+    ∀ p : Penv,
+      invariant.lift.environmentUnitCharacter p =
+          invariant.coricUnitCharacter
+            (invariant.lift.base.environmentPrimeToPlace p) ∧
+        invariant.lift.gaussianUnitCharacter
+            (invariant.lift.base.primeEvaluation p) =
+          invariant.coricUnitCharacter
+            (invariant.lift.base.gaussianPrimeToPlace
+              (invariant.lift.base.primeEvaluation p)) ∧
+        invariant.lift.environmentUnitCharacter p =
+          invariant.lift.gaussianUnitCharacter
+            (invariant.lift.base.primeEvaluation p) :=
+  fun p =>
+    ⟨invariant.environment_unit_eq_coric p,
+      invariant.gaussianUnitCharacter_at_evaluatedPrime_eq_coric p,
+      invariant.environmentUnitCharacter_eq_gaussianUnitCharacter_at_evaluatedPrime p⟩
+
+end IUTStage1CoricThetaMuPrimeStripInvariant
+
+/--
 Local-global collection equipped with structure morphisms to the global object.
 
 Remark 3.9.5(ix), (cQ3), describes local Frobenioid objects equipped with

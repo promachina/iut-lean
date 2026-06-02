@@ -232,6 +232,25 @@ theorem environmentGaussianThetaMuPrimeStripLift_endpoint
             lift.environmentUnitCharacter p :=
   lift.endpoint
 
+theorem coricThetaMuPrimeStripInvariant_endpoint
+    {Penv Pgau V : Type u} {μ : Type v}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (invariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ) :
+    ∀ p : Penv,
+      invariant.lift.environmentUnitCharacter p =
+          invariant.coricUnitCharacter
+            (invariant.lift.base.environmentPrimeToPlace p) ∧
+        invariant.lift.gaussianUnitCharacter
+            (invariant.lift.base.primeEvaluation p) =
+          invariant.coricUnitCharacter
+            (invariant.lift.base.gaussianPrimeToPlace
+              (invariant.lift.base.primeEvaluation p)) ∧
+        invariant.lift.environmentUnitCharacter p =
+          invariant.lift.gaussianUnitCharacter
+            (invariant.lift.base.primeEvaluation p) :=
+  invariant.endpoint
+
 theorem localGlobalFrobenioidStructureMorphismCollection_endpoint
     {V : Type u} [Fintype V]
     (source :

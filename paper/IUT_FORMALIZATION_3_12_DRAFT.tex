@@ -753,7 +753,11 @@ represented at finite level.  A lift to an \(F^{\times\mu}\)-prime-strip
 stores an environment-side unit character; the Gaussian-side unit character is
 defined by transport along the prime-evaluation equivalence.  Thus \Lean{}
 proves unit-character compatibility at evaluated primes rather than accepting
-it as an independent bridge field.
+it as an independent bridge field.  The coric \(F^{\vdash\times\mu}\)
+invariance of Corollary 4.7(iv) is represented by a common unit character on
+the valuation set \(V\).  Once the environment unit character is the pullback
+of this coric character along \(Prime(C_{\mathrm{env}})\simeq V\), \Lean{}
+derives the corresponding Gaussian equality from the prime-evaluation square.
 A finite tensor-product operation on these degree objects adds divisor degrees
 and unit log-volumes, and \Lean{} proves that the realified log-volume of the
 tensor product is the sum of the two realified log-volumes.  This operation is
@@ -1160,6 +1164,10 @@ The project currently proves the following source-facing results in \Lean{}:
   equivalence.  The Gaussian unit character is constructed from the
   environment unit character, and \Lean{} proves compatibility at evaluated
   primes.
+\item The coric \(F^{\vdash\times\mu}\) invariant of Corollary 4.7(iv) is now
+  represented at finite level: a common unit character on \(V\) pulls back to
+  the environment side, and \Lean{} derives the Gaussian-side pullback equality
+  from the prime-evaluation square.
 \item The realified Frobenioid degree layer now has finite morphisms: divisor
   and unit shifts determine the target realified log-volume, identity has zero
   shift, and composition adds both shifts.
