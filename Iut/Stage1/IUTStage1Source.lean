@@ -41758,6 +41758,59 @@ def ofEntryTargetThetaAlignment
       NonarchimedeanLogKummerPacketTargetCalibration.ofPacketNormalizedEntryTargetAndThetaTarget
         entrySource thetaAverage_eq_packetNormalized thetaAverage_eq_ind3Target }
 
+def ofZModLabelledProcessionEntryTargetThetaAlignment
+    {l : PrimeGeFive}
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean)
+    (labelledAverage_eq_packetNormalized :
+      labelledAverage.normalizedLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (entrySource :
+      NonarchimedeanPacketNormalizedEntryTargetSource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceCalibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummer entrySource.toEntry
+        holomorphicF.toRealized holomorphicD.toRealized monoAnalyticD.toRealized)
+    (thetaAverage_eq_labelledAverage :
+      thetaAverage = labelledAverage.normalizedLogVolume)
+    (thetaAverage_eq_ind3Target :
+      thetaAverage =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume) :
+    NonarchimedeanRealifiedFrobenioidLogKummerPacketSource
+      audited thetaAverage logKummer entrySource.toEntry
+      holomorphicF holomorphicD monoAnalyticD :=
+  { kummerCompatibility := kummerCompatibility,
+    forgettingCompatibility := forgettingCompatibility,
+    holomorphicF_realization := holomorphicF_realization,
+    holomorphicD_realization := holomorphicD_realization,
+    monoAnalyticD_realization := monoAnalyticD_realization,
+    holomorphicStructureForgotten := holomorphicStructureForgotten,
+    holomorphic_structure_forgotten := holomorphic_structure_forgotten,
+    sourceCalibration := sourceCalibration,
+    targetCalibration :=
+      open NonarchimedeanLogKummerPacketTargetCalibration in
+      ofZModLabelledProcessionEntryTargetAndThetaTarget
+        labelledAverage labelledAverage_eq_packetNormalized entrySource
+        thetaAverage_eq_labelledAverage thetaAverage_eq_ind3Target }
+
 def ofVerticalIQTargetSource
     (kummerCompatibility :
       IUTStage1RealifiedFrobenioidKummerCompatibility
@@ -42062,6 +42115,74 @@ theorem realifiedFrobenioidPacket_calibration_endpoint
     source.targetCalibration.thetaAverage_eq_entryTarget,
     source.targetCalibration.entryTarget_eq_ind3Target,
     source.toPacketCorrespondence.qPilotLogKummerNonInterference⟩
+
+theorem ofZModLabelledProcessionEntryTargetThetaAlignment_endpoint
+    {l : PrimeGeFive}
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean)
+    (labelledAverage_eq_packetNormalized :
+      labelledAverage.normalizedLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (entrySource :
+      NonarchimedeanPacketNormalizedEntryTargetSource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceCalibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummer entrySource.toEntry
+        holomorphicF.toRealized holomorphicD.toRealized monoAnalyticD.toRealized)
+    (thetaAverage_eq_labelledAverage :
+      thetaAverage = labelledAverage.normalizedLogVolume)
+    (thetaAverage_eq_ind3Target :
+      thetaAverage =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume) :
+    let source :=
+      ofZModLabelledProcessionEntryTargetThetaAlignment
+        labelledAverage labelledAverage_eq_packetNormalized entrySource
+        kummerCompatibility forgettingCompatibility holomorphicF_realization
+        holomorphicD_realization monoAnalyticD_realization
+        holomorphicStructureForgotten holomorphic_structure_forgotten
+        sourceCalibration thetaAverage_eq_labelledAverage
+        thetaAverage_eq_ind3Target;
+    source.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.zmodLabelledProcessionAverage ∧
+      thetaAverage =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      holomorphicD.toRealized.product.productLogVolume =
+        holomorphicF.toRealized.product.productLogVolume ∧
+      monoAnalyticD.toRealized.product.productLogVolume =
+        holomorphicD.toRealized.product.productLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      entrySource.toEntry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      thetaAverage = entrySource.toEntry.targetLogVolume.finiteLogVolume ∧
+      entrySource.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+  by
+    intro source
+    have hpacket := source.realifiedFrobenioidPacket_endpoint
+    exact
+      ⟨rfl,
+        source.targetCalibration.thetaAverage_eq_packetNormalized,
+        hpacket.1, hpacket.2.1, hpacket.2.2.1, hpacket.2.2.2.1,
+        hpacket.2.2.2.2.1, hpacket.2.2.2.2.2⟩
 
 theorem ofEntryTargetThetaAlignment_endpoint
     (entrySource :
