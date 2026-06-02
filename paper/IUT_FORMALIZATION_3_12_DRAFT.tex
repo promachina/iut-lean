@@ -437,6 +437,10 @@ source: realified Kummer compatibility still supplies the
 \(\mathrm{holomorphicF}\to\mathrm{holomorphicD}\to D^\vdash\) transfer, while
 the target face is now generated from the packet-normalized entry target and
 theta-target alignment.
+The realified source can now also generate the source packet calibration from
+packet-local/source alignments before forming the correspondence; consequently
+the strongest realified Step (x) constructor no longer needs a completed source
+calibration as input.
 The first-pass Gaussian route also has a one-correspondence form: it consumes
 a finite log-Kummer packet-correspondence source and projects the source
 packet/product calibration and target packet-normalized calibration from that
@@ -886,6 +890,10 @@ The project currently proves the following source-facing results in \Lean{}:
   target-data constructor: Frobenioid compatibility yields the Kummer and
   forgetting transfers, while packet-normalized target data is generated from
   the entry-target source and theta-target alignment.
+\item The realified packet source now also has a source-reduced constructor:
+  packet-local/source alignment and packet-local \((\Ind3)\)-source alignment
+  generate the source packet calibration using the Frobenioid-derived Kummer
+  and forgetting transfers.
 \item The finite sign-unit/root-of-unity part of Remark 3.11.4 is formalized:
   sign-unit action preserves full cusp labels, full-label log-volume readings,
   Gaussian degrees, and averaged Gaussian log-volume.
