@@ -638,6 +638,10 @@ labelled theta-source alignment.
 In the finite-divisor variant, the source packet-local alignment is now
 constructed from the finite divisor/Frobenioid tensor packet product before
 the direct-labelled vertical-\(IQ\) route is applied.
+The labelwise equality between the labelled capsule source and the
+Hodge-descent theta-source \(ZMod(\ell)\)-average is now derived from local
+Hodge-descent transport: each theta-source label is identified with the
+packet local object's finite log-volume, as is each labelled capsule value.
 The vertical-\(IQ\) route can now also be instantiated with a finite
 divisor/Frobenioid packet product on the mono-analytic side.  In this form the
 route constructs the theta-root attached realified log-Kummer entry source
@@ -1419,6 +1423,9 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The direct-labelled vertical-\(IQ\) route now has a finite-divisor form:
   source packet-local alignment is constructed from finite divisor/Frobenioid
   product data rather than supplied as a separate alignment record.
+\item The direct-labelled and finite-divisor routes no longer require
+  labelwise equality with the theta-source \(ZMod(\ell)\)-average as route
+  input; it is derived from Hodge-descent label-local-object transport.
 \item The theta-root attached Step (x) source can now be constructed from the
   same finite divisor-product source and an exact vertical-\(IQ\) target.  The
   endpoint exposes the canonical bad-local theta-root label, Kummer/forgetting

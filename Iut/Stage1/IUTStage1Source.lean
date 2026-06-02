@@ -39169,6 +39169,47 @@ theorem zeroLogVolume_eq_packetLocalObjectFinite
       |>.toCuspZeroLocalLabelObjectConstructionAudit
   cuspZero.zeroLogVolume_eq_packetLocalObjectFinite audited
 
+theorem thetaSourceLabelLogVolume_eq_packetLocalObjectFinite
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (j : ZMod l.value) :
+    (part.insulated_route.theta_source.compatible_average.zmod_cusp_audit
+          |>.averaged_audit |>.averagedLogVolume audited).normalizedLogVolume j =
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume := by
+  let cuspZero :=
+    part.toInsulatedCuspZeroPacketBridgeAudit
+      |>.toCuspZeroLocalLabelObjectConstructionAudit
+  calc
+    (part.insulated_route.theta_source.compatible_average.zmod_cusp_audit
+          |>.averaged_audit |>.averagedLogVolume audited).normalizedLogVolume j =
+        (cuspZero.labelLocalObject audited j).finiteLogVolume :=
+      cuspZero.normalizedLogVolume_eq_labelLocalObjectFinite audited j
+    _ = audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume := by
+      rw [cuspZero.labelLocalObject_eq_packetLocalObject audited j]
+
+theorem labelledAverage_eq_thetaSourceLabelwise_of_packetLocalObject
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind)
+    (labelledAverage : IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind)
+    (labelledLocalObject_eq_packetLocalObject :
+      labelledAverage.localObject =
+        audited.choice.local_tensor_state.packetState.localObject) :
+    ∀ j : ZMod l.value,
+      labelledAverage.toLabelAveraged.normalizedLogVolume j =
+        (part.insulated_route.theta_source.compatible_average.zmod_cusp_audit
+          |>.averaged_audit |>.averagedLogVolume audited).normalizedLogVolume j := by
+  intro j
+  calc
+    labelledAverage.toLabelAveraged.normalizedLogVolume j =
+        labelledAverage.localObject.finiteLogVolume :=
+      labelledAverage.capsuleLogVolume_eq_localObjectFinite j
+    _ = audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume := by
+      rw [labelledLocalObject_eq_packetLocalObject]
+    _ =
+        (part.insulated_route.theta_source.compatible_average.zmod_cusp_audit
+          |>.averaged_audit |>.averagedLogVolume audited).normalizedLogVolume j :=
+      (part.thetaSourceLabelLogVolume_eq_packetLocalObjectFinite audited j).symm
+
 /--
 Alignment of the Hodge-descent packet local object with the two real values of
 the audited `(Ind3)` upper-semi datum.
@@ -39339,6 +39380,21 @@ def ofDirectPacketNormalization
     labelledAverage_eq_thetaSourceLabelwise :=
       labelledAverage_eq_thetaSourceLabelwise }
 
+def ofHodgeDescentDirectPacketNormalization
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind)
+    (directNormalization :
+      IUTStage1DirectPacketNormalizationData
+        audited.choice.local_tensor_state.packetState)
+    (labelledLocalObject_eq_packetLocalObject :
+      labelledAverage.localObject =
+        audited.choice.local_tensor_state.packetState.localObject) :
+    StepXThetaSourceLabelledCapsuleAverageAlignment part audited :=
+  ofDirectPacketNormalization
+    labelledAverage directNormalization labelledLocalObject_eq_packetLocalObject
+    (part.labelledAverage_eq_thetaSourceLabelwise_of_packetLocalObject
+      audited labelledAverage labelledLocalObject_eq_packetLocalObject)
+
 theorem labelledAverage_average_eq_thetaSourceAverage
     (alignment :
       StepXThetaSourceLabelledCapsuleAverageAlignment part audited) :
@@ -39413,6 +39469,29 @@ theorem ofDirectPacketNormalization_endpoint
       ⟨alignment.labelledAverage_eq_packetNormalized,
         alignment.thetaSourceAverage_eq_labelledAverage,
         alignment.thetaSourceAverage_eq_packetNormalized⟩
+
+theorem ofHodgeDescentDirectPacketNormalization_endpoint
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind)
+    (directNormalization :
+      IUTStage1DirectPacketNormalizationData
+        audited.choice.local_tensor_state.packetState)
+    (labelledLocalObject_eq_packetLocalObject :
+      labelledAverage.localObject =
+        audited.choice.local_tensor_state.packetState.localObject) :
+    labelledAverage.normalizedLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        labelledAverage.normalizedLogVolume ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume := by
+  let alignment : StepXThetaSourceLabelledCapsuleAverageAlignment part audited :=
+    ofHodgeDescentDirectPacketNormalization
+      labelledAverage directNormalization labelledLocalObject_eq_packetLocalObject
+  exact
+    ⟨alignment.labelledAverage_eq_packetNormalized,
+      alignment.thetaSourceAverage_eq_labelledAverage,
+      alignment.thetaSourceAverage_eq_packetNormalized⟩
 
 end StepXThetaSourceLabelledCapsuleAverageAlignment
 
@@ -48464,6 +48543,94 @@ theorem boundarySignedEqualityOrStrictCTheta_of_directLabelledVerticalIQ
       thetaSigned_le_cTheta_absLogQ
 
 /--
+Direct-normalized labelled-average route with Hodge-derived labelwise equality.
+
+The labelwise identification with the theta source is derived from
+Hodge-descent packet-local-object transport; it is no longer a route input.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeDirectLabelledVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (alignment :
+      IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+        part audited record X C)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean)
+    (directNormalization :
+      IUTStage1DirectPacketNormalizationData
+        audited.choice.local_tensor_state.packetState)
+    (labelledLocalObject_eq_packetLocalObject :
+      labelledAverage.localObject =
+        audited.choice.local_tensor_state.packetState.localObject)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  let thetaLabelledAlignment :
+      StepXThetaSourceLabelledCapsuleAverageAlignment part audited :=
+    StepXThetaSourceLabelledCapsuleAverageAlignment.ofHodgeDescentDirectPacketNormalization
+      labelledAverage directNormalization labelledLocalObject_eq_packetLocalObject
+  exact
+    part.boundarySignedEqualityOrStrictCTheta_of_sourceAlignedThetaLabelledVerticalIQ
+      profile audited alignment source_profile_eq thetaRootSource upperSemiEntry
+      kummerCompatibility forgettingCompatibility holomorphicF_realization
+      holomorphicD_realization monoAnalyticD_realization
+      holomorphicStructureForgotten holomorphic_structure_forgotten
+      sourceAlignment thetaLabelledAlignment targetSource cTheta
+      thetaSigned_le_cTheta_absLogQ
+
+/--
 Hodge/SHE/IPL/hull route through a packet-normalized Step (x) theta-source
 alignment.
 
@@ -49494,6 +49661,116 @@ theorem boundarySignedEqualityOrStrictCTheta_of_directLabelledFiniteDivisorVerti
       forgettingCompatibility holomorphicF_realization holomorphicD_realization rfl
       holomorphicStructureForgotten holomorphic_structure_forgotten
       sourceAlignment targetSource cTheta thetaSigned_le_cTheta_absLogQ
+
+/--
+Finite-divisor direct-labelled route with Hodge-derived labelwise equality.
+
+This is the current strongest finite Step (x) source boundary: source
+packet-local alignment is constructed from finite divisor/Frobenioid data,
+labelled-average packet normalization is derived from direct normalization,
+the theta-source labelwise equality is derived from Hodge descent, and the
+target equality is derived from exact vertical-`IQ` data.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeDirectLabelledFiniteDivisorVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (alignment :
+      IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+        part audited record X C)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean)
+    (directNormalization :
+      IUTStage1DirectPacketNormalizationData
+        audited.choice.local_tensor_state.packetState)
+    (labelledLocalObject_eq_packetLocalObject :
+      labelledAverage.localObject =
+        audited.choice.local_tensor_state.packetState.localObject)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  let monoAnalyticD :=
+    divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+      IUTStage1TensorPacketRealizationKind.monoAnalyticD
+      monoAnalyticTheater
+  let sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized :=
+    NonarchimedeanLogKummerPacketLocalSourceAlignment.ofFiniteDivisorTensorPacketProduct
+      divisorPacket IUTStage1TensorPacketRealizationKind.monoAnalyticD
+      monoAnalyticTheater packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified
+      packetLocalObjectFinite_eq_ind3Source
+  exact
+    part.boundarySignedEqualityOrStrictCTheta_of_hodgeDirectLabelledVerticalIQ
+      profile audited alignment source_profile_eq thetaRootSource labelledAverage
+      directNormalization labelledLocalObject_eq_packetLocalObject upperSemiEntry
+      kummerCompatibility forgettingCompatibility holomorphicF_realization
+      holomorphicD_realization rfl holomorphicStructureForgotten
+      holomorphic_structure_forgotten sourceAlignment targetSource cTheta
+      thetaSigned_le_cTheta_absLogQ
 
 /--
 Compatibility form of the vertical-`IQ` route with the three packet-local
