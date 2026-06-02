@@ -920,6 +920,45 @@ theorem thetaPossibleImagesWeightedDeterminant_endpoint
     q_subset_approximant determinantSource
     compatibility
 
+open IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow in
+theorem thetaPossibleImagesCanonicalHullFamilyDetLogVolume_endpoint
+    {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (possibleThetaImage : ι -> Set α)
+    (qPilotRegion : Set α)
+    (q_subset_hull :
+      qPilotRegion ⊆ hullData.hullRegion (⋃ i, possibleThetaImage i))
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          hullData (⋃ i, possibleThetaImage i))
+        determinantSource)
+    (i j : ι)
+    (hnei : (possibleThetaImage i).Nonempty)
+    (hnej : (possibleThetaImage j).Nonempty) :
+    let data :=
+      ofCanonicalHullWeightedDeterminant
+        hullData possibleThetaImage qPilotRegion q_subset_hull
+        determinantSource compatibility;
+    let familySource :=
+      canonicalHullWeightedDeterminantFamilyHullDetLogVolumeSource
+        hullData possibleThetaImage determinantSource compatibility;
+    data.thetaHull = familySource.familyHull ∧
+      data.approximantLogVolume = familySource.familyHullLogVolume ∧
+      familySource.possibleRegion i ⊆ familySource.familyHull ∧
+      familySource.possibleRegion j ⊆ familySource.familyHull ∧
+      familySource.quotientMap '' familySource.possibleRegion i =
+        familySource.quotientMap '' familySource.possibleRegion j ∧
+      familySource.familyHullLogVolume =
+        determinantSource.determinantLogVolume ∧
+      familySource.tensorPower.normalizedLogVolume =
+        familySource.familyHullLogVolume :=
+  canonicalHullWeightedDeterminantFamilyHullDetLogVolume_endpoint
+    hullData possibleThetaImage qPilotRegion q_subset_hull
+    determinantSource compatibility i j hnei hnej
+
 theorem sourceHullDetDataFromTensorPowerWeightedDeterminant_endpoint
     {source target : Copy} {index : Type u} {β : Type v} [Fintype β]
     {package : IUTStage1SourcePackage source target index}
