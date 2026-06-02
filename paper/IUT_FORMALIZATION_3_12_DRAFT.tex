@@ -460,6 +460,10 @@ source.  The corresponding Hodge--Arakelov route consumes one object carrying
 the canonical nonzero theta-root label, the selected upper-semi entry, and the
 realified-Frobenioid log-Kummer packet source before entering the
 \(C_\Theta\)-dichotomy.
+This theta-root attached source now has the same reduced constructor: the
+theta-root label package is combined with entry membership and the
+packet-local/target alignments, and \Lean{} projects the canonical-label facts
+together with the Step (x) upper-semi endpoint.
 The Hodge/\(\SHE/\IPL\)/hull route has the same realified endpoint: its
 alignment record supplies the Hodge--Arakelov Gaussian comparison,
 canonical-one preservation, q-pilot positivity, and theta/Hodge log-volume
@@ -902,6 +906,9 @@ The project currently proves the following source-facing results in \Lean{}:
   entry membership plus source/target alignment data constructs the packet
   source internally and projects q-pilot non-interference, source equality,
   target equality, and the upper-semi inequality.
+\item The theta-root attached realified entry source now has the same reduced
+  constructor and projects both the canonical nonzero theta-root label facts
+  and the realified Step (x) upper-semi endpoint.
 \item The finite sign-unit/root-of-unity part of Remark 3.11.4 is formalized:
   sign-unit action preserves full cusp labels, full-label log-volume readings,
   Gaussian degrees, and averaged Gaussian log-volume.
