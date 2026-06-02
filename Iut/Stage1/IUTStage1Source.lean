@@ -38726,6 +38726,87 @@ theorem packetLocalObjectFinite_le_thetaAverage
 end NonarchimedeanLogKummerUpperSemiCompatibility
 
 /--
+Packet-local source alignment for the nonarchimedean Step (x) log-Kummer
+corridor.
+
+This record keeps together the local object/source equality, the
+source-to-mono-analytic product equality, and the packet-local identification
+with the `(Ind3)` source value.  It is the source-side input from which the
+current finite realified-Frobenioid model constructs the packet source
+calibration.
+-/
+structure NonarchimedeanLogKummerPacketLocalSourceAlignment
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (entry : IUTStage1NonarchimedeanInclusionData)
+    {j : Nat}
+    (monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j) where
+  packetLocalObject_eq_entrySource :
+    audited.choice.local_tensor_state.packetState.localObject =
+      entry.sourceLogVolume
+  entrySource_eq_monoAnalyticProduct :
+    entry.sourceLogVolume.finiteLogVolume =
+      monoAnalyticD.product.productLogVolume
+  packetLocalObjectFinite_eq_ind3Source :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+
+namespace NonarchimedeanLogKummerPacketLocalSourceAlignment
+
+variable
+  {audited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean}
+  {entry : IUTStage1NonarchimedeanInclusionData}
+  {j : Nat}
+  {monoAnalyticD :
+    IUTStage1RealizedTensorPacketProductLogVolume
+      IUTStage1PlaceKind.nonarchimedean j}
+
+theorem packetLocalObjectFinite_eq_entrySource
+    (alignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited entry monoAnalyticD) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      entry.sourceLogVolume.finiteLogVolume := by
+  rw [alignment.packetLocalObject_eq_entrySource]
+
+theorem packetLocalObjectFinite_le_entryTarget
+    (alignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited entry monoAnalyticD) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+      entry.targetLogVolume.finiteLogVolume := by
+  calc
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        entry.sourceLogVolume.finiteLogVolume :=
+      alignment.packetLocalObjectFinite_eq_entrySource
+    _ <= entry.targetLogVolume.finiteLogVolume :=
+      entry.logVolume_le
+
+theorem sourceAlignment_endpoint
+    (alignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited entry monoAnalyticD) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        entry.sourceLogVolume.finiteLogVolume ∧
+      entry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.product.productLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        entry.targetLogVolume.finiteLogVolume :=
+  ⟨alignment.packetLocalObjectFinite_eq_entrySource,
+    alignment.entrySource_eq_monoAnalyticProduct,
+    alignment.packetLocalObjectFinite_eq_ind3Source,
+    alignment.packetLocalObjectFinite_le_entryTarget⟩
+
+end NonarchimedeanLogKummerPacketLocalSourceAlignment
+
+/--
 Source-side packet/product calibration for the nonarchimedean Step (x)
 log-Kummer corridor.
 
@@ -38806,6 +38887,27 @@ def ofPacketLocalSourceAlignment
           forgetting.preserves_productLogVolume
         _ = holomorphicF.product.productLogVolume :=
           kummer.preserves_productLogVolume }
+
+def ofPacketLocalSourceAlignmentObject
+    (alignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited entry monoAnalyticD)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD)
+    (calibration_source :
+      IUTStage1LocalObjectLogVolumeIdentificationSource :=
+        IUTStage1LocalObjectLogVolumeIdentificationSource.directLocalObjectConstruction) :
+    NonarchimedeanLogKummerPacketSourceCalibration
+      audited logKummer entry holomorphicF holomorphicD monoAnalyticD :=
+  ofPacketLocalSourceAlignment
+    alignment.packetLocalObject_eq_entrySource
+    alignment.entrySource_eq_monoAnalyticProduct
+    alignment.packetLocalObjectFinite_eq_ind3Source
+    kummer forgetting calibration_source
 
 theorem packetLocalObjectFinite_eq_entrySource
     (calibration :
@@ -40707,6 +40809,52 @@ def ofUpperSemiEntryPacketLocalAndVerticalIQTarget
     holomorphicStructureForgotten holomorphic_structure_forgotten
     sourceCalibration targetSource
 
+def ofUpperSemiEntrySourceAlignedAndVerticalIQTarget
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited thetaAverage logKummer upperSemiEntry.toEntry) :
+    NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
+      audited thetaAverage logKummer upperSemiEntry.toEntry
+      holomorphicF holomorphicD monoAnalyticD :=
+  let sourceCalibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummer upperSemiEntry.toEntry
+        holomorphicF.toRealized holomorphicD.toRealized monoAnalyticD.toRealized :=
+    NonarchimedeanLogKummerPacketSourceCalibration.ofPacketLocalSourceAlignmentObject
+      sourceAlignment
+      (kummerCompatibility.toKummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF_realization holomorphicD_realization)
+      (forgettingCompatibility.toMonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD_realization monoAnalyticD_realization
+        holomorphicStructureForgotten holomorphic_structure_forgotten)
+  ofEntryMemSourceCalibrationAndVerticalIQTarget
+    upperSemiEntry.toEntry_mem kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization monoAnalyticD_realization
+    holomorphicStructureForgotten holomorphic_structure_forgotten
+    sourceCalibration targetSource
+
 def toLogKummerUpperSemiCompatibility
     (source :
       NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
@@ -40975,6 +41123,63 @@ theorem ofUpperSemiEntryPacketLocalAndVerticalIQTarget_endpoint
         ind3_target_eq_packet_normalized, q_pilot_noninterference,
         source.packetLocalObjectFinite_le_thetaAverage⟩
 
+theorem ofUpperSemiEntrySourceAlignedAndVerticalIQTarget_endpoint
+    {logKummerId : LogKummerCorrespondenceId}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited thetaAverage logKummerId upperSemiEntry.toEntry) :
+    holomorphicD.toRealized.product.productLogVolume =
+        holomorphicF.toRealized.product.productLogVolume ∧
+      monoAnalyticD.toRealized.product.productLogVolume =
+        holomorphicD.toRealized.product.productLogVolume ∧
+      upperSemiEntry.toEntry ∈
+        audited.choice.upper_semi_state.nonarchimedeanInclusions ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      thetaAverage =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        thetaAverage :=
+  ofUpperSemiEntryPacketLocalAndVerticalIQTarget_endpoint
+    (logKummerId := logKummerId)
+    upperSemiEntry kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization
+    monoAnalyticD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten
+    sourceAlignment.packetLocalObject_eq_entrySource
+    sourceAlignment.entrySource_eq_monoAnalyticProduct
+    sourceAlignment.packetLocalObjectFinite_eq_ind3Source
+    targetSource
+
 end NonarchimedeanRealifiedFrobenioidLogKummerEntrySource
 
 /--
@@ -41205,6 +41410,45 @@ def ofThetaRootUpperSemiEntryPacketLocalAndVerticalIQTarget
         holomorphic_structure_forgotten packetLocalObject_eq_entrySource
         entrySource_eq_monoAnalyticProduct packetLocalObjectFinite_eq_ind3Source
         targetSource }
+
+def ofThetaRootUpperSemiEntrySourceAlignedAndVerticalIQTarget
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited thetaAverage logKummer upperSemiEntry.toEntry) :
+    NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+      audited thetaAverage logKummer l X C upperSemiEntry.toEntry
+      holomorphicF holomorphicD monoAnalyticD :=
+  { thetaRootSource := thetaRootSource,
+    realifiedEntrySource :=
+      open NonarchimedeanRealifiedFrobenioidLogKummerEntrySource in
+      ofUpperSemiEntrySourceAlignedAndVerticalIQTarget
+        upperSemiEntry kummerCompatibility forgettingCompatibility
+        holomorphicF_realization holomorphicD_realization
+        monoAnalyticD_realization holomorphicStructureForgotten
+        holomorphic_structure_forgotten sourceAlignment targetSource }
 
 theorem thetaRootCanonicalGeneratorUpToSign
     (source :
@@ -41518,6 +41762,67 @@ theorem ofThetaRootUpperSemiEntryPacketLocalAndVerticalIQTarget_endpoint
         ind3_target_eq_packet_normalized,
         q_pilot_noninterference,
         source.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩
+
+theorem ofThetaRootUpperSemiEntrySourceAlignedAndVerticalIQTarget_endpoint
+    {logKummerId : LogKummerCorrespondenceId}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited thetaAverage logKummerId upperSemiEntry.toEntry) :
+    thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      holomorphicD.toRealized.product.productLogVolume =
+        holomorphicF.toRealized.product.productLogVolume ∧
+      monoAnalyticD.toRealized.product.productLogVolume =
+        holomorphicD.toRealized.product.productLogVolume ∧
+      upperSemiEntry.toEntry ∈
+        audited.choice.upper_semi_state.nonarchimedeanInclusions ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      thetaAverage =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        thetaAverage :=
+  ofThetaRootUpperSemiEntryPacketLocalAndVerticalIQTarget_endpoint
+    (logKummerId := logKummerId)
+    thetaRootSource upperSemiEntry kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization
+    monoAnalyticD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten
+    sourceAlignment.packetLocalObject_eq_entrySource
+    sourceAlignment.entrySource_eq_monoAnalyticProduct
+    sourceAlignment.packetLocalObjectFinite_eq_ind3Source
+    targetSource
 
 end NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
 
@@ -44384,13 +44689,92 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceCalibratedV
       thetaSigned_le_cTheta_absLogQ
 
 /--
-Hodge/SHE/IPL/hull vertical-`IQ` route with source calibration constructed
-internally.
+Hodge/SHE/IPL/hull vertical-`IQ` route through a named source-side packet
+alignment object.
 
-The source side is now reduced to packet-local/source alignment,
-entry-source/mono-analytic-product alignment, packet-local/`(Ind3)`-source
-alignment, and realified Kummer/forgetting compatibility.  The named
-source-calibration record is constructed inside the theorem.
+The source side is now a single packet-local source-alignment object together
+with realified Kummer/forgetting compatibility.  The theorem constructs the
+theta-root attached realified Step (x) source internally and then applies the
+Hodge/SHE/IPL/hull endpoint.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceAlignedVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (alignment :
+      IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+        part audited record X C)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta := by
+  let realifiedSource :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C upperSemiEntry.toEntry
+        holomorphicF holomorphicD monoAnalyticD :=
+    open NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource in
+    ofThetaRootUpperSemiEntrySourceAlignedAndVerticalIQTarget
+      thetaRootSource upperSemiEntry kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization
+      monoAnalyticD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten sourceAlignment targetSource
+  exact
+    part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullRealifiedFrobenioidEntry
+      profile audited alignment source_profile_eq realifiedSource cTheta
+      thetaSigned_le_cTheta_absLogQ
+
+/--
+Compatibility form of the vertical-`IQ` route with the three packet-local
+source alignments supplied separately.
 -/
 theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullPacketLocalVerticalIQ
     {packageN :
@@ -44456,24 +44840,20 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullPacketLocalVertic
         cTheta * (-packageN.preLedger.qSigned)) :
     (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
         packageN.preLedger.thetaSigned < 0) ∨
-      (-1 : Real) < cTheta := by
-  let realifiedSource :
-      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
-        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
-        packageN.logKummer l X C upperSemiEntry.toEntry
-        holomorphicF holomorphicD monoAnalyticD :=
-    open NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource in
-    ofThetaRootUpperSemiEntryPacketLocalAndVerticalIQTarget
-      thetaRootSource upperSemiEntry kummerCompatibility forgettingCompatibility
-      holomorphicF_realization holomorphicD_realization
-      monoAnalyticD_realization holomorphicStructureForgotten
-      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
-      entrySource_eq_monoAnalyticProduct packetLocalObjectFinite_eq_ind3Source
-      targetSource
-  exact
-    part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullRealifiedFrobenioidEntry
-      profile audited alignment source_profile_eq realifiedSource cTheta
-      thetaSigned_le_cTheta_absLogQ
+      (-1 : Real) < cTheta :=
+  let sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized :=
+    { packetLocalObject_eq_entrySource := packetLocalObject_eq_entrySource,
+      entrySource_eq_monoAnalyticProduct := entrySource_eq_monoAnalyticProduct,
+      packetLocalObjectFinite_eq_ind3Source :=
+        packetLocalObjectFinite_eq_ind3Source }
+  part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceAlignedVerticalIQ
+    profile audited alignment source_profile_eq thetaRootSource upperSemiEntry
+    kummerCompatibility forgettingCompatibility holomorphicF_realization
+    holomorphicD_realization monoAnalyticD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten sourceAlignment targetSource cTheta
+    thetaSigned_le_cTheta_absLogQ
 
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
     (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l) :
