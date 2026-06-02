@@ -45164,6 +45164,10 @@ structure NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
   targetSource :
     NonarchimedeanLogKummerVerticalIQTargetSource
       audited thetaAverage logKummer entry
+  targetCalibration_eq_verticalIQ :
+    realifiedSource.realifiedEntrySource.packetSource.targetCalibration =
+      NonarchimedeanLogKummerPacketTargetCalibration.ofVerticalIQTargetSource
+        targetSource
 
 namespace NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
 
@@ -45181,6 +45185,46 @@ variable
     IUTStage1RealifiedFrobenioidTensorPacketProductSource
       IUTStage1PlaceKind.nonarchimedean j}
 
+def ofExactSourceAlignedThetaRootAndVerticalIQTarget
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited thetaAverage logKummer upperSemiEntry.toEntry) :
+    NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
+      audited thetaAverage logKummer l X C upperSemiEntry.toEntry
+      holomorphicF holomorphicD monoAnalyticD :=
+  { realifiedSource :=
+      open NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource in
+      ofThetaRootUpperSemiEntrySourceAlignedAndVerticalIQTarget
+          thetaRootSource upperSemiEntry kummerCompatibility forgettingCompatibility
+          holomorphicF_realization holomorphicD_realization
+          monoAnalyticD_realization holomorphicStructureForgotten
+          holomorphic_structure_forgotten sourceAlignment targetSource,
+    targetSource := targetSource,
+    targetCalibration_eq_verticalIQ := rfl }
+
 theorem hasPreciseFrobenioidIsomorphisms
     (source :
       NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
@@ -45189,6 +45233,16 @@ theorem hasPreciseFrobenioidIsomorphisms
     source.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
       true :=
   source.targetSource.hasPreciseFrobenioidIsomorphisms
+
+theorem targetCalibration_source_eq_verticalIQ
+    (source :
+      NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
+        audited thetaAverage logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD) :
+    source.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+      IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility := by
+  rw [source.targetCalibration_eq_verticalIQ]
+  rfl
 
 theorem thetaAverage_eq_packetNormalized
     (source :
@@ -45222,18 +45276,26 @@ theorem exactVerticalIQ_endpoint
       NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
         audited thetaAverage logKummer l X C entry
         holomorphicF holomorphicD monoAnalyticD) :
+    let targetCalibration :=
+      source.realifiedSource.realifiedEntrySource.packetSource.targetCalibration;
     source.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
         true ∧
+      targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
       thetaAverage =
         audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
       audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
         audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
       entry.targetLogVolume.finiteLogVolume =
         audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume :=
-  ⟨source.hasPreciseFrobenioidIsomorphisms,
-    source.thetaAverage_eq_packetNormalized,
-    source.ind3Target_eq_packetNormalized,
-    source.entryTarget_eq_packetNormalized⟩
+  by
+    dsimp
+    exact
+      ⟨source.hasPreciseFrobenioidIsomorphisms,
+        source.targetCalibration_source_eq_verticalIQ,
+        source.thetaAverage_eq_packetNormalized,
+        source.ind3Target_eq_packetNormalized,
+        source.entryTarget_eq_packetNormalized⟩
 
 end NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
 
