@@ -1682,6 +1682,37 @@ theorem thetaPossibleImagesCanonicalHullFamilyDetLogVolume_endpoint
     hullData possibleThetaImage qPilotRegion q_subset_hull
     determinantSource compatibility i j hnei hnej
 
+open IUTStage1ThetaPilotPossibleImages in
+theorem thetaPilotPossibleImagesCanonicalHullWeightedDeterminant_endpoint
+    {source target : Copy} {index : Type u} {β : Type v} [Fintype β]
+    {package : IUTStage1SourcePackage source target index}
+    (images : IUTStage1ThetaPilotPossibleImages package)
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target))
+    (qPilotRegion : Region target)
+    (q_subset_hull :
+      qPilotRegion.toSet ⊆ hullData.hullRegion images.thetaImageUnionSet)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          hullData images.thetaImageUnionSet)
+        determinantSource) :
+    let hullSource :=
+      images.toCanonicalHullWeightedDeterminant
+        hullData qPilotRegion q_subset_hull determinantSource compatibility;
+    images.thetaPilot = package.thetaPilot ∧
+      images.indeterminacies = package.indeterminacies ∧
+      hullSource.thetaImageUnion = images.thetaImageUnionSet ∧
+      hullSource.thetaImageUnion =
+        package.preLedger.output.comparisons.targetUnion.toSet ∧
+      hullSource.approximantRegion = hullSource.thetaHull ∧
+      hullSource.qPilotLogVolume <= hullSource.thetaHullLogVolume ∧
+      hullSource.approximantLogVolume =
+        determinantSource.determinantLogVolume :=
+  images.canonicalHullWeightedDeterminant_endpoint
+    hullData qPilotRegion q_subset_hull determinantSource compatibility
+
 theorem sourceHullDetDataFromTensorPowerWeightedDeterminant_endpoint
     {source target : Copy} {index : Type u} {β : Type v} [Fintype β]
     {package : IUTStage1SourcePackage source target index}

@@ -765,6 +765,10 @@ and the point-set hull of \(P_{\mathrm{out}}\) satisfies the determinant
 bound, then the hull/determinant source data is constructed from the
 holomorphic-hull shadow.  The remaining bridge equality is explicit, so the
 package cannot display one hull construction while proving with another.
+The source package's theta-pilot possible-image record now also feeds the
+canonical hull approximant directly: \Lean{} proves that its set-theoretic
+union is exactly the package target union before applying the determinant
+comparison.
 The possible-image approximant source now feeds this package bridge in the
 canonical case.  If its possible-image union is the package target union, its
 chosen approximant is the canonical hull, the package measure is the induced
@@ -1549,6 +1553,10 @@ The project currently proves the following source-facing results in \Lean{}:
   constructor: source obligations are derived from the source record where
   possible, the record's theta possible-image union is tied to the hull endpoint,
   and the determinant bound yields \(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\).
+\item The theta-pilot possible-image family of the source package now feeds the
+  canonical holomorphic-hull approximant directly: \Lean{} identifies its
+  set-theoretic union with the package target union before the determinant
+  comparison is applied.
 \item The package-level hull/determinant source bridge can now be constructed
   from a concrete common hull containing the target union and a
   determinant/log-volume bound for that hull.  The experiment endpoint returns
