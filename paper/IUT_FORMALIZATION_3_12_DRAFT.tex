@@ -480,6 +480,11 @@ entry membership, packet-local source alignments, packet-normalized target
 alignment, and realified Frobenioid compatibility construct the Step (x) source
 inside the theorem before proving the same \(C_\Theta=-1\) boundary alternative
 or strict \(C_\Theta>-1\) conclusion.
+The packet-normalized theta-source calibration is now also consumed through a
+single Step (x) alignment object: the constant \(ZMod(\ell)\)
+packet-normalized route and the proof that it has the same theta source as the
+Hodge-descent route are bundled before \Lean{} derives the
+theta-average-to-packet-normalized equality used by the final corridor.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(iii)'s approximant family.  For a region \(P\), an approximant
 record carries a hull \(H\), proves \(H\subseteq\phi(P)\), and proves
@@ -1031,6 +1036,9 @@ The project currently proves the following source-facing results in \Lean{}:
   requires equality of the Hodge-descent theta source with the packet-normalized
   theta source, preventing a packet-normalization audit for one theta source
   from being used for another.
+\item The same source equality is now bundled with the packet-normalized route
+  as a Step (x) theta-source alignment, and the Hodge/SHE/IPL/hull endpoint
+  consumes that aligned object instead of separate route/equality inputs.
 \item The selected packet-normalized nonarchimedean entry is now bundled with
   its membership in the audited upper-semi inclusion family.  The route consumes
   this single source object rather than a constructed entry and separate

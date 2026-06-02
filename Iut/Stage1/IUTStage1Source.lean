@@ -37432,6 +37432,55 @@ def ofPacketNormalizedTarget
 end Ind3ThetaTargetAlignment
 
 /--
+Step (x) packet-normalized theta-source alignment.
+
+The packet-normalized `ZMod l` route may be used in the Hodge/SHE/IPL/hull
+corridor only when its theta source is the same theta source as the
+Hodge-descent packet route.  This record keeps the packet-normalized route and
+the source-identification proof together, so downstream theorems do not accept
+these as unrelated inputs.
+-/
+structure StepXPacketNormalizedThetaSourceAlignment
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l) where
+  packetRoute :
+    audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l
+  theta_source_eq :
+    part.insulated_route.theta_source = packetRoute.theta_source
+
+namespace StepXPacketNormalizedThetaSourceAlignment
+
+variable
+  {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+
+theorem thetaSourceAverage_eq_packetNormalized
+    (alignment : StepXPacketNormalizedThetaSourceAlignment part)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.insulated_route.theta_source.thetaSourceAverage audited =
+      audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume := by
+  rw [alignment.theta_source_eq]
+  exact alignment.packetRoute.thetaSourceAverage_eq_packetNormalized audited
+
+theorem targetSigned_le_thetaSourceAverage
+    (alignment : StepXPacketNormalizedThetaSourceAlignment part)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    package.preLedger.targetVolume.targetSigned <=
+      part.insulated_route.theta_source.thetaSourceAverage audited := by
+  rw [alignment.theta_source_eq]
+  exact alignment.packetRoute.targetSigned_le_thetaSourceAverage audited
+
+theorem thetaSourceAlignment_endpoint
+    (alignment : StepXPacketNormalizedThetaSourceAlignment part)
+    (audited : IUTStage1PlaceAuditedDirectSummandPacketChoice coric kind) :
+    part.insulated_route.theta_source.thetaSourceAverage audited =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      package.preLedger.targetVolume.targetSigned <=
+        part.insulated_route.theta_source.thetaSourceAverage audited :=
+  ⟨alignment.thetaSourceAverage_eq_packetNormalized audited,
+    alignment.targetSigned_le_thetaSourceAverage audited⟩
+
+end StepXPacketNormalizedThetaSourceAlignment
+
+/--
 Transport-explicit real-line alignment for the two real equalities required by
 `Ind3SourceTargetAlignment`.
 
@@ -42644,6 +42693,82 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceCalibratedZ
   exact
     part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullRealifiedFrobenioidEntry
       profile audited alignment source_profile_eq realifiedSource cTheta
+      thetaSigned_le_cTheta_absLogQ
+
+/--
+Hodge/SHE/IPL/hull route through a packet-normalized Step (x) theta-source
+alignment.
+
+This is the same route as
+`boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceCalibratedZMod`,
+but the packet-normalized route and its theta-source identification are
+consumed as one Step (x) alignment object.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceCalibratedStepXAligned
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (alignment :
+      IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+        part audited record X C)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceCalibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited packageN.logKummer upperSemiEntry.toEntry
+        holomorphicF.toRealized holomorphicD.toRealized monoAnalyticD.toRealized)
+    (orderedAlignment : Ind3OrderedRealLineAlignment part audited)
+    (stepXAlignment : StepXPacketNormalizedThetaSourceAlignment part)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta := by
+  exact
+    part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceCalibratedZMod
+      profile audited alignment source_profile_eq thetaRootSource upperSemiEntry
+      kummerCompatibility forgettingCompatibility holomorphicF_realization
+      holomorphicD_realization monoAnalyticD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten sourceCalibration orderedAlignment
+      stepXAlignment.packetRoute stepXAlignment.theta_source_eq cTheta
       thetaSigned_le_cTheta_absLogQ
 
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
