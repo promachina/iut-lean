@@ -2448,6 +2448,53 @@ theorem packetTargetCalibrationFromEntryTargetAndThetaAlignment_endpoint
         (logKummer := logKummer)
         entrySource thetaAverage_eq_packetNormalized thetaAverage_eq_ind3Target
 
+open NonarchimedeanLogKummerPacketTargetCalibration in
+theorem packetTargetCalibrationFromZModLabelledProcession_endpoint
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {thetaAverage : Real}
+    {logKummer : LogKummerCorrespondenceId}
+    {l : PrimeGeFive}
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean)
+    (labelledAverage_eq_packetNormalized :
+      labelledAverage.normalizedLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (entrySource : NonarchimedeanPacketNormalizedEntryTargetSource audited)
+    (thetaAverage_eq_labelledAverage :
+      thetaAverage = labelledAverage.normalizedLogVolume)
+    (thetaAverage_eq_ind3Target :
+      thetaAverage =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume) :
+    let calibration :
+      NonarchimedeanLogKummerPacketTargetCalibration
+        audited thetaAverage logKummer entrySource.toEntry :=
+      ofZModLabelledProcessionEntryTargetAndThetaTarget
+        labelledAverage labelledAverage_eq_packetNormalized entrySource
+        thetaAverage_eq_labelledAverage thetaAverage_eq_ind3Target;
+    calibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.zmodLabelledProcessionAverage ∧
+      calibration.thetaAverage_eq_packetNormalized =
+        thetaAverage_eq_labelledAverage.trans
+          labelledAverage_eq_packetNormalized ∧
+      calibration.ind3Target_eq_packetNormalized =
+        thetaAverage_eq_ind3Target.symm.trans
+          (thetaAverage_eq_labelledAverage.trans
+            labelledAverage_eq_packetNormalized) ∧
+      calibration.entryTarget_eq_packetNormalized =
+        entrySource.toEntry_targetLogVolume_eq_packetNormalized ∧
+      calibration.thetaAverage_eq_entryTarget =
+        thetaAverage_eq_labelledAverage.trans
+          (labelledAverage_eq_packetNormalized.trans
+            entrySource.toEntry_targetLogVolume_eq_packetNormalized.symm) :=
+  ofZModLabelledProcessionEntryTargetAndThetaTarget_endpoint
+    (logKummer := logKummer)
+    labelledAverage labelledAverage_eq_packetNormalized entrySource
+    thetaAverage_eq_labelledAverage thetaAverage_eq_ind3Target
+
 theorem packetCorrespondenceFromEntryTargetThetaAlignment_endpoint
     {coric : Type u}
     {audited :

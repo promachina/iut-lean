@@ -16647,6 +16647,7 @@ structure IUTStage1LocalTensorPacketNormalizedCompatibility
 inductive IUTStage1PacketNormalizedIdentificationSource where
   | directPacketNormalization
   | ind2TransportedPacketNormalization
+  | zmodLabelledProcessionAverage
   | logKummerVerticalIQCompatibility
   | separateRealLineIdentification
 deriving DecidableEq
@@ -40931,6 +40932,28 @@ def ofPacketNormalizedEntryTargetAndThetaTarget
     (thetaAverage_eq_ind3Target.symm.trans thetaAverage_eq_packetNormalized)
     calibration_source
 
+def ofZModLabelledProcessionEntryTargetAndThetaTarget
+    {l : PrimeGeFive}
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean)
+    (labelledAverage_eq_packetNormalized :
+      labelledAverage.normalizedLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (entrySource :
+      NonarchimedeanPacketNormalizedEntryTargetSource audited)
+    (thetaAverage_eq_labelledAverage :
+      thetaAverage = labelledAverage.normalizedLogVolume)
+    (thetaAverage_eq_ind3Target :
+      thetaAverage =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume) :
+    NonarchimedeanLogKummerPacketTargetCalibration
+      audited thetaAverage logKummer entrySource.toEntry :=
+  ofPacketNormalizedEntryTargetAndThetaTarget entrySource
+    (thetaAverage_eq_labelledAverage.trans labelledAverage_eq_packetNormalized)
+    thetaAverage_eq_ind3Target
+    IUTStage1PacketNormalizedIdentificationSource.zmodLabelledProcessionAverage
+
 theorem thetaAverage_eq_packetNormalized
     (calibration :
       NonarchimedeanLogKummerPacketTargetCalibration
@@ -41052,6 +41075,46 @@ theorem ofPacketNormalizedEntryTargetAndThetaTarget_endpoint
   by
     intro calibration
     exact ⟨rfl, rfl, rfl⟩
+
+theorem ofZModLabelledProcessionEntryTargetAndThetaTarget_endpoint
+    {l : PrimeGeFive}
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean)
+    (labelledAverage_eq_packetNormalized :
+      labelledAverage.normalizedLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (entrySource :
+      NonarchimedeanPacketNormalizedEntryTargetSource audited)
+    (thetaAverage_eq_labelledAverage :
+      thetaAverage = labelledAverage.normalizedLogVolume)
+    (thetaAverage_eq_ind3Target :
+      thetaAverage =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume) :
+    let calibration :
+      NonarchimedeanLogKummerPacketTargetCalibration
+        audited thetaAverage logKummer entrySource.toEntry :=
+      ofZModLabelledProcessionEntryTargetAndThetaTarget
+        labelledAverage labelledAverage_eq_packetNormalized entrySource
+        thetaAverage_eq_labelledAverage thetaAverage_eq_ind3Target;
+    calibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.zmodLabelledProcessionAverage ∧
+      calibration.thetaAverage_eq_packetNormalized =
+        thetaAverage_eq_labelledAverage.trans
+          labelledAverage_eq_packetNormalized ∧
+      calibration.ind3Target_eq_packetNormalized =
+        thetaAverage_eq_ind3Target.symm.trans
+          (thetaAverage_eq_labelledAverage.trans
+            labelledAverage_eq_packetNormalized) ∧
+      calibration.entryTarget_eq_packetNormalized =
+        entrySource.toEntry_targetLogVolume_eq_packetNormalized ∧
+      calibration.thetaAverage_eq_entryTarget =
+        thetaAverage_eq_labelledAverage.trans
+          (labelledAverage_eq_packetNormalized.trans
+            entrySource.toEntry_targetLogVolume_eq_packetNormalized.symm) :=
+  by
+    intro calibration
+    exact ⟨rfl, rfl, rfl, rfl, rfl⟩
 
 end NonarchimedeanLogKummerPacketTargetCalibration
 
