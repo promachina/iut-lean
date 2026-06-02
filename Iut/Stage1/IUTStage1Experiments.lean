@@ -270,6 +270,22 @@ theorem coricGlobalRealifiedFrobenioidCompatibility_endpoint
             compat.scale * compat.source.globalObject.realifiedLogVolume :=
   compat.endpoint
 
+theorem frobeniusPictureChain_endpoint
+    (shift : Int) :
+    (∀ source target : Int,
+        IUTStage1FrobeniusPictureChain.edge source target ↔
+          IUTStage1FrobeniusPictureChain.edge
+            (IUTStage1FrobeniusPictureChain.translate shift source)
+            (IUTStage1FrobeniusPictureChain.translate shift target)) ∧
+      (∀ map : Int -> Int,
+        map 0 = 1 ->
+          map 1 = 0 ->
+            ¬ ∀ source target : Int,
+              IUTStage1FrobeniusPictureChain.edge source target ->
+                IUTStage1FrobeniusPictureChain.edge
+                  (map source) (map target)) :=
+  IUTStage1FrobeniusPictureChain.endpoint shift
+
 theorem localGlobalFrobenioidStructureMorphismCollection_endpoint
     {V : Type u} [Fintype V]
     (source :

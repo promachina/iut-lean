@@ -6741,6 +6741,78 @@ theorem endpoint
 
 end IUTStage1CoricGlobalRealifiedFrobenioidCompatibility
 
+namespace IUTStage1FrobeniusPictureChain
+
+/-!
+Finite graph shadow of the Frobenius-pictures of IUT II, Corollary 4.7(vi).
+
+The source paper represents the infinite chain of linked Hodge theaters by the
+oriented graph `... → • → • → • → ...`, indexed by `ℤ`.  The graph has the
+translation action of `ℤ`, but not arbitrary permutation symmetries; in
+particular, an adjacent transposition is not an automorphism of the oriented
+graph.  This finite formalization keeps exactly that order-theoretic content.
+-/
+
+def edge (source target : Int) : Prop :=
+  target = source + 1
+
+def translate (shift : Int) (vertex : Int) : Int :=
+  vertex + shift
+
+theorem translate_edge_iff
+    (shift source target : Int) :
+    edge source target ↔
+      edge (translate shift source) (translate shift target) := by
+  unfold edge translate
+  constructor <;> intro h <;> omega
+
+theorem translate_preserves_edge
+    (shift source target : Int)
+    (h : edge source target) :
+    edge (translate shift source) (translate shift target) :=
+  (translate_edge_iff shift source target).mp h
+
+theorem adjacent_swap_not_edge_preserving
+    (map : Int -> Int)
+    (hzero : map 0 = 1)
+    (hone : map 1 = 0) :
+    ¬ ∀ source target : Int, edge source target -> edge (map source) (map target) := by
+  intro hpreserves
+  have h01 : edge 0 1 := by
+    unfold edge
+    norm_num
+  have hbad := hpreserves 0 1 h01
+  unfold edge at hbad
+  rw [hzero, hone] at hbad
+  omega
+
+theorem adjacent_swap_not_automorphism
+    (equiv : Int ≃ Int)
+    (hzero : equiv 0 = 1)
+    (hone : equiv 1 = 0) :
+    ¬ ∀ source target : Int,
+      edge source target ↔ edge (equiv source) (equiv target) := by
+  intro hauto
+  exact adjacent_swap_not_edge_preserving
+    (fun n => equiv n) hzero hone
+    (fun source target hedge => (hauto source target).mp hedge)
+
+theorem endpoint
+    (shift : Int) :
+    (∀ source target : Int,
+        edge source target ↔
+          edge (translate shift source) (translate shift target)) ∧
+      (∀ map : Int -> Int,
+        map 0 = 1 ->
+          map 1 = 0 ->
+            ¬ ∀ source target : Int,
+              edge source target -> edge (map source) (map target)) :=
+  ⟨fun source target => translate_edge_iff shift source target,
+    fun map hzero hone =>
+      adjacent_swap_not_edge_preserving map hzero hone⟩
+
+end IUTStage1FrobeniusPictureChain
+
 /--
 Local-global collection equipped with structure morphisms to the global object.
 

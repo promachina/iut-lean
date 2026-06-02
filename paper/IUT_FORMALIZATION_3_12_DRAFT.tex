@@ -764,6 +764,12 @@ collections.  This is the finite shadow of the \(R_{>0}\)-orbit language:
 given scaled equality of the global realified log-volume and of the restricted
 local prime readings, \Lean{} derives the scaled local-object and local-prime
 log-volume equalities from the existing local-global collection laws.
+The Frobenius-picture graph of Corollary 4.7(vi) is represented by the
+directed successor relation \(n\to n+1\) on \(\mathbb{Z}\).  \Lean{} proves
+that translations preserve this oriented graph and that any map exchanging
+the adjacent vertices \(0\) and \(1\) cannot preserve directed edges.  This
+captures the finite order-theoretic content of the paper's statement that the
+chain has translation symmetry but not arbitrary permutation symmetry.
 A finite tensor-product operation on these degree objects adds divisor degrees
 and unit log-volumes, and \Lean{} proves that the realified log-volume of the
 tensor product is the sum of the two realified log-volumes.  This operation is
@@ -1178,6 +1184,10 @@ The project currently proves the following source-facing results in \Lean{}:
   is now represented by a positive real scale on finite local-global
   Frobenioid collections.  From scaled global and restricted-local readings,
   \Lean{} derives the scaled local-object and local-prime log-volume readings.
+\item The Frobenius-picture graph of Corollary 4.7(vi) is now represented as
+  the directed successor graph on \(\mathbb{Z}\).  \Lean{} proves translation
+  invariance and rules out edge preservation by any map that swaps adjacent
+  vertices \(0\) and \(1\).
 \item The realified Frobenioid degree layer now has finite morphisms: divisor
   and unit shifts determine the target realified log-volume, identity has zero
   shift, and composition adds both shifts.
