@@ -1151,6 +1151,8 @@ theorem thetaPossibleImagesCanonicalHullFamilyDetLogVolume_endpoint
         familySource.quotientMap '' familySource.possibleRegion j ∧
       familySource.familyHullLogVolume =
         determinantSource.determinantLogVolume ∧
+      familySource.familyUnionLogVolume <=
+        determinantSource.determinantLogVolume ∧
       familySource.tensorPower.normalizedLogVolume =
         familySource.familyHullLogVolume :=
   canonicalHullWeightedDeterminantFamilyHullDetLogVolume_endpoint

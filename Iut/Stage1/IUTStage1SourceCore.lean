@@ -4038,6 +4038,8 @@ theorem canonicalHullWeightedDeterminantFamilyHullDetLogVolume_endpoint
         familySource.quotientMap '' familySource.possibleRegion j ∧
       familySource.familyHullLogVolume =
         determinantSource.determinantLogVolume ∧
+      familySource.familyUnionLogVolume <=
+        determinantSource.determinantLogVolume ∧
       familySource.tensorPower.normalizedLogVolume =
         familySource.familyHullLogVolume :=
   by
@@ -4050,6 +4052,7 @@ theorem canonicalHullWeightedDeterminantFamilyHullDetLogVolume_endpoint
         hendpoint.2.1,
         hendpoint.2.2.1,
         hendpoint.2.2.2.1,
+        hendpoint.2.2.2.2.1,
         hendpoint.2.2.2.2.2.1⟩
 
 end IUTStage1ThetaPossibleImagesHullApproximantLogVolumeShadow
