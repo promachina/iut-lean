@@ -615,6 +615,12 @@ The possible-image Step (xi) source can now also be built from such an exact
 approximant and a weighted determinant source; in that route \Lean{} derives
 \(\mu_{\log}(P)=\mu_{\log}(H)=\det_{\log}\), rather than only the inequality
 \(\mu_{\log}(P)\le\mu_{\log}(H)\).
+Remark 3.9.5(iv)'s statement \(\phi(P)\in\Phi(P)\), hence
+\(H_{\Phi(P)}=\phi(P)\), is now represented by a finite approximant-family
+object.  Every member of the family is a \(\Phi(P)\)-approximant inside
+\(\phi(P)\), and if one distinguished member is the canonical hull, \Lean{}
+proves that the family union and its log-volume are exactly those of
+\(\phi(P)\).
 The canonical hull \(\phi(P)\) is itself an approximant, and every approximant
 is fixed by hull formation.  This is the compactness guard emphasized in the
 paper: the indeterminacy in choosing a hull approximant remains inside
