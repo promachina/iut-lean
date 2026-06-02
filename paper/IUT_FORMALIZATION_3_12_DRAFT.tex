@@ -810,6 +810,10 @@ constructing the hull/determinant bridge.
 The same endpoint is exposed at the Theorem 3.11 source-record level, so the
 possible-image union used by the canonical hull is the record's multiradial
 theta-image union before being identified with the package target union.
+For arbitrary possible-image families that are later identified with the
+Theorem 3.11 record, the constructor now has the same source shape: start from
+q-pilot containment in the displayed possible-image union and derive containment
+in its canonical hull internally.
 The record-native specialization now has the same \(q\subseteq P_{\mathrm{rec}}\)
 input form: the hull containment needed by Step (xi) is derived from the
 record's own possible-image union.
@@ -1666,6 +1670,10 @@ The project currently proves the following source-facing results in \Lean{}:
 \item This canonical-hull Ob4 endpoint is also public for the Theorem 3.11
   source constructor: the source record's theta possible-image union is the
   hull input before the package target-union identification is applied.
+\item The arbitrary-family Theorem 3.11 Ob4 constructor now also has a
+  \(q\subseteq P\) source form.  The family is then identified with the
+  record's theta possible-image union, and \Lean{} derives the hull containment
+  consumed by the package-level source data.
 \item The record-native Theorem 3.11 Ob4 route can now consume
   \(q\subseteq P_{\mathrm{rec}}\), where \(P_{\mathrm{rec}}\) is the record's
   own possible-image union; \Lean{} derives
