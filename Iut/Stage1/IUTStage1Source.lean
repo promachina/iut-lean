@@ -6405,6 +6405,74 @@ theorem endpoint
 
 end CQ3CQ4ClosedLoopGuard
 
+/--
+cQ3/cQ4 closed-loop guard backed by a finite local-global Frobenioid collection.
+
+The preceding closed-loop guard identifies the cQ3 hull/determinant boundary
+with the cQ4 calibrated log-Kummer boundary.  This refinement records that the
+cQ3 boundary is the global realified log-volume of a finite local-global
+Frobenioid collection in the sense of Remark 3.9.5(ix)'s local-global
+collection discussion.
+-/
+structure CQ3CQ4LocalGlobalClosedLoopGuard
+    (data : IUTStage1StepXToHullUpperRayLogVolume label)
+    (V : Type u) [Fintype V] where
+  guard : CQ3CQ4ClosedLoopGuard data
+  collection : IUTStage1LocalGlobalRealifiedFrobenioidCollection V
+  global_eq_cq3 :
+    collection.globalObject.realifiedLogVolume = guard.cq3HullDetLogVolume
+
+namespace CQ3CQ4LocalGlobalClosedLoopGuard
+
+variable {V : Type u} [Fintype V]
+
+theorem localScaled_eq_cq3
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (backed : CQ3CQ4LocalGlobalClosedLoopGuard data V)
+    (v : V) :
+    ((backed.collection.localization v).extensionDegree : Real) *
+        (backed.collection.localObject v).realifiedLogVolume =
+      backed.guard.cq3HullDetLogVolume := by
+  rw [backed.collection.extensionDegree_mul_localRealifiedLogVolume v]
+  exact backed.global_eq_cq3
+
+theorem localScaled_eq_cq4
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (backed : CQ3CQ4LocalGlobalClosedLoopGuard data V)
+    (v : V) :
+    ((backed.collection.localization v).extensionDegree : Real) *
+        (backed.collection.localObject v).realifiedLogVolume =
+      backed.guard.cq4CalibratedLogVolume := by
+  exact (backed.localScaled_eq_cq3 v).trans backed.guard.cq3_eq_cq4
+
+theorem qPilotLogVolume_le_global
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (backed : CQ3CQ4LocalGlobalClosedLoopGuard data V) :
+    data.qPilotLogVolume <=
+      backed.collection.globalObject.realifiedLogVolume := by
+  rw [backed.global_eq_cq3]
+  exact backed.guard.qPilotLogVolume_le_cq3
+
+theorem localGlobalClosedLoop_endpoint
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (backed : CQ3CQ4LocalGlobalClosedLoopGuard data V) :
+    (∀ v : V,
+      ((backed.collection.localization v).extensionDegree : Real) *
+          (backed.collection.localObject v).realifiedLogVolume =
+        backed.guard.cq3HullDetLogVolume ∧
+      ((backed.collection.localization v).extensionDegree : Real) *
+          (backed.collection.localObject v).realifiedLogVolume =
+        backed.guard.cq4CalibratedLogVolume) ∧
+      backed.guard.cq3HullDetLogVolume =
+        backed.guard.cq4CalibratedLogVolume ∧
+      data.qPilotLogVolume <=
+        backed.collection.globalObject.realifiedLogVolume :=
+  ⟨fun v => ⟨backed.localScaled_eq_cq3 v, backed.localScaled_eq_cq4 v⟩,
+    backed.guard.cq3_eq_cq4,
+    backed.qPilotLogVolume_le_global⟩
+
+end CQ3CQ4LocalGlobalClosedLoopGuard
+
 theorem twoComputation_determinant_endpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
     let twoComputation := data.toQPilotTwoComputationLogVolume;

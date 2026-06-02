@@ -665,6 +665,12 @@ restriction factors.  \Lean{} proves that each local log-volume is the
 restricted global value and that multiplying by the corresponding extension
 degree recovers the global log-volume.  This is a finite log-volume shadow of
 the local-global category, not a construction of the category itself.
+This local-global collection now also backs the finite cQ3/cQ4 closed-loop
+guard: if the collection's global realified log-volume is the cQ3
+hull/determinant boundary, then \Lean{} proves that every localized value
+rescales to both the cQ3 boundary and the cQ4 calibrated log-Kummer boundary.
+Thus the Step (xi) boundary can be read from the local-global collection rather
+than from a bare real number alone.
 \IUT{} I, Example 5.1 and Remark 5.1.1 distinguish the diagonal Frobenioid
 \(F_{\langle J\rangle}\) from the product of underlying categories \(F_J\):
 the former carries constant distributions in \(j\), while the latter allows
@@ -972,6 +978,10 @@ The project currently proves the following source-facing results in \Lean{}:
   degree/log-volume content of Remark 3.9.5(ix): each local object is a
   restricted global value, and extension-degree rescaling recovers the global
   realified log-volume.
+\item The cQ3/cQ4 closed-loop guard can now be backed by such a local-global
+  collection: the global collection value is identified with the cQ3
+  hull/determinant boundary, and every localized value rescales to both the
+  cQ3 and cQ4 Step (xi) boundaries.
 \item The diagonal/arbitrary distribution distinction of \IUT{} I, Example 5.1
   and Remark 5.1.1 is formalized at finite realified log-volume level:
   diagonal distributions are constant in \(j\), their total is

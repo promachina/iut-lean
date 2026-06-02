@@ -8045,6 +8045,26 @@ theorem stepXToHullUpperRay_cq3Cq4ClosedLoopGuard_endpoint
           guard.calibration.localPrimeStepLogVolume = 0) :=
   guard.endpoint
 
+theorem stepXToHullUpperRay_cq3Cq4LocalGlobalClosedLoopGuard_endpoint
+    {label : Type u} [Fintype label]
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    {V : Type u} [Fintype V]
+    (backed :
+      IUTStage1StepXToHullUpperRayLogVolume.CQ3CQ4LocalGlobalClosedLoopGuard
+        data V) :
+    (∀ v : V,
+      ((backed.collection.localization v).extensionDegree : Real) *
+          (backed.collection.localObject v).realifiedLogVolume =
+        backed.guard.cq3HullDetLogVolume ∧
+      ((backed.collection.localization v).extensionDegree : Real) *
+          (backed.collection.localObject v).realifiedLogVolume =
+        backed.guard.cq4CalibratedLogVolume) ∧
+      backed.guard.cq3HullDetLogVolume =
+        backed.guard.cq4CalibratedLogVolume ∧
+      data.qPilotLogVolume <=
+        backed.collection.globalObject.realifiedLogVolume :=
+  backed.localGlobalClosedLoop_endpoint
+
 theorem stepXToHullUpperRay_twoComputation_fig38_endpoint
     {label : Type u} [Fintype label]
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
