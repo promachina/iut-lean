@@ -6313,6 +6313,103 @@ theorem localGlobalCollection_endpoint
 end IUTStage1LocalGlobalRealifiedFrobenioidCollection
 
 /--
+Finite local compatibility for the environment/Gaussian evaluation.
+
+IUT II, Corollary 4.6(v), and the subsequent prime-strip formulation identify
+the environment and Gaussian global realified Frobenioids by an evaluation
+isomorphism compatible with the local monoid isomorphisms at every `v`.  This
+finite package connects the divisor-source evaluation above with the
+local-global restriction layer: the global objects are the degree projections
+of the ordinary environment/Gaussian divisor sources, and the local
+restrictions agree pointwise.
+-/
+structure IUTStage1EnvironmentGaussianLocalEvaluation
+    (V : Type u) [Fintype V] where
+  evaluation :
+    IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation V
+  environmentLocal :
+    IUTStage1LocalGlobalRealifiedFrobenioidCollection V
+  gaussianLocal :
+    IUTStage1LocalGlobalRealifiedFrobenioidCollection V
+  environment_global_eq :
+    environmentLocal.globalObject =
+      evaluation.environment.ordinary.toDegreeObject
+  gaussian_global_eq :
+    gaussianLocal.globalObject =
+      evaluation.gaussian.ordinary.toDegreeObject
+  local_restriction_eq :
+    ∀ v : V,
+      gaussianLocal.localization v = environmentLocal.localization v
+
+namespace IUTStage1EnvironmentGaussianLocalEvaluation
+
+variable {V : Type u} [Fintype V]
+
+theorem environmentGlobalLogVolume_eq_ordinary
+    (comparison : IUTStage1EnvironmentGaussianLocalEvaluation V) :
+    comparison.environmentLocal.globalObject.realifiedLogVolume =
+      comparison.evaluation.environment.ordinary.realifiedLogVolume := by
+  rw [comparison.environment_global_eq]
+  rfl
+
+theorem gaussianGlobalLogVolume_eq_ordinary
+    (comparison : IUTStage1EnvironmentGaussianLocalEvaluation V) :
+    comparison.gaussianLocal.globalObject.realifiedLogVolume =
+      comparison.evaluation.gaussian.ordinary.realifiedLogVolume := by
+  rw [comparison.gaussian_global_eq]
+  rfl
+
+theorem gaussianGlobalLogVolume_eq_environment
+    (comparison : IUTStage1EnvironmentGaussianLocalEvaluation V) :
+    comparison.gaussianLocal.globalObject.realifiedLogVolume =
+      comparison.environmentLocal.globalObject.realifiedLogVolume := by
+  rw [comparison.gaussianGlobalLogVolume_eq_ordinary,
+    comparison.environmentGlobalLogVolume_eq_ordinary,
+    comparison.evaluation.gaussianOrdinaryLogVolume_eq_environment]
+
+theorem localRestrictedLogVolume_eq_environment
+    (comparison : IUTStage1EnvironmentGaussianLocalEvaluation V)
+    (v : V) :
+    (comparison.gaussianLocal.localization v).restrictedGlobalPrimeLogVolume =
+      (comparison.environmentLocal.localization v).restrictedGlobalPrimeLogVolume := by
+  rw [comparison.local_restriction_eq v]
+
+theorem localExtensionDegree_eq_environment
+    (comparison : IUTStage1EnvironmentGaussianLocalEvaluation V)
+    (v : V) :
+    (comparison.gaussianLocal.localization v).extensionDegree =
+      (comparison.environmentLocal.localization v).extensionDegree := by
+  rw [comparison.local_restriction_eq v]
+
+theorem gaussianLocalLogVolume_eq_environment
+    (comparison : IUTStage1EnvironmentGaussianLocalEvaluation V)
+    (v : V) :
+    (comparison.gaussianLocal.localObject v).realifiedLogVolume =
+      (comparison.environmentLocal.localObject v).realifiedLogVolume := by
+  rw [comparison.gaussianLocal.localRealifiedLogVolume_eq_restricted v,
+    comparison.environmentLocal.localRealifiedLogVolume_eq_restricted v,
+    comparison.local_restriction_eq v]
+
+theorem endpoint
+    (comparison : IUTStage1EnvironmentGaussianLocalEvaluation V) :
+    comparison.gaussianLocal.globalObject.realifiedLogVolume =
+        comparison.environmentLocal.globalObject.realifiedLogVolume ∧
+      ∀ v : V,
+        (comparison.gaussianLocal.localization v).restrictedGlobalPrimeLogVolume =
+            (comparison.environmentLocal.localization v).restrictedGlobalPrimeLogVolume ∧
+          (comparison.gaussianLocal.localization v).extensionDegree =
+            (comparison.environmentLocal.localization v).extensionDegree ∧
+          (comparison.gaussianLocal.localObject v).realifiedLogVolume =
+            (comparison.environmentLocal.localObject v).realifiedLogVolume :=
+  ⟨comparison.gaussianGlobalLogVolume_eq_environment,
+    fun v =>
+      ⟨comparison.localRestrictedLogVolume_eq_environment v,
+        comparison.localExtensionDegree_eq_environment v,
+        comparison.gaussianLocalLogVolume_eq_environment v⟩⟩
+
+end IUTStage1EnvironmentGaussianLocalEvaluation
+
+/--
 Local-global collection equipped with structure morphisms to the global object.
 
 Remark 3.9.5(ix), (cQ3), describes local Frobenioid objects equipped with

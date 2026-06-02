@@ -173,6 +173,20 @@ theorem localGlobalRealifiedFrobenioidCollection_endpoint
         ∑ v : V, (collection.localization v).restrictedGlobalPrimeLogVolume :=
   collection.localGlobalCollection_endpoint
 
+theorem environmentGaussianLocalEvaluation_endpoint
+    {V : Type u} [Fintype V]
+    (comparison : IUTStage1EnvironmentGaussianLocalEvaluation V) :
+    comparison.gaussianLocal.globalObject.realifiedLogVolume =
+        comparison.environmentLocal.globalObject.realifiedLogVolume ∧
+      ∀ v : V,
+        (comparison.gaussianLocal.localization v).restrictedGlobalPrimeLogVolume =
+            (comparison.environmentLocal.localization v).restrictedGlobalPrimeLogVolume ∧
+          (comparison.gaussianLocal.localization v).extensionDegree =
+            (comparison.environmentLocal.localization v).extensionDegree ∧
+          (comparison.gaussianLocal.localObject v).realifiedLogVolume =
+            (comparison.environmentLocal.localObject v).realifiedLogVolume :=
+  comparison.endpoint
+
 theorem localGlobalFrobenioidStructureMorphismCollection_endpoint
     {V : Type u} [Fintype V]
     (source :
