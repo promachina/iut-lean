@@ -36122,6 +36122,44 @@ variable
     IUTStage1RealizedTensorPacketProductLogVolume
       IUTStage1PlaceKind.nonarchimedean j}
 
+def ofPacketLocalSourceAlignment
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        entry.sourceLogVolume)
+    (entrySource_eq_monoAnalyticProduct :
+      entry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.product.productLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD)
+    (calibration_source :
+      IUTStage1LocalObjectLogVolumeIdentificationSource :=
+        IUTStage1LocalObjectLogVolumeIdentificationSource.directLocalObjectConstruction) :
+    NonarchimedeanLogKummerPacketSourceCalibration
+      audited logKummer entry holomorphicF holomorphicD monoAnalyticD :=
+  { calibration_source := calibration_source,
+    packetLocalObject_eq_entrySource := packetLocalObject_eq_entrySource,
+    entrySource_eq_monoAnalyticProduct := entrySource_eq_monoAnalyticProduct,
+    ind3Source_eq_holomorphicFProduct := by
+      calc
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume =
+            audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume :=
+          packetLocalObjectFinite_eq_ind3Source.symm
+        _ = entry.sourceLogVolume.finiteLogVolume := by
+          rw [packetLocalObject_eq_entrySource]
+        _ = monoAnalyticD.product.productLogVolume :=
+          entrySource_eq_monoAnalyticProduct
+        _ = holomorphicD.product.productLogVolume :=
+          forgetting.preserves_productLogVolume
+        _ = holomorphicF.product.productLogVolume :=
+          kummer.preserves_productLogVolume }
+
 theorem packetLocalObjectFinite_eq_entrySource
     (calibration :
       NonarchimedeanLogKummerPacketSourceCalibration
@@ -36169,6 +36207,42 @@ theorem packetSourceCalibration_endpoint
         audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
   ⟨calibration.packetLocalObjectFinite_eq_entrySource,
     calibration.entrySource_eq_ind3Source kummer forgetting⟩
+
+theorem ofPacketLocalSourceAlignment_endpoint
+    {logKummerId : LogKummerCorrespondenceId}
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        entry.sourceLogVolume)
+    (entrySource_eq_monoAnalyticProduct :
+      entry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.product.productLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        entry.sourceLogVolume.finiteLogVolume ∧
+      entry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume =
+        holomorphicF.product.productLogVolume :=
+  by
+    let calibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited logKummerId entry holomorphicF holomorphicD monoAnalyticD :=
+      ofPacketLocalSourceAlignment (logKummer := logKummerId)
+        packetLocalObject_eq_entrySource
+        entrySource_eq_monoAnalyticProduct
+        packetLocalObjectFinite_eq_ind3Source kummer forgetting
+    exact
+      ⟨calibration.packetLocalObjectFinite_eq_entrySource,
+        calibration.entrySource_eq_ind3Source kummer forgetting,
+        calibration.ind3Source_eq_holomorphicFProduct⟩
 
 end NonarchimedeanLogKummerPacketSourceCalibration
 

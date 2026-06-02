@@ -837,6 +837,43 @@ theorem packetCorrespondenceFromEntryTargetThetaAlignment_endpoint
     entrySource sourceCalibration thetaAverage_eq_packetNormalized
     thetaAverage_eq_ind3Target kummer forgetting
 
+theorem packetSourceCalibrationFromPacketLocalAlignment_endpoint
+    {coric : Type u}
+    {audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    {logKummer : LogKummerCorrespondenceId}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealizedTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        entry.sourceLogVolume)
+    (entrySource_eq_monoAnalyticProduct :
+      entry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.product.productLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (kummer :
+      IUTStage1KummerFTensorPacketToDTensorPacketTransfer
+        holomorphicF holomorphicD)
+    (forgetting :
+      IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+        holomorphicD monoAnalyticD) :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        entry.sourceLogVolume.finiteLogVolume ∧
+      entry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume =
+        holomorphicF.product.productLogVolume :=
+  NonarchimedeanLogKummerPacketSourceCalibration.ofPacketLocalSourceAlignment_endpoint
+    (logKummerId := logKummer)
+    packetLocalObject_eq_entrySource entrySource_eq_monoAnalyticProduct
+    packetLocalObjectFinite_eq_ind3Source kummer forgetting
+
 open NonarchimedeanRealifiedFrobenioidLogKummerPacketSource in
 theorem realifiedPacketFromEntryTargetThetaAlignment_endpoint
     {coric : Type u}
