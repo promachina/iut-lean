@@ -1617,6 +1617,14 @@ def tensorProduct
   { base := left.base.tensorProduct right.base object,
     thetaGeneratorLogVolume := left.thetaGeneratorLogVolume }
 
+def naiveFrobeniusTensorPower
+    (source : IUTStage1ThetaRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    IUTStage1ThetaRealifiedFrobenioidDivisorSource π :=
+  { base := source.base.naiveFrobeniusTensorPower tensorDegree object,
+    thetaGeneratorLogVolume := source.thetaGeneratorLogVolume }
+
 theorem thetaDivisorLogVolume_eq_base_realified_of_theta_one
     (source : IUTStage1ThetaRealifiedFrobenioidDivisorSource π)
     (htheta : source.thetaGeneratorLogVolume = 1) :
@@ -1640,6 +1648,19 @@ theorem tensorProduct_thetaDivisorLogVolume_eq_add
   simp [IUTStage1FiniteRealifiedFrobenioidDivisorSource.tensorProduct, htheta]
   ring
 
+theorem naiveFrobeniusTensorPower_thetaDivisorLogVolume_eq_mul
+    (source : IUTStage1ThetaRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).thetaDivisorLogVolume =
+      (tensorDegree : Real) * source.thetaDivisorLogVolume := by
+  simp only [thetaDivisorLogVolume, naiveFrobeniusTensorPower]
+  rw [source.base.naiveFrobeniusTensorPower_divisorDegree_eq_mul
+    tensorDegree object]
+  simp [
+    IUTStage1FiniteRealifiedFrobenioidDivisorSource.naiveFrobeniusTensorPower]
+  ring_nf
+
 theorem endpoint
     (source : IUTStage1ThetaRealifiedFrobenioidDivisorSource π)
     (htheta : source.thetaGeneratorLogVolume = 1) :
@@ -1648,6 +1669,15 @@ theorem endpoint
         source.base.unitLogVolume ∧
       source.thetaDivisorLogVolume = source.base.realifiedLogVolume :=
   ⟨rfl, source.thetaDivisorLogVolume_eq_base_realified_of_theta_one htheta⟩
+
+theorem naiveFrobeniusTensorPower_endpoint
+    (source : IUTStage1ThetaRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).thetaDivisorLogVolume =
+      (tensorDegree : Real) * source.thetaDivisorLogVolume :=
+  source.naiveFrobeniusTensorPower_thetaDivisorLogVolume_eq_mul
+    tensorDegree object
 
 end IUTStage1ThetaRealifiedFrobenioidDivisorSource
 
@@ -1688,6 +1718,16 @@ def tensorProduct
     extensionDegree_pos := left.extensionDegree_pos,
     localFrobeniusLogVolume := left.localFrobeniusLogVolume }
 
+def naiveFrobeniusTensorPower
+    (source : IUTStage1LogShellRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    IUTStage1LogShellRealifiedFrobenioidDivisorSource π :=
+  { base := source.base.naiveFrobeniusTensorPower tensorDegree object,
+    extensionDegree := source.extensionDegree,
+    extensionDegree_pos := source.extensionDegree_pos,
+    localFrobeniusLogVolume := source.localFrobeniusLogVolume }
+
 theorem normalizedFrobeniusLogVolume_eq
     (source : IUTStage1LogShellRealifiedFrobenioidDivisorSource π) :
     source.normalizedFrobeniusLogVolume =
@@ -1721,6 +1761,28 @@ theorem tensorProduct_logShellDivisorLogVolume_eq_add
     IUTStage1FiniteRealifiedFrobenioidDivisorSource.tensorProduct]
   ring_nf
 
+theorem naiveFrobeniusTensorPower_normalizedFrobeniusLogVolume_eq
+    (source : IUTStage1LogShellRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).normalizedFrobeniusLogVolume =
+      source.normalizedFrobeniusLogVolume :=
+  rfl
+
+theorem naiveFrobeniusTensorPower_logShellDivisorLogVolume_eq_mul
+    (source : IUTStage1LogShellRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).logShellDivisorLogVolume =
+      (tensorDegree : Real) * source.logShellDivisorLogVolume := by
+  simp only [logShellDivisorLogVolume, naiveFrobeniusTensorPower]
+  rw [source.base.naiveFrobeniusTensorPower_divisorDegree_eq_mul
+    tensorDegree object]
+  simp [
+    normalizedFrobeniusLogVolume,
+    IUTStage1FiniteRealifiedFrobenioidDivisorSource.naiveFrobeniusTensorPower]
+  ring_nf
+
 theorem endpoint
     (source : IUTStage1LogShellRealifiedFrobenioidDivisorSource π)
     (hnorm : source.normalizedFrobeniusLogVolume = 1) :
@@ -1733,6 +1795,19 @@ theorem endpoint
       source.logShellDivisorLogVolume = source.base.realifiedLogVolume :=
   ⟨rfl, rfl,
     source.logShellDivisorLogVolume_eq_base_realified_of_normalized_one hnorm⟩
+
+theorem naiveFrobeniusTensorPower_endpoint
+    (source : IUTStage1LogShellRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).normalizedFrobeniusLogVolume =
+        source.normalizedFrobeniusLogVolume ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).logShellDivisorLogVolume =
+        (tensorDegree : Real) * source.logShellDivisorLogVolume :=
+  ⟨source.naiveFrobeniusTensorPower_normalizedFrobeniusLogVolume_eq
+      tensorDegree object,
+    source.naiveFrobeniusTensorPower_logShellDivisorLogVolume_eq_mul
+      tensorDegree object⟩
 
 end IUTStage1LogShellRealifiedFrobenioidDivisorSource
 

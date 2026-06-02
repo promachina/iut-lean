@@ -825,6 +825,15 @@ theorem thetaRealifiedFrobenioidDivisorTensorProduct_endpoint
       left.thetaDivisorLogVolume + right.thetaDivisorLogVolume :=
   left.tensorProduct_thetaDivisorLogVolume_eq_add right object hprime htheta
 
+theorem thetaRealifiedFrobenioidNaiveTensorPower_endpoint
+    {π : Type u} [Fintype π]
+    (source : IUTStage1ThetaRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).thetaDivisorLogVolume =
+      (tensorDegree : Real) * source.thetaDivisorLogVolume :=
+  source.naiveFrobeniusTensorPower_endpoint tensorDegree object
+
 theorem logShellRealifiedFrobenioidDivisorSource_endpoint
     {π : Type u} [Fintype π]
     (source : IUTStage1LogShellRealifiedFrobenioidDivisorSource π)
@@ -849,6 +858,17 @@ theorem logShellRealifiedFrobenioidDivisorTensorProduct_endpoint
     (left.tensorProduct right object).logShellDivisorLogVolume =
       left.logShellDivisorLogVolume + right.logShellDivisorLogVolume :=
   left.tensorProduct_logShellDivisorLogVolume_eq_add right object hprime hnorm
+
+theorem logShellRealifiedFrobenioidNaiveTensorPower_endpoint
+    {π : Type u} [Fintype π]
+    (source : IUTStage1LogShellRealifiedFrobenioidDivisorSource π)
+    (tensorDegree : Nat)
+    (object : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    (source.naiveFrobeniusTensorPower tensorDegree object).normalizedFrobeniusLogVolume =
+        source.normalizedFrobeniusLogVolume ∧
+      (source.naiveFrobeniusTensorPower tensorDegree object).logShellDivisorLogVolume =
+        (tensorDegree : Real) * source.logShellDivisorLogVolume :=
+  source.naiveFrobeniusTensorPower_endpoint tensorDegree object
 
 theorem compatibleRealifiedFrobenioidDivisorCopies_endpoint
     {π : Type u} [Fintype π]

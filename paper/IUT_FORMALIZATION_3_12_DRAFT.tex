@@ -827,10 +827,14 @@ be \(M\) times the original values.
 The theta-version of \IUT{} I, Example 3.5(ii), is now represented at this
 finite level: the same divisor degree is read through a formal
 \(\log(\Theta)\)-generator, and normalization of this generator to \(1\)
-recovers the ordinary finite divisor source.
+recovers the ordinary finite divisor source.  The Ob4 tensor-power operation
+also lifts to this theta copy, where \Lean{} proves that the theta divisor
+log-volume is multiplied by \(M\).
 The \(D\)-, or log-shell, version of Example 3.5(iii) is represented similarly:
 a distinguished local Frobenius/log-shell reading is divided by the extension
-degree before it is applied to the finite divisor degree.
+degree before it is applied to the finite divisor degree.  Tensor-powering this
+copy leaves the normalized Frobenius reading fixed and multiplies the resulting
+log-shell divisor log-volume by \(M\).
 The three finite copies now have a compatibility package: if they share the
 same base divisor source and the theta/log-shell readings are normalized, then
 their log-volume readings are equal.  The environment/Gaussian realified
@@ -1279,11 +1283,14 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The theta-version of the finite divisor source is now represented: a
   formal \(\log(\Theta)\)-generator scales the divisor degree, normalization to
   \(1\) recovers the ordinary source, and tensor products preserve additivity
-  when the theta generators match.
+  when the theta generators match.  The Ob4 tensor-power operation also lifts
+  to this copy, multiplying the theta divisor log-volume by \(M\).
 \item The \(D\)/log-shell version is also represented at finite level:
   \Lean{} normalizes a distinguished local Frobenius log-volume by the
   extension degree, recovers the ordinary source when this normalized value is
   \(1\), and proves tensor-product additivity when normalized values match.
+  The Ob4 tensor-power operation preserves the normalized Frobenius reading and
+  multiplies the log-shell divisor log-volume by \(M\).
 \item The ordinary, theta, and log-shell divisor copies now have a compatibility
   package: shared base divisor data plus normalized readings imply equality of
   all three finite log-volume readings.
