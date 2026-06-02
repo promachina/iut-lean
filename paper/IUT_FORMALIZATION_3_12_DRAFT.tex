@@ -677,6 +677,12 @@ hull/determinant boundary, then \Lean{} proves that every localized value
 rescales to both the cQ3 boundary and the cQ4 calibrated log-Kummer boundary.
 Thus the Step (xi) boundary can be read from the local-global collection rather
 than from a bare real number alone.
+The local-global collection has also been refined by structure morphisms in
+the finite Frobenioid degree category.  For each \(v\), a degree morphism from
+the local object to the global object records divisor and unit shifts.
+\Lean{} proves that the resulting morphism shift is exactly the additive form
+of the localization rescaling.  This models the degree/log-volume content of
+the ``structure poly-morphism'' language in Remark 3.9.5(ix), (cQ3).
 \IUT{} I, Example 5.1 and Remark 5.1.1 distinguish the diagonal Frobenioid
 \(F_{\langle J\rangle}\) from the product of underlying categories \(F_J\):
 the former carries constant distributions in \(j\), while the latter allows
@@ -991,6 +997,9 @@ The project currently proves the following source-facing results in \Lean{}:
   collection: the global collection value is identified with the cQ3
   hull/determinant boundary, and every localized value rescales to both the
   cQ3 and cQ4 Step (xi) boundaries.
+\item The local-global collection now carries finite structure morphisms from
+  local objects to the global determinant object.  The morphism divisor/unit
+  shift is proved equal to the additive localization rescaling term.
 \item The diagonal/arbitrary distribution distinction of \IUT{} I, Example 5.1
   and Remark 5.1.1 is formalized at finite realified log-volume level:
   diagonal distributions are constant in \(j\), their total is

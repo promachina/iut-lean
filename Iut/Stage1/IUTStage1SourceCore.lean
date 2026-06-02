@@ -5829,6 +5829,80 @@ theorem localGlobalCollection_endpoint
 end IUTStage1LocalGlobalRealifiedFrobenioidCollection
 
 /--
+Local-global collection equipped with structure morphisms to the global object.
+
+Remark 3.9.5(ix), (cQ3), describes local Frobenioid objects equipped with
+structure poly-morphisms to the determinant object arising from the hull.  This
+finite version attaches, for every local index `v`, a degree/log-volume
+morphism from the local object to the global object of the local-global
+collection.
+-/
+structure IUTStage1LocalGlobalFrobenioidStructureMorphismCollection
+    (V : Type u) [Fintype V] where
+  collection : IUTStage1LocalGlobalRealifiedFrobenioidCollection V
+  structureMorphism :
+    ∀ v : V,
+      IUTStage1RealifiedFrobenioidDegreeObject.DegreeMorphism
+        (collection.localObject v) collection.globalObject
+
+namespace IUTStage1LocalGlobalFrobenioidStructureMorphismCollection
+
+variable {V : Type u} [Fintype V]
+
+theorem structureMorphism_realifiedLogVolume
+    (source :
+      IUTStage1LocalGlobalFrobenioidStructureMorphismCollection V)
+    (v : V) :
+    source.collection.globalObject.realifiedLogVolume =
+      (source.collection.localObject v).realifiedLogVolume +
+        (((source.structureMorphism v).divisorDegreeShift : Int) : Real) +
+        (source.structureMorphism v).unitLogVolumeShift :=
+  (source.structureMorphism v).target_realifiedLogVolume_eq_source_plus_shifts
+
+theorem structureMorphism_shift_eq_localization_rescaling
+    (source :
+      IUTStage1LocalGlobalFrobenioidStructureMorphismCollection V)
+    (v : V) :
+    (((source.structureMorphism v).divisorDegreeShift : Int) : Real) +
+        (source.structureMorphism v).unitLogVolumeShift =
+      (((source.collection.localization v).extensionDegree : Real) - 1) *
+        (source.collection.localObject v).realifiedLogVolume := by
+  have h_morphism := source.structureMorphism_realifiedLogVolume v
+  have h_localization :=
+    source.collection.extensionDegree_mul_localRealifiedLogVolume v
+  have h_shift :
+      (((source.structureMorphism v).divisorDegreeShift : Int) : Real) +
+          (source.structureMorphism v).unitLogVolumeShift =
+        source.collection.globalObject.realifiedLogVolume -
+          (source.collection.localObject v).realifiedLogVolume := by
+    linarith
+  have h_rescale :
+      (((source.collection.localization v).extensionDegree : Real) - 1) *
+          (source.collection.localObject v).realifiedLogVolume =
+        source.collection.globalObject.realifiedLogVolume -
+          (source.collection.localObject v).realifiedLogVolume := by
+    rw [sub_mul, one_mul, h_localization]
+  exact h_shift.trans h_rescale.symm
+
+theorem structureMorphism_endpoint
+    (source :
+      IUTStage1LocalGlobalFrobenioidStructureMorphismCollection V) :
+    ∀ v : V,
+      source.collection.globalObject.realifiedLogVolume =
+          (source.collection.localObject v).realifiedLogVolume +
+            (((source.structureMorphism v).divisorDegreeShift : Int) : Real) +
+            (source.structureMorphism v).unitLogVolumeShift ∧
+        (((source.structureMorphism v).divisorDegreeShift : Int) : Real) +
+            (source.structureMorphism v).unitLogVolumeShift =
+          (((source.collection.localization v).extensionDegree : Real) - 1) *
+            (source.collection.localObject v).realifiedLogVolume :=
+  fun v =>
+    ⟨source.structureMorphism_realifiedLogVolume v,
+      source.structureMorphism_shift_eq_localization_rescaling v⟩
+
+end IUTStage1LocalGlobalFrobenioidStructureMorphismCollection
+
+/--
 Local `p_v^N` Frobenioid source normalized by the global realified restriction.
 
 This connects the Step (xii) local shift model to the source-backed restriction

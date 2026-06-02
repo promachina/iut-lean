@@ -173,6 +173,21 @@ theorem localGlobalRealifiedFrobenioidCollection_endpoint
         ∑ v : V, (collection.localization v).restrictedGlobalPrimeLogVolume :=
   collection.localGlobalCollection_endpoint
 
+theorem localGlobalFrobenioidStructureMorphismCollection_endpoint
+    {V : Type u} [Fintype V]
+    (source :
+      IUTStage1LocalGlobalFrobenioidStructureMorphismCollection V) :
+    ∀ v : V,
+      source.collection.globalObject.realifiedLogVolume =
+          (source.collection.localObject v).realifiedLogVolume +
+            (((source.structureMorphism v).divisorDegreeShift : Int) : Real) +
+            (source.structureMorphism v).unitLogVolumeShift ∧
+        (((source.structureMorphism v).divisorDegreeShift : Int) : Real) +
+            (source.structureMorphism v).unitLogVolumeShift =
+          (((source.collection.localization v).extensionDegree : Real) - 1) *
+            (source.collection.localObject v).realifiedLogVolume :=
+  source.structureMorphism_endpoint
+
 theorem restrictionNormalizedLocalFrobenioidSource_endpoint
     (source : IUTStage1RestrictionNormalizedLocalFrobenioidSource) :
     source.localSource.shiftedLogVolume =
