@@ -450,6 +450,17 @@ theorem hullLogVolumeApproximant_endpoint
       data.hullRegion approximant.approximant = approximant.approximant :=
   approximant.endpoint
 
+theorem holomorphicHullShadowRegionBridge_endpoint
+    {line : Copy}
+    (data : IUTStage1HolomorphicHullLogVolumeShadow (Point line))
+    (region : Region line) :
+    ((data.toRegionHullOperator).hull region).toSet =
+        data.hullRegion region.toSet ∧
+      Region.Subset region ((data.toRegionHullOperator).hull region) ∧
+      data.toRegionMeasure.volume region <=
+        data.toRegionMeasure.volume ((data.toRegionHullOperator).hull region) :=
+  data.toRegionHullOperator_endpoint region
+
 theorem hullApproximantUpperRay_qPilot_le_theta
     {α : Type u}
     {hullData : IUTStage1HolomorphicHullLogVolumeShadow α}

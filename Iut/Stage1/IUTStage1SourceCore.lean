@@ -1941,6 +1941,7 @@ structure IUTStage1HolomorphicHullLogVolumeShadow (α : Type u) where
 namespace IUTStage1HolomorphicHullLogVolumeShadow
 
 variable {α : Type u}
+variable {line : Copy}
 
 def hullRegion
     (data : IUTStage1HolomorphicHullLogVolumeShadow α)
@@ -2012,6 +2013,66 @@ theorem logVolume_hull_le_closed_of_subset
       data.logVolume closedRegion :=
   data.logVolume_mono
     (data.hull_subset_closed_of_subset hsubset hclosed)
+
+def toRegionHullOperator
+    (data : IUTStage1HolomorphicHullLogVolumeShadow (Point line)) :
+    HullOperator line :=
+  { hull := fun region =>
+      Region.ofSet (data.hullRegion region.toSet),
+    extensive := fun region _ hx =>
+      data.region_subset_hull region.toSet hx,
+    monotone := fun hsubset _ hx =>
+      data.hull_mono
+        (Region.subset_iff_toSet_subset.mp hsubset) hx }
+
+def toRegionMeasure
+    (data : IUTStage1HolomorphicHullLogVolumeShadow (Point line)) :
+    RegionMeasure line :=
+  { volume := fun region => data.logVolume region.toSet,
+    monotone := fun hsubset =>
+      data.logVolume_mono
+        (Region.subset_iff_toSet_subset.mp hsubset) }
+
+@[simp]
+theorem toRegionHullOperator_hull_toSet
+    (data : IUTStage1HolomorphicHullLogVolumeShadow (Point line))
+    (region : Region line) :
+    ((data.toRegionHullOperator).hull region).toSet =
+      data.hullRegion region.toSet :=
+  rfl
+
+@[simp]
+theorem toRegionMeasure_volume_eq
+    (data : IUTStage1HolomorphicHullLogVolumeShadow (Point line))
+    (region : Region line) :
+    data.toRegionMeasure.volume region = data.logVolume region.toSet :=
+  rfl
+
+theorem toRegionMeasure_le_hull
+    (data : IUTStage1HolomorphicHullLogVolumeShadow (Point line))
+    (region : Region line) :
+    data.toRegionMeasure.volume region <=
+      data.toRegionMeasure.volume ((data.toRegionHullOperator).hull region) :=
+  data.logVolume_le_hullLogVolume region.toSet
+
+theorem toRegionMeasure_hull_volume_eq
+    (data : IUTStage1HolomorphicHullLogVolumeShadow (Point line))
+    (region : Region line) :
+    data.toRegionMeasure.volume ((data.toRegionHullOperator).hull region) =
+      data.logVolume (data.hullRegion region.toSet) :=
+  rfl
+
+theorem toRegionHullOperator_endpoint
+    (data : IUTStage1HolomorphicHullLogVolumeShadow (Point line))
+    (region : Region line) :
+    ((data.toRegionHullOperator).hull region).toSet =
+        data.hullRegion region.toSet ∧
+      Region.Subset region ((data.toRegionHullOperator).hull region) ∧
+      data.toRegionMeasure.volume region <=
+        data.toRegionMeasure.volume ((data.toRegionHullOperator).hull region) :=
+  ⟨rfl,
+    (data.toRegionHullOperator).extensive region,
+    data.toRegionMeasure_le_hull region⟩
 
 end IUTStage1HolomorphicHullLogVolumeShadow
 

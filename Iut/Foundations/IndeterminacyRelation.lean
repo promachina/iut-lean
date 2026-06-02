@@ -34,6 +34,12 @@ def Subset (small large : Region line) : Prop :=
 def ExtEq (left right : Region line) : Prop :=
   ∀ x : Point line, left.Contains x ↔ right.Contains x
 
+def toSet (region : Region line) : Set (Point line) :=
+  { x | region.Contains x }
+
+def ofSet (points : Set (Point line)) : Region line :=
+  { Contains := fun x => x ∈ points }
+
 /-- The singleton region containing exactly one point. -/
 def singleton (x : Point line) : Region line :=
   { Contains := fun y => y.coord = x.coord }
@@ -70,6 +76,35 @@ theorem subset_trans {a b c : Region line} (hab : Subset a b) (hbc : Subset b c)
 theorem extEq_refl (region : Region line) : ExtEq region region := by
   intro x
   rfl
+
+@[simp]
+theorem toSet_mem (region : Region line) (x : Point line) :
+    x ∈ region.toSet ↔ region.Contains x :=
+  Iff.rfl
+
+@[simp]
+theorem ofSet_contains (points : Set (Point line)) (x : Point line) :
+    (ofSet points).Contains x ↔ x ∈ points :=
+  Iff.rfl
+
+@[simp]
+theorem toSet_ofSet (points : Set (Point line)) :
+    (ofSet points).toSet = points :=
+  rfl
+
+@[simp]
+theorem ofSet_toSet_extEq (region : Region line) :
+    ExtEq (ofSet region.toSet) region := by
+  intro x
+  rfl
+
+theorem subset_iff_toSet_subset {small large : Region line} :
+    Subset small large ↔ small.toSet ⊆ large.toSet := by
+  constructor
+  · intro hsubset x hx
+    exact hsubset x hx
+  · intro hsubset x hx
+    exact hsubset hx
 
 theorem extEq_of_subset_of_subset {left right : Region line}
     (hlr : Subset left right) (hrl : Subset right left) : ExtEq left right := by
