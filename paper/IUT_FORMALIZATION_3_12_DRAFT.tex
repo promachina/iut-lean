@@ -867,6 +867,13 @@ that translations preserve this oriented graph and that any map exchanging
 the adjacent vertices \(0\) and \(1\) cannot preserve directed edges.  This
 captures the finite order-theoretic content of the paper's statement that the
 chain has translation symmetry but not arbitrary permutation symmetry.
+Proposition 3.10(ii)'s column log-Kummer correspondence is now represented at
+the same finite level.  For each vertical coordinate \(m\in\mathbb Z\), the
+source carries a packet of group elements acting on one common \(IQ\)-carrier
+labelled by \(n,\circ\).  Translation in the column transports group elements,
+and \Lean{} proves that the transported element acts by the same endomorphism
+on the common carrier.  This records the translation-invariance of the
+log-Kummer action; it does not yet construct the underlying number fields.
 The associated etale-picture core of Corollary 4.11(i),(ii) is represented by
 a common \(D^{\vdash}\)-core projection for all integer-labelled spokes.
 \Lean{} proves that this projection is constant across successor steps and is

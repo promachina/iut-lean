@@ -7709,6 +7709,76 @@ theorem endpoint
 end IUTStage1FrobeniusPictureChain
 
 /--
+Finite column log-Kummer correspondence.
+
+Proposition 3.10(ii) describes the log-Kummer correspondence as the totality,
+as `m : ℤ` varies, of number-field multiplicative groups and their actions on a
+common `IQ` object labelled by `n,◦`, invariant under translations in the fixed
+vertical column of the log-theta-lattice.  This finite source keeps that action
+content: each vertical coordinate has its own packet of group elements, while
+translation of the coordinate transports group elements without changing their
+action on the common `IQ` carrier.
+-/
+structure IUTStage1ColumnLogKummerCorrespondence
+    (IQ : Type u) where
+  groupElement : Int -> Type v
+  action : ∀ m : Int, groupElement m -> IQ -> IQ
+  translateElement :
+    ∀ shift m : Int, groupElement m ≃ groupElement (m + shift)
+  action_translateElement_eq :
+    ∀ (shift m : Int) (g : groupElement m) (x : IQ),
+      action (m + shift) (translateElement shift m g) x =
+        action m g x
+
+namespace IUTStage1ColumnLogKummerCorrespondence
+
+variable {IQ : Type u}
+
+theorem translate_preserves_action
+    (corr : IUTStage1ColumnLogKummerCorrespondence IQ)
+    (shift m : Int)
+    (g : corr.groupElement m)
+    (x : IQ) :
+    corr.action (m + shift) (corr.translateElement shift m g) x =
+      corr.action m g x :=
+  corr.action_translateElement_eq shift m g x
+
+theorem adjacent_logLink_preserves_action
+    (corr : IUTStage1ColumnLogKummerCorrespondence IQ)
+    (m : Int)
+    (g : corr.groupElement m)
+    (x : IQ) :
+    corr.action (m + 1) (corr.translateElement 1 m g) x =
+      corr.action m g x :=
+  corr.translate_preserves_action 1 m g x
+
+theorem negative_adjacent_logLink_preserves_action
+    (corr : IUTStage1ColumnLogKummerCorrespondence IQ)
+    (m : Int)
+    (g : corr.groupElement m)
+    (x : IQ) :
+    corr.action (m + (-1)) (corr.translateElement (-1) m g) x =
+      corr.action m g x :=
+  corr.translate_preserves_action (-1) m g x
+
+theorem endpoint
+    (corr : IUTStage1ColumnLogKummerCorrespondence IQ)
+    (shift m : Int)
+    (g : corr.groupElement m)
+    (x : IQ) :
+    corr.action (m + shift) (corr.translateElement shift m g) x =
+        corr.action m g x ∧
+      corr.action (m + 1) (corr.translateElement 1 m g) x =
+        corr.action m g x ∧
+      corr.action (m + (-1)) (corr.translateElement (-1) m g) x =
+        corr.action m g x :=
+  ⟨corr.translate_preserves_action shift m g x,
+    corr.adjacent_logLink_preserves_action m g x,
+    corr.negative_adjacent_logLink_preserves_action m g x⟩
+
+end IUTStage1ColumnLogKummerCorrespondence
+
+/--
 Finite `D^{⊢}` core of the etale-picture of IUT II, Corollary 4.11.
 
 Corollary 4.11(i) says that the associated `D^{⊢}`-prime-strip is a constant

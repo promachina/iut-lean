@@ -298,6 +298,20 @@ theorem frobeniusPictureChain_endpoint
                   (map source) (map target)) :=
   IUTStage1FrobeniusPictureChain.endpoint shift
 
+theorem columnLogKummerCorrespondence_endpoint
+    {IQ : Type u}
+    (corr : IUTStage1ColumnLogKummerCorrespondence IQ)
+    (shift m : Int)
+    (g : corr.groupElement m)
+    (x : IQ) :
+    corr.action (m + shift) (corr.translateElement shift m g) x =
+        corr.action m g x ∧
+      corr.action (m + 1) (corr.translateElement 1 m g) x =
+        corr.action m g x ∧
+      corr.action (m + (-1)) (corr.translateElement (-1) m g) x =
+        corr.action m g x :=
+  corr.endpoint shift m g x
+
 theorem etalePictureDCore_endpoint
     {Core Spoke : Type u}
     (picture : IUTStage1EtalePictureDCore Core Spoke) :
