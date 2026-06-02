@@ -630,6 +630,13 @@ equality of realified Frobenioid log-volumes, while retaining the
 Hodge-theater history guard.  This is still a finite degree-level shadow, not
 a construction of Mochizuki's Frobenioids, but it moves one equality source
 below the packet-correspondence interface.
+The Ob8/Ob9 vertical-shift issue is now attached directly to the Step (xi-g)
+handoff.  A log-Kummer vertical-shift calibration pairs the
+Step (x)-to-hull upper-ray source with the global realified Frobenioid
+calibration.  \Lean{} proves that the calibrated value is the hull boundary
+used by the upper ray, that both q-pilot computations are bounded by this
+calibrated value, and that a shifted local value coincides with the calibrated
+value only when the shift term vanishes.
 The global-to-local realified restriction from \IUT{} I, Example 3.5 is also
 encoded at degree level: the restricted global prime log-volume is
 \([K_v:(F_{\mathrm{mod}})_v]^{-1}\) times the local prime log-volume, and
@@ -928,6 +935,10 @@ The project currently proves the following source-facing results in \Lean{}:
   divisor degree, unit log-volume, and realified log-volume are proved to add.
   A tensor-packet source certified by this Frobenioid product inherits
   product-log-volume additivity.
+\item The Ob8/Ob9 vertical-shift guard is now tied to the Step (xi-g)
+  two-computation handoff: global realified Frobenioid calibration selects the
+  hull upper-ray boundary, both q-pilot readings are bounded by it, and shifted
+  local coincidence is equivalent to a zero shift term.
 \item The global-to-local realified Frobenioid restriction factor of \IUT{} I,
   Example 3.5 is formalized as inverse-extension-degree scaling of the local
   prime log-volume, with the degree-normalization identity proved in \Lean{}.
@@ -1078,6 +1089,9 @@ The project currently proves the following source-facing results in \Lean{}:
   from a certified possible-image hull approximant.  The determinant
   normalization is read from the approximant/determinant compatibility, rather
   than supplied as a separate equality at the bridge boundary.
+\item The same upper-ray bridge now has a log-Kummer vertical-shift calibration
+  endpoint: the globally calibrated Frobenioid log-volume is the hull boundary
+  used in Step (xi-g), not an independently chosen real value.
 \item A Hodge/\(\SHE/\IPL\)/hull packet-target route now derives the target-side
   log-volume equality from \(\SHE\) synchronization and reads \(q\)-positivity
   from the hull constructor; the source-side theta/Hodge equality is derived

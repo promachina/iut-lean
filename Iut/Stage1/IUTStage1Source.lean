@@ -6194,6 +6194,127 @@ theorem twoComputation_output_le_theta
       data.toQPilotTwoComputationLogVolume.upperRayData.thetaHullLogVolume :=
   data.toQPilotTwoComputationLogVolume.output_le_thetaHullLogVolume
 
+/--
+Source-facing Ob8/Ob9 calibration for the Step (xi-g) handoff.
+
+The log-Kummer correspondence may introduce vertical-shift ambiguity on the
+local Frobenioid side.  The global realified Frobenioid calibration selects the
+unshifted hull log-volume used as the upper-ray boundary, and the q-pilot
+two-computation value remains bounded by this calibrated value.
+-/
+structure LogKummerVerticalShiftCalibration
+    (data : IUTStage1StepXToHullUpperRayLogVolume label) where
+  localExponent : Int
+  localPrimeStepLogVolume : Real
+
+namespace LogKummerVerticalShiftCalibration
+
+def localData
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    IUTStage1LocalFrobenioidLogVolumeAmbiguity :=
+  data.toLocalFrobenioidLogVolumeAmbiguity
+    calibration.localExponent calibration.localPrimeStepLogVolume
+
+def globalData
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    IUTStage1GlobalFrobenioidLogVolumeCalibration :=
+  data.toGlobalFrobenioidLogVolumeCalibration
+    calibration.localExponent calibration.localPrimeStepLogVolume
+
+theorem calibratedLogVolume_eq_thetaReal
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    calibration.globalData.calibratedLogVolume =
+      data.toThetaFiniteLogVolumeEndpoint.thetaRealLogVolume :=
+  rfl
+
+theorem calibratedLogVolume_eq_thetaHull
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    calibration.globalData.calibratedLogVolume =
+      data.thetaHullLogVolume := by
+  exact
+    calibration.calibratedLogVolume_eq_thetaReal.trans
+      data.toThetaFiniteLogVolumeEndpoint.thetaRealLogVolume_eq_hull
+
+theorem qPilotLogVolume_le_calibrated
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    data.qPilotLogVolume <= calibration.globalData.calibratedLogVolume := by
+  rw [calibration.calibratedLogVolume_eq_thetaHull]
+  exact data.qPilotLogVolume_le_thetaHullLogVolume
+
+theorem twoComputation_input_le_calibrated
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume <=
+      calibration.globalData.calibratedLogVolume := by
+  rw [calibration.calibratedLogVolume_eq_thetaHull]
+  exact data.twoComputation_input_le_theta
+
+theorem twoComputation_output_le_calibrated
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    data.toQPilotTwoComputationLogVolume.outputHullLogVolume <=
+      calibration.globalData.calibratedLogVolume := by
+  rw [calibration.calibratedLogVolume_eq_thetaHull]
+  exact data.twoComputation_output_le_theta
+
+theorem calibrated_eq_shifted_iff_shiftTerm_zero
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    calibration.globalData.calibratedLogVolume =
+        calibration.localData.shiftedLogVolume ↔
+      (calibration.localExponent : Real) *
+        calibration.localPrimeStepLogVolume = 0 := by
+  exact
+    calibration.globalData.calibratedLogVolume_eq_shifted_iff_shiftTerm_eq_zero
+
+theorem calibrated_eq_shifted_iff_exponent_zero_or_step_zero
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    calibration.globalData.calibratedLogVolume =
+        calibration.localData.shiftedLogVolume ↔
+      calibration.localExponent = 0 ∨
+        calibration.localPrimeStepLogVolume = 0 := by
+  exact
+    calibration.globalData
+      |>.calibratedLogVolume_eq_shifted_iff_exponent_zero_or_step_zero
+
+theorem calibrated_ne_shifted_of_nonzero_shift
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data)
+    (hExponent : calibration.localExponent ≠ 0)
+    (hStep : calibration.localPrimeStepLogVolume ≠ 0) :
+    calibration.globalData.calibratedLogVolume ≠
+      calibration.localData.shiftedLogVolume :=
+  calibration.globalData.calibratedLogVolume_ne_shifted_of_local_nonzero
+    hExponent hStep
+
+theorem endpoint
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration : LogKummerVerticalShiftCalibration data) :
+    calibration.globalData.calibratedLogVolume =
+        data.thetaHullLogVolume ∧
+      data.qPilotLogVolume <= calibration.globalData.calibratedLogVolume ∧
+      data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume <=
+        calibration.globalData.calibratedLogVolume ∧
+      data.toQPilotTwoComputationLogVolume.outputHullLogVolume <=
+        calibration.globalData.calibratedLogVolume ∧
+      (calibration.globalData.calibratedLogVolume =
+          calibration.localData.shiftedLogVolume ↔
+        calibration.localExponent = 0 ∨
+          calibration.localPrimeStepLogVolume = 0) :=
+  ⟨calibration.calibratedLogVolume_eq_thetaHull,
+    calibration.qPilotLogVolume_le_calibrated,
+    calibration.twoComputation_input_le_calibrated,
+    calibration.twoComputation_output_le_calibrated,
+    calibration.calibrated_eq_shifted_iff_exponent_zero_or_step_zero⟩
+
+end LogKummerVerticalShiftCalibration
+
 theorem twoComputation_determinant_endpoint
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
     let twoComputation := data.toQPilotTwoComputationLogVolume;

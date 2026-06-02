@@ -7929,6 +7929,25 @@ theorem stepXToHullUpperRay_twoComputation_output_le_theta
       data.toQPilotTwoComputationLogVolume.upperRayData.thetaHullLogVolume :=
   data.twoComputation_output_le_theta
 
+theorem stepXToHullUpperRay_logKummerVerticalShiftCalibration_endpoint
+    {label : Type u} [Fintype label]
+    {data : IUTStage1StepXToHullUpperRayLogVolume label}
+    (calibration :
+      IUTStage1StepXToHullUpperRayLogVolume.LogKummerVerticalShiftCalibration
+        data) :
+    calibration.globalData.calibratedLogVolume =
+        data.thetaHullLogVolume ∧
+      data.qPilotLogVolume <= calibration.globalData.calibratedLogVolume ∧
+      data.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume <=
+        calibration.globalData.calibratedLogVolume ∧
+      data.toQPilotTwoComputationLogVolume.outputHullLogVolume <=
+        calibration.globalData.calibratedLogVolume ∧
+      (calibration.globalData.calibratedLogVolume =
+          calibration.localData.shiftedLogVolume ↔
+        calibration.localExponent = 0 ∨
+          calibration.localPrimeStepLogVolume = 0) :=
+  calibration.endpoint
+
 theorem stepXToHullUpperRay_twoComputation_fig38_endpoint
     {label : Type u} [Fintype label]
     (data : IUTStage1StepXToHullUpperRayLogVolume label) :
