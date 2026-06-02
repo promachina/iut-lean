@@ -648,6 +648,9 @@ In the canonical-hull form, this Ob4 input also derives the
 approximant-equals-\(\phi(P)\) witness internally; the source input is q-pilot
 containment in \(\phi(P)\), tensor-power determinant compatibility, and the
 bridge equality with the package hull/determinant datum.
+The same endpoint is exposed at the Theorem 3.11 source-record level, so the
+possible-image union used by the canonical hull is the record's multiradial
+theta-image union before being identified with the package target union.
 Below the packet layer, the code now has a first realified Frobenioid degree
 source.  A finite Frobenioid object carries a divisor degree, a unit
 log-volume, and their realified log-volume; a tensor-packet product may be
@@ -1204,6 +1207,9 @@ The project currently proves the following source-facing results in \Lean{}:
   a normalized tensor-power bound is converted to the determinant bound, while
   \Lean{} derives the approximant-equals-\(\phi(P)\) witness from the canonical
   hull constructor.
+\item This canonical-hull Ob4 endpoint is also public for the Theorem 3.11
+  source constructor: the source record's theta possible-image union is the
+  hull input before the package target-union identification is applied.
 \item The Step (x)-to-Step (xi) upper-ray bridge can now be built directly
   from a certified possible-image hull approximant.  The determinant
   normalization is read from the approximant/determinant compatibility, rather
