@@ -7485,6 +7485,38 @@ theorem restriction_endpoint
   ⟨restriction.restrictedGlobalPrimeLogVolume_eq,
     restriction.extensionDegree_mul_restrictedGlobalPrimeLogVolume⟩
 
+def naiveFrobeniusTensorPower
+    (restriction : IUTStage1GlobalToLocalRealifiedFrobenioidRestriction)
+    (tensorDegree : Nat) :
+    IUTStage1GlobalToLocalRealifiedFrobenioidRestriction :=
+  { extensionDegree := restriction.extensionDegree,
+    extensionDegree_pos := restriction.extensionDegree_pos,
+    localPrimeLogVolume := (tensorDegree : Real) * restriction.localPrimeLogVolume,
+    restrictedGlobalPrimeLogVolume :=
+      (tensorDegree : Real) * restriction.restrictedGlobalPrimeLogVolume,
+    restricted_global_prime_eq := by
+      rw [restriction.restricted_global_prime_eq]
+      ring }
+
+theorem naiveFrobeniusTensorPower_endpoint
+    (restriction : IUTStage1GlobalToLocalRealifiedFrobenioidRestriction)
+    (tensorDegree : Nat) :
+    (restriction.naiveFrobeniusTensorPower tensorDegree).extensionDegree =
+        restriction.extensionDegree ∧
+      (restriction.naiveFrobeniusTensorPower
+          tensorDegree).restrictedGlobalPrimeLogVolume =
+        (tensorDegree : Real) * restriction.restrictedGlobalPrimeLogVolume ∧
+      (restriction.naiveFrobeniusTensorPower tensorDegree).localPrimeLogVolume =
+        (tensorDegree : Real) * restriction.localPrimeLogVolume ∧
+      ((restriction.naiveFrobeniusTensorPower tensorDegree).extensionDegree :
+          Real) *
+          (restriction.naiveFrobeniusTensorPower
+            tensorDegree).restrictedGlobalPrimeLogVolume =
+        (restriction.naiveFrobeniusTensorPower tensorDegree).localPrimeLogVolume :=
+  let powered := restriction.naiveFrobeniusTensorPower tensorDegree
+  ⟨rfl, rfl, rfl,
+    powered.extensionDegree_mul_restrictedGlobalPrimeLogVolume⟩
+
 end IUTStage1GlobalToLocalRealifiedFrobenioidRestriction
 
 /--
@@ -7627,6 +7659,78 @@ theorem localGlobalCollection_endpoint
       ⟨collection.localRealifiedLogVolume_eq_restricted v,
         collection.extensionDegree_mul_localRealifiedLogVolume v⟩,
     collection.totalLocalRealifiedLogVolume_eq_totalRestricted⟩
+
+def naiveFrobeniusTensorPower
+    (collection : IUTStage1LocalGlobalRealifiedFrobenioidCollection V)
+    (tensorDegree : Nat)
+    (globalObject :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean)
+    (localObject :
+      V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    IUTStage1LocalGlobalRealifiedFrobenioidCollection V :=
+  { globalObject :=
+      collection.globalObject.naiveFrobeniusTensorPower
+        tensorDegree globalObject,
+    localObject := fun v =>
+      (collection.localObject v).naiveFrobeniusTensorPower
+        tensorDegree (localObject v),
+    localization := fun v =>
+      (collection.localization v).naiveFrobeniusTensorPower tensorDegree,
+    local_realified_eq_restricted := by
+      intro v
+      rw [(collection.localObject v).naiveFrobeniusTensorPower_endpoint
+        tensorDegree (localObject v) |>.2.2]
+      simp [
+        IUTStage1GlobalToLocalRealifiedFrobenioidRestriction.naiveFrobeniusTensorPower,
+        collection.local_realified_eq_restricted v],
+    global_realified_eq_localPrime := by
+      intro v
+      rw [collection.globalObject.naiveFrobeniusTensorPower_endpoint
+        tensorDegree globalObject |>.2.2]
+      simp [
+        IUTStage1GlobalToLocalRealifiedFrobenioidRestriction.naiveFrobeniusTensorPower,
+        collection.global_realified_eq_localPrime v] }
+
+theorem naiveFrobeniusTensorPower_endpoint
+    (collection : IUTStage1LocalGlobalRealifiedFrobenioidCollection V)
+    (tensorDegree : Nat)
+    (globalObject :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean)
+    (localObject :
+      V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    let powered :=
+      collection.naiveFrobeniusTensorPower
+        tensorDegree globalObject localObject
+    (∀ v : V,
+      (powered.localObject v).realifiedLogVolume =
+          (tensorDegree : Real) *
+            (collection.localObject v).realifiedLogVolume ∧
+        (powered.localization v).restrictedGlobalPrimeLogVolume =
+          (tensorDegree : Real) *
+            (collection.localization v).restrictedGlobalPrimeLogVolume ∧
+        powered.globalObject.realifiedLogVolume =
+          (tensorDegree : Real) * collection.globalObject.realifiedLogVolume ∧
+        (powered.localization v).localPrimeLogVolume =
+          (tensorDegree : Real) *
+            (collection.localization v).localPrimeLogVolume ∧
+        ((powered.localization v).extensionDegree : Real) *
+            (powered.localObject v).realifiedLogVolume =
+          powered.globalObject.realifiedLogVolume) ∧
+      (∑ v : V, (powered.localObject v).realifiedLogVolume) =
+        ∑ v : V, (powered.localization v).restrictedGlobalPrimeLogVolume := by
+  let powered :=
+    collection.naiveFrobeniusTensorPower
+      tensorDegree globalObject localObject
+  exact
+    ⟨fun v =>
+      ⟨(collection.localObject v).naiveFrobeniusTensorPower_endpoint
+          tensorDegree (localObject v) |>.2.2,
+        rfl,
+        collection.globalObject.naiveFrobeniusTensorPower_endpoint
+          tensorDegree globalObject |>.2.2,
+        rfl,
+        powered.extensionDegree_mul_localRealifiedLogVolume v⟩,
+      powered.totalLocalRealifiedLogVolume_eq_totalRestricted⟩
 
 end IUTStage1LocalGlobalRealifiedFrobenioidCollection
 

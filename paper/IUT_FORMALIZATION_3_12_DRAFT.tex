@@ -963,7 +963,11 @@ for each \(v\), one global realified Frobenioid object, and localization
 restriction factors.  \Lean{} proves that each local log-volume is the
 restricted global value and that multiplying by the corresponding extension
 degree recovers the global log-volume.  This is a finite log-volume shadow of
-the local-global category, not a construction of the category itself.
+the local-global category, not a construction of the category itself.  The
+collection and its restriction factors now transport coherently under Ob4
+tensor-powering: local objects, the global object, restricted prime log-volumes,
+and local prime log-volumes are all multiplied by \(M\), while extension-degree
+rescaling remains valid.
 This local-global collection now also backs the finite cQ3/cQ4 closed-loop
 guard: if the collection's global realified log-volume is the cQ3
 hull/determinant boundary, then \Lean{} proves that every localized value
@@ -1381,7 +1385,8 @@ The project currently proves the following source-facing results in \Lean{}:
 \item A finite local-global realified Frobenioid collection now models the
   degree/log-volume content of Remark 3.9.5(ix): each local object is a
   restricted global value, and extension-degree rescaling recovers the global
-  realified log-volume.
+  realified log-volume.  The collection and its restriction factors are stable
+  under Ob4 tensor-powering, with the realified readings multiplied by \(M\).
 \item The cQ3/cQ4 closed-loop guard can now be backed by such a local-global
   collection: the global collection value is identified with the cQ3
   hull/determinant boundary, and every localized value rescales to both the

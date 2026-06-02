@@ -160,6 +160,23 @@ theorem globalToLocalRealifiedFrobenioidRestriction_endpoint
         restriction.localPrimeLogVolume :=
   restriction.restriction_endpoint
 
+theorem globalToLocalRealifiedFrobenioidRestrictionNaiveTensorPower_endpoint
+    (restriction : IUTStage1GlobalToLocalRealifiedFrobenioidRestriction)
+    (tensorDegree : Nat) :
+    (restriction.naiveFrobeniusTensorPower tensorDegree).extensionDegree =
+        restriction.extensionDegree ∧
+      (restriction.naiveFrobeniusTensorPower
+          tensorDegree).restrictedGlobalPrimeLogVolume =
+        (tensorDegree : Real) * restriction.restrictedGlobalPrimeLogVolume ∧
+      (restriction.naiveFrobeniusTensorPower tensorDegree).localPrimeLogVolume =
+        (tensorDegree : Real) * restriction.localPrimeLogVolume ∧
+      ((restriction.naiveFrobeniusTensorPower tensorDegree).extensionDegree :
+          Real) *
+          (restriction.naiveFrobeniusTensorPower
+            tensorDegree).restrictedGlobalPrimeLogVolume =
+        (restriction.naiveFrobeniusTensorPower tensorDegree).localPrimeLogVolume :=
+  restriction.naiveFrobeniusTensorPower_endpoint tensorDegree
+
 theorem logLinkProductFormulaCompatibility_endpoint
     {V : Type u} [Fintype V]
     (compat : IUTStage1LogLinkProductFormulaCompatibility V) :
@@ -184,6 +201,37 @@ theorem localGlobalRealifiedFrobenioidCollection_endpoint
       (∑ v : V, (collection.localObject v).realifiedLogVolume) =
         ∑ v : V, (collection.localization v).restrictedGlobalPrimeLogVolume :=
   collection.localGlobalCollection_endpoint
+
+theorem localGlobalRealifiedFrobenioidCollectionNaiveTensorPower_endpoint
+    {V : Type u} [Fintype V]
+    (collection : IUTStage1LocalGlobalRealifiedFrobenioidCollection V)
+    (tensorDegree : Nat)
+    (globalObject :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean)
+    (localObject :
+      V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    let powered :=
+      collection.naiveFrobeniusTensorPower
+        tensorDegree globalObject localObject
+    (∀ v : V,
+      (powered.localObject v).realifiedLogVolume =
+          (tensorDegree : Real) *
+            (collection.localObject v).realifiedLogVolume ∧
+        (powered.localization v).restrictedGlobalPrimeLogVolume =
+          (tensorDegree : Real) *
+            (collection.localization v).restrictedGlobalPrimeLogVolume ∧
+        powered.globalObject.realifiedLogVolume =
+          (tensorDegree : Real) * collection.globalObject.realifiedLogVolume ∧
+        (powered.localization v).localPrimeLogVolume =
+          (tensorDegree : Real) *
+            (collection.localization v).localPrimeLogVolume ∧
+        ((powered.localization v).extensionDegree : Real) *
+            (powered.localObject v).realifiedLogVolume =
+          powered.globalObject.realifiedLogVolume) ∧
+      (∑ v : V, (powered.localObject v).realifiedLogVolume) =
+        ∑ v : V, (powered.localization v).restrictedGlobalPrimeLogVolume :=
+  collection.naiveFrobeniusTensorPower_endpoint
+    tensorDegree globalObject localObject
 
 theorem environmentGaussianLocalEvaluation_endpoint
     {V : Type u} [Fintype V]
