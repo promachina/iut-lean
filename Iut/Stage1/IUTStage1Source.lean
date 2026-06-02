@@ -44457,24 +44457,22 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullPacketLocalVertic
     (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
         packageN.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < cTheta := by
-  let sourceCalibration :
-      NonarchimedeanLogKummerPacketSourceCalibration
-        audited packageN.logKummer upperSemiEntry.toEntry
-        holomorphicF.toRealized holomorphicD.toRealized monoAnalyticD.toRealized :=
-    NonarchimedeanLogKummerPacketSourceCalibration.ofPacketLocalSourceAlignment
-      packetLocalObject_eq_entrySource entrySource_eq_monoAnalyticProduct
-      packetLocalObjectFinite_eq_ind3Source
-      (kummerCompatibility.toKummerFTensorPacketToDTensorPacketTransfer
-        holomorphicF_realization holomorphicD_realization)
-      (forgettingCompatibility.toMonoAnalyticTensorPacketForgettingTransfer
-        holomorphicD_realization monoAnalyticD_realization
-        holomorphicStructureForgotten holomorphic_structure_forgotten)
+  let realifiedSource :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C upperSemiEntry.toEntry
+        holomorphicF holomorphicD monoAnalyticD :=
+    open NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource in
+    ofThetaRootUpperSemiEntryPacketLocalAndVerticalIQTarget
+      thetaRootSource upperSemiEntry kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization
+      monoAnalyticD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      entrySource_eq_monoAnalyticProduct packetLocalObjectFinite_eq_ind3Source
+      targetSource
   exact
-    part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceCalibratedVerticalIQ
-      profile audited alignment source_profile_eq thetaRootSource upperSemiEntry
-      kummerCompatibility forgettingCompatibility holomorphicF_realization
-      holomorphicD_realization monoAnalyticD_realization holomorphicStructureForgotten
-      holomorphic_structure_forgotten sourceCalibration targetSource cTheta
+    part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullRealifiedFrobenioidEntry
+      profile audited alignment source_profile_eq realifiedSource cTheta
       thetaSigned_le_cTheta_absLogQ
 
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
