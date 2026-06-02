@@ -8661,6 +8661,154 @@ theorem compatibleMorphism_endpoint
       morphism.structure_then_global_realifiedLogVolume v,
       morphism.compatible_totalShift v⟩
 
+def naiveFrobeniusTensorPower
+    (morphism :
+      IUTStage1LocalGlobalFrobenioidCompatibleMorphism source target)
+    (tensorDegree : Nat)
+    (sourceGlobalObject targetGlobalObject :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean)
+    (sourceLocalObject targetLocalObject :
+      V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    IUTStage1LocalGlobalFrobenioidCompatibleMorphism
+      (source.naiveFrobeniusTensorPower
+        tensorDegree sourceGlobalObject sourceLocalObject)
+      (target.naiveFrobeniusTensorPower
+        tensorDegree targetGlobalObject targetLocalObject) :=
+  { globalMorphism :=
+      morphism.globalMorphism.naiveFrobeniusTensorPower
+        tensorDegree sourceGlobalObject targetGlobalObject,
+    localMorphism := fun v =>
+      (morphism.localMorphism v).naiveFrobeniusTensorPower
+        tensorDegree (sourceLocalObject v) (targetLocalObject v),
+    compatible_divisorShift := by
+      intro v
+      have h := morphism.compatible_divisorShift v
+      dsimp [IUTStage1RealifiedFrobenioidDegreeObject.DegreeMorphism.comp] at h
+      dsimp [
+        IUTStage1LocalGlobalFrobenioidStructureMorphismCollection.naiveFrobeniusTensorPower,
+        IUTStage1RealifiedFrobenioidDegreeObject.DegreeMorphism.comp,
+        IUTStage1RealifiedFrobenioidDegreeObject.DegreeMorphism.naiveFrobeniusTensorPower]
+      calc
+        (tensorDegree : Int) * (morphism.localMorphism v).divisorDegreeShift +
+            (tensorDegree : Int) *
+              (target.structureMorphism v).divisorDegreeShift =
+          (tensorDegree : Int) *
+            ((morphism.localMorphism v).divisorDegreeShift +
+              (target.structureMorphism v).divisorDegreeShift) := by
+            ring
+        _ =
+          (tensorDegree : Int) *
+            ((source.structureMorphism v).divisorDegreeShift +
+              morphism.globalMorphism.divisorDegreeShift) := by
+            rw [h]
+        _ =
+          (tensorDegree : Int) *
+              (source.structureMorphism v).divisorDegreeShift +
+            (tensorDegree : Int) *
+              morphism.globalMorphism.divisorDegreeShift := by
+            ring,
+    compatible_unitShift := by
+      intro v
+      have h := morphism.compatible_unitShift v
+      dsimp [IUTStage1RealifiedFrobenioidDegreeObject.DegreeMorphism.comp] at h
+      dsimp [
+        IUTStage1LocalGlobalFrobenioidStructureMorphismCollection.naiveFrobeniusTensorPower,
+        IUTStage1RealifiedFrobenioidDegreeObject.DegreeMorphism.comp,
+        IUTStage1RealifiedFrobenioidDegreeObject.DegreeMorphism.naiveFrobeniusTensorPower]
+      calc
+        (tensorDegree : Real) * (morphism.localMorphism v).unitLogVolumeShift +
+            (tensorDegree : Real) *
+              (target.structureMorphism v).unitLogVolumeShift =
+          (tensorDegree : Real) *
+            ((morphism.localMorphism v).unitLogVolumeShift +
+              (target.structureMorphism v).unitLogVolumeShift) := by
+            ring
+        _ =
+          (tensorDegree : Real) *
+            ((source.structureMorphism v).unitLogVolumeShift +
+              morphism.globalMorphism.unitLogVolumeShift) := by
+            rw [h]
+        _ =
+          (tensorDegree : Real) *
+              (source.structureMorphism v).unitLogVolumeShift +
+            (tensorDegree : Real) *
+              morphism.globalMorphism.unitLogVolumeShift := by
+            ring }
+
+theorem naiveFrobeniusTensorPower_endpoint
+    (morphism :
+      IUTStage1LocalGlobalFrobenioidCompatibleMorphism source target)
+    (tensorDegree : Nat)
+    (sourceGlobalObject targetGlobalObject :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean)
+    (sourceLocalObject targetLocalObject :
+      V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    let sourcePowered :=
+      source.naiveFrobeniusTensorPower
+        tensorDegree sourceGlobalObject sourceLocalObject
+    let targetPowered :=
+      target.naiveFrobeniusTensorPower
+        tensorDegree targetGlobalObject targetLocalObject
+    let powered :=
+      morphism.naiveFrobeniusTensorPower
+        tensorDegree sourceGlobalObject targetGlobalObject
+        sourceLocalObject targetLocalObject
+    (powered.globalMorphism.divisorDegreeShift =
+        (tensorDegree : Int) * morphism.globalMorphism.divisorDegreeShift ∧
+      powered.globalMorphism.unitLogVolumeShift =
+        (tensorDegree : Real) * morphism.globalMorphism.unitLogVolumeShift) ∧
+      ∀ v : V,
+        (powered.localMorphism v).divisorDegreeShift =
+            (tensorDegree : Int) *
+              (morphism.localMorphism v).divisorDegreeShift ∧
+          (powered.localMorphism v).unitLogVolumeShift =
+            (tensorDegree : Real) *
+              (morphism.localMorphism v).unitLogVolumeShift ∧
+          ((powered.localMorphism v).comp
+              (targetPowered.structureMorphism v)).divisorDegreeShift =
+            ((sourcePowered.structureMorphism v).comp
+              powered.globalMorphism).divisorDegreeShift ∧
+          ((powered.localMorphism v).comp
+              (targetPowered.structureMorphism v)).unitLogVolumeShift =
+            ((sourcePowered.structureMorphism v).comp
+              powered.globalMorphism).unitLogVolumeShift := by
+  let sourcePowered :=
+    source.naiveFrobeniusTensorPower
+      tensorDegree sourceGlobalObject sourceLocalObject
+  let targetPowered :=
+    target.naiveFrobeniusTensorPower
+      tensorDegree targetGlobalObject targetLocalObject
+  let powered :=
+    morphism.naiveFrobeniusTensorPower
+      tensorDegree sourceGlobalObject targetGlobalObject
+      sourceLocalObject targetLocalObject
+  change
+    (powered.globalMorphism.divisorDegreeShift =
+        (tensorDegree : Int) * morphism.globalMorphism.divisorDegreeShift ∧
+      powered.globalMorphism.unitLogVolumeShift =
+        (tensorDegree : Real) * morphism.globalMorphism.unitLogVolumeShift) ∧
+      ∀ v : V,
+        (powered.localMorphism v).divisorDegreeShift =
+            (tensorDegree : Int) *
+              (morphism.localMorphism v).divisorDegreeShift ∧
+          (powered.localMorphism v).unitLogVolumeShift =
+            (tensorDegree : Real) *
+              (morphism.localMorphism v).unitLogVolumeShift ∧
+          ((powered.localMorphism v).comp
+              (targetPowered.structureMorphism v)).divisorDegreeShift =
+            ((sourcePowered.structureMorphism v).comp
+              powered.globalMorphism).divisorDegreeShift ∧
+          ((powered.localMorphism v).comp
+              (targetPowered.structureMorphism v)).unitLogVolumeShift =
+            ((sourcePowered.structureMorphism v).comp
+              powered.globalMorphism).unitLogVolumeShift
+  refine ⟨⟨rfl, rfl⟩, ?_⟩
+  intro v
+  exact
+    ⟨rfl, rfl,
+      powered.compatible_divisorShift v,
+      powered.compatible_unitShift v⟩
+
 end IUTStage1LocalGlobalFrobenioidCompatibleMorphism
 
 /--

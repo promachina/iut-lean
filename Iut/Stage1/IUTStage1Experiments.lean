@@ -455,6 +455,50 @@ theorem localGlobalFrobenioidCompatibleMorphism_endpoint
               morphism.globalMorphism).unitLogVolumeShift :=
   morphism.compatibleMorphism_endpoint
 
+theorem localGlobalFrobenioidCompatibleMorphismNaiveTensorPower_endpoint
+    {V : Type u} [Fintype V]
+    {source target :
+      IUTStage1LocalGlobalFrobenioidStructureMorphismCollection V}
+    (morphism :
+      IUTStage1LocalGlobalFrobenioidCompatibleMorphism source target)
+    (tensorDegree : Nat)
+    (sourceGlobalObject targetGlobalObject :
+      IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean)
+    (sourceLocalObject targetLocalObject :
+      V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean) :
+    let sourcePowered :=
+      source.naiveFrobeniusTensorPower
+        tensorDegree sourceGlobalObject sourceLocalObject
+    let targetPowered :=
+      target.naiveFrobeniusTensorPower
+        tensorDegree targetGlobalObject targetLocalObject
+    let powered :=
+      morphism.naiveFrobeniusTensorPower
+        tensorDegree sourceGlobalObject targetGlobalObject
+        sourceLocalObject targetLocalObject
+    (powered.globalMorphism.divisorDegreeShift =
+        (tensorDegree : Int) * morphism.globalMorphism.divisorDegreeShift ∧
+      powered.globalMorphism.unitLogVolumeShift =
+        (tensorDegree : Real) * morphism.globalMorphism.unitLogVolumeShift) ∧
+      ∀ v : V,
+        (powered.localMorphism v).divisorDegreeShift =
+            (tensorDegree : Int) *
+              (morphism.localMorphism v).divisorDegreeShift ∧
+          (powered.localMorphism v).unitLogVolumeShift =
+            (tensorDegree : Real) *
+              (morphism.localMorphism v).unitLogVolumeShift ∧
+          ((powered.localMorphism v).comp
+              (targetPowered.structureMorphism v)).divisorDegreeShift =
+            ((sourcePowered.structureMorphism v).comp
+              powered.globalMorphism).divisorDegreeShift ∧
+          ((powered.localMorphism v).comp
+              (targetPowered.structureMorphism v)).unitLogVolumeShift =
+            ((sourcePowered.structureMorphism v).comp
+              powered.globalMorphism).unitLogVolumeShift :=
+  morphism.naiveFrobeniusTensorPower_endpoint
+    tensorDegree sourceGlobalObject targetGlobalObject
+    sourceLocalObject targetLocalObject
+
 theorem restrictionNormalizedLocalFrobenioidSource_endpoint
     (source : IUTStage1RestrictionNormalizedLocalFrobenioidSource) :
     source.localSource.shiftedLogVolume =

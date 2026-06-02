@@ -988,7 +988,10 @@ local-global structure collections.  A compatible morphism consists of local
 morphisms at each \(v\), one global morphism, and a commutativity condition:
 the local-then-structure path and the structure-then-global path have the same
 divisor and unit shifts.  \Lean{} derives equality of the total realified
-log-volume shift along these two paths.
+log-volume shift along these two paths.  The same compatible morphism now
+transports through Ob4 tensor-powering: the global morphism, all local
+morphisms, and the two paths in the compatibility square acquire shifts
+multiplied by \(M\), and the square remains commutative.
 \IUT{} I, Example 5.1 and Remark 5.1.1 distinguish the diagonal Frobenioid
 \(F_{\langle J\rangle}\) from the product of underlying categories \(F_J\):
 the former carries constant distributions in \(j\), while the latter allows
@@ -1401,7 +1404,9 @@ The project currently proves the following source-facing results in \Lean{}:
   structure-morphism shift multiplied by \(M\).
 \item Compatible morphisms between local-global structure collections are now
   represented: local-then-structure and structure-then-global paths have equal
-  divisor/unit shifts and hence equal total realified log-volume shift.
+  divisor/unit shifts and hence equal total realified log-volume shift.  This
+  compatibility is preserved by Ob4 tensor-powering of the source and target
+  local-global structure collections.
 \item The diagonal/arbitrary distribution distinction of \IUT{} I, Example 5.1
   and Remark 5.1.1 is formalized at finite realified log-volume level:
   diagonal distributions are constant in \(j\), their total is
