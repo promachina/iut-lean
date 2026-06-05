@@ -31951,6 +31951,57 @@ theorem sourceDerivedCorridorEndpoint
 
 set_option linter.style.longLine false in
 /--
+Bundled IPL finite-average provenance and exact Step (x) boundary audit.
+
+This refines `sourceDerivedCorridorEndpoint` at the same source package:
+the IPL source/target log-volumes are identified with the finite Hodge/SHE
+transport averages before the exact vertical-`IQ` target calibration and
+Step (x) upper-semi inequality are read from the bundled source.
+-/
+theorem sourceDerivedIPLFiniteAverageStepXEndpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    let transportAudit :=
+      sourceData.routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    let targetCalibration :=
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration;
+    sourceData.routeSource.toIPLLogVolumeTransport.sourceLogVolume =
+        transportAudit.sourceAverage ∧
+      sourceData.routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        transportAudit.targetTransportedAverage ∧
+      sourceData.routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.routeSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  have hipl := sourceData.routeSource.constructedIPLFiniteTransportLogVolume_endpoint
+  have hboundary := sourceData.boundaryEndpoint
+  exact
+    ⟨hipl.1,
+      hipl.2.1,
+      hipl.2.2.1,
+      hboundary.2.1,
+      hboundary.2.2.2.1,
+      hboundary.1,
+      hboundary.2.2.2.2.2.2.2.2.1,
+      hboundary.2.2.2.2.2.2.2.2.2.1,
+      hboundary.2.2.2.2.2.2.2.2.2.2.1,
+      hboundary.2.2.2.2.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
 Bundled audit from the Hodge--Arakelov Gaussian source to the exact Step (x)
 boundary.
 

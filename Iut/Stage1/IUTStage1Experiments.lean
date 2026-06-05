@@ -24882,6 +24882,68 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteS
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface bundled audit joining IPL finite-average provenance to the
+exact Step (x) boundary.
+
+The endpoint keeps the finite Hodge/SHE transported averages, the route-owned
+IPL datum, raw Step (xi) comparison, exact vertical-`IQ` target calibration,
+and upper-semi Step (x) bound visible from one bundled source package.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource_IPLFiniteAverageStepXEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    let transportAudit :=
+      sourceData.routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    let targetCalibration :=
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration;
+    sourceData.routeSource.toIPLLogVolumeTransport.sourceLogVolume =
+        transportAudit.sourceAverage ∧
+      sourceData.routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        transportAudit.targetTransportedAverage ∧
+      sourceData.routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.routeSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+  sourceData.sourceDerivedIPLFiniteAverageStepXEndpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bundled audit from the Hodge--Arakelov Gaussian source to
 the exact Step (x) boundary.
 -/
