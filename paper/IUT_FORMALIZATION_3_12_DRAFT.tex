@@ -2023,6 +2023,14 @@ The project currently proves the following source-facing results in \Lean{}:
   constructs the \(\IPL\) log-volume transport, the hull/determinant source,
   and the source-derived Hodge/\(\SHE/\IPL\)/hull bridge internally, then
   applies the finite-divisor vertical-\(IQ\) route.
+\item The milestone-facing endpoint has a Hodge--Arakelov source form as well:
+  it consumes source and target Hodge--Arakelov theta-evaluation sources,
+  canonical one-label degree preservation, and a typed allowed-forgetting
+  witness, then constructs the finite Hodge/\(\SHE\) transport internally.  In
+  this form the canonical square-weight profile and theta-root source are read
+  directly from the Hodge--Arakelov source side before the endpoint applies the
+  same Theorem 3.11 \(\IPL\), record-native Step (xi), and finite-divisor
+  vertical-\(IQ\) route.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
@@ -2161,6 +2169,15 @@ free-standing \(\IPL\) datum, source/target endpoint equalities, or a separate
 gives the endpoint equalities definitionally, the source object aligns that
 constructed datum with the pre-ledger certificate, and log-volume preservation
 is read from the finite Hodge/\(\SHE\) transport.
+At the next source boundary, the same public endpoint can now build the finite
+Hodge/\(\SHE\) transport from source and target Hodge--Arakelov
+theta-evaluation sources, the canonical one-label degree preservation, and the
+allowed-forgetting witness.  Thus the public route no longer needs to be handed
+the finite transport record, a free square-weight profile, or a separate
+theta-root source; these are constructed or projected from the
+Hodge--Arakelov source data.  The descent bridge, the permission to forget
+holomorphic structure, and the deeper construction of the theta-evaluation
+sources remain open source-paper obligations.
 
 The practical priority order is:
 \begin{enumerate}
@@ -2170,10 +2187,10 @@ The practical priority order is:
 \item extend the audited Hodge--Arakelov theta evaluation wrapper beyond the
   finite degree-evaluation, bad-local quotient, and canonical-label shadows
   toward actual Gaussian/Frobenioid material from \IUT{} II;
-\item replace the finite Hodge/SHE transport source boundary by source-paper
-  constructions of the Hodge-theater descent bridge and typed forgetful
-  transport witness, then replace the synchronization-derived finite
-  preservation data;
+\item replace the remaining finite Hodge/SHE transport source boundary by
+  source-paper constructions of the Hodge-theater descent bridge, typed
+  forgetful transport witness, and deeper Gaussian/Frobenioid preservation
+  data beneath the current Hodge--Arakelov theta-evaluation wrapper;
 \item replace the remaining \(\IPL\) certificate-alignment proof by the actual
   Theorem 3.11 input-prime-strip link construction, rather than carrying the
   alignment as an explicit source-boundary obligation;
