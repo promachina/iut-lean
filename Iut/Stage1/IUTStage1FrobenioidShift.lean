@@ -32002,6 +32002,68 @@ theorem sourceDerivedIPLFiniteAverageStepXEndpoint
 
 set_option linter.style.longLine false in
 /--
+Bundled Ob5 possible-image family-hull audit at the exact Step (x) boundary.
+
+This keeps the Remark 3.9.5(Ob5)-style bounded-family quotient guard visible
+inside the strongest finite exact route: two nonempty Theorem 3.11 possible
+images lie in the same family hull and have the same upper-semi quotient image,
+while the same bundled source supplies the exact vertical-`IQ` calibration and
+Step (x) upper-semi inequality.
+-/
+theorem possibleImageFamilyHullOb5StepXEndpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (i j : IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)
+    (hnei :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i).Nonempty)
+    (hnej :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j).Nonempty) :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i ⊆ sourceData.routeSource.possibleImageFamilyHullSource.familyHull ∧
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j ⊆ sourceData.routeSource.possibleImageFamilyHullSource.familyHull ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record i =
+        sourceData.routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record j ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.familyHullLogVolume =
+        sourceData.routeSource.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.familyUnionLogVolume <=
+        sourceData.routeSource.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.routeSource.possibleImageFamilyHullSource.familyHullLogVolume ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.tensorPower.tensorPowerLogVolume =
+        (sourceData.routeSource.possibleImageFamilyHullSource.tensorPower.tensorDegree : Real) *
+          sourceData.routeSource.possibleImageFamilyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited := by
+  have hob5 := sourceData.routeSource.possibleImageFamilyHullOb5_endpoint i j hnei hnej
+  exact
+    ⟨hob5.1,
+      hob5.2.1,
+      hob5.2.2.1,
+      hob5.2.2.2.1,
+      hob5.2.2.2.2.1,
+      hob5.2.2.2.2.2.1,
+      hob5.2.2.2.2.2.2.1,
+      hob5.2.2.2.2.2.2.2,
+      sourceData.exactSource.targetCalibration_source_eq_verticalIQ,
+      sourceData.exactSource.realifiedSource.toPacketCorrespondence.qPilotLogKummerNonInterference,
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩
+
+set_option linter.style.longLine false in
+/--
 Bundled audit from the Hodge--Arakelov Gaussian source to the exact Step (x)
 boundary.
 

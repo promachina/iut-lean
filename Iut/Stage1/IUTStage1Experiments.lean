@@ -24944,6 +24944,79 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteS
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob5 possible-image family-hull audit at the bundled exact
+Step (x) boundary.
+
+This endpoint exposes the bounded-family quotient guard for two nonempty
+Theorem 3.11 possible images together with the exact vertical-`IQ`
+calibration, log-Kummer non-interference, and Step (x) upper-semi bound from
+the same source package.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource_possibleImageFamilyHullOb5StepXEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {k : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean k}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean k}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (i j : IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)
+    (hnei :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i).Nonempty)
+    (hnej :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j).Nonempty) :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i ⊆ sourceData.routeSource.possibleImageFamilyHullSource.familyHull ∧
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j ⊆ sourceData.routeSource.possibleImageFamilyHullSource.familyHull ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record i =
+        sourceData.routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record j ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.familyHullLogVolume =
+        sourceData.routeSource.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.familyUnionLogVolume <=
+        sourceData.routeSource.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.routeSource.possibleImageFamilyHullSource.familyHullLogVolume ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.tensorPower.tensorPowerLogVolume =
+        (sourceData.routeSource.possibleImageFamilyHullSource.tensorPower.tensorDegree : Real) *
+          sourceData.routeSource.possibleImageFamilyHullSource.familyHullLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited :=
+  sourceData.possibleImageFamilyHullOb5StepXEndpoint i j hnei hnej
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bundled audit from the Hodge--Arakelov Gaussian source to
 the exact Step (x) boundary.
 -/
