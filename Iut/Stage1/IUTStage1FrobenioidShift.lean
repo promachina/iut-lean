@@ -32234,6 +32234,40 @@ theorem sourceDerivedCorridorEndpoint
 
 set_option linter.style.longLine false in
 /--
+Raw comparison audit for the bundled finite exact vertical-`IQ` route source.
+
+This is the public source-derived boundary before the external numeric
+`C_\Theta` estimate is supplied: it returns the named Gaussian-to-Step (xi)
+route audit, exact vertical-`IQ` Frobenioid precision, target calibration, the
+raw signed comparison, log-Kummer non-interference, and the Step (x) upper-semi
+bound from one bundled source package.
+-/
+theorem rawComparisonWithGaussianStepXIAuditEndpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+        sourceData.routeSource ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited := by
+  have hgauss := sourceData.routeSource.toGaussianToStepXIAudit
+  exact
+    ⟨hgauss,
+      sourceData.exactSource.hasPreciseFrobenioidIsomorphisms,
+      sourceData.exactSource.targetCalibration_source_eq_verticalIQ,
+      hgauss.qSigned_le_thetaSigned,
+      sourceData.exactSource.realifiedSource.toPacketCorrespondence.qPilotLogKummerNonInterference,
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩
+
+set_option linter.style.longLine false in
+/--
 Bundled IPL finite-average provenance and exact Step (x) boundary audit.
 
 This refines `sourceDerivedCorridorEndpoint` at the same source package:

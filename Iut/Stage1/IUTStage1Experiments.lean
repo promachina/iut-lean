@@ -25040,6 +25040,56 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteS
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface raw comparison audit for the bundled finite exact
+vertical-`IQ` route source.
+
+This wrapper exposes the named Gaussian-to-Step (xi) audit, exact vertical-`IQ`
+precision, target calibration, raw signed comparison, log-Kummer
+non-interference, and Step (x) upper-semi bound before any external
+`C_\Theta` numeric estimate is supplied.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource_rawComparisonWithGaussianStepXIAuditEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+        sourceData.routeSource ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited :=
+  sourceData.rawComparisonWithGaussianStepXIAuditEndpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bundled audit joining IPL finite-average provenance to the
 exact Step (x) boundary.
 
