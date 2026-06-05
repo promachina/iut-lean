@@ -35099,6 +35099,41 @@ structure SourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibl
         |>.toSideConditionedHolomorphicHullDeterminantSource
         |>.toHolomorphicHullDeterminantSource
         |>.toHullDetSourceConstructor)
+  historySeparatedForgetfulTransport_eq :
+    let transportSource :=
+      IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+        (record := record)
+        sourceCalibratedEvaluation.evaluation targetEvaluation
+        canonicalOneDegree_preserved;
+    transportSource.forgetfulTransport.transportAllowed =
+      IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+        record.bundle.hodgeTheaterDescentBridgeData
+  historySeparatedForgetfulTransportAllowed :
+    let transportSource :=
+      IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+        (record := record)
+        sourceCalibratedEvaluation.evaluation targetEvaluation
+        canonicalOneDegree_preserved;
+    transportSource.forgetfulTransport.transportAllowed
+  finiteHodgeFullLabelLogVolume_preserved :
+    ∀ j : ZMod l.value,
+      (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited sourceCalibratedEvaluation targetEvaluation
+        canonicalOneDegree_preserved iplConstructionSource hullSource).finiteHodgeSHETransport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            ((sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+              part audited sourceCalibratedEvaluation targetEvaluation
+              canonicalOneDegree_preserved iplConstructionSource hullSource).finiteHodgeSHETransport.coordinateEquiv j)) =
+        (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+          part audited sourceCalibratedEvaluation targetEvaluation
+          canonicalOneDegree_preserved iplConstructionSource hullSource).finiteHodgeSHETransport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+  finiteHodgeTransportedAverage_preserved :
+    let transportAudit :=
+      (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited sourceCalibratedEvaluation targetEvaluation
+        canonicalOneDegree_preserved iplConstructionSource hullSource).finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    transportAudit.targetTransportedAverage = transportAudit.sourceAverage
   finiteHodgeSource_eq_calibrated :
     (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
       part audited sourceCalibratedEvaluation targetEvaluation
@@ -35253,6 +35288,31 @@ theorem toSourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibl
           IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndHullDetSources,
           IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
           IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport]
+      historySeparatedForgetfulTransport_eq := by
+        dsimp [
+          IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated,
+          IUTStage1FiniteHodgeSHETransportSource.ofSynchronizationHistorySeparated,
+          IUTStage1FiniteHodgeSHETransportSource.ofSynchronization,
+          IUTStage1HodgeSHEAllowedForgetfulTransport.ofDescentBridge]
+      historySeparatedForgetfulTransportAllowed := by
+        dsimp [
+          IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated,
+          IUTStage1FiniteHodgeSHETransportSource.ofSynchronizationHistorySeparated,
+          IUTStage1FiniteHodgeSHETransportSource.ofSynchronization,
+          IUTStage1HodgeSHEAllowedForgetfulTransport.ofDescentBridge,
+          IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed]
+        exact
+          record.bundle.hodgeTheaterDescentBridgeData_histories_not_identified
+      finiteHodgeFullLabelLogVolume_preserved := by
+        intro j
+        exact
+          (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+            part audited sourceCalibratedEvaluation targetEvaluation
+            canonicalOneDegree_preserved iplConstructionSource hullSource).finiteHodgeSHETransport.fullLabelLogVolume_preserved' j
+      finiteHodgeTransportedAverage_preserved :=
+        (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+          part audited sourceCalibratedEvaluation targetEvaluation
+          canonicalOneDegree_preserved iplConstructionSource hullSource).finiteHodgeSHETransport.transportedAverage_preserved'
       finiteHodgeSource_eq_calibrated := hsourceEq,
       comparisonLevel := hlevel,
       coordinateEquiv := hcoord,
