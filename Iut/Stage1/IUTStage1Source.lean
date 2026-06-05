@@ -25062,6 +25062,78 @@ theorem transport_endpoint
 end IUTStage1IPLLogVolumeTransport
 
 /--
+Theorem 3.11 IPL link source read from the pre-ledger certificate.
+
+This keeps the actual `IPLDatum` fixed to the certificate bundled in the
+source package.  The remaining open content is only the two endpoint
+identifications saying that the link source and target are the input and output
+prime strips.
+-/
+structure IUTStage1Theorem311IPLLinkSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) where
+  link_source_eq_input :
+    package.preLedger.certificate.ipl.link.source =
+      package.preLedger.certificate.ipl.inputPrimeStrip
+  link_target_eq_output :
+    package.preLedger.certificate.ipl.link.target =
+      package.preLedger.certificate.ipl.outputPrimeStrip
+
+namespace IUTStage1Theorem311IPLLinkSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+
+def iplDatum
+    (_linkSource : IUTStage1Theorem311IPLLinkSource record) :
+    QualitativeData.IPLDatum package.preLedger.output.family :=
+  package.preLedger.certificate.ipl
+
+theorem iplDatum_eq_preledger_certificate
+    (linkSource : IUTStage1Theorem311IPLLinkSource record) :
+    linkSource.iplDatum = package.preLedger.certificate.ipl :=
+  rfl
+
+theorem hasStructuredIPL
+    (linkSource : IUTStage1Theorem311IPLLinkSource record) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family :=
+  ⟨linkSource.iplDatum⟩
+
+theorem record_hasStructuredIPL
+    (_linkSource : IUTStage1Theorem311IPLLinkSource record) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family :=
+  record.hasStructuredIPL
+
+theorem linkSource_eq_input
+    (linkSource : IUTStage1Theorem311IPLLinkSource record) :
+    linkSource.iplDatum.link.source =
+      linkSource.iplDatum.inputPrimeStrip :=
+  linkSource.link_source_eq_input
+
+theorem linkTarget_eq_output
+    (linkSource : IUTStage1Theorem311IPLLinkSource record) :
+    linkSource.iplDatum.link.target =
+      linkSource.iplDatum.outputPrimeStrip :=
+  linkSource.link_target_eq_output
+
+theorem source_endpoint
+    (linkSource : IUTStage1Theorem311IPLLinkSource record) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family ∧
+      linkSource.iplDatum = package.preLedger.certificate.ipl ∧
+      linkSource.iplDatum.link.source =
+        linkSource.iplDatum.inputPrimeStrip ∧
+      linkSource.iplDatum.link.target =
+        linkSource.iplDatum.outputPrimeStrip :=
+  ⟨linkSource.hasStructuredIPL,
+    linkSource.iplDatum_eq_preledger_certificate,
+    linkSource.linkSource_eq_input,
+    linkSource.linkTarget_eq_output⟩
+
+end IUTStage1Theorem311IPLLinkSource
+
+/--
 Route-level wrapper for square-weighted full-label transport preservation.
 
 The underlying preservation audit from
@@ -26428,6 +26500,14 @@ variable {l : PrimeGeFive} {F : Type v} [Field F]
 variable {X C : HyperbolicOrbicurveModel F}
 variable {finiteTransport : IUTStage1FiniteHodgeSHETransport record l X C}
 
+def ofTheorem311IPLLinkSource
+    (linkSource : IUTStage1Theorem311IPLLinkSource record) :
+    IUTStage1IPLLogVolumeTransportSource
+      record l X C finiteTransport :=
+  { iplDatum := linkSource.iplDatum,
+    link_source_eq_input := linkSource.linkSource_eq_input,
+    link_target_eq_output := linkSource.linkTarget_eq_output }
+
 noncomputable def sourceLogVolume
     (_sourceData :
       IUTStage1IPLLogVolumeTransportSource
@@ -26454,6 +26534,26 @@ theorem targetLogVolume_preserved
         record l X C finiteTransport) :
     sourceData.targetLogVolume = sourceData.sourceLogVolume :=
   finiteTransport.transportedAverage_preserved'
+
+theorem ofTheorem311IPLLinkSource_endpoint
+    (linkSource : IUTStage1Theorem311IPLLinkSource record) :
+    let sourceData :=
+      ofTheorem311IPLLinkSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport := finiteTransport) linkSource;
+    sourceData.iplDatum = package.preLedger.certificate.ipl ∧
+      sourceData.iplDatum.link.source =
+        sourceData.iplDatum.inputPrimeStrip ∧
+      sourceData.iplDatum.link.target =
+        sourceData.iplDatum.outputPrimeStrip ∧
+      sourceData.targetLogVolume = sourceData.sourceLogVolume :=
+  by
+    intro sourceData
+    exact
+      ⟨rfl,
+        linkSource.linkSource_eq_input,
+        linkSource.linkTarget_eq_output,
+        sourceData.targetLogVolume_preserved⟩
 
 noncomputable def toIPLLogVolumeTransport
     (sourceData :
@@ -49100,6 +49200,29 @@ noncomputable def ofFiniteHodgeSHEIPLAndHullDetSources
     hullConstructor := hullSource.toHullDetSourceConstructor,
     sourceCalibration := sourceCalibration }
 
+noncomputable def ofFiniteHodgeSHET11IPLAndHullDetSources
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    (hullSource :
+      IUTStage1HolomorphicHullDeterminantSource (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  let iplSource :=
+    IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource
+      (l := l) (X := X) (C := C)
+      (finiteTransport := transportSource.toFiniteHodgeSHETransport)
+      iplLinkSource
+  { iplTransport := iplSource.toIPLLogVolumeTransport,
+    finiteHodgeSHETransport :=
+      transportSource.toFiniteHodgeSHETransport,
+    hullConstructor := hullSource.toHullDetSourceConstructor,
+    sourceCalibration := sourceCalibration }
+
 def toRouteLogVolumeAlignment
     (bridge :
       IUTStage1SourceDerivedHodgeSHEIPLHullBridge
@@ -49252,6 +49375,41 @@ theorem ofFiniteHodgeSHEIPLAndHullDetSources_endpoint
       rfl,
       rfl,
       iplSource.toIPLLogVolumeTransport.targetLogVolume_preserved,
+      hullSource.qSigned_le_thetaSigned,
+      transportSource.allowedForgetfulTransport_holds,
+      transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
+
+theorem ofFiniteHodgeSHET11IPLAndHullDetSources_endpoint
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    (hullSource :
+      IUTStage1HolomorphicHullDeterminantSource (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    let bridge :=
+      ofFiniteHodgeSHET11IPLAndHullDetSources
+        (part := part) (audited := audited)
+        transportSource iplLinkSource hullSource sourceCalibration;
+    bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.finiteHodgeSHETransport =
+        transportSource.toFiniteHodgeSHETransport ∧
+      bridge.hullConstructor =
+        hullSource.toHullDetSourceConstructor ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      transportSource.forgetfulTransport.transportAllowed ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  intro bridge
+  exact
+    ⟨rfl,
+      rfl,
+      rfl,
+      bridge.iplTransport.targetLogVolume_preserved,
       hullSource.qSigned_le_thetaSigned,
       transportSource.allowedForgetfulTransport_holds,
       transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
