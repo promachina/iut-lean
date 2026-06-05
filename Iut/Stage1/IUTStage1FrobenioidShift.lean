@@ -34757,6 +34757,25 @@ structure SourceCalibratedHodgeArakelovHistorySeparatedT11IPLLinkPossibleImageSi
   hullDetBridge_eq_obligations :
     packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
       hullSource.obligations.hullDetData.bridgeData
+  hullDetBridge_eq_recordCanonical :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        hullSource.operation hullSource.hullOperation hullSource.determinantOperation
+        hullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record hullSource.qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) hullSource.qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record hullSource.qChoice)
+          (fun _ hx => hx))
+        hullSource.determinantSource hullSource.compatibility
+        hullSource.measure_eq_hullLogVolume hullSource.tensorPower_bound
+  tensorPowerDeterminant_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+      hullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
   q_pilot_positive :
     0 < -packageN.preLedger.qSigned
   normalization :
@@ -34833,6 +34852,9 @@ theorem toSourceCalibratedHodgeArakelovHistorySeparatedT11IPLLinkPossibleImageSi
       qPilotRegion_eq_choice := hqEq,
       qPilotRegion_subset_union := hqSubset,
       hullDetBridge_eq_obligations := hbridgeEq,
+      hullDetBridge_eq_recordCanonical :=
+        hullSource.hullDetBridge_eq_recordCanonical,
+      tensorPowerDeterminant_bound := hullSource.tensorPower_bound,
       q_pilot_positive := hqpos,
       normalization := hnorm,
       qSigned_le_thetaSigned := hle,
