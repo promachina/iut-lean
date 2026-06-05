@@ -127,6 +127,8 @@ The module roles are:
   \(C_\Theta\) algebra.
 \item \texttt{IUTStage1Remark312Absorption}: Remark 3.12.2(v) absorption
   interfaces.
+\item \texttt{IUTStage1IUTIVAlgebra}: Remark 3.12 sign shadows and the
+  conditional \IUT{} IV real-algebra handoff estimates.
 \item \texttt{IUTStage1Source}: finite labels, Gaussian data, SHE/Hodge
   interfaces, and route theorems.
 \item \texttt{IUTStage1Experiments}: compiled endpoint checks and diagnostic
@@ -319,6 +321,7 @@ The relevant implementation lives in four Lean modules:
 \begin{itemize}
 \item \texttt{Iut/Stage1/IUTStage1SourceCore.lean}
 \item \texttt{Iut/Stage1/IUTStage1Remark312Absorption.lean}
+\item \texttt{Iut/Stage1/IUTStage1IUTIVAlgebra.lean}
 \item \texttt{Iut/Stage1/IUTStage1Source.lean}
 \item \texttt{Iut/Stage1/IUTStage1Experiments.lean}
 \end{itemize}
@@ -2273,17 +2276,18 @@ container cannot be paired with an unrelated convenient bound.  Throughout the
 current corridor, ``upper ray'' means the signed-log region
 \(\{x\mid x\le b\}\), not the ordinary order-theoretic ray \(\{x\mid b\le x\}\).
 
-The largest engineering issue is
-\texttt{Iut/Stage1/IUTStage1Source.lean}, which currently contains most of the
-finite-label, Gaussian, Hodge/SHE, hull, Step (x), Step (xi), Step (xii), and
-\IUT{} IV algebra.  This is now too large for comfortable review.  Low-risk
-future refactors are:
+The largest engineering issue remains the size of
+\texttt{Iut/Stage1/IUTStage1Source.lean}, which still contains most of the
+finite-label, Gaussian, Hodge/SHE, hull, Step (x), Step (xi), and Step (xii)
+corridor.  The first mechanical split has been made:
+\texttt{IUTStage1IUTIVAlgebra.lean} now carries the Remark 3.12 sign shadows
+and the conditional \IUT{} IV real-algebra handoff estimates.  Low-risk future
+refactors are:
 \[
 \begin{array}{ll}
 \text{finite labels and }q^{j^2}\text{ averages} & \text{separate module},\\
 \text{Step (xi) hull/determinant upper rays} & \text{separate module},\\
-\text{Step (xii) local Frobenioid shifts} & \text{separate module},\\
-\text{\IUT{} IV real algebra} & \text{separate module}.
+\text{Step (xii) local Frobenioid shifts} & \text{separate module}.
 \end{array}
 \]
 These refactors should be mechanical only: move declarations, preserve names
