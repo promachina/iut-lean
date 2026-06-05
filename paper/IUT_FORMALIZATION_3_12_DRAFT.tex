@@ -2125,6 +2125,11 @@ The project currently proves the following source-facing results in \Lean{}:
   its endpoint equalities directly, the boundary consumes the Theorem 3.11
   input-prime-strip link construction source and projects the link source
   internally before entering the finite-divisor vertical-\(IQ\) endpoint.
+\item The constructed-\(\IPL\), source-calibrated summand route now also has a
+  synchronized Hodge--Arakelov input form.  The source object carries the
+  calibrated source evaluation, target evaluation, and canonical one-label degree
+  preservation together, so the public finite-divisor boundary no longer receives
+  the Hodge/SHE synchronization equality separately.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2305,16 +2310,19 @@ certificate-equals-constructed-\(\IPL\)-datum assumption.  The remaining
 source-paper task for this layer is to construct those certificate endpoint
 equalities, and eventually the input-prime-strip link itself, from the
 Theorem 3.11 \(\IPL\) machinery.
-At the next source boundary, the same public endpoint can now build the finite
-Hodge/\(\SHE\) transport from source and target Hodge--Arakelov
-theta-evaluation sources and the canonical one-label degree preservation.  The
-allowed-forgetting predicate is now fixed to the history-separation condition
-of the record's Hodge-theater descent bridge, so the public route no longer
-needs to be handed the finite transport record, a free square-weight profile, a
-separate theta-root source, or a free permission predicate.  These are
-constructed or projected from the Hodge--Arakelov and Theorem 3.11 source data.
-The actual Hodge-theater forgetting operation and the deeper construction of
-the theta-evaluation sources remain open source-paper obligations.
+At the next source boundary, the same public endpoint can now receive a
+synchronized Hodge--Arakelov source object.  This object carries the calibrated
+source evaluation, target evaluation, and canonical one-label degree
+preservation together, and it projects the finite Hodge/\(\SHE\) transport
+used by the route.  The allowed-forgetting predicate is fixed to the
+history-separation condition of the record's Hodge-theater descent bridge, so
+the public route no longer needs to be handed the finite transport record, a
+free square-weight profile, a separate theta-root source, a separate
+source/target evaluation synchronization equality, or a free permission
+predicate.  These are constructed or projected from the synchronized
+Hodge--Arakelov and Theorem 3.11 source data.  The actual Hodge-theater
+forgetting operation and the deeper construction of the theta-evaluation
+sources remain open source-paper obligations.
 At the Step (xi) boundary, the strongest public Hodge--Arakelov route can now
 consume the holomorphic-hull/determinant source object directly.  This is a
 review-surface improvement rather than a closure of Step (xi): the source

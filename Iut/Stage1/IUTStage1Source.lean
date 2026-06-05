@@ -51515,6 +51515,102 @@ theorem calibrated_endpoint
 end IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
 
 /--
+Synchronized Hodge--Arakelov theta evaluations with source theta calibration.
+
+This bundles the calibrated source-side Hodge--Arakelov evaluation, the target
+Hodge--Arakelov evaluation, and the canonical one-label degree preservation used
+to construct the finite Hodge/SHE synchronization.  The strongest finite-divisor
+routes can consume this one source object instead of taking the target evaluation
+and synchronization equality as separate public inputs.
+-/
+structure IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F) where
+  sourceCalibratedEvaluation :
+    IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
+      part audited X C
+  targetEvaluation :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+      l X C
+  canonicalOneDegree_preserved :
+    targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+
+namespace IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+
+def sourceEvaluation
+    (sync :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+      l X C :=
+  sync.sourceCalibratedEvaluation.evaluation
+
+def valueSource
+    (sync :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+      l X C :=
+  sync.sourceCalibratedEvaluation.valueSource
+
+noncomputable def toSourceThetaHodgeLogVolumeCalibration
+    (sync :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1SourceThetaHodgeLogVolumeCalibration
+      part audited sync.valueSource :=
+  sync.sourceCalibratedEvaluation.toSourceThetaHodgeLogVolumeCalibration
+
+theorem synchronization_endpoint
+    (sync :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        sync.sourceEvaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sync.sourceEvaluation.fullLabelCompatibility ∧
+      sync.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sync.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+  ⟨sync.sourceCalibratedEvaluation.fullLabel_calibrated,
+    sync.sourceCalibratedEvaluation.sourceLogVolumeEq,
+    sync.canonicalOneDegree_preserved⟩
+
+end IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+
+/--
 Route-level log-volume alignment produced from Hodge/SHE/IPL/hull source data.
 
 The source-side theta-average chart is calibrated against the Hodge--Arakelov
@@ -57920,6 +58016,97 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedCalibratedHodgeAr
     packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
     packetLocalObjectFinite_eq_ind3Source targetSource cTheta
     thetaSigned_le_cTheta_absLogQ
+
+/--
+Source-calibrated synchronized Hodge--Arakelov route from a constructed
+Theorem 3.11 IPL-link source and summand-factored Step (xi) source.
+
+The Hodge--Arakelov source/target evaluations and canonical one-label
+preservation are supplied by one synchronization object.  This removes the last
+separate Hodge/SHE synchronization equality from the current strongest
+finite-divisor vertical-`IQ` public boundary.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedSynchronizedCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionSummandChartedHodgeFamilyHullExactThetaHullDetObligationsBackedFiniteDivisorVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource : IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (summandChartedFamilyHullSource :
+      IUTStage1SummandChartedHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record hodgeSynchronization.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionSummandChartedHodgeFamilyHullExactThetaHullDetObligationsBackedFiniteDivisorVerticalIQ
+    audited hodgeSynchronization.sourceCalibratedEvaluation
+    hodgeSynchronization.targetEvaluation
+    hodgeSynchronization.canonicalOneDegree_preserved
+    iplConstructionSource summandChartedFamilyHullSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource cTheta thetaSigned_le_cTheta_absLogQ
 
 /--
 Source-derived finite-divisor vertical-`IQ` route from a constructed
