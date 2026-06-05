@@ -5620,6 +5620,85 @@ theorem hodgeSHEIPLHullSourceAlignedZModLabelledAverage_cThetaDichotomy
     holomorphic_structure_forgotten sourceAlignment orderedAlignment
     thetaSourceAverage_eq_labelledAverage cTheta thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Experiment-surface `C_Theta` dichotomy for the source-derived source-aligned
+labelled-average route.
+
+The packet-local source-alignment object remains explicit, while the
+Hodge/SHE/IPL/hull alignment, canonical square-weight profile, and theta-root
+source are projected from the source-derived bridge.
+-/
+theorem sourceDerivedHodgeSHEIPLHullSourceAlignedZModLabelledAverage_cThetaDichotomy
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (bridge :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean)
+    (labelledAverage_eq_packetNormalized :
+      labelledAverage.normalizedLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (orderedAlignment : Ind3OrderedRealLineAlignment part audited)
+    (thetaSourceAverage_eq_labelledAverage :
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        labelledAverage.normalizedLogVolume)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_of_sourceDerivedHodgeSHEIPLHullSourceAlignedZModLabelledAverage
+    audited bridge labelledAverage labelledAverage_eq_packetNormalized
+    upperSemiEntry kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization
+    monoAnalyticD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten sourceAlignment orderedAlignment
+    thetaSourceAverage_eq_labelledAverage cTheta thetaSigned_le_cTheta_absLogQ
+
 theorem hodgeSHEIPLHullFiniteSourceZModLabelledAverage_cThetaDichotomy
     {source target : Copy} {coric : Type u}
     {package :
