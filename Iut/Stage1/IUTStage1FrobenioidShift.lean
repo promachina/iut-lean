@@ -19668,6 +19668,39 @@ theorem possibleImageCanonicalHullTensorBridge_endpoint
       packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
   sourceData.possibleImageSource.possibleImageCanonicalHullTensorBridge_endpoint
 
+set_option linter.style.longLine false in
+/--
+Raw comparison exposed before the generic source-derived bridge is assembled.
+
+The all-in-one route source already contains the constructed Hodge/SHE/IPL
+payload and the target-charted possible-image Step (xi) source.  This endpoint
+keeps the certificate-pinned IPL datum, IPL log-volume preservation, Hodge--
+Arakelov source value, chosen possible-image q-region, and raw
+`qSigned <= thetaSigned` comparison visible directly at that source boundary.
+-/
+theorem sourceRawComparison_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.hodgeIPLSource.hodgeSynchronization.valueSource ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.possibleImageSource.qChoice ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  let hipl := sourceData.hodgeIPLSource.source_endpoint
+  let hshe := sourceData.hodgeArakelovFiniteHodgeSHETransportSource_endpoint
+  let hstep := sourceData.possibleImageSource.possibleImageSideConditionedHull_endpoint
+  ⟨hipl.2.2.1,
+    hipl.2.2.2.2.1,
+    hshe.1,
+    hstep.1,
+    hstep.2.2.2.2.2⟩
+
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
 
 set_option linter.style.longLine true
@@ -21771,12 +21804,13 @@ theorem ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource_rawComparison
         routeSource.hodgeIPLSource.hodgeSynchronization.valueSource ∧
       packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned := by
   intro bridge
+  have hsource := routeSource.sourceRawComparison_endpoint
   exact
     ⟨(ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource_endpoint
         (part := part) (audited := audited) routeSource).1,
       bridge.iplTransport.targetLogVolume_preserved,
       rfl,
-      bridge.hullConstructor.qSigned_le_thetaSigned⟩
+      hsource.2.2.2.2⟩
 
 theorem sourceLogVolumeEq
     (bridge :

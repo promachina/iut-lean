@@ -24156,6 +24156,47 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_bridgeEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface raw comparison from the all-in-one route source before the
+generic source-derived bridge is assembled.
+
+This exposes the route-source audit that combines the constructed Hodge/IPL
+payload with the target-charted possible-image Step (xi) source to obtain the
+raw signed comparison directly.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_sourceRawComparisonEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    routeSource.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        routeSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        routeSource.hodgeIPLSource.hodgeSynchronization.valueSource ∧
+      routeSource.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record routeSource.possibleImageSource.qChoice ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  routeSource.sourceRawComparison_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface raw source-derived comparison for the all-in-one
 target-charted route.
 
