@@ -151,7 +151,9 @@ The module roles are:
 \item \texttt{IUTStage1FrobenioidShift}: endpoint-audit surfaces together with
   the nonarchimedean realified-Frobenioid/log-Kummer, vertical-\(IQ\), and
   root-of-unity support routes.
-\item \texttt{IUTStage1Source}: remaining structured endpoint-audit refinements
+\item \texttt{IUTStage1EndpointAudit}: nested LogVolumeChartAudit refinements
+  around the place-audited multiradial theta-hull endpoint.
+\item \texttt{IUTStage1Source}: remaining public source-package audit surface
   around the Corollary 3.12 corridor.
 \item \texttt{IUTStage1Experiments}: compiled endpoint checks and diagnostic
   theorems.
@@ -351,6 +353,7 @@ The relevant implementation lives in the following Lean modules:
 \item \texttt{Iut/Stage1/IUTStage1Theorem311.lean}
 \item \texttt{Iut/Stage1/IUTStage1StepXI.lean}
 \item \texttt{Iut/Stage1/IUTStage1FrobenioidShift.lean}
+\item \texttt{Iut/Stage1/IUTStage1EndpointAudit.lean}
 \item \texttt{Iut/Stage1/IUTStage1Source.lean}
 \item \texttt{Iut/Stage1/IUTStage1Experiments.lean}
 \end{itemize}
@@ -2387,8 +2390,10 @@ multiradial possible-image layer now lives in
 source layer now lives in \texttt{IUTStage1StepXI.lean}.  The first endpoint
 audit family and nonarchimedean realified-Frobenioid/log-Kummer support layer
 now live in \texttt{IUTStage1FrobenioidShift.lean}; the original
-\texttt{IUTStage1Source.lean} file now contains the remaining structured
-endpoint-audit refinements.  Low-risk future refactors are:
+\texttt{IUTStage1Source.lean} file has now also been split into
+\texttt{IUTStage1EndpointAudit.lean}, for the nested LogVolumeChartAudit
+refinements, and \texttt{IUTStage1Source.lean}, for the public
+source-package audit surface.  Low-risk future refactors are:
 \[
 \begin{array}{ll}
 \text{Structured endpoint route families} & \text{smaller route modules},\\
