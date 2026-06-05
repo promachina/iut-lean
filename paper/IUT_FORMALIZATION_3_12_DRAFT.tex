@@ -2231,9 +2231,9 @@ The project currently proves the following source-facing results in \Lean{}:
   Hodge/\(\SHE/\IPL\) endpoint, the side-conditioned possible-image
   hull/determinant endpoint, the holomorphic-hull/log-volume endpoint, the
   canonical hull/tensor-power bridge endpoint, the source-boundary raw
-  comparison endpoint, bridge endpoint, the bridge-level raw source-derived
-  comparison endpoint, and finite-divisor packet-source and finite-divisor
-  \(C_\Theta\)-dichotomy endpoints from this single object.
+  comparison endpoint, source-owned bridge endpoint, the bridge-level raw
+  source-derived comparison endpoint, and finite-divisor packet-source and
+  finite-divisor \(C_\Theta\)-dichotomy endpoints from this single object.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2593,9 +2593,13 @@ source, chosen possible-image q-region, and
 \(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\) comparison are all projected
 from the route source.  The bridge-level raw comparison endpoint now uses this
 source-boundary comparison for its final inequality while still auditing the
-assembled bridge's \(\IPL\) and Hodge/\(\SHE\) projections.  This separates the
-Step (xi) comparison from the later finite Step (x) and \(C_\Theta\) boundary.
-Its finite Step (x) boundary now also has a
+assembled bridge's \(\IPL\) and Hodge/\(\SHE\) projections.  The route source
+now owns the assembled source-derived bridge via a
+\texttt{toSourceDerivedBridge} projection, and the finite-divisor vertical
+\(IQ\) theorem consumes that route-owned bridge instead of spelling out the
+generic bridge constructor at the Step (x) boundary.  This separates the
+Step (xi) comparison and bridge assembly from the later finite Step (x) and
+\(C_\Theta\) boundary.  Its finite Step (x) boundary now also has a
 packet-source form: the public all-in-one route can consume a
 \texttt{NonarchimedeanFiniteDivisorPacketLocalSource} directly, so the divisor
 packet, mono-analytic theater, and packet-local log-volume equalities are

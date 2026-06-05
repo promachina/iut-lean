@@ -21861,6 +21861,81 @@ theorem sourceDerivedBridge_endpoint
 
 end IUTStage1SourceDerivedHodgeSHEIPLHullBridge
 
+namespace IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {β : Type v} [Fintype β]
+
+set_option linter.style.longLine false in
+noncomputable def toSourceDerivedBridge
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+    (part := part) (audited := audited) sourceData
+
+set_option linter.style.longLine false in
+/--
+Source-derived bridge audit projected from the all-in-one route source.
+
+This method-style endpoint keeps the route source as the owner of the assembled
+Hodge/SHE/IPL/hull bridge.  Later finite Step (x) boundaries can consume
+`sourceData.toSourceDerivedBridge` instead of repeating the generic bridge
+constructor at the boundary.
+-/
+theorem sourceDerivedBridge_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    let bridge := sourceData.toSourceDerivedBridge;
+    bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        sourceData.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      sourceData.possibleImageSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.possibleImageSource.qChoice ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      packageN.preLedger.thetaSigned =
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.possibleImageSource.obligations.hullDetData.bridgeData ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  simpa [toSourceDerivedBridge] using
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource_endpoint
+      (part := part) (audited := audited) sourceData
+
+end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+
 theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullPacketTargetSource
     {packageN :
       IUTStage1SourcePackage source target
@@ -30580,15 +30655,12 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChart
       packageN.preLedger.thetaSigned <=
         cTheta * (-packageN.preLedger.qSigned)) :
     (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
-        packageN.preLedger.thetaSigned < 0) ∨
+      packageN.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < cTheta := by
-  let sourceBridge :=
-    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource
-      (part := part) (audited := audited) routeSource
   exact
     part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorIQ
       (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
-      audited sourceBridge rfl
+      audited routeSource.toSourceDerivedBridge rfl
       routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaRootSource
       upperSemiEntry divisorPacket monoAnalyticTheater kummerCompatibility
       forgettingCompatibility holomorphicF_realization holomorphicD_realization

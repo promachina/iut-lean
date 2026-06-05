@@ -24121,9 +24121,7 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_bridgeEndpoint
     (routeSource :
       part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
         (β := β) audited record X C) :
-    let bridge :=
-      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource
-        (part := part) (audited := audited) routeSource;
+    let bridge := routeSource.toSourceDerivedBridge;
     bridge.iplTransport.iplDatum = package.preLedger.certificate.ipl ∧
       bridge.iplTransport.iplDatum =
         routeSource.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
@@ -24151,8 +24149,7 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_bridgeEndpoint
       package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
       bridge.finiteHodgeSHETransport.sourceTheater.side ≠
         bridge.finiteHodgeSHETransport.targetTheater.side :=
-  IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource_endpoint
-    (part := part) (audited := audited) routeSource
+  routeSource.sourceDerivedBridge_endpoint
 
 set_option linter.style.longLine false in
 /--
