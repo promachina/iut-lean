@@ -2015,10 +2015,11 @@ The project currently proves the following source-facing results in \Lean{}:
   strict \(C_\Theta>-1\) conclusion.
 \item The same finite-divisor vertical-\(IQ\) endpoint now also has the
   milestone-facing constructor form: it consumes the finite Hodge/\(\SHE\)
-  transport source, the \(\IPL\) log-volume transport source, the Step (xi)
-  holomorphic-hull/determinant source, and the theta/Hodge calibration
-  certificate directly, constructs the source-derived bridge internally, and
-  then applies the finite-divisor vertical-\(IQ\) route.
+  transport source, a Theorem 3.11 \(\IPL\)-link construction source, the Step
+  (xi) holomorphic-hull/determinant source, and the theta/Hodge calibration
+  certificate directly.  It constructs the \(\IPL\) log-volume transport and
+  source-derived Hodge/\(\SHE/\IPL\)/hull bridge internally, then applies the
+  finite-divisor vertical-\(IQ\) route.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
@@ -2149,13 +2150,14 @@ bridge and a typed allowed-forgetting witness separately from the
 synchronization-derived finite preservation data.  The remaining work is to
 make each of those components itself follow from the relevant source-paper
 constructions, rather than supplying them as records.
-The \(\IPL\) component can now be constructed from the finite Hodge/\(\SHE\)
-transport together with a Theorem 3.11 IPL-link construction source.  The
-finite endpoint no longer receives a free-standing \(\IPL\) datum or
-source/target endpoint equalities: the constructed input-prime-strip link gives
-the endpoint equalities definitionally, and the source object aligns that
-constructed datum with the pre-ledger certificate.  Its log-volume preservation
-is no longer an independent equality at the bridge boundary.
+The \(\IPL\) component can now be constructed at the public finite-divisor
+vertical-\(IQ\) endpoint from the finite Hodge/\(\SHE\) transport together with
+a Theorem 3.11 IPL-link construction source.  The endpoint no longer receives a
+free-standing \(\IPL\) datum, source/target endpoint equalities, or a separate
+\(\IPL\) log-volume transport source: the constructed input-prime-strip link
+gives the endpoint equalities definitionally, the source object aligns that
+constructed datum with the pre-ledger certificate, and log-volume preservation
+is read from the finite Hodge/\(\SHE\) transport.
 
 The practical priority order is:
 \begin{enumerate}
