@@ -2028,6 +2028,12 @@ The project currently proves the following source-facing results in \Lean{}:
   keeps the \(q\)-pilot containment and determinant payload intact, but no
   longer expands the record-native hull fields at the public Hodge--Arakelov
   boundary.
+\item The Step (xi) source boundary now also has a choice-linked q-pilot form:
+  a named Theorem 3.11 possible-output choice carries
+  \(q\subseteq P_{\mathrm{choice}}\), and \Lean{} derives
+  \(q\subseteq P_{\mathrm{rec}}\) by the possible-image union inclusion.  Thus
+  the strongest Hodge--Arakelov/history-separated endpoint has a variant whose
+  q-pilot containment is not an independent public field.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2221,10 +2227,13 @@ the theta-evaluation sources remain open source-paper obligations.
 At the Step (xi) boundary, the strongest public Hodge--Arakelov route can now
 consume the holomorphic-hull/determinant source object directly.  This is a
 review-surface improvement rather than a closure of Step (xi): the source
-object still contains the holomorphic hull shadow, \(q\subseteq P_{\mathrm{rec}}\),
-weighted determinant source, tensor-power bound, bridge equality, positivity,
-and normalization.  The remaining task is to construct those fields from the
-source-paper holomorphic-hull and determinant operations.
+object still contains the holomorphic hull shadow, weighted determinant source,
+tensor-power bound, bridge equality, positivity, and normalization.  The
+\(q\subseteq P_{\mathrm{rec}}\) containment now has a stronger choice-linked
+source form, where \(q\subseteq P_{\mathrm{choice}}\) is supplied and
+\(q\subseteq P_{\mathrm{rec}}\) is derived from the possible-image union.  The
+remaining task is to construct those fields from the source-paper
+holomorphic-hull and determinant operations.
 
 The practical priority order is:
 \begin{enumerate}
@@ -2247,8 +2256,9 @@ The practical priority order is:
   this finite correspondence object itself as source-facing input;
 \item construct the fields of the Step (xi) holomorphic-hull/determinant source
   from the actual holomorphic-hull and determinant operations of
-  Remark 3.9.5 and Step (xi), rather than carrying them as auditable source
-  fields;
+  Remark 3.9.5 and Step (xi), including replacing the remaining supplied
+  choice-link, determinant, tensor-power, bridge, positivity, and normalization
+  fields by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source
   content to bear on the Mochizuki--Scholze--Stix disagreement.
 \end{enumerate}
