@@ -148,7 +148,10 @@ The module roles are:
 \item \texttt{IUTStage1StepXI}: Step (xi) hull/determinant and IPL source
   objects, source obligations, package-audit constructors, and holomorphic
   hull/determinant source routes.
-\item \texttt{IUTStage1Source}: endpoint route theorems and audit surfaces
+\item \texttt{IUTStage1FrobenioidShift}: endpoint-audit surfaces together with
+  the nonarchimedean realified-Frobenioid/log-Kummer, vertical-\(IQ\), and
+  root-of-unity support routes.
+\item \texttt{IUTStage1Source}: remaining structured endpoint-audit refinements
   around the Corollary 3.12 corridor.
 \item \texttt{IUTStage1Experiments}: compiled endpoint checks and diagnostic
   theorems.
@@ -347,6 +350,7 @@ The relevant implementation lives in the following Lean modules:
 \item \texttt{Iut/Stage1/IUTStage1HodgeSHE.lean}
 \item \texttt{Iut/Stage1/IUTStage1Theorem311.lean}
 \item \texttt{Iut/Stage1/IUTStage1StepXI.lean}
+\item \texttt{Iut/Stage1/IUTStage1FrobenioidShift.lean}
 \item \texttt{Iut/Stage1/IUTStage1Source.lean}
 \item \texttt{Iut/Stage1/IUTStage1Experiments.lean}
 \end{itemize}
@@ -2301,9 +2305,9 @@ container cannot be paired with an unrelated convenient bound.  Throughout the
 current corridor, ``upper ray'' means the signed-log region
 \(\{x\mid x\le b\}\), not the ordinary order-theoretic ray \(\{x\mid b\le x\}\).
 
-The largest engineering issue remains the size of the endpoint corridor in
-\texttt{Iut/Stage1/IUTStage1Source.lean}.  Seven mechanical splits have been
-made: \texttt{IUTStage1IUTIVAlgebra.lean} now
+The largest engineering issue has been reduced to the remaining organization of
+the endpoint-route families.  Eight mechanical splits have been made:
+\texttt{IUTStage1IUTIVAlgebra.lean} now
 carries the Remark 3.12 sign shadows and the conditional \IUT{} IV
 real-algebra handoff estimates, while \texttt{IUTStage1FiniteLabels.lean}
 carries the finite-label and theta-root cusp-label source layer, and
@@ -2314,12 +2318,15 @@ Hodge--Arakelov theta-evaluation shadow layer now lives in
 \texttt{IUTStage1HodgeSHE.lean}.  The Theorem 3.11 source-choice and
 multiradial possible-image layer now lives in
 \texttt{IUTStage1Theorem311.lean}.  The Step (xi) hull/determinant and \(\IPL\)
-source layer now lives in \texttt{IUTStage1StepXI.lean}.  Low-risk future
-refactors are:
+source layer now lives in \texttt{IUTStage1StepXI.lean}.  The first endpoint
+audit family and nonarchimedean realified-Frobenioid/log-Kummer support layer
+now live in \texttt{IUTStage1FrobenioidShift.lean}; the original
+\texttt{IUTStage1Source.lean} file now contains the remaining structured
+endpoint-audit refinements.  Low-risk future refactors are:
 \[
 \begin{array}{ll}
-\text{Endpoint route and audit families} & \text{smaller route modules},\\
-\text{Step (xii) local Frobenioid shifts} & \text{separate module}.
+\text{Structured endpoint route families} & \text{smaller route modules},\\
+\text{Generated dependency/audit report} & \text{separate checked target}.
 \end{array}
 \]
 These refactors should be mechanical only: move declarations, preserve names
