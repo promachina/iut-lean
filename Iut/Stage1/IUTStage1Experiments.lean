@@ -23043,6 +23043,56 @@ theorem targetChartedHodgeDeterminantPossibleImageHull_sourceEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface holomorphic-hull/log-volume audit for the target-charted
+Hodge/determinant possible-image Step (xi) source.
+
+This exposes the possible-image-to-holomorphic-hull log-volume passage before
+the Hodge/\(\IPL\) construction wraps this Step (xi) source into the all-in-one
+route.
+-/
+theorem targetChartedHodgeDeterminantPossibleImageHull_holomorphicHullLogVolumeEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {hodgeSynchronization :
+      part.IUTStage1TargetChartedHodgeArakelovSynchronization
+        audited X C}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization) :
+    package.preLedger.output.Certified ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+        package.preLedger.certificate.she ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice :=
+  sourceData.possibleImageHolomorphicHullLogVolume_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface canonical hull/tensor-power bridge audit for the
 target-charted Hodge/determinant possible-image Step (xi) source.
 

@@ -19003,6 +19003,47 @@ theorem source_endpoint
 
 set_option linter.style.longLine false in
 /--
+Holomorphic-hull/log-volume Step (xi) audit for the target-charted
+Hodge/determinant possible-image source.
+
+This source-level endpoint exposes the passage from the chosen Theorem 3.11
+possible image to the holomorphic hull and the resulting log-volume bound before
+the Hodge/\(\IPL\) construction wraps the source into the all-in-one route.
+-/
+theorem possibleImageHolomorphicHullLogVolume_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    packageN.preLedger.output.Certified ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+        packageN.preLedger.certificate.she ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          packageN.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost packageN.preLedger.measure
+        (sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          packageN.preLedger.certificate).hull
+        packageN.preLedger.thetaSigned ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice := by
+  have hsource :=
+    sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
+      |>.holomorphicHullLogVolume_endpoint
+  exact
+    ⟨hsource.1,
+      hsource.2.1,
+      hsource.2.2.1,
+      hsource.2.2.2.1,
+      hsource.2.2.2.2.1,
+      hsource.2.2.2.2.2.1,
+      rfl⟩
+
+set_option linter.style.longLine false in
+/--
 Canonical possible-image hull/tensor-power bridge audit for the target-charted
 Hodge/determinant Step (xi) source.
 
@@ -19484,16 +19525,8 @@ theorem possibleImageHolomorphicHullLogVolume_endpoint
         IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
           record sourceData.possibleImageSource.qChoice := by
   have hsource :=
-    sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
-      |>.holomorphicHullLogVolume_endpoint
-  exact
-    ⟨hsource.1,
-      hsource.2.1,
-      hsource.2.2.1,
-      hsource.2.2.2.1,
-      hsource.2.2.2.2.1,
-      hsource.2.2.2.2.2.1,
-      hsource.2.2.2.2.2.2.1⟩
+    sourceData.possibleImageSource.possibleImageHolomorphicHullLogVolume_endpoint
+  exact hsource
 
 set_option linter.style.longLine false in
 /--
