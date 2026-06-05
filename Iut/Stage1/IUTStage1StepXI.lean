@@ -4291,6 +4291,113 @@ theorem toIPLLogVolumeTransport_endpoint
 end IUTStage1IPLLogVolumeTransportSource
 
 /--
+Finite Hodge/SHE transport with a constructed Theorem 3.11 IPL link.
+
+This binds the two inputs that previously appeared side by side at many bridge
+boundaries: the finite Hodge/SHE transport source and the constructed
+input-prime-strip link.  The associated IPL/log-volume transport is projected
+from this single source object, so the log-volume preservation is read from the
+same finite Hodge/SHE transport that supplies the Hodge-theater sides.
+-/
+structure IUTStage1FiniteHodgeSHEIPLConstructionSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F) where
+  transportSource : IUTStage1FiniteHodgeSHETransportSource record l X C
+  iplConstructionSource :
+    IUTStage1Theorem311IPLLinkConstructionSource record
+
+namespace IUTStage1FiniteHodgeSHEIPLConstructionSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {l : PrimeGeFive} {F : Type v} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+
+noncomputable def finiteTransport
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    IUTStage1FiniteHodgeSHETransport record l X C :=
+  sourceData.transportSource.toFiniteHodgeSHETransport
+
+def constructedDatum
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    QualitativeData.IPLDatum package.preLedger.output.family :=
+  sourceData.iplConstructionSource.constructedDatum
+
+def iplDatum
+    (_sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    QualitativeData.IPLDatum package.preLedger.output.family :=
+  package.preLedger.certificate.ipl
+
+noncomputable def toIPLLogVolumeTransportSource
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    IUTStage1IPLLogVolumeTransportSource
+      record l X C sourceData.finiteTransport :=
+  IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+    (l := l) (X := X) (C := C)
+    (finiteTransport := sourceData.finiteTransport)
+    sourceData.iplConstructionSource
+
+noncomputable def toIPLLogVolumeTransport
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    IUTStage1IPLLogVolumeTransport record :=
+  sourceData.toIPLLogVolumeTransportSource.toIPLLogVolumeTransport
+
+theorem iplDatum_eq_constructedDatum
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    sourceData.iplDatum = sourceData.constructedDatum :=
+  sourceData.iplConstructionSource.iplDatum_eq_constructedDatum
+
+theorem targetLogVolume_preserved
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    sourceData.toIPLLogVolumeTransport.targetLogVolume =
+      sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
+  sourceData.toIPLLogVolumeTransport.targetLogVolume_preserved
+
+set_option linter.style.longLine false in
+theorem source_endpoint
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  ⟨rfl,
+    sourceData.iplDatum_eq_constructedDatum,
+    sourceData.iplConstructionSource.linkSource_eq_input,
+    sourceData.iplConstructionSource.linkTarget_eq_output,
+    rfl,
+    rfl,
+    sourceData.targetLogVolume_preserved,
+    sourceData.transportSource.allowedForgetfulTransport_holds,
+    sourceData.toIPLLogVolumeTransport.histories_not_identified'⟩
+
+end IUTStage1FiniteHodgeSHEIPLConstructionSource
+
+/--
 Boundary comparing the strengthened SHE/common-container route with the factored
 square/full-label preservation interface.
 
