@@ -2069,6 +2069,12 @@ The project currently proves the following source-facing results in \Lean{}:
   \(\theta_{\mathrm{signed}}=\mu_{\log}(\phi(P_{\mathrm{rec}}))\); \Lean{}
   then derives the older exact tensor-power equality and the tensor-power
   bound from the Ob5 hull/determinant compatibility.
+\item The history-separated Hodge--Arakelov, certificate-pinned \(\IPL\),
+  finite-divisor vertical-\(IQ\) endpoint now consumes this
+  family-hull-backed source directly.  The endpoint projects it to the older
+  hull/det-data-backed exact-theta source internally, so the public route no
+  longer has to present the exact tensor-power equality as the Step (xi)
+  source-facing input.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2284,9 +2290,11 @@ construction.  The newest record-native bounded-family variant replaces the
 loose exact tensor-power equality by the source-shaped assertion that
 \(\theta_{\mathrm{signed}}\) is the log-volume of the Theorem 3.11
 possible-image family hull; the normalized tensor-power equality is then
-derived from the Ob5 determinant compatibility.  The remaining task is to
-construct the underlying fields from the source-paper holomorphic-hull and
-determinant operations.
+derived from the Ob5 determinant compatibility.  That variant is now wired into
+the finite-divisor vertical-\(IQ\) endpoint chain through a projection to the
+older backed exact-theta source.  The remaining task is to construct the
+underlying fields from the source-paper holomorphic-hull and determinant
+operations.
 
 The practical priority order is:
 \begin{enumerate}
