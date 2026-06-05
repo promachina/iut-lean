@@ -23413,6 +23413,53 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_sourceEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Hodge/SHE/IPL audit for the all-in-one target-charted
+Hodge/IPL determinant possible-image route.
+
+This exposes the route's constructed finite Hodge/SHE transport and
+input-prime-strip log-volume transport independently of the Step (xi)
+hull/determinant projection.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_hodgeSHEIPLConstructionEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      routeSource.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      routeSource.toIPLLogVolumeTransport.iplDatum =
+        routeSource.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        routeSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      routeSource.toIPLLogVolumeTransport.sourceTheater.side ≠
+        routeSource.toIPLLogVolumeTransport.targetTheater.side :=
+  routeSource.hodgeSHEIPLConstruction_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Step (xi) hull-source audit for the all-in-one
 target-charted Hodge/IPL determinant possible-image route.
 

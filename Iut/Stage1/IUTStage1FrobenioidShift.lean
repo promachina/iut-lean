@@ -19106,6 +19106,59 @@ theorem source_endpoint
     hsource.2.2.2.2.2.2.2.2.2,
     hipl.2.2.2.2.2.2⟩
 
+noncomputable def toFiniteHodgeSHEIPLConstructionSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C :=
+  sourceData.hodgeIPLSource.toFiniteHodgeSHEIPLConstructionSource
+
+noncomputable def sourceCalibration
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1SourceThetaHodgeLogVolumeCalibration
+      part audited
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA :=
+  sourceData.hodgeIPLSource.sourceCalibration
+
+noncomputable def toIPLLogVolumeTransport
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1IPLLogVolumeTransport record :=
+  sourceData.hodgeIPLSource.toIPLLogVolumeTransport
+
+set_option linter.style.longLine false in
+/--
+Hodge/SHE/IPL payload exposed by the all-in-one target-charted route.
+
+This is the route-level projection of the constructed Hodge/SHE transport and
+input-prime-strip log-volume transport, before the Step (xi)
+hull/determinant source is applied.
+-/
+theorem hodgeSHEIPLConstruction_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.hodgeIPLSource.source_endpoint
+
 set_option linter.style.longLine false in
 /--
 Project the all-in-one target-charted Hodge/IPL route to its Step (xi)
