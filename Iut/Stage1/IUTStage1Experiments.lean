@@ -23352,6 +23352,50 @@ theorem targetChartedHodgeArakelovIPLConstruction_sourceEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit for the finite Hodge/SHE transport source constructed
+inside the packaged target-charted Hodge/IPL source.
+
+This exposes the Hodge--Arakelov source/target value sources and the
+history-separated finite Hodge/SHE transport constructor before the constructed
+IPL/log-volume layer is formed.
+-/
+theorem targetChartedHodgeArakelovIPLConstruction_hodgeArakelovFiniteHodgeSHETransportSourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        audited record X C) :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.hodgeSynchronization.sourceEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+        sourceData.hodgeSynchronization.targetEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) :=
+  sourceData.hodgeArakelovFiniteHodgeSHETransportSource_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the constructed IPL/log-volume transport inside
 the packaged target-charted Hodge/IPL source.
 

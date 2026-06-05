@@ -17928,6 +17928,51 @@ noncomputable def toIPLLogVolumeTransport
   sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport
 
 set_option linter.style.longLine false in
+/--
+History-separated finite Hodge/SHE transport source constructed inside the
+target-charted Hodge--Arakelov/IPL source.
+
+This exposes the finite Hodge/SHE transport source before the IPL layer is
+formed: the source/target Hodge--Arakelov value sources, the record-native
+history-separated forgetting permission, pointwise representative comparison
+level, identity coordinate equivalence, and Hodge-theater separation are all
+read from the Hodge--Arakelov synchronization constructor.
+-/
+theorem hodgeArakelovFiniteHodgeSHETransportSource_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.hodgeSynchronization.sourceEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+        sourceData.hodgeSynchronization.targetEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) := by
+  let hodgeSync :=
+    sourceData.hodgeSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization
+  have h :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated_endpoint
+      (record := record)
+      hodgeSync.sourceEvaluation hodgeSync.targetEvaluation
+      hodgeSync.canonicalOneDegree_preserved
+  simpa [
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.toFiniteHodgeSHEIPLConstructionSource,
+    IUTStage1TargetChartedHodgeArakelovSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization,
+    IUTStage1TargetChartedHodgeArakelovSynchronization.sourceEvaluation,
+    IUTStage1TargetChartedHodgeArakelovSynchronization.targetEvaluation,
+    IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization.sourceEvaluation,
+    IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization.targetEvaluation]
+    using h
+
+set_option linter.style.longLine false in
 theorem source_endpoint
     (sourceData :
       IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
@@ -19360,21 +19405,10 @@ theorem hodgeArakelovFiniteHodgeSHETransportSource_endpoint
         IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
       sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
         Equiv.refl (ZMod l.value) := by
-  let hodgeSync :=
-    sourceData.hodgeIPLSource.hodgeSynchronization
-      |>.toThetaSourceCalibratedHodgeArakelovSynchronization
-  have h :=
-    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated_endpoint
-      (record := record)
-      hodgeSync.sourceEvaluation hodgeSync.targetEvaluation
-      hodgeSync.canonicalOneDegree_preserved
   simpa [
     IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.toFiniteHodgeSHEIPLConstructionSource,
-    IUTStage1TargetChartedHodgeArakelovSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization,
-    IUTStage1TargetChartedHodgeArakelovSynchronization.sourceEvaluation,
-    IUTStage1TargetChartedHodgeArakelovSynchronization.targetEvaluation,
-    IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization.sourceEvaluation]
-    using h
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.toFiniteHodgeSHEIPLConstructionSource]
+    using sourceData.hodgeIPLSource.hodgeArakelovFiniteHodgeSHETransportSource_endpoint
 
 set_option linter.style.longLine false in
 /--
