@@ -25739,6 +25739,161 @@ theorem synchronization_endpoint
 end IUTStage1SHESynchronizationSource
 
 /--
+Finite Hodge/SHE transport object for the current Stage 1 corridor.
+
+This packages the finite Hodge--Arakelov shadow of simultaneous holomorphic
+expressibility as transport data: the two Hodge-theater sides, the finite label
+map, full-label log-volume preservation, transported-average preservation, and
+the no-history-identification guard.  It is constructed from the current
+Hodge--Arakelov synchronization source, but downstream bridge code can consume
+this transport object instead of reaching directly into the synchronization
+record.
+-/
+structure IUTStage1FiniteHodgeSHETransport
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F) where
+  synchronization : IUTStage1SHESynchronizationSource record l X C
+  sourceTheater : QualitativeData.HodgeTheaterId
+  targetTheater : QualitativeData.HodgeTheaterId
+  source_theater_eq :
+    sourceTheater =
+      record.bundle.structuredSHE.context.domainStructure.theater
+  target_theater_eq :
+    targetTheater =
+      record.bundle.structuredSHE.context.codomainStructure.theater
+  coordinateEquiv : ZMod l.value ≃ ZMod l.value
+  coordinate_equiv_eq :
+    coordinateEquiv =
+      synchronization.toFactoredObligations.coordinateEquiv
+  fullLabelLogVolume_preserved :
+    ∀ j : ZMod l.value,
+      synchronization.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (coordinateEquiv j)) =
+        synchronization.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+  transportedAverage_preserved :
+    let audit :=
+      synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit
+    audit.targetTransportedAverage = audit.sourceAverage
+  histories_not_identified :
+    sourceTheater.side ≠ targetTheater.side
+
+namespace IUTStage1FiniteHodgeSHETransport
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {l : PrimeGeFive} {F : Type v} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+
+noncomputable def ofSynchronization
+    (sync : IUTStage1SHESynchronizationSource record l X C) :
+    IUTStage1FiniteHodgeSHETransport record l X C :=
+  { synchronization := sync,
+    sourceTheater :=
+      record.bundle.structuredSHE.context.domainStructure.theater,
+    targetTheater :=
+      record.bundle.structuredSHE.context.codomainStructure.theater,
+    source_theater_eq := rfl,
+    target_theater_eq := rfl,
+    coordinateEquiv := sync.toFactoredObligations.coordinateEquiv,
+    coordinate_equiv_eq := rfl,
+    fullLabelLogVolume_preserved := sync.fullLabelLogVolume_preserved,
+    transportedAverage_preserved := sync.transportedAverage_eq,
+    histories_not_identified := record.hodgeHistories_not_identified }
+
+def toSHESynchronizationSource
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    IUTStage1SHESynchronizationSource record l X C :=
+  transport.synchronization
+
+noncomputable def toFactoredObligations
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    IUTStage1StructuredSHEFactoredSquareFullLabelObligations
+      package record.bundle l :=
+  transport.synchronization.toFactoredObligations
+
+theorem hasStructuredSHE
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family :=
+  transport.synchronization.hasStructuredSHE
+
+theorem sourceTheater_eq_domain
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    transport.sourceTheater =
+      record.bundle.structuredSHE.context.domainStructure.theater :=
+  transport.source_theater_eq
+
+theorem targetTheater_eq_codomain
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    transport.targetTheater =
+      record.bundle.structuredSHE.context.codomainStructure.theater :=
+  transport.target_theater_eq
+
+theorem coordinateEquiv_eq_factored
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    transport.coordinateEquiv =
+      transport.toFactoredObligations.coordinateEquiv :=
+  transport.coordinate_equiv_eq
+
+theorem fullLabelLogVolume_preserved'
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    ∀ j : ZMod l.value,
+      transport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (transport.coordinateEquiv j)) =
+        transport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) :=
+  transport.fullLabelLogVolume_preserved
+
+theorem transportedAverage_preserved'
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    let audit :=
+      transport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit
+    audit.targetTransportedAverage = audit.sourceAverage :=
+  transport.transportedAverage_preserved
+
+theorem histories_not_identified'
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    transport.sourceTheater.side ≠ transport.targetTheater.side :=
+  transport.histories_not_identified
+
+theorem finiteHodgeSHETransport_endpoint
+    (transport : IUTStage1FiniteHodgeSHETransport record l X C) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
+      transport.sourceTheater =
+        record.bundle.structuredSHE.context.domainStructure.theater ∧
+      transport.targetTheater =
+        record.bundle.structuredSHE.context.codomainStructure.theater ∧
+      transport.coordinateEquiv =
+        transport.toFactoredObligations.coordinateEquiv ∧
+      (∀ j : ZMod l.value,
+        transport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (transport.coordinateEquiv j)) =
+          transport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      (let audit :=
+        transport.synchronization.toStructuredSHESquareWeightTransportAudit
+          |>.preservationAudit
+      audit.targetTransportedAverage = audit.sourceAverage) ∧
+      transport.sourceTheater.side ≠ transport.targetTheater.side :=
+  ⟨transport.hasStructuredSHE,
+    transport.sourceTheater_eq_domain,
+    transport.targetTheater_eq_codomain,
+    transport.coordinateEquiv_eq_factored,
+    transport.fullLabelLogVolume_preserved',
+    transport.transportedAverage_preserved',
+    transport.histories_not_identified'⟩
+
+end IUTStage1FiniteHodgeSHETransport
+
+/--
 Boundary comparing the strengthened SHE/common-container route with the factored
 square/full-label preservation interface.
 
@@ -48098,6 +48253,168 @@ theorem alignment_endpoint
 
 end IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
 
+/--
+Source-derived Hodge/SHE/IPL/hull bridge for the finite nonarchimedean
+Corollary 3.12 route.
+
+This is the current source-facing replacement for passing a completed
+`IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment` as an opaque argument.  It
+keeps the four source components separate: the Theorem 3.11 multiradial record,
+the IPL/log-volume transport, the Hodge--Arakelov SHE synchronization source,
+the Step (xi) hull/determinant constructor, and the source-side theta/Hodge
+calibration certificate.  The ordinary route alignment is then constructed
+from these components.
+-/
+structure IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F) where
+  iplTransport : IUTStage1IPLLogVolumeTransport record
+  finiteHodgeSHETransport : IUTStage1FiniteHodgeSHETransport record l X C
+  hullConstructor :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
+      record
+  sourceCalibration :
+    IUTStage1SourceThetaHodgeLogVolumeCalibration
+      part audited finiteHodgeSHETransport.synchronization.sourceHA
+
+namespace IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+
+def toRouteLogVolumeAlignment
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C) :
+    IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment
+      part audited record X C :=
+  { iplTransport := bridge.iplTransport,
+    sheSync := bridge.finiteHodgeSHETransport.toSHESynchronizationSource,
+    hullConstructor := bridge.hullConstructor,
+    sourceCalibration := bridge.sourceCalibration }
+
+theorem hasStructuredIPL
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C) :
+    QualitativeData.HasStructuredIPL packageN.preLedger.output.family :=
+  bridge.iplTransport.hasStructuredIPL
+
+theorem hasStructuredSHE
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C) :
+    QualitativeData.HasStructuredSHE packageN.preLedger.output.family :=
+  bridge.finiteHodgeSHETransport.hasStructuredSHE
+
+theorem targetLogVolume_preserved
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C) :
+    bridge.iplTransport.targetLogVolume =
+      bridge.iplTransport.sourceLogVolume :=
+  bridge.iplTransport.targetLogVolume_preserved
+
+theorem finiteHodgeSHETransport_endpoint
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C) :
+    QualitativeData.HasStructuredSHE packageN.preLedger.output.family ∧
+      bridge.finiteHodgeSHETransport.sourceTheater =
+        record.bundle.structuredSHE.context.domainStructure.theater ∧
+      bridge.finiteHodgeSHETransport.targetTheater =
+        record.bundle.structuredSHE.context.codomainStructure.theater ∧
+      bridge.finiteHodgeSHETransport.coordinateEquiv =
+        bridge.finiteHodgeSHETransport.toFactoredObligations.coordinateEquiv ∧
+      (∀ j : ZMod l.value,
+        bridge.finiteHodgeSHETransport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (bridge.finiteHodgeSHETransport.coordinateEquiv j)) =
+          bridge.finiteHodgeSHETransport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      (let audit :=
+        bridge.finiteHodgeSHETransport.synchronization
+          |>.toStructuredSHESquareWeightTransportAudit
+          |>.preservationAudit
+      audit.targetTransportedAverage = audit.sourceAverage) ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side :=
+  IUTStage1FiniteHodgeSHETransport.finiteHodgeSHETransport_endpoint
+    bridge.finiteHodgeSHETransport
+
+theorem sourceLogVolumeEq
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C) :
+    part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+        audited =
+      bridge.toRouteLogVolumeAlignment.sourceSynchronizedLogVolume :=
+  bridge.toRouteLogVolumeAlignment.sourceLogVolumeEq
+
+theorem targetLogVolumeEqTheta
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C) :
+    bridge.toRouteLogVolumeAlignment.targetSynchronizedLogVolume =
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+        audited :=
+  bridge.toRouteLogVolumeAlignment.targetLogVolumeEqTheta
+
+theorem qPilotPositive
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C) :
+    0 < -packageN.preLedger.qSigned :=
+  bridge.hullConstructor.q_pilot_positive
+
+theorem sourceDerivedBridge_endpoint
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C) :
+    QualitativeData.HasStructuredIPL packageN.preLedger.output.family ∧
+      QualitativeData.HasStructuredSHE packageN.preLedger.output.family ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        bridge.toRouteLogVolumeAlignment.sourceSynchronizedLogVolume ∧
+      bridge.toRouteLogVolumeAlignment.targetSynchronizedLogVolume =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited ∧
+      0 < -packageN.preLedger.qSigned :=
+  ⟨bridge.hasStructuredIPL,
+    bridge.hasStructuredSHE,
+    bridge.targetLogVolume_preserved,
+    bridge.sourceLogVolumeEq,
+    bridge.targetLogVolumeEqTheta,
+    bridge.qPilotPositive⟩
+
+end IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+
 theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullPacketTargetSource
     {packageN :
       IUTStage1SourcePackage source target
@@ -52281,6 +52598,94 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullFiniteDivisorVert
       holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
       holomorphic_structure_forgotten targetSource cTheta
       thetaSigned_le_cTheta_absLogQ
+
+/--
+Source-derived Hodge/SHE/IPL/hull finite-divisor vertical-`IQ` route.
+
+This endpoint has the same Step (x) finite-divisor boundary as
+`boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullFiniteDivisorVerticalIQ`,
+but the Hodge/SHE/IPL/hull comparison is supplied as separated source
+components and converted internally to the route-level log-volume alignment.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceBridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullFiniteDivisorVerticalIQ
+    profile audited sourceBridge.toRouteLogVolumeAlignment source_profile_eq
+    thetaRootSource upperSemiEntry divisorPacket monoAnalyticTheater
+    kummerCompatibility forgettingCompatibility holomorphicF_realization
+    holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified
+    packetLocalObjectFinite_eq_ind3Source targetSource cTheta
+    thetaSigned_le_cTheta_absLogQ
 
 /--
 Direct-labelled finite-divisor route with exact vertical-`IQ` target.

@@ -1969,6 +1969,21 @@ The project currently proves the following source-facing results in \Lean{}:
   from the hull constructor; the source-side theta/Hodge equality is derived
   from a full-label calibration certificate in the route-alignment source
   record.
+\item The Hodge/\(\SHE/\IPL\)/hull alignment is now also exposed through a
+  source-derived bridge object.  This object keeps the Theorem 3.11
+  multiradial record, the \(\IPL\) log-volume transport, the
+  finite Hodge--Arakelov \(\SHE\) transport, the Step (xi) hull/determinant
+  constructor, and the theta/Hodge calibration certificate as separate source
+  components, then constructs the route-level log-volume alignment internally.
+  The finite transport records the source and target Hodge-theater sides,
+  finite label transport, full-label log-volume preservation,
+  transported-average preservation, and the present no-history-identification
+  guard.
+\item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
+  has a source-derived form: it consumes this separated bridge object instead
+  of a prebuilt route alignment before constructing the same finite-divisor
+  Step (x) source and proving the \(C_\Theta=-1\) boundary alternative or
+  strict \(C_\Theta>-1\) conclusion.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
@@ -2087,6 +2102,15 @@ C_\Theta\ge -1 .
 The project should continue by replacing the present record fields for
 factored \SHE{} preservation and Hodge-descent source-target alignment with
 the corresponding constructions from \IUT{} I--III.
+The first source-derived bridge layer has now been added: the final
+finite-divisor vertical-\(IQ\) route can consume separated \(\IPL\),
+\(\SHE\), hull/determinant, and theta/Hodge calibration source components
+instead of an opaque route-alignment argument.  The \(\SHE\) component has been
+refined to a finite Hodge/SHE transport package that exposes the two theater
+sides, the finite label equivalence, full-label log-volume preservation,
+transported-average preservation, and the current history-separation guard.
+The remaining work is to make each of those components itself follow from the
+relevant source-paper constructions, rather than supplying them as records.
 
 The practical priority order is:
 \begin{enumerate}
@@ -2096,6 +2120,9 @@ The practical priority order is:
 \item extend the Gaussian-derived factored \SHE{} construction beyond the
   finite degree-evaluation and canonical-label shadows toward actual
   Gaussian/Frobenioid material from \IUT{} II;
+\item construct the finite Hodge/SHE transport package from structured
+  Hodge-theater histories and allowed forgetful transports, instead of deriving
+  it from the present synchronization source record;
 \item construct the packet-correspondence source from the actual
   log-Kummer/Frobenioid machinery of \IUT{} III, Step (x), rather than treating
   this finite correspondence object itself as source-facing input;
