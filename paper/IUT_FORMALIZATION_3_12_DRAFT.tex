@@ -2015,11 +2015,14 @@ The project currently proves the following source-facing results in \Lean{}:
   strict \(C_\Theta>-1\) conclusion.
 \item The same finite-divisor vertical-\(IQ\) endpoint now also has the
   milestone-facing constructor form: it consumes the finite Hodge/\(\SHE\)
-  transport source, a Theorem 3.11 \(\IPL\)-link construction source, the Step
-  (xi) holomorphic-hull/determinant source, and the theta/Hodge calibration
-  certificate directly.  It constructs the \(\IPL\) log-volume transport and
-  source-derived Hodge/\(\SHE/\IPL\)/hull bridge internally, then applies the
-  finite-divisor vertical-\(IQ\) route.
+  transport source, a Theorem 3.11 \(\IPL\)-link construction source,
+  record-native Step (xi) hull data, and the theta/Hodge calibration
+  certificate directly.  The Step (xi) inputs are the record's possible-image
+  union, \(q\subseteq P_{\mathrm{rec}}\), the holomorphic hull shadow, weighted
+  determinant source, tensor-power bound, and bridge equality.  The endpoint
+  constructs the \(\IPL\) log-volume transport, the hull/determinant source,
+  and the source-derived Hodge/\(\SHE/\IPL\)/hull bridge internally, then
+  applies the finite-divisor vertical-\(IQ\) route.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
@@ -2177,9 +2180,10 @@ The practical priority order is:
 \item construct the packet-correspondence source from the actual
   log-Kummer/Frobenioid machinery of \IUT{} III, Step (x), rather than treating
   this finite correspondence object itself as source-facing input;
-\item replace the holomorphic-hull/determinant source-wrapper fields by the
-  actual holomorphic-hull and determinant operations from Remark 3.9.5 and
-  Step (xi);
+\item replace the remaining record-native holomorphic-hull shadow,
+  weighted-determinant source, tensor-power bound, and bridge-equality fields
+  by the actual holomorphic-hull and determinant operations from
+  Remark 3.9.5 and Step (xi);
 \item only then evaluate whether the Stage 1 interface has enough source
   content to bear on the Mochizuki--Scholze--Stix disagreement.
 \end{enumerate}
