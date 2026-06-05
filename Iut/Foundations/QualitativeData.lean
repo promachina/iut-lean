@@ -57,6 +57,62 @@ structure IPLDatum (family : TransportedRegionFamily source target index) where
   choicePrimeStrip : index -> PrimeStripId
   link : PrimeStripLink
 
+/--
+Source-shaped input-prime-strip-link construction.
+
+Unlike `IPLDatum`, this record does not accept an arbitrary link source and
+target.  Its associated `IPLDatum` builds the link from the recorded input and
+output prime strips, so the two endpoint identifications are definitional
+consequences of the construction.
+-/
+structure InputPrimeStripLinkConstruction
+    (family : TransportedRegionFamily source target index) where
+  inputPrimeStrip : PrimeStripId
+  outputPrimeStrip : PrimeStripId
+  choicePrimeStrip : index -> PrimeStripId
+  linkLabel : String
+
+namespace InputPrimeStripLinkConstruction
+
+variable {family : TransportedRegionFamily source target index}
+
+def link (construction : InputPrimeStripLinkConstruction family) :
+    PrimeStripLink :=
+  { source := construction.inputPrimeStrip,
+    target := construction.outputPrimeStrip,
+    linkLabel := construction.linkLabel }
+
+def toIPLDatum
+    (construction : InputPrimeStripLinkConstruction family) :
+    IPLDatum family :=
+  { inputPrimeStrip := construction.inputPrimeStrip,
+    outputPrimeStrip := construction.outputPrimeStrip,
+    choicePrimeStrip := construction.choicePrimeStrip,
+    link := construction.link }
+
+theorem toIPLDatum_link_source_eq_input
+    (construction : InputPrimeStripLinkConstruction family) :
+    construction.toIPLDatum.link.source =
+      construction.toIPLDatum.inputPrimeStrip :=
+  rfl
+
+theorem toIPLDatum_link_target_eq_output
+    (construction : InputPrimeStripLinkConstruction family) :
+    construction.toIPLDatum.link.target =
+      construction.toIPLDatum.outputPrimeStrip :=
+  rfl
+
+theorem toIPLDatum_endpoint
+    (construction : InputPrimeStripLinkConstruction family) :
+    construction.toIPLDatum.link.source =
+        construction.toIPLDatum.inputPrimeStrip ∧
+      construction.toIPLDatum.link.target =
+        construction.toIPLDatum.outputPrimeStrip :=
+  ⟨construction.toIPLDatum_link_source_eq_input,
+    construction.toIPLDatum_link_target_eq_output⟩
+
+end InputPrimeStripLinkConstruction
+
 /-- A named arithmetic holomorphic structure in the toy bookkeeping layer. -/
 structure HolomorphicStructure where
   theater : HodgeTheaterId
