@@ -20234,6 +20234,50 @@ theorem possibleImageFamilyHullExactThetaHullDetObligationsBacked_sourceEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit payload for the possible-image Hodge-calibrated,
+obligations-backed family-hull Step (xi) source.
+
+This removes the raw `thetaSigned = familyHullLogVolume` input from the public
+source object: the equality is derived through the Hodge--Arakelov
+theta-monoid degree, while the q-region remains a chosen Theorem 3.11 possible
+image.
+-/
+theorem possibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBacked_sourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {l : PrimeGeFive} {F : Type v} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    (sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        l X C)
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    sourceData.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      sourceData.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      package.preLedger.thetaSigned = sourceHA.thetaMonoidDegree ∧
+      sourceHA.thetaMonoidDegree =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.thetaSigned =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.source_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for the calibrated Hodge--Arakelov,
 constructed-IPL, possible-image family-hull route.
 
@@ -20354,6 +20398,74 @@ theorem calibratedSynchronizationIPLConstructionPossibleImageFamilyHullObligatio
       bridge.finiteHodgeSHETransport.sourceTheater.side ≠
         bridge.finiteHodgeSHETransport.targetTheater.side :=
   IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageFamilyHullObligationsBackedSources_endpoint
+    (part := part) (audited := audited)
+    hodgeSynchronization iplConstructionSource sourceData
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface bridge audit for the calibrated Hodge--Arakelov,
+constructed-IPL, possible-image Hodge-calibrated obligations-backed
+family-hull route.
+
+The source-derived bridge uses one Hodge--Arakelov synchronization for finite
+Hodge/SHE transport, source theta/Hodge calibration, and the Step (xi)
+theta/family-hull calibration.
+-/
+theorem calibratedSynchronizationIPLConstructionPossibleImageHodgeCalibratedFamilyHullObligationsBacked_bridgeEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record hodgeSynchronization.valueSource) :
+    let bridge :=
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageHodgeCalibratedFamilyHullObligationsBackedSources
+        (part := part) (audited := audited)
+        hodgeSynchronization iplConstructionSource sourceData;
+    bridge.iplTransport.iplDatum = package.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        iplConstructionSource.constructedDatum ∧
+      bridge.finiteHodgeSHETransport.synchronization.sourceHA =
+        hodgeSynchronization.valueSource ∧
+      bridge.finiteHodgeSHETransport.synchronization.targetHA =
+        hodgeSynchronization.targetEvaluation.valueSource ∧
+      sourceData.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      package.preLedger.thetaSigned =
+        hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.thetaSigned =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side :=
+  IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageHodgeCalibratedFamilyHullObligationsBackedSources_endpoint
     (part := part) (audited := audited)
     hodgeSynchronization iplConstructionSource sourceData
 
@@ -20641,6 +20753,98 @@ theorem calibratedSynchronizationIPLConstructionPossibleImageFamilyHullObligatio
     packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
     packetLocalObjectFinite_eq_ind3Source targetSource cTheta
     thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface calibrated `C_Theta` dichotomy from the possible-image
+Hodge-calibrated obligations-backed family-hull source-derived bridge.
+
+Compared with the obligations-backed possible-image route, the Step (xi) source
+no longer carries the raw `thetaSigned = familyHullLogVolume` equality; it is
+derived from the Hodge--Arakelov theta-monoid degree of the same calibrated
+synchronization that constructs finite Hodge/SHE transport.
+-/
+theorem calibratedSynchronizationIPLConstructionPossibleImageHodgeCalibratedFamilyHullObligationsBackedFiniteDivisorVerticalIQ_cThetaDichotomy
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (possibleImageHodgeFamilyHullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record hodgeSynchronization.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedFiniteDivisorVerticalIQ
+    audited hodgeSynchronization iplConstructionSource
+    possibleImageHodgeFamilyHullSource upperSemiEntry divisorPacket
+    monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource cTheta thetaSigned_le_cTheta_absLogQ
 
 set_option linter.style.longLine false in
 /--

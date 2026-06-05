@@ -11251,6 +11251,155 @@ end IUTStage1HodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
 /--
+Possible-image Hodge-calibrated version of the obligations-backed family-hull
+Step (xi) source.
+
+This combines two refinements: the q-pilot region is definitionally the chosen
+Theorem 3.11 possible image, and the equality
+`thetaSigned = familyHullLogVolume` is derived from a Hodge--Arakelov
+theta/family-hull calibration rather than supplied as a raw Step (xi) field.
+-/
+structure
+    IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    {l : PrimeGeFive} {F : Type w} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    (sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        l X C)
+    {β : Type v} [Fintype β] where
+  operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId
+  hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId
+  determinantOperation :
+    RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId
+  familyHullSource :
+    IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+      (β := β) record
+  qChoice : index
+  measure_eq_hullLogVolume :
+    package.preLedger.measure = familyHullSource.hullData.toRegionMeasure
+  thetaFamilyCalibration :
+    IUTStage1HodgeFamilyHullLogVolumeCalibration
+      record sourceHA familyHullSource
+  obligations : IUTStage1SourceHullDetObligations package
+  obligationsHullDetData_eq_recordCanonical :
+    obligations.hullDetData.bridgeData =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        operation hullOperation determinantOperation familyHullSource.hullData
+        (recordThetaPossibleImage record qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) qChoice
+          (recordThetaPossibleImage record qChoice)
+          (fun _ hx => hx))
+        familyHullSource.determinantSource familyHullSource.compatibility
+        measure_eq_hullLogVolume
+        (IUTStage1HodgeFamilyHullLogVolumeCalibration.tensorPower_bound
+          thetaFamilyCalibration)
+
+namespace
+  IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {l : PrimeGeFive} {F : Type w} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+variable {sourceHA :
+  IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+    l X C}
+variable {β : Type v} [Fintype β]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+def qPilotRegion
+    (sourceData :
+      IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    Set (Point target) :=
+  recordThetaPossibleImage record sourceData.qChoice
+
+theorem q_subset_choice
+    (sourceData :
+      IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    sourceData.qPilotRegion ⊆
+      recordThetaPossibleImage record sourceData.qChoice :=
+  fun _ hx => hx
+
+noncomputable def toPossibleImageFamilyHullExactThetaHullDetObligationsBackedSource
+    (sourceData :
+      IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    IUTStage1PossibleImageFamilyHullExactThetaHullDetObligationsBackedSource
+      (β := β) record :=
+  { operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    familyHullSource := sourceData.familyHullSource,
+    qChoice := sourceData.qChoice,
+    measure_eq_hullLogVolume := sourceData.measure_eq_hullLogVolume,
+    thetaSigned_eq_familyHullLogVolume :=
+      sourceData.thetaFamilyCalibration.thetaSigned_eq_familyHullLogVolume,
+    obligations := sourceData.obligations,
+    obligationsHullDetData_eq_recordCanonical :=
+      sourceData.obligationsHullDetData_eq_recordCanonical }
+
+noncomputable def toHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+    (sourceData :
+      IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    IUTStage1HodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+      (β := β) record sourceHA :=
+  { operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    familyHullSource := sourceData.familyHullSource,
+    qChoice := sourceData.qChoice,
+    qPilotRegion := sourceData.qPilotRegion,
+    q_subset_choice := sourceData.q_subset_choice,
+    measure_eq_hullLogVolume := sourceData.measure_eq_hullLogVolume,
+    thetaFamilyCalibration := sourceData.thetaFamilyCalibration,
+    obligations := sourceData.obligations,
+    obligationsHullDetData_eq_recordCanonical :=
+      sourceData.obligationsHullDetData_eq_recordCanonical }
+
+theorem source_endpoint
+    (sourceData :
+      IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    sourceData.qPilotRegion =
+        recordThetaPossibleImage record sourceData.qChoice ∧
+      sourceData.qPilotRegion ⊆
+        recordThetaPossibleImageUnion record ∧
+      package.preLedger.thetaSigned = sourceHA.thetaMonoidDegree ∧
+      sourceHA.thetaMonoidDegree =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.thetaSigned =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  let projected :=
+    sourceData.toPossibleImageFamilyHullExactThetaHullDetObligationsBackedSource
+  ⟨rfl,
+    projected.source_endpoint.2.1,
+    sourceData.thetaFamilyCalibration.thetaSigned_eq_thetaMonoidDegree,
+    sourceData.thetaFamilyCalibration.thetaMonoidDegree_eq_familyHullLogVolume,
+    sourceData.thetaFamilyCalibration.thetaSigned_eq_familyHullLogVolume,
+    sourceData.obligations.hullDetData.hullDetBridge_eq_bridgeData,
+    sourceData.obligations.qPilotPositive,
+    sourceData.obligations.normalization,
+    projected.source_endpoint.2.2.2.2.2.2⟩
+
+end IUTStage1PossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+
+open IUTStage1Theorem311HullDetSourceConstructor in
+/--
 Charted Hodge-calibrated version of the obligations-backed family-hull Step
 (xi) source.
 
