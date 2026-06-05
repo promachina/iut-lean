@@ -19564,6 +19564,14 @@ noncomputable def toPossibleImageHolomorphicHullDeterminantSource
     |>.toSideConditionedHolomorphicHullDeterminantSource
     |>.toHolomorphicHullDeterminantSource
 
+def possibleImageFamilyHullSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+      (β := β) record :=
+  sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource
+
 set_option linter.style.longLine false in
 /--
 Step (xi) payload exposed by the all-in-one target-charted Hodge/IPL route.
@@ -19622,6 +19630,63 @@ theorem possibleImageHolomorphicHullLogVolume_endpoint
   have hsource :=
     sourceData.possibleImageSource.possibleImageHolomorphicHullLogVolume_endpoint
   exact hsource
+
+set_option linter.style.longLine false in
+/--
+Remark 3.9.5(Ob5) bounded-family quotient audit for the all-in-one
+target-charted route.
+
+This route-level endpoint exposes the source-paper mechanism that prevents
+choosing a convenient possible image as canonical: any two nonempty
+Theorem 3.11 possible images lie in the record possible-image family hull and
+have the same image after the upper-semi quotient by that hull.  The same
+family-hull source supplies the determinant and tensor-power log-volume data
+used by the Step (xi) bridge.
+-/
+theorem possibleImageFamilyHullOb5_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C)
+    (i j : IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)
+    (hnei :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i).Nonempty)
+    (hnej :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j).Nonempty) :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i ⊆ sourceData.possibleImageFamilyHullSource.familyHull ∧
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j ⊆ sourceData.possibleImageFamilyHullSource.familyHull ∧
+      sourceData.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record i =
+        sourceData.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record j ∧
+      sourceData.possibleImageFamilyHullSource.familyHullLogVolume =
+        sourceData.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.possibleImageFamilyHullSource.familyUnionLogVolume <=
+        sourceData.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.possibleImageFamilyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.possibleImageFamilyHullSource.familyHullLogVolume ∧
+      sourceData.possibleImageFamilyHullSource.tensorPower.tensorPowerLogVolume =
+        (sourceData.possibleImageFamilyHullSource.tensorPower.tensorDegree : Real) *
+          sourceData.possibleImageFamilyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned := by
+  have hfamily :=
+    sourceData.possibleImageFamilyHullSource.boundedFamily_endpoint
+      i j hnei hnej
+  exact
+    ⟨hfamily.1,
+      hfamily.2.1,
+      hfamily.2.2.1,
+      hfamily.2.2.2.1,
+      hfamily.2.2.2.2.1,
+      hfamily.2.2.2.2.2.1,
+      hfamily.2.2.2.2.2.2,
+      sourceData.possibleImageSideConditionedHull_endpoint.2.2.2.2.2⟩
 
 set_option linter.style.longLine false in
 /--

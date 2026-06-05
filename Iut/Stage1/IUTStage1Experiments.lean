@@ -24041,6 +24041,65 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_possibleImageHolomorp
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Remark 3.9.5(Ob5) bounded-family quotient audit for the
+all-in-one target-charted route.
+
+The endpoint exposes that nonempty possible images from the Theorem 3.11
+record lie in the same family hull and have the same upper-semi quotient image,
+before the finite Step (x) data or external `C_Theta` bound enter.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_possibleImageFamilyHullOb5Endpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C)
+    (i j : IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)
+    (hnei :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i).Nonempty)
+    (hnej :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j).Nonempty) :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i ⊆ routeSource.possibleImageFamilyHullSource.familyHull ∧
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j ⊆ routeSource.possibleImageFamilyHullSource.familyHull ∧
+      routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record i =
+        routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record j ∧
+      routeSource.possibleImageFamilyHullSource.familyHullLogVolume =
+        routeSource.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      routeSource.possibleImageFamilyHullSource.familyUnionLogVolume <=
+        routeSource.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      routeSource.possibleImageFamilyHullSource.tensorPower.normalizedLogVolume =
+        routeSource.possibleImageFamilyHullSource.familyHullLogVolume ∧
+      routeSource.possibleImageFamilyHullSource.tensorPower.tensorPowerLogVolume =
+        (routeSource.possibleImageFamilyHullSource.tensorPower.tensorDegree : Real) *
+          routeSource.possibleImageFamilyHullSource.familyHullLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  routeSource.possibleImageFamilyHullOb5_endpoint i j hnei hnej
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface canonical Step (xi) hull/tensor-power bridge audit for the
 all-in-one target-charted route.
 
