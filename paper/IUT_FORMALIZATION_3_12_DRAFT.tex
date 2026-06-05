@@ -1980,10 +1980,12 @@ The project currently proves the following source-facing results in \Lean{}:
   transported-average preservation, and the present no-history-identification
   guard.
 \item The finite Hodge/\(\SHE\) transport now has a source-boundary layer:
-  \Lean{} constructs it from a Hodge-theater descent bridge, an explicit
-  allowed-forgetting proposition, the current Hodge--Arakelov synchronization
-  source, and the finite full-label preservation data.  This separates the
-  history/forgetting obligation from the downstream transport object.
+  \Lean{} constructs it from a Hodge-theater descent bridge, a typed
+  allowed-forgetting witness, the current Hodge--Arakelov synchronization
+  source, and the finite full-label preservation data.  The witness records
+  the source theater, target theater, descent operation, permission proof, and
+  history-separation guard, separating the history/forgetting obligation from
+  the downstream transport object.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2115,10 +2117,10 @@ refined to a finite Hodge/SHE transport package that exposes the two theater
 sides, the finite label equivalence, full-label log-volume preservation,
 transported-average preservation, and the current history-separation guard.
 It now also has a typed source boundary that carries the Hodge-theater descent
-bridge and allowed-forgetting proof separately from the synchronization-derived
-finite preservation data.  The remaining work is to make each of those
-components itself follow from the relevant source-paper constructions, rather
-than supplying them as records.
+bridge and a typed allowed-forgetting witness separately from the
+synchronization-derived finite preservation data.  The remaining work is to
+make each of those components itself follow from the relevant source-paper
+constructions, rather than supplying them as records.
 
 The practical priority order is:
 \begin{enumerate}
@@ -2129,8 +2131,9 @@ The practical priority order is:
   finite degree-evaluation and canonical-label shadows toward actual
   Gaussian/Frobenioid material from \IUT{} II;
 \item replace the finite Hodge/SHE transport source boundary by source-paper
-  constructions of the Hodge-theater descent bridge and allowed forgetful
-  transport, then replace the synchronization-derived finite preservation data;
+  constructions of the Hodge-theater descent bridge and typed forgetful
+  transport witness, then replace the synchronization-derived finite
+  preservation data;
 \item construct the packet-correspondence source from the actual
   log-Kummer/Frobenioid machinery of \IUT{} III, Step (x), rather than treating
   this finite correspondence object itself as source-facing input;

@@ -25894,10 +25894,68 @@ theorem finiteHodgeSHETransport_endpoint
 end IUTStage1FiniteHodgeSHETransport
 
 /--
+Typed witness for an allowed Hodge/SHE forgetful transport.
+
+The witness records the two Hodge-theater sides, the descent operation along
+which the finite comparison is read, the permission predicate for forgetting
+the holomorphic structure, and the guard that this permission is not an
+identification of the two histories.
+-/
+structure IUTStage1HodgeSHEAllowedForgetfulTransport where
+  sourceTheater : QualitativeData.HodgeTheaterId
+  targetTheater : QualitativeData.HodgeTheaterId
+  descent : AlgorithmicOutput.DescentOperationId
+  transportAllowed : Prop
+  transport_allowed : transportAllowed
+  histories_not_identified : sourceTheater.side ≠ targetTheater.side
+
+namespace IUTStage1HodgeSHEAllowedForgetfulTransport
+
+def ofDescentBridge
+    (bridge : IUTStage1HodgeTheaterDescentBridgeData)
+    (transportAllowed : Prop)
+    (transport_allowed : transportAllowed) :
+    IUTStage1HodgeSHEAllowedForgetfulTransport :=
+  { sourceTheater := bridge.domainTheater,
+    targetTheater := bridge.codomainTheater,
+    descent := bridge.descent,
+    transportAllowed := transportAllowed,
+    transport_allowed := transport_allowed,
+    histories_not_identified := bridge.histories_not_identified }
+
+theorem transportAllowed_holds
+    (transport : IUTStage1HodgeSHEAllowedForgetfulTransport) :
+    transport.transportAllowed :=
+  transport.transport_allowed
+
+theorem source_history_ne_target_history
+    (transport : IUTStage1HodgeSHEAllowedForgetfulTransport) :
+    transport.sourceTheater.side ≠ transport.targetTheater.side :=
+  transport.histories_not_identified
+
+theorem ofDescentBridge_endpoint
+    (bridge : IUTStage1HodgeTheaterDescentBridgeData)
+    (transportAllowed : Prop)
+    (transport_allowed : transportAllowed) :
+    let transport :=
+      ofDescentBridge bridge transportAllowed transport_allowed;
+    transport.sourceTheater = bridge.domainTheater ∧
+      transport.targetTheater = bridge.codomainTheater ∧
+      transport.descent = bridge.descent ∧
+      transport.transportAllowed ∧
+      transport.sourceTheater.side ≠ transport.targetTheater.side := by
+  intro transport
+  exact
+    ⟨rfl, rfl, rfl, transport.transportAllowed_holds,
+      transport.source_history_ne_target_history⟩
+
+end IUTStage1HodgeSHEAllowedForgetfulTransport
+
+/--
 Source boundary for finite Hodge/SHE transport.
 
 This refines the finite transport object by naming the Hodge-theater descent
-bridge and the allowed forgetful transport that justifies reading the finite
+bridge and the allowed forgetful transport that justify reading the finite
 label comparison without identifying the two Hodge-theater histories.  The
 current constructor still uses the Hodge--Arakelov synchronization source for
 the finite log-volume preservation data; the descent bridge and forgetting
@@ -25914,8 +25972,13 @@ structure IUTStage1FiniteHodgeSHETransportSource
   descentBridge : IUTStage1HodgeTheaterDescentBridgeData
   descentBridge_eq_structuredSHE :
     descentBridge = record.bundle.hodgeTheaterDescentBridgeData
-  allowedForgetfulTransport : Prop
-  allowed_forgetful_transport : allowedForgetfulTransport
+  forgetfulTransport : IUTStage1HodgeSHEAllowedForgetfulTransport
+  forgetful_source_eq :
+    forgetfulTransport.sourceTheater = descentBridge.domainTheater
+  forgetful_target_eq :
+    forgetfulTransport.targetTheater = descentBridge.codomainTheater
+  forgetful_descent_eq :
+    forgetfulTransport.descent = descentBridge.descent
   coordinateEquiv : ZMod l.value ≃ ZMod l.value
   coordinate_equiv_eq :
     coordinateEquiv =
@@ -25948,8 +26011,13 @@ noncomputable def ofSynchronization
   { synchronization := sync,
     descentBridge := record.bundle.hodgeTheaterDescentBridgeData,
     descentBridge_eq_structuredSHE := rfl,
-    allowedForgetfulTransport := allowedForgetfulTransport,
-    allowed_forgetful_transport := allowed_forgetful_transport,
+    forgetfulTransport :=
+      IUTStage1HodgeSHEAllowedForgetfulTransport.ofDescentBridge
+        record.bundle.hodgeTheaterDescentBridgeData
+        allowedForgetfulTransport allowed_forgetful_transport,
+    forgetful_source_eq := rfl,
+    forgetful_target_eq := rfl,
+    forgetful_descent_eq := rfl,
     coordinateEquiv := sync.toFactoredObligations.coordinateEquiv,
     coordinate_equiv_eq := rfl,
     fullLabelLogVolume_preserved := sync.fullLabelLogVolume_preserved,
@@ -25988,8 +26056,29 @@ theorem coordinateEquiv_eq_factored
 theorem allowedForgetfulTransport_holds
     (sourceData :
       IUTStage1FiniteHodgeSHETransportSource record l X C) :
-    sourceData.allowedForgetfulTransport :=
-  sourceData.allowed_forgetful_transport
+    sourceData.forgetfulTransport.transportAllowed :=
+  sourceData.forgetfulTransport.transportAllowed_holds
+
+theorem forgetfulTransport_sourceTheater_eq
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    sourceData.forgetfulTransport.sourceTheater =
+      sourceData.descentBridge.domainTheater :=
+  sourceData.forgetful_source_eq
+
+theorem forgetfulTransport_targetTheater_eq
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    sourceData.forgetfulTransport.targetTheater =
+      sourceData.descentBridge.codomainTheater :=
+  sourceData.forgetful_target_eq
+
+theorem forgetfulTransport_descent_eq
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    sourceData.forgetfulTransport.descent =
+      sourceData.descentBridge.descent :=
+  sourceData.forgetful_descent_eq
 
 noncomputable def toFiniteHodgeSHETransport
     (sourceData :
@@ -26017,7 +26106,13 @@ theorem source_endpoint
         record.bundle.structuredSHE.context.domainStructure.theater ∧
       sourceData.descentBridge.codomainTheater =
         record.bundle.structuredSHE.context.codomainStructure.theater ∧
-      sourceData.allowedForgetfulTransport ∧
+      sourceData.forgetfulTransport.sourceTheater =
+        sourceData.descentBridge.domainTheater ∧
+      sourceData.forgetfulTransport.targetTheater =
+        sourceData.descentBridge.codomainTheater ∧
+      sourceData.forgetfulTransport.descent =
+        sourceData.descentBridge.descent ∧
+      sourceData.forgetfulTransport.transportAllowed ∧
       sourceData.coordinateEquiv =
         sourceData.synchronization.toFactoredObligations.coordinateEquiv ∧
       sourceData.descentBridge.domainTheater.side ≠
@@ -26025,6 +26120,9 @@ theorem source_endpoint
   ⟨sourceData.descentBridge_eq_structuredSHE,
     sourceData.descentBridge_domainTheater_eq,
     sourceData.descentBridge_codomainTheater_eq,
+    sourceData.forgetfulTransport_sourceTheater_eq,
+    sourceData.forgetfulTransport_targetTheater_eq,
+    sourceData.forgetfulTransport_descent_eq,
     sourceData.allowedForgetfulTransport_holds,
     sourceData.coordinateEquiv_eq_factored,
     sourceData.histories_not_identified⟩
@@ -26039,7 +26137,7 @@ theorem toFiniteHodgeSHETransport_endpoint
         record.bundle.structuredSHE.context.codomainStructure.theater ∧
       sourceData.toFiniteHodgeSHETransport.coordinateEquiv =
         sourceData.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv ∧
-      sourceData.allowedForgetfulTransport ∧
+      sourceData.forgetfulTransport.transportAllowed ∧
       sourceData.toFiniteHodgeSHETransport.sourceTheater.side ≠
         sourceData.toFiniteHodgeSHETransport.targetTheater.side := by
   let endpoint :=
@@ -48561,7 +48659,7 @@ theorem ofFiniteHodgeSHETransportSource_endpoint
         iplTransport transportSource hullConstructor sourceCalibration;
     bridge.finiteHodgeSHETransport =
         transportSource.toFiniteHodgeSHETransport ∧
-      transportSource.allowedForgetfulTransport ∧
+      transportSource.forgetfulTransport.transportAllowed ∧
       bridge.finiteHodgeSHETransport.sourceTheater.side ≠
         bridge.finiteHodgeSHETransport.targetTheater.side := by
   intro bridge
