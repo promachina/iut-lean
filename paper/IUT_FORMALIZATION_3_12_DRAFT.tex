@@ -133,7 +133,10 @@ The module roles are:
   \(F_\ell\)-label/torsor/sign/cusp-label models, \(ZMod\) full labels,
   theta-root cusp-label source packages, and label-averaged log-volume
   compatibility.
-\item \texttt{IUTStage1Source}: Step (x), Gaussian data, SHE/Hodge
+\item \texttt{IUTStage1StepX}: procession tensor-packet log-volume, the
+  Step (x) indeterminacy corridor, the theta-hull upper-ray handoff, and
+  local Frobenioid shift diagnostics attached to that boundary.
+\item \texttt{IUTStage1Source}: Gaussian data, SHE/Hodge
   interfaces, IPL/hull source objects, and route theorems.
 \item \texttt{IUTStage1Experiments}: compiled endpoint checks and diagnostic
   theorems.
@@ -327,6 +330,7 @@ The relevant implementation lives in the following Lean modules:
 \item \texttt{Iut/Stage1/IUTStage1Remark312Absorption.lean}
 \item \texttt{Iut/Stage1/IUTStage1IUTIVAlgebra.lean}
 \item \texttt{Iut/Stage1/IUTStage1FiniteLabels.lean}
+\item \texttt{Iut/Stage1/IUTStage1StepX.lean}
 \item \texttt{Iut/Stage1/IUTStage1Source.lean}
 \item \texttt{Iut/Stage1/IUTStage1Experiments.lean}
 \end{itemize}
@@ -2283,12 +2287,13 @@ current corridor, ``upper ray'' means the signed-log region
 
 The largest engineering issue remains the size of
 \texttt{Iut/Stage1/IUTStage1Source.lean}, which still contains most of the
-Gaussian, Hodge/SHE, hull, Step (x), Step (xi), and Step (xii) corridor.  Two
+Gaussian, Hodge/SHE, hull, Step (xi), and later endpoint corridor.  Three
 mechanical splits have been made: \texttt{IUTStage1IUTIVAlgebra.lean} now
 carries the Remark 3.12 sign shadows and the conditional \IUT{} IV
 real-algebra handoff estimates, while \texttt{IUTStage1FiniteLabels.lean}
-carries the finite-label and theta-root cusp-label source layer.  Low-risk
-future refactors are:
+carries the finite-label and theta-root cusp-label source layer, and
+\texttt{IUTStage1StepX.lean} carries the Step (x) upper-ray corridor together
+with its boundary Frobenioid-shift diagnostics.  Low-risk future refactors are:
 \[
 \begin{array}{ll}
 \text{Step (xi) hull/determinant upper rays} & \text{separate module},\\
