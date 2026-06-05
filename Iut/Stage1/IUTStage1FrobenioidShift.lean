@@ -30736,15 +30736,91 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChart
     (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
         packageN.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < cTheta := by
-  let sourceBridge :=
-    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource
-      (part := part) (audited := audited) routeSource
   exact
     part.boundarySignedEqualityOrStrictCTheta_of_sourceDerivedHodgeSHEIPLHullFiniteSourceVerticalIQ
-      audited sourceBridge upperSemiEntry finiteSource kummerCompatibility
-      forgettingCompatibility holomorphicF_realization holomorphicD_realization
-      holomorphicStructureForgotten holomorphic_structure_forgotten targetSource
-      cTheta thetaSigned_le_cTheta_absLogQ
+      audited routeSource.toSourceDerivedBridge upperSemiEntry finiteSource
+      kummerCompatibility forgettingCompatibility holomorphicF_realization
+      holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten targetSource cTheta
+      thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Finite-source Step (x) boundary audit for the all-in-one target-charted route.
+
+Before the external `C_Theta` numeric bound is applied, this endpoint exposes
+the route-owned source-derived bridge, the raw Step (xi) comparison, the
+finite-divisor packet-local source equalities, and the vertical-`IQ` target
+equalities from the bundled source objects.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceVerticalIQ_boundaryEndpoint
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C)
+    {j : Nat}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (finiteSource :
+      NonarchimedeanFiniteDivisorPacketLocalSource
+        audited upperSemiEntry.toEntry product)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      routeSource.toSourceDerivedBridge.iplTransport.targetLogVolume =
+        routeSource.toSourceDerivedBridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+      product.productLogVolume =
+        finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  have hbridge := routeSource.sourceDerivedBridge_endpoint
+  have hraw := routeSource.sourceRawComparison_endpoint
+  have hfinite := finiteSource.source_endpoint
+  have htarget := targetSource.verticalIQTarget_endpoint
+  exact
+    ⟨hbridge.1,
+      routeSource.toSourceDerivedBridge.iplTransport.targetLogVolume_preserved,
+      hraw.2.2.2.2,
+      hfinite.1,
+      hfinite.2.1,
+      hfinite.2.2.1,
+      hfinite.2.2.2.1,
+      hfinite.2.2.2.2,
+      htarget.1,
+      htarget.2.2.2.2.1,
+      htarget.2.2.2.2.2⟩
 
 /--
 Source-derived finite-divisor vertical-`IQ` route from a constructed
