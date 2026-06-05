@@ -23518,6 +23518,53 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_hodgeArakelovFiniteHo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface constructed IPL/log-volume transport-source audit for the
+all-in-one target-charted route.
+
+This exposes the Theorem 3.11 IPL construction source after the finite
+Hodge/SHE transport source has been constructed from Hodge--Arakelov data.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_constructedIPLLogVolumeTransportSourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    routeSource.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      routeSource.toIPLLogVolumeTransport.iplDatum =
+        routeSource.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      routeSource.toIPLLogVolumeTransport.iplDatum.link.source =
+        routeSource.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      routeSource.toIPLLogVolumeTransport.iplDatum.link.target =
+        routeSource.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      routeSource.toIPLLogVolumeTransport.sourceTheater =
+        routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      routeSource.toIPLLogVolumeTransport.targetTheater =
+        routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        routeSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      routeSource.toIPLLogVolumeTransport.sourceTheater.side ≠
+        routeSource.toIPLLogVolumeTransport.targetTheater.side :=
+  routeSource.constructedIPLLogVolumeTransportSource_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Hodge/SHE/IPL audit for the all-in-one target-charted
 Hodge/IPL determinant possible-image route.
 

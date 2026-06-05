@@ -19233,6 +19233,40 @@ theorem hodgeArakelovFiniteHodgeSHETransportSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Constructed IPL/log-volume transport source exposed by the all-in-one route.
+
+After the finite Hodge/SHE transport source has been constructed from the
+Hodge--Arakelov theta-evaluation sources, the route constructs the IPL
+log-volume transport from the Theorem 3.11 IPL construction source.  This audit
+keeps the certificate-pinned IPL datum, link endpoints, finite Hodge-theater
+sides, log-volume preservation, allowed forgetful transport, and
+history-separation guard visible at the route boundary.
+-/
+theorem constructedIPLLogVolumeTransportSource_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.source_endpoint
+
+set_option linter.style.longLine false in
+/--
 Hodge/SHE/IPL payload exposed by the all-in-one target-charted route.
 
 This is the route-level projection of the constructed Hodge/SHE transport and
