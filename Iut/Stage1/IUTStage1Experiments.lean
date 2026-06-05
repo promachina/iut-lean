@@ -23413,6 +23413,66 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_sourceEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Hodge--Arakelov theta-evaluation audit for the all-in-one
+target-charted route.
+
+This exposes the route's theta-root/Gaussian source layer before the finite
+Hodge/SHE, IPL, and Step (xi) hull projections are used.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_hodgeArakelovThetaEvaluationEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+      (∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+        routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.squareWeightProfile.weight j *
+            routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaMonoidDegree) ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.fullLabelCompatibility ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+  routeSource.hodgeArakelovThetaEvaluation_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Hodge/SHE/IPL audit for the all-in-one target-charted
 Hodge/IPL determinant possible-image route.
 

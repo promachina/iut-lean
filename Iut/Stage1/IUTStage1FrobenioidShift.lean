@@ -19106,6 +19106,64 @@ theorem source_endpoint
     hsource.2.2.2.2.2.2.2.2.2,
     hipl.2.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Hodge--Arakelov theta-evaluation payload exposed by the all-in-one route.
+
+This starts the route audit at the theta-root/Gaussian source layer: the
+source evaluation supplies the canonical theta-root label, zero/canonical
+Gaussian degrees, and square-weighted `q^{j^2}` degree formula, while the
+target-charted synchronization supplies the source theta calibration and the
+target canonical-one chart comparison.
+-/
+theorem hodgeArakelovThetaEvaluation_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+      (∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+        sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.squareWeightProfile.weight j *
+            sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaMonoidDegree) ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.fullLabelCompatibility ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+  let hsource :=
+    sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaEvaluation_endpoint
+  let hsync := sourceData.hodgeIPLSource.hodgeSynchronization.synchronization_endpoint
+  ⟨hsource.1,
+    hsource.2.1,
+    hsource.2.2.1,
+    hsource.2.2.2.1,
+    hsource.2.2.2.2.1,
+    hsource.2.2.2.2.2,
+    hsync.1,
+    hsync.2.1,
+    hsync.2.2.1,
+    sourceData.hodgeIPLSource.hodgeSynchronization.synchronization.canonicalOneDegree_preserved⟩
+
 noncomputable def toFiniteHodgeSHEIPLConstructionSource
     (sourceData :
       IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
