@@ -26153,6 +26153,124 @@ theorem toFiniteHodgeSHETransport_endpoint
 end IUTStage1FiniteHodgeSHETransportSource
 
 /--
+IPL/log-volume source constructed from finite Hodge/SHE transport.
+
+The prime-strip link data remain explicit, but the Hodge-theater sides and the
+log-volume preservation equality are read from the finite Hodge/SHE transport.
+Thus the IPL layer no longer needs an independent source/target log-volume
+equality when it is used through this source object.
+-/
+structure IUTStage1IPLLogVolumeTransportSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F)
+    (finiteTransport : IUTStage1FiniteHodgeSHETransport record l X C) where
+  iplDatum : QualitativeData.IPLDatum package.preLedger.output.family
+  link_source_eq_input :
+    iplDatum.link.source = iplDatum.inputPrimeStrip
+  link_target_eq_output :
+    iplDatum.link.target = iplDatum.outputPrimeStrip
+
+namespace IUTStage1IPLLogVolumeTransportSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {l : PrimeGeFive} {F : Type v} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+variable {finiteTransport : IUTStage1FiniteHodgeSHETransport record l X C}
+
+noncomputable def sourceLogVolume
+    (_sourceData :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C finiteTransport) :
+    Real :=
+  let audit :=
+    finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+      |>.preservationAudit
+  audit.sourceAverage
+
+noncomputable def targetLogVolume
+    (_sourceData :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C finiteTransport) :
+    Real :=
+  let audit :=
+    finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+      |>.preservationAudit
+  audit.targetTransportedAverage
+
+theorem targetLogVolume_preserved
+    (sourceData :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C finiteTransport) :
+    sourceData.targetLogVolume = sourceData.sourceLogVolume :=
+  finiteTransport.transportedAverage_preserved'
+
+noncomputable def toIPLLogVolumeTransport
+    (sourceData :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C finiteTransport) :
+    IUTStage1IPLLogVolumeTransport record :=
+  { iplDatum := sourceData.iplDatum,
+    sourceTheater := finiteTransport.sourceTheater,
+    targetTheater := finiteTransport.targetTheater,
+    source_theater_eq := finiteTransport.source_theater_eq,
+    target_theater_eq := finiteTransport.target_theater_eq,
+    link_source_eq_input := sourceData.link_source_eq_input,
+    link_target_eq_output := sourceData.link_target_eq_output,
+    sourceLogVolume := sourceData.sourceLogVolume,
+    targetLogVolume := sourceData.targetLogVolume,
+    targetLogVolume_eq_sourceLogVolume :=
+      sourceData.targetLogVolume_preserved,
+    histories_not_identified := finiteTransport.histories_not_identified }
+
+theorem finiteTransport_sourceTheater_eq
+    (sourceData :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C finiteTransport) :
+    sourceData.toIPLLogVolumeTransport.sourceTheater =
+      finiteTransport.sourceTheater :=
+  rfl
+
+theorem finiteTransport_targetTheater_eq
+    (sourceData :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C finiteTransport) :
+    sourceData.toIPLLogVolumeTransport.targetTheater =
+      finiteTransport.targetTheater :=
+  rfl
+
+theorem toIPLLogVolumeTransport_endpoint
+    (sourceData :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C finiteTransport) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  ⟨sourceData.toIPLLogVolumeTransport.hasStructuredIPL,
+    sourceData.finiteTransport_sourceTheater_eq,
+    sourceData.finiteTransport_targetTheater_eq,
+    sourceData.toIPLLogVolumeTransport.linkSource_eq_datum_source,
+    sourceData.toIPLLogVolumeTransport.linkTarget_eq_datum_target,
+    sourceData.toIPLLogVolumeTransport.targetLogVolume_preserved,
+    sourceData.toIPLLogVolumeTransport.histories_not_identified'⟩
+
+end IUTStage1IPLLogVolumeTransportSource
+
+/--
 Boundary comparing the strengthened SHE/common-container route with the factored
 square/full-label preservation interface.
 
@@ -48583,6 +48701,26 @@ noncomputable def ofFiniteHodgeSHETransportSource
     hullConstructor := hullConstructor,
     sourceCalibration := sourceCalibration }
 
+noncomputable def ofFiniteHodgeSHEAndIPLTransportSources
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplSource :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C transportSource.toFiniteHodgeSHETransport)
+    (hullConstructor :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
+        record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  { iplTransport := iplSource.toIPLLogVolumeTransport,
+    finiteHodgeSHETransport :=
+      transportSource.toFiniteHodgeSHETransport,
+    hullConstructor := hullConstructor,
+    sourceCalibration := sourceCalibration }
+
 def toRouteLogVolumeAlignment
     (bridge :
       IUTStage1SourceDerivedHodgeSHEIPLHullBridge
@@ -48665,6 +48803,39 @@ theorem ofFiniteHodgeSHETransportSource_endpoint
   intro bridge
   exact
     ⟨rfl,
+      transportSource.allowedForgetfulTransport_holds,
+      transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
+
+theorem ofFiniteHodgeSHEAndIPLTransportSources_endpoint
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplSource :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C transportSource.toFiniteHodgeSHETransport)
+    (hullConstructor :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
+        record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    let bridge :=
+      ofFiniteHodgeSHEAndIPLTransportSources
+        (part := part) (audited := audited)
+        transportSource iplSource hullConstructor sourceCalibration;
+    bridge.iplTransport =
+        iplSource.toIPLLogVolumeTransport ∧
+      bridge.finiteHodgeSHETransport =
+        transportSource.toFiniteHodgeSHETransport ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      transportSource.forgetfulTransport.transportAllowed ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  intro bridge
+  exact
+    ⟨rfl,
+      rfl,
+      iplSource.toIPLLogVolumeTransport.targetLogVolume_preserved,
       transportSource.allowedForgetfulTransport_holds,
       transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
 
