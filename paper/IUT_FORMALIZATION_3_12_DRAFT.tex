@@ -145,8 +145,11 @@ The module roles are:
 \item \texttt{IUTStage1Theorem311}: Theorem 3.11 choice/indeterminacy records,
   multiradial possible-image records, algorithm-output records, and
   SHE-alignment source records.
-\item \texttt{IUTStage1Source}: Step (xi) hull/determinant and IPL source
-  objects, plus endpoint route theorems.
+\item \texttt{IUTStage1StepXI}: Step (xi) hull/determinant and IPL source
+  objects, source obligations, package-audit constructors, and holomorphic
+  hull/determinant source routes.
+\item \texttt{IUTStage1Source}: endpoint route theorems and audit surfaces
+  around the Corollary 3.12 corridor.
 \item \texttt{IUTStage1Experiments}: compiled endpoint checks and diagnostic
   theorems.
 \end{itemize}
@@ -343,6 +346,7 @@ The relevant implementation lives in the following Lean modules:
 \item \texttt{Iut/Stage1/IUTStage1Gaussian.lean}
 \item \texttt{Iut/Stage1/IUTStage1HodgeSHE.lean}
 \item \texttt{Iut/Stage1/IUTStage1Theorem311.lean}
+\item \texttt{Iut/Stage1/IUTStage1StepXI.lean}
 \item \texttt{Iut/Stage1/IUTStage1Source.lean}
 \item \texttt{Iut/Stage1/IUTStage1Experiments.lean}
 \end{itemize}
@@ -2297,10 +2301,9 @@ container cannot be paired with an unrelated convenient bound.  Throughout the
 current corridor, ``upper ray'' means the signed-log region
 \(\{x\mid x\le b\}\), not the ordinary order-theoretic ray \(\{x\mid b\le x\}\).
 
-The largest engineering issue remains the size of
-\texttt{Iut/Stage1/IUTStage1Source.lean}, which still contains most of the
-Step (xi), IPL, hull, and later endpoint corridor.  Six
-mechanical splits have been made: \texttt{IUTStage1IUTIVAlgebra.lean} now
+The largest engineering issue remains the size of the endpoint corridor in
+\texttt{Iut/Stage1/IUTStage1Source.lean}.  Seven mechanical splits have been
+made: \texttt{IUTStage1IUTIVAlgebra.lean} now
 carries the Remark 3.12 sign shadows and the conditional \IUT{} IV
 real-algebra handoff estimates, while \texttt{IUTStage1FiniteLabels.lean}
 carries the finite-label and theta-root cusp-label source layer, and
@@ -2310,10 +2313,12 @@ Hodge--Arakelov theta-evaluation shadow layer now lives in
 \texttt{IUTStage1Gaussian.lean}, and the Hodge/SHE support layer now lives in
 \texttt{IUTStage1HodgeSHE.lean}.  The Theorem 3.11 source-choice and
 multiradial possible-image layer now lives in
-\texttt{IUTStage1Theorem311.lean}.  Low-risk future refactors are:
+\texttt{IUTStage1Theorem311.lean}.  The Step (xi) hull/determinant and \(\IPL\)
+source layer now lives in \texttt{IUTStage1StepXI.lean}.  Low-risk future
+refactors are:
 \[
 \begin{array}{ll}
-\text{Step (xi) hull/determinant upper rays} & \text{separate module},\\
+\text{Endpoint route and audit families} & \text{smaller route modules},\\
 \text{Step (xii) local Frobenioid shifts} & \text{separate module}.
 \end{array}
 \]
