@@ -30344,6 +30344,83 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChart
       packetLocalObjectFinite_eq_ind3Source targetSource cTheta
       thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Direct source-bridge finite-source route from the all-in-one target-charted
+Hodge/IPL determinant possible-image route source.
+
+This is the packet-local source-object form of
+`boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChartedHodgeIPLDeterminantPossibleImageRouteFiniteDivisorVerticalIQ`:
+the finite Step (x) divisor packet, mono-analytic theater, and packet-local
+log-volume equalities are already bundled in
+`NonarchimedeanFiniteDivisorPacketLocalSource`.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (finiteSource :
+      NonarchimedeanFiniteDivisorPacketLocalSource
+        audited upperSemiEntry.toEntry product)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD finiteSource.toMonoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta := by
+  let sourceBridge :=
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+      (part := part) (audited := audited) routeSource
+  exact
+    part.boundarySignedEqualityOrStrictCTheta_of_sourceDerivedHodgeSHEIPLHullFiniteSourceVerticalIQ
+      audited sourceBridge upperSemiEntry finiteSource kummerCompatibility
+      forgettingCompatibility holomorphicF_realization holomorphicD_realization
+      holomorphicStructureForgotten holomorphic_structure_forgotten targetSource
+      cTheta thetaSigned_le_cTheta_absLogQ
+
 /--
 Source-derived finite-divisor vertical-`IQ` route from a constructed
 Theorem 3.11 IPL-link source.
