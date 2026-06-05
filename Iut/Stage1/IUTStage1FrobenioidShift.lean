@@ -31936,6 +31936,118 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceVerticalIQ
 
 set_option linter.style.longLine false in
 /--
+Named bridge audit for the all-in-one target-charted Hodge/\(\IPL\)
+determinant possible-image route source.
+
+This is the route-source version of the packaged-source bridge audit.  It keeps
+the named Gaussian-to-Step (xi) source-chain audit together with the route-owned
+source-derived bridge facts, so finite Step (x) boundaries can consume a single
+route source before constructing the packet-local source.
+-/
+structure TargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    Prop where
+  gaussianToStepXIAudit :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+      routeSource
+  iplDatum_eq_certificate :
+    routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
+      packageN.preLedger.certificate.ipl
+  iplDatum_eq_constructed :
+    routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
+      routeSource.hodgeIPLSource.iplConstructionSource.constructedDatum
+  targetChartedTheta_eq_canonicalOneDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  chartedTheta_eq_thetaMonoidDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree
+  qPilotRegion_eq_choice :
+    routeSource.possibleImageSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record routeSource.possibleImageSource.qChoice
+  hodgeThetaDegree_eq_summandSum :
+    routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  familyHullLogVolume_eq_determinant :
+    routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume
+  thetaSigned_eq_familyHull :
+    packageN.preLedger.thetaSigned =
+      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume
+  hullDetBridge_eq_obligations :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      routeSource.possibleImageSource.obligations.hullDetData.bridgeData
+  targetLogVolume_preserved :
+    routeSource.toSourceDerivedBridge.iplTransport.targetLogVolume =
+      routeSource.toSourceDerivedBridge.iplTransport.sourceLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  histories_not_identified :
+    routeSource.toSourceDerivedBridge.finiteHodgeSHETransport.sourceTheater.side ≠
+      routeSource.toSourceDerivedBridge.finiteHodgeSHETransport.targetTheater.side
+
+set_option linter.style.longLine false in
+theorem toTargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    TargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
+      part audited routeSource := by
+  have h := routeSource.sourceDerivedBridge_endpoint
+  exact
+    { gaussianToStepXIAudit := routeSource.toGaussianToStepXIAudit,
+      iplDatum_eq_certificate := h.1,
+      iplDatum_eq_constructed := h.2.1,
+      targetChartedTheta_eq_canonicalOneDegree := h.2.2.1,
+      chartedTheta_eq_thetaMonoidDegree := h.2.2.2.1,
+      qPilotRegion_eq_choice := h.2.2.2.2.1,
+      hodgeThetaDegree_eq_summandSum := h.2.2.2.2.2.1,
+      familyHullLogVolume_eq_determinant := h.2.2.2.2.2.2.1,
+      thetaSigned_eq_familyHull := h.2.2.2.2.2.2.2.1,
+      hullDetBridge_eq_obligations := h.2.2.2.2.2.2.2.2.1,
+      targetLogVolume_preserved := h.2.2.2.2.2.2.2.2.2.1,
+      qSigned_le_thetaSigned := h.2.2.2.2.2.2.2.2.2.2.1,
+      histories_not_identified := h.2.2.2.2.2.2.2.2.2.2.2 }
+
+set_option linter.style.longLine false in
+/--
 Exact vertical-`IQ` finite-source route from the all-in-one target-charted
 Hodge/IPL determinant possible-image route source.
 
@@ -32089,6 +32201,85 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceExactVerti
       hboundary.2.2.2.2.2.2.2.2.1,
       hboundary.2.2.2.2.2.2.2.2.2.1,
       hboundary.2.2.2.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Exact vertical-`IQ` finite-source Step (x) boundary audit carrying the named
+all-in-one route bridge audit.
+
+This is the stricter Step (x) counterpart of
+`sourceDerivedBridgeTargetChartedHodgeIPLDeterminantPossibleImageRouteFiniteDivisorVerticalIQ_boundaryEndpoint_withBridgeAudit`:
+the route's named source-derived Step (xi) bridge audit is retained while the
+target side is supplied by the exact vertical-`IQ` realified source.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceExactVerticalIQ_boundaryEndpoint_withRouteBridgeAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (finiteSource :
+      NonarchimedeanFiniteDivisorPacketLocalSource
+        audited upperSemiEntry.toEntry product)
+    (exactSource :
+      NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C upperSemiEntry.toEntry
+        holomorphicF holomorphicD finiteSource.toMonoAnalyticD) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.TargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
+        part audited routeSource ∧
+      let targetCalibration :=
+        exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration;
+      targetCalibration.calibration_source =
+          IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+        routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
+          packageN.preLedger.certificate.ipl ∧
+        routeSource.toSourceDerivedBridge.iplTransport.targetLogVolume =
+          routeSource.toSourceDerivedBridge.iplTransport.sourceLogVolume ∧
+        packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+        upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+          finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+        product.productLogVolume =
+          finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+          upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+          true ∧
+        part.insulated_route.theta_source.thetaSourceAverage audited =
+          upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  exact
+    ⟨part.toTargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
+        audited routeSource,
+      part.targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceExactVerticalIQ_boundaryEndpoint
+        audited routeSource upperSemiEntry finiteSource exactSource⟩
 
 set_option linter.style.longLine false in
 /--
@@ -36967,118 +37158,6 @@ theorem sourceDerivedBridgeTargetChartedHodgeIPLConstructionDeterminantPossibleI
       htarget.2.2.2.2.1,
       htarget.2.2.2.2.2,
       haudit.qSigned_le_thetaSigned⟩
-
-set_option linter.style.longLine false in
-/--
-Named bridge audit for the all-in-one target-charted Hodge/\(\IPL\)
-determinant possible-image route source.
-
-This is the route-source version of the packaged-source bridge audit.  It keeps
-the named Gaussian-to-Step (xi) source-chain audit together with the route-owned
-source-derived bridge facts, so finite Step (x) boundaries can consume a single
-route source before constructing the packet-local source.
--/
-structure TargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
-    {packageN :
-      IUTStage1SourcePackage source target
-        (IUTStage1PlaceAuditedDirectSummandPacketChoice
-          coric IUTStage1PlaceKind.nonarchimedean)}
-    {obligations : IUTStage1SourceHullDetObligations packageN}
-    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
-    {audit : endpoint.LogVolumeChartAudit}
-    {l : PrimeGeFive}
-    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
-    (audited :
-      IUTStage1PlaceAuditedDirectSummandPacketChoice
-        coric IUTStage1PlaceKind.nonarchimedean)
-    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
-    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
-    {β : Type v} [Fintype β]
-    (routeSource :
-      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
-        (β := β) part audited record X C) :
-    Prop where
-  gaussianToStepXIAudit :
-    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
-      routeSource
-  iplDatum_eq_certificate :
-    routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
-      packageN.preLedger.certificate.ipl
-  iplDatum_eq_constructed :
-    routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
-      routeSource.hodgeIPLSource.iplConstructionSource.constructedDatum
-  targetChartedTheta_eq_canonicalOneDegree :
-    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
-      packageN.preLedger.thetaBound.thetaPoint).coord =
-      routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
-  chartedTheta_eq_thetaMonoidDegree :
-    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
-      packageN.preLedger.thetaBound.thetaPoint).coord =
-      routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree
-  qPilotRegion_eq_choice :
-    routeSource.possibleImageSource.qPilotRegion =
-      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
-        record routeSource.possibleImageSource.qChoice
-  hodgeThetaDegree_eq_summandSum :
-    routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
-      (Finset.univ.sum fun index =>
-        (routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
-  familyHullLogVolume_eq_determinant :
-    routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
-      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume
-  thetaSigned_eq_familyHull :
-    packageN.preLedger.thetaSigned =
-      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume
-  hullDetBridge_eq_obligations :
-    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
-      routeSource.possibleImageSource.obligations.hullDetData.bridgeData
-  targetLogVolume_preserved :
-    routeSource.toSourceDerivedBridge.iplTransport.targetLogVolume =
-      routeSource.toSourceDerivedBridge.iplTransport.sourceLogVolume
-  qSigned_le_thetaSigned :
-    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
-  histories_not_identified :
-    routeSource.toSourceDerivedBridge.finiteHodgeSHETransport.sourceTheater.side ≠
-      routeSource.toSourceDerivedBridge.finiteHodgeSHETransport.targetTheater.side
-
-set_option linter.style.longLine false in
-theorem toTargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
-    {packageN :
-      IUTStage1SourcePackage source target
-        (IUTStage1PlaceAuditedDirectSummandPacketChoice
-          coric IUTStage1PlaceKind.nonarchimedean)}
-    {obligations : IUTStage1SourceHullDetObligations packageN}
-    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
-    {audit : endpoint.LogVolumeChartAudit}
-    {l : PrimeGeFive}
-    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
-    (audited :
-      IUTStage1PlaceAuditedDirectSummandPacketChoice
-        coric IUTStage1PlaceKind.nonarchimedean)
-    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
-    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
-    {β : Type v} [Fintype β]
-    (routeSource :
-      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
-        (β := β) part audited record X C) :
-    TargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
-      part audited routeSource := by
-  have h := routeSource.sourceDerivedBridge_endpoint
-  exact
-    { gaussianToStepXIAudit := routeSource.toGaussianToStepXIAudit,
-      iplDatum_eq_certificate := h.1,
-      iplDatum_eq_constructed := h.2.1,
-      targetChartedTheta_eq_canonicalOneDegree := h.2.2.1,
-      chartedTheta_eq_thetaMonoidDegree := h.2.2.2.1,
-      qPilotRegion_eq_choice := h.2.2.2.2.1,
-      hodgeThetaDegree_eq_summandSum := h.2.2.2.2.2.1,
-      familyHullLogVolume_eq_determinant := h.2.2.2.2.2.2.1,
-      thetaSigned_eq_familyHull := h.2.2.2.2.2.2.2.1,
-      hullDetBridge_eq_obligations := h.2.2.2.2.2.2.2.2.1,
-      targetLogVolume_preserved := h.2.2.2.2.2.2.2.2.2.1,
-      qSigned_le_thetaSigned := h.2.2.2.2.2.2.2.2.2.2.1,
-      histories_not_identified := h.2.2.2.2.2.2.2.2.2.2.2 }
 
 set_option linter.style.longLine false in
 /--
