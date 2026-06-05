@@ -53887,6 +53887,89 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceCalibratedZ
       profile audited alignment source_profile_eq realifiedSource cTheta
       thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Source-derived Hodge/SHE/IPL/hull route whose packet-normalized theta
+calibration is derived from a finite `ZMod l` labelled procession average.
+
+The labelled-average comparison and packet/source calibration remain Step (x)
+inputs.  The source-derived bridge supplies the route alignment, canonical
+square-weight profile, and theta-root source before constructing the calibrated
+realified source.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_sourceDerivedHodgeSHEIPLHullSourceCalibratedZModLabelledAverage
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (labelledAverage :
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean)
+    (labelledAverage_eq_packetNormalized :
+      labelledAverage.normalizedLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceCalibration :
+      NonarchimedeanLogKummerPacketSourceCalibration
+        audited packageN.logKummer upperSemiEntry.toEntry
+        holomorphicF.toRealized holomorphicD.toRealized monoAnalyticD.toRealized)
+    (orderedAlignment : Ind3OrderedRealLineAlignment part audited)
+    (thetaSourceAverage_eq_labelledAverage :
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        labelledAverage.normalizedLogVolume)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullSourceCalibratedZModLabelledAverage
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    audited bridge.toRouteLogVolumeAlignment rfl
+    bridge.finiteHodgeSHETransport.synchronization.sourceHA.thetaRootSource
+    labelledAverage labelledAverage_eq_packetNormalized upperSemiEntry
+    kummerCompatibility forgettingCompatibility holomorphicF_realization
+    holomorphicD_realization monoAnalyticD_realization
+    holomorphicStructureForgotten holomorphic_structure_forgotten
+    sourceCalibration orderedAlignment thetaSourceAverage_eq_labelledAverage
+    cTheta thetaSigned_le_cTheta_absLogQ
+
 /--
 Source-aligned labelled-average route.
 
