@@ -32195,6 +32195,77 @@ theorem gaussianHodgeDeterminantStepXICorridorEndpoint
       sourceData.exactSource.realifiedSource.toPacketCorrespondence.qPilotLogKummerNonInterference,
       sourceData.exactSource.realifiedSource.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩
 
+set_option linter.style.longLine false in
+/--
+Bundled Gaussian-to-Ob5 Step (xi) audit at the exact Step (x) boundary.
+
+This combines the Hodge--Arakelov theta-evaluation front of the route with the
+Remark 3.9.5(Ob5)-style family-hull quotient guard: before the exact
+vertical-`IQ` Step (x) boundary is used, the source package exposes the
+canonical theta label, finite Gaussian square-weight formula, two arbitrary
+nonempty possible images lying in the same family hull, their equal
+upper-semi quotient image, the raw signed comparison, and the Step (x)
+log-Kummer/upper-semi facts.
+-/
+theorem gaussianHodgeOb5StepXCorridorEndpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (i j : IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)
+    (hnei :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i).Nonempty)
+    (hnej :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j).Nonempty) :
+    sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      (∀ k : ZMod l.value, k.val ≤ l.value / 2 ->
+        sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l k) =
+          sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.squareWeightProfile.weight k *
+            sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaMonoidDegree) ∧
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record i ⊆ sourceData.routeSource.possibleImageFamilyHullSource.familyHull ∧
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record j ⊆ sourceData.routeSource.possibleImageFamilyHullSource.familyHull ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record i =
+        sourceData.routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record j ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.familyHullLogVolume =
+        sourceData.routeSource.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited := by
+  rcases sourceData.routeSource.hodgeArakelovThetaEvaluation_endpoint with
+    ⟨hcanon, hlabel, _hnonzero, hzero, _hdegree, hsquare,
+      _hfullPres, _hfullEq, _hchartTarget, _htargetSource⟩
+  have hob5 := sourceData.routeSource.possibleImageFamilyHullOb5_endpoint i j hnei hnej
+  exact
+    ⟨hcanon,
+      hlabel,
+      hzero,
+      hsquare,
+      hob5.1,
+      hob5.2.1,
+      hob5.2.2.1,
+      hob5.2.2.2.1,
+      hob5.2.2.2.2.2.2.2,
+      sourceData.exactSource.targetCalibration_source_eq_verticalIQ,
+      sourceData.exactSource.realifiedSource.toPacketCorrespondence.qPilotLogKummerNonInterference,
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩
+
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
 
 set_option linter.style.longLine false in

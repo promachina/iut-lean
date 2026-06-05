@@ -25146,6 +25146,81 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteS
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface bundled Gaussian-to-Ob5 Step (xi) audit at the exact
+Step (x) boundary.
+
+The endpoint starts at the Hodge--Arakelov theta-evaluation source and carries
+the Ob5 family-hull quotient guard for two nonempty Theorem 3.11 possible
+images through to the same exact vertical-`IQ` Step (x) boundary.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource_gaussianHodgeOb5StepXCorridorEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {k : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean k}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean k}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (i j : IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)
+    (hnei :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record i).Nonempty)
+    (hnej :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record j).Nonempty) :
+    sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      (∀ k : ZMod l.value, k.val ≤ l.value / 2 ->
+        sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l k) =
+          sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.squareWeightProfile.weight k *
+            sourceData.routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaMonoidDegree) ∧
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record i ⊆ sourceData.routeSource.possibleImageFamilyHullSource.familyHull ∧
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record j ⊆ sourceData.routeSource.possibleImageFamilyHullSource.familyHull ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record i =
+        sourceData.routeSource.possibleImageFamilyHullSource.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record j ∧
+      sourceData.routeSource.possibleImageFamilyHullSource.familyHullLogVolume =
+        sourceData.routeSource.possibleImageFamilyHullSource.determinantSource.determinantLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited :=
+  sourceData.gaussianHodgeOb5StepXCorridorEndpoint i j hnei hnej
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` boundary for the bundled finite exact
 vertical-`IQ` route source.
 -/
