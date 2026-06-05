@@ -2054,6 +2054,12 @@ The project currently proves the following source-facing results in \Lean{}:
   two loose fields in this variant; they are projected from
   \(IUTStage1SourceSideConditions\), the same side-condition boundary used when
   promoting source data to the Stage 1 ledger.
+\item The exact-theta Step (xi) source now also has a hull/det-data-backed
+  form.  In this variant, the equality with the package's named
+  hull/determinant bridge is no longer carried directly.  Instead the source
+  consumes \(IUTStage1SourceHullDetData\), projects the package bridge equality
+  already stored in that object, and then identifies the stored bridge data
+  with the record-canonical Step (xi) hull/tensor-power construction.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2261,9 +2267,12 @@ tensor-power-bound field by the equality
 which \Lean{} derives the bound used by the older constructor.  The
 side-conditioned exact-theta variant additionally projects q-pilot positivity
 and normalization from the existing Stage 1 side-condition object, rather than
-carrying these as independent Step (xi) fields.  The remaining task is to
-construct the underlying fields from the source-paper holomorphic-hull and
-determinant operations.
+carrying these as independent Step (xi) fields.  A further
+hull/det-data-backed variant projects the package bridge equality from the
+existing hull/determinant source-data object and then records only the
+compatibility of that stored bridge with the record-canonical Step (xi)
+construction.  The remaining task is to construct the underlying fields from
+the source-paper holomorphic-hull and determinant operations.
 
 The practical priority order is:
 \begin{enumerate}

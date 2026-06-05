@@ -23659,6 +23659,18 @@ theorem hullDetBridge_eq
       data.sourceData.structuredHullDet.toHullDetHullBridgeData.toHullDetBridgeData :=
   data.sourceData.hullDetBridge_eq
 
+def bridgeData
+    (data : IUTStage1SourceHullDetData package) :
+    package.preLedger.output.HullDetBridgeData
+      package.preLedger.measure package.preLedger.thetaSigned :=
+  data.sourceData.structuredHullDet.toHullDetHullBridgeData.toHullDetBridgeData
+
+theorem hullDetBridge_eq_bridgeData
+    (data : IUTStage1SourceHullDetData package) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      data.bridgeData :=
+  data.sourceData.hullDetBridge_eq
+
 theorem choiceTargetVolume_le_thetaSigned
     (data : IUTStage1SourceHullDetData package) (choice : index) :
     RegionMeasure.targetVolume package.preLedger.measure
@@ -32220,6 +32232,149 @@ theorem source_endpoint
 
 end
   IUTStage1ChoiceLinkedExactThetaSideConditionedHolomorphicHullDeterminantSource
+
+open IUTStage1Theorem311HullDetSourceConstructor in
+/--
+Choice-linked exact-theta Step (xi) source backed by package hull/det data.
+
+This variant no longer carries the package bridge equality directly.  Instead
+it consumes the package's `IUTStage1SourceHullDetData`, whose pre-ledger source
+data already stores equality with the named package hull/determinant bridge,
+and a compatibility equality identifying that stored bridge data with the
+record-canonical Step (xi) hull/tensor-power construction.
+-/
+structure IUTStage1ChoiceLinkedExactThetaHullDetDataBackedSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    {β : Type v} [Fintype β] where
+  operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId
+  hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId
+  determinantOperation :
+    RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId
+  hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target)
+  qChoice : index
+  qPilotRegion : Set (Point target)
+  q_subset_choice :
+    qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record qChoice
+  determinantSource :
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β
+  compatibility :
+    IUTStage1HullApproximantWeightedDeterminantCompatibility
+      (IUTStage1HullLogVolumeApproximant.canonical
+        hullData
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+      determinantSource
+  measure_eq_hullLogVolume :
+    package.preLedger.measure = hullData.toRegionMeasure
+  thetaSigned_eq_tensorPowerNormalized :
+    package.preLedger.thetaSigned =
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          determinantSource).normalizedLogVolume
+  hullDetSourceData : IUTStage1SourceHullDetData package
+  hullDetSourceData_eq_recordCanonical :
+    hullDetSourceData.bridgeData =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        operation hullOperation determinantOperation hullData qPilotRegion
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) qChoice qPilotRegion q_subset_choice)
+        determinantSource compatibility measure_eq_hullLogVolume
+        (le_of_eq thetaSigned_eq_tensorPowerNormalized.symm)
+  sideConditions : IUTStage1SourceSideConditions package
+
+namespace IUTStage1ChoiceLinkedExactThetaHullDetDataBackedSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+noncomputable def recordCanonicalBridgeData
+    (sourceData :
+      IUTStage1ChoiceLinkedExactThetaHullDetDataBackedSource
+        (β := β) record) :
+    package.preLedger.output.HullDetBridgeData
+      package.preLedger.measure package.preLedger.thetaSigned :=
+  recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+    (record := record)
+    sourceData.operation sourceData.hullOperation
+    sourceData.determinantOperation sourceData.hullData
+    sourceData.qPilotRegion
+    (qPilotRegion_subset_recordUnion_of_choice
+      (record := record)
+      sourceData.qChoice sourceData.qPilotRegion sourceData.q_subset_choice)
+    sourceData.determinantSource sourceData.compatibility
+    sourceData.measure_eq_hullLogVolume
+    (le_of_eq sourceData.thetaSigned_eq_tensorPowerNormalized.symm)
+
+theorem hullDetBridge_eq
+    (sourceData :
+      IUTStage1ChoiceLinkedExactThetaHullDetDataBackedSource
+        (β := β) record) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.recordCanonicalBridgeData := by
+  calc
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.hullDetSourceData.bridgeData :=
+      sourceData.hullDetSourceData.hullDetBridge_eq_bridgeData
+    _ = sourceData.recordCanonicalBridgeData :=
+      sourceData.hullDetSourceData_eq_recordCanonical
+
+noncomputable def toSideConditionedHolomorphicHullDeterminantSource
+    (sourceData :
+      IUTStage1ChoiceLinkedExactThetaHullDetDataBackedSource
+        (β := β) record) :
+    IUTStage1ChoiceLinkedExactThetaSideConditionedHolomorphicHullDeterminantSource
+      (β := β) record :=
+  { operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    hullData := sourceData.hullData,
+    qChoice := sourceData.qChoice,
+    qPilotRegion := sourceData.qPilotRegion,
+    q_subset_choice := sourceData.q_subset_choice,
+    determinantSource := sourceData.determinantSource,
+    compatibility := sourceData.compatibility,
+    measure_eq_hullLogVolume := sourceData.measure_eq_hullLogVolume,
+    thetaSigned_eq_tensorPowerNormalized :=
+      sourceData.thetaSigned_eq_tensorPowerNormalized,
+    hullDetBridge_eq := sourceData.hullDetBridge_eq,
+    sideConditions := sourceData.sideConditions }
+
+theorem source_endpoint
+    (sourceData :
+      IUTStage1ChoiceLinkedExactThetaHullDetDataBackedSource
+        (β := β) record) :
+    sourceData.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      sourceData.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      package.preLedger.thetaSigned =
+        (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.determinantSource).normalizedLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.hullDetSourceData.bridgeData ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.recordCanonicalBridgeData ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  ⟨sourceData.q_subset_choice,
+    sourceData.toSideConditionedHolomorphicHullDeterminantSource
+      |>.toChoiceLinkedHolomorphicHullDeterminantSource |>.q_subset_recordUnion,
+    sourceData.thetaSigned_eq_tensorPowerNormalized,
+    sourceData.hullDetSourceData.hullDetBridge_eq_bridgeData,
+    sourceData.hullDetBridge_eq,
+    sourceData.toSideConditionedHolomorphicHullDeterminantSource
+      |>.qSigned_le_thetaSigned⟩
+
+end IUTStage1ChoiceLinkedExactThetaHullDetDataBackedSource
 
 /--
 Hull+det endpoint stated for multiradial Theta-pilot images.
@@ -55161,6 +55316,105 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHist
     audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
     iplLinkSource
     sideConditionedHullSource.toExactThetaHolomorphicHullDeterminantSource
+    sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
+    kummerCompatibility forgettingCompatibility holomorphicF_realization
+    holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource cTheta thetaSigned_le_cTheta_absLogQ
+
+/--
+History-separated Hodge--Arakelov source form with a certificate-pinned
+Theorem 3.11 IPL link and a hull/det-data-backed exact-theta Step (xi) source.
+
+This is a stricter bridge-provenance variant of the side-conditioned endpoint:
+the Step (xi) source object no longer carries the package bridge equality
+directly, but projects it from `IUTStage1SourceHullDetData` before following the
+same finite-divisor vertical-`IQ` route.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHistorySeparatedT11IPLLinkChoiceLinkedExactThetaHullDetDataBackedFiniteDivisorVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (backedHullSource :
+      IUTStage1ChoiceLinkedExactThetaHullDetDataBackedSource
+        (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceEvaluation.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHistorySeparatedT11IPLLinkChoiceLinkedExactThetaSideConditionedHullFiniteDivisorVerticalIQ
+    audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+    iplLinkSource
+    backedHullSource.toSideConditionedHolomorphicHullDeterminantSource
     sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
     kummerCompatibility forgettingCompatibility holomorphicF_realization
     holomorphicD_realization holomorphicStructureForgotten
