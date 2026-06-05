@@ -24553,6 +24553,65 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteS
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface realified Step (x) correspondence audit for the bundled
+finite exact vertical-`IQ` route source.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource_realifiedStepXCorrespondenceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    sourceData.exactSource.realifiedSource.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      sourceData.exactSource.realifiedSource.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      holomorphicD.toRealized.product.productLogVolume =
+        holomorphicF.toRealized.product.productLogVolume ∧
+      sourceData.finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume =
+        holomorphicD.toRealized.product.productLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited :=
+  sourceData.realifiedStepXCorrespondenceEndpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` boundary for the bundled finite exact
 vertical-`IQ` route source.
 -/

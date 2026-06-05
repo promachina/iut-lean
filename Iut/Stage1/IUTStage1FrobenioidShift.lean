@@ -31093,6 +31093,46 @@ theorem boundaryEndpoint
     audited sourceData.routeSource sourceData.upperSemiEntry
     sourceData.finiteSource sourceData.exactSource
 
+set_option linter.style.longLine false in
+/--
+Realified Step (x) correspondence audit for the bundled exact route source.
+
+This endpoint exposes the theta-root canonical label data, Kummer/Frobenioid
+product preservation, mono-analytic forgetting, packet-source/target
+normalization, q-pilot log-Kummer non-interference, and upper-semi inequality
+carried by the bundled exact vertical-`IQ` realified source.
+-/
+theorem realifiedStepXCorrespondenceEndpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.exactSource.realifiedSource.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      sourceData.exactSource.realifiedSource.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      holomorphicD.toRealized.product.productLogVolume =
+        holomorphicF.toRealized.product.productLogVolume ∧
+      sourceData.finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume =
+        holomorphicD.toRealized.product.productLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited :=
+  sourceData.exactSource.realifiedSource.thetaRootRealifiedEntry_packetCorrespondence_endpoint
+
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
 
 set_option linter.style.longLine false in
