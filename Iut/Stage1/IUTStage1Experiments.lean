@@ -23822,6 +23822,47 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_bridgeEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface raw source-derived comparison for the all-in-one
+target-charted route.
+
+This exposes the assembled bridge output `qSigned <= thetaSigned` before the
+finite Step (x) vertical-`IQ` source and the separate `C_Theta` numeric bound
+are used.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_rawComparisonEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    let bridge :=
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (part := part) (audited := audited) routeSource;
+    bridge.iplTransport.iplDatum = package.preLedger.certificate.ipl ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      bridge.finiteHodgeSHETransport.synchronization.sourceHA =
+        routeSource.hodgeIPLSource.hodgeSynchronization.valueSource ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource_rawComparison_endpoint
+    (part := part) (audited := audited) routeSource
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy from the all-in-one target-charted
 Hodge/IPL determinant possible-image route source.
 -/

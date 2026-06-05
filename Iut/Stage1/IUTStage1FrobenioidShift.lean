@@ -21527,6 +21527,38 @@ theorem ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource_endpoint
       bridge.hullConstructor.qSigned_le_thetaSigned,
       bridge.finiteHodgeSHETransport.histories_not_identified'⟩
 
+set_option linter.style.longLine false in
+/--
+Raw source-derived comparison from the all-in-one target-charted route.
+
+This is the bridge output before the finite Step (x) vertical-`IQ` source and
+the separate `C_Theta` numeric bound are used.  The theorem records that the
+assembled bridge keeps the certificate-pinned IPL datum, preserves the IPL
+log-volume, reads its source Hodge--Arakelov value source from the route, and
+already supplies the raw signed comparison.
+-/
+theorem ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource_rawComparison_endpoint
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    let bridge :=
+      ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (part := part) (audited := audited) routeSource;
+    bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      bridge.finiteHodgeSHETransport.synchronization.sourceHA =
+        routeSource.hodgeIPLSource.hodgeSynchronization.valueSource ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned := by
+  intro bridge
+  exact
+    ⟨(ofTargetChartedHodgeIPLDeterminantPossibleImageRouteSource_endpoint
+        (part := part) (audited := audited) routeSource).1,
+      bridge.iplTransport.targetLogVolume_preserved,
+      rfl,
+      bridge.hullConstructor.qSigned_le_thetaSigned⟩
+
 theorem sourceLogVolumeEq
     (bridge :
       IUTStage1SourceDerivedHodgeSHEIPLHullBridge
