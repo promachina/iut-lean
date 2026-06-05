@@ -2060,6 +2060,15 @@ The project currently proves the following source-facing results in \Lean{}:
   consumes \(IUTStage1SourceHullDetData\), projects the package bridge equality
   already stored in that object, and then identifies the stored bridge data
   with the record-canonical Step (xi) hull/tensor-power construction.
+\item The same boundary now has a record-native bounded-family hull form.
+  This new source object specializes the Ob5 bounded-family hull/determinant
+  source to the Theorem 3.11 possible-image family, so the family union
+  \(P_{\mathrm{rec}}\), its hull \(\phi(P_{\mathrm{rec}})\), the weighted
+  determinant source, and the normalized Ob4 tensor-power log-volume are tied
+  to one record-level object.  The strengthened endpoint assumes
+  \(\theta_{\mathrm{signed}}=\mu_{\log}(\phi(P_{\mathrm{rec}}))\); \Lean{}
+  then derives the older exact tensor-power equality and the tensor-power
+  bound from the Ob5 hull/determinant compatibility.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2271,8 +2280,13 @@ carrying these as independent Step (xi) fields.  A further
 hull/det-data-backed variant projects the package bridge equality from the
 existing hull/determinant source-data object and then records only the
 compatibility of that stored bridge with the record-canonical Step (xi)
-construction.  The remaining task is to construct the underlying fields from
-the source-paper holomorphic-hull and determinant operations.
+construction.  The newest record-native bounded-family variant replaces the
+loose exact tensor-power equality by the source-shaped assertion that
+\(\theta_{\mathrm{signed}}\) is the log-volume of the Theorem 3.11
+possible-image family hull; the normalized tensor-power equality is then
+derived from the Ob5 determinant compatibility.  The remaining task is to
+construct the underlying fields from the source-paper holomorphic-hull and
+determinant operations.
 
 The practical priority order is:
 \begin{enumerate}
@@ -2295,9 +2309,10 @@ The practical priority order is:
   this finite correspondence object itself as source-facing input;
 \item construct the fields of the Step (xi) holomorphic-hull/determinant source
   from the actual holomorphic-hull and determinant operations of
-  Remark 3.9.5 and Step (xi), including replacing the remaining supplied
-  choice-link, determinant, tensor-power, bridge, positivity, and normalization
-  fields by source-paper constructions;
+  Remark 3.9.5 and Step (xi), especially the record possible-image family hull
+  whose log-volume equals \(\theta_{\mathrm{signed}}\), including replacing the
+  remaining supplied choice-link, determinant, bridge, positivity, and
+  normalization fields by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source
   content to bear on the Mochizuki--Scholze--Stix disagreement.
 \end{enumerate}
