@@ -19373,6 +19373,82 @@ theorem possibleImageSideConditionedHull_endpoint
       packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
   sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.source_endpoint
 
+set_option linter.style.longLine false in
+/--
+Canonical possible-image hull/tensor-power bridge exposed by the all-in-one
+target-charted route.
+
+This is the Step (xi) route audit at the hull/determinant construction
+boundary: the q-pilot region is the chosen Theorem 3.11 possible image, the
+common-container hull/determinant bridge is the record-canonical
+hull/tensor-power bridge built from the family hull and weighted determinant,
+and the same source yields the theta/family-hull equality, positivity,
+normalization, and raw signed comparison.
+-/
+theorem possibleImageCanonicalHullTensorBridge_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    sourceData.possibleImageSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.possibleImageSource.qChoice ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          sourceData.possibleImageSource.operation
+          sourceData.possibleImageSource.hullOperation
+          sourceData.possibleImageSource.determinantOperation
+          sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData
+          sourceData.possibleImageSource.qPilotRegion
+          (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) sourceData.possibleImageSource.qChoice
+            sourceData.possibleImageSource.qPilotRegion
+            sourceData.possibleImageSource.q_subset_choice)
+          sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource
+          sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.compatibility
+          sourceData.possibleImageSource.hodgeDeterminantSource.measure_eq_hullLogVolume
+          sourceData.possibleImageSource.hodgeDeterminantSource.tensorPower_bound ∧
+      packageN.preLedger.thetaSigned =
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  let hsource := sourceData.possibleImageSource.source_endpoint
+  have hcanonical :
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          sourceData.possibleImageSource.operation
+          sourceData.possibleImageSource.hullOperation
+          sourceData.possibleImageSource.determinantOperation
+          sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData
+          sourceData.possibleImageSource.qPilotRegion
+          (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) sourceData.possibleImageSource.qChoice
+            sourceData.possibleImageSource.qPilotRegion
+            sourceData.possibleImageSource.q_subset_choice)
+          sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource
+          sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.compatibility
+          sourceData.possibleImageSource.hodgeDeterminantSource.measure_eq_hullLogVolume
+          sourceData.possibleImageSource.hodgeDeterminantSource.tensorPower_bound := by
+    have hbridge :=
+      sourceData.possibleImageSource.obligations.hullDetData.hullDetBridge_eq_bridgeData.trans
+        sourceData.possibleImageSource.obligationsHullDetData_eq_recordCanonical
+    simpa [
+      IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource.qPilotRegion,
+      IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource.q_subset_choice]
+      using hbridge
+  ⟨hsource.1,
+    hcanonical,
+    hsource.2.2.2.2.2.1,
+    sourceData.possibleImageSource.hodgeDeterminantSource.tensorPower_bound,
+    hsource.2.2.2.2.2.2.2.1,
+    hsource.2.2.2.2.2.2.2.2.1,
+    hsource.2.2.2.2.2.2.2.2.2⟩
+
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
 
 set_option linter.style.longLine true
