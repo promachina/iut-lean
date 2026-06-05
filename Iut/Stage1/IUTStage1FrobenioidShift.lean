@@ -19964,6 +19964,91 @@ theorem sourceRawComparison_endpoint
     hstep.1,
     hstep.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Gaussian-to-Step (xi) audit for the all-in-one target-charted route source.
+
+This exposes the complete source chain before any finite Step (x) vertical-`IQ`
+input enters: theta-root/Gaussian evaluation, factored finite Hodge/SHE
+transport, constructed IPL log-volume transport, possible-image
+hull/determinant data, and the resulting raw signed comparison are all
+projected from one route source.
+-/
+theorem gaussianToStepXI_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      (∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+        sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.squareWeightProfile.weight j *
+            sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.thetaMonoidDegree) ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.possibleImageSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.possibleImageSource.qChoice ∧
+      sourceData.possibleImageSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      packageN.preLedger.thetaSigned =
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.possibleImageSource.obligations.hullDetData.bridgeData ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned := by
+  have htheta := sourceData.hodgeArakelovThetaEvaluation_endpoint
+  have hshe := sourceData.hodgeArakelovFiniteHodgeSHETransportSource_endpoint
+  have hipl := sourceData.constructedIPLLogVolumeTransportSource_endpoint
+  have hsource := sourceData.source_endpoint
+  have hside := sourceData.possibleImageSideConditionedHull_endpoint
+  exact
+    ⟨htheta.1,
+      htheta.2.1,
+      htheta.2.2.2.2.2.1,
+      htheta.2.2.2.2.2.2.1,
+      htheta.2.2.2.2.2.2.2.2.1,
+      htheta.2.2.2.2.2.2.2.2.2,
+      hshe.2.2.2.2.1,
+      hshe.2.2.2.2.2.1,
+      hshe.2.2.2.2.2.2,
+      hipl.1,
+      hipl.2.1,
+      hipl.2.2.2.2.2.2.1,
+      hsource.2.2.2.2.1,
+      hside.2.1,
+      hsource.2.2.2.2.2.1,
+      hsource.2.2.2.2.2.2.2.1,
+      hsource.2.2.2.2.2.2.2.2.1,
+      hside.2.2.2.2.2⟩
+
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
 
 set_option linter.style.longLine true
