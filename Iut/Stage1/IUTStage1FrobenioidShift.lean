@@ -31133,6 +31133,60 @@ theorem realifiedStepXCorrespondenceEndpoint
         part.insulated_route.theta_source.thetaSourceAverage audited :=
   sourceData.exactSource.realifiedSource.thetaRootRealifiedEntry_packetCorrespondence_endpoint
 
+set_option linter.style.longLine false in
+/--
+End-to-end source-derived corridor audit for the bundled exact route source.
+
+This single endpoint exposes one representative fact from each load-bearing
+stage of the current strongest finite corridor: theta-root data, history-
+separated Hodge/SHE transport, constructed IPL log-volume preservation,
+possible-image Step (xi) hull containment, the raw signed comparison, exact
+vertical-`IQ` calibration, log-Kummer non-interference, and the Step (x)
+upper-semi inequality.
+-/
+theorem sourceDerivedCorridorEndpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.exactSource.realifiedSource.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      sourceData.exactSource.realifiedSource.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      sourceData.routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.routeSource.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.routeSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.routeSource.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.routeSource.possibleImageSource.qChoice ∧
+      sourceData.routeSource.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited := by
+  have hshe := sourceData.routeSource.hodgeArakelovFiniteHodgeSHETransportSource_endpoint
+  have hipl := sourceData.routeSource.constructedIPLLogVolumeTransportSource_endpoint
+  have hstep := sourceData.routeSource.possibleImageSideConditionedHull_endpoint
+  exact
+    ⟨sourceData.exactSource.realifiedSource.thetaRootCanonicalGeneratorUpToSign,
+      sourceData.exactSource.realifiedSource.thetaRootCanonicalFullLabel_ne_zero,
+      hshe.2.2.1,
+      hipl.1,
+      hipl.2.2.2.2.2.2.1,
+      hstep.1,
+      hstep.2.1,
+      hstep.2.2.2.2.2,
+      sourceData.exactSource.targetCalibration_source_eq_verticalIQ,
+      sourceData.exactSource.realifiedSource.toPacketCorrespondence.qPilotLogKummerNonInterference,
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩
+
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteSource
 
 set_option linter.style.longLine false in
