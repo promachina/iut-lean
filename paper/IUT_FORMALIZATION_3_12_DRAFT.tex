@@ -1511,6 +1511,11 @@ The project currently proves the following source-facing results in \Lean{}:
 \item The direct-labelled vertical-\(IQ\) route now has a finite-divisor form:
   source packet-local alignment is constructed from finite divisor/Frobenioid
   product data rather than supplied as a separate alignment record.
+\item The Hodge direct-labelled finite-divisor route can now consume the
+  all-in-one target-charted Hodge/\(\IPL\)/determinant possible-image route
+  source directly: the source-derived Hodge/\(\SHE/\IPL\)/hull bridge is
+  projected from that route source before the labelled Step (x) boundary is
+  entered.
 \item The direct-labelled and finite-divisor routes no longer require
   labelwise equality with the theta-source \(ZMod(\ell)\)-average as route
   input; it is derived from Hodge-descent label-local-object transport.
@@ -2615,6 +2620,12 @@ threaded through the Gaussian-front audit: the canonical Hodge--Arakelov
 theta label, zero Gaussian degree, square-weight formula, two arbitrary
 nonempty possible images, their common family-hull quotient image, and the
 exact Step (x) log-Kummer/upper-semi facts appear in one endpoint.
+The same all-in-one route source now feeds the Hodge direct-labelled
+finite-divisor vertical-\(IQ\) endpoint directly: instead of passing the
+generic source-derived bridge at the public Step (x) boundary, \Lean{} projects
+the bridge from the target-charted Hodge/\(\IPL\)/determinant possible-image
+route and then applies the Hodge-derived labelled-average and finite-divisor
+packet-local construction.
 On the
 Step (xi) side, the target-charted Hodge/determinant possible-image source now
 exposes the converted side-conditioned hull/determinant endpoint itself: the
