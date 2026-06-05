@@ -2083,6 +2083,11 @@ The project currently proves the following source-facing results in \Lean{}:
   Step (xi) source-facing input.  The experiment module exposes the same route
   as the audit theorem
   \texttt{familyHullBackedFiniteDivisorVerticalIQ\_cThetaDichotomy}.
+\item The same family-hull Step (xi) source now has an obligations-backed
+  form.  It consumes one \(IUTStage1SourceHullDetObligations\) object and
+  projects the package hull/determinant data, q-pilot positivity, and source
+  normalization from that object, rather than carrying them as separate Step
+  (xi) fields.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
