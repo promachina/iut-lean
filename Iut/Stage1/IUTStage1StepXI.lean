@@ -4299,6 +4299,40 @@ noncomputable def toIPLLogVolumeTransport
       sourceData.targetLogVolume_preserved,
     histories_not_identified := finiteTransport.histories_not_identified }
 
+set_option linter.style.longLine false in
+/--
+IPL log-volume provenance from the finite Hodge/SHE transport.
+
+The IPL source does not introduce an independent log-volume equality: its
+source log-volume is the source average of the finite Hodge/SHE transport
+audit, its target log-volume is the transported target average, and preservation
+is exactly the transported-average equality supplied by the finite
+Hodge/SHE layer.
+-/
+theorem finiteTransportLogVolume_endpoint
+    (sourceData :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C finiteTransport) :
+    let audit :=
+      finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.targetLogVolume = audit.targetTransportedAverage ∧
+      sourceData.targetLogVolume = sourceData.sourceLogVolume ∧
+      sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume = audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
+  by
+    intro audit
+    exact
+      ⟨rfl,
+        rfl,
+        sourceData.targetLogVolume_preserved,
+        rfl,
+        rfl,
+        sourceData.toIPLLogVolumeTransport.targetLogVolume_preserved⟩
+
 theorem finiteTransport_sourceTheater_eq
     (sourceData :
       IUTStage1IPLLogVolumeTransportSource
@@ -4415,6 +4449,41 @@ theorem targetLogVolume_preserved
     sourceData.toIPLLogVolumeTransport.targetLogVolume =
       sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
   sourceData.toIPLLogVolumeTransport.targetLogVolume_preserved
+
+set_option linter.style.longLine false in
+/--
+Constructed IPL log-volume provenance from the finite Hodge/SHE transport.
+
+For the combined finite Hodge/SHE plus constructed IPL-link source, the
+resulting IPL transport reads its source and target log-volume values directly
+from the finite Hodge/SHE transported-average audit.
+-/
+theorem constructedIPLFiniteTransportLogVolume_endpoint
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    let audit :=
+      sourceData.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toIPLLogVolumeTransportSource.sourceLogVolume :=
+  by
+    intro audit
+    exact
+      ⟨rfl,
+        rfl,
+        sourceData.targetLogVolume_preserved,
+        rfl,
+        rfl,
+        sourceData.toIPLLogVolumeTransportSource.targetLogVolume_preserved⟩
 
 set_option linter.style.longLine false in
 theorem source_endpoint

@@ -18084,6 +18084,36 @@ theorem constructedIPLLogVolumeTransportSource_endpoint
         sourceData.toIPLLogVolumeTransport.targetTheater.side :=
   sourceData.toFiniteHodgeSHEIPLConstructionSource.source_endpoint
 
+set_option linter.style.longLine false in
+/--
+Constructed IPL log-volume provenance exposed by the target-charted
+Hodge--Arakelov/IPL source.
+
+The IPL source and target log-volume values are read from the finite
+Hodge/SHE transported-average audit constructed from the Hodge--Arakelov
+synchronization; the preservation equality is the finite transport's average
+preservation, not a separate route assumption.
+-/
+theorem constructedIPLFiniteTransportLogVolume_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.constructedIPLFiniteTransportLogVolume_endpoint
+
 end IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
@@ -19563,6 +19593,35 @@ theorem constructedIPLLogVolumeTransportSource_endpoint
       sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
         sourceData.toIPLLogVolumeTransport.targetTheater.side :=
   sourceData.hodgeIPLSource.constructedIPLLogVolumeTransportSource_endpoint
+
+set_option linter.style.longLine false in
+/--
+Constructed IPL log-volume provenance exposed by the all-in-one route.
+
+This route-level audit makes the IPL/log-volume step explicit: the source and
+target log-volume values in the route's IPL transport are exactly the source
+average and transported target average of the finite Hodge/SHE transport audit
+constructed from the Hodge--Arakelov synchronization.
+-/
+theorem constructedIPLFiniteTransportLogVolume_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume :=
+  sourceData.hodgeIPLSource.constructedIPLFiniteTransportLogVolume_endpoint
 
 set_option linter.style.longLine false in
 /--

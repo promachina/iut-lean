@@ -23909,6 +23909,51 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_constructedIPLLogVolu
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface constructed IPL log-volume provenance audit for the
+all-in-one target-charted route.
+
+The route's IPL source and target log-volume values are projected from the
+finite Hodge/SHE transported-average audit built from the Hodge--Arakelov
+synchronization.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_constructedIPLFiniteTransportLogVolumeEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    let audit :=
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    routeSource.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      routeSource.toIPLLogVolumeTransport.targetLogVolume =
+        routeSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        routeSource.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume :=
+  routeSource.constructedIPLFiniteTransportLogVolume_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Hodge/SHE/IPL audit for the all-in-one target-charted
 Hodge/IPL determinant possible-image route.
 
