@@ -2069,6 +2069,12 @@ The project currently proves the following source-facing results in \Lean{}:
   \(\theta_{\mathrm{signed}}=\mu_{\log}(\phi(P_{\mathrm{rec}}))\); \Lean{}
   then derives the older exact tensor-power equality and the tensor-power
   bound from the Ob5 hull/determinant compatibility.
+\item The record-native bounded-family source now projects back to the generic
+  Ob5 bounded-family hull/determinant source.  Thus the record-level
+  possible-image family reuses the existing quotient-collapse theorem,
+  possible-region containment in the family hull, determinant/log-volume
+  comparison, and normalized tensor-power endpoint instead of duplicating a
+  weaker record-specific summary.
 \item The history-separated Hodge--Arakelov, certificate-pinned \(\IPL\),
   finite-divisor vertical-\(IQ\) endpoint now consumes this
   family-hull-backed source directly.  The endpoint constructs the

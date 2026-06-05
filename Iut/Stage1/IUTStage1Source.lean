@@ -32312,6 +32312,50 @@ noncomputable def tensorPower
   IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
     sourceData.determinantSource
 
+noncomputable def toBoundedFamilyHullDetLogVolumeSource
+    (sourceData :
+      IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record) :
+    IUTStage1BoundedFamilyHullDetLogVolumeSource
+      (Point target) index β :=
+  { hullData := sourceData.hullData,
+    possibleRegion := recordThetaPossibleImage record,
+    determinantSource := sourceData.determinantSource,
+    compatibility := by
+      simpa [recordThetaPossibleImageUnion] using sourceData.compatibility }
+
+theorem toBoundedFamily_familyUnion
+    (sourceData :
+      IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record) :
+    sourceData.toBoundedFamilyHullDetLogVolumeSource.familyUnion =
+      sourceData.familyUnion := by
+  rfl
+
+theorem toBoundedFamily_familyHull
+    (sourceData :
+      IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record) :
+    sourceData.toBoundedFamilyHullDetLogVolumeSource.familyHull =
+      sourceData.familyHull := by
+  rfl
+
+theorem toBoundedFamily_familyHullLogVolume
+    (sourceData :
+      IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record) :
+    sourceData.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume =
+      sourceData.familyHullLogVolume := by
+  rfl
+
+theorem toBoundedFamily_familyUnionLogVolume
+    (sourceData :
+      IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record) :
+    sourceData.toBoundedFamilyHullDetLogVolumeSource.familyUnionLogVolume =
+      sourceData.familyUnionLogVolume := by
+  rfl
+
 theorem familyHullLogVolume_eq_normalized
     (sourceData :
       IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
@@ -32383,6 +32427,57 @@ theorem source_endpoint
   ⟨rfl, sourceData.familyHullLogVolume_eq_determinant,
     sourceData.familyUnionLogVolume_le_familyHullLogVolume,
     sourceData.tensorPower_normalizedLogVolume_eq_familyHullLogVolume⟩
+
+theorem boundedFamily_endpoint
+    (sourceData :
+      IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record)
+    (i j : index)
+    (hnei : (recordThetaPossibleImage record i).Nonempty)
+    (hnej : (recordThetaPossibleImage record j).Nonempty) :
+    recordThetaPossibleImage record i ⊆ sourceData.familyHull ∧
+      recordThetaPossibleImage record j ⊆ sourceData.familyHull ∧
+      sourceData.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          recordThetaPossibleImage record i =
+        sourceData.toBoundedFamilyHullDetLogVolumeSource.quotientMap ''
+          recordThetaPossibleImage record j ∧
+      sourceData.familyHullLogVolume =
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.familyUnionLogVolume <=
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.tensorPower.normalizedLogVolume =
+        sourceData.familyHullLogVolume ∧
+      sourceData.tensorPower.tensorPowerLogVolume =
+        (sourceData.tensorPower.tensorDegree : Real) *
+          sourceData.familyHullLogVolume := by
+  simpa [toBoundedFamilyHullDetLogVolumeSource, familyHull,
+    familyHullLogVolume, familyUnionLogVolume, tensorPower] using
+    sourceData.toBoundedFamilyHullDetLogVolumeSource.endpoint i j hnei hnej
+
+theorem boundedFamily_ob5_endpoint
+    (sourceData :
+      IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record)
+    {A B : Set (Point target)}
+    (hneA : A.Nonempty)
+    (hneB : B.Nonempty) :
+    (sourceData.toBoundedFamilyHullDetLogVolumeSource.quotientMap '' A =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+        sourceData.toBoundedFamilyHullDetLogVolumeSource.quotientMap '' B =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ↔
+      A ⊆ sourceData.familyHull ∧ B ⊆ sourceData.familyHull) ∧
+      sourceData.familyHullLogVolume =
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.familyUnionLogVolume <=
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.tensorPower.normalizedLogVolume =
+        sourceData.familyHullLogVolume ∧
+      sourceData.tensorPower.tensorPowerLogVolume =
+        (sourceData.tensorPower.tensorDegree : Real) *
+          sourceData.familyHullLogVolume := by
+  simpa [toBoundedFamilyHullDetLogVolumeSource, familyHull,
+    familyHullLogVolume, familyUnionLogVolume, tensorPower] using
+    sourceData.toBoundedFamilyHullDetLogVolumeSource.ob5_endpoint hneA hneB
 
 end IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
 

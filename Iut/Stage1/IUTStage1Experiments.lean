@@ -1826,6 +1826,32 @@ theorem boundedFamilyHullDetLogVolumeOb5_endpoint
         (data.tensorPower.tensorDegree : Real) * data.familyHullLogVolume :=
   data.ob5_endpoint hneA hneB
 
+theorem recordBoundedFamilyHullDetLogVolumeOb5_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (data :
+      IUTStage1SourcePackage.IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record)
+    {A B : Set (Point target)}
+    (hneA : A.Nonempty)
+    (hneB : B.Nonempty) :
+    (data.toBoundedFamilyHullDetLogVolumeSource.quotientMap '' A =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+        data.toBoundedFamilyHullDetLogVolumeSource.quotientMap '' B =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ↔
+      A ⊆ data.familyHull ∧ B ⊆ data.familyHull) ∧
+      data.familyHullLogVolume =
+        data.determinantSource.determinantLogVolume ∧
+      data.familyUnionLogVolume <=
+        data.determinantSource.determinantLogVolume ∧
+      data.tensorPower.normalizedLogVolume =
+        data.familyHullLogVolume ∧
+      data.tensorPower.tensorPowerLogVolume =
+        (data.tensorPower.tensorDegree : Real) * data.familyHullLogVolume :=
+  data.boundedFamily_ob5_endpoint hneA hneB
+
 theorem boundedFamilyHullDetLogVolumeOb9_endpoint
     {α : Type u} {ι : Type v} {β : Type w} {δ : Type x}
     [Fintype β]
