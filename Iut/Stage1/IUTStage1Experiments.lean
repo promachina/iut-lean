@@ -22250,6 +22250,89 @@ theorem calibratedSynchronizationIPLConstructionPossibleImageSideConditionedHull
     packetLocalObjectFinite_eq_ind3Source targetSource cTheta
     thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Experiment-facing raw Step (xi) comparison from the calibrated possible-image
+source-derived Hodge/SHE/IPL/hull route.
+
+This exposes the non-`C_Theta` comparison produced by the strongest current
+source-derived Step (xi) bridge: possible-image hull/determinant data gives
+`qSigned <= thetaSigned` after Hodge/SHE transport and IPL transport are
+constructed from their source objects.
+-/
+theorem calibratedSynchronizationIPLConstructionPossibleImageSideConditionedHull_qSigned_le_thetaSigned
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part
+    |>.qSigned_le_thetaSigned_from_sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHull
+    audited hodgeSynchronization iplConstructionSource hullSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-facing audit payload for the raw calibrated possible-image Step (xi)
+comparison.
+-/
+theorem calibratedSynchronizationIPLConstructionPossibleImageSideConditionedHull_qComparison_endpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    hullSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record hullSource.qChoice ∧
+      hullSource.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part
+    |>.sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHull_qComparison_endpoint
+    audited hodgeSynchronization iplConstructionSource hullSource
+
 /--
 Scholze-Stix-style collapse test for the representative `j^2` factors.
 

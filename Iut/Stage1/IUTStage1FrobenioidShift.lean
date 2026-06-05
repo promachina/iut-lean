@@ -27005,6 +27005,105 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedCalibratedHodgeSH
 
 set_option linter.style.longLine false in
 /--
+Raw signed Step (xi) comparison from the calibrated possible-image
+source-derived Hodge/SHE/IPL/hull route.
+
+Unlike the `C_Theta` dichotomy endpoints, this theorem does not consume the
+extra numeric bound `thetaSigned <= C_Theta * (-qSigned)`.  It exposes the
+source-derived bridge's Step (xi) output: after constructing Hodge/SHE
+transport and source calibration from the calibrated Hodge--Arakelov
+synchronization, constructing the IPL transport from the Theorem 3.11 link
+source, and reading q-pilot possible-image hull/determinant data from the
+Step (xi) source, Lean derives the raw comparison `qSigned <= thetaSigned`.
+-/
+theorem qSigned_le_thetaSigned_from_sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHull
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  let hullDetSource :=
+    hullSource.toSideConditionedHolomorphicHullDeterminantSource
+      |>.toHolomorphicHullDeterminantSource
+  let sourceBridge :=
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndHullDetSources
+        (part := part) (audited := audited)
+        hodgeSynchronization iplConstructionSource hullDetSource
+  sourceBridge.hullConstructor.qSigned_le_thetaSigned
+
+set_option linter.style.longLine false in
+/--
+Audit payload for the raw calibrated possible-image Step (xi) comparison.
+
+This endpoint records the source projections used by
+`qSigned_le_thetaSigned_from_sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHull`:
+the q-pilot region is the chosen Theorem 3.11 possible-image region, q-pilot
+positivity and source normalization come from the shared side-condition object,
+and the raw signed comparison is obtained from the constructed source-derived
+bridge.
+-/
+theorem sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHull_qComparison_endpoint
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    hullSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record hullSource.qChoice ∧
+      hullSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  have hsource := hullSource.source_endpoint
+  ⟨hsource.1,
+    hsource.2.1,
+    hsource.2.2.2.1,
+    hsource.2.2.2.2.1,
+    part.qSigned_le_thetaSigned_from_sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHull
+      audited hodgeSynchronization iplConstructionSource hullSource⟩
+
+set_option linter.style.longLine false in
+/--
 Source-derived finite-divisor vertical-`IQ` route from a side-conditioned
 Step (xi) hull/determinant source.
 
