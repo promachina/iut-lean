@@ -2089,6 +2089,12 @@ The project currently proves the following source-facing results in \Lean{}:
   normalization from that object, rather than carrying them as separate Step
   (xi) fields.  The experiment module exposes this stronger audit route as
   \texttt{obligationsBackedFamilyHullFiniteDivisorVerticalIQ\_cThetaDichotomy}.
+\item The exact theta/family-hull identification now also has a
+  Hodge-calibrated source form.  Instead of supplying
+  \texttt{thetaSigned = familyHullLogVolume} directly, the source object
+  factors the equality through the Hodge--Arakelov theta-monoid degree, and the
+  experiment module exposes this route as
+  \texttt{hodgeCalibratedFamilyHullFiniteDivisorVerticalIQ\_cThetaDichotomy}.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
