@@ -25894,6 +25894,167 @@ theorem finiteHodgeSHETransport_endpoint
 end IUTStage1FiniteHodgeSHETransport
 
 /--
+Source boundary for finite Hodge/SHE transport.
+
+This refines the finite transport object by naming the Hodge-theater descent
+bridge and the allowed forgetful transport that justifies reading the finite
+label comparison without identifying the two Hodge-theater histories.  The
+current constructor still uses the Hodge--Arakelov synchronization source for
+the finite log-volume preservation data; the descent bridge and forgetting
+permission are now separate fields that can later be constructed from the
+source-paper Hodge-theater machinery.
+-/
+structure IUTStage1FiniteHodgeSHETransportSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F) where
+  synchronization : IUTStage1SHESynchronizationSource record l X C
+  descentBridge : IUTStage1HodgeTheaterDescentBridgeData
+  descentBridge_eq_structuredSHE :
+    descentBridge = record.bundle.hodgeTheaterDescentBridgeData
+  allowedForgetfulTransport : Prop
+  allowed_forgetful_transport : allowedForgetfulTransport
+  coordinateEquiv : ZMod l.value ≃ ZMod l.value
+  coordinate_equiv_eq :
+    coordinateEquiv =
+      synchronization.toFactoredObligations.coordinateEquiv
+  fullLabelLogVolume_preserved :
+    ∀ j : ZMod l.value,
+      synchronization.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            (coordinateEquiv j)) =
+        synchronization.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
+  transportedAverage_preserved :
+    let audit :=
+      synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit
+    audit.targetTransportedAverage = audit.sourceAverage
+
+namespace IUTStage1FiniteHodgeSHETransportSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {l : PrimeGeFive} {F : Type v} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+
+noncomputable def ofSynchronization
+    (sync : IUTStage1SHESynchronizationSource record l X C)
+    (allowedForgetfulTransport : Prop)
+    (allowed_forgetful_transport : allowedForgetfulTransport) :
+    IUTStage1FiniteHodgeSHETransportSource record l X C :=
+  { synchronization := sync,
+    descentBridge := record.bundle.hodgeTheaterDescentBridgeData,
+    descentBridge_eq_structuredSHE := rfl,
+    allowedForgetfulTransport := allowedForgetfulTransport,
+    allowed_forgetful_transport := allowed_forgetful_transport,
+    coordinateEquiv := sync.toFactoredObligations.coordinateEquiv,
+    coordinate_equiv_eq := rfl,
+    fullLabelLogVolume_preserved := sync.fullLabelLogVolume_preserved,
+    transportedAverage_preserved := sync.transportedAverage_eq }
+
+theorem descentBridge_domainTheater_eq
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    sourceData.descentBridge.domainTheater =
+      record.bundle.structuredSHE.context.domainStructure.theater := by
+  rw [sourceData.descentBridge_eq_structuredSHE]
+  exact record.bundle.hodgeTheaterDescentBridgeData_domainTheater_eq
+
+theorem descentBridge_codomainTheater_eq
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    sourceData.descentBridge.codomainTheater =
+      record.bundle.structuredSHE.context.codomainStructure.theater := by
+  rw [sourceData.descentBridge_eq_structuredSHE]
+  exact record.bundle.hodgeTheaterDescentBridgeData_codomainTheater_eq
+
+theorem histories_not_identified
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    sourceData.descentBridge.domainTheater.side ≠
+      sourceData.descentBridge.codomainTheater.side :=
+  sourceData.descentBridge.histories_not_identified
+
+theorem coordinateEquiv_eq_factored
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    sourceData.coordinateEquiv =
+      sourceData.synchronization.toFactoredObligations.coordinateEquiv :=
+  sourceData.coordinate_equiv_eq
+
+theorem allowedForgetfulTransport_holds
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    sourceData.allowedForgetfulTransport :=
+  sourceData.allowed_forgetful_transport
+
+noncomputable def toFiniteHodgeSHETransport
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    IUTStage1FiniteHodgeSHETransport record l X C :=
+  { synchronization := sourceData.synchronization,
+    sourceTheater := sourceData.descentBridge.domainTheater,
+    targetTheater := sourceData.descentBridge.codomainTheater,
+    source_theater_eq := sourceData.descentBridge_domainTheater_eq,
+    target_theater_eq := sourceData.descentBridge_codomainTheater_eq,
+    coordinateEquiv := sourceData.coordinateEquiv,
+    coordinate_equiv_eq := sourceData.coordinate_equiv_eq,
+    fullLabelLogVolume_preserved :=
+      sourceData.fullLabelLogVolume_preserved,
+    transportedAverage_preserved :=
+      sourceData.transportedAverage_preserved,
+    histories_not_identified := sourceData.histories_not_identified }
+
+theorem source_endpoint
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    sourceData.descentBridge =
+        record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.descentBridge.domainTheater =
+        record.bundle.structuredSHE.context.domainStructure.theater ∧
+      sourceData.descentBridge.codomainTheater =
+        record.bundle.structuredSHE.context.codomainStructure.theater ∧
+      sourceData.allowedForgetfulTransport ∧
+      sourceData.coordinateEquiv =
+        sourceData.synchronization.toFactoredObligations.coordinateEquiv ∧
+      sourceData.descentBridge.domainTheater.side ≠
+        sourceData.descentBridge.codomainTheater.side :=
+  ⟨sourceData.descentBridge_eq_structuredSHE,
+    sourceData.descentBridge_domainTheater_eq,
+    sourceData.descentBridge_codomainTheater_eq,
+    sourceData.allowedForgetfulTransport_holds,
+    sourceData.coordinateEquiv_eq_factored,
+    sourceData.histories_not_identified⟩
+
+theorem toFiniteHodgeSHETransport_endpoint
+    (sourceData :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
+      sourceData.toFiniteHodgeSHETransport.sourceTheater =
+        record.bundle.structuredSHE.context.domainStructure.theater ∧
+      sourceData.toFiniteHodgeSHETransport.targetTheater =
+        record.bundle.structuredSHE.context.codomainStructure.theater ∧
+      sourceData.toFiniteHodgeSHETransport.coordinateEquiv =
+        sourceData.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv ∧
+      sourceData.allowedForgetfulTransport ∧
+      sourceData.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHETransport.targetTheater.side := by
+  let endpoint :=
+    sourceData.toFiniteHodgeSHETransport.finiteHodgeSHETransport_endpoint
+  exact
+    ⟨endpoint.1,
+      endpoint.2.1,
+      endpoint.2.2.1,
+      endpoint.2.2.2.1,
+      sourceData.allowedForgetfulTransport_holds,
+      endpoint.2.2.2.2.2.2⟩
+
+end IUTStage1FiniteHodgeSHETransportSource
+
+/--
 Boundary comparing the strengthened SHE/common-container route with the factored
 square/full-label preservation interface.
 
@@ -48260,10 +48421,10 @@ Corollary 3.12 route.
 This is the current source-facing replacement for passing a completed
 `IUTStage1HodgeSHEIPLHullRouteLogVolumeAlignment` as an opaque argument.  It
 keeps the four source components separate: the Theorem 3.11 multiradial record,
-the IPL/log-volume transport, the Hodge--Arakelov SHE synchronization source,
-the Step (xi) hull/determinant constructor, and the source-side theta/Hodge
-calibration certificate.  The ordinary route alignment is then constructed
-from these components.
+the IPL/log-volume transport, the finite Hodge/SHE transport, the Step (xi)
+hull/determinant constructor, and the source-side theta/Hodge calibration
+certificate.  The ordinary route alignment is then constructed from these
+components.
 -/
 structure IUTStage1SourceDerivedHodgeSHEIPLHullBridge
     {packageN :
@@ -48305,6 +48466,24 @@ variable {audited :
     coric IUTStage1PlaceKind.nonarchimedean}
 variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
 variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+
+noncomputable def ofFiniteHodgeSHETransportSource
+    (iplTransport : IUTStage1IPLLogVolumeTransport record)
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (hullConstructor :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
+        record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  { iplTransport := iplTransport,
+    finiteHodgeSHETransport :=
+      transportSource.toFiniteHodgeSHETransport,
+    hullConstructor := hullConstructor,
+    sourceCalibration := sourceCalibration }
 
 def toRouteLogVolumeAlignment
     (bridge :
@@ -48365,6 +48544,31 @@ theorem finiteHodgeSHETransport_endpoint
         bridge.finiteHodgeSHETransport.targetTheater.side :=
   IUTStage1FiniteHodgeSHETransport.finiteHodgeSHETransport_endpoint
     bridge.finiteHodgeSHETransport
+
+theorem ofFiniteHodgeSHETransportSource_endpoint
+    (iplTransport : IUTStage1IPLLogVolumeTransport record)
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (hullConstructor :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
+        record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    let bridge :=
+      ofFiniteHodgeSHETransportSource
+        (part := part) (audited := audited)
+        iplTransport transportSource hullConstructor sourceCalibration;
+    bridge.finiteHodgeSHETransport =
+        transportSource.toFiniteHodgeSHETransport ∧
+      transportSource.allowedForgetfulTransport ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  intro bridge
+  exact
+    ⟨rfl,
+      transportSource.allowedForgetfulTransport_holds,
+      transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
 
 theorem sourceLogVolumeEq
     (bridge :
