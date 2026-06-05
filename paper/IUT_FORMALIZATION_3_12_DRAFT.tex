@@ -2009,6 +2009,13 @@ The project currently proves the following source-facing results in \Lean{}:
   pre-ledger certificate.  Its Hodge-theater sides are projected from the
   finite transport, and its log-volume preservation equality is the transported
   average preservation supplied by the finite Hodge/\(\SHE\) layer.
+\item The public \(\IPL\) boundary also has a certificate-pinned link-source
+  form.  This form consumes the pre-ledger certificate's own \(\IPL\) datum
+  together with just the endpoint equalities saying that its link source and
+  target are the input and output prime strips.  Thus the strongest
+  finite-divisor route no longer has to carry a separate constructed
+  \(\IPL\)-datum alignment when the certificate datum itself already satisfies
+  the Theorem 3.11 endpoint shape.
 \item The Step (xi) holomorphic-hull/determinant route now has a source
   boundary wrapper around the record-native Ob4 constructor.  The wrapper keeps
   the holomorphic hull shadow, \(q\subseteq P_{\mathrm{rec}}\) containment,
@@ -2044,6 +2051,11 @@ The project currently proves the following source-facing results in \Lean{}:
   with the record's history-separated descent-bridge permission, then follows
   the same \(\IPL\), record-native Step (xi), and finite-divisor
   vertical-\(IQ\) path.
+\item The strongest Hodge--Arakelov/history-separated endpoint can now use the
+  certificate-pinned \(\IPL\)-link source.  Its public assumptions no longer
+  include an arbitrary finite Hodge/\(\SHE\) transport, a free
+  allowed-forgetting predicate, a free square-weight profile, a separate
+  theta-root source, or a constructed-\(\IPL\)-datum alignment.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
@@ -2182,6 +2194,14 @@ free-standing \(\IPL\) datum, source/target endpoint equalities, or a separate
 gives the endpoint equalities definitionally, the source object aligns that
 constructed datum with the pre-ledger certificate, and log-volume preservation
 is read from the finite Hodge/\(\SHE\) transport.
+There is now also a certificate-pinned variant of this boundary.  It reads the
+\(\IPL\) datum directly from the pre-ledger certificate and asks only for the
+two endpoint equalities of that certificate link.  Consequently the public
+Hodge--Arakelov/history-separated route may avoid the stronger
+certificate-equals-constructed-\(\IPL\)-datum assumption.  The remaining
+source-paper task for this layer is to construct those certificate endpoint
+equalities, and eventually the input-prime-strip link itself, from the
+Theorem 3.11 \(\IPL\) machinery.
 At the next source boundary, the same public endpoint can now build the finite
 Hodge/\(\SHE\) transport from source and target Hodge--Arakelov
 theta-evaluation sources and the canonical one-label degree preservation.  The
@@ -2206,9 +2226,9 @@ The practical priority order is:
   forgetting operation beneath the current history-separated permission
   predicate, and deeper Gaussian/Frobenioid preservation data beneath the
   current Hodge--Arakelov theta-evaluation wrapper;
-\item replace the remaining \(\IPL\) certificate-alignment proof by the actual
-  Theorem 3.11 input-prime-strip link construction, rather than carrying the
-  alignment as an explicit source-boundary obligation;
+\item replace the remaining certificate-pinned \(\IPL\) endpoint equalities by
+  the actual Theorem 3.11 input-prime-strip link construction, rather than
+  carrying these endpoint equalities as explicit source-boundary obligations;
 \item construct the packet-correspondence source from the actual
   log-Kummer/Frobenioid machinery of \IUT{} III, Step (x), rather than treating
   this finite correspondence object itself as source-facing input;
