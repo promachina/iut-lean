@@ -2192,6 +2192,11 @@ The project currently proves the following source-facing results in \Lean{}:
   The q-pilot region is fixed to the chosen Theorem 3.11 possible-image region,
   so the public Step (xi) source no longer carries a separate q-region and
   \(q\subseteq P_{\mathrm{choice}}\) proof.
+\item The target-charted possible-image summand route now has a Hodge-layer
+  charted synchronization form.  The target theta chart/canonical-one equality
+  is projected from a target-charted Hodge--Arakelov synchronization object,
+  while the Step (xi) source retains only the determinant summand equality and
+  record-native possible-image hull data.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2434,6 +2439,16 @@ target-charted possible-image summand source, and the boundary theorem builds
 the source-derived Hodge/\(\SHE/\IPL\)/hull bridge internally before entering
 the generic finite-divisor route.  Thus this endpoint no longer has to reach the
 bridge through the older target-charted/summand projection chain.
+The target chart comparison can now be moved one layer earlier.  A
+target-charted Hodge--Arakelov synchronization records that the transported
+pre-ledger theta chart is the target Hodge--Arakelov canonical one-label
+degree; \Lean{} then derives the source theta-monoid reading from the
+synchronized canonical-one preservation.  The associated possible-image summand
+Step (xi) source no longer carries this target chart/canonical-one equality as
+a hull-side calibration field; it keeps only the determinant-side finite
+summand equality plus the record-native possible-image hull data.  The bridge
+audit and finite-divisor \(C_\Theta\)-endpoint expose this refined source
+boundary.
 The direct-labelled Step (x) finite-divisor route now also has a
 source-derived Hodge/\(\SHE/\IPL\)/hull form.  Instead of taking the older
 route-alignment record, a free square-weight profile, and a separate theta-root

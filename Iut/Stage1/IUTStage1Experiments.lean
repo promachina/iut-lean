@@ -22800,6 +22800,255 @@ theorem synchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstruct
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit for target-charted Hodge--Arakelov synchronization.
+
+The target theta chart is identified with the target Hodge--Arakelov canonical
+one-label degree at the Hodge synchronization layer, before Step (xi) receives
+any hull or determinant source.
+-/
+theorem targetChartedHodgeArakelovSynchronization_endpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      part.IUTStage1TargetChartedHodgeArakelovSynchronization
+        audited X C) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        hodgeSynchronization.sourceEvaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        hodgeSynchronization.sourceEvaluation.fullLabelCompatibility ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.valueSource.thetaMonoidDegree :=
+  hodgeSynchronization.synchronization_endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface audit for the target-charted synchronized possible-image
+summand Step (xi) source.
+
+The source projects the target chart comparison from target-charted Hodge
+synchronization; its own determinant-side scalar input is only the finite
+summand equality.
+-/
+theorem targetChartedSynchronizedPossibleImageSummandHodgeFamilyHull_sourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {hodgeSynchronization :
+      part.IUTStage1TargetChartedHodgeArakelovSynchronization
+        audited X C}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      part.IUTStage1TargetChartedSynchronizedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization) :
+    sourceData.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      package.preLedger.thetaSigned =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.source_endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface bridge audit for target-charted Hodge synchronization and
+the target-charted synchronized possible-image summand Step (xi) source.
+-/
+theorem targetChartedHodgeSynchronizedPossibleImageSummandHodgeFamilyHullIPLConstruction_bridgeEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      part.IUTStage1TargetChartedHodgeArakelovSynchronization
+        audited X C)
+    (iplConstructionSource : IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (sourceData :
+      part.IUTStage1TargetChartedSynchronizedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization) :
+    let bridge :=
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeSynchronizationT11IPLConstructionAndPossibleImageSummandSources
+        (part := part) (audited := audited)
+        hodgeSynchronization iplConstructionSource sourceData;
+    bridge.iplTransport.iplDatum = package.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        iplConstructionSource.constructedDatum ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      sourceData.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      package.preLedger.thetaSigned =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side :=
+  IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeSynchronizationT11IPLConstructionAndPossibleImageSummandSources_endpoint
+    (part := part) (audited := audited)
+    hodgeSynchronization iplConstructionSource sourceData
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface `C_Theta` dichotomy for the target-charted Hodge
+synchronization possible-image summand route.
+
+The finite-divisor endpoint now receives the target chart/canonical-one
+comparison through the Hodge synchronization object; the Step (xi) source keeps
+only the determinant summand equality and record-native possible-image hull
+data.
+-/
+theorem targetChartedHodgeSynchronizedPossibleImageSummandHodgeFamilyHullIPLConstructionBridgeFiniteDivisorVerticalIQ_cThetaDichotomy
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      part.IUTStage1TargetChartedHodgeArakelovSynchronization
+        audited X C)
+    (iplConstructionSource : IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (possibleImageSummandSource :
+      part.IUTStage1TargetChartedSynchronizedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChartedHodgeSynchronizedPossibleImageSummandHodgeFamilyHullIPLConstructionFiniteDivisorVerticalIQ
+    audited hodgeSynchronization iplConstructionSource
+    possibleImageSummandSource upperSemiEntry divisorPacket monoAnalyticTheater
+    kummerCompatibility forgettingCompatibility holomorphicF_realization
+    holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy for the record-native Step (xi)
 hull/determinant finite-divisor route.
 
