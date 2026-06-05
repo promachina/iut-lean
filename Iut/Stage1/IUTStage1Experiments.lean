@@ -24041,6 +24041,58 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_possibleImageHolomorp
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface determinant summand/family-hull Step (xi) audit for the
+all-in-one target-charted route.
+
+This endpoint names the determinant payload itself: target chart readings,
+Hodge theta-monoid summand formula, family-hull/determinant log-volume
+equality, package measure calibration, tensor-power normalization,
+determinant tensor bound, and the raw signed comparison.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_possibleImageDeterminantSummandFamilyHullEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+        routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+        routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.tensorPower.normalizedLogVolume =
+        routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.measure =
+        routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.toRegionMeasure ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  routeSource.possibleImageDeterminantSummandFamilyHull_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Remark 3.9.5(Ob5) bounded-family quotient audit for the
 all-in-one target-charted route.
 

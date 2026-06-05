@@ -19633,6 +19633,54 @@ theorem possibleImageHolomorphicHullLogVolume_endpoint
 
 set_option linter.style.longLine false in
 /--
+Determinant summand/family-hull payload exposed by the all-in-one
+target-charted route.
+
+This is the focused Step (xi) determinant audit before the finite Step (x)
+vertical-`IQ` source and the external `C_Theta` bound enter.  It keeps the
+target chart reading, Hodge theta-monoid summand formula,
+family-hull/determinant log-volume identification, package measure
+calibration, tensor-power normalization, determinant tensor bound, and raw
+signed comparison visible at the route boundary.
+-/
+theorem possibleImageDeterminantSummandFamilyHull_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.measure =
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.toRegionMeasure ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned := by
+  have hdet :=
+    sourceData.possibleImageSource.hodgeDeterminantSource.source_endpoint
+  exact
+    ⟨hdet.1,
+      hdet.2.1,
+      hdet.2.2.1,
+      hdet.2.2.2.1,
+      hdet.2.2.2.2.1,
+      sourceData.possibleImageSource.hodgeDeterminantSource.measure_eq_hullLogVolume,
+      hdet.2.2.2.2.2,
+      sourceData.possibleImageSideConditionedHull_endpoint.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
 Remark 3.9.5(Ob5) bounded-family quotient audit for the all-in-one
 target-charted route.
 
