@@ -56619,6 +56619,73 @@ theorem boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullRealifiedEntryVer
         sourceAudit.2.2.2.2.2⟩,
       route⟩
 
+set_option linter.style.longLine false in
+/--
+Source-derived realified-source audit form with vertical-`IQ` target.
+
+This is the bridge-projection version of
+`boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullRealifiedEntryVerticalIQ_audit`:
+the Hodge/SHE/IPL/hull route alignment and the canonical square-weight profile
+are recovered from the separated source-derived bridge, while the realified
+Step (x) source and exact vertical-`IQ` target still provide the packet-local
+and target-side audit witnesses.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_of_sourceDerivedHodgeSHEIPLHullRealifiedEntryVerticalIQ_audit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (bridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {entry : IUTStage1NonarchimedeanInclusionData}
+    (realifiedSource :
+      NonarchimedeanThetaRootRealifiedFrobenioidLogKummerEntrySource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C entry
+        holomorphicF holomorphicD monoAnalyticD)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer entry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      (let sourceCalibration :=
+          realifiedSource.realifiedEntrySource.packetSource.sourceCalibration;
+       let packetAlignment := realifiedSource.toPacketLocalSourceAlignment;
+       packetAlignment.packetLocalObject_eq_entrySource =
+            sourceCalibration.packetLocalObject_eq_entrySource ∧
+         packetAlignment.entrySource_eq_monoAnalyticProduct =
+            sourceCalibration.entrySource_eq_monoAnalyticProduct ∧
+         audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+            audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume) ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  part.boundarySignedEqualityOrStrictCTheta_of_hodgeSHEIPLHullRealifiedEntryVerticalIQ_audit
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    audited bridge.toRouteLogVolumeAlignment rfl realifiedSource targetSource
+    cTheta thetaSigned_le_cTheta_absLogQ
+
 /--
 Hodge/SHE/IPL/hull route through a vertical-`IQ` Step (x) target source.
 
