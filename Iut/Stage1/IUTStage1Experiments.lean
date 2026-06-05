@@ -21527,6 +21527,61 @@ theorem synchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstruct
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit for the direct synchronized possible-image summand
+source-derived bridge constructor.
+-/
+theorem synchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstruction_bridgeEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      part.IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        audited X C)
+    (iplConstructionSource : IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (sourceData :
+      part.IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization) :
+    let bridge :=
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndSynchronizedTargetChartedPossibleImageSummandSources
+        (part := part) (audited := audited)
+        hodgeSynchronization iplConstructionSource sourceData;
+    bridge.iplTransport.iplDatum = package.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        iplConstructionSource.constructedDatum ∧
+      sourceData.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      package.preLedger.thetaSigned =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side :=
+  IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndSynchronizedTargetChartedPossibleImageSummandSources_endpoint
+    (part := part) (audited := audited)
+    hodgeSynchronization iplConstructionSource sourceData
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy from the synchronized target-charted
 possible-image summand Step (xi) route.
 

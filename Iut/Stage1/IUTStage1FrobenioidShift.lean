@@ -19014,6 +19014,90 @@ theorem ofCalibratedHodgeSynchronizationT11IPLConstructionAndHullDetSources_endp
       hullSource.qSigned_le_thetaSigned,
       bridge.finiteHodgeSHETransport.histories_not_identified'⟩
 
+set_option linter.style.longLine false in
+/--
+Construct the source-derived bridge directly from the synchronized
+target-charted possible-image summand/family-hull Step (xi) source.
+
+The generic possible-image side-conditioned holomorphic-hull/determinant source
+is projected internally from the summand/family-hull source before the calibrated
+Hodge/SHE and constructed-IPL bridge is assembled.
+-/
+noncomputable def ofCalibratedHodgeSynchronizationT11IPLConstructionAndSynchronizedTargetChartedPossibleImageSummandSources
+    {β : Type v} [Fintype β]
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (possibleImageSummandSource :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  let hullSource :=
+    possibleImageSummandSource.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
+      |>.toSideConditionedHolomorphicHullDeterminantSource
+      |>.toHolomorphicHullDeterminantSource
+  ofCalibratedHodgeSynchronizationT11IPLConstructionAndHullDetSources
+    (part := part) (audited := audited)
+    hodgeSynchronization iplConstructionSource hullSource
+
+set_option linter.style.longLine false in
+/--
+Audit endpoint for the direct synchronized possible-image summand bridge
+constructor.
+
+This records the source projections that feed the bridge: the q-pilot region is
+the chosen Theorem 3.11 possible image, the Hodge theta degree is the finite sum
+of adjusted determinant summands, the package theta scalar is the family-hull
+log-volume, and the constructed bridge still yields `qSigned <= thetaSigned`.
+-/
+theorem ofCalibratedHodgeSynchronizationT11IPLConstructionAndSynchronizedTargetChartedPossibleImageSummandSources_endpoint
+    {β : Type v} [Fintype β]
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (possibleImageSummandSource :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    let bridge :=
+      ofCalibratedHodgeSynchronizationT11IPLConstructionAndSynchronizedTargetChartedPossibleImageSummandSources
+        (part := part) (audited := audited)
+        hodgeSynchronization iplConstructionSource possibleImageSummandSource;
+    bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        iplConstructionSource.constructedDatum ∧
+      possibleImageSummandSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record possibleImageSummandSource.qChoice ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (possibleImageSummandSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      packageN.preLedger.thetaSigned =
+        possibleImageSummandSource.familyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        possibleImageSummandSource.obligations.hullDetData.bridgeData ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  intro bridge
+  have hsource := possibleImageSummandSource.source_endpoint
+  exact
+    ⟨rfl,
+      iplConstructionSource.iplDatum_eq_constructedDatum,
+      hsource.1,
+      hsource.2.2.2.2.1,
+      hsource.2.2.2.2.2.1,
+      hsource.2.2.2.2.2.2.1,
+      bridge.iplTransport.targetLogVolume_preserved,
+      bridge.hullConstructor.qSigned_le_thetaSigned,
+      bridge.finiteHodgeSHETransport.histories_not_identified'⟩
+
 theorem sourceLogVolumeEq
     (bridge :
       IUTStage1SourceDerivedHodgeSHEIPLHullBridge
@@ -27241,9 +27325,11 @@ theorem qSigned_le_thetaSigned_from_sourceDerivedSynchronizedTargetChartedPossib
       IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
         (β := β) part audited record hodgeSynchronization) :
     packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
-  part.qSigned_le_thetaSigned_from_sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHull
-    audited hodgeSynchronization iplConstructionSource
-    possibleImageSummandSource.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
+  let sourceBridge :=
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndSynchronizedTargetChartedPossibleImageSummandSources
+      (part := part) (audited := audited)
+      hodgeSynchronization iplConstructionSource possibleImageSummandSource
+  sourceBridge.hullConstructor.qSigned_le_thetaSigned
 
 set_option linter.style.longLine false in
 /--
