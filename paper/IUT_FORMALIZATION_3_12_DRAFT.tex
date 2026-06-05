@@ -2071,11 +2071,11 @@ The project currently proves the following source-facing results in \Lean{}:
   bound from the Ob5 hull/determinant compatibility.
 \item The history-separated Hodge--Arakelov, certificate-pinned \(\IPL\),
   finite-divisor vertical-\(IQ\) endpoint now consumes this
-  family-hull-backed source directly.  The endpoint projects it to the older
-  hull/det-data-backed exact-theta source internally, so the public route no
-  longer has to present the exact tensor-power equality as the Step (xi)
-  source-facing input.  The experiment module exposes the same route as the
-  audit theorem
+  family-hull-backed source directly.  The endpoint constructs the
+  source-derived Hodge/\(\SHE/\IPL\)/hull bridge from this source, so the
+  public route no longer has to present the exact tensor-power equality as the
+  Step (xi) source-facing input.  The experiment module exposes the same route
+  as the audit theorem
   \texttt{familyHullBackedFiniteDivisorVerticalIQ\_cThetaDichotomy}.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
@@ -2293,9 +2293,10 @@ loose exact tensor-power equality by the source-shaped assertion that
 \(\theta_{\mathrm{signed}}\) is the log-volume of the Theorem 3.11
 possible-image family hull; the normalized tensor-power equality is then
 derived from the Ob5 determinant compatibility.  That variant is now wired into
-the finite-divisor vertical-\(IQ\) endpoint chain through a projection to the
-older backed exact-theta source.  The remaining task is to construct the
-underlying fields from the source-paper holomorphic-hull and determinant
+the finite-divisor vertical-\(IQ\) endpoint chain through a dedicated
+source-derived bridge constructor, rather than through the older backed
+exact-theta source.  The remaining task is to construct the underlying fields
+from the source-paper holomorphic-hull and determinant
 operations.
 
 The practical priority order is:

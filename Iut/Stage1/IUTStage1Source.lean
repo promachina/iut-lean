@@ -50502,6 +50502,34 @@ noncomputable def ofFiniteHodgeSHET11IPLAndHullDetSources
     hullConstructor := hullSource.toHullDetSourceConstructor,
     sourceCalibration := sourceCalibration }
 
+noncomputable def ofFiniteHodgeSHET11IPLAndFamilyHullExactThetaSources
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    (familyHullSource :
+      IUTStage1ChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
+        (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  let iplSource :=
+    IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource
+      (l := l) (X := X) (C := C)
+      (finiteTransport := transportSource.toFiniteHodgeSHETransport)
+      iplLinkSource
+  let hullSource :=
+    familyHullSource.toSideConditionedHolomorphicHullDeterminantSource
+      |>.toChoiceLinkedHolomorphicHullDeterminantSource
+      |>.toHolomorphicHullDeterminantSource
+  { iplTransport := iplSource.toIPLLogVolumeTransport,
+    finiteHodgeSHETransport :=
+      transportSource.toFiniteHodgeSHETransport,
+    hullConstructor := hullSource.toHullDetSourceConstructor,
+    sourceCalibration := sourceCalibration }
+
 noncomputable def ofFiniteHodgeSHET11IPLConstructionAndHullDetSources
     {β : Type v} [Fintype β]
     (transportSource :
@@ -50714,6 +50742,46 @@ theorem ofFiniteHodgeSHET11IPLAndHullDetSources_endpoint
       rfl,
       bridge.iplTransport.targetLogVolume_preserved,
       hullSource.qSigned_le_thetaSigned,
+      transportSource.allowedForgetfulTransport_holds,
+      transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
+
+theorem ofFiniteHodgeSHET11IPLAndFamilyHullExactThetaSources_endpoint
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    (familyHullSource :
+      IUTStage1ChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
+        (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    let bridge :=
+      ofFiniteHodgeSHET11IPLAndFamilyHullExactThetaSources
+        (part := part) (audited := audited)
+        transportSource iplLinkSource familyHullSource sourceCalibration;
+    bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.finiteHodgeSHETransport =
+        transportSource.toFiniteHodgeSHETransport ∧
+      packageN.preLedger.thetaSigned =
+        familyHullSource.familyHullSource.familyHullLogVolume ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      transportSource.forgetfulTransport.transportAllowed ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  intro bridge
+  dsimp [ofFiniteHodgeSHET11IPLAndFamilyHullExactThetaSources,
+    IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+    IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport] at bridge ⊢
+  exact
+    ⟨rfl,
+      rfl,
+      familyHullSource.thetaSigned_eq_familyHullLogVolume,
+      bridge.iplTransport.targetLogVolume_preserved,
+      familyHullSource.toSideConditionedHolomorphicHullDeterminantSource
+        |>.qSigned_le_thetaSigned,
       transportSource.allowedForgetfulTransport_holds,
       transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
 
@@ -55874,12 +55942,19 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHist
     (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
         packageN.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < cTheta :=
-  part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHistorySeparatedT11IPLLinkChoiceLinkedExactThetaHullDetDataBackedFiniteDivisorVerticalIQ
-    audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
-    iplLinkSource familyHullBackedSource.toExactThetaHullDetDataBackedSource
-    sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
-    kummerCompatibility forgettingCompatibility holomorphicF_realization
-    holomorphicD_realization holomorphicStructureForgotten
+  let transportSource :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+      (record := record)
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+  let sourceBridge :=
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndFamilyHullExactThetaSources
+        (part := part) (audited := audited)
+        transportSource iplLinkSource familyHullBackedSource sourceCalibration
+  part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorIQ
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    audited sourceBridge rfl sourceEvaluation.thetaRootSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
     holomorphic_structure_forgotten packetLocalObject_eq_entrySource
     packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
     targetSource cTheta thetaSigned_le_cTheta_absLogQ
