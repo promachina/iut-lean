@@ -5166,6 +5166,83 @@ theorem hodgeSHEIPLHullUpperSemiEntryZMod_cThetaDichotomy
     orderedAlignment packetRoute theta_source_eq cTheta
     thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Experiment-surface `C_Theta` dichotomy for the source-derived upper-semi
+`ZMod` route.
+
+The upper-semi source packages the entry and its membership; the source-derived
+bridge supplies the route alignment, canonical square-weight profile, and
+theta-root source before applying the packet-normalized `ZMod` calibration.
+-/
+theorem sourceDerivedHodgeSHEIPLHullUpperSemiEntryZMod_cThetaDichotomy
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (bridge :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (entrySource_eq_monoAnalyticProduct :
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.toRealized.product.productLogVolume)
+    (orderedAlignment : Ind3OrderedRealLineAlignment part audited)
+    (packetRoute :
+      audit.FLZModCuspLabelThetaConstantZModPacketNormalizedRouteAudit l)
+    (theta_source_eq :
+      part.insulated_route.theta_source = packetRoute.theta_source)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_of_sourceDerivedHodgeSHEIPLHullUpperSemiEntryZMod
+    audited bridge upperSemiEntry kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization
+    monoAnalyticD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    entrySource_eq_monoAnalyticProduct orderedAlignment packetRoute
+    theta_source_eq cTheta thetaSigned_le_cTheta_absLogQ
+
 /--
 Corollary 3.12 first-pass `C_Theta` dichotomy through a packet-normalized
 upper-semi Step (x) entry and a named source-side packet/product calibration.
