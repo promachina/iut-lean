@@ -2101,6 +2101,12 @@ The project currently proves the following source-facing results in \Lean{}:
   \texttt{thetaSigned} equality from the existing chart theorem.  The
   experiment module exposes this route as
   \texttt{chartedHodgeCalibratedFamilyHullFiniteDivisorVerticalIQ\_cThetaDichotomy}.
+\item The charted Hodge/family-hull calibration now has a determinant-factored
+  form.  The source object calibrates the Hodge--Arakelov theta-monoid degree
+  to the normalized determinant log-volume of the record-native family hull,
+  and \Lean{} derives the family-hull equality from the Ob5
+  hull/determinant compatibility.  The experiment module exposes this route as
+  \texttt{determinantChartedHodgeFamilyHullFiniteDivisorVerticalIQ\_cThetaDichotomy}.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
