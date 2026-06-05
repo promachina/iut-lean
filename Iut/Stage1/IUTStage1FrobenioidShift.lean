@@ -19161,6 +19161,42 @@ theorem hodgeSHEIPLConstruction_endpoint
 
 set_option linter.style.longLine false in
 /--
+Finite Hodge/SHE transport audit exposed by the all-in-one target-charted route.
+
+This isolates the Hodge/SHE part of the constructed bridge: the structured SHE
+flag, source/target Hodge theaters, coordinate transport, full-label
+log-volume preservation, transported-average preservation, and
+history-separation guard are all projected from the route's finite transport.
+-/
+theorem finiteHodgeSHETransport_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    QualitativeData.HasStructuredSHE packageN.preLedger.output.family ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater =
+        record.bundle.structuredSHE.context.domainStructure.theater ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater =
+        record.bundle.structuredSHE.context.codomainStructure.theater ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.coordinateEquiv =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.toFactoredObligations.coordinateEquiv ∧
+      (∀ j : ZMod l.value,
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.coordinateEquiv j)) =
+          sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      (let audit :=
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization
+          |>.toStructuredSHESquareWeightTransportAudit
+          |>.preservationAudit
+      audit.targetTransportedAverage = audit.sourceAverage) ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater.side :=
+  IUTStage1FiniteHodgeSHETransport.finiteHodgeSHETransport_endpoint
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport
+
+set_option linter.style.longLine false in
+/--
 Project the all-in-one target-charted Hodge/IPL route to its Step (xi)
 possible-image side-conditioned holomorphic hull/determinant source.
 

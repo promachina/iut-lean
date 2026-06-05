@@ -23460,6 +23460,58 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_hodgeSHEIPLConstructi
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface finite Hodge/SHE transport audit for the all-in-one
+target-charted route.
+
+This is the Hodge/SHE-only part of the route: it exposes the structured SHE
+flag, source/target theaters, coordinate/full-label preservation,
+transported-average preservation, and history separation before the IPL and
+Step (xi) hull projections are used.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_finiteHodgeSHETransportEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater =
+        record.bundle.structuredSHE.context.domainStructure.theater ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater =
+        record.bundle.structuredSHE.context.codomainStructure.theater ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.coordinateEquiv =
+        routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.toFactoredObligations.coordinateEquiv ∧
+      (∀ j : ZMod l.value,
+        routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.coordinateEquiv j)) =
+          routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      (let audit :=
+        routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization
+          |>.toStructuredSHESquareWeightTransportAudit
+          |>.preservationAudit
+      audit.targetTransportedAverage = audit.sourceAverage) ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater.side ≠
+        routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater.side :=
+  routeSource.finiteHodgeSHETransport_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Step (xi) hull-source audit for the all-in-one
 target-charted Hodge/IPL determinant possible-image route.
 
