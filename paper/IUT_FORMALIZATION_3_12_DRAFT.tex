@@ -2114,6 +2114,12 @@ The project currently proves the following source-facing results in \Lean{}:
   equalities before entering the same finite-divisor endpoint.  The experiment
   module exposes this route as
   \texttt{summandChartedHodgeFamilyHullFiniteDivisorVerticalIQ\_cThetaDichotomy}.
+\item The summand-factored route now also has a source-calibrated
+  Hodge--Arakelov input form.  The source Hodge--Arakelov evaluation carries the
+  full-label theta/Hodge log-volume calibration and projects the previous
+  \texttt{IUTStage1SourceThetaHodgeLogVolumeCalibration} internally.  The
+  experiment module exposes this boundary as the source-calibrated variant of
+  the summand-charted finite-divisor theorem.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
