@@ -25690,6 +25690,73 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteDivisorVerticalI
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audited raw finite-source boundary from the all-in-one
+target-charted Hodge/IPL determinant possible-image route source.
+
+This is the no-`C_\Theta` boundary: it returns the named Gaussian-to-Step (xi)
+audit together with the route-owned bridge, raw comparison, finite-source
+equalities, and vertical-`IQ` target equalities.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceVerticalIQ_boundaryEndpointWithGaussianStepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C)
+    {j : Nat}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (finiteSource :
+      NonarchimedeanFiniteDivisorPacketLocalSource
+        audited upperSemiEntry.toEntry product)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+        routeSource ∧
+      routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      routeSource.toSourceDerivedBridge.iplTransport.targetLogVolume =
+        routeSource.toSourceDerivedBridge.iplTransport.sourceLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+      product.productLogVolume =
+        finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+  part.targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceVerticalIQ_boundaryEndpoint_withGaussianStepXIAudit
+    audited routeSource upperSemiEntry finiteSource targetSource
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Hodge direct-labelled finite-divisor route from the
 all-in-one target-charted Hodge/IPL determinant possible-image route source.
 
