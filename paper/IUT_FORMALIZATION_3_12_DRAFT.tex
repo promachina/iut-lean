@@ -2041,6 +2041,14 @@ The project currently proves the following source-facing results in \Lean{}:
   q-pilot log-volume in this ray, derives the determinant upper bound for that
   q-pilot log-volume, and records equality of the input-prime-strip and
   output-hull q-pilot readings.
+\item The choice-linked Step (xi) source now has a stricter exact-theta form.
+  Instead of carrying the normalized tensor-power upper bound as a separate
+  field, it carries the equality identifying \(\theta_{\mathrm{signed}}\) with
+  the normalized Ob4 tensor-power log-volume of the weighted determinant
+  source.  \Lean{} then derives the old tensor-power bound, projects back to
+  the existing choice-linked hull source, and exposes a public
+  Hodge--Arakelov/history-separated finite-divisor endpoint for this stronger
+  source shape.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2242,8 +2250,12 @@ source form, where \(q\subseteq P_{\mathrm{choice}}\) is supplied and
 choice-linked source also projects to the formal Step (xi-e/f/g) upper-ray
 record: the q-pilot log-volume is shown to lie in the upper ray, to be bounded
 by the determinant log-volume, and to have matching input/output q-pilot
-readings.  The remaining task is to construct the underlying fields from the
-source-paper holomorphic-hull and determinant operations.
+readings.  A stricter exact-theta variant now replaces the free
+tensor-power-bound field by the equality
+\(\theta_{\mathrm{signed}}=\operatorname{NormVol}(\mathrm{Ob4Det})\), from
+which \Lean{} derives the bound used by the older constructor.  The remaining
+task is to construct the underlying fields from the source-paper
+holomorphic-hull and determinant operations.
 
 The practical priority order is:
 \begin{enumerate}
