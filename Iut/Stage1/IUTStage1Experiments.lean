@@ -26150,6 +26150,88 @@ theorem calibratedSynchronizationIPLConstructionPossibleImageSideConditionedHull
 
 set_option linter.style.longLine false in
 /--
+Experiment-facing Gaussian-to-Step (xi) audit for the obligations-backed
+calibrated possible-image route with a certificate-pinned Theorem 3.11 IPL link.
+-/
+theorem calibratedSynchronizationIPLLinkPossibleImageSideConditionedHullObligationsBacked_gaussianToStepXI_endpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    let bridge :=
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources
+        (part := part) (audited := audited)
+        hodgeSynchronization iplLinkSource hullSource;
+    hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        hodgeSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+      (∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+        hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          hodgeSynchronization.sourceEvaluation.squareWeightProfile.weight j *
+            hodgeSynchronization.sourceEvaluation.thetaMonoidDegree) ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        hodgeSynchronization.sourceEvaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      bridge.finiteHodgeSHETransport.synchronization.sourceHA =
+        hodgeSynchronization.valueSource ∧
+      bridge.finiteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      bridge.finiteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) ∧
+      bridge.iplTransport.iplDatum = package.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum.link.source =
+        bridge.iplTransport.iplDatum.inputPrimeStrip ∧
+      bridge.iplTransport.iplDatum.link.target =
+        bridge.iplTransport.iplDatum.outputPrimeStrip ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      hullSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record hullSource.qChoice ∧
+      hullSource.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        hullSource.obligations.hullDetData.bridgeData ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side :=
+  part
+    |>.sourceDerivedCalibratedHodgeSHEIPLHullT11IPLLinkPossibleImageSideConditionedHullObligationsBacked_gaussianToStepXI_endpoint
+    audited hodgeSynchronization iplLinkSource hullSource
+
+set_option linter.style.longLine false in
+/--
 Experiment-facing raw Step (xi) comparison from the calibrated possible-image
 source-derived Hodge/SHE/IPL/hull route.
 
@@ -26314,6 +26396,89 @@ theorem calibratedSynchronizationIPLConstructionPossibleImageSideConditionedHull
   part
     |>.sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHullObligationsBacked_qComparison_endpoint
     audited hodgeSynchronization iplConstructionSource hullSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-facing raw Step (xi) comparison from the IPL-link obligations-backed
+calibrated possible-image source-derived route.
+-/
+theorem calibratedSynchronizationIPLLinkPossibleImageSideConditionedHullObligationsBacked_qSigned_le_thetaSigned
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part
+    |>.qSigned_le_thetaSigned_from_sourceDerivedCalibratedHodgeSHEIPLHullT11IPLLinkPossibleImageSideConditionedHullObligationsBacked
+    audited hodgeSynchronization iplLinkSource hullSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-facing audit payload for the IPL-link obligations-backed calibrated
+possible-image Step (xi) comparison.
+-/
+theorem calibratedSynchronizationIPLLinkPossibleImageSideConditionedHullObligationsBacked_qComparison_endpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    hullSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record hullSource.qChoice ∧
+      hullSource.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        hullSource.obligations.hullDetData.bridgeData ∧
+      iplLinkSource.iplDatum = package.preLedger.certificate.ipl ∧
+      iplLinkSource.iplDatum.link.source =
+        iplLinkSource.iplDatum.inputPrimeStrip ∧
+      iplLinkSource.iplDatum.link.target =
+        iplLinkSource.iplDatum.outputPrimeStrip ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part
+    |>.sourceDerivedCalibratedHodgeSHEIPLHullT11IPLLinkPossibleImageSideConditionedHullObligationsBacked_qComparison_endpoint
+    audited hodgeSynchronization iplLinkSource hullSource
 
 /--
 Scholze-Stix-style collapse test for the representative `j^2` factors.
