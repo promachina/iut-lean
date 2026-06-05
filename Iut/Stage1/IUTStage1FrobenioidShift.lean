@@ -36739,6 +36739,237 @@ theorem sourceDerivedBridgeTargetChartedHodgeDeterminantPossibleImageHullFiniteD
 
 set_option linter.style.longLine false in
 /--
+Named bridge audit for the packaged target-charted Hodge/\(\IPL\) construction
+source together with the Hodge/determinant possible-image route.
+
+This is the packaged-source version of
+`TargetChartedHodgeDeterminantPossibleImageHullIPLConstructionBridgeAudit`: the
+Hodge synchronization, finite Hodge/\(\SHE\) transport, and constructed
+\(\IPL\)/log-volume transport are all read from one
+`IUTStage1TargetChartedHodgeArakelovIPLConstructionSource` before the
+determinant possible-image Step (xi) payload is applied.
+-/
+structure TargetChartedHodgeIPLConstructionDeterminantPossibleImageHullBridgeAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeIPLSource :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C)
+    {β : Type v} [Fintype β]
+    (possibleImageSource :
+      IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record hodgeIPLSource.hodgeSynchronization)
+    (sourceBridge :
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge part audited record X C) :
+    Prop where
+  iplDatum_eq_certificate :
+    sourceBridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl
+  iplDatum_eq_constructed :
+    sourceBridge.iplTransport.iplDatum =
+      hodgeIPLSource.iplConstructionSource.constructedDatum
+  targetChartedTheta_eq_canonicalOneDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  chartedTheta_eq_thetaMonoidDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree
+  qPilotRegion_eq_choice :
+    possibleImageSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record possibleImageSource.qChoice
+  hodgeThetaDegree_eq_summandSum :
+    hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  familyHullLogVolume_eq_determinant :
+    possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+      possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume
+  thetaSigned_eq_familyHull :
+    packageN.preLedger.thetaSigned =
+      possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume
+  hullDetBridge_eq_obligations :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      possibleImageSource.obligations.hullDetData.bridgeData
+  targetLogVolume_preserved :
+    sourceBridge.iplTransport.targetLogVolume =
+      sourceBridge.iplTransport.sourceLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  histories_not_identified :
+    sourceBridge.finiteHodgeSHETransport.sourceTheater.side ≠
+      sourceBridge.finiteHodgeSHETransport.targetTheater.side
+
+set_option linter.style.longLine false in
+theorem toTargetChartedHodgeIPLConstructionDeterminantPossibleImageHullBridgeAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeIPLSource :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C)
+    {β : Type v} [Fintype β]
+    (possibleImageSource :
+      IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record hodgeIPLSource.hodgeSynchronization) :
+    let sourceBridge :=
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLConstructionAndHodgeDeterminantPossibleImageSources
+        (part := part) (audited := audited)
+        hodgeIPLSource possibleImageSource;
+    TargetChartedHodgeIPLConstructionDeterminantPossibleImageHullBridgeAudit
+      part audited hodgeIPLSource possibleImageSource sourceBridge := by
+  let sourceBridge :=
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLConstructionAndHodgeDeterminantPossibleImageSources
+      (part := part) (audited := audited)
+      hodgeIPLSource possibleImageSource
+  have h :=
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLConstructionAndHodgeDeterminantPossibleImageSources_endpoint
+      (part := part) (audited := audited)
+      hodgeIPLSource possibleImageSource
+  exact
+    { iplDatum_eq_certificate := h.1,
+      iplDatum_eq_constructed := h.2.1,
+      targetChartedTheta_eq_canonicalOneDegree := h.2.2.1,
+      chartedTheta_eq_thetaMonoidDegree := h.2.2.2.1,
+      qPilotRegion_eq_choice := h.2.2.2.2.1,
+      hodgeThetaDegree_eq_summandSum := h.2.2.2.2.2.1,
+      familyHullLogVolume_eq_determinant := h.2.2.2.2.2.2.1,
+      thetaSigned_eq_familyHull := h.2.2.2.2.2.2.2.1,
+      hullDetBridge_eq_obligations := h.2.2.2.2.2.2.2.2.1,
+      targetLogVolume_preserved := h.2.2.2.2.2.2.2.2.2.1,
+      qSigned_le_thetaSigned := h.2.2.2.2.2.2.2.2.2.2.1,
+      histories_not_identified := h.2.2.2.2.2.2.2.2.2.2.2 }
+
+set_option linter.style.longLine false in
+/--
+No-`C_\Theta` finite-divisor Step (x) boundary for the packaged
+target-charted Hodge/\(\IPL\) construction source and Hodge/determinant
+possible-image route.
+
+This endpoint ties the packaged-source bridge audit to the finite-divisor packet
+equalities and vertical-`IQ` target equalities before the later numeric
+`C_\Theta` estimate is supplied.
+-/
+theorem sourceDerivedBridgeTargetChartedHodgeIPLConstructionDeterminantPossibleImageHullFiniteDivisorVerticalIQ_boundaryEndpoint_withBridgeAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeIPLSource :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C)
+    {β : Type v} [Fintype β]
+    (possibleImageSource :
+      IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record hodgeIPLSource.hodgeSynchronization)
+    {j : Nat}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    let sourceBridge :=
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLConstructionAndHodgeDeterminantPossibleImageSources
+        (part := part) (audited := audited)
+        hodgeIPLSource possibleImageSource;
+    TargetChartedHodgeIPLConstructionDeterminantPossibleImageHullBridgeAudit
+        part audited hodgeIPLSource possibleImageSource sourceBridge ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          monoAnalyticTheater).toRealized.product.productLogVolume ∧
+      product.productLogVolume = divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned := by
+  let finiteSource :
+      NonarchimedeanFiniteDivisorPacketLocalSource
+        audited upperSemiEntry.toEntry product :=
+    { divisorPacket := divisorPacket,
+      monoAnalyticTheater := monoAnalyticTheater,
+      packetLocalObject_eq_entrySource := packetLocalObject_eq_entrySource,
+      packetLocalObjectFinite_eq_divisorRealified :=
+        packetLocalObjectFinite_eq_divisorRealified,
+      packetLocalObjectFinite_eq_ind3Source :=
+        packetLocalObjectFinite_eq_ind3Source }
+  have haudit :=
+    part.toTargetChartedHodgeIPLConstructionDeterminantPossibleImageHullBridgeAudit
+      audited hodgeIPLSource possibleImageSource
+  have hfinite := finiteSource.source_endpoint
+  have htarget := targetSource.verticalIQTarget_endpoint
+  exact
+    ⟨haudit,
+      hfinite.1,
+      hfinite.2.1,
+      hfinite.2.2.1,
+      hfinite.2.2.2.1,
+      hfinite.2.2.2.2,
+      htarget.1,
+      htarget.2.2.2.2.1,
+      htarget.2.2.2.2.2,
+      haudit.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
 Source-derived finite-divisor vertical-`IQ` route from a side-conditioned
 Step (xi) hull/determinant source.
 
