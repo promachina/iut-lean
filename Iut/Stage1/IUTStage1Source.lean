@@ -26323,6 +26323,40 @@ theorem ofDescentBridge_endpoint
     ⟨rfl, rfl, rfl, transport.transportAllowed_holds,
       transport.source_history_ne_target_history⟩
 
+/--
+Canonical finite-stage permission predicate for the current Hodge/SHE
+forgetful transport boundary.
+
+At this stage the formal route only permits forgetting along a descent bridge
+that still separates the two Hodge-theater histories.  This is intentionally a
+finite shadow of the source-paper Hodge-theater forgetting operation, not a
+claim that the full IUT functorial construction has been formalized.
+-/
+def historySeparatedAllowed
+    (bridge : IUTStage1HodgeTheaterDescentBridgeData) : Prop :=
+  bridge.domainTheater.side ≠ bridge.codomainTheater.side
+
+def ofHistorySeparatedDescentBridge
+    (bridge : IUTStage1HodgeTheaterDescentBridgeData) :
+    IUTStage1HodgeSHEAllowedForgetfulTransport :=
+  ofDescentBridge bridge
+    (historySeparatedAllowed bridge)
+    bridge.histories_not_identified
+
+theorem ofHistorySeparatedDescentBridge_endpoint
+    (bridge : IUTStage1HodgeTheaterDescentBridgeData) :
+    let transport := ofHistorySeparatedDescentBridge bridge;
+    transport.sourceTheater = bridge.domainTheater ∧
+      transport.targetTheater = bridge.codomainTheater ∧
+      transport.descent = bridge.descent ∧
+      transport.transportAllowed =
+        historySeparatedAllowed bridge ∧
+      transport.sourceTheater.side ≠ transport.targetTheater.side := by
+  intro transport
+  exact
+    ⟨rfl, rfl, rfl, rfl,
+      transport.source_history_ne_target_history⟩
+
 end IUTStage1HodgeSHEAllowedForgetfulTransport
 
 /--
@@ -26415,6 +26449,31 @@ noncomputable def ofThetaEvaluationSources
       (record := record)
       sourceEvaluation targetEvaluation canonicalOneDegree_preserved)
     allowedForgetfulTransport allowed_forgetful_transport
+
+noncomputable def ofSynchronizationHistorySeparated
+    (sync : IUTStage1SHESynchronizationSource record l X C) :
+    IUTStage1FiniteHodgeSHETransportSource record l X C :=
+  ofSynchronization
+    (record := record) sync
+    (IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+      record.bundle.hodgeTheaterDescentBridgeData)
+    record.bundle.hodgeTheaterDescentBridgeData_histories_not_identified
+
+noncomputable def ofThetaEvaluationSourcesHistorySeparated
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    IUTStage1FiniteHodgeSHETransportSource record l X C :=
+  ofSynchronizationHistorySeparated
+    (record := record)
+    (IUTStage1SHESynchronizationSource.ofThetaEvaluationSources
+      (record := record)
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved)
 
 theorem descentBridge_domainTheater_eq
     (sourceData :
@@ -26571,6 +26630,43 @@ theorem ofThetaEvaluationSources_endpoint
   intro sourceData
   exact
     ⟨rfl,
+      rfl,
+      sourceData.allowedForgetfulTransport_holds,
+      sourceData.toFiniteHodgeSHETransport.histories_not_identified',
+      sourceData.toFiniteHodgeSHETransport.toFactoredObligations
+        |>.comparisonLevel_eq_pointwiseRepresentative,
+      sourceData.toFiniteHodgeSHETransport.toFactoredObligations
+        |>.coordinateEquiv_eq_refl⟩
+
+theorem ofThetaEvaluationSourcesHistorySeparated_endpoint
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    let sourceData :=
+      ofThetaEvaluationSourcesHistorySeparated
+        (record := record)
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved;
+    sourceData.synchronization.sourceHA = sourceEvaluation.valueSource ∧
+      sourceData.synchronization.targetHA = targetEvaluation.valueSource ∧
+      sourceData.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) := by
+  intro sourceData
+  exact
+    ⟨rfl,
+      rfl,
       rfl,
       sourceData.allowedForgetfulTransport_holds,
       sourceData.toFiniteHodgeSHETransport.histories_not_identified',
@@ -54436,6 +54532,142 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovT11I
     q_subset_recordUnion determinantSource compatibility measure_eq_hullLogVolume
     tensorPower_bound hullDetBridge_eq q_pilot_positive normalization
     sourceCalibration rfl sourceEvaluation.thetaRootSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility
+    forgettingCompatibility holomorphicF_realization holomorphicD_realization
+    holomorphicStructureForgotten holomorphic_structure_forgotten
+    packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
+    packetLocalObjectFinite_eq_ind3Source targetSource cTheta
+    thetaSigned_le_cTheta_absLogQ
+
+/--
+History-separated Hodge--Arakelov source form of the finite-divisor
+vertical-`IQ` route.
+
+Compared with the previous Hodge--Arakelov endpoint, this version no longer
+receives an arbitrary allowed-forgetting predicate.  The finite Hodge/SHE
+transport is built using the canonical history-separated permission attached
+to the Theorem 3.11 Hodge-theater descent bridge carried by the source record.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHistorySeparatedT11IPLRecordHullFiniteDivisorVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target))
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          hullData
+            (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record))
+        determinantSource)
+    (measure_eq_hullLogVolume :
+      packageN.preLedger.measure = hullData.toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation hullData qPilotRegion
+          q_subset_recordUnion determinantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageN.preLedger.qSigned)
+    (normalization : packageN.preLedger.normalization)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceEvaluation.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovT11IPLRecordHullFiniteDivisorVerticalIQ
+    audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+    (IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+      record.bundle.hodgeTheaterDescentBridgeData)
+    record.bundle.hodgeTheaterDescentBridgeData_histories_not_identified
+    iplConstructionSource operation hullOperation determinantOperation hullData
+    qPilotRegion q_subset_recordUnion determinantSource compatibility
+    measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+    q_pilot_positive normalization sourceCalibration upperSemiEntry
     divisorPacket monoAnalyticTheater kummerCompatibility
     forgettingCompatibility holomorphicF_realization holomorphicD_realization
     holomorphicStructureForgotten holomorphic_structure_forgotten

@@ -1993,6 +1993,14 @@ The project currently proves the following source-facing results in \Lean{}:
   the source theater, target theater, descent operation, permission proof, and
   history-separation guard, separating the history/forgetting obligation from
   the downstream transport object.
+\item The allowed-forgetting witness now has a canonical history-separated
+  finite-stage form.  Instead of treating the permission predicate as an
+  unrelated route input, the public Hodge--Arakelov endpoint can take it to be
+  the history-separation condition of the Theorem 3.11 Hodge-theater descent
+  bridge carried by the source record.  This removes a loose external
+  \(\mathrm{Prop}\) from the public corridor while preserving the trust boundary: the
+  full source-paper construction of the Hodge-theater forgetting operation is
+  still not claimed.
 \item The \(\IPL\) log-volume transport now has a source construction from the
   same finite Hodge/\(\SHE\) transport plus a Theorem 3.11 IPL-link
   construction source.  The construction builds the input-prime-strip link with
@@ -2031,6 +2039,11 @@ The project currently proves the following source-facing results in \Lean{}:
   directly from the Hodge--Arakelov source side before the endpoint applies the
   same Theorem 3.11 \(\IPL\), record-native Step (xi), and finite-divisor
   vertical-\(IQ\) route.
+\item A stronger Hodge--Arakelov endpoint removes even that explicit
+  allowed-forgetting argument: it builds the finite Hodge/\(\SHE\) transport
+  with the record's history-separated descent-bridge permission, then follows
+  the same \(\IPL\), record-native Step (xi), and finite-divisor
+  vertical-\(IQ\) path.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
@@ -2171,13 +2184,14 @@ constructed datum with the pre-ledger certificate, and log-volume preservation
 is read from the finite Hodge/\(\SHE\) transport.
 At the next source boundary, the same public endpoint can now build the finite
 Hodge/\(\SHE\) transport from source and target Hodge--Arakelov
-theta-evaluation sources, the canonical one-label degree preservation, and the
-allowed-forgetting witness.  Thus the public route no longer needs to be handed
-the finite transport record, a free square-weight profile, or a separate
-theta-root source; these are constructed or projected from the
-Hodge--Arakelov source data.  The descent bridge, the permission to forget
-holomorphic structure, and the deeper construction of the theta-evaluation
-sources remain open source-paper obligations.
+theta-evaluation sources and the canonical one-label degree preservation.  The
+allowed-forgetting predicate is now fixed to the history-separation condition
+of the record's Hodge-theater descent bridge, so the public route no longer
+needs to be handed the finite transport record, a free square-weight profile, a
+separate theta-root source, or a free permission predicate.  These are
+constructed or projected from the Hodge--Arakelov and Theorem 3.11 source data.
+The actual Hodge-theater forgetting operation and the deeper construction of
+the theta-evaluation sources remain open source-paper obligations.
 
 The practical priority order is:
 \begin{enumerate}
@@ -2188,9 +2202,10 @@ The practical priority order is:
   finite degree-evaluation, bad-local quotient, and canonical-label shadows
   toward actual Gaussian/Frobenioid material from \IUT{} II;
 \item replace the remaining finite Hodge/SHE transport source boundary by
-  source-paper constructions of the Hodge-theater descent bridge, typed
-  forgetful transport witness, and deeper Gaussian/Frobenioid preservation
-  data beneath the current Hodge--Arakelov theta-evaluation wrapper;
+  source-paper constructions of the Hodge-theater descent bridge, the actual
+  forgetting operation beneath the current history-separated permission
+  predicate, and deeper Gaussian/Frobenioid preservation data beneath the
+  current Hodge--Arakelov theta-evaluation wrapper;
 \item replace the remaining \(\IPL\) certificate-alignment proof by the actual
   Theorem 3.11 input-prime-strip link construction, rather than carrying the
   alignment as an explicit source-boundary obligation;
