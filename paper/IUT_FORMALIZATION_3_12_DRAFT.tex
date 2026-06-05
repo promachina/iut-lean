@@ -2003,6 +2003,12 @@ The project currently proves the following source-facing results in \Lean{}:
   of a prebuilt route alignment before constructing the same finite-divisor
   Step (x) source and proving the \(C_\Theta=-1\) boundary alternative or
   strict \(C_\Theta>-1\) conclusion.
+\item The same finite-divisor vertical-\(IQ\) endpoint now also has the
+  milestone-facing constructor form: it consumes the finite Hodge/\(\SHE\)
+  transport source, the \(\IPL\) log-volume transport source, the Step (xi)
+  holomorphic-hull/determinant source, and the theta/Hodge calibration
+  certificate directly, constructs the source-derived bridge internally, and
+  then applies the finite-divisor vertical-\(IQ\) route.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
@@ -2151,7 +2157,7 @@ The practical priority order is:
   preservation data;
 \item construct the remaining \(\IPL\) prime-strip link data from the
   Theorem 3.11 input-prime-strip link rather than supplying the finite
-  prime-strip datum directly;
+  prime-strip datum directly to the endpoint constructor;
 \item construct the packet-correspondence source from the actual
   log-Kummer/Frobenioid machinery of \IUT{} III, Step (x), rather than treating
   this finite correspondence object itself as source-facing input;
