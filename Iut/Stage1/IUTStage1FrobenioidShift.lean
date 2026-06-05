@@ -19411,17 +19411,17 @@ theorem possibleImageHolomorphicHullLogVolume_endpoint
       sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
         IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
           record sourceData.possibleImageSource.qChoice := by
-  let hullSource := sourceData.toPossibleImageHolomorphicHullDeterminantSource
-  have hhull := hullSource.hullDetSource_endpoint
-  have hside := sourceData.possibleImageSideConditionedHull_endpoint
+  have hsource :=
+    sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
+      |>.holomorphicHullLogVolume_endpoint
   exact
-    ⟨hhull.1,
-      hhull.2.1,
-      hhull.2.2.1,
-      hhull.2.2.2.1,
-      hhull.2.2.2.2.1,
-      hhull.2.2.2.2.2,
-      hside.1⟩
+    ⟨hsource.1,
+      hsource.2.1,
+      hsource.2.2.1,
+      hsource.2.2.2.1,
+      hsource.2.2.2.2.1,
+      hsource.2.2.2.2.2.1,
+      hsource.2.2.2.2.2.2.1⟩
 
 set_option linter.style.longLine false in
 /--

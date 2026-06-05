@@ -9366,6 +9366,46 @@ theorem theorem311HullDetSourceConstructor_endpoint
     endpoint.2.2.2.2.1,
     endpoint.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Experiment-surface possible-image Step (xi) holomorphic-hull/log-volume audit.
+
+This exposes the source-level endpoint before it is wrapped by any
+Hodge/SHE/IPL route: a chosen Theorem 3.11 possible image is embedded in the
+record possible-image union, the holomorphic hull is applied, and the resulting
+log-volume bound yields the raw signed comparison.
+-/
+theorem possibleImageSideConditionedHolomorphicHullLogVolume_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    package.preLedger.output.Certified ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+        package.preLedger.certificate.she ∧
+      sourceData.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (sourceData.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (sourceData.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      sourceData.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      sourceData.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization :=
+  sourceData.holomorphicHullLogVolume_endpoint
+
 theorem theorem311HullDetSourceConstructorFromCanonicalApproximant_endpoint
     {source target : Copy} {index : Type u}
     {package : IUTStage1SourcePackage source target index}

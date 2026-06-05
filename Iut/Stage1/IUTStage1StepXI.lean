@@ -9480,6 +9480,56 @@ theorem qSigned_le_thetaSigned
   sourceData.toSideConditionedHolomorphicHullDeterminantSource
     |>.qSigned_le_thetaSigned
 
+set_option linter.style.longLine false in
+/--
+Possible-image holomorphic-hull/log-volume Step (xi) audit.
+
+This is the source-level form of the Corollary 3.12 Step (xi) passage from a
+chosen Theorem 3.11 possible image to the record possible-image union, then to
+the holomorphic hull and its log-volume bound.  It packages the same raw signed
+comparison with the side-condition witnesses used by the source object.
+-/
+theorem holomorphicHullLogVolume_endpoint
+    (sourceData :
+      IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    package.preLedger.output.Certified ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+        package.preLedger.certificate.she ∧
+      sourceData.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (sourceData.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (sourceData.toSideConditionedHolomorphicHullDeterminantSource.toHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      sourceData.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      sourceData.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization := by
+  have hhull :=
+    sourceData.toSideConditionedHolomorphicHullDeterminantSource
+      |>.toHolomorphicHullDeterminantSource
+      |>.hullDetSource_endpoint
+  exact
+    ⟨hhull.1,
+      hhull.2.1,
+      hhull.2.2.1,
+      hhull.2.2.2.1,
+      hhull.2.2.2.2.1,
+      hhull.2.2.2.2.2,
+      sourceData.qPilotRegion_eq_possibleImage,
+      sourceData.q_subset_recordUnion,
+      sourceData.sideConditions.qPilotPositive,
+      sourceData.sideConditions.sourceNormalization⟩
+
 theorem source_endpoint
     (sourceData :
       IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantSource
