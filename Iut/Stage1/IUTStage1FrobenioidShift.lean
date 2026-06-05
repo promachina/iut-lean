@@ -19080,6 +19080,35 @@ theorem source_endpoint
 
 set_option linter.style.longLine false in
 /--
+Side-conditioned possible-image hull/determinant Step (xi) audit for the
+target-charted Hodge/determinant source.
+
+This exposes the converted possible-image holomorphic hull source at the
+target-charted Step (xi) boundary: the q-pilot region is the chosen Theorem
+3.11 possible image, it lies in the record possible-image union, and the
+tensor-power bound, q-positivity, normalization, and raw comparison are all
+projected before any Hodge/IPL route wrapper is used.
+-/
+theorem possibleImageSideConditionedHull_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.hodgeDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.source_endpoint
+
+set_option linter.style.longLine false in
+/--
 Holomorphic-hull/log-volume Step (xi) audit for the target-charted
 Hodge/determinant possible-image source.
 
@@ -19559,7 +19588,7 @@ theorem possibleImageSideConditionedHull_endpoint
       0 < -packageN.preLedger.qSigned ∧
       packageN.preLedger.normalization ∧
       packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
-  sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.source_endpoint
+  sourceData.possibleImageSource.possibleImageSideConditionedHull_endpoint
 
 set_option linter.style.longLine false in
 /--

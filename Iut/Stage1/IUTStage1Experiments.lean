@@ -23043,6 +23043,51 @@ theorem targetChartedHodgeDeterminantPossibleImageHull_sourceEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface side-conditioned hull/determinant audit for the
+target-charted Hodge/determinant possible-image Step (xi) source.
+
+This exposes the converted possible-image hull source at the Step (xi) source
+boundary, before the Hodge/IPL construction wraps it into the all-in-one route.
+-/
+theorem targetChartedHodgeDeterminantPossibleImageHull_sideConditionedHullEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {hodgeSynchronization :
+      part.IUTStage1TargetChartedHodgeArakelovSynchronization
+        audited X C}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization) :
+    sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.hodgeDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.possibleImageSideConditionedHull_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface holomorphic-hull/log-volume audit for the target-charted
 Hodge/determinant possible-image Step (xi) source.
 
