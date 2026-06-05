@@ -6095,6 +6095,76 @@ theorem hodgeSHEIPLHullSourceAlignedThetaLabelledAverage_cThetaDichotomy
     holomorphic_structure_forgotten sourceAlignment orderedAlignment
     thetaLabelledAlignment cTheta thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Experiment-surface `C_Theta` dichotomy for the source-derived source-aligned
+theta-labelled route.
+
+The labelled capsule average alignment remains explicit; the source-derived
+bridge supplies the Hodge/SHE/IPL/hull alignment, canonical square-weight
+profile, and theta-root source.
+-/
+theorem sourceDerivedHodgeSHEIPLHullSourceAlignedThetaLabelledAverage_cThetaDichotomy
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (bridge :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+        part audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD monoAnalyticD)
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (monoAnalyticD_realization :
+      monoAnalyticD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (sourceAlignment :
+      NonarchimedeanLogKummerPacketLocalSourceAlignment
+        audited upperSemiEntry.toEntry monoAnalyticD.toRealized)
+    (orderedAlignment : Ind3OrderedRealLineAlignment part audited)
+    (thetaLabelledAlignment :
+      StepXThetaSourceLabelledCapsuleAverageAlignment part audited)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_of_sourceDerivedHodgeSHEIPLHullSourceAlignedThetaLabelledAverage
+    audited bridge upperSemiEntry kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization monoAnalyticD_realization
+    holomorphicStructureForgotten holomorphic_structure_forgotten sourceAlignment
+    orderedAlignment thetaLabelledAlignment cTheta thetaSigned_le_cTheta_absLogQ
+
 theorem sourceAlignedDirectLabelledAverage_cThetaDichotomy
     {source target : Copy} {coric : Type u}
     {package :
