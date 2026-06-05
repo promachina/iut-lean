@@ -1307,6 +1307,13 @@ The project currently proves the following source-facing results in \Lean{}:
   Gaussian degree evaluation from a theta-monoid degree and the bad-local
   theta-root label source; canonical-label preservation feeds the factored
   \SHE{} square/full-label obligations.
+\item The same finite Hodge--Arakelov layer now has an audited theta evaluation
+  wrapper matching the current IUT II shadow: it keeps the theta-root source,
+  bad-local quotient identification, Gaussian degree evaluation, full-label
+  compatibility, canonical \(j=1\) behavior, and the canonical square-weight
+  profile as one source-facing object.  A pair of these objects constructs the
+  \(\SHE\) synchronization source and can also construct the finite
+  Hodge/\(\SHE\) transport source once the allowed-forgetting witness is given.
 \item A nonarchimedean upper-semi object equipped with 1-column q-pilot
   log-Kummer data now supplies the raw nonarchimedean \((\Ind3)\) entry
   alignment used by the canonical Gaussian route.
@@ -2148,9 +2155,9 @@ The practical priority order is:
 \item factor the large source module into reviewable finite-label, hull,
   Frobenioid-shift, and \IUT{} IV algebra modules without changing theorem
   statements;
-\item extend the Gaussian-derived factored \SHE{} construction beyond the
-  finite degree-evaluation and canonical-label shadows toward actual
-  Gaussian/Frobenioid material from \IUT{} II;
+\item extend the audited Hodge--Arakelov theta evaluation wrapper beyond the
+  finite degree-evaluation, bad-local quotient, and canonical-label shadows
+  toward actual Gaussian/Frobenioid material from \IUT{} II;
 \item replace the finite Hodge/SHE transport source boundary by source-paper
   constructions of the Hodge-theater descent bridge and typed forgetful
   transport witness, then replace the synchronization-derived finite

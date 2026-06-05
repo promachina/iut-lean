@@ -12830,6 +12830,143 @@ theorem thetaValueEvaluation_endpoint
 
 end IUTStage1HodgeArakelovThetaValueEvaluationSource
 
+/--
+Audited Hodge--Arakelov theta evaluation source for the finite Gaussian
+degree corridor.
+
+This wraps the current degree-level theta-value source with the bad-local
+quotient identification.  The derived projections expose the objects used by
+the finite `q^{j^2}` shadow of IUT II: theta-root labels, the Gaussian monoid
+degree evaluation, full-label log-volume compatibility, canonical label
+behavior, and the canonical square-weight profile.
+-/
+structure IUTStage1HodgeArakelovThetaEvaluationSource
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F) where
+  valueSource : IUTStage1HodgeArakelovThetaValueEvaluationSource l X C
+  quotientZData_eq_zmod :
+    valueSource.thetaRootSource.quotientZData = zmodBadLocalQuotientZData l
+
+namespace IUTStage1HodgeArakelovThetaEvaluationSource
+
+variable {l : PrimeGeFive} {F : Type v} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+
+def ofValueSource
+    (valueSource :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (quotientZData_eq_zmod :
+      valueSource.thetaRootSource.quotientZData =
+        zmodBadLocalQuotientZData l) :
+    IUTStage1HodgeArakelovThetaEvaluationSource l X C :=
+  { valueSource := valueSource,
+    quotientZData_eq_zmod := quotientZData_eq_zmod }
+
+def thetaRootSource
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    IUTStage1ThetaRootCuspLabelSourcePackage l X C :=
+  source.valueSource.thetaRootSource
+
+def thetaMonoidDegree
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) : Real :=
+  source.valueSource.thetaMonoidDegree
+
+noncomputable def toGaussianMonoidDegreeEvaluation
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    GaussianMonoidDegreeEvaluation l :=
+  source.valueSource.toGaussianMonoidDegreeEvaluation
+
+noncomputable def fullLabelCompatibility
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility l :=
+  source.toGaussianMonoidDegreeEvaluation.toCuspLabelLogVolumeCompatibility
+
+def squareWeightProfile
+    (_source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    IUTStage1ZModSquareWeightProfile l :=
+  IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l
+
+theorem canonicalFullLabel_eq_one
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    source.thetaRootSource.canonicalFullLabel =
+      IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) := by
+  rw [source.thetaRootSource
+    |>.canonicalFullLabel_eq_zmodCanonical_of_quotientZData_eq_zmod
+      source.quotientZData_eq_zmod]
+  exact (IUTStage1ZModCuspFullLabel.fromCoordinate_one l).symm
+
+theorem canonicalFullLabel_ne_zero
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    source.thetaRootSource.canonicalFullLabel ≠
+      IUTStage1ZModCuspFullLabel.zero :=
+  source.valueSource.canonicalThetaRootLabel_ne_zero
+
+theorem zeroDegree_eq_zero
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        IUTStage1ZModCuspFullLabel.zero = 0 :=
+  source.valueSource.zeroDegree_eq_zero
+
+theorem canonicalOneDegree_eq_thetaMonoidDegree
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      source.thetaMonoidDegree :=
+  source.valueSource.canonicalOneDegree_eq_thetaMonoidDegree
+
+theorem canonicalFullLabelDegree_eq_thetaMonoidDegree
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        source.thetaRootSource.canonicalFullLabel =
+      source.thetaMonoidDegree := by
+  rw [source.canonicalFullLabel_eq_one]
+  exact source.canonicalOneDegree_eq_thetaMonoidDegree
+
+theorem fullLabelCompatibility_fullLabelLogVolume
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C)
+    (label : IUTStage1ZModCuspFullLabel l) :
+    source.fullLabelCompatibility.fullLabelLogVolume label =
+      source.toGaussianMonoidDegreeEvaluation.gaussianDegree label :=
+  source.toGaussianMonoidDegreeEvaluation
+    |>.toCuspLabelLogVolumeCompatibility_fullLabelLogVolume label
+
+theorem coordinateSquareWeight_degree
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C)
+    (j : ZMod l.value) (hhalf : j.val ≤ l.value / 2) :
+    source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+      source.squareWeightProfile.weight j * source.thetaMonoidDegree := by
+  have h :=
+    source.toGaussianMonoidDegreeEvaluation
+      |>.finiteQJSquaredSquareWeight_endpoint source.squareWeightProfile
+  simpa [thetaMonoidDegree, squareWeightProfile,
+    source.valueSource.environmentDegree_eq] using h.1 j hhalf
+
+theorem thetaEvaluation_endpoint
+    (source : IUTStage1HodgeArakelovThetaEvaluationSource l X C) :
+    source.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      source.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      source.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          source.thetaRootSource.canonicalFullLabel =
+        source.thetaMonoidDegree ∧
+      (∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+        source.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          source.squareWeightProfile.weight j * source.thetaMonoidDegree) :=
+  ⟨source.thetaRootSource.canonicalGeneratorUpToSign,
+    source.canonicalFullLabel_eq_one,
+    source.canonicalFullLabel_ne_zero,
+    source.zeroDegree_eq_zero,
+    source.canonicalFullLabelDegree_eq_thetaMonoidDegree,
+    source.coordinateSquareWeight_degree⟩
+
+end IUTStage1HodgeArakelovThetaEvaluationSource
+
 def absLabelProcessionTop (l : PrimeGeFive) : Nat :=
   l.value / 2
 
@@ -25647,6 +25784,20 @@ variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
 variable {l : PrimeGeFive} {F : Type v} [Field F]
 variable {X C : HyperbolicOrbicurveModel F}
 
+noncomputable def ofThetaEvaluationSources
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    IUTStage1SHESynchronizationSource record l X C :=
+  { sourceHA := sourceEvaluation.valueSource,
+    targetHA := targetEvaluation.valueSource,
+    canonicalOneDegree_preserved := canonicalOneDegree_preserved }
+
 noncomputable def toFactoredObligations
     (sync : IUTStage1SHESynchronizationSource record l X C) :
   IUTStage1StructuredSHEFactoredSquareFullLabelObligations
@@ -25735,6 +25886,46 @@ theorem synchronization_endpoint
     sync.fullLabelLogVolume_preserved,
     sync.transportedAverage_eq,
     sync.histories_not_identified⟩
+
+theorem ofThetaEvaluationSources_endpoint
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    let sync :=
+      ofThetaEvaluationSources
+        (record := record)
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved;
+    sync.sourceHA = sourceEvaluation.valueSource ∧
+      sync.targetHA = targetEvaluation.valueSource ∧
+      sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      targetEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
+      sync.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sync.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) ∧
+      sync.toStructuredSHESquareWeightTransportAudit.preservationAudit.targetTransportedAverage =
+        sync.toStructuredSHESquareWeightTransportAudit.preservationAudit.sourceAverage ∧
+      record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+        record.bundle.structuredSHE.context.codomainStructure.theater.side := by
+  intro sync
+  exact
+    ⟨rfl,
+      rfl,
+      sourceEvaluation.canonicalFullLabel_eq_one,
+      targetEvaluation.canonicalFullLabel_eq_one,
+      sync.hasStructuredSHE,
+      sync.comparisonLevel_eq_pointwiseRepresentative,
+      sync.coordinateEquiv_eq_refl,
+      sync.transportedAverage_eq,
+      sync.histories_not_identified⟩
 
 end IUTStage1SHESynchronizationSource
 
@@ -26023,6 +26214,25 @@ noncomputable def ofSynchronization
     fullLabelLogVolume_preserved := sync.fullLabelLogVolume_preserved,
     transportedAverage_preserved := sync.transportedAverage_eq }
 
+noncomputable def ofThetaEvaluationSources
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (allowedForgetfulTransport : Prop)
+    (allowed_forgetful_transport : allowedForgetfulTransport) :
+    IUTStage1FiniteHodgeSHETransportSource record l X C :=
+  ofSynchronization
+    (record := record)
+    (IUTStage1SHESynchronizationSource.ofThetaEvaluationSources
+      (record := record)
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved)
+    allowedForgetfulTransport allowed_forgetful_transport
+
 theorem descentBridge_domainTheater_eq
     (sourceData :
       IUTStage1FiniteHodgeSHETransportSource record l X C) :
@@ -26149,6 +26359,42 @@ theorem toFiniteHodgeSHETransport_endpoint
       endpoint.2.2.2.1,
       sourceData.allowedForgetfulTransport_holds,
       endpoint.2.2.2.2.2.2⟩
+
+theorem ofThetaEvaluationSources_endpoint
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (allowedForgetfulTransport : Prop)
+    (allowed_forgetful_transport : allowedForgetfulTransport) :
+    let sourceData :=
+      ofThetaEvaluationSources
+        (record := record)
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+        allowedForgetfulTransport allowed_forgetful_transport;
+    sourceData.synchronization.sourceHA = sourceEvaluation.valueSource ∧
+      sourceData.synchronization.targetHA = targetEvaluation.valueSource ∧
+      sourceData.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) := by
+  intro sourceData
+  exact
+    ⟨rfl,
+      rfl,
+      sourceData.allowedForgetfulTransport_holds,
+      sourceData.toFiniteHodgeSHETransport.histories_not_identified',
+      sourceData.toFiniteHodgeSHETransport.toFactoredObligations
+        |>.comparisonLevel_eq_pointwiseRepresentative,
+      sourceData.toFiniteHodgeSHETransport.toFactoredObligations
+        |>.coordinateEquiv_eq_refl⟩
 
 end IUTStage1FiniteHodgeSHETransportSource
 
