@@ -22685,6 +22685,45 @@ theorem synchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstruct
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface named audit for the raw synchronized target-charted
+possible-image summand/family-hull comparison.
+
+This names the summand/family-hull Step (xi) payload used to obtain
+`qSigned <= thetaSigned`, so downstream endpoints can cite the source
+provenance without restating the full conjunction.
+-/
+theorem synchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstruction_toQComparisonAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      part.IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        audited X C)
+    (iplConstructionSource : IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (sourceData :
+      part.IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionQComparisonAudit
+      part audited hodgeSynchronization iplConstructionSource sourceData :=
+  part
+    |>.toSynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionQComparisonAudit
+    audited hodgeSynchronization iplConstructionSource sourceData
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the direct synchronized possible-image summand
 source-derived bridge constructor.
 -/

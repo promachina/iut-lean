@@ -36116,6 +36116,98 @@ theorem sourceDerivedSynchronizedTargetChartedPossibleImageSummandHodgeFamilyHul
 
 set_option linter.style.longLine false in
 /--
+Named audit proposition for the synchronized target-charted possible-image
+summand/family-hull Step (xi) comparison.
+
+This packages the reusable payload of
+`sourceDerivedSynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstruction_qComparison_endpoint`:
+the q-pilot is the chosen Theorem 3.11 possible image, the Hodge theta degree is
+the determinant summand sum, `thetaSigned` is the family-hull log-volume, the
+package hull/determinant bridge is obligation-backed, and the raw comparison
+`qSigned <= thetaSigned` follows through the calibrated Hodge/SHE,
+constructed-\(\IPL\), and summand/family-hull Step (xi) bridge.
+-/
+structure SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionQComparisonAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (possibleImageSummandSource :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) : Prop where
+  qPilotRegion_eq_choice :
+    possibleImageSummandSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record possibleImageSummandSource.qChoice
+  hodgeThetaDegree_eq_summandSum :
+    hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (possibleImageSummandSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  thetaSigned_eq_familyHull :
+    packageN.preLedger.thetaSigned =
+      possibleImageSummandSource.familyHullSource.familyHullLogVolume
+  hullDetBridge_eq_obligations :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      possibleImageSummandSource.obligations.hullDetData.bridgeData
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toSynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionQComparisonAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (possibleImageSummandSource :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionQComparisonAudit
+      part audited hodgeSynchronization iplConstructionSource
+      possibleImageSummandSource := by
+  have h :=
+    part.sourceDerivedSynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstruction_qComparison_endpoint
+      audited hodgeSynchronization iplConstructionSource possibleImageSummandSource
+  exact
+    { qPilotRegion_eq_choice := h.1,
+      hodgeThetaDegree_eq_summandSum := h.2.1,
+      thetaSigned_eq_familyHull := h.2.2.1,
+      hullDetBridge_eq_obligations := h.2.2.2.1,
+      qSigned_le_thetaSigned := h.2.2.2.2 }
+
+set_option linter.style.longLine false in
+/--
 Source-derived finite-divisor vertical-`IQ` route from a side-conditioned
 Step (xi) hull/determinant source.
 
