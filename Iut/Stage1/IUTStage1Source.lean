@@ -31810,6 +31810,64 @@ theorem qSigned_le_thetaSigned
     package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   sourceData.toHolomorphicHullDeterminantSource.qSigned_le_thetaSigned
 
+noncomputable def toUpperRayLogVolume
+    (sourceData :
+      IUTStage1ChoiceLinkedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1HullDetPilotUpperRayLogVolume :=
+  IUTStage1HullDetPilotUpperRayLogVolume.ofHolomorphicHull
+    sourceData.hullData sourceData.qPilotRegion
+    (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+      record)
+    (fun _ hx =>
+      sourceData.hullData.region_subset_hull
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+        (sourceData.q_subset_recordUnion hx))
+    sourceData.determinantSource.toDeterminantLogVolume
+    (by
+      simpa [IUTStage1HullLogVolumeApproximant.canonical] using
+        sourceData.compatibility.approximant_eq_projected_normalized)
+
+noncomputable def toQPilotTwoComputationLogVolume
+    (sourceData :
+      IUTStage1ChoiceLinkedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1QPilotTwoComputationLogVolume :=
+  { upperRayData := sourceData.toUpperRayLogVolume,
+    inputPrimeStripLogVolume :=
+      sourceData.hullData.logVolume sourceData.qPilotRegion,
+    outputHullLogVolume :=
+      sourceData.hullData.logVolume sourceData.qPilotRegion,
+    input_eq_q := rfl,
+    output_eq_q := rfl }
+
+theorem upperRay_endpoint
+    (sourceData :
+      IUTStage1ChoiceLinkedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume =
+        sourceData.hullData.logVolume sourceData.qPilotRegion ∧
+      sourceData.toUpperRayLogVolume.thetaHullLogVolume =
+        sourceData.hullData.logVolume
+          (sourceData.hullData.hullRegion
+            (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record)) ∧
+      sourceData.toUpperRayLogVolume.qPilotLogVolume ∈
+        sourceData.toUpperRayLogVolume.upperRay ∧
+      sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.toQPilotTwoComputationLogVolume.inputPrimeStripLogVolume =
+        sourceData.toQPilotTwoComputationLogVolume.outputHullLogVolume :=
+  ⟨rfl,
+    rfl,
+    sourceData.toUpperRayLogVolume.qPilot_mem_upperRay,
+    by
+      simpa [
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.toDeterminantLogVolume]
+        using sourceData.toUpperRayLogVolume.qPilotLogVolume_le_determinant,
+    sourceData.toQPilotTwoComputationLogVolume.input_eq_output⟩
+
 theorem source_endpoint
     (sourceData :
       IUTStage1ChoiceLinkedHolomorphicHullDeterminantSource
@@ -31823,10 +31881,16 @@ theorem source_endpoint
       (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
           sourceData.determinantSource).normalizedLogVolume <=
         package.preLedger.thetaSigned ∧
+      sourceData.toUpperRayLogVolume.qPilotLogVolume ∈
+        sourceData.toUpperRayLogVolume.upperRay ∧
+      sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+        sourceData.determinantSource.determinantLogVolume ∧
       package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   ⟨sourceData.q_subset_choice,
     sourceData.q_subset_recordUnion,
     sourceData.tensorPower_bound,
+    sourceData.upperRay_endpoint.2.2.1,
+    sourceData.upperRay_endpoint.2.2.2.1,
     sourceData.qSigned_le_thetaSigned⟩
 
 end IUTStage1ChoiceLinkedHolomorphicHullDeterminantSource
