@@ -139,8 +139,11 @@ The module roles are:
 \item \texttt{IUTStage1Gaussian}: weighted label averages, \(ZMod\)
   square-weight profiles, Gaussian monoid degree evaluations, and
   Hodge--Arakelov theta-evaluation source objects.
-\item \texttt{IUTStage1Source}: SHE/Hodge
-  interfaces, IPL/hull source objects, and route theorems.
+\item \texttt{IUTStage1HodgeSHE}: square-weighted full-label transport
+  audits, Hodge/SHE local object data, packet-normalization support,
+  direct-summand local tensor actions, and upper-semi compatibility states.
+\item \texttt{IUTStage1Source}: Theorem 3.11, IPL/hull source objects, and
+  route theorems.
 \item \texttt{IUTStage1Experiments}: compiled endpoint checks and diagnostic
   theorems.
 \end{itemize}
@@ -335,6 +338,7 @@ The relevant implementation lives in the following Lean modules:
 \item \texttt{Iut/Stage1/IUTStage1FiniteLabels.lean}
 \item \texttt{Iut/Stage1/IUTStage1StepX.lean}
 \item \texttt{Iut/Stage1/IUTStage1Gaussian.lean}
+\item \texttt{Iut/Stage1/IUTStage1HodgeSHE.lean}
 \item \texttt{Iut/Stage1/IUTStage1Source.lean}
 \item \texttt{Iut/Stage1/IUTStage1Experiments.lean}
 \end{itemize}
@@ -2291,7 +2295,7 @@ current corridor, ``upper ray'' means the signed-log region
 
 The largest engineering issue remains the size of
 \texttt{Iut/Stage1/IUTStage1Source.lean}, which still contains most of the
-Hodge/SHE, IPL, hull, Step (xi), and later endpoint corridor.  Four
+Theorem 3.11, IPL, hull, Step (xi), and later endpoint corridor.  Five
 mechanical splits have been made: \texttt{IUTStage1IUTIVAlgebra.lean} now
 carries the Remark 3.12 sign shadows and the conditional \IUT{} IV
 real-algebra handoff estimates, while \texttt{IUTStage1FiniteLabels.lean}
@@ -2299,7 +2303,8 @@ carries the finite-label and theta-root cusp-label source layer, and
 \texttt{IUTStage1StepX.lean} carries the Step (x) upper-ray corridor together
 with its boundary Frobenioid-shift diagnostics.  The Gaussian and
 Hodge--Arakelov theta-evaluation shadow layer now lives in
-\texttt{IUTStage1Gaussian.lean}.  Low-risk future refactors are:
+\texttt{IUTStage1Gaussian.lean}, and the Hodge/SHE support layer now lives in
+\texttt{IUTStage1HodgeSHE.lean}.  Low-risk future refactors are:
 \[
 \begin{array}{ll}
 \text{Step (xi) hull/determinant upper rays} & \text{separate module},\\
