@@ -23043,6 +23043,65 @@ theorem targetChartedHodgeDeterminantPossibleImageHull_sourceEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface canonical hull/tensor-power bridge audit for the
+target-charted Hodge/determinant possible-image Step (xi) source.
+
+This exposes the record-canonical Theorem 3.11 possible-image bridge before the
+Hodge/\(\IPL\) construction wraps this Step (xi) source into the all-in-one route.
+-/
+theorem targetChartedHodgeDeterminantPossibleImageHull_canonicalHullTensorBridgeEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {hodgeSynchronization :
+      part.IUTStage1TargetChartedHodgeArakelovSynchronization
+        audited X C}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization) :
+    sourceData.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          sourceData.operation
+          sourceData.hullOperation
+          sourceData.determinantOperation
+          sourceData.hodgeDeterminantSource.familyHullSource.hullData
+          sourceData.qPilotRegion
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) sourceData.qChoice sourceData.qPilotRegion
+            sourceData.q_subset_choice)
+          sourceData.hodgeDeterminantSource.familyHullSource.determinantSource
+          sourceData.hodgeDeterminantSource.familyHullSource.compatibility
+          sourceData.hodgeDeterminantSource.measure_eq_hullLogVolume
+          sourceData.hodgeDeterminantSource.tensorPower_bound ∧
+      package.preLedger.thetaSigned =
+        sourceData.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.hodgeDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.possibleImageCanonicalHullTensorBridge_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for target-charted Hodge synchronization and
 the Hodge/determinant possible-image Step (xi) source.
 -/
