@@ -2023,6 +2023,11 @@ The project currently proves the following source-facing results in \Lean{}:
   and normalization as separate auditable fields, then constructs the existing
   Theorem 3.11 hull/determinant constructor and exposes
   \(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\).
+\item The strongest Hodge--Arakelov/history-separated route can now consume
+  that Step (xi) holomorphic-hull/determinant source as a single object.  This
+  keeps the \(q\)-pilot containment and determinant payload intact, but no
+  longer expands the record-native hull fields at the public Hodge--Arakelov
+  boundary.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2055,7 +2060,8 @@ The project currently proves the following source-facing results in \Lean{}:
   certificate-pinned \(\IPL\)-link source.  Its public assumptions no longer
   include an arbitrary finite Hodge/\(\SHE\) transport, a free
   allowed-forgetting predicate, a free square-weight profile, a separate
-  theta-root source, or a constructed-\(\IPL\)-datum alignment.
+  theta-root source, a constructed-\(\IPL\)-datum alignment, or the raw
+  record-native Step (xi) hull/determinant field list.
 \item The target-side theta-to-entry equality is no longer a direct input in the
   strongest route.  It is derived from a Step (x) theta-target alignment and
   calibration of the entry target with the upper-semi target value.
@@ -2212,6 +2218,13 @@ separate theta-root source, or a free permission predicate.  These are
 constructed or projected from the Hodge--Arakelov and Theorem 3.11 source data.
 The actual Hodge-theater forgetting operation and the deeper construction of
 the theta-evaluation sources remain open source-paper obligations.
+At the Step (xi) boundary, the strongest public Hodge--Arakelov route can now
+consume the holomorphic-hull/determinant source object directly.  This is a
+review-surface improvement rather than a closure of Step (xi): the source
+object still contains the holomorphic hull shadow, \(q\subseteq P_{\mathrm{rec}}\),
+weighted determinant source, tensor-power bound, bridge equality, positivity,
+and normalization.  The remaining task is to construct those fields from the
+source-paper holomorphic-hull and determinant operations.
 
 The practical priority order is:
 \begin{enumerate}
@@ -2232,10 +2245,10 @@ The practical priority order is:
 \item construct the packet-correspondence source from the actual
   log-Kummer/Frobenioid machinery of \IUT{} III, Step (x), rather than treating
   this finite correspondence object itself as source-facing input;
-\item replace the remaining record-native holomorphic-hull shadow,
-  weighted-determinant source, tensor-power bound, and bridge-equality fields
-  by the actual holomorphic-hull and determinant operations from
-  Remark 3.9.5 and Step (xi);
+\item construct the fields of the Step (xi) holomorphic-hull/determinant source
+  from the actual holomorphic-hull and determinant operations of
+  Remark 3.9.5 and Step (xi), rather than carrying them as auditable source
+  fields;
 \item only then evaluate whether the Stage 1 interface has enough source
   content to bear on the Mochizuki--Scholze--Stix disagreement.
 \end{enumerate}
