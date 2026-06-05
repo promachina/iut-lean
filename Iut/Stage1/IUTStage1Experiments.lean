@@ -27444,6 +27444,46 @@ theorem calibratedSynchronizationIPLConstructionPossibleImageSideConditionedHull
 
 set_option linter.style.longLine false in
 /--
+Experiment-facing named Gaussian-to-Step (xi) audit for the synchronized
+calibrated Hodge/SHE, constructed-\(\IPL\), obligations-backed possible-image
+route.
+
+This packages the long synchronized Gaussian-to-Step (xi) conjunction as one
+audit proposition before the later Hodge--Arakelov history-separated wrappers.
+-/
+theorem calibratedSynchronizationIPLConstructionPossibleImageSideConditionedHullObligationsBacked_toGaussianStepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.CalibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+      part audited hodgeSynchronization iplConstructionSource hullSource :=
+  part
+    |>.toCalibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+    audited hodgeSynchronization iplConstructionSource hullSource
+
+set_option linter.style.longLine false in
+/--
 Experiment-facing Gaussian-to-Step (xi) audit for the obligations-backed
 calibrated possible-image route with a certificate-pinned Theorem 3.11 IPL link.
 -/
