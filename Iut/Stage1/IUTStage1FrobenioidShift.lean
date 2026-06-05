@@ -19347,6 +19347,15 @@ noncomputable def toPossibleImageSideConditionedHolomorphicHullDeterminantSource
       (β := β) record :=
   sourceData.possibleImageSource.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
 
+noncomputable def toPossibleImageHolomorphicHullDeterminantSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1HolomorphicHullDeterminantSource (β := β) record :=
+  sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
+    |>.toSideConditionedHolomorphicHullDeterminantSource
+    |>.toHolomorphicHullDeterminantSource
+
 set_option linter.style.longLine false in
 /--
 Step (xi) payload exposed by the all-in-one target-charted Hodge/IPL route.
@@ -19372,6 +19381,47 @@ theorem possibleImageSideConditionedHull_endpoint
       packageN.preLedger.normalization ∧
       packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
   sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.source_endpoint
+
+set_option linter.style.longLine false in
+/--
+Holomorphic-hull/log-volume Step (xi) audit for the all-in-one target-charted
+route.
+
+This is the route-level form of the Corollary 3.12 Step (xi) passage from the
+Theorem 3.11 possible-image union to its holomorphic hull and then to the
+log-volume bound that yields the raw signed comparison.
+-/
+theorem possibleImageHolomorphicHullLogVolume_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    packageN.preLedger.output.Certified ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+        packageN.preLedger.certificate.she ∧
+      sourceData.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (sourceData.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          packageN.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost packageN.preLedger.measure
+        (sourceData.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          packageN.preLedger.certificate).hull
+        packageN.preLedger.thetaSigned ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.possibleImageSource.qChoice := by
+  let hullSource := sourceData.toPossibleImageHolomorphicHullDeterminantSource
+  have hhull := hullSource.hullDetSource_endpoint
+  have hside := sourceData.possibleImageSideConditionedHull_endpoint
+  exact
+    ⟨hhull.1,
+      hhull.2.1,
+      hhull.2.2.1,
+      hhull.2.2.2.1,
+      hhull.2.2.2.2.1,
+      hhull.2.2.2.2.2,
+      hside.1⟩
 
 set_option linter.style.longLine false in
 /--
