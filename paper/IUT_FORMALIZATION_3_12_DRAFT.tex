@@ -129,8 +129,12 @@ The module roles are:
   interfaces.
 \item \texttt{IUTStage1IUTIVAlgebra}: Remark 3.12 sign shadows and the
   conditional \IUT{} IV real-algebra handoff estimates.
-\item \texttt{IUTStage1Source}: finite labels, Gaussian data, SHE/Hodge
-  interfaces, and route theorems.
+\item \texttt{IUTStage1FiniteLabels}: finite local log-volume endpoints,
+  \(F_\ell\)-label/torsor/sign/cusp-label models, \(ZMod\) full labels,
+  theta-root cusp-label source packages, and label-averaged log-volume
+  compatibility.
+\item \texttt{IUTStage1Source}: Step (x), Gaussian data, SHE/Hodge
+  interfaces, IPL/hull source objects, and route theorems.
 \item \texttt{IUTStage1Experiments}: compiled endpoint checks and diagnostic
   theorems.
 \end{itemize}
@@ -317,11 +321,12 @@ missing higher-level data.
 
 \section{Formalized Corridor}
 
-The relevant implementation lives in four Lean modules:
+The relevant implementation lives in the following Lean modules:
 \begin{itemize}
 \item \texttt{Iut/Stage1/IUTStage1SourceCore.lean}
 \item \texttt{Iut/Stage1/IUTStage1Remark312Absorption.lean}
 \item \texttt{Iut/Stage1/IUTStage1IUTIVAlgebra.lean}
+\item \texttt{Iut/Stage1/IUTStage1FiniteLabels.lean}
 \item \texttt{Iut/Stage1/IUTStage1Source.lean}
 \item \texttt{Iut/Stage1/IUTStage1Experiments.lean}
 \end{itemize}
@@ -2278,14 +2283,14 @@ current corridor, ``upper ray'' means the signed-log region
 
 The largest engineering issue remains the size of
 \texttt{Iut/Stage1/IUTStage1Source.lean}, which still contains most of the
-finite-label, Gaussian, Hodge/SHE, hull, Step (x), Step (xi), and Step (xii)
-corridor.  The first mechanical split has been made:
-\texttt{IUTStage1IUTIVAlgebra.lean} now carries the Remark 3.12 sign shadows
-and the conditional \IUT{} IV real-algebra handoff estimates.  Low-risk future
-refactors are:
+Gaussian, Hodge/SHE, hull, Step (x), Step (xi), and Step (xii) corridor.  Two
+mechanical splits have been made: \texttt{IUTStage1IUTIVAlgebra.lean} now
+carries the Remark 3.12 sign shadows and the conditional \IUT{} IV
+real-algebra handoff estimates, while \texttt{IUTStage1FiniteLabels.lean}
+carries the finite-label and theta-root cusp-label source layer.  Low-risk
+future refactors are:
 \[
 \begin{array}{ll}
-\text{finite labels and }q^{j^2}\text{ averages} & \text{separate module},\\
 \text{Step (xi) hull/determinant upper rays} & \text{separate module},\\
 \text{Step (xii) local Frobenioid shifts} & \text{separate module}.
 \end{array}
