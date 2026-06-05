@@ -30822,6 +30822,162 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceVerticalIQ
       htarget.2.2.2.2.1,
       htarget.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Exact vertical-`IQ` finite-source route from the all-in-one target-charted
+Hodge/IPL determinant possible-image route source.
+
+The Step (x) target and realified log-Kummer transfer data are supplied as one
+exact vertical-`IQ` realified source.  The theorem projects the exact target,
+Kummer preservation, mono-analytic forgetting, and realization guards from that
+source before applying the finite-source route.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceExactVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (finiteSource :
+      NonarchimedeanFiniteDivisorPacketLocalSource
+        audited upperSemiEntry.toEntry product)
+    (exactSource :
+      NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C upperSemiEntry.toEntry
+        holomorphicF holomorphicD finiteSource.toMonoAnalyticD)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  ⟨exactSource.hasPreciseFrobenioidIsomorphisms,
+    part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceVerticalIQ
+      audited routeSource upperSemiEntry finiteSource
+      exactSource.realifiedSource.realifiedEntrySource.packetSource.kummerCompatibility
+      exactSource.realifiedSource.realifiedEntrySource.packetSource.forgettingCompatibility
+      exactSource.realifiedSource.realifiedEntrySource.packetSource.holomorphicF_realization
+      exactSource.realifiedSource.realifiedEntrySource.packetSource.holomorphicD_realization
+      exactSource.realifiedSource.realifiedEntrySource.packetSource.holomorphicStructureForgotten
+      exactSource.realifiedSource.realifiedEntrySource.packetSource.holomorphic_structure_forgotten
+      exactSource.targetSource cTheta thetaSigned_le_cTheta_absLogQ⟩
+
+set_option linter.style.longLine false in
+/--
+Exact vertical-`IQ` finite-source Step (x) boundary audit for the all-in-one
+target-charted route.
+
+This exposes that the retained Step (x) target calibration really comes from
+log-Kummer vertical-`IQ` compatibility, then projects the route-owned bridge,
+raw Step (xi) comparison, finite-source equalities, and exact vertical-`IQ`
+target equalities from the bundled source objects.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceExactVerticalIQ_boundaryEndpoint
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (finiteSource :
+      NonarchimedeanFiniteDivisorPacketLocalSource
+        audited upperSemiEntry.toEntry product)
+    (exactSource :
+      NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer l X C upperSemiEntry.toEntry
+        holomorphicF holomorphicD finiteSource.toMonoAnalyticD) :
+    let targetCalibration :=
+      exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration;
+    targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      routeSource.toSourceDerivedBridge.iplTransport.targetLogVolume =
+        routeSource.toSourceDerivedBridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+      product.productLogVolume =
+        finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  intro targetCalibration
+  have hexact := exactSource.exactVerticalIQ_endpoint
+  have hboundary :=
+    part.targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteSourceVerticalIQ_boundaryEndpoint
+      audited routeSource upperSemiEntry finiteSource exactSource.targetSource
+  exact
+    ⟨hexact.2.1,
+      hboundary.1,
+      hboundary.2.1,
+      hboundary.2.2.1,
+      hboundary.2.2.2.1,
+      hboundary.2.2.2.2.1,
+      hboundary.2.2.2.2.2.1,
+      hboundary.2.2.2.2.2.2.1,
+      hboundary.2.2.2.2.2.2.2.1,
+      hboundary.2.2.2.2.2.2.2.2.1,
+      hboundary.2.2.2.2.2.2.2.2.2.1,
+      hboundary.2.2.2.2.2.2.2.2.2.2⟩
+
 /--
 Source-derived finite-divisor vertical-`IQ` route from a constructed
 Theorem 3.11 IPL-link source.

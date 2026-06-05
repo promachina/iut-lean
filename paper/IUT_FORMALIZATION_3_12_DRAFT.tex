@@ -2238,6 +2238,10 @@ The project currently proves the following source-facing results in \Lean{}:
   external \(C_\Theta\) numeric bound: the route-owned bridge data, raw
   source comparison, packet-local finite-source equalities, and vertical-\(IQ\)
   target equalities are all projected from the bundled route/source objects.
+  The same route now has an exact vertical-\(IQ\) finite-source form: the
+  realified log-Kummer Step (x) source retains the exact vertical-\(IQ\) target
+  and transfer data, and the route projects its Kummer/forgetting
+  compatibilities and \(FMOD\)-exact target internally.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2613,7 +2617,12 @@ Step (x) boundary before applying the \(C_\Theta\) numeric bound: the endpoint
 records the route-owned \(\IPL\) datum and log-volume preservation, the raw
 \(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\) comparison, the
 packet-local source log-volume chain, and the vertical-\(IQ\) target
-identifications from the supplied finite-source and target-source records.
+identifications from the supplied finite-source and target-source records.  A
+tighter exact vertical-\(IQ\) variant now consumes a
+\texttt{NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource} instead of
+a separate target-source record: the endpoint projects the retained
+log-Kummer vertical-\(IQ\) calibration source, the Kummer/forgetting transfer
+guards, and the exact target before applying the same \(C_\Theta\) boundary.
 The direct-labelled Step (x) finite-divisor route now also has a
 source-derived Hodge/\(\SHE/\IPL\)/hull form.  Instead of taking the older
 route-alignment record, a free square-weight profile, and a separate theta-root
