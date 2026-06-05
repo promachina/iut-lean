@@ -26683,6 +26683,114 @@ theorem calibratedSynchronizationIPLLinkPossibleImageSideConditionedHullObligati
     |>.sourceDerivedCalibratedHodgeSHEIPLHullT11IPLLinkPossibleImageSideConditionedHullObligationsBacked_qComparison_endpoint
     audited hodgeSynchronization iplLinkSource hullSource
 
+set_option linter.style.longLine false in
+/--
+Experiment-facing raw Step (xi) comparison from the source-calibrated
+Hodge--Arakelov/IPL-link obligations-backed possible-image route.
+-/
+theorem sourceCalibratedHodgeArakelovIPLLinkPossibleImageSideConditionedHullObligationsBacked_qSigned_le_thetaSigned
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceCalibratedEvaluation :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
+        part audited X C)
+    (targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part
+    |>.qSigned_le_thetaSigned_from_sourceDerivedCalibratedHodgeArakelovHistorySeparatedT11IPLLinkPossibleImageSideConditionedHullObligationsBacked
+    audited sourceCalibratedEvaluation targetEvaluation canonicalOneDegree_preserved
+    iplLinkSource hullSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-facing audit payload for the source-calibrated
+Hodge--Arakelov/IPL-link possible-image Step (xi) comparison.
+-/
+theorem sourceCalibratedHodgeArakelovIPLLinkPossibleImageSideConditionedHullObligationsBacked_qComparison_endpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceCalibratedEvaluation :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
+        part audited X C)
+    (targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        sourceCalibratedEvaluation.evaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sourceCalibratedEvaluation.evaluation.fullLabelCompatibility ∧
+      hullSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record hullSource.qChoice ∧
+      hullSource.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        hullSource.obligations.hullDetData.bridgeData ∧
+      iplLinkSource.iplDatum = package.preLedger.certificate.ipl ∧
+      iplLinkSource.iplDatum.link.source =
+        iplLinkSource.iplDatum.inputPrimeStrip ∧
+      iplLinkSource.iplDatum.link.target =
+        iplLinkSource.iplDatum.outputPrimeStrip ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  part
+    |>.sourceDerivedCalibratedHodgeArakelovHistorySeparatedT11IPLLinkPossibleImageSideConditionedHullObligationsBacked_qComparison_endpoint
+    audited sourceCalibratedEvaluation targetEvaluation canonicalOneDegree_preserved
+    iplLinkSource hullSource
+
 /--
 Scholze-Stix-style collapse test for the representative `j^2` factors.
 
