@@ -35173,6 +35173,22 @@ structure SourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibl
       (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
         part audited sourceCalibratedEvaluation targetEvaluation
         canonicalOneDegree_preserved iplConstructionSource hullSource).iplTransport.iplDatum.outputPrimeStrip
+  iplSourceLogVolume_eq_finiteHodgeAverage :
+    let bridge :=
+      sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited sourceCalibratedEvaluation targetEvaluation
+        canonicalOneDegree_preserved iplConstructionSource hullSource;
+    let transportAudit :=
+      bridge.finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    bridge.iplTransport.sourceLogVolume = transportAudit.sourceAverage
+  iplTargetLogVolume_eq_finiteHodgeTransportedAverage :
+    let bridge :=
+      sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited sourceCalibratedEvaluation targetEvaluation
+        canonicalOneDegree_preserved iplConstructionSource hullSource;
+    let transportAudit :=
+      bridge.finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    bridge.iplTransport.targetLogVolume = transportAudit.targetTransportedAverage
   iplLogVolume_preserved :
     (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
       part audited sourceCalibratedEvaluation targetEvaluation
@@ -35320,6 +35336,26 @@ theorem toSourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibl
       iplDatum_eq_constructed := hconstructed,
       linkSource_eq_input := hlinkSource,
       linkTarget_eq_output := hlinkTarget,
+      iplSourceLogVolume_eq_finiteHodgeAverage := by
+        dsimp [
+          sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndHullDetSources,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+          IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport,
+          IUTStage1IPLLogVolumeTransportSource.sourceLogVolume]
+      iplTargetLogVolume_eq_finiteHodgeTransportedAverage := by
+        dsimp [
+          sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndHullDetSources,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+          IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport,
+          IUTStage1IPLLogVolumeTransportSource.targetLogVolume]
       iplLogVolume_preserved := hlog,
       qPilotRegion_eq_choice := hqEq,
       qPilotRegion_subset_union := hqSubset,
