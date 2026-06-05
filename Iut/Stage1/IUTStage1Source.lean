@@ -31001,6 +31001,119 @@ theorem ofRecordCanonicalHullTensorPowerOfQSubsetUnion_endpoint
 
 end IUTStage1Theorem311HullDetSourceConstructor
 
+open IUTStage1Theorem311HullDetSourceConstructor in
+/--
+Source-facing holomorphic-hull/determinant boundary for the record-native
+Step (xi) Ob4 route.
+
+The fields are the current mathematical payload that still has to be
+constructed from the source papers: a holomorphic hull on the Theorem 3.11
+possible-image union, q-pilot containment in that union, a weighted determinant
+source, tensor-power normalization, and equality with the package's named
+hull/determinant bridge.  From this package Lean constructs the existing
+Theorem 3.11 hull/determinant constructor.
+-/
+structure IUTStage1HolomorphicHullDeterminantSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    {β : Type v} [Fintype β] where
+  operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId
+  hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId
+  determinantOperation :
+    RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId
+  hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target)
+  qPilotRegion : Set (Point target)
+  q_subset_recordUnion :
+    qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  determinantSource :
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β
+  compatibility :
+    IUTStage1HullApproximantWeightedDeterminantCompatibility
+      (IUTStage1HullLogVolumeApproximant.canonical
+        hullData
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+      determinantSource
+  measure_eq_hullLogVolume :
+    package.preLedger.measure = hullData.toRegionMeasure
+  tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        determinantSource).normalizedLogVolume <=
+      package.preLedger.thetaSigned
+  hullDetBridge_eq :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        operation hullOperation determinantOperation hullData qPilotRegion
+        q_subset_recordUnion determinantSource compatibility
+        measure_eq_hullLogVolume tensorPower_bound
+  q_pilot_positive : 0 < -package.preLedger.qSigned
+  normalization : package.preLedger.normalization
+
+namespace IUTStage1HolomorphicHullDeterminantSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+
+noncomputable def toHullDetSourceConstructor
+    (sourceData :
+      IUTStage1HolomorphicHullDeterminantSource (β := β) record) :
+    IUTStage1Theorem311HullDetSourceConstructor record :=
+  IUTStage1Theorem311HullDetSourceConstructor.ofRecordCanonicalHullTensorPowerOfQSubsetUnion
+    (record := record)
+    sourceData.operation sourceData.hullOperation
+    sourceData.determinantOperation sourceData.hullData
+    sourceData.qPilotRegion sourceData.q_subset_recordUnion
+    sourceData.determinantSource sourceData.compatibility
+    sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound
+    sourceData.hullDetBridge_eq sourceData.q_pilot_positive
+    sourceData.normalization
+
+theorem qSigned_le_thetaSigned
+    (sourceData :
+      IUTStage1HolomorphicHullDeterminantSource (β := β) record) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.toHullDetSourceConstructor.qSigned_le_thetaSigned
+
+theorem hullDetSource_endpoint
+    (sourceData :
+      IUTStage1HolomorphicHullDeterminantSource (β := β) record) :
+    package.preLedger.output.Certified ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+        package.preLedger.certificate.she ∧
+      sourceData.toHullDetSourceConstructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (sourceData.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (sourceData.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.toHullDetSourceConstructor.hullDetSource_endpoint
+
+theorem source_endpoint
+    (sourceData :
+      IUTStage1HolomorphicHullDeterminantSource (β := β) record) :
+    sourceData.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  ⟨sourceData.q_subset_recordUnion,
+    sourceData.tensorPower_bound,
+    sourceData.qSigned_le_thetaSigned⟩
+
+end IUTStage1HolomorphicHullDeterminantSource
+
 /--
 Hull+det endpoint stated for multiradial Theta-pilot images.
 
@@ -48721,6 +48834,26 @@ noncomputable def ofFiniteHodgeSHEAndIPLTransportSources
     hullConstructor := hullConstructor,
     sourceCalibration := sourceCalibration }
 
+noncomputable def ofFiniteHodgeSHEIPLAndHullDetSources
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplSource :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C transportSource.toFiniteHodgeSHETransport)
+    (hullSource :
+      IUTStage1HolomorphicHullDeterminantSource (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  { iplTransport := iplSource.toIPLLogVolumeTransport,
+    finiteHodgeSHETransport :=
+      transportSource.toFiniteHodgeSHETransport,
+    hullConstructor := hullSource.toHullDetSourceConstructor,
+    sourceCalibration := sourceCalibration }
+
 def toRouteLogVolumeAlignment
     (bridge :
       IUTStage1SourceDerivedHodgeSHEIPLHullBridge
@@ -48836,6 +48969,44 @@ theorem ofFiniteHodgeSHEAndIPLTransportSources_endpoint
     ⟨rfl,
       rfl,
       iplSource.toIPLLogVolumeTransport.targetLogVolume_preserved,
+      transportSource.allowedForgetfulTransport_holds,
+      transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
+
+theorem ofFiniteHodgeSHEIPLAndHullDetSources_endpoint
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplSource :
+      IUTStage1IPLLogVolumeTransportSource
+        record l X C transportSource.toFiniteHodgeSHETransport)
+    (hullSource :
+      IUTStage1HolomorphicHullDeterminantSource (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    let bridge :=
+      ofFiniteHodgeSHEIPLAndHullDetSources
+        (part := part) (audited := audited)
+        transportSource iplSource hullSource sourceCalibration;
+    bridge.iplTransport =
+        iplSource.toIPLLogVolumeTransport ∧
+      bridge.finiteHodgeSHETransport =
+        transportSource.toFiniteHodgeSHETransport ∧
+      bridge.hullConstructor =
+        hullSource.toHullDetSourceConstructor ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      transportSource.forgetfulTransport.transportAllowed ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  intro bridge
+  exact
+    ⟨rfl,
+      rfl,
+      rfl,
+      iplSource.toIPLLogVolumeTransport.targetLogVolume_preserved,
+      hullSource.qSigned_le_thetaSigned,
       transportSource.allowedForgetfulTransport_holds,
       transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
 
