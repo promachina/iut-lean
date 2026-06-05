@@ -35068,6 +35068,37 @@ structure SourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibl
       sourceCalibratedEvaluation.evaluation.fullLabelCompatibility
       (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
         audited)
+  finiteHodgeTransport_eq_constructed :
+    let transportSource :=
+      IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+        (record := record)
+        sourceCalibratedEvaluation.evaluation targetEvaluation
+        canonicalOneDegree_preserved;
+    (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited sourceCalibratedEvaluation targetEvaluation
+      canonicalOneDegree_preserved iplConstructionSource hullSource).finiteHodgeSHETransport =
+      transportSource.toFiniteHodgeSHETransport
+  iplTransport_eq_constructed :
+    let transportSource :=
+      IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+        (record := record)
+        sourceCalibratedEvaluation.evaluation targetEvaluation
+        canonicalOneDegree_preserved;
+    (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited sourceCalibratedEvaluation targetEvaluation
+      canonicalOneDegree_preserved iplConstructionSource hullSource).iplTransport =
+      (IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport := transportSource.toFiniteHodgeSHETransport)
+        iplConstructionSource).toIPLLogVolumeTransport
+  hullConstructor_eq_source :
+    (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited sourceCalibratedEvaluation targetEvaluation
+      canonicalOneDegree_preserved iplConstructionSource hullSource).hullConstructor =
+      (hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
+        |>.toSideConditionedHolomorphicHullDeterminantSource
+        |>.toHolomorphicHullDeterminantSource
+        |>.toHullDetSourceConstructor)
   finiteHodgeSource_eq_calibrated :
     (sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
       part audited sourceCalibratedEvaluation targetEvaluation
@@ -35193,6 +35224,35 @@ theorem toSourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibl
       canonicalLabelDegree := hcanonicalDegree,
       squareWeightFormula := hsquare,
       fullLabelPreserved := hfull,
+      finiteHodgeTransport_eq_constructed := by
+        dsimp [
+          sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndHullDetSources,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+          IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport]
+      iplTransport_eq_constructed := by
+        dsimp [
+          sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndHullDetSources,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+          IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport,
+          IUTStage1Theorem311IPLLinkConstructionSource.toIPLLinkSource]
+      hullConstructor_eq_source := by
+        dsimp [
+          sourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofHodgeArakelovHistorySeparatedT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndHullDetSources,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+          IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport]
       finiteHodgeSource_eq_calibrated := hsourceEq,
       comparisonLevel := hlevel,
       coordinateEquiv := hcoord,
