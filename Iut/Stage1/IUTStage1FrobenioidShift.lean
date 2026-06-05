@@ -17957,6 +17957,38 @@ theorem source_endpoint
     iplSource.source_endpoint.2.2.2.2.2.2.2.1,
     iplSource.source_endpoint.2.2.2.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Constructed IPL/log-volume transport source audit for the target-charted
+Hodge--Arakelov/IPL construction source.
+
+This exposes the Theorem 3.11 input-prime-strip construction after the finite
+Hodge/SHE transport has been constructed from the Hodge--Arakelov
+synchronization, but before any Step (xi) hull/determinant source is used.
+-/
+theorem constructedIPLLogVolumeTransportSource_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.source_endpoint
+
 end IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
@@ -19376,7 +19408,7 @@ theorem constructedIPLLogVolumeTransportSource_endpoint
       sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
       sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
         sourceData.toIPLLogVolumeTransport.targetTheater.side :=
-  sourceData.toFiniteHodgeSHEIPLConstructionSource.source_endpoint
+  sourceData.hodgeIPLSource.constructedIPLLogVolumeTransportSource_endpoint
 
 set_option linter.style.longLine false in
 /--

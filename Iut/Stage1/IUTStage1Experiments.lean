@@ -23352,6 +23352,55 @@ theorem targetChartedHodgeArakelovIPLConstruction_sourceEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit for the constructed IPL/log-volume transport inside
+the packaged target-charted Hodge/IPL source.
+
+This is the finer source-level endpoint used by the all-in-one route: it keeps
+the certificate-pinned IPL datum, constructed input-prime-strip datum, link
+source/target, finite Hodge-theater sides, log-volume preservation, allowed
+forgetful transport, and history-separation guard visible before any
+determinant possible-image hull source is applied.
+-/
+theorem targetChartedHodgeArakelovIPLConstruction_constructedIPLLogVolumeTransportSourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        audited record X C) :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.constructedIPLLogVolumeTransportSource_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for the packaged target-charted Hodge/IPL
 source and the Hodge/determinant possible-image Step (xi) source.
 -/
