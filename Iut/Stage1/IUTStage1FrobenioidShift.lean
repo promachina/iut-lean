@@ -19106,6 +19106,48 @@ theorem source_endpoint
     hsource.2.2.2.2.2.2.2.2.2,
     hipl.2.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Project the all-in-one target-charted Hodge/IPL route to its Step (xi)
+possible-image side-conditioned holomorphic hull/determinant source.
+
+This keeps the route-level public input intact while exposing the actual
+Step (xi) hull source consumed by the generic source-derived bridge.
+-/
+noncomputable def toPossibleImageSideConditionedHolomorphicHullDeterminantSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantSource
+      (β := β) record :=
+  sourceData.possibleImageSource.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
+
+set_option linter.style.longLine false in
+/--
+Step (xi) payload exposed by the all-in-one target-charted Hodge/IPL route.
+
+The possible-image q-region, union containment, Ob4/tensor-power determinant
+bound, q-pilot positivity, normalization, and raw signed comparison are all
+read through the route source's side-conditioned hull/determinant projection.
+-/
+theorem possibleImageSideConditionedHull_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.possibleImageSource.qChoice ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.source_endpoint
+
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
 
 set_option linter.style.longLine true
