@@ -17973,6 +17973,56 @@ theorem hodgeArakelovFiniteHodgeSHETransportSource_endpoint
     using h
 
 set_option linter.style.longLine false in
+/--
+Factored SHE preservation constructed from the Hodge--Arakelov theta
+evaluations inside the target-charted Hodge/IPL source.
+
+This exposes the source-paper route point before the finite Hodge/SHE transport
+object is formed: canonical one-label preservation between the source and
+target Hodge--Arakelov evaluations yields the identity coordinate transport,
+coordinate-square preservation, full-label map/value preservation,
+transported-average preservation, and history separation used by the finite
+SHE layer.
+-/
+theorem hodgeArakelovFactoredSHEPreservation_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    let hodgeSync :=
+      sourceData.hodgeSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let obligations :=
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations.fromHodgeArakelovThetaValueEvaluations
+        (package := packageN) (bundle := record.bundle)
+        hodgeSync.sourceEvaluation.valueSource
+        hodgeSync.targetEvaluation.valueSource
+        hodgeSync.canonicalOneDegree_preserved;
+    let transportAudit := obligations.toStructuredSHESquareWeightTransportAudit;
+    obligations.coordinateEquiv = Equiv.refl (ZMod l.value) ∧
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) obligations.coordinateEquiv ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l) obligations.coordinateEquiv ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        obligations.sourceLogVolume obligations.targetLogVolume ∧
+      (∀ j : ZMod l.value,
+        obligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (obligations.coordinateEquiv j)) =
+          obligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      transportAudit.preservationAudit.targetTransportedAverage =
+        transportAudit.preservationAudit.sourceAverage ∧
+      record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+        record.bundle.structuredSHE.context.codomainStructure.theater.side := by
+  intro hodgeSync obligations transportAudit
+  exact
+    IUTStage1StructuredSHEFactoredSquareFullLabelObligations.fromHodgeArakelovThetaValueEvaluations_factoredSHE_endpoint
+      (package := packageN) (bundle := record.bundle)
+      hodgeSync.sourceEvaluation.valueSource
+      hodgeSync.targetEvaluation.valueSource
+      hodgeSync.canonicalOneDegree_preserved
+
+set_option linter.style.longLine false in
 theorem source_endpoint
     (sourceData :
       IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
@@ -19382,6 +19432,47 @@ theorem hodgeArakelovThetaEvaluation_endpoint
     hsync.2.1,
     hsync.2.2.1,
     sourceData.hodgeIPLSource.hodgeSynchronization.synchronization.canonicalOneDegree_preserved⟩
+
+set_option linter.style.longLine false in
+/--
+Factored SHE preservation exposed by the all-in-one route.
+
+This route-level audit sits between the Hodge--Arakelov theta-evaluation layer
+and the finite Hodge/SHE transport source: the source/target theta evaluations
+and canonical one-label preservation construct the factored square/full-label
+obligations used by the finite SHE transport.
+-/
+theorem hodgeArakelovFactoredSHEPreservation_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    let hodgeSync :=
+      sourceData.hodgeIPLSource.hodgeSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let obligations :=
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations.fromHodgeArakelovThetaValueEvaluations
+        (package := packageN) (bundle := record.bundle)
+        hodgeSync.sourceEvaluation.valueSource
+        hodgeSync.targetEvaluation.valueSource
+        hodgeSync.canonicalOneDegree_preserved;
+    let transportAudit := obligations.toStructuredSHESquareWeightTransportAudit;
+    obligations.coordinateEquiv = Equiv.refl (ZMod l.value) ∧
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) obligations.coordinateEquiv ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l) obligations.coordinateEquiv ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        obligations.sourceLogVolume obligations.targetLogVolume ∧
+      (∀ j : ZMod l.value,
+        obligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (obligations.coordinateEquiv j)) =
+          obligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      transportAudit.preservationAudit.targetTransportedAverage =
+        transportAudit.preservationAudit.sourceAverage ∧
+      record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+        record.bundle.structuredSHE.context.codomainStructure.theater.side :=
+  sourceData.hodgeIPLSource.hodgeArakelovFactoredSHEPreservation_endpoint
 
 noncomputable def toFiniteHodgeSHEIPLConstructionSource
     (sourceData :

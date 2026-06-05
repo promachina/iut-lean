@@ -23760,6 +23760,63 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_hodgeArakelovThetaEva
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface factored SHE preservation audit for the all-in-one
+target-charted route.
+
+This exposes the Hodge--Arakelov theta-evaluation constructor step that
+produces the factored square/full-label obligations before finite Hodge/SHE
+transport and IPL data are read.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_hodgeArakelovFactoredSHEPreservationEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    let hodgeSync :=
+      routeSource.hodgeIPLSource.hodgeSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let obligations :=
+      IUTStage1StructuredSHEFactoredSquareFullLabelObligations.fromHodgeArakelovThetaValueEvaluations
+        (package := package) (bundle := record.bundle)
+        hodgeSync.sourceEvaluation.valueSource
+        hodgeSync.targetEvaluation.valueSource
+        hodgeSync.canonicalOneDegree_preserved;
+    let transportAudit := obligations.toStructuredSHESquareWeightTransportAudit;
+    obligations.coordinateEquiv = Equiv.refl (ZMod l.value) ∧
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) obligations.coordinateEquiv ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l) obligations.coordinateEquiv ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        obligations.sourceLogVolume obligations.targetLogVolume ∧
+      (∀ j : ZMod l.value,
+        obligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (obligations.coordinateEquiv j)) =
+          obligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      transportAudit.preservationAudit.targetTransportedAverage =
+        transportAudit.preservationAudit.sourceAverage ∧
+      record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+        record.bundle.structuredSHE.context.codomainStructure.theater.side :=
+  routeSource.hodgeArakelovFactoredSHEPreservation_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface finite Hodge/SHE transport-source audit for the all-in-one
 target-charted route.
 

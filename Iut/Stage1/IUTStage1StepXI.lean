@@ -3333,6 +3333,58 @@ theorem coordinateIdentity_and_histories_not_identified
   ⟨obligations.coordinateEquiv_eq_refl,
     bundle.domainHistory_ne_codomainHistory⟩
 
+set_option linter.style.longLine false in
+/--
+Factored SHE preservation derived from Hodge--Arakelov theta evaluations.
+
+This is the constructor-level audit for the finite SHE step: from the
+source/target Hodge--Arakelov theta-value evaluations and canonical one-label
+degree preservation, the factored square/full-label obligations supply
+identity coordinate transport, coordinate-square preservation, full-label map
+and value preservation, transported-average preservation, and the retained
+separation of the two Hodge-theater histories.
+-/
+theorem fromHodgeArakelovThetaValueEvaluations_factoredSHE_endpoint
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceHA targetHA :
+      IUTStage1HodgeArakelovThetaValueEvaluationSource l X C)
+    (canonicalOneDegree_preserved :
+      targetHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceHA.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    let obligations :=
+      fromHodgeArakelovThetaValueEvaluations
+        (package := package) (bundle := bundle)
+        sourceHA targetHA canonicalOneDegree_preserved;
+    let transportAudit := obligations.toStructuredSHESquareWeightTransportAudit;
+    obligations.coordinateEquiv = Equiv.refl (ZMod l.value) ∧
+      IUTStage1ZModSquareWeightProfile.CoordinateSquarePreserving
+        (l := l) obligations.coordinateEquiv ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelMapPreserving
+        (l := l) obligations.coordinateEquiv ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        obligations.sourceLogVolume obligations.targetLogVolume ∧
+      (∀ j : ZMod l.value,
+        obligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (obligations.coordinateEquiv j)) =
+          obligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      transportAudit.preservationAudit.targetTransportedAverage =
+        transportAudit.preservationAudit.sourceAverage ∧
+      bundle.structuredSHE.context.domainStructure.theater.side ≠
+        bundle.structuredSHE.context.codomainStructure.theater.side := by
+  intro obligations transportAudit
+  exact
+    ⟨obligations.coordinateEquiv_eq_refl,
+      obligations.coordinateSquare_preserved,
+      obligations.fullLabelMap_preserved,
+      obligations.fullLabelValue_preserved,
+      obligations.fullLabelLogVolume_preserved,
+      obligations.transportedAverage_eq,
+      bundle.domainHistory_ne_codomainHistory⟩
+
 theorem coordinateEquiv_ne_neg
     (obligations :
       IUTStage1StructuredSHEFactoredSquareFullLabelObligations
