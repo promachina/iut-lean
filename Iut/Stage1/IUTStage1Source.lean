@@ -52347,6 +52347,35 @@ noncomputable def ofFiniteHodgeSHET11IPLAndFamilyHullExactThetaSources
     hullConstructor := hullSource.toHullDetSourceConstructor,
     sourceCalibration := sourceCalibration }
 
+noncomputable def ofFiniteHodgeSHET11IPLConstructionAndFamilyHullExactThetaSources
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (familyHullSource :
+      IUTStage1ChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
+        (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  let iplSource :=
+    IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+      (l := l) (X := X) (C := C)
+      (finiteTransport := transportSource.toFiniteHodgeSHETransport)
+      iplConstructionSource
+  let hullSource :=
+    familyHullSource.toSideConditionedHolomorphicHullDeterminantSource
+      |>.toChoiceLinkedHolomorphicHullDeterminantSource
+      |>.toHolomorphicHullDeterminantSource
+  { iplTransport := iplSource.toIPLLogVolumeTransport,
+    finiteHodgeSHETransport :=
+      transportSource.toFiniteHodgeSHETransport,
+    hullConstructor := hullSource.toHullDetSourceConstructor,
+    sourceCalibration := sourceCalibration }
+
 noncomputable def ofFiniteHodgeSHET11IPLConstructionAndHullDetSources
     {β : Type v} [Fintype β]
     (transportSource :
@@ -52594,6 +52623,58 @@ theorem ofFiniteHodgeSHET11IPLAndFamilyHullExactThetaSources_endpoint
     IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport] at bridge ⊢
   exact
     ⟨rfl,
+      rfl,
+      familyHullSource.thetaSigned_eq_familyHullLogVolume,
+      bridge.iplTransport.targetLogVolume_preserved,
+      familyHullSource.toSideConditionedHolomorphicHullDeterminantSource
+        |>.qSigned_le_thetaSigned,
+      transportSource.allowedForgetfulTransport_holds,
+      transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
+
+theorem ofFiniteHodgeSHET11IPLConstructionAndFamilyHullExactThetaSources_endpoint
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (familyHullSource :
+      IUTStage1ChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
+        (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    let bridge :=
+      ofFiniteHodgeSHET11IPLConstructionAndFamilyHullExactThetaSources
+        (part := part) (audited := audited)
+        transportSource iplConstructionSource familyHullSource
+        sourceCalibration;
+    bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        iplConstructionSource.constructedDatum ∧
+      bridge.iplTransport.iplDatum.link.source =
+        bridge.iplTransport.iplDatum.inputPrimeStrip ∧
+      bridge.iplTransport.iplDatum.link.target =
+        bridge.iplTransport.iplDatum.outputPrimeStrip ∧
+      bridge.finiteHodgeSHETransport =
+        transportSource.toFiniteHodgeSHETransport ∧
+      packageN.preLedger.thetaSigned =
+        familyHullSource.familyHullSource.familyHullLogVolume ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      transportSource.forgetfulTransport.transportAllowed ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  intro bridge
+  dsimp [ofFiniteHodgeSHET11IPLConstructionAndFamilyHullExactThetaSources,
+    IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource,
+    IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+    IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport] at bridge ⊢
+  exact
+    ⟨rfl,
+      iplConstructionSource.iplDatum_eq_constructedDatum,
+      iplConstructionSource.linkSource_eq_input,
+      iplConstructionSource.linkTarget_eq_output,
       rfl,
       familyHullSource.thetaSigned_eq_familyHullLogVolume,
       bridge.iplTransport.targetLogVolume_preserved,
@@ -57767,6 +57848,114 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHist
     IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndFamilyHullExactThetaSources
         (part := part) (audited := audited)
         transportSource iplLinkSource familyHullBackedSource sourceCalibration
+  part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorIQ
+    (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    audited sourceBridge rfl sourceEvaluation.thetaRootSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+History-separated Hodge--Arakelov source form with a constructed Theorem 3.11
+IPL link and a family-hull-backed exact-theta Step (xi) source.
+
+This variant keeps the constructed input-prime-strip link visible in the
+source-derived bridge.  The bridge records that the package certificate's IPL
+datum is the constructed datum before applying the finite-divisor
+vertical-`IQ` route.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHistorySeparatedT11IPLConstructionChoiceLinkedFamilyHullExactThetaHullDetDataBackedFiniteDivisorVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (familyHullBackedSource :
+      IUTStage1ChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
+        (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceEvaluation.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  let transportSource :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+      (record := record)
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+  let sourceBridge :=
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLConstructionAndFamilyHullExactThetaSources
+        (part := part) (audited := audited)
+        transportSource iplConstructionSource familyHullBackedSource
+        sourceCalibration
   part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorIQ
     (IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
     audited sourceBridge rfl sourceEvaluation.thetaRootSource upperSemiEntry
