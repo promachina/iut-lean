@@ -10334,6 +10334,133 @@ end IUTStage1ChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
 /--
+Possible-image family-hull exact-theta Step (xi) source backed by package
+hull/det data.
+
+This refines `IUTStage1ChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource`
+by fixing the q-pilot region to a chosen Theorem 3.11 possible image.  It keeps
+the Ob5-shaped family-hull assertion `thetaSigned = familyHullLogVolume`, while
+deriving the q-pilot containment data needed by the existing choice-linked
+source internally.
+-/
+structure IUTStage1PossibleImageFamilyHullExactThetaHullDetDataBackedSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    {β : Type v} [Fintype β] where
+  operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId
+  hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId
+  determinantOperation :
+    RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId
+  familyHullSource :
+    IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+      (β := β) record
+  qChoice : index
+  measure_eq_hullLogVolume :
+    package.preLedger.measure = familyHullSource.hullData.toRegionMeasure
+  thetaSigned_eq_familyHullLogVolume :
+    package.preLedger.thetaSigned =
+      familyHullSource.familyHullLogVolume
+  hullDetSourceData : IUTStage1SourceHullDetData package
+  hullDetSourceData_eq_recordCanonical :
+    hullDetSourceData.bridgeData =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        operation hullOperation determinantOperation familyHullSource.hullData
+        (recordThetaPossibleImage record qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) qChoice
+          (recordThetaPossibleImage record qChoice)
+          (fun _ hx => hx))
+        familyHullSource.determinantSource familyHullSource.compatibility
+        measure_eq_hullLogVolume
+        (familyHullSource.tensorPower_bound_of_theta_eq_familyHullLogVolume
+            thetaSigned_eq_familyHullLogVolume)
+  sideConditions : IUTStage1SourceSideConditions package
+
+namespace IUTStage1PossibleImageFamilyHullExactThetaHullDetDataBackedSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+def qPilotRegion
+    (sourceData :
+      IUTStage1PossibleImageFamilyHullExactThetaHullDetDataBackedSource
+        (β := β) record) :
+    Set (Point target) :=
+  recordThetaPossibleImage record sourceData.qChoice
+
+theorem q_subset_choice
+    (sourceData :
+      IUTStage1PossibleImageFamilyHullExactThetaHullDetDataBackedSource
+        (β := β) record) :
+    sourceData.qPilotRegion ⊆
+      recordThetaPossibleImage record sourceData.qChoice :=
+  fun _ hx => hx
+
+noncomputable def toChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
+    (sourceData :
+      IUTStage1PossibleImageFamilyHullExactThetaHullDetDataBackedSource
+        (β := β) record) :
+    IUTStage1ChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
+      (β := β) record :=
+  { operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    familyHullSource := sourceData.familyHullSource,
+    qChoice := sourceData.qChoice,
+    qPilotRegion := sourceData.qPilotRegion,
+    q_subset_choice := sourceData.q_subset_choice,
+    measure_eq_hullLogVolume := sourceData.measure_eq_hullLogVolume,
+    thetaSigned_eq_familyHullLogVolume :=
+      sourceData.thetaSigned_eq_familyHullLogVolume,
+    hullDetSourceData := sourceData.hullDetSourceData,
+    hullDetSourceData_eq_recordCanonical :=
+      sourceData.hullDetSourceData_eq_recordCanonical,
+    sideConditions := sourceData.sideConditions }
+
+theorem source_endpoint
+    (sourceData :
+      IUTStage1PossibleImageFamilyHullExactThetaHullDetDataBackedSource
+        (β := β) record) :
+    sourceData.qPilotRegion =
+        recordThetaPossibleImage record sourceData.qChoice ∧
+      sourceData.qPilotRegion ⊆
+        recordThetaPossibleImageUnion record ∧
+      package.preLedger.thetaSigned =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      sourceData.familyHullSource.familyHullLogVolume =
+        sourceData.familyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.familyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.hullDetSourceData.bridgeData ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        (sourceData.toChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
+          |>.recordCanonicalBridgeData) ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  let projected := sourceData.toChoiceLinkedFamilyHullExactThetaHullDetDataBackedSource
+  ⟨rfl,
+    projected.source_endpoint.2.1,
+    sourceData.thetaSigned_eq_familyHullLogVolume,
+    sourceData.familyHullSource.familyHullLogVolume_eq_determinant,
+    sourceData.familyHullSource.tensorPower_normalizedLogVolume_eq_familyHullLogVolume,
+    sourceData.hullDetSourceData.hullDetBridge_eq_bridgeData,
+    projected.hullDetBridge_eq,
+    sourceData.sideConditions.q_pilot_positive,
+    sourceData.sideConditions.sourceNormalization,
+    projected.source_endpoint.2.2.2.2.2.2.2⟩
+
+end IUTStage1PossibleImageFamilyHullExactThetaHullDetDataBackedSource
+
+open IUTStage1Theorem311HullDetSourceConstructor in
+/--
 Family-hull exact-theta Step (xi) source backed by hull/det obligations.
 
 This refines
