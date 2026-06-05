@@ -2049,6 +2049,11 @@ The project currently proves the following source-facing results in \Lean{}:
   the existing choice-linked hull source, and exposes a public
   Hodge--Arakelov/history-separated finite-divisor endpoint for this stronger
   source shape.
+\item That exact-theta Step (xi) source now has a side-conditioned form as
+  well.  The q-pilot positivity and source normalization proofs are no longer
+  two loose fields in this variant; they are projected from
+  \(IUTStage1SourceSideConditions\), the same side-condition boundary used when
+  promoting source data to the Stage 1 ledger.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
@@ -2253,9 +2258,12 @@ by the determinant log-volume, and to have matching input/output q-pilot
 readings.  A stricter exact-theta variant now replaces the free
 tensor-power-bound field by the equality
 \(\theta_{\mathrm{signed}}=\operatorname{NormVol}(\mathrm{Ob4Det})\), from
-which \Lean{} derives the bound used by the older constructor.  The remaining
-task is to construct the underlying fields from the source-paper
-holomorphic-hull and determinant operations.
+which \Lean{} derives the bound used by the older constructor.  The
+side-conditioned exact-theta variant additionally projects q-pilot positivity
+and normalization from the existing Stage 1 side-condition object, rather than
+carrying these as independent Step (xi) fields.  The remaining task is to
+construct the underlying fields from the source-paper holomorphic-hull and
+determinant operations.
 
 The practical priority order is:
 \begin{enumerate}
