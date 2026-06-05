@@ -32162,6 +32162,127 @@ theorem sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSid
 
 set_option linter.style.longLine false in
 /--
+Gaussian-to-Step (xi) audit for the calibrated obligations-backed
+possible-image route.
+
+This refines
+`sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHull_gaussianToStepXI_endpoint`:
+the Hodge--Arakelov theta-evaluation source still supplies the theta-root,
+Gaussian, and full-label calibration facts, while the Step (xi)
+possible-image hull source now projects the package hull/determinant bridge
+datum, q-pilot positivity, and source normalization from source
+hull/determinant obligations.
+-/
+theorem sourceDerivedCalibratedHodgeSHEIPLHullT11IPLConstructionPossibleImageSideConditionedHullObligationsBacked_gaussianToStepXI_endpoint
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    let bridge :=
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources
+        (part := part) (audited := audited)
+        hodgeSynchronization iplConstructionSource hullSource;
+    hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+        hodgeSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+      (∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+        hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          hodgeSynchronization.sourceEvaluation.squareWeightProfile.weight j *
+            hodgeSynchronization.sourceEvaluation.thetaMonoidDegree) ∧
+      IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        hodgeSynchronization.sourceEvaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      bridge.finiteHodgeSHETransport.synchronization.sourceHA =
+        hodgeSynchronization.valueSource ∧
+      bridge.finiteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      bridge.finiteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) ∧
+      bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        iplConstructionSource.constructedDatum ∧
+      bridge.iplTransport.iplDatum.link.source =
+        bridge.iplTransport.iplDatum.inputPrimeStrip ∧
+      bridge.iplTransport.iplDatum.link.target =
+        bridge.iplTransport.iplDatum.outputPrimeStrip ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      hullSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record hullSource.qChoice ∧
+      hullSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        hullSource.obligations.hullDetData.bridgeData ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  intro bridge
+  have htheta := hodgeSynchronization.sourceEvaluation.thetaEvaluation_endpoint
+  have hsync := hodgeSynchronization.synchronization_endpoint
+  have hbridge :=
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources_endpoint
+      (part := part) (audited := audited)
+      hodgeSynchronization iplConstructionSource hullSource
+  exact
+    ⟨htheta.1,
+      htheta.2.1,
+      htheta.2.2.1,
+      htheta.2.2.2.1,
+      htheta.2.2.2.2.1,
+      htheta.2.2.2.2.2,
+      hsync.1,
+      rfl,
+      bridge.finiteHodgeSHETransport.toFactoredObligations
+        |>.comparisonLevel_eq_pointwiseRepresentative,
+      bridge.finiteHodgeSHETransport.toFactoredObligations
+        |>.coordinateEquiv_eq_refl,
+      hbridge.1,
+      hbridge.2.1,
+      bridge.iplTransport.linkSource_eq_datum_source,
+      bridge.iplTransport.linkTarget_eq_datum_target,
+      hbridge.2.2.2.2.2.2.2.1,
+      hbridge.2.2.1,
+      hbridge.2.2.2.1,
+      hbridge.2.2.2.2.1,
+      hbridge.2.2.2.2.2.1,
+      hbridge.2.2.2.2.2.2.1,
+      hbridge.2.2.2.2.2.2.2.2.1,
+      hbridge.2.2.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
 Raw signed Step (xi) comparison from the synchronized target-charted
 possible-image summand/family-hull source.
 
