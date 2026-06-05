@@ -19189,6 +19189,50 @@ noncomputable def toIPLLogVolumeTransport
 
 set_option linter.style.longLine false in
 /--
+History-separated finite Hodge/SHE transport source exposed by the all-in-one
+route.
+
+The route's finite Hodge/SHE transport source is the one constructed from the
+source and target Hodge--Arakelov theta-evaluation sources, using canonical
+one-label degree preservation and the record's history-separated Hodge-theater
+descent bridge.
+-/
+theorem hodgeArakelovFiniteHodgeSHETransportSource_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+        sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) := by
+  let hodgeSync :=
+    sourceData.hodgeIPLSource.hodgeSynchronization
+      |>.toThetaSourceCalibratedHodgeArakelovSynchronization
+  have h :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated_endpoint
+      (record := record)
+      hodgeSync.sourceEvaluation hodgeSync.targetEvaluation
+      hodgeSync.canonicalOneDegree_preserved
+  simpa [
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.toFiniteHodgeSHEIPLConstructionSource,
+    IUTStage1TargetChartedHodgeArakelovSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization,
+    IUTStage1TargetChartedHodgeArakelovSynchronization.sourceEvaluation,
+    IUTStage1TargetChartedHodgeArakelovSynchronization.targetEvaluation,
+    IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization.sourceEvaluation]
+    using h
+
+set_option linter.style.longLine false in
+/--
 Hodge/SHE/IPL payload exposed by the all-in-one target-charted route.
 
 This is the route-level projection of the constructed Hodge/SHE transport and

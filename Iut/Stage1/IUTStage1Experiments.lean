@@ -23473,6 +23473,51 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_hodgeArakelovThetaEva
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface finite Hodge/SHE transport-source audit for the all-in-one
+target-charted route.
+
+This pins the route's finite Hodge/SHE transport source to the
+history-separated construction from source/target Hodge--Arakelov
+theta-evaluation sources.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_hodgeArakelovFiniteHodgeSHETransportSourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        routeSource.hodgeIPLSource.hodgeSynchronization.sourceEvaluation.valueSource ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+        routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.valueSource ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      routeSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) :=
+  routeSource.hodgeArakelovFiniteHodgeSHETransportSource_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Hodge/SHE/IPL audit for the all-in-one target-charted
 Hodge/IPL determinant possible-image route.
 
