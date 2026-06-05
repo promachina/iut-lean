@@ -2107,6 +2107,13 @@ The project currently proves the following source-facing results in \Lean{}:
   and \Lean{} derives the family-hull equality from the Ob5
   hull/determinant compatibility.  The experiment module exposes this route as
   \texttt{determinantChartedHodgeFamilyHullFiniteDivisorVerticalIQ\_cThetaDichotomy}.
+\item The determinant-factored route now has a summand-factored source form.
+  The source object calibrates the Hodge--Arakelov theta-monoid degree to the
+  finite sum of adjusted localization summands of the weighted determinant
+  source; \Lean{} derives the determinant and normalized determinant
+  equalities before entering the same finite-divisor endpoint.  The experiment
+  module exposes this route as
+  \texttt{summandChartedHodgeFamilyHullFiniteDivisorVerticalIQ\_cThetaDichotomy}.
 \item The finite-divisor vertical-\(IQ\) Hodge/\(\SHE/\IPL\)/hull endpoint now
   has a source-derived form: it consumes this separated bridge object instead
   of a prebuilt route alignment before constructing the same finite-divisor
