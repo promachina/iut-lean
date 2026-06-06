@@ -2639,6 +2639,35 @@ by localized hull-regions.  From this cover identity, \Lean{} proves
 \(H_\beta\subseteq\phi(P_B)\) for each \(\beta\), derives the family-hull
 log-volume sum from the supplied cover-additivity theorem, and then constructs
 the localized hull/vector-bundle decomposition source described above.
+The pointwise summand calibration has now been factored as well.  A local
+source object
+\[
+\begin{array}{l}
+\texttt{IUTStage1LocalizedHullRegion}\\
+\quad\texttt{VectorBundleCalibrationSource}
+\end{array}
+\]
+attaches a single localized hull-region \(H_\beta\) to its
+structure-sheaf-adjusted localized arithmetic vector bundle and records the
+source equality
+\[
+  \mu_{\log}(H_\beta)
+    =
+  w_\beta\cdot
+  \bigl(L_{\beta,\mathrm{bundle}}-L_{\beta,\mathcal O(-)}\bigr).
+\]
+\Lean{} then identifies the right hand side with the weighted adjusted
+localized vector-bundle summand.  The aggregate declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395CalibratedLocalized}\\
+\quad\texttt{HullCoverVectorBundleSource}
+\end{array}
+\]
+assembles these calibrated local objects, constructs the finite localized
+determinant source from them, and then projects to the localized hull-cover
+source.  Thus the cover-level pointwise equality
+\(\mu_{\log}(H_\beta)=\operatorname{adj}_\beta\) is no longer a bare field.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5820,7 +5849,7 @@ The practical priority order is:
   the adjusted-localization interface, but
   the next work is to replace the
   still-supplied hull system, finite localized cover/additivity theorem,
-  pointwise localized summand calibration, measure calibration,
+  local region/vector-bundle log-volume calibration, measure calibration,
   record-canonical synchronization, and chart synchronization witnesses by
   source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source

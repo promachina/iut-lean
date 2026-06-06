@@ -41481,6 +41481,69 @@ theorem remark395LocalizedHullCoverVectorBundleSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface pointwise localized hull-region/vector-bundle calibration.
+
+This is the local Ob3-3 calibration beneath the finite cover: the region
+log-volume is first identified with the weighted structure-sheaf-adjusted raw
+vector-bundle value, and Lean then reads the determinant summand from the
+localized vector-bundle source.
+-/
+theorem localizedHullRegionVectorBundleCalibrationSource_endpoint
+    {α : Type u}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    {η : Type v} {γ : Type w} [Fintype γ]
+    (data :
+      IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+        hullSystem η γ) :
+    hullSystem.logVolume data.localizedRegion =
+        data.weightedAdjustedRaw ∧
+      data.weightedAdjustedRaw =
+        data.localizedVectorBundle.weightedAdjustedLogVolume ∧
+      hullSystem.logVolume data.localizedRegion =
+        data.localizedVectorBundle.weightedAdjustedLogVolume ∧
+      data.localizedVectorBundle.adjustedRawLogVolume =
+        data.localizedVectorBundle.bundle.bundleLogVolume -
+          data.localizedVectorBundle.structureSheafLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface calibrated localized hull-cover source.
+
+This endpoint removes the bare pointwise localized summand equality from the
+cover source.  Each localized region now carries a local-ring-labelled
+vector-bundle calibration, from which Lean derives the pointwise summand
+equalities and then constructs the existing finite cover/decomposition route.
+-/
+theorem remark395CalibratedLocalizedHullCoverVectorBundleSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395CalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    (∀ index : β,
+      data.localizedSource.localization index =
+        (data.localizedCalibration index).localizedVectorBundle) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.localizedRegion index) =
+          (data.localizedCalibration index).weightedAdjustedRaw) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.localizedRegion index) =
+          data.localizedSource.weightedAdjustedLogVolume index) ∧
+      data.familyHull = data.localizedRegionUnion ∧
+      data.familyHullLogVolume = data.localizedLogVolumeSum ∧
+      data.localizedLogVolumeSum = data.localizedAdjustedSum ∧
+      data.familyHullLogVolume = data.localizedAdjustedSum ∧
+      data.toLocalizedHullCoverVectorBundleSource.familyHull =
+        data.familyHull ∧
+      data.toLocalizedHullCoverVectorBundleSource.localizedAdjustedSum =
+        data.localizedAdjustedSum ∧
+      data.toLocalizedHullCoverVectorBundleSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume =
+        data.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
