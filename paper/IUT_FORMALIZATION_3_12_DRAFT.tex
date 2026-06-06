@@ -2515,6 +2515,24 @@ and
 \texttt{remark395RecordOb3Ob5DeterminantCompatibilitySource\_boundedFamilyEndpoint}
 verify the family union, canonical hull, determinant log-volume equality, and
 normalized tensor-power equality after this projection.
+The generic bridge from Ob3/Ob5 compatibility to the Step~(xi) log-volume
+chain now also has an exact-theta constructor:
+\[
+\begin{array}{l}
+\texttt{remark395HullDeterminantBridgeSource}\\
+\quad\texttt{\_ofOb3Ob5CompatibilitySourceOfThetaEqFamilyHullLogVolume}\\
+\quad\texttt{\_endpoint}.
+\end{array}
+\]
+This route no longer takes the Ob4 tensor-power bound as an independent input.
+Given \(q\subseteq \bigcup_\beta P_\beta\) and the source calibration
+\(\theta_{\mathrm{signed}}=\mu_{\log}(\phi(P_B))\), \Lean{} derives the
+tensor-power bound from the bounded-family hull/determinant source and then
+proves
+\[
+  \mu_{\log}(q)\leq \det_{\mathrm{norm}}\leq
+  \theta_{\mathrm{signed}}.
+\]
 The record-canonical Ob3/Ob5 source now also has a public constructor endpoint
 from the Ob3/Ob4 adjusted determinant source.  Given the remaining
 source-facing equality

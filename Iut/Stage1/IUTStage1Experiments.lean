@@ -41338,6 +41338,53 @@ theorem remark395HullDeterminantBridgeSource_normalizedBridge
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Remark 3.9.5 bridge constructor from exact theta/family-hull
+log-volume calibration.
+
+This generic Ob3/Ob5 route no longer accepts the Ob4 tensor-power bound as a
+separate input.  It derives that bound from the source equality
+`thetaSigned = mu_log(phi(P_B))` and then exposes the usual Step (xi)
+normalized bridge `mu_log(qRegion) <= det_norm <= thetaSigned`.
+-/
+theorem remark395HullDeterminantBridgeSource_ofOb3Ob5CompatibilitySourceOfThetaEqFamilyHullLogVolume_endpoint
+    {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+    (compatibilitySource :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β)
+    (qRegion : Set α)
+    (q_subset_familyUnion :
+      qRegion ⊆ compatibilitySource.familyUnion)
+    (thetaSigned : Real)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume) :
+    let source :=
+      IUTStage1Remark395HullDeterminantBridgeSource.ofOb3Ob5CompatibilitySourceOfThetaEqFamilyHullLogVolume
+          compatibilitySource qRegion q_subset_familyUnion thetaSigned
+          thetaSigned_eq_familyHullLogVolume;
+    source.compatibility = compatibilitySource.toCompatibility ∧
+      thetaSigned =
+        compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume ∧
+      source.qRegion ⊆ source.familyHull ∧
+      source.familyHullLogVolume =
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          source.determinantSource).normalizedLogVolume <= thetaSigned ∧
+      source.qRegionLogVolume <=
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      compatibilitySource.determinantSource.normalizedLogVolume <=
+        thetaSigned ∧
+      source.qRegionLogVolume <=
+        compatibilitySource.determinantSource.determinantLogVolume ∧
+      compatibilitySource.determinantSource.determinantLogVolume <=
+        thetaSigned ∧
+      source.qRegionLogVolume <= thetaSigned :=
+  IUTStage1Remark395HullDeterminantBridgeSource.ofOb3Ob5CompatibilitySourceOfThetaEqFamilyHullLogVolume_endpoint
+      compatibilitySource qRegion q_subset_familyUnion thetaSigned
+      thetaSigned_eq_familyHullLogVolume
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface record-canonical Ob3/Ob5 compatibility audit for the Theorem
 3.11 possible-image family used by Step (xi).
 -/

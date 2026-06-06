@@ -6192,6 +6192,76 @@ theorem ofOb3Ob5CompatibilitySource_endpoint
         source.qRegionLogVolume_le_thetaSigned⟩
 
 set_option linter.style.longLine false in
+noncomputable def ofOb3Ob5CompatibilitySourceOfThetaEqFamilyHullLogVolume
+    (compatibilitySource :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β)
+    (qRegion : Set α)
+    (q_subset_familyUnion :
+      qRegion ⊆ compatibilitySource.familyUnion)
+    (thetaSigned : Real)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume) :
+    IUTStage1Remark395HullDeterminantBridgeSource α ι β :=
+  ofOb3Ob5CompatibilitySource compatibilitySource qRegion
+    q_subset_familyUnion thetaSigned
+    (compatibilitySource.toBoundedFamilyHullDetLogVolumeSource
+      |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+          thetaSigned_eq_familyHullLogVolume)
+
+set_option linter.style.longLine false in
+theorem ofOb3Ob5CompatibilitySourceOfThetaEqFamilyHullLogVolume_endpoint
+    (compatibilitySource :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β)
+    (qRegion : Set α)
+    (q_subset_familyUnion :
+      qRegion ⊆ compatibilitySource.familyUnion)
+    (thetaSigned : Real)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume) :
+    let source :=
+      ofOb3Ob5CompatibilitySourceOfThetaEqFamilyHullLogVolume
+        compatibilitySource qRegion q_subset_familyUnion thetaSigned
+        thetaSigned_eq_familyHullLogVolume;
+    source.compatibility = compatibilitySource.toCompatibility ∧
+      thetaSigned =
+        compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume ∧
+      source.qRegion ⊆ source.familyHull ∧
+      source.familyHullLogVolume =
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          source.determinantSource).normalizedLogVolume <= thetaSigned ∧
+      source.qRegionLogVolume <=
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      compatibilitySource.determinantSource.normalizedLogVolume <=
+        thetaSigned ∧
+      source.qRegionLogVolume <=
+        compatibilitySource.determinantSource.determinantLogVolume ∧
+      compatibilitySource.determinantSource.determinantLogVolume <=
+        thetaSigned ∧
+      source.qRegionLogVolume <= thetaSigned :=
+  by
+    intro source
+    exact
+      ⟨rfl,
+        thetaSigned_eq_familyHullLogVolume,
+        source.qRegion_subset_familyHull,
+        source.familyHullLogVolume_eq_normalized,
+        source.tensorPower_bound,
+        by
+          simpa [IUTStage1Remark395HullDeterminantBridgeSource.determinantNormalizedLogVolume]
+            using source.qRegionLogVolume_le_determinantNormalizedLogVolume,
+        by
+          simpa [IUTStage1Remark395HullDeterminantBridgeSource.determinantNormalizedLogVolume]
+            using source.determinantNormalizedLogVolume_le_thetaSigned,
+        source.qRegionLogVolume_le_determinantLogVolume,
+        source.determinantLogVolume_le_thetaSigned,
+        source.qRegionLogVolume_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
 noncomputable def ofAdjustedDeterminantLogVolumeSource
     {γ : Type x} [Fintype γ]
     (sourceData :
