@@ -20830,6 +20830,79 @@ theorem toGaussianToStepXIAudit
       sourceData.toTargetChartedHodgeIPLDeterminantPossibleImageRouteSource :=
   sourceData.toTargetChartedHodgeIPLDeterminantPossibleImageRouteSource.toGaussianToStepXIAudit
 
+/--
+Calibrated Gaussian-to-Step (xi) audit for the all-in-one route.
+
+This is the calibrated counterpart of the projected
+`GaussianToStepXIAudit`: it keeps that existing Hodge/SHE/IPL/hull audit, but
+also records the calibrated possible-image source fields directly.  In
+particular, the determinant-side Hodge theta/summand equality is read through
+the target-charted summand calibration rather than through the older projected
+determinant possible-image source.
+-/
+structure CalibratedGaussianToStepXIAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageRouteSource
+        (β := β) part audited record X C) : Prop where
+  projectedGaussianAudit :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+      sourceData.toTargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+  qPilotRegion_eq_choice :
+    sourceData.calibratedPossibleImageSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.calibratedPossibleImageSource.qChoice
+  measure_eq_hullLogVolume :
+    packageN.preLedger.measure =
+      sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.hullData.toRegionMeasure
+  targetChartedTheta_eq_canonicalOneDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  chartedTheta_eq_thetaMonoidDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree
+  thetaMonoidDegree_eq_summandSum :
+    sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  familyUnion_eq_record :
+    sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.familyUnion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  familyHullLogVolume_eq_determinant :
+    sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+      sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume
+  thetaSigned_eq_familyHull :
+    packageN.preLedger.thetaSigned =
+      sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.familyHullLogVolume
+  hullDetBridge_eq_obligations :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.calibratedPossibleImageSource.obligations.hullDetData.bridgeData
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toCalibratedGaussianToStepXIAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    CalibratedGaussianToStepXIAudit sourceData := by
+  have hsource := sourceData.source_endpoint
+  exact
+    { projectedGaussianAudit := sourceData.toGaussianToStepXIAudit,
+      qPilotRegion_eq_choice := hsource.2.2.2.1,
+      measure_eq_hullLogVolume := hsource.2.2.2.2.1,
+      targetChartedTheta_eq_canonicalOneDegree := hsource.2.2.2.2.2.1,
+      chartedTheta_eq_thetaMonoidDegree := hsource.2.2.2.2.2.2.1,
+      thetaMonoidDegree_eq_summandSum := hsource.2.2.2.2.2.2.2.1,
+      familyUnion_eq_record := hsource.2.2.2.2.2.2.2.2.1,
+      familyHullLogVolume_eq_determinant := hsource.2.2.2.2.2.2.2.2.2.1,
+      thetaSigned_eq_familyHull := hsource.2.2.2.2.2.2.2.2.2.2.1,
+      hullDetBridge_eq_obligations := hsource.2.2.2.2.2.2.2.2.2.2.2.1,
+      qSigned_le_thetaSigned := hsource.2.2.2.2.2.2.2.2.2.2.2.2.1 }
+
 end IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageRouteSource
 
 set_option linter.style.longLine true
