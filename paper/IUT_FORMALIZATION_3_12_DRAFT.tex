@@ -4677,7 +4677,9 @@ and
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstruction}\\
-\quad\texttt{DirectMilestoneCThetaAudit}.
+\quad\texttt{DirectMilestoneCThetaAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstruction}\\
+\quad\texttt{Ob5QuotientMilestoneCThetaAudit}.
 \end{array}
 \]
 The constructed-\(\IPL\) route now also has compact milestone-facing aliases:
@@ -4695,12 +4697,15 @@ The constructed-\(\IPL\) route now also has compact milestone-facing aliases:
 \quad\texttt{\_withMilestoneAudit},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from}\\
 \quad\texttt{\_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ}\\
-\quad\texttt{\_withDirectMilestoneAudit}.
+\quad\texttt{\_withDirectMilestoneAudit},\\
+\texttt{boundarySignedEqualityOrStrictCTheta\_from}\\
+\quad\texttt{\_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_withOb5QuotientMilestoneAudit}.
 \end{array}
 \]
 The first pair is now the compact subgoal-6 public endpoint and its direct audit
-companion; the latter three names keep the more explicit constructed-\(\IPL\)
-spelling.  All five aliases return the same canonical-one constructor-built
+companion; the latter four names keep the more explicit constructed-\(\IPL\)
+spelling.  All six aliases return the same canonical-one constructor-built
 constructed \(\IPL\) route: Hodge--Arakelov theta evaluation, factored \(\SHE\),
 constructed \(\IPL\)/log-volume transport, Step (xi) hull/determinant audits,
 source side conditions, raw q-comparison, finite boundary, and conditional
@@ -4751,6 +4756,14 @@ constructed-\(\IPL\) transport chain, the Hodge/\(\SHE\)/\(\IPL\)/hull bridge
 constructor, the route alignment it constructs, and the Step (xi-f/g)
 upper-ray handoff instead of only the coarser constructed-\(\IPL\) and hull
 audits.
+The quotient-aware milestone bundle,
+\texttt{CanonicalOneConstructorBuiltIPLConstructionOb5QuotientMilestoneCThetaAudit},
+attaches the route-level Ob5 quotient-independence audit to this same direct
+\(C_\Theta\) milestone surface.  Its compact alias with suffix
+\texttt{withOb5QuotientMilestoneAudit} returns the final dichotomy together
+with the collapsed Ob5 quotient images for two nonempty possible-image choices,
+so the quotient-collapse payload is visible at the same review surface as the
+finite-divisor vertical-\(\mathrm{IQ}\) \(C_\Theta\) endpoint.
 The same route now has an unbundled canonical-one Hodge--Arakelov source
 endpoint,
 \[

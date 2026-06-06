@@ -52460,6 +52460,123 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
 
 set_option linter.style.longLine false in
 /--
+Quotient-aware direct milestone \(C_\Theta\) audit for the canonical-one
+constructed-\(\IPL\) finite-divisor route.
+
+This is the direct milestone audit with the Remark 3.9.5(v)--(vi)
+possible-image quotient collapse attached.  The extra parameters are exactly
+the mathematical witnesses needed for the quotient statement: a comparison
+possible-image choice, nonemptiness of the selected q-choice image, and
+nonemptiness of the comparison image.  Under these hypotheses, the same route
+records the final ordered-real dichotomy and the fact that both possible
+images collapse to the same bounded-family upper-semi quotient point.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionOb5QuotientMilestoneCThetaAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty)
+    (cTheta : Real) :
+    Prop where
+  directMilestoneCThetaAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectMilestoneCThetaAudit
+      sourceData cTheta
+  ob5QuotientIndependenceAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb5QuotientIndependenceAudit
+      sourceData comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  qChoice_quotientImage_eq_collapsed :
+    (sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  comparison_quotientImage_eq_collapsed :
+    (sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record comparisonChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  quotientImages_eq :
+    (sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice =
+      (sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record comparisonChoice
+  familyHullLogVolume_eq_determinant :
+    sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume =
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  tensorPower_normalizedLogVolume_eq_familyHull :
+    sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource.tensorPower.normalizedLogVolume =
+      sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  thetaSigned_le_cTheta_absLogQ :
+    packageN.preLedger.thetaSigned <=
+      cTheta * (-packageN.preLedger.qSigned)
+  dichotomy :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta
+
+set_option linter.style.longLine false in
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLConstructionFiniteDivisorVerticalIQ_withOb5QuotientMilestoneAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLConstructionOb5QuotientMilestoneCThetaAudit
+      sourceData comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+      cTheta := by
+  have hdirect :=
+    sourceData.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLConstructionFiniteDivisorVerticalIQ_withDirectMilestoneAudit
+      cTheta thetaSigned_le_cTheta_absLogQ
+  have hquotient :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5QuotientIndependenceAudit
+      comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  exact
+    { directMilestoneCThetaAudit := hdirect,
+      ob5QuotientIndependenceAudit := hquotient,
+      qChoice_quotientImage_eq_collapsed :=
+        hquotient.qChoice_quotientImage_eq_collapsed,
+      comparison_quotientImage_eq_collapsed :=
+        hquotient.comparison_quotientImage_eq_collapsed,
+      quotientImages_eq :=
+        hquotient.quotientImages_eq,
+      familyHullLogVolume_eq_determinant :=
+        hquotient.familyHullLogVolume_eq_determinant,
+      tensorPower_normalizedLogVolume_eq_familyHull :=
+        hquotient.tensorPower_normalizedLogVolume_eq_familyHull,
+      qSigned_le_thetaSigned :=
+        hdirect.qSigned_le_thetaSigned,
+      thetaSigned_le_cTheta_absLogQ :=
+        hdirect.thetaSigned_le_cTheta_absLogQ,
+      dichotomy := hdirect.dichotomy }
+
+set_option linter.style.longLine false in
+/--
 Compact constructed-\(\IPL\) milestone endpoint for the source-derived
 finite-divisor vertical-\(IQ\) corridor.
 
@@ -52529,6 +52646,40 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCo
     CanonicalOneConstructorBuiltIPLConstructionDirectMilestoneCThetaAudit
       sourceData cTheta :=
   sourceData.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLConstructionFiniteDivisorVerticalIQ_withDirectMilestoneAudit
+    cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Compact quotient-aware constructed-\(\IPL\) milestone audit for the
+source-derived finite-divisor vertical-\(IQ\) corridor.
+
+This is the shorter public alias for the canonical-one constructed-\(\IPL\)
+quotient-aware milestone audit.  It keeps the final \(C_\Theta\) dichotomy on
+the same source object as the Ob5 statement that two nonempty Theorem 3.11
+possible images collapse to the same bounded-family quotient image.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ_withOb5QuotientMilestoneAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLConstructionOb5QuotientMilestoneCThetaAudit
+      sourceData comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+      cTheta :=
+  sourceData.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLConstructionFiniteDivisorVerticalIQ_withOb5QuotientMilestoneAudit
+    comparisonChoice qChoice_nonempty comparisonChoice_nonempty
     cTheta thetaSigned_le_cTheta_absLogQ
 
 end
