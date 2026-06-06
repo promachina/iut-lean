@@ -3948,6 +3948,28 @@ and experiment wrapper
 \]
 therefore remove the separate public measure-calibration and bridge
 synchronization arguments from this adjusted Ob3/Ob5 route.
+The same route now has a constructor-backed source form.  The source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ConstructorBackedConstructed}\\
+\quad\texttt{HullDeterminantFiniteDivisorVerticalIQSource}
+\end{array}
+\]
+does not take an ambient hull/determinant obligations object.  Instead it
+carries the common-container equality with the record-canonical hull/tensor
+bridge, q-pilot positivity, and source normalization; Lean then constructs
+\texttt{IUTStage1SourceHullDetObligations} from the Theorem~3.11
+hull/determinant constructor.  The experiment wrapper
+\[
+\begin{array}{l}
+\texttt{remark395ConstructorBackedConstructedOb3Ob5Adjusted}\\
+\quad\texttt{HullDeterminantFiniteDivisorVerticalIQ\_cThetaDichotomy}
+\end{array}
+\]
+is therefore the current strongest adjusted Ob3/Ob5 finite-divisor route: it
+keeps the final numeric \(C_\Theta\) estimate explicit, but no longer accepts
+an arbitrary obligations object together with a separate record-canonical
+bridge-data equality.
 This obligations-backed record-canonical exact corridor now also has a named
 audit proposition.  The proposition packages the constructed \(\IPL\) datum,
 the record-canonical Step (xi) bridge equality, the obligations-derived
