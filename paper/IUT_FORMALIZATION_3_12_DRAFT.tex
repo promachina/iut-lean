@@ -4129,7 +4129,12 @@ constructor-built upper-ray log-volume audit
 which records the q-pilot region's holomorphic-hull containment, the equality
 between hull log-volume and normalized weighted determinant, membership of the
 q-pilot log-volume in the resulting upper ray, and the projected
-\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison.  Its Ob1/Ob2
+\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison.  This upper-ray
+handoff is now named at the same route level as
+\texttt{CanonicalOneConstructorBuiltIPLConstructionUpperRayAudit}, which
+projects q-pilot upper-ray membership, theta-hull and determinant bounds,
+determinant normalization, and the raw signed comparison from the
+constructor-built Step (xi) source.  Its Ob1/Ob2
 hull-absorption payload is now isolated as
 \texttt{CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit}:
 the selected q-region is identified with a Theorem 3.11 possible image, shown
@@ -4189,6 +4194,7 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionStepXIHullAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionUpperRayAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstruction}\\
 \quad\texttt{StepXIHolomorphicHullDeterminantSkeleton},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit},\\
@@ -4222,9 +4228,10 @@ source side conditions, raw q-comparison, finite boundary, and conditional
 \(C_\Theta\) audit, with the numeric \(C_\Theta\) estimate still explicit.
 \texttt{CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit}
 now carries the transport-source, log-volume transport, and finite-transport
-log-volume audits directly, so the milestone-facing bundle exposes the
-pre-\(\IPL\) and constructed-\(\IPL\) transport chain instead of only the
-coarser constructed-\(\IPL\) audit.
+log-volume audits directly, together with the constructor-built upper-ray
+audit, so the milestone-facing bundle exposes the pre-\(\IPL\) and
+constructed-\(\IPL\) transport chain and the Step (xi-f/g) upper-ray handoff
+instead of only the coarser constructed-\(\IPL\) and hull audits.
 The same route now has an unbundled canonical-one Hodge--Arakelov source
 endpoint,
 \[

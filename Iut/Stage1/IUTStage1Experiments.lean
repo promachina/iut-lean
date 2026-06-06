@@ -38567,6 +38567,46 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneCo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Step (xi-f/g) upper-ray audit for the canonical-one
+constructed-\(\IPL\) constructor-built finite-divisor route.
+
+This exposes the signed-log upper-ray handoff from the constructor-built
+possible-image hull source: q-pilot upper-ray membership, theta-hull and
+determinant bounds, determinant normalization, and the raw signed comparison.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneConstructorBuiltIPLConstructionUpperRayAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.CanonicalOneConstructorBuiltIPLConstructionUpperRayAudit
+      sourceData :=
+  sourceData.toCanonicalOneConstructorBuiltIPLConstructionUpperRayAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Step (xi) holomorphic-hull/determinant skeleton for the
 canonical-one constructed-\(\IPL\) constructor-built finite-divisor route.
 
@@ -39094,8 +39134,8 @@ constructor-built finite-divisor route.
 
 The returned milestone bundle includes the theta-evaluation,
 transport-source, factored-\(\SHE\), log-volume transport,
-finite-transport log-volume, constructed-\(\IPL\), Step (xi) payload, boundary,
-and conditional \(C_\Theta\) audits.
+finite-transport log-volume, constructed-\(\IPL\), Step (xi) upper-ray and
+hull/determinant payload, boundary, and conditional \(C_\Theta\) audits.
 -/
 theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
     {source target : Copy} {coric : Type u}
@@ -39187,7 +39227,8 @@ source-derived finite-divisor vertical-\(IQ\) route.
 
 This exposes the same strengthened milestone bundle, including the
 transport-source, log-volume transport, and finite-transport log-volume audits
-that feed the constructed \(\IPL\) bridge.
+that feed the constructed \(\IPL\) bridge, plus the constructor-built Step
+(xi-f/g) upper-ray audit.
 -/
 theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ_withMilestoneAudit
     {source target : Copy} {coric : Type u}

@@ -49117,6 +49117,95 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
 
 set_option linter.style.longLine false in
 /--
+Step (xi-f/g) upper-ray audit for the canonical-one constructed-\(\IPL\)
+constructor-built finite-divisor source.
+
+This names the upper-ray consequence of the constructor-built Step (xi)
+hull/determinant source at the same route level as the Ob1--Ob5 audits: the
+q-pilot log-volume is read from the selected q-region, lies in the signed-log
+upper ray of the holomorphic hull, is bounded by the theta hull and determinant
+log-volumes, and carries the raw \(q_{\mathrm{signed}}\leq
+\theta_{\mathrm{signed}}\) comparison before the finite Step (x) boundary.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionUpperRayAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  constructorBuiltStepXIUpperRayAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIUpperRayAudit
+      sourceData.hullSource
+  qPilotRegion_subset_holomorphicHull :
+    sourceData.hullSource.qPilotRegion ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  qPilotLogVolume_eq_regionLogVolume :
+    sourceData.hullSource.toUpperRayLogVolume.qPilotLogVolume =
+      sourceData.hullSource.hullData.logVolume sourceData.hullSource.qPilotRegion
+  thetaHullLogVolume_eq_holomorphicHull :
+    sourceData.hullSource.toUpperRayLogVolume.thetaHullLogVolume =
+      sourceData.hullSource.hullData.logVolume
+        (sourceData.hullSource.hullData.hullRegion
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+  thetaHullLogVolume_eq_normalizedDeterminant :
+    sourceData.hullSource.toUpperRayLogVolume.thetaHullLogVolume =
+      sourceData.hullSource.determinantSource.toDeterminantLogVolume.normalizedLogVolume
+  qPilotLogVolume_mem_upperRay :
+    sourceData.hullSource.toUpperRayLogVolume.qPilotLogVolume ∈
+      sourceData.hullSource.toUpperRayLogVolume.upperRay
+  qPilotLogVolume_le_thetaHullLogVolume :
+    sourceData.hullSource.toUpperRayLogVolume.qPilotLogVolume <=
+      sourceData.hullSource.toUpperRayLogVolume.thetaHullLogVolume
+  qPilotLogVolume_le_determinant :
+    sourceData.hullSource.toUpperRayLogVolume.qPilotLogVolume <=
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  determinantLogVolume_eq_weightedSum :
+    sourceData.hullSource.determinantSource.determinantLogVolume =
+      Finset.univ.sum fun index =>
+        (sourceData.hullSource.determinantSource.summand index).adjustedLogVolume
+  normalizedLogVolume_eq_determinantLogVolume :
+    sourceData.hullSource.determinantSource.normalizedLogVolume =
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionUpperRayAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionUpperRayAudit sourceData := by
+  have hupper := sourceData.hullSource.toConstructorBuiltStepXIUpperRayAudit
+  exact
+    { stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      constructorBuiltStepXIUpperRayAudit := hupper,
+      qPilotRegion_subset_holomorphicHull :=
+        hupper.qPilotRegion_subset_holomorphicHull,
+      qPilotLogVolume_eq_regionLogVolume :=
+        hupper.qPilotLogVolume_eq_regionLogVolume,
+      thetaHullLogVolume_eq_holomorphicHull :=
+        hupper.thetaHullLogVolume_eq_holomorphicHull,
+      thetaHullLogVolume_eq_normalizedDeterminant :=
+        hupper.thetaHullLogVolume_eq_normalizedDeterminant,
+      qPilotLogVolume_mem_upperRay :=
+        hupper.qPilotLogVolume_mem_upperRay,
+      qPilotLogVolume_le_thetaHullLogVolume :=
+        hupper.qPilotLogVolume_le_thetaHullLogVolume,
+      qPilotLogVolume_le_determinant :=
+        hupper.qPilotLogVolume_le_determinant,
+      determinantLogVolume_eq_weightedSum :=
+        hupper.determinantLogVolume_eq_weightedSum,
+      normalizedLogVolume_eq_determinantLogVolume :=
+        hupper.normalizedLogVolume_eq_determinantLogVolume,
+      qSigned_le_thetaSigned :=
+        hupper.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Route-level Step (xi) holomorphic-hull/determinant skeleton for the
 canonical-one constructed-\(\IPL\) constructor-built finite-divisor source.
 
@@ -49584,6 +49673,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  upperRayAudit :
+    CanonicalOneConstructorBuiltIPLConstructionUpperRayAudit sourceData
   stepXIHolomorphicHullDeterminantSkeleton :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton
       sourceData
@@ -49617,6 +49708,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
       stepXIHullAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      upperRayAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionUpperRayAudit,
       stepXIHolomorphicHullDeterminantSkeleton :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton,
       ob1Ob2HullAbsorptionAudit :=
@@ -49807,6 +49900,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  upperRayAudit :
+    CanonicalOneConstructorBuiltIPLConstructionUpperRayAudit sourceData
   stepXIHolomorphicHullDeterminantSkeleton :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton
       sourceData
@@ -49892,6 +49987,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
       stepXIHullAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      upperRayAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionUpperRayAudit,
       stepXIHolomorphicHullDeterminantSkeleton :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton,
       ob1Ob2HullAbsorptionAudit :=
@@ -50007,6 +50104,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  upperRayAudit :
+    CanonicalOneConstructorBuiltIPLConstructionUpperRayAudit sourceData
   stepXIHolomorphicHullDeterminantSkeleton :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton
       sourceData
@@ -50075,6 +50174,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
     stepXIHullAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+    upperRayAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionUpperRayAudit,
     stepXIHolomorphicHullDeterminantSkeleton :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton,
     ob1Ob2HullAbsorptionAudit :=
@@ -50134,8 +50235,8 @@ This returns the full audit package of the canonical-one constructor-built
 constructed-\(\IPL\) route under a shorter milestone-facing name: theta
 evaluation, transport-source construction, factored \(\SHE\), log-volume
 transport, finite-transport log-volume, constructed \(\IPL\), Step (xi)
-hull/determinant audits, side conditions, raw q-comparison, finite boundary,
-conditional \(C_\Theta\) audit, and final dichotomy.
+hull/determinant and upper-ray audits, side conditions, raw q-comparison,
+finite boundary, conditional \(C_\Theta\) audit, and final dichotomy.
 -/
 theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ_withMilestoneAudit
     (sourceData :
