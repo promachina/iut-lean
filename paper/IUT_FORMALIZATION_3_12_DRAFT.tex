@@ -5124,6 +5124,22 @@ bridge equality is still an explicit Step~(xi) synchronization boundary, but
 the numerical Ob4 inequality is now constructed from the Remark~3.9.5
 family-hull/log-volume source in this route.
 
+The same exact-theta constructor-built route now has an obligations-backed
+form, with suffix
+\[
+\texttt{OfThetaEqFamilyHullLogVolumeFromObligations\_endpoint}.
+\]
+This version consumes an \texttt{IUTStage1SourceHullDetObligations} object and
+a single synchronization statement identifying its hull/determinant bridge
+datum with the record-canonical Step~(xi) construction.  Lean then derives the
+package bridge equality from
+\texttt{hullDetData.hullDetBridge\_eq\_bridgeData}, and reads q-pilot
+positivity and source normalization from the same obligations object.  Thus,
+at this constructor-built boundary, the remaining supplied Step~(xi) data has
+been narrowed from four separate fields---tensor-power bound, bridge equality,
+q-positivity, and normalization---to the family-hull exact-theta calibration
+plus one obligations-backed record-canonical bridge synchronization.
+
 The milestone-facing constructed source now also factors its log-volume
 comparison through the generic record-canonical Remark 3.9.5 bridge source.
 The projection \texttt{toRecordHullDeterminantBridgeSource} packages the same
