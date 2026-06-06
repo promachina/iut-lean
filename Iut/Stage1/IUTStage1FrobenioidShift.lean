@@ -36205,6 +36205,275 @@ theorem boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLConstruct
 
 set_option linter.style.longLine false in
 /--
+Bundled finite exact vertical-`IQ` source assembled from a theta-monoid-matched
+Hodge/IPL construction source and a constructor-backed Step (xi) possible-image
+source.
+
+This is the matched variant of
+`IUTStage1TargetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource`.
+The ordinary assembled exact source is recovered only by projection, after the
+matched Hodge/IPL source reconstructs canonical one-label preservation from
+target/source theta-monoid degree matching.
+-/
+structure IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F)
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    (holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j)
+    (product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j) where
+  matchedHodgeIPLSource :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+      part audited record X C
+  constructorBackedPossibleImageSource :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+      (β := β) part audited record
+      matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.hodgeSynchronization
+  upperSemiEntry :
+    NonarchimedeanPacketNormalizedUpperSemiEntrySource audited
+  finiteSource :
+    NonarchimedeanFiniteDivisorPacketLocalSource
+      audited upperSemiEntry.toEntry product
+  exactSource :
+    NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
+      audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+      packageN.logKummer l X C upperSemiEntry.toEntry
+      holomorphicF holomorphicD finiteSource.toMonoAnalyticD
+
+namespace IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {β : Type v} [Fintype β]
+variable {j : Nat}
+variable {holomorphicF holomorphicD :
+  IUTStage1RealifiedFrobenioidTensorPacketProductSource
+    IUTStage1PlaceKind.nonarchimedean j}
+variable {product :
+  IUTStage1BaseValuationTensorPacketProductLogVolume
+    IUTStage1PlaceKind.nonarchimedean j}
+
+noncomputable def toAssembledConstructorBackedExactSource
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+      (β := β) part audited record X C holomorphicF holomorphicD product :=
+  { hodgeIPLSource :=
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource,
+    constructorBackedPossibleImageSource :=
+      sourceData.constructorBackedPossibleImageSource,
+    upperSemiEntry := sourceData.upperSemiEntry,
+    finiteSource := sourceData.finiteSource,
+    exactSource := sourceData.exactSource }
+
+set_option linter.style.longLine false in
+noncomputable def toMatchedHodgeIPLDeterminantPossibleImageRouteSource
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLDeterminantPossibleImageRouteSource
+      (β := β) part audited record X C :=
+  { matchedHodgeIPLSource := sourceData.matchedHodgeIPLSource,
+    possibleImageSource :=
+      sourceData.constructorBackedPossibleImageSource
+        |>.toMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+        |>.toTargetChartedHodgeCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+        |>.toTargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource }
+
+set_option linter.style.longLine false in
+/--
+Source-derived exact corridor audit for the matched assembled
+constructor-backed package.
+
+This endpoint exposes the matched theta-degree input at the exact route
+boundary, then reuses the ordinary assembled constructor-backed corridor
+projection for the Step (xi) constructor and exact Step (x) facts.
+-/
+theorem assembledSourceDerivedCorridorEndpoint
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.targetEvaluation.thetaMonoidDegree =
+        sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum =
+        sourceData.matchedHodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.constructorBackedPossibleImageSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.constructorBackedPossibleImageSource.qChoice ∧
+      sourceData.constructorBackedPossibleImageSource.constructorObligations.hullDetData =
+        sourceData.constructorBackedPossibleImageSource.toHullDetSourceConstructor.hullDetData ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.constructorBackedPossibleImageSource.constructorObligations.hullDetData.bridgeData ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited := by
+  have hmatched := sourceData.matchedHodgeIPLSource.source_endpoint
+  have hassembled :=
+    sourceData.toAssembledConstructorBackedExactSource
+      |>.assembledSourceDerivedCorridorEndpoint
+  exact
+    ⟨hmatched.2.1,
+      hassembled.1,
+      hassembled.2.1,
+      hassembled.2.2.1,
+      hassembled.2.2.2.1,
+      hassembled.2.2.2.2.1,
+      hassembled.2.2.2.2.2.1,
+      hassembled.2.2.2.2.2.2.1,
+      hassembled.2.2.2.2.2.2.2.1,
+      hassembled.2.2.2.2.2.2.2.2.1,
+      hassembled.2.2.2.2.2.2.2.2.2.1,
+      hassembled.2.2.2.2.2.2.2.2.2.2⟩
+
+/--
+Matched assembled constructor-backed Gaussian/exact audit.
+
+This audit combines the matched all-in-one Gaussian-to-Step (xi) route audit
+with the constructor-backed Step (xi) audit and exact vertical-`IQ` boundary
+facts from the assembled source.
+-/
+structure MatchedAssembledConstructorBackedGaussianExactAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) : Prop where
+  matchedRouteAudit :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLDeterminantPossibleImageRouteSource.MatchedGaussianToStepXIAudit
+      sourceData.toMatchedHodgeIPLDeterminantPossibleImageRouteSource
+  projectedConstructorBackedAudit :
+    let routeData :=
+      sourceData.toAssembledConstructorBackedExactSource
+        |>.toConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQRouteSource;
+    IUTStage1TargetChartedHodgeIPLConstructorBackedMeasureCalibratedPossibleImageRouteSource.ConstructorBackedMeasureCalibratedGaussianToStepXIAudit
+      routeData.routeSource
+  targetCalibration_source :
+    sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+      IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility
+  hasPreciseFrobenioidIsomorphisms :
+    sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+      true
+  rawComparison :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toMatchedAssembledConstructorBackedGaussianExactAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedAssembledConstructorBackedGaussianExactAudit sourceData := by
+  have hcorridor := sourceData.assembledSourceDerivedCorridorEndpoint
+  exact
+    { matchedRouteAudit :=
+        sourceData.toMatchedHodgeIPLDeterminantPossibleImageRouteSource
+          |>.toMatchedGaussianToStepXIAudit,
+      projectedConstructorBackedAudit :=
+        sourceData.toAssembledConstructorBackedExactSource
+          |>.toConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQRouteSource
+          |>.routeSource
+          |>.toConstructorBackedMeasureCalibratedGaussianToStepXIAudit,
+      targetCalibration_source := hcorridor.2.2.2.2.2.2.2.2.1,
+      hasPreciseFrobenioidIsomorphisms := hcorridor.2.2.2.2.2.2.2.2.2.1,
+      rawComparison := hcorridor.2.2.2.2.2.2.2.1 }
+
+end IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+
+set_option linter.style.longLine false in
+/--
+`C_\Theta` boundary for the matched assembled constructor-backed bundled finite
+exact vertical-`IQ` source.
+
+The public package stores the theta-monoid-matched Hodge/IPL construction
+source, constructor-backed Step (xi) source, and exact Step (x) data.  Projection
+to the older assembled exact source is internal; the returned audit records both
+the matched route and the constructor-backed Step (xi) route before the external
+numeric \(C_\Theta\) estimate is used.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_targetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_withMatchedAssembledConstructorBackedGaussianExactAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedAssembledConstructorBackedGaussianExactAudit
+        sourceData ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  have hboundary :=
+    part.boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_withGaussianStepXIAudit
+      audited sourceData.toAssembledConstructorBackedExactSource
+      cTheta thetaSigned_le_cTheta_absLogQ
+  exact
+    ⟨sourceData.toMatchedAssembledConstructorBackedGaussianExactAudit,
+      sourceData.exactSource.hasPreciseFrobenioidIsomorphisms,
+      hboundary.2.2⟩
+
+set_option linter.style.longLine false in
+/--
 Record-canonical constructor source for the bundled finite exact vertical-`IQ`
 boundary.
 
