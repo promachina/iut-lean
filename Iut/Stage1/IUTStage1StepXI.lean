@@ -9687,6 +9687,30 @@ def hullData
   IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
     sourceData.hullOperator
 
+def possibleImageFamilySource
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1Remark395PossibleImageFamilySource (Point target) index :=
+  { hullOperator := sourceData.hullOperator,
+    possibleRegion := recordThetaPossibleImage record }
+
+theorem possibleImageFamilyUnion_eq_recordUnion
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    sourceData.possibleImageFamilySource.familyUnion =
+      recordThetaPossibleImageUnion record :=
+  rfl
+
+theorem possibleImageFamilyCanonicalHull_eq_phi
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    sourceData.possibleImageFamilySource.canonicalHull =
+      sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) :=
+  rfl
+
 theorem recordUnion_subset_phi
     (sourceData :
       IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
@@ -9718,6 +9742,40 @@ theorem qPilotRegion_subset_phi
   intro x hx
   exact sourceData.recordUnion_subset_phi
     (sourceData.q_subset_recordUnion hx)
+
+theorem possibleImageFamilyQuotient_images_eq
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (choice₁ choice₂ : index)
+    (hne₁ :
+      (recordThetaPossibleImage record choice₁).Nonempty)
+    (hne₂ :
+      (recordThetaPossibleImage record choice₂).Nonempty) :
+    sourceData.possibleImageFamilySource.quotientMap ''
+        recordThetaPossibleImage record choice₁ =
+      sourceData.possibleImageFamilySource.quotientMap ''
+        recordThetaPossibleImage record choice₂ :=
+  sourceData.possibleImageFamilySource.quotientMap_images_eq
+    choice₁ choice₂ hne₁ hne₂
+
+theorem possibleImageFamilyQuotient_collapse_iff
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    {A B : Set (Point target)}
+    (hneA : A.Nonempty)
+    (hneB : B.Nonempty) :
+    sourceData.possibleImageFamilySource.quotientMap '' A =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+        sourceData.possibleImageFamilySource.quotientMap '' B =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ↔
+      A ⊆ sourceData.hullOperator.phi
+            (recordThetaPossibleImageUnion record) ∧
+        B ⊆ sourceData.hullOperator.phi
+            (recordThetaPossibleImageUnion record) :=
+  sourceData.possibleImageFamilySource
+    |>.quotientMap_two_regions_collapse_iff hneA hneB
 
 theorem determinantLogVolume_le_thetaSigned
     (sourceData :
@@ -9762,6 +9820,34 @@ theorem qRegionLogVolume_le_thetaSigned
   sourceData.qRegionLogVolume_le_determinantLogVolume.trans
     sourceData.determinantLogVolume_le_thetaSigned
 
+def possibleImageFamilyDetLogVolumeSource
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1BoundedFamilyHullDetLogVolumeSource
+      (Point target) index β :=
+  sourceData.possibleImageFamilySource
+    |>.toBoundedFamilyHullDetLogVolumeSource
+      sourceData.determinantSource sourceData.compatibility
+
+theorem possibleImageFamilyHullLogVolume_eq_determinant
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    sourceData.possibleImageFamilyDetLogVolumeSource.familyHullLogVolume =
+      sourceData.determinantSource.determinantLogVolume :=
+  sourceData.possibleImageFamilyDetLogVolumeSource
+    |>.familyHullLogVolume_eq_determinant
+
+theorem possibleImageFamilyUnionLogVolume_le_determinant
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    sourceData.possibleImageFamilyDetLogVolumeSource.familyUnionLogVolume <=
+      sourceData.determinantSource.determinantLogVolume :=
+  sourceData.possibleImageFamilyDetLogVolumeSource
+    |>.familyUnionLogVolume_le_determinant
+
 noncomputable def toHolomorphicHullDeterminantSource
     (sourceData :
       IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
@@ -9794,12 +9880,20 @@ theorem source_endpoint
         (β := β) record) :
     recordThetaPossibleImageUnion record ⊆
         sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) ∧
+      sourceData.possibleImageFamilySource.familyUnion =
+        recordThetaPossibleImageUnion record ∧
+      sourceData.possibleImageFamilySource.canonicalPhi.approximant =
+        sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) ∧
       (∀ choice : index,
         recordThetaPossibleImage record choice ⊆
           sourceData.hullOperator.phi
             (recordThetaPossibleImageUnion record)) ∧
       sourceData.qPilotRegion ⊆
         sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) ∧
+      sourceData.possibleImageFamilyDetLogVolumeSource.familyHullLogVolume =
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.possibleImageFamilyDetLogVolumeSource.familyUnionLogVolume <=
+        sourceData.determinantSource.determinantLogVolume ∧
       sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
         sourceData.determinantSource.determinantLogVolume ∧
       sourceData.determinantSource.determinantLogVolume <=
@@ -9808,8 +9902,12 @@ theorem source_endpoint
         package.preLedger.thetaSigned ∧
       package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   ⟨sourceData.recordUnion_subset_phi,
+    sourceData.possibleImageFamilyUnion_eq_recordUnion,
+    sourceData.possibleImageFamilySource.canonicalPhi_approximant_eq_phi,
     sourceData.possibleImage_subset_phi,
     sourceData.qPilotRegion_subset_phi,
+    sourceData.possibleImageFamilyHullLogVolume_eq_determinant,
+    sourceData.possibleImageFamilyUnionLogVolume_le_determinant,
     sourceData.qRegionLogVolume_le_determinantLogVolume,
     sourceData.determinantLogVolume_le_thetaSigned,
     sourceData.qRegionLogVolume_le_thetaSigned,

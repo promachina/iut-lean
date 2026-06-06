@@ -39682,6 +39682,29 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneCo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit for the source-facing Remark 3.9.5 possible-image
+family package.
+
+This is the `P_B`, `phi(P_B)`, canonical `Phi(P_B)` approximant, and Ob5
+upper-semi quotient collapse before determinant or finite-divisor data enter.
+-/
+theorem remark395PossibleImageFamilySource_endpoint
+    {α : Type u} {ι : Type v}
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (i j : ι)
+    (hnei : (data.possibleRegion i).Nonempty)
+    (hnej : (data.possibleRegion j).Nonempty) :
+    data.familyUnion ⊆ data.canonicalHull ∧
+      data.possibleRegion i ⊆ data.canonicalHull ∧
+      data.possibleRegion j ⊆ data.canonicalHull ∧
+      data.canonicalPhi.approximant = data.canonicalHull ∧
+      data.hullOperator.isClosed data.canonicalHull ∧
+      data.quotientMap '' data.possibleRegion i =
+        data.quotientMap '' data.possibleRegion j :=
+  data.endpoint i j hnei hnej
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface endpoint for the finite-divisor vertical-\(IQ\) corridor
 through the constructed Remark 3.9.5 holomorphic-hull/determinant source.
 

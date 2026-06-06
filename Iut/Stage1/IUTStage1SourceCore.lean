@@ -4046,6 +4046,230 @@ theorem endpoint
 end IUTStage1BoundedFamilyHullQuotientSource
 
 /--
+Source-facing Remark 3.9.5 possible-image family.
+
+The paper writes `P_B = {P_beta}_{beta in B}` for a bounded family of possible
+regions, then forms the canonical family hull `phi(P_B)`.  This record keeps
+that notation on top of the source-facing `phi` operator, while projecting to
+the older hull/log-volume shadow only for reuse of the existing `Phi`, `Xi`,
+and upper-semi quotient lemmas.
+-/
+structure IUTStage1Remark395PossibleImageFamilySource
+    (α : Type u) (ι : Type v) where
+  hullOperator : IUTStage1Remark395HolomorphicHullOperator α
+  possibleRegion : ι -> Set α
+
+namespace IUTStage1Remark395PossibleImageFamilySource
+
+variable {α : Type u} {ι : Type v} {κ : Type w}
+
+open IUTStage1UpperSemiSetQuotient
+
+def hullData
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    IUTStage1HolomorphicHullLogVolumeShadow α :=
+  IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+    data.hullOperator
+
+def familyUnion
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    Set α :=
+  ⋃ i, data.possibleRegion i
+
+def canonicalHull
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    Set α :=
+  data.hullOperator.phi data.familyUnion
+
+theorem canonicalHull_eq_shadowHull
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    data.canonicalHull = data.hullData.hullRegion data.familyUnion :=
+  rfl
+
+def Phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    Type _ :=
+  IUTStage1HullLogVolumeApproximant data.hullData data.familyUnion
+
+def Xi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    Type _ :=
+  IUTStage1ExactHullLogVolumeApproximant data.hullData data.familyUnion
+
+def canonicalPhi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    data.Phi :=
+  IUTStage1HullLogVolumeApproximant.canonical
+    data.hullData data.familyUnion
+
+theorem canonicalPhi_approximant_eq_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    data.canonicalPhi.approximant = data.canonicalHull :=
+  rfl
+
+def PhiFamily
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (κ : Type w) :
+    Type _ :=
+  IUTStage1HullLogVolumeApproximantFamily
+    data.hullData data.familyUnion κ
+
+def XiFamily
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (κ : Type w) :
+    Type _ :=
+  IUTStage1ExactHullLogVolumeApproximantFamily
+    data.hullData data.familyUnion κ
+
+def HPhi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.PhiFamily κ) :
+    Set α :=
+  family.familyUnion
+
+def HXi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ) :
+    Set α :=
+  family.familyUnion
+
+theorem familyUnion_subset_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    data.familyUnion ⊆ data.canonicalHull :=
+  data.hullOperator.region_subset_hull data.familyUnion
+
+theorem possibleRegion_subset_familyUnion
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (i : ι) :
+    data.possibleRegion i ⊆ data.familyUnion := by
+  intro x hx
+  exact Set.mem_iUnion.mpr ⟨i, hx⟩
+
+theorem possibleRegion_subset_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (i : ι) :
+    data.possibleRegion i ⊆ data.canonicalHull :=
+  (data.possibleRegion_subset_familyUnion i).trans
+    data.familyUnion_subset_phi
+
+theorem phi_closed
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    data.hullOperator.isClosed data.canonicalHull :=
+  data.hullOperator.phi_closed data.familyUnion
+
+theorem canonicalPhi_logVolume_between
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    data.hullOperator.logVolume data.familyUnion <=
+        data.hullOperator.logVolume data.canonicalPhi.approximant ∧
+      data.hullOperator.logVolume data.canonicalPhi.approximant <=
+        data.hullOperator.logVolume data.canonicalHull := by
+  simpa [canonicalHull, canonicalPhi, hullData,
+    IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator] using
+    data.canonicalPhi.approximant_logVolume_between
+
+theorem HPhi_eq_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.PhiFamily κ) :
+    data.HPhi family = data.canonicalHull := by
+  rw [HPhi, family.familyUnion_eq_hull]
+  rfl
+
+theorem HXi_eq_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ) :
+    data.HXi family = data.canonicalHull := by
+  rw [HXi, family.familyUnion_eq_hull]
+  rfl
+
+def toBoundedFamilyHullQuotientSource
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
+    IUTStage1BoundedFamilyHullQuotientSource α ι :=
+  { hullData := data.hullData,
+    possibleRegion := data.possibleRegion }
+
+noncomputable def quotientMap
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (x : α) :
+    IUTStage1UpperSemiSetQuotient α data.canonicalHull :=
+  IUTStage1UpperSemiSetQuotient.quotientMap data.canonicalHull x
+
+theorem quotientMap_image_possibleRegion_eq_collapsed
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (i : ι)
+    (hne : (data.possibleRegion i).Nonempty) :
+    data.quotientMap '' data.possibleRegion i =
+      {IUTStage1UpperSemiSetQuotient.collapsed} := by
+  simpa [quotientMap] using
+    quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+      (S := data.canonicalHull) hne
+      (data.possibleRegion_subset_phi i)
+
+theorem quotientMap_images_eq
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (i j : ι)
+    (hnei : (data.possibleRegion i).Nonempty)
+    (hnej : (data.possibleRegion j).Nonempty) :
+    data.quotientMap '' data.possibleRegion i =
+      data.quotientMap '' data.possibleRegion j := by
+  rw [data.quotientMap_image_possibleRegion_eq_collapsed i hnei,
+    data.quotientMap_image_possibleRegion_eq_collapsed j hnej]
+
+theorem quotientMap_two_regions_collapse_iff
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    {A B : Set α}
+    (hneA : A.Nonempty)
+    (hneB : B.Nonempty) :
+    data.quotientMap '' A =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+        data.quotientMap '' B =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ↔
+      A ⊆ data.canonicalHull ∧ B ⊆ data.canonicalHull := by
+  simpa [quotientMap] using
+    IUTStage1UpperSemiSetQuotient.quotientMap_two_images_collapse_iff
+      (S := data.canonicalHull) hneA hneB
+
+theorem quotientMap_image_under_map_between_possibleRegions
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (i j : ι)
+    (f : α -> α)
+    (hnei : (data.possibleRegion i).Nonempty)
+    (hf :
+      ∀ x, x ∈ data.possibleRegion i -> f x ∈ data.possibleRegion j) :
+    (fun x => data.quotientMap (f x)) '' data.possibleRegion i =
+      data.quotientMap '' data.possibleRegion i := by
+  simpa [quotientMap] using
+    quotientMap_image_under_map_between_subsets
+      (S := data.canonicalHull)
+      (A := data.possibleRegion i)
+      (B := data.possibleRegion j)
+      (f := f)
+      hnei
+      (data.possibleRegion_subset_phi i)
+      (data.possibleRegion_subset_phi j)
+      hf
+
+theorem endpoint
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (i j : ι)
+    (hnei : (data.possibleRegion i).Nonempty)
+    (hnej : (data.possibleRegion j).Nonempty) :
+    data.familyUnion ⊆ data.canonicalHull ∧
+      data.possibleRegion i ⊆ data.canonicalHull ∧
+      data.possibleRegion j ⊆ data.canonicalHull ∧
+      data.canonicalPhi.approximant = data.canonicalHull ∧
+      data.hullOperator.isClosed data.canonicalHull ∧
+      data.quotientMap '' data.possibleRegion i =
+        data.quotientMap '' data.possibleRegion j :=
+  ⟨data.familyUnion_subset_phi,
+    data.possibleRegion_subset_phi i,
+    data.possibleRegion_subset_phi j,
+    data.canonicalPhi_approximant_eq_phi,
+    data.phi_closed,
+    data.quotientMap_images_eq i j hnei hnej⟩
+
+end IUTStage1Remark395PossibleImageFamilySource
+
+/--
 Finite log-volume shadow of the Step (xi-d) determinant passage.
 
 The paper passes from localizations of arithmetic vector bundles of rank `> 1` to
@@ -4891,6 +5115,56 @@ theorem ob9_endpoint
     data.realifiedSemiSimplification_familyHullLogVolume_eq_determinant corr⟩
 
 end IUTStage1BoundedFamilyHullDetLogVolumeSource
+
+namespace IUTStage1Remark395PossibleImageFamilySource
+
+variable {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+
+def toBoundedFamilyHullDetLogVolumeSource
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          data.hullData data.familyUnion)
+        determinantSource) :
+    IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β :=
+  { hullData := data.hullData,
+    possibleRegion := data.possibleRegion,
+    determinantSource := determinantSource,
+    compatibility := compatibility }
+
+theorem toBoundedFamilyHullDetLogVolumeSource_familyHull_eq_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          data.hullData data.familyUnion)
+        determinantSource) :
+    (data.toBoundedFamilyHullDetLogVolumeSource
+        determinantSource compatibility).familyHull =
+      data.canonicalHull :=
+  rfl
+
+theorem toBoundedFamilyHullDetLogVolumeSource_familyHullLogVolume_eq_determinant
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          data.hullData data.familyUnion)
+        determinantSource) :
+    (data.toBoundedFamilyHullDetLogVolumeSource
+        determinantSource compatibility).familyHullLogVolume =
+      determinantSource.determinantLogVolume :=
+  (data.toBoundedFamilyHullDetLogVolumeSource
+      determinantSource compatibility).familyHullLogVolume_eq_determinant
+
+end IUTStage1Remark395PossibleImageFamilySource
 
 /--
 Step (xi-e)/(xi-f) upper-ray comparison after hull, determinant, and normalized

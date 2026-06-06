@@ -2404,7 +2404,21 @@ source-object level.  The new declaration
 inclusions are preserved, \(\phi(\phi(P))=\phi(P)\), and log-volume is
 monotone.  It projects to the older closure-operator shadow used by the
 existing bridge code, but the public source object no longer begins with that
-shadow.  The corresponding Step~(xi) source
+shadow.  The possible-image family layer has also been made source-facing:
+\texttt{IUTStage1Remark395PossibleImageFamilySource} records the family
+\(P_B=\{P_\beta\}_{\beta\in B}\), its union, the canonical hull
+\(\phi(P_B)\), the \(\Phi(P_B)\) and \(\Xi(P_B)\) approximant types projected
+from this \(\phi\)-operator, and the Remark~3.9.5(Ob5) upper-semi quotient
+collapse.  The experiment-surface declaration
+\[
+\begin{array}{l}
+\texttt{Iut.Stage1.Experiments.remark395PossibleImageFamilySource\_endpoint}
+\end{array}
+\]
+proves that the family union and each possible image lie in \(\phi(P_B)\), that
+the canonical \(\Phi\)-approximant is \(\phi(P_B)\), and that any two nonempty
+possible regions have the same quotient image after collapsing \(\phi(P_B)\).
+The corresponding Step~(xi) source
 \[
 \begin{array}{l}
 \texttt{IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource}
@@ -2415,6 +2429,10 @@ q-pilot containment in that union, the finite Ob3/Ob4 weighted determinant
 source, tensor-power normalization, and the record-canonical hull/determinant
 bridge equality.  Lean proves inside this source object that the possible-image
 union, each possible image, and the q-pilot region lie in \(\phi(P)\), and that
+the source object projects the possible-image family to the Ob5
+family-hull/determinant log-volume source.  In particular, Lean now also proves
+the family-hull log-volume equality with the weighted determinant and the
+family-union log-volume bound by that determinant before proving
 \[
   \mu_{\log}(q_{\mathrm{region}})
   \le \det_{\log}^{\mathrm{norm}}
