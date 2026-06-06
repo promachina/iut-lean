@@ -2859,6 +2859,100 @@ theorem frobenioidKummerCompatibility_endpoint
 end IUTStage1RealifiedFrobenioidKummerCompatibility
 
 /--
+Source-facing Remark 3.9.5 holomorphic-hull operator.
+
+This record keeps the paper's notation at the surface: `phi` is the
+holomorphic-hull operation of Remark 3.9.5, not yet the abstract
+`ClosureOperator` shadow used by the older bridge code.  The fields are the
+source laws used in Step (xi): fixed closed hulls, containment
+`P ⊆ phi(P)`, monotonicity, idempotence, and monotone log-volume.
+-/
+structure IUTStage1Remark395HolomorphicHullOperator (α : Type u) where
+  phi : Set α -> Set α
+  isClosed : Set α -> Prop
+  phi_closed : ∀ region : Set α, isClosed (phi region)
+  phi_fix_closed :
+    ∀ {region : Set α}, isClosed region -> phi region = region
+  region_subset_phi : ∀ region : Set α, region ⊆ phi region
+  phi_mono :
+    ∀ {region₁ region₂ : Set α},
+      region₁ ⊆ region₂ -> phi region₁ ⊆ phi region₂
+  phi_idempotent : ∀ region : Set α, phi (phi region) = phi region
+  logVolume : Set α -> Real
+  logVolume_mono :
+    ∀ {region₁ region₂ : Set α},
+      region₁ ⊆ region₂ -> logVolume region₁ <= logVolume region₂
+
+namespace IUTStage1Remark395HolomorphicHullOperator
+
+variable {α : Type u}
+
+def toClosureOperator
+    (data : IUTStage1Remark395HolomorphicHullOperator α) :
+    ClosureOperator (Set α) :=
+  { toOrderHom :=
+      { toFun := data.phi,
+        monotone' := fun _ _ hsubset => data.phi_mono hsubset },
+    le_closure' := data.region_subset_phi,
+    idempotent' := data.phi_idempotent,
+    IsClosed := data.isClosed,
+    isClosed_iff := by
+      intro region
+      constructor
+      · intro hclosed
+        exact data.phi_fix_closed hclosed
+      · intro hfix
+        rw [← hfix]
+        exact data.phi_closed region }
+
+theorem phi_closed_hull
+    (data : IUTStage1Remark395HolomorphicHullOperator α)
+    (region : Set α) :
+    data.isClosed (data.phi region) :=
+  data.phi_closed region
+
+theorem region_subset_hull
+    (data : IUTStage1Remark395HolomorphicHullOperator α)
+    (region : Set α) :
+    region ⊆ data.phi region :=
+  data.region_subset_phi region
+
+theorem hull_mono
+    (data : IUTStage1Remark395HolomorphicHullOperator α)
+    {region₁ region₂ : Set α}
+    (hsubset : region₁ ⊆ region₂) :
+    data.phi region₁ ⊆ data.phi region₂ :=
+  data.phi_mono hsubset
+
+theorem hull_idempotent
+    (data : IUTStage1Remark395HolomorphicHullOperator α)
+    (region : Set α) :
+    data.phi (data.phi region) = data.phi region :=
+  data.phi_idempotent region
+
+theorem logVolume_le_hullLogVolume
+    (data : IUTStage1Remark395HolomorphicHullOperator α)
+    (region : Set α) :
+    data.logVolume region <= data.logVolume (data.phi region) :=
+  data.logVolume_mono (data.region_subset_phi region)
+
+theorem remark395_hullMap_laws
+    (data : IUTStage1Remark395HolomorphicHullOperator α)
+    {closedHull region region₁ region₂ : Set α}
+    (hclosed : data.isClosed closedHull)
+    (hsubset : region₁ ⊆ region₂) :
+    data.phi closedHull = closedHull ∧
+      region ⊆ data.phi region ∧
+      data.phi region₁ ⊆ data.phi region₂ ∧
+      data.phi (data.phi region) = data.phi region :=
+  ⟨data.phi_fix_closed hclosed,
+    data.region_subset_phi region,
+    data.phi_mono hsubset,
+    data.phi_idempotent region⟩
+
+end IUTStage1Remark395HolomorphicHullOperator
+
+/--
 Remark 3.9.5 holomorphic-hull shadow.
 
 The paper characterizes hull formation by the three closure properties P1--P3:
@@ -2877,6 +2971,13 @@ namespace IUTStage1HolomorphicHullLogVolumeShadow
 
 variable {α : Type u}
 variable {line : Copy}
+
+def ofRemark395Operator
+    (data : IUTStage1Remark395HolomorphicHullOperator α) :
+    IUTStage1HolomorphicHullLogVolumeShadow α :=
+  { hull := data.toClosureOperator,
+    logVolume := data.logVolume,
+    logVolume_mono := data.logVolume_mono }
 
 def hullRegion
     (data : IUTStage1HolomorphicHullLogVolumeShadow α)
