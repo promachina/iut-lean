@@ -41074,8 +41074,37 @@ theorem remark395PossibleImageFamilySource_endpoint
       data.canonicalPhi.approximant = data.canonicalHull ∧
       data.hullOperator.isClosed data.canonicalHull ∧
       data.quotientMap '' data.possibleRegion i =
-        data.quotientMap '' data.possibleRegion j :=
+      data.quotientMap '' data.possibleRegion j :=
   data.endpoint i j hnei hnej
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface exact-approximant Ob5 audit for the source-facing
+Remark 3.9.5 possible-image family package.
+
+This is the `Xi(P_B)` companion to the canonical `Phi(P_B)` endpoint: when an
+exact-approximant family is available, its union `H_Xi(P_B)` is the canonical
+hull `phi(P_B)`, and its upper-semi quotient image is the same collapsed image
+as any nonempty possible image.
+-/
+theorem remark395PossibleImageFamilySource_XiFamilyOb5Endpoint
+    {α : Type u} {ι : Type v} {κ : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ)
+    (k : κ)
+    (i : ι)
+    (hne : (data.possibleRegion i).Nonempty) :
+    data.HXi family = data.canonicalHull ∧
+      data.HXi family ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HXi family ∧
+      data.hullOperator.logVolume
+          ((family.exactApproximant k).approximant).approximant =
+        data.hullOperator.logVolume data.familyUnion ∧
+      data.quotientMap '' data.HXi family =
+        {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+      data.quotientMap '' data.HXi family =
+        data.quotientMap '' data.possibleRegion i :=
+  data.XiFamily_ob5_endpoint family k i hne
 
 set_option linter.style.longLine false in
 /--

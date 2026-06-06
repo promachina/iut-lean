@@ -4352,6 +4352,30 @@ theorem HXi_eq_phi
   rw [HXi, family.familyUnion_eq_hull]
   rfl
 
+theorem HXi_subset_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ) :
+    data.HXi family ⊆ data.canonicalHull := by
+  rw [data.HXi_eq_phi family]
+
+theorem phi_subset_HXi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ) :
+    data.canonicalHull ⊆ data.HXi family := by
+  rw [data.HXi_eq_phi family]
+
+theorem HXi_nonempty_of_possibleRegion_nonempty
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ)
+    {i : ι}
+    (hne : (data.possibleRegion i).Nonempty) :
+    (data.HXi family).Nonempty := by
+  rcases hne with ⟨x, hx⟩
+  exact
+    ⟨x,
+      data.phi_subset_HXi family
+        (data.possibleRegion_subset_phi i hx)⟩
+
 def toBoundedFamilyHullQuotientSource
     (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
     IUTStage1BoundedFamilyHullQuotientSource α ι :=
@@ -4374,6 +4398,55 @@ theorem quotientMap_image_possibleRegion_eq_collapsed
     quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
       (S := data.canonicalHull) hne
       (data.possibleRegion_subset_phi i)
+
+theorem quotientMap_image_HXi_eq_collapsed
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ)
+    {i : ι}
+    (hne : (data.possibleRegion i).Nonempty) :
+    data.quotientMap '' data.HXi family =
+      {IUTStage1UpperSemiSetQuotient.collapsed} := by
+  simpa [quotientMap] using
+    quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+      (S := data.canonicalHull)
+      (data.HXi_nonempty_of_possibleRegion_nonempty family hne)
+      (data.HXi_subset_phi family)
+
+theorem quotientMap_image_HXi_eq_possibleRegion
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ)
+    {i : ι}
+    (hne : (data.possibleRegion i).Nonempty) :
+    data.quotientMap '' data.HXi family =
+      data.quotientMap '' data.possibleRegion i := by
+  rw [data.quotientMap_image_HXi_eq_collapsed family hne,
+    data.quotientMap_image_possibleRegion_eq_collapsed i hne]
+
+set_option linter.style.longLine false in
+theorem XiFamily_ob5_endpoint
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ)
+    (k : κ)
+    (i : ι)
+    (hne : (data.possibleRegion i).Nonempty) :
+    data.HXi family = data.canonicalHull ∧
+      data.HXi family ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HXi family ∧
+      data.hullOperator.logVolume
+          ((family.exactApproximant k).approximant).approximant =
+        data.hullOperator.logVolume data.familyUnion ∧
+      data.quotientMap '' data.HXi family =
+        {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+      data.quotientMap '' data.HXi family =
+        data.quotientMap '' data.possibleRegion i :=
+  ⟨data.HXi_eq_phi family,
+    data.HXi_subset_phi family,
+    data.phi_subset_HXi family,
+    by
+      simpa [hullData, IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator]
+        using family.exactApproximant_logVolume_eq_region k,
+    data.quotientMap_image_HXi_eq_collapsed family hne,
+    data.quotientMap_image_HXi_eq_possibleRegion family hne⟩
 
 theorem quotientMap_images_eq
     (data : IUTStage1Remark395PossibleImageFamilySource α ι)

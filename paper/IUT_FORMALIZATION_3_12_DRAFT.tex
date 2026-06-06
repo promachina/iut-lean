@@ -766,6 +766,14 @@ family contains the canonical hull, its union is \(\phi(P)\).  In the special
 case where \(P\) is already closed under hull formation, the canonical
 one-point \(\Xi(P)\)-family has union \(P=\phi(P)\) and log-volume
 \(\mu_{\log}(P)\), matching Remark 3.9.5(iv)'s closed-region case.
+At the possible-image-family level, this exact-approximant family now also
+interfaces with the Ob5 upper-semi quotient: if a \(\Xi(P_B)\)-family is
+available and one possible image is nonempty, \Lean{} proves
+\[
+  H_{\Xi(P_B)}=\phi(P_B)
+\]
+and proves that the quotient image of \(H_{\Xi(P_B)}\) is the same collapsed
+point as the quotient image of that nonempty possible image.
 The canonical hull \(\phi(P)\) is itself an approximant, and every approximant
 is fixed by hull formation.  This is the compactness guard emphasized in the
 paper: the indeterminacy in choosing a hull approximant remains inside
@@ -2425,6 +2433,15 @@ collapse.  The experiment-surface declaration
 proves that the family union and each possible image lie in \(\phi(P_B)\), that
 the canonical \(\Phi\)-approximant is \(\phi(P_B)\), and that any two nonempty
 possible regions have the same quotient image after collapsing \(\phi(P_B)\).
+The exact-approximant companion
+\[
+\begin{array}{l}
+\texttt{Iut.Stage1.Experiments.remark395PossibleImageFamilySource}\\
+\quad\texttt{\_XiFamilyOb5Endpoint}
+\end{array}
+\]
+proves the same Ob5 collapse for \(H_{\Xi(P_B)}\), while recording that each
+chosen exact approximant has log-volume \(\mu_{\log}(P_B)\).
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
