@@ -2643,6 +2643,45 @@ theorem linkTarget_eq_output
     QualitativeData.InputPrimeStripLinkConstruction.toIPLDatum_link_target_eq_output
       constructionSource.construction
 
+def choiceLink
+    (constructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (choice : index) : QualitativeData.PrimeStripLink :=
+  constructionSource.construction.choiceLink choice
+
+theorem choiceLink_source_eq_input
+    (constructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (choice : index) :
+    (constructionSource.choiceLink choice).source =
+      constructionSource.iplDatum.inputPrimeStrip := by
+  rw [constructionSource.iplDatum_eq_constructedDatum]
+  exact
+    QualitativeData.InputPrimeStripLinkConstruction.choiceLink_source_eq_input
+      constructionSource.construction choice
+
+theorem choiceLink_target_eq_choice
+    (constructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (choice : index) :
+    (constructionSource.choiceLink choice).target =
+      constructionSource.iplDatum.choicePrimeStrip choice := by
+  rw [constructionSource.iplDatum_eq_constructedDatum]
+  exact
+    QualitativeData.InputPrimeStripLinkConstruction.choiceLink_target_eq_choice
+      constructionSource.construction choice
+
+theorem choiceLink_endpoint
+    (constructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (choice : index) :
+    (constructionSource.choiceLink choice).source =
+        constructionSource.iplDatum.inputPrimeStrip ∧
+      (constructionSource.choiceLink choice).target =
+        constructionSource.iplDatum.choicePrimeStrip choice :=
+  ⟨constructionSource.choiceLink_source_eq_input choice,
+    constructionSource.choiceLink_target_eq_choice choice⟩
+
 def toIPLLinkSource
     (constructionSource :
       IUTStage1Theorem311IPLLinkConstructionSource record) :
@@ -2674,6 +2713,32 @@ theorem construction_source_endpoint
     constructionSource.toIPLLinkSource_iplDatum_eq_certificate,
     constructionSource.toIPLLinkSource.linkSource_eq_input,
     constructionSource.toIPLLinkSource.linkTarget_eq_output⟩
+
+set_option linter.style.longLine false in
+/--
+Choice-wise IPL endpoint for the Theorem 3.11 construction source.
+
+Besides the main input/output prime-strip link, the construction gives every
+possible output choice a link whose source is the same input prime strip and
+whose target is the corresponding choice prime strip.  This is the finite
+choice-indexed shadow of the Theorem 3.11 IPL condition that possible output
+prime strips are linked back to the fixed q-pilot input prime strip.
+-/
+theorem construction_choiceLink_endpoint
+    (constructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record) :
+    (∀ choice : index,
+      (constructionSource.choiceLink choice).source =
+          constructionSource.iplDatum.inputPrimeStrip ∧
+        (constructionSource.choiceLink choice).target =
+          constructionSource.iplDatum.choicePrimeStrip choice) ∧
+      constructionSource.iplDatum =
+        constructionSource.constructedDatum ∧
+      constructionSource.toIPLLinkSource.iplDatum =
+        package.preLedger.certificate.ipl :=
+  ⟨constructionSource.choiceLink_endpoint,
+    constructionSource.iplDatum_eq_constructedDatum,
+    constructionSource.toIPLLinkSource_iplDatum_eq_certificate⟩
 
 end IUTStage1Theorem311IPLLinkConstructionSource
 
@@ -4484,6 +4549,34 @@ theorem constructedIPLFiniteTransportLogVolume_endpoint
         rfl,
         rfl,
         sourceData.toIPLLogVolumeTransportSource.targetLogVolume_preserved⟩
+
+set_option linter.style.longLine false in
+/--
+Choice-wise IPL provenance for the combined finite Hodge/SHE plus constructed
+IPL source.
+
+The constructed IPL datum links every possible output choice back to the same
+input prime strip that appears in the IPL/log-volume transport.  The endpoint
+also keeps the certificate-to-constructed-datum alignment and the log-volume
+preservation read from the finite Hodge/SHE transport.
+-/
+theorem constructedIPLChoiceLink_endpoint
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    (∀ choice : index,
+      (sourceData.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
+  ⟨fun choice => by
+      simpa using
+        sourceData.iplConstructionSource.choiceLink_endpoint choice,
+    sourceData.iplDatum_eq_constructedDatum,
+    sourceData.targetLogVolume_preserved⟩
 
 set_option linter.style.longLine false in
 theorem source_endpoint

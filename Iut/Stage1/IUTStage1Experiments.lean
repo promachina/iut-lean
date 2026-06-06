@@ -35741,6 +35741,56 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMat
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface choice-wise constructed-\(\IPL\) provenance for the bundled
+theta-monoid-matched finite-divisor route source.
+
+Every possible output choice prime strip is linked back to the same input
+prime strip used by the route's \(\IPL\)/log-volume transport.  This exposes a
+finite choice-indexed shadow of the input-prime-strip-link condition before
+the Step (xi) hull/determinant comparison is used.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMatchedConstructedIPLChoiceLinkEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    (∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      (sourceData.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.constructedIPLChoiceLink_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface possible-image Step (xi) hull/determinant endpoint for the
 bundled theta-monoid-matched finite-divisor route source.
 

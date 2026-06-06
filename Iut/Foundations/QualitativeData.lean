@@ -82,6 +82,21 @@ def link (construction : InputPrimeStripLinkConstruction family) :
     target := construction.outputPrimeStrip,
     linkLabel := construction.linkLabel }
 
+/--
+The choice-wise input-prime-strip link.
+
+This is the finite bookkeeping shadow of the IPL assertion that each possible
+output prime strip is linked back to the fixed input prime strip.  The source
+endpoint is the input prime strip by construction; the target endpoint is the
+chosen output prime strip.
+-/
+def choiceLink
+    (construction : InputPrimeStripLinkConstruction family)
+    (choice : index) : PrimeStripLink :=
+  { source := construction.inputPrimeStrip,
+    target := construction.choicePrimeStrip choice,
+    linkLabel := construction.linkLabel }
+
 def toIPLDatum
     (construction : InputPrimeStripLinkConstruction family) :
     IPLDatum family :=
@@ -102,6 +117,20 @@ theorem toIPLDatum_link_target_eq_output
       construction.toIPLDatum.outputPrimeStrip :=
   rfl
 
+theorem choiceLink_source_eq_input
+    (construction : InputPrimeStripLinkConstruction family)
+    (choice : index) :
+    (construction.choiceLink choice).source =
+      construction.toIPLDatum.inputPrimeStrip :=
+  rfl
+
+theorem choiceLink_target_eq_choice
+    (construction : InputPrimeStripLinkConstruction family)
+    (choice : index) :
+    (construction.choiceLink choice).target =
+      construction.toIPLDatum.choicePrimeStrip choice :=
+  rfl
+
 theorem toIPLDatum_endpoint
     (construction : InputPrimeStripLinkConstruction family) :
     construction.toIPLDatum.link.source =
@@ -110,6 +139,16 @@ theorem toIPLDatum_endpoint
         construction.toIPLDatum.outputPrimeStrip :=
   ⟨construction.toIPLDatum_link_source_eq_input,
     construction.toIPLDatum_link_target_eq_output⟩
+
+theorem choiceLink_endpoint
+    (construction : InputPrimeStripLinkConstruction family)
+    (choice : index) :
+    (construction.choiceLink choice).source =
+        construction.toIPLDatum.inputPrimeStrip ∧
+      (construction.choiceLink choice).target =
+        construction.toIPLDatum.choicePrimeStrip choice :=
+  ⟨construction.choiceLink_source_eq_input choice,
+    construction.choiceLink_target_eq_choice choice⟩
 
 end InputPrimeStripLinkConstruction
 
