@@ -5981,6 +5981,207 @@ theorem endpoint
 end IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
 
 /--
+Localized hull-cover source for the Ob3-3 summand formula.
+
+This is one step closer to Remark 3.9.5(vii), (Ob1)--(Ob3): the localized
+regions are no longer arbitrary subsets merely asserted to lie in the canonical
+family hull.  Instead, a minimal Remark 3.9.5 hull system constructs the family
+hull, and the localized regions are required to cover this hull.  The individual
+containment facts consumed by the existing decomposition source are then
+derived from the cover identity.
+-/
+structure IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+    (α : Type u) (ι : Type v) (η : Type y) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedSource :
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+      η β γ
+  localizedRegion : β -> Set α
+  familyHull_eq_localizedRegionUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index, localizedRegion index
+  localizedCoverLogVolume_eq_sum :
+    hullSystem.logVolume (⋃ index, localizedRegion index) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume (localizedRegion index)
+  localizedRegion_logVolume_eq_adjusted :
+    ∀ index : β,
+      hullSystem.logVolume (localizedRegion index) =
+        localizedSource.weightedAdjustedLogVolume index
+
+namespace IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+
+variable {α : Type u} {ι : Type v} {η : Type y}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def hullOperator
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1Remark395HolomorphicHullOperator α :=
+  data.hullSystem.toHolomorphicHullOperator
+
+def familyUnion
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ i, data.possibleRegion i
+
+def familyHull
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  data.hullSystem.phi data.familyUnion
+
+def localizedRegionUnion
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ index, data.localizedRegion index
+
+def familyHullLogVolume
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  data.hullSystem.logVolume data.familyHull
+
+def localizedLogVolumeSum
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.hullSystem.logVolume (data.localizedRegion index)
+
+def localizedAdjustedSum
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.localizedSource.weightedAdjustedLogVolume index
+
+theorem familyHull_eq_localizedRegionUnion_source
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHull = data.localizedRegionUnion := by
+  simpa [familyHull, familyUnion, localizedRegionUnion] using
+    data.familyHull_eq_localizedRegionUnion
+
+theorem localizedRegion_subset_familyHull
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    data.localizedRegion index ⊆ data.familyHull := by
+  intro point hpoint
+  rw [data.familyHull_eq_localizedRegionUnion_source]
+  exact Set.mem_iUnion.mpr ⟨index, hpoint⟩
+
+theorem familyHullLogVolume_eq_localizedLogVolumeSum
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHullLogVolume = data.localizedLogVolumeSum := by
+  have hcover :
+      data.hullSystem.logVolume data.familyHull =
+        data.hullSystem.logVolume data.localizedRegionUnion := by
+    rw [data.familyHull_eq_localizedRegionUnion_source]
+  exact hcover.trans
+    (by
+      simpa [localizedRegionUnion, localizedLogVolumeSum] using
+        data.localizedCoverLogVolume_eq_sum)
+
+theorem localizedLogVolumeSum_eq_localizedAdjustedSum
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.localizedLogVolumeSum = data.localizedAdjustedSum := by
+  dsimp [localizedLogVolumeSum, localizedAdjustedSum]
+  exact Finset.sum_congr rfl
+    (fun index _ => data.localizedRegion_logVolume_eq_adjusted index)
+
+theorem familyHullLogVolume_eq_localizedAdjustedSum
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHullLogVolume = data.localizedAdjustedSum :=
+  data.familyHullLogVolume_eq_localizedLogVolumeSum.trans
+    data.localizedLogVolumeSum_eq_localizedAdjustedSum
+
+set_option linter.style.longLine false in
+noncomputable def toLocalizedHullVectorBundleDecompositionSource
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+      α ι η β γ :=
+  { hullOperator := data.hullOperator,
+    possibleRegion := data.possibleRegion,
+    localizedSource := data.localizedSource,
+    localizedRegion := data.localizedRegion,
+    localizedRegion_subset_familyHull := by
+      intro index point hpoint
+      simpa [hullOperator, familyHull, familyUnion] using
+        data.localizedRegion_subset_familyHull index hpoint,
+    familyHullLogVolume_eq_localizedLogVolumeSum := by
+      simpa [hullOperator, familyHullLogVolume, familyHull, familyUnion,
+        localizedLogVolumeSum] using
+        data.familyHullLogVolume_eq_localizedLogVolumeSum,
+    localizedRegion_logVolume_eq_adjusted := by
+      intro index
+      simpa [hullOperator] using
+        data.localizedRegion_logVolume_eq_adjusted index }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHull = data.localizedRegionUnion ∧
+      (∀ index : β,
+        data.localizedRegion index ⊆ data.familyHull) ∧
+      data.familyHullLogVolume = data.localizedLogVolumeSum ∧
+      data.localizedLogVolumeSum = data.localizedAdjustedSum ∧
+      data.familyHullLogVolume = data.localizedAdjustedSum ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.familyHull =
+        data.familyHull ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.localizedLogVolumeSum =
+        data.localizedLogVolumeSum ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.localizedAdjustedSum =
+        data.localizedAdjustedSum ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume =
+        data.localizedAdjustedSum :=
+  ⟨data.familyHull_eq_localizedRegionUnion_source,
+    data.localizedRegion_subset_familyHull,
+    data.familyHullLogVolume_eq_localizedLogVolumeSum,
+    data.localizedLogVolumeSum_eq_localizedAdjustedSum,
+    data.familyHullLogVolume_eq_localizedAdjustedSum,
+    by
+      rfl,
+    by
+      rfl,
+    by
+      rfl,
+    by
+      simpa [toLocalizedHullVectorBundleDecompositionSource,
+        IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource.familyHullLogVolume,
+        IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource.familyHull,
+        IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource.familyUnion,
+        localizedAdjustedSum] using
+        data.familyHullLogVolume_eq_localizedAdjustedSum⟩
+
+end IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+
+/--
 Finite log-volume skeleton of Remark 3.9.5(vii), (Ob4).
 
 The passage from an object to its `M`-th tensor-power Frobenioid copy is modeled

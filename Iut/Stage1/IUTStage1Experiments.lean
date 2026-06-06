@@ -41450,6 +41450,37 @@ theorem remark395LocalizedHullVectorBundleDecompositionSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface localized hull-cover source for the Ob3-3 summand formula.
+
+This endpoint starts from the minimal Remark 3.9.5 hull system and a finite
+localized cover of the family hull.  It derives the localized-region
+containment and the decomposition source consumed by the existing Ob3/Ob5
+determinant route.
+-/
+theorem remark395LocalizedHullCoverVectorBundleSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHull = data.localizedRegionUnion ∧
+      (∀ index : β,
+        data.localizedRegion index ⊆ data.familyHull) ∧
+      data.familyHullLogVolume = data.localizedLogVolumeSum ∧
+      data.localizedLogVolumeSum = data.localizedAdjustedSum ∧
+      data.familyHullLogVolume = data.localizedAdjustedSum ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.familyHull =
+        data.familyHull ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.localizedLogVolumeSum =
+        data.localizedLogVolumeSum ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.localizedAdjustedSum =
+        data.localizedAdjustedSum ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume =
+        data.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the

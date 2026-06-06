@@ -2622,6 +2622,23 @@ sum of these localized region log-volumes, and each localized region log-volume
 is the corresponding adjusted localized vector-bundle summand.  Lean derives
 the Ob3-3 summand identity from these two facts and then constructs the same
 Ob3/Ob5 adjusted determinant log-volume source.
+The localized-region containment has now been pushed one level lower.  The
+source declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395LocalizedHullCover}\\
+\quad\texttt{VectorBundleSource}
+\end{array}
+\]
+starts from the intersection-defined Remark~3.9.5 hull system and a finite
+cover
+\[
+  \phi(P_B)=\bigcup_\beta H_\beta
+\]
+by localized hull-regions.  From this cover identity, \Lean{} proves
+\(H_\beta\subseteq\phi(P_B)\) for each \(\beta\), derives the family-hull
+log-volume sum from the supplied cover-additivity theorem, and then constructs
+the localized hull/vector-bundle decomposition source described above.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5802,10 +5819,10 @@ The practical priority order is:
   localized-vector-bundle source pushes the Ob3/Ob4 determinant payload below
   the adjusted-localization interface, but
   the next work is to replace the
-  still-supplied hull system, localized hull-region additivity, pointwise
-  localized summand calibration, measure calibration, record-canonical
-  synchronization, and chart synchronization witnesses by source-paper
-  constructions;
+  still-supplied hull system, finite localized cover/additivity theorem,
+  pointwise localized summand calibration, measure calibration,
+  record-canonical synchronization, and chart synchronization witnesses by
+  source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source
   content to bear on the Mochizuki--Scholze--Stix disagreement.
 \end{enumerate}
