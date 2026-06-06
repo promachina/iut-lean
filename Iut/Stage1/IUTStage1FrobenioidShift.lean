@@ -47341,6 +47341,86 @@ theorem boundaryEndpointWithCanonicalOneConstructorBuiltIPLConstructionGaussianS
   sourceData.toThetaMonoidMatchedConstructorBuiltSource.boundaryEndpointWithConstructorBuiltMatchedGaussianStepXIAudit
 
 set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  middleRouteAudit :
+    CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  boundaryAudit :
+    CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit sourceData
+  packetLocalObjectFinite_eq_entrySource :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      projected.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume
+  entrySourceFinite_eq_divisorRealized :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    projected.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+      (projected.divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+        IUTStage1TensorPacketRealizationKind.monoAnalyticD
+        projected.monoAnalyticTheater).toRealized.product.productLogVolume
+  productLogVolume_eq_divisorRealified :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    product.productLogVolume =
+      projected.divisorPacket.divisor.realifiedLogVolume
+  packetLocalObjectFinite_eq_ind3Source :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  packetLocalObjectFinite_le_entryTarget :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+      projected.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume
+  targetPreciseFrobenioidIsomorphisms :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    projected.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+      true
+  thetaAverage_eq_entryTarget :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    part.insulated_route.theta_source.thetaSourceAverage audited =
+      projected.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume
+  entryTargetFinite_eq_ind3Target :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    projected.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit sourceData := by
+  let projected :=
+    sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource
+  have hboundary := projected.boundaryEndpointWithMatchedGaussianStepXIAudit
+  exact
+    { middleRouteAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
+      stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      boundaryAudit :=
+        sourceData.boundaryEndpointWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit,
+      packetLocalObjectFinite_eq_entrySource := hboundary.2.2.2.1,
+      entrySourceFinite_eq_divisorRealized := hboundary.2.2.2.2.1,
+      productLogVolume_eq_divisorRealified := hboundary.2.2.2.2.2.1,
+      packetLocalObjectFinite_eq_ind3Source := hboundary.2.2.2.2.2.2.1,
+      packetLocalObjectFinite_le_entryTarget := hboundary.2.2.2.2.2.2.2.1,
+      targetPreciseFrobenioidIsomorphisms := hboundary.2.2.2.2.2.2.2.2.1,
+      thetaAverage_eq_entryTarget := hboundary.2.2.2.2.2.2.2.2.2.1,
+      entryTargetFinite_eq_ind3Target := hboundary.2.2.2.2.2.2.2.2.2.2.1,
+      qSigned_le_thetaSigned := hboundary.2.2.2.2.2.2.2.2.2.2.2 }
+
+set_option linter.style.longLine false in
 abbrev CanonicalOneConstructorBuiltIPLConstructionCThetaAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47393,6 +47473,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  finiteBoundaryAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit sourceData
   boundaryAudit :
     CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit sourceData
   cThetaAudit :
@@ -47419,6 +47501,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
     stepXIHullAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+    finiteBoundaryAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit,
     boundaryAudit :=
       sourceData.boundaryEndpointWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit,
     cThetaAudit :=

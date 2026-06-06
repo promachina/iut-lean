@@ -36849,6 +36849,47 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneCo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface finite Step (x)/vertical-\(IQ\) boundary ledger for the
+canonical-one constructed-\(\IPL\) constructor-built finite-divisor route.
+
+This keeps the middle route audit, Step (xi) hull audit, compact boundary
+audit, finite-divisor packet equalities, vertical-\(IQ\) target equalities, and
+raw signed comparison attached to one source object before the numeric
+\(C_\Theta\) estimate is used.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
+      sourceData :=
+  sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface direct conditional dichotomy for the canonical-one
 constructed-\(\IPL\) constructor-built finite-divisor route.
 -/

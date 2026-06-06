@@ -3937,13 +3937,19 @@ Step (xi) hull side is now separated as
 records the constructor-built, constructor-sourced, and constructor-pinned
 possible-image hull endpoints, the projected possible-image hull/determinant
 endpoint, and the record-canonical hull/tensor bridge equality before the
-boundary audit is used.  The
+boundary audit is used.  The no-\(C_\Theta\) finite boundary is now separated as
+\texttt{CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit}; it
+keeps the middle-route audit, Step (xi) hull audit, compact boundary audit,
+finite-divisor packet equalities, exact vertical-\(IQ\) target equalities, and
+raw \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison attached to
+the same source object.  The
 experiment surface exposes this stricter route through suffixes
 \[
 \begin{array}{l}
 \texttt{canonicalOneConstructorBuiltIPLConstructionFullRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionStepXIHullAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionCTheta},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit}.
