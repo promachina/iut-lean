@@ -2440,6 +2440,38 @@ source also has a constructor
 \texttt{ofOb3Ob4AdjustedDeterminantSource} whose endpoint verifies that this
 source-facing Ob3/Ob4 package is the determinant source used by the existing
 hull/determinant corridor.
+The actual log-volume bridge has now been separated as a named source object:
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395HullDeterminantBridgeSource}.
+\end{array}
+\]
+It takes q-region containment in the possible-image union, Ob3/Ob5
+compatibility between \(\phi(P_B)\) and the determinant-normalized log-volume,
+and the Ob4 normalized tensor-power bound by \(\theta_{\mathrm{signed}}\), then
+proves the chain
+\[
+  \mu_{\log}(q_{\mathrm{region}})
+  \le
+  \mu_{\log}(\phi(P_B))
+  =
+  \det_{\log}^{\mathrm{norm}}
+  =
+  \det_{\log}
+  \le
+  \theta_{\mathrm{signed}} .
+\]
+The experiment-surface theorem
+\texttt{remark395HullDeterminantBridgeSource\_endpoint} exposes this chain.
+The Step~(xi) specialization
+\texttt{IUTStage1Remark395RecordHullDeterminantBridgeSource} fixes the family
+to the Theorem~3.11 possible images and the bound to
+\texttt{package.preLedger.thetaSigned}; its endpoint verifies the
+record-canonical q-to-determinant-to-theta comparison.  The constructed
+Step~(xi) source also has
+\texttt{ofRecordHullDeterminantBridgeSource}, so the bridge payload may now be
+passed as one source-level mathematical object instead of as unrelated
+compatibility and tensor-bound fields.
 The corresponding Step~(xi) source
 \[
 \begin{array}{l}
@@ -2469,8 +2501,10 @@ The experiment-surface theorem
 \]
 threads this constructed Remark~3.9.5 source through the finite-divisor
 vertical-\(IQ\) corridor.  The numeric \(C_\Theta\) estimate remains an explicit
-hypothesis, and the determinant compatibility and bridge equality are still
-source obligations rather than full arithmetic vector-bundle constructions.
+hypothesis.  The Ob3/Ob5 compatibility certificate, the Ob4 tensor-bound input,
+and the equality with the older algorithmic hull/determinant bridge remain
+source obligations rather than full arithmetic vector-bundle constructions, but
+the ordered log-volume comparison itself is now a proved source-level bridge.
 
 The endpoint type \texttt{Stage1Comparison} is not a source proof: its
 comparison field is the Corollary-3.12-shaped conclusion, and the corresponding

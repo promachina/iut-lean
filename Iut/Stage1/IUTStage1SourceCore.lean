@@ -5316,6 +5316,177 @@ theorem toBoundedFamilyHullDetLogVolumeSource_familyHullLogVolume_eq_determinant
 end IUTStage1Remark395PossibleImageFamilySource
 
 /--
+Source-facing Remark 3.9.5 hull/determinant bridge.
+
+This is the log-volume chain used in Step (xi) after the possible-image family
+has been formed.  The input is still finite and source-facing: a paper-style
+`phi` hull operator, the family `P_i`, a q-pilot region contained in the family
+union, the Ob3/Ob5 compatibility identifying the canonical hull log-volume
+with the determinant-normalized value, and the Ob4 tensor-power bound by the
+theta log-volume.  The endpoint proves the actual comparison chain
+`μ_log(qRegion) <= det_norm = det <= thetaSigned`.
+-/
+structure IUTStage1Remark395HullDeterminantBridgeSource
+    (α : Type u) (ι : Type v) (β : Type w) [Fintype β] where
+  hullOperator : IUTStage1Remark395HolomorphicHullOperator α
+  possibleRegion : ι -> Set α
+  qRegion : Set α
+  q_subset_familyUnion : qRegion ⊆ ⋃ i, possibleRegion i
+  determinantSource :
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β
+  compatibility :
+    IUTStage1HullApproximantWeightedDeterminantCompatibility
+      (IUTStage1HullLogVolumeApproximant.canonical
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator)
+        (⋃ i, possibleRegion i))
+      determinantSource
+  thetaSigned : Real
+  tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        determinantSource).normalizedLogVolume <= thetaSigned
+
+namespace IUTStage1Remark395HullDeterminantBridgeSource
+
+variable {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+
+def hullData
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    IUTStage1HolomorphicHullLogVolumeShadow α :=
+  IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+    data.hullOperator
+
+def possibleImageFamilySource
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    IUTStage1Remark395PossibleImageFamilySource α ι :=
+  { hullOperator := data.hullOperator,
+    possibleRegion := data.possibleRegion }
+
+def boundedFamilySource
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β :=
+  data.possibleImageFamilySource
+    |>.toBoundedFamilyHullDetLogVolumeSource
+      data.determinantSource data.compatibility
+
+def familyUnion
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    Set α :=
+  ⋃ i, data.possibleRegion i
+
+def familyHull
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    Set α :=
+  data.hullOperator.phi data.familyUnion
+
+def qRegionLogVolume
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    Real :=
+  data.hullOperator.logVolume data.qRegion
+
+def familyHullLogVolume
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    Real :=
+  data.hullOperator.logVolume data.familyHull
+
+noncomputable def determinantNormalizedLogVolume
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    Real :=
+  data.determinantSource.normalizedLogVolume
+
+theorem possibleImageFamilySource_familyUnion_eq
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.possibleImageFamilySource.familyUnion = data.familyUnion :=
+  rfl
+
+theorem possibleImageFamilySource_canonicalHull_eq
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.possibleImageFamilySource.canonicalHull = data.familyHull :=
+  rfl
+
+theorem boundedFamilySource_familyHull_eq
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.boundedFamilySource.familyHull = data.familyHull :=
+  rfl
+
+theorem qRegion_subset_familyHull
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.qRegion ⊆ data.familyHull := by
+  intro x hx
+  exact data.hullOperator.region_subset_hull data.familyUnion
+    (data.q_subset_familyUnion hx)
+
+theorem qRegionLogVolume_le_familyHullLogVolume
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.qRegionLogVolume <= data.familyHullLogVolume :=
+  data.hullOperator.logVolume_mono data.qRegion_subset_familyHull
+
+theorem familyHullLogVolume_eq_normalized
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.familyHullLogVolume = data.determinantNormalizedLogVolume := by
+  simpa [familyHullLogVolume, familyHull, familyUnion,
+    determinantNormalizedLogVolume,
+    IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator,
+    IUTStage1HullLogVolumeApproximant.canonical] using
+    data.compatibility.approximant_eq_weighted_normalized
+
+theorem familyHullLogVolume_eq_determinant
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.familyHullLogVolume =
+      data.determinantSource.determinantLogVolume := by
+  simpa [familyHullLogVolume, familyHull, familyUnion,
+    IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator,
+    IUTStage1HullLogVolumeApproximant.canonical] using
+    data.compatibility.approximant_eq_determinantLogVolume
+
+theorem determinantNormalizedLogVolume_eq_determinant
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.determinantNormalizedLogVolume =
+      data.determinantSource.determinantLogVolume :=
+  data.determinantSource.normalizedLogVolume_eq_determinantLogVolume
+
+theorem determinantLogVolume_le_thetaSigned
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.determinantSource.determinantLogVolume <= data.thetaSigned :=
+  (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant_normalizedLogVolume_le_iff
+      data.determinantSource data.thetaSigned).mp
+    data.tensorPower_bound
+
+theorem qRegionLogVolume_le_determinantLogVolume
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.qRegionLogVolume <=
+      data.determinantSource.determinantLogVolume :=
+  data.qRegionLogVolume_le_familyHullLogVolume.trans
+    (le_of_eq data.familyHullLogVolume_eq_determinant)
+
+theorem qRegionLogVolume_le_thetaSigned
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.qRegionLogVolume <= data.thetaSigned :=
+  data.qRegionLogVolume_le_determinantLogVolume.trans
+    data.determinantLogVolume_le_thetaSigned
+
+theorem endpoint
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.qRegion ⊆ data.familyHull ∧
+      data.qRegionLogVolume <= data.familyHullLogVolume ∧
+      data.familyHullLogVolume = data.determinantNormalizedLogVolume ∧
+      data.determinantNormalizedLogVolume =
+        data.determinantSource.determinantLogVolume ∧
+      data.qRegionLogVolume <=
+        data.determinantSource.determinantLogVolume ∧
+      data.determinantSource.determinantLogVolume <= data.thetaSigned ∧
+      data.qRegionLogVolume <= data.thetaSigned :=
+  ⟨data.qRegion_subset_familyHull,
+    data.qRegionLogVolume_le_familyHullLogVolume,
+    data.familyHullLogVolume_eq_normalized,
+    data.determinantNormalizedLogVolume_eq_determinant,
+    data.qRegionLogVolume_le_determinantLogVolume,
+    data.determinantLogVolume_le_thetaSigned,
+    data.qRegionLogVolume_le_thetaSigned⟩
+
+end IUTStage1Remark395HullDeterminantBridgeSource
+
+/--
 Step (xi-e)/(xi-f) upper-ray comparison after hull, determinant, and normalized
 log-volume.
 

@@ -39735,6 +39735,54 @@ theorem remark395Ob3Ob4AdjustedDeterminantSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface bridge audit for Remark 3.9.5.
+
+This is the source-core Step (xi) log-volume chain: q-pilot containment in the
+possible-image union, monotonicity into the canonical hull, Ob3/Ob5 determinant
+compatibility, and the Ob4 normalized tensor-power bound together imply
+`mu_log(qRegion) <= det_norm = det <= thetaSigned`.
+-/
+theorem remark395HullDeterminantBridgeSource_endpoint
+    {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.qRegion ⊆ data.familyHull ∧
+      data.qRegionLogVolume <= data.familyHullLogVolume ∧
+      data.familyHullLogVolume = data.determinantNormalizedLogVolume ∧
+      data.determinantNormalizedLogVolume =
+        data.determinantSource.determinantLogVolume ∧
+      data.qRegionLogVolume <=
+        data.determinantSource.determinantLogVolume ∧
+      data.determinantSource.determinantLogVolume <= data.thetaSigned ∧
+      data.qRegionLogVolume <= data.thetaSigned :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface record-canonical bridge audit for the Theorem 3.11
+possible-image family used by Step (xi).
+-/
+theorem remark395RecordHullDeterminantBridgeSource_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (bridgeSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record) :
+    bridgeSource.qPilotRegion ⊆
+        bridgeSource.hullOperator.phi
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record) ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        bridgeSource.determinantSource.determinantLogVolume ∧
+      bridgeSource.determinantSource.determinantLogVolume <=
+        package.preLedger.thetaSigned ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        package.preLedger.thetaSigned :=
+  bridgeSource.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface endpoint for the finite-divisor vertical-\(IQ\) corridor
 through the constructed Remark 3.9.5 holomorphic-hull/determinant source.
 
