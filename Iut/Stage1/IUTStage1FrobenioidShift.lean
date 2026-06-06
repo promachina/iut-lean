@@ -48893,6 +48893,55 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPLConstruction
         cTheta thetaSigned_le_cTheta_absLogQ }
 
+set_option linter.style.longLine false in
+/--
+Compact constructed-\(\IPL\) milestone endpoint for the source-derived
+finite-divisor vertical-\(IQ\) corridor.
+
+This is a review-surface alias for the canonical-one constructor-built
+constructed-\(\IPL\) route: the source object constructs the \(\IPL\)
+log-volume transport from the finite Hodge/\(\SHE\) transport and Theorem 3.11
+input-prime-strip-link construction source, then projects the Step (xi)
+q-comparison before the explicit \(C_\Theta\) estimate is applied.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  sourceData.boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPLConstruction
+    cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Compact constructed-\(\IPL\) milestone audit for the source-derived
+finite-divisor vertical-\(IQ\) corridor.
+
+This returns the full audit package of the canonical-one constructor-built
+constructed-\(\IPL\) route under a shorter milestone-facing name: theta
+evaluation, factored \(\SHE\), constructed \(\IPL\), Step (xi)
+hull/determinant audits, side conditions, raw q-comparison, finite boundary,
+conditional \(C_\Theta\) audit, and final dichotomy.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ_withMilestoneAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
+      sourceData cTheta :=
+  sourceData.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLConstructionFiniteDivisorVerticalIQ_withMilestoneAudit
+    cTheta thetaSigned_le_cTheta_absLogQ
+
 end
   IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
 
