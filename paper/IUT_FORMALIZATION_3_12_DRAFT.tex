@@ -3273,6 +3273,17 @@ measure equality as a direct field.  The experiment surface now exposes
 and a matching finite-divisor boundary wrapper returning the
 measure-calibrated Gaussian-to-Step (xi) audit; both project to the older
 calibrated route only internally.
+The measure-calibrated boundary now has a constructor-backed refinement as
+well.  The new constructor-backed possible-image source constructs its
+hull/determinant obligations via
+\path|ofRecordCanonicalHullTensorPowerOfQSubsetUnion|, using the
+record-canonical possible-image hull/tensor-power bridge.  The matching
+all-in-one route therefore no longer carries an arbitrary possible-image
+hull/determinant obligations object at this boundary; it projects to the
+measure-calibrated route only after the constructor has produced those
+obligations.  The experiment surface exposes this as a constructor-backed
+Gaussian-to-Step (xi) audit and a matching no-\(C_\Theta\) finite-divisor
+boundary wrapper.
 The same calibration-backed route has now been pushed into the strongest
 bundled finite exact vertical-\(IQ\) source as well.  The experiment-surface
 calibrated finite-exact wrappers, with suffixes
