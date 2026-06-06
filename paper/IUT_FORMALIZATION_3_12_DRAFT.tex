@@ -2397,6 +2397,41 @@ endpoint reports only \texttt{propext}, \texttt{Classical.choice}, and
 \texttt{Quot.sound}; in particular, no \texttt{sorryAx} appears.  Thus the
 milestone is kernel-clean at the usual Lean classical/quotient trust boundary.
 
+The Remark~3.9.5 holomorphic-hull/determinant milestone has now started at the
+source-object level.  The new declaration
+\texttt{IUTStage1Remark395HolomorphicHullOperator} records the source-facing
+\(\phi\)-operator laws directly: closed hulls are fixed, \(P\subseteq\phi(P)\),
+inclusions are preserved, \(\phi(\phi(P))=\phi(P)\), and log-volume is
+monotone.  It projects to the older closure-operator shadow used by the
+existing bridge code, but the public source object no longer begins with that
+shadow.  The corresponding Step~(xi) source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource}
+\end{array}
+\]
+combines this \(\phi\)-operator with the Theorem~3.11 possible-image union,
+q-pilot containment in that union, the finite Ob3/Ob4 weighted determinant
+source, tensor-power normalization, and the record-canonical hull/determinant
+bridge equality.  Lean proves inside this source object that the possible-image
+union, each possible image, and the q-pilot region lie in \(\phi(P)\), and that
+\[
+  \mu_{\log}(q_{\mathrm{region}})
+  \le \det_{\log}^{\mathrm{norm}}
+  \le \theta_{\mathrm{signed}} .
+\]
+The experiment-surface theorem
+\[
+\begin{array}{l}
+\texttt{Iut.Stage1.Experiments.boundarySignedEqualityOrStrictCTheta\_from}\\
+\quad\texttt{\_remark395ConstructedHullDeterminantFiniteDivisorVerticalIQ}
+\end{array}
+\]
+threads this constructed Remark~3.9.5 source through the finite-divisor
+vertical-\(IQ\) corridor.  The numeric \(C_\Theta\) estimate remains an explicit
+hypothesis, and the determinant compatibility and bridge equality are still
+source obligations rather than full arithmetic vector-bundle constructions.
+
 The endpoint type \texttt{Stage1Comparison} is not a source proof: its
 comparison field is the Corollary-3.12-shaped conclusion, and the corresponding
 theorem is only a projection.  The source-facing route must construct this
