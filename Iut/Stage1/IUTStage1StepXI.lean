@@ -11862,6 +11862,151 @@ theorem toConstructorBuiltOb3Ob4DeterminantAudit
 
 set_option linter.style.longLine false in
 /--
+Build the constructor-built possible-image Step (xi) source from an Ob3/Ob4
+adjusted determinant source.
+
+This is the constructor-built analogue of the generic Remark 3.9.5
+`ofOb3Ob4AdjustedDeterminantSource` route: the public determinant input is the
+source-facing localization/structure-sheaf/tensor-power package, and the older
+weighted determinant source is projected internally.
+-/
+noncomputable def ofOb3Ob4AdjustedDeterminantSource
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target))
+    (qChoice : index)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          hullData (recordThetaPossibleImageUnion record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure = hullData.toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation hullData
+          (recordThetaPossibleImage record qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice (recordThetaPossibleImage record qChoice)
+            (fun _ hx => hx))
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization) :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+      (β := β) record :=
+  { operation := operation,
+    hullOperation := hullOperation,
+    determinantOperation := determinantOperation,
+    hullData := hullData,
+    qChoice := qChoice,
+    determinantSource := ob3ob4Source.toWeightedDeterminantSource,
+    compatibility := compatibility,
+    measure_eq_hullLogVolume := measure_eq_hullLogVolume,
+    tensorPower_bound := tensorPower_bound,
+    hullDetBridge_eq := hullDetBridge_eq,
+    q_pilot_positive := q_pilot_positive,
+    normalization := normalization }
+
+set_option linter.style.longLine false in
+/--
+Endpoint for the Ob3/Ob4-adjusted constructor-built possible-image Step (xi)
+source.
+
+The endpoint exposes the raw adjusted-localization formulas, the weighted
+determinant summation, tensor-power normalization, and the existing
+constructor-built Ob3/Ob4 audit for the source object constructed from them.
+-/
+theorem ofOb3Ob4AdjustedDeterminantSource_endpoint
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target))
+    (qChoice : index)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          hullData (recordThetaPossibleImageUnion record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure = hullData.toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation hullData
+          (recordThetaPossibleImage record qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice (recordThetaPossibleImage record qChoice)
+            (fun _ hx => hx))
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization) :
+    let sourceData :=
+      ofOb3Ob4AdjustedDeterminantSource (record := record)
+        operation hullOperation determinantOperation hullData qChoice
+        ob3ob4Source compatibility measure_eq_hullLogVolume tensorPower_bound
+        hullDetBridge_eq q_pilot_positive normalization;
+    SourceEndpoint sourceData ∧
+      ConstructorBuiltOb3Ob4DeterminantAudit sourceData ∧
+      sourceData.determinantSource =
+        ob3ob4Source.toWeightedDeterminantSource ∧
+      (∀ index : β,
+        ob3ob4Source.adjustedRawLogVolume index =
+          ob3ob4Source.localizationBundleLogVolume index -
+            ob3ob4Source.structureSheafLogVolume index) ∧
+      (∀ index : β,
+        ob3ob4Source.weightedAdjustedLogVolume index =
+          ((ob3ob4Source.localization index).weight : Real) *
+            ob3ob4Source.adjustedRawLogVolume index) ∧
+      sourceData.determinantSource.determinantLogVolume =
+        (Finset.univ.sum fun index =>
+          ob3ob4Source.weightedAdjustedLogVolume index) ∧
+      sourceData.determinantSource.normalizedLogVolume =
+        ob3ob4Source.determinantLogVolume ∧
+      sourceData.determinantSource.tensorPowerLogVolume =
+        ob3ob4Source.tensorPowerLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  by
+    intro sourceData
+    exact
+      ⟨sourceData.source_endpoint,
+        sourceData.toConstructorBuiltOb3Ob4DeterminantAudit,
+        rfl,
+        ob3ob4Source.adjustedRawLogVolume_eq,
+        ob3ob4Source.weightedAdjustedLogVolume_eq,
+        by
+          simpa [sourceData, ofOb3Ob4AdjustedDeterminantSource] using
+            ob3ob4Source.determinantLogVolume_eq_sum_weightedAdjusted,
+        by
+          simpa [sourceData, ofOb3Ob4AdjustedDeterminantSource,
+            IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.normalizedDeterminantLogVolume]
+            using ob3ob4Source.normalizedDeterminantLogVolume_eq_determinant,
+        rfl,
+        sourceData.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
 Ob3/Ob5 determinant-compatibility chain for the constructor-built possible-image
 Step (xi) source.
 

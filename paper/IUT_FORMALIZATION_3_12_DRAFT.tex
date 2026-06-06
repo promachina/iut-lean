@@ -4845,6 +4845,19 @@ the source-derived Step (xi) hull/determinant comparison and the finite
 Step (x) boundary are visible before the separate numerical
 \(C_\Theta\)-estimate is supplied.
 
+The constructor-built possible-image Step (xi) source can now also be
+constructed directly from an Ob3/Ob4 adjusted determinant package.  The new
+constructor
+\texttt{ofOb3Ob4AdjustedDeterminantSource} takes the localization summands,
+structure-sheaf subtraction, and positive tensor-power data, projects the
+weighted determinant internally, and returns the existing constructor-built
+Ob3/Ob4 audit for the resulting possible-image hull source.  Its experiment
+endpoint exposes the raw adjusted-localization identities, the weighted
+determinant summation, tensor-power normalization, and the
+\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison.  Thus another
+piece of the Step (xi) determinant payload has moved from an already-weighted
+determinant input to a source-facing Remark 3.9.5(vii) Ob3/Ob4 construction.
+
 The practical priority order is:
 \begin{enumerate}
 \item factor the large source module into reviewable finite-label, hull,
