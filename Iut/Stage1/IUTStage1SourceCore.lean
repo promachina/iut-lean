@@ -2953,6 +2953,136 @@ theorem remark395_hullMap_laws
 end IUTStage1Remark395HolomorphicHullOperator
 
 /--
+Remark 3.9.5(ii) minimal-hull construction of the holomorphic hull.
+
+The paper identifies `phi(P)` with the intersection of all hulls `H` that
+contain `P`.  This source object records the hull predicate and the single
+closure fact needed for that construction: this intersection is again a hull.
+The usual P1--P3 laws are then proved from the definition instead of being
+supplied as fields of the `phi`-operator.
+-/
+structure IUTStage1Remark395HolomorphicHullSystem (α : Type u) where
+  isHull : Set α -> Prop
+  iInter_hulls_containing_isHull :
+    ∀ region : Set α,
+      isHull {x | ∀ hull : Set α, isHull hull -> region ⊆ hull -> x ∈ hull}
+  logVolume : Set α -> Real
+  logVolume_mono :
+    ∀ {region₁ region₂ : Set α},
+      region₁ ⊆ region₂ -> logVolume region₁ <= logVolume region₂
+
+namespace IUTStage1Remark395HolomorphicHullSystem
+
+variable {α : Type u}
+
+def phi
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    (region : Set α) :
+    Set α :=
+  {x | ∀ hull : Set α, data.isHull hull -> region ⊆ hull -> x ∈ hull}
+
+theorem phi_eq_iInter_hulls
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    (region : Set α) :
+    data.phi region =
+      {x | ∀ hull : Set α, data.isHull hull -> region ⊆ hull -> x ∈ hull} :=
+  rfl
+
+theorem phi_isHull
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    (region : Set α) :
+    data.isHull (data.phi region) :=
+  data.iInter_hulls_containing_isHull region
+
+theorem region_subset_phi
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    (region : Set α) :
+    region ⊆ data.phi region := by
+  intro x hx hull _ hsubset
+  exact hsubset hx
+
+theorem phi_subset_hull_of_subset
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    {region hull : Set α}
+    (hHull : data.isHull hull)
+    (hsubset : region ⊆ hull) :
+    data.phi region ⊆ hull := by
+  intro x hx
+  exact hx hull hHull hsubset
+
+theorem phi_fix_hull
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    {hull : Set α}
+    (hHull : data.isHull hull) :
+    data.phi hull = hull :=
+  Set.Subset.antisymm
+    (data.phi_subset_hull_of_subset hHull (fun _ hx => hx))
+    (data.region_subset_phi hull)
+
+theorem phi_mono
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    {region₁ region₂ : Set α}
+    (hsubset : region₁ ⊆ region₂) :
+    data.phi region₁ ⊆ data.phi region₂ := by
+  intro x hx hull hHull hregion₂
+  exact hx hull hHull (hsubset.trans hregion₂)
+
+theorem phi_idempotent
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    (region : Set α) :
+    data.phi (data.phi region) = data.phi region :=
+  data.phi_fix_hull (data.phi_isHull region)
+
+theorem logVolume_le_phi_logVolume
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    (region : Set α) :
+    data.logVolume region <= data.logVolume (data.phi region) :=
+  data.logVolume_mono (data.region_subset_phi region)
+
+def toHolomorphicHullOperator
+    (data : IUTStage1Remark395HolomorphicHullSystem α) :
+    IUTStage1Remark395HolomorphicHullOperator α :=
+  { phi := data.phi,
+    isClosed := data.isHull,
+    phi_closed := data.phi_isHull,
+    phi_fix_closed := fun hHull =>
+      data.phi_fix_hull hHull,
+    region_subset_phi := data.region_subset_phi,
+    phi_mono := fun hsubset =>
+      data.phi_mono hsubset,
+    phi_idempotent := data.phi_idempotent,
+    logVolume := data.logVolume,
+    logVolume_mono := fun hsubset =>
+      data.logVolume_mono hsubset }
+
+@[simp]
+theorem toHolomorphicHullOperator_phi_eq
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    (region : Set α) :
+    data.toHolomorphicHullOperator.phi region = data.phi region :=
+  rfl
+
+theorem endpoint
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    {hull region region₁ region₂ : Set α}
+    (hHull : data.isHull hull)
+    (hsubset : region₁ ⊆ region₂) :
+    data.phi hull = hull ∧
+      region ⊆ data.phi region ∧
+      data.phi region₁ ⊆ data.phi region₂ ∧
+      data.isHull (data.phi region) ∧
+      data.phi (data.phi region) = data.phi region ∧
+      data.logVolume region <= data.logVolume (data.phi region) :=
+  ⟨data.phi_fix_hull hHull,
+    data.region_subset_phi region,
+    data.phi_mono hsubset,
+    data.phi_isHull region,
+    data.phi_idempotent region,
+    data.logVolume_le_phi_logVolume region⟩
+
+end IUTStage1Remark395HolomorphicHullSystem
+
+/--
 Remark 3.9.5 holomorphic-hull shadow.
 
 The paper characterizes hull formation by the three closure properties P1--P3:

@@ -39801,6 +39801,29 @@ theorem remark395Ob3Ob4AdjustedDeterminantSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface minimal-hull construction for Remark 3.9.5(ii).
+
+Starting from the source statement that the intersection of all hulls
+containing a region is again a hull, this endpoint derives the P1--P3
+holomorphic-hull laws, idempotence, and the monotone log-volume bound for the
+constructed `phi(P)`.
+-/
+theorem remark395HolomorphicHullSystem_endpoint
+    {α : Type u}
+    (data : IUTStage1Remark395HolomorphicHullSystem α)
+    {hull region region₁ region₂ : Set α}
+    (hHull : data.isHull hull)
+    (hsubset : region₁ ⊆ region₂) :
+    data.phi hull = hull ∧
+      region ⊆ data.phi region ∧
+      data.phi region₁ ⊆ data.phi region₂ ∧
+      data.isHull (data.phi region) ∧
+      data.phi (data.phi region) = data.phi region ∧
+      data.logVolume region <= data.logVolume (data.phi region) :=
+  data.endpoint hHull hsubset
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Ob3/Ob5 determinant-compatibility audit for Remark 3.9.5.
 
 This names the source-level equality between the canonical possible-image hull

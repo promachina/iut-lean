@@ -2404,7 +2404,14 @@ source-object level.  The new declaration
 inclusions are preserved, \(\phi(\phi(P))=\phi(P)\), and log-volume is
 monotone.  It projects to the older closure-operator shadow used by the
 existing bridge code, but the public source object no longer begins with that
-shadow.  The possible-image family layer has also been made source-facing:
+shadow.  This has now been backed by the earlier construction in
+Remark~3.9.5(ii): \texttt{IUTStage1Remark395HolomorphicHullSystem} defines
+\(\phi(P)\) as the intersection of all hulls that contain \(P\).  Its only
+source closure input is that this intersection is again a hull; \Lean{} then
+derives P1--P3, idempotence, and
+\(\mu_{\log}(P)\leq\mu_{\log}(\phi(P))\), before projecting to the existing
+\(\phi\)-operator interface.
+The possible-image family layer has also been made source-facing:
 \texttt{IUTStage1Remark395PossibleImageFamilySource} records the family
 \(P_B=\{P_\beta\}_{\beta\in B}\), its union, the canonical hull
 \(\phi(P_B)\), the \(\Phi(P_B)\) and \(\Xi(P_B)\) approximant types projected
