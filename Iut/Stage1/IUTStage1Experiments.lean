@@ -30853,6 +30853,181 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithC
     packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
     targetSource cTheta thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Compact review-surface name for the synchronized finite-divisor Step (x)
+boundary backed by the constructed Hodge/SHE/IPL/Step (xi) route audit.
+
+This is the bundled version of
+`sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_boundaryEndpointWithConstructedRouteAudit`:
+the source-calibrated evaluation, target evaluation, and canonical one-label
+degree preservation are consumed through one Hodge--Arakelov synchronization
+object.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_boundaryEndpointWithSynchronizedRouteAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record)
+    {j : Nat}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.CalibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+        part audited hodgeSynchronization iplConstructionSource hullSource ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          monoAnalyticTheater).toRealized.product.productLogVolume ∧
+      product.productLogVolume = divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  synchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQ_boundaryEndpointWithGaussianStepXIAudit
+    part audited hodgeSynchronization iplConstructionSource hullSource
+    upperSemiEntry divisorPacket monoAnalyticTheater
+    packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
+    packetLocalObjectFinite_eq_ind3Source targetSource
+
+set_option linter.style.longLine false in
+/--
+Compact review-surface name for the synchronized finite-divisor `C_\Theta`
+dichotomy backed by the constructed Hodge/SHE/IPL/Step (xi) route audit.
+
+The synchronized Hodge--Arakelov object supplies the source calibration, target
+evaluation, and canonical one-label preservation.  The external numeric
+`C_\Theta` estimate remains explicit.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithSynchronizedRouteAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.CalibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+        part audited hodgeSynchronization iplConstructionSource hullSource ∧
+      ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  synchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQ_cThetaDichotomyWithGaussianStepXIAudit
+    part audited hodgeSynchronization iplConstructionSource hullSource
+    upperSemiEntry divisorPacket monoAnalyticTheater kummerCompatibility
+    forgettingCompatibility holomorphicF_realization holomorphicD_realization
+    holomorphicStructureForgotten holomorphic_structure_forgotten
+    packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
+    packetLocalObjectFinite_eq_ind3Source targetSource cTheta
+    thetaSigned_le_cTheta_absLogQ
+
 /--
 Scholze-Stix-style collapse test for the representative `j^2` factors.
 
