@@ -4017,7 +4017,18 @@ Step (xi) hull side is now separated as
 records the constructor-built, constructor-sourced, and constructor-pinned
 possible-image hull endpoints, the projected possible-image hull/determinant
 endpoint, and the record-canonical hull/tensor bridge equality before the
-boundary audit is used.  Its Ob1/Ob2 hull-absorption payload is now isolated as
+boundary audit is used.  The same Step (xi) hull audit now exposes the
+constructor-built upper-ray log-volume audit
+\[
+\begin{array}{l}
+\texttt{ConstructorBuiltStepXIUpperRayAudit},
+\end{array}
+\]
+which records the q-pilot region's holomorphic-hull containment, the equality
+between hull log-volume and normalized weighted determinant, membership of the
+q-pilot log-volume in the resulting upper ray, and the projected
+\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison.  Its Ob1/Ob2
+hull-absorption payload is now isolated as
 \texttt{CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit}:
 the selected q-region is identified with a Theorem 3.11 possible image, shown
 inside the record possible-image union, and both the union and selected q-region

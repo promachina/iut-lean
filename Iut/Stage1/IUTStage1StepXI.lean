@@ -10510,6 +10510,49 @@ theorem qSigned_le_thetaSigned
   sourceData.toConstructorSourcedHolomorphicHullDeterminantSource
     |>.qSigned_le_thetaSigned
 
+noncomputable def toUpperRayLogVolume
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1HullDetPilotUpperRayLogVolume :=
+  IUTStage1HullDetPilotUpperRayLogVolume.ofHolomorphicHull
+    sourceData.hullData sourceData.qPilotRegion
+    (recordThetaPossibleImageUnion record)
+    (fun _ hx =>
+      sourceData.hullData.region_subset_hull
+        (recordThetaPossibleImageUnion record)
+        (sourceData.q_subset_recordUnion hx))
+    sourceData.determinantSource.toDeterminantLogVolume
+    (by
+      simpa [IUTStage1HullLogVolumeApproximant.canonical] using
+        sourceData.compatibility.approximant_eq_projected_normalized)
+
+set_option linter.style.longLine false in
+theorem upperRay_endpoint
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume =
+        sourceData.hullData.logVolume sourceData.qPilotRegion ∧
+      sourceData.toUpperRayLogVolume.thetaHullLogVolume =
+        sourceData.hullData.logVolume
+          (sourceData.hullData.hullRegion
+            (recordThetaPossibleImageUnion record)) ∧
+      sourceData.toUpperRayLogVolume.qPilotLogVolume ∈
+        sourceData.toUpperRayLogVolume.upperRay ∧
+      sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+        sourceData.toUpperRayLogVolume.thetaHullLogVolume ∧
+      sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+        sourceData.determinantSource.determinantLogVolume :=
+  ⟨rfl,
+    rfl,
+    sourceData.toUpperRayLogVolume.qPilot_mem_upperRay,
+    sourceData.toUpperRayLogVolume.qPilotLogVolume_le_thetaHullLogVolume,
+    by
+      simpa [
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.toDeterminantLogVolume]
+        using sourceData.toUpperRayLogVolume.qPilotLogVolume_le_determinant⟩
+
 set_option linter.style.longLine false in
 def SourceEndpoint
     (sourceData :
@@ -10633,6 +10676,86 @@ theorem recordCanonicalStepXIAudit
 
 set_option linter.style.longLine false in
 /--
+Step (xi) upper-ray audit for the constructor-built possible-image
+hull/determinant source.
+
+This is the paper-facing log-volume consequence of the constructor ingredients:
+the selected q-pilot region is absorbed by the holomorphic hull of the record
+possible-image union, the hull log-volume is identified with the normalized
+weighted determinant, and the q-pilot log-volume lies in the resulting upper
+ray before the raw signed comparison `qSigned <= thetaSigned` is projected.
+-/
+structure ConstructorBuiltStepXIUpperRayAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  recordCanonicalStepXIAudit :
+    RecordCanonicalStepXIAudit sourceData
+  qPilotRegion_subset_holomorphicHull :
+    sourceData.qPilotRegion ⊆
+      sourceData.hullData.hullRegion (recordThetaPossibleImageUnion record)
+  qPilotLogVolume_eq_regionLogVolume :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume =
+      sourceData.hullData.logVolume sourceData.qPilotRegion
+  thetaHullLogVolume_eq_holomorphicHull :
+    sourceData.toUpperRayLogVolume.thetaHullLogVolume =
+      sourceData.hullData.logVolume
+        (sourceData.hullData.hullRegion
+          (recordThetaPossibleImageUnion record))
+  thetaHullLogVolume_eq_normalizedDeterminant :
+    sourceData.toUpperRayLogVolume.thetaHullLogVolume =
+      sourceData.determinantSource.toDeterminantLogVolume.normalizedLogVolume
+  qPilotLogVolume_mem_upperRay :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume ∈
+      sourceData.toUpperRayLogVolume.upperRay
+  qPilotLogVolume_le_thetaHullLogVolume :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+      sourceData.toUpperRayLogVolume.thetaHullLogVolume
+  qPilotLogVolume_le_determinant :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+      sourceData.determinantSource.determinantLogVolume
+  determinantLogVolume_eq_weightedSum :
+    sourceData.determinantSource.determinantLogVolume =
+      Finset.univ.sum fun index =>
+        (sourceData.determinantSource.summand index).adjustedLogVolume
+  normalizedLogVolume_eq_determinantLogVolume :
+    sourceData.determinantSource.normalizedLogVolume =
+      sourceData.determinantSource.determinantLogVolume
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltStepXIUpperRayAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltStepXIUpperRayAudit sourceData :=
+  { recordCanonicalStepXIAudit := sourceData.recordCanonicalStepXIAudit,
+    qPilotRegion_subset_holomorphicHull :=
+      fun _ hx =>
+        sourceData.hullData.region_subset_hull
+          (recordThetaPossibleImageUnion record)
+          (sourceData.q_subset_recordUnion hx),
+    qPilotLogVolume_eq_regionLogVolume := sourceData.upperRay_endpoint.1,
+    thetaHullLogVolume_eq_holomorphicHull :=
+      sourceData.upperRay_endpoint.2.1,
+    thetaHullLogVolume_eq_normalizedDeterminant :=
+      sourceData.toUpperRayLogVolume.theta_eq_normalized_determinant,
+    qPilotLogVolume_mem_upperRay :=
+      sourceData.upperRay_endpoint.2.2.1,
+    qPilotLogVolume_le_thetaHullLogVolume :=
+      sourceData.upperRay_endpoint.2.2.2.1,
+    qPilotLogVolume_le_determinant :=
+      sourceData.upperRay_endpoint.2.2.2.2,
+    determinantLogVolume_eq_weightedSum :=
+      sourceData.determinantSource.determinantLogVolume_eq_sum,
+    normalizedLogVolume_eq_determinantLogVolume :=
+      sourceData.determinantSource.normalizedLogVolume_eq_determinantLogVolume,
+    qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Named Step (xi) boundary audit for the constructor-built possible-image
 hull/determinant source.
 
@@ -10728,6 +10851,8 @@ structure ConstructorBuiltRemainingPayloadAudit
     Prop where
   constructorBuiltBoundaryAudit :
     ConstructorBuiltStepXIBoundaryAudit sourceData
+  upperRayAudit :
+    ConstructorBuiltStepXIUpperRayAudit sourceData
   qPilotRegion_eq_possibleImage :
     sourceData.qPilotRegion =
       recordThetaPossibleImage record sourceData.qChoice
@@ -10791,6 +10916,8 @@ theorem toConstructorBuiltRemainingPayloadAudit
     ConstructorBuiltRemainingPayloadAudit sourceData :=
   { constructorBuiltBoundaryAudit :=
       sourceData.toConstructorBuiltStepXIBoundaryAudit,
+    upperRayAudit :=
+      sourceData.toConstructorBuiltStepXIUpperRayAudit,
     qPilotRegion_eq_possibleImage :=
       sourceData.qPilotRegion_eq_possibleImage,
     qPilotRegion_subset_recordUnion :=

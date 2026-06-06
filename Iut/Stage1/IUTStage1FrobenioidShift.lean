@@ -48002,6 +48002,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
   constructorBuiltStepXIBoundaryAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
       sourceData.hullSource
+  constructorBuiltStepXIUpperRayAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIUpperRayAudit
+      sourceData.hullSource
   constructorBuiltRemainingPayloadAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
       sourceData.hullSource
@@ -48063,6 +48066,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
       recordCanonicalStepXIAudit := sourceData.hullSource.recordCanonicalStepXIAudit,
       constructorBuiltStepXIBoundaryAudit :=
         sourceData.hullSource.toConstructorBuiltStepXIBoundaryAudit,
+      constructorBuiltStepXIUpperRayAudit :=
+        sourceData.hullSource.toConstructorBuiltStepXIUpperRayAudit,
       constructorBuiltRemainingPayloadAudit :=
         sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit,
       constructorSourcedSourceEndpoint :=
