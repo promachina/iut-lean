@@ -54550,6 +54550,183 @@ theorem sourceDerivedSynchronizedTargetChartedPossibleImageSummandHodgeFamilyHul
 
 set_option linter.style.longLine false in
 /--
+No-`C_\Theta` finite-divisor boundary with both the summand Step (xi)
+log-volume chain and the Ob5 quotient bridge visible.
+
+This is the quotient-refined review target for the synchronized possible-image
+summand route.  It keeps the finite Step (x) packet/vertical-`IQ` equalities,
+the source-derived chain
+`mu_log(qRegion) <= det_log <= thetaSigned`, the synchronized reduction to the
+constructor-built Step (xi) source, and the Ob1--Ob5 quotient bridge for a
+chosen comparison possible image.
+-/
+structure SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionFiniteDivisorVerticalIQStepXIOb5QuotientBoundaryAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource : IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (possibleImageSummandSource :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization)
+    {j : Nat}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record possibleImageSummandSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty) : Prop where
+  stepXILogVolumeBoundaryAudit :
+    SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionFiniteDivisorVerticalIQStepXILogVolumeBoundaryAudit
+      part audited hodgeSynchronization iplConstructionSource
+      possibleImageSummandSource upperSemiEntry divisorPacket monoAnalyticTheater
+      targetSource
+  constructorBuiltReductionAudit :
+    IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource.SynchronizedPossibleImageSummandConstructorBuiltReductionAudit
+      possibleImageSummandSource
+  ob1ToOb5QuotientBridgeAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1ToOb5QuotientBridgeAudit
+      (possibleImageSummandSource
+        |>.toPossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource)
+      comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  qPilotLogVolume_le_determinant :
+    possibleImageSummandSource.familyHullSource.hullData.logVolume
+        possibleImageSummandSource.qPilotRegion <=
+      possibleImageSummandSource.familyHullSource.determinantSource.determinantLogVolume
+  determinantLogVolume_le_thetaSigned :
+    possibleImageSummandSource.familyHullSource.determinantSource.determinantLogVolume <=
+      packageN.preLedger.thetaSigned
+  quotientImages_eq :
+    (possibleImageSummandSource
+      |>.toPossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+      |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+      |>.toRecordBoundedFamilyHullDetLogVolumeSource
+      |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record possibleImageSummandSource.qChoice =
+    (possibleImageSummandSource
+      |>.toPossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+      |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+      |>.toRecordBoundedFamilyHullDetLogVolumeSource
+      |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record comparisonChoice
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem sourceDerivedSynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionFiniteDivisorVerticalIQ_boundaryEndpoint_withStepXIOb5QuotientBoundaryAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource : IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (possibleImageSummandSource :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization)
+    {j : Nat}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record possibleImageSummandSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty) :
+    SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionFiniteDivisorVerticalIQStepXIOb5QuotientBoundaryAudit
+      part audited hodgeSynchronization iplConstructionSource
+      possibleImageSummandSource upperSemiEntry divisorPacket monoAnalyticTheater
+      targetSource comparisonChoice qChoice_nonempty comparisonChoice_nonempty :=
+  let stepXIBoundary :=
+    part.sourceDerivedSynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullIPLConstructionFiniteDivisorVerticalIQ_boundaryEndpoint_withStepXILogVolumeChainAudit
+      audited hodgeSynchronization iplConstructionSource possibleImageSummandSource
+      upperSemiEntry divisorPacket monoAnalyticTheater
+      packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
+      packetLocalObjectFinite_eq_ind3Source targetSource
+  let constructorBuiltSource :=
+    possibleImageSummandSource
+      |>.toPossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+      |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+  let quotientAudit :=
+    constructorBuiltSource.toConstructorBuiltOb1ToOb5QuotientBridgeAudit
+      comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  { stepXILogVolumeBoundaryAudit := stepXIBoundary,
+    constructorBuiltReductionAudit :=
+      possibleImageSummandSource.toSynchronizedPossibleImageSummandConstructorBuiltReductionAudit,
+    ob1ToOb5QuotientBridgeAudit := quotientAudit,
+    qPilotLogVolume_le_determinant :=
+      stepXIBoundary.qPilotLogVolume_le_determinant,
+    determinantLogVolume_le_thetaSigned :=
+      stepXIBoundary.determinantLogVolume_le_thetaSigned,
+    quotientImages_eq := quotientAudit.quotientImages_eq,
+    qSigned_le_thetaSigned := stepXIBoundary.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Canonical-one no-\(C_\Theta\) audit boundary for the synchronized
 possible-image summand/family-hull route.
 
