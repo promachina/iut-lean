@@ -41544,6 +41544,36 @@ theorem remark395CalibratedLocalizedHullCoverVectorBundleSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface finite-additive calibrated localized hull-cover source.
+
+This endpoint derives the localized cover log-volume sum from a finite-additive
+`mu_log` law and pairwise disjoint localized regions, then projects to the
+calibrated cover/decomposition route.
+-/
+theorem remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1PairwiseDisjointRegionFamily data.localizedRegion ∧
+      data.hullSystem.logVolume data.localizedRegionUnion =
+        data.localizedLogVolumeSum ∧
+      data.familyHull = data.localizedRegionUnion ∧
+      data.familyHullLogVolume = data.localizedLogVolumeSum ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.localizedRegion index) =
+          data.localizedSource.weightedAdjustedLogVolume index) ∧
+      data.localizedLogVolumeSum = data.localizedAdjustedSum ∧
+      data.familyHullLogVolume = data.localizedAdjustedSum ∧
+      data.toCalibratedLocalizedHullCoverVectorBundleSource.familyHullLogVolume =
+        data.localizedAdjustedSum ∧
+      data.toCalibratedLocalizedHullCoverVectorBundleSource.toLocalizedHullCoverVectorBundleSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume =
+        data.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the

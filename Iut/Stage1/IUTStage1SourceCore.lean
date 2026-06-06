@@ -6495,6 +6495,273 @@ theorem endpoint
 end IUTStage1Remark395CalibratedLocalizedHullCoverVectorBundleSource
 
 /--
+Pairwise disjointness for a finite family of localized hull-regions.
+
+This is the disjoint-cover hypothesis needed to read the log-volume of a
+localized cover as the finite sum of its components.
+-/
+def IUTStage1PairwiseDisjointRegionFamily
+    {α : Type u} {β : Type v}
+    (region : β -> Set α) :
+    Prop :=
+  ∀ ⦃index₁ index₂ : β⦄,
+    index₁ ≠ index₂ -> Disjoint (region index₁) (region index₂)
+
+/--
+Finite additivity source for the Remark 3.9.5 hull log-volume.
+
+The basic hull system only records monotonicity of `mu_log`.  This source object
+adds the source-paper additivity law used for localized Ob3 decompositions: for
+a finite pairwise-disjoint family of localized hull-regions, the log-volume of
+the union is the sum of the local log-volumes.
+-/
+structure IUTStage1FiniteAdditiveHullLogVolumeSource
+    {α : Type u}
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (β : Type v) [Fintype β] where
+  finite_iUnion_logVolume_eq_sum :
+    ∀ region : β -> Set α,
+      IUTStage1PairwiseDisjointRegionFamily region ->
+        hullSystem.logVolume (⋃ index, region index) =
+          Finset.univ.sum fun index =>
+            hullSystem.logVolume (region index)
+
+namespace IUTStage1FiniteAdditiveHullLogVolumeSource
+
+variable {α : Type u}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {β : Type v} [Fintype β]
+
+theorem finite_iUnion_eq_sum
+    (data :
+      IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β)
+    (region : β -> Set α)
+    (hdisjoint : IUTStage1PairwiseDisjointRegionFamily region) :
+    hullSystem.logVolume (⋃ index, region index) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume (region index) :=
+  data.finite_iUnion_logVolume_eq_sum region hdisjoint
+
+end IUTStage1FiniteAdditiveHullLogVolumeSource
+
+/--
+Calibrated localized hull-cover source with finite-additive log-volume.
+
+This refines the calibrated cover source by replacing the supplied cover
+additivity equality with two source-facing inputs: pairwise disjointness of the
+localized hull-regions and a finite-additive hull log-volume law.  Lean derives
+the specific cover sum equality before projecting to the existing calibrated
+cover source.
+-/
+structure IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (α : Type u) (ι : Type v) (η : Type y) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  additiveLogVolume :
+    IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β
+  localizedRegions_disjoint :
+    IUTStage1PairwiseDisjointRegionFamily
+      (fun index => (localizedCalibration index).localizedRegion)
+  familyHull_eq_localizedRegionUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index, (localizedCalibration index).localizedRegion
+
+namespace IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+
+variable {α : Type u} {ι : Type v} {η : Type y}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def localizedRegion
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    Set α :=
+  (data.localizedCalibration index).localizedRegion
+
+def localizedRegionUnion
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ index, data.localizedRegion index
+
+def localizedLogVolumeSum
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.hullSystem.logVolume (data.localizedRegion index)
+
+def localizedSource
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+      η β γ :=
+  { localization := fun index =>
+      (data.localizedCalibration index).localizedVectorBundle,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos }
+
+def localizedAdjustedSum
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.localizedSource.weightedAdjustedLogVolume index
+
+def familyUnion
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ i, data.possibleRegion i
+
+def familyHull
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  data.hullSystem.phi data.familyUnion
+
+def familyHullLogVolume
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  data.hullSystem.logVolume data.familyHull
+
+theorem localizedCoverLogVolume_eq_sum
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.hullSystem.logVolume data.localizedRegionUnion =
+      data.localizedLogVolumeSum := by
+  simpa [localizedRegionUnion, localizedRegion, localizedLogVolumeSum] using
+    data.additiveLogVolume.finite_iUnion_eq_sum
+      (fun index => (data.localizedCalibration index).localizedRegion)
+      data.localizedRegions_disjoint
+
+theorem familyHull_eq_localizedRegionUnion_source
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHull = data.localizedRegionUnion := by
+  simpa [familyHull, familyUnion, localizedRegionUnion, localizedRegion] using
+    data.familyHull_eq_localizedRegionUnion
+
+theorem familyHullLogVolume_eq_localizedLogVolumeSum
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHullLogVolume = data.localizedLogVolumeSum := by
+  have hcover :
+      data.hullSystem.logVolume data.familyHull =
+        data.hullSystem.logVolume data.localizedRegionUnion := by
+    rw [data.familyHull_eq_localizedRegionUnion_source]
+  exact hcover.trans data.localizedCoverLogVolume_eq_sum
+
+theorem localizedRegion_logVolume_eq_adjusted
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    data.hullSystem.logVolume (data.localizedRegion index) =
+      data.localizedSource.weightedAdjustedLogVolume index := by
+  simpa [localizedRegion, localizedSource,
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.weightedAdjustedLogVolume]
+    using
+      (data.localizedCalibration index).region_logVolume_eq_weightedAdjustedLogVolume
+
+theorem localizedLogVolumeSum_eq_localizedAdjustedSum
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.localizedLogVolumeSum = data.localizedAdjustedSum := by
+  dsimp [localizedLogVolumeSum, localizedAdjustedSum]
+  exact Finset.sum_congr rfl
+    (fun index _ => data.localizedRegion_logVolume_eq_adjusted index)
+
+theorem familyHullLogVolume_eq_localizedAdjustedSum
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHullLogVolume = data.localizedAdjustedSum :=
+  data.familyHullLogVolume_eq_localizedLogVolumeSum.trans
+    data.localizedLogVolumeSum_eq_localizedAdjustedSum
+
+set_option linter.style.longLine false in
+noncomputable def toCalibratedLocalizedHullCoverVectorBundleSource
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1Remark395CalibratedLocalizedHullCoverVectorBundleSource
+      α ι η β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    familyHull_eq_localizedRegionUnion :=
+      data.familyHull_eq_localizedRegionUnion,
+    localizedCoverLogVolume_eq_sum := by
+      simpa [localizedRegion] using
+        data.localizedCoverLogVolume_eq_sum }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1PairwiseDisjointRegionFamily data.localizedRegion ∧
+      data.hullSystem.logVolume data.localizedRegionUnion =
+        data.localizedLogVolumeSum ∧
+      data.familyHull = data.localizedRegionUnion ∧
+      data.familyHullLogVolume = data.localizedLogVolumeSum ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.localizedRegion index) =
+          data.localizedSource.weightedAdjustedLogVolume index) ∧
+      data.localizedLogVolumeSum = data.localizedAdjustedSum ∧
+      data.familyHullLogVolume = data.localizedAdjustedSum ∧
+      data.toCalibratedLocalizedHullCoverVectorBundleSource.familyHullLogVolume =
+        data.localizedAdjustedSum ∧
+      data.toCalibratedLocalizedHullCoverVectorBundleSource.toLocalizedHullCoverVectorBundleSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume =
+        data.localizedAdjustedSum :=
+  ⟨by
+      simpa [localizedRegion] using data.localizedRegions_disjoint,
+    data.localizedCoverLogVolume_eq_sum,
+    data.familyHull_eq_localizedRegionUnion_source,
+    data.familyHullLogVolume_eq_localizedLogVolumeSum,
+    data.localizedRegion_logVolume_eq_adjusted,
+    data.localizedLogVolumeSum_eq_localizedAdjustedSum,
+    data.familyHullLogVolume_eq_localizedAdjustedSum,
+    by
+      simpa [toCalibratedLocalizedHullCoverVectorBundleSource,
+        IUTStage1Remark395CalibratedLocalizedHullCoverVectorBundleSource.familyHullLogVolume,
+        IUTStage1Remark395CalibratedLocalizedHullCoverVectorBundleSource.familyHull,
+        IUTStage1Remark395CalibratedLocalizedHullCoverVectorBundleSource.familyUnion,
+        localizedAdjustedSum] using
+        data.familyHullLogVolume_eq_localizedAdjustedSum,
+    by
+      simpa [toCalibratedLocalizedHullCoverVectorBundleSource] using
+        data.toCalibratedLocalizedHullCoverVectorBundleSource.endpoint.2.2.2.2.2.2.2.2.2⟩
+
+end IUTStage1Remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+
+/--
 Finite log-volume skeleton of Remark 3.9.5(vii), (Ob4).
 
 The passage from an object to its `M`-th tensor-power Frobenioid copy is modeled

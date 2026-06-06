@@ -2668,6 +2668,28 @@ assembles these calibrated local objects, constructs the finite localized
 determinant source from them, and then projects to the localized hull-cover
 source.  Thus the cover-level pointwise equality
 \(\mu_{\log}(H_\beta)=\operatorname{adj}_\beta\) is no longer a bare field.
+The finite cover-additivity input has also been separated from this aggregate
+object.  The declaration
+\[
+\texttt{IUTStage1FiniteAdditiveHullLogVolumeSource}
+\]
+records the source-paper law that a finite pairwise-disjoint family of
+localized hull-regions satisfies
+\[
+  \mu_{\log}\!\left(\bigcup_\beta H_\beta\right)
+    =
+  \sum_\beta \mu_{\log}(H_\beta).
+\]
+The refined aggregate source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395FiniteAdditive}\\
+\quad\texttt{CalibratedLocalizedHullCoverVectorBundleSource}
+\end{array}
+\]
+assumes pairwise disjointness of the localized regions and this finite
+additivity law, then derives the exact cover-sum equality consumed by the
+calibrated cover source.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5848,10 +5870,10 @@ The practical priority order is:
   localized-vector-bundle source pushes the Ob3/Ob4 determinant payload below
   the adjusted-localization interface, but
   the next work is to replace the
-  still-supplied hull system, finite localized cover/additivity theorem,
-  local region/vector-bundle log-volume calibration, measure calibration,
-  record-canonical synchronization, and chart synchronization witnesses by
-  source-paper constructions;
+  still-supplied hull system, pairwise-disjoint localized cover construction,
+  finite-additive log-volume law, local region/vector-bundle log-volume
+  calibration, measure calibration, record-canonical synchronization, and chart
+  synchronization witnesses by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source
   content to bear on the Mochizuki--Scholze--Stix disagreement.
 \end{enumerate}
