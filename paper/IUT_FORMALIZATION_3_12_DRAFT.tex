@@ -5097,6 +5097,33 @@ tensor-power bound.  The experiment surface exposes this as
 the Ob3/Ob4-adjusted constructor endpoint now returns this bridge audit next
 to the determinant audit.
 
+There is also an exact-theta constructor-built variant of the adjusted-summand
+route,
+\[
+\begin{array}{l}
+\texttt{remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{\_toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource}\\
+\quad\texttt{OfThetaEqFamilyHullLogVolume\_endpoint}.
+\end{array}
+\]
+Here the constructor no longer accepts the Ob4 tensor-power bound as a free
+input.  It starts from the finite Ob3-3 summand identity, derives the record
+Ob3/Ob5 family-hull determinant source, assumes the source-facing exact-theta
+calibration
+\[
+  \theta_{\mathrm{signed}}
+    = \mu_{\log}\!\left(\phi\!\left(\bigcup_i P_i\right)\right),
+\]
+and then obtains
+\[
+  \det_{\mathrm{norm}}\leq \theta_{\mathrm{signed}}
+\]
+from the bounded-family theorem
+\texttt{tensorPower\_bound\_of\_theta\_eq\_familyHullLogVolume}.  The package
+bridge equality is still an explicit Step~(xi) synchronization boundary, but
+the numerical Ob4 inequality is now constructed from the Remark~3.9.5
+family-hull/log-volume source in this route.
+
 The milestone-facing constructed source now also factors its log-volume
 comparison through the generic record-canonical Remark 3.9.5 bridge source.
 The projection \texttt{toRecordHullDeterminantBridgeSource} packages the same

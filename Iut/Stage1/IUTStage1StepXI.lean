@@ -14488,6 +14488,142 @@ theorem toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource_endpoint
         sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
         constructorBuiltSource.qSigned_le_thetaSigned⟩
 
+set_option linter.style.longLine false in
+/--
+Exact-theta constructor-built Step (xi) source from the finite Ob3-3 summand
+identity.
+
+Compared with `toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource`,
+this constructor does not take the Ob4 tensor-power bound as an independent
+argument.  It derives that bound from the record family-hull statement
+`thetaSigned = familyHullLogVolume`, using the Ob3/Ob5 compatibility already
+constructed from the adjusted-summand identity.
+-/
+noncomputable def toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qChoice : index)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          sourceData.hullOperator).toRegionMeasure)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            sourceData.hullOperator)
+          (recordThetaPossibleImage record qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice (recordThetaPossibleImage record qChoice)
+            (fun _ hx => hx))
+          sourceData.ob3ob4Source.toWeightedDeterminantSource
+          sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          ((sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume))
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization) :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+      (β := β) record :=
+  sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+    operation hullOperation determinantOperation qChoice measure_eq_hullLogVolume
+    ((sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+      |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+      |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+          thetaSigned_eq_familyHullLogVolume)
+    hullDetBridge_eq q_pilot_positive normalization
+
+set_option linter.style.longLine false in
+theorem toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume_endpoint
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qChoice : index)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          sourceData.hullOperator).toRegionMeasure)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            sourceData.hullOperator)
+          (recordThetaPossibleImage record qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice (recordThetaPossibleImage record qChoice)
+            (fun _ hx => hx))
+          sourceData.ob3ob4Source.toWeightedDeterminantSource
+          sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          ((sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume))
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization) :
+    let constructorBuiltSource :=
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
+        operation hullOperation determinantOperation qChoice
+        measure_eq_hullLogVolume thetaSigned_eq_familyHullLogVolume
+        hullDetBridge_eq q_pilot_positive normalization;
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+        constructorBuiltSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBridgeInequalityAudit
+        constructorBuiltSource ∧
+      constructorBuiltSource.determinantSource =
+        sourceData.ob3ob4Source.toWeightedDeterminantSource ∧
+      constructorBuiltSource.compatibility =
+        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility ∧
+      package.preLedger.thetaSigned =
+        (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          constructorBuiltSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  by
+    intro constructorBuiltSource
+    exact
+      ⟨constructorBuiltSource.source_endpoint,
+        constructorBuiltSource.toConstructorBuiltStepXIBridgeInequalityAudit,
+        rfl,
+        rfl,
+        thetaSigned_eq_familyHullLogVolume,
+        constructorBuiltSource.tensorPower_bound,
+        sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume,
+        sourceData.adjustedSummandLogVolume_eq_determinantLogVolume,
+        sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+        constructorBuiltSource.qSigned_le_thetaSigned⟩
+
 end IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
