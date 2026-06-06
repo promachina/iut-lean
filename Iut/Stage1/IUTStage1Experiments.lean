@@ -43817,6 +43817,36 @@ theorem possibleImageConstructorBuiltHullSource_ob1Ob2HullAbsorptionAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob5 quotient-independence audit for the constructor-built
+possible-image Step (xi) hull/determinant source.
+
+Given two nonempty Theorem 3.11 possible images, the bounded-family hull quotient
+collapses both to the same upper-semi quotient image.  The audit also carries the
+family-hull determinant/log-volume and tensor-power identities that feed the
+Step (xi) comparison.
+-/
+theorem possibleImageConstructorBuiltHullSource_ob5QuotientIndependenceAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (comparisonChoice : index)
+    (qChoice_nonempty :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb5QuotientIndependenceAudit
+      sourceData comparisonChoice qChoice_nonempty comparisonChoice_nonempty :=
+  sourceData.toConstructorBuiltOb5QuotientIndependenceAudit
+    comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Ob3/Ob4 determinant/tensor-power audit for the
 constructor-built possible-image Step (xi) hull/determinant source.
 

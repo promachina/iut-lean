@@ -14070,6 +14070,155 @@ theorem ofAdjustedDeterminantSource_endpoint
 
 end IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
 
+namespace IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+noncomputable def toRecordBoundedFamilyHullDetLogVolumeSource
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+      (β := β) record :=
+  sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+    |>.toRecordBoundedFamilyHullDetLogVolumeSource
+
+set_option linter.style.longLine false in
+/--
+Ob5 quotient-independence audit for the constructor-built possible-image Step
+(xi) source.
+
+Remark 3.9.5(v)--(vi) eliminates the indeterminacy of selecting a particular
+possible image by quotienting by the bounded-family hull.  This audit specializes
+that upper-semi quotient formalism to the constructor-built Step (xi) source:
+two nonempty Theorem 3.11 possible images map to the same collapsed quotient
+image, while the same bounded-family source supplies the determinant/log-volume
+and tensor-power identities used downstream.
+-/
+structure ConstructorBuiltOb5QuotientIndependenceAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (comparisonChoice : index)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record sourceData.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    Prop where
+  ob1Ob2HullAbsorptionAudit :
+    ConstructorBuiltOb1Ob2HullAbsorptionAudit sourceData
+  qChoiceRegion_subset_familyHull :
+    recordThetaPossibleImage record sourceData.qChoice ⊆
+      sourceData.toRecordBoundedFamilyHullDetLogVolumeSource.familyHull
+  comparisonRegion_subset_familyHull :
+    recordThetaPossibleImage record comparisonChoice ⊆
+      sourceData.toRecordBoundedFamilyHullDetLogVolumeSource.familyHull
+  qChoice_quotientImage_eq_collapsed :
+    (sourceData.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          recordThetaPossibleImage record sourceData.qChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  comparison_quotientImage_eq_collapsed :
+    (sourceData.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          recordThetaPossibleImage record comparisonChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  quotientImages_eq :
+    (sourceData.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          recordThetaPossibleImage record sourceData.qChoice =
+      (sourceData.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          recordThetaPossibleImage record comparisonChoice
+  quotientCollapse_iff :
+    ((sourceData.toRecordBoundedFamilyHullDetLogVolumeSource
+          |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+            recordThetaPossibleImage record sourceData.qChoice =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+        (sourceData.toRecordBoundedFamilyHullDetLogVolumeSource
+          |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+            recordThetaPossibleImage record comparisonChoice =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ↔
+      recordThetaPossibleImage record sourceData.qChoice ⊆
+          sourceData.toRecordBoundedFamilyHullDetLogVolumeSource.familyHull ∧
+        recordThetaPossibleImage record comparisonChoice ⊆
+          sourceData.toRecordBoundedFamilyHullDetLogVolumeSource.familyHull)
+  familyHullLogVolume_eq_determinant :
+    sourceData.toRecordBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume =
+      sourceData.determinantSource.determinantLogVolume
+  familyUnionLogVolume_le_determinant :
+    sourceData.toRecordBoundedFamilyHullDetLogVolumeSource.familyUnionLogVolume <=
+      sourceData.determinantSource.determinantLogVolume
+  tensorPower_normalizedLogVolume_eq_familyHull :
+    sourceData.toRecordBoundedFamilyHullDetLogVolumeSource.tensorPower.normalizedLogVolume =
+      sourceData.toRecordBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltOb5QuotientIndependenceAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (comparisonChoice : index)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record sourceData.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    ConstructorBuiltOb5QuotientIndependenceAudit
+      sourceData comparisonChoice qChoice_nonempty comparisonChoice_nonempty := by
+  let familyHullSource :=
+    sourceData.toRecordBoundedFamilyHullDetLogVolumeSource
+  let quotientSource :=
+    familyHullSource.toBoundedFamilyHullDetLogVolumeSource
+  have hbounded :=
+    familyHullSource.boundedFamily_endpoint
+      sourceData.qChoice comparisonChoice qChoice_nonempty
+      comparisonChoice_nonempty
+  have hob5 :=
+    familyHullSource.boundedFamily_ob5_endpoint
+      (A := recordThetaPossibleImage record sourceData.qChoice)
+      (B := recordThetaPossibleImage record comparisonChoice)
+      qChoice_nonempty comparisonChoice_nonempty
+  have hcollapsed :
+      quotientSource.quotientMap ''
+            recordThetaPossibleImage record sourceData.qChoice =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+        quotientSource.quotientMap ''
+            recordThetaPossibleImage record comparisonChoice =
+          {IUTStage1UpperSemiSetQuotient.collapsed} :=
+    hob5.1.mpr ⟨hbounded.1, hbounded.2.1⟩
+  exact
+    { ob1Ob2HullAbsorptionAudit :=
+        sourceData.toConstructorBuiltOb1Ob2HullAbsorptionAudit,
+      qChoiceRegion_subset_familyHull :=
+        hbounded.1,
+      comparisonRegion_subset_familyHull :=
+        hbounded.2.1,
+      qChoice_quotientImage_eq_collapsed := by
+        simpa [familyHullSource, quotientSource] using hcollapsed.1,
+      comparison_quotientImage_eq_collapsed := by
+        simpa [familyHullSource, quotientSource] using hcollapsed.2,
+      quotientImages_eq :=
+        hbounded.2.2.1,
+      quotientCollapse_iff :=
+        hob5.1,
+      familyHullLogVolume_eq_determinant :=
+        hbounded.2.2.2.1,
+      familyUnionLogVolume_le_determinant :=
+        hbounded.2.2.2.2.1,
+      tensorPower_normalizedLogVolume_eq_familyHull :=
+        hbounded.2.2.2.2.2.1,
+      qSigned_le_thetaSigned :=
+        sourceData.qSigned_le_thetaSigned }
+
+end IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+
 open IUTStage1Theorem311HullDetSourceConstructor in
 /--
 Record-canonical Ob3/Ob5 log-volume construction from adjusted determinant
