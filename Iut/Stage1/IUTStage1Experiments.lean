@@ -37997,6 +37997,107 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface unbundled canonical-one Hodge--Arakelov endpoint for the
+constructed-\(\IPL\) constructor-built finite-divisor route.
+
+The theorem assembles the canonical-one constructed-\(\IPL\) source object from
+the Hodge--Arakelov theta evaluations, canonical \(1\)-label Gaussian
+preservation, Theorem 3.11 \(\IPL\)-link construction source,
+constructor-built Step (xi) hull source, and finite Step (x) data before
+projecting the conditional \(C_\Theta\) dichotomy.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_hodgeArakelovCanonicalOneConstructorBuiltIPLConstructionCTheta
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceCalibratedEvaluation :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
+        part audited X C)
+    (targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplConstructionSource : IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovCanonicalOneT11IPLConstructionConstructorBuiltFiniteDivisorVerticalIQ
+    part audited sourceCalibratedEvaluation targetEvaluation
+    canonicalOneDegree_preserved iplConstructionSource hullSource
+    upperSemiEntry divisorPacket monoAnalyticTheater kummerCompatibility
+    forgettingCompatibility holomorphicF_realization holomorphicD_realization
+    holomorphicStructureForgotten holomorphic_structure_forgotten
+    packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
+    packetLocalObjectFinite_eq_ind3Source targetSource cTheta
+    thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Hodge--Arakelov source endpoint for the constructor-built
 finite-divisor route with a certificate-pinned Theorem 3.11 \(\IPL\) link.
 
