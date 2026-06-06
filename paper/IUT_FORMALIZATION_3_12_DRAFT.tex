@@ -5059,6 +5059,27 @@ determinant summation, tensor-power normalization, and the
 piece of the Step (xi) determinant payload has moved from an already-weighted
 determinant input to a source-facing Remark 3.9.5(vii) Ob3/Ob4 construction.
 
+There is now also a minimal-hull-system variant of this constructor,
+\[
+\begin{array}{l}
+\texttt{possibleImageConstructorBuiltHullSource}\\
+\quad\texttt{\_ofRemark395HullSystemOb3Ob4AdjustedDeterminantSource}\\
+\quad\texttt{\_endpoint}.
+\end{array}
+\]
+This route starts from the intersection-defined
+\texttt{IUTStage1Remark395HolomorphicHullSystem}, projects the older
+hull/log-volume shadow internally, and identifies the resulting Step~(xi)
+hull with
+\[
+  \phi\bigl(\bigcup_i P_i\bigr)
+\]
+for the Theorem~3.11 possible-image family.  The endpoint proves that this
+object is a source-paper hull, that the chosen q-region is contained in it,
+and then returns the same Ob3/Ob4 determinant audit, bridge-inequality audit,
+and raw signed comparison.  Thus this constructor form no longer treats the
+holomorphic-hull shadow as a supplied Step~(xi) payload.
+
 The same constructor-built source now exposes the Step (xi) bridge inequality
 as a named audit
 \texttt{ConstructorBuiltStepXIBridgeInequalityAudit}.  This audit records the
