@@ -23583,6 +23583,74 @@ noncomputable def ofFiniteHodgeSHET11IPLConstructionAndPossibleImageChartedHodge
     familyHullSource.toPossibleImageHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
     sourceCalibration
 
+set_option linter.style.longLine false in
+/--
+Construct the source-derived bridge from a constructed Theorem 3.11 IPL source
+and a constructor-built possible-image Step (xi) hull/determinant source.
+
+The Step (xi) source builds the Theorem 3.11 hull/determinant constructor from
+record-canonical hull/tensor data before projecting to the side-conditioned
+obligations-backed hull source used by the bridge.
+-/
+noncomputable def ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSources
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (hullSource :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  let iplSource :=
+    IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+      (l := l) (X := X) (C := C)
+      (finiteTransport := transportSource.toFiniteHodgeSHETransport)
+      iplConstructionSource
+  { iplTransport := iplSource.toIPLLogVolumeTransport,
+    finiteHodgeSHETransport :=
+      transportSource.toFiniteHodgeSHETransport,
+    hullConstructor := hullSource.toHullDetSourceConstructor,
+    sourceCalibration := sourceCalibration }
+
+set_option linter.style.longLine false in
+/--
+Construct the calibrated source-derived bridge from a constructed Theorem 3.11
+IPL source and a constructor-built possible-image Step (xi) hull/determinant
+source.
+
+This is the bridge-level constructor for the current strongest Step (xi)
+source: finite Hodge/SHE transport and theta/Hodge calibration come from the
+calibrated Hodge--Arakelov synchronization, while the hull side is the
+constructor-built record-canonical possible-image object.
+-/
+noncomputable def ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageConstructorBuiltHullSources
+    {β : Type v} [Fintype β]
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (hullSource :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge
+      part audited record X C :=
+  let transportSource :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+      (record := record)
+      hodgeSynchronization.sourceEvaluation
+      hodgeSynchronization.targetEvaluation
+      hodgeSynchronization.canonicalOneDegree_preserved
+  ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSources
+    (part := part) (audited := audited)
+    transportSource iplConstructionSource hullSource
+    hodgeSynchronization.toSourceThetaHodgeLogVolumeCalibration
+
 noncomputable def ofFiniteHodgeSHET11IPLConstructionAndHullDetSources
     {β : Type v} [Fintype β]
     (transportSource :
@@ -24337,6 +24405,155 @@ theorem ofFiniteHodgeSHET11IPLConstructionAndPossibleImageChartedHodgeFamilyHull
       bridge.hullConstructor.qSigned_le_thetaSigned,
       transportSource.allowedForgetfulTransport_holds,
       transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
+
+set_option linter.style.longLine false in
+/--
+Audit endpoint for the constructed-IPL constructor-built possible-image Step
+(xi) bridge constructor.
+
+This is the bridge boundary for the current constructor-built Step (xi) source:
+the finite Hodge/SHE transport is fixed by the transport source, the IPL datum
+is built from the Theorem 3.11 construction source, and the hull side exposes
+the source endpoint, record-canonical Step (xi) audit, compact boundary audit,
+and remaining-payload ledger carried by the same constructor-built source.
+-/
+theorem ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSources_endpoint
+    {β : Type v} [Fintype β]
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (hullSource :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA) :
+    let bridge :=
+      ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSources
+        (part := part) (audited := audited)
+        transportSource iplConstructionSource hullSource
+        sourceCalibration;
+    bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        iplConstructionSource.constructedDatum ∧
+      bridge.iplTransport.iplDatum.link.source =
+        bridge.iplTransport.iplDatum.inputPrimeStrip ∧
+      bridge.iplTransport.iplDatum.link.target =
+        bridge.iplTransport.iplDatum.outputPrimeStrip ∧
+      bridge.finiteHodgeSHETransport =
+        transportSource.toFiniteHodgeSHETransport ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+        hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
+        hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
+        hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+        hullSource ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      transportSource.forgetfulTransport.transportAllowed ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  intro bridge
+  dsimp [
+    ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSources,
+    IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource,
+    IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+    IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport] at bridge ⊢
+  exact
+    ⟨rfl,
+      iplConstructionSource.iplDatum_eq_constructedDatum,
+      iplConstructionSource.linkSource_eq_input,
+      iplConstructionSource.linkTarget_eq_output,
+      rfl,
+      hullSource.source_endpoint,
+      hullSource.recordCanonicalStepXIAudit,
+      hullSource.toConstructorBuiltStepXIBoundaryAudit,
+      hullSource.toConstructorBuiltRemainingPayloadAudit,
+      bridge.iplTransport.targetLogVolume_preserved,
+      bridge.hullConstructor.qSigned_le_thetaSigned,
+      transportSource.allowedForgetfulTransport_holds,
+      transportSource.toFiniteHodgeSHETransport.histories_not_identified'⟩
+
+set_option linter.style.longLine false in
+/--
+Audit endpoint for the calibrated Hodge--Arakelov, constructed-IPL,
+constructor-built possible-image Step (xi) bridge constructor.
+
+This is the one-object Hodge/SHE/IPL/Step (xi) bridge audit: finite Hodge/SHE
+transport and source theta/Hodge calibration are constructed from the
+calibrated synchronization, while the Step (xi) hull side is the
+constructor-built record-canonical possible-image source.
+-/
+theorem ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageConstructorBuiltHullSources_endpoint
+    {β : Type v} [Fintype β]
+    (hodgeSynchronization :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        part audited X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (hullSource :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    let bridge :=
+      ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageConstructorBuiltHullSources
+        (part := part) (audited := audited)
+        hodgeSynchronization iplConstructionSource hullSource;
+    bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        iplConstructionSource.constructedDatum ∧
+      bridge.iplTransport.iplDatum.link.source =
+        bridge.iplTransport.iplDatum.inputPrimeStrip ∧
+      bridge.iplTransport.iplDatum.link.target =
+        bridge.iplTransport.iplDatum.outputPrimeStrip ∧
+      bridge.finiteHodgeSHETransport.synchronization.sourceHA =
+        hodgeSynchronization.valueSource ∧
+      bridge.finiteHodgeSHETransport.synchronization.targetHA =
+        hodgeSynchronization.targetEvaluation.valueSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+        hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
+        hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
+        hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+        hullSource ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side := by
+  let transportSource :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+      (record := record)
+      hodgeSynchronization.sourceEvaluation
+      hodgeSynchronization.targetEvaluation
+      hodgeSynchronization.canonicalOneDegree_preserved
+  have h :=
+    ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSources_endpoint
+      (part := part) (audited := audited)
+      transportSource iplConstructionSource hullSource
+      hodgeSynchronization.toSourceThetaHodgeLogVolumeCalibration
+  dsimp [
+    ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageConstructorBuiltHullSources,
+    transportSource] at h ⊢
+  exact
+    ⟨h.1,
+      h.2.1,
+      h.2.2.1,
+      h.2.2.2.1,
+      rfl,
+      rfl,
+      h.2.2.2.2.2.1,
+      h.2.2.2.2.2.2.1,
+      h.2.2.2.2.2.2.2.1,
+      h.2.2.2.2.2.2.2.2.1,
+      h.2.2.2.2.2.2.2.2.2.1,
+      h.2.2.2.2.2.2.2.2.2.2.1,
+      h.2.2.2.2.2.2.2.2.2.2.2.2⟩
 
 theorem ofFiniteHodgeSHET11IPLConstructionAndHullDetSources_endpoint
     {β : Type v} [Fintype β]
