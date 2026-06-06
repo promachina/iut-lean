@@ -5419,6 +5419,29 @@ the record bridge source.  The new constructed-record bridge audit, exposed on
 the experiment surface, records that the constructed source's
 q-to-determinant-to-theta chain is read from this generic Remark 3.9.5 bridge
 theorem rather than re-proved as an isolated comparison.
+The constructor-backed finite-divisor source now exposes the same bridge
+projection directly.  Its experiment-surface audit,
+\[
+\begin{array}{l}
+\texttt{remark395ConstructorBackedConstructedHullDeterminant}\\
+\quad\texttt{FiniteDivisorVerticalIQ\_recordBridgeAudit},
+\end{array}
+\]
+starts from the constructor-backed adjusted source, constructs the record
+Remark~3.9.5 bridge internally, and records
+\[
+  \mu_{\log}(q\mathrm{Region})
+    \leq
+  \det_{\mathrm{log}}
+    \leq
+  \theta_{\mathrm{signed}}
+\]
+together with the raw \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\)
+comparison projected from the same Theorem~3.11 hull/determinant constructor.
+Thus the newest finite-divisor endpoint no longer hides the Step~(xi)
+q-to-determinant-to-theta comparison behind only the constructed obligations
+equality; the remaining external input at the \(C_\Theta\) endpoint is still
+the global numeric estimate.
 The constructor-built source-level canonical-scale bridge is now exposed
 directly as
 \[

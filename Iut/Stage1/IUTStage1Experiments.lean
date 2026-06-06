@@ -33852,6 +33852,32 @@ theorem remark395ConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface bridge audit for the constructor-backed constructed
+Remark 3.9.5 Ob3/Ob5-adjusted hull/determinant source.
+
+This exposes, at the milestone boundary, the source-derived Step (xi)
+log-volume chain
+`mu_log(qRegion) <= determinantLogVolume <= thetaSigned`, together with the
+raw signed comparison projected from the Theorem 3.11 hull/determinant
+constructor.
+-/
+theorem remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_recordBridgeAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    (constructorBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ConstructorBackedRecordBridgeAudit
+      constructorBackedSource :=
+  constructorBackedSource.constructorBackedRecordBridgeAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy through the constructor-backed
 constructed Remark 3.9.5 Ob3/Ob5-adjusted hull/determinant source.
 
