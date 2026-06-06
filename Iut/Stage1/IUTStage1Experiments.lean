@@ -25897,6 +25897,134 @@ theorem targetChartedHodgeIPLMeasureCalibratedPossibleImageRoute_toMeasureCalibr
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface endpoint for the target-charted measured adjusted-summand
+family-hull source.
+
+This keeps the finite Ob3-3 adjusted-summand identity visible at the
+Hodge-calibrated Step (xi) family-hull boundary, while still projecting to the
+existing measured determinant family-hull route.
+-/
+theorem targetChartedHodgeMeasureCalibratedAdjustedSummandFamilyHullSource_endpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeMeasureCalibratedAdjustedSummandFamilyHullSource
+        (β := β) (γ := γ) audited record hodgeSynchronization) :
+    package.preLedger.measure =
+        sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      sourceData.measuredAdjustedSource.adjustedSource.familyHullLogVolume =
+        sourceData.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume ∧
+      sourceData.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume =
+        sourceData.measuredAdjustedSource.adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+        sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyUnionLogVolume <=
+        sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned :=
+  sourceData.source_endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface endpoint for the target-charted adjusted-summand
+possible-image Step (xi) source.
+
+The endpoint exposes the selected Theorem 3.11 possible-image q-region, the
+record-canonical obligations bridge, the package measure calibration, and the
+finite adjusted-summand-to-determinant equalities used by the Step (xi)
+comparison.
+-/
+theorem targetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligationsBackedSource_endpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligationsBackedSource
+        (β := β) (γ := γ) audited record hodgeSynchronization) :
+    sourceData.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      package.preLedger.measure =
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.familyHullLogVolume =
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume ∧
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume =
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      package.preLedger.thetaSigned =
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.source_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface constructor-backed Gaussian-to-Step (xi) audit.
 
 This is the current stricter Step (xi) all-in-one route audit: the

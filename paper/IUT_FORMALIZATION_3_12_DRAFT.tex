@@ -2609,6 +2609,28 @@ endpoint first projects the measured family-hull source and then invokes the
 possible-image constructor above.  Thus, in this route, the measure
 calibration \(\mu=\mu_{\log}(\phi(\cup_B P_B))\) is no longer a loose
 endpoint argument; it is part of the source-facing adjusted-summand object.
+This adjusted source is now threaded through the target-charted Hodge
+Step~(xi) layer as well.  The declarations
+\[
+\begin{array}{l}
+\texttt{IUTStage1TargetChartedHodgeMeasureCalibrated}\\
+\quad\texttt{AdjustedSummandFamilyHullSource},\\
+\texttt{IUTStage1TargetChartedHodgeMeasureCalibrated}\\
+\quad\texttt{AdjustedPossibleImageHullDetObligationsBackedSource}
+\end{array}
+\]
+project to the older measured determinant routes only internally.  Their
+experiment endpoints keep the finite adjusted-summand identity
+\[
+  \mu_{\log}(\phi(P_B))
+    =
+  \sum_{\gamma}(\text{localization}_{\gamma}
+      - \text{structure sheaf}_{\gamma})
+    =
+  \det_{\log}
+\]
+visible next to the Hodge theta-degree calibration, the selected
+Theorem~3.11 possible-image q-region, and the obligations bridge equality.
 The actual log-volume bridge has now been separated as a named source object:
 \[
 \begin{array}{l}
