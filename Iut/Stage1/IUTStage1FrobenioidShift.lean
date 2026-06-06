@@ -48078,6 +48078,70 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
 
 set_option linter.style.longLine false in
 /--
+Ob1/Ob2 hull-absorption payload inside the canonical-one constructed-\(\IPL\)
+Step (xi) hull source.
+
+This isolates the Remark 3.9.5(vii) passage from possible-image regions to the
+holomorphic hull: the selected q-region is a Theorem 3.11 possible image, lies
+in the record possible-image union, and both the union and selected q-region
+are absorbed by the canonical holomorphic hull before determinant data enters.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  remainingPayloadAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource
+  qPilotRegion_eq_possibleImage :
+    sourceData.hullSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.hullSource.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  possibleImageUnion_subset_holomorphicHull :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  qPilotRegion_subset_holomorphicHull :
+    sourceData.hullSource.qPilotRegion ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit
+      sourceData := by
+  have hremaining := sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit
+  exact
+    { stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      remainingPayloadAudit := hremaining,
+      qPilotRegion_eq_possibleImage :=
+        hremaining.qPilotRegion_eq_possibleImage,
+      qPilotRegion_subset_recordUnion :=
+        hremaining.qPilotRegion_subset_recordUnion,
+      possibleImageUnion_subset_holomorphicHull :=
+        hremaining.possibleImageUnion_subset_holomorphicHull,
+      qPilotRegion_subset_holomorphicHull :=
+        hremaining.qPilotRegion_subset_holomorphicHull,
+      qSigned_le_thetaSigned :=
+        hremaining.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Ob3/Ob4 determinant payload inside the canonical-one constructed-\(\IPL\)
 Step (xi) hull source.
 
@@ -48094,6 +48158,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
     Prop where
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit
+      sourceData
   remainingPayloadAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
       sourceData.hullSource
@@ -48165,6 +48232,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
   exact
     { stepXIHullAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit,
       remainingPayloadAudit := hremaining,
       qPilotRegion_eq_possibleImage :=
         hremaining.qPilotRegion_eq_possibleImage,
@@ -48362,6 +48431,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit
+      sourceData
   ob3Ob4DeterminantAudit :
     CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
       sourceData
@@ -48432,6 +48504,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
       stepXIHullAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit,
       ob3Ob4DeterminantAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
       packetTargetAudit := hpacketTarget,
@@ -48526,6 +48600,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit
+      sourceData
   ob3Ob4DeterminantAudit :
     CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
       sourceData
@@ -48573,6 +48650,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
     stepXIHullAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+    ob1Ob2HullAbsorptionAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit,
     ob3Ob4DeterminantAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
     packetTargetAudit :=
