@@ -35908,6 +35908,47 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMat
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface record-canonical Step (xi) audit for the bundled
+theta-monoid-matched constructor-built finite-divisor route source.
+
+This pulls the `RecordCanonicalStepXIAudit` out of the bundled route object:
+the selected q-pilot possible image is sent through the record-canonical
+holomorphic hull/tensor-power constructor before the finite vertical-`IQ`
+boundary is applied.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMatchedConstructorBuiltRecordCanonicalStepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
+      sourceData.hullSource :=
+  sourceData.hullSource.recordCanonicalStepXIAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface raw finite-divisor boundary for the bundled
 theta-monoid-matched constructor-built route source.
 

@@ -44248,6 +44248,8 @@ def ConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
     Prop :=
   IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
       sourceData.hullSource ∧
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
+      sourceData.hullSource ∧
     IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
       sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource ∧
     IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource.SourceEndpoint
@@ -44262,6 +44264,7 @@ theorem toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     ConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit sourceData :=
   ⟨sourceData.hullSource.source_endpoint,
+    sourceData.hullSource.recordCanonicalStepXIAudit,
     sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
     (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
       |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
@@ -44283,6 +44286,8 @@ def ConstructorBuiltMatchedBoundaryAudit
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     Prop :=
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+        sourceData.hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
         sourceData.hullSource ∧
       IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
         sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource ∧
@@ -44327,6 +44332,7 @@ theorem boundaryEndpointWithConstructorBuiltMatchedGaussianStepXIAudit
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     ConstructorBuiltMatchedBoundaryAudit sourceData :=
   ⟨sourceData.hullSource.source_endpoint,
+    sourceData.hullSource.recordCanonicalStepXIAudit,
     sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
     (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
       |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
@@ -44349,6 +44355,8 @@ def ConstructorBuiltMatchedCThetaAudit
     (cTheta : Real) :
     Prop :=
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+        sourceData.hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
         sourceData.hullSource ∧
       IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
         sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource ∧
@@ -44381,6 +44389,7 @@ theorem cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
         cTheta * (-packageN.preLedger.qSigned)) :
     ConstructorBuiltMatchedCThetaAudit sourceData cTheta :=
   ⟨sourceData.hullSource.source_endpoint,
+    sourceData.hullSource.recordCanonicalStepXIAudit,
     sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
     (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
       |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
