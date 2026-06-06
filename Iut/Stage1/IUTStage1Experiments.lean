@@ -29069,18 +29069,17 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFi
 
 set_option linter.style.longLine false in
 /--
-Compact milestone endpoint for the current strongest source-derived
-finite-divisor vertical-`IQ` corridor.
+Matched-obligations milestone endpoint for the source-derived finite-divisor
+vertical-`IQ` corridor.
 
 This is a review-surface alias for
 `sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithMatchedSideConditionedConstructorBackedObligationsAudit`.
-It keeps the exact endpoint name requested by the Source-Derived Step (xi)
-milestone while returning the same strongest audit: matched Hodge/SHE/\(\IPL\)
-construction, side-conditioned constructor-backed Step (xi) hull/determinant
-provenance, and the projected constructor-built \(C_\Theta\) dichotomy.  The
-external numeric \(C_\Theta\) estimate is still an explicit hypothesis.
+It returns the matched Hodge/SHE/\(\IPL\) construction audit,
+side-conditioned constructor-backed Step (xi) hull/determinant provenance, and
+the projected constructor-built \(C_\Theta\) dichotomy.  The external numeric
+\(C_\Theta\) estimate is still an explicit hypothesis.
 -/
-theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_withMatchedSideConditionedConstructorBackedObligationsAudit
     {source target : Copy} {coric : Type u}
     {package :
       IUTStage1SourcePackage source target
@@ -39730,6 +39729,55 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCo
 
 set_option linter.style.longLine false in
 /--
+Compact milestone endpoint for the source-derived finite-divisor vertical-\(IQ\)
+route.
+
+This is the public subgoal-6 endpoint: the Hodge/SHE/\(\IPL\)/hull alignment is
+read from the canonical-one constructed-\(\IPL\) constructor-built source object,
+so the route exposes theta evaluation, finite Hodge/\(\SHE\) transport,
+constructed \(\IPL\)/log-volume transport, Ob1--Ob5 Step (xi) hull/determinant
+data, finite Step (x) vertical-\(IQ\) precision, and then the explicit numeric
+\(C_\Theta\) estimate.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ
+    part audited sourceData cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface compact constructed-\(\IPL\) milestone audit for the
 source-derived finite-divisor vertical-\(IQ\) route.
 
@@ -39820,6 +39868,52 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCo
       sourceData cTheta :=
   sourceData.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ_withDirectMilestoneAudit
     cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Direct audit companion for
+`boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ`.
+
+The returned package is the direct canonical-one constructed-\(\IPL\)
+milestone audit: it omits the coarser matched-route compatibility projections
+and keeps the load-bearing Hodge/SHE/\(\IPL\), Step (xi), finite-boundary, and
+ordered-real \(C_\Theta\) audits together.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_withDirectMilestoneAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.CanonicalOneConstructorBuiltIPLConstructionDirectMilestoneCThetaAudit
+      sourceData cTheta :=
+  boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ_withDirectMilestoneAudit
+    part audited sourceData cTheta thetaSigned_le_cTheta_absLogQ
 
 set_option linter.style.longLine false in
 /--
