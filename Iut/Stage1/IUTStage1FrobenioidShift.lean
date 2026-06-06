@@ -51928,6 +51928,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionCanonicalCThetaScaleAudit
   hullCanonicalScaleAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltCanonicalCThetaScaleAudit
       sourceData.hullSource
+  remark395CanonicalScaleBridgeAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemark395CanonicalCThetaBridgeAudit
+      sourceData.hullSource
   directCThetaAudit :
     CanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
       sourceData sourceData.hullSource.canonicalCThetaScale
@@ -51965,6 +51968,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionCanonicalCThetaScaleAudit
       qComparisonAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectQComparisonAudit,
       hullCanonicalScaleAudit := hscale,
+      remark395CanonicalScaleBridgeAudit :=
+        sourceData.hullSource.toConstructorBuiltRemark395CanonicalCThetaBridgeAudit,
       directCThetaAudit := hdirect,
       q_pilot_positive := hdirect.q_pilot_positive,
       qSigned_le_thetaSigned := hdirect.qSigned_le_thetaSigned,

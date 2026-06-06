@@ -12934,6 +12934,91 @@ theorem toConstructorBuiltRecordOb3Ob5BridgeAudit
     qSigned_le_thetaSigned :=
       sourceData.qSigned_le_thetaSigned }
 
+set_option linter.style.longLine false in
+/--
+Remark 3.9.5 canonical-scale bridge audit for the constructor-built Step (xi)
+source.
+
+The canonical local \(C_\Theta\)-scale is useful only if it remains attached to
+the source-paper log-volume passage that produced the signed comparison.  This
+audit therefore places the no-external-bound scale next to the constructed
+Ob1--Ob5/record Ob3--Ob5 bridge chain:
+\[
+  \mu_{\log}(q\mathrm{Region})
+    \leq \det_{\mathrm{norm}}
+    \leq \theta_{\mathrm{signed}}
+    \leq C_{\Theta,\mathrm{can}}\cdot(-q_{\mathrm{signed}}).
+\]
+It still does not identify this local scale with the global paper constant; it
+records that the local scale is now tied to the constructed Remark 3.9.5
+hull/determinant payload rather than to an isolated ordered-real hypothesis.
+-/
+structure ConstructorBuiltRemark395CanonicalCThetaBridgeAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  recordOb3Ob5BridgeAudit :
+    ConstructorBuiltRecordOb3Ob5BridgeAudit sourceData
+  stepXIBridgeInequalityAudit :
+    ConstructorBuiltStepXIBridgeInequalityAudit sourceData
+  canonicalScaleAudit :
+    ConstructorBuiltCanonicalCThetaScaleAudit sourceData
+  qRegionLogVolume_le_determinantNormalized :
+    sourceData.hullData.logVolume sourceData.qPilotRegion <=
+      sourceData.determinantSource.normalizedLogVolume
+  determinantNormalized_le_thetaSigned :
+    sourceData.determinantSource.normalizedLogVolume <=
+      package.preLedger.thetaSigned
+  qRegionLogVolume_le_thetaSigned :
+    sourceData.hullData.logVolume sourceData.qPilotRegion <=
+      package.preLedger.thetaSigned
+  qRegionLogVolume_le_thetaSigned_fromRecordBridge :
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+        sourceData.qPilotRegion <=
+      package.preLedger.thetaSigned
+  thetaSigned_le_canonicalCTheta_absLogQ :
+    package.preLedger.thetaSigned <=
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned)
+  sourceBridge_to_canonicalScale_chain :
+    sourceData.hullData.logVolume sourceData.qPilotRegion <=
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned)
+  dichotomy :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < sourceData.canonicalCThetaScale
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltRemark395CanonicalCThetaBridgeAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltRemark395CanonicalCThetaBridgeAudit sourceData := by
+  let hrecord := sourceData.toConstructorBuiltRecordOb3Ob5BridgeAudit
+  let hbridge := sourceData.toConstructorBuiltStepXIBridgeInequalityAudit
+  let hscale := sourceData.toConstructorBuiltCanonicalCThetaScaleAudit
+  have hchain :
+      sourceData.hullData.logVolume sourceData.qPilotRegion <=
+        sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) :=
+    hbridge.bridge_regionLogVolume_le_thetaSigned.trans
+      hscale.thetaSigned_le_canonicalCTheta_absLogQ
+  exact
+    { recordOb3Ob5BridgeAudit := hrecord,
+      stepXIBridgeInequalityAudit := hbridge,
+      canonicalScaleAudit := hscale,
+      qRegionLogVolume_le_determinantNormalized :=
+        hbridge.regionLogVolume_le_determinantNormalized,
+      determinantNormalized_le_thetaSigned :=
+        hbridge.determinantNormalized_le_thetaSigned,
+      qRegionLogVolume_le_thetaSigned :=
+        hbridge.bridge_regionLogVolume_le_thetaSigned,
+      qRegionLogVolume_le_thetaSigned_fromRecordBridge :=
+        hrecord.qRegionLogVolume_le_thetaSigned_from_recordBridge,
+      thetaSigned_le_canonicalCTheta_absLogQ :=
+        hscale.thetaSigned_le_canonicalCTheta_absLogQ,
+      sourceBridge_to_canonicalScale_chain := hchain,
+      dichotomy := hscale.dichotomy }
+
 end IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
