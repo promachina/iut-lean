@@ -18602,6 +18602,113 @@ theorem toTargetChartedHodgeSHEIPLConstructionAudit
 
 end IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
 
+set_option linter.style.longLine false in
+/--
+Target-charted Hodge--Arakelov/IPL construction source whose Hodge
+synchronization is generated from theta-monoid degree matching.
+
+This is the matched variant of
+`IUTStage1TargetChartedHodgeArakelovIPLConstructionSource`: the public Hodge
+input stores equality of source and target theta-monoid degrees, and the
+canonical one-label preservation proof is reconstructed internally from the
+finite Gaussian evaluation theorem.
+-/
+structure IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F) where
+  matchedHodgeSynchronization :
+    IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+      part audited X C
+  iplConstructionSource :
+    IUTStage1Theorem311IPLLinkConstructionSource record
+
+namespace IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+
+noncomputable def toTargetChartedHodgeArakelovIPLConstructionSource
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+      part audited record X C :=
+  { hodgeSynchronization :=
+      sourceData.matchedHodgeSynchronization.toTargetChartedHodgeArakelovSynchronization,
+    iplConstructionSource := sourceData.iplConstructionSource }
+
+set_option linter.style.longLine false in
+theorem source_endpoint
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.matchedHodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      sourceData.matchedHodgeSynchronization.targetEvaluation.thetaMonoidDegree =
+        sourceData.matchedHodgeSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.matchedHodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      sourceData.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toTargetChartedHodgeArakelovIPLConstructionSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.targetTheater.side := by
+  have hsync := sourceData.matchedHodgeSynchronization.synchronization_endpoint
+  have hsource :=
+    sourceData.toTargetChartedHodgeArakelovIPLConstructionSource.source_endpoint
+  exact
+    ⟨hsource.1,
+      hsync.2.2.1,
+      hsource.2.1,
+      hsource.2.2.1,
+      hsource.2.2.2.1,
+      hsource.2.2.2.2.1,
+      hsource.2.2.2.2.2.1,
+      hsource.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+theorem hodgeSHEIPLAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.TargetChartedHodgeSHEIPLConstructionAudit
+      sourceData.toTargetChartedHodgeArakelovIPLConstructionSource :=
+  sourceData.toTargetChartedHodgeArakelovIPLConstructionSource
+    |>.toTargetChartedHodgeSHEIPLConstructionAudit
+
+end IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+
 open IUTStage1Theorem311HullDetSourceConstructor in
 /--
 Target-charted summand calibration for synchronized Hodge--Arakelov data.
@@ -33617,6 +33724,100 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChart
       hodgeIPLSource.hodgeSynchronization.valueSource.thetaRootSource
       upperSemiEntry divisorPacket monoAnalyticTheater kummerCompatibility
       forgettingCompatibility holomorphicF_realization holomorphicD_realization
+      holomorphicStructureForgotten holomorphic_structure_forgotten
+      packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
+      packetLocalObjectFinite_eq_ind3Source targetSource cTheta
+      thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Direct source-bridge finite-divisor route from a theta-monoid-matched
+target-charted Hodge/IPL construction source and the Hodge/determinant
+possible-image Step (xi) source.
+
+The public Hodge/IPL input stores the target/source theta-monoid degree match.
+The ordinary target-charted Hodge/IPL source, including canonical one-label
+preservation, is reconstructed by projection before the determinant
+possible-image route is applied.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChartedThetaMonoidMatchedHodgeIPLConstructionDeterminantPossibleImageHullFiniteDivisorVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (matchedHodgeIPLSource :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+        part audited record X C)
+    {β : Type v} [Fintype β]
+    (possibleImageSource :
+      IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record
+        matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.hodgeSynchronization)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta := by
+  let hodgeIPLSource :=
+    matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource
+  exact
+    part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedBridgeTargetChartedHodgeIPLConstructionDeterminantPossibleImageHullFiniteDivisorVerticalIQ
+      audited hodgeIPLSource possibleImageSource upperSemiEntry divisorPacket
+      monoAnalyticTheater kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization
       holomorphicStructureForgotten holomorphic_structure_forgotten
       packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
       packetLocalObjectFinite_eq_ind3Source targetSource cTheta
