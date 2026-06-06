@@ -4502,6 +4502,40 @@ noncomputable def toIPLLogVolumeTransport
     IUTStage1IPLLogVolumeTransport record :=
   sourceData.toIPLLogVolumeTransportSource.toIPLLogVolumeTransport
 
+set_option linter.style.longLine false in
+/--
+The combined finite Hodge/SHE+\(\IPL\) source uses the constructed
+Theorem 3.11 input-prime-strip link to build its IPL/log-volume source.
+
+This keeps the constructor identity available as a theorem, so downstream
+audits can cite it instead of treating `toIPLLogVolumeTransportSource` as an
+opaque projection.
+-/
+theorem toIPLLogVolumeTransportSource_eq_constructed
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    sourceData.toIPLLogVolumeTransportSource =
+      IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport := sourceData.finiteTransport)
+        sourceData.iplConstructionSource :=
+  rfl
+
+set_option linter.style.longLine false in
+/--
+The resulting IPL/log-volume transport is the transport associated to the
+constructed Theorem 3.11 input-prime-strip link source.
+-/
+theorem toIPLLogVolumeTransport_eq_constructed
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    sourceData.toIPLLogVolumeTransport =
+      (IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport := sourceData.finiteTransport)
+        sourceData.iplConstructionSource).toIPLLogVolumeTransport :=
+  rfl
+
 theorem iplDatum_eq_constructedDatum
     (sourceData :
       IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :

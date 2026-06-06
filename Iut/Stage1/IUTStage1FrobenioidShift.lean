@@ -18165,6 +18165,43 @@ noncomputable def toIPLLogVolumeTransport
 
 set_option linter.style.longLine false in
 /--
+The target-charted Hodge/IPL source constructs its IPL/log-volume source from
+the finite Hodge/SHE transport and the Theorem 3.11 IPL-link construction
+source it carries.
+-/
+theorem toIPLLogVolumeTransportSource_eq_constructed
+    (sourceData :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource =
+      IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport :=
+          sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport)
+        sourceData.iplConstructionSource :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource
+    |>.toIPLLogVolumeTransportSource_eq_constructed
+
+set_option linter.style.longLine false in
+/--
+The public IPL/log-volume transport projection is the transport associated to
+the constructed Theorem 3.11 IPL-link source.
+-/
+theorem toIPLLogVolumeTransport_eq_constructed
+    (sourceData :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    sourceData.toIPLLogVolumeTransport =
+      (IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport :=
+          sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport)
+        sourceData.iplConstructionSource).toIPLLogVolumeTransport :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource
+    |>.toIPLLogVolumeTransport_eq_constructed
+
+set_option linter.style.longLine false in
+/--
 History-separated finite Hodge/SHE transport source constructed inside the
 target-charted Hodge--Arakelov/IPL source.
 
@@ -18554,6 +18591,13 @@ structure TargetChartedHodgeSHEIPLConstructionAudit
         Equiv.refl (ZMod l.value)
   finiteHodgeSHETransportAudit :
     FiniteHodgeSHETransportAuditProp sourceData
+  iplTransportSource_eq_constructed :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource =
+      IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport :=
+          sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport)
+        sourceData.iplConstructionSource
   hodgeSHEIPLConstructionAudit :
     (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
         packageN.preLedger.thetaBound.thetaPoint).coord =
@@ -18631,6 +18675,8 @@ theorem toTargetChartedHodgeSHEIPLConstructionAudit
       sourceData.hodgeArakelovFiniteHodgeSHETransportSource_endpoint,
     finiteHodgeSHETransportAudit :=
       sourceData.finiteHodgeSHETransport_endpoint,
+    iplTransportSource_eq_constructed :=
+      sourceData.toIPLLogVolumeTransportSource_eq_constructed,
     hodgeSHEIPLConstructionAudit :=
       sourceData.source_endpoint,
     constructedIPLLogVolumeTransportAudit :=

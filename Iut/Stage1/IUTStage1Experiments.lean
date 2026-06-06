@@ -24778,6 +24778,44 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_constructedIPLLogVolu
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface constructor identity for the all-in-one target-charted
+route's \(\IPL\)/log-volume source.
+
+This pins the route projection to the constructor from the finite Hodge/SHE
+transport and the carried Theorem 3.11 input-prime-strip-link construction
+source.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_constructedIPLTransportSourceEqConstructedEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    routeSource.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource =
+      IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport :=
+          routeSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport)
+        routeSource.toFiniteHodgeSHEIPLConstructionSource.iplConstructionSource :=
+  routeSource.toFiniteHodgeSHEIPLConstructionSource
+    |>.toIPLLogVolumeTransportSource_eq_constructed
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface constructed IPL log-volume provenance audit for the
 all-in-one target-charted route.
 
@@ -36170,6 +36208,51 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMat
       sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
         sourceData.toIPLLogVolumeTransport.targetTheater.side :=
   sourceData.constructedIPLLogVolumeTransportSource_endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface constructor identity for the bundled theta-monoid-matched
+finite-divisor route's \(\IPL\)/log-volume source.
+
+This makes the middle route segment explicit at the finite-divisor review
+surface: the \(\IPL\) source is constructed from the finite Hodge/SHE transport
+and the carried Theorem 3.11 input-prime-strip-link construction source.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMatchedConstructedIPLTransportSourceEqConstructedEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource =
+      IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport :=
+          sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport)
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.iplConstructionSource :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource
+    |>.toIPLLogVolumeTransportSource_eq_constructed
 
 set_option linter.style.longLine false in
 /--
