@@ -46281,6 +46281,155 @@ theorem toCanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudi
   sourceData.toThetaMonoidMatchedSource.toConstructorBuiltIPLLinkMatchedSourceDerivedFiniteDivisorRouteAudit
 
 set_option linter.style.longLine false in
+/--
+Pre-Step (xi) Hodge/\(\SHE\)/\(\IPL\) audit for the canonical-one
+constructor-built \(\IPL\)-link route.
+
+This packages exactly the data used before the possible-image hull comparison:
+the Hodge--Arakelov theta-root/Gaussian endpoint, the finite Hodge/\(\SHE\)
+transport, the history-separated forgetful transport permission, and the
+certificate-pinned \(\IPL\)/log-volume transport facts.
+-/
+structure CanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  canonicalFullLabel :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+      IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)
+  canonicalLabelDegree :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        hodgeSynchronization.sourceEvaluation.thetaRootSource.canonicalFullLabel =
+      hodgeSynchronization.sourceEvaluation.thetaMonoidDegree
+  squareWeightFormula :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    ∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+      hodgeSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+        hodgeSynchronization.sourceEvaluation.squareWeightProfile.weight j *
+          hodgeSynchronization.sourceEvaluation.thetaMonoidDegree
+  fullLabelPreserved :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+      hodgeSynchronization.sourceEvaluation.fullLabelCompatibility
+      (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+        audited)
+  finiteHodgeSource_eq_synchronized :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let hullSource :=
+      sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource;
+    (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited hodgeSynchronization sourceData.iplLinkSource hullSource).finiteHodgeSHETransport.synchronization.sourceHA =
+      hodgeSynchronization.valueSource
+  finiteHodgeTarget_eq_synchronized :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let hullSource :=
+      sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource;
+    (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited hodgeSynchronization sourceData.iplLinkSource hullSource).finiteHodgeSHETransport.synchronization.targetHA =
+      hodgeSynchronization.targetEvaluation.valueSource
+  historySeparatedForgetfulTransportAllowed :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let transportSource :=
+      IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+        (record := record)
+        hodgeSynchronization.sourceEvaluation hodgeSynchronization.targetEvaluation
+        hodgeSynchronization.canonicalOneDegree_preserved;
+    transportSource.forgetfulTransport.transportAllowed
+  finiteHodgeTransportedAverage_preserved :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let hullSource :=
+      sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource;
+    let bridge :=
+      calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization sourceData.iplLinkSource hullSource;
+    let transportAudit :=
+      bridge.finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    transportAudit.targetTransportedAverage = transportAudit.sourceAverage
+  iplDatum_eq_certificate :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let hullSource :=
+      sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource;
+    (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited hodgeSynchronization sourceData.iplLinkSource hullSource).iplTransport.iplDatum =
+      packageN.preLedger.certificate.ipl
+  linkSource_eq_input :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let hullSource :=
+      sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource;
+    (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited hodgeSynchronization sourceData.iplLinkSource hullSource).iplTransport.iplDatum.link.source =
+      (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization sourceData.iplLinkSource hullSource).iplTransport.iplDatum.inputPrimeStrip
+  linkTarget_eq_output :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let hullSource :=
+      sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource;
+    (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited hodgeSynchronization sourceData.iplLinkSource hullSource).iplTransport.iplDatum.link.target =
+      (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization sourceData.iplLinkSource hullSource).iplTransport.iplDatum.outputPrimeStrip
+  iplLogVolume_preserved :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let hullSource :=
+      sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource;
+    (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited hodgeSynchronization sourceData.iplLinkSource hullSource).iplTransport.targetLogVolume =
+      (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization sourceData.iplLinkSource hullSource).iplTransport.sourceLogVolume
+  historiesNotIdentified :
+    let hodgeSynchronization :=
+      sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    let hullSource :=
+      sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource;
+    (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited hodgeSynchronization sourceData.iplLinkSource hullSource).finiteHodgeSHETransport.sourceTheater.side ≠
+      (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization sourceData.iplLinkSource hullSource).finiteHodgeSHETransport.targetTheater.side
+
+theorem toCanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit sourceData := by
+  have hroute :=
+    sourceData.toCanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudit
+  have hgaussian := hroute.2.2.2.2
+  exact
+    { canonicalFullLabel := hgaussian.canonicalFullLabel,
+      canonicalLabelDegree := hgaussian.canonicalLabelDegree,
+      squareWeightFormula := hgaussian.squareWeightFormula,
+      fullLabelPreserved := hgaussian.fullLabelPreserved,
+      finiteHodgeSource_eq_synchronized :=
+        hgaussian.finiteHodgeSource_eq_synchronized,
+      finiteHodgeTarget_eq_synchronized :=
+        hgaussian.finiteHodgeTarget_eq_synchronized,
+      historySeparatedForgetfulTransportAllowed :=
+        hgaussian.historySeparatedForgetfulTransportAllowed,
+      finiteHodgeTransportedAverage_preserved :=
+        hgaussian.finiteHodgeTransportedAverage_preserved,
+      iplDatum_eq_certificate := hgaussian.iplDatum_eq_certificate,
+      linkSource_eq_input := hgaussian.linkSource_eq_input,
+      linkTarget_eq_output := hgaussian.linkTarget_eq_output,
+      iplLogVolume_preserved := hgaussian.iplLogVolume_preserved,
+      historiesNotIdentified := hgaussian.historiesNotIdentified }
+
+set_option linter.style.longLine false in
 def CanonicalOneConstructorBuiltIPLLinkBoundaryAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -46334,6 +46483,8 @@ structure CanonicalOneConstructorBuiltIPLLinkQComparisonAudit
       IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     Prop where
+  hodgeSHEIPLAudit :
+    CanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit sourceData
   routeAudit :
     CanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudit
       sourceData
@@ -46348,7 +46499,9 @@ theorem toCanonicalOneConstructorBuiltIPLLinkQComparisonAudit
   have hroute :=
     sourceData.toCanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudit
   exact
-    { routeAudit := hroute,
+    { hodgeSHEIPLAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit,
+      routeAudit := hroute,
       qSigned_le_thetaSigned := hroute.2.2.2.2.qSigned_le_thetaSigned }
 
 theorem qSigned_le_thetaSigned_fromCanonicalOneConstructorBuiltIPLLink
