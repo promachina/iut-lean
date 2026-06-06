@@ -39944,6 +39944,29 @@ theorem remark395RecordHullDeterminantBridgeSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit that the constructed Remark 3.9.5 Step (xi) source
+factors its q-to-determinant-to-theta comparison through the generic
+record-canonical Remark 3.9.5 bridge source.
+
+This keeps the paper-facing `phi`-operator source object as the review target,
+then projects the possible-image family, q-region containment, Ob3/Ob5
+determinant compatibility, and Ob4 tensor-power bound to
+`IUTStage1Remark395RecordHullDeterminantBridgeSource`.
+-/
+theorem remark395ConstructedHolomorphicHullDeterminantSource_recordBridgeAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedRecordBridgeAudit
+      sourceData :=
+  sourceData.constructedRecordBridgeAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface summand-calibrated Step (xi) log-volume audit.
 
 This exposes the current subgoal-5 chain before the final `C_Theta` input is
