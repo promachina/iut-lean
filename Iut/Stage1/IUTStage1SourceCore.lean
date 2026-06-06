@@ -4985,7 +4985,7 @@ def toCompatibility
   { approximant_eq_weighted_normalized := by
       simpa [canonicalApproximant, hullData, familyUnion, familyHull,
         IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator,
-        IUTStage1HullLogVolumeApproximant.canonical] using
+      IUTStage1HullLogVolumeApproximant.canonical] using
         data.familyHullLogVolume_eq_normalized }
 
 theorem familyHullLogVolume_eq_determinant
@@ -5399,6 +5399,47 @@ theorem ob9_endpoint
     data.realifiedSemiSimplification_familyHullLogVolume_eq_determinant corr⟩
 
 end IUTStage1BoundedFamilyHullDetLogVolumeSource
+
+namespace IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+
+variable {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+
+def toBoundedFamilyHullDetLogVolumeSource
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β :=
+  { hullData := data.hullData,
+    possibleRegion := data.possibleRegion,
+    determinantSource := data.determinantSource,
+    compatibility := data.toCompatibility }
+
+theorem toBoundedFamilyHullDetLogVolumeSource_endpoint
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    data.toBoundedFamilyHullDetLogVolumeSource.familyUnion =
+        data.familyUnion ∧
+      data.toBoundedFamilyHullDetLogVolumeSource.familyHull =
+        data.familyHull ∧
+      data.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume =
+        data.determinantSource.determinantLogVolume ∧
+      data.toBoundedFamilyHullDetLogVolumeSource.tensorPower.normalizedLogVolume =
+        data.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume :=
+  by
+    refine ⟨rfl, rfl, ?_, ?_⟩
+    · simpa [toBoundedFamilyHullDetLogVolumeSource,
+        IUTStage1BoundedFamilyHullDetLogVolumeSource.familyHullLogVolume,
+        IUTStage1BoundedFamilyHullDetLogVolumeSource.familyHull,
+        IUTStage1BoundedFamilyHullQuotientSource.familyHull,
+        IUTStage1BoundedFamilyHullQuotientSource.familyUnion,
+        familyHull, familyUnion] using
+        data.familyHullLogVolume_eq_determinant
+    · exact
+        data.toBoundedFamilyHullDetLogVolumeSource
+          |>.tensorPower_normalizedLogVolume_eq_familyHullLogVolume
+
+end IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
 
 namespace IUTStage1Remark395PossibleImageFamilySource
 

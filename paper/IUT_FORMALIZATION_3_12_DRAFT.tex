@@ -2454,7 +2454,15 @@ Lean derives the older
 from this equality and then derives the ordinary determinant equality from the
 Ob3/Ob4 normalization theorem.  The record-canonical Step~(xi) specialization
 \texttt{IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource} fixes
-\(P_B\) to the Theorem~3.11 possible-image family.
+\(P_B\) to the Theorem~3.11 possible-image family.  Both the generic and
+record-canonical Ob3/Ob5 source objects now project to the bounded-family
+hull/determinant source used by the downstream exact-theta Step~(xi) routes:
+the endpoints
+\texttt{remark395Ob3Ob5DeterminantCompatibilitySource\_boundedFamilyEndpoint}
+and
+\texttt{remark395RecordOb3Ob5DeterminantCompatibilitySource\_boundedFamilyEndpoint}
+verify the family union, canonical hull, determinant log-volume equality, and
+normalized tensor-power equality after this projection.
 The actual log-volume bridge has now been separated as a named source object:
 \[
 \begin{array}{l}

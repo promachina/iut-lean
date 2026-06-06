@@ -12994,6 +12994,65 @@ theorem boundedFamily_ob5_endpoint
 
 end IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
 
+namespace IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+def toRecordBoundedFamilyHullDetLogVolumeSource
+    (compatibilitySource :
+      IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
+        (β := β) record) :
+    IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+      (β := β) record :=
+  { hullData :=
+      IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+        compatibilitySource.hullOperator,
+    determinantSource := compatibilitySource.determinantSource,
+    compatibility := compatibilitySource.toCompatibility }
+
+theorem toRecordBoundedFamilyHullDetLogVolumeSource_endpoint
+    (compatibilitySource :
+      IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
+        (β := β) record) :
+    let familyHullSource :=
+      compatibilitySource.toRecordBoundedFamilyHullDetLogVolumeSource;
+    familyHullSource.familyUnion = recordThetaPossibleImageUnion record ∧
+      familyHullSource.familyHull =
+        compatibilitySource.hullOperator.phi
+          (recordThetaPossibleImageUnion record) ∧
+      familyHullSource.familyHullLogVolume =
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      familyHullSource.familyHullLogVolume =
+        compatibilitySource.determinantSource.determinantLogVolume ∧
+      familyHullSource.tensorPower.normalizedLogVolume =
+        familyHullSource.familyHullLogVolume :=
+  by
+    intro familyHullSource
+    refine ⟨rfl, rfl, ?_, ?_, ?_⟩
+    · simpa [familyHullSource,
+        toRecordBoundedFamilyHullDetLogVolumeSource,
+        IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume,
+        IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.familyHull,
+        IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.familyUnion,
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator]
+        using compatibilitySource.familyHullLogVolume_eq_normalized
+    · simpa [familyHullSource,
+        toRecordBoundedFamilyHullDetLogVolumeSource,
+        IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume,
+        IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.familyHull,
+        IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.familyUnion,
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator]
+        using compatibilitySource.familyHullLogVolume_eq_determinant
+    · exact
+        familyHullSource.tensorPower_normalizedLogVolume_eq_familyHullLogVolume
+
+end IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
+
 open IUTStage1Theorem311HullDetSourceConstructor in
 /--
 Choice-linked exact-theta Step (xi) source whose theta value is backed by the

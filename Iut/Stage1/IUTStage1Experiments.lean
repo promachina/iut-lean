@@ -39755,6 +39755,26 @@ theorem remark395Ob3Ob5DeterminantCompatibilitySource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface projection from the Ob3/Ob5 source equality to the bounded
+family hull/determinant source used by downstream Step (xi) routes.
+-/
+theorem remark395Ob3Ob5DeterminantCompatibilitySource_boundedFamilyEndpoint
+    {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    data.toBoundedFamilyHullDetLogVolumeSource.familyUnion =
+        data.familyUnion ∧
+      data.toBoundedFamilyHullDetLogVolumeSource.familyHull =
+        data.familyHull ∧
+      data.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume =
+        data.determinantSource.determinantLogVolume ∧
+      data.toBoundedFamilyHullDetLogVolumeSource.tensorPower.normalizedLogVolume =
+        data.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume :=
+  data.toBoundedFamilyHullDetLogVolumeSource_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
@@ -39800,6 +39820,36 @@ theorem remark395RecordOb3Ob5DeterminantCompatibilitySource_endpoint
             record)) =
         compatibilitySource.determinantSource.determinantLogVolume :=
   compatibilitySource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface projection from the record-canonical Ob3/Ob5 source equality
+to the record-native bounded family hull/determinant source.
+-/
+theorem remark395RecordOb3Ob5DeterminantCompatibilitySource_boundedFamilyEndpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (compatibilitySource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
+        (β := β) record) :
+    let familyHullSource :=
+      compatibilitySource.toRecordBoundedFamilyHullDetLogVolumeSource;
+    familyHullSource.familyUnion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      familyHullSource.familyHull =
+        compatibilitySource.hullOperator.phi
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record) ∧
+      familyHullSource.familyHullLogVolume =
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      familyHullSource.familyHullLogVolume =
+        compatibilitySource.determinantSource.determinantLogVolume ∧
+      familyHullSource.tensorPower.normalizedLogVolume =
+        familyHullSource.familyHullLogVolume :=
+  compatibilitySource.toRecordBoundedFamilyHullDetLogVolumeSource_endpoint
 
 set_option linter.style.longLine false in
 /--
