@@ -47120,6 +47120,332 @@ theorem toCanonicalOneConstructorBuiltIPLLinkStepXIHullAudit
       normalization := hgaussian.normalization }
 
 set_option linter.style.longLine false in
+/--
+Ob1/Ob2 hull-absorption payload inside the canonical-one constructor-built
+\(\IPL\)-link Step (xi) hull source.
+
+This isolates the Remark 3.9.5(vii) passage from possible-image regions to the
+holomorphic hull: the selected q-region is a Theorem 3.11 possible image, lies
+in the record possible-image union, and both the union and selected q-region
+are absorbed by the canonical holomorphic hull before determinant data enters.
+-/
+structure CanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLLinkStepXIHullAudit sourceData
+  remainingPayloadAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource
+  qPilotRegion_eq_possibleImage :
+    sourceData.hullSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.hullSource.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  possibleImageUnion_subset_holomorphicHull :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  qPilotRegion_subset_holomorphicHull :
+    sourceData.hullSource.qPilotRegion ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit
+      sourceData := by
+  have hremaining := sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit
+  exact
+    { stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkStepXIHullAudit,
+      remainingPayloadAudit := hremaining,
+      qPilotRegion_eq_possibleImage :=
+        hremaining.qPilotRegion_eq_possibleImage,
+      qPilotRegion_subset_recordUnion :=
+        hremaining.qPilotRegion_subset_recordUnion,
+      possibleImageUnion_subset_holomorphicHull :=
+        hremaining.possibleImageUnion_subset_holomorphicHull,
+      qPilotRegion_subset_holomorphicHull :=
+        hremaining.qPilotRegion_subset_holomorphicHull,
+      qSigned_le_thetaSigned :=
+        hremaining.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
+Ob3/Ob4 determinant payload inside the canonical-one constructor-built
+\(\IPL\)-link Step (xi) hull source.
+
+This isolates the Remark 3.9.5(vii) determinant part of the
+constructor-built source: the weighted determinant sum, normalization,
+hull-log-volume compatibility, tensor-power bound, measure calibration, and
+record-canonical hull/tensor bridge are all projected before the finite Step
+(x) boundary is used.
+-/
+structure CanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLLinkStepXIHullAudit sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit
+      sourceData
+  remainingPayloadAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource
+  qPilotRegion_eq_possibleImage :
+    sourceData.hullSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice
+  possibleImageUnion_subset_holomorphicHull :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  qPilotRegion_subset_holomorphicHull :
+    sourceData.hullSource.qPilotRegion ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  ob3_determinantLogVolume_eq_sum :
+    sourceData.hullSource.determinantSource.determinantLogVolume =
+      Finset.univ.sum fun index =>
+        (sourceData.hullSource.determinantSource.summand index).adjustedLogVolume
+  ob3_ob4_normalized_eq_determinantLogVolume :
+    sourceData.hullSource.determinantSource.normalizedLogVolume =
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  ob3_ob5_hullLogVolume_eq_determinantLogVolume :
+    sourceData.hullSource.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullSource.hullData
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record)).approximant =
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  ob4_tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.hullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
+  measure_eq_hullLogVolume :
+    packageN.preLedger.measure = sourceData.hullSource.hullData.toRegionMeasure
+  recordCanonicalBridge_eq :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.hullSource.operation sourceData.hullSource.hullOperation
+        sourceData.hullSource.determinantOperation sourceData.hullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.hullSource.qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice)
+          (fun _ hx => hx))
+        sourceData.hullSource.determinantSource sourceData.hullSource.compatibility
+        sourceData.hullSource.measure_eq_hullLogVolume
+        sourceData.hullSource.tensorPower_bound
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit
+      sourceData := by
+  have hremaining := sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit
+  exact
+    { stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkStepXIHullAudit,
+      ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit,
+      remainingPayloadAudit := hremaining,
+      qPilotRegion_eq_possibleImage :=
+        hremaining.qPilotRegion_eq_possibleImage,
+      possibleImageUnion_subset_holomorphicHull :=
+        hremaining.possibleImageUnion_subset_holomorphicHull,
+      qPilotRegion_subset_holomorphicHull :=
+        hremaining.qPilotRegion_subset_holomorphicHull,
+      ob3_determinantLogVolume_eq_sum :=
+        hremaining.ob3_determinantLogVolume_eq_sum,
+      ob3_ob4_normalized_eq_determinantLogVolume :=
+        hremaining.ob3_ob4_normalized_eq_determinantLogVolume,
+      ob3_ob5_hullLogVolume_eq_determinantLogVolume :=
+        hremaining.ob3_ob5_hullLogVolume_eq_determinantLogVolume,
+      ob4_tensorPower_bound :=
+        hremaining.ob4_tensorPower_bound,
+      measure_eq_hullLogVolume :=
+        hremaining.measure_eq_hullLogVolume,
+      recordCanonicalBridge_eq :=
+        hremaining.recordCanonicalBridge_eq,
+      q_pilot_positive :=
+        hremaining.q_pilot_positive,
+      normalization :=
+        hremaining.normalization,
+      qSigned_le_thetaSigned :=
+        hremaining.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
+Ob5 compatibility payload inside the canonical-one constructor-built
+\(\IPL\)-link Step (xi) hull source.
+
+This isolates the Remark 3.9.5(vii) point that the comparison must be
+independent of the selected possible image: the selected q-region is absorbed
+by the bounded-family hull, and the hull-log-volume, determinant
+normalization, package measure, and record-canonical bridge are all compatible
+with that hull-family passage.
+-/
+structure CanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit
+      sourceData
+  ob3Ob4DeterminantAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit
+      sourceData
+  remainingPayloadAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource
+  qPilotRegion_subset_holomorphicHull :
+    sourceData.hullSource.qPilotRegion ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  ob5_hullLogVolume_eq_normalized :
+    sourceData.hullSource.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullSource.hullData
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record)).approximant =
+      sourceData.hullSource.determinantSource.normalizedLogVolume
+  ob5_hullLogVolume_eq_determinantLogVolume :
+    sourceData.hullSource.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullSource.hullData
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record)).approximant =
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  measure_eq_hullLogVolume :
+    packageN.preLedger.measure = sourceData.hullSource.hullData.toRegionMeasure
+  recordCanonicalBridge_eq :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.hullSource.operation sourceData.hullSource.hullOperation
+        sourceData.hullSource.determinantOperation sourceData.hullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.hullSource.qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice)
+          (fun _ hx => hx))
+        sourceData.hullSource.determinantSource sourceData.hullSource.compatibility
+        sourceData.hullSource.measure_eq_hullLogVolume
+        sourceData.hullSource.tensorPower_bound
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit
+      sourceData := by
+  have hremaining := sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit
+  exact
+    { ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit,
+      ob3Ob4DeterminantAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit,
+      remainingPayloadAudit := hremaining,
+      qPilotRegion_subset_holomorphicHull :=
+        hremaining.qPilotRegion_subset_holomorphicHull,
+      ob5_hullLogVolume_eq_normalized :=
+        hremaining.ob3_ob5_hullLogVolume_eq_normalized,
+      ob5_hullLogVolume_eq_determinantLogVolume :=
+        hremaining.ob3_ob5_hullLogVolume_eq_determinantLogVolume,
+      measure_eq_hullLogVolume :=
+        hremaining.measure_eq_hullLogVolume,
+      recordCanonicalBridge_eq :=
+        hremaining.recordCanonicalBridge_eq,
+      qSigned_le_thetaSigned :=
+        hremaining.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
+Source side-condition payload inside the canonical-one constructor-built
+\(\IPL\)-link Step (xi) hull source.
+
+After the Ob1--Ob5 hull/determinant audits, the remaining non-boundary
+payload is the q-pilot positivity and source normalization required by the
+Stage 1 ledger.  This audit repackages those two facts through the existing
+`IUTStage1SourceSideConditions` interface before the raw signed comparison is
+passed to the finite Step (x) boundary.
+-/
+structure CanonicalOneConstructorBuiltIPLLinkSideConditionAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  ob5CompatibilityAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit
+      sourceData
+  remainingPayloadAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource
+  sourceSideConditions :
+    IUTStage1SourceSideConditions packageN
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  source_normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLLinkSideConditionAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkSideConditionAudit
+      sourceData := by
+  have hremaining := sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit
+  let hside : IUTStage1SourceSideConditions packageN :=
+    { q_pilot_positive := hremaining.q_pilot_positive,
+      source_normalization := hremaining.normalization }
+  exact
+    { ob5CompatibilityAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit,
+      remainingPayloadAudit := hremaining,
+      sourceSideConditions := hside,
+      q_pilot_positive := hside.qPilotPositive,
+      source_normalization := hside.sourceNormalization,
+      qSigned_le_thetaSigned :=
+        hremaining.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
 def CanonicalOneConstructorBuiltIPLLinkBoundaryAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47216,6 +47542,17 @@ structure CanonicalOneConstructorBuiltIPLLinkQComparisonAudit
     CanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLLinkStepXIHullAudit sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit
+      sourceData
+  ob3Ob4DeterminantAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit
+      sourceData
+  ob5CompatibilityAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit
+      sourceData
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLLinkSideConditionAudit sourceData
   sourceDerivedBridgeAudit :
     CanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit sourceData
   routeAudit :
@@ -47236,6 +47573,14 @@ theorem toCanonicalOneConstructorBuiltIPLLinkQComparisonAudit
         sourceData.toCanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit,
       stepXIHullAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLLinkStepXIHullAudit,
+      ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit,
+      ob3Ob4DeterminantAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit,
+      ob5CompatibilityAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit,
+      sideConditionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkSideConditionAudit,
       sourceDerivedBridgeAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit,
       routeAudit := hroute,
