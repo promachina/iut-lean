@@ -23442,6 +23442,129 @@ theorem toConstructorBackedAdjustedStepXIAudit
       adjustedSummand_eq_determinant := hsource.2.2.2.1,
       qSigned_le_thetaSigned := hsource.2.2.2.2.2.2.2.2.2 }
 
+set_option linter.style.longLine false in
+/--
+Constructor-backed audit that also retains the exact-theta provenance.
+
+This strengthens `ConstructorBackedAdjustedStepXIAudit` without changing its
+public shape.  The audit records the constructor-built hull/determinant
+boundary together with the target-charted Hodge calibration and finite Ob3-3
+adjusted-summand identity that produce the exact-theta family-hull equality.
+-/
+structure ConstructorBackedAdjustedExactThetaStepXIAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization) :
+    Prop where
+  constructorBackedAdjustedAudit :
+    ConstructorBackedAdjustedStepXIAudit sourceData
+  qPilotRegion_eq_choice :
+    sourceData.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  measure_eq_hullLogVolume :
+    packageN.preLedger.measure =
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure
+  targetChartedTheta_eq_canonicalOneDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  targetChartedTheta_eq_thetaMonoidDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      hodgeSynchronization.valueSource.thetaMonoidDegree
+  thetaMonoidDegree_eq_adjustedSummandSum :
+    hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  thetaSigned_eq_familyHullLogVolume :
+    packageN.preLedger.thetaSigned =
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume
+  familyHullLogVolume_eq_adjustedSummand :
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.familyHullLogVolume =
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume
+  adjustedSummand_eq_determinant :
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume =
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.ob3ob4Source.determinantLogVolume
+  familyUnion_eq_record :
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  familyHullLogVolume_eq_determinant :
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume
+  constructorObligations_hullDetData_eq :
+    sourceData.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.constructorObligations.hullDetData =
+      sourceData.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.toHullDetSourceConstructor.hullDetData
+  hullDetBridge_eq_constructor :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.constructorObligations.hullDetData.bridgeData
+  hullDetBridge_eq_recordCanonical :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.hullData
+        sourceData.qPilotRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice sourceData.qPilotRegion
+          sourceData.q_subset_choice)
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.compatibility
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        sourceData.measureCalibratedAdjustedHodgeSource.tensorPower_bound
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBackedAdjustedExactThetaStepXIAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization) :
+    ConstructorBackedAdjustedExactThetaStepXIAudit sourceData := by
+  have hsource := sourceData.source_endpoint
+  have hdet :=
+    sourceData.measureCalibratedAdjustedHodgeSource.source_endpoint
+  exact
+    { constructorBackedAdjustedAudit :=
+        sourceData.toConstructorBackedAdjustedStepXIAudit,
+      qPilotRegion_eq_choice := hsource.1,
+      qPilotRegion_subset_recordUnion :=
+        IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice sourceData.qPilotRegion
+          sourceData.q_subset_choice,
+      measure_eq_hullLogVolume := hsource.2.1,
+      targetChartedTheta_eq_canonicalOneDegree :=
+        sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration.targetChartedTheta_eq_canonicalOneDegree,
+      targetChartedTheta_eq_thetaMonoidDegree :=
+        sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration.chartedTheta_eq_thetaMonoidDegree,
+      thetaMonoidDegree_eq_adjustedSummandSum :=
+        sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration.thetaMonoidDegree_eq_summandSum,
+      thetaSigned_eq_familyHullLogVolume :=
+        sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration
+          |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+          |>.thetaSigned_eq_familyHullLogVolume,
+      familyHullLogVolume_eq_adjustedSummand := hsource.2.2.1,
+      adjustedSummand_eq_determinant := hsource.2.2.2.1,
+      familyUnion_eq_record := hdet.2.2.2.2.2.2.1,
+      familyHullLogVolume_eq_determinant := hdet.2.2.2.2.2.2.2.1,
+      constructorObligations_hullDetData_eq := hsource.2.2.2.2.1,
+      hullDetBridge_eq_constructor := hsource.2.2.2.2.2.1,
+      hullDetBridge_eq_recordCanonical := hsource.2.2.2.2.2.2.1,
+      q_pilot_positive := hsource.2.2.2.2.2.2.2.1,
+      normalization := hsource.2.2.2.2.2.2.2.2.1,
+      qSigned_le_thetaSigned := hsource.2.2.2.2.2.2.2.2.2 }
+
 end
   IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
 

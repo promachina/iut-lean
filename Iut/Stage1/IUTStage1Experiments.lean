@@ -26162,6 +26162,46 @@ theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImag
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface constructor-backed exact-theta audit for the
+measure-calibrated adjusted-summand possible-image Step (xi) source.
+
+This is the constructor-backed companion of
+`targetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligationsBackedSource_adjustedExactThetaStepXIAudit`:
+the exact-theta equality is still derived from the target theta chart and the
+finite Ob3-3 adjusted summands, while the hull/determinant bridge,
+q-positivity, and normalization are produced by the Theorem 3.11
+record-canonical constructor.
+-/
+theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_adjustedExactThetaStepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization) :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource.ConstructorBackedAdjustedExactThetaStepXIAudit
+      stepXISource :=
+  stepXISource.toConstructorBackedAdjustedExactThetaStepXIAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface source endpoint for the all-in-one constructor-backed
 adjusted-summand Gaussian-to-Step (xi) route.
 
