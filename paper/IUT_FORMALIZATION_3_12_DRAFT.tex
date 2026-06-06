@@ -3321,6 +3321,13 @@ Theorem 3.11 hull/determinant constructor produces the Step (xi) source.  Its
 experiment wrapper displays these constructor inputs together with the
 constructed \(\IPL\) datum and exact vertical-\(IQ\) calibration before the
 external numeric \(C_\Theta\) estimate is used.
+An obligations-backed version of this record-canonical exact boundary now
+projects q-positivity, source normalization, and the package bridge-data
+alignment from a single \texttt{IUTStage1SourceHullDetObligations} object.  It
+still exposes the measured determinant payload, q-choice, and record-canonical
+hull/tensor bridge equality, but the final Step (xi) constructor no longer
+takes q-positivity and normalization as independent fields at this exact
+boundary.
 The record-native possible-image hull route has also gained an
 obligations-derived side-condition form.  The new experiment wrapper uses the
 ambient \texttt{IUTStage1SourceHullDetObligations} object to supply q-pilot
