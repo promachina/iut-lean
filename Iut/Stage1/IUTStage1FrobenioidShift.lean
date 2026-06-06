@@ -21292,6 +21292,100 @@ theorem toGaussianToStepXIAudit
       hullDetBridge_eq_recordCanonical := hcanonical.2.1,
       qSigned_le_thetaSigned := hside.2.2.2.2.2 }
 
+set_option linter.style.longLine false in
+/--
+Compact full-route audit for the all-in-one target-charted
+Hodge/IPL determinant possible-image route source.
+
+This is a review-facing bundle of the route projections that currently carry
+the Step (xi) mathematical payload: the Gaussian/Hodge/SHE/IPL chain, the
+determinant source-boundary audit, the calibrated determinant and
+possible-image sources, and the raw comparison endpoint.
+-/
+structure TargetChartedFullRouteAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) : Prop where
+  gaussianToStepXIAudit :
+    GaussianToStepXIAudit sourceData
+  determinantSourceBoundaryAudit :
+    IUTStage1TargetChartedHodgeDeterminantSummandFamilyHullSource.DeterminantSourceBoundaryAudit
+      sourceData.possibleImageSource.hodgeDeterminantSource
+  calibratedDeterminantSourceAudit :
+    packageN.preLedger.measure =
+        sourceData.calibratedDeterminantSource.familyHullSource.hullData.toRegionMeasure ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.calibratedDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      sourceData.calibratedDeterminantSource.familyHullSource.familyUnion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.calibratedDeterminantSource.familyHullSource.familyHullLogVolume =
+        sourceData.calibratedDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.calibratedDeterminantSource.familyHullSource.familyUnionLogVolume <=
+        sourceData.calibratedDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      sourceData.calibratedDeterminantSource.familyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.calibratedDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.calibratedDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned
+  calibratedPossibleImageSourceAudit :
+    sourceData.calibratedPossibleImageSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.possibleImageSource.qChoice ∧
+      packageN.preLedger.measure =
+        sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.hullData.toRegionMeasure ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.familyUnion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+        sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      packageN.preLedger.thetaSigned =
+        sourceData.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.possibleImageSource.obligations.hullDetData.bridgeData ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  sourceRawComparisonAudit :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.hodgeIPLSource.hodgeSynchronization.valueSource ∧
+      sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.possibleImageSource.qChoice ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toTargetChartedFullRouteAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    TargetChartedFullRouteAudit sourceData :=
+  { gaussianToStepXIAudit := sourceData.toGaussianToStepXIAudit,
+    determinantSourceBoundaryAudit := sourceData.determinantSourceBoundaryAudit_endpoint,
+    calibratedDeterminantSourceAudit := sourceData.calibratedDeterminantSource_endpoint,
+    calibratedPossibleImageSourceAudit := sourceData.calibratedPossibleImageSource_endpoint,
+    sourceRawComparisonAudit := sourceData.sourceRawComparison_endpoint }
+
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
 
 set_option linter.style.longLine false in

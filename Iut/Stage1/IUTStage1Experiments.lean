@@ -26186,6 +26186,40 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_calibratedPossibleIma
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface compact full-route audit for the all-in-one target-charted
+Hodge/IPL determinant possible-image route source.
+
+This bundles the review-critical projections for the current strongest ordinary
+target-charted route: the Gaussian-to-Step (xi) audit, determinant
+source-boundary audit, calibrated determinant endpoint, calibrated
+possible-image endpoint, and raw comparison endpoint.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_fullRouteAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.TargetChartedFullRouteAudit
+      routeSource :=
+  routeSource.toTargetChartedFullRouteAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface all-in-one route whose Step (xi) field is the
 calibration-backed possible-image source.
 
