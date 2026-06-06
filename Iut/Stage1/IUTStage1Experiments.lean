@@ -25538,6 +25538,50 @@ theorem targetChartedHodgeIPLConstructorBackedMeasureCalibratedPossibleImageRout
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface source endpoint for the side-conditioned constructor-backed
+Step (xi) hull/determinant source.
+
+This is the low-level Step (xi) boundary where q-pilot positivity and source
+normalization are projected from one `IUTStage1SourceSideConditions` object
+before the constructor-backed hull/determinant source is used.
+-/
+theorem targetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedPossibleImage_sourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+        (β := β) audited record hodgeSynchronization) :
+    let projected :=
+      stepXISource.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource;
+    stepXISource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record stepXISource.qChoice ∧
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.ConstructorBackedStepXIHullDetAudit
+        projected ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  stepXISource.source_endpoint
+
+set_option linter.style.longLine false in
+/--
 Compact milestone-facing no-`C_\Theta` finite-divisor boundary from the
 calibration-backed all-in-one route source, returning the calibrated audit
 payload directly.
