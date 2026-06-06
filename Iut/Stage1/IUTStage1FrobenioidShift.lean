@@ -47246,6 +47246,85 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
       sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.constructedIPLFiniteTransportLogVolume_endpoint }
 
 set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  constructorBuiltSourceEndpoint :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+      sourceData.hullSource
+  recordCanonicalStepXIAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
+      sourceData.hullSource
+  constructorSourcedSourceEndpoint :
+    IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
+      sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
+  constructorPinnedSourceEndpoint :
+    IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource.SourceEndpoint
+      (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
+        |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource)
+  possibleImageHullDeterminantAudit :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    projected.hullSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record projected.hullSource.qChoice ∧
+      projected.hullSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        projected.hullSource.obligations.hullDetData.bridgeData ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          projected.hullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  recordCanonicalHullBridgeAudit :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        projected.hullSource.operation projected.hullSource.hullOperation
+        projected.hullSource.determinantOperation projected.hullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record projected.hullSource.qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) projected.hullSource.qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record projected.hullSource.qChoice)
+          (fun _ hx => hx))
+        projected.hullSource.determinantSource projected.hullSource.compatibility
+        projected.hullSource.measure_eq_hullLogVolume
+        projected.hullSource.tensorPower_bound
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData := by
+  let projected :=
+    sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource
+  have hpossible := projected.possibleImageHullDeterminantSource_endpoint
+  exact
+    { constructorBuiltSourceEndpoint := sourceData.hullSource.source_endpoint,
+      recordCanonicalStepXIAudit := sourceData.hullSource.recordCanonicalStepXIAudit,
+      constructorSourcedSourceEndpoint :=
+        sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
+      constructorPinnedSourceEndpoint :=
+        (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
+          |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+          |>.source_endpoint),
+      possibleImageHullDeterminantAudit := hpossible,
+      recordCanonicalHullBridgeAudit :=
+        projected.possibleImageRecordCanonicalHullBridge_endpoint,
+      qSigned_le_thetaSigned := hpossible.2.2.2.2.2.2 }
+
+set_option linter.style.longLine false in
 abbrev CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47312,6 +47391,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
       sourceData
   middleRouteAudit :
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
   boundaryAudit :
     CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit sourceData
   cThetaAudit :
@@ -47336,6 +47417,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit,
     middleRouteAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
+    stepXIHullAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
     boundaryAudit :=
       sourceData.boundaryEndpointWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit,
     cThetaAudit :=
