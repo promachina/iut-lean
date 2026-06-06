@@ -782,6 +782,27 @@ The bounded-family version of Remark 3.9.5(v)--(vi) is now represented by a
 family-hull quotient source.  For a family \(P_\beta\), the code forms the hull
 of the union, uses it as the collapsed subset in the upper-semi quotient, and
 proves that any two nonempty possible regions have the same quotient image.
+This quotient source is now connected directly to the typed Theorem~3.11
+indeterminacy layer.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1MultiradialThetaImages}\\
+\quad\texttt{.remark395Ob5QuotientEndpoint\_of\_related}
+\end{array}
+\]
+starts from a multiradial possible-image package with its explicit
+\((\Ind1),(\Ind2),(\Ind3)\) quotient relation, forms the corresponding
+Remark~3.9.5 family \(P_B\), and proves that related choices have equal
+possible-image regions and equal upper-semi quotient images after collapsing
+\(\phi(P_B)\).  The experiment surface exposes the same bridge as
+\[
+\begin{array}{l}
+\texttt{multiradialThetaImages\_remark395IndeterminacyOb5Endpoint}.
+\end{array}
+\]
+As before, equality across an \((\Ind3)\) generator is not inferred from the
+one-sided Step~(x) upper-semi inequality; it is precisely the explicit
+image-invariance field of the typed multiradial quotient package.
 The map statement in Remark 3.9.5(v) is now lifted to this bounded-family
 source: any set map from a nonempty possible region \(P_i\) into another
 possible region \(P_j\) induces, after quotienting by the family hull, the same

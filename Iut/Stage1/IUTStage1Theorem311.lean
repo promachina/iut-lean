@@ -3317,6 +3317,60 @@ theorem indeterminaciesMatchPackage
     images.possibleImages.indeterminacies = package.indeterminacies :=
   images.possibleImages.indeterminaciesMatchPackage
 
+def toRemark395PossibleImageFamilySource
+    (images : IUTStage1MultiradialThetaImages package)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    IUTStage1Remark395PossibleImageFamilySource (Point target) index :=
+  { hullOperator := hullOperator,
+    possibleRegion := images.possibleImages.possibleImageSet }
+
+set_option linter.style.longLine false in
+/--
+Theorem 3.11 indeterminacy bridge to Remark 3.9.5(v)--(vi) Ob5.
+
+Once a multiradial possible-image package supplies a typed
+`(Ind1),(Ind2),(Ind3)` quotient and image invariance for related choices, the
+corresponding Remark 3.9.5 possible-image family has the expected Ob5 collapse:
+related possible-image regions are equal, both lie in the family hull
+`phi(P_B)`, and the upper-semi quotient by this hull identifies their images.
+-/
+theorem remark395Ob5QuotientEndpoint_of_related
+    (images : IUTStage1MultiradialThetaImages package)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {choice₁ choice₂ : index}
+    (hrel : images.quotient.relation choice₁ choice₂)
+    (hne₁ :
+      (images.possibleImages.possibleImageSet choice₁).Nonempty)
+    (hne₂ :
+      (images.possibleImages.possibleImageSet choice₂).Nonempty) :
+    let familySource :=
+      images.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.possibleRegion choice₁ =
+        familySource.possibleRegion choice₂ ∧
+      familySource.familyUnion ⊆ familySource.canonicalHull ∧
+      familySource.possibleRegion choice₁ ⊆ familySource.canonicalHull ∧
+      familySource.possibleRegion choice₂ ⊆ familySource.canonicalHull ∧
+      familySource.canonicalPhi.approximant = familySource.canonicalHull ∧
+      familySource.hullOperator.isClosed familySource.canonicalHull ∧
+      familySource.quotientMap '' familySource.possibleRegion choice₁ =
+        familySource.quotientMap '' familySource.possibleRegion choice₂ :=
+  by
+    intro familySource
+    have hregion :
+        familySource.possibleRegion choice₁ =
+          familySource.possibleRegion choice₂ :=
+      congrArg Region.toSet (images.region_eq_of_related hrel)
+    exact
+      ⟨hregion,
+        familySource.familyUnion_subset_phi,
+        familySource.possibleRegion_subset_phi choice₁,
+        familySource.possibleRegion_subset_phi choice₂,
+        familySource.canonicalPhi_approximant_eq_phi,
+        familySource.phi_closed,
+        familySource.quotientMap_images_eq choice₁ choice₂ hne₁ hne₂⟩
+
 end IUTStage1MultiradialThetaImages
 
 /--
