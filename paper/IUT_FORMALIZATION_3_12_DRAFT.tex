@@ -3220,6 +3220,12 @@ tensor-power equalities, and the record-canonical hull/tensor-power bridge
 equality from the same route audit.  Thus the finite-divisor wrappers that
 return this audit now carry more than the final raw comparison: they expose the
 holomorphic-hull/determinant provenance used to obtain it.
+The no-\(C_\Theta\) finite-divisor boundary now returns this strengthened audit
+as well, via the compact suffix
+\texttt{boundaryEndpointWithAllInOneRouteGaussianStepXIAudit}.  This gives a
+raw Step (x) endpoint whose payload is the same all-in-one Gaussian-to-Step
+(xi) chain used by the later \(C_\Theta\)-dichotomy wrapper, before any numeric
+\(C_\Theta\) estimate is supplied.
 
 The practical priority order is:
 \begin{enumerate}
