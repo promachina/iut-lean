@@ -27872,6 +27872,47 @@ theorem targetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligat
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface constructor-backed Step (xi) source audit for the
+theta-monoid-matched obligations-backed record-canonical constructor exact
+corridor.
+
+This exposes the matched theta-degree witness together with the projected
+constructor-backed Step (xi) source audit and the matched assembled
+Gaussian/exact route audit.
+-/
+theorem targetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource_constructorBackedStepXISourceAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.MatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit
+      sourceData :=
+  sourceData.toMatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface no-`C_\Theta` raw-comparison endpoint for the
 theta-monoid-matched obligations-backed record-canonical exact corridor.
 

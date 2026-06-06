@@ -38483,6 +38483,58 @@ noncomputable def toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSo
     finiteSource := sourceData.finiteSource,
     exactSource := sourceData.exactSource }
 
+set_option linter.style.longLine false in
+noncomputable def toConstructorBackedMeasureCalibratedPossibleImageSource
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+      (β := β) part audited record
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.hodgeSynchronization :=
+  sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+    |>.toConstructorBackedMeasureCalibratedPossibleImageSource
+
+/--
+Matched constructor-backed Step (xi) source audit for the obligations-backed
+record-canonical exact corridor.
+
+This records that the theta-monoid-matched exact source exposes the same
+constructor-backed possible-image Step (xi) source as its ordinary projection,
+while retaining the matched assembled Gaussian/exact route audit.
+-/
+structure MatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  thetaMonoidDegreeMatched :
+    sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.targetEvaluation.thetaMonoidDegree =
+      sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.sourceEvaluation.thetaMonoidDegree
+  projectedConstructorBackedStepXIAudit :
+    IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorBackedStepXISourceAudit
+      sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+  matchedAssembledAudit :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedAssembledConstructorBackedGaussianExactAudit
+      (sourceData.toMatchedRecordCanonicalConstructorFiniteExactVerticalIQSource
+        |>.toMatchedAssembledConstructorBackedExactSource)
+
+set_option linter.style.longLine false in
+theorem toMatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit sourceData := by
+  have hmatched := sourceData.matchedHodgeIPLSource.source_endpoint
+  exact
+    { thetaMonoidDegreeMatched := hmatched.2.1,
+      projectedConstructorBackedStepXIAudit :=
+        sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+          |>.toObligationsRecordCanonicalConstructorBackedStepXISourceAudit,
+      matchedAssembledAudit :=
+        sourceData.toMatchedRecordCanonicalConstructorFiniteExactVerticalIQSource
+          |>.toMatchedAssembledConstructorBackedExactSource
+          |>.toMatchedAssembledConstructorBackedGaussianExactAudit }
+
 /--
 Matched obligations-backed Gaussian/exact audit for the record-canonical
 constructor corridor.
@@ -38498,6 +38550,8 @@ structure MatchedObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
   matchedRecordCanonicalAudit :
     IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource.MatchedRecordCanonicalConstructorGaussianExactAudit
       sourceData.toMatchedRecordCanonicalConstructorFiniteExactVerticalIQSource
+  matchedConstructorBackedStepXISourceAudit :
+    MatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit sourceData
   projectedObligationsAudit :
     IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
       sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
@@ -38514,6 +38568,8 @@ theorem toMatchedObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
       matchedRecordCanonicalAudit :=
         sourceData.toMatchedRecordCanonicalConstructorFiniteExactVerticalIQSource
           |>.toMatchedRecordCanonicalConstructorGaussianExactAudit,
+      matchedConstructorBackedStepXISourceAudit :=
+        sourceData.toMatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit,
       projectedObligationsAudit :=
         sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
           |>.toObligationsRecordCanonicalConstructorGaussianExactCorridorAudit }
