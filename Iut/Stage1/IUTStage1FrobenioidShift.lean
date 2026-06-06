@@ -47147,6 +47147,99 @@ theorem thetaMonoidDegree_eq
     _ = sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
       sourceData.sourceCalibratedEvaluation.evaluation.canonicalOneDegree_eq_thetaMonoidDegree
 
+noncomputable def toFiniteHodgeSHEIPLConstructionSource
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C :=
+  let transportSource :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+      (record := record)
+      sourceData.sourceCalibratedEvaluation.evaluation
+      sourceData.targetEvaluation sourceData.canonicalOneDegree_preserved
+  { transportSource := transportSource,
+    iplConstructionSource := sourceData.iplConstructionSource }
+
+noncomputable def toIPLLogVolumeTransport
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1IPLLogVolumeTransport record :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport
+
+set_option linter.style.longLine false in
+theorem finiteHodgeSHEIPLConstructionSource_endpoint
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.sourceCalibratedEvaluation.evaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+        sourceData.targetEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) := by
+  have h :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated_endpoint
+      (record := record)
+      sourceData.sourceCalibratedEvaluation.evaluation
+      sourceData.targetEvaluation sourceData.canonicalOneDegree_preserved
+  simpa [
+    IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.toFiniteHodgeSHEIPLConstructionSource]
+    using h
+
+set_option linter.style.longLine false in
+theorem constructedIPLLogVolumeTransportSource_endpoint
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.source_endpoint
+
+set_option linter.style.longLine false in
+theorem constructedIPLFiniteTransportLogVolume_endpoint
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.constructedIPLFiniteTransportLogVolume_endpoint
+
 noncomputable def toThetaMonoidMatchedConstructorBuiltSource
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47194,6 +47287,88 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorR
   sourceData.toThetaMonoidMatchedConstructorBuiltSource.toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
 
 set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  thetaMonoidDegree_eq :
+    sourceData.targetEvaluation.thetaMonoidDegree =
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree
+  canonicalOneDegree_preserved :
+    sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  directFiniteHodgeSHEIPLConstructionSourceAudit :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.sourceCalibratedEvaluation.evaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+        sourceData.targetEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value)
+  directConstructedIPLLogVolumeTransportAudit :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side
+  directConstructedIPLFiniteTransportLogVolumeAudit :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume
+  matchedFiniteHodgeSHETransportAudit :
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource.MatchedFiniteHodgeSHETransportAudit
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData :=
+  { thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq,
+    canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
+    directFiniteHodgeSHEIPLConstructionSourceAudit :=
+      sourceData.finiteHodgeSHEIPLConstructionSource_endpoint,
+    directConstructedIPLLogVolumeTransportAudit :=
+      sourceData.constructedIPLLogVolumeTransportSource_endpoint,
+    directConstructedIPLFiniteTransportLogVolumeAudit :=
+      sourceData.constructedIPLFiniteTransportLogVolume_endpoint,
+    matchedFiniteHodgeSHETransportAudit :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toMatchedFiniteHodgeSHETransportAudit }
+
+set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47207,6 +47382,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
         (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
       sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
         (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  hodgeSHEIPLAudit :
+    CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
   matchedFiniteHodgeSHETransportAudit :
     IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource.MatchedFiniteHodgeSHETransportAudit
       sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource
@@ -47253,6 +47430,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData :=
   { thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq,
     canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
+    hodgeSHEIPLAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
     matchedFiniteHodgeSHETransportAudit :=
       sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toMatchedFiniteHodgeSHETransportAudit,
     constructedIPLLogVolumeTransportAudit :=
@@ -47571,6 +47750,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
   routeAudit :
     CanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit
       sourceData
+  hodgeSHEIPLAudit :
+    CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
   middleRouteAudit :
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
@@ -47601,6 +47782,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData cTheta :=
   { routeAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit,
+    hodgeSHEIPLAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
     middleRouteAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
     stepXIHullAudit :=
