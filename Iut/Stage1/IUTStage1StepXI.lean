@@ -5139,6 +5139,19 @@ theorem sourceNormalization
 
 end IUTStage1SourceSideConditions
 
+namespace IUTStage1SourceHullDetObligations
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+def sideConditions
+    (obligations : IUTStage1SourceHullDetObligations package) :
+    IUTStage1SourceSideConditions package :=
+  { q_pilot_positive := obligations.qPilotPositive,
+    source_normalization := obligations.normalization }
+
+end IUTStage1SourceHullDetObligations
+
 /--
 Audited boundary between the raw real inequality and the signed comparison
 payload used for Corollary 3.12-style statements.
