@@ -46318,6 +46318,60 @@ theorem cThetaDichotomyWithCanonicalOneConstructorBuiltIPLLinkGaussianStepXIAudi
   sourceData.toThetaMonoidMatchedSource.cThetaDichotomyWithConstructorBuiltIPLLinkMatchedGaussianStepXIAudit
     cTheta thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Named raw Step (xi) comparison audit for the canonical-one constructor-built
+\(\IPL\)-link route.
+
+The route audit records the Hodge--Arakelov canonical-one reconstruction,
+certificate-pinned \(\IPL\)-link data, and constructor-built possible-image
+hull/determinant payload.  The signed comparison is then projected from the
+underlying Gaussian-to-Step (xi) audit before the finite Step (x) boundary or
+the later numeric \(C_\Theta\) estimate is used.
+-/
+structure CanonicalOneConstructorBuiltIPLLinkQComparisonAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  routeAudit :
+    CanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudit
+      sourceData
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLLinkQComparisonAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkQComparisonAudit sourceData := by
+  have hroute :=
+    sourceData.toCanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudit
+  exact
+    { routeAudit := hroute,
+      qSigned_le_thetaSigned := hroute.2.2.2.2.qSigned_le_thetaSigned }
+
+theorem qSigned_le_thetaSigned_fromCanonicalOneConstructorBuiltIPLLink
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  sourceData.toCanonicalOneConstructorBuiltIPLLinkQComparisonAudit.qSigned_le_thetaSigned
+
+theorem boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPLLink
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  (sourceData.cThetaDichotomyWithCanonicalOneConstructorBuiltIPLLinkGaussianStepXIAudit
+    cTheta thetaSigned_le_cTheta_absLogQ).2
+
 end
   IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
 
