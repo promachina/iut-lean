@@ -44405,6 +44405,218 @@ end IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBacke
 
 set_option linter.style.longLine false in
 /--
+Theta-monoid-matched assembled exact source whose constructor-backed Step (xi)
+field is side-conditioned.
+
+This refines the matched constructor-backed exact source: q-pilot positivity
+and source normalization are projected from one
+`IUTStage1SourceSideConditions` object inside the Step (xi) source before the
+constructor-backed exact corridor is assembled.
+-/
+structure IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F)
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    (holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j)
+    (product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j) where
+  matchedHodgeIPLSource :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+      part audited record X C
+  sideConditionedConstructorBackedPossibleImageSource :
+    IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+      (β := β) part audited record
+      matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.hodgeSynchronization
+  upperSemiEntry :
+    NonarchimedeanPacketNormalizedUpperSemiEntrySource audited
+  finiteSource :
+    NonarchimedeanFiniteDivisorPacketLocalSource
+      audited upperSemiEntry.toEntry product
+  exactSource :
+    NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
+      audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+      packageN.logKummer l X C upperSemiEntry.toEntry
+      holomorphicF holomorphicD finiteSource.toMonoAnalyticD
+
+namespace IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {β : Type v} [Fintype β]
+variable {j : Nat}
+variable {holomorphicF holomorphicD :
+  IUTStage1RealifiedFrobenioidTensorPacketProductSource
+    IUTStage1PlaceKind.nonarchimedean j}
+variable {product :
+  IUTStage1BaseValuationTensorPacketProductLogVolume
+    IUTStage1PlaceKind.nonarchimedean j}
+
+set_option linter.style.longLine false in
+noncomputable def toMatchedConstructorBackedExactSource
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+      (β := β) part audited record X C holomorphicF holomorphicD product :=
+  { matchedHodgeIPLSource := sourceData.matchedHodgeIPLSource,
+    constructorBackedPossibleImageSource :=
+      sourceData.sideConditionedConstructorBackedPossibleImageSource
+        |>.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource,
+    upperSemiEntry := sourceData.upperSemiEntry,
+    finiteSource := sourceData.finiteSource,
+    exactSource := sourceData.exactSource }
+
+set_option linter.style.longLine false in
+/--
+Audit for the side-conditioned matched constructor-backed exact source.
+
+The first component exposes the side-conditioned Step (xi) source endpoint;
+the second component is the established matched constructor-backed Gaussian and
+exact vertical-`IQ` audit after projection.
+-/
+def MatchedSideConditionedConstructorBackedGaussianExactAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  sourceData.sideConditionedConstructorBackedPossibleImageSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.sideConditionedConstructorBackedPossibleImageSource.qChoice ∧
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.ConstructorBackedStepXIHullDetAudit
+      sourceData.sideConditionedConstructorBackedPossibleImageSource.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource ∧
+    0 < -packageN.preLedger.qSigned ∧
+    packageN.preLedger.normalization ∧
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedAssembledConstructorBackedGaussianExactAudit
+      sourceData.toMatchedConstructorBackedExactSource
+
+theorem toMatchedSideConditionedConstructorBackedGaussianExactAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData := by
+  have hstep :=
+    sourceData.sideConditionedConstructorBackedPossibleImageSource.source_endpoint
+  exact
+    ⟨hstep.1,
+      hstep.2.1,
+      hstep.2.2.1,
+      hstep.2.2.2.1,
+      hstep.2.2.2.2,
+      sourceData.toMatchedConstructorBackedExactSource
+        |>.toMatchedAssembledConstructorBackedGaussianExactAudit⟩
+
+set_option linter.style.longLine false in
+/--
+Audit connecting the side-conditioned matched constructor-backed exact source
+to the obligations-backed record-canonical corridor and the constructor-built
+finite-divisor route.
+-/
+def MatchedSideConditionedConstructorBackedObligationsCorridorAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData ∧
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsCorridorAudit
+      sourceData.toMatchedConstructorBackedExactSource
+
+theorem toMatchedSideConditionedConstructorBackedObligationsCorridorAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedSideConditionedConstructorBackedObligationsCorridorAudit sourceData :=
+  ⟨sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
+    sourceData.toMatchedConstructorBackedExactSource
+      |>.toMatchedConstructorBackedObligationsCorridorAudit⟩
+
+set_option linter.style.longLine false in
+/--
+No-\(C_\Theta\) boundary audit for the side-conditioned matched
+constructor-backed exact source after projection to the obligations-backed
+record-canonical corridor.
+-/
+def MatchedSideConditionedConstructorBackedObligationsBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData ∧
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsBoundaryAudit
+      sourceData.toMatchedConstructorBackedExactSource
+
+theorem boundaryEndpointWithMatchedSideConditionedConstructorBackedObligationsAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedSideConditionedConstructorBackedObligationsBoundaryAudit sourceData :=
+  ⟨sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
+    sourceData.toMatchedConstructorBackedExactSource
+      |>.boundaryEndpointWithMatchedConstructorBackedObligationsAudit⟩
+
+set_option linter.style.longLine false in
+/--
+Conditional \(C_\Theta\) audit for the side-conditioned matched
+constructor-backed exact source after projection to the obligations-backed
+record-canonical corridor.
+-/
+def MatchedSideConditionedConstructorBackedObligationsCThetaAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop :=
+  MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData ∧
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsCThetaAudit
+      sourceData.toMatchedConstructorBackedExactSource cTheta
+
+theorem cThetaDichotomyWithMatchedSideConditionedConstructorBackedObligationsAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    MatchedSideConditionedConstructorBackedObligationsCThetaAudit
+      sourceData cTheta :=
+  ⟨sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
+    sourceData.toMatchedConstructorBackedExactSource
+      |>.cThetaDichotomyWithMatchedConstructorBackedObligationsAudit
+        cTheta thetaSigned_le_cTheta_absLogQ⟩
+
+end IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+
+set_option linter.style.longLine false in
+/--
 The synchronized source-derived bridge for the calibrated Hodge/SHE,
 certificate-pinned \(\IPL\)-link, obligations-backed possible-image route.
 

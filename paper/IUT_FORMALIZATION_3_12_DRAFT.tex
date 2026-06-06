@@ -3767,6 +3767,21 @@ finite-divisor route.  The experiment surface exposes this as:
 \texttt{MatchedConstructorBackedObligationsCThetaAudit}.
 \end{array}
 \]
+There is now a side-conditioned variant of this matched constructor-backed
+exact source as well.  Its Step (xi) field is a
+\texttt{SideConditionedConstructorBacked} source, so q-pilot positivity and
+source normalization are projected from one
+\texttt{IUTStage1SourceSideConditions} object before the constructor-backed
+source is projected to the obligations-backed record-canonical corridor and the
+constructor-built finite-divisor route.  The experiment surface exposes this
+boundary as:
+\[
+\begin{array}{l}
+\texttt{MatchedSideConditionedConstructorBackedObligationsCorridorAudit},\\
+\texttt{MatchedSideConditionedConstructorBackedObligationsBoundaryAudit},\\
+\texttt{MatchedSideConditionedConstructorBackedObligationsCThetaAudit}.
+\end{array}
+\]
 
 The practical priority order is:
 \begin{enumerate}
