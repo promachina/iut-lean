@@ -22045,6 +22045,201 @@ end IUTStage1MeasureCalibratedRecordBoundedFamilyHullDetLogVolumeSource
 
 set_option linter.style.longLine false in
 /--
+Measure-calibrated finite Ob3-3 summand source.
+
+This packages the record-canonical adjusted-summand construction together with
+the package measure identification for the family hull derived from that
+construction.  It is the measured analogue of
+`IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource`: the
+Ob3/Ob5 family-hull source is still derived from the finite summand identity,
+while `measure_eq_hullLogVolume` is no longer a loose argument of downstream
+exact-theta constructors.
+-/
+structure IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    {β : Type w} [Fintype β]
+    {γ : Type x} [Fintype γ] where
+  adjustedSource :
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+      (β := β) (γ := γ) record
+  measure_eq_hullLogVolume :
+    package.preLedger.measure =
+      (adjustedSource.toRecordOb3Ob5DeterminantCompatibilitySource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource).hullData.toRegionMeasure
+
+namespace
+  IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type w} [Fintype β]
+variable {γ : Type x} [Fintype γ]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+noncomputable def measuredFamilyHullSource
+    (sourceData :
+      IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    IUTStage1MeasureCalibratedRecordBoundedFamilyHullDetLogVolumeSource
+      (β := β) record :=
+  { familyHullSource :=
+      sourceData.adjustedSource.toRecordOb3Ob5DeterminantCompatibilitySource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource,
+    measure_eq_hullLogVolume := sourceData.measure_eq_hullLogVolume }
+
+set_option linter.style.longLine false in
+theorem source_endpoint
+    (sourceData :
+      IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    package.preLedger.measure =
+        sourceData.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      sourceData.adjustedSource.familyHullLogVolume =
+        sourceData.adjustedSource.adjustedSummandLogVolume ∧
+      sourceData.adjustedSource.adjustedSummandLogVolume =
+        sourceData.adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      sourceData.measuredFamilyHullSource.familyHullSource.familyUnion =
+        recordThetaPossibleImageUnion record ∧
+      sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+        sourceData.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.measuredFamilyHullSource.familyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume :=
+  ⟨sourceData.measure_eq_hullLogVolume,
+    sourceData.adjustedSource.familyHullLogVolume_eq_adjustedSummandLogVolume,
+    sourceData.adjustedSource.adjustedSummandLogVolume_eq_determinantLogVolume,
+    sourceData.measuredFamilyHullSource.familyHullSource.source_endpoint.1,
+    sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume_eq_determinant,
+    sourceData.measuredFamilyHullSource.familyHullSource.tensorPower_normalizedLogVolume_eq_familyHullLogVolume⟩
+
+set_option linter.style.longLine false in
+/--
+Build the possible-image exact-theta Step (xi) source from the measured
+adjusted-summand source.
+
+The package measure equality is projected from `measuredFamilyHullSource`; the
+Ob4 tensor-power bound is still derived from
+`thetaSigned = familyHullLogVolume` by the Step XI constructor.
+-/
+noncomputable def toPossibleImageFamilyHullExactThetaHullDetObligationsBackedSource
+    (sourceData :
+      IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qChoice : index)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume)
+    (obligations : IUTStage1SourceHullDetObligations package)
+    (obligationsHullDetData_eq_recordCanonical :
+      obligations.hullDetData.bridgeData =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          sourceData.measuredFamilyHullSource.familyHullSource.hullData
+          (recordThetaPossibleImage record qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice
+            (recordThetaPossibleImage record qChoice)
+            (fun _ hx => hx))
+          sourceData.measuredFamilyHullSource.familyHullSource.determinantSource
+          sourceData.measuredFamilyHullSource.familyHullSource.compatibility
+          sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measuredFamilyHullSource.familyHullSource
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume)) :
+    IUTStage1PossibleImageFamilyHullExactThetaHullDetObligationsBackedSource
+      (β := β) record :=
+  sourceData.adjustedSource
+    |>.toPossibleImageFamilyHullExactThetaHullDetObligationsBackedSource
+      operation hullOperation determinantOperation qChoice
+      sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume
+      thetaSigned_eq_familyHullLogVolume obligations
+      obligationsHullDetData_eq_recordCanonical
+
+set_option linter.style.longLine false in
+theorem toPossibleImageFamilyHullExactThetaHullDetObligationsBackedSource_endpoint
+    (sourceData :
+      IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qChoice : index)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume)
+    (obligations : IUTStage1SourceHullDetObligations package)
+    (obligationsHullDetData_eq_recordCanonical :
+      obligations.hullDetData.bridgeData =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          sourceData.measuredFamilyHullSource.familyHullSource.hullData
+          (recordThetaPossibleImage record qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice
+            (recordThetaPossibleImage record qChoice)
+            (fun _ hx => hx))
+          sourceData.measuredFamilyHullSource.familyHullSource.determinantSource
+          sourceData.measuredFamilyHullSource.familyHullSource.compatibility
+          sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measuredFamilyHullSource.familyHullSource
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume)) :
+    let exactThetaSource :=
+      sourceData.toPossibleImageFamilyHullExactThetaHullDetObligationsBackedSource
+        operation hullOperation determinantOperation qChoice
+        thetaSigned_eq_familyHullLogVolume obligations
+        obligationsHullDetData_eq_recordCanonical;
+    package.preLedger.measure =
+        sourceData.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      exactThetaSource.qPilotRegion =
+        recordThetaPossibleImage record exactThetaSource.qChoice ∧
+      exactThetaSource.qPilotRegion ⊆ recordThetaPossibleImageUnion record ∧
+      package.preLedger.thetaSigned =
+        exactThetaSource.familyHullSource.familyHullLogVolume ∧
+      exactThetaSource.familyHullSource.determinantSource =
+        sourceData.adjustedSource.ob3ob4Source.toWeightedDeterminantSource ∧
+      sourceData.adjustedSource.familyHullLogVolume =
+        sourceData.adjustedSource.adjustedSummandLogVolume ∧
+      sourceData.adjustedSource.adjustedSummandLogVolume =
+        sourceData.adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      exactThetaSource.familyHullSource.tensorPower.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  by
+    intro exactThetaSource
+    have hsource :=
+      sourceData.adjustedSource
+        |>.toPossibleImageFamilyHullExactThetaHullDetObligationsBackedSource_endpoint
+          operation hullOperation determinantOperation qChoice
+          sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume
+          thetaSigned_eq_familyHullLogVolume obligations
+          obligationsHullDetData_eq_recordCanonical
+    exact
+      ⟨sourceData.measure_eq_hullLogVolume,
+        hsource.1,
+        hsource.2.1,
+        hsource.2.2.1,
+        hsource.2.2.2.2.2.2.1,
+        hsource.2.2.2.2.2.2.2.1,
+        hsource.2.2.2.2.2.2.2.2.1,
+        hsource.2.2.2.2.2.2.2.2.2.1,
+        hsource.2.2.2.2.2.2.2.2.2.2⟩
+
+end
+  IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+
+set_option linter.style.longLine false in
+/--
 Target-charted Hodge determinant source whose family-hull side is already
 package-measure calibrated.
 
