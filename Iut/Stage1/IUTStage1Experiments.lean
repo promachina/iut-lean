@@ -42201,6 +42201,64 @@ theorem remark395ConstructedHolomorphicHullDeterminantSource_normalizedRecordBri
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface canonical-scale audit for the constructed Remark 3.9.5
+Step (xi) source.
+
+This is the source-level version of the local canonical \(C_\Theta\) endpoint:
+the same constructed holomorphic-hull/determinant source supplies the normalized
+determinant bridge and defines
+`C_{Theta,can} = thetaSigned / (-qSigned)`.
+-/
+theorem remark395ConstructedHolomorphicHullDeterminantSource_canonicalCThetaScaleAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedCanonicalCThetaScaleAudit
+        sourceData :=
+  sourceData.constructedCanonicalCThetaScaleAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface compact local-scale chain for the constructed Remark 3.9.5
+Step (xi) source.
+
+The theorem exposes the exact ordered-real chain now available from the
+constructed source object:
+`mu_log(qRegion) <= det_norm <= thetaSigned <= C_{Theta,can} * (-qSigned)`,
+together with the resulting boundary-equality-or-strict-scale dichotomy.
+-/
+theorem remark395ConstructedHolomorphicHullDeterminantSource_canonicalCThetaScaleChain
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.determinantSource.normalizedLogVolume ∧
+      sourceData.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.thetaSigned <=
+        sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) ∧
+      sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) ∧
+      ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < sourceData.canonicalCThetaScale) :=
+  let audit := sourceData.constructedCanonicalCThetaScaleAudit
+  ⟨audit.constructedRecordBridgeAudit.normalizedBridge_from_bridge.1,
+    audit.constructedRecordBridgeAudit.normalizedBridge_from_bridge.2,
+    audit.thetaSigned_le_canonicalCTheta_absLogQ,
+    audit.sourceBridge_to_canonicalScale_chain,
+    audit.dichotomy⟩
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface possible-image q-choice constructor for the milestone-facing
 constructed Remark 3.9.5 Step (xi) source.
 
