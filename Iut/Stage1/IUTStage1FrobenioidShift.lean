@@ -35850,6 +35850,48 @@ theorem toObligationsRecordCanonicalConstructorExactCorridorAudit
       exactVerticalIQ_hasPreciseFrobenioidIsomorphisms :=
         hcorridor.2.2.2.2.2.2.2.2 }
 
+set_option linter.style.longLine false in
+/--
+Gaussian-to-exact audit for the obligations-backed record-canonical corridor.
+
+This proposition binds the Gaussian-to-Step (xi) constructor-backed route audit
+to the obligations-backed exact vertical-`IQ` corridor audit for the same source
+package.  It is the compact review target for the chain
+theta/Hodge Gaussian data \(\to\) \(\SHE\) preservation \(\to\) constructed
+\(\IPL\) transport \(\to\) record-canonical Step (xi) constructor
+\(\to\) exact vertical-`IQ`.
+-/
+structure ObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  gaussianToStepXIAudit :
+    let routeData :=
+      sourceData.toRecordCanonicalConstructorFiniteExactVerticalIQSource
+        |>.toAssembledConstructorBackedExactSource
+        |>.toConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQRouteSource;
+    IUTStage1TargetChartedHodgeIPLConstructorBackedMeasureCalibratedPossibleImageRouteSource.ConstructorBackedMeasureCalibratedGaussianToStepXIAudit
+      routeData.routeSource
+  exactCorridorAudit :
+    ObligationsRecordCanonicalConstructorExactCorridorAudit sourceData
+
+set_option linter.style.longLine false in
+theorem toObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    ObligationsRecordCanonicalConstructorGaussianExactCorridorAudit sourceData := by
+  let routeData :=
+    sourceData.toRecordCanonicalConstructorFiniteExactVerticalIQSource
+      |>.toAssembledConstructorBackedExactSource
+      |>.toConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQRouteSource
+  exact
+    { gaussianToStepXIAudit :=
+        routeData.routeSource.toConstructorBackedMeasureCalibratedGaussianToStepXIAudit,
+      exactCorridorAudit :=
+        sourceData.toObligationsRecordCanonicalConstructorExactCorridorAudit }
+
 end IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
 
 set_option linter.style.longLine false in
@@ -35902,6 +35944,61 @@ theorem boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLRecordCan
     part.boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource_withGaussianStepXIAudit
       audited sourceData.toRecordCanonicalConstructorFiniteExactVerticalIQSource
       cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+`C_\Theta` boundary for the obligations-backed record-canonical exact corridor
+with the combined Gaussian/exact audit.
+
+This is the review-facing variant of
+`boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource_withGaussianStepXIAudit`:
+the first conjunct packages both the constructor-backed Gaussian-to-Step (xi)
+route audit and the obligations-backed exact vertical-`IQ` corridor audit.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource_withGaussianExactCorridorAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
+        sourceData ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  have hboundary :=
+    part.boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource_withGaussianStepXIAudit
+      audited sourceData cTheta thetaSigned_le_cTheta_absLogQ
+  exact
+    ⟨sourceData.toObligationsRecordCanonicalConstructorGaussianExactCorridorAudit,
+      hboundary.2.1,
+      hboundary.2.2⟩
 
 /--
 Source-derived finite-divisor vertical-`IQ` route from a constructed
