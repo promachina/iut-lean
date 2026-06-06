@@ -22359,9 +22359,36 @@ structure ConstructorBackedStepXIHullDetAudit
     sourceData.qPilotRegion =
       IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
         record sourceData.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  recordUnion_subset_holomorphicHull :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ⊆
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
   measure_eq_hullLogVolume :
     packageN.preLedger.measure =
       sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure
+  familyUnion_eq_record :
+    sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  familyHullLogVolume_eq_determinant :
+    sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume
+  familyUnionLogVolume_le_familyHullLogVolume :
+    sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnionLogVolume <=
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume
+  tensorPower_normalized_eq_familyHull :
+    sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.tensorPower.normalizedLogVolume =
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume
+  tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
   constructorObligations_hullDetData_eq :
     sourceData.constructorObligations.hullDetData =
       sourceData.toHullDetSourceConstructor.hullDetData
@@ -22397,9 +22424,25 @@ theorem toConstructorBackedStepXIHullDetAudit
         (β := β) part audited record hodgeSynchronization) :
     ConstructorBackedStepXIHullDetAudit sourceData := by
   have hsource := sourceData.source_endpoint
+  have hmeasured :=
+    sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.source_endpoint
   exact
     { qPilotRegion_eq_choice := hsource.1,
+      qPilotRegion_subset_recordUnion :=
+        IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice sourceData.qPilotRegion
+          sourceData.q_subset_choice,
+      recordUnion_subset_holomorphicHull :=
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData.region_subset_hull
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record),
       measure_eq_hullLogVolume := hsource.2.1,
+      familyUnion_eq_record := hmeasured.2.1,
+      familyHullLogVolume_eq_determinant := hmeasured.2.2.1,
+      familyUnionLogVolume_le_familyHullLogVolume := hmeasured.2.2.2.1,
+      tensorPower_normalized_eq_familyHull := hmeasured.2.2.2.2,
+      tensorPower_bound :=
+        sourceData.measureCalibratedHodgeDeterminantSource.tensorPower_bound,
       constructorObligations_hullDetData_eq := hsource.2.2.1,
       hullDetBridge_eq_constructor := hsource.2.2.2.1,
       hullDetBridge_eq_recordCanonical := hsource.2.2.2.2.1,

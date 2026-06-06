@@ -25727,6 +25727,90 @@ theorem targetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedPossi
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Step (xi) holomorphic-hull/determinant skeleton for the
+side-conditioned constructor-backed source.
+
+This projects the source-paper chain used by Corollary 3.12 Step (xi): the
+selected q-pilot region lies in the record possible-image union, that union lies
+in its holomorphic hull, the bounded-family hull supplies the determinant and
+tensor-power log-volume facts, the package bridge is the record-canonical
+hull/tensor bridge, and the raw signed comparison follows.
+-/
+theorem targetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedPossibleImage_stepXIHolomorphicHullDeterminantEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+        (β := β) audited record hodgeSynchronization) :
+    let projected :=
+      stepXISource.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource;
+    projected.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ⊆
+        projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData.hullRegion
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record) ∧
+      projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+        projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnionLogVolume <=
+        projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.tensorPower.normalizedLogVolume =
+        projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          projected.operation projected.hullOperation projected.determinantOperation
+          projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+          projected.qPilotRegion
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) projected.qChoice projected.qPilotRegion
+            projected.q_subset_choice)
+          projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+          projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+          projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+          projected.measureCalibratedHodgeDeterminantSource.tensorPower_bound ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned := by
+  intro projected
+  let audit :=
+    stepXISource.toSideConditionedConstructorBackedStepXIHullDetAudit.constructorBackedAudit
+  exact
+    ⟨audit.qPilotRegion_subset_recordUnion,
+      audit.recordUnion_subset_holomorphicHull,
+      audit.familyUnion_eq_record,
+      audit.familyHullLogVolume_eq_determinant,
+      audit.familyUnionLogVolume_le_familyHullLogVolume,
+      audit.tensorPower_normalized_eq_familyHull,
+      audit.tensorPower_bound,
+      audit.hullDetBridge_eq_recordCanonical,
+      audit.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
 Compact milestone-facing no-`C_\Theta` finite-divisor boundary from the
 calibration-backed all-in-one route source, returning the calibrated audit
 payload directly.
