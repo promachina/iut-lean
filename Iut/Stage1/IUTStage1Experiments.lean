@@ -36426,6 +36426,30 @@ theorem possibleImageConstructorBuiltHullSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface record-canonical Step (xi) audit for the constructor-built
+possible-image hull/determinant source.
+
+This exposes the canonical hull approximant facts behind the constructor-built
+source: q lies in the record possible-image union and its canonical hull, the
+record union matches the package target union, the tensor-power determinant
+bound supplies the theta-bound, and the constructed Theorem 3.11 hull source
+produces certification, hull containment, determinant-volume control, and the
+raw signed comparison.
+-/
+theorem possibleImageConstructorBuiltHullSource_recordCanonicalStepXIAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
+      sourceData :=
+  sourceData.recordCanonicalStepXIAudit
+
+set_option linter.style.longLine false in
+/--
 Constructor-built variant of the theta-monoid-matched raw finite-divisor
 boundary.
 

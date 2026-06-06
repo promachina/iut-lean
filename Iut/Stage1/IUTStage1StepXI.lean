@@ -10433,6 +10433,77 @@ theorem source_endpoint
     sourceData.normalization,
     sourceData.qSigned_le_thetaSigned⟩
 
+set_option linter.style.longLine false in
+/--
+Record-canonical Step (xi) audit for the constructor-built possible-image
+hull/determinant source.
+
+This exposes the actual constructor ingredients used by
+`toHullDetSourceConstructor`: the selected q-pilot region is contained in the
+record possible-image union, hence in the canonical holomorphic hull; the
+possible-image union agrees with both the Theorem 3.11 record and the package
+target union; the tensor-power determinant bound controls the package
+theta-bound; and the resulting constructor supplies certification, the
+record-union hull containment, the determinant-volume bound, and the raw signed
+comparison.
+-/
+def RecordCanonicalStepXIAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) : Prop :=
+  let q_subset_hull :
+      sourceData.qPilotRegion ⊆
+        sourceData.hullData.hullRegion (recordThetaPossibleImageUnion record) :=
+    fun _ hx =>
+      sourceData.hullData.region_subset_hull
+        (recordThetaPossibleImageUnion record)
+        (sourceData.q_subset_recordUnion hx)
+  let approximantSource :=
+    canonicalHullWeightedDeterminantApproximantSource
+      sourceData.hullData (recordThetaPossibleImage record)
+      sourceData.qPilotRegion q_subset_hull sourceData.determinantSource
+      sourceData.compatibility
+  let constructor := sourceData.toHullDetSourceConstructor
+  sourceData.qPilotRegion ⊆ recordThetaPossibleImageUnion record ∧
+    sourceData.qPilotRegion ⊆ approximantSource.thetaHull ∧
+    approximantSource.thetaImageUnion =
+      record.thetaPossibleImages.union.toSet ∧
+    approximantSource.thetaImageUnion =
+      package.preLedger.output.comparisons.targetUnion.toSet ∧
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.determinantSource).normalizedLogVolume <=
+      package.preLedger.thetaSigned ∧
+    approximantSource.approximantRegion = approximantSource.thetaHull ∧
+    approximantSource.approximantLogVolume =
+      sourceData.determinantSource.determinantLogVolume ∧
+    package.preLedger.output.Certified ∧
+    Region.Subset record.thetaPossibleImages.union
+      (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull ∧
+    RegionMeasure.HasVolumeAtMost package.preLedger.measure
+      (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+        package.preLedger.certificate).hull
+      package.preLedger.thetaSigned ∧
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem recordCanonicalStepXIAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    RecordCanonicalStepXIAudit sourceData := by
+  simpa [RecordCanonicalStepXIAudit, toHullDetSourceConstructor]
+    using
+      IUTStage1Theorem311HullDetSourceConstructor.ofRecordCanonicalHullTensorPowerOfQSubsetUnion_endpoint
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.hullData
+        sourceData.qPilotRegion sourceData.q_subset_recordUnion
+        sourceData.determinantSource sourceData.compatibility
+        sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound
+        sourceData.hullDetBridge_eq sourceData.q_pilot_positive
+        sourceData.normalization
+
 end IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
