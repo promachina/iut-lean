@@ -17730,6 +17730,125 @@ theorem synchronization_endpoint
 end IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
 
 /--
+Hodge--Arakelov synchronization generated from equality of theta-monoid
+degrees.
+
+The finite Gaussian evaluation source proves that the canonical `1`-label
+Gaussian degree is the theta-monoid degree on each side.  Thus this source
+object replaces the canonical-one preservation proof by the more source-facing
+equality of the source and target theta-monoid degrees.
+-/
+structure IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F) where
+  sourceCalibratedEvaluation :
+    IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
+      part audited X C
+  targetEvaluation :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+      l X C
+  thetaMonoidDegree_eq :
+    targetEvaluation.thetaMonoidDegree =
+      sourceCalibratedEvaluation.evaluation.thetaMonoidDegree
+
+namespace IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+
+def sourceEvaluation
+    (sync :
+      IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+      l X C :=
+  sync.sourceCalibratedEvaluation.evaluation
+
+def valueSource
+    (sync :
+      IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+      l X C :=
+  sync.sourceCalibratedEvaluation.valueSource
+
+theorem canonicalOneDegree_preserved
+    (sync :
+      IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    sync.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      sync.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) := by
+  calc
+    sync.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sync.targetEvaluation.thetaMonoidDegree :=
+      sync.targetEvaluation.canonicalOneDegree_eq_thetaMonoidDegree
+    _ = sync.sourceEvaluation.thetaMonoidDegree :=
+      sync.thetaMonoidDegree_eq
+    _ =
+        sync.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+      sync.sourceEvaluation.canonicalOneDegree_eq_thetaMonoidDegree.symm
+
+noncomputable def toThetaSourceCalibratedHodgeArakelovSynchronization
+    (sync :
+      IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+      part audited X C :=
+  { sourceCalibratedEvaluation := sync.sourceCalibratedEvaluation,
+    targetEvaluation := sync.targetEvaluation,
+    canonicalOneDegree_preserved := sync.canonicalOneDegree_preserved }
+
+theorem matchedSynchronization_endpoint
+    (sync :
+      IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        sync.sourceEvaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sync.sourceEvaluation.fullLabelCompatibility ∧
+      sync.targetEvaluation.thetaMonoidDegree =
+        sync.sourceEvaluation.thetaMonoidDegree ∧
+      sync.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sync.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+  ⟨sync.sourceCalibratedEvaluation.fullLabel_calibrated,
+    sync.sourceCalibratedEvaluation.sourceLogVolumeEq,
+    sync.thetaMonoidDegree_eq,
+    sync.canonicalOneDegree_preserved⟩
+
+end IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+
+/--
 Target-charted Hodge--Arakelov synchronization.
 
 This strengthens `IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization`
@@ -17844,6 +17963,123 @@ theorem synchronization_endpoint
     sync.chartedTheta_eq_thetaMonoidDegree⟩
 
 end IUTStage1TargetChartedHodgeArakelovSynchronization
+
+/--
+Target-charted Hodge--Arakelov synchronization whose canonical-one preservation
+is derived from equality of source and target theta-monoid degrees.
+-/
+structure IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F) where
+  matchedSynchronization :
+    IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+      part audited X C
+  targetChartedTheta_eq_canonicalOneDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      matchedSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+
+namespace IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+
+def sourceEvaluation
+    (sync :
+      IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+      l X C :=
+  sync.matchedSynchronization.sourceEvaluation
+
+def targetEvaluation
+    (sync :
+      IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+      l X C :=
+  sync.matchedSynchronization.targetEvaluation
+
+def valueSource
+    (sync :
+      IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+      l X C :=
+  sync.matchedSynchronization.valueSource
+
+noncomputable def toTargetChartedHodgeArakelovSynchronization
+    (sync :
+      IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1TargetChartedHodgeArakelovSynchronization
+      part audited X C :=
+  { synchronization :=
+      sync.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization,
+    targetChartedTheta_eq_canonicalOneDegree :=
+      sync.targetChartedTheta_eq_canonicalOneDegree }
+
+theorem chartedTheta_eq_thetaMonoidDegree
+    (sync :
+      IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      sync.valueSource.thetaMonoidDegree :=
+  sync.targetChartedTheta_eq_canonicalOneDegree.trans
+    (sync.matchedSynchronization.canonicalOneDegree_preserved.trans
+      sync.sourceEvaluation.canonicalOneDegree_eq_thetaMonoidDegree)
+
+theorem synchronization_endpoint
+    (sync :
+      IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C) :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        sync.sourceEvaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sync.sourceEvaluation.fullLabelCompatibility ∧
+      sync.targetEvaluation.thetaMonoidDegree =
+        sync.sourceEvaluation.thetaMonoidDegree ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sync.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sync.valueSource.thetaMonoidDegree :=
+  ⟨sync.matchedSynchronization.matchedSynchronization_endpoint.1,
+    sync.matchedSynchronization.matchedSynchronization_endpoint.2.1,
+    sync.matchedSynchronization.thetaMonoidDegree_eq,
+    sync.targetChartedTheta_eq_canonicalOneDegree,
+    sync.chartedTheta_eq_thetaMonoidDegree⟩
+
+end IUTStage1TargetChartedThetaMonoidDegreeMatchedHodgeArakelovSynchronization
 
 set_option linter.style.longLine false in
 /--
