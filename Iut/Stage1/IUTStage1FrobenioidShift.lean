@@ -42835,6 +42835,139 @@ theorem boundaryEndpointWithMatchedGaussianStepXIAudit
       hboundary.2.2.2.2.2.2.2.2.2⟩
 
 set_option linter.style.longLine false in
+/--
+Named full-route audit for the bundled theta-monoid-matched finite-divisor
+source.
+
+This combines the pre-\(\IPL\) Hodge/SHE audit, the constructed \(\IPL\)
+log-volume endpoints, the obligations-backed possible-image Step (xi) endpoint,
+the record-canonical hull/tensor bridge equality, and the no-\(C_\Theta\)
+finite-divisor boundary in one proposition.
+-/
+structure MatchedSourceDerivedFiniteDivisorRouteAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  matchedFiniteHodgeSHETransportAudit :
+    MatchedFiniteHodgeSHETransportAudit sourceData
+  constructedIPLLogVolumeTransportAudit :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side
+  constructedIPLFiniteTransportLogVolumeAudit :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume
+  possibleImageHullDeterminantAudit :
+    sourceData.hullSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice ∧
+      sourceData.hullSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.hullSource.obligations.hullDetData.bridgeData ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.hullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  recordCanonicalHullBridgeAudit :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.hullSource.operation sourceData.hullSource.hullOperation
+        sourceData.hullSource.determinantOperation sourceData.hullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.hullSource.qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice)
+          (fun _ hx => hx))
+        sourceData.hullSource.determinantSource
+        sourceData.hullSource.compatibility
+        sourceData.hullSource.measure_eq_hullLogVolume
+        sourceData.hullSource.tensorPower_bound
+  matchedGaussianStepXIBoundaryAudit :
+    let hodgeSynchronization :=
+      sourceData.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+    sourceData.matchedSynchronization.targetEvaluation.thetaMonoidDegree =
+        sourceData.matchedSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+      sourceData.matchedSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceData.matchedSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      CalibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+        part audited hodgeSynchronization
+        sourceData.iplConstructionSource sourceData.hullSource ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        (sourceData.divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          sourceData.monoAnalyticTheater).toRealized.product.productLogVolume ∧
+      product.productLogVolume =
+        sourceData.divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toMatchedSourceDerivedFiniteDivisorRouteAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedSourceDerivedFiniteDivisorRouteAudit sourceData :=
+  { matchedFiniteHodgeSHETransportAudit :=
+      sourceData.toMatchedFiniteHodgeSHETransportAudit,
+    constructedIPLLogVolumeTransportAudit :=
+      sourceData.constructedIPLLogVolumeTransportSource_endpoint,
+    constructedIPLFiniteTransportLogVolumeAudit :=
+      sourceData.constructedIPLFiniteTransportLogVolume_endpoint,
+    possibleImageHullDeterminantAudit :=
+      sourceData.possibleImageHullDeterminantSource_endpoint,
+    recordCanonicalHullBridgeAudit :=
+      sourceData.possibleImageRecordCanonicalHullBridge_endpoint,
+    matchedGaussianStepXIBoundaryAudit :=
+      sourceData.boundaryEndpointWithMatchedGaussianStepXIAudit }
+
+set_option linter.style.longLine false in
 theorem cThetaDichotomyWithMatchedGaussianStepXIAudit
     (sourceData :
       IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
