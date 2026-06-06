@@ -18589,6 +18589,18 @@ structure TargetChartedHodgeSHEIPLConstructionAudit
       sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
       sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
         sourceData.toIPLLogVolumeTransport.targetTheater.side
+  constructedIPLChoiceLinkAudit :
+    (∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      (sourceData.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume
   constructedIPLFiniteTransportLogVolumeAudit :
     let audit :=
       sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
@@ -18623,6 +18635,8 @@ theorem toTargetChartedHodgeSHEIPLConstructionAudit
       sourceData.source_endpoint,
     constructedIPLLogVolumeTransportAudit :=
       sourceData.constructedIPLLogVolumeTransportSource_endpoint,
+    constructedIPLChoiceLinkAudit :=
+      sourceData.constructedIPLChoiceLink_endpoint,
     constructedIPLFiniteTransportLogVolumeAudit :=
       sourceData.constructedIPLFiniteTransportLogVolume_endpoint }
 
@@ -44725,6 +44739,21 @@ structure MatchedSideConditionedHodgeSHEIPLAudit
   hodgeSHEIPLConstructionAudit :
     IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.TargetChartedHodgeSHEIPLConstructionAudit
       sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource
+  constructedIPLChoiceLinkAudit :
+    (∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      (sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.iplConstructionSource.choiceLink
+          choice).source =
+          sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.iplConstructionSource.choiceLink
+          choice).target =
+          sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip
+            choice) ∧
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum =
+        sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.iplConstructionSource.constructedDatum ∧
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.sourceLogVolume
 
 theorem toMatchedSideConditionedHodgeSHEIPLAudit
     (sourceData :
@@ -44735,7 +44764,9 @@ theorem toMatchedSideConditionedHodgeSHEIPLAudit
   exact
     { thetaMonoidDegreeMatched := hmatched.2.1,
       hodgeSHEIPLConstructionAudit :=
-        sourceData.matchedHodgeIPLSource.hodgeSHEIPLAudit }
+        sourceData.matchedHodgeIPLSource.hodgeSHEIPLAudit,
+      constructedIPLChoiceLinkAudit :=
+        sourceData.matchedHodgeIPLSource.hodgeSHEIPLAudit.constructedIPLChoiceLinkAudit }
 
 set_option linter.style.longLine false in
 /--

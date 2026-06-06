@@ -28150,6 +28150,58 @@ theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstr
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface choice-wise \(\IPL\) link endpoint for the
+side-conditioned matched constructor-backed exact source.
+
+This projects the input-prime-strip links from the matched Hodge/SHE/\(\IPL\)
+audit before the Step (xi) hull/determinant source and exact vertical-`IQ`
+boundary are used.
+-/
+theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_matchedSideConditionedConstructedIPLChoiceLinkEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    (∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      (sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.iplConstructionSource.choiceLink
+          choice).source =
+          sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.iplConstructionSource.choiceLink
+          choice).target =
+          sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip
+            choice) ∧
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum =
+        sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.iplConstructionSource.constructedDatum ∧
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.sourceLogVolume :=
+  sourceData.toMatchedSideConditionedHodgeSHEIPLAudit.constructedIPLChoiceLinkAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the side-conditioned matched constructor-backed
 exact source and its projection through the obligations-backed
 record-canonical corridor.
