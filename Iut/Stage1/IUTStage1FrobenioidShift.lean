@@ -47002,6 +47002,354 @@ end
 
 set_option linter.style.longLine false in
 /--
+Canonical-one bundled source object with constructed \(\IPL\) and a
+constructor-built possible-image Step (xi) hull/determinant source.
+
+This is the canonical-one counterpart of
+`IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource`:
+the route stores only preservation of the Gaussian degree at the canonical
+\(1\)-label.  The theta-monoid match is derived from the Hodge--Arakelov
+evaluation laws, and the \(\IPL\)/log-volume transport is then constructed
+from the finite Hodge/\(\SHE\) transport and the Theorem 3.11
+input-prime-strip-link construction source.
+-/
+structure
+    IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F)
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    (holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j)
+    (product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j) where
+  sourceCalibratedEvaluation :
+    IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
+      part audited X C
+  targetEvaluation :
+    IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+      l X C
+  canonicalOneDegree_preserved :
+    targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  iplConstructionSource :
+    IUTStage1Theorem311IPLLinkConstructionSource record
+  hullSource :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+      (β := β) record
+  upperSemiEntry :
+    NonarchimedeanPacketNormalizedUpperSemiEntrySource audited
+  divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product
+  monoAnalyticTheater : QualitativeData.HodgeTheaterId
+  kummerCompatibility :
+    IUTStage1RealifiedFrobenioidKummerCompatibility
+      holomorphicF holomorphicD
+  forgettingCompatibility :
+    IUTStage1RealifiedFrobenioidKummerCompatibility
+      holomorphicD
+        (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          monoAnalyticTheater)
+  holomorphicF_realization :
+    holomorphicF.toRealized.realization =
+      IUTStage1TensorPacketRealizationKind.holomorphicF
+  holomorphicD_realization :
+    holomorphicD.toRealized.realization =
+      IUTStage1TensorPacketRealizationKind.holomorphicD
+  holomorphicStructureForgotten : Prop
+  holomorphic_structure_forgotten : holomorphicStructureForgotten
+  packetLocalObject_eq_entrySource :
+    audited.choice.local_tensor_state.packetState.localObject =
+      upperSemiEntry.toEntry.sourceLogVolume
+  packetLocalObjectFinite_eq_divisorRealified :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      divisorPacket.divisor.realifiedLogVolume
+  packetLocalObjectFinite_eq_ind3Source :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  targetSource :
+    NonarchimedeanLogKummerVerticalIQTargetSource
+      audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+      packageN.logKummer upperSemiEntry.toEntry
+
+namespace
+  IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {β : Type v} [Fintype β]
+variable {j : Nat}
+variable {holomorphicF holomorphicD :
+  IUTStage1RealifiedFrobenioidTensorPacketProductSource
+    IUTStage1PlaceKind.nonarchimedean j}
+variable {product :
+  IUTStage1BaseValuationTensorPacketProductLogVolume
+    IUTStage1PlaceKind.nonarchimedean j}
+
+theorem thetaMonoidDegree_eq
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.targetEvaluation.thetaMonoidDegree =
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree := by
+  calc
+    sourceData.targetEvaluation.thetaMonoidDegree =
+        sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+      sourceData.targetEvaluation.canonicalOneDegree_eq_thetaMonoidDegree.symm
+    _ =
+        sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+      sourceData.canonicalOneDegree_preserved
+    _ = sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
+      sourceData.sourceCalibratedEvaluation.evaluation.canonicalOneDegree_eq_thetaMonoidDegree
+
+noncomputable def toThetaMonoidMatchedConstructorBuiltSource
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+      (β := β) part audited record X C holomorphicF holomorphicD product :=
+  { matchedSynchronization :=
+      { sourceCalibratedEvaluation := sourceData.sourceCalibratedEvaluation,
+        targetEvaluation := sourceData.targetEvaluation,
+        thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq },
+    iplConstructionSource := sourceData.iplConstructionSource,
+    hullSource := sourceData.hullSource,
+    upperSemiEntry := sourceData.upperSemiEntry,
+    divisorPacket := sourceData.divisorPacket,
+    monoAnalyticTheater := sourceData.monoAnalyticTheater,
+    kummerCompatibility := sourceData.kummerCompatibility,
+    forgettingCompatibility := sourceData.forgettingCompatibility,
+    holomorphicF_realization := sourceData.holomorphicF_realization,
+    holomorphicD_realization := sourceData.holomorphicD_realization,
+    holomorphicStructureForgotten := sourceData.holomorphicStructureForgotten,
+    holomorphic_structure_forgotten :=
+      sourceData.holomorphic_structure_forgotten,
+    packetLocalObject_eq_entrySource :=
+      sourceData.packetLocalObject_eq_entrySource,
+    packetLocalObjectFinite_eq_divisorRealified :=
+      sourceData.packetLocalObjectFinite_eq_divisorRealified,
+    packetLocalObjectFinite_eq_ind3Source :=
+      sourceData.packetLocalObjectFinite_eq_ind3Source,
+    targetSource := sourceData.targetSource }
+
+set_option linter.style.longLine false in
+abbrev CanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
+    sourceData.toThetaMonoidMatchedConstructorBuiltSource
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit sourceData :=
+  sourceData.toThetaMonoidMatchedConstructorBuiltSource.toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
+
+set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  thetaMonoidDegree_eq :
+    sourceData.targetEvaluation.thetaMonoidDegree =
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree
+  canonicalOneDegree_preserved :
+    sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  matchedFiniteHodgeSHETransportAudit :
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource.MatchedFiniteHodgeSHETransportAudit
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource
+  constructedIPLLogVolumeTransportAudit :
+    sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toIPLLogVolumeTransport.targetTheater.side
+  constructedIPLFiniteTransportLogVolumeAudit :
+    let projected :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource;
+    let audit :=
+      projected.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    projected.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      projected.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      projected.toIPLLogVolumeTransport.targetLogVolume =
+        projected.toIPLLogVolumeTransport.sourceLogVolume ∧
+      projected.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      projected.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      projected.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        projected.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData :=
+  { thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq,
+    canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
+    matchedFiniteHodgeSHETransportAudit :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toMatchedFiniteHodgeSHETransportAudit,
+    constructedIPLLogVolumeTransportAudit :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.constructedIPLLogVolumeTransportSource_endpoint,
+    constructedIPLFiniteTransportLogVolumeAudit :=
+      sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.constructedIPLFiniteTransportLogVolume_endpoint }
+
+set_option linter.style.longLine false in
+abbrev CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltMatchedBoundaryAudit
+    sourceData.toThetaMonoidMatchedConstructorBuiltSource
+
+theorem boundaryEndpointWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit sourceData :=
+  sourceData.toThetaMonoidMatchedConstructorBuiltSource.boundaryEndpointWithConstructorBuiltMatchedGaussianStepXIAudit
+
+set_option linter.style.longLine false in
+abbrev CanonicalOneConstructorBuiltIPLConstructionCThetaAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop :=
+  IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltMatchedCThetaAudit
+    sourceData.toThetaMonoidMatchedConstructorBuiltSource cTheta
+
+theorem cThetaDichotomyWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLConstructionCThetaAudit sourceData cTheta :=
+  sourceData.toThetaMonoidMatchedConstructorBuiltSource
+    |>.cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
+      cTheta thetaSigned_le_cTheta_absLogQ
+
+theorem boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPLConstruction
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  let h :=
+    sourceData.cThetaDichotomyWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit
+      cTheta thetaSigned_le_cTheta_absLogQ;
+  (h.2.2.2.2).2.2.2
+
+set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop where
+  routeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit
+      sourceData
+  middleRouteAudit :
+    CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
+  boundaryAudit :
+    CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit sourceData
+  cThetaAudit :
+    CanonicalOneConstructorBuiltIPLConstructionCThetaAudit sourceData cTheta
+  dichotomy :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta
+
+set_option linter.style.longLine false in
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLConstructionFiniteDivisorVerticalIQ_withMilestoneAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
+      sourceData cTheta :=
+  { routeAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit,
+    middleRouteAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
+    boundaryAudit :=
+      sourceData.boundaryEndpointWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit,
+    cThetaAudit :=
+      sourceData.cThetaDichotomyWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit
+        cTheta thetaSigned_le_cTheta_absLogQ,
+    dichotomy :=
+      sourceData.boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPLConstruction
+        cTheta thetaSigned_le_cTheta_absLogQ }
+
+end
+  IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+
+set_option linter.style.longLine false in
+/--
 History-separated Hodge--Arakelov endpoint for the constructor-built
 certificate-pinned \(\IPL\)-link finite-divisor route.
 
