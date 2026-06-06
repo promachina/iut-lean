@@ -48316,6 +48316,31 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit
       sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.finiteHodgeSHETransport_endpoint }
 
 set_option linter.style.longLine false in
+abbrev CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  (∀ choice :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean,
+    (sourceData.iplConstructionSource.choiceLink choice).source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      (sourceData.iplConstructionSource.choiceLink choice).target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+      sourceData.iplConstructionSource.constructedDatum ∧
+    sourceData.toIPLLogVolumeTransport.targetLogVolume =
+      sourceData.toIPLLogVolumeTransport.sourceLogVolume
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData :=
+  sourceData.constructedIPLChoiceLink_endpoint
+
+set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -48360,6 +48385,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
         sourceData.iplConstructionSource.constructedDatum ∧
       sourceData.toIPLLogVolumeTransport.targetLogVolume =
         sourceData.toIPLLogVolumeTransport.sourceLogVolume
+  choiceLinkAudit :
+    CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData
   directFiniteTransportLogVolumeEndpoint :
     let audit :=
       sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
@@ -48389,6 +48416,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
       sourceData.constructedIPLLogVolumeTransportSource_endpoint,
     directChoiceLinkEndpoint :=
       sourceData.constructedIPLChoiceLink_endpoint,
+    choiceLinkAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
     directFiniteTransportLogVolumeEndpoint :=
       sourceData.constructedIPLFiniteTransportLogVolume_endpoint }
 
@@ -48404,6 +48433,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
     CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
   constructedIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData
+  choiceLinkAudit :
+    CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData
   thetaMonoidDegree_eq :
     sourceData.targetEvaluation.thetaMonoidDegree =
       sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree
@@ -48475,6 +48506,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
     constructedIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit,
+    choiceLinkAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
     thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq,
     canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
     directFiniteHodgeSHEIPLConstructionSourceAudit :=
@@ -48524,6 +48557,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
         (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
   hodgeSHEIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
+  choiceLinkAudit :
+    CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData
   directGaussianToStepXIAudit :
     CanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit
       sourceData
@@ -48575,6 +48610,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
     canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
     hodgeSHEIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
+    choiceLinkAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
     directGaussianToStepXIAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit,
     matchedFiniteHodgeSHETransportAudit :=
@@ -49139,6 +49176,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
     Prop where
   hodgeSHEIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
+  choiceLinkAudit :
+    CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData
   middleRouteAudit :
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
@@ -49164,6 +49203,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
   exact
     { hodgeSHEIPLAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
+      choiceLinkAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
       middleRouteAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
       stepXIHullAudit :=
@@ -49370,6 +49411,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
     CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
   qComparisonAudit :
     CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit sourceData
+  choiceLinkAudit :
+    CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData
   packetTargetAudit :
     CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
   directFiniteBoundaryAudit :
@@ -49449,6 +49492,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit,
       qComparisonAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit,
+      choiceLinkAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
       packetTargetAudit := hpacketTarget,
       directFiniteBoundaryAudit := hdirectBoundary,
       boundaryAudit :=
@@ -49529,6 +49574,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
     CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
   constructedIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData
+  choiceLinkAudit :
+    CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData
   hodgeSHEIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
   directGaussianToStepXIAudit :
@@ -49591,6 +49638,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
     constructedIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit,
+    choiceLinkAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
     hodgeSHEIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
     directGaussianToStepXIAudit :=

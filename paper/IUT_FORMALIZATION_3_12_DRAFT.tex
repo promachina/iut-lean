@@ -4074,7 +4074,11 @@ isolates that constructed \(\IPL\) segment: the finite source's
 the Theorem 3.11 input-prime-strip link source, every output choice prime strip
 is linked back to the constructed input strip, and the source/target log-volume
 equality is read from the finite Hodge/\(\SHE\) transported-average audit.
-Its
+The named subaudit
+\texttt{CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit} now exposes
+this choice-wise input-prime-strip link obligation directly and is threaded
+through the Hodge/\(\SHE\)/\(\IPL\), middle-route, q-comparison, finite-boundary,
+and milestone \(C_\Theta\) audits.  Its
 Step (xi) hull side is now separated as
 \texttt{CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit}, which
 records the constructor-built, constructor-sourced, and constructor-pinned
@@ -4138,6 +4142,7 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit},\\
