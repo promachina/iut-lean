@@ -51138,6 +51138,127 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
 
 set_option linter.style.longLine false in
 /--
+Route-level Ob5 quotient-independence audit for the canonical-one constructed
+\(\IPL\) finite-divisor source.
+
+The standalone constructor-built Step (xi) source proves the Remark
+3.9.5(v)--(vi) quotient-collapse statement for any two nonempty possible
+images.  This route audit threads that statement through the strongest
+canonical-one constructed-\(\IPL\) finite-divisor object, next to the existing
+Ob1--Ob5 compatibility payload, so the finite-boundary route itself records
+independence of the possible-image choice under the bounded-family hull
+quotient.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionOb5QuotientIndependenceAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty) :
+    Prop where
+  ob1ToOb5BridgeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb1ToOb5BridgeAudit sourceData
+  ob5CompatibilityAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
+      sourceData
+  constructorBuiltOb5QuotientIndependenceAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb5QuotientIndependenceAudit
+      sourceData.hullSource comparisonChoice qChoice_nonempty
+      comparisonChoice_nonempty
+  qChoiceRegion_subset_familyHull :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice ⊆
+      sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource.familyHull
+  comparisonRegion_subset_familyHull :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice ⊆
+      sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource.familyHull
+  qChoice_quotientImage_eq_collapsed :
+    (sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  comparison_quotientImage_eq_collapsed :
+    (sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record comparisonChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  quotientImages_eq :
+    (sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice =
+      (sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record comparisonChoice
+  familyHullLogVolume_eq_determinant :
+    sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume =
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  familyUnionLogVolume_le_determinant :
+    sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource.familyUnionLogVolume <=
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  tensorPower_normalizedLogVolume_eq_familyHull :
+    sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource.tensorPower.normalizedLogVolume =
+      sourceData.hullSource.toRecordBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionOb5QuotientIndependenceAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty) :
+    CanonicalOneConstructorBuiltIPLConstructionOb5QuotientIndependenceAudit
+      sourceData comparisonChoice qChoice_nonempty
+      comparisonChoice_nonempty := by
+  let hob5 :=
+    sourceData.hullSource.toConstructorBuiltOb5QuotientIndependenceAudit
+      comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  exact
+    { ob1ToOb5BridgeAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb1ToOb5BridgeAudit,
+      ob5CompatibilityAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
+      constructorBuiltOb5QuotientIndependenceAudit := hob5,
+      qChoiceRegion_subset_familyHull :=
+        hob5.qChoiceRegion_subset_familyHull,
+      comparisonRegion_subset_familyHull :=
+        hob5.comparisonRegion_subset_familyHull,
+      qChoice_quotientImage_eq_collapsed :=
+        hob5.qChoice_quotientImage_eq_collapsed,
+      comparison_quotientImage_eq_collapsed :=
+        hob5.comparison_quotientImage_eq_collapsed,
+      quotientImages_eq :=
+        hob5.quotientImages_eq,
+      familyHullLogVolume_eq_determinant :=
+        hob5.familyHullLogVolume_eq_determinant,
+      familyUnionLogVolume_le_determinant :=
+        hob5.familyUnionLogVolume_le_determinant,
+      tensorPower_normalizedLogVolume_eq_familyHull :=
+        hob5.tensorPower_normalizedLogVolume_eq_familyHull,
+      qSigned_le_thetaSigned :=
+        hob5.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Source side-condition payload inside the canonical-one constructed-\(\IPL\)
 Step (xi) hull source.
 
