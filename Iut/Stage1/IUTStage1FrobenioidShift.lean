@@ -47486,6 +47486,24 @@ theorem constructedIPLLogVolumeTransportSource_endpoint
   sourceData.toFiniteHodgeSHEIPLConstructionSource.source_endpoint
 
 set_option linter.style.longLine false in
+theorem constructedIPLChoiceLink_endpoint
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    (∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      (sourceData.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.constructedIPLChoiceLink_endpoint
+
+set_option linter.style.longLine false in
 theorem constructedIPLFiniteTransportLogVolume_endpoint
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47701,6 +47719,83 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit
       sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.finiteHodgeSHETransport_endpoint }
 
 set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  factoredSHEAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
+  iplTransportSource_eq_constructed :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource =
+      IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport :=
+          sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport)
+        sourceData.iplConstructionSource
+  directLogVolumeTransportEndpoint :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side
+  directChoiceLinkEndpoint :
+    (∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      (sourceData.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume
+  directFiniteTransportLogVolumeEndpoint :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData :=
+  { factoredSHEAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
+    iplTransportSource_eq_constructed :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource_eq_constructed,
+    directLogVolumeTransportEndpoint :=
+      sourceData.constructedIPLLogVolumeTransportSource_endpoint,
+    directChoiceLinkEndpoint :=
+      sourceData.constructedIPLChoiceLink_endpoint,
+    directFiniteTransportLogVolumeEndpoint :=
+      sourceData.constructedIPLFiniteTransportLogVolume_endpoint }
+
+set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47710,6 +47805,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
     CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
   factoredSHEAudit :
     CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
+  constructedIPLAudit :
+    CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData
   thetaMonoidDegree_eq :
     sourceData.targetEvaluation.thetaMonoidDegree =
       sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree
@@ -47779,6 +47876,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
     factoredSHEAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
+    constructedIPLAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit,
     thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq,
     canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
     directFiniteHodgeSHEIPLConstructionSourceAudit :=
@@ -48293,6 +48392,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
     CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
   factoredSHEAudit :
     CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
+  constructedIPLAudit :
+    CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData
   hodgeSHEIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
   directGaussianToStepXIAudit :
@@ -48337,6 +48438,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
     factoredSHEAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
+    constructedIPLAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit,
     hodgeSHEIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
     directGaussianToStepXIAudit :=
