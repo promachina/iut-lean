@@ -26058,6 +26058,156 @@ theorem targetChartedHodgeIPLConstructorBackedMeasureCalibratedPossibleImageRout
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface endpoint for the constructor-backed adjusted-summand
+possible-image Step (xi) source.
+
+This keeps the finite adjusted-summand determinant identity visible at the
+same boundary where the Theorem 3.11 record-canonical hull/determinant
+constructor supplies the possible-image q-region bridge.
+-/
+theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_endpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization) :
+    stepXISource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record stepXISource.qChoice ∧
+      package.preLedger.measure =
+        stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.familyHullLogVolume =
+        stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume ∧
+      stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume =
+        stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      stepXISource.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.constructorObligations.hullDetData =
+        stepXISource.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.toHullDetSourceConstructor.hullDetData ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        stepXISource.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.constructorObligations.hullDetData.bridgeData ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          stepXISource.operation stepXISource.hullOperation
+          stepXISource.determinantOperation
+          stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.hullData
+          stepXISource.qPilotRegion
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) stepXISource.qChoice stepXISource.qPilotRegion
+            stepXISource.q_subset_choice)
+          stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource
+          stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.compatibility
+          stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+          stepXISource.measureCalibratedAdjustedHodgeSource.tensorPower_bound ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  stepXISource.source_endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface source endpoint for the all-in-one constructor-backed
+adjusted-summand Gaussian-to-Step (xi) route.
+
+The route exposes IPL construction, target/source log-volume alignment, the
+selected possible-image q-region, package measure calibration,
+adjusted-summand determinant equalities, the generated hull/determinant bridge,
+and the signed Step (xi) comparison.
+-/
+theorem targetChartedHodgeIPLConstructorBackedMeasureCalibratedAdjustedPossibleImageRoute_sourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLConstructorBackedMeasureCalibratedAdjustedPossibleImageRouteSource
+        (β := β) (γ := γ) audited record X C) :
+    routeSource.hodgeIPLSource.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      routeSource.hodgeIPLSource.toIPLLogVolumeTransport.iplDatum =
+        routeSource.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      routeSource.hodgeIPLSource.toIPLLogVolumeTransport.targetLogVolume =
+        routeSource.hodgeIPLSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      routeSource.constructorBackedAdjustedPossibleImageSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record routeSource.constructorBackedAdjustedPossibleImageSource.qChoice ∧
+      package.preLedger.measure =
+        routeSource.constructorBackedAdjustedPossibleImageSource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      routeSource.constructorBackedAdjustedPossibleImageSource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.familyHullLogVolume =
+        routeSource.constructorBackedAdjustedPossibleImageSource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume ∧
+      routeSource.constructorBackedAdjustedPossibleImageSource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume =
+        routeSource.constructorBackedAdjustedPossibleImageSource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        routeSource.constructorBackedAdjustedPossibleImageSource.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.constructorObligations.hullDetData.bridgeData ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  routeSource.source_endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface audit for the all-in-one constructor-backed
+adjusted-summand Gaussian-to-Step (xi) route.
+
+This is the current strictest finite adjusted-summand Step (xi) route: it
+projects internally to the constructor-backed measured route, while retaining
+the adjusted-summand audit as public provenance.
+-/
+theorem targetChartedHodgeIPLConstructorBackedMeasureCalibratedAdjustedPossibleImageRoute_toConstructorBackedAdjustedGaussianStepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLConstructorBackedMeasureCalibratedAdjustedPossibleImageRouteSource
+        (β := β) (γ := γ) audited record X C) :
+    IUTStage1TargetChartedHodgeIPLConstructorBackedMeasureCalibratedAdjustedPossibleImageRouteSource.ConstructorBackedAdjustedGaussianToStepXIAudit
+      routeSource :=
+  routeSource.toConstructorBackedAdjustedGaussianToStepXIAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface source endpoint for the side-conditioned constructor-backed
 Step (xi) hull/determinant source.
 

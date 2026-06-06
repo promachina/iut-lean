@@ -2631,6 +2631,39 @@ experiment endpoints keep the finite adjusted-summand identity
 \]
 visible next to the Hodge theta-degree calibration, the selected
 Theorem~3.11 possible-image q-region, and the obligations bridge equality.
+The adjusted-summand payload has also been moved into the constructor-backed
+Step~(xi) route.  The source
+\[
+\begin{array}{l}
+\texttt{IUTStage1TargetChartedHodgeConstructorBacked}\\
+\quad\texttt{MeasureCalibratedAdjustedPossibleImageHullDetSource}
+\end{array}
+\]
+uses the record-canonical Theorem~3.11 hull/tensor-power constructor to
+generate the possible-image hull/determinant obligations, while its determinant
+input is projected from the measured adjusted-summand family-hull source.  Its
+endpoint exposes, in one checked proposition, the selected q-region, the
+measure calibration, the two finite adjusted-summand equalities
+\[
+  \mu_{\log}(\phi(P_B))
+  =
+  \sum_{\gamma}(\text{localization}_{\gamma}
+      - \text{structure sheaf}_{\gamma})
+  =
+  \det_{\log},
+\]
+the equality between generated obligations and the constructor hull/determinant
+data, the record-canonical bridge equality, q-positivity, normalization, and
+\(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\).  The all-in-one route
+\[
+\begin{array}{l}
+\texttt{IUTStage1TargetChartedHodgeIPLConstructorBacked}\\
+\quad\texttt{MeasureCalibratedAdjustedPossibleImageRouteSource}
+\end{array}
+\]
+then combines this constructor-backed adjusted source with the Hodge/IPL
+construction.  Its audit projects internally to the constructor-backed measured
+route, but keeps the adjusted-summand Step~(xi) audit as public provenance.
 The actual log-volume bridge has now been separated as a named source object:
 \[
 \begin{array}{l}
