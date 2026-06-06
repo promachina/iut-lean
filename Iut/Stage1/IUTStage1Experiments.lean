@@ -39771,6 +39771,38 @@ theorem remark395PossibleImageFamilySource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface possible-image family from the minimal hull system of
+Remark 3.9.5(ii).
+
+This constructs the family source directly from the intersection-defined
+holomorphic hull system, so the family union, canonical hull, selected
+possible-image inclusions, canonical `Phi` approximant, and Ob5 quotient
+collapse are all read through the constructed `phi(P_B)`.
+-/
+theorem remark395PossibleImageFamilySource_ofHullSystem_endpoint
+    {α : Type u} {ι : Type v}
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (possibleRegion : ι -> Set α)
+    (i j : ι)
+    (hnei : (possibleRegion i).Nonempty)
+    (hnej : (possibleRegion j).Nonempty) :
+    let data :=
+      IUTStage1Remark395PossibleImageFamilySource.ofHullSystem
+        hullSystem possibleRegion;
+    data.familyUnion = ⋃ index, possibleRegion index ∧
+      data.canonicalHull = hullSystem.phi (⋃ index, possibleRegion index) ∧
+      hullSystem.isHull data.canonicalHull ∧
+      data.familyUnion ⊆ data.canonicalHull ∧
+      data.possibleRegion i ⊆ data.canonicalHull ∧
+      data.possibleRegion j ⊆ data.canonicalHull ∧
+      data.canonicalPhi.approximant = data.canonicalHull ∧
+      data.quotientMap '' data.possibleRegion i =
+        data.quotientMap '' data.possibleRegion j :=
+  IUTStage1Remark395PossibleImageFamilySource.ofHullSystem_endpoint
+    hullSystem possibleRegion i j hnei hnej
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Ob3/Ob4 determinant audit for Remark 3.9.5.
 
 This source-level endpoint exposes the structure-sheaf adjustment, weighted

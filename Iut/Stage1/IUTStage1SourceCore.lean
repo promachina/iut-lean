@@ -4229,6 +4229,13 @@ variable {α : Type u} {ι : Type v} {κ : Type w}
 
 open IUTStage1UpperSemiSetQuotient
 
+def ofHullSystem
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (possibleRegion : ι -> Set α) :
+    IUTStage1Remark395PossibleImageFamilySource α ι :=
+  { hullOperator := hullSystem.toHolomorphicHullOperator,
+    possibleRegion := possibleRegion }
+
 def hullData
     (data : IUTStage1Remark395PossibleImageFamilySource α ι) :
     IUTStage1HolomorphicHullLogVolumeShadow α :=
@@ -4430,6 +4437,35 @@ theorem endpoint
     data.canonicalPhi_approximant_eq_phi,
     data.phi_closed,
     data.quotientMap_images_eq i j hnei hnej⟩
+
+set_option linter.style.longLine false in
+theorem ofHullSystem_endpoint
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (possibleRegion : ι -> Set α)
+    (i j : ι)
+    (hnei : (possibleRegion i).Nonempty)
+    (hnej : (possibleRegion j).Nonempty) :
+    let data := ofHullSystem hullSystem possibleRegion;
+    data.familyUnion = ⋃ index, possibleRegion index ∧
+      data.canonicalHull = hullSystem.phi (⋃ index, possibleRegion index) ∧
+      hullSystem.isHull data.canonicalHull ∧
+      data.familyUnion ⊆ data.canonicalHull ∧
+      data.possibleRegion i ⊆ data.canonicalHull ∧
+      data.possibleRegion j ⊆ data.canonicalHull ∧
+      data.canonicalPhi.approximant = data.canonicalHull ∧
+      data.quotientMap '' data.possibleRegion i =
+        data.quotientMap '' data.possibleRegion j :=
+  by
+    intro data
+    exact
+      ⟨rfl,
+        rfl,
+        hullSystem.phi_isHull (⋃ index, possibleRegion index),
+        data.familyUnion_subset_phi,
+        data.possibleRegion_subset_phi i,
+        data.possibleRegion_subset_phi j,
+        data.canonicalPhi_approximant_eq_phi,
+        data.quotientMap_images_eq i j hnei hnej⟩
 
 end IUTStage1Remark395PossibleImageFamilySource
 
