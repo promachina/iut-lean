@@ -4207,6 +4207,7 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionDirectMiddleRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstruction}\\
 \quad\texttt{RouteLogVolumeAlignmentAudit},\\
@@ -4247,10 +4248,14 @@ source side conditions, raw q-comparison, finite boundary, and conditional
 \texttt{CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit}
 now carries the transport-source, log-volume transport, and finite-transport
 log-volume audits directly, together with the constructed source-derived
-bridge audit, the constructed route-log-volume alignment audit,
-constructor-built upper-ray audit, and a direct signed \(C_\Theta\) audit.  The
-direct audit computes the ordered-real dichotomy from the constructed
-q-positivity side condition, the constructed
+bridge audit, the constructed route-log-volume alignment audit, a direct
+middle-route audit, constructor-built upper-ray audit, and a direct signed
+\(C_\Theta\) audit.  The direct middle-route audit bundles the canonical-one
+theta-evaluation, finite Hodge/\(\SHE\) transport, factored \(\SHE\),
+constructed \(\IPL\) log-volume transport, source-derived bridge, and
+route-log-volume alignment chain before the theta-monoid-matched finite
+boundary is used for compatibility.  The direct \(C_\Theta\) audit computes the
+ordered-real dichotomy from the constructed q-positivity side condition, the constructed
 \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) Step (xi) comparison, and
 the explicit numeric \(C_\Theta\) estimate, rather than projecting that
 dichotomy only through the coarser theta-monoid-matched \(C_\Theta\) package.
