@@ -35140,6 +35140,9 @@ structure TargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
   gaussianToStepXIAudit :
     IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
       routeSource
+  hodgeSHEIPLAudit :
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.TargetChartedHodgeSHEIPLConstructionAudit
+      routeSource.hodgeIPLSource
   iplDatum_eq_certificate :
     routeSource.toSourceDerivedBridge.iplTransport.iplDatum =
       packageN.preLedger.certificate.ipl
@@ -35206,6 +35209,8 @@ theorem toTargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
   have h := routeSource.sourceDerivedBridge_endpoint
   exact
     { gaussianToStepXIAudit := routeSource.toGaussianToStepXIAudit,
+      hodgeSHEIPLAudit :=
+        routeSource.hodgeIPLSource.toTargetChartedHodgeSHEIPLConstructionAudit,
       iplDatum_eq_certificate := h.1,
       iplDatum_eq_constructed := h.2.1,
       targetChartedTheta_eq_canonicalOneDegree := h.2.2.1,
@@ -49436,6 +49441,9 @@ structure TargetChartedHodgeIPLConstructionDeterminantPossibleImageHullBridgeAud
     (sourceBridge :
       IUTStage1SourceDerivedHodgeSHEIPLHullBridge part audited record X C) :
     Prop where
+  hodgeSHEIPLAudit :
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.TargetChartedHodgeSHEIPLConstructionAudit
+      hodgeIPLSource
   iplDatum_eq_certificate :
     sourceBridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl
   iplDatum_eq_constructed :
@@ -49514,7 +49522,9 @@ theorem toTargetChartedHodgeIPLConstructionDeterminantPossibleImageHullBridgeAud
       (part := part) (audited := audited)
       hodgeIPLSource possibleImageSource
   exact
-    { iplDatum_eq_certificate := h.1,
+    { hodgeSHEIPLAudit :=
+        hodgeIPLSource.toTargetChartedHodgeSHEIPLConstructionAudit,
+      iplDatum_eq_certificate := h.1,
       iplDatum_eq_constructed := h.2.1,
       targetChartedTheta_eq_canonicalOneDegree := h.2.2.1,
       chartedTheta_eq_thetaMonoidDegree := h.2.2.2.1,

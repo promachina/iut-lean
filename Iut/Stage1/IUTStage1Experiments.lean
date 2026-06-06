@@ -24219,6 +24219,46 @@ theorem targetChartedHodgeIPLConstructionDeterminantPossibleImageHull_bridgeEndp
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface named bridge audit for the packaged target-charted
+Hodge/IPL construction source and Hodge/determinant possible-image source.
+
+The returned audit now carries the full Hodge/SHE/IPL construction audit as a
+field before the determinant possible-image Step (xi) payload is used.
+-/
+theorem targetChartedHodgeIPLConstructionDeterminantPossibleImageHull_bridgeAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeIPLSource :
+      part.IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        audited record X C)
+    {β : Type v} [Fintype β]
+    (possibleImageSource :
+      part.IUTStage1TargetChartedHodgeDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) audited record hodgeIPLSource.hodgeSynchronization) :
+    let bridge :=
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofTargetChartedHodgeIPLConstructionAndHodgeDeterminantPossibleImageSources
+        (part := part) (audited := audited)
+        hodgeIPLSource possibleImageSource;
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.TargetChartedHodgeIPLConstructionDeterminantPossibleImageHullBridgeAudit
+      part audited hodgeIPLSource possibleImageSource bridge :=
+  part.toTargetChartedHodgeIPLConstructionDeterminantPossibleImageHullBridgeAudit
+    audited hodgeIPLSource possibleImageSource
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface no-`C_\Theta` finite-divisor Step (x) boundary for the
 packaged target-charted Hodge/IPL construction source and Hodge/determinant
 possible-image route.
@@ -30603,6 +30643,40 @@ theorem targetChartedThetaMonoidMatchedHodgeIPLDeterminantPossibleImageRouteFini
     audited routeSource upperSemiEntry divisorPacket monoAnalyticTheater
     packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
     packetLocalObjectFinite_eq_ind3Source targetSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface Hodge/SHE/IPL construction payload carried by the
+all-in-one target-charted determinant possible-image route bridge audit.
+
+This exposes the theta-evaluation, factored SHE, finite transport, and
+constructed IPL/log-volume audit before any finite Step (x) vertical-`IQ`
+boundary is appended.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_allInOneRouteHodgeSHEIPLAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.TargetChartedHodgeSHEIPLConstructionAudit
+      routeSource.hodgeIPLSource :=
+  (part.toTargetChartedHodgeIPLDeterminantPossibleImageRouteBridgeAudit
+    audited routeSource).hodgeSHEIPLAudit
 
 set_option linter.style.longLine false in
 /--
