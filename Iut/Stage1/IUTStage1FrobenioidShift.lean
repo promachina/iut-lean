@@ -19619,6 +19619,28 @@ noncomputable def toSummandChartedHodgeFamilyHullExactThetaHullDetObligationsBac
     |>.toSummandChartedHodgeFamilyHullExactThetaHullDetObligationsBackedSource
 
 set_option linter.style.longLine false in
+noncomputable def toPossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+    (sourceData :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    IUTStage1PossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+      (β := β) record hodgeSynchronization.valueSource :=
+  { operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    familyHullSource := sourceData.familyHullSource,
+    qChoice := sourceData.qChoice,
+    measure_eq_hullLogVolume := sourceData.measure_eq_hullLogVolume,
+    chartedThetaFamilyCalibration :=
+      sourceData.targetChartedSummandCalibration
+        |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+        |>.toDeterminantChartedHodgeFamilyHullLogVolumeCalibration
+        |>.toChartedHodgeFamilyHullLogVolumeCalibration,
+    obligations := sourceData.obligations,
+    obligationsHullDetData_eq_recordCanonical :=
+      sourceData.obligationsHullDetData_eq_recordCanonical }
+
+set_option linter.style.longLine false in
 theorem source_endpoint
     (sourceData :
       IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
@@ -19658,6 +19680,101 @@ theorem source_endpoint
     projected.source_endpoint.2.2.2.2.2.2.1,
     projected.source_endpoint.2.2.2.2.2.2.2.1,
     projected.source_endpoint.2.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Named reduction audit from the synchronized target-charted possible-image
+summand source to the constructor-built Step (xi) boundary.
+
+The source first fixes the q-pilot region to a Theorem 3.11 possible image,
+then factors the Hodge--Arakelov theta-monoid degree through the finite
+summand sum and determinant log-volumes.  Forgetting the summand factorization
+produces the charted Hodge/family-hull source, whose reduction audit constructs
+the constructor-built possible-image hull boundary.
+-/
+structure SynchronizedPossibleImageSummandConstructorBuiltReductionAudit
+    (sourceData :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    Prop where
+  sourceEndpoint :
+    sourceData.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      sourceData.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      packageN.preLedger.thetaSigned =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  chartedFamilyHullReductionAudit :
+    IUTStage1PossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource.ChartedFamilyHullConstructorBuiltReductionAudit
+      sourceData.toPossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+  qPilotRegion_eq_possibleImage :
+    sourceData.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice
+  target_chart_eq_source_theta_monoid_degree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      hodgeSynchronization.valueSource.thetaMonoidDegree
+  theta_monoid_degree_eq_summand_sum :
+    hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (sourceData.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  thetaSigned_eq_familyHullLogVolume :
+    packageN.preLedger.thetaSigned =
+      sourceData.familyHullSource.familyHullLogVolume
+  hullDetBridge_eq_obligations :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.obligations.hullDetData.bridgeData
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toSynchronizedPossibleImageSummandConstructorBuiltReductionAudit
+    (sourceData :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    SynchronizedPossibleImageSummandConstructorBuiltReductionAudit sourceData :=
+  { sourceEndpoint := sourceData.source_endpoint,
+    chartedFamilyHullReductionAudit :=
+      sourceData.toPossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        |>.toChartedFamilyHullConstructorBuiltReductionAudit,
+    qPilotRegion_eq_possibleImage := rfl,
+    target_chart_eq_source_theta_monoid_degree :=
+      sourceData.targetChartedSummandCalibration.chartedTheta_eq_thetaMonoidDegree,
+    theta_monoid_degree_eq_summand_sum :=
+      sourceData.targetChartedSummandCalibration
+        |>.thetaMonoidDegree_eq_summandSum,
+    thetaSigned_eq_familyHullLogVolume :=
+      sourceData.targetChartedSummandCalibration
+        |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+        |>.thetaSigned_eq_familyHullLogVolume,
+    hullDetBridge_eq_obligations :=
+      sourceData.obligations.hullDetData.hullDetBridge_eq_bridgeData,
+    q_pilot_positive := sourceData.obligations.qPilotPositive,
+    normalization := sourceData.obligations.normalization,
+    qSigned_le_thetaSigned :=
+      sourceData.source_endpoint.2.2.2.2.2.2.2.2.2 }
 
 end IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
 

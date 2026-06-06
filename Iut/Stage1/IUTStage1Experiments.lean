@@ -22844,6 +22844,42 @@ theorem synchronizedTargetChartedPossibleImageSummandHodgeFamilyHull_sourceEndpo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface reduction audit from the synchronized target-charted
+possible-image summand Step (xi) source to the constructor-built boundary.
+
+This keeps the visible endpoint tied to the source package while recording that
+the same data forgets to the charted Hodge/family-hull source whose
+constructor-built possible-image hull boundary is already named.
+-/
+theorem synchronizedTargetChartedPossibleImageSummandHodgeFamilyHull_constructorBuiltReductionAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {hodgeSynchronization :
+      part.IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        audited X C}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      part.IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource.SynchronizedPossibleImageSummandConstructorBuiltReductionAudit
+      sourceData :=
+  sourceData.toSynchronizedPossibleImageSummandConstructorBuiltReductionAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface raw Step (xi) comparison from the synchronized target-charted
 possible-image summand/family-hull route.
 
