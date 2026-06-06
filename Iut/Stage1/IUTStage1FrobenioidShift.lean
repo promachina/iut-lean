@@ -47641,6 +47641,66 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit
     thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq }
 
 set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  thetaEvaluationAudit :
+    CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
+  synchronizationEndpoint :
+    let sync :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization;
+    QualitativeData.HasStructuredSHE packageN.preLedger.output.family ∧
+      sync.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sync.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) ∧
+      (∀ j : ZMod l.value,
+        sync.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (sync.toFactoredObligations.coordinateEquiv j)) =
+          sync.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      sync.toStructuredSHESquareWeightTransportAudit.preservationAudit.targetTransportedAverage =
+        sync.toStructuredSHESquareWeightTransportAudit.preservationAudit.sourceAverage ∧
+      record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+        record.bundle.structuredSHE.context.codomainStructure.theater.side
+  finiteTransportEndpoint :
+    let transport :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport;
+    QualitativeData.HasStructuredSHE packageN.preLedger.output.family ∧
+      transport.sourceTheater =
+        record.bundle.structuredSHE.context.domainStructure.theater ∧
+      transport.targetTheater =
+        record.bundle.structuredSHE.context.codomainStructure.theater ∧
+      transport.coordinateEquiv =
+        transport.toFactoredObligations.coordinateEquiv ∧
+      (∀ j : ZMod l.value,
+        transport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (transport.coordinateEquiv j)) =
+          transport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      (let audit :=
+        transport.synchronization.toStructuredSHESquareWeightTransportAudit
+          |>.preservationAudit;
+      audit.targetTransportedAverage = audit.sourceAverage) ∧
+      transport.sourceTheater.side ≠ transport.targetTheater.side
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData :=
+  { thetaEvaluationAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
+    synchronizationEndpoint :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.synchronization_endpoint,
+    finiteTransportEndpoint :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.finiteHodgeSHETransport_endpoint }
+
+set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47648,6 +47708,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
     Prop where
   thetaEvaluationAudit :
     CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
+  factoredSHEAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
   thetaMonoidDegree_eq :
     sourceData.targetEvaluation.thetaMonoidDegree =
       sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree
@@ -47715,6 +47777,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData :=
   { thetaEvaluationAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
+    factoredSHEAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
     thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq,
     canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
     directFiniteHodgeSHEIPLConstructionSourceAudit :=
@@ -48227,6 +48291,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
       sourceData
   thetaEvaluationAudit :
     CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
+  factoredSHEAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
   hodgeSHEIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
   directGaussianToStepXIAudit :
@@ -48269,6 +48335,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit,
     thetaEvaluationAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
+    factoredSHEAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
     hodgeSHEIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
     directGaussianToStepXIAudit :=

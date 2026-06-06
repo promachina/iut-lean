@@ -3998,7 +3998,13 @@ front Hodge--Arakelov Gaussian data is now also separated as
 records the source and target theta-evaluation endpoints, the source
 theta/log-volume calibration, canonical \(1\)-label degree preservation, and the
 derived theta-monoid degree equality before the finite Hodge/\(\SHE\) transport
-is constructed.  Its
+is constructed.  The next audit,
+\texttt{CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit}, records
+the factored square/full-label \(\SHE\) synchronization endpoint and the finite
+Hodge/\(\SHE\) transport endpoint: structured-\(\SHE\) availability,
+identity-coordinate transport, full-label log-volume preservation,
+transported-average preservation, and history separation all appear before the
+constructed \(\IPL\) log-volume transport is read.  Its
 Step (xi) hull side is now separated as
 \texttt{CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit}, which
 records the constructor-built, constructor-sourced, and constructor-pinned
@@ -4016,6 +4022,7 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionFullRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit},\\
@@ -4029,11 +4036,11 @@ experiment surface exposes this stricter route through suffixes
 \end{array}
 \]
 The corresponding milestone \(C_\Theta\) audit now also carries the
-remaining-payload route audit and the theta-evaluation audit as fields, so the
-final canonical-one constructed-\(\IPL\) review target keeps the
-theta-root/Hodge--Arakelov Gaussian, Hodge/\(\SHE/\IPL\), direct
-Gaussian-to-Step (xi), finite Step (x), vertical-\(IQ\), and Step (xi)
-source-paper payload ledgers together.
+remaining-payload route audit, the theta-evaluation audit, and the factored
+\(\SHE\) audit as fields, so the final canonical-one constructed-\(\IPL\)
+review target keeps the theta-root/Hodge--Arakelov Gaussian, factored
+Hodge/\(\SHE\), constructed \(\IPL\), direct Gaussian-to-Step (xi), finite Step
+(x), vertical-\(IQ\), and Step (xi) source-paper payload ledgers together.
 At the same canonical-one boundary, the finite Hodge/\(\SHE/\IPL\) middle
 layer is now constructed directly from the route's source-calibrated and
 target Hodge--Arakelov evaluations plus canonical \(1\)-label preservation.
