@@ -11862,6 +11862,98 @@ theorem toConstructorBuiltOb3Ob4DeterminantAudit
 
 set_option linter.style.longLine false in
 /--
+Source-derived Step (xi) bridge inequality for the constructor-built
+possible-image hull/determinant source.
+
+This packages the log-volume bridge in the shape used in Remark 3.9.5(vii) and
+Step (xi): the selected q-pilot log-volume is bounded by the normalized
+determinant/tensor-power log-volume, which is in turn bounded by the package
+theta scalar.  The first inequality comes from Ob1/Ob2 hull absorption together
+with Ob3-3 hull/determinant compatibility; the second is the Ob4 normalized
+tensor-power bound already stored in the constructor-built source.
+-/
+structure ConstructorBuiltStepXIBridgeInequalityAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  upperRayAudit :
+    ConstructorBuiltStepXIUpperRayAudit sourceData
+  ob3Ob4DeterminantAudit :
+    ConstructorBuiltOb3Ob4DeterminantAudit sourceData
+  qPilotLogVolume_eq_regionLogVolume :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume =
+      sourceData.hullData.logVolume sourceData.qPilotRegion
+  determinantNormalized_eq_tensorPowerNormalized :
+    sourceData.determinantSource.normalizedLogVolume =
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.determinantSource).normalizedLogVolume
+  qPilotLogVolume_le_determinantNormalized :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+      sourceData.determinantSource.normalizedLogVolume
+  regionLogVolume_le_determinantNormalized :
+    sourceData.hullData.logVolume sourceData.qPilotRegion <=
+      sourceData.determinantSource.normalizedLogVolume
+  determinantNormalized_le_thetaSigned :
+    sourceData.determinantSource.normalizedLogVolume <=
+      package.preLedger.thetaSigned
+  tensorPowerNormalized_le_thetaSigned :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.determinantSource).normalizedLogVolume <=
+      package.preLedger.thetaSigned
+  bridge_regionLogVolume_le_thetaSigned :
+    sourceData.hullData.logVolume sourceData.qPilotRegion <=
+      package.preLedger.thetaSigned
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltStepXIBridgeInequalityAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltStepXIBridgeInequalityAudit sourceData :=
+  let upperRayAudit := sourceData.toConstructorBuiltStepXIUpperRayAudit
+  let determinantAudit := sourceData.toConstructorBuiltOb3Ob4DeterminantAudit
+  have q_le_normalized :
+      sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+        sourceData.determinantSource.normalizedLogVolume := by
+    calc
+      sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+          sourceData.determinantSource.determinantLogVolume :=
+        upperRayAudit.qPilotLogVolume_le_determinant
+      _ = sourceData.determinantSource.normalizedLogVolume :=
+        sourceData.determinantSource.normalizedLogVolume_eq_determinantLogVolume.symm
+  have region_le_normalized :
+      sourceData.hullData.logVolume sourceData.qPilotRegion <=
+        sourceData.determinantSource.normalizedLogVolume := by
+    calc
+      sourceData.hullData.logVolume sourceData.qPilotRegion =
+          sourceData.toUpperRayLogVolume.qPilotLogVolume :=
+        upperRayAudit.qPilotLogVolume_eq_regionLogVolume.symm
+      _ <= sourceData.determinantSource.normalizedLogVolume :=
+        q_le_normalized
+  have normalized_le_theta :
+      sourceData.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned := by
+    simpa [IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant]
+      using sourceData.tensorPower_bound
+  { upperRayAudit := upperRayAudit,
+    ob3Ob4DeterminantAudit := determinantAudit,
+    qPilotLogVolume_eq_regionLogVolume :=
+      upperRayAudit.qPilotLogVolume_eq_regionLogVolume,
+    determinantNormalized_eq_tensorPowerNormalized := by
+      rfl,
+    qPilotLogVolume_le_determinantNormalized := q_le_normalized,
+    regionLogVolume_le_determinantNormalized := region_le_normalized,
+    determinantNormalized_le_thetaSigned := normalized_le_theta,
+    tensorPowerNormalized_le_thetaSigned := sourceData.tensorPower_bound,
+    bridge_regionLogVolume_le_thetaSigned :=
+      region_le_normalized.trans normalized_le_theta,
+    qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Build the constructor-built possible-image Step (xi) source from an Ob3/Ob4
 adjusted determinant source.
 
@@ -11969,6 +12061,7 @@ theorem ofOb3Ob4AdjustedDeterminantSource_endpoint
         hullDetBridge_eq q_pilot_positive normalization;
     SourceEndpoint sourceData ∧
       ConstructorBuiltOb3Ob4DeterminantAudit sourceData ∧
+      ConstructorBuiltStepXIBridgeInequalityAudit sourceData ∧
       sourceData.determinantSource =
         ob3ob4Source.toWeightedDeterminantSource ∧
       (∀ index : β,
@@ -11992,6 +12085,7 @@ theorem ofOb3Ob4AdjustedDeterminantSource_endpoint
     exact
       ⟨sourceData.source_endpoint,
         sourceData.toConstructorBuiltOb3Ob4DeterminantAudit,
+        sourceData.toConstructorBuiltStepXIBridgeInequalityAudit,
         rfl,
         ob3ob4Source.adjustedRawLogVolume_eq,
         ob3ob4Source.weightedAdjustedLogVolume_eq,

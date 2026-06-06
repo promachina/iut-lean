@@ -42602,6 +42602,28 @@ theorem possibleImageConstructorBuiltHullSource_ob3Ob4DeterminantAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Step (xi) bridge-inequality audit for the constructor-built
+possible-image hull/determinant source.
+
+This exposes the source-derived local bridge
+`mu_log(qRegion) <= det_norm <= thetaSigned`: q is absorbed by the canonical
+hull, the hull log-volume is identified with the normalized determinant, and
+the Ob4 tensor-power bound controls the theta scalar.
+-/
+theorem possibleImageConstructorBuiltHullSource_bridgeInequalityAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBridgeInequalityAudit
+      sourceData :=
+  sourceData.toConstructorBuiltStepXIBridgeInequalityAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface constructor-built Step (xi) source from an Ob3/Ob4 adjusted
 determinant package.
 
@@ -42662,6 +42684,8 @@ theorem possibleImageConstructorBuiltHullSource_ofOb3Ob4AdjustedDeterminantSourc
     IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
         sourceData ∧
       IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob4DeterminantAudit
+        sourceData ∧
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBridgeInequalityAudit
         sourceData ∧
       sourceData.determinantSource =
         ob3ob4Source.toWeightedDeterminantSource ∧

@@ -4858,6 +4858,23 @@ determinant summation, tensor-power normalization, and the
 piece of the Step (xi) determinant payload has moved from an already-weighted
 determinant input to a source-facing Remark 3.9.5(vii) Ob3/Ob4 construction.
 
+The same constructor-built source now exposes the Step (xi) bridge inequality
+as a named audit
+\texttt{ConstructorBuiltStepXIBridgeInequalityAudit}.  This audit records the
+selected q-pilot log-volume, the normalized determinant/tensor-power
+log-volume, and the package theta scalar in the direct chain
+\[
+  \mu_{\log}(q\mathrm{Region})
+    \leq \det_{\mathrm{norm}}
+    \leq \theta_{\mathrm{signed}} .
+\]
+The first inequality is derived from the upper-ray/hull absorption audit and
+the Ob3-3 determinant compatibility; the second is the Ob4 normalized
+tensor-power bound.  The experiment surface exposes this as
+\texttt{possibleImageConstructorBuiltHullSource\_bridgeInequalityAudit}, and
+the Ob3/Ob4-adjusted constructor endpoint now returns this bridge audit next
+to the determinant audit.
+
 The practical priority order is:
 \begin{enumerate}
 \item factor the large source module into reviewable finite-label, hull,
