@@ -48404,6 +48404,64 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit
 
 set_option linter.style.longLine false in
 /--
+Named raw Step (xi) comparison audit for the canonical-one constructed-\(\IPL\)
+route.
+
+The audit exposes the Hodge--Arakelov canonical-one reconstruction, the
+constructed \(\IPL\)/log-volume middle route, the constructor-built
+possible-image hull/determinant audits, and the source side-condition audit
+before projecting the raw \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\)
+comparison.  This keeps the comparison review surface separate from both the
+finite Step (x) packet boundary and the later numeric \(C_\Theta\) estimate.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  hodgeSHEIPLAudit :
+    CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
+  middleRouteAudit :
+    CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  ob5CompatibilityAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
+      sourceData
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit sourceData := by
+  have hside :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit
+  exact
+    { hodgeSHEIPLAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
+      middleRouteAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
+      stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      ob5CompatibilityAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
+      sideConditionAudit := hside,
+      qSigned_le_thetaSigned :=
+        hside.qSigned_le_thetaSigned }
+
+theorem qSigned_le_thetaSigned_fromCanonicalOneConstructorBuiltIPLConstruction
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  sourceData.toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit.qSigned_le_thetaSigned
+
+set_option linter.style.longLine false in
+/--
 Step (x) finite packet and vertical-\(IQ\) target audit projected from the
 canonical-one constructed-\(\IPL\) source object.
 
@@ -48584,6 +48642,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
       sourceData
   sideConditionAudit :
     CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
+  qComparisonAudit :
+    CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit sourceData
   packetTargetAudit :
     CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
   directFiniteBoundaryAudit :
@@ -48659,6 +48719,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
       sideConditionAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit,
+      qComparisonAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit,
       packetTargetAudit := hpacketTarget,
       directFiniteBoundaryAudit := hdirectBoundary,
       boundaryAudit :=
@@ -48762,6 +48824,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
       sourceData
   sideConditionAudit :
     CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
+  qComparisonAudit :
+    CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit sourceData
   packetTargetAudit :
     CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
   finiteBoundaryAudit :
@@ -48814,6 +48878,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
     sideConditionAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit,
+    qComparisonAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit,
     packetTargetAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit,
     finiteBoundaryAudit :=

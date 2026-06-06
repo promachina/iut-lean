@@ -4037,7 +4037,13 @@ remaining source side conditions are now split off as
 constructor-built hull source's q-pilot positivity and source normalization
 are repackaged through the existing
 \texttt{IUTStage1SourceSideConditions} interface before the finite Step (x)
-boundary consumes the raw signed comparison.  The
+boundary consumes the raw signed comparison.  The raw Step (xi) comparison is
+now also named directly as
+\texttt{CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit}: it keeps
+the Hodge/\(\SHE\)/constructed-\(\IPL\) middle-route audit, Step (xi) hull
+audit, Ob5 compatibility audit, and source side-condition audit together
+before projecting
+\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\).  The
 no-\(C_\Theta\) finite boundary is now separated as
 \texttt{CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit}; it
 keeps the middle-route audit, Step (xi) hull audit, compact boundary audit,
@@ -4060,6 +4066,8 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionSideConditionAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionQComparisonAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstruction\_qComparison},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionPacketTargetAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit},\\
