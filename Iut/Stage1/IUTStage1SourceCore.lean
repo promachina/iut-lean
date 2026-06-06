@@ -6094,6 +6094,10 @@ theorem ofOb3Ob5CompatibilitySource_endpoint
       source.familyHullLogVolume =
         compatibilitySource.determinantSource.normalizedLogVolume ∧
       source.qRegionLogVolume <=
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      compatibilitySource.determinantSource.normalizedLogVolume <=
+        thetaSigned ∧
+      source.qRegionLogVolume <=
         compatibilitySource.determinantSource.determinantLogVolume ∧
       compatibilitySource.determinantSource.determinantLogVolume <=
         thetaSigned ∧
@@ -6104,6 +6108,12 @@ theorem ofOb3Ob5CompatibilitySource_endpoint
       ⟨rfl,
         source.qRegion_subset_familyHull,
         source.familyHullLogVolume_eq_normalized,
+        by
+          simpa [IUTStage1Remark395HullDeterminantBridgeSource.determinantNormalizedLogVolume]
+            using source.qRegionLogVolume_le_determinantNormalizedLogVolume,
+        by
+          simpa [IUTStage1Remark395HullDeterminantBridgeSource.determinantNormalizedLogVolume]
+            using source.determinantNormalizedLogVolume_le_thetaSigned,
         source.qRegionLogVolume_le_determinantLogVolume,
         source.determinantLogVolume_le_thetaSigned,
         source.qRegionLogVolume_le_thetaSigned⟩

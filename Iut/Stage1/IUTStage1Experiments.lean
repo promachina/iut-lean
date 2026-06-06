@@ -41497,6 +41497,10 @@ theorem remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource_toRecordHullDete
           (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
             record) ∧
       bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        bridgeSource.determinantSource.normalizedLogVolume ∧
+      bridgeSource.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
         bridgeSource.determinantSource.determinantLogVolume ∧
       bridgeSource.determinantSource.determinantLogVolume <=
         package.preLedger.thetaSigned ∧
@@ -41557,6 +41561,10 @@ theorem remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource_toRecordHullDete
         sourceData.hullOperator.phi
           (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
             record) ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        bridgeSource.determinantSource.normalizedLogVolume ∧
+      bridgeSource.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
       bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
         bridgeSource.determinantSource.determinantLogVolume ∧
       bridgeSource.determinantSource.determinantLogVolume <=
@@ -41629,6 +41637,10 @@ theorem remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource_toConstructedHol
         sourceData.ob3ob4Source.determinantLogVolume ∧
       sourceData.familyHullLogVolume =
         sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        constructedSource.determinantSource.normalizedLogVolume ∧
+      constructedSource.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
       constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
         constructedSource.determinantSource.determinantLogVolume ∧
       constructedSource.determinantSource.determinantLogVolume <=
@@ -42241,6 +42253,10 @@ theorem remark395ConstructedHolomorphicHullDeterminantSource_ofPossibleImageChoi
             record) ∧
       sourceData.determinantSource =
         ob3ob4Source.toWeightedDeterminantSource ∧
+      sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.determinantSource.normalizedLogVolume ∧
+      sourceData.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
       sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
         sourceData.determinantSource.determinantLogVolume ∧
       sourceData.determinantSource.determinantLogVolume <=

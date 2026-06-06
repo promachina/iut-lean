@@ -57528,6 +57528,11 @@ structure ConstructorBackedRecordBridgeAudit
           (recordThetaPossibleImageUnion record) ∧
       sourceData.toRecordHullDeterminantBridgeSource.hullOperator.logVolume
           sourceData.toRecordHullDeterminantBridgeSource.qPilotRegion <=
+        sourceData.toRecordHullDeterminantBridgeSource.determinantSource.normalizedLogVolume ∧
+      sourceData.toRecordHullDeterminantBridgeSource.determinantSource.normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      sourceData.toRecordHullDeterminantBridgeSource.hullOperator.logVolume
+          sourceData.toRecordHullDeterminantBridgeSource.qPilotRegion <=
         sourceData.toRecordHullDeterminantBridgeSource.determinantSource.determinantLogVolume ∧
       sourceData.toRecordHullDeterminantBridgeSource.determinantSource.determinantLogVolume <=
         packageN.preLedger.thetaSigned ∧
@@ -57592,7 +57597,8 @@ theorem constructorBackedRecordBridgeAudit
         qPilotRegion_subset_recordUnion_of_choice
           (record := record) sourceData.qChoice sourceData.qPilotRegion
           sourceData.q_subset_choice,
-      qPilotRegion_subset_phi := hbridge.2.2.2.2.2.2.2.1,
+      qPilotRegion_subset_phi :=
+        sourceData.toRecordHullDeterminantBridgeSource.qPilotRegion_subset_phi,
       qPilotLogVolume_le_familyHullLogVolume :=
         sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
           |>.qRegionLogVolume_le_familyHullLogVolume,
@@ -57614,9 +57620,12 @@ theorem constructorBackedRecordBridgeAudit
             |>.determinantNormalizedLogVolume_eq_determinant)).trans
           (sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
             |>.determinantLogVolume_le_thetaSigned),
-      qPilotLogVolume_le_determinant := hbridge.2.2.2.2.2.2.2.2.1,
-      determinantLogVolume_le_thetaSigned := hbridge.2.2.2.2.2.2.2.2.2.1,
-      qPilotLogVolume_le_thetaSigned := hbridge.2.2.2.2.2.2.2.2.2.2,
+      qPilotLogVolume_le_determinant :=
+        sourceData.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_determinantLogVolume,
+      determinantLogVolume_le_thetaSigned :=
+        sourceData.toRecordHullDeterminantBridgeSource.determinantLogVolume_le_thetaSigned,
+      qPilotLogVolume_le_thetaSigned :=
+        sourceData.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_thetaSigned,
       qSigned_le_thetaSigned :=
         sourceData.toHullDetSourceConstructor.qSigned_le_thetaSigned }
 

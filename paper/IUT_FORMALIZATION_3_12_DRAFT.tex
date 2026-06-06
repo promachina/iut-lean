@@ -2702,7 +2702,11 @@ to the Theorem~3.11 possible images and the bound to
 \texttt{package.preLedger.thetaSigned}; its endpoint verifies the
 record-canonical q-to-determinant-to-theta comparison, while
 \texttt{remark395RecordHullDeterminantBridgeSource\_normalizedBridge} exposes
-the corresponding record-canonical normalized bridge.  The constructed
+the corresponding record-canonical normalized bridge.  The record bridge
+constructors from Ob3/Ob5 compatibility and from the adjusted Ob3-3 summand
+identity now expose this normalized two-step chain in their endpoint statements,
+so a reviewer no longer has to pass through a separate determinant-log endpoint
+to see the \(\det_{\mathrm{norm}}\) comparison.  The constructed
 summand-charted Hodge/family-hull source now exposes this same comparison as a
 separate subgoal-5 audit:
 \[
@@ -5473,6 +5477,13 @@ The experiment surface exposes this two-step normalized form as
 \[
 \texttt{remark395ConstructedHolomorphicHullDeterminantSource\_normalizedRecordBridge}.
 \]
+The public constructor endpoints for the record bridge, the exact-theta bridge,
+the constructed source, and the possible-image-choice constructor now include
+the same normalized inequalities directly in their returned conjunctions.  Thus
+the milestone route displays
+\(\mu_{\log}(q\mathrm{Region})\leq\det_{\mathrm{norm}}\leq
+\theta_{\mathrm{signed}}\) at the point where the Step~(xi) source is built,
+not only after a later audit projection.
 The constructor-backed finite-divisor source now exposes the same bridge
 projection directly.  Its experiment-surface audit,
 \[
