@@ -45254,6 +45254,73 @@ theorem possibleImageConstructorBuiltHullSource_ob1ToOb5QuotientBridgeAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob1--Ob5 quotient bridge chain for the constructor-built
+possible-image Step (xi) source.
+
+This is the flat review form of
+`possibleImageConstructorBuiltHullSource_ob1ToOb5QuotientBridgeAudit`: it
+exposes the two possible-image inclusions into the family hull, the Ob5
+quotient-image equality, the determinant/log-volume bridge
+`mu_log(qRegion) <= det_norm <= thetaSigned`, the canonical `C_Theta` upper
+bound, and the signed comparison in one theorem statement.
+-/
+theorem possibleImageConstructorBuiltHullSource_ob1ToOb5QuotientBridgeChain
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (comparisonChoice : index)
+    (qChoice_nonempty :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty) :
+    let familyHullSource :=
+      sourceData.toRecordBoundedFamilyHullDetLogVolumeSource
+    let boundedFamilySource :=
+      familyHullSource.toBoundedFamilyHullDetLogVolumeSource
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice ⊆
+      familyHullSource.familyHull ∧
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice ⊆
+      familyHullSource.familyHull ∧
+    boundedFamilySource.quotientMap ''
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice =
+      boundedFamilySource.quotientMap ''
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record comparisonChoice ∧
+    sourceData.hullData.logVolume sourceData.qPilotRegion <=
+      sourceData.determinantSource.normalizedLogVolume ∧
+    sourceData.determinantSource.normalizedLogVolume <=
+      package.preLedger.thetaSigned ∧
+    sourceData.hullData.logVolume sourceData.qPilotRegion <=
+      package.preLedger.thetaSigned ∧
+    package.preLedger.thetaSigned <=
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) ∧
+    sourceData.hullData.logVolume sourceData.qPilotRegion <=
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) ∧
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  let audit :=
+    sourceData.toConstructorBuiltOb1ToOb5QuotientBridgeAudit
+      comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  ⟨ audit.qChoiceRegion_subset_familyHull,
+    audit.comparisonRegion_subset_familyHull,
+    audit.quotientImages_eq,
+    audit.qRegionLogVolume_le_determinantNormalized,
+    audit.determinantNormalized_le_thetaSigned,
+    audit.qRegionLogVolume_le_thetaSigned,
+    audit.thetaSigned_le_canonicalCTheta_absLogQ,
+    audit.sourceBridge_to_canonicalScale_chain,
+    audit.qSigned_le_thetaSigned ⟩
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Ob3/Ob4 determinant/tensor-power audit for the
 constructor-built possible-image Step (xi) hull/determinant source.
 
