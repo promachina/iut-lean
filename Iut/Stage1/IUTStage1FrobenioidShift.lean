@@ -46280,6 +46280,59 @@ theorem toCanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudi
     CanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudit sourceData :=
   sourceData.toThetaMonoidMatchedSource.toConstructorBuiltIPLLinkMatchedSourceDerivedFiniteDivisorRouteAudit
 
+noncomputable def toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+      (β := β) record :=
+  sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+
+set_option linter.style.longLine false in
+/--
+Canonical-one projection to the existing obligations-backed possible-image
+holomorphic-hull/determinant source.
+
+This is the source-object handoff used by the constructor-built \(\IPL\)-link
+route before the Gaussian-to-Step (xi) bridge is assembled: the q-pilot region
+is a chosen Theorem 3.11 possible image, the region lies in the record
+possible-image union, the package bridge is the obligations bridge, and the
+side conditions give q-positivity, normalization, and the raw signed
+comparison.
+-/
+abbrev CanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSourceAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  let hullSource :=
+    sourceData.toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource;
+  hullSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record hullSource.qChoice ∧
+    hullSource.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ∧
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      hullSource.obligations.hullDetData.bridgeData ∧
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        hullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned ∧
+    0 < -packageN.preLedger.qSigned ∧
+    packageN.preLedger.normalization ∧
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSourceAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSourceAudit sourceData := by
+  simpa [
+    CanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSourceAudit,
+    toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource]
+    using
+      sourceData.toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource.source_endpoint
+
 set_option linter.style.longLine false in
 /--
 Pre-Step (xi) Hodge/\(\SHE\)/\(\IPL\) audit for the canonical-one
@@ -46459,6 +46512,9 @@ structure CanonicalOneConstructorBuiltIPLLinkStepXIHullAudit
     IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource.SourceEndpoint
       (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
         |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource)
+  holomorphicHullDeterminantSourceAudit :
+    CanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSourceAudit
+      sourceData
   qPilotRegion_eq_choice :
     let hullSource :=
       sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource;
@@ -46550,6 +46606,8 @@ theorem toCanonicalOneConstructorBuiltIPLLinkStepXIHullAudit
       recordCanonicalStepXIAudit := hroute.2.1,
       constructorSourcedSourceEndpoint := hroute.2.2.1,
       constructorPinnedSourceEndpoint := hroute.2.2.2.1,
+      holomorphicHullDeterminantSourceAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSourceAudit,
       qPilotRegion_eq_choice := hgaussian.qPilotRegion_eq_choice,
       qPilotRegion_subset_union := hgaussian.qPilotRegion_subset_union,
       hullDetBridge_eq_obligations := hgaussian.hullDetBridge_eq_obligations,
