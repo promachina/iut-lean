@@ -27410,6 +27410,46 @@ theorem targetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVer
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface named audit for the obligations-backed record-canonical
+constructor exact corridor.
+
+This is the compact target for dependency review: it packages the constructed
+\(\IPL\) datum, record-canonical Step (xi) bridge equality, obligations-derived
+side conditions, raw comparison, and exact vertical-`IQ` precision.
+-/
+theorem targetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource_namedCorridorAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorExactCorridorAudit
+      sourceData :=
+  sourceData.toObligationsRecordCanonicalConstructorExactCorridorAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audited `C_Theta` boundary for the obligations-backed
 record-canonical constructor finite exact vertical-`IQ` source.
 -/

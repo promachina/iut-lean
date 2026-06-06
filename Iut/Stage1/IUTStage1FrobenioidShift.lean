@@ -35768,6 +35768,88 @@ theorem obligationsRecordCanonicalConstructorCorridorEndpoint
       sourceData.exactSource.targetCalibration_source_eq_verticalIQ,
       sourceData.exactSource.hasPreciseFrobenioidIsomorphisms⟩
 
+set_option linter.style.longLine false in
+/--
+Named audit payload for the obligations-backed record-canonical exact
+corridor.
+
+This is the review-facing form of
+`obligationsRecordCanonicalConstructorCorridorEndpoint`: it keeps the
+constructed \(\IPL\) datum, record-canonical constructor bridge, obligations
+side conditions, raw Step (xi) comparison, and exact vertical-`IQ` precision in
+one reusable proposition.
+-/
+structure ObligationsRecordCanonicalConstructorExactCorridorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  iplDatum_eq_certificate :
+    sourceData.hodgeIPLSource.toIPLLogVolumeTransport.iplDatum =
+      packageN.preLedger.certificate.ipl
+  iplDatum_eq_constructed :
+    sourceData.hodgeIPLSource.toIPLLogVolumeTransport.iplDatum =
+      sourceData.hodgeIPLSource.iplConstructionSource.constructedDatum
+  iplLogVolume_preserved :
+    sourceData.hodgeIPLSource.toIPLLogVolumeTransport.targetLogVolume =
+      sourceData.hodgeIPLSource.toIPLLogVolumeTransport.sourceLogVolume
+  qPilotRegion_eq_choice :
+    sourceData.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice
+  obligationsHullDetData_eq_recordCanonical :
+    sourceData.constructorObligations.hullDetData.bridgeData =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+        sourceData.qPilotRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice sourceData.qPilotRegion
+          sourceData.q_subset_choice)
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        sourceData.measureCalibratedHodgeDeterminantSource.tensorPower_bound
+  hullDetBridge_eq_obligations :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.constructorObligations.hullDetData.bridgeData
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  targetCalibration_source_eq_verticalIQ :
+    sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+      IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility
+  exactVerticalIQ_hasPreciseFrobenioidIsomorphisms :
+    sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+      true
+
+set_option linter.style.longLine false in
+theorem toObligationsRecordCanonicalConstructorExactCorridorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    ObligationsRecordCanonicalConstructorExactCorridorAudit sourceData := by
+  have hipl := sourceData.hodgeIPLSource.source_endpoint
+  have hcorridor := sourceData.obligationsRecordCanonicalConstructorCorridorEndpoint
+  exact
+    { iplDatum_eq_certificate := hipl.2.2.1,
+      iplDatum_eq_constructed := hipl.2.2.2.1,
+      iplLogVolume_preserved := hipl.2.2.2.2.1,
+      qPilotRegion_eq_choice := hcorridor.2.1,
+      obligationsHullDetData_eq_recordCanonical := hcorridor.2.2.1,
+      hullDetBridge_eq_obligations := hcorridor.2.2.2.1,
+      q_pilot_positive := hcorridor.2.2.2.2.1,
+      normalization := hcorridor.2.2.2.2.2.1,
+      qSigned_le_thetaSigned := hcorridor.2.2.2.2.2.2.1,
+      targetCalibration_source_eq_verticalIQ := hcorridor.2.2.2.2.2.2.2.1,
+      exactVerticalIQ_hasPreciseFrobenioidIsomorphisms :=
+        hcorridor.2.2.2.2.2.2.2.2 }
+
 end IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
 
 set_option linter.style.longLine false in
