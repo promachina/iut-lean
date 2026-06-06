@@ -12998,6 +12998,132 @@ theorem source_endpoint
     sourceData.obligations.normalization,
     projected.source_endpoint.2.2.2.2.2.2.2.2⟩
 
+noncomputable def toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+    (sourceData :
+      IUTStage1PossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+      (β := β) record :=
+  { operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    hullData := sourceData.familyHullSource.hullData,
+    qChoice := sourceData.qChoice,
+    determinantSource := sourceData.familyHullSource.determinantSource,
+    compatibility := sourceData.familyHullSource.compatibility,
+    measure_eq_hullLogVolume := sourceData.measure_eq_hullLogVolume,
+    tensorPower_bound :=
+      IUTStage1HodgeFamilyHullLogVolumeCalibration.tensorPower_bound
+        (sourceData.chartedThetaFamilyCalibration
+          |>.toHodgeFamilyHullLogVolumeCalibration),
+    hullDetBridge_eq := by
+      calc
+        package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+            sourceData.obligations.hullDetData.bridgeData :=
+          sourceData.obligations.hullDetData.hullDetBridge_eq_bridgeData
+        _ =
+            recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+              (record := record)
+              sourceData.operation sourceData.hullOperation
+              sourceData.determinantOperation sourceData.familyHullSource.hullData
+              (recordThetaPossibleImage record sourceData.qChoice)
+              (qPilotRegion_subset_recordUnion_of_choice
+                (record := record) sourceData.qChoice
+                (recordThetaPossibleImage record sourceData.qChoice)
+                (fun _ hx => hx))
+              sourceData.familyHullSource.determinantSource
+              sourceData.familyHullSource.compatibility
+              sourceData.measure_eq_hullLogVolume
+              (IUTStage1HodgeFamilyHullLogVolumeCalibration.tensorPower_bound
+                (sourceData.chartedThetaFamilyCalibration
+                  |>.toHodgeFamilyHullLogVolumeCalibration)) :=
+          sourceData.obligationsHullDetData_eq_recordCanonical,
+    q_pilot_positive := sourceData.obligations.qPilotPositive,
+    normalization := sourceData.obligations.normalization }
+
+set_option linter.style.longLine false in
+/--
+Named reduction audit from the strongest charted Hodge/family-hull Step (xi)
+source to the constructor-built possible-image hull source.
+
+The charted source fixes the q-region to a Theorem 3.11 possible image,
+derives `thetaSigned` from the pre-ledger theta chart and Hodge--Arakelov
+theta-monoid degree, derives the tensor-power bound from the record
+family-hull log-volume, and reads bridge data, q-positivity, and normalization
+from one hull/determinant obligations object.
+-/
+structure ChartedFamilyHullConstructorBuiltReductionAudit
+    (sourceData :
+      IUTStage1PossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    Prop where
+  chartedSourceEndpoint :
+    sourceData.qPilotRegion =
+        recordThetaPossibleImage record sourceData.qChoice ∧
+      sourceData.qPilotRegion ⊆
+        recordThetaPossibleImageUnion record ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        sourceHA.thetaMonoidDegree ∧
+      package.preLedger.thetaSigned = sourceHA.thetaMonoidDegree ∧
+      sourceHA.thetaMonoidDegree =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.thetaSigned =
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned
+  constructorBuiltBoundaryAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+  theta_chart_eq_theta_monoid_degree :
+    (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+      package.preLedger.thetaBound.thetaPoint).coord =
+      sourceHA.thetaMonoidDegree
+  thetaSigned_eq_theta_monoid_degree :
+    package.preLedger.thetaSigned = sourceHA.thetaMonoidDegree
+  theta_monoid_degree_eq_familyHullLogVolume :
+    sourceHA.thetaMonoidDegree =
+      sourceData.familyHullSource.familyHullLogVolume
+  thetaSigned_eq_familyHullLogVolume :
+    package.preLedger.thetaSigned =
+      sourceData.familyHullSource.familyHullLogVolume
+  hullDetBridge_eq_obligations :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.obligations.hullDetData.bridgeData
+  q_pilot_positive :
+    0 < -package.preLedger.qSigned
+  normalization :
+    package.preLedger.normalization
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+theorem toChartedFamilyHullConstructorBuiltReductionAudit
+    (sourceData :
+      IUTStage1PossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    ChartedFamilyHullConstructorBuiltReductionAudit sourceData :=
+  { chartedSourceEndpoint := sourceData.source_endpoint,
+    constructorBuiltBoundaryAudit :=
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        |>.toConstructorBuiltStepXIBoundaryAudit,
+    theta_chart_eq_theta_monoid_degree :=
+      sourceData.chartedThetaFamilyCalibration.chartedTheta_eq_thetaMonoidDegree,
+    thetaSigned_eq_theta_monoid_degree :=
+      sourceData.chartedThetaFamilyCalibration.thetaSigned_eq_thetaMonoidDegree,
+    theta_monoid_degree_eq_familyHullLogVolume :=
+      sourceData.chartedThetaFamilyCalibration.thetaMonoidDegree_eq_familyHullLogVolume,
+    thetaSigned_eq_familyHullLogVolume :=
+      sourceData.chartedThetaFamilyCalibration.thetaSigned_eq_familyHullLogVolume,
+    hullDetBridge_eq_obligations :=
+      sourceData.obligations.hullDetData.hullDetBridge_eq_bridgeData,
+    q_pilot_positive := sourceData.obligations.qPilotPositive,
+    normalization := sourceData.obligations.normalization,
+    qSigned_le_thetaSigned :=
+      sourceData.source_endpoint.2.2.2.2.2.2.2.2.2 }
+
 end IUTStage1PossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in

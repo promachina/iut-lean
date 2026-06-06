@@ -20651,6 +20651,38 @@ theorem possibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligation
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface reduction audit from the strongest charted
+Hodge/family-hull Step (xi) source to the constructor-built possible-image
+hull source.
+
+This shows that the older constructor-built boundary can be constructed from
+the charted Hodge-calibrated family-hull source: the tensor-power bound is
+derived from the family-hull log-volume calibration, and bridge data,
+q-positivity, and normalization are projected from one hull/determinant
+obligations object.
+-/
+theorem possibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBacked_constructorBuiltReductionAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {l : PrimeGeFive} {F : Type v} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    (sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        l X C)
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource.ChartedFamilyHullConstructorBuiltReductionAudit
+      sourceData :=
+  sourceData.toChartedFamilyHullConstructorBuiltReductionAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for the calibrated Hodge--Arakelov,
 constructed-IPL, possible-image family-hull route.
 
