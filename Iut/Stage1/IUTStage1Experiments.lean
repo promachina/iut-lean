@@ -42780,6 +42780,28 @@ theorem possibleImageConstructorBuiltHullSource_remainingPayloadAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface record-canonical Ob3/Ob5 bridge audit for the
+constructor-built possible-image Step (xi) hull/determinant source.
+
+This projects the constructor-built hull/log-volume shadow back to the
+Remark 3.9.5 `phi`-operator, forms the record Ob3/Ob5 determinant
+compatibility source, and then obtains the q-to-determinant-to-theta chain from
+the generic record bridge source.
+-/
+theorem possibleImageConstructorBuiltHullSource_recordOb3Ob5BridgeAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRecordOb3Ob5BridgeAudit
+      sourceData :=
+  sourceData.toConstructorBuiltRecordOb3Ob5BridgeAudit
+
+set_option linter.style.longLine false in
+/--
 Constructor-built variant of the theta-monoid-matched raw finite-divisor
 boundary.
 

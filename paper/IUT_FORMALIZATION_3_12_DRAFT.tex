@@ -4885,6 +4885,20 @@ the experiment surface, records that the constructed source's
 q-to-determinant-to-theta chain is read from this generic Remark 3.9.5 bridge
 theorem rather than re-proved as an isolated comparison.
 
+The constructor-built Step (xi) source now has the same record-canonical
+Ob3/Ob5 projection.  A shadow hull/log-volume object is first converted back
+to a Remark 3.9.5 \(\phi\)-operator by
+\texttt{toRemark395Operator}; the constructor-built source then forms the
+record Ob3/Ob5 determinant-compatibility source and the record hull/determinant
+bridge source from its own q-region containment, determinant compatibility, and
+Ob4 tensor-power bound.  The public
+\texttt{recordOb3Ob5BridgeAudit} endpoint records that the q-to-determinant
+and determinant-to-theta inequalities are obtained from the generic
+record-canonical bridge theorem.  This does not construct the analytic
+determinant compatibility, but it removes another ad hoc audit boundary: the
+large constructor-built object now factors through the same source object as the
+milestone-facing constructed source.
+
 The practical priority order is:
 \begin{enumerate}
 \item factor the large source module into reviewable finite-label, hull,

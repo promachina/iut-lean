@@ -2979,11 +2979,45 @@ def ofRemark395Operator
     logVolume := data.logVolume,
     logVolume_mono := data.logVolume_mono }
 
+def toRemark395Operator
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α) :
+    IUTStage1Remark395HolomorphicHullOperator α :=
+  { phi := fun region => data.hull region,
+    isClosed := data.hull.IsClosed,
+    phi_closed := fun region => by
+      rw [data.hull.isClosed_iff]
+      exact data.hull.idempotent region,
+    phi_fix_closed := fun hclosed =>
+      data.hull.isClosed_iff.mp hclosed,
+    region_subset_phi := fun region =>
+      data.hull.le_closure region,
+    phi_mono := fun hsubset =>
+      data.hull.monotone hsubset,
+    phi_idempotent := fun region =>
+      data.hull.idempotent region,
+    logVolume := data.logVolume,
+    logVolume_mono := fun hsubset =>
+      data.logVolume_mono hsubset }
+
 def hullRegion
     (data : IUTStage1HolomorphicHullLogVolumeShadow α)
     (region : Set α) :
     Set α :=
   data.hull region
+
+@[simp]
+theorem toRemark395Operator_phi_eq
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (region : Set α) :
+    data.toRemark395Operator.phi region = data.hullRegion region :=
+  rfl
+
+@[simp]
+theorem toRemark395Operator_logVolume_eq
+    (data : IUTStage1HolomorphicHullLogVolumeShadow α)
+    (region : Set α) :
+    data.toRemark395Operator.logVolume region = data.logVolume region :=
+  rfl
 
 theorem hull_fix_of_closed
     (data : IUTStage1HolomorphicHullLogVolumeShadow α)

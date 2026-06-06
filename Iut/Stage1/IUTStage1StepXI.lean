@@ -11537,6 +11537,31 @@ theorem q_subset_recordUnion
     (record := record)
     sourceData.qChoice sourceData.qPilotRegion (fun _ hx => hx)
 
+noncomputable def toRecordOb3Ob5DeterminantCompatibilitySource
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
+      (β := β) record :=
+  { hullOperator := sourceData.hullData.toRemark395Operator,
+    determinantSource := sourceData.determinantSource,
+    familyHullLogVolume_eq_normalized := by
+      simpa [IUTStage1HolomorphicHullLogVolumeShadow.toRemark395Operator,
+        IUTStage1HolomorphicHullLogVolumeShadow.hullRegion,
+        IUTStage1HullLogVolumeApproximant.canonical] using
+        sourceData.compatibility.approximant_eq_weighted_normalized }
+
+noncomputable def toRecordHullDeterminantBridgeSource
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1Remark395RecordHullDeterminantBridgeSource
+      (β := β) record :=
+  IUTStage1Remark395RecordHullDeterminantBridgeSource.ofOb3Ob5CompatibilitySource
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+    sourceData.qPilotRegion sourceData.q_subset_recordUnion
+    sourceData.tensorPower_bound
+
 noncomputable def toHullDetSourceConstructor
     (sourceData :
       IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
@@ -12589,6 +12614,104 @@ theorem toConstructorBuiltOb1ToOb5BridgeAudit
       ob3ob5.hullLogVolume_eq_determinantLogVolume_from_normalized,
     bridge_eq_recordCanonical :=
       sourceData.hullDetBridge_eq,
+    qSigned_le_thetaSigned :=
+      sourceData.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
+Record-canonical Ob3/Ob5 bridge audit for the constructor-built Step (xi)
+source.
+
+The constructor-built source already carries the hull-log-volume compatibility
+needed for Ob3/Ob5.  This audit projects that compatibility to the
+record-canonical Remark 3.9.5 source object, then obtains the q-to-determinant
+and determinant-to-theta inequalities from the generic record bridge theorem.
+-/
+structure ConstructorBuiltRecordOb3Ob5BridgeAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  ob1ToOb5BridgeAudit :
+    ConstructorBuiltOb1ToOb5BridgeAudit sourceData
+  recordOb3Ob5Endpoint :
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+        (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+          (recordThetaPossibleImageUnion record)) =
+        sourceData.determinantSource.normalizedLogVolume ∧
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+        (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+          (recordThetaPossibleImageUnion record)) =
+        sourceData.determinantSource.determinantLogVolume
+  recordBridgeEndpoint :
+    sourceData.qPilotRegion ⊆
+        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+          (recordThetaPossibleImageUnion record) ∧
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          sourceData.qPilotRegion <=
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.determinantSource.determinantLogVolume <=
+        package.preLedger.thetaSigned ∧
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          sourceData.qPilotRegion <=
+        package.preLedger.thetaSigned
+  familyHullLogVolume_eq_normalized :
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+        (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+          (recordThetaPossibleImageUnion record)) =
+      sourceData.determinantSource.normalizedLogVolume
+  familyHullLogVolume_eq_determinant :
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+        (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+          (recordThetaPossibleImageUnion record)) =
+      sourceData.determinantSource.determinantLogVolume
+  qPilotRegion_subset_phi_from_recordBridge :
+    sourceData.qPilotRegion ⊆
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+        (recordThetaPossibleImageUnion record)
+  qRegionLogVolume_le_determinant_from_recordBridge :
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+        sourceData.qPilotRegion <=
+      sourceData.determinantSource.determinantLogVolume
+  determinantLogVolume_le_thetaSigned_from_recordBridge :
+    sourceData.determinantSource.determinantLogVolume <=
+      package.preLedger.thetaSigned
+  qRegionLogVolume_le_thetaSigned_from_recordBridge :
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+        sourceData.qPilotRegion <=
+      package.preLedger.thetaSigned
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltRecordOb3Ob5BridgeAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltRecordOb3Ob5BridgeAudit sourceData :=
+  { ob1ToOb5BridgeAudit :=
+      sourceData.toConstructorBuiltOb1ToOb5BridgeAudit,
+    recordOb3Ob5Endpoint :=
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.endpoint,
+    recordBridgeEndpoint :=
+      sourceData.toRecordHullDeterminantBridgeSource.endpoint,
+    familyHullLogVolume_eq_normalized :=
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+        |>.familyHullLogVolume_eq_normalized,
+    familyHullLogVolume_eq_determinant :=
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+        |>.familyHullLogVolume_eq_determinant,
+    qPilotRegion_subset_phi_from_recordBridge :=
+      sourceData.toRecordHullDeterminantBridgeSource.qPilotRegion_subset_phi,
+    qRegionLogVolume_le_determinant_from_recordBridge :=
+      sourceData.toRecordHullDeterminantBridgeSource
+        |>.qRegionLogVolume_le_determinantLogVolume,
+    determinantLogVolume_le_thetaSigned_from_recordBridge :=
+      sourceData.toRecordHullDeterminantBridgeSource
+        |>.determinantLogVolume_le_thetaSigned,
+    qRegionLogVolume_le_thetaSigned_from_recordBridge :=
+      sourceData.toRecordHullDeterminantBridgeSource
+        |>.qRegionLogVolume_le_thetaSigned,
     qSigned_le_thetaSigned :=
       sourceData.qSigned_le_thetaSigned }
 
