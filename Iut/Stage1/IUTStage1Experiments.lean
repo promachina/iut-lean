@@ -26025,6 +26025,45 @@ theorem targetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligatio
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit for the adjusted-summand, measure-calibrated,
+charted-Hodge exact-theta Step (xi) source.
+
+This keeps the strongest obligations-backed adjusted source as a named review
+object: the q-region is a Theorem 3.11 possible image, package measure is read
+from the measured family hull, exact theta is derived through the target
+theta chart and finite Ob3-3 adjusted summands, and the obligations object
+supplies the bridge, q-positivity, and normalization.
+-/
+theorem targetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligationsBackedSource_adjustedExactThetaStepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligationsBackedSource
+        (β := β) (γ := γ) audited record hodgeSynchronization) :
+    IUTStage1TargetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligationsBackedSource.AdjustedExactThetaStepXIAudit
+      sourceData :=
+  sourceData.toAdjustedExactThetaStepXIAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface constructor-backed Gaussian-to-Step (xi) audit.
 
 This is the current stricter Step (xi) all-in-one route audit: the
