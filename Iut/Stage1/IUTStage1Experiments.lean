@@ -26489,6 +26489,116 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageFiniteExactVerticalIQRouteS
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface boundary audit for the bundled finite exact vertical-`IQ`
+source whose Step (xi) route is calibration-backed.
+
+This wrapper consumes the stricter calibrated possible-image route package and
+only then projects to the established exact finite-route boundary.
+-/
+theorem targetChartedHodgeIPLCalibratedPossibleImageFiniteExactVerticalIQRouteSource_boundaryEndpointWithCalibratedRouteAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+        sourceData.routeSource.toTargetChartedHodgeIPLDeterminantPossibleImageRouteSource ∧
+      let targetCalibration :=
+        sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration;
+      targetCalibration.calibration_source =
+          IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+        sourceData.routeSource.hodgeIPLSource.toIPLLogVolumeTransport.iplDatum =
+          package.preLedger.certificate.ipl ∧
+        sourceData.routeSource.hodgeIPLSource.toIPLLogVolumeTransport.targetLogVolume =
+          sourceData.routeSource.hodgeIPLSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+        package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+        sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+          sourceData.finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+        product.productLogVolume =
+          sourceData.finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+          sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+          true ∧
+        part.insulated_route.theta_source.thetaSourceAverage audited =
+          sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+  sourceData.boundaryEndpointWithCalibratedRouteAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface audited `C_Theta` boundary for the bundled calibrated
+finite exact vertical-`IQ` source.
+-/
+theorem targetChartedHodgeIPLCalibratedPossibleImageFiniteExactVerticalIQRouteSource_cThetaDichotomyWithGaussianStepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageFiniteExactVerticalIQRouteSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+        sourceData.routeSource.toTargetChartedHodgeIPLDeterminantPossibleImageRouteSource ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  part.boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLCalibratedPossibleImageFiniteExactVerticalIQRouteSource_withGaussianStepXIAudit
+    audited sourceData cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy from the all-in-one target-charted
 Hodge/IPL determinant possible-image route source.
 -/
