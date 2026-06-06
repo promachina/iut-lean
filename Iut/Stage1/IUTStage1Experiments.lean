@@ -38813,6 +38813,28 @@ theorem possibleImageConstructorBuiltHullSource_recordCanonicalStepXIAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface remaining-payload audit for the constructor-built
+possible-image Step (xi) hull/determinant source.
+
+This separates the source-paper payload still carried by the constructor-built
+boundary: possible-image q-region selection, holomorphic-hull absorption,
+Ob3/Ob5 determinant log-volume compatibility, Ob4 tensor-power control, the
+record-canonical bridge equality, and side conditions.
+-/
+theorem possibleImageConstructorBuiltHullSource_remainingPayloadAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData :=
+  sourceData.toConstructorBuiltRemainingPayloadAudit
+
+set_option linter.style.longLine false in
+/--
 Constructor-built variant of the theta-monoid-matched raw finite-divisor
 boundary.
 

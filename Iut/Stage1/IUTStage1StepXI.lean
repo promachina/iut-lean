@@ -10710,6 +10710,121 @@ theorem toConstructorBuiltStepXIBoundaryAudit
     normalization := sourceData.normalization,
     qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned }
 
+set_option linter.style.longLine false in
+/--
+Remaining source-paper payload at the constructor-built Step (xi) boundary.
+
+This audit separates the current constructor-derived facts from the pieces that
+still have to be replaced by source-paper constructions from Remark 3.9.5 and
+Step (xi): the possible-image q-region, holomorphic-hull absorption, Ob3
+weighted determinant data, Ob3-3/Ob5 hull-log-volume compatibility, the Ob4
+tensor-power bound, the record-canonical bridge equality, and the two side
+conditions.
+-/
+structure ConstructorBuiltRemainingPayloadAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  constructorBuiltBoundaryAudit :
+    ConstructorBuiltStepXIBoundaryAudit sourceData
+  qPilotRegion_eq_possibleImage :
+    sourceData.qPilotRegion =
+      recordThetaPossibleImage record sourceData.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.qPilotRegion ⊆
+      recordThetaPossibleImageUnion record
+  possibleImageUnion_subset_holomorphicHull :
+    recordThetaPossibleImageUnion record ⊆
+      sourceData.hullData.hullRegion (recordThetaPossibleImageUnion record)
+  qPilotRegion_subset_holomorphicHull :
+    sourceData.qPilotRegion ⊆
+      sourceData.hullData.hullRegion (recordThetaPossibleImageUnion record)
+  ob3_determinantLogVolume_eq_sum :
+    sourceData.determinantSource.determinantLogVolume =
+      Finset.univ.sum fun index =>
+        (sourceData.determinantSource.summand index).adjustedLogVolume
+  ob3_ob4_normalized_eq_determinantLogVolume :
+    sourceData.determinantSource.normalizedLogVolume =
+      sourceData.determinantSource.determinantLogVolume
+  ob3_ob5_hullLogVolume_eq_normalized :
+    sourceData.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullData (recordThetaPossibleImageUnion record)).approximant =
+      sourceData.determinantSource.normalizedLogVolume
+  ob3_ob5_hullLogVolume_eq_determinantLogVolume :
+    sourceData.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullData (recordThetaPossibleImageUnion record)).approximant =
+      sourceData.determinantSource.determinantLogVolume
+  ob4_tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.determinantSource).normalizedLogVolume <=
+      package.preLedger.thetaSigned
+  measure_eq_hullLogVolume :
+    package.preLedger.measure = sourceData.hullData.toRegionMeasure
+  recordCanonicalBridge_eq :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.hullData
+        (recordThetaPossibleImage record sourceData.qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (fun _ hx => hx))
+        sourceData.determinantSource sourceData.compatibility
+        sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound
+  q_pilot_positive :
+    0 < -package.preLedger.qSigned
+  normalization :
+    package.preLedger.normalization
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltRemainingPayloadAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltRemainingPayloadAudit sourceData :=
+  { constructorBuiltBoundaryAudit :=
+      sourceData.toConstructorBuiltStepXIBoundaryAudit,
+    qPilotRegion_eq_possibleImage :=
+      sourceData.qPilotRegion_eq_possibleImage,
+    qPilotRegion_subset_recordUnion :=
+      sourceData.q_subset_recordUnion,
+    possibleImageUnion_subset_holomorphicHull :=
+      fun _ hx =>
+        sourceData.hullData.region_subset_hull
+          (recordThetaPossibleImageUnion record) hx,
+    qPilotRegion_subset_holomorphicHull :=
+      fun _ hx =>
+        sourceData.hullData.region_subset_hull
+          (recordThetaPossibleImageUnion record)
+          (sourceData.q_subset_recordUnion hx),
+    ob3_determinantLogVolume_eq_sum :=
+      sourceData.determinantSource.determinantLogVolume_eq_sum,
+    ob3_ob4_normalized_eq_determinantLogVolume :=
+      sourceData.determinantSource.normalizedLogVolume_eq_determinantLogVolume,
+    ob3_ob5_hullLogVolume_eq_normalized :=
+      sourceData.compatibility.approximant_eq_weighted_normalized,
+    ob3_ob5_hullLogVolume_eq_determinantLogVolume :=
+      sourceData.compatibility.approximant_eq_determinantLogVolume,
+    ob4_tensorPower_bound :=
+      sourceData.tensorPower_bound,
+    measure_eq_hullLogVolume :=
+      sourceData.measure_eq_hullLogVolume,
+    recordCanonicalBridge_eq :=
+      sourceData.hullDetBridge_eq,
+    q_pilot_positive :=
+      sourceData.q_pilot_positive,
+    normalization :=
+      sourceData.normalization,
+    qSigned_le_thetaSigned :=
+      sourceData.qSigned_le_thetaSigned }
+
 end IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
