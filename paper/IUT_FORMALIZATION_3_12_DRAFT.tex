@@ -3693,6 +3693,18 @@ theta-monoid-matched raw and \(C_\Theta\) finite-divisor variants with the
 project internally to the older obligations-backed possible-image source, but
 the public Step (xi) input is now pinned to a source constructor rather than
 only to a bridge-equality field.
+The next tightening removes even that ambient obligations object from the
+public Step (xi) source.  The constructor-sourced hull source derives
+\texttt{IUTStage1SourceHullDetObligations} as
+\texttt{constructor.toHullDetObligations}; algorithm certification, \(\SHE\)
+alignment, q-positivity, normalization, and hull/determinant data therefore
+enter through the same Theorem~3.11 constructor.  The experiment suffix
+\texttt{ConstructorSourcedThetaMonoidMatchedRouteAudit} exposes the
+constructor-sourced endpoint, the projected constructor-pinned endpoint, and
+the same raw or conditional \(C_\Theta\) finite-divisor boundary.  The remaining
+unconstructed Step (xi) inputs are now concentrated in the constructor itself:
+the holomorphic hull shadow, weighted determinant payload, measure calibration,
+and tensor-power bound.
 
 The practical priority order is:
 \begin{enumerate}
