@@ -46864,6 +46864,58 @@ theorem boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPL
   (sourceData.cThetaDichotomyWithCanonicalOneConstructorBuiltIPLLinkGaussianStepXIAudit
     cTheta thetaSigned_le_cTheta_absLogQ).2
 
+set_option linter.style.longLine false in
+/--
+Milestone-facing \(C_\Theta\) audit for the canonical-one constructor-built
+\(\IPL\)-link finite-divisor route.
+
+This packages the route at the requested Source-Derived Step (xi) boundary:
+the raw q-comparison audit, the no-\(C_\Theta\) finite Step (x) boundary audit,
+the source-derived Hodge/\(\SHE\)/\(\IPL\)/hull bridge audit, the conditional
+\(C_\Theta\) route audit, and the final ordered-real dichotomy.
+-/
+structure CanonicalOneConstructorBuiltIPLLinkMilestoneCThetaAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop where
+  qComparisonAudit :
+    CanonicalOneConstructorBuiltIPLLinkQComparisonAudit sourceData
+  finiteBoundaryAudit :
+    CanonicalOneConstructorBuiltIPLLinkFiniteBoundaryAudit sourceData
+  sourceDerivedBridgeAudit :
+    CanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit sourceData
+  cThetaAudit :
+    CanonicalOneConstructorBuiltIPLLinkCThetaAudit sourceData cTheta
+  dichotomy :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta
+
+set_option linter.style.longLine false in
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLLinkFiniteDivisorVerticalIQ_withMilestoneAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLLinkMilestoneCThetaAudit sourceData cTheta := by
+  have hcTheta :=
+    sourceData.cThetaDichotomyWithCanonicalOneConstructorBuiltIPLLinkGaussianStepXIAudit
+      cTheta thetaSigned_le_cTheta_absLogQ
+  exact
+    { qComparisonAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkQComparisonAudit,
+      finiteBoundaryAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkFiniteBoundaryAudit,
+      sourceDerivedBridgeAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit,
+      cThetaAudit := hcTheta,
+      dichotomy := hcTheta.2 }
+
 end
   IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
 
