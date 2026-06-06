@@ -11854,6 +11854,95 @@ theorem source_endpoint
     sourceData.normalization,
     sourceData.qSigned_le_thetaSigned⟩
 
+set_option linter.unusedVariables false in
+noncomputable def canonicalCThetaScale
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Real :=
+  package.preLedger.thetaSigned / (-package.preLedger.qSigned)
+
+theorem thetaSigned_le_canonicalCThetaScale_absLogQ
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    package.preLedger.thetaSigned <=
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) := by
+  have hne : (-package.preLedger.qSigned) ≠ 0 :=
+    ne_of_gt sourceData.q_pilot_positive
+  have heq :
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) =
+        package.preLedger.thetaSigned := by
+    simpa [canonicalCThetaScale] using
+      div_mul_cancel₀ package.preLedger.thetaSigned hne
+  rw [heq]
+
+set_option linter.style.longLine false in
+/--
+Canonical \(C_\Theta\)-scale audit for the constructor-built Remark 3.9.5
+Step (xi) source.
+
+This does not identify the scale with the paper's final global constant.
+Instead, it removes the raw numeric hypothesis at this source boundary by using
+the q-pilot positivity to form the canonical local scale
+\(\theta_{\mathrm{signed}}/(-q_{\mathrm{signed}})\), then proves the
+theta/log-q upper bound required by the ordered-real Corollary 3.12 lemma.
+-/
+structure ConstructorBuiltCanonicalCThetaScaleAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  sourceEndpoint :
+    SourceEndpoint sourceData
+  canonicalCThetaScale_eq :
+    sourceData.canonicalCThetaScale =
+      package.preLedger.thetaSigned / (-package.preLedger.qSigned)
+  q_pilot_positive :
+    0 < -package.preLedger.qSigned
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+  thetaSigned_le_canonicalCTheta_absLogQ :
+    package.preLedger.thetaSigned <=
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned)
+  dichotomy :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < sourceData.canonicalCThetaScale
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltCanonicalCThetaScaleAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltCanonicalCThetaScaleAudit sourceData := by
+  let hbound : IUTStage1Corollary312SignedCThetaBound :=
+    { comparison :=
+        { thetaSigned := package.preLedger.thetaSigned,
+          qSigned := package.preLedger.qSigned,
+          q_positive := sourceData.q_pilot_positive,
+          qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned },
+      cTheta := sourceData.canonicalCThetaScale,
+      thetaSigned_le_cTheta_absLogQ :=
+        sourceData.thetaSigned_le_canonicalCThetaScale_absLogQ }
+  have hdichotomy :
+      (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < sourceData.canonicalCThetaScale := by
+    rcases hbound.cTheta_eq_neg_one_or_gt_neg_one with hC | hstrict
+    · exact Or.inl
+        ⟨hbound.qSigned_eq_thetaSigned_of_cTheta_eq_neg_one hC,
+          hbound.thetaSigned_neg_of_cTheta_eq_neg_one hC⟩
+    · exact Or.inr hstrict
+  exact
+    { sourceEndpoint := sourceData.source_endpoint,
+      canonicalCThetaScale_eq := rfl,
+      q_pilot_positive := sourceData.q_pilot_positive,
+      qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned,
+      thetaSigned_le_canonicalCTheta_absLogQ :=
+        sourceData.thetaSigned_le_canonicalCThetaScale_absLogQ,
+      dichotomy := hdichotomy }
+
 set_option linter.style.longLine false in
 /--
 Record-canonical Step (xi) audit for the constructor-built possible-image

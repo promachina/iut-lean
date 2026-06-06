@@ -5112,6 +5112,34 @@ determinant compatibility, but it removes another ad hoc audit boundary: the
 large constructor-built object now factors through the same source object as the
 milestone-facing constructed source.
 
+The constructor-built Step~(xi) source now also has a canonical local
+\(C_\Theta\)-scale audit.  From q-pilot positivity it defines
+\[
+  C_{\Theta,\mathrm{can}}
+    =
+  \theta_{\mathrm{signed}}/(-q_{\mathrm{signed}})
+\]
+and proves internally that
+\[
+  \theta_{\mathrm{signed}}
+  \le
+  C_{\Theta,\mathrm{can}}\cdot(-q_{\mathrm{signed}}).
+\]
+The canonical-one constructed-\(\IPL\) finite-divisor route therefore has a
+no-external-bound endpoint
+\[
+\begin{array}{l}
+\texttt{sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource}\\
+\quad\texttt{\_canonicalOneConstructorBuiltIPLConstruction}\\
+\quad\texttt{CanonicalCThetaScaleDichotomy}.
+\end{array}
+\]
+This does not yet identify \(C_{\Theta,\mathrm{can}}\) with the global
+paper constant \(C_\Theta\).  Its purpose is narrower and useful: the
+theta/log-q upper bound is no longer an opaque route hypothesis for this local
+scale, and the remaining mathematical task is now isolated as the comparison
+between this canonical source scale and the \IUT{} constant from the paper.
+
 The practical priority order is:
 \begin{enumerate}
 \item factor the large source module into reviewable finite-label, hull,

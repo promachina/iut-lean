@@ -51899,6 +51899,79 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
       thetaSigned_le_cTheta_absLogQ := thetaSigned_le_cTheta_absLogQ,
       dichotomy := hdichotomy }
 
+set_option linter.style.longLine false in
+/--
+Canonical-scale \(C_\Theta\) audit for the canonical-one constructed-\(\IPL\)
+finite-divisor route.
+
+The scale is not supplied as an external numeric hypothesis.  It is the local
+source scale
+\[
+  \theta_{\mathrm{signed}}/(-q_{\mathrm{signed}})
+\]
+attached to the constructor-built Remark 3.9.5 Step~(xi) source.  The
+theta/log-q bound required by the ordered-real Corollary 3.12 lemma is derived
+from q-pilot positivity.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionCanonicalCThetaScaleAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
+  qComparisonAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectQComparisonAudit
+      sourceData
+  hullCanonicalScaleAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltCanonicalCThetaScaleAudit
+      sourceData.hullSource
+  directCThetaAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+      sourceData sourceData.hullSource.canonicalCThetaScale
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  thetaSigned_le_canonicalCTheta_absLogQ :
+    packageN.preLedger.thetaSigned <=
+      sourceData.hullSource.canonicalCThetaScale *
+        (-packageN.preLedger.qSigned)
+  dichotomy :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < sourceData.hullSource.canonicalCThetaScale
+
+set_option linter.style.longLine false in
+theorem toCanonicalOneConstructorBuiltIPLConstructionCanonicalCThetaScaleAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionCanonicalCThetaScaleAudit
+      sourceData := by
+  have hscale :=
+    sourceData.hullSource.toConstructorBuiltCanonicalCThetaScaleAudit
+  have hdirect :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+      sourceData.hullSource.canonicalCThetaScale
+      hscale.thetaSigned_le_canonicalCTheta_absLogQ
+  exact
+    { stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      sideConditionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit,
+      qComparisonAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectQComparisonAudit,
+      hullCanonicalScaleAudit := hscale,
+      directCThetaAudit := hdirect,
+      q_pilot_positive := hdirect.q_pilot_positive,
+      qSigned_le_thetaSigned := hdirect.qSigned_le_thetaSigned,
+      thetaSigned_le_canonicalCTheta_absLogQ :=
+        hscale.thetaSigned_le_canonicalCTheta_absLogQ,
+      dichotomy := hdirect.dichotomy }
+
 theorem boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPLConstruction
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -51912,6 +51985,26 @@ theorem boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPL
       (-1 : Real) < cTheta :=
   (sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
     cTheta thetaSigned_le_cTheta_absLogQ).dichotomy
+
+set_option linter.style.longLine false in
+/--
+No-external-bound canonical-scale dichotomy for the canonical-one
+constructed-\(\IPL\) finite-divisor route.
+
+This is the same ordered-real endpoint as the ordinary \(C_\Theta\) route, but
+with \(C_\Theta\) specialized to the local canonical scale of the
+constructor-built Remark 3.9.5 source.  The theta/log-q bound is proved from
+q-pilot positivity instead of being passed as a route hypothesis.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPLConstruction_canonicalCThetaScale
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < sourceData.hullSource.canonicalCThetaScale :=
+  sourceData.toCanonicalOneConstructorBuiltIPLConstructionCanonicalCThetaScaleAudit
+    |>.dichotomy
 
 set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
