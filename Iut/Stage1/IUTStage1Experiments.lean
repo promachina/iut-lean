@@ -21002,6 +21002,8 @@ theorem calibratedSynchronizationIPLConstructionPossibleImageConstructorBuiltHul
         sourceData ∧
       IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
         sourceData ∧
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob4DeterminantAudit
+        sourceData ∧
       IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
         sourceData ∧
       bridge.iplTransport.targetLogVolume =
@@ -41346,13 +41348,35 @@ theorem possibleImageConstructorBuiltHullSource_recordCanonicalStepXIAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob3/Ob4 determinant/tensor-power audit for the
+constructor-built possible-image Step (xi) hull/determinant source.
+
+This isolates the weighted determinant summation, normalization,
+hull-log-volume compatibility, naive Frobenius tensor-power bound, and
+determinant upper-ray comparison before the remaining-payload ledger adds the
+q-choice, bridge, and side-condition fields.
+-/
+theorem possibleImageConstructorBuiltHullSource_ob3Ob4DeterminantAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob4DeterminantAudit
+      sourceData :=
+  sourceData.toConstructorBuiltOb3Ob4DeterminantAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface remaining-payload audit for the constructor-built
 possible-image Step (xi) hull/determinant source.
 
 This separates the source-paper payload still carried by the constructor-built
-boundary: possible-image q-region selection, holomorphic-hull absorption,
-Ob3/Ob5 determinant log-volume compatibility, Ob4 tensor-power control, the
-record-canonical bridge equality, and side conditions.
+boundary: possible-image q-region selection, holomorphic-hull absorption, the
+Ob3/Ob4 determinant/tensor-power audit, Ob3/Ob5 determinant log-volume
+compatibility, the record-canonical bridge equality, and side conditions.
 -/
 theorem possibleImageConstructorBuiltHullSource_remainingPayloadAudit
     {source target : Copy} {index : Type u}

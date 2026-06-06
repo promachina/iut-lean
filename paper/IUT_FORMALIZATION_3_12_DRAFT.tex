@@ -3311,6 +3311,15 @@ Step (xi) hull/determinant source directly.  The core constructor
 finite Hodge/\(\SHE\) synchronization, constructor-built Step (xi) source
 endpoint, record-canonical Step (xi) audit, compact boundary audit, and
 remaining-payload ledger from the same source object.
+The constructor-built Step (xi) source now also separates its Ob3/Ob4
+determinant/tensor-power passage as
+\texttt{ConstructorBuiltOb3Ob4DeterminantAudit}, exposed by the experiment
+suffix \texttt{possibleImageConstructorBuiltHullSource\_ob3Ob4DeterminantAudit}
+and carried by this bridge endpoint.  The audit records weighted determinant
+summation, determinant normalization, hull-log-volume compatibility, the naive
+Frobenius tensor-power bound, and the determinant upper-ray comparison before
+the remaining-payload ledger adds q-choice, record-canonical bridge, positivity,
+and normalization fields.
 The theta-monoid-matched all-in-one route now has the same stronger no-\(C_\Theta\)
 boundary surface with suffix
 \texttt{boundaryEndpointWithMatchedRouteBridgeAudit}.  Its first component
@@ -3862,10 +3871,9 @@ audit,
 \texttt{remainingPayloadAudit}.  This ledger separates the still-supplied
 Remark~3.9.5/Step~(xi) inputs from the constructor projections: selected
 possible-image q-region, holomorphic-hull absorption of the possible-image
-union and q-region, Ob3 weighted-determinant summation, Ob3--Ob5
-hull-log-volume compatibility, Ob4 tensor-power control, the record-canonical
-hull/tensor bridge equality, q-positivity, normalization, and the derived raw
-comparison.
+union and q-region, the named Ob3/Ob4 determinant/tensor-power audit, Ob3--Ob5
+hull-log-volume compatibility, the record-canonical hull/tensor bridge
+equality, q-positivity, normalization, and the derived raw comparison.
 This constructor-built Step (xi) source is now also available as a single
 theta-monoid-matched finite-divisor route object, not merely as an external
 experiment wrapper.  This source object packages the matched Hodge--Arakelov

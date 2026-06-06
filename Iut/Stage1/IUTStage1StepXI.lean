@@ -10756,6 +10756,73 @@ theorem toConstructorBuiltStepXIUpperRayAudit
 
 set_option linter.style.longLine false in
 /--
+Ob3/Ob4 determinant and tensor-power audit for the constructor-built
+possible-image Step (xi) source.
+
+This isolates the Remark 3.9.5(vii) passage from holomorphic-hull regions to
+determinant line bundles and positive tensor powers: weighted determinant
+summation, normalization, hull-log-volume compatibility, the naive Frobenius
+tensor-power bound, and the resulting determinant upper-ray comparison are all
+available before the broader remaining-payload ledger adds q-choice,
+holomorphic-hull absorption, bridge equality, and side conditions.
+-/
+structure ConstructorBuiltOb3Ob4DeterminantAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  upperRayAudit :
+    ConstructorBuiltStepXIUpperRayAudit sourceData
+  determinantLogVolume_eq_weightedSum :
+    sourceData.determinantSource.determinantLogVolume =
+      Finset.univ.sum fun index =>
+        (sourceData.determinantSource.summand index).adjustedLogVolume
+  normalizedLogVolume_eq_determinantLogVolume :
+    sourceData.determinantSource.normalizedLogVolume =
+      sourceData.determinantSource.determinantLogVolume
+  hullLogVolume_eq_normalized :
+    sourceData.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullData (recordThetaPossibleImageUnion record)).approximant =
+      sourceData.determinantSource.normalizedLogVolume
+  hullLogVolume_eq_determinantLogVolume :
+    sourceData.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullData (recordThetaPossibleImageUnion record)).approximant =
+      sourceData.determinantSource.determinantLogVolume
+  tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.determinantSource).normalizedLogVolume <=
+      package.preLedger.thetaSigned
+  qPilotLogVolume_le_determinant :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+      sourceData.determinantSource.determinantLogVolume
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltOb3Ob4DeterminantAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltOb3Ob4DeterminantAudit sourceData :=
+  { upperRayAudit :=
+      sourceData.toConstructorBuiltStepXIUpperRayAudit,
+    determinantLogVolume_eq_weightedSum :=
+      sourceData.determinantSource.determinantLogVolume_eq_sum,
+    normalizedLogVolume_eq_determinantLogVolume :=
+      sourceData.determinantSource.normalizedLogVolume_eq_determinantLogVolume,
+    hullLogVolume_eq_normalized :=
+      sourceData.compatibility.approximant_eq_weighted_normalized,
+    hullLogVolume_eq_determinantLogVolume :=
+      sourceData.compatibility.approximant_eq_determinantLogVolume,
+    tensorPower_bound := sourceData.tensorPower_bound,
+    qPilotLogVolume_le_determinant :=
+      sourceData.toUpperRayLogVolume.qPilotLogVolume_le_determinant,
+    qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Named Step (xi) boundary audit for the constructor-built possible-image
 hull/determinant source.
 
@@ -10853,6 +10920,8 @@ structure ConstructorBuiltRemainingPayloadAudit
     ConstructorBuiltStepXIBoundaryAudit sourceData
   upperRayAudit :
     ConstructorBuiltStepXIUpperRayAudit sourceData
+  ob3Ob4DeterminantAudit :
+    ConstructorBuiltOb3Ob4DeterminantAudit sourceData
   qPilotRegion_eq_possibleImage :
     sourceData.qPilotRegion =
       recordThetaPossibleImage record sourceData.qChoice
@@ -10918,6 +10987,8 @@ theorem toConstructorBuiltRemainingPayloadAudit
       sourceData.toConstructorBuiltStepXIBoundaryAudit,
     upperRayAudit :=
       sourceData.toConstructorBuiltStepXIUpperRayAudit,
+    ob3Ob4DeterminantAudit :=
+      sourceData.toConstructorBuiltOb3Ob4DeterminantAudit,
     qPilotRegion_eq_possibleImage :=
       sourceData.qPilotRegion_eq_possibleImage,
     qPilotRegion_subset_recordUnion :=
