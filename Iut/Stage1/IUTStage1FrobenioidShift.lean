@@ -44597,6 +44597,39 @@ theorem cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
     sourceData.toObligationsBackedSource.cThetaDichotomyWithMatchedGaussianStepXIAudit
       cTheta thetaSigned_le_cTheta_absLogQ⟩
 
+set_option linter.style.longLine false in
+/--
+Conditional \(C_\Theta\) audit for the constructor-built matched route with the
+remaining Step (xi) payload ledger exposed.
+
+This is the \(C_\Theta\) counterpart of
+`ConstructorBuiltMatchedRemainingPayloadRouteAudit`: it keeps the
+Remark 3.9.5/Step (xi) payload still supplied to the constructor-built hull
+source next to the constructor-built matched route audit and final dichotomy.
+-/
+def ConstructorBuiltMatchedRemainingPayloadCThetaAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop :=
+  IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource ∧
+    ConstructorBuiltMatchedCThetaAudit sourceData cTheta
+
+theorem cThetaDichotomyWithConstructorBuiltMatchedRemainingPayloadAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    ConstructorBuiltMatchedRemainingPayloadCThetaAudit sourceData cTheta :=
+  ⟨sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit,
+    sourceData.cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
+      cTheta thetaSigned_le_cTheta_absLogQ⟩
+
 end
   IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
 
