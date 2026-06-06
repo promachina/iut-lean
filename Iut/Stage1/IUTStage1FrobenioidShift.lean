@@ -46589,6 +46589,106 @@ theorem boundarySignedEqualityOrStrictCTheta_of_targetChartedHodgeIPLDeterminant
     entrySource_eq_monoAnalyticProduct packetLocalObjectFinite_eq_ind3Source
     targetSource cTheta thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+No-`C_\Theta` packet-local endpoint for the all-in-one target-charted
+Hodge/\(\IPL\) determinant possible-image route.
+
+The route source supplies the source-derived Hodge/SHE/IPL/hull bridge audit,
+including the raw signed comparison.  The remaining conjuncts expose the Step
+(x) packet-local equalities and the exact vertical-`IQ` target audit before the
+ordered-real `C_\Theta` dichotomy is invoked.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoutePacketLocalVerticalIQ_boundaryEndpoint
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C)
+    {j : Nat}
+    {monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (entrySource_eq_monoAnalyticProduct :
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.toRealized.product.productLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    (let bridge := routeSource.toSourceDerivedBridge;
+      bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+        bridge.iplTransport.iplDatum =
+          routeSource.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+        (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+          packageN.preLedger.thetaBound.thetaPoint).coord =
+          routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+        (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+          packageN.preLedger.thetaBound.thetaPoint).coord =
+          routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+        routeSource.possibleImageSource.qPilotRegion =
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record routeSource.possibleImageSource.qChoice ∧
+        routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+          (Finset.univ.sum fun index =>
+            (routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand
+              index).adjustedLogVolume) ∧
+        routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+        packageN.preLedger.thetaSigned =
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+        packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+          routeSource.possibleImageSource.obligations.hullDetData.bridgeData ∧
+        bridge.iplTransport.targetLogVolume =
+          bridge.iplTransport.sourceLogVolume ∧
+        packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+        bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+          bridge.finiteHodgeSHETransport.targetTheater.side) ∧
+      (targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+        part.insulated_route.theta_source.thetaSourceAverage audited =
+          audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+          audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+          audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+        part.insulated_route.theta_source.thetaSourceAverage audited =
+          upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume) ∧
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.toRealized.product.productLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  ⟨routeSource.sourceDerivedBridge_endpoint,
+    targetSource.verticalIQTarget_endpoint,
+    packetLocalObject_eq_entrySource,
+    entrySource_eq_monoAnalyticProduct,
+    packetLocalObjectFinite_eq_ind3Source⟩
+
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
     (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l) :
     part.toHodgeDescentInsulatedCuspZeroBridgeAudit.classified_bridge.bridge_source =
