@@ -42019,6 +42019,70 @@ theorem constructedIPLFiniteTransportLogVolume_endpoint
   sourceData.toFiniteHodgeSHEIPLConstructionSource.constructedIPLFiniteTransportLogVolume_endpoint
 
 set_option linter.style.longLine false in
+/--
+Possible-image Step (xi) hull/determinant endpoint projected from the bundled
+finite-divisor route object.
+
+This displays the hull side of the route directly from the same source package:
+the q-pilot region is the chosen Theorem 3.11 possible image, it lies in the
+record possible-image union, the package hull bridge is the obligations bridge,
+the tensor-power determinant log-volume is bounded by `thetaSigned`, and the
+side conditions yield the raw signed comparison.
+-/
+theorem possibleImageHullDeterminantSource_endpoint
+    (sourceData :
+      IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.hullSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice ∧
+      sourceData.hullSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.hullSource.obligations.hullDetData.bridgeData ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.hullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  sourceData.hullSource.source_endpoint
+
+set_option linter.style.longLine false in
+/--
+Record-canonical hull/tensor bridge equality projected from the bundled
+finite-divisor route object.
+
+This is the Step (xi) bridge-alignment part of
+`possibleImageHullDeterminantSource_endpoint`: the package hull/determinant
+bridge is not merely equal to an obligations field, but to the canonical bridge
+constructed from the selected possible-image region, its record-union
+containment, the weighted determinant source, and the tensor-power bound.
+-/
+theorem possibleImageRecordCanonicalHullBridge_endpoint
+    (sourceData :
+      IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.hullSource.operation sourceData.hullSource.hullOperation
+        sourceData.hullSource.determinantOperation sourceData.hullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.hullSource.qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice)
+          (fun _ hx => hx))
+        sourceData.hullSource.determinantSource
+        sourceData.hullSource.compatibility
+        sourceData.hullSource.measure_eq_hullLogVolume
+        sourceData.hullSource.tensorPower_bound :=
+  sourceData.hullSource.hullDetBridge_eq_recordCanonical
+
+set_option linter.style.longLine false in
 theorem boundaryEndpointWithGaussianStepXIAudit
     (sourceData :
       IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
@@ -42321,6 +42385,50 @@ theorem constructedIPLFiniteTransportLogVolume_endpoint
       sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
         sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume :=
   sourceData.toSynchronizedSource.constructedIPLFiniteTransportLogVolume_endpoint
+
+set_option linter.style.longLine false in
+theorem possibleImageHullDeterminantSource_endpoint
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.hullSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice ∧
+      sourceData.hullSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.hullSource.obligations.hullDetData.bridgeData ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.hullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  sourceData.toSynchronizedSource.possibleImageHullDeterminantSource_endpoint
+
+set_option linter.style.longLine false in
+theorem possibleImageRecordCanonicalHullBridge_endpoint
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.hullSource.operation sourceData.hullSource.hullOperation
+        sourceData.hullSource.determinantOperation sourceData.hullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.hullSource.qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice)
+          (fun _ hx => hx))
+        sourceData.hullSource.determinantSource
+        sourceData.hullSource.compatibility
+        sourceData.hullSource.measure_eq_hullLogVolume
+        sourceData.hullSource.tensorPower_bound :=
+  sourceData.toSynchronizedSource.possibleImageRecordCanonicalHullBridge_endpoint
 
 set_option linter.style.longLine false in
 theorem boundaryEndpointWithMatchedGaussianStepXIAudit
