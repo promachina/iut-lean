@@ -4222,6 +4222,8 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionSideConditionAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionQComparisonAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstruction}\\
+\quad\texttt{DirectQComparisonAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstruction\_qComparison},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionPacketTargetAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit},\\
@@ -4273,6 +4275,15 @@ canonical-one theta evaluation, finite Hodge/\(\SHE\) transport, factored
 \(\SHE\), constructed-\(\IPL\) log-volume transport, finite-transport
 log-volume, and choice-link endpoints.  The direct middle route, raw
 q-comparison audit, and direct milestone bundle consume this stricter audit.
+The raw comparison itself now also has a no-broad-middle-route form,
+\texttt{CanonicalOneConstructorBuiltIPLConstructionDirectQComparisonAudit}.
+It removes the older \texttt{MiddleRouteAudit} field from the comparison
+payload and reviews \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\)
+through the direct Hodge/\(\SHE\)/\(\IPL\) audit, direct middle route,
+source-derived bridge, route-log-volume alignment, Step (xi)
+hull/determinant audits, Ob1--Ob5 payload, and source side conditions.  The
+direct finite-boundary route, direct \(C_\Theta\) audit, and direct milestone
+bundle consume this direct q-comparison audit.
 There is now also
 \texttt{CanonicalOneConstructorBuiltIPLConstructionDirectMilestoneCThetaAudit},
 which removes the theta-monoid-matched route, remaining-payload, compact
