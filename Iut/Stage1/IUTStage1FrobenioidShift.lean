@@ -20905,6 +20905,490 @@ theorem toCalibratedGaussianToStepXIAudit
 
 end IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageRouteSource
 
+set_option linter.style.longLine false in
+/--
+Package-measure calibrated record family-hull determinant source.
+
+This factors the remaining measure alignment at the Step (xi) determinant
+boundary into a named source object: the family hull and weighted determinant
+are record-native, while the package ledger measure is identified with the
+holomorphic hull log-volume measure supplied by that source.
+-/
+structure IUTStage1MeasureCalibratedRecordBoundedFamilyHullDetLogVolumeSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    {β : Type w} [Fintype β] where
+  familyHullSource :
+    IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+      (β := β) record
+  measure_eq_hullLogVolume :
+    package.preLedger.measure = familyHullSource.hullData.toRegionMeasure
+
+namespace IUTStage1MeasureCalibratedRecordBoundedFamilyHullDetLogVolumeSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type w} [Fintype β]
+
+theorem source_endpoint
+    (sourceData :
+      IUTStage1MeasureCalibratedRecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record) :
+    package.preLedger.measure =
+        sourceData.familyHullSource.hullData.toRegionMeasure ∧
+      sourceData.familyHullSource.familyUnion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.familyHullSource.familyHullLogVolume =
+        sourceData.familyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.familyHullSource.familyUnionLogVolume <=
+        sourceData.familyHullSource.familyHullLogVolume ∧
+      sourceData.familyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.familyHullSource.familyHullLogVolume :=
+  ⟨sourceData.measure_eq_hullLogVolume,
+    sourceData.familyHullSource.source_endpoint.1,
+    sourceData.familyHullSource.familyHullLogVolume_eq_determinant,
+    sourceData.familyHullSource.familyUnionLogVolume_le_familyHullLogVolume,
+    sourceData.familyHullSource.tensorPower_normalizedLogVolume_eq_familyHullLogVolume⟩
+
+end IUTStage1MeasureCalibratedRecordBoundedFamilyHullDetLogVolumeSource
+
+set_option linter.style.longLine false in
+/--
+Target-charted Hodge determinant source whose family-hull side is already
+package-measure calibrated.
+
+Compared with
+`IUTStage1TargetChartedHodgeCalibratedDeterminantSummandFamilyHullSource`,
+this source does not expose `measure_eq_hullLogVolume` as a direct determinant
+field.  It is projected from the measure-calibrated record family-hull source.
+-/
+structure IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type w} [Fintype β] where
+  measuredFamilyHullSource :
+    IUTStage1MeasureCalibratedRecordBoundedFamilyHullDetLogVolumeSource
+      (β := β) record
+  targetChartedSummandCalibration :
+    IUTStage1TargetChartedSummandHodgeFamilyHullLogVolumeCalibration
+      part audited
+      hodgeSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization
+      measuredFamilyHullSource.familyHullSource
+
+namespace IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {hodgeSynchronization :
+  IUTStage1TargetChartedHodgeArakelovSynchronization
+    part audited X C}
+variable {β : Type w} [Fintype β]
+
+def toTargetChartedHodgeCalibratedDeterminantSummandFamilyHullSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource
+        (β := β) part audited record hodgeSynchronization) :
+    IUTStage1TargetChartedHodgeCalibratedDeterminantSummandFamilyHullSource
+      (β := β) part audited record hodgeSynchronization :=
+  { familyHullSource := sourceData.measuredFamilyHullSource.familyHullSource,
+    measure_eq_hullLogVolume :=
+      sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume,
+    targetChartedSummandCalibration :=
+      sourceData.targetChartedSummandCalibration }
+
+theorem tensorPower_bound
+    (sourceData :
+      IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource
+        (β := β) part audited record hodgeSynchronization) :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.measuredFamilyHullSource.familyHullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned :=
+  sourceData.toTargetChartedHodgeCalibratedDeterminantSummandFamilyHullSource
+    |>.tensorPower_bound
+
+theorem source_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource
+        (β := β) part audited record hodgeSynchronization) :
+    packageN.preLedger.measure =
+        sourceData.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      sourceData.measuredFamilyHullSource.familyHullSource.familyUnion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+        sourceData.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.measuredFamilyHullSource.familyHullSource.familyUnionLogVolume <=
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      sourceData.measuredFamilyHullSource.familyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.measuredFamilyHullSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned :=
+  sourceData.toTargetChartedHodgeCalibratedDeterminantSummandFamilyHullSource
+    |>.calibrated_source_endpoint
+
+end IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource
+
+set_option linter.style.longLine false in
+/--
+Possible-image Step (xi) source backed by a package-measure calibrated
+determinant payload.
+
+The common-container bridge equality still records the canonical
+possible-image hull/tensor-power bridge, but the measure input used to build
+that bridge is now projected from the measured family-hull source.
+-/
+structure
+    IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type w} [Fintype β] where
+  operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId
+  hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId
+  determinantOperation :
+    RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId
+  measureCalibratedHodgeDeterminantSource :
+    IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource
+      (β := β) part audited record hodgeSynchronization
+  qChoice :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean
+  obligations : IUTStage1SourceHullDetObligations packageN
+  obligationsHullDetData_eq_recordCanonical :
+    obligations.hullDetData.bridgeData =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        operation hullOperation determinantOperation
+        measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record qChoice)
+          (fun _ hx => hx))
+        measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+        measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+        measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        measureCalibratedHodgeDeterminantSource.tensorPower_bound
+
+namespace
+  IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {hodgeSynchronization :
+  IUTStage1TargetChartedHodgeArakelovSynchronization
+    part audited X C}
+variable {β : Type w} [Fintype β]
+
+def qPilotRegion
+    (sourceData :
+      IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    Set (Point target) :=
+  IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+    record sourceData.qChoice
+
+theorem q_subset_choice
+    (sourceData :
+      IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    sourceData.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice :=
+  fun _ hx => hx
+
+set_option linter.style.longLine false in
+noncomputable def toTargetChartedHodgeCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    IUTStage1TargetChartedHodgeCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+      (β := β) part audited record hodgeSynchronization :=
+  { operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    calibratedHodgeDeterminantSource :=
+      sourceData.measureCalibratedHodgeDeterminantSource
+        |>.toTargetChartedHodgeCalibratedDeterminantSummandFamilyHullSource,
+    qChoice := sourceData.qChoice,
+    obligations := sourceData.obligations,
+    obligationsHullDetData_eq_recordCanonical := by
+      simpa [
+        IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource.qPilotRegion,
+        IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource.toTargetChartedHodgeCalibratedDeterminantSummandFamilyHullSource,
+        IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource.tensorPower_bound]
+        using sourceData.obligationsHullDetData_eq_recordCanonical }
+
+set_option linter.style.longLine false in
+theorem source_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization) :
+    sourceData.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      packageN.preLedger.measure =
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      packageN.preLedger.thetaSigned =
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.obligations.hullDetData.bridgeData ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  sourceData.toTargetChartedHodgeCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+    |>.source_endpoint
+
+end IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+
+set_option linter.style.longLine false in
+/--
+All-in-one target-charted route whose Step (xi) possible-image source carries
+a package-measure calibrated determinant payload.
+
+This is the next stricter all-in-one route after the calibrated possible-image
+route: measure alignment is no longer a public field of the determinant
+payload, but a projection from the measured record family-hull source.
+-/
+structure IUTStage1TargetChartedHodgeIPLMeasureCalibratedPossibleImageRouteSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F)
+    {β : Type w} [Fintype β] where
+  hodgeIPLSource :
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+      part audited record X C
+  measureCalibratedPossibleImageSource :
+    IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantPossibleImageHullDetObligationsBackedSource
+      (β := β) part audited record hodgeIPLSource.hodgeSynchronization
+
+namespace IUTStage1TargetChartedHodgeIPLMeasureCalibratedPossibleImageRouteSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {β : Type w} [Fintype β]
+
+noncomputable def toTargetChartedHodgeIPLCalibratedPossibleImageRouteSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLMeasureCalibratedPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageRouteSource
+      (β := β) part audited record X C :=
+  { hodgeIPLSource := sourceData.hodgeIPLSource,
+    calibratedPossibleImageSource :=
+      sourceData.measureCalibratedPossibleImageSource
+        |>.toTargetChartedHodgeCalibratedDeterminantPossibleImageHullDetObligationsBackedSource }
+
+theorem source_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLMeasureCalibratedPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    sourceData.hodgeIPLSource.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.hodgeIPLSource.toIPLLogVolumeTransport.iplDatum =
+        sourceData.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      sourceData.hodgeIPLSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.hodgeIPLSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.measureCalibratedPossibleImageSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.measureCalibratedPossibleImageSource.qChoice ∧
+      packageN.preLedger.measure =
+        sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+        packageN.preLedger.thetaBound.thetaPoint).coord =
+        sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+        sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      packageN.preLedger.thetaSigned =
+        sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.measureCalibratedPossibleImageSource.obligations.hullDetData.bridgeData ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      sourceData.hodgeIPLSource.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.hodgeIPLSource.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.toTargetChartedHodgeIPLCalibratedPossibleImageRouteSource
+    |>.source_endpoint
+
+theorem toCalibratedGaussianToStepXIAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLMeasureCalibratedPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageRouteSource.CalibratedGaussianToStepXIAudit
+      sourceData.toTargetChartedHodgeIPLCalibratedPossibleImageRouteSource :=
+  sourceData.toTargetChartedHodgeIPLCalibratedPossibleImageRouteSource
+    |>.toCalibratedGaussianToStepXIAudit
+
+/--
+Measure-calibrated Gaussian-to-Step (xi) audit for the all-in-one route.
+
+This audit keeps the calibrated route audit and exposes the measured
+family-hull object that supplies package-measure alignment for the determinant
+payload.
+-/
+structure MeasureCalibratedGaussianToStepXIAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLMeasureCalibratedPossibleImageRouteSource
+        (β := β) part audited record X C) : Prop where
+  projectedCalibratedAudit :
+    IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageRouteSource.CalibratedGaussianToStepXIAudit
+      sourceData.toTargetChartedHodgeIPLCalibratedPossibleImageRouteSource
+  measuredFamilyHullEndpoint :
+    packageN.preLedger.measure =
+        sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+        sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnionLogVolume <=
+        sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.tensorPower.normalizedLogVolume =
+        sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume
+  qPilotRegion_eq_choice :
+    sourceData.measureCalibratedPossibleImageSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.measureCalibratedPossibleImageSource.qChoice
+  thetaSigned_eq_familyHull :
+    packageN.preLedger.thetaSigned =
+      sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume
+  hullDetBridge_eq_obligations :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.measureCalibratedPossibleImageSource.obligations.hullDetData.bridgeData
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toMeasureCalibratedGaussianToStepXIAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLMeasureCalibratedPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    MeasureCalibratedGaussianToStepXIAudit sourceData := by
+  have hsource := sourceData.source_endpoint
+  exact
+    { projectedCalibratedAudit := sourceData.toCalibratedGaussianToStepXIAudit,
+      measuredFamilyHullEndpoint :=
+        sourceData.measureCalibratedPossibleImageSource.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.source_endpoint,
+      qPilotRegion_eq_choice := hsource.2.2.2.1,
+      thetaSigned_eq_familyHull := hsource.2.2.2.2.2.2.2.2.2.2.1,
+      hullDetBridge_eq_obligations := hsource.2.2.2.2.2.2.2.2.2.2.2.1,
+      qSigned_le_thetaSigned := hsource.2.2.2.2.2.2.2.2.2.2.2.2.1 }
+
+end IUTStage1TargetChartedHodgeIPLMeasureCalibratedPossibleImageRouteSource
+
 set_option linter.style.longLine true
 
 /--
