@@ -2375,6 +2375,28 @@ obligation interfaces.  These interfaces are acceptable only as temporary
 boundaries.  The next phase must replace them by constructions from the source
 papers or mark them as unresolved.
 
+For the Source-Derived Step (xi) Bridge milestone, the checked public endpoint is
+\[
+\begin{array}{l}
+\texttt{Iut.Stage1.Experiments.boundarySignedEqualityOrStrictCTheta\_from}\\
+\quad\texttt{\_sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ}.
+\end{array}
+\]
+Its direct audit companion is
+\[
+\begin{array}{l}
+\texttt{Iut.Stage1.Experiments.boundarySignedEqualityOrStrictCTheta\_from}\\
+\quad\texttt{\_sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_withDirectMilestoneAudit}.
+\end{array}
+\]
+Both declarations have been added to the \texttt{checkdecls} list.  A kernel
+\texttt{\#print axioms} check for these two declarations, the explicit
+constructed-\(\IPL\) alias, and the underlying namespaced constructed-\(\IPL\)
+endpoint reports only \texttt{propext}, \texttt{Classical.choice}, and
+\texttt{Quot.sound}; in particular, no \texttt{sorryAx} appears.  Thus the
+milestone is kernel-clean at the usual Lean classical/quotient trust boundary.
+
 The endpoint type \texttt{Stage1Comparison} is not a source proof: its
 comparison field is the Corollary-3.12-shaped conclusion, and the corresponding
 theorem is only a projection.  The source-facing route must construct this
