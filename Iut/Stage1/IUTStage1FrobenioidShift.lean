@@ -49254,6 +49254,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
   constructorBuiltRemainingPayloadAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
       sourceData.hullSource
+  constructorBuiltOb1ToOb5BridgeAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1ToOb5BridgeAudit
+      sourceData.hullSource
   constructorSourcedSourceEndpoint :
     IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
       sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
@@ -49318,6 +49321,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
         sourceData.hullSource.toConstructorBuiltOb3Ob5DeterminantCompatibilityAudit,
       constructorBuiltRemainingPayloadAudit :=
         sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit,
+      constructorBuiltOb1ToOb5BridgeAudit :=
+        sourceData.hullSource.toConstructorBuiltOb1ToOb5BridgeAudit,
       constructorSourcedSourceEndpoint :=
         sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
       constructorPinnedSourceEndpoint :=
@@ -49328,6 +49333,23 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
       recordCanonicalHullBridgeAudit :=
         projected.possibleImageRecordCanonicalHullBridge_endpoint,
       qSigned_le_thetaSigned := hpossible.2.2.2.2.2.2 }
+
+set_option linter.style.longLine false in
+abbrev CanonicalOneConstructorBuiltIPLConstructionOb1ToOb5BridgeAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1ToOb5BridgeAudit
+    sourceData.hullSource
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionOb1ToOb5BridgeAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionOb1ToOb5BridgeAudit
+      sourceData :=
+  sourceData.hullSource.toConstructorBuiltOb1ToOb5BridgeAudit
 
 set_option linter.style.longLine false in
 /--

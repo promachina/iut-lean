@@ -4156,7 +4156,18 @@ Step (xi) hull side is now separated as
 records the constructor-built, constructor-sourced, and constructor-pinned
 possible-image hull endpoints, the projected possible-image hull/determinant
 endpoint, and the record-canonical hull/tensor bridge equality before the
-boundary audit is used.  The same Step (xi) hull audit now exposes the
+boundary audit is used.  It now also carries the compact
+\texttt{CanonicalOneConstructorBuiltIPLConstructionOb1ToOb5BridgeAudit}, whose
+source-level core is
+\texttt{ConstructorBuiltOb1ToOb5BridgeAudit}.  This audit packages the
+Remark 3.9.5(vii) chain from Ob1/Ob2 hull absorption through Ob3/Ob4
+determinant and tensor-power normalization, Ob3/Ob5 determinant/log-volume
+compatibility, the remaining Step (xi) source payload, and the actual
+\texttt{hullDetSource\_endpoint} produced by the Theorem 3.11
+hull/determinant constructor.  Thus the record-canonical bridge endpoint is now
+reviewable as the output of the Ob1--Ob5 source data, not only as a separate
+remaining-payload projection.  The same Step (xi) hull audit now exposes the
+\enlargethispage{2\baselineskip}
 constructor-built upper-ray log-volume audit
 \[
 \begin{array}{l}
@@ -4217,6 +4228,7 @@ determinant/tensor-power facts, the record-canonical bridge equality, side
 conditions, and the raw signed comparison as projections from the
 constructor-built hull source.  The
 experiment surface exposes this stricter route through suffixes
+\pagebreak[3]
 \[
 \begin{array}{l}
 \texttt{canonicalOneConstructorBuiltIPLConstructionFullRouteAudit},\\
@@ -4243,6 +4255,8 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstruction}\\
 \quad\texttt{RouteLogVolumeAlignmentAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionStepXIHullAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstruction}\\
+\quad\texttt{Ob1ToOb5BridgeAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionUpperRayAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstruction}\\
 \quad\texttt{StepXIHolomorphicHullDeterminantSkeleton},\\

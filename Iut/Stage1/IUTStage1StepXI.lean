@@ -11254,6 +11254,108 @@ theorem toConstructorBuiltRemainingPayloadAudit
     qSigned_le_thetaSigned :=
       sourceData.qSigned_le_thetaSigned }
 
+set_option linter.style.longLine false in
+/--
+Ob1--Ob5 bridge audit for the constructor-built possible-image Step (xi) source.
+
+Remark 3.9.5(vii) explains the passage as a chain: possible-image regions are
+absorbed by holomorphic hulls (Ob1/Ob2), converted to determinant line data and
+positive tensor powers (Ob3/Ob4), and then made independent of the selected
+possibility by the bounded-family hull formalism (Ob5).  This audit packages that
+chain together with the actual Theorem 3.11 hull/determinant constructor endpoint,
+so the existing bridge is read as the output of the Ob1--Ob5 source data rather
+than as a bare route projection.
+-/
+structure ConstructorBuiltOb1ToOb5BridgeAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  sourceEndpoint :
+    SourceEndpoint sourceData
+  boundaryAudit :
+    ConstructorBuiltStepXIBoundaryAudit sourceData
+  upperRayAudit :
+    ConstructorBuiltStepXIUpperRayAudit sourceData
+  ob1Ob2HullAbsorptionAudit :
+    ConstructorBuiltOb1Ob2HullAbsorptionAudit sourceData
+  ob3Ob4DeterminantAudit :
+    ConstructorBuiltOb3Ob4DeterminantAudit sourceData
+  ob3Ob5DeterminantCompatibilityAudit :
+    ConstructorBuiltOb3Ob5DeterminantCompatibilityAudit sourceData
+  remainingPayloadAudit :
+    ConstructorBuiltRemainingPayloadAudit sourceData
+  constructorHullDetSourceEndpoint :
+    let constructor := sourceData.toHullDetSourceConstructor;
+    package.preLedger.output.Certified ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+        package.preLedger.certificate.she ∧
+      constructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (constructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned
+  ob1_ob2_qRegion_absorbed :
+    sourceData.qPilotRegion ⊆
+      sourceData.hullData.hullRegion (recordThetaPossibleImageUnion record)
+  ob3_ob5_hullLogVolume_eq_determinant :
+    sourceData.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullData (recordThetaPossibleImageUnion record)).approximant =
+      sourceData.determinantSource.determinantLogVolume
+  bridge_eq_recordCanonical :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.hullData
+        (recordThetaPossibleImage record sourceData.qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (fun _ hx => hx))
+        sourceData.determinantSource sourceData.compatibility
+        sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+theorem toConstructorBuiltOb1ToOb5BridgeAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltOb1ToOb5BridgeAudit sourceData :=
+  let ob1ob2 := sourceData.toConstructorBuiltOb1Ob2HullAbsorptionAudit
+  let ob3ob5 := sourceData.toConstructorBuiltOb3Ob5DeterminantCompatibilityAudit
+  { sourceEndpoint :=
+      sourceData.source_endpoint,
+    boundaryAudit :=
+      sourceData.toConstructorBuiltStepXIBoundaryAudit,
+    upperRayAudit :=
+      sourceData.toConstructorBuiltStepXIUpperRayAudit,
+    ob1Ob2HullAbsorptionAudit :=
+      ob1ob2,
+    ob3Ob4DeterminantAudit :=
+      sourceData.toConstructorBuiltOb3Ob4DeterminantAudit,
+    ob3Ob5DeterminantCompatibilityAudit :=
+      ob3ob5,
+    remainingPayloadAudit :=
+      sourceData.toConstructorBuiltRemainingPayloadAudit,
+    constructorHullDetSourceEndpoint :=
+      sourceData.toHullDetSourceConstructor.hullDetSource_endpoint,
+    ob1_ob2_qRegion_absorbed :=
+      ob1ob2.qPilotRegion_subset_holomorphicHull,
+    ob3_ob5_hullLogVolume_eq_determinant :=
+      ob3ob5.hullLogVolume_eq_determinantLogVolume_from_normalized,
+    bridge_eq_recordCanonical :=
+      sourceData.hullDetBridge_eq,
+    qSigned_le_thetaSigned :=
+      sourceData.qSigned_le_thetaSigned }
+
 end IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
