@@ -49177,6 +49177,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
   constructorBuiltStepXIUpperRayAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIUpperRayAudit
       sourceData.hullSource
+  constructorBuiltOb3Ob5DeterminantCompatibilityAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob5DeterminantCompatibilityAudit
+      sourceData.hullSource
   constructorBuiltRemainingPayloadAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
       sourceData.hullSource
@@ -49240,6 +49243,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
         sourceData.hullSource.toConstructorBuiltStepXIBoundaryAudit,
       constructorBuiltStepXIUpperRayAudit :=
         sourceData.hullSource.toConstructorBuiltStepXIUpperRayAudit,
+      constructorBuiltOb3Ob5DeterminantCompatibilityAudit :=
+        sourceData.hullSource.toConstructorBuiltOb3Ob5DeterminantCompatibilityAudit,
       constructorBuiltRemainingPayloadAudit :=
         sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit,
       constructorSourcedSourceEndpoint :=
@@ -50010,6 +50015,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
   remainingPayloadAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
       sourceData.hullSource
+  constructorBuiltOb3Ob5DeterminantCompatibilityAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob5DeterminantCompatibilityAudit
+      sourceData.hullSource
   qPilotRegion_subset_holomorphicHull :
     sourceData.hullSource.qPilotRegion ⊆
       sourceData.hullSource.hullData.hullRegion
@@ -50063,12 +50071,15 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
       ob3Ob4DeterminantAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
       remainingPayloadAudit := hremaining,
+      constructorBuiltOb3Ob5DeterminantCompatibilityAudit :=
+        sourceData.hullSource.toConstructorBuiltOb3Ob5DeterminantCompatibilityAudit,
       qPilotRegion_subset_holomorphicHull :=
         hremaining.qPilotRegion_subset_holomorphicHull,
       ob5_hullLogVolume_eq_normalized :=
         hremaining.ob3_ob5_hullLogVolume_eq_normalized,
       ob5_hullLogVolume_eq_determinantLogVolume :=
-        hremaining.ob3_ob5_hullLogVolume_eq_determinantLogVolume,
+        sourceData.hullSource.toConstructorBuiltOb3Ob5DeterminantCompatibilityAudit
+          |>.hullLogVolume_eq_determinantLogVolume_from_normalized,
       measure_eq_hullLogVolume :=
         hremaining.measure_eq_hullLogVolume,
       recordCanonicalBridge_eq :=

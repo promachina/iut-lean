@@ -38900,7 +38900,10 @@ Experiment-surface Ob5 compatibility audit for the canonical-one constructed
 This isolates the Remark 3.9.5(vii) independence-of-possibilities passage: the
 selected q-region is absorbed by the bounded-family hull, while the
 hull-log-volume, determinant normalization, package measure, and
-record-canonical bridge remain compatible with that hull-family passage.
+record-canonical bridge remain compatible with that hull-family passage.  The
+audit also carries the constructor-built Ob3/Ob5 compatibility chain that
+derives the determinant log-volume equality through normalized determinant
+compatibility.
 -/
 theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
     {source target : Copy} {coric : Type u}
