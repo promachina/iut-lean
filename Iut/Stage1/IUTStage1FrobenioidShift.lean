@@ -44496,6 +44496,41 @@ noncomputable def toMatchedConstructorBackedExactSource
 
 set_option linter.style.longLine false in
 /--
+Hodge/SHE/IPL provenance for the side-conditioned matched constructor-backed
+exact source.
+
+This audit stops the current strongest finite-exact route from hiding the
+middle comparison layer inside the assembled source: the theta-monoid match is
+projected from the matched Hodge synchronization, while the full theta-root,
+factored SHE, finite Hodge/SHE transport, constructed IPL transport, and
+finite-transport log-volume provenance are projected from the target-charted
+Hodge--Arakelov/IPL construction audit.
+-/
+structure MatchedSideConditionedHodgeSHEIPLAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  thetaMonoidDegreeMatched :
+    sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.targetEvaluation.thetaMonoidDegree =
+      sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.sourceEvaluation.thetaMonoidDegree
+  hodgeSHEIPLConstructionAudit :
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.TargetChartedHodgeSHEIPLConstructionAudit
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource
+
+theorem toMatchedSideConditionedHodgeSHEIPLAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedSideConditionedHodgeSHEIPLAudit sourceData := by
+  have hmatched := sourceData.matchedHodgeIPLSource.source_endpoint
+  exact
+    { thetaMonoidDegreeMatched := hmatched.2.1,
+      hodgeSHEIPLConstructionAudit :=
+        sourceData.matchedHodgeIPLSource.hodgeSHEIPLAudit }
+
+set_option linter.style.longLine false in
+/--
 Audit for the side-conditioned matched constructor-backed exact source.
 
 The first component exposes the side-conditioned Step (xi) source endpoint;
@@ -44545,7 +44580,8 @@ def MatchedSideConditionedConstructorBackedObligationsCorridorAudit
       IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     Prop :=
-  MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData ∧
+  MatchedSideConditionedHodgeSHEIPLAudit sourceData ∧
+    MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData ∧
     IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsCorridorAudit
       sourceData.toMatchedConstructorBackedExactSource
 
@@ -44554,7 +44590,8 @@ theorem toMatchedSideConditionedConstructorBackedObligationsCorridorAudit
       IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     MatchedSideConditionedConstructorBackedObligationsCorridorAudit sourceData :=
-  ⟨sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
+  ⟨sourceData.toMatchedSideConditionedHodgeSHEIPLAudit,
+    sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
     sourceData.toMatchedConstructorBackedExactSource
       |>.toMatchedConstructorBackedObligationsCorridorAudit⟩
 
@@ -44569,7 +44606,8 @@ def MatchedSideConditionedConstructorBackedObligationsBoundaryAudit
       IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     Prop :=
-  MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData ∧
+  MatchedSideConditionedHodgeSHEIPLAudit sourceData ∧
+    MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData ∧
     IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsBoundaryAudit
       sourceData.toMatchedConstructorBackedExactSource
 
@@ -44578,7 +44616,8 @@ theorem boundaryEndpointWithMatchedSideConditionedConstructorBackedObligationsAu
       IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     MatchedSideConditionedConstructorBackedObligationsBoundaryAudit sourceData :=
-  ⟨sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
+  ⟨sourceData.toMatchedSideConditionedHodgeSHEIPLAudit,
+    sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
     sourceData.toMatchedConstructorBackedExactSource
       |>.boundaryEndpointWithMatchedConstructorBackedObligationsAudit⟩
 
@@ -44594,7 +44633,8 @@ def MatchedSideConditionedConstructorBackedObligationsCThetaAudit
         (β := β) part audited record X C holomorphicF holomorphicD product)
     (cTheta : Real) :
     Prop :=
-  MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData ∧
+  MatchedSideConditionedHodgeSHEIPLAudit sourceData ∧
+    MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData ∧
     IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsCThetaAudit
       sourceData.toMatchedConstructorBackedExactSource cTheta
 
@@ -44608,7 +44648,8 @@ theorem cThetaDichotomyWithMatchedSideConditionedConstructorBackedObligationsAud
         cTheta * (-packageN.preLedger.qSigned)) :
     MatchedSideConditionedConstructorBackedObligationsCThetaAudit
       sourceData cTheta :=
-  ⟨sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
+  ⟨sourceData.toMatchedSideConditionedHodgeSHEIPLAudit,
+    sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
     sourceData.toMatchedConstructorBackedExactSource
       |>.cThetaDichotomyWithMatchedConstructorBackedObligationsAudit
         cTheta thetaSigned_le_cTheta_absLogQ⟩
