@@ -37832,6 +37832,96 @@ theorem toObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
 
 set_option linter.style.longLine false in
 /--
+Review-facing boundary ledger for the strongest obligations-backed
+record-canonical exact corridor.
+
+This audit separates the facts already constructed by the current route from
+the public source objects that still have to be supplied by genuine IUT
+constructions: the operation identifiers, q-choice, measure-calibrated
+determinant source, hull/determinant obligations, upper-semi finite entry, and
+exact vertical-`IQ` source.  It is intentionally a ledger, not a new endpoint:
+the final raw comparison and the `C_\Theta` dichotomy still use the existing
+Gaussian/exact corridor theorems.
+-/
+structure ObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  hodgeSHEIPLAudit :
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.TargetChartedHodgeSHEIPLConstructionAudit
+      sourceData.hodgeIPLSource
+  determinantSourceBoundaryAudit :
+    IUTStage1TargetChartedHodgeDeterminantSummandFamilyHullSource.DeterminantSourceBoundaryAudit
+      (sourceData.measureCalibratedHodgeDeterminantSource
+        |>.toTargetChartedHodgeCalibratedDeterminantSummandFamilyHullSource
+        |>.toTargetChartedHodgeDeterminantSummandFamilyHullSource)
+  stepXIHullDetAudit :
+    ObligationsRecordCanonicalConstructorStepXIHullDetAudit sourceData
+  exactCorridorAudit :
+    ObligationsRecordCanonicalConstructorExactCorridorAudit sourceData
+  finiteDivisorPacketAudit :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        sourceData.finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+      product.productLogVolume =
+        sourceData.finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume
+  exactVerticalIQBoundaryAudit :
+    sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited
+
+set_option linter.style.longLine false in
+theorem toObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    ObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit sourceData := by
+  have hdet :=
+    sourceData.measureCalibratedHodgeDeterminantSource
+      |>.toTargetChartedHodgeCalibratedDeterminantSummandFamilyHullSource
+      |>.toTargetChartedHodgeDeterminantSummandFamilyHullSource
+      |>.toDeterminantSourceBoundaryAudit
+  have hfinite := sourceData.finiteSource.source_endpoint
+  have htarget := sourceData.exactSource.targetSource.verticalIQTarget_endpoint
+  exact
+    { hodgeSHEIPLAudit :=
+        sourceData.hodgeIPLSource.toTargetChartedHodgeSHEIPLConstructionAudit,
+      determinantSourceBoundaryAudit := hdet,
+      stepXIHullDetAudit :=
+        sourceData.toObligationsRecordCanonicalConstructorStepXIHullDetAudit,
+      exactCorridorAudit :=
+        sourceData.toObligationsRecordCanonicalConstructorExactCorridorAudit,
+      finiteDivisorPacketAudit :=
+        ⟨hfinite.1,
+          hfinite.2.1,
+          hfinite.2.2.1,
+          hfinite.2.2.2.1,
+          hfinite.2.2.2.2⟩,
+      exactVerticalIQBoundaryAudit :=
+        ⟨sourceData.exactSource.targetCalibration_source_eq_verticalIQ,
+          sourceData.exactSource.hasPreciseFrobenioidIsomorphisms,
+          htarget.2.2.2.2.1,
+          htarget.2.2.2.2.2,
+          sourceData.exactSource.realifiedSource.toPacketCorrespondence.qPilotLogKummerNonInterference,
+          sourceData.exactSource.realifiedSource.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩ }
+
+set_option linter.style.longLine false in
+/--
 No-`C_\Theta` raw-comparison endpoint for the obligations-backed
 record-canonical exact corridor.
 
