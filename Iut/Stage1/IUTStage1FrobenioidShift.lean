@@ -43958,10 +43958,19 @@ theorem toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
     sourceData.toObligationsBackedSource.toMatchedSourceDerivedFiniteDivisorRouteAudit⟩
 
 set_option linter.style.longLine false in
-theorem boundaryEndpointWithConstructorBuiltMatchedGaussianStepXIAudit
+/--
+Raw finite-divisor boundary audit for the constructor-built matched route.
+
+This is the no-\(C_\Theta\) endpoint of the bundled constructor-built source:
+it exposes the built, constructor-sourced, and constructor-pinned Step (xi)
+boundaries, then the projected theta-monoid matched Gaussian-to-Step (xi)
+finite-divisor boundary.
+-/
+def ConstructorBuiltMatchedBoundaryAudit
     (sourceData :
       IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
         sourceData.hullSource ∧
       IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
@@ -43999,7 +44008,13 @@ theorem boundaryEndpointWithConstructorBuiltMatchedGaussianStepXIAudit
             projectedSource.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
           projectedSource.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
             audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
-          packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+          packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem boundaryEndpointWithConstructorBuiltMatchedGaussianStepXIAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    ConstructorBuiltMatchedBoundaryAudit sourceData :=
   ⟨sourceData.hullSource.source_endpoint,
     sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
     (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
@@ -44008,14 +44023,20 @@ theorem boundaryEndpointWithConstructorBuiltMatchedGaussianStepXIAudit
     sourceData.toObligationsBackedSource.boundaryEndpointWithMatchedGaussianStepXIAudit⟩
 
 set_option linter.style.longLine false in
-theorem cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
+/--
+Conditional \(C_\Theta\) audit for the constructor-built matched route.
+
+The proposition records the constructor-built Step (xi) source boundaries and
+the projected matched Gaussian-to-Step (xi) audit together with the final
+ordered-real dichotomy.  The numeric \(C_\Theta\) estimate remains an input to
+the theorem that proves this audit.
+-/
+def ConstructorBuiltMatchedCThetaAudit
     (sourceData :
       IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product)
-    (cTheta : Real)
-    (thetaSigned_le_cTheta_absLogQ :
-      packageN.preLedger.thetaSigned <=
-        cTheta * (-packageN.preLedger.qSigned)) :
+    (cTheta : Real) :
+    Prop :=
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
         sourceData.hullSource ∧
       IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
@@ -44037,7 +44058,17 @@ theorem cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
             projectedSource.iplConstructionSource projectedSource.hullSource ∧
           ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
               packageN.preLedger.thetaSigned < 0) ∨
-            (-1 : Real) < cTheta) :=
+            (-1 : Real) < cTheta)
+
+theorem cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    ConstructorBuiltMatchedCThetaAudit sourceData cTheta :=
   ⟨sourceData.hullSource.source_endpoint,
     sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
     (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
