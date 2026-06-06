@@ -4000,6 +4000,11 @@ The theta-evaluation-pair audit records both source and target
 Hodge--Arakelov theta-evaluation endpoints, the source full-label calibration
 against the theta-source cusp-log-volume average, canonical \(1\)-label
 Gaussian-degree preservation, and the derived theta-monoid degree equality.
+The latter is now exposed directly on the experiment surface as
+\texttt{canonicalOneConstructorBuiltIPLLinkThetaMonoidDegreeEq}; its proof uses
+the source and target Hodge--Arakelov theta-evaluation endpoints'
+\texttt{canonicalOneDegree\_eq\_thetaMonoidDegree} theorems rather than an
+inline route calculation.
 The same source object now exposes the raw Step (xi) comparison before the
 finite Step (x) boundary is unfolded.  Its named audit
 \texttt{CanonicalOneConstructorBuiltIPLLinkQComparisonAudit} packages the
@@ -4096,7 +4101,9 @@ front Hodge--Arakelov Gaussian data is now also separated as
 records the source and target theta-evaluation endpoints, the source
 theta/log-volume calibration, canonical \(1\)-label degree preservation, and the
 derived theta-monoid degree equality before the finite Hodge/\(\SHE\) transport
-is constructed.  The transport-source handoff is now also named separately as
+is constructed.  The equality itself is also available as the compact experiment
+target \texttt{canonicalOneConstructorBuiltIPLConstructionThetaMonoidDegreeEq}.
+The transport-source handoff is now also named separately as
 \texttt{CanonicalOneConstructorBuiltIPLConstructionTransportSourceAudit}: it
 packages the theta-evaluation audit with the finite Hodge/\(\SHE\)
 transport-source endpoint built from the source/target Hodge--Arakelov

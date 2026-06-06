@@ -46867,23 +46867,42 @@ variable {product :
   IUTStage1BaseValuationTensorPacketProductLogVolume
     IUTStage1PlaceKind.nonarchimedean j}
 
+set_option linter.style.longLine false in
+theorem thetaMonoidDegree_eq_of_canonicalOneDegree_preserved
+    (sourceCalibratedEvaluation :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
+        part audited X C)
+    (targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    targetEvaluation.thetaMonoidDegree =
+      sourceCalibratedEvaluation.evaluation.thetaMonoidDegree := by
+  calc
+    targetEvaluation.thetaMonoidDegree =
+        targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+      targetEvaluation.canonicalOneDegree_eq_thetaMonoidDegree.symm
+    _ =
+        sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+      canonicalOneDegree_preserved
+    _ = sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
+      sourceCalibratedEvaluation.evaluation.canonicalOneDegree_eq_thetaMonoidDegree
+
 theorem thetaMonoidDegree_eq
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     sourceData.targetEvaluation.thetaMonoidDegree =
-      sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree := by
-  calc
-    sourceData.targetEvaluation.thetaMonoidDegree =
-        sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-      sourceData.targetEvaluation.canonicalOneDegree_eq_thetaMonoidDegree.symm
-    _ =
-        sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-      sourceData.canonicalOneDegree_preserved
-    _ = sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
-      sourceData.sourceCalibratedEvaluation.evaluation.canonicalOneDegree_eq_thetaMonoidDegree
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
+  thetaMonoidDegree_eq_of_canonicalOneDegree_preserved
+    sourceData.sourceCalibratedEvaluation sourceData.targetEvaluation
+    sourceData.canonicalOneDegree_preserved
 
 noncomputable def toThetaMonoidMatchedSource
     (sourceData :
@@ -48206,6 +48225,33 @@ variable {product :
   IUTStage1BaseValuationTensorPacketProductLogVolume
     IUTStage1PlaceKind.nonarchimedean j}
 
+set_option linter.style.longLine false in
+theorem thetaMonoidDegree_eq_of_canonicalOneDegree_preserved
+    (sourceCalibratedEvaluation :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
+        part audited X C)
+    (targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    targetEvaluation.thetaMonoidDegree =
+      sourceCalibratedEvaluation.evaluation.thetaMonoidDegree := by
+  calc
+    targetEvaluation.thetaMonoidDegree =
+        targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+      targetEvaluation.canonicalOneDegree_eq_thetaMonoidDegree.symm
+    _ =
+        sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
+      canonicalOneDegree_preserved
+    _ = sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
+      sourceCalibratedEvaluation.evaluation.canonicalOneDegree_eq_thetaMonoidDegree
+
 def finiteSource
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -48226,18 +48272,10 @@ theorem thetaMonoidDegree_eq
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     sourceData.targetEvaluation.thetaMonoidDegree =
-      sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree := by
-  calc
-    sourceData.targetEvaluation.thetaMonoidDegree =
-        sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-      sourceData.targetEvaluation.canonicalOneDegree_eq_thetaMonoidDegree.symm
-    _ =
-        sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-      sourceData.canonicalOneDegree_preserved
-    _ = sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
-      sourceData.sourceCalibratedEvaluation.evaluation.canonicalOneDegree_eq_thetaMonoidDegree
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
+  thetaMonoidDegree_eq_of_canonicalOneDegree_preserved
+    sourceData.sourceCalibratedEvaluation sourceData.targetEvaluation
+    sourceData.canonicalOneDegree_preserved
 
 noncomputable def toFiniteHodgeSHEIPLConstructionSource
     (sourceData :
@@ -52209,18 +52247,9 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovCano
       (-1 : Real) < cTheta := by
   have thetaMonoidDegree_eq :
       targetEvaluation.thetaMonoidDegree =
-        sourceCalibratedEvaluation.evaluation.thetaMonoidDegree := by
-    calc
-      targetEvaluation.thetaMonoidDegree =
-          targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-        targetEvaluation.canonicalOneDegree_eq_thetaMonoidDegree.symm
-      _ =
-          sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-        canonicalOneDegree_preserved
-      _ = sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
-        sourceCalibratedEvaluation.evaluation.canonicalOneDegree_eq_thetaMonoidDegree
+        sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
+    IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.thetaMonoidDegree_eq_of_canonicalOneDegree_preserved
+        sourceCalibratedEvaluation targetEvaluation canonicalOneDegree_preserved
   exact
     part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHistorySeparatedT11IPLLinkConstructorBuiltFiniteDivisorVerticalIQ
       audited sourceCalibratedEvaluation targetEvaluation thetaMonoidDegree_eq
@@ -52316,18 +52345,9 @@ theorem boundaryEndpoint_from_sourceDerivedHodgeArakelovCanonicalOneT11IPLLinkCo
         packageN.logKummer upperSemiEntry.toEntry) :
     let thetaMonoidDegree_eq :
         targetEvaluation.thetaMonoidDegree =
-          sourceCalibratedEvaluation.evaluation.thetaMonoidDegree := by
-      calc
-        targetEvaluation.thetaMonoidDegree =
-            targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-              (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-          targetEvaluation.canonicalOneDegree_eq_thetaMonoidDegree.symm
-        _ =
-            sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-              (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-          canonicalOneDegree_preserved
-        _ = sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
-          sourceCalibratedEvaluation.evaluation.canonicalOneDegree_eq_thetaMonoidDegree;
+          sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.thetaMonoidDegree_eq_of_canonicalOneDegree_preserved
+          sourceCalibratedEvaluation targetEvaluation canonicalOneDegree_preserved;
     let matchedSynchronization :
         IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
           part audited X C :=
@@ -52359,18 +52379,9 @@ theorem boundaryEndpoint_from_sourceDerivedHodgeArakelovCanonicalOneT11IPLLinkCo
       sourceData :=
   let thetaMonoidDegree_eq :
       targetEvaluation.thetaMonoidDegree =
-        sourceCalibratedEvaluation.evaluation.thetaMonoidDegree := by
-    calc
-      targetEvaluation.thetaMonoidDegree =
-          targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-        targetEvaluation.canonicalOneDegree_eq_thetaMonoidDegree.symm
-      _ =
-          sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
-            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
-        canonicalOneDegree_preserved
-      _ = sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
-        sourceCalibratedEvaluation.evaluation.canonicalOneDegree_eq_thetaMonoidDegree
+        sourceCalibratedEvaluation.evaluation.thetaMonoidDegree :=
+    IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.thetaMonoidDegree_eq_of_canonicalOneDegree_preserved
+        sourceCalibratedEvaluation targetEvaluation canonicalOneDegree_preserved
   part.boundaryEndpoint_from_sourceDerivedHodgeArakelovHistorySeparatedT11IPLLinkConstructorBuiltFiniteDivisorVerticalIQ
     audited sourceCalibratedEvaluation targetEvaluation thetaMonoidDegree_eq
     iplLinkSource hullSource upperSemiEntry divisorPacket monoAnalyticTheater
