@@ -4113,7 +4113,14 @@ The named subaudit
 \texttt{CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit} now exposes
 this choice-wise input-prime-strip link obligation directly and is threaded
 through the Hodge/\(\SHE\)/\(\IPL\), middle-route, q-comparison, finite-boundary,
-and milestone \(C_\Theta\) audits.  Its
+and milestone \(C_\Theta\) audits.  The constructed-\(\IPL\) route now also has
+its own bridge-construction audit,
+\texttt{CanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit}.
+This audit records the bridge built from the Hodge--Arakelov theta data,
+finite Hodge/\(\SHE\) transport, the constructed Theorem 3.11 \(\IPL\) source,
+and the constructor-built possible-image Step (xi) hull source, and then
+projects the generic source-derived bridge alignment endpoint from that bridge.
+Its
 Step (xi) hull side is now separated as
 \texttt{CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit}, which
 records the constructor-built, constructor-sourced, and constructor-pinned
@@ -4193,6 +4200,7 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionStepXIHullAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionUpperRayAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstruction}\\
@@ -4228,10 +4236,12 @@ source side conditions, raw q-comparison, finite boundary, and conditional
 \(C_\Theta\) audit, with the numeric \(C_\Theta\) estimate still explicit.
 \texttt{CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit}
 now carries the transport-source, log-volume transport, and finite-transport
-log-volume audits directly, together with the constructor-built upper-ray
-audit, so the milestone-facing bundle exposes the pre-\(\IPL\) and
-constructed-\(\IPL\) transport chain and the Step (xi-f/g) upper-ray handoff
-instead of only the coarser constructed-\(\IPL\) and hull audits.
+log-volume audits directly, together with the constructed source-derived
+bridge audit and constructor-built upper-ray audit, so the milestone-facing
+bundle exposes the pre-\(\IPL\) and constructed-\(\IPL\) transport chain, the
+Hodge/\(\SHE\)/\(\IPL\)/hull bridge constructor, and the Step (xi-f/g)
+upper-ray handoff instead of only the coarser constructed-\(\IPL\) and hull
+audits.
 The same route now has an unbundled canonical-one Hodge--Arakelov source
 endpoint,
 \[

@@ -48259,6 +48259,26 @@ noncomputable def toIPLLogVolumeTransport
     IUTStage1IPLLogVolumeTransport record :=
   sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport
 
+noncomputable def sourceCalibration
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourceThetaHodgeLogVolumeCalibration
+      part audited
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA :=
+  sourceData.sourceCalibratedEvaluation.toSourceThetaHodgeLogVolumeCalibration
+
+noncomputable def toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridge
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge part audited record X C :=
+  IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSources
+    (part := part) (audited := audited)
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource
+    sourceData.iplConstructionSource sourceData.hullSource
+    sourceData.sourceCalibration
+
 set_option linter.style.longLine false in
 theorem finiteHodgeSHEIPLConstructionSource_endpoint
     (sourceData :
@@ -49117,6 +49137,105 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
 
 set_option linter.style.longLine false in
 /--
+Source-derived bridge-construction audit for the canonical-one constructed
+\(\IPL\) constructor-built finite-divisor route.
+
+This is the route-level handoff from Hodge--Arakelov theta data to the finite
+Hodge/\(\SHE\) transport, constructed Theorem 3.11 \(\IPL\)/log-volume
+transport, and constructor-built possible-image Step (xi) hull source.  It
+records both the specialized constructor endpoint and the generic
+source-derived bridge alignment endpoint used to recover the ordinary route
+log-volume alignment.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  thetaEvaluationAudit :
+    CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
+  transportSourceAudit :
+    CanonicalOneConstructorBuiltIPLConstructionTransportSourceAudit sourceData
+  logVolumeTransportAudit :
+    CanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit sourceData
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  bridgeConstructorEndpoint :
+    let bridge :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridge;
+    bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+      bridge.iplTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      bridge.iplTransport.iplDatum.link.source =
+        bridge.iplTransport.iplDatum.inputPrimeStrip ∧
+      bridge.iplTransport.iplDatum.link.target =
+        bridge.iplTransport.iplDatum.outputPrimeStrip ∧
+      bridge.finiteHodgeSHETransport =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+        sourceData.hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
+        sourceData.hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
+        sourceData.hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1Ob2HullAbsorptionAudit
+        sourceData.hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob4DeterminantAudit
+        sourceData.hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+        sourceData.hullSource ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+        bridge.finiteHodgeSHETransport.targetTheater.side
+  bridgeAlignmentEndpoint :
+    let bridge :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridge;
+    QualitativeData.HasStructuredIPL packageN.preLedger.output.family ∧
+      QualitativeData.HasStructuredSHE packageN.preLedger.output.family ∧
+      bridge.iplTransport.targetLogVolume =
+        bridge.iplTransport.sourceLogVolume ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        bridge.toRouteLogVolumeAlignment.sourceSynchronizedLogVolume ∧
+      bridge.toRouteLogVolumeAlignment.targetSynchronizedLogVolume =
+        part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited ∧
+      0 < -packageN.preLedger.qSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit
+      sourceData := by
+  have hconstructor :=
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSources_endpoint
+      (part := part) (audited := audited)
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource
+      sourceData.iplConstructionSource sourceData.hullSource
+      sourceData.sourceCalibration
+  have halignment :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridge.sourceDerivedBridge_endpoint
+  exact
+    { thetaEvaluationAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
+      transportSourceAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionTransportSourceAudit,
+      logVolumeTransportAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit,
+      stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      bridgeConstructorEndpoint := by
+        simpa [
+          toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridge]
+          using hconstructor,
+      bridgeAlignmentEndpoint := halignment }
+
+set_option linter.style.longLine false in
+/--
 Step (xi-f/g) upper-ray audit for the canonical-one constructed-\(\IPL\)
 constructor-built finite-divisor source.
 
@@ -49671,6 +49790,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
     CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData
   middleRouteAudit :
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
+  sourceDerivedBridgeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit
+      sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
   upperRayAudit :
@@ -49706,6 +49828,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
       middleRouteAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
+      sourceDerivedBridgeAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit,
       stepXIHullAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
       upperRayAudit :=
@@ -49898,6 +50022,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
     Prop where
   middleRouteAudit :
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
+  sourceDerivedBridgeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit
+      sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
   upperRayAudit :
@@ -49985,6 +50112,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
   exact
     { middleRouteAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
+      sourceDerivedBridgeAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit,
       stepXIHullAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
       upperRayAudit :=
@@ -50102,6 +50231,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
       sourceData
   middleRouteAudit :
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
+  sourceDerivedBridgeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit
+      sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
   upperRayAudit :
@@ -50172,6 +50304,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit,
     middleRouteAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
+    sourceDerivedBridgeAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit,
     stepXIHullAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
     upperRayAudit :=
