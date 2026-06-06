@@ -36004,6 +36004,27 @@ structure CalibratedSynchronizationT11IPLConstructionPossibleImageSideConditione
     (calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
       part audited hodgeSynchronization iplConstructionSource hullSource).finiteHodgeSHETransport.synchronization.sourceHA =
       hodgeSynchronization.valueSource
+  finiteHodgeTarget_eq_synchronized :
+    (calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited hodgeSynchronization iplConstructionSource hullSource).finiteHodgeSHETransport.synchronization.targetHA =
+      hodgeSynchronization.targetEvaluation.valueSource
+  historySeparatedForgetfulTransportAllowed :
+    let transportSource :=
+      IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+        (record := record)
+        hodgeSynchronization.sourceEvaluation hodgeSynchronization.targetEvaluation
+        hodgeSynchronization.canonicalOneDegree_preserved;
+    transportSource.forgetfulTransport.transportAllowed
+  finiteHodgeFullLabelLogVolume_preserved :
+    ∀ j : ZMod l.value,
+      (calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplConstructionSource hullSource).finiteHodgeSHETransport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            ((calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+              part audited hodgeSynchronization iplConstructionSource hullSource).finiteHodgeSHETransport.coordinateEquiv j)) =
+        (calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+          part audited hodgeSynchronization iplConstructionSource hullSource).finiteHodgeSHETransport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
   comparisonLevel :
     (calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
       part audited hodgeSynchronization iplConstructionSource hullSource).finiteHodgeSHETransport.toFactoredObligations.comparisonLevel =
@@ -36164,6 +36185,33 @@ theorem toCalibratedSynchronizationT11IPLConstructionPossibleImageSideConditione
       squareWeightFormula := hsquare,
       fullLabelPreserved := hfull,
       finiteHodgeSource_eq_synchronized := hsourceEq,
+      finiteHodgeTarget_eq_synchronized := by
+        have hcore :=
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndHullDetSources_endpoint
+            (part := part) (audited := audited)
+            hodgeSynchronization iplConstructionSource
+            (hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantSource
+              |>.toSideConditionedHolomorphicHullDeterminantSource
+              |>.toHolomorphicHullDeterminantSource)
+        simpa [
+          calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageSideConditionedHullSources]
+          using hcore.2.2.2.1
+      historySeparatedForgetfulTransportAllowed := by
+        dsimp [
+          IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated,
+          IUTStage1FiniteHodgeSHETransportSource.ofSynchronizationHistorySeparated,
+          IUTStage1FiniteHodgeSHETransportSource.ofSynchronization,
+          IUTStage1HodgeSHEAllowedForgetfulTransport.ofDescentBridge,
+          IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed]
+        exact
+          record.bundle.hodgeTheaterDescentBridgeData_histories_not_identified
+      finiteHodgeFullLabelLogVolume_preserved := by
+        intro j
+        exact
+          (calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+            part audited hodgeSynchronization iplConstructionSource hullSource).finiteHodgeSHETransport.fullLabelLogVolume_preserved' j
       comparisonLevel := hlevel,
       coordinateEquiv := hcoord,
       iplDatum_eq_certificate := hcert,
@@ -36316,6 +36364,27 @@ structure CalibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObl
     (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
       part audited hodgeSynchronization iplLinkSource hullSource).finiteHodgeSHETransport.synchronization.sourceHA =
       hodgeSynchronization.valueSource
+  finiteHodgeTarget_eq_synchronized :
+    (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+      part audited hodgeSynchronization iplLinkSource hullSource).finiteHodgeSHETransport.synchronization.targetHA =
+      hodgeSynchronization.targetEvaluation.valueSource
+  historySeparatedForgetfulTransportAllowed :
+    let transportSource :=
+      IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+        (record := record)
+        hodgeSynchronization.sourceEvaluation hodgeSynchronization.targetEvaluation
+        hodgeSynchronization.canonicalOneDegree_preserved;
+    transportSource.forgetfulTransport.transportAllowed
+  finiteHodgeFullLabelLogVolume_preserved :
+    ∀ j : ZMod l.value,
+      (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplLinkSource hullSource).finiteHodgeSHETransport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l
+            ((calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+              part audited hodgeSynchronization iplLinkSource hullSource).finiteHodgeSHETransport.coordinateEquiv j)) =
+        (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+          part audited hodgeSynchronization iplLinkSource hullSource).finiteHodgeSHETransport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)
   comparisonLevel :
     (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
       part audited hodgeSynchronization iplLinkSource hullSource).finiteHodgeSHETransport.toFactoredObligations.comparisonLevel =
@@ -36468,6 +36537,21 @@ theorem toCalibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObl
       squareWeightFormula := htheta.2.2.2.2.2,
       fullLabelPreserved := hsync.1,
       finiteHodgeSource_eq_synchronized := rfl,
+      finiteHodgeTarget_eq_synchronized := rfl,
+      historySeparatedForgetfulTransportAllowed := by
+        dsimp [
+          IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated,
+          IUTStage1FiniteHodgeSHETransportSource.ofSynchronizationHistorySeparated,
+          IUTStage1FiniteHodgeSHETransportSource.ofSynchronization,
+          IUTStage1HodgeSHEAllowedForgetfulTransport.ofDescentBridge,
+          IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed]
+        exact
+          record.bundle.hodgeTheaterDescentBridgeData_histories_not_identified
+      finiteHodgeFullLabelLogVolume_preserved := by
+        intro j
+        exact
+          (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+            part audited hodgeSynchronization iplLinkSource hullSource).finiteHodgeSHETransport.fullLabelLogVolume_preserved' j
       comparisonLevel :=
         (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
           part audited hodgeSynchronization iplLinkSource hullSource).finiteHodgeSHETransport.toFactoredObligations
