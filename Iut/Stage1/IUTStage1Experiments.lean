@@ -28488,6 +28488,85 @@ theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstr
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface no-\(C_\Theta\) boundary for the side-conditioned matched
+constructor-backed exact source that keeps the remaining-source ledger visible
+next to the obligations-backed boundary audit.
+-/
+theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_matchedSideConditionedConstructorBackedRemainingBoundaryWithObligationsAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedSideConditionedConstructorBackedRemainingBoundaryAudit
+      sourceData :=
+  sourceData.boundaryEndpointWithMatchedSideConditionedConstructorBackedRemainingAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface conditional \(C_\Theta\) audit for the side-conditioned
+matched constructor-backed exact source that keeps the remaining-source ledger
+visible next to the projected constructor-built dichotomy audit.
+-/
+theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_matchedSideConditionedConstructorBackedRemainingCThetaAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedSideConditionedConstructorBackedRemainingCThetaAudit
+      sourceData cTheta :=
+  sourceData.cThetaDichotomyWithMatchedSideConditionedConstructorBackedRemainingAudit
+    cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface milestone-facing no-\(C_\Theta\) boundary for the strongest
 current side-conditioned, theta-monoid-matched constructor-backed
 source-derived finite-divisor vertical-`IQ` corridor.
@@ -28574,6 +28653,126 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithM
       sourceData cTheta :=
   sourceData.cThetaDichotomyWithMatchedSideConditionedConstructorBackedObligationsAudit
     cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface milestone-facing no-\(C_\Theta\) boundary that returns the
+remaining-source ledger together with the obligations-backed boundary audit.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_boundaryEndpointWithMatchedSideConditionedConstructorBackedRemainingAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedSideConditionedConstructorBackedRemainingBoundaryAudit
+      sourceData :=
+  sourceData.boundaryEndpointWithMatchedSideConditionedConstructorBackedRemainingAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface milestone-facing conditional \(C_\Theta\) audit that
+returns the remaining-source ledger together with the projected
+constructor-built dichotomy audit.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithMatchedSideConditionedConstructorBackedRemainingAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedSideConditionedConstructorBackedRemainingCThetaAudit
+      sourceData cTheta :=
+  sourceData.cThetaDichotomyWithMatchedSideConditionedConstructorBackedRemainingAudit
+    cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Compact milestone endpoint for the current strongest source-derived
+finite-divisor vertical-`IQ` corridor with the remaining-source boundary
+ledger still attached.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_withRemainingBoundaryAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedSideConditionedConstructorBackedRemainingCThetaAudit
+      sourceData cTheta :=
+  sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithMatchedSideConditionedConstructorBackedRemainingAudit
+    part audited sourceData cTheta thetaSigned_le_cTheta_absLogQ
 
 set_option linter.style.longLine false in
 /--

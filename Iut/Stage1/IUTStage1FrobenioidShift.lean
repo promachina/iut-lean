@@ -45061,6 +45061,66 @@ theorem cThetaDichotomyWithMatchedSideConditionedConstructorBackedObligationsAud
       |>.cThetaDichotomyWithMatchedConstructorBackedObligationsAudit
         cTheta thetaSigned_le_cTheta_absLogQ⟩
 
+set_option linter.style.longLine false in
+/--
+No-\(C_\Theta\) boundary audit that keeps the side-conditioned
+remaining-source ledger visible next to the projected obligations boundary.
+
+This is the public review target for the strongest current side-conditioned
+finite-exact corridor: it does not replace the ordinary obligations boundary,
+but returns it together with the remaining-source ledger carrying the Step (xi)
+holomorphic-hull/determinant skeleton.
+-/
+def MatchedSideConditionedConstructorBackedRemainingBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  MatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit sourceData ∧
+    MatchedSideConditionedConstructorBackedObligationsBoundaryAudit sourceData
+
+theorem boundaryEndpointWithMatchedSideConditionedConstructorBackedRemainingAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedSideConditionedConstructorBackedRemainingBoundaryAudit sourceData :=
+  ⟨sourceData.toMatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit,
+    sourceData.boundaryEndpointWithMatchedSideConditionedConstructorBackedObligationsAudit⟩
+
+set_option linter.style.longLine false in
+/--
+Conditional \(C_\Theta\) audit that keeps the side-conditioned
+remaining-source ledger visible next to the projected constructor-built
+dichotomy audit.
+
+The numerical \(C_\Theta\) estimate remains an explicit hypothesis; this
+wrapper only prevents the public milestone endpoint from dropping the
+Step (xi) skeleton and source-boundary ledger while returning the conditional
+dichotomy audit.
+-/
+def MatchedSideConditionedConstructorBackedRemainingCThetaAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop :=
+  MatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit sourceData ∧
+    MatchedSideConditionedConstructorBackedObligationsCThetaAudit sourceData cTheta
+
+theorem cThetaDichotomyWithMatchedSideConditionedConstructorBackedRemainingAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    MatchedSideConditionedConstructorBackedRemainingCThetaAudit
+      sourceData cTheta :=
+  ⟨sourceData.toMatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit,
+    sourceData.cThetaDichotomyWithMatchedSideConditionedConstructorBackedObligationsAudit
+      cTheta thetaSigned_le_cTheta_absLogQ⟩
+
 end IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
 
 set_option linter.style.longLine false in
