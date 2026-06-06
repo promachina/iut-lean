@@ -10631,6 +10631,85 @@ theorem recordCanonicalStepXIAudit
         sourceData.hullDetBridge_eq sourceData.q_pilot_positive
         sourceData.normalization
 
+set_option linter.style.longLine false in
+/--
+Named Step (xi) boundary audit for the constructor-built possible-image
+hull/determinant source.
+
+The field names separate the constructor-derived facts from the fields that
+still enter as source obligations: the selected possible-image q-region, the
+record-canonical bridge equality, the tensor-power determinant bound,
+q-positivity, normalization, and the final raw signed comparison.
+-/
+structure ConstructorBuiltStepXIBoundaryAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  constructorBuiltSourceEndpoint :
+    SourceEndpoint sourceData
+  recordCanonicalStepXIAudit :
+    RecordCanonicalStepXIAudit sourceData
+  qPilotRegion_eq_possibleImage :
+    sourceData.qPilotRegion =
+      recordThetaPossibleImage record sourceData.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.qPilotRegion ⊆
+      recordThetaPossibleImageUnion record
+  constructor_eq_built :
+    sourceData.toConstructorSourcedHolomorphicHullDeterminantSource.constructor =
+      sourceData.toHullDetSourceConstructor
+  obligations_eq_built :
+    sourceData.toConstructorSourcedHolomorphicHullDeterminantSource.obligations =
+      sourceData.toHullDetSourceConstructor.toHullDetObligations
+  hullDetBridge_eq_constructor :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.toHullDetSourceConstructor.hullDetData.bridgeData
+  constructorBridge_eq_recordCanonical :
+    sourceData.toHullDetSourceConstructor.hullDetData.bridgeData =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.hullData
+        (recordThetaPossibleImage record sourceData.qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (fun _ hx => hx))
+        sourceData.determinantSource sourceData.compatibility
+        sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound
+  tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.determinantSource).normalizedLogVolume <=
+      package.preLedger.thetaSigned
+  q_pilot_positive :
+    0 < -package.preLedger.qSigned
+  normalization :
+    package.preLedger.normalization
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+theorem toConstructorBuiltStepXIBoundaryAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltStepXIBoundaryAudit sourceData :=
+  { constructorBuiltSourceEndpoint := sourceData.source_endpoint,
+    recordCanonicalStepXIAudit := sourceData.recordCanonicalStepXIAudit,
+    qPilotRegion_eq_possibleImage := sourceData.qPilotRegion_eq_possibleImage,
+    qPilotRegion_subset_recordUnion := sourceData.q_subset_recordUnion,
+    constructor_eq_built := rfl,
+    obligations_eq_built := rfl,
+    hullDetBridge_eq_constructor :=
+      sourceData.toConstructorSourcedHolomorphicHullDeterminantSource
+        |>.hullDetBridge_eq_constructor,
+    constructorBridge_eq_recordCanonical :=
+      sourceData.constructorHullDetData_eq_recordCanonical,
+    tensorPower_bound := sourceData.tensorPower_bound,
+    q_pilot_positive := sourceData.q_pilot_positive,
+    normalization := sourceData.normalization,
+    qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned }
+
 end IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in

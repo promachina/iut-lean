@@ -46661,6 +46661,9 @@ structure CanonicalOneConstructorBuiltIPLLinkStepXIHullAudit
   recordCanonicalStepXIAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
       sourceData.hullSource
+  constructorBuiltStepXIBoundaryAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
+      sourceData.hullSource
   constructorSourcedSourceEndpoint :
     IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
       sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
@@ -46760,6 +46763,8 @@ theorem toCanonicalOneConstructorBuiltIPLLinkStepXIHullAudit
   exact
     { constructorBuiltSourceEndpoint := hroute.1,
       recordCanonicalStepXIAudit := hroute.2.1,
+      constructorBuiltStepXIBoundaryAudit :=
+        sourceData.hullSource.toConstructorBuiltStepXIBoundaryAudit,
       constructorSourcedSourceEndpoint := hroute.2.2.1,
       constructorPinnedSourceEndpoint := hroute.2.2.2.1,
       holomorphicHullDeterminantSourceAudit :=
@@ -47478,6 +47483,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
   recordCanonicalStepXIAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.RecordCanonicalStepXIAudit
       sourceData.hullSource
+  constructorBuiltStepXIBoundaryAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
+      sourceData.hullSource
   constructorSourcedSourceEndpoint :
     IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
       sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
@@ -47534,6 +47542,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
   exact
     { constructorBuiltSourceEndpoint := sourceData.hullSource.source_endpoint,
       recordCanonicalStepXIAudit := sourceData.hullSource.recordCanonicalStepXIAudit,
+      constructorBuiltStepXIBoundaryAudit :=
+        sourceData.hullSource.toConstructorBuiltStepXIBoundaryAudit,
       constructorSourcedSourceEndpoint :=
         sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
       constructorPinnedSourceEndpoint :=
