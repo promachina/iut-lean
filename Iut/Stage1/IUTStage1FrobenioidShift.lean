@@ -46107,6 +46107,124 @@ end
 
 set_option linter.style.longLine false in
 /--
+History-separated Hodge--Arakelov endpoint for the constructor-built
+certificate-pinned \(\IPL\)-link finite-divisor route.
+
+The public inputs are the calibrated source Hodge--Arakelov theta evaluation,
+the target Hodge--Arakelov theta evaluation, and the source-facing equality of
+their theta-monoid degrees.  The matched synchronization consumed by the bundled
+constructor-built route is assembled internally before the Step (xi)
+hull/determinant source and the finite vertical-\(IQ\) source are applied.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeArakelovHistorySeparatedT11IPLLinkConstructorBuiltFiniteDivisorVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceCalibratedEvaluation :
+      IUTStage1ThetaSourceCalibratedHodgeArakelovEvaluation
+        part audited X C)
+    (targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (thetaMonoidDegree_eq :
+      targetEvaluation.thetaMonoidDegree =
+        sourceCalibratedEvaluation.evaluation.thetaMonoidDegree)
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (hullSource :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  let matchedSynchronization :
+      IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+        part audited X C :=
+    { sourceCalibratedEvaluation := sourceCalibratedEvaluation,
+      targetEvaluation := targetEvaluation,
+      thetaMonoidDegree_eq := thetaMonoidDegree_eq }
+  let sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product :=
+    { matchedSynchronization := matchedSynchronization,
+      iplLinkSource := iplLinkSource,
+      hullSource := hullSource,
+      upperSemiEntry := upperSemiEntry,
+      divisorPacket := divisorPacket,
+      monoAnalyticTheater := monoAnalyticTheater,
+      kummerCompatibility := kummerCompatibility,
+      forgettingCompatibility := forgettingCompatibility,
+      holomorphicF_realization := holomorphicF_realization,
+      holomorphicD_realization := holomorphicD_realization,
+      holomorphicStructureForgotten := holomorphicStructureForgotten,
+      holomorphic_structure_forgotten := holomorphic_structure_forgotten,
+      packetLocalObject_eq_entrySource := packetLocalObject_eq_entrySource,
+      packetLocalObjectFinite_eq_divisorRealified :=
+        packetLocalObjectFinite_eq_divisorRealified,
+      packetLocalObjectFinite_eq_ind3Source :=
+        packetLocalObjectFinite_eq_ind3Source,
+      targetSource := targetSource }
+  (sourceData.cThetaDichotomyWithConstructorBuiltIPLLinkMatchedGaussianStepXIAudit
+    cTheta thetaSigned_le_cTheta_absLogQ).2
+
+set_option linter.style.longLine false in
+/--
 Raw signed Step (xi) comparison from the synchronized target-charted
 possible-image summand/family-hull source.
 
