@@ -28464,6 +28464,46 @@ theorem targetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVer
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface constructor-backed Step (xi) source audit for the
+obligations-backed record-canonical exact corridor.
+
+This exposes the constructor-backed measure-calibrated possible-image source
+assembled from the record-canonical fields, before the exact vertical-`IQ`
+package projects to the final Gaussian/exact corridor.
+-/
+theorem targetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource_constructorBackedStepXISourceAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorBackedStepXISourceAudit
+      sourceData :=
+  sourceData.toObligationsRecordCanonicalConstructorBackedStepXISourceAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface combined Gaussian/exact audit for the obligations-backed
 record-canonical constructor exact corridor.
 
