@@ -41887,6 +41887,27 @@ def finiteSource
     packetLocalObjectFinite_eq_ind3Source :=
       sourceData.packetLocalObjectFinite_eq_ind3Source }
 
+noncomputable def toFiniteHodgeSHEIPLConstructionSource
+    (sourceData :
+      IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C :=
+  let transportSource :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+      (record := record)
+      sourceData.hodgeSynchronization.sourceEvaluation
+      sourceData.hodgeSynchronization.targetEvaluation
+      sourceData.hodgeSynchronization.canonicalOneDegree_preserved
+  { transportSource := transportSource,
+    iplConstructionSource := sourceData.iplConstructionSource }
+
+noncomputable def toIPLLogVolumeTransport
+    (sourceData :
+      IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1IPLLogVolumeTransport record :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport
+
 theorem toGaussianStepXIAudit
     (sourceData :
       IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
@@ -41897,6 +41918,105 @@ theorem toGaussianStepXIAudit
   part.toCalibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
     audited sourceData.hodgeSynchronization sourceData.iplConstructionSource
     sourceData.hullSource
+
+set_option linter.style.longLine false in
+/--
+Finite Hodge/SHE and constructed-\(\IPL\) source projected from the bundled
+finite-divisor route object.
+
+This displays the middle route segment before the Step (xi) hull source is
+used: the Hodge/SHE transport is constructed from the synchronized
+Hodge--Arakelov theta evaluations, and the \(\IPL\) transport then reads its
+Hodge-theater sides and log-volume preservation from that finite transport.
+-/
+theorem finiteHodgeSHEIPLConstructionSource_endpoint
+    (sourceData :
+      IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.hodgeSynchronization.sourceEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+        sourceData.hodgeSynchronization.targetEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) := by
+  have h :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated_endpoint
+      (record := record)
+      sourceData.hodgeSynchronization.sourceEvaluation
+      sourceData.hodgeSynchronization.targetEvaluation
+      sourceData.hodgeSynchronization.canonicalOneDegree_preserved
+  simpa [
+    IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource.toFiniteHodgeSHEIPLConstructionSource]
+    using h
+
+set_option linter.style.longLine false in
+/--
+Constructed \(\IPL\)/log-volume endpoint projected from the bundled
+finite-divisor route object.
+
+The \(\IPL\) datum, prime-strip endpoints, Hodge-theater sides, log-volume
+preservation, allowed forgetting, and no-history-identification are all read
+from the constructed finite Hodge/SHE+\(\IPL\) source.
+-/
+theorem constructedIPLLogVolumeTransportSource_endpoint
+    (sourceData :
+      IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.source_endpoint
+
+set_option linter.style.longLine false in
+/--
+Constructed \(\IPL\) log-volume provenance from the finite Hodge/SHE
+transport projected by the bundled route object.
+
+This endpoint states explicitly that the \(\IPL\) source/target log-volumes are
+the finite Hodge/SHE source average and transported target average, and that
+preservation is exactly the finite transport's transported-average equality.
+-/
+theorem constructedIPLFiniteTransportLogVolume_endpoint
+    (sourceData :
+      IUTStage1SynchronizedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.constructedIPLFiniteTransportLogVolume_endpoint
 
 set_option linter.style.longLine false in
 theorem boundaryEndpointWithGaussianStepXIAudit
@@ -42103,6 +42223,20 @@ noncomputable def toSynchronizedSource
       sourceData.packetLocalObjectFinite_eq_ind3Source,
     targetSource := sourceData.targetSource }
 
+noncomputable def toFiniteHodgeSHEIPLConstructionSource
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C :=
+  sourceData.toSynchronizedSource.toFiniteHodgeSHEIPLConstructionSource
+
+noncomputable def toIPLLogVolumeTransport
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1IPLLogVolumeTransport record :=
+  sourceData.toSynchronizedSource.toIPLLogVolumeTransport
+
 theorem matchedSynchronization_endpoint
     (sourceData :
       IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
@@ -42121,6 +42255,72 @@ theorem matchedSynchronization_endpoint
         sourceData.matchedSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
           (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) :=
   sourceData.matchedSynchronization.matchedSynchronization_endpoint
+
+set_option linter.style.longLine false in
+theorem finiteHodgeSHEIPLConstructionSource_endpoint
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.matchedSynchronization.sourceEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+        sourceData.matchedSynchronization.targetEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value) :=
+  sourceData.toSynchronizedSource.finiteHodgeSHEIPLConstructionSource_endpoint
+
+set_option linter.style.longLine false in
+theorem constructedIPLLogVolumeTransportSource_endpoint
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.toSynchronizedSource.constructedIPLLogVolumeTransportSource_endpoint
+
+set_option linter.style.longLine false in
+theorem constructedIPLFiniteTransportLogVolume_endpoint
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume :=
+  sourceData.toSynchronizedSource.constructedIPLFiniteTransportLogVolume_endpoint
 
 set_option linter.style.longLine false in
 theorem boundaryEndpointWithMatchedGaussianStepXIAudit

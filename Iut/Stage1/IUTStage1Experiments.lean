@@ -33752,6 +33752,113 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_cThetaDichotom
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface constructed-\(\IPL\) endpoint for the bundled
+theta-monoid-matched finite-divisor route source.
+
+This exposes the middle route segment
+finite Hodge/\(\SHE\) transport \(\to\) constructed \(\IPL\)/log-volume
+transport before the Step (xi) hull comparison is used.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMatchedConstructedIPLEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.constructedIPLLogVolumeTransportSource_endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface constructed-\(\IPL\) finite-log-volume provenance for the
+bundled theta-monoid-matched finite-divisor route source.
+
+The \(\IPL\) source and target log-volume values are identified with the
+finite Hodge/\(\SHE\) source average and transported target average; the
+preservation equality is inherited from the finite transport.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMatchedConstructedIPLFiniteLogVolumeEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume :=
+  sourceData.constructedIPLFiniteTransportLogVolume_endpoint
+
+set_option linter.style.longLine false in
+/--
 Compact review-surface name for the finite-divisor Step (x) boundary where the
 Hodge synchronization is derived from equality of source and target
 theta-monoid degrees.
