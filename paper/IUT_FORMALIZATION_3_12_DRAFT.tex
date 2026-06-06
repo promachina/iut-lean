@@ -2550,6 +2550,31 @@ identifications, and the chain
 \]
 so the constructed Step~(xi) route no longer receives the canonical
 hull--determinant compatibility as an independent input in this constructor.
+The same summand source now also feeds the constructor-built possible-image
+Step~(xi) source used by the finite-divisor-facing corridor.  The constructor
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource}
+\end{array}
+\]
+fixes the q-pilot region to a chosen Theorem~3.11 possible image, derives its
+record-union containment, derives the Ob3/Ob5 compatibility from the finite
+summand formula, and then builds
+\(\texttt{IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource}\).
+Its experiment endpoint
+\[
+\begin{array}{l}
+\texttt{remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{\_toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource\_endpoint}
+\end{array}
+\]
+therefore exposes the constructor-built source endpoint, the Step~(xi)
+bridge-inequality audit, the derived compatibility object, and the
+summand-to-determinant equalities at one review boundary.  This removes one
+more independent compatibility certificate from the public constructor-built
+route, although the package measure calibration and record-canonical
+hull/determinant bridge equality are still explicit inputs.
 The actual log-volume bridge has now been separated as a named source object:
 \[
 \begin{array}{l}
