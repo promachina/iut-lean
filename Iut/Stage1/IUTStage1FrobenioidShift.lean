@@ -47570,11 +47570,84 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit
   sourceData.toThetaMonoidMatchedConstructorBuiltSource.toConstructorBuiltMatchedRemainingPayloadRouteAudit
 
 set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  sourceThetaEvaluationEndpoint :
+    sourceData.sourceCalibratedEvaluation.evaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          sourceData.sourceCalibratedEvaluation.evaluation.thetaRootSource.canonicalFullLabel =
+        sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree ∧
+      (∀ j : ZMod l.value, j.val <= l.value / 2 ->
+        sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          sourceData.sourceCalibratedEvaluation.evaluation.squareWeightProfile.weight j *
+            sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree)
+  sourceCalibrationEndpoint :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+        sourceData.sourceCalibratedEvaluation.evaluation.fullLabelCompatibility
+        (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited) ∧
+      part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+          audited =
+        sourceData.sourceCalibratedEvaluation.evaluation.fullLabelCompatibility ∧
+      sourceData.sourceCalibratedEvaluation.thetaRootSource =
+        sourceData.sourceCalibratedEvaluation.evaluation.thetaRootSource
+  targetThetaEvaluationEndpoint :
+    sourceData.targetEvaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+      sourceData.targetEvaluation.thetaRootSource.canonicalFullLabel =
+        IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+      sourceData.targetEvaluation.thetaRootSource.canonicalFullLabel ≠
+        IUTStage1ZModCuspFullLabel.zero ∧
+      sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          IUTStage1ZModCuspFullLabel.zero = 0 ∧
+      sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          sourceData.targetEvaluation.thetaRootSource.canonicalFullLabel =
+        sourceData.targetEvaluation.thetaMonoidDegree ∧
+      (∀ j : ZMod l.value, j.val <= l.value / 2 ->
+        sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+          sourceData.targetEvaluation.squareWeightProfile.weight j *
+            sourceData.targetEvaluation.thetaMonoidDegree)
+  canonicalOneDegree_preserved :
+    sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  thetaMonoidDegree_eq :
+    sourceData.targetEvaluation.thetaMonoidDegree =
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData :=
+  { sourceThetaEvaluationEndpoint :=
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaEvaluation_endpoint,
+    sourceCalibrationEndpoint :=
+      sourceData.sourceCalibratedEvaluation.calibrated_endpoint,
+    targetThetaEvaluationEndpoint :=
+      sourceData.targetEvaluation.thetaEvaluation_endpoint,
+    canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
+    thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq }
+
+set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     Prop where
+  thetaEvaluationAudit :
+    CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
   thetaMonoidDegree_eq :
     sourceData.targetEvaluation.thetaMonoidDegree =
       sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree
@@ -47640,7 +47713,9 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData :=
-  { thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq,
+  { thetaEvaluationAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
+    thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq,
     canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
     directFiniteHodgeSHEIPLConstructionSourceAudit :=
       sourceData.finiteHodgeSHEIPLConstructionSource_endpoint,
@@ -48150,6 +48225,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
   remainingPayloadRouteAudit :
     CanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit
       sourceData
+  thetaEvaluationAudit :
+    CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
   hodgeSHEIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
   directGaussianToStepXIAudit :
@@ -48190,6 +48267,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit,
     remainingPayloadRouteAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit,
+    thetaEvaluationAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
     hodgeSHEIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
     directGaussianToStepXIAudit :=
