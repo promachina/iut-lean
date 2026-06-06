@@ -10883,6 +10883,69 @@ theorem toConstructorBuiltOb3Ob4DeterminantAudit
 
 set_option linter.style.longLine false in
 /--
+Ob3/Ob5 determinant-compatibility chain for the constructor-built possible-image
+Step (xi) source.
+
+This isolates the equality used in Remark 3.9.5(vii): the canonical hull
+approximant log-volume first equals the normalized weighted determinant
+log-volume, and only then equals the determinant log-volume by the Ob3/Ob4
+normalization theorem.  Thus the determinant log-volume comparison is not a
+separate source payload at this audit boundary.
+-/
+structure ConstructorBuiltOb3Ob5DeterminantCompatibilityAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  ob3Ob4DeterminantAudit :
+    ConstructorBuiltOb3Ob4DeterminantAudit sourceData
+  hullLogVolume_eq_normalized :
+    sourceData.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullData (recordThetaPossibleImageUnion record)).approximant =
+      sourceData.determinantSource.normalizedLogVolume
+  normalizedLogVolume_eq_determinantLogVolume :
+    sourceData.determinantSource.normalizedLogVolume =
+      sourceData.determinantSource.determinantLogVolume
+  hullLogVolume_eq_determinantLogVolume_from_normalized :
+    sourceData.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullData (recordThetaPossibleImageUnion record)).approximant =
+      sourceData.determinantSource.determinantLogVolume
+  qPilotLogVolume_le_determinant :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+      sourceData.determinantSource.determinantLogVolume
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltOb3Ob5DeterminantCompatibilityAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltOb3Ob5DeterminantCompatibilityAudit sourceData :=
+  let determinantAudit := sourceData.toConstructorBuiltOb3Ob4DeterminantAudit
+  { ob3Ob4DeterminantAudit := determinantAudit,
+    hullLogVolume_eq_normalized :=
+      determinantAudit.hullLogVolume_eq_normalized,
+    normalizedLogVolume_eq_determinantLogVolume :=
+      determinantAudit.normalizedLogVolume_eq_determinantLogVolume,
+    hullLogVolume_eq_determinantLogVolume_from_normalized := by
+      calc
+        sourceData.hullData.logVolume
+            (IUTStage1HullLogVolumeApproximant.canonical
+              sourceData.hullData (recordThetaPossibleImageUnion record)).approximant =
+          sourceData.determinantSource.normalizedLogVolume :=
+            determinantAudit.hullLogVolume_eq_normalized
+        _ = sourceData.determinantSource.determinantLogVolume :=
+            determinantAudit.normalizedLogVolume_eq_determinantLogVolume,
+    qPilotLogVolume_le_determinant :=
+      determinantAudit.qPilotLogVolume_le_determinant,
+    qSigned_le_thetaSigned :=
+      determinantAudit.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Named Step (xi) boundary audit for the constructor-built possible-image
 hull/determinant source.
 
@@ -10984,6 +11047,8 @@ structure ConstructorBuiltRemainingPayloadAudit
     ConstructorBuiltOb1Ob2HullAbsorptionAudit sourceData
   ob3Ob4DeterminantAudit :
     ConstructorBuiltOb3Ob4DeterminantAudit sourceData
+  ob3Ob5DeterminantCompatibilityAudit :
+    ConstructorBuiltOb3Ob5DeterminantCompatibilityAudit sourceData
   qPilotRegion_eq_possibleImage :
     sourceData.qPilotRegion =
       recordThetaPossibleImage record sourceData.qChoice
@@ -11053,6 +11118,8 @@ theorem toConstructorBuiltRemainingPayloadAudit
       sourceData.toConstructorBuiltOb1Ob2HullAbsorptionAudit,
     ob3Ob4DeterminantAudit :=
       sourceData.toConstructorBuiltOb3Ob4DeterminantAudit,
+    ob3Ob5DeterminantCompatibilityAudit :=
+      sourceData.toConstructorBuiltOb3Ob5DeterminantCompatibilityAudit,
     qPilotRegion_eq_possibleImage :=
       sourceData.qPilotRegion_eq_possibleImage,
     qPilotRegion_subset_recordUnion :=
@@ -11073,7 +11140,8 @@ theorem toConstructorBuiltRemainingPayloadAudit
     ob3_ob5_hullLogVolume_eq_normalized :=
       sourceData.compatibility.approximant_eq_weighted_normalized,
     ob3_ob5_hullLogVolume_eq_determinantLogVolume :=
-      sourceData.compatibility.approximant_eq_determinantLogVolume,
+      sourceData.toConstructorBuiltOb3Ob5DeterminantCompatibilityAudit
+        |>.hullLogVolume_eq_determinantLogVolume_from_normalized,
     ob4_tensorPower_bound :=
       sourceData.tensorPower_bound,
     measure_eq_hullLogVolume :=

@@ -41952,14 +41952,35 @@ theorem possibleImageConstructorBuiltHullSource_ob3Ob4DeterminantAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob3/Ob5 determinant-compatibility chain for the
+constructor-built possible-image Step (xi) hull/determinant source.
+
+This exposes that the determinant log-volume equality is derived by composing
+canonical hull-log-volume compatibility with weighted-determinant normalization,
+rather than carried as a separate remaining-payload input.
+-/
+theorem possibleImageConstructorBuiltHullSource_ob3Ob5DeterminantCompatibilityAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob5DeterminantCompatibilityAudit
+      sourceData :=
+  sourceData.toConstructorBuiltOb3Ob5DeterminantCompatibilityAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface remaining-payload audit for the constructor-built
 possible-image Step (xi) hull/determinant source.
 
 This separates the source-paper payload still carried by the constructor-built
 boundary: possible-image q-region selection, holomorphic-hull absorption, the
 Ob1/Ob2 hull-absorption audit, the Ob3/Ob4 determinant/tensor-power audit,
-Ob3/Ob5 determinant log-volume compatibility, the record-canonical bridge
-equality, and side conditions.
+the derived Ob3/Ob5 determinant log-volume compatibility chain, the
+record-canonical bridge equality, and side conditions.
 -/
 theorem possibleImageConstructorBuiltHullSource_remainingPayloadAudit
     {source target : Copy} {index : Type u}
