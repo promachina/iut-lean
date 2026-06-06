@@ -4702,6 +4702,155 @@ theorem ofAdjustedLocalizationSources_endpoint
 end IUTStage1ArithmeticVectorBundleWeightedDeterminantSource
 
 /--
+Source-facing Remark 3.9.5(vii), Ob3/Ob4 determinant package.
+
+This packages the source data before projecting to the older weighted
+determinant skeleton: localization summands of the arithmetic vector bundle,
+the structure-sheaf adjustment `O(-)` from Ob3-1-2, the positive tensor power
+`M` of Ob3-2/Ob4, and the normalized determinant log-volume used by the
+Step (xi) log-volume estimate.
+-/
+structure IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource
+    (β : Type u) (γ : Type v) [Fintype β] [Fintype γ] where
+  localization :
+    β -> IUTStage1StructureSheafAdjustedLocalizationSource γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+
+namespace IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource
+
+variable {β : Type u} {γ : Type v} [Fintype β] [Fintype γ]
+
+def localizationBundleLogVolume
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (index : β) :
+    Real :=
+  (data.localization index).toLocalizationSource.bundleLogVolume
+
+def structureSheafLogVolume
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (index : β) :
+    Real :=
+  (data.localization index).structureSheafLogVolume
+
+def adjustedRawLogVolume
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (index : β) :
+    Real :=
+  (data.localization index).adjustedRawLogVolume
+
+def weightedAdjustedLogVolume
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (index : β) :
+    Real :=
+  (data.localization index).weightedAdjustedLogVolume
+
+def toWeightedDeterminantSource
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β :=
+  IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.ofAdjustedLocalizationSources
+    data.localization data.anchor data.positiveTensorPower
+    data.tensor_power_pos
+
+def determinantLogVolume
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    Real :=
+  data.toWeightedDeterminantSource.determinantLogVolume
+
+def tensorPowerLogVolume
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    Real :=
+  data.toWeightedDeterminantSource.tensorPowerLogVolume
+
+noncomputable def normalizedDeterminantLogVolume
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    Real :=
+  data.toWeightedDeterminantSource.normalizedLogVolume
+
+noncomputable def toDeterminantLogVolume
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    IUTStage1ArithmeticVectorBundleDeterminantLogVolume :=
+  data.toWeightedDeterminantSource.toDeterminantLogVolume
+
+theorem adjustedRawLogVolume_eq
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (index : β) :
+    data.adjustedRawLogVolume index =
+      data.localizationBundleLogVolume index -
+        data.structureSheafLogVolume index := by
+  simpa [adjustedRawLogVolume, localizationBundleLogVolume,
+    structureSheafLogVolume] using
+    (data.localization index).endpoint.2.1
+
+theorem weightedAdjustedLogVolume_eq
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (index : β) :
+    data.weightedAdjustedLogVolume index =
+      ((data.localization index).weight : Real) *
+        (data.adjustedRawLogVolume index) :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem determinantLogVolume_eq_sum_weightedAdjusted
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    data.determinantLogVolume =
+      Finset.univ.sum fun index =>
+        data.weightedAdjustedLogVolume index := by
+  simpa [determinantLogVolume, toWeightedDeterminantSource,
+    weightedAdjustedLogVolume,
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.ofAdjustedLocalizationSources]
+    using
+      (IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.ofAdjustedLocalizationSources_endpoint
+        data.localization data.anchor data.positiveTensorPower
+        data.tensor_power_pos).1
+
+theorem tensorPowerLogVolume_eq
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    data.tensorPowerLogVolume =
+      (data.positiveTensorPower : Real) * data.determinantLogVolume :=
+  data.toWeightedDeterminantSource.tensorPowerLogVolume_eq
+
+theorem normalizedDeterminantLogVolume_eq_determinant
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    data.normalizedDeterminantLogVolume = data.determinantLogVolume :=
+  data.toWeightedDeterminantSource.normalizedLogVolume_eq_determinantLogVolume
+
+theorem projectedNormalizedLogVolume_eq_determinant
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    data.toDeterminantLogVolume.normalizedLogVolume =
+      data.determinantLogVolume :=
+  data.toWeightedDeterminantSource
+    |>.toDeterminantLogVolume_normalizedLogVolume_eq
+
+theorem endpoint
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    (∀ index : β,
+      data.adjustedRawLogVolume index =
+        data.localizationBundleLogVolume index -
+          data.structureSheafLogVolume index) ∧
+      (∀ index : β,
+        data.weightedAdjustedLogVolume index =
+          ((data.localization index).weight : Real) *
+            data.adjustedRawLogVolume index) ∧
+      data.determinantLogVolume =
+        (Finset.univ.sum fun index =>
+          data.weightedAdjustedLogVolume index) ∧
+      data.tensorPowerLogVolume =
+        (data.positiveTensorPower : Real) * data.determinantLogVolume ∧
+      data.normalizedDeterminantLogVolume = data.determinantLogVolume ∧
+      data.toDeterminantLogVolume.normalizedLogVolume =
+        data.determinantLogVolume :=
+  ⟨data.adjustedRawLogVolume_eq,
+    data.weightedAdjustedLogVolume_eq,
+    data.determinantLogVolume_eq_sum_weightedAdjusted,
+    data.tensorPowerLogVolume_eq,
+    data.normalizedDeterminantLogVolume_eq_determinant,
+    data.projectedNormalizedLogVolume_eq_determinant⟩
+
+end IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource
+
+/--
 Log-volume compatibility between a hull approximant and a weighted determinant
 source.
 

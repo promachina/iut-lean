@@ -39705,6 +39705,36 @@ theorem remark395PossibleImageFamilySource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob3/Ob4 determinant audit for Remark 3.9.5.
+
+This source-level endpoint exposes the structure-sheaf adjustment, weighted
+determinant summation, positive tensor power, and normalized determinant
+log-volume before the data is projected to the older weighted determinant
+skeleton.
+-/
+theorem remark395Ob3Ob4AdjustedDeterminantSource_endpoint
+    {β : Type u} {γ : Type v} [Fintype β] [Fintype γ]
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
+    (∀ index : β,
+      data.adjustedRawLogVolume index =
+        data.localizationBundleLogVolume index -
+          data.structureSheafLogVolume index) ∧
+      (∀ index : β,
+        data.weightedAdjustedLogVolume index =
+          ((data.localization index).weight : Real) *
+            data.adjustedRawLogVolume index) ∧
+      data.determinantLogVolume =
+        (Finset.univ.sum fun index =>
+          data.weightedAdjustedLogVolume index) ∧
+      data.tensorPowerLogVolume =
+        (data.positiveTensorPower : Real) * data.determinantLogVolume ∧
+      data.normalizedDeterminantLogVolume = data.determinantLogVolume ∧
+      data.toDeterminantLogVolume.normalizedLogVolume =
+        data.determinantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface endpoint for the finite-divisor vertical-\(IQ\) corridor
 through the constructed Remark 3.9.5 holomorphic-hull/determinant source.
 
