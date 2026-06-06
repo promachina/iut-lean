@@ -50801,6 +50801,165 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
 
 set_option linter.style.longLine false in
 /--
+Direct milestone \(C_\Theta\) audit for the canonical-one constructed-\(\IPL\)
+finite-divisor route.
+
+This omits the theta-monoid-matched route, remaining-payload, boundary, and
+matched \(C_\Theta\) compatibility projections from
+`CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit`.  The
+load-bearing route is the direct source-derived chain: theta evaluation,
+finite Hodge/\(\SHE\) transport, factored \(\SHE\), constructed \(\IPL\),
+Step (xi) hull/determinant, finite packet/vertical-\(IQ\), raw q-comparison,
+and the direct signed \(C_\Theta\) ordered-real audit.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionDirectMilestoneCThetaAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop where
+  thetaEvaluationAudit :
+    CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
+  transportSourceAudit :
+    CanonicalOneConstructorBuiltIPLConstructionTransportSourceAudit sourceData
+  factoredSHEAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
+  logVolumeTransportAudit :
+    CanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit sourceData
+  finiteTransportLogVolumeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit
+      sourceData
+  constructedIPLAudit :
+    CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData
+  choiceLinkAudit :
+    CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData
+  hodgeSHEIPLAudit :
+    CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
+  directMiddleRouteAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectMiddleRouteAudit
+      sourceData
+  sourceDerivedBridgeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit
+      sourceData
+  routeLogVolumeAlignmentAudit :
+    CanonicalOneConstructorBuiltIPLConstructionRouteLogVolumeAlignmentAudit
+      sourceData
+  directGaussianToStepXIAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit
+      sourceData
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  upperRayAudit :
+    CanonicalOneConstructorBuiltIPLConstructionUpperRayAudit sourceData
+  stepXIHolomorphicHullDeterminantSkeleton :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton
+      sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit
+      sourceData
+  ob3Ob4DeterminantAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
+      sourceData
+  ob5CompatibilityAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
+      sourceData
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
+  qComparisonAudit :
+    CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit sourceData
+  packetTargetAudit :
+    CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
+  directFiniteBoundaryAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit
+      sourceData
+  directRouteFiniteBoundaryAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit
+      sourceData
+  directCThetaAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+      sourceData cTheta
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  thetaSigned_le_cTheta_absLogQ :
+    packageN.preLedger.thetaSigned <=
+      cTheta * (-packageN.preLedger.qSigned)
+  dichotomy :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta
+
+set_option linter.style.longLine false in
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLConstructionFiniteDivisorVerticalIQ_withDirectMilestoneAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLConstructionDirectMilestoneCThetaAudit
+      sourceData cTheta := by
+  have hdirectCTheta :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+      cTheta thetaSigned_le_cTheta_absLogQ
+  exact
+    { thetaEvaluationAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
+      transportSourceAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionTransportSourceAudit,
+      factoredSHEAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
+      logVolumeTransportAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit,
+      finiteTransportLogVolumeAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit,
+      constructedIPLAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit,
+      choiceLinkAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
+      hodgeSHEIPLAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
+      directMiddleRouteAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectMiddleRouteAudit,
+      sourceDerivedBridgeAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit,
+      routeLogVolumeAlignmentAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionRouteLogVolumeAlignmentAudit,
+      directGaussianToStepXIAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit,
+      stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      upperRayAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionUpperRayAudit,
+      stepXIHolomorphicHullDeterminantSkeleton :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton,
+      ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit,
+      ob3Ob4DeterminantAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
+      ob5CompatibilityAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
+      sideConditionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit,
+      qComparisonAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit,
+      packetTargetAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit,
+      directFiniteBoundaryAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit,
+      directRouteFiniteBoundaryAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit,
+      directCThetaAudit := hdirectCTheta,
+      q_pilot_positive := hdirectCTheta.q_pilot_positive,
+      qSigned_le_thetaSigned := hdirectCTheta.qSigned_le_thetaSigned,
+      thetaSigned_le_cTheta_absLogQ :=
+        hdirectCTheta.thetaSigned_le_cTheta_absLogQ,
+      dichotomy := hdirectCTheta.dichotomy }
+
+set_option linter.style.longLine false in
+/--
 Compact constructed-\(\IPL\) milestone endpoint for the source-derived
 finite-divisor vertical-\(IQ\) corridor.
 
