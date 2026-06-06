@@ -44248,6 +44248,38 @@ theorem possibleImageConstructorBuiltHullSource_ob5QuotientIndependenceAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface combined Ob1--Ob5 quotient bridge audit for the
+constructor-built possible-image Step (xi) source.
+
+This joins the source-derived bridge
+`mu_log(qRegion) <= det_norm <= thetaSigned` to the bounded-family Ob5
+quotient collapse for two nonempty Theorem 3.11 possible images.  The result
+keeps hull absorption, determinant/tensor-power normalization, record Ob3/Ob5
+bridge data, quotient-image equality, and the local canonical `C_Theta` chain
+in one source-level review target.
+-/
+theorem possibleImageConstructorBuiltHullSource_ob1ToOb5QuotientBridgeAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (comparisonChoice : index)
+    (qChoice_nonempty :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1ToOb5QuotientBridgeAudit
+      sourceData comparisonChoice qChoice_nonempty comparisonChoice_nonempty :=
+  sourceData.toConstructorBuiltOb1ToOb5QuotientBridgeAudit
+    comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Ob3/Ob4 determinant/tensor-power audit for the
 constructor-built possible-image Step (xi) hull/determinant source.
 
