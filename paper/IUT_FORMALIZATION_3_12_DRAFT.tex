@@ -3876,12 +3876,21 @@ route.  The source object
 keeps the same record-canonical Step (xi) constructor-built hull source, but
 uses only the certificate-pinned Theorem~3.11 \(\IPL\) link source rather than
 an input-prime-strip link construction source.  Its experiment suffixes
-\texttt{ConstructorBuiltIPLLinkFullRouteAudit},
-\texttt{ConstructorBuiltIPLLinkBoundaryAudit}, and
-\texttt{ConstructorBuiltIPLLinkCThetaAudit} expose the route, no-\(C_\Theta\),
-and conditional \(C_\Theta\) audits.  This separates the Step (xi)
-constructor-built progress from the still-open construction of the actual
-Theorem~3.11 input-prime-strip link machinery.
+\[
+\begin{array}{l}
+\texttt{ConstructorBuiltIPLLinkFullRouteAudit},\\
+\texttt{ConstructorBuiltIPLLinkRemainingPayloadRouteAudit},\\
+\texttt{ConstructorBuiltIPLLinkBoundaryAudit},\\
+\texttt{ConstructorBuiltIPLLinkCThetaAudit},\\
+\texttt{ConstructorBuiltIPLLinkRemainingPayloadCThetaAudit}
+\end{array}
+\]
+expose the route, no-\(C_\Theta\), conditional \(C_\Theta\), and
+remaining-payload conditional audits.  The last suffix carries the same
+remaining Step (xi) payload ledger beside the certificate-pinned \(\IPL\)-link
+dichotomy.  This separates the Step (xi) constructor-built progress from the
+still-open construction of the actual Theorem~3.11 input-prime-strip link
+machinery.
 This constructor-built \(\IPL\)-link route now also has a Hodge--Arakelov
 source endpoint.  Instead of asking the public theorem for the bundled
 theta-monoid-matched synchronization record, the endpoint starts from a
@@ -3923,9 +3932,11 @@ surface exposes this compact review target through the suffixes
 \[
 \begin{array}{l}
 \texttt{canonicalOneConstructorBuiltIPLLinkFullRouteAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLLinkRemainingPayloadRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLLinkThetaEvaluationPairAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLLinkBoundaryAudit},\\
-\texttt{canonicalOneConstructorBuiltIPLLinkCThetaAudit}.
+\texttt{canonicalOneConstructorBuiltIPLLinkCThetaAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLLinkRemainingPayloadCThetaAudit}.
 \end{array}
 \]
 The theta-evaluation-pair audit records both source and target
@@ -3971,6 +3982,7 @@ is projected.  The experiment surface adds direct endpoints with suffixes
 \texttt{canonicalOneConstructorBuiltIPLLinkQComparisonAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLLink\_qComparison},\\
 \texttt{canonicalOneConstructorBuiltIPLLinkCTheta},\\
+\texttt{canonicalOneConstructorBuiltIPLLinkRemainingPayloadCThetaAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLLinkMilestoneCThetaAudit}.
 \end{array}
 \]
@@ -3982,11 +3994,12 @@ The experiment surface exposes this as
 \texttt{canonicalOneConstructorBuiltIPLLinkFiniteBoundaryAudit}.  The new
 \texttt{CanonicalOneConstructorBuiltIPLLinkMilestoneCThetaAudit} then packages
 the q-comparison audit, finite-boundary audit, source-derived bridge audit,
-conditional \(C_\Theta\) audit, and final ordered-real dichotomy as one
-milestone-facing declaration.  Thus this review target separates the raw
-source-derived Step (xi) comparison, the finite vertical-\(IQ\) boundary ledger,
-and the later numeric \(C_\Theta\) input while also offering a single audit
-surface for the canonical-one constructor-built route.
+conditional \(C_\Theta\) audit, the remaining-payload \(C_\Theta\) audit, and
+final ordered-real dichotomy as one milestone-facing declaration.  Thus this
+review target separates the raw source-derived Step (xi) comparison, the finite
+vertical-\(IQ\) boundary ledger, the still-supplied Step (xi) payload, and the
+later numeric \(C_\Theta\) input while also offering a single audit surface for
+the canonical-one constructor-built route.
 There is now a stricter canonical-one variant whose middle route constructs
 \(\IPL\)/log-volume transport rather than consuming only the certificate-pinned
 \(\IPL\)-link source:

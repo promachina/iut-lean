@@ -46396,6 +46396,48 @@ theorem cThetaDichotomyWithConstructorBuiltIPLLinkMatchedGaussianStepXIAudit
     (sourceData.toIPLLinkObligationsBackedSource.cThetaDichotomyWithGaussianStepXIAudit
       cTheta thetaSigned_le_cTheta_absLogQ).2⟩
 
+set_option linter.style.longLine false in
+def ConstructorBuiltIPLLinkMatchedRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource ∧
+    ConstructorBuiltIPLLinkMatchedSourceDerivedFiniteDivisorRouteAudit sourceData
+
+theorem toConstructorBuiltIPLLinkMatchedRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    ConstructorBuiltIPLLinkMatchedRemainingPayloadRouteAudit sourceData :=
+  ⟨sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit,
+    sourceData.toConstructorBuiltIPLLinkMatchedSourceDerivedFiniteDivisorRouteAudit⟩
+
+set_option linter.style.longLine false in
+def ConstructorBuiltIPLLinkMatchedRemainingPayloadCThetaAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop :=
+  IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource ∧
+    ConstructorBuiltIPLLinkMatchedCThetaAudit sourceData cTheta
+
+theorem cThetaDichotomyWithConstructorBuiltIPLLinkMatchedRemainingPayloadAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    ConstructorBuiltIPLLinkMatchedRemainingPayloadCThetaAudit sourceData cTheta :=
+  ⟨sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit,
+    sourceData.cThetaDichotomyWithConstructorBuiltIPLLinkMatchedGaussianStepXIAudit
+      cTheta thetaSigned_le_cTheta_absLogQ⟩
+
 end
   IUTStage1ThetaMonoidMatchedHodgeSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
 
@@ -47116,6 +47158,45 @@ theorem cThetaDichotomyWithCanonicalOneConstructorBuiltIPLLinkGaussianStepXIAudi
     cTheta thetaSigned_le_cTheta_absLogQ
 
 set_option linter.style.longLine false in
+def CanonicalOneConstructorBuiltIPLLinkRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1ThetaMonoidMatchedHodgeSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltIPLLinkMatchedRemainingPayloadRouteAudit
+    sourceData.toThetaMonoidMatchedSource
+
+theorem toCanonicalOneConstructorBuiltIPLLinkRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkRemainingPayloadRouteAudit sourceData :=
+  sourceData.toThetaMonoidMatchedSource.toConstructorBuiltIPLLinkMatchedRemainingPayloadRouteAudit
+
+set_option linter.style.longLine false in
+def CanonicalOneConstructorBuiltIPLLinkRemainingPayloadCThetaAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop :=
+  IUTStage1ThetaMonoidMatchedHodgeSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltIPLLinkMatchedRemainingPayloadCThetaAudit
+    sourceData.toThetaMonoidMatchedSource cTheta
+
+theorem cThetaDichotomyWithCanonicalOneConstructorBuiltIPLLinkRemainingPayloadAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLLinkRemainingPayloadCThetaAudit
+      sourceData cTheta :=
+  sourceData.toThetaMonoidMatchedSource.cThetaDichotomyWithConstructorBuiltIPLLinkMatchedRemainingPayloadAudit
+    cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
 /--
 Named raw Step (xi) comparison audit for the canonical-one constructor-built
 \(\IPL\)-link route.
@@ -47268,6 +47349,9 @@ structure CanonicalOneConstructorBuiltIPLLinkMilestoneCThetaAudit
     CanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit sourceData
   cThetaAudit :
     CanonicalOneConstructorBuiltIPLLinkCThetaAudit sourceData cTheta
+  remainingPayloadCThetaAudit :
+    CanonicalOneConstructorBuiltIPLLinkRemainingPayloadCThetaAudit
+      sourceData cTheta
   dichotomy :
     (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
         packageN.preLedger.thetaSigned < 0) ∨
@@ -47294,6 +47378,9 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceDerivedBridgeAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit,
       cThetaAudit := hcTheta,
+      remainingPayloadCThetaAudit :=
+        sourceData.cThetaDichotomyWithCanonicalOneConstructorBuiltIPLLinkRemainingPayloadAudit
+          cTheta thetaSigned_le_cTheta_absLogQ,
       dichotomy := hcTheta.2 }
 
 end
