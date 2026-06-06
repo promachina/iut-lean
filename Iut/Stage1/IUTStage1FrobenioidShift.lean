@@ -36310,6 +36310,46 @@ structure CalibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObl
   hullDetBridge_eq_obligations :
     packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
       hullSource.obligations.hullDetData.bridgeData
+  hullDetBridge_eq_recordCanonical :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        hullSource.operation hullSource.hullOperation hullSource.determinantOperation
+        hullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record hullSource.qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) hullSource.qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record hullSource.qChoice)
+          (fun _ hx => hx))
+        hullSource.determinantSource hullSource.compatibility
+        hullSource.measure_eq_hullLogVolume hullSource.tensorPower_bound
+  tensorPowerDeterminant_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+      hullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
+  thetaPilotHullUnion_eq_record :
+    let bridge :=
+      calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplLinkSource hullSource;
+    bridge.hullConstructor.toThetaPilotHullEndpoint.possible_images.union =
+      record.thetaPossibleImages.union
+  recordThetaUnion_subset_hull :
+    let bridge :=
+      calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplLinkSource hullSource;
+    Region.Subset record.thetaPossibleImages.union
+      (bridge.hullConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+        packageN.preLedger.certificate).hull
+  thetaPilotHullVolume_bound :
+    let bridge :=
+      calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplLinkSource hullSource;
+    RegionMeasure.HasVolumeAtMost packageN.preLedger.measure
+      (bridge.hullConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+        packageN.preLedger.certificate).hull
+      packageN.preLedger.thetaSigned
   q_pilot_positive :
     0 < -packageN.preLedger.qSigned
   normalization :
@@ -36378,6 +36418,18 @@ theorem toCalibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObl
       qPilotRegion_eq_choice := hbridge.2.2.2.2.2.1,
       qPilotRegion_subset_union := hbridge.2.2.2.2.2.2.1,
       hullDetBridge_eq_obligations := hbridge.2.2.2.2.2.2.2.1,
+      hullDetBridge_eq_recordCanonical :=
+        hullSource.hullDetBridge_eq_recordCanonical,
+      tensorPowerDeterminant_bound := hullSource.tensorPower_bound,
+      thetaPilotHullUnion_eq_record :=
+        (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+          part audited hodgeSynchronization iplLinkSource hullSource).hullConstructor.possibleImagesUnion_eq_record
+      recordThetaUnion_subset_hull :=
+        (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+          part audited hodgeSynchronization iplLinkSource hullSource).hullConstructor.recordPossibleImagesUnion_subset_hull
+      thetaPilotHullVolume_bound :=
+        (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+          part audited hodgeSynchronization iplLinkSource hullSource).hullConstructor.determinantVolumeBound
       q_pilot_positive := hbridge.2.2.2.2.2.2.2.2.1,
       normalization := hbridge.2.2.2.2.2.2.2.2.2.1,
       qSigned_le_thetaSigned := hbridge.2.2.2.2.2.2.2.2.2.2.2.1,
