@@ -44543,6 +44543,53 @@ theorem possibleImageConstructorBuiltHullSource_recordOb3Ob5BridgeAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob1--Ob5 bridge audit for the constructor-built
+possible-image Step (xi) hull/determinant source.
+
+This is the direct source-level review target for the Remark 3.9.5(vii)
+handoff: Ob1/Ob2 holomorphic-hull absorption, Ob3/Ob4 determinant and
+tensor-power normalization, Ob3/Ob5 determinant/log-volume compatibility, the
+remaining Step (xi) payload, the Theorem 3.11 hull/determinant constructor
+endpoint, and the raw signed comparison are all returned from the same
+constructor-built source.
+-/
+theorem possibleImageConstructorBuiltHullSource_ob1ToOb5BridgeAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1ToOb5BridgeAudit
+      sourceData :=
+  sourceData.toConstructorBuiltOb1ToOb5BridgeAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface canonical-scale bridge audit for the constructor-built
+Remark 3.9.5 Step (xi) source.
+
+The endpoint keeps the source-derived chain
+`mu_log(qRegion) <= det_norm <= thetaSigned` next to the local canonical
+`C_Theta` scale derived from q-pilot positivity.  This exposes the no-external
+numeric-bound bridge at the source-level Step (xi) boundary, separate from the
+downstream finite-divisor wrappers.
+-/
+theorem possibleImageConstructorBuiltHullSource_remark395CanonicalCThetaBridgeAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemark395CanonicalCThetaBridgeAudit
+      sourceData :=
+  sourceData.toConstructorBuiltRemark395CanonicalCThetaBridgeAudit
+
+set_option linter.style.longLine false in
+/--
 Constructor-built variant of the theta-monoid-matched raw finite-divisor
 boundary.
 
