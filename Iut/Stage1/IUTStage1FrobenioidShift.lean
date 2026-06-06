@@ -38670,6 +38670,51 @@ theorem toMatchedObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
 
 set_option linter.style.longLine false in
 /--
+Matched remaining-boundary ledger for the obligations-backed
+record-canonical constructor corridor.
+
+This is the theta-monoid-matched counterpart of
+`ObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit`: it keeps
+the matched Gaussian/exact audit and matched constructor-backed Step (xi) audit
+next to the ordinary projected ledger of still-public source inputs.  The
+ledger identifies the source-paper fields still to be constructed rather than
+adding a new comparison theorem.
+-/
+structure MatchedObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  thetaMonoidDegreeMatched :
+    sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.targetEvaluation.thetaMonoidDegree =
+      sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.sourceEvaluation.thetaMonoidDegree
+  matchedGaussianExactCorridorAudit :
+    MatchedObligationsRecordCanonicalConstructorGaussianExactCorridorAudit sourceData
+  matchedConstructorBackedStepXISourceAudit :
+    MatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit sourceData
+  projectedRemainingSourceBoundaryAudit :
+    IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit
+      sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+
+set_option linter.style.longLine false in
+theorem toMatchedObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit sourceData := by
+  have hmatched := sourceData.matchedHodgeIPLSource.source_endpoint
+  exact
+    { thetaMonoidDegreeMatched := hmatched.2.1,
+      matchedGaussianExactCorridorAudit :=
+        sourceData.toMatchedObligationsRecordCanonicalConstructorGaussianExactCorridorAudit,
+      matchedConstructorBackedStepXISourceAudit :=
+        sourceData.toMatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit,
+      projectedRemainingSourceBoundaryAudit :=
+        sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+          |>.toObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit }
+
+set_option linter.style.longLine false in
+/--
 No-`C_\Theta` raw-comparison endpoint for the matched obligations-backed
 record-canonical exact corridor.
 -/
