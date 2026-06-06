@@ -33857,9 +33857,9 @@ Remark 3.9.5 Ob3/Ob5-adjusted hull/determinant source.
 
 This exposes, at the milestone boundary, the source-derived Step (xi)
 log-volume chain
-`mu_log(qRegion) <= determinantLogVolume <= thetaSigned`, together with the
-raw signed comparison projected from the Theorem 3.11 hull/determinant
-constructor.
+`mu_log(qRegion) <= det_norm = determinantLogVolume <= thetaSigned`,
+together with the raw signed comparison projected from the Theorem 3.11
+hull/determinant constructor.
 -/
 theorem remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_recordBridgeAudit
     {source target : Copy} {coric : Type u}

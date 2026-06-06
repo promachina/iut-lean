@@ -57439,6 +57439,21 @@ structure ConstructorBackedRecordBridgeAudit
     sourceData.toRecordHullDeterminantBridgeSource.qPilotRegion ⊆
       sourceData.measuredSource.adjustedSource.hullOperator.phi
         (recordThetaPossibleImageUnion record)
+  qPilotLogVolume_le_familyHullLogVolume :
+    sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.qRegionLogVolume <=
+      sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.familyHullLogVolume
+  familyHullLogVolume_eq_determinantNormalized :
+    sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.familyHullLogVolume =
+      sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantNormalizedLogVolume
+  determinantNormalized_eq_determinantLogVolume :
+    sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantNormalizedLogVolume =
+      sourceData.toRecordHullDeterminantBridgeSource.determinantSource.determinantLogVolume
+  qPilotLogVolume_le_determinantNormalized :
+    sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.qRegionLogVolume <=
+      sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantNormalizedLogVolume
+  determinantNormalized_le_thetaSigned :
+    sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantNormalizedLogVolume <=
+      packageN.preLedger.thetaSigned
   qPilotLogVolume_le_determinant :
     sourceData.toRecordHullDeterminantBridgeSource.hullOperator.logVolume
         sourceData.toRecordHullDeterminantBridgeSource.qPilotRegion <=
@@ -57475,6 +57490,27 @@ theorem constructorBackedRecordBridgeAudit
           (record := record) sourceData.qChoice sourceData.qPilotRegion
           sourceData.q_subset_choice,
       qPilotRegion_subset_phi := hbridge.2.2.2.2.2.2.2.1,
+      qPilotLogVolume_le_familyHullLogVolume :=
+        sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
+          |>.qRegionLogVolume_le_familyHullLogVolume,
+      familyHullLogVolume_eq_determinantNormalized :=
+        sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
+          |>.familyHullLogVolume_eq_normalized,
+      determinantNormalized_eq_determinantLogVolume :=
+        sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
+          |>.determinantNormalizedLogVolume_eq_determinant,
+      qPilotLogVolume_le_determinantNormalized :=
+        (sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
+          |>.qRegionLogVolume_le_familyHullLogVolume).trans
+          (le_of_eq
+            (sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
+              |>.familyHullLogVolume_eq_normalized)),
+      determinantNormalized_le_thetaSigned :=
+        (le_of_eq
+          (sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
+            |>.determinantNormalizedLogVolume_eq_determinant)).trans
+          (sourceData.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
+            |>.determinantLogVolume_le_thetaSigned),
       qPilotLogVolume_le_determinant := hbridge.2.2.2.2.2.2.2.2.1,
       determinantLogVolume_le_thetaSigned := hbridge.2.2.2.2.2.2.2.2.2.1,
       qPilotLogVolume_le_thetaSigned := hbridge.2.2.2.2.2.2.2.2.2.2,
