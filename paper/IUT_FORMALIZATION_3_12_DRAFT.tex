@@ -2750,8 +2750,28 @@ The experiment-surface theorem
 \end{array}
 \]
 threads this constructed Remark~3.9.5 source through the finite-divisor
-vertical-\(IQ\) corridor.  The numeric \(C_\Theta\) estimate remains an explicit
-hypothesis.  The source equality
+vertical-\(IQ\) corridor.  This ordinary form still accepts a chosen
+\(C_\Theta\) and the corresponding numeric estimate as explicit inputs.  The
+same source now has a canonical-scale companion
+\[
+\begin{array}{l}
+\texttt{Iut.Stage1.Experiments.boundarySignedEqualityOrStrictCTheta\_from}\\
+\quad\texttt{\_remark395ConstructedHullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_canonicalCThetaScale},
+\end{array}
+\]
+where the constructed Remark~3.9.5 source object defines the scale as
+\(\theta_{\mathrm{signed}}/(-q_{\mathrm{signed}})\).  The source-level audit
+\texttt{ConstructedCanonicalCThetaScaleAudit} records the
+\[
+  \mu_{\log}(q_{\mathrm{region}})
+  \le \det_{\log}^{\mathrm{norm}}
+  \le \theta_{\mathrm{signed}}
+  \le C_{\Theta,\mathrm{can}}\cdot(-q_{\mathrm{signed}})
+\]
+chain and proves the final ordered-real dichotomy without an external
+\texttt{thetaSigned\_le\_cTheta\_absLogQ} hypothesis for this local scale.  The
+source equality
 \(\mu_{\log}(\phi(P_B))=\det_{\log}^{\mathrm{norm}}\), the Ob4 tensor-bound
 input, and the equality with the older algorithmic hull/determinant bridge
 remain source obligations rather than full arithmetic vector-bundle

@@ -10537,6 +10537,29 @@ theorem qSigned_le_thetaSigned
     package.preLedger.qSigned <= package.preLedger.thetaSigned :=
   sourceData.toHolomorphicHullDeterminantSource.qSigned_le_thetaSigned
 
+set_option linter.unusedVariables false in
+noncomputable def canonicalCThetaScale
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Real :=
+  package.preLedger.thetaSigned / (-package.preLedger.qSigned)
+
+theorem thetaSigned_le_canonicalCThetaScale_absLogQ
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    package.preLedger.thetaSigned <=
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) := by
+  have hne : (-package.preLedger.qSigned) ≠ 0 :=
+    ne_of_gt sourceData.q_pilot_positive
+  have heq :
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) =
+        package.preLedger.thetaSigned := by
+    simpa [canonicalCThetaScale] using
+      div_mul_cancel₀ package.preLedger.thetaSigned hne
+  rw [heq]
+
 theorem source_endpoint
     (sourceData :
       IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
@@ -10737,6 +10760,122 @@ theorem constructedRecordBridgeAudit
       sourceData.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_thetaSigned,
     constructedSourceEndpoint :=
       sourceData.source_endpoint }
+
+set_option linter.style.longLine false in
+/--
+Canonical-scale \(C_\Theta\) audit for the constructed Remark 3.9.5 Step (xi)
+source.
+
+The source already proves the q-to-determinant-to-theta log-volume comparison
+from the holomorphic hull and determinant data.  This audit attaches the local
+scale \(\theta_{\mathrm{signed}}/(-q_{\mathrm{signed}})\) directly to that
+constructed Remark 3.9.5 source, deriving the ordered-real \(C_\Theta\)
+dichotomy without an externally supplied numeric bound.
+-/
+structure ConstructedCanonicalCThetaScaleAudit
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  constructedRecordBridgeAudit :
+    ConstructedRecordBridgeAudit sourceData
+  sourceEndpoint :
+    recordThetaPossibleImageUnion record ⊆
+        sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) ∧
+      sourceData.possibleImageFamilySource.familyUnion =
+        recordThetaPossibleImageUnion record ∧
+      sourceData.possibleImageFamilySource.canonicalPhi.approximant =
+        sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) ∧
+      (∀ choice : index,
+        recordThetaPossibleImage record choice ⊆
+          sourceData.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) ∧
+      sourceData.qPilotRegion ⊆
+        sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) ∧
+      sourceData.possibleImageFamilyDetLogVolumeSource.familyHullLogVolume =
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.possibleImageFamilyDetLogVolumeSource.familyUnionLogVolume <=
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.determinantSource.determinantLogVolume ∧
+      sourceData.determinantSource.determinantLogVolume <=
+        package.preLedger.thetaSigned ∧
+      sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned
+  canonicalCThetaScale_eq :
+    sourceData.canonicalCThetaScale =
+      package.preLedger.thetaSigned / (-package.preLedger.qSigned)
+  q_pilot_positive :
+    0 < -package.preLedger.qSigned
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+  qRegionLogVolume_le_determinant :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      sourceData.determinantSource.determinantLogVolume
+  determinantLogVolume_le_thetaSigned :
+    sourceData.determinantSource.determinantLogVolume <=
+      package.preLedger.thetaSigned
+  qRegionLogVolume_le_thetaSigned :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      package.preLedger.thetaSigned
+  thetaSigned_le_canonicalCTheta_absLogQ :
+    package.preLedger.thetaSigned <=
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned)
+  sourceBridge_to_canonicalScale_chain :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      sourceData.canonicalCThetaScale * (-package.preLedger.qSigned)
+  dichotomy :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < sourceData.canonicalCThetaScale
+
+set_option linter.style.longLine false in
+theorem constructedCanonicalCThetaScaleAudit
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructedCanonicalCThetaScaleAudit sourceData := by
+  let hbound : IUTStage1Corollary312SignedCThetaBound :=
+    { comparison :=
+        { thetaSigned := package.preLedger.thetaSigned,
+          qSigned := package.preLedger.qSigned,
+          q_positive := sourceData.q_pilot_positive,
+          qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned },
+      cTheta := sourceData.canonicalCThetaScale,
+      thetaSigned_le_cTheta_absLogQ :=
+        sourceData.thetaSigned_le_canonicalCThetaScale_absLogQ }
+  have hdichotomy :
+      (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < sourceData.canonicalCThetaScale := by
+    rcases hbound.cTheta_eq_neg_one_or_gt_neg_one with hC | hstrict
+    · exact Or.inl
+        ⟨hbound.qSigned_eq_thetaSigned_of_cTheta_eq_neg_one hC,
+          hbound.thetaSigned_neg_of_cTheta_eq_neg_one hC⟩
+    · exact Or.inr hstrict
+  have hchain :
+      sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.canonicalCThetaScale * (-package.preLedger.qSigned) :=
+    sourceData.qRegionLogVolume_le_thetaSigned.trans
+      sourceData.thetaSigned_le_canonicalCThetaScale_absLogQ
+  exact
+    { constructedRecordBridgeAudit :=
+        sourceData.constructedRecordBridgeAudit,
+      sourceEndpoint := sourceData.source_endpoint,
+      canonicalCThetaScale_eq := rfl,
+      q_pilot_positive := sourceData.q_pilot_positive,
+      qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned,
+      qRegionLogVolume_le_determinant :=
+        sourceData.qRegionLogVolume_le_determinantLogVolume,
+      determinantLogVolume_le_thetaSigned :=
+        sourceData.determinantLogVolume_le_thetaSigned,
+      qRegionLogVolume_le_thetaSigned :=
+        sourceData.qRegionLogVolume_le_thetaSigned,
+      thetaSigned_le_canonicalCTheta_absLogQ :=
+        sourceData.thetaSigned_le_canonicalCThetaScale_absLogQ,
+      sourceBridge_to_canonicalScale_chain := hchain,
+      dichotomy := hdichotomy }
 
 end IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
 
