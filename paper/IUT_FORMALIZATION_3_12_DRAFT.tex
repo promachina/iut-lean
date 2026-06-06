@@ -3499,6 +3499,13 @@ projects q-pilot positivity and source normalization from one
 \texttt{IUTStage1SourceSideConditions} object before building the
 constructor-backed hull/determinant source.  This removes two more flat public
 propositions at the low-level Step (xi) constructor boundary.
+The same low-level source now has the named audit
+\texttt{SideConditionedConstructorBackedStepXIHullDetAudit}.  It packages the
+selected possible-image q-region, the constructor-backed hull/determinant
+provenance, the side-condition-derived q-positivity and normalization, and the
+raw signed comparison as one reusable Step (xi) proposition.  The strongest
+matched side-conditioned exact corridor now consumes this audit directly before
+projecting to the constructor-backed and obligations-backed exact route.
 The theta-monoid-matched obligations-backed record-canonical corridor now has
 the same explicit source-facing exposure.  Its new audit
 \texttt{MatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit}

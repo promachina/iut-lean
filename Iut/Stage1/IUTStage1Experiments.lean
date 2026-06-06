@@ -25582,6 +25582,43 @@ theorem targetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedPossi
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface named audit for the side-conditioned constructor-backed
+Step (xi) hull/determinant source.
+
+This wrapper packages the low-level Step (xi) source boundary as one audit:
+selected possible-image q-region, constructor-backed hull/determinant
+provenance, side-condition-derived q-positivity and normalization, and the raw
+signed comparison.
+-/
+theorem targetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedPossibleImage_stepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+        (β := β) audited record hodgeSynchronization) :
+    IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.SideConditionedConstructorBackedStepXIHullDetAudit
+      stepXISource :=
+  stepXISource.toSideConditionedConstructorBackedStepXIHullDetAudit
+
+set_option linter.style.longLine false in
+/--
 Compact milestone-facing no-`C_\Theta` finite-divisor boundary from the
 calibration-backed all-in-one route source, returning the calibrated audit
 payload directly.

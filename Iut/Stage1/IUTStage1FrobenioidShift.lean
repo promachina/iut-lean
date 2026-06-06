@@ -22478,6 +22478,50 @@ theorem source_endpoint
       sourceData.sourceNormalization,
       haudit.qSigned_le_thetaSigned⟩
 
+set_option linter.style.longLine false in
+/--
+Named audit for the side-conditioned constructor-backed Step (xi)
+holomorphic-hull/determinant source.
+
+This packages the low-level Step (xi) source boundary as a reusable
+proposition: the q-pilot region is the selected Theorem 3.11 possible image,
+the constructor-backed hull/determinant audit supplies the record-canonical
+hull/tensor bridge, and q-positivity plus source normalization are projected
+from one Stage 1 side-condition object.
+-/
+structure SideConditionedConstructorBackedStepXIHullDetAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+        (β := β) part audited record hodgeSynchronization) :
+    Prop where
+  qPilotRegion_eq_choice :
+    sourceData.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice
+  constructorBackedAudit :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.ConstructorBackedStepXIHullDetAudit
+      sourceData.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toSideConditionedConstructorBackedStepXIHullDetAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+        (β := β) part audited record hodgeSynchronization) :
+    SideConditionedConstructorBackedStepXIHullDetAudit sourceData := by
+  have hsource := sourceData.source_endpoint
+  exact
+    { qPilotRegion_eq_choice := hsource.1,
+      constructorBackedAudit := hsource.2.1,
+      q_pilot_positive := hsource.2.2.1,
+      normalization := hsource.2.2.2.1,
+      qSigned_le_thetaSigned := hsource.2.2.2.2 }
+
 end IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
 
 set_option linter.style.longLine false in
@@ -44542,14 +44586,8 @@ def MatchedSideConditionedConstructorBackedGaussianExactAudit
       IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     Prop :=
-  sourceData.sideConditionedConstructorBackedPossibleImageSource.qPilotRegion =
-      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
-        record sourceData.sideConditionedConstructorBackedPossibleImageSource.qChoice ∧
-    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.ConstructorBackedStepXIHullDetAudit
-      sourceData.sideConditionedConstructorBackedPossibleImageSource.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource ∧
-    0 < -packageN.preLedger.qSigned ∧
-    packageN.preLedger.normalization ∧
-    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+  IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.SideConditionedConstructorBackedStepXIHullDetAudit
+      sourceData.sideConditionedConstructorBackedPossibleImageSource ∧
     IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedAssembledConstructorBackedGaussianExactAudit
       sourceData.toMatchedConstructorBackedExactSource
 
@@ -44558,14 +44596,9 @@ theorem toMatchedSideConditionedConstructorBackedGaussianExactAudit
       IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData := by
-  have hstep :=
-    sourceData.sideConditionedConstructorBackedPossibleImageSource.source_endpoint
   exact
-    ⟨hstep.1,
-      hstep.2.1,
-      hstep.2.2.1,
-      hstep.2.2.2.1,
-      hstep.2.2.2.2,
+    ⟨sourceData.sideConditionedConstructorBackedPossibleImageSource
+        |>.toSideConditionedConstructorBackedStepXIHullDetAudit,
       sourceData.toMatchedConstructorBackedExactSource
         |>.toMatchedAssembledConstructorBackedGaussianExactAudit⟩
 
