@@ -3849,10 +3849,15 @@ surface exposes this compact review target through the suffixes
 \[
 \begin{array}{l}
 \texttt{canonicalOneConstructorBuiltIPLLinkFullRouteAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLLinkThetaEvaluationPairAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLLinkBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLLinkCThetaAudit}.
 \end{array}
 \]
+The theta-evaluation-pair audit records both source and target
+Hodge--Arakelov theta-evaluation endpoints, the source full-label calibration
+against the theta-source cusp-log-volume average, canonical \(1\)-label
+Gaussian-degree preservation, and the derived theta-monoid degree equality.
 The same source object now exposes the raw Step (xi) comparison before the
 finite Step (x) boundary is unfolded.  Its named audit
 \texttt{CanonicalOneConstructorBuiltIPLLinkQComparisonAudit} packages the
@@ -3884,6 +3889,7 @@ volume facts, q-positivity, and normalization before the raw signed comparison
 is projected.  The experiment surface adds direct endpoints with suffixes
 \[
 \begin{array}{l}
+\texttt{canonicalOneConstructorBuiltIPLLinkThetaEvaluationPairAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSourceAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit},\\

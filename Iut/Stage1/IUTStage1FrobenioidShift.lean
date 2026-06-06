@@ -46280,6 +46280,83 @@ theorem toCanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudi
     CanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudit sourceData :=
   sourceData.toThetaMonoidMatchedSource.toConstructorBuiltIPLLinkMatchedSourceDerivedFiniteDivisorRouteAudit
 
+set_option linter.style.longLine false in
+abbrev hodgeArakelovThetaEvaluationEndpointProp
+    (evaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C) :
+    Prop :=
+  evaluation.thetaRootSource.canonicalGenerator.canonicalGeneratorUpToSign ∧
+    evaluation.thetaRootSource.canonicalFullLabel =
+      IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value) ∧
+    evaluation.thetaRootSource.canonicalFullLabel ≠
+      IUTStage1ZModCuspFullLabel.zero ∧
+    evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        IUTStage1ZModCuspFullLabel.zero = 0 ∧
+    evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        evaluation.thetaRootSource.canonicalFullLabel =
+      evaluation.thetaMonoidDegree ∧
+    (∀ j : ZMod l.value, j.val ≤ l.value / 2 ->
+      evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l j) =
+        evaluation.squareWeightProfile.weight j * evaluation.thetaMonoidDegree)
+
+set_option linter.style.longLine false in
+/--
+Canonical-one Hodge--Arakelov theta-evaluation pair audit.
+
+This is the theta-root/Gaussian layer immediately before the finite
+Hodge/\(\SHE\)/\(\IPL\) transport: both source and target Hodge--Arakelov
+evaluations satisfy the finite \(j^2\)-profile endpoint, the source evaluation
+is calibrated against the theta-source cusp-log-volume average, the canonical
+\(1\)-label Gaussian degree is preserved, and the target/source theta-monoid
+degrees are therefore identified by the canonical-one laws.
+-/
+structure CanonicalOneConstructorBuiltIPLLinkThetaEvaluationPairAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  sourceThetaEvaluationEndpoint :
+    hodgeArakelovThetaEvaluationEndpointProp
+      sourceData.sourceCalibratedEvaluation.evaluation
+  targetThetaEvaluationEndpoint :
+    hodgeArakelovThetaEvaluationEndpointProp
+      sourceData.targetEvaluation
+  sourceFullLabelCalibrated :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+      sourceData.sourceCalibratedEvaluation.evaluation.fullLabelCompatibility
+      (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+        audited)
+  sourceLogVolume_eq_fullLabelCompatibility :
+    part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+        audited =
+      sourceData.sourceCalibratedEvaluation.evaluation.fullLabelCompatibility
+  canonicalOneDegree_preserved :
+    sourceData.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      sourceData.sourceCalibratedEvaluation.evaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  thetaMonoidDegree_eq :
+    sourceData.targetEvaluation.thetaMonoidDegree =
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaMonoidDegree
+
+theorem toCanonicalOneConstructorBuiltIPLLinkThetaEvaluationPairAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkThetaEvaluationPairAudit sourceData :=
+  { sourceThetaEvaluationEndpoint :=
+      sourceData.sourceCalibratedEvaluation.evaluation.thetaEvaluation_endpoint,
+    targetThetaEvaluationEndpoint :=
+      sourceData.targetEvaluation.thetaEvaluation_endpoint,
+    sourceFullLabelCalibrated :=
+      sourceData.sourceCalibratedEvaluation.fullLabel_calibrated,
+    sourceLogVolume_eq_fullLabelCompatibility :=
+      sourceData.sourceCalibratedEvaluation.sourceLogVolumeEq,
+    canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
+    thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq }
+
 noncomputable def toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -46423,6 +46500,8 @@ structure CanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit
       IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
         (β := β) part audited record X C holomorphicF holomorphicD product) :
     Prop where
+  thetaEvaluationPairAudit :
+    CanonicalOneConstructorBuiltIPLLinkThetaEvaluationPairAudit sourceData
   canonicalFullLabel :
     let hodgeSynchronization :=
       sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
@@ -46539,7 +46618,9 @@ theorem toCanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit
     sourceData.toCanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudit
   have hgaussian := hroute.2.2.2.2
   exact
-    { canonicalFullLabel := hgaussian.canonicalFullLabel,
+    { thetaEvaluationPairAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkThetaEvaluationPairAudit,
+      canonicalFullLabel := hgaussian.canonicalFullLabel,
       canonicalLabelDegree := hgaussian.canonicalLabelDegree,
       squareWeightFormula := hgaussian.squareWeightFormula,
       fullLabelPreserved := hgaussian.fullLabelPreserved,
