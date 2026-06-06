@@ -27773,6 +27773,76 @@ theorem targetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligat
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface no-`C_\Theta` raw-comparison endpoint for the
+theta-monoid-matched obligations-backed record-canonical exact corridor.
+
+This keeps the combined matched obligations audit, exact vertical-`IQ`
+calibration, finite Step (x) packet equalities, log-Kummer non-interference,
+and raw signed comparison visible before the numerical `C_Theta` estimate is
+introduced.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_boundaryEndpointWithThetaMonoidMatchedRecordCanonicalGaussianExactCorridorAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.MatchedObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
+      sourceData ∧
+      let targetCalibration :=
+        sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration;
+      targetCalibration.calibration_source =
+          IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+        sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.iplDatum =
+          package.preLedger.certificate.ipl ∧
+        sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.targetLogVolume =
+          sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+        package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+        sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+          sourceData.finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+        product.productLogVolume =
+          sourceData.finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+          sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+          true ∧
+        part.insulated_route.theta_source.thetaSourceAverage audited =
+          sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+        IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+          true ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+          part.insulated_route.theta_source.thetaSourceAverage audited :=
+  sourceData.rawComparisonWithMatchedObligationsGaussianExactCorridorAuditEndpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audited `C_Theta` boundary for the theta-monoid-matched
 obligations-backed record-canonical constructor finite exact vertical-`IQ`
 source.
