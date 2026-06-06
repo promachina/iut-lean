@@ -44630,6 +44630,61 @@ theorem toMatchedSideConditionedConstructorBackedObligationsCorridorAudit
 
 set_option linter.style.longLine false in
 /--
+Remaining-boundary ledger for the strongest side-conditioned matched
+constructor-backed exact corridor.
+
+This is the side-conditioned counterpart of the matched record-canonical
+remaining-boundary ledger: it keeps the constructed Hodge/SHE/\(\IPL\) audit,
+the named side-conditioned Step (xi) hull/determinant audit, and the projected
+constructor-backed remaining-boundary ledger together.  The ledger names the
+source-paper inputs still visible at this strongest corridor: the matched
+Hodge--Arakelov/\(\IPL\) source, the side-conditioned constructor-backed
+Step (xi) source, the upper-semi finite-divisor Step (x) source, and the exact
+vertical-`IQ` source.
+-/
+structure MatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  hodgeSHEIPLAudit :
+    MatchedSideConditionedHodgeSHEIPLAudit sourceData
+  sideConditionedStepXIAudit :
+    IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.SideConditionedConstructorBackedStepXIHullDetAudit
+      sourceData.sideConditionedConstructorBackedPossibleImageSource
+  matchedConstructorBackedGaussianExactAudit :
+    MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData
+  projectedMatchedConstructorBackedObligationsCorridorAudit :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsCorridorAudit
+      sourceData.toMatchedConstructorBackedExactSource
+  projectedAssembledConstructorBackedRemainingSourceBoundaryAudit :
+    IUTStage1TargetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.AssembledConstructorBackedRemainingSourceBoundaryAudit
+      (sourceData.toMatchedConstructorBackedExactSource
+        |>.toAssembledConstructorBackedExactSource)
+
+set_option linter.style.longLine false in
+theorem toMatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit sourceData :=
+  { hodgeSHEIPLAudit :=
+      sourceData.toMatchedSideConditionedHodgeSHEIPLAudit,
+    sideConditionedStepXIAudit :=
+      sourceData.sideConditionedConstructorBackedPossibleImageSource
+        |>.toSideConditionedConstructorBackedStepXIHullDetAudit,
+    matchedConstructorBackedGaussianExactAudit :=
+      sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
+    projectedMatchedConstructorBackedObligationsCorridorAudit :=
+      sourceData.toMatchedConstructorBackedExactSource
+        |>.toMatchedConstructorBackedObligationsCorridorAudit,
+    projectedAssembledConstructorBackedRemainingSourceBoundaryAudit :=
+      sourceData.toMatchedConstructorBackedExactSource
+        |>.toAssembledConstructorBackedExactSource
+        |>.toAssembledConstructorBackedRemainingSourceBoundaryAudit }
+
+set_option linter.style.longLine false in
+/--
 No-\(C_\Theta\) boundary audit for the side-conditioned matched
 constructor-backed exact source after projection to the obligations-backed
 record-canonical corridor.

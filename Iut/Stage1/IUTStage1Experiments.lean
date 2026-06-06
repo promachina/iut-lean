@@ -28083,6 +28083,47 @@ theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstr
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface remaining-boundary ledger for the side-conditioned matched
+constructor-backed exact source.
+
+This exposes, in one review target, the matched Hodge/SHE/\(\IPL\) audit, the
+side-conditioned Step (xi) hull/determinant audit, and the projected
+constructor-backed remaining-boundary ledger of still-public source-paper
+inputs.
+-/
+theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_matchedSideConditionedConstructorBackedRemainingBoundaryAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit
+      sourceData :=
+  sourceData.toMatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface no-\(C_\Theta\) boundary for the side-conditioned matched
 constructor-backed exact source after projection to the obligations-backed
 record-canonical corridor.
