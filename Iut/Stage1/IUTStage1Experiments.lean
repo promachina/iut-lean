@@ -25356,6 +25356,71 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_calibratedPossibleIma
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface all-in-one route whose Step (xi) field is the
+calibration-backed possible-image source.
+
+The endpoint consumes the stricter route source directly, then exposes the
+Gaussian-to-Step (xi) audit of its projected route together with the calibrated
+possible-image source facts used at the determinant/hull boundary.
+-/
+theorem targetChartedHodgeIPLCalibratedPossibleImageRoute_sourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLCalibratedPossibleImageRouteSource
+        (β := β) audited record X C) :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+        routeSource.toTargetChartedHodgeIPLDeterminantPossibleImageRouteSource ∧
+      routeSource.hodgeIPLSource.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      routeSource.hodgeIPLSource.toIPLLogVolumeTransport.targetLogVolume =
+        routeSource.hodgeIPLSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      routeSource.calibratedPossibleImageSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record routeSource.calibratedPossibleImageSource.qChoice ∧
+      package.preLedger.measure =
+        routeSource.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.hullData.toRegionMeasure ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (routeSource.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      package.preLedger.thetaSigned =
+        routeSource.calibratedPossibleImageSource.calibratedHodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        routeSource.calibratedPossibleImageSource.obligations.hullDetData.bridgeData ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  let hipl := routeSource.hodgeIPLSource.source_endpoint
+  let hcal := routeSource.calibratedPossibleImageSource.source_endpoint
+  ⟨routeSource.toGaussianToStepXIAudit,
+    hipl.2.2.1,
+    hipl.2.2.2.2.1,
+    hcal.1,
+    hcal.2.1,
+    hcal.2.2.1,
+    hcal.2.2.2.2.1,
+    hcal.2.2.2.2.2.2.2.1,
+    hcal.2.2.2.2.2.2.2.2.1,
+    hcal.2.2.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy from the all-in-one target-charted
 route and a bundled finite-divisor packet-local Step (x) source.
 -/
