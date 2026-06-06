@@ -9855,6 +9855,198 @@ end IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBa
 
 open IUTStage1Theorem311HullDetSourceConstructor in
 /--
+Possible-image Step (xi) holomorphic-hull/determinant source pinned to a
+Theorem 3.11 hull/determinant constructor.
+
+This refines
+`IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource`:
+the public source still records the determinant payload and the selected
+Theorem 3.11 possible image, but it also carries the source constructor whose
+`hullDetData` is identified with the ambient obligations object.  The bridge
+equality used by downstream routes is then projected through this constructor
+boundary.
+-/
+structure IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    {β : Type v} [Fintype β] where
+  operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId
+  hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId
+  determinantOperation :
+    RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId
+  hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target)
+  qChoice : index
+  determinantSource :
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β
+  compatibility :
+    IUTStage1HullApproximantWeightedDeterminantCompatibility
+      (IUTStage1HullLogVolumeApproximant.canonical
+        hullData (recordThetaPossibleImageUnion record))
+      determinantSource
+  measure_eq_hullLogVolume :
+    package.preLedger.measure = hullData.toRegionMeasure
+  tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        determinantSource).normalizedLogVolume <=
+      package.preLedger.thetaSigned
+  constructor : IUTStage1Theorem311HullDetSourceConstructor record
+  obligations : IUTStage1SourceHullDetObligations package
+  constructor_hullDetData_eq_obligations :
+    constructor.hullDetData = obligations.hullDetData
+  constructorHullDetData_eq_recordCanonical :
+    constructor.hullDetData.bridgeData =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        operation hullOperation determinantOperation hullData
+        (recordThetaPossibleImage record qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) qChoice (recordThetaPossibleImage record qChoice)
+          (fun _ hx => hx))
+        determinantSource compatibility measure_eq_hullLogVolume
+        tensorPower_bound
+
+namespace IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+def qPilotRegion
+    (sourceData :
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    Set (Point target) :=
+  recordThetaPossibleImage record sourceData.qChoice
+
+theorem qPilotRegion_eq_possibleImage
+    (sourceData :
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    sourceData.qPilotRegion =
+      recordThetaPossibleImage record sourceData.qChoice :=
+  rfl
+
+theorem q_subset_recordUnion
+    (sourceData :
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    sourceData.qPilotRegion ⊆
+      recordThetaPossibleImageUnion record :=
+  qPilotRegion_subset_recordUnion_of_choice
+    (record := record)
+    sourceData.qChoice sourceData.qPilotRegion (fun _ hx => hx)
+
+theorem obligationsHullDetData_eq_recordCanonical
+    (sourceData :
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    sourceData.obligations.hullDetData.bridgeData =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.hullData
+        (recordThetaPossibleImage record sourceData.qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (fun _ hx => hx))
+        sourceData.determinantSource sourceData.compatibility
+        sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound := by
+  rw [← sourceData.constructor_hullDetData_eq_obligations]
+  exact sourceData.constructorHullDetData_eq_recordCanonical
+
+theorem hullDetBridge_eq_constructor
+    (sourceData :
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.constructor.hullDetData.bridgeData := by
+  exact
+    sourceData.obligations.hullDetData.hullDetBridge_eq_bridgeData.trans
+      (congrArg (fun data : IUTStage1SourceHullDetData package => data.bridgeData)
+        sourceData.constructor_hullDetData_eq_obligations.symm)
+
+noncomputable def toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+    (sourceData :
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    IUTStage1PossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+      (β := β) record :=
+  { operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    hullData := sourceData.hullData,
+    qChoice := sourceData.qChoice,
+    determinantSource := sourceData.determinantSource,
+    compatibility := sourceData.compatibility,
+    measure_eq_hullLogVolume := sourceData.measure_eq_hullLogVolume,
+    tensorPower_bound := sourceData.tensorPower_bound,
+    obligations := sourceData.obligations,
+    obligationsHullDetData_eq_recordCanonical :=
+      sourceData.obligationsHullDetData_eq_recordCanonical }
+
+theorem qSigned_le_thetaSigned
+    (sourceData :
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+    |>.qSigned_le_thetaSigned
+
+set_option linter.style.longLine false in
+def SourceEndpoint
+    (sourceData :
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) : Prop :=
+    sourceData.qPilotRegion =
+        recordThetaPossibleImage record sourceData.qChoice ∧
+      sourceData.qPilotRegion ⊆
+        recordThetaPossibleImageUnion record ∧
+      sourceData.constructor.hullDetData = sourceData.obligations.hullDetData ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.constructor.hullDetData.bridgeData ∧
+      sourceData.constructor.hullDetData.bridgeData =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          sourceData.operation sourceData.hullOperation
+          sourceData.determinantOperation sourceData.hullData
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) sourceData.qChoice
+            (recordThetaPossibleImage record sourceData.qChoice)
+            (fun _ hx => hx))
+          sourceData.determinantSource sourceData.compatibility
+          sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+theorem source_endpoint
+    (sourceData :
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+        (β := β) record) :
+    SourceEndpoint sourceData :=
+  ⟨sourceData.qPilotRegion_eq_possibleImage,
+    sourceData.q_subset_recordUnion,
+    sourceData.constructor_hullDetData_eq_obligations,
+    sourceData.hullDetBridge_eq_constructor,
+    sourceData.constructorHullDetData_eq_recordCanonical,
+    sourceData.tensorPower_bound,
+    sourceData.constructor.q_pilot_positive,
+    sourceData.constructor.normalization,
+    sourceData.qSigned_le_thetaSigned⟩
+
+end IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+
+open IUTStage1Theorem311HullDetSourceConstructor in
+/--
 Choice-linked Step (xi) holomorphic-hull/determinant source.
 
 This is a refinement of `IUTStage1HolomorphicHullDeterminantSource` for the

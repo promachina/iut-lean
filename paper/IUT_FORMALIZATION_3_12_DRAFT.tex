@@ -3680,6 +3680,19 @@ vertical-\(IQ\) corridor line up more closely with the Step (xi) passage of
 \IUT{} III, Remark~3.9.5 and Corollary~3.12, where possible images pass through
 holomorphic hulls, determinant/tensor-power data, and log-volume comparison
 before the final numerical estimate is invoked.
+The possible-image Step (xi) source has also gained a constructor-pinned form.
+This new source still stores the selected Theorem~3.11 possible image and the
+weighted determinant payload, but it additionally carries the Theorem~3.11
+hull/determinant constructor whose hull data is identified with the ambient
+source obligations.  Its endpoint exposes the constructor/obligation
+identification, the constructor bridge equality, q-positivity, normalization,
+the tensor-power bound, and the raw \(q_{\mathrm{signed}}\le
+\theta_{\mathrm{signed}}\) comparison together.  The experiment surface now has
+theta-monoid-matched raw and \(C_\Theta\) finite-divisor variants with the
+\texttt{ConstructorPinnedThetaMonoidMatchedRouteAudit} suffix.  These variants
+project internally to the older obligations-backed possible-image source, but
+the public Step (xi) input is now pinned to a source constructor rather than
+only to a bridge-equality field.
 
 The practical priority order is:
 \begin{enumerate}
