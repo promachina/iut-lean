@@ -51229,6 +51229,29 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCo
   sourceData.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLConstructionFiniteDivisorVerticalIQ_withMilestoneAudit
     cTheta thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Compact constructed-\(\IPL\) direct milestone audit for the source-derived
+finite-divisor vertical-\(IQ\) corridor.
+
+This is the compact milestone-facing alias for the no-broad-middle-route
+canonical-one constructor-built route: direct Hodge/\(\SHE\)/\(\IPL\), direct
+q-comparison, direct finite boundary, and direct \(C_\Theta\) audits are kept
+as the load-bearing payload.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ_withDirectMilestoneAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLConstructionDirectMilestoneCThetaAudit
+      sourceData cTheta :=
+  sourceData.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCanonicalOneConstructorBuiltIPLConstructionFiniteDivisorVerticalIQ_withDirectMilestoneAudit
+    cTheta thetaSigned_le_cTheta_absLogQ
+
 end
   IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
 
