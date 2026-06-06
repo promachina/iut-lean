@@ -36265,6 +36265,73 @@ theorem toObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
       exactCorridorAudit :=
         sourceData.toObligationsRecordCanonicalConstructorExactCorridorAudit }
 
+set_option linter.style.longLine false in
+/--
+No-`C_\Theta` raw-comparison endpoint for the obligations-backed
+record-canonical exact corridor.
+
+This is the strongest current review boundary before the external numeric
+`C_\Theta` estimate is supplied.  It returns the combined Hodge/SHE/IPL,
+Step (xi) hull/determinant, Gaussian route, and exact vertical-`IQ` audit, then
+keeps the finite-divisor Step (x) equalities, vertical-`IQ` target equalities,
+q-pilot log-Kummer non-interference, and raw `qSigned <= thetaSigned`
+comparison visible as projections from the bundled source.
+-/
+theorem rawComparisonWithGaussianExactCorridorAuditEndpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    ObligationsRecordCanonicalConstructorGaussianExactCorridorAudit sourceData ∧
+      let targetCalibration :=
+        sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration;
+      targetCalibration.calibration_source =
+          IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+        sourceData.hodgeIPLSource.toIPLLogVolumeTransport.iplDatum =
+          packageN.preLedger.certificate.ipl ∧
+        sourceData.hodgeIPLSource.toIPLLogVolumeTransport.targetLogVolume =
+          sourceData.hodgeIPLSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+        packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+        sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+          sourceData.finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+        product.productLogVolume =
+          sourceData.finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+          sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+          true ∧
+        part.insulated_route.theta_source.thetaSourceAverage audited =
+          sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+        IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+          true ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+          part.insulated_route.theta_source.thetaSourceAverage audited := by
+  have haudit :=
+    sourceData.toObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
+  have hfinite := sourceData.finiteSource.source_endpoint
+  have htarget := sourceData.exactSource.targetSource.verticalIQTarget_endpoint
+  exact
+    ⟨haudit,
+      sourceData.exactSource.targetCalibration_source_eq_verticalIQ,
+      haudit.exactCorridorAudit.iplDatum_eq_certificate,
+      haudit.exactCorridorAudit.iplLogVolume_preserved,
+      haudit.stepXIHullDetAudit.qSigned_le_thetaSigned,
+      hfinite.1,
+      hfinite.2.1,
+      hfinite.2.2.1,
+      hfinite.2.2.2.1,
+      hfinite.2.2.2.2,
+      sourceData.exactSource.hasPreciseFrobenioidIsomorphisms,
+      htarget.2.2.2.2.1,
+      htarget.2.2.2.2.2,
+      sourceData.exactSource.realifiedSource.toPacketCorrespondence.qPilotLogKummerNonInterference,
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩
+
 end IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
 
 set_option linter.style.longLine false in
