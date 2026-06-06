@@ -39896,6 +39896,37 @@ theorem remark395Ob3Ob5DeterminantCompatibilitySource_boundedFamilyEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface source-core Ob3/Ob5 construction from adjusted determinant
+summands.
+
+The input equality is now the finite Ob3-3 summand formula
+`mu_log(phi(P_B)) = sum adjustedSummands`; Lean derives the normalized
+determinant compatibility used by the Step (xi) bridge.
+-/
+theorem remark395Ob3Ob5AdjustedDeterminantLogVolumeSource_endpoint
+    {α : Type u} {ι : Type v} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      sourceData.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        sourceData.toOb3Ob5DeterminantCompatibilitySource.determinantSource.normalizedLogVolume ∧
+      sourceData.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        sourceData.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  sourceData.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
@@ -40059,6 +40090,43 @@ theorem remark395RecordOb3Ob5DeterminantCompatibilitySource_ofAdjustedDeterminan
   IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource.ofAdjustedDeterminantSource_endpoint
     (record := record)
     hullOperator ob3ob4Source familyHullLogVolume_eq_normalized
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface record-canonical Ob3/Ob5 construction from adjusted
+determinant summands.
+
+This fixes the source-core summand construction to the Theorem 3.11
+possible-image family and derives the record Ob3/Ob5 compatibility source.
+-/
+theorem remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record)) =
+        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.determinantSource.normalizedLogVolume ∧
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record)) =
+        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  sourceData.endpoint
 
 set_option linter.style.longLine false in
 /--

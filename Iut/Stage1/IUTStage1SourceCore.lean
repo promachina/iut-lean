@@ -5254,6 +5254,170 @@ theorem ofAdjustedDeterminantSource_endpoint
           simpa [source, ofAdjustedDeterminantSource] using
             source.familyHullLogVolume_eq_determinant⟩
 
+/--
+Source-facing Ob3/Ob5 log-volume construction from Ob3/Ob4 adjusted summands.
+
+Remark 3.9.5(vii), (Ob3-1)--(Ob3-3), identifies the log-volume of the
+holomorphic hull with the finite weighted sum of the structure-sheaf-adjusted
+localization contributions.  This source object records that summand equality;
+Lean then derives the normalized determinant equality required by the existing
+Ob3/Ob5 compatibility source.
+-/
+structure IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+    (α : Type u) (ι : Type v) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullOperator : IUTStage1Remark395HolomorphicHullOperator α
+  possibleRegion : ι -> Set α
+  ob3ob4Source :
+    IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ
+  familyHullLogVolume_eq_adjustedSum :
+    hullOperator.logVolume
+        (hullOperator.phi (⋃ i, possibleRegion i)) =
+      Finset.univ.sum fun index =>
+        ob3ob4Source.weightedAdjustedLogVolume index
+
+namespace IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+
+variable {α : Type u} {ι : Type v} {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def familyUnion
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    Set α :=
+  ⋃ i, sourceData.possibleRegion i
+
+def familyHull
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    Set α :=
+  sourceData.hullOperator.phi sourceData.familyUnion
+
+def familyHullLogVolume
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    Real :=
+  sourceData.hullOperator.logVolume sourceData.familyHull
+
+def adjustedSummandLogVolume
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    sourceData.ob3ob4Source.weightedAdjustedLogVolume index
+
+theorem familyHullLogVolume_eq_adjustedSummandLogVolume
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    sourceData.familyHullLogVolume =
+      sourceData.adjustedSummandLogVolume := by
+  simpa [familyHullLogVolume, familyHull, familyUnion,
+    adjustedSummandLogVolume] using
+    sourceData.familyHullLogVolume_eq_adjustedSum
+
+theorem adjustedSummandLogVolume_eq_determinantLogVolume
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    sourceData.adjustedSummandLogVolume =
+      sourceData.ob3ob4Source.determinantLogVolume := by
+  simpa [adjustedSummandLogVolume] using
+    sourceData.ob3ob4Source.determinantLogVolume_eq_sum_weightedAdjusted.symm
+
+theorem familyHullLogVolume_eq_determinantLogVolume
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    sourceData.familyHullLogVolume =
+      sourceData.ob3ob4Source.determinantLogVolume :=
+  sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume.trans
+    sourceData.adjustedSummandLogVolume_eq_determinantLogVolume
+
+theorem familyHullLogVolume_eq_normalizedDeterminantLogVolume
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    sourceData.familyHullLogVolume =
+      sourceData.ob3ob4Source.normalizedDeterminantLogVolume := by
+  rw [sourceData.familyHullLogVolume_eq_determinantLogVolume,
+    sourceData.ob3ob4Source.normalizedDeterminantLogVolume_eq_determinant]
+
+noncomputable def toOb3Ob5DeterminantCompatibilitySource
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+      α ι β :=
+  IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.ofAdjustedDeterminantSource
+    sourceData.hullOperator sourceData.possibleRegion sourceData.ob3ob4Source
+    sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume
+
+set_option linter.style.longLine false in
+theorem toOb3Ob5DeterminantCompatibilitySource_endpoint
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    let compatibilitySource :=
+      sourceData.toOb3Ob5DeterminantCompatibilitySource;
+    compatibilitySource.determinantSource =
+        sourceData.ob3ob4Source.toWeightedDeterminantSource ∧
+      sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      compatibilitySource.hullOperator.logVolume
+          compatibilitySource.familyHull =
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      compatibilitySource.hullOperator.logVolume
+          compatibilitySource.familyHull =
+        compatibilitySource.determinantSource.determinantLogVolume :=
+  by
+    intro compatibilitySource
+    exact
+      ⟨rfl,
+        sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume,
+        sourceData.adjustedSummandLogVolume_eq_determinantLogVolume,
+        sourceData.familyHullLogVolume_eq_determinantLogVolume,
+        sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+        compatibilitySource.familyHullLogVolume_eq_normalized,
+        compatibilitySource.familyHullLogVolume_eq_determinant⟩
+
+theorem endpoint
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ) :
+    sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      sourceData.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        sourceData.toOb3Ob5DeterminantCompatibilitySource.determinantSource.normalizedLogVolume ∧
+      sourceData.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        sourceData.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  ⟨sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume,
+    sourceData.adjustedSummandLogVolume_eq_determinantLogVolume,
+    sourceData.familyHullLogVolume_eq_determinantLogVolume,
+    sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+    sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_normalized,
+    sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_determinant⟩
+
+end IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+
 end IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
 
 /--

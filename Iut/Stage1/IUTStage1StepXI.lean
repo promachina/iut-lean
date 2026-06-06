@@ -13753,6 +13753,204 @@ end IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
 /--
+Record-canonical Ob3/Ob5 log-volume construction from adjusted determinant
+summands.
+
+This fixes the source-core construction to the Theorem 3.11 possible-image
+family.  The remaining input is the Ob3-3 style equality between the
+holomorphic-hull log-volume of the record family and the finite sum of
+Ob3/Ob4 adjusted localization summands; the normalized determinant equality
+is then derived from the Ob3/Ob4 determinant source.
+-/
+structure IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ] where
+  hullOperator :
+    IUTStage1Remark395HolomorphicHullOperator (Point target)
+  ob3ob4Source :
+    IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ
+  familyHullLogVolume_eq_adjustedSum :
+    hullOperator.logVolume
+        (hullOperator.phi (recordThetaPossibleImageUnion record)) =
+      Finset.univ.sum fun index =>
+        ob3ob4Source.weightedAdjustedLogVolume index
+
+namespace IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+variable {γ : Type w} [Fintype γ]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+def adjustedSummandLogVolume
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    Real :=
+  Finset.univ.sum fun index =>
+    sourceData.ob3ob4Source.weightedAdjustedLogVolume index
+
+def familyHullLogVolume
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    Real :=
+  sourceData.hullOperator.logVolume
+    (sourceData.hullOperator.phi (recordThetaPossibleImageUnion record))
+
+set_option linter.style.longLine false in
+def toSourceCoreAdjustedLogVolumeSource
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+      (Point target) index β γ :=
+  { hullOperator := sourceData.hullOperator,
+    possibleRegion := recordThetaPossibleImage record,
+    ob3ob4Source := sourceData.ob3ob4Source,
+    familyHullLogVolume_eq_adjustedSum := by
+      simpa [recordThetaPossibleImageUnion] using
+        sourceData.familyHullLogVolume_eq_adjustedSum }
+
+theorem familyHullLogVolume_eq_adjustedSummandLogVolume
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    sourceData.familyHullLogVolume =
+      sourceData.adjustedSummandLogVolume := by
+  simpa [familyHullLogVolume, adjustedSummandLogVolume] using
+    sourceData.familyHullLogVolume_eq_adjustedSum
+
+theorem adjustedSummandLogVolume_eq_determinantLogVolume
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    sourceData.adjustedSummandLogVolume =
+      sourceData.ob3ob4Source.determinantLogVolume := by
+  simpa [adjustedSummandLogVolume] using
+    sourceData.ob3ob4Source.determinantLogVolume_eq_sum_weightedAdjusted.symm
+
+theorem familyHullLogVolume_eq_determinantLogVolume
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    sourceData.familyHullLogVolume =
+      sourceData.ob3ob4Source.determinantLogVolume :=
+  sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume.trans
+    sourceData.adjustedSummandLogVolume_eq_determinantLogVolume
+
+theorem familyHullLogVolume_eq_normalizedDeterminantLogVolume
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    sourceData.familyHullLogVolume =
+      sourceData.ob3ob4Source.normalizedDeterminantLogVolume := by
+  rw [sourceData.familyHullLogVolume_eq_determinantLogVolume,
+    sourceData.ob3ob4Source.normalizedDeterminantLogVolume_eq_determinant]
+
+noncomputable def toRecordOb3Ob5DeterminantCompatibilitySource
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
+      (β := β) record :=
+  IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource.ofAdjustedDeterminantSource
+    (record := record)
+    sourceData.hullOperator sourceData.ob3ob4Source
+    sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume
+
+set_option linter.style.longLine false in
+theorem toRecordOb3Ob5DeterminantCompatibilitySource_endpoint
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    let compatibilitySource :=
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource;
+    compatibilitySource.determinantSource =
+        sourceData.ob3ob4Source.toWeightedDeterminantSource ∧
+      sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) =
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) =
+        compatibilitySource.determinantSource.determinantLogVolume ∧
+      (let familyHullSource :=
+        compatibilitySource.toRecordBoundedFamilyHullDetLogVolumeSource;
+      familyHullSource.familyUnion = recordThetaPossibleImageUnion record ∧
+        familyHullSource.familyHull =
+          compatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record) ∧
+        familyHullSource.familyHullLogVolume =
+          sourceData.ob3ob4Source.determinantLogVolume ∧
+        familyHullSource.tensorPower.normalizedLogVolume =
+          familyHullSource.familyHullLogVolume) :=
+  by
+    intro compatibilitySource
+    have hbounded :=
+      compatibilitySource.toRecordBoundedFamilyHullDetLogVolumeSource_endpoint
+    exact
+      ⟨rfl,
+        sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume,
+        sourceData.adjustedSummandLogVolume_eq_determinantLogVolume,
+        sourceData.familyHullLogVolume_eq_determinantLogVolume,
+        sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+        compatibilitySource.endpoint.1,
+        compatibilitySource.endpoint.2,
+        ⟨hbounded.1,
+          hbounded.2.1,
+          by
+            simpa [compatibilitySource, toRecordOb3Ob5DeterminantCompatibilitySource]
+              using hbounded.2.2.2.1,
+          hbounded.2.2.2.2⟩⟩
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record) :
+    sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) =
+        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.determinantSource.normalizedLogVolume ∧
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) =
+        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  ⟨sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume,
+    sourceData.adjustedSummandLogVolume_eq_determinantLogVolume,
+    sourceData.familyHullLogVolume_eq_determinantLogVolume,
+    sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.endpoint.1,
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.endpoint.2⟩
+
+end IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+
+open IUTStage1Theorem311HullDetSourceConstructor in
+/--
 Choice-linked exact-theta Step (xi) source whose theta value is backed by the
 record-native possible-image family hull.
 

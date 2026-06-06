@@ -2495,6 +2495,36 @@ the bounded-family Ob5 hull source.  The experiment surface exposes this as
 \quad\texttt{\_ofAdjustedDeterminantSource\_endpoint}.
 \end{array}
 \]
+The remaining equality has now been pushed one level closer to Remark~3.9.5,
+(vii), (Ob3-1)--(Ob3-3).  The new source-core object
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource}\\
+\quad\texttt{.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource}
+\end{array}
+\]
+does not assume equality with the normalized determinant directly.  Instead it
+records the finite Ob3-3 summand formula
+\[
+  \mu_{\log}(\phi(P_B))
+    =
+  \sum_{\beta} \operatorname{adj}_{\beta},
+\]
+where the summands are the Ob3/Ob4 structure-sheaf-adjusted localization
+contributions.  Lean then derives equality with the determinant log-volume and
+with the normalized determinant log-volume from the adjusted determinant source.
+The record-canonical specialization fixes \(P_B\) to the Theorem~3.11
+possible-image family and exposes
+\[
+\begin{array}{l}
+\texttt{remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{\_endpoint}.
+\end{array}
+\]
+Thus the current open analytic/log-volume input is no longer
+\(\mu_{\log}(\phi(P_B))=\det_{\mathrm{norm}}\) as a monolithic assertion, but
+the more source-facing finite summand identity
+\(\mu_{\log}(\phi(P_B))=\sum_{\beta}\operatorname{adj}_{\beta}\).
 The actual log-volume bridge has now been separated as a named source object:
 \[
 \begin{array}{l}
