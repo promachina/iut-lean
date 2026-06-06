@@ -3751,6 +3751,22 @@ surface exposes this review target through three suffixes:
 \texttt{MatchedObligationsConstructorBuiltCThetaAudit}.
 \end{array}
 \]
+The same obligations-backed record-canonical corridor is now also reachable
+from the earlier constructor-backed matched exact source.  This projection sets
+the corridor's constructor-obligations object to
+\texttt{toHullDetSourceConstructor.toHullDetObligations}; consequently the
+obligations bridge equality with the record-canonical hull/tensor-power bridge
+is definitional at this boundary.  The new review target therefore starts from
+constructor-backed Step (xi) data, projects to the obligations-backed
+record-canonical corridor, and only then uses the constructor-built
+finite-divisor route.  The experiment surface exposes this as:
+\[
+\begin{array}{l}
+\texttt{MatchedConstructorBackedObligationsCorridorAudit},\\
+\texttt{MatchedConstructorBackedObligationsBoundaryAudit},\\
+\texttt{MatchedConstructorBackedObligationsCThetaAudit}.
+\end{array}
+\]
 
 The practical priority order is:
 \begin{enumerate}
