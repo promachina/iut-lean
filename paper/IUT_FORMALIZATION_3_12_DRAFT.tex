@@ -4055,10 +4055,16 @@ surface exposes this review target through three suffixes:
 \[
 \begin{array}{l}
 \texttt{MatchedObligationsConstructorBuiltFullRouteAudit},\\
+\texttt{MatchedObligationsConstructorBuiltRemainingPayloadRouteAudit},\\
 \texttt{MatchedObligationsConstructorBuiltBoundaryAudit},\\
 \texttt{MatchedObligationsConstructorBuiltCThetaAudit}.
 \end{array}
 \]
+The remaining-payload variant keeps the obligations-to-record-canonical
+Step (xi) bridge together with the constructor-built Step (xi) payload ledger,
+so this intermediate corridor now reports the same unresolved
+hull/determinant source-paper payload that was previously visible only on the
+lower constructor-built route.
 The same obligations-backed record-canonical corridor is now also reachable
 from the earlier constructor-backed matched exact source.  This projection sets
 the corridor's constructor-obligations object to
@@ -4071,10 +4077,15 @@ finite-divisor route.  The experiment surface exposes this as:
 \[
 \begin{array}{l}
 \texttt{MatchedConstructorBackedObligationsCorridorAudit},\\
+\texttt{MatchedConstructorBackedObligationsRemainingPayloadCorridorAudit},\\
 \texttt{MatchedConstructorBackedObligationsBoundaryAudit},\\
 \texttt{MatchedConstructorBackedObligationsCThetaAudit}.
 \end{array}
 \]
+The remaining-payload corridor threads the same constructor-built payload
+ledger through this projection, so the constructor-backed exact source no
+longer hides the unresolved Step (xi) hull operation, determinant source,
+bridge, positivity, and normalization payload behind the full-route audit.
 There is now a side-conditioned variant of this matched constructor-backed
 exact source as well.  Its Step (xi) field is a
 \texttt{SideConditionedConstructorBacked} source, so q-pilot positivity and
@@ -4093,6 +4104,7 @@ surface exposes this boundary as:
 \begin{array}{l}
 \texttt{MatchedSideConditionedHodgeSHEIPLAudit},\\
 \texttt{MatchedSideConditionedConstructorBackedObligationsCorridorAudit},\\
+\texttt{MatchedSideConditionedConstructorBackedObligationsRemainingPayloadCorridorAudit},\\
 \texttt{MatchedSideConditionedConstructorBackedObligationsBoundaryAudit},\\
 \texttt{MatchedSideConditionedConstructorBackedObligationsCThetaAudit}.
 \end{array}
@@ -4136,6 +4148,10 @@ This ledger is the strongest current review target for what is still public at
 the source-paper boundary: the matched Hodge--Arakelov/\(\IPL\) source, the
 side-conditioned constructor-backed Step (xi) source, the upper-semi
 finite-divisor Step (x) source, and the exact vertical-\(IQ\) source.
+It now also carries the projected constructor-backed remaining-payload
+corridor audit, so the route-level remaining-source ledger explicitly includes
+the constructor-built Step (xi) payload audit rather than only the older full
+obligations corridor and assembled remaining-boundary ledger.
 The matched side-conditioned Hodge/\(\SHE/\IPL\) audit now also carries the
 choice-wise input-prime-strip links directly.  The experiment endpoint with
 suffix \texttt{matchedSideConditionedConstructedIPLChoiceLinkEndpoint} exposes
@@ -4205,7 +4221,9 @@ The practical priority order is:
   canonical-one constructed-\(\IPL\) route now carries a direct
   Gaussian-to-Step (xi) audit through the constructor-built hull projection, so
   the named constructor-built Step (xi) boundary audit, and now its
-  route-carried remaining-payload audit, should be treated as the
+  route-carried remaining-payload audit, now threaded through the
+  obligations-backed, constructor-backed, and side-conditioned corridors,
+  should be treated as the
   current ledgers of remaining source-paper obligations; the charted
   Hodge-calibrated family-hull source now constructs this constructor-built
   boundary from a stronger source object, and the synchronized target-charted

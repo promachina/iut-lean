@@ -44666,6 +44666,34 @@ theorem toMatchedObligationsConstructorBuiltFiniteDivisorRouteAudit
 
 set_option linter.style.longLine false in
 /--
+Remaining-payload audit for the constructor-built finite-divisor route after
+projection from the matched obligations-backed record-canonical exact corridor.
+
+This keeps the obligations-to-record-canonical Step (xi) bridge provenance
+visible next to the newer constructor-built remaining-payload route audit.
+-/
+def MatchedObligationsConstructorBuiltRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorStepXIHullDetAudit
+      sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource ∧
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltMatchedRemainingPayloadRouteAudit
+      sourceData.toThetaMonoidMatchedConstructorBuiltFiniteDivisorVerticalIQSource
+
+theorem toMatchedObligationsConstructorBuiltRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedObligationsConstructorBuiltRemainingPayloadRouteAudit sourceData :=
+  ⟨sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+      |>.toObligationsRecordCanonicalConstructorStepXIHullDetAudit,
+    sourceData.toThetaMonoidMatchedConstructorBuiltFiniteDivisorVerticalIQSource
+      |>.toConstructorBuiltMatchedRemainingPayloadRouteAudit⟩
+
+set_option linter.style.longLine false in
+/--
 No-\(C_\Theta\) boundary audit for the constructor-built finite-divisor route
 when the route is projected from the matched obligations record-canonical
 exact corridor.
@@ -44811,6 +44839,33 @@ theorem toMatchedConstructorBackedObligationsCorridorAudit
       |>.toMatchedObligationsRecordCanonicalConstructorGaussianExactCorridorAudit,
     sourceData.toMatchedObligationsRecordCanonicalConstructorExactSource
       |>.toMatchedObligationsConstructorBuiltFiniteDivisorRouteAudit⟩
+
+set_option linter.style.longLine false in
+/--
+Remaining-payload corridor audit after projecting a constructor-backed exact
+source to the obligations-backed record-canonical corridor.
+
+The first component keeps the assembled constructor-backed Gaussian/exact
+source audit, while the second component exposes the remaining Step (xi)
+payload audit through the constructor-built finite-divisor projection.
+-/
+def MatchedConstructorBackedObligationsRemainingPayloadCorridorAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  MatchedAssembledConstructorBackedGaussianExactAudit sourceData ∧
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.MatchedObligationsConstructorBuiltRemainingPayloadRouteAudit
+      sourceData.toMatchedObligationsRecordCanonicalConstructorExactSource
+
+theorem toMatchedConstructorBackedObligationsRemainingPayloadCorridorAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedConstructorBackedObligationsRemainingPayloadCorridorAudit sourceData :=
+  ⟨sourceData.toMatchedAssembledConstructorBackedGaussianExactAudit,
+    sourceData.toMatchedObligationsRecordCanonicalConstructorExactSource
+      |>.toMatchedObligationsConstructorBuiltRemainingPayloadRouteAudit⟩
 
 set_option linter.style.longLine false in
 /--
@@ -45173,6 +45228,9 @@ structure MatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit
   projectedMatchedConstructorBackedObligationsCorridorAudit :
     IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsCorridorAudit
       sourceData.toMatchedConstructorBackedExactSource
+  projectedMatchedConstructorBackedObligationsRemainingPayloadCorridorAudit :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsRemainingPayloadCorridorAudit
+      sourceData.toMatchedConstructorBackedExactSource
   projectedAssembledConstructorBackedRemainingSourceBoundaryAudit :
     IUTStage1TargetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.AssembledConstructorBackedRemainingSourceBoundaryAudit
       (sourceData.toMatchedConstructorBackedExactSource
@@ -45196,6 +45254,9 @@ theorem toMatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit
     projectedMatchedConstructorBackedObligationsCorridorAudit :=
       sourceData.toMatchedConstructorBackedExactSource
         |>.toMatchedConstructorBackedObligationsCorridorAudit,
+    projectedMatchedConstructorBackedObligationsRemainingPayloadCorridorAudit :=
+      sourceData.toMatchedConstructorBackedExactSource
+        |>.toMatchedConstructorBackedObligationsRemainingPayloadCorridorAudit,
     projectedAssembledConstructorBackedRemainingSourceBoundaryAudit :=
       sourceData.toMatchedConstructorBackedExactSource
         |>.toAssembledConstructorBackedExactSource

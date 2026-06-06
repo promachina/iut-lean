@@ -28221,6 +28221,43 @@ theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeas
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface remaining-payload audit after projecting the matched
+constructor-backed exact source to the obligations-backed record-canonical
+corridor and then to the constructor-built finite-divisor route.
+-/
+theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_matchedConstructorBackedObligationsRemainingPayloadCorridorAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsRemainingPayloadCorridorAudit
+      sourceData :=
+  sourceData.toMatchedConstructorBackedObligationsRemainingPayloadCorridorAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface no-\(C_\Theta\) constructor-built boundary after projecting
 the matched constructor-backed exact source to the obligations-backed
 record-canonical corridor.
@@ -28474,13 +28511,51 @@ theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstr
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface remaining-payload corridor audit for the side-conditioned
+matched constructor-backed exact source after projection through the
+constructor-backed obligations corridor.
+-/
+theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_matchedSideConditionedConstructorBackedObligationsRemainingPayloadCorridorAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedConstructorBackedObligationsRemainingPayloadCorridorAudit
+      sourceData.toMatchedConstructorBackedExactSource :=
+  sourceData.toMatchedConstructorBackedExactSource
+    |>.toMatchedConstructorBackedObligationsRemainingPayloadCorridorAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface remaining-boundary ledger for the side-conditioned matched
 constructor-backed exact source.
 
 This exposes, in one review target, the matched Hodge/SHE/\(\IPL\) audit, the
 side-conditioned Step (xi) hull/determinant audit, and the projected
-constructor-backed remaining-boundary ledger of still-public source-paper
-inputs.
+constructor-backed remaining-payload and remaining-boundary ledgers of
+still-public source-paper inputs.
 -/
 theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_matchedSideConditionedConstructorBackedRemainingBoundaryAudit
     {source target : Copy} {coric : Type u}
@@ -37810,6 +37885,46 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_matchedObligat
     IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.MatchedObligationsConstructorBuiltFiniteDivisorRouteAudit
       sourceData :=
   sourceData.toMatchedObligationsConstructorBuiltFiniteDivisorRouteAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface remaining-payload audit sourced from the matched
+obligations-backed record-canonical exact corridor.
+
+This endpoint exposes the obligations-to-record-canonical Step (xi) bridge
+next to the constructor-built remaining-payload route audit before the route is
+used by constructor-backed or side-conditioned wrappers.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_matchedObligationsConstructorBuiltRemainingPayloadRouteAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.MatchedObligationsConstructorBuiltRemainingPayloadRouteAudit
+      sourceData :=
+  sourceData.toMatchedObligationsConstructorBuiltRemainingPayloadRouteAudit
 
 set_option linter.style.longLine false in
 /--
