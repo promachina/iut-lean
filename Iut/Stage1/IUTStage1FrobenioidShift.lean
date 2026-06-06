@@ -48353,6 +48353,57 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
 
 set_option linter.style.longLine false in
 /--
+Source side-condition payload inside the canonical-one constructed-\(\IPL\)
+Step (xi) hull source.
+
+After the Ob1--Ob5 hull/determinant audits, the remaining non-boundary
+payload is the q-pilot positivity and source normalization required by the
+Stage 1 ledger.  This audit repackages those two facts through the existing
+`IUTStage1SourceSideConditions` interface before the raw signed comparison is
+passed to the finite Step (x) boundary.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  ob5CompatibilityAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
+      sourceData
+  remainingPayloadAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource
+  sourceSideConditions :
+    IUTStage1SourceSideConditions packageN
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  source_normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit
+      sourceData := by
+  have hremaining := sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit
+  let hside : IUTStage1SourceSideConditions packageN :=
+    { q_pilot_positive := hremaining.q_pilot_positive,
+      source_normalization := hremaining.normalization }
+  exact
+    { ob5CompatibilityAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
+      remainingPayloadAudit := hremaining,
+      sourceSideConditions := hside,
+      q_pilot_positive := hside.qPilotPositive,
+      source_normalization := hside.sourceNormalization,
+      qSigned_le_thetaSigned :=
+        hremaining.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Step (x) finite packet and vertical-\(IQ\) target audit projected from the
 canonical-one constructed-\(\IPL\) source object.
 
@@ -48531,6 +48582,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
   ob5CompatibilityAudit :
     CanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
       sourceData
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
   packetTargetAudit :
     CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
   directFiniteBoundaryAudit :
@@ -48604,6 +48657,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
       ob5CompatibilityAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
+      sideConditionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit,
       packetTargetAudit := hpacketTarget,
       directFiniteBoundaryAudit := hdirectBoundary,
       boundaryAudit :=
@@ -48705,6 +48760,8 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
   ob5CompatibilityAudit :
     CanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
       sourceData
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
   packetTargetAudit :
     CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
   finiteBoundaryAudit :
@@ -48755,6 +48812,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
     ob5CompatibilityAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
+    sideConditionAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit,
     packetTargetAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit,
     finiteBoundaryAudit :=

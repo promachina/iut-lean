@@ -4032,6 +4032,12 @@ used.  The Ob5 independence-of-possibilities passage is now isolated as
 selected q-region is absorbed by the bounded-family hull, and the
 hull-log-volume, determinant normalization, package measure, and
 record-canonical bridge remain compatible with that hull-family passage.  The
+remaining source side conditions are now split off as
+\texttt{CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit}: the
+constructor-built hull source's q-pilot positivity and source normalization
+are repackaged through the existing
+\texttt{IUTStage1SourceSideConditions} interface before the finite Step (x)
+boundary consumes the raw signed comparison.  The
 no-\(C_\Theta\) finite boundary is now separated as
 \texttt{CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit}; it
 keeps the middle-route audit, Step (xi) hull audit, compact boundary audit,
@@ -4053,6 +4059,7 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionSideConditionAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionPacketTargetAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit},\\
