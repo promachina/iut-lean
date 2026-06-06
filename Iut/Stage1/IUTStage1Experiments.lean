@@ -40637,8 +40637,63 @@ theorem remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource_endpoint
           (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
             (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
               record)) =
-        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+      sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
   sourceData.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface bridge constructor from the finite Ob3-3 adjusted summand
+identity.
+
+This exposes the intermediate Step (xi) bridge before the final constructed
+source is assembled: q-region containment enters the record possible-image
+union, the Ob3/Ob5 determinant equality is derived from the adjusted summand
+formula, and the Ob4 tensor-power bound supplies the upper comparison by
+`thetaSigned`.
+-/
+theorem remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource_toRecordHullDeterminantBridgeSource_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned) :
+    let bridgeSource :=
+      sourceData.toRecordHullDeterminantBridgeSource
+        qPilotRegion q_subset_recordUnion tensorPower_bound;
+    bridgeSource.determinantSource =
+        sourceData.ob3ob4Source.toWeightedDeterminantSource ∧
+      bridgeSource.compatibility =
+        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility ∧
+      sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      bridgeSource.qPilotRegion ⊆
+        sourceData.hullOperator.phi
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record) ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        bridgeSource.determinantSource.determinantLogVolume ∧
+      bridgeSource.determinantSource.determinantLogVolume <=
+        package.preLedger.thetaSigned ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        package.preLedger.thetaSigned :=
+  sourceData.toRecordHullDeterminantBridgeSource_endpoint
+    qPilotRegion q_subset_recordUnion tensorPower_bound
 
 set_option linter.style.longLine false in
 /--

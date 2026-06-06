@@ -5173,6 +5173,39 @@ bridge equality is still an explicit Step~(xi) synchronization boundary, but
 the numerical Ob4 inequality is now constructed from the Remark~3.9.5
 family-hull/log-volume source in this route.
 
+The adjusted-summand source now also exposes the intermediate bridge itself,
+before assembling the final constructed Step~(xi) object.  The generic source
+constructor
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395HullDeterminantBridgeSource}\\
+\quad\texttt{.ofAdjustedDeterminantLogVolumeSource}
+\end{array}
+\]
+starts from the finite Ob3--3 identity
+\[
+  \mu_{\log}(\phi(\bigcup_i P_i))
+    = \sum_\beta \operatorname{AdjLoc}_\beta ,
+\]
+derives the Ob3/Ob5 determinant compatibility, and then proves the bridge
+chain
+\[
+  \mu_{\log}(q\mathrm{Region})
+    \leq \det_{\log}
+    \leq \theta_{\mathrm{signed}} .
+\]
+The record-canonical companion
+\texttt{toRecordHullDeterminantBridgeSource} fixes the family to the
+Theorem~3.11 possible images, while the experiment endpoint
+\[
+\begin{array}{l}
+\texttt{remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{\_toRecordHullDeterminantBridgeSource\_endpoint}
+\end{array}
+\]
+makes this bridge-level derivation reviewable without unfolding the later
+constructed-source route.
+
 The same exact-theta constructor-built route now has an obligations-backed
 form, with suffix
 \[

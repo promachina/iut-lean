@@ -14527,6 +14527,71 @@ theorem toRecordOb3Ob5DeterminantCompatibilitySource_endpoint
           hbounded.2.2.2.2⟩⟩
 
 set_option linter.style.longLine false in
+noncomputable def toRecordHullDeterminantBridgeSource
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion record)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned) :
+    IUTStage1Remark395RecordHullDeterminantBridgeSource
+      (β := β) record :=
+  IUTStage1Remark395RecordHullDeterminantBridgeSource.ofOb3Ob5CompatibilitySource
+    (record := record)
+    sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+    qPilotRegion q_subset_recordUnion tensorPower_bound
+
+set_option linter.style.longLine false in
+theorem toRecordHullDeterminantBridgeSource_endpoint
+    (sourceData :
+      IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion record)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned) :
+    let bridgeSource :=
+      sourceData.toRecordHullDeterminantBridgeSource
+        qPilotRegion q_subset_recordUnion tensorPower_bound;
+    bridgeSource.determinantSource =
+        sourceData.ob3ob4Source.toWeightedDeterminantSource ∧
+      bridgeSource.compatibility =
+        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility ∧
+      sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      bridgeSource.qPilotRegion ⊆
+        sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        bridgeSource.determinantSource.determinantLogVolume ∧
+      bridgeSource.determinantSource.determinantLogVolume <=
+        package.preLedger.thetaSigned ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        package.preLedger.thetaSigned :=
+  by
+    intro bridgeSource
+    exact
+      ⟨rfl,
+        rfl,
+        sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume,
+        sourceData.adjustedSummandLogVolume_eq_determinantLogVolume,
+        sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+        bridgeSource.qPilotRegion_subset_phi,
+        bridgeSource.qRegionLogVolume_le_determinantLogVolume,
+        bridgeSource.determinantLogVolume_le_thetaSigned,
+        bridgeSource.qRegionLogVolume_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
 theorem endpoint
     (sourceData :
       IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
