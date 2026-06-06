@@ -34808,6 +34808,48 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMat
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface full-route audit for the bundled theta-monoid-matched
+finite-divisor route source with constructor-built Step (xi) hull data.
+
+This is the compact review target for the current strongest finite route:
+theta-monoid matched Hodge--Arakelov data, constructed \(\IPL\) transport, and
+a possible-image hull/determinant source whose Theorem 3.11 constructor is
+built from record-canonical hull/tensor inputs before projection to the
+established finite-divisor boundary.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMatchedConstructorBuiltFullRouteAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
+      sourceData :=
+  sourceData.toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface pre-\(\IPL\) Hodge/SHE audit for the bundled
 theta-monoid-matched finite-divisor route source.
 

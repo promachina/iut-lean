@@ -43789,6 +43789,268 @@ end
 
 set_option linter.style.longLine false in
 /--
+Theta-monoid-matched bundled source object with a constructor-built
+possible-image Step (xi) hull/determinant source.
+
+This is the constructor-built counterpart of
+`IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource`:
+the public finite-divisor route no longer carries an obligations-backed hull
+source.  Instead, it carries the record-canonical hull/tensor inputs from
+which the Theorem 3.11 hull/determinant constructor and its obligations are
+built before projection to the established route.
+-/
+structure
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F)
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    (holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j)
+    (product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j) where
+  matchedSynchronization :
+    IUTStage1ThetaMonoidDegreeMatchedHodgeArakelovSynchronization
+      part audited X C
+  iplConstructionSource :
+    IUTStage1Theorem311IPLLinkConstructionSource record
+  hullSource :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+      (β := β) record
+  upperSemiEntry :
+    NonarchimedeanPacketNormalizedUpperSemiEntrySource audited
+  divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product
+  monoAnalyticTheater : QualitativeData.HodgeTheaterId
+  kummerCompatibility :
+    IUTStage1RealifiedFrobenioidKummerCompatibility
+      holomorphicF holomorphicD
+  forgettingCompatibility :
+    IUTStage1RealifiedFrobenioidKummerCompatibility
+      holomorphicD
+        (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          monoAnalyticTheater)
+  holomorphicF_realization :
+    holomorphicF.toRealized.realization =
+      IUTStage1TensorPacketRealizationKind.holomorphicF
+  holomorphicD_realization :
+    holomorphicD.toRealized.realization =
+      IUTStage1TensorPacketRealizationKind.holomorphicD
+  holomorphicStructureForgotten : Prop
+  holomorphic_structure_forgotten : holomorphicStructureForgotten
+  packetLocalObject_eq_entrySource :
+    audited.choice.local_tensor_state.packetState.localObject =
+      upperSemiEntry.toEntry.sourceLogVolume
+  packetLocalObjectFinite_eq_divisorRealified :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      divisorPacket.divisor.realifiedLogVolume
+  packetLocalObjectFinite_eq_ind3Source :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  targetSource :
+    NonarchimedeanLogKummerVerticalIQTargetSource
+      audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+      packageN.logKummer upperSemiEntry.toEntry
+
+namespace
+  IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {β : Type v} [Fintype β]
+variable {j : Nat}
+variable {holomorphicF holomorphicD :
+  IUTStage1RealifiedFrobenioidTensorPacketProductSource
+    IUTStage1PlaceKind.nonarchimedean j}
+variable {product :
+  IUTStage1BaseValuationTensorPacketProductLogVolume
+    IUTStage1PlaceKind.nonarchimedean j}
+
+noncomputable def toObligationsBackedSource
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+      (β := β) part audited record X C holomorphicF holomorphicD product :=
+  { matchedSynchronization := sourceData.matchedSynchronization,
+    iplConstructionSource := sourceData.iplConstructionSource,
+    hullSource :=
+      sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource,
+    upperSemiEntry := sourceData.upperSemiEntry,
+    divisorPacket := sourceData.divisorPacket,
+    monoAnalyticTheater := sourceData.monoAnalyticTheater,
+    kummerCompatibility := sourceData.kummerCompatibility,
+    forgettingCompatibility := sourceData.forgettingCompatibility,
+    holomorphicF_realization := sourceData.holomorphicF_realization,
+    holomorphicD_realization := sourceData.holomorphicD_realization,
+    holomorphicStructureForgotten := sourceData.holomorphicStructureForgotten,
+    holomorphic_structure_forgotten :=
+      sourceData.holomorphic_structure_forgotten,
+    packetLocalObject_eq_entrySource :=
+      sourceData.packetLocalObject_eq_entrySource,
+    packetLocalObjectFinite_eq_divisorRealified :=
+      sourceData.packetLocalObjectFinite_eq_divisorRealified,
+    packetLocalObjectFinite_eq_ind3Source :=
+      sourceData.packetLocalObjectFinite_eq_ind3Source,
+    targetSource := sourceData.targetSource }
+
+set_option linter.style.longLine false in
+/--
+Full route audit for the constructor-built theta-monoid-matched finite-divisor
+source.
+
+The first three conjuncts expose the Step (xi) constructor-building boundary,
+the projected constructor-sourced boundary, and the constructor-pinned
+boundary.  The final conjunct is the existing matched finite-divisor route
+audit after projecting the built source to its obligations-backed source.
+-/
+def ConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+      sourceData.hullSource ∧
+    IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
+      sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource ∧
+    IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource.SourceEndpoint
+      (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
+        |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource) ∧
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource.MatchedSourceDerivedFiniteDivisorRouteAudit
+      sourceData.toObligationsBackedSource
+
+theorem toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    ConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit sourceData :=
+  ⟨sourceData.hullSource.source_endpoint,
+    sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
+    (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
+      |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+      |>.source_endpoint),
+    sourceData.toObligationsBackedSource.toMatchedSourceDerivedFiniteDivisorRouteAudit⟩
+
+set_option linter.style.longLine false in
+theorem boundaryEndpointWithConstructorBuiltMatchedGaussianStepXIAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+        sourceData.hullSource ∧
+      IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
+        sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource ∧
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource.SourceEndpoint
+        (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
+          |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource) ∧
+      let projectedSource := sourceData.toObligationsBackedSource;
+      let hodgeSynchronization :=
+        projectedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+      projectedSource.matchedSynchronization.targetEvaluation.thetaMonoidDegree =
+          projectedSource.matchedSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+        projectedSource.matchedSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+          projectedSource.matchedSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+        CalibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+            part audited hodgeSynchronization
+            projectedSource.iplConstructionSource projectedSource.hullSource ∧
+          audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+            projectedSource.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+          projectedSource.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+            (projectedSource.divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+              IUTStage1TensorPacketRealizationKind.monoAnalyticD
+              projectedSource.monoAnalyticTheater).toRealized.product.productLogVolume ∧
+          product.productLogVolume =
+            projectedSource.divisorPacket.divisor.realifiedLogVolume ∧
+          audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+            audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+          audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+            projectedSource.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+          projectedSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+            true ∧
+          part.insulated_route.theta_source.thetaSourceAverage audited =
+            projectedSource.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+          projectedSource.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+            audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+          packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  ⟨sourceData.hullSource.source_endpoint,
+    sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
+    (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
+      |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+      |>.source_endpoint),
+    sourceData.toObligationsBackedSource.boundaryEndpointWithMatchedGaussianStepXIAudit⟩
+
+set_option linter.style.longLine false in
+theorem cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+        sourceData.hullSource ∧
+      IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
+        sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource ∧
+      IUTStage1PossibleImageConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource.SourceEndpoint
+        (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
+          |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource) ∧
+      let projectedSource := sourceData.toObligationsBackedSource;
+      let hodgeSynchronization :=
+        projectedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+      projectedSource.matchedSynchronization.targetEvaluation.thetaMonoidDegree =
+          projectedSource.matchedSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+        projectedSource.matchedSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+          projectedSource.matchedSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+        CalibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+            part audited hodgeSynchronization
+            projectedSource.iplConstructionSource projectedSource.hullSource ∧
+          ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+              packageN.preLedger.thetaSigned < 0) ∨
+            (-1 : Real) < cTheta) :=
+  ⟨sourceData.hullSource.source_endpoint,
+    sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
+    (sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
+      |>.toConstructorPinnedHolomorphicHullDeterminantObligationsBackedSource
+      |>.source_endpoint),
+    sourceData.toObligationsBackedSource.cThetaDichotomyWithMatchedGaussianStepXIAudit
+      cTheta thetaSigned_le_cTheta_absLogQ⟩
+
+end
+  IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+
+set_option linter.style.longLine false in
+/--
 The synchronized source-derived bridge for the calibrated Hodge/SHE,
 certificate-pinned \(\IPL\)-link, obligations-backed possible-image route.
 
