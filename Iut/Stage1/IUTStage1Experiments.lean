@@ -38165,7 +38165,8 @@ Experiment-surface factored-\(\SHE\) audit for the canonical-one constructed
 
 This exposes the factored square/full-label \(\SHE\) endpoint constructed from
 the Hodge--Arakelov theta-evaluation pair, together with the finite
-Hodge/\(\SHE\) transport endpoint consumed by the constructed \(\IPL\) segment.
+Hodge/\(\SHE\) transport-source endpoint and finite transport endpoint
+consumed by the constructed \(\IPL\) segment.
 -/
 theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit
     {source target : Copy} {coric : Type u}

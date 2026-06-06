@@ -48492,6 +48492,21 @@ structure CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit
     Prop where
   thetaEvaluationAudit :
     CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
+  transportSourceEndpoint :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+        sourceData.sourceCalibratedEvaluation.evaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+        sourceData.targetEvaluation.valueSource ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+        IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+          record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+        IUTStage1SquareComparisonLevel.pointwiseRepresentative ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+        Equiv.refl (ZMod l.value)
   synchronizationEndpoint :
     let sync :=
       sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization;
@@ -48539,6 +48554,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit
     CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData :=
   { thetaEvaluationAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
+    transportSourceEndpoint :=
+      sourceData.finiteHodgeSHEIPLConstructionSource_endpoint,
     synchronizationEndpoint :=
       sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.synchronization_endpoint,
     finiteTransportEndpoint :=
