@@ -47610,6 +47610,19 @@ structure CanonicalOneConstructorBuiltIPLLinkFiniteBoundaryAudit
     Prop where
   qComparisonAudit :
     CanonicalOneConstructorBuiltIPLLinkQComparisonAudit sourceData
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLLinkStepXIHullAudit sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit
+      sourceData
+  ob3Ob4DeterminantAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit
+      sourceData
+  ob5CompatibilityAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit
+      sourceData
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLLinkSideConditionAudit sourceData
   packetLocalObjectFinite_eq_entrySource :
     audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
       sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume
@@ -47647,6 +47660,16 @@ theorem toCanonicalOneConstructorBuiltIPLLinkFiniteBoundaryAudit
   exact
     { qComparisonAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLLinkQComparisonAudit,
+      stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkStepXIHullAudit,
+      ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit,
+      ob3Ob4DeterminantAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit,
+      ob5CompatibilityAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit,
+      sideConditionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkSideConditionAudit,
       packetLocalObjectFinite_eq_entrySource := hboundary.2.1,
       entrySourceFinite_eq_divisorRealized := hboundary.2.2.1,
       productLogVolume_eq_divisorRealified := hboundary.2.2.2.1,
@@ -47688,6 +47711,19 @@ structure CanonicalOneConstructorBuiltIPLLinkMilestoneCThetaAudit
     Prop where
   qComparisonAudit :
     CanonicalOneConstructorBuiltIPLLinkQComparisonAudit sourceData
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLLinkStepXIHullAudit sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit
+      sourceData
+  ob3Ob4DeterminantAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit
+      sourceData
+  ob5CompatibilityAudit :
+    CanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit
+      sourceData
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLLinkSideConditionAudit sourceData
   finiteBoundaryAudit :
     CanonicalOneConstructorBuiltIPLLinkFiniteBoundaryAudit sourceData
   sourceDerivedBridgeAudit :
@@ -47718,6 +47754,16 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
   exact
     { qComparisonAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLLinkQComparisonAudit,
+      stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkStepXIHullAudit,
+      ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb1Ob2HullAbsorptionAudit,
+      ob3Ob4DeterminantAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb3Ob4DeterminantAudit,
+      ob5CompatibilityAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkOb5CompatibilityAudit,
+      sideConditionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkSideConditionAudit,
       finiteBoundaryAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLLinkFiniteBoundaryAudit,
       sourceDerivedBridgeAudit :=
