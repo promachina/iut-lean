@@ -44080,6 +44080,186 @@ theorem cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
 end
   IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
 
+namespace IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {β : Type v} [Fintype β]
+variable {j : Nat}
+variable {holomorphicF holomorphicD :
+  IUTStage1RealifiedFrobenioidTensorPacketProductSource
+    IUTStage1PlaceKind.nonarchimedean j}
+variable {product :
+  IUTStage1BaseValuationTensorPacketProductLogVolume
+    IUTStage1PlaceKind.nonarchimedean j}
+
+set_option linter.style.longLine false in
+/--
+Project the matched obligations-backed record-canonical exact corridor to the
+newer constructor-built finite-divisor route.
+
+The Step (xi) hull source in the target route is not supplied separately: it is
+assembled from the record-canonical measured determinant data, the selected
+possible image, and the constructor obligations bridge equality carried by the
+matched exact source.
+-/
+noncomputable def toThetaMonoidMatchedConstructorBuiltFiniteDivisorVerticalIQSource
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+      (β := β) part audited record X C holomorphicF holomorphicD product :=
+  { matchedSynchronization :=
+      sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.matchedSynchronization,
+    iplConstructionSource :=
+      sourceData.matchedHodgeIPLSource.iplConstructionSource,
+    hullSource :=
+      { operation := sourceData.operation,
+        hullOperation := sourceData.hullOperation,
+        determinantOperation := sourceData.determinantOperation,
+        hullData :=
+          sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData,
+        qChoice := sourceData.qChoice,
+        determinantSource :=
+          sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource,
+        compatibility :=
+          sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility,
+        measure_eq_hullLogVolume :=
+          sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume,
+        tensorPower_bound :=
+          sourceData.measureCalibratedHodgeDeterminantSource.tensorPower_bound,
+        hullDetBridge_eq := by
+          simpa [
+            IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.qPilotRegion]
+            using sourceData.hullDetBridge_eq_recordCanonical,
+        q_pilot_positive :=
+          sourceData.constructorObligations.qPilotPositive,
+        normalization :=
+          sourceData.constructorObligations.normalization },
+    upperSemiEntry := sourceData.upperSemiEntry,
+    divisorPacket := sourceData.finiteSource.divisorPacket,
+    monoAnalyticTheater := sourceData.finiteSource.monoAnalyticTheater,
+    kummerCompatibility :=
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.kummerCompatibility,
+    forgettingCompatibility :=
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.forgettingCompatibility,
+    holomorphicF_realization :=
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.holomorphicF_realization,
+    holomorphicD_realization :=
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.holomorphicD_realization,
+    holomorphicStructureForgotten :=
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.holomorphicStructureForgotten,
+    holomorphic_structure_forgotten :=
+      sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.holomorphic_structure_forgotten,
+    packetLocalObject_eq_entrySource :=
+      sourceData.finiteSource.packetLocalObject_eq_entrySource,
+    packetLocalObjectFinite_eq_divisorRealified :=
+      sourceData.finiteSource.packetLocalObjectFinite_eq_divisorRealified,
+    packetLocalObjectFinite_eq_ind3Source :=
+      sourceData.finiteSource.packetLocalObjectFinite_eq_ind3Source,
+    targetSource := sourceData.exactSource.targetSource }
+
+set_option linter.style.longLine false in
+/--
+Full constructor-built finite-divisor audit, sourced from the matched
+obligations-backed record-canonical exact corridor.
+
+The first component records the obligations-to-record-canonical Step (xi)
+bridge provenance.  The second component is the full constructor-built
+finite-divisor route audit after projection.
+-/
+def MatchedObligationsConstructorBuiltFiniteDivisorRouteAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorStepXIHullDetAudit
+      sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource ∧
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
+      sourceData.toThetaMonoidMatchedConstructorBuiltFiniteDivisorVerticalIQSource
+
+theorem toMatchedObligationsConstructorBuiltFiniteDivisorRouteAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedObligationsConstructorBuiltFiniteDivisorRouteAudit sourceData :=
+  ⟨sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+      |>.toObligationsRecordCanonicalConstructorStepXIHullDetAudit,
+    sourceData.toThetaMonoidMatchedConstructorBuiltFiniteDivisorVerticalIQSource
+      |>.toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit⟩
+
+set_option linter.style.longLine false in
+/--
+No-\(C_\Theta\) boundary audit for the constructor-built finite-divisor route
+when the route is projected from the matched obligations record-canonical
+exact corridor.
+-/
+def MatchedObligationsConstructorBuiltBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorStepXIHullDetAudit
+      sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource ∧
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltMatchedBoundaryAudit
+      sourceData.toThetaMonoidMatchedConstructorBuiltFiniteDivisorVerticalIQSource
+
+theorem boundaryEndpointWithMatchedObligationsConstructorBuiltAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedObligationsConstructorBuiltBoundaryAudit sourceData :=
+  ⟨sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+      |>.toObligationsRecordCanonicalConstructorStepXIHullDetAudit,
+    sourceData.toThetaMonoidMatchedConstructorBuiltFiniteDivisorVerticalIQSource
+      |>.boundaryEndpointWithConstructorBuiltMatchedGaussianStepXIAudit⟩
+
+set_option linter.style.longLine false in
+/--
+Conditional \(C_\Theta\) audit for the constructor-built finite-divisor route
+projected from the matched obligations record-canonical exact corridor.
+-/
+def MatchedObligationsConstructorBuiltCThetaAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop :=
+  IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorStepXIHullDetAudit
+      sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource ∧
+    IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltMatchedCThetaAudit
+      sourceData.toThetaMonoidMatchedConstructorBuiltFiniteDivisorVerticalIQSource
+      cTheta
+
+theorem cThetaDichotomyWithMatchedObligationsConstructorBuiltAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    MatchedObligationsConstructorBuiltCThetaAudit sourceData cTheta :=
+  ⟨sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+      |>.toObligationsRecordCanonicalConstructorStepXIHullDetAudit,
+    sourceData.toThetaMonoidMatchedConstructorBuiltFiniteDivisorVerticalIQSource
+      |>.cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
+        cTheta thetaSigned_le_cTheta_absLogQ⟩
+
+end IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+
 set_option linter.style.longLine false in
 /--
 The synchronized source-derived bridge for the calibrated Hodge/SHE,

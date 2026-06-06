@@ -34938,6 +34938,125 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_thetaMonoidMat
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface full constructor-built finite-divisor audit sourced from
+the matched obligations-backed record-canonical exact corridor.
+
+This endpoint takes the obligations-backed exact source directly and projects
+the constructor-built finite-divisor route internally, exposing the
+obligations-to-record-canonical Step (xi) bridge audit alongside the full
+constructor-built route audit.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_matchedObligationsConstructorBuiltFullRouteAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.MatchedObligationsConstructorBuiltFiniteDivisorRouteAudit
+      sourceData :=
+  sourceData.toMatchedObligationsConstructorBuiltFiniteDivisorRouteAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface no-\(C_\Theta\) constructor-built finite-divisor boundary
+sourced from the matched obligations-backed record-canonical exact corridor.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_matchedObligationsConstructorBuiltBoundaryAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.MatchedObligationsConstructorBuiltBoundaryAudit
+      sourceData :=
+  sourceData.boundaryEndpointWithMatchedObligationsConstructorBuiltAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface conditional \(C_\Theta\) constructor-built finite-divisor
+audit sourced from the matched obligations-backed record-canonical exact
+corridor.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_matchedObligationsConstructorBuiltCThetaAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.MatchedObligationsConstructorBuiltCThetaAudit
+      sourceData cTheta :=
+  sourceData.cThetaDichotomyWithMatchedObligationsConstructorBuiltAudit
+    cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface pre-\(\IPL\) Hodge/SHE audit for the bundled
 theta-monoid-matched finite-divisor route source.
 
