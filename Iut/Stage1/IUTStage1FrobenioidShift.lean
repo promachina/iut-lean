@@ -18351,6 +18351,74 @@ theorem source_endpoint
     sourceData.familyHullSource.tensorPower_normalizedLogVolume_eq_familyHullLogVolume,
     sourceData.tensorPower_bound⟩
 
+/--
+Review-facing audit for the determinant summand/family-hull source boundary.
+
+The measure calibration and Hodge theta/summand equality are still explicit
+fields of this source object.  The remaining determinant/hull equalities are
+projected from the record-native bounded-family hull/determinant source and
+the target-charted Hodge synchronization.
+-/
+structure DeterminantSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeDeterminantSummandFamilyHullSource
+        (β := β) part audited record hodgeSynchronization) :
+    Prop where
+  measure_eq_hullLogVolume :
+    packageN.preLedger.measure =
+      sourceData.familyHullSource.hullData.toRegionMeasure
+  familyUnion_eq_record :
+    sourceData.familyHullSource.familyUnion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  targetChartedTheta_eq_canonicalOneDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  chartedTheta_eq_thetaMonoidDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      hodgeSynchronization.valueSource.thetaMonoidDegree
+  thetaMonoidDegree_eq_summandSum :
+    hodgeSynchronization.valueSource.thetaMonoidDegree =
+      Finset.univ.sum fun index =>
+        (sourceData.familyHullSource.determinantSource.summand index).adjustedLogVolume
+  familyHullLogVolume_eq_determinant :
+    sourceData.familyHullSource.familyHullLogVolume =
+      sourceData.familyHullSource.determinantSource.determinantLogVolume
+  familyUnionLogVolume_le_familyHullLogVolume :
+    sourceData.familyHullSource.familyUnionLogVolume <=
+      sourceData.familyHullSource.familyHullLogVolume
+  tensorPower_normalized_eq_familyHull :
+    sourceData.familyHullSource.tensorPower.normalizedLogVolume =
+      sourceData.familyHullSource.familyHullLogVolume
+  tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.familyHullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
+
+theorem toDeterminantSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeDeterminantSummandFamilyHullSource
+        (β := β) part audited record hodgeSynchronization) :
+    DeterminantSourceBoundaryAudit sourceData :=
+  { measure_eq_hullLogVolume := sourceData.measure_eq_hullLogVolume,
+    familyUnion_eq_record := sourceData.familyHullSource.source_endpoint.1,
+    targetChartedTheta_eq_canonicalOneDegree :=
+      sourceData.source_endpoint.1,
+    chartedTheta_eq_thetaMonoidDegree :=
+      sourceData.source_endpoint.2.1,
+    thetaMonoidDegree_eq_summandSum :=
+      sourceData.thetaMonoidDegree_eq_summandSum,
+    familyHullLogVolume_eq_determinant :=
+      sourceData.familyHullSource.familyHullLogVolume_eq_determinant,
+    familyUnionLogVolume_le_familyHullLogVolume :=
+      sourceData.familyHullSource.familyUnionLogVolume_le_familyHullLogVolume,
+    tensorPower_normalized_eq_familyHull :=
+      sourceData.familyHullSource.tensorPower_normalizedLogVolume_eq_familyHullLogVolume,
+    tensorPower_bound := sourceData.tensorPower_bound }
+
 end IUTStage1TargetChartedHodgeDeterminantSummandFamilyHullSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in
@@ -19930,6 +19998,22 @@ theorem possibleImageCanonicalHullTensorBridge_endpoint
       packageN.preLedger.normalization ∧
       packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
   sourceData.possibleImageSource.possibleImageCanonicalHullTensorBridge_endpoint
+
+set_option linter.style.longLine false in
+/--
+Determinant-source boundary audit exposed by the all-in-one target-charted
+route.
+
+This projection isolates the Step (xi) determinant family-hull boundary before
+the possible-image hull source and the Hodge/IPL bridge are assembled.
+-/
+theorem determinantSourceBoundaryAudit_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    IUTStage1TargetChartedHodgeDeterminantSummandFamilyHullSource.DeterminantSourceBoundaryAudit
+      sourceData.possibleImageSource.hodgeDeterminantSource :=
+  sourceData.possibleImageSource.hodgeDeterminantSource.toDeterminantSourceBoundaryAudit
 
 set_option linter.style.longLine false in
 /--

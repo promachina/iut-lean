@@ -25207,6 +25207,42 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_gaussianToStepXIHullD
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface determinant-source boundary audit for the all-in-one
+target-charted route.
+
+This exposes the determinant summand/family-hull payload before the
+possible-image hull source is assembled: the package measure calibration and
+Hodge theta/summand equality remain visible source fields, while the
+record-family union, family-hull/determinant equality, family-union bound, and
+tensor-power normalization are projected from the record-native bounded-family
+hull/determinant source.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_determinantSourceBoundaryAuditEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    IUTStage1TargetChartedHodgeDeterminantSummandFamilyHullSource.DeterminantSourceBoundaryAudit
+      routeSource.possibleImageSource.hodgeDeterminantSource :=
+  routeSource.determinantSourceBoundaryAudit_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy from the all-in-one target-charted
 route and a bundled finite-divisor packet-local Step (x) source.
 -/
