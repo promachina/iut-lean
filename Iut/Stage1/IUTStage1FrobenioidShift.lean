@@ -22263,6 +22263,74 @@ theorem source_endpoint
       sourceData.normalization,
       hprojected.2.2.2.2.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Named audit for the constructor-backed Step (xi) holomorphic-hull/determinant
+source.
+
+The audit records the fields that Step (xi) uses after the Theorem 3.11
+hull/determinant constructor has been applied: the possible-image q-region, the
+measure-calibrated determinant source, the constructed hull/determinant
+obligations object, the record-canonical bridge, q-positivity, normalization,
+and the raw signed comparison.
+-/
+structure ConstructorBackedStepXIHullDetAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+        (β := β) part audited record hodgeSynchronization) :
+    Prop where
+  qPilotRegion_eq_choice :
+    sourceData.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice
+  measure_eq_hullLogVolume :
+    packageN.preLedger.measure =
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure
+  constructorObligations_hullDetData_eq :
+    sourceData.constructorObligations.hullDetData =
+      sourceData.toHullDetSourceConstructor.hullDetData
+  hullDetBridge_eq_constructor :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.constructorObligations.hullDetData.bridgeData
+  hullDetBridge_eq_recordCanonical :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+        sourceData.qPilotRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice sourceData.qPilotRegion
+          sourceData.q_subset_choice)
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        sourceData.measureCalibratedHodgeDeterminantSource.tensorPower_bound
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBackedStepXIHullDetAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+        (β := β) part audited record hodgeSynchronization) :
+    ConstructorBackedStepXIHullDetAudit sourceData := by
+  have hsource := sourceData.source_endpoint
+  exact
+    { qPilotRegion_eq_choice := hsource.1,
+      measure_eq_hullLogVolume := hsource.2.1,
+      constructorObligations_hullDetData_eq := hsource.2.2.1,
+      hullDetBridge_eq_constructor := hsource.2.2.2.1,
+      hullDetBridge_eq_recordCanonical := hsource.2.2.2.2.1,
+      q_pilot_positive := hsource.2.2.2.2.2.1,
+      normalization := hsource.2.2.2.2.2.2.1,
+      qSigned_le_thetaSigned := hsource.2.2.2.2.2.2.2 }
+
 end IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
 
 set_option linter.style.longLine false in
@@ -36241,6 +36309,83 @@ theorem boundaryEndpointWithAssembledConstructorBackedRouteAudit
       sourceData.exactSource.hasPreciseFrobenioidIsomorphisms,
       hcorridor.2.2.2.2.2.2.1⟩
 
+set_option linter.style.longLine false in
+/--
+Remaining-boundary audit for the assembled constructor-backed exact source.
+
+This is the direct source-object boundary for the current Step (xi) bridge:
+the Hodge/SHE/IPL construction and constructor-backed possible-image
+hull/determinant source are supplied as source objects, while the finite
+Step (x) packet equalities and exact vertical-`IQ`/log-Kummer boundary remain
+visible as the next source-paper obligations.
+-/
+structure AssembledConstructorBackedRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  hodgeSHEIPLAudit :
+    IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.TargetChartedHodgeSHEIPLConstructionAudit
+      sourceData.hodgeIPLSource
+  constructorBackedStepXIAudit :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.ConstructorBackedStepXIHullDetAudit
+      sourceData.constructorBackedPossibleImageSource
+  finiteDivisorPacketAudit :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        sourceData.finiteSource.toMonoAnalyticD.toRealized.product.productLogVolume ∧
+      product.productLogVolume =
+        sourceData.finiteSource.divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume
+  exactVerticalIQBoundaryAudit :
+    sourceData.exactSource.realifiedSource.realifiedEntrySource.packetSource.targetCalibration.calibration_source =
+        IUTStage1PacketNormalizedIdentificationSource.logKummerVerticalIQCompatibility ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume ∧
+      IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+        true ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        part.insulated_route.theta_source.thetaSourceAverage audited
+  rawComparison :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toAssembledConstructorBackedRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    AssembledConstructorBackedRemainingSourceBoundaryAudit sourceData := by
+  have hfinite := sourceData.finiteSource.source_endpoint
+  have htarget := sourceData.exactSource.targetSource.verticalIQTarget_endpoint
+  have hcorridor := sourceData.assembledSourceDerivedCorridorEndpoint
+  exact
+    { hodgeSHEIPLAudit :=
+        sourceData.hodgeIPLSource.toTargetChartedHodgeSHEIPLConstructionAudit,
+      constructorBackedStepXIAudit :=
+        sourceData.constructorBackedPossibleImageSource.toConstructorBackedStepXIHullDetAudit,
+      finiteDivisorPacketAudit :=
+        ⟨hfinite.1,
+          hfinite.2.1,
+          hfinite.2.2.1,
+          hfinite.2.2.2.1,
+          hfinite.2.2.2.2⟩,
+      exactVerticalIQBoundaryAudit :=
+        ⟨sourceData.exactSource.targetCalibration_source_eq_verticalIQ,
+          sourceData.exactSource.hasPreciseFrobenioidIsomorphisms,
+          htarget.2.2.2.2.1,
+          htarget.2.2.2.2.2,
+          sourceData.exactSource.realifiedSource.toPacketCorrespondence.qPilotLogKummerNonInterference,
+          sourceData.exactSource.realifiedSource.realifiedEntrySource.packetLocalObjectFinite_le_thetaAverage⟩,
+      rawComparison := hcorridor.2.2.2.2.2.2.1 }
+
 end IUTStage1TargetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
 
 set_option linter.style.longLine false in
@@ -38081,6 +38226,9 @@ structure ObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit
         |>.toTargetChartedHodgeDeterminantSummandFamilyHullSource)
   constructorBackedStepXISourceAudit :
     ObligationsRecordCanonicalConstructorBackedStepXISourceAudit sourceData
+  assembledConstructorBackedRemainingSourceBoundaryAudit :
+    IUTStage1TargetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.AssembledConstructorBackedRemainingSourceBoundaryAudit
+      sourceData.toAssembledConstructorBackedExactSource
   stepXIHullDetAudit :
     ObligationsRecordCanonicalConstructorStepXIHullDetAudit sourceData
   exactCorridorAudit :
@@ -38129,6 +38277,9 @@ theorem toObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit
       determinantSourceBoundaryAudit := hdet,
       constructorBackedStepXISourceAudit :=
         sourceData.toObligationsRecordCanonicalConstructorBackedStepXISourceAudit,
+      assembledConstructorBackedRemainingSourceBoundaryAudit :=
+        sourceData.toAssembledConstructorBackedExactSource
+          |>.toAssembledConstructorBackedRemainingSourceBoundaryAudit,
       stepXIHullDetAudit :=
         sourceData.toObligationsRecordCanonicalConstructorStepXIHullDetAudit,
       exactCorridorAudit :=
@@ -38692,6 +38843,10 @@ structure MatchedObligationsRecordCanonicalConstructorRemainingSourceBoundaryAud
     MatchedObligationsRecordCanonicalConstructorGaussianExactCorridorAudit sourceData
   matchedConstructorBackedStepXISourceAudit :
     MatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit sourceData
+  projectedAssembledConstructorBackedRemainingSourceBoundaryAudit :
+    IUTStage1TargetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.AssembledConstructorBackedRemainingSourceBoundaryAudit
+      (sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        |>.toAssembledConstructorBackedExactSource)
   projectedRemainingSourceBoundaryAudit :
     IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit
       sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
@@ -38709,6 +38864,10 @@ theorem toMatchedObligationsRecordCanonicalConstructorRemainingSourceBoundaryAud
         sourceData.toMatchedObligationsRecordCanonicalConstructorGaussianExactCorridorAudit,
       matchedConstructorBackedStepXISourceAudit :=
         sourceData.toMatchedObligationsRecordCanonicalConstructorBackedStepXISourceAudit,
+      projectedAssembledConstructorBackedRemainingSourceBoundaryAudit :=
+        sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+          |>.toAssembledConstructorBackedExactSource
+          |>.toAssembledConstructorBackedRemainingSourceBoundaryAudit,
       projectedRemainingSourceBoundaryAudit :=
         sourceData.toRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
           |>.toObligationsRecordCanonicalConstructorRemainingSourceBoundaryAudit }
