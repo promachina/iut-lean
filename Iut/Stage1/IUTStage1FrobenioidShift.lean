@@ -47369,6 +47369,28 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
       sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toMatchedFiniteHodgeSHETransportAudit }
 
 set_option linter.style.longLine false in
+abbrev CanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  SourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+    part audited sourceData.sourceCalibratedEvaluation sourceData.targetEvaluation
+    sourceData.canonicalOneDegree_preserved sourceData.iplConstructionSource
+    sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit
+      sourceData :=
+  part.toSourceCalibratedHodgeArakelovHistorySeparatedT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+    audited sourceData.sourceCalibratedEvaluation sourceData.targetEvaluation
+    sourceData.canonicalOneDegree_preserved sourceData.iplConstructionSource
+    sourceData.hullSource.toPossibleImageSideConditionedHolomorphicHullDeterminantObligationsBackedSource
+
+set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47384,6 +47406,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
         (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
   hodgeSHEIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
+  directGaussianToStepXIAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit
+      sourceData
   matchedFiniteHodgeSHETransportAudit :
     IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource.MatchedFiniteHodgeSHETransportAudit
       sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource
@@ -47432,6 +47457,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit
     canonicalOneDegree_preserved := sourceData.canonicalOneDegree_preserved,
     hodgeSHEIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
+    directGaussianToStepXIAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit,
     matchedFiniteHodgeSHETransportAudit :=
       sourceData.toThetaMonoidMatchedConstructorBuiltSource.toObligationsBackedSource.toMatchedFiniteHodgeSHETransportAudit,
     constructedIPLLogVolumeTransportAudit :=
@@ -47752,6 +47779,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
       sourceData
   hodgeSHEIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
+  directGaussianToStepXIAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit
+      sourceData
   middleRouteAudit :
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
@@ -47784,6 +47814,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit,
     hodgeSHEIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
+    directGaussianToStepXIAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit,
     middleRouteAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
     stepXIHullAudit :=
