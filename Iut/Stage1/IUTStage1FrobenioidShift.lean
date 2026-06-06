@@ -36020,6 +36020,116 @@ theorem obligationsRecordCanonicalConstructorCorridorEndpoint
 
 set_option linter.style.longLine false in
 /--
+Named Step (xi) hull/determinant audit for the obligations-backed
+record-canonical constructor source.
+
+This isolates the possible-image hull/determinant provenance before the exact
+vertical-`IQ` fields enter: the q-pilot region is the selected Theorem 3.11
+possible image, it lies in the record possible-image union, the measured
+family-hull determinant payload supplies the tensor-power bound, the package
+common-container bridge is identified with the record-canonical
+hull/tensor-power constructor, and the obligations side conditions yield the
+raw signed comparison.
+-/
+structure ObligationsRecordCanonicalConstructorStepXIHullDetAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  qPilotRegion_eq_choice :
+    sourceData.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  measuredFamilyUnion_eq_recordUnion :
+    sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  measuredFamilyHullLogVolume_eq_determinant :
+    sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume
+  measuredFamilyUnionLogVolume_le_familyHull :
+    sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnionLogVolume <=
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume
+  measuredTensorPower_normalized_eq_familyHull :
+    sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.tensorPower.normalizedLogVolume =
+      sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume
+  measuredTensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
+  obligationsHullDetData_eq_recordCanonical :
+    sourceData.constructorObligations.hullDetData.bridgeData =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+        sourceData.qPilotRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice sourceData.qPilotRegion
+          sourceData.q_subset_choice)
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        sourceData.measureCalibratedHodgeDeterminantSource.tensorPower_bound
+  hullDetBridge_eq_recordCanonical :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+        sourceData.qPilotRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice sourceData.qPilotRegion
+          sourceData.q_subset_choice)
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        sourceData.measureCalibratedHodgeDeterminantSource.tensorPower_bound
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toObligationsRecordCanonicalConstructorStepXIHullDetAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    ObligationsRecordCanonicalConstructorStepXIHullDetAudit sourceData := by
+  have hcorridor := sourceData.obligationsRecordCanonicalConstructorCorridorEndpoint
+  exact
+    { qPilotRegion_eq_choice := hcorridor.2.1,
+      qPilotRegion_subset_recordUnion :=
+        IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice sourceData.qPilotRegion
+          sourceData.q_subset_choice,
+      measuredFamilyUnion_eq_recordUnion :=
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.source_endpoint.1,
+      measuredFamilyHullLogVolume_eq_determinant :=
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume_eq_determinant,
+      measuredFamilyUnionLogVolume_le_familyHull :=
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnionLogVolume_le_familyHullLogVolume,
+      measuredTensorPower_normalized_eq_familyHull :=
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.tensorPower_normalizedLogVolume_eq_familyHullLogVolume,
+      measuredTensorPower_bound :=
+        sourceData.measureCalibratedHodgeDeterminantSource.tensorPower_bound,
+      obligationsHullDetData_eq_recordCanonical := hcorridor.2.2.1,
+      hullDetBridge_eq_recordCanonical :=
+        sourceData.hullDetBridge_eq_recordCanonical,
+      q_pilot_positive := hcorridor.2.2.2.2.1,
+      normalization := hcorridor.2.2.2.2.2.1,
+      qSigned_le_thetaSigned := hcorridor.2.2.2.2.2.2.1 }
+
+set_option linter.style.longLine false in
+/--
 Named audit payload for the obligations-backed record-canonical exact
 corridor.
 
@@ -36043,6 +36153,8 @@ structure ObligationsRecordCanonicalConstructorExactCorridorAudit
   iplLogVolume_preserved :
     sourceData.hodgeIPLSource.toIPLLogVolumeTransport.targetLogVolume =
       sourceData.hodgeIPLSource.toIPLLogVolumeTransport.sourceLogVolume
+  stepXIHullDetAudit :
+    ObligationsRecordCanonicalConstructorStepXIHullDetAudit sourceData
   qPilotRegion_eq_choice :
     sourceData.qPilotRegion =
       IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
@@ -36090,6 +36202,8 @@ theorem toObligationsRecordCanonicalConstructorExactCorridorAudit
     { iplDatum_eq_certificate := hipl.2.2.1,
       iplDatum_eq_constructed := hipl.2.2.2.1,
       iplLogVolume_preserved := hipl.2.2.2.2.1,
+      stepXIHullDetAudit :=
+        sourceData.toObligationsRecordCanonicalConstructorStepXIHullDetAudit,
       qPilotRegion_eq_choice := hcorridor.2.1,
       obligationsHullDetData_eq_recordCanonical := hcorridor.2.2.1,
       hullDetBridge_eq_obligations := hcorridor.2.2.2.1,
@@ -36119,6 +36233,8 @@ structure ObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
   hodgeSHEIPLAudit :
     IUTStage1TargetChartedHodgeArakelovIPLConstructionSource.TargetChartedHodgeSHEIPLConstructionAudit
       sourceData.hodgeIPLSource
+  stepXIHullDetAudit :
+    ObligationsRecordCanonicalConstructorStepXIHullDetAudit sourceData
   gaussianToStepXIAudit :
     let routeData :=
       sourceData.toRecordCanonicalConstructorFiniteExactVerticalIQSource
@@ -36142,6 +36258,8 @@ theorem toObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
   exact
     { hodgeSHEIPLAudit :=
         sourceData.hodgeIPLSource.toTargetChartedHodgeSHEIPLConstructionAudit,
+      stepXIHullDetAudit :=
+        sourceData.toObligationsRecordCanonicalConstructorStepXIHullDetAudit,
       gaussianToStepXIAudit :=
         routeData.routeSource.toConstructorBackedMeasureCalibratedGaussianToStepXIAudit,
       exactCorridorAudit :=
