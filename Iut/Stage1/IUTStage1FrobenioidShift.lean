@@ -36440,6 +36440,59 @@ theorem boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLRecordCan
       hboundary.2.1,
       hboundary.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Milestone-facing source-derived finite-divisor vertical-`IQ` route for the
+obligations-backed record-canonical exact corridor.
+
+This is a short public alias for the strongest current source package.  It
+keeps the advertised source-derived Hodge/SHE/IPL/hull finite-divisor endpoint
+name while using the record-canonical obligations-backed corridor: the returned
+audit contains the Hodge/SHE/IPL construction audit, the Step (xi)
+hull/determinant audit, the constructor-backed Gaussian route audit, and the
+exact vertical-`IQ` corridor audit before the external numeric `C_\Theta`
+estimate produces the final dichotomy.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_withRecordCanonicalGaussianExactCorridorAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource.ObligationsRecordCanonicalConstructorGaussianExactCorridorAudit
+        sourceData ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  part.boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLRecordCanonicalConstructorObligationsFiniteExactVerticalIQSource_withGaussianExactCorridorAudit
+    audited sourceData cTheta thetaSigned_le_cTheta_absLogQ
+
 /--
 Source-derived finite-divisor vertical-`IQ` route from a constructed
 Theorem 3.11 IPL-link source.
