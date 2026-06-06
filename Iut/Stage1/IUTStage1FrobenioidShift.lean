@@ -48078,6 +48078,121 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
 
 set_option linter.style.longLine false in
 /--
+Ob3/Ob4 determinant payload inside the canonical-one constructed-\(\IPL\)
+Step (xi) hull source.
+
+This isolates the Remark 3.9.5(vii) determinant part of the
+constructor-built source: the weighted determinant sum, normalization,
+hull-log-volume compatibility, tensor-power bound, measure calibration, and
+record-canonical hull/tensor bridge are all projected before the finite Step
+(x) boundary is used.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  remainingPayloadAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource
+  qPilotRegion_eq_possibleImage :
+    sourceData.hullSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.hullSource.qChoice
+  possibleImageUnion_subset_holomorphicHull :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  qPilotRegion_subset_holomorphicHull :
+    sourceData.hullSource.qPilotRegion ⊆
+      sourceData.hullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+  ob3_determinantLogVolume_eq_sum :
+    sourceData.hullSource.determinantSource.determinantLogVolume =
+      Finset.univ.sum fun index =>
+        (sourceData.hullSource.determinantSource.summand index).adjustedLogVolume
+  ob3_ob4_normalized_eq_determinantLogVolume :
+    sourceData.hullSource.determinantSource.normalizedLogVolume =
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  ob3_ob5_hullLogVolume_eq_determinantLogVolume :
+    sourceData.hullSource.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.hullSource.hullData
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record)).approximant =
+      sourceData.hullSource.determinantSource.determinantLogVolume
+  ob4_tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.hullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
+  measure_eq_hullLogVolume :
+    packageN.preLedger.measure = sourceData.hullSource.hullData.toRegionMeasure
+  recordCanonicalBridge_eq :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.hullSource.operation sourceData.hullSource.hullOperation
+        sourceData.hullSource.determinantOperation sourceData.hullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.hullSource.qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.hullSource.qChoice)
+          (fun _ hx => hx))
+        sourceData.hullSource.determinantSource sourceData.hullSource.compatibility
+        sourceData.hullSource.measure_eq_hullLogVolume
+        sourceData.hullSource.tensorPower_bound
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  normalization :
+    packageN.preLedger.normalization
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
+      sourceData := by
+  have hremaining := sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit
+  exact
+    { stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      remainingPayloadAudit := hremaining,
+      qPilotRegion_eq_possibleImage :=
+        hremaining.qPilotRegion_eq_possibleImage,
+      possibleImageUnion_subset_holomorphicHull :=
+        hremaining.possibleImageUnion_subset_holomorphicHull,
+      qPilotRegion_subset_holomorphicHull :=
+        hremaining.qPilotRegion_subset_holomorphicHull,
+      ob3_determinantLogVolume_eq_sum :=
+        hremaining.ob3_determinantLogVolume_eq_sum,
+      ob3_ob4_normalized_eq_determinantLogVolume :=
+        hremaining.ob3_ob4_normalized_eq_determinantLogVolume,
+      ob3_ob5_hullLogVolume_eq_determinantLogVolume :=
+        hremaining.ob3_ob5_hullLogVolume_eq_determinantLogVolume,
+      ob4_tensorPower_bound :=
+        hremaining.ob4_tensorPower_bound,
+      measure_eq_hullLogVolume :=
+        hremaining.measure_eq_hullLogVolume,
+      recordCanonicalBridge_eq :=
+        hremaining.recordCanonicalBridge_eq,
+      q_pilot_positive :=
+        hremaining.q_pilot_positive,
+      normalization :=
+        hremaining.normalization,
+      qSigned_le_thetaSigned :=
+        hremaining.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Step (x) finite packet and vertical-\(IQ\) target audit projected from the
 canonical-one constructed-\(\IPL\) source object.
 
@@ -48247,6 +48362,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  ob3Ob4DeterminantAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
+      sourceData
   packetTargetAudit :
     CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
   directFiniteBoundaryAudit :
@@ -48314,6 +48432,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
       stepXIHullAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      ob3Ob4DeterminantAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
       packetTargetAudit := hpacketTarget,
       directFiniteBoundaryAudit := hdirectBoundary,
       boundaryAudit :=
@@ -48406,6 +48526,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  ob3Ob4DeterminantAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
+      sourceData
   packetTargetAudit :
     CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
   finiteBoundaryAudit :
@@ -48450,6 +48573,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
     stepXIHullAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+    ob3Ob4DeterminantAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
     packetTargetAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit,
     finiteBoundaryAudit :=
