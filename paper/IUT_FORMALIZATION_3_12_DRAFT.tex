@@ -2525,6 +2525,31 @@ Thus the current open analytic/log-volume input is no longer
 \(\mu_{\log}(\phi(P_B))=\det_{\mathrm{norm}}\) as a monolithic assertion, but
 the more source-facing finite summand identity
 \(\mu_{\log}(\phi(P_B))=\sum_{\beta}\operatorname{adj}_{\beta}\).
+This summand-calibrated source now feeds the milestone-facing constructed
+Step~(xi) source directly.  The new constructor
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{.toConstructedHolomorphicHullDeterminantSource}
+\end{array}
+\]
+first derives the record Ob3/Ob5 compatibility object from the finite summand
+formula, then uses that derived compatibility to build
+\(\texttt{IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource}\).
+The experiment endpoint
+\[
+\begin{array}{l}
+\texttt{remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{\_toConstructedHolomorphicHullDeterminantSource\_endpoint}
+\end{array}
+\]
+returns the finite-summand equality, the determinant and normalized determinant
+identifications, and the chain
+\[
+  \mu_{\log}(q) \leq \det_{\log}(P_B) \leq \Theta_{\mathrm{signed}},
+\]
+so the constructed Step~(xi) route no longer receives the canonical
+hull--determinant compatibility as an independent input in this constructor.
 The actual log-volume bridge has now been separated as a named source object:
 \[
 \begin{array}{l}
