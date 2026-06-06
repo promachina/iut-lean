@@ -38446,6 +38446,47 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneCo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface direct Hodge/SHE/\(\IPL\) audit for the canonical-one
+constructed \(\IPL\) finite-divisor source.
+
+This is the no-matched-transport Hodge/SHE/\(\IPL\) review surface: finite
+Hodge/SHE transport, factored \(\SHE\), constructed \(\IPL\) log-volume
+transport, finite-transport log-volume, and choice-link provenance are read
+directly from the canonical-one source object.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneConstructorBuiltIPLConstructionDirectHodgeSHEIPLAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.CanonicalOneConstructorBuiltIPLConstructionDirectHodgeSHEIPLAudit
+      sourceData :=
+  sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectHodgeSHEIPLAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface direct Gaussian-to-Step (xi) audit for the canonical-one
 constructed-\(\IPL\) constructor-built finite-divisor source.
 

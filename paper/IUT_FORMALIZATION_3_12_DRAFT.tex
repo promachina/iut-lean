@@ -4205,6 +4205,8 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstruction}\\
+\quad\texttt{DirectHodgeSHEIPLAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectMiddleRouteAudit},\\
@@ -4263,6 +4265,14 @@ ordered-real dichotomy from the constructed q-positivity side condition, the con
 \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) Step (xi) comparison, and
 the explicit numeric \(C_\Theta\) estimate, rather than projecting that
 dichotomy only through the coarser theta-monoid-matched \(C_\Theta\) package.
+The Hodge/\(\SHE\)/\(\IPL\) part of this direct path is now also exposed as
+\texttt{CanonicalOneConstructorBuiltIPLConstructionDirectHodgeSHEIPLAudit}.
+Unlike the broader compatibility audit, this direct audit does not carry the
+theta-monoid-matched finite-transport ledger; it records only the
+canonical-one theta evaluation, finite Hodge/\(\SHE\) transport, factored
+\(\SHE\), constructed-\(\IPL\) log-volume transport, finite-transport
+log-volume, and choice-link endpoints.  The direct middle route, raw
+q-comparison audit, and direct milestone bundle consume this stricter audit.
 There is now also
 \texttt{CanonicalOneConstructorBuiltIPLConstructionDirectMilestoneCThetaAudit},
 which removes the theta-monoid-matched route, remaining-payload, compact
