@@ -14983,6 +14983,121 @@ theorem source_endpoint
     sourceData.obligations.normalization,
     projected.source_endpoint.2.2.2.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Summand-calibrated Step (xi) log-volume chain.
+
+This is the source-facing inequality package extracted from the
+summand-factored charted Hodge/family-hull source: the selected q-pilot region
+is absorbed by the record possible-image hull, hull monotonicity bounds its
+log-volume by the canonical family-hull log-volume, Ob3/Ob5 identifies that
+hull log-volume with the weighted determinant, and the summand calibration
+identifies the determinant with the package theta scalar.
+-/
+structure SummandCalibratedStepXILogVolumeChainAudit
+    (sourceData :
+      IUTStage1SummandChartedHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    Prop where
+  qPilotRegion_subset_recordUnion :
+    sourceData.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  qPilotRegion_subset_familyHull :
+    sourceData.qPilotRegion ⊆ sourceData.familyHullSource.familyHull
+  qPilotLogVolume_le_familyHullLogVolume :
+    sourceData.familyHullSource.hullData.logVolume sourceData.qPilotRegion <=
+      sourceData.familyHullSource.familyHullLogVolume
+  familyHullLogVolume_eq_determinant :
+    sourceData.familyHullSource.familyHullLogVolume =
+      sourceData.familyHullSource.determinantSource.determinantLogVolume
+  thetaMonoidDegree_eq_summandSum :
+    sourceHA.thetaMonoidDegree =
+      Finset.univ.sum fun index =>
+        (sourceData.familyHullSource.determinantSource.summand index).adjustedLogVolume
+  determinantLogVolume_eq_summandSum :
+    sourceData.familyHullSource.determinantSource.determinantLogVolume =
+      Finset.univ.sum fun index =>
+        (sourceData.familyHullSource.determinantSource.summand index).adjustedLogVolume
+  determinantLogVolume_eq_thetaSigned :
+    sourceData.familyHullSource.determinantSource.determinantLogVolume =
+      package.preLedger.thetaSigned
+  determinantLogVolume_le_thetaSigned :
+    sourceData.familyHullSource.determinantSource.determinantLogVolume <=
+      package.preLedger.thetaSigned
+  qPilotLogVolume_le_determinant :
+    sourceData.familyHullSource.hullData.logVolume sourceData.qPilotRegion <=
+      sourceData.familyHullSource.determinantSource.determinantLogVolume
+  qPilotLogVolume_le_thetaSigned :
+    sourceData.familyHullSource.hullData.logVolume sourceData.qPilotRegion <=
+      package.preLedger.thetaSigned
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem summandCalibratedStepXILogVolumeChainAudit
+    (sourceData :
+      IUTStage1SummandChartedHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    SummandCalibratedStepXILogVolumeChainAudit sourceData := by
+  let q_subset_recordUnion :
+      sourceData.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record :=
+    IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+      (record := record) sourceData.qChoice sourceData.qPilotRegion
+      sourceData.q_subset_choice
+  have q_subset_familyHull :
+      sourceData.qPilotRegion ⊆ sourceData.familyHullSource.familyHull := by
+    intro x hx
+    exact sourceData.familyHullSource.hullData.region_subset_hull
+      sourceData.familyHullSource.familyUnion
+      (by
+        simpa [IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.familyUnion]
+          using q_subset_recordUnion hx)
+  have q_le_familyHull :
+      sourceData.familyHullSource.hullData.logVolume sourceData.qPilotRegion <=
+        sourceData.familyHullSource.familyHullLogVolume :=
+    sourceData.familyHullSource.hullData.logVolume_mono q_subset_familyHull
+  have det_eq_theta :
+      sourceData.familyHullSource.determinantSource.determinantLogVolume =
+        package.preLedger.thetaSigned := by
+    calc
+      sourceData.familyHullSource.determinantSource.determinantLogVolume =
+          sourceHA.thetaMonoidDegree :=
+        sourceData.summandChartedCalibration
+          |>.thetaMonoidDegree_eq_determinantLogVolume |>.symm
+      _ =
+          (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+            package.preLedger.thetaBound.thetaPoint).coord :=
+        sourceData.summandChartedCalibration.chartedTheta_eq_thetaMonoidDegree.symm
+      _ = package.preLedger.thetaSigned :=
+        package.preLedger.thetaSigned_eq_chartedTheta
+  have q_le_det :
+      sourceData.familyHullSource.hullData.logVolume sourceData.qPilotRegion <=
+        sourceData.familyHullSource.determinantSource.determinantLogVolume :=
+    q_le_familyHull.trans
+      (le_of_eq sourceData.familyHullSource.familyHullLogVolume_eq_determinant)
+  let projected :=
+    sourceData
+      |>.toDeterminantChartedHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+  exact
+    { qPilotRegion_subset_recordUnion := q_subset_recordUnion,
+      qPilotRegion_subset_familyHull := q_subset_familyHull,
+      qPilotLogVolume_le_familyHullLogVolume := q_le_familyHull,
+      familyHullLogVolume_eq_determinant :=
+        sourceData.familyHullSource.familyHullLogVolume_eq_determinant,
+      thetaMonoidDegree_eq_summandSum :=
+        sourceData.summandChartedCalibration.thetaMonoidDegree_eq_summandSum,
+      determinantLogVolume_eq_summandSum :=
+        sourceData.familyHullSource.determinantSource.determinantLogVolume_eq_sum,
+      determinantLogVolume_eq_thetaSigned := det_eq_theta,
+      determinantLogVolume_le_thetaSigned := le_of_eq det_eq_theta,
+      qPilotLogVolume_le_determinant := q_le_det,
+      qPilotLogVolume_le_thetaSigned := q_le_det.trans (le_of_eq det_eq_theta),
+      qSigned_le_thetaSigned :=
+        projected.source_endpoint.2.2.2.2.2.2.2.2 }
+
 end IUTStage1SummandChartedHodgeFamilyHullExactThetaHullDetObligationsBackedSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in

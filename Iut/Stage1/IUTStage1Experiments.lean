@@ -39878,6 +39878,32 @@ theorem remark395RecordHullDeterminantBridgeSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface summand-calibrated Step (xi) log-volume audit.
+
+This exposes the current subgoal-5 chain before the final `C_Theta` input is
+applied: selected possible-image q-containment, hull monotonicity,
+Ob3/Ob5 determinant identification, summand-calibrated theta equality, and
+`mu_log(qRegion) <= det_log <= thetaSigned`.
+-/
+theorem remark395SummandCalibratedStepXILogVolumeChainAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {l : PrimeGeFive} {F : Type v} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    {sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        l X C}
+    {β : Type w} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1SummandChartedHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) record sourceHA) :
+    IUTStage1SourcePackage.IUTStage1SummandChartedHodgeFamilyHullExactThetaHullDetObligationsBackedSource.SummandCalibratedStepXILogVolumeChainAudit
+      sourceData :=
+  sourceData.summandCalibratedStepXILogVolumeChainAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface endpoint for the finite-divisor vertical-\(IQ\) corridor
 through the constructed Remark 3.9.5 holomorphic-hull/determinant source.
 

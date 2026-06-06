@@ -2491,6 +2491,28 @@ The Step~(xi) specialization
 to the Theorem~3.11 possible images and the bound to
 \texttt{package.preLedger.thetaSigned}; its endpoint verifies the
 record-canonical q-to-determinant-to-theta comparison.  The constructed
+summand-charted Hodge/family-hull source now exposes this same comparison as a
+separate subgoal-5 audit:
+\[
+\begin{array}{l}
+\texttt{remark395SummandCalibratedStepXILogVolumeChainAudit}.
+\end{array}
+\]
+This endpoint starts from the selected Theorem~3.11 possible-image q-region,
+uses the record-family hull containment and monotonicity, applies the Ob3/Ob5
+family-hull/determinant equality, and then uses the finite summand calibration to
+derive \(\det_{\log}=\theta_{\mathrm{signed}}\).  Thus the theorem returns the
+explicit Lean chain
+\[
+  \mu_{\log}(q_{\mathrm{region}})
+  \le
+  \det_{\log}
+  \le
+  \theta_{\mathrm{signed}},
+\]
+together with the determinant summand-sum equality and the raw
+\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison.
+The constructed
 Step~(xi) source also has
 \texttt{ofRecordHullDeterminantBridgeSource}, so the bridge payload may now be
 passed as one source-level mathematical object instead of as unrelated
