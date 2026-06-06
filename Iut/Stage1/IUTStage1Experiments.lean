@@ -40697,6 +40697,67 @@ theorem remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource_toRecordHullDete
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface exact-theta bridge constructor from the finite Ob3-3
+adjusted summand identity.
+
+Unlike the ordinary bridge endpoint, this version does not receive the Ob4
+tensor-power bound as an argument.  It derives the bound from the
+source-facing calibration
+`thetaSigned = familyHullLogVolume`, after the Ob3/Ob5 determinant equality
+has been constructed from the adjusted summands.
+-/
+theorem remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource_toRecordHullDeterminantBridgeSourceOfThetaEqFamilyHullLogVolume_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume) :
+    let bridgeSource :=
+      sourceData.toRecordHullDeterminantBridgeSourceOfThetaEqFamilyHullLogVolume
+        qPilotRegion q_subset_recordUnion thetaSigned_eq_familyHullLogVolume;
+    bridgeSource.determinantSource =
+        sourceData.ob3ob4Source.toWeightedDeterminantSource ∧
+      bridgeSource.compatibility =
+        sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility ∧
+      package.preLedger.thetaSigned =
+        (sourceData.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          bridgeSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      bridgeSource.qPilotRegion ⊆
+        sourceData.hullOperator.phi
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record) ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        bridgeSource.determinantSource.determinantLogVolume ∧
+      bridgeSource.determinantSource.determinantLogVolume <=
+        package.preLedger.thetaSigned ∧
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        package.preLedger.thetaSigned :=
+  sourceData.toRecordHullDeterminantBridgeSourceOfThetaEqFamilyHullLogVolume_endpoint
+    qPilotRegion q_subset_recordUnion thetaSigned_eq_familyHullLogVolume
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface constructor from the finite Ob3-3 summand identity to the
 milestone-facing constructed Remark 3.9.5 Step (xi) source.
 

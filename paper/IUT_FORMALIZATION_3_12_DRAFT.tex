@@ -5206,6 +5206,35 @@ Theorem~3.11 possible images, while the experiment endpoint
 makes this bridge-level derivation reviewable without unfolding the later
 constructed-source route.
 
+There is now also an exact-theta bridge-level variant with suffix
+\[
+\begin{array}{l}
+\texttt{toRecordHullDeterminantBridgeSource}\\
+\quad\texttt{OfThetaEqFamilyHullLogVolume}
+\end{array}
+\]
+and experiment endpoint
+\[
+\begin{array}{l}
+\texttt{remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{\_toRecordHullDeterminantBridgeSource}\\
+\quad\texttt{OfThetaEqFamilyHullLogVolume\_endpoint}.
+\end{array}
+\]
+This version no longer takes the Ob4 tensor-power bound as an argument at the
+bridge surface.  The generic bounded-family theorem
+\texttt{IUTStage1BoundedFamilyHullDetLogVolumeSource}\\
+\texttt{.tensorPower\_bound\_of\_theta\_eq\_familyHullLogVolume}
+derives the bound from
+\[
+  \theta_{\mathrm{signed}}
+    = \mu_{\log}(\phi(\bigcup_i P_i)),
+\]
+after the adjusted-summand source has already produced the Ob3/Ob5
+determinant equality.  Thus the intermediate bridge now has both forms: an
+ordinary form with an explicit Ob4 bound, and an exact-theta form in which that
+bound is constructed from the family-hull calibration.
+
 The same exact-theta constructor-built route now has an obligations-backed
 form, with suffix
 \[

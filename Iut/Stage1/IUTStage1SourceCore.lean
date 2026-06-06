@@ -5669,6 +5669,15 @@ theorem tensorPower_normalizedLogVolume_eq_familyHullLogVolume
   rw [data.tensorPower.normalizedLogVolume_eq_base,
     data.tensorPower_baseLogVolume_eq_familyHullLogVolume]
 
+theorem tensorPower_bound_of_theta_eq_familyHullLogVolume
+    (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β)
+    {thetaSigned : Real}
+    (hθ : thetaSigned = data.familyHullLogVolume) :
+    data.tensorPower.normalizedLogVolume <= thetaSigned :=
+  le_of_eq
+    (by
+      rw [data.tensorPower_normalizedLogVolume_eq_familyHullLogVolume, hθ])
+
 theorem tensorPowerLogVolume_eq_scaled_familyHullLogVolume
     (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β) :
     data.tensorPower.tensorPowerLogVolume =
@@ -6136,6 +6145,81 @@ theorem ofAdjustedDeterminantLogVolumeSource_endpoint
     exact
       ⟨rfl,
         rfl,
+        sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume,
+        sourceData.adjustedSummandLogVolume_eq_determinantLogVolume,
+        sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+        bridgeSource.qRegionLogVolume_le_determinantLogVolume,
+        bridgeSource.determinantLogVolume_le_thetaSigned,
+        bridgeSource.qRegionLogVolume_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+noncomputable def ofAdjustedDeterminantLogVolumeSourceOfThetaEqFamilyHullLogVolume
+    {γ : Type x} [Fintype γ]
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ)
+    (qRegion : Set α)
+    (q_subset_familyUnion :
+      qRegion ⊆ sourceData.familyUnion)
+    (thetaSigned : Real)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        (sourceData.toOb3Ob5DeterminantCompatibilitySource
+          |>.toBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume) :
+    IUTStage1Remark395HullDeterminantBridgeSource α ι β :=
+  ofAdjustedDeterminantLogVolumeSource sourceData qRegion
+    q_subset_familyUnion thetaSigned
+    ((sourceData.toOb3Ob5DeterminantCompatibilitySource
+      |>.toBoundedFamilyHullDetLogVolumeSource)
+      |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+          thetaSigned_eq_familyHullLogVolume)
+
+set_option linter.style.longLine false in
+theorem ofAdjustedDeterminantLogVolumeSourceOfThetaEqFamilyHullLogVolume_endpoint
+    {γ : Type x} [Fintype γ]
+    (sourceData :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+        α ι β γ)
+    (qRegion : Set α)
+    (q_subset_familyUnion :
+      qRegion ⊆ sourceData.familyUnion)
+    (thetaSigned : Real)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        (sourceData.toOb3Ob5DeterminantCompatibilitySource
+          |>.toBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume) :
+    let bridgeSource :=
+      ofAdjustedDeterminantLogVolumeSourceOfThetaEqFamilyHullLogVolume
+        sourceData qRegion q_subset_familyUnion thetaSigned
+        thetaSigned_eq_familyHullLogVolume;
+    bridgeSource.determinantSource =
+        sourceData.ob3ob4Source.toWeightedDeterminantSource ∧
+      bridgeSource.compatibility =
+        sourceData.toOb3Ob5DeterminantCompatibilitySource.toCompatibility ∧
+      thetaSigned =
+        (sourceData.toOb3Ob5DeterminantCompatibilitySource
+          |>.toBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          bridgeSource.determinantSource).normalizedLogVolume <=
+        thetaSigned ∧
+      sourceData.familyHullLogVolume =
+        sourceData.adjustedSummandLogVolume ∧
+      sourceData.adjustedSummandLogVolume =
+        sourceData.ob3ob4Source.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      bridgeSource.qRegionLogVolume <=
+        bridgeSource.determinantSource.determinantLogVolume ∧
+      bridgeSource.determinantSource.determinantLogVolume <=
+        thetaSigned ∧
+      bridgeSource.qRegionLogVolume <= thetaSigned :=
+  by
+    intro bridgeSource
+    exact
+      ⟨rfl,
+        rfl,
+        thetaSigned_eq_familyHullLogVolume,
+        bridgeSource.tensorPower_bound,
         sourceData.familyHullLogVolume_eq_adjustedSummandLogVolume,
         sourceData.adjustedSummandLogVolume_eq_determinantLogVolume,
         sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
