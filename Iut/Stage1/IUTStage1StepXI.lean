@@ -9824,6 +9824,27 @@ theorem determinantLogVolume_le_thetaSigned
       package.preLedger.thetaSigned :=
   bridgeSource.toSourceCoreBridge.determinantLogVolume_le_thetaSigned
 
+theorem qRegionLogVolume_le_determinantNormalizedLogVolume
+    (bridgeSource :
+      IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record) :
+    bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+      bridgeSource.determinantSource.normalizedLogVolume := by
+  simpa [IUTStage1Remark395HullDeterminantBridgeSource.qRegionLogVolume,
+    IUTStage1Remark395HullDeterminantBridgeSource.determinantNormalizedLogVolume]
+    using
+      bridgeSource.toSourceCoreBridge.qRegionLogVolume_le_determinantNormalizedLogVolume
+
+theorem determinantNormalizedLogVolume_le_thetaSigned
+    (bridgeSource :
+      IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record) :
+    bridgeSource.determinantSource.normalizedLogVolume <=
+      package.preLedger.thetaSigned := by
+  simpa [IUTStage1Remark395HullDeterminantBridgeSource.determinantNormalizedLogVolume]
+    using
+      bridgeSource.toSourceCoreBridge.determinantNormalizedLogVolume_le_thetaSigned
+
 theorem qRegionLogVolume_le_thetaSigned
     (bridgeSource :
       IUTStage1Remark395RecordHullDeterminantBridgeSource
@@ -9831,6 +9852,17 @@ theorem qRegionLogVolume_le_thetaSigned
     bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
       package.preLedger.thetaSigned :=
   bridgeSource.toSourceCoreBridge.qRegionLogVolume_le_thetaSigned
+
+theorem normalizedBridge
+    (bridgeSource :
+      IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record) :
+    bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        bridgeSource.determinantSource.normalizedLogVolume ∧
+      bridgeSource.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned :=
+  ⟨bridgeSource.qRegionLogVolume_le_determinantNormalizedLogVolume,
+    bridgeSource.determinantNormalizedLogVolume_le_thetaSigned⟩
 
 theorem endpoint
     (bridgeSource :

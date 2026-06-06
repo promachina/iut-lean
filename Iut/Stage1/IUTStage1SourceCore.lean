@@ -6023,6 +6023,18 @@ theorem determinantLogVolume_le_thetaSigned
       data.determinantSource data.thetaSigned).mp
     data.tensorPower_bound
 
+theorem qRegionLogVolume_le_determinantNormalizedLogVolume
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.qRegionLogVolume <= data.determinantNormalizedLogVolume :=
+  data.qRegionLogVolume_le_familyHullLogVolume.trans
+    (le_of_eq data.familyHullLogVolume_eq_normalized)
+
+theorem determinantNormalizedLogVolume_le_thetaSigned
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.determinantNormalizedLogVolume <= data.thetaSigned :=
+  (le_of_eq data.determinantNormalizedLogVolume_eq_determinant).trans
+    data.determinantLogVolume_le_thetaSigned
+
 theorem qRegionLogVolume_le_determinantLogVolume
     (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
     data.qRegionLogVolume <=
@@ -6035,6 +6047,13 @@ theorem qRegionLogVolume_le_thetaSigned
     data.qRegionLogVolume <= data.thetaSigned :=
   data.qRegionLogVolume_le_determinantLogVolume.trans
     data.determinantLogVolume_le_thetaSigned
+
+theorem normalizedBridge
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.qRegionLogVolume <= data.determinantNormalizedLogVolume ∧
+      data.determinantNormalizedLogVolume <= data.thetaSigned :=
+  ⟨data.qRegionLogVolume_le_determinantNormalizedLogVolume,
+    data.determinantNormalizedLogVolume_le_thetaSigned⟩
 
 theorem endpoint
     (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :

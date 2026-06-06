@@ -2687,11 +2687,22 @@ proves the chain
 \]
 The experiment-surface theorem
 \texttt{remark395HullDeterminantBridgeSource\_endpoint} exposes this chain.
+The direct two-step normalized form is also exposed as
+\texttt{remark395HullDeterminantBridgeSource\_normalizedBridge}, which records
+\[
+  \mu_{\log}(q_{\mathrm{region}})
+    \leq
+  \det_{\mathrm{norm}}
+    \leq
+  \theta_{\mathrm{signed}} .
+\]
 The Step~(xi) specialization
 \texttt{IUTStage1Remark395RecordHullDeterminantBridgeSource} fixes the family
 to the Theorem~3.11 possible images and the bound to
 \texttt{package.preLedger.thetaSigned}; its endpoint verifies the
-record-canonical q-to-determinant-to-theta comparison.  The constructed
+record-canonical q-to-determinant-to-theta comparison, while
+\texttt{remark395RecordHullDeterminantBridgeSource\_normalizedBridge} exposes
+the corresponding record-canonical normalized bridge.  The constructed
 summand-charted Hodge/family-hull source now exposes this same comparison as a
 separate subgoal-5 audit:
 \[
@@ -5308,12 +5319,23 @@ derives the Ob3/Ob5 determinant compatibility, and then proves the bridge
 chain
 \[
   \mu_{\log}(q\mathrm{Region})
-    \leq \det_{\log}
+    \leq
+  \det_{\mathrm{norm}}
+    =
+  \det_{\log}
     \leq \theta_{\mathrm{signed}} .
 \]
 The record-canonical companion
 \texttt{toRecordHullDeterminantBridgeSource} fixes the family to the
-Theorem~3.11 possible images, while the experiment endpoint
+Theorem~3.11 possible images, while the normalized experiment endpoints
+\[
+\begin{array}{l}
+\texttt{remark395HullDeterminantBridgeSource\_normalizedBridge},\\
+\texttt{remark395RecordHullDeterminantBridgeSource\_normalizedBridge}
+\end{array}
+\]
+make the direct \(\det_{\mathrm{norm}}\)-bridge reviewable without unpacking
+the longer endpoint.  The experiment endpoint
 \[
 \begin{array}{l}
 \texttt{remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\

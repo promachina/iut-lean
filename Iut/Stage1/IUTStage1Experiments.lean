@@ -41155,6 +41155,20 @@ theorem remark395HullDeterminantBridgeSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface normalized determinant bridge for Remark 3.9.5.
+
+This is the direct Step (xi) inequality used by later source routes:
+`mu_log(qRegion) <= det_norm <= thetaSigned`.
+-/
+theorem remark395HullDeterminantBridgeSource_normalizedBridge
+    {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+    (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
+    data.qRegionLogVolume <= data.determinantNormalizedLogVolume ∧
+      data.determinantNormalizedLogVolume <= data.thetaSigned :=
+  data.normalizedBridge
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface record-canonical Ob3/Ob5 compatibility audit for the Theorem
 3.11 possible-image family used by Step (xi).
 -/
@@ -41979,6 +41993,25 @@ theorem remark395RecordHullDeterminantBridgeSource_endpoint
       bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
         package.preLedger.thetaSigned :=
   bridgeSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface record-canonical normalized determinant bridge for the
+Theorem 3.11 possible-image family used by Step (xi).
+-/
+theorem remark395RecordHullDeterminantBridgeSource_normalizedBridge
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (bridgeSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record) :
+    bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion <=
+        bridgeSource.determinantSource.normalizedLogVolume ∧
+      bridgeSource.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned :=
+  bridgeSource.normalizedBridge
 
 set_option linter.style.longLine false in
 /--
