@@ -4223,6 +4223,8 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstruction\_qComparison},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionPacketTargetAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstruction}\\
+\quad\texttt{DirectRouteFiniteBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionCTheta},\\
@@ -4407,13 +4409,18 @@ the packet-local equalities, upper-semi inequality, packet-normalized target
 equalities, and target \((\Ind3)\) equality are visible as source-endpoint
 facts in the milestone audit rather than only as loose components of the final
 boundary tuple.
-These two pieces are now joined by a direct finite-boundary audit: the raw
-comparison is projected from the source-calibrated Gaussian-to-Step (xi) bridge
-audit, while the finite packet and vertical-\(IQ\) facts are projected from the
-packet/target audit.  The older compact matched boundary is still retained for
-compatibility with the existing \(C_\Theta\) route, but the no-\(C_\Theta\)
-review surface now has a direct source-derived boundary for the same
-canonical-one constructed-\(\IPL\) source object.
+These pieces are now joined in two stages.  The smaller direct finite-boundary
+audit projects the raw comparison from the source-calibrated
+Gaussian-to-Step (xi) bridge and the finite packet/vertical-\(IQ\) facts from
+the packet/target audit.  The larger
+\texttt{CanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit}
+then carries the direct middle route, source-derived bridge, route-log-volume
+alignment, Step (xi) hull/determinant audits, side conditions, raw
+q-comparison, and finite packet/vertical-\(IQ\) target facts together before the
+matched compatibility boundary is used.  The older compact matched boundary is
+still retained for compatibility with the existing \(C_\Theta\) route, but the
+no-\(C_\Theta\) review surface now has a direct source-derived boundary for the
+same canonical-one constructed-\(\IPL\) source object.
 The constructor-built bundled route can now also be reached from the stronger
 theta-monoid-matched obligations-backed record-canonical exact corridor.  The
 projection constructs the bundled route internally from the matched

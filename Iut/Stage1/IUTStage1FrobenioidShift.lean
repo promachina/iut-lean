@@ -50252,6 +50252,111 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit
       qSigned_le_thetaSigned := hdirect.qSigned_le_thetaSigned }
 
 set_option linter.style.longLine false in
+/--
+Direct finite-boundary route audit for the canonical-one constructed-\(\IPL\)
+source.
+
+This is the no-theta-monoid-matched finite-boundary review bundle.  It carries
+the direct middle route, source-derived bridge, route-log-volume alignment,
+Step (xi) hull/determinant audits, side conditions, raw q-comparison, and the
+finite packet/vertical-\(IQ\) target endpoint facts together before the
+compatibility `BoundaryAudit` is projected through the matched route.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  directMiddleRouteAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectMiddleRouteAudit
+      sourceData
+  sourceDerivedBridgeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit
+      sourceData
+  routeLogVolumeAlignmentAudit :
+    CanonicalOneConstructorBuiltIPLConstructionRouteLogVolumeAlignmentAudit
+      sourceData
+  stepXIHullAudit :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
+  upperRayAudit :
+    CanonicalOneConstructorBuiltIPLConstructionUpperRayAudit sourceData
+  stepXIHolomorphicHullDeterminantSkeleton :
+    CanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton
+      sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit
+      sourceData
+  ob3Ob4DeterminantAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
+      sourceData
+  ob5CompatibilityAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
+      sourceData
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
+  qComparisonAudit :
+    CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit sourceData
+  packetTargetAudit :
+    CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
+  directFiniteBoundaryAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit
+      sourceData
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  source_normalization :
+    packageN.preLedger.normalization
+  thetaAverage_eq_entryTarget :
+    part.insulated_route.theta_source.thetaSourceAverage audited =
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume
+  entryTargetFinite_eq_ind3Target :
+    sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit
+      sourceData := by
+  have hside :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit
+  have hpacket :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit
+  have hdirect :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit
+  exact
+    { directMiddleRouteAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectMiddleRouteAudit,
+      sourceDerivedBridgeAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedBridgeAudit,
+      routeLogVolumeAlignmentAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionRouteLogVolumeAlignmentAudit,
+      stepXIHullAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
+      upperRayAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionUpperRayAudit,
+      stepXIHolomorphicHullDeterminantSkeleton :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton,
+      ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit,
+      ob3Ob4DeterminantAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
+      ob5CompatibilityAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
+      sideConditionAudit := hside,
+      qComparisonAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit,
+      packetTargetAudit := hpacket,
+      directFiniteBoundaryAudit := hdirect,
+      q_pilot_positive := hside.q_pilot_positive,
+      source_normalization := hside.source_normalization,
+      thetaAverage_eq_entryTarget := hpacket.thetaAverage_eq_entryTarget,
+      entryTargetFinite_eq_ind3Target := hpacket.entryTargetFinite_eq_ind3Target,
+      qSigned_le_thetaSigned := hdirect.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
 abbrev CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -50310,6 +50415,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
     CanonicalOneConstructorBuiltIPLConstructionPacketTargetAudit sourceData
   directFiniteBoundaryAudit :
     CanonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit
+      sourceData
+  directRouteFiniteBoundaryAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit
       sourceData
   boundaryAudit :
     CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit sourceData
@@ -50397,6 +50505,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
       packetTargetAudit := hpacketTarget,
       directFiniteBoundaryAudit := hdirectBoundary,
+      directRouteFiniteBoundaryAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit,
       boundaryAudit :=
         sourceData.boundaryEndpointWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit,
       packetLocalObjectFinite_eq_entrySource :=
@@ -50562,6 +50672,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
   directFiniteBoundaryAudit :
     CanonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit
       sourceData
+  directRouteFiniteBoundaryAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit
+      sourceData
   middleRouteAudit :
     CanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit sourceData
   directMiddleRouteAudit :
@@ -50644,6 +50757,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit,
     directFiniteBoundaryAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit,
+    directRouteFiniteBoundaryAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectRouteFiniteBoundaryAudit,
     middleRouteAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit,
     directMiddleRouteAudit :=
