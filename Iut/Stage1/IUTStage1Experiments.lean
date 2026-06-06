@@ -38652,8 +38652,9 @@ set_option linter.style.longLine false in
 Experiment-surface raw Step (xi) q-comparison audit for the canonical-one
 constructed \(\IPL\) constructor-built finite-divisor route.
 
-This exposes the constructed \(\IPL\) middle route, Step (xi) hull audits, and
-side-condition audit before projecting the raw
+This exposes the constructed \(\IPL\) middle route, Step (xi) hull audit,
+named Ob1/Ob2 hull absorption, named Ob3/Ob4 determinant payload, Ob5
+compatibility, and side-condition audit before projecting the raw
 `qSigned <= thetaSigned` comparison.
 -/
 theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneConstructorBuiltIPLConstructionQComparisonAudit

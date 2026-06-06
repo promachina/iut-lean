@@ -49393,10 +49393,12 @@ route.
 
 The audit exposes the Hodge--Arakelov canonical-one reconstruction, the
 constructed \(\IPL\)/log-volume middle route, the constructor-built
-possible-image hull/determinant audits, and the source side-condition audit
-before projecting the raw \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\)
-comparison.  This keeps the comparison review surface separate from both the
-finite Step (x) packet boundary and the later numeric \(C_\Theta\) estimate.
+possible-image hull/determinant skeleton, the named Ob1/Ob2 hull-absorption
+and Ob3/Ob4 determinant audits, Ob5 compatibility, and the source
+side-condition audit before projecting the raw
+\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison.  This keeps the
+comparison review surface separate from both the finite Step (x) packet
+boundary and the later numeric \(C_\Theta\) estimate.
 -/
 structure CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
     (sourceData :
@@ -49413,6 +49415,12 @@ structure CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
     CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit sourceData
   stepXIHolomorphicHullDeterminantSkeleton :
     CanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton
+      sourceData
+  ob1Ob2HullAbsorptionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit
+      sourceData
+  ob3Ob4DeterminantAudit :
+    CanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit
       sourceData
   ob5CompatibilityAudit :
     CanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit
@@ -49440,6 +49448,10 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit,
       stepXIHolomorphicHullDeterminantSkeleton :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionStepXIHolomorphicHullDeterminantSkeleton,
+      ob1Ob2HullAbsorptionAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb1Ob2HullAbsorptionAudit,
+      ob3Ob4DeterminantAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb3Ob4DeterminantAudit,
       ob5CompatibilityAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLConstructionOb5CompatibilityAudit,
       sideConditionAudit := hside,
