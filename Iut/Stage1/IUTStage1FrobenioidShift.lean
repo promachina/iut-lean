@@ -44868,6 +44868,83 @@ theorem toMatchedSideConditionedConstructorBackedObligationsCorridorAudit
 
 set_option linter.style.longLine false in
 /--
+Route-level Step (xi) holomorphic-hull/determinant skeleton for the strongest
+side-conditioned matched constructor-backed exact source.
+
+This names the source-paper Step (xi) chain inside the bundled finite-exact
+route: the selected q-pilot region is contained in the Theorem 3.11
+possible-image union; that union is contained in its holomorphic hull; the
+bounded-family determinant source supplies the determinant/log-volume and
+tensor-power facts; the package bridge is the record-canonical hull/tensor
+bridge; and the raw signed comparison is available.
+-/
+def MatchedSideConditionedStepXIHolomorphicHullDeterminantSkeleton
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  let projected :=
+    sourceData.sideConditionedConstructorBackedPossibleImageSource
+      |>.toConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource;
+  projected.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ∧
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ⊆
+      projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData.hullRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record) ∧
+    projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ∧
+    projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume =
+      projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource.determinantLogVolume ∧
+    projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyUnionLogVolume <=
+      projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+    projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.tensorPower.normalizedLogVolume =
+      projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned ∧
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        projected.operation projected.hullOperation projected.determinantOperation
+        projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+        projected.qPilotRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) projected.qChoice projected.qPilotRegion
+          projected.q_subset_choice)
+        projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+        projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+        projected.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        projected.measureCalibratedHodgeDeterminantSource.tensorPower_bound ∧
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toMatchedSideConditionedStepXIHolomorphicHullDeterminantSkeleton
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedSideConditionedStepXIHolomorphicHullDeterminantSkeleton sourceData := by
+  dsimp [MatchedSideConditionedStepXIHolomorphicHullDeterminantSkeleton]
+  let audit :=
+    sourceData.sideConditionedConstructorBackedPossibleImageSource
+      |>.toSideConditionedConstructorBackedStepXIHullDetAudit
+      |>.constructorBackedAudit
+  exact
+    ⟨audit.qPilotRegion_subset_recordUnion,
+      audit.recordUnion_subset_holomorphicHull,
+      audit.familyUnion_eq_record,
+      audit.familyHullLogVolume_eq_determinant,
+      audit.familyUnionLogVolume_le_familyHullLogVolume,
+      audit.tensorPower_normalized_eq_familyHull,
+      audit.tensorPower_bound,
+      audit.hullDetBridge_eq_recordCanonical,
+      audit.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
 Remaining-boundary ledger for the strongest side-conditioned matched
 constructor-backed exact corridor.
 
@@ -44890,6 +44967,8 @@ structure MatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit
   sideConditionedStepXIAudit :
     IUTStage1TargetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource.SideConditionedConstructorBackedStepXIHullDetAudit
       sourceData.sideConditionedConstructorBackedPossibleImageSource
+  stepXIHolomorphicHullDeterminantSkeleton :
+    MatchedSideConditionedStepXIHolomorphicHullDeterminantSkeleton sourceData
   matchedConstructorBackedGaussianExactAudit :
     MatchedSideConditionedConstructorBackedGaussianExactAudit sourceData
   projectedMatchedConstructorBackedObligationsCorridorAudit :
@@ -44911,6 +44990,8 @@ theorem toMatchedSideConditionedConstructorBackedRemainingSourceBoundaryAudit
     sideConditionedStepXIAudit :=
       sourceData.sideConditionedConstructorBackedPossibleImageSource
         |>.toSideConditionedConstructorBackedStepXIHullDetAudit,
+    stepXIHolomorphicHullDeterminantSkeleton :=
+      sourceData.toMatchedSideConditionedStepXIHolomorphicHullDeterminantSkeleton,
     matchedConstructorBackedGaussianExactAudit :=
       sourceData.toMatchedSideConditionedConstructorBackedGaussianExactAudit,
     projectedMatchedConstructorBackedObligationsCorridorAudit :=

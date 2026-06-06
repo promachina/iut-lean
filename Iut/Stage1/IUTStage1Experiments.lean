@@ -28286,6 +28286,47 @@ theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstr
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface route-level Step (xi) holomorphic-hull/determinant skeleton
+for the side-conditioned matched constructor-backed exact source.
+
+This is the bundled finite-exact analogue of
+`targetChartedHodgeSideConditionedConstructorBackedMeasureCalibratedPossibleImage_stepXIHolomorphicHullDeterminantEndpoint`:
+the skeleton is now projected from the same source object that also carries the
+matched Hodge/SHE/\(\IPL\), finite-divisor, and exact vertical-`IQ` data.
+-/
+theorem targetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_matchedSideConditionedStepXIHolomorphicHullDeterminantSkeleton
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionSideConditionedConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedSideConditionedStepXIHolomorphicHullDeterminantSkeleton
+      sourceData :=
+  sourceData.toMatchedSideConditionedStepXIHolomorphicHullDeterminantSkeleton
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the side-conditioned matched constructor-backed
 exact source and its projection through the obligations-backed
 record-canonical corridor.
