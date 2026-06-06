@@ -24970,6 +24970,81 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_gaussianToStepXIEndpo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Gaussian-to-Step (xi) audit with the Step (xi)
+holomorphic-hull and determinant bridge fields projected explicitly.
+
+This is the all-in-one route audit in its review-facing form: besides the
+theta-root, Hodge/\(\SHE\), and \(\IPL\) provenance carried by
+`GaussianToStepXIAudit`, it displays the record possible-image union, its
+containment in the constructed holomorphic hull, the hull log-volume bound, the
+determinant family-hull equalities, and the record-canonical hull/tensor bridge
+used for the raw comparison.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_gaussianToStepXIHullDetAuditEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+        routeSource ∧
+      routeSource.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (routeSource.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (routeSource.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+        routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.tensorPower.normalizedLogVolume =
+        routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          routeSource.possibleImageSource.operation
+          routeSource.possibleImageSource.hullOperation
+          routeSource.possibleImageSource.determinantOperation
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData
+          routeSource.possibleImageSource.qPilotRegion
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) routeSource.possibleImageSource.qChoice
+            routeSource.possibleImageSource.qPilotRegion
+            routeSource.possibleImageSource.q_subset_choice)
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.compatibility
+          routeSource.possibleImageSource.hodgeDeterminantSource.measure_eq_hullLogVolume
+          routeSource.possibleImageSource.hodgeDeterminantSource.tensorPower_bound ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned := by
+  have haudit := routeSource.toGaussianToStepXIAudit
+  exact
+    ⟨haudit,
+      haudit.possibleImageUnion_eq_record,
+      haudit.recordUnion_subset_holomorphicHull,
+      haudit.holomorphicHull_volume_bound,
+      haudit.familyHullLogVolume_eq_determinant,
+      haudit.tensorPower_normalized_eq_familyHull,
+      haudit.hullDetBridge_eq_recordCanonical,
+      haudit.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy from the all-in-one target-charted
 route and a bundled finite-divisor packet-local Step (x) source.
 -/

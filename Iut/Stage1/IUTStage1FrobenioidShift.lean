@@ -20115,16 +20115,55 @@ structure GaussianToStepXIAudit
     sourceData.possibleImageSource.qPilotRegion ⊆
       IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
         record
+  possibleImageUnion_eq_record :
+    sourceData.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.toThetaPilotHullEndpoint.possible_images.union =
+      record.thetaPossibleImages.union
+  recordUnion_subset_holomorphicHull :
+    Region.Subset record.thetaPossibleImages.union
+      (sourceData.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+        packageN.preLedger.certificate).hull
+  holomorphicHull_volume_bound :
+    RegionMeasure.HasVolumeAtMost packageN.preLedger.measure
+      (sourceData.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+        packageN.preLedger.certificate).hull
+      packageN.preLedger.thetaSigned
   thetaMonoidDegree_eq_summandSum :
     sourceData.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
       (Finset.univ.sum fun index =>
         (sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  familyHullLogVolume_eq_determinant :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume
+  tensorPower_normalized_eq_familyHull :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.tensorPower.normalizedLogVolume =
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume
   thetaSigned_eq_familyHull :
     packageN.preLedger.thetaSigned =
       sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume
+  tensorPower_bound :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
   hullDetBridge_eq_obligations :
     packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
       sourceData.possibleImageSource.obligations.hullDetData.bridgeData
+  hullDetBridge_eq_recordCanonical :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.possibleImageSource.operation
+        sourceData.possibleImageSource.hullOperation
+        sourceData.possibleImageSource.determinantOperation
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData
+        sourceData.possibleImageSource.qPilotRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.possibleImageSource.qChoice
+          sourceData.possibleImageSource.qPilotRegion
+          sourceData.possibleImageSource.q_subset_choice)
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.compatibility
+        sourceData.possibleImageSource.hodgeDeterminantSource.measure_eq_hullLogVolume
+        sourceData.possibleImageSource.hodgeDeterminantSource.tensorPower_bound
   qSigned_le_thetaSigned :
     packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
 
@@ -20139,6 +20178,9 @@ theorem toGaussianToStepXIAudit
   have hipl := sourceData.constructedIPLLogVolumeTransportSource_endpoint
   have hsource := sourceData.source_endpoint
   have hside := sourceData.possibleImageSideConditionedHull_endpoint
+  have hhull := sourceData.possibleImageHolomorphicHullLogVolume_endpoint
+  have hdet := sourceData.possibleImageDeterminantSummandFamilyHull_endpoint
+  have hcanonical := sourceData.possibleImageCanonicalHullTensorBridge_endpoint
   exact
     { canonicalGeneratorUpToSign := htheta.1,
       canonicalFullLabel := htheta.2.1,
@@ -20154,9 +20196,16 @@ theorem toGaussianToStepXIAudit
       iplLogVolume_preserved := hipl.2.2.2.2.2.2.1,
       qPilotRegion_eq_choice := hsource.2.2.2.2.1,
       qPilotRegion_subset_union := hside.2.1,
+      possibleImageUnion_eq_record := hhull.2.2.1,
+      recordUnion_subset_holomorphicHull := hhull.2.2.2.1,
+      holomorphicHull_volume_bound := hhull.2.2.2.2.1,
       thetaMonoidDegree_eq_summandSum := hsource.2.2.2.2.2.1,
+      familyHullLogVolume_eq_determinant := hdet.2.2.2.1,
+      tensorPower_normalized_eq_familyHull := hdet.2.2.2.2.1,
       thetaSigned_eq_familyHull := hsource.2.2.2.2.2.2.2.1,
+      tensorPower_bound := hcanonical.2.2.2.1,
       hullDetBridge_eq_obligations := hsource.2.2.2.2.2.2.2.2.1,
+      hullDetBridge_eq_recordCanonical := hcanonical.2.1,
       qSigned_le_thetaSigned := hside.2.2.2.2.2 }
 
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
