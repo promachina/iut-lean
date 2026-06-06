@@ -41419,6 +41419,37 @@ theorem remark395Ob3Ob5AdjustedDeterminantLogVolumeSource_ofLocalizedVectorBundl
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface decomposition source for the localized Ob3-3 summand
+formula.
+
+This endpoint no longer receives the localized adjusted-summand equality as a
+single assertion.  It reads it from finite additivity of the family-hull
+log-volume over localized regions and the pointwise equality between each
+localized-region log-volume and its adjusted vector-bundle summand.
+-/
+theorem remark395LocalizedHullVectorBundleDecompositionSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        α ι η β γ) :
+    (∀ index : β,
+      data.localizedRegion index ⊆ data.familyHull) ∧
+      data.familyHullLogVolume = data.localizedLogVolumeSum ∧
+      data.localizedLogVolumeSum = data.localizedAdjustedSum ∧
+      data.familyHullLogVolume = data.localizedAdjustedSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source =
+        data.localizedSource.toAdjustedDeterminantSource ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.localizedAdjustedSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.localizedSource.determinantLogVolume ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
