@@ -44390,6 +44390,33 @@ theorem toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
 
 set_option linter.style.longLine false in
 /--
+Full constructor-built finite-divisor route audit with the remaining
+Remark 3.9.5/Step (xi) payload ledger exposed.
+
+This strengthens the compact route audit without changing it: the first
+component is the source-paper payload still supplied to the constructor-built
+hull source, and the second component is the existing finite-divisor route
+audit.
+-/
+def ConstructorBuiltMatchedRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource ∧
+    ConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit sourceData
+
+theorem toConstructorBuiltMatchedRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    ConstructorBuiltMatchedRemainingPayloadRouteAudit sourceData :=
+  ⟨sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit,
+    sourceData.toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit⟩
+
+set_option linter.style.longLine false in
+/--
 Raw finite-divisor boundary audit for the constructor-built matched route.
 
 This is the no-\(C_\Theta\) endpoint of the bundled constructor-built source:
@@ -47409,6 +47436,23 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorR
   sourceData.toThetaMonoidMatchedConstructorBuiltSource.toConstructorBuiltMatchedSourceDerivedFiniteDivisorRouteAudit
 
 set_option linter.style.longLine false in
+abbrev CanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.ConstructorBuiltMatchedRemainingPayloadRouteAudit
+    sourceData.toThetaMonoidMatchedConstructorBuiltSource
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit
+      sourceData :=
+  sourceData.toThetaMonoidMatchedConstructorBuiltSource.toConstructorBuiltMatchedRemainingPayloadRouteAudit
+
+set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -47603,6 +47647,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
   constructorBuiltStepXIBoundaryAudit :
     IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
       sourceData.hullSource
+  constructorBuiltRemainingPayloadAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
+      sourceData.hullSource
   constructorSourcedSourceEndpoint :
     IUTStage1PossibleImageConstructorSourcedHolomorphicHullDeterminantSource.SourceEndpoint
       sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource
@@ -47661,6 +47708,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionStepXIHullAudit
       recordCanonicalStepXIAudit := sourceData.hullSource.recordCanonicalStepXIAudit,
       constructorBuiltStepXIBoundaryAudit :=
         sourceData.hullSource.toConstructorBuiltStepXIBoundaryAudit,
+      constructorBuiltRemainingPayloadAudit :=
+        sourceData.hullSource.toConstructorBuiltRemainingPayloadAudit,
       constructorSourcedSourceEndpoint :=
         sourceData.hullSource.toConstructorSourcedHolomorphicHullDeterminantSource.source_endpoint,
       constructorPinnedSourceEndpoint :=
@@ -47981,6 +48030,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
   routeAudit :
     CanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit
       sourceData
+  remainingPayloadRouteAudit :
+    CanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit
+      sourceData
   hodgeSHEIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit sourceData
   directGaussianToStepXIAudit :
@@ -48019,6 +48071,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData cTheta :=
   { routeAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionSourceDerivedFiniteDivisorRouteAudit,
+    remainingPayloadRouteAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit,
     hodgeSHEIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit,
     directGaussianToStepXIAudit :=

@@ -3823,7 +3823,12 @@ exposes the built Step (xi) endpoint, the projected
 constructor-sourced endpoint, and the projected constructor-pinned endpoint,
 then projects to the established matched finite-divisor audit.  The experiment
 surface exposes this as the compact \texttt{ConstructorBuiltFullRouteAudit}
-review target.  The same bundled source now also has no-\(C_\Theta\) and
+review target.  The same route now also has
+\texttt{ConstructorBuiltRemainingPayloadRouteAudit}, exposed with suffix
+\texttt{ConstructorBuiltRemainingPayloadRouteAudit}; it pairs the
+remaining-payload ledger with the full finite-divisor route audit so the
+source-paper Step (xi) obligations remain attached to the bundled source
+object.  The same bundled source now also has no-\(C_\Theta\) and
 conditional \(C_\Theta\) experiment endpoints with suffixes
 \texttt{ConstructorBuiltBoundaryAudit} and
 \texttt{ConstructorBuiltCThetaAudit}; these keep the external numeric estimate
@@ -3986,6 +3991,7 @@ experiment surface exposes this stricter route through suffixes
 \[
 \begin{array}{l}
 \texttt{canonicalOneConstructorBuiltIPLConstructionFullRouteAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionDirectGaussianToStepXIAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit},\\
@@ -3998,6 +4004,11 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit}.
 \end{array}
 \]
+The corresponding milestone \(C_\Theta\) audit now also carries the
+remaining-payload route audit as a field, so the final canonical-one
+constructed-\(\IPL\) review target keeps the Hodge/\(\SHE/\IPL\), direct
+Gaussian-to-Step (xi), finite Step (x), vertical-\(IQ\), and Step (xi)
+source-paper payload ledgers together.
 At the same canonical-one boundary, the finite Hodge/\(\SHE/\IPL\) middle
 layer is now constructed directly from the route's source-calibrated and
 target Hodge--Arakelov evaluations plus canonical \(1\)-label preservation.
@@ -4194,7 +4205,7 @@ The practical priority order is:
   canonical-one constructed-\(\IPL\) route now carries a direct
   Gaussian-to-Step (xi) audit through the constructor-built hull projection, so
   the named constructor-built Step (xi) boundary audit, and now its
-  remaining-payload audit, should be treated as the
+  route-carried remaining-payload audit, should be treated as the
   current ledgers of remaining source-paper obligations; the charted
   Hodge-calibrated family-hull source now constructs this constructor-built
   boundary from a stronger source object, and the synchronized target-charted
