@@ -18322,6 +18322,32 @@ theorem constructedIPLLogVolumeTransportSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Choice-wise constructed-\(\IPL\) provenance exposed by the target-charted
+Hodge--Arakelov/IPL source.
+
+Each possible output choice prime strip is linked back to the input prime strip
+of the route's constructed IPL transport.  This is the choice-indexed
+input-prime-strip link before any Step (xi) hull/determinant source is used.
+-/
+theorem constructedIPLChoiceLink_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeArakelovIPLConstructionSource
+        part audited record X C) :
+    (∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      (sourceData.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.constructedIPLChoiceLink_endpoint
+
+set_option linter.style.longLine false in
+/--
 Constructed IPL log-volume provenance exposed by the target-charted
 Hodge--Arakelov/IPL source.
 
@@ -20550,6 +20576,32 @@ theorem constructedIPLLogVolumeTransportSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Choice-wise constructed-\(\IPL\) provenance exposed by the all-in-one route.
+
+The target-charted Hodge/IPL determinant possible-image route keeps the
+constructed input-prime-strip link visible at route level: every possible
+output choice prime strip is linked back to the same input prime strip used by
+the route's IPL/log-volume transport.
+-/
+theorem constructedIPLChoiceLink_endpoint
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    (∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      (sourceData.hodgeIPLSource.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.hodgeIPLSource.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
+  sourceData.hodgeIPLSource.constructedIPLChoiceLink_endpoint
+
+set_option linter.style.longLine false in
+/--
 Constructed IPL log-volume provenance exposed by the all-in-one route.
 
 This route-level audit makes the IPL/log-volume step explicit: the source and
@@ -21188,6 +21240,14 @@ structure GaussianToStepXIAudit
   iplDatum_eq_constructed :
     sourceData.toIPLLogVolumeTransport.iplDatum =
       sourceData.hodgeIPLSource.iplConstructionSource.constructedDatum
+  choiceLink_endpoint :
+    ∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      (sourceData.hodgeIPLSource.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.hodgeIPLSource.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice
   iplLogVolume_preserved :
     sourceData.toIPLLogVolumeTransport.targetLogVolume =
       sourceData.toIPLLogVolumeTransport.sourceLogVolume
@@ -21260,6 +21320,7 @@ theorem toGaussianToStepXIAudit
   have htheta := sourceData.hodgeArakelovThetaEvaluation_endpoint
   have hshe := sourceData.hodgeArakelovFiniteHodgeSHETransportSource_endpoint
   have hipl := sourceData.constructedIPLLogVolumeTransportSource_endpoint
+  have hchoice := sourceData.constructedIPLChoiceLink_endpoint
   have hsource := sourceData.source_endpoint
   have hside := sourceData.possibleImageSideConditionedHull_endpoint
   have hhull := sourceData.possibleImageHolomorphicHullLogVolume_endpoint
@@ -21277,6 +21338,7 @@ theorem toGaussianToStepXIAudit
       coordinateEquiv := hshe.2.2.2.2.2.2,
       iplDatum_eq_certificate := hipl.1,
       iplDatum_eq_constructed := hipl.2.1,
+      choiceLink_endpoint := hchoice.1,
       iplLogVolume_preserved := hipl.2.2.2.2.2.2.1,
       qPilotRegion_eq_choice := hsource.2.2.2.2.1,
       qPilotRegion_subset_union := hside.2.1,
@@ -49507,6 +49569,121 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoutePacketLocalVerticalIQ_
     packetLocalObject_eq_entrySource,
     entrySource_eq_monoAnalyticProduct,
     packetLocalObjectFinite_eq_ind3Source⟩
+
+set_option linter.style.longLine false in
+/--
+Choice-linked no-`C_\Theta` packet-local endpoint for the all-in-one
+target-charted Hodge/\(\IPL\) determinant possible-image route.
+
+This strengthens
+`targetChartedHodgeIPLDeterminantPossibleImageRoutePacketLocalVerticalIQ_boundaryEndpoint`
+by exposing the constructed choice-wise input-prime-strip links at the same
+boundary as the raw Step (xi) comparison and the exact vertical-`IQ` target
+audit.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoutePacketLocalVerticalIQ_choiceLinkedBoundaryEndpoint
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C)
+    {j : Nat}
+    {monoAnalyticD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (entrySource_eq_monoAnalyticProduct :
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.toRealized.product.productLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    (let bridge := routeSource.toSourceDerivedBridge;
+      (∀ choice :
+        IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean,
+        (routeSource.hodgeIPLSource.iplConstructionSource.choiceLink choice).source =
+            bridge.iplTransport.iplDatum.inputPrimeStrip ∧
+          (routeSource.hodgeIPLSource.iplConstructionSource.choiceLink choice).target =
+            bridge.iplTransport.iplDatum.choicePrimeStrip choice) ∧
+      (bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+        bridge.iplTransport.iplDatum =
+          routeSource.hodgeIPLSource.iplConstructionSource.constructedDatum ∧
+        (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+          packageN.preLedger.thetaBound.thetaPoint).coord =
+          routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+        (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+          packageN.preLedger.thetaBound.thetaPoint).coord =
+          routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+        routeSource.possibleImageSource.qPilotRegion =
+          IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record routeSource.possibleImageSource.qChoice ∧
+        routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+          (Finset.univ.sum fun index =>
+            (routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.summand
+              index).adjustedLogVolume) ∧
+        routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+        packageN.preLedger.thetaSigned =
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+        packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+          routeSource.possibleImageSource.obligations.hullDetData.bridgeData ∧
+        bridge.iplTransport.targetLogVolume =
+          bridge.iplTransport.sourceLogVolume ∧
+        packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+        bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+          bridge.finiteHodgeSHETransport.targetTheater.side)) ∧
+      (targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms = true ∧
+        part.insulated_route.theta_source.thetaSourceAverage audited =
+          audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+          audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+          audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+        part.insulated_route.theta_source.thetaSourceAverage audited =
+          upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume) ∧
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume ∧
+      upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        monoAnalyticD.toRealized.product.productLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
+  have hbase :=
+    part.targetChartedHodgeIPLDeterminantPossibleImageRoutePacketLocalVerticalIQ_boundaryEndpoint
+      audited routeSource upperSemiEntry packetLocalObject_eq_entrySource
+      entrySource_eq_monoAnalyticProduct packetLocalObjectFinite_eq_ind3Source
+      targetSource
+  have hchoice := routeSource.constructedIPLChoiceLink_endpoint
+  exact
+    ⟨⟨hchoice.1, hbase.1⟩,
+      hbase.2.1,
+      hbase.2.2.1,
+      hbase.2.2.2.1,
+      hbase.2.2.2.2⟩
 
 theorem bridgeSource_eq_hodgeTheaterDescentPacketTransport
     (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l) :
