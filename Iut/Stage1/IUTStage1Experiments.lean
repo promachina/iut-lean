@@ -25243,6 +25243,62 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_determinantSourceBoun
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface calibration-backed determinant-source boundary for the
+all-in-one target-charted route.
+
+This is the stricter view of the same determinant payload: the
+Hodge theta/summand equality is obtained from the target-charted summand
+calibration object before the record-native family-hull determinant facts and
+tensor-power bound are projected.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_calibratedDeterminantSourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    package.preLedger.measure =
+        routeSource.calibratedDeterminantSource.familyHullSource.hullData.toRegionMeasure ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        routeSource.hodgeIPLSource.hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) ∧
+      (Transport.map package.preLedger.chartedContainer.chart.thetaToTarget
+        package.preLedger.thetaBound.thetaPoint).coord =
+        routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree ∧
+      routeSource.hodgeIPLSource.hodgeSynchronization.valueSource.thetaMonoidDegree =
+        (Finset.univ.sum fun index =>
+          (routeSource.calibratedDeterminantSource.familyHullSource.determinantSource.summand index).adjustedLogVolume) ∧
+      routeSource.calibratedDeterminantSource.familyHullSource.familyUnion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      routeSource.calibratedDeterminantSource.familyHullSource.familyHullLogVolume =
+        routeSource.calibratedDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      routeSource.calibratedDeterminantSource.familyHullSource.familyUnionLogVolume <=
+        routeSource.calibratedDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      routeSource.calibratedDeterminantSource.familyHullSource.tensorPower.normalizedLogVolume =
+        routeSource.calibratedDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          routeSource.calibratedDeterminantSource.familyHullSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned :=
+  routeSource.calibratedDeterminantSource_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy from the all-in-one target-charted
 route and a bundled finite-divisor packet-local Step (x) source.
 -/

@@ -3229,6 +3229,13 @@ equality---from the record-native family-hull facts that \Lean{} derives:
 the record possible-image union, the family-hull/determinant equality, the
 family-union bound by the hull, tensor-power normalization, and the resulting
 tensor-power bound against \(\theta_{\mathrm{Signed}}\).
+This has now been tightened by the endpoint
+\path|targetChartedHodgeIPLDeterminantPossibleImageRoute_calibratedDeterminantSourceEndpoint|:
+the same route determinant payload is first viewed through a calibration-backed
+source object, so the Hodge theta/summand equality is projected from the
+target-charted summand calibration rather than exposed as a raw determinant
+field.  The package measure identification remains the explicit determinant
+measure boundary.
 The no-\(C_\Theta\) finite-divisor boundary now returns this strengthened audit
 as well, via the compact suffix
 \texttt{boundaryEndpointWithAllInOneRouteGaussianStepXIAudit}.  This gives a
