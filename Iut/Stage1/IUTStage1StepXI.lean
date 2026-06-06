@@ -4643,6 +4643,105 @@ theorem source_endpoint
     sourceData.transportSource.allowedForgetfulTransport_holds,
     sourceData.toIPLLogVolumeTransport.histories_not_identified'⟩
 
+set_option linter.style.longLine false in
+/--
+Constructed IPL log-volume provenance as a single finite-transport chain.
+
+This audit makes the Step (xi) IPL/log-volume handoff non-independent: the
+constructed Theorem 3.11 input-prime-strip datum supplies the IPL endpoints, the
+finite Hodge/SHE transport supplies the source and transported target averages,
+and the IPL target/source log-volume equality is exactly the finite transported
+average preservation theorem.
+-/
+structure ConstructedIPLFiniteTransportLogVolumeChainAudit
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    Prop where
+  finiteTransportEndpoint :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
+      sourceData.finiteTransport.sourceTheater =
+        record.bundle.structuredSHE.context.domainStructure.theater ∧
+      sourceData.finiteTransport.targetTheater =
+        record.bundle.structuredSHE.context.codomainStructure.theater ∧
+      sourceData.finiteTransport.coordinateEquiv =
+        sourceData.finiteTransport.toFactoredObligations.coordinateEquiv ∧
+      (∀ j : ZMod l.value,
+        sourceData.finiteTransport.toFactoredObligations.targetLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l
+              (sourceData.finiteTransport.coordinateEquiv j)) =
+          sourceData.finiteTransport.toFactoredObligations.sourceLogVolume.fullLabelLogVolume
+            (IUTStage1ZModCuspFullLabel.fromCoordinate l j)) ∧
+      (let audit :=
+        sourceData.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+          |>.preservationAudit;
+      audit.targetTransportedAverage = audit.sourceAverage) ∧
+      sourceData.finiteTransport.sourceTheater.side ≠
+        sourceData.finiteTransport.targetTheater.side
+  iplTransportSource_eq_constructed :
+    sourceData.toIPLLogVolumeTransportSource =
+      IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport := sourceData.finiteTransport)
+        sourceData.iplConstructionSource
+  constructedIPLTransportEndpoint :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side
+  finiteTransportLogVolumeEndpoint :
+    let audit :=
+      sourceData.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toIPLLogVolumeTransportSource.sourceLogVolume
+  transportedAverage_preserved :
+    let audit :=
+      sourceData.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    audit.targetTransportedAverage = audit.sourceAverage
+  targetLogVolume_eq_sourceLogVolume_from_finiteTransport :
+    sourceData.toIPLLogVolumeTransport.targetLogVolume =
+      sourceData.toIPLLogVolumeTransport.sourceLogVolume
+
+theorem toConstructedIPLFiniteTransportLogVolumeChainAudit
+    (sourceData :
+      IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C) :
+    ConstructedIPLFiniteTransportLogVolumeChainAudit sourceData :=
+  { finiteTransportEndpoint :=
+      sourceData.finiteTransport.finiteHodgeSHETransport_endpoint,
+    iplTransportSource_eq_constructed :=
+      sourceData.toIPLLogVolumeTransportSource_eq_constructed,
+    constructedIPLTransportEndpoint :=
+      sourceData.source_endpoint,
+    finiteTransportLogVolumeEndpoint :=
+      sourceData.constructedIPLFiniteTransportLogVolume_endpoint,
+    transportedAverage_preserved :=
+      sourceData.finiteTransport.transportedAverage_preserved',
+    targetLogVolume_eq_sourceLogVolume_from_finiteTransport :=
+      sourceData.targetLogVolume_preserved }
+
 end IUTStage1FiniteHodgeSHEIPLConstructionSource
 
 /--

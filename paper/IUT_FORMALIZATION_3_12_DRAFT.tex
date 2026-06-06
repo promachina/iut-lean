@@ -4118,12 +4118,20 @@ read.  The constructed \(\IPL\) segment now has two named subaudits:
 \texttt{CanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit}
 identifies the finite source's \(\IPL\)/log-volume transport source with the
 construction from the Theorem 3.11 input-prime-strip link source, while
-\texttt{CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit}
-reads the source and target \(\IPL\) log-volumes from the finite
-Hodge/\(\SHE\) source average and transported target average.  The aggregate
-\texttt{CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit}
-then packages these two subaudits together with the choice-wise prime-strip
-links.
+  \texttt{CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit}
+  reads the source and target \(\IPL\) log-volumes from the finite
+  Hodge/\(\SHE\) source average and transported target average.  The stronger
+  chain audit
+  \texttt{CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit}
+  packages the finite Hodge/\(\SHE\) transport endpoint, the constructed
+  Theorem 3.11 \(\IPL\) source, the finite-transport log-volume endpoint, and the
+  transported-average preservation theorem as a single provenance boundary.  Thus
+  the equality between the constructed \(\IPL\) target and source log-volumes is
+  read directly from finite transported-average preservation rather than from an
+  independent route-level conjunction.  The aggregate
+  \texttt{CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit}
+  then packages these two subaudits together with the choice-wise prime-strip
+  links.
 The named subaudit
 \texttt{CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit} now exposes
 this choice-wise input-prime-strip link obligation directly and is threaded
@@ -4221,6 +4229,8 @@ experiment surface exposes this stricter route through suffixes
 \quad\texttt{LogVolumeTransportAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstruction}\\
 \quad\texttt{FiniteTransportLogVolumeAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstruction}\\
+\quad\texttt{FiniteTransportLogVolumeChainAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit},\\

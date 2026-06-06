@@ -48789,6 +48789,24 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAud
       sourceData.constructedIPLFiniteTransportLogVolume_endpoint }
 
 set_option linter.style.longLine false in
+abbrev CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  IUTStage1FiniteHodgeSHEIPLConstructionSource.ConstructedIPLFiniteTransportLogVolumeChainAudit
+    sourceData.toFiniteHodgeSHEIPLConstructionSource
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit
+      sourceData :=
+  IUTStage1FiniteHodgeSHEIPLConstructionSource.toConstructedIPLFiniteTransportLogVolumeChainAudit
+    sourceData.toFiniteHodgeSHEIPLConstructionSource
+
+set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -48801,6 +48819,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
       sourceData
   finiteTransportLogVolumeAudit :
     CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit
+      sourceData
+  finiteTransportLogVolumeChainAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit
       sourceData
   iplTransportSource_eq_constructed :
     sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource =
@@ -48868,6 +48889,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit,
     finiteTransportLogVolumeAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit,
+    finiteTransportLogVolumeChainAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit,
     iplTransportSource_eq_constructed :=
       sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource_eq_constructed,
     directLogVolumeTransportEndpoint :=
@@ -48891,6 +48914,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
     CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
   constructedIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData
+  finiteTransportLogVolumeChainAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit
+      sourceData
   choiceLinkAudit :
     CanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit sourceData
   thetaMonoidDegree_eq :
@@ -48964,6 +48990,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionHodgeSHEIPLAudit
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
     constructedIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit,
+    finiteTransportLogVolumeChainAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit,
     choiceLinkAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit,
     thetaMonoidDegree_eq := sourceData.thetaMonoidDegree_eq,
@@ -49004,6 +49032,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionDirectHodgeSHEIPLAudit
       sourceData
   finiteTransportLogVolumeAudit :
     CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit
+      sourceData
+  finiteTransportLogVolumeChainAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit
       sourceData
   constructedIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData
@@ -49082,6 +49113,8 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionDirectHodgeSHEIPLAudit
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit,
     finiteTransportLogVolumeAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit,
+    finiteTransportLogVolumeChainAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeChainAudit,
     constructedIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit,
     choiceLinkAudit :=
