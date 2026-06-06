@@ -42342,6 +42342,79 @@ theorem finiteHodgeSHEIPLConstructionSource_endpoint
   sourceData.toSynchronizedSource.finiteHodgeSHEIPLConstructionSource_endpoint
 
 set_option linter.style.longLine false in
+/--
+Named pre-\(\IPL\) audit for the theta-monoid-matched finite-divisor route.
+
+This packages the Hodge--Arakelov theta-monoid match together with the
+history-separated finite Hodge/SHE transport source before the constructed
+\(\IPL\) transport or Step (xi) hull source is used.
+-/
+structure MatchedFiniteHodgeSHETransportAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  fullLabelValuePreserving :
+    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+      sourceData.matchedSynchronization.sourceEvaluation.fullLabelCompatibility
+      (part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+        audited)
+  thetaCuspLogVolume_eq_sourceFullLabel :
+    part.toThetaCuspClassContainerAudit.theta_source.compatible_average.cuspLogVolume
+        audited =
+      sourceData.matchedSynchronization.sourceEvaluation.fullLabelCompatibility
+  thetaMonoidDegreeMatched :
+    sourceData.matchedSynchronization.targetEvaluation.thetaMonoidDegree =
+      sourceData.matchedSynchronization.sourceEvaluation.thetaMonoidDegree
+  canonicalOneDegree_preserved :
+    sourceData.matchedSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+      sourceData.matchedSynchronization.sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  transport_sourceHA_eq :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.sourceHA =
+      sourceData.matchedSynchronization.sourceEvaluation.valueSource
+  transport_targetHA_eq :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.synchronization.targetHA =
+      sourceData.matchedSynchronization.targetEvaluation.valueSource
+  transportAllowed_eq_historySeparated :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed =
+      IUTStage1HodgeSHEAllowedForgetfulTransport.historySeparatedAllowed
+        record.bundle.hodgeTheaterDescentBridgeData
+  transportAllowed :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed
+  histories_not_identified :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.sourceTheater.side ≠
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.targetTheater.side
+  comparisonLevel_pointwise :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.comparisonLevel =
+      IUTStage1SquareComparisonLevel.pointwiseRepresentative
+  coordinateEquiv_refl :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.toFiniteHodgeSHETransport.toFactoredObligations.coordinateEquiv =
+      Equiv.refl (ZMod l.value)
+
+set_option linter.style.longLine false in
+theorem toMatchedFiniteHodgeSHETransportAudit
+    (sourceData :
+      IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedFiniteHodgeSHETransportAudit sourceData := by
+  have hmatched := sourceData.matchedSynchronization_endpoint
+  have htransport := sourceData.finiteHodgeSHEIPLConstructionSource_endpoint
+  exact
+    { fullLabelValuePreserving := hmatched.1,
+      thetaCuspLogVolume_eq_sourceFullLabel := hmatched.2.1,
+      thetaMonoidDegreeMatched := hmatched.2.2.1,
+      canonicalOneDegree_preserved := hmatched.2.2.2,
+      transport_sourceHA_eq := htransport.1,
+      transport_targetHA_eq := htransport.2.1,
+      transportAllowed_eq_historySeparated := htransport.2.2.1,
+      transportAllowed := htransport.2.2.2.1,
+      histories_not_identified := htransport.2.2.2.2.1,
+      comparisonLevel_pointwise := htransport.2.2.2.2.2.1,
+      coordinateEquiv_refl := htransport.2.2.2.2.2.2 }
+
+set_option linter.style.longLine false in
 theorem constructedIPLLogVolumeTransportSource_endpoint
     (sourceData :
       IUTStage1ThetaMonoidMatchedHodgeSHEIPLConstructionPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
