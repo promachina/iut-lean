@@ -36474,6 +36474,160 @@ theorem boundarySignedEqualityOrStrictCTheta_from_targetChartedThetaMonoidMatche
 
 set_option linter.style.longLine false in
 /--
+Theta-monoid-matched record-canonical constructor source for the bundled finite
+exact vertical-`IQ` boundary.
+
+This is the matched analogue of
+`IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource`:
+the public Hodge/IPL input is the theta-degree-matched source, while the
+ordinary record-canonical constructor source is recovered only by projection.
+-/
+structure IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {F : Type v} [Field F] (X C : HyperbolicOrbicurveModel F)
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    (holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j)
+    (product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j) where
+  matchedHodgeIPLSource :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeArakelovIPLConstructionSource
+      part audited record X C
+  operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId
+  hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId
+  determinantOperation :
+    RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId
+  measureCalibratedHodgeDeterminantSource :
+    IUTStage1TargetChartedHodgeMeasureCalibratedDeterminantSummandFamilyHullSource
+      (β := β) part audited record
+      matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.hodgeSynchronization
+  qChoice :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean
+  hullDetBridge_eq_recordCanonical :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        operation hullOperation determinantOperation
+        measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+        (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record qChoice)
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) qChoice
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record qChoice)
+          (fun _ hx => hx))
+        measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+        measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+        measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        measureCalibratedHodgeDeterminantSource.tensorPower_bound
+  q_pilot_positive : 0 < -packageN.preLedger.qSigned
+  normalization : packageN.preLedger.normalization
+  upperSemiEntry :
+    NonarchimedeanPacketNormalizedUpperSemiEntrySource audited
+  finiteSource :
+    NonarchimedeanFiniteDivisorPacketLocalSource
+      audited upperSemiEntry.toEntry product
+  exactSource :
+    NonarchimedeanThetaRootExactVerticalIQRealifiedEntrySource
+      audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+      packageN.logKummer l X C upperSemiEntry.toEntry
+      holomorphicF holomorphicD finiteSource.toMonoAnalyticD
+
+namespace IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {β : Type v} [Fintype β]
+variable {j : Nat}
+variable {holomorphicF holomorphicD :
+  IUTStage1RealifiedFrobenioidTensorPacketProductSource
+    IUTStage1PlaceKind.nonarchimedean j}
+variable {product :
+  IUTStage1BaseValuationTensorPacketProductLogVolume
+    IUTStage1PlaceKind.nonarchimedean j}
+
+def qPilotRegion
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Set (Point target) :=
+  IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+    record sourceData.qChoice
+
+theorem q_subset_choice
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice :=
+  fun _ hx => hx
+
+noncomputable def toConstructorBackedPossibleImageSource
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedDeterminantPossibleImageHullDetSource
+      (β := β) part audited record
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource.hodgeSynchronization :=
+  { operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    measureCalibratedHodgeDeterminantSource :=
+      sourceData.measureCalibratedHodgeDeterminantSource,
+    qChoice := sourceData.qChoice,
+    hullDetBridge_eq_recordCanonical := by
+      simpa [
+        IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource.qPilotRegion]
+        using sourceData.hullDetBridge_eq_recordCanonical,
+    q_pilot_positive := sourceData.q_pilot_positive,
+    normalization := sourceData.normalization }
+
+noncomputable def toMatchedAssembledConstructorBackedExactSource
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource
+      (β := β) part audited record X C holomorphicF holomorphicD product :=
+  { matchedHodgeIPLSource := sourceData.matchedHodgeIPLSource,
+    constructorBackedPossibleImageSource :=
+      sourceData.toConstructorBackedPossibleImageSource,
+    upperSemiEntry := sourceData.upperSemiEntry,
+    finiteSource := sourceData.finiteSource,
+    exactSource := sourceData.exactSource }
+
+end IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+
+set_option linter.style.longLine false in
+/--
 Record-canonical constructor source for the bundled finite exact vertical-`IQ`
 boundary.
 
@@ -36739,6 +36893,214 @@ theorem boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLRecordCan
     part.boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource_withGaussianStepXIAudit
       audited sourceData.toAssembledConstructorBackedExactSource
       cTheta thetaSigned_le_cTheta_absLogQ
+
+namespace IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {β : Type v} [Fintype β]
+variable {j : Nat}
+variable {holomorphicF holomorphicD :
+  IUTStage1RealifiedFrobenioidTensorPacketProductSource
+    IUTStage1PlaceKind.nonarchimedean j}
+variable {product :
+  IUTStage1BaseValuationTensorPacketProductLogVolume
+    IUTStage1PlaceKind.nonarchimedean j}
+
+noncomputable def toRecordCanonicalConstructorFiniteExactVerticalIQSource
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1TargetChartedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+      (β := β) part audited record X C holomorphicF holomorphicD product :=
+  { hodgeIPLSource :=
+      sourceData.matchedHodgeIPLSource.toTargetChartedHodgeArakelovIPLConstructionSource,
+    operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    measureCalibratedHodgeDeterminantSource :=
+      sourceData.measureCalibratedHodgeDeterminantSource,
+    qChoice := sourceData.qChoice,
+    hullDetBridge_eq_recordCanonical := sourceData.hullDetBridge_eq_recordCanonical,
+    q_pilot_positive := sourceData.q_pilot_positive,
+    normalization := sourceData.normalization,
+    upperSemiEntry := sourceData.upperSemiEntry,
+    finiteSource := sourceData.finiteSource,
+    exactSource := sourceData.exactSource }
+
+set_option linter.style.longLine false in
+/--
+Matched source-derived corridor endpoint for the record-canonical constructor
+exact source.
+
+The first conjunct is the Hodge--Arakelov theta-monoid degree match used to
+derive canonical one-label preservation.  The second conjunct is the ordinary
+record-canonical constructor corridor, obtained only after projection.
+-/
+theorem matchedRecordCanonicalConstructorCorridorEndpoint
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.targetEvaluation.thetaMonoidDegree =
+        sourceData.matchedHodgeIPLSource.matchedHodgeSynchronization.sourceEvaluation.thetaMonoidDegree ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          sourceData.operation sourceData.hullOperation
+          sourceData.determinantOperation
+          sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+          sourceData.qPilotRegion
+          (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) sourceData.qChoice sourceData.qPilotRegion
+            sourceData.q_subset_choice)
+          sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+          sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+          sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+          sourceData.measureCalibratedHodgeDeterminantSource.tensorPower_bound ∧
+        0 < -packageN.preLedger.qSigned ∧
+          packageN.preLedger.normalization ∧
+            packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+              sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+                true := by
+  have hmatched := sourceData.matchedHodgeIPLSource.source_endpoint
+  have hassembledAudit :=
+    sourceData.toMatchedAssembledConstructorBackedExactSource
+      |>.toMatchedAssembledConstructorBackedGaussianExactAudit
+  exact
+    ⟨hmatched.2.1,
+      by
+        simpa [
+          IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource.qPilotRegion]
+          using sourceData.hullDetBridge_eq_recordCanonical,
+      sourceData.q_pilot_positive,
+      sourceData.normalization,
+      hassembledAudit.rawComparison,
+      sourceData.exactSource.hasPreciseFrobenioidIsomorphisms⟩
+
+/--
+Gaussian/exact audit for the theta-monoid-matched record-canonical constructor
+corridor.
+-/
+structure MatchedRecordCanonicalConstructorGaussianExactAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  matchedAssembledAudit :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLConstructionConstructorBackedMeasureCalibratedPossibleImageFiniteExactVerticalIQSource.MatchedAssembledConstructorBackedGaussianExactAudit
+      sourceData.toMatchedAssembledConstructorBackedExactSource
+  recordCanonicalHullTensorBridge :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.hullData
+        sourceData.qPilotRegion
+        (IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice sourceData.qPilotRegion
+          sourceData.q_subset_choice)
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.determinantSource
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.familyHullSource.compatibility
+        sourceData.measureCalibratedHodgeDeterminantSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        sourceData.measureCalibratedHodgeDeterminantSource.tensorPower_bound
+  q_pilot_positive : 0 < -packageN.preLedger.qSigned
+  normalization : packageN.preLedger.normalization
+  rawComparison : packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  hasPreciseFrobenioidIsomorphisms :
+    sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+      true
+
+set_option linter.style.longLine false in
+theorem toMatchedRecordCanonicalConstructorGaussianExactAudit
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    MatchedRecordCanonicalConstructorGaussianExactAudit sourceData := by
+  have hassembledAudit :=
+    sourceData.toMatchedAssembledConstructorBackedExactSource
+      |>.toMatchedAssembledConstructorBackedGaussianExactAudit
+  exact
+    { matchedAssembledAudit :=
+        hassembledAudit,
+      recordCanonicalHullTensorBridge := by
+        simpa [
+          IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource.qPilotRegion]
+          using sourceData.hullDetBridge_eq_recordCanonical,
+      q_pilot_positive := sourceData.q_pilot_positive,
+      normalization := sourceData.normalization,
+      rawComparison := hassembledAudit.rawComparison,
+      hasPreciseFrobenioidIsomorphisms :=
+        sourceData.exactSource.hasPreciseFrobenioidIsomorphisms }
+
+end IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+
+set_option linter.style.longLine false in
+/--
+`C_\Theta` boundary for the theta-monoid-matched record-canonical constructor
+finite exact vertical-`IQ` source.
+
+The theorem keeps the matched theta-degree/Hodge/IPL provenance in the returned
+audit while using the ordinary record-canonical constructor projection for the
+existing finite exact vertical-`IQ` dichotomy.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_targetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource_withMatchedRecordCanonicalGaussianExactAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    IUTStage1TargetChartedThetaMonoidMatchedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource.MatchedRecordCanonicalConstructorGaussianExactAudit
+        sourceData ∧
+      sourceData.exactSource.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  have hboundary :=
+    part.boundarySignedEqualityOrStrictCTheta_from_targetChartedHodgeIPLRecordCanonicalConstructorFiniteExactVerticalIQSource_withGaussianStepXIAudit
+      audited sourceData.toRecordCanonicalConstructorFiniteExactVerticalIQSource
+      cTheta thetaSigned_le_cTheta_absLogQ
+  exact
+    ⟨sourceData.toMatchedRecordCanonicalConstructorGaussianExactAudit,
+      sourceData.exactSource.hasPreciseFrobenioidIsomorphisms,
+      hboundary.2.2⟩
 
 set_option linter.style.longLine false in
 /--
