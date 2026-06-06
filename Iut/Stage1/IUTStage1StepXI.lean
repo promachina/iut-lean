@@ -10718,8 +10718,9 @@ Remark 3.9.5 bridge source.
 This keeps the paper-facing source object in view: the possible-image family,
 the `phi`-hull, Ob3/Ob5 determinant compatibility, and the Ob4 tensor-power
 bound are first packaged as `IUTStage1Remark395RecordHullDeterminantBridgeSource`;
-the constructed source endpoint then reads the log-volume chain from that
-generic bridge.
+the constructed source endpoint then reads both the normalized
+`mu_log(qRegion) <= det_norm <= thetaSigned` chain and the determinant-log
+chain from that generic bridge.
 -/
 structure ConstructedRecordBridgeAudit
     (sourceData :
@@ -10743,6 +10744,17 @@ structure ConstructedRecordBridgeAudit
   qRegionLogVolume_le_determinant_from_bridge :
     sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
       sourceData.determinantSource.determinantLogVolume
+  qRegionLogVolume_le_determinantNormalized_from_bridge :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      sourceData.determinantSource.normalizedLogVolume
+  determinantNormalizedLogVolume_le_thetaSigned_from_bridge :
+    sourceData.determinantSource.normalizedLogVolume <=
+      package.preLedger.thetaSigned
+  normalizedBridge_from_bridge :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.determinantSource.normalizedLogVolume ∧
+      sourceData.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned
   determinantLogVolume_le_thetaSigned_from_bridge :
     sourceData.determinantSource.determinantLogVolume <=
       package.preLedger.thetaSigned
@@ -10786,6 +10798,12 @@ theorem constructedRecordBridgeAudit
       sourceData.toRecordHullDeterminantBridgeSource.qPilotRegion_subset_phi,
     qRegionLogVolume_le_determinant_from_bridge :=
       sourceData.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_determinantLogVolume,
+    qRegionLogVolume_le_determinantNormalized_from_bridge :=
+      sourceData.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_determinantNormalizedLogVolume,
+    determinantNormalizedLogVolume_le_thetaSigned_from_bridge :=
+      sourceData.toRecordHullDeterminantBridgeSource.determinantNormalizedLogVolume_le_thetaSigned,
+    normalizedBridge_from_bridge :=
+      sourceData.toRecordHullDeterminantBridgeSource.normalizedBridge,
     determinantLogVolume_le_thetaSigned_from_bridge :=
       sourceData.toRecordHullDeterminantBridgeSource.determinantLogVolume_le_thetaSigned,
     qRegionLogVolume_le_thetaSigned_from_bridge :=

@@ -42136,8 +42136,27 @@ theorem remark395ConstructedHolomorphicHullDeterminantSource_recordBridgeAudit
       IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
         (β := β) record) :
     IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedRecordBridgeAudit
-      sourceData :=
+        sourceData :=
   sourceData.constructedRecordBridgeAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface normalized determinant bridge read from the constructed
+Remark 3.9.5 Step (xi) source's record-canonical bridge audit.
+-/
+theorem remark395ConstructedHolomorphicHullDeterminantSource_normalizedRecordBridge
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.determinantSource.normalizedLogVolume ∧
+      sourceData.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned :=
+  sourceData.constructedRecordBridgeAudit.normalizedBridge_from_bridge
 
 set_option linter.style.longLine false in
 /--

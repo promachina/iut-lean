@@ -5460,7 +5460,19 @@ containment, Ob3/Ob5 determinant compatibility, and Ob4 tensor-power bound as
 the record bridge source.  The new constructed-record bridge audit, exposed on
 the experiment surface, records that the constructed source's
 q-to-determinant-to-theta chain is read from this generic Remark 3.9.5 bridge
-theorem rather than re-proved as an isolated comparison.
+theorem rather than re-proved as an isolated comparison.  This audit now also
+carries the normalized determinant chain directly:
+\[
+  \mu_{\log}(q\mathrm{Region})
+    \leq
+  \det_{\mathrm{norm}}
+    \leq
+  \theta_{\mathrm{signed}} .
+\]
+The experiment surface exposes this two-step normalized form as
+\[
+\texttt{remark395ConstructedHolomorphicHullDeterminantSource\_normalizedRecordBridge}.
+\]
 The constructor-backed finite-divisor source now exposes the same bridge
 projection directly.  Its experiment-surface audit,
 \[
