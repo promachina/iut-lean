@@ -46333,6 +46333,81 @@ theorem toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSourceAud
     using
       sourceData.toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource.source_endpoint
 
+noncomputable def toCanonicalOneConstructorBuiltIPLLinkSourceDerivedBridge
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourceDerivedHodgeSHEIPLHullBridge part audited record X C :=
+  let hodgeSynchronization :=
+    sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+  IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources
+    (part := part) (audited := audited)
+    hodgeSynchronization sourceData.iplLinkSource
+    sourceData.toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource
+
+set_option linter.style.longLine false in
+/--
+Canonical-one source-derived bridge-construction audit.
+
+This records the actual bridge assembled from the canonical-one
+Hodge--Arakelov synchronization, the certificate-pinned Theorem 3.11
+\(\IPL\)-link source, and the projected possible-image
+holomorphic-hull/determinant source.  It is the local handoff
+theta-root/Gaussian data \(\to\) finite Hodge/\(\SHE\) transport
+\(\to\) \(\IPL\)/log-volume transport \(\to\) Step (xi) hull source
+\(\to q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\).
+-/
+abbrev CanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop :=
+  let hodgeSynchronization :=
+    sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization;
+  let hullSource :=
+    sourceData.toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource;
+  let bridge := sourceData.toCanonicalOneConstructorBuiltIPLLinkSourceDerivedBridge;
+  bridge.iplTransport.iplDatum = packageN.preLedger.certificate.ipl ∧
+    bridge.iplTransport.iplDatum.link.source =
+      bridge.iplTransport.iplDatum.inputPrimeStrip ∧
+    bridge.iplTransport.iplDatum.link.target =
+      bridge.iplTransport.iplDatum.outputPrimeStrip ∧
+    bridge.finiteHodgeSHETransport.synchronization.sourceHA =
+      hodgeSynchronization.valueSource ∧
+    bridge.finiteHodgeSHETransport.synchronization.targetHA =
+      hodgeSynchronization.targetEvaluation.valueSource ∧
+    hullSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record hullSource.qChoice ∧
+    hullSource.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record ∧
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      hullSource.obligations.hullDetData.bridgeData ∧
+    0 < -packageN.preLedger.qSigned ∧
+    packageN.preLedger.normalization ∧
+    bridge.iplTransport.targetLogVolume =
+      bridge.iplTransport.sourceLogVolume ∧
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned ∧
+    bridge.finiteHodgeSHETransport.sourceTheater.side ≠
+      bridge.finiteHodgeSHETransport.targetTheater.side
+
+theorem toCanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLLinkPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit sourceData := by
+  simpa [
+    CanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit,
+    toCanonicalOneConstructorBuiltIPLLinkSourceDerivedBridge,
+    toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource]
+    using
+      IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources_endpoint
+        (part := part) (audited := audited)
+        sourceData.toThetaMonoidMatchedSource.matchedSynchronization.toThetaSourceCalibratedHodgeArakelovSynchronization
+        sourceData.iplLinkSource
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkHolomorphicHullDeterminantSource
+
 set_option linter.style.longLine false in
 /--
 Pre-Step (xi) Hodge/\(\SHE\)/\(\IPL\) audit for the canonical-one
@@ -46680,6 +46755,8 @@ structure CanonicalOneConstructorBuiltIPLLinkQComparisonAudit
     CanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit sourceData
   stepXIHullAudit :
     CanonicalOneConstructorBuiltIPLLinkStepXIHullAudit sourceData
+  sourceDerivedBridgeAudit :
+    CanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit sourceData
   routeAudit :
     CanonicalOneConstructorBuiltIPLLinkSourceDerivedFiniteDivisorRouteAudit
       sourceData
@@ -46698,6 +46775,8 @@ theorem toCanonicalOneConstructorBuiltIPLLinkQComparisonAudit
         sourceData.toCanonicalOneConstructorBuiltIPLLinkHodgeSHEIPLAudit,
       stepXIHullAudit :=
         sourceData.toCanonicalOneConstructorBuiltIPLLinkStepXIHullAudit,
+      sourceDerivedBridgeAudit :=
+        sourceData.toCanonicalOneConstructorBuiltIPLLinkSourceDerivedBridgeAudit,
       routeAudit := hroute,
       qSigned_le_thetaSigned := hroute.2.2.2.2.qSigned_le_thetaSigned }
 
