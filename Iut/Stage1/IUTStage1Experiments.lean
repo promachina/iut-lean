@@ -21002,6 +21002,8 @@ theorem calibratedSynchronizationIPLConstructionPossibleImageConstructorBuiltHul
         sourceData ∧
       IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
         sourceData ∧
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1Ob2HullAbsorptionAudit
+        sourceData ∧
       IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob4DeterminantAudit
         sourceData ∧
       IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
@@ -41348,6 +41350,26 @@ theorem possibleImageConstructorBuiltHullSource_recordCanonicalStepXIAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob1/Ob2 hull-absorption audit for the constructor-built
+possible-image Step (xi) hull/determinant source.
+
+This isolates the passage from a Theorem 3.11 possible-image q-region to the
+canonical holomorphic hull before determinant/tensor-power data is used.
+-/
+theorem possibleImageConstructorBuiltHullSource_ob1Ob2HullAbsorptionAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1Ob2HullAbsorptionAudit
+      sourceData :=
+  sourceData.toConstructorBuiltOb1Ob2HullAbsorptionAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Ob3/Ob4 determinant/tensor-power audit for the
 constructor-built possible-image Step (xi) hull/determinant source.
 
@@ -41375,8 +41397,9 @@ possible-image Step (xi) hull/determinant source.
 
 This separates the source-paper payload still carried by the constructor-built
 boundary: possible-image q-region selection, holomorphic-hull absorption, the
-Ob3/Ob4 determinant/tensor-power audit, Ob3/Ob5 determinant log-volume
-compatibility, the record-canonical bridge equality, and side conditions.
+Ob1/Ob2 hull-absorption audit, the Ob3/Ob4 determinant/tensor-power audit,
+Ob3/Ob5 determinant log-volume compatibility, the record-canonical bridge
+equality, and side conditions.
 -/
 theorem possibleImageConstructorBuiltHullSource_remainingPayloadAudit
     {source target : Copy} {index : Type u}

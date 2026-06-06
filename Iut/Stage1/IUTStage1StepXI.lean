@@ -10756,6 +10756,66 @@ theorem toConstructorBuiltStepXIUpperRayAudit
 
 set_option linter.style.longLine false in
 /--
+Ob1/Ob2 holomorphic-hull absorption audit for the constructor-built
+possible-image Step (xi) source.
+
+This isolates the Remark 3.9.5(vii) passage from possible-image regions to
+arithmetic-vector-bundle hulls: the selected q-pilot region is a Theorem 3.11
+possible image, lies in the record possible-image union, and both the union and
+the selected q-region are absorbed by the canonical holomorphic hull before
+determinant and tensor-power data enters.
+-/
+structure ConstructorBuiltOb1Ob2HullAbsorptionAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  recordCanonicalStepXIAudit :
+    RecordCanonicalStepXIAudit sourceData
+  qPilotRegion_eq_possibleImage :
+    sourceData.qPilotRegion =
+      recordThetaPossibleImage record sourceData.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.qPilotRegion ⊆
+      recordThetaPossibleImageUnion record
+  possibleImageUnion_subset_holomorphicHull :
+    recordThetaPossibleImageUnion record ⊆
+      sourceData.hullData.hullRegion (recordThetaPossibleImageUnion record)
+  qPilotRegion_subset_holomorphicHull :
+    sourceData.qPilotRegion ⊆
+      sourceData.hullData.hullRegion (recordThetaPossibleImageUnion record)
+  qPilotLogVolume_le_thetaHullLogVolume :
+    sourceData.toUpperRayLogVolume.qPilotLogVolume <=
+      sourceData.toUpperRayLogVolume.thetaHullLogVolume
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBuiltOb1Ob2HullAbsorptionAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) :
+    ConstructorBuiltOb1Ob2HullAbsorptionAudit sourceData :=
+  { recordCanonicalStepXIAudit := sourceData.recordCanonicalStepXIAudit,
+    qPilotRegion_eq_possibleImage :=
+      sourceData.qPilotRegion_eq_possibleImage,
+    qPilotRegion_subset_recordUnion :=
+      sourceData.q_subset_recordUnion,
+    possibleImageUnion_subset_holomorphicHull :=
+      fun _ hx =>
+        sourceData.hullData.region_subset_hull
+          (recordThetaPossibleImageUnion record) hx,
+    qPilotRegion_subset_holomorphicHull :=
+      fun _ hx =>
+        sourceData.hullData.region_subset_hull
+          (recordThetaPossibleImageUnion record)
+          (sourceData.q_subset_recordUnion hx),
+    qPilotLogVolume_le_thetaHullLogVolume :=
+      sourceData.toUpperRayLogVolume.qPilotLogVolume_le_thetaHullLogVolume,
+    qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Ob3/Ob4 determinant and tensor-power audit for the constructor-built
 possible-image Step (xi) source.
 
@@ -10920,6 +10980,8 @@ structure ConstructorBuiltRemainingPayloadAudit
     ConstructorBuiltStepXIBoundaryAudit sourceData
   upperRayAudit :
     ConstructorBuiltStepXIUpperRayAudit sourceData
+  ob1Ob2HullAbsorptionAudit :
+    ConstructorBuiltOb1Ob2HullAbsorptionAudit sourceData
   ob3Ob4DeterminantAudit :
     ConstructorBuiltOb3Ob4DeterminantAudit sourceData
   qPilotRegion_eq_possibleImage :
@@ -10987,6 +11049,8 @@ theorem toConstructorBuiltRemainingPayloadAudit
       sourceData.toConstructorBuiltStepXIBoundaryAudit,
     upperRayAudit :=
       sourceData.toConstructorBuiltStepXIUpperRayAudit,
+    ob1Ob2HullAbsorptionAudit :=
+      sourceData.toConstructorBuiltOb1Ob2HullAbsorptionAudit,
     ob3Ob4DeterminantAudit :=
       sourceData.toConstructorBuiltOb3Ob4DeterminantAudit,
     qPilotRegion_eq_possibleImage :=

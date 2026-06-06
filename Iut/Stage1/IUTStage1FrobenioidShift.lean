@@ -24449,6 +24449,8 @@ theorem ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSo
         hullSource ∧
       IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
         hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1Ob2HullAbsorptionAudit
+        hullSource ∧
       IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob4DeterminantAudit
         hullSource ∧
       IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
@@ -24474,6 +24476,7 @@ theorem ofFiniteHodgeSHET11IPLConstructionAndPossibleImageConstructorBuiltHullSo
       hullSource.source_endpoint,
       hullSource.recordCanonicalStepXIAudit,
       hullSource.toConstructorBuiltStepXIBoundaryAudit,
+      hullSource.toConstructorBuiltOb1Ob2HullAbsorptionAudit,
       hullSource.toConstructorBuiltOb3Ob4DeterminantAudit,
       hullSource.toConstructorBuiltRemainingPayloadAudit,
       bridge.iplTransport.targetLogVolume_preserved,
@@ -24522,6 +24525,8 @@ theorem ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageConstr
         hullSource ∧
       IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBoundaryAudit
         hullSource ∧
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1Ob2HullAbsorptionAudit
+        hullSource ∧
       IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob4DeterminantAudit
         hullSource ∧
       IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemainingPayloadAudit
@@ -24559,7 +24564,8 @@ theorem ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageConstr
       h.2.2.2.2.2.2.2.2.2.1,
       h.2.2.2.2.2.2.2.2.2.2.1,
       h.2.2.2.2.2.2.2.2.2.2.2.1,
-      h.2.2.2.2.2.2.2.2.2.2.2.2.2⟩
+      h.2.2.2.2.2.2.2.2.2.2.2.2.1,
+      h.2.2.2.2.2.2.2.2.2.2.2.2.2.2⟩
 
 theorem ofFiniteHodgeSHET11IPLConstructionAndHullDetSources_endpoint
     {β : Type v} [Fintype β]
