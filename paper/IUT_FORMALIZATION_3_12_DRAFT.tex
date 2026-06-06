@@ -3952,6 +3952,7 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionMiddleRouteAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionStepXIHullAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionPacketTargetAudit},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionDirectFiniteBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionCTheta},\\
@@ -3985,6 +3986,13 @@ the packet-local equalities, upper-semi inequality, packet-normalized target
 equalities, and target \((\Ind3)\) equality are visible as source-endpoint
 facts in the milestone audit rather than only as loose components of the final
 boundary tuple.
+These two pieces are now joined by a direct finite-boundary audit: the raw
+comparison is projected from the source-calibrated Gaussian-to-Step (xi) bridge
+audit, while the finite packet and vertical-\(IQ\) facts are projected from the
+packet/target audit.  The older compact matched boundary is still retained for
+compatibility with the existing \(C_\Theta\) route, but the no-\(C_\Theta\)
+review surface now has a direct source-derived boundary for the same
+canonical-one constructed-\(\IPL\) source object.
 The constructor-built bundled route can now also be reached from the stronger
 theta-monoid-matched obligations-backed record-canonical exact corridor.  The
 projection constructs the bundled route internally from the matched
@@ -4136,7 +4144,9 @@ The practical priority order is:
   this finite correspondence object itself as source-facing input; the
   canonical-one constructed-\(\IPL\) route now exposes the finite packet source
   endpoint and exact vertical-\(IQ\) target endpoint as one packet/target audit,
-  but the finite correspondence object is still supplied at that boundary;
+  and joins it to the direct Gaussian-to-Step (xi) audit in a no-\(C_\Theta\)
+  finite-boundary audit, but the finite correspondence object is still supplied
+  at that boundary;
 \item construct the remaining fields of the Step (xi)
   holomorphic-hull/determinant source from the actual holomorphic-hull and
   determinant operations of Remark 3.9.5 and Step (xi): the target-charted
