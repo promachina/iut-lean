@@ -36474,6 +36474,46 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_boundaryEndpoi
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface remaining-boundary ledger for the bundled synchronized
+finite-divisor vertical-`IQ` route source with a certificate-pinned
+Theorem 3.11 IPL link.
+
+This exposes the same compact review boundary as the constructed-\(\IPL\)
+route, but keeps the weaker certificate-pinned link source visible.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_synchronizedIPLLinkRemainingBoundaryAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1SynchronizedHodgeSHEIPLLinkPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1SynchronizedHodgeSHEIPLLinkPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource.SynchronizedIPLLinkRemainingSourceBoundaryAudit
+      sourceData :=
+  sourceData.toSynchronizedIPLLinkRemainingSourceBoundaryAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_\Theta` dichotomy for the bundled synchronized
 finite-divisor vertical-`IQ` route source with a certificate-pinned
 Theorem 3.11 IPL link.

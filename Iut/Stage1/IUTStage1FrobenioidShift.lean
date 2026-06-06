@@ -46127,6 +46127,92 @@ theorem boundaryEndpointWithGaussianStepXIAudit
       haudit.qSigned_le_thetaSigned⟩
 
 set_option linter.style.longLine false in
+/--
+Remaining-boundary ledger for the synchronized Hodge/SHE, certificate-pinned
+\(\IPL\)-link, possible-image Step (xi), finite-divisor vertical-`IQ` route.
+
+This is the certificate-pinned counterpart of
+`SynchronizedRemainingSourceBoundaryAudit` for the constructed-\(\IPL\) route:
+the Hodge--Arakelov synchronization, \(\IPL\)-link source, possible-image
+hull/determinant source, finite Step (x) packet, and vertical-`IQ` target are
+all supplied as source objects, while their endpoint equalities are exposed as
+projections from this one bundled route object.
+-/
+structure SynchronizedIPLLinkRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1SynchronizedHodgeSHEIPLLinkPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  gaussianToStepXIAudit :
+    CalibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedGaussianToStepXIAudit
+      part audited sourceData.hodgeSynchronization
+      sourceData.iplLinkSource sourceData.hullSource
+  certificatePinnedIPLLinkSource :
+    IUTStage1Theorem311IPLLinkSource record
+  possibleImageHullDeterminantAudit :
+    sourceData.hullSource.qPilotRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.hullSource.qChoice ∧
+      sourceData.hullSource.qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.hullSource.obligations.hullDetData.bridgeData ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          sourceData.hullSource.determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      0 < -packageN.preLedger.qSigned ∧
+      packageN.preLedger.normalization ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  finiteDivisorPacketAudit :
+    audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+        (sourceData.divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          sourceData.monoAnalyticTheater).toRealized.product.productLogVolume ∧
+      product.productLogVolume =
+        sourceData.divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume <=
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume
+  exactVerticalIQBoundaryAudit :
+    sourceData.targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+        true ∧
+      part.insulated_route.theta_source.thetaSourceAverage audited =
+        sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+      sourceData.upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume
+  rawComparison :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toSynchronizedIPLLinkRemainingSourceBoundaryAudit
+    (sourceData :
+      IUTStage1SynchronizedHodgeSHEIPLLinkPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    SynchronizedIPLLinkRemainingSourceBoundaryAudit sourceData := by
+  have hboundary := sourceData.boundaryEndpointWithGaussianStepXIAudit
+  have htarget := sourceData.targetSource.verticalIQTarget_endpoint
+  exact
+    { gaussianToStepXIAudit := hboundary.1,
+      certificatePinnedIPLLinkSource := sourceData.iplLinkSource,
+      possibleImageHullDeterminantAudit :=
+        sourceData.possibleImageHullDeterminantSource_endpoint,
+      finiteDivisorPacketAudit :=
+        ⟨hboundary.2.1,
+          hboundary.2.2.1,
+          hboundary.2.2.2.1,
+          hboundary.2.2.2.2.1,
+          hboundary.2.2.2.2.2.1⟩,
+      exactVerticalIQBoundaryAudit :=
+        ⟨hboundary.2.2.2.2.2.2.1,
+          htarget.2.2.2.2.1,
+          htarget.2.2.2.2.2⟩,
+      rawComparison := hboundary.2.2.2.2.2.2.2.2.2 }
+
+set_option linter.style.longLine false in
 theorem cThetaDichotomyWithGaussianStepXIAudit
     (sourceData :
       IUTStage1SynchronizedHodgeSHEIPLLinkPossibleImageSideConditionedHullObligationsBackedFiniteDivisorVerticalIQSource
