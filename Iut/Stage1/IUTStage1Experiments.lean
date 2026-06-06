@@ -39091,6 +39091,11 @@ set_option linter.style.longLine false in
 /--
 Experiment-surface milestone audit for the canonical-one constructed-\(\IPL\)
 constructor-built finite-divisor route.
+
+The returned milestone bundle includes the theta-evaluation,
+transport-source, factored-\(\SHE\), log-volume transport,
+finite-transport log-volume, constructed-\(\IPL\), Step (xi) payload, boundary,
+and conditional \(C_\Theta\) audits.
 -/
 theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
     {source target : Copy} {coric : Type u}
@@ -39179,6 +39184,10 @@ set_option linter.style.longLine false in
 /--
 Experiment-surface compact constructed-\(\IPL\) milestone audit for the
 source-derived finite-divisor vertical-\(IQ\) route.
+
+This exposes the same strengthened milestone bundle, including the
+transport-source, log-volume transport, and finite-transport log-volume audits
+that feed the constructed \(\IPL\) bridge.
 -/
 theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullConstructedIPLFiniteDivisorVerticalIQ_withMilestoneAudit
     {source target : Copy} {coric : Type u}

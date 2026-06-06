@@ -49982,8 +49982,15 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
       sourceData
   thetaEvaluationAudit :
     CanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit sourceData
+  transportSourceAudit :
+    CanonicalOneConstructorBuiltIPLConstructionTransportSourceAudit sourceData
   factoredSHEAudit :
     CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
+  logVolumeTransportAudit :
+    CanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit sourceData
+  finiteTransportLogVolumeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit
+      sourceData
   constructedIPLAudit :
     CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData
   choiceLinkAudit :
@@ -50046,8 +50053,14 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionRemainingPayloadRouteAudit,
     thetaEvaluationAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionThetaEvaluationAudit,
+    transportSourceAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionTransportSourceAudit,
     factoredSHEAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
+    logVolumeTransportAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit,
+    finiteTransportLogVolumeAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit,
     constructedIPLAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit,
     choiceLinkAudit :=
@@ -50119,7 +50132,8 @@ finite-divisor vertical-\(IQ\) corridor.
 
 This returns the full audit package of the canonical-one constructor-built
 constructed-\(\IPL\) route under a shorter milestone-facing name: theta
-evaluation, factored \(\SHE\), constructed \(\IPL\), Step (xi)
+evaluation, transport-source construction, factored \(\SHE\), log-volume
+transport, finite-transport log-volume, constructed \(\IPL\), Step (xi)
 hull/determinant audits, side conditions, raw q-comparison, finite boundary,
 conditional \(C_\Theta\) audit, and final dichotomy.
 -/
