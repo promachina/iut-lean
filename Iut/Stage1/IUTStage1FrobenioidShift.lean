@@ -50270,6 +50270,78 @@ theorem cThetaDichotomyWithCanonicalOneConstructorBuiltIPLConstructionGaussianSt
     |>.cThetaDichotomyWithConstructorBuiltMatchedGaussianStepXIAudit
       cTheta thetaSigned_le_cTheta_absLogQ
 
+set_option linter.style.longLine false in
+/--
+Direct \(C_\Theta\) audit for the canonical-one constructed-\(\IPL\) route.
+
+This audit computes the final ordered-real dichotomy from the constructed
+source-side q-positivity audit, the constructed Step (xi)
+q-comparison audit, and the explicit numeric \(C_\Theta\) estimate.  It does
+not re-enter the broader theta-monoid-matched `CThetaAudit`; that matched audit
+is retained separately as a compatibility boundary.
+-/
+structure CanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real) :
+    Prop where
+  sideConditionAudit :
+    CanonicalOneConstructorBuiltIPLConstructionSideConditionAudit sourceData
+  qComparisonAudit :
+    CanonicalOneConstructorBuiltIPLConstructionQComparisonAudit sourceData
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  thetaSigned_le_cTheta_absLogQ :
+    packageN.preLedger.thetaSigned <=
+      cTheta * (-packageN.preLedger.qSigned)
+  dichotomy :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta
+
+set_option linter.style.longLine false in
+theorem toCanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    CanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+      sourceData cTheta := by
+  have hside :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionSideConditionAudit
+  have hq :=
+    sourceData.toCanonicalOneConstructorBuiltIPLConstructionQComparisonAudit
+  let hbound : IUTStage1Corollary312SignedCThetaBound :=
+    { comparison :=
+        { thetaSigned := packageN.preLedger.thetaSigned,
+          qSigned := packageN.preLedger.qSigned,
+          q_positive := hside.q_pilot_positive,
+          qSigned_le_thetaSigned := hq.qSigned_le_thetaSigned },
+      cTheta := cTheta,
+      thetaSigned_le_cTheta_absLogQ := thetaSigned_le_cTheta_absLogQ }
+  have hdichotomy :
+      (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta := by
+    rcases hbound.cTheta_eq_neg_one_or_gt_neg_one with hC | hstrict
+    · exact Or.inl
+        ⟨hbound.qSigned_eq_thetaSigned_of_cTheta_eq_neg_one hC,
+          hbound.thetaSigned_neg_of_cTheta_eq_neg_one hC⟩
+    · exact Or.inr hstrict
+  exact
+    { sideConditionAudit := hside,
+      qComparisonAudit := hq,
+      q_pilot_positive := hside.q_pilot_positive,
+      qSigned_le_thetaSigned := hq.qSigned_le_thetaSigned,
+      thetaSigned_le_cTheta_absLogQ := thetaSigned_le_cTheta_absLogQ,
+      dichotomy := hdichotomy }
+
 theorem boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPLConstruction
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -50281,10 +50353,8 @@ theorem boundarySignedEqualityOrStrictCTheta_fromCanonicalOneConstructorBuiltIPL
     (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
         packageN.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < cTheta :=
-  let h :=
-    sourceData.cThetaDichotomyWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit
-      cTheta thetaSigned_le_cTheta_absLogQ;
-  (h.2.2.2.2).2.2.2
+  (sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+    cTheta thetaSigned_le_cTheta_absLogQ).dichotomy
 
 set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
@@ -50356,6 +50426,9 @@ structure CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit
     CanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit sourceData
   boundaryAudit :
     CanonicalOneConstructorBuiltIPLConstructionBoundaryAudit sourceData
+  directCThetaAudit :
+    CanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+      sourceData cTheta
   cThetaAudit :
     CanonicalOneConstructorBuiltIPLConstructionCThetaAudit sourceData cTheta
   dichotomy :
@@ -50426,6 +50499,9 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLHullCa
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit,
     boundaryAudit :=
       sourceData.boundaryEndpointWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit,
+    directCThetaAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+        cTheta thetaSigned_le_cTheta_absLogQ,
     cThetaAudit :=
       sourceData.cThetaDichotomyWithCanonicalOneConstructorBuiltIPLConstructionGaussianStepXIAudit
         cTheta thetaSigned_le_cTheta_absLogQ,

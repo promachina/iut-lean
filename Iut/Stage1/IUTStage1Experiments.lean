@@ -39211,6 +39211,52 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneCo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface direct \(C_\Theta\) audit for the canonical-one
+constructed-\(\IPL\) constructor-built finite-divisor route.
+
+The audit computes the ordered-real dichotomy from the constructed
+q-positivity and Step (xi) q-comparison audits plus the explicit numeric
+\(C_\Theta\) estimate, without projecting the dichotomy from the broader
+theta-monoid-matched `CThetaAudit`.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (sourceData :
+      part.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) audited record X C holomorphicF holomorphicD product)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource.CanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+      sourceData cTheta :=
+  sourceData.toCanonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit
+    cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface milestone audit for the canonical-one constructed-\(\IPL\)
 constructor-built finite-divisor route.
 

@@ -4225,6 +4225,7 @@ experiment surface exposes this stricter route through suffixes
 \texttt{canonicalOneConstructorBuiltIPLConstructionFiniteBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionBoundaryAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionCTheta},\\
+\texttt{canonicalOneConstructorBuiltIPLConstructionDirectCThetaAudit},\\
 \texttt{canonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit}.
 \end{array}
 \]
@@ -4246,12 +4247,18 @@ source side conditions, raw q-comparison, finite boundary, and conditional
 \texttt{CanonicalOneConstructorBuiltIPLConstructionMilestoneCThetaAudit}
 now carries the transport-source, log-volume transport, and finite-transport
 log-volume audits directly, together with the constructed source-derived
-bridge audit, the constructed route-log-volume alignment audit, and
-constructor-built upper-ray audit, so the milestone-facing bundle exposes the
-pre-\(\IPL\) and constructed-\(\IPL\) transport chain, the
-Hodge/\(\SHE\)/\(\IPL\)/hull bridge constructor, the route alignment it
-constructs, and the Step (xi-f/g) upper-ray handoff instead of only the coarser
-constructed-\(\IPL\) and hull audits.
+bridge audit, the constructed route-log-volume alignment audit,
+constructor-built upper-ray audit, and a direct signed \(C_\Theta\) audit.  The
+direct audit computes the ordered-real dichotomy from the constructed
+q-positivity side condition, the constructed
+\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) Step (xi) comparison, and
+the explicit numeric \(C_\Theta\) estimate, rather than projecting that
+dichotomy only through the coarser theta-monoid-matched \(C_\Theta\) package.
+Thus the milestone-facing bundle exposes the pre-\(\IPL\) and
+constructed-\(\IPL\) transport chain, the Hodge/\(\SHE\)/\(\IPL\)/hull bridge
+constructor, the route alignment it constructs, and the Step (xi-f/g)
+upper-ray handoff instead of only the coarser constructed-\(\IPL\) and hull
+audits.
 The same route now has an unbundled canonical-one Hodge--Arakelov source
 endpoint,
 \[
