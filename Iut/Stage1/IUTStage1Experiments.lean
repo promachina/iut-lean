@@ -41207,6 +41207,81 @@ theorem remark395Ob3Ob4AdjustedDeterminantSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface localized arithmetic-vector-bundle source for
+Remark 3.9.5(vii), (Ob3-1).
+
+This exposes the layer before structure-sheaf adjustment: a labelled local-ring
+localization carries a rank-`> 1` direct-summand family whose log-volume is the
+finite sum of the summand log-volumes.
+-/
+theorem remark395LocalizedArithmeticVectorBundle_endpoint
+    {η : Type u} {γ : Type v} [Fintype γ]
+    (data : IUTStage1LocalizedArithmeticVectorBundle η γ)
+    (structureSheafLogVolume : Real)
+    (weight : Nat)
+    (weight_pos : 0 < weight) :
+    data.rank = Fintype.card γ ∧
+      1 < data.rank ∧
+      data.bundleLogVolume =
+        Finset.univ.sum data.directSummandLogVolume ∧
+      (data.toLocalizationSource structureSheafLogVolume weight weight_pos).bundleLogVolume =
+        data.bundleLogVolume :=
+  data.endpoint structureSheafLogVolume weight weight_pos
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface structure-sheaf adjusted localized bundle source.
+
+This names the Ob3-1-2 passage from a localized vector bundle over a local-ring
+label to the adjusted summand interface consumed by the determinant source.
+-/
+theorem remark395StructureSheafAdjustedLocalizedVectorBundleSource_endpoint
+    {η : Type u} {γ : Type v} [Fintype γ]
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ) :
+    data.toAdjustedLocalizationSource.toLocalizationSource.bundleLogVolume =
+        data.bundle.bundleLogVolume ∧
+      data.toAdjustedLocalizationSource.adjustedRawLogVolume =
+        data.bundle.bundleLogVolume - data.structureSheafLogVolume ∧
+      data.toAdjustedLocalizationSource.weightedAdjustedLogVolume =
+        data.weightedAdjustedLogVolume ∧
+      data.bundle.rank = Fintype.card γ ∧
+      1 < data.bundle.rank :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface Ob3/Ob4 determinant source from localized vector bundles.
+
+This endpoint shows that the existing adjusted determinant source is now
+constructed from local-ring-labelled vector-bundle localizations, and that the
+weighted summand formula and normalized determinant equality survive the
+projection.
+-/
+theorem remark395Ob3Ob4LocalizedVectorBundleDeterminantSource_endpoint
+    {η : Type u} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ) :
+    (∀ index : β,
+      data.toAdjustedDeterminantSource.localizationBundleLogVolume index =
+        (data.localization index).bundle.bundleLogVolume) ∧
+      (∀ index : β,
+        data.toAdjustedDeterminantSource.adjustedRawLogVolume index =
+          (data.localization index).bundle.bundleLogVolume -
+            (data.localization index).structureSheafLogVolume) ∧
+      (∀ index : β,
+        data.toAdjustedDeterminantSource.weightedAdjustedLogVolume index =
+          data.weightedAdjustedLogVolume index) ∧
+      data.determinantLogVolume =
+        (Finset.univ.sum fun index =>
+          data.weightedAdjustedLogVolume index) ∧
+      data.normalizedDeterminantLogVolume =
+        data.determinantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface minimal-hull construction for Remark 3.9.5(ii).
 
 Starting from the source statement that the intersection of all hulls
@@ -41298,6 +41373,49 @@ theorem remark395Ob3Ob5AdjustedDeterminantLogVolumeSource_endpoint
           sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHull =
         sourceData.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
   sourceData.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface Ob3/Ob5 construction from localized vector-bundle
+determinant data.
+
+This is the lower source-facing version of the finite Ob3-3 summand route: the
+summand identity is stated for local-ring-labelled vector-bundle localizations,
+then projected to the adjusted determinant source and finally to the normalized
+Ob3/Ob5 compatibility used by Step (xi).
+-/
+theorem remark395Ob3Ob5AdjustedDeterminantLogVolumeSource_ofLocalizedVectorBundleDeterminantSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type u} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (hullOperator : IUTStage1Remark395HolomorphicHullOperator α)
+    (possibleRegion : ι -> Set α)
+    (localizedSource :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (familyHullLogVolume_eq_localizedAdjustedSum :
+      hullOperator.logVolume
+          (hullOperator.phi (⋃ i, possibleRegion i)) =
+        Finset.univ.sum fun index =>
+          localizedSource.weightedAdjustedLogVolume index) :
+    let sourceData :=
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource.ofLocalizedVectorBundleDeterminantSource
+        hullOperator possibleRegion localizedSource
+        familyHullLogVolume_eq_localizedAdjustedSum;
+    sourceData.ob3ob4Source =
+        localizedSource.toAdjustedDeterminantSource ∧
+      sourceData.familyHullLogVolume =
+        (Finset.univ.sum fun index =>
+          localizedSource.weightedAdjustedLogVolume index) ∧
+      sourceData.familyHullLogVolume =
+        localizedSource.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      sourceData.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        sourceData.toOb3Ob5DeterminantCompatibilitySource.determinantSource.normalizedLogVolume :=
+  IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource.ofLocalizedVectorBundleDeterminantSource_endpoint
+    hullOperator possibleRegion localizedSource
+    familyHullLogVolume_eq_localizedAdjustedSum
 
 set_option linter.style.longLine false in
 /--

@@ -4801,6 +4801,161 @@ theorem endpoint
 end IUTStage1StructureSheafAdjustedLocalizationSource
 
 /--
+Finite source object for a localized arithmetic vector bundle over a labelled
+local ring.
+
+Step (xi-d) of the proof of Corollary 3.12 first passes to localizations of
+arithmetic vector bundles over local rings in the `1,◦` holomorphic structure.
+This is still a finite log-volume model, but it keeps the local-ring label and
+the rank-`> 1` vector-bundle object separate from the later structure-sheaf
+adjustment and determinant/tensor-power operations.
+-/
+structure IUTStage1LocalizedArithmeticVectorBundle
+    (η : Type u) (γ : Type v) [Fintype γ] where
+  localRing : η
+  directSummandLogVolume : γ -> Real
+  rank_gt_one : 1 < Fintype.card γ
+
+namespace IUTStage1LocalizedArithmeticVectorBundle
+
+variable {η : Type u} {γ : Type v} [Fintype γ]
+
+def rank
+    (_data : IUTStage1LocalizedArithmeticVectorBundle η γ) :
+    Nat :=
+  Fintype.card γ
+
+def bundleLogVolume
+    (data : IUTStage1LocalizedArithmeticVectorBundle η γ) :
+    Real :=
+  Finset.univ.sum data.directSummandLogVolume
+
+def toLocalizationSource
+    (data : IUTStage1LocalizedArithmeticVectorBundle η γ)
+    (structureSheafLogVolume : Real)
+    (weight : Nat)
+    (weight_pos : 0 < weight) :
+    IUTStage1ArithmeticVectorBundleLocalizationSource γ :=
+  { directSummandLogVolume := data.directSummandLogVolume,
+    structureSheafLogVolume := structureSheafLogVolume,
+    weight := weight,
+    weight_pos := weight_pos,
+    rank_gt_one := data.rank_gt_one }
+
+theorem bundleLogVolume_eq_sum
+    (data : IUTStage1LocalizedArithmeticVectorBundle η γ) :
+    data.bundleLogVolume =
+      Finset.univ.sum data.directSummandLogVolume :=
+  rfl
+
+theorem toLocalizationSource_bundleLogVolume_eq
+    (data : IUTStage1LocalizedArithmeticVectorBundle η γ)
+    (structureSheafLogVolume : Real)
+    (weight : Nat)
+    (weight_pos : 0 < weight) :
+    (data.toLocalizationSource structureSheafLogVolume weight weight_pos).bundleLogVolume =
+      data.bundleLogVolume :=
+  rfl
+
+theorem endpoint
+    (data : IUTStage1LocalizedArithmeticVectorBundle η γ)
+    (structureSheafLogVolume : Real)
+    (weight : Nat)
+    (weight_pos : 0 < weight) :
+    data.rank = Fintype.card γ ∧
+      1 < data.rank ∧
+      data.bundleLogVolume =
+        Finset.univ.sum data.directSummandLogVolume ∧
+      (data.toLocalizationSource structureSheafLogVolume weight weight_pos).bundleLogVolume =
+        data.bundleLogVolume :=
+  ⟨rfl, data.rank_gt_one, rfl, rfl⟩
+
+end IUTStage1LocalizedArithmeticVectorBundle
+
+/--
+Localized vector-bundle source with the Ob3-1-2 structure-sheaf adjustment.
+
+This is the source-facing constructor for the existing adjusted-localization
+interface: first choose the localized vector bundle over a local-ring label,
+then subtract the structure-sheaf term `O(-)`, then apply the positive
+multiplicity that contributes to the determinant summand.
+-/
+structure IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource
+    (η : Type u) (γ : Type v) [Fintype γ] where
+  bundle : IUTStage1LocalizedArithmeticVectorBundle η γ
+  structureSheafLogVolume : Real
+  adjustedRawLogVolume : Real
+  adjusted_raw_eq :
+    adjustedRawLogVolume =
+      bundle.bundleLogVolume - structureSheafLogVolume
+  weight : Nat
+  weight_pos : 0 < weight
+
+namespace IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource
+
+variable {η : Type u} {γ : Type v} [Fintype γ]
+
+def toAdjustedLocalizationSource
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ) :
+    IUTStage1StructureSheafAdjustedLocalizationSource γ :=
+  { directSummandLogVolume := data.bundle.directSummandLogVolume,
+    structureSheafLogVolume := data.structureSheafLogVolume,
+    adjustedRawLogVolume := data.adjustedRawLogVolume,
+    adjusted_raw_eq := by
+      simpa [IUTStage1LocalizedArithmeticVectorBundle.bundleLogVolume]
+        using data.adjusted_raw_eq,
+    weight := data.weight,
+    weight_pos := data.weight_pos,
+    rank_gt_one := data.bundle.rank_gt_one }
+
+def weightedAdjustedLogVolume
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ) :
+    Real :=
+  (data.weight : Real) * data.adjustedRawLogVolume
+
+theorem toAdjustedLocalizationSource_bundleLogVolume_eq
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ) :
+    data.toAdjustedLocalizationSource.toLocalizationSource.bundleLogVolume =
+      data.bundle.bundleLogVolume :=
+  rfl
+
+theorem toAdjustedLocalizationSource_adjustedRawLogVolume_eq
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ) :
+    data.toAdjustedLocalizationSource.adjustedRawLogVolume =
+      data.bundle.bundleLogVolume - data.structureSheafLogVolume := by
+  simpa [toAdjustedLocalizationSource] using data.adjusted_raw_eq
+
+theorem toAdjustedLocalizationSource_weightedAdjustedLogVolume_eq
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ) :
+    data.toAdjustedLocalizationSource.weightedAdjustedLogVolume =
+      data.weightedAdjustedLogVolume :=
+  rfl
+
+theorem endpoint
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ) :
+    data.toAdjustedLocalizationSource.toLocalizationSource.bundleLogVolume =
+        data.bundle.bundleLogVolume ∧
+      data.toAdjustedLocalizationSource.adjustedRawLogVolume =
+        data.bundle.bundleLogVolume - data.structureSheafLogVolume ∧
+      data.toAdjustedLocalizationSource.weightedAdjustedLogVolume =
+        data.weightedAdjustedLogVolume ∧
+      data.bundle.rank = Fintype.card γ ∧
+      1 < data.bundle.rank :=
+  ⟨data.toAdjustedLocalizationSource_bundleLogVolume_eq,
+    data.toAdjustedLocalizationSource_adjustedRawLogVolume_eq,
+    data.toAdjustedLocalizationSource_weightedAdjustedLogVolume_eq,
+    rfl,
+    data.bundle.rank_gt_one⟩
+
+end IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource
+
+/--
 Finite determinant source for Remark 3.9.5(vii), (Ob3).
 
 The determinant log-volume is constructed as the finite weighted sum of
@@ -5122,6 +5277,121 @@ theorem endpoint
     data.projectedNormalizedLogVolume_eq_determinant⟩
 
 end IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource
+
+/--
+Remark 3.9.5(vii), (Ob3)/(Ob4), with explicit localized vector bundles.
+
+This refines `IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource`: the
+localization entries are no longer arbitrary adjusted summand records, but are
+constructed from localized arithmetic vector bundles over labelled local rings,
+their structure-sheaf adjustment, and their positive determinant weights.
+-/
+structure IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+    (η : Type u) (β : Type v) (γ : Type w)
+    [Fintype β] [Fintype γ] where
+  localization :
+    β -> IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+
+namespace IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+
+variable {η : Type u} {β : Type v} {γ : Type w}
+variable [Fintype β] [Fintype γ]
+
+def toAdjustedDeterminantSource
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ) :
+    IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ :=
+  { localization := fun index =>
+      (data.localization index).toAdjustedLocalizationSource,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos }
+
+def weightedAdjustedLogVolume
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (index : β) :
+    Real :=
+  (data.localization index).weightedAdjustedLogVolume
+
+def determinantLogVolume
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ) :
+    Real :=
+  data.toAdjustedDeterminantSource.determinantLogVolume
+
+noncomputable def normalizedDeterminantLogVolume
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ) :
+    Real :=
+  data.toAdjustedDeterminantSource.normalizedDeterminantLogVolume
+
+theorem localization_projected_weightedAdjustedLogVolume_eq
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (index : β) :
+    data.toAdjustedDeterminantSource.weightedAdjustedLogVolume index =
+      data.weightedAdjustedLogVolume index :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem determinantLogVolume_eq_sum_weightedAdjusted
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ) :
+    data.determinantLogVolume =
+      Finset.univ.sum fun index =>
+        data.weightedAdjustedLogVolume index := by
+  simpa [determinantLogVolume, weightedAdjustedLogVolume] using
+    data.toAdjustedDeterminantSource.determinantLogVolume_eq_sum_weightedAdjusted
+
+theorem normalizedDeterminantLogVolume_eq_determinant
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ) :
+    data.normalizedDeterminantLogVolume =
+      data.determinantLogVolume :=
+  data.toAdjustedDeterminantSource.normalizedDeterminantLogVolume_eq_determinant
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ) :
+    (∀ index : β,
+      data.toAdjustedDeterminantSource.localizationBundleLogVolume index =
+        (data.localization index).bundle.bundleLogVolume) ∧
+      (∀ index : β,
+        data.toAdjustedDeterminantSource.adjustedRawLogVolume index =
+          (data.localization index).bundle.bundleLogVolume -
+            (data.localization index).structureSheafLogVolume) ∧
+      (∀ index : β,
+        data.toAdjustedDeterminantSource.weightedAdjustedLogVolume index =
+          data.weightedAdjustedLogVolume index) ∧
+      data.determinantLogVolume =
+        (Finset.univ.sum fun index =>
+          data.weightedAdjustedLogVolume index) ∧
+      data.normalizedDeterminantLogVolume =
+        data.determinantLogVolume :=
+  ⟨fun index => by
+      exact (data.localization index)
+        |>.toAdjustedLocalizationSource_bundleLogVolume_eq,
+    fun index => by
+      exact (data.localization index)
+        |>.toAdjustedLocalizationSource_adjustedRawLogVolume_eq,
+    data.localization_projected_weightedAdjustedLogVolume_eq,
+    data.determinantLogVolume_eq_sum_weightedAdjusted,
+    data.normalizedDeterminantLogVolume_eq_determinant⟩
+
+end IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
 
 /--
 Log-volume compatibility between a hull approximant and a weighted determinant
@@ -5463,6 +5733,67 @@ theorem toOb3Ob5DeterminantCompatibilitySource_endpoint
         sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
         compatibilitySource.familyHullLogVolume_eq_normalized,
         compatibilitySource.familyHullLogVolume_eq_determinant⟩
+
+set_option linter.style.longLine false in
+noncomputable def ofLocalizedVectorBundleDeterminantSource
+    {η : Type u}
+    (hullOperator : IUTStage1Remark395HolomorphicHullOperator α)
+    (possibleRegion : ι -> Set α)
+    (localizedSource :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (familyHullLogVolume_eq_localizedAdjustedSum :
+      hullOperator.logVolume
+          (hullOperator.phi (⋃ i, possibleRegion i)) =
+        Finset.univ.sum fun index =>
+          localizedSource.weightedAdjustedLogVolume index) :
+    IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+      α ι β γ :=
+  { hullOperator := hullOperator,
+    possibleRegion := possibleRegion,
+    ob3ob4Source := localizedSource.toAdjustedDeterminantSource,
+    familyHullLogVolume_eq_adjustedSum := by
+      simpa [IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.weightedAdjustedLogVolume]
+        using familyHullLogVolume_eq_localizedAdjustedSum }
+
+set_option linter.style.longLine false in
+theorem ofLocalizedVectorBundleDeterminantSource_endpoint
+    {η : Type u}
+    (hullOperator : IUTStage1Remark395HolomorphicHullOperator α)
+    (possibleRegion : ι -> Set α)
+    (localizedSource :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (familyHullLogVolume_eq_localizedAdjustedSum :
+      hullOperator.logVolume
+          (hullOperator.phi (⋃ i, possibleRegion i)) =
+        Finset.univ.sum fun index =>
+          localizedSource.weightedAdjustedLogVolume index) :
+    let sourceData :=
+      ofLocalizedVectorBundleDeterminantSource
+        hullOperator possibleRegion localizedSource
+        familyHullLogVolume_eq_localizedAdjustedSum;
+    sourceData.ob3ob4Source =
+        localizedSource.toAdjustedDeterminantSource ∧
+      sourceData.familyHullLogVolume =
+        (Finset.univ.sum fun index =>
+          localizedSource.weightedAdjustedLogVolume index) ∧
+      sourceData.familyHullLogVolume =
+        localizedSource.determinantLogVolume ∧
+      sourceData.familyHullLogVolume =
+        sourceData.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      sourceData.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        sourceData.toOb3Ob5DeterminantCompatibilitySource.determinantSource.normalizedLogVolume :=
+  by
+    intro sourceData
+    exact
+      ⟨rfl,
+        familyHullLogVolume_eq_localizedAdjustedSum,
+        familyHullLogVolume_eq_localizedAdjustedSum.trans
+          localizedSource.determinantLogVolume_eq_sum_weightedAdjusted.symm,
+        sourceData.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+        sourceData.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_normalized⟩
 
 theorem endpoint
     (sourceData :

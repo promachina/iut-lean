@@ -2492,6 +2492,22 @@ source also has a constructor
 \texttt{ofOb3Ob4AdjustedDeterminantSource} whose endpoint verifies that this
 source-facing Ob3/Ob4 package is the determinant source used by the existing
 hull/determinant corridor.
+This determinant package now has a lower source-facing constructor layer.  The
+new objects
+\[
+\begin{array}{l}
+\texttt{IUTStage1LocalizedArithmeticVectorBundle},\\
+\texttt{IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource},\\
+\texttt{IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource}
+\end{array}
+\]
+separate the local-ring-labelled vector-bundle localization of Step~(xi-d) from
+the later \(O(-)\) structure-sheaf adjustment and determinant/tensor-power
+normalization.  Their experiment endpoints prove that the localized
+rank-\(>1\) direct-summand log-volume projects to the adjusted localization
+source, and that the resulting Ob3/Ob4 determinant source has the same weighted
+summand formula and normalized determinant equality as the older adjusted
+determinant package.
 The Ob3/Ob5 determinant-compatibility input has also been separated from the
 low-level certificate:
 \[
@@ -2581,6 +2597,17 @@ Thus the current open analytic/log-volume input is no longer
 \(\mu_{\log}(\phi(P_B))=\det_{\mathrm{norm}}\) as a monolithic assertion, but
 the more source-facing finite summand identity
 \(\mu_{\log}(\phi(P_B))=\sum_{\beta}\operatorname{adj}_{\beta}\).
+This identity can now also be stated at the localized vector-bundle level: the
+constructor
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{.ofLocalizedVectorBundleDeterminantSource}
+\end{array}
+\]
+takes the equality with the sum of local-ring-labelled adjusted vector-bundle
+summands and derives the adjusted determinant source, determinant log-volume
+equality, and normalized Ob3/Ob5 compatibility from it.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5757,11 +5784,13 @@ The practical priority order is:
   the lower-level record-hull finite-divisor endpoint can also consume this
   constructor-built possible-image source directly, and the adjusted Ob3/Ob5
   finite-divisor endpoint now constructs that source from the record-canonical
-  adjusted determinant log-volume data plus obligations, but
+  adjusted determinant log-volume data plus obligations; the newest
+  localized-vector-bundle source pushes the Ob3/Ob4 determinant payload below
+  the adjusted-localization interface, but
   the next work is to replace the
-  still-supplied hull system, adjusted-summand equality, measure calibration,
-  record-canonical synchronization, and chart synchronization witnesses by
-  source-paper constructions;
+  still-supplied hull system, localized adjusted-summand equality, measure
+  calibration, record-canonical synchronization, and chart synchronization
+  witnesses by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source
   content to bear on the Mochizuki--Scholze--Stix disagreement.
 \end{enumerate}
