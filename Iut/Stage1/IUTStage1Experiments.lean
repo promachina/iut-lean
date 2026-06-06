@@ -26531,6 +26531,135 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithA
 
 set_option linter.style.longLine false in
 /--
+Compact milestone-facing finite-divisor `C_\Theta` boundary with the
+all-in-one Step (xi) holomorphic-hull/determinant audit fields displayed.
+
+This is a review-surface expansion of
+`sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithAllInOneRouteGaussianStepXIAudit`.
+It returns the strengthened Gaussian-to-Step (xi) audit, the record
+possible-image union, holomorphic-hull containment and volume bound,
+family-hull/determinant equalities, the record-canonical hull/tensor bridge,
+and then the final dichotomy.
+-/
+theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithAllInOneRouteHullDetGaussianStepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.GaussianToStepXIAudit
+        routeSource ∧
+      routeSource.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.toThetaPilotHullEndpoint.possible_images.union =
+        record.thetaPossibleImages.union ∧
+      Region.Subset record.thetaPossibleImages.union
+        (routeSource.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull ∧
+      RegionMeasure.HasVolumeAtMost package.preLedger.measure
+        (routeSource.toPossibleImageHolomorphicHullDeterminantSource.toHullDetSourceConstructor.hullDetData.sourceData.structuredHullDet.applyHull
+          package.preLedger.certificate).hull
+        package.preLedger.thetaSigned ∧
+      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+        routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume ∧
+      routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.tensorPower.normalizedLogVolume =
+        routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          routeSource.possibleImageSource.operation
+          routeSource.possibleImageSource.hullOperation
+          routeSource.possibleImageSource.determinantOperation
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData
+          routeSource.possibleImageSource.qPilotRegion
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) routeSource.possibleImageSource.qChoice
+            routeSource.possibleImageSource.qPilotRegion
+            routeSource.possibleImageSource.q_subset_choice)
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource
+          routeSource.possibleImageSource.hodgeDeterminantSource.familyHullSource.compatibility
+          routeSource.possibleImageSource.hodgeDeterminantSource.measure_eq_hullLogVolume
+          routeSource.possibleImageSource.hodgeDeterminantSource.tensorPower_bound ∧
+      ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  have hboundary :=
+    sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQ_cThetaDichotomyWithAllInOneRouteGaussianStepXIAudit
+      part audited routeSource upperSemiEntry divisorPacket monoAnalyticTheater
+      kummerCompatibility forgettingCompatibility holomorphicF_realization
+      holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+      targetSource cTheta thetaSigned_le_cTheta_absLogQ
+  exact
+    ⟨hboundary.1,
+      hboundary.1.possibleImageUnion_eq_record,
+      hboundary.1.recordUnion_subset_holomorphicHull,
+      hboundary.1.holomorphicHull_volume_bound,
+      hboundary.1.familyHullLogVolume_eq_determinant,
+      hboundary.1.tensorPower_normalized_eq_familyHull,
+      hboundary.1.hullDetBridge_eq_recordCanonical,
+      hboundary.2⟩
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audited raw finite-source boundary from the all-in-one
 target-charted Hodge/IPL determinant possible-image route source.
 
