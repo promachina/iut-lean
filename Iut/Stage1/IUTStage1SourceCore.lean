@@ -4922,6 +4922,141 @@ theorem region_logVolume_le_determinantLogVolume
 end IUTStage1HullApproximantWeightedDeterminantCompatibility
 
 /--
+Source-facing Ob3/Ob5 compatibility between a Remark 3.9.5 canonical hull and a
+weighted determinant.
+
+The existing compatibility certificate is intentionally small: it only records
+that the canonical hull approximant log-volume equals the normalized weighted
+determinant log-volume.  This source object names the same assertion at the
+paper-facing possible-image-family level, before projecting it to the generic
+certificate consumed by the bridge code.
+-/
+structure IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+    (α : Type u) (ι : Type v) (β : Type w) [Fintype β] where
+  hullOperator : IUTStage1Remark395HolomorphicHullOperator α
+  possibleRegion : ι -> Set α
+  determinantSource :
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β
+  familyHullLogVolume_eq_normalized :
+    hullOperator.logVolume
+        (hullOperator.phi (⋃ i, possibleRegion i)) =
+      determinantSource.normalizedLogVolume
+
+namespace IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+
+variable {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+
+def hullData
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    IUTStage1HolomorphicHullLogVolumeShadow α :=
+  IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+    data.hullOperator
+
+def familyUnion
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    Set α :=
+  ⋃ i, data.possibleRegion i
+
+def familyHull
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    Set α :=
+  data.hullOperator.phi data.familyUnion
+
+def canonicalApproximant
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    IUTStage1HullLogVolumeApproximant data.hullData data.familyUnion :=
+  IUTStage1HullLogVolumeApproximant.canonical
+    data.hullData data.familyUnion
+
+def toCompatibility
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    IUTStage1HullApproximantWeightedDeterminantCompatibility
+      data.canonicalApproximant data.determinantSource :=
+  { approximant_eq_weighted_normalized := by
+      simpa [canonicalApproximant, hullData, familyUnion, familyHull,
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator,
+        IUTStage1HullLogVolumeApproximant.canonical] using
+        data.familyHullLogVolume_eq_normalized }
+
+theorem familyHullLogVolume_eq_determinant
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    data.hullOperator.logVolume data.familyHull =
+      data.determinantSource.determinantLogVolume := by
+  rw [familyHull, familyUnion, data.familyHullLogVolume_eq_normalized,
+    data.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+
+theorem toCompatibility_endpoint
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    data.toCompatibility.approximant_eq_weighted_normalized =
+        data.familyHullLogVolume_eq_normalized ∧
+      data.hullOperator.logVolume data.familyHull =
+        data.determinantSource.determinantLogVolume :=
+  ⟨rfl, data.familyHullLogVolume_eq_determinant⟩
+
+noncomputable def ofAdjustedDeterminantSource
+    {γ : Type x} [Fintype γ]
+    (hullOperator : IUTStage1Remark395HolomorphicHullOperator α)
+    (possibleRegion : ι -> Set α)
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (familyHullLogVolume_eq_normalized :
+      hullOperator.logVolume
+          (hullOperator.phi (⋃ i, possibleRegion i)) =
+        ob3ob4Source.normalizedDeterminantLogVolume) :
+    IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+      α ι β :=
+  { hullOperator := hullOperator,
+    possibleRegion := possibleRegion,
+    determinantSource := ob3ob4Source.toWeightedDeterminantSource,
+    familyHullLogVolume_eq_normalized := by
+      simpa [
+        IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.normalizedDeterminantLogVolume]
+        using familyHullLogVolume_eq_normalized }
+
+theorem ofAdjustedDeterminantSource_endpoint
+    {γ : Type x} [Fintype γ]
+    (hullOperator : IUTStage1Remark395HolomorphicHullOperator α)
+    (possibleRegion : ι -> Set α)
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (familyHullLogVolume_eq_normalized :
+      hullOperator.logVolume
+          (hullOperator.phi (⋃ i, possibleRegion i)) =
+        ob3ob4Source.normalizedDeterminantLogVolume) :
+    let source :=
+      ofAdjustedDeterminantSource hullOperator possibleRegion
+        ob3ob4Source familyHullLogVolume_eq_normalized;
+    source.determinantSource = ob3ob4Source.toWeightedDeterminantSource ∧
+      source.hullOperator.logVolume source.familyHull =
+        ob3ob4Source.normalizedDeterminantLogVolume ∧
+      source.hullOperator.logVolume source.familyHull =
+        ob3ob4Source.determinantLogVolume :=
+  by
+    intro source
+    exact
+      ⟨rfl,
+        familyHullLogVolume_eq_normalized,
+        by
+          simpa [source, ofAdjustedDeterminantSource] using
+            source.familyHullLogVolume_eq_determinant⟩
+
+end IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+
+/--
 Finite log-volume skeleton of Remark 3.9.5(vii), (Ob4).
 
 The passage from an object to its `M`-th tensor-power Frobenioid copy is modeled
@@ -5350,6 +5485,28 @@ namespace IUTStage1Remark395HullDeterminantBridgeSource
 
 variable {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
 
+noncomputable def ofOb3Ob5CompatibilitySource
+    (compatibilitySource :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β)
+    (qRegion : Set α)
+    (q_subset_familyUnion :
+      qRegion ⊆ compatibilitySource.familyUnion)
+    (thetaSigned : Real)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          compatibilitySource.determinantSource).normalizedLogVolume <=
+        thetaSigned) :
+    IUTStage1Remark395HullDeterminantBridgeSource α ι β :=
+  { hullOperator := compatibilitySource.hullOperator,
+    possibleRegion := compatibilitySource.possibleRegion,
+    qRegion := qRegion,
+    q_subset_familyUnion := q_subset_familyUnion,
+    determinantSource := compatibilitySource.determinantSource,
+    compatibility := compatibilitySource.toCompatibility,
+    thetaSigned := thetaSigned,
+    tensorPower_bound := tensorPower_bound }
+
 def hullData
     (data : IUTStage1Remark395HullDeterminantBridgeSource α ι β) :
     IUTStage1HolomorphicHullLogVolumeShadow α :=
@@ -5483,6 +5640,40 @@ theorem endpoint
     data.qRegionLogVolume_le_determinantLogVolume,
     data.determinantLogVolume_le_thetaSigned,
     data.qRegionLogVolume_le_thetaSigned⟩
+
+theorem ofOb3Ob5CompatibilitySource_endpoint
+    (compatibilitySource :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β)
+    (qRegion : Set α)
+    (q_subset_familyUnion :
+      qRegion ⊆ compatibilitySource.familyUnion)
+    (thetaSigned : Real)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          compatibilitySource.determinantSource).normalizedLogVolume <=
+        thetaSigned) :
+    let source :=
+      ofOb3Ob5CompatibilitySource compatibilitySource qRegion
+        q_subset_familyUnion thetaSigned tensorPower_bound;
+    source.compatibility = compatibilitySource.toCompatibility ∧
+      source.qRegion ⊆ source.familyHull ∧
+      source.familyHullLogVolume =
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      source.qRegionLogVolume <=
+        compatibilitySource.determinantSource.determinantLogVolume ∧
+      compatibilitySource.determinantSource.determinantLogVolume <=
+        thetaSigned ∧
+      source.qRegionLogVolume <= thetaSigned :=
+  by
+    intro source
+    exact
+      ⟨rfl,
+        source.qRegion_subset_familyHull,
+        source.familyHullLogVolume_eq_normalized,
+        source.qRegionLogVolume_le_determinantLogVolume,
+        source.determinantLogVolume_le_thetaSigned,
+        source.qRegionLogVolume_le_thetaSigned⟩
 
 end IUTStage1Remark395HullDeterminantBridgeSource
 

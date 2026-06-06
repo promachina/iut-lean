@@ -2440,6 +2440,21 @@ source also has a constructor
 \texttt{ofOb3Ob4AdjustedDeterminantSource} whose endpoint verifies that this
 source-facing Ob3/Ob4 package is the determinant source used by the existing
 hull/determinant corridor.
+The Ob3/Ob5 determinant-compatibility input has also been separated from the
+low-level certificate:
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource}.
+\end{array}
+\]
+This object states, at the possible-image-family level, that
+\(\mu_{\log}(\phi(P_B))\) is the normalized weighted-determinant log-volume.
+Lean derives the older
+\texttt{IUTStage1HullApproximantWeightedDeterminantCompatibility} certificate
+from this equality and then derives the ordinary determinant equality from the
+Ob3/Ob4 normalization theorem.  The record-canonical Step~(xi) specialization
+\texttt{IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource} fixes
+\(P_B\) to the Theorem~3.11 possible-image family.
 The actual log-volume bridge has now been separated as a named source object:
 \[
 \begin{array}{l}
@@ -2471,7 +2486,11 @@ record-canonical q-to-determinant-to-theta comparison.  The constructed
 Step~(xi) source also has
 \texttt{ofRecordHullDeterminantBridgeSource}, so the bridge payload may now be
 passed as one source-level mathematical object instead of as unrelated
-compatibility and tensor-bound fields.
+compatibility and tensor-bound fields.  There is now a sharper constructor
+\texttt{ofRecordOb3Ob5CompatibilitySource} that builds the constructed
+Step~(xi) source from the record Ob3/Ob5 source equality plus the remaining
+Ob4 tensor-bound, measure-calibration, bridge-equality, positivity, and
+normalization data.
 The corresponding Step~(xi) source
 \[
 \begin{array}{l}
@@ -2501,10 +2520,12 @@ The experiment-surface theorem
 \]
 threads this constructed Remark~3.9.5 source through the finite-divisor
 vertical-\(IQ\) corridor.  The numeric \(C_\Theta\) estimate remains an explicit
-hypothesis.  The Ob3/Ob5 compatibility certificate, the Ob4 tensor-bound input,
-and the equality with the older algorithmic hull/determinant bridge remain
-source obligations rather than full arithmetic vector-bundle constructions, but
-the ordered log-volume comparison itself is now a proved source-level bridge.
+hypothesis.  The source equality
+\(\mu_{\log}(\phi(P_B))=\det_{\log}^{\mathrm{norm}}\), the Ob4 tensor-bound
+input, and the equality with the older algorithmic hull/determinant bridge
+remain source obligations rather than full arithmetic vector-bundle
+constructions, but the Ob3/Ob5 certificate and ordered log-volume comparison
+are now derived from named source-level objects.
 
 The endpoint type \texttt{Stage1Comparison} is not a source proof: its
 comparison field is the Corollary-3.12-shaped conclusion, and the corresponding

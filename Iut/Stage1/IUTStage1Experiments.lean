@@ -39735,6 +39735,26 @@ theorem remark395Ob3Ob4AdjustedDeterminantSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob3/Ob5 determinant-compatibility audit for Remark 3.9.5.
+
+This names the source-level equality between the canonical possible-image hull
+log-volume and the normalized weighted determinant, then derives the ordinary
+determinant equality from Ob3/Ob4 normalization.
+-/
+theorem remark395Ob3Ob5DeterminantCompatibilitySource_endpoint
+    {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
+    (data :
+      IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource
+        α ι β) :
+    data.hullOperator.logVolume data.familyHull =
+        data.determinantSource.normalizedLogVolume ∧
+      data.hullOperator.logVolume data.familyHull =
+        data.determinantSource.determinantLogVolume :=
+  ⟨data.familyHullLogVolume_eq_normalized,
+    data.familyHullLogVolume_eq_determinant⟩
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
@@ -39755,6 +39775,31 @@ theorem remark395HullDeterminantBridgeSource_endpoint
       data.determinantSource.determinantLogVolume <= data.thetaSigned ∧
       data.qRegionLogVolume <= data.thetaSigned :=
   data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface record-canonical Ob3/Ob5 compatibility audit for the Theorem
+3.11 possible-image family used by Step (xi).
+-/
+theorem remark395RecordOb3Ob5DeterminantCompatibilitySource_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (compatibilitySource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
+        (β := β) record) :
+    compatibilitySource.hullOperator.logVolume
+        (compatibilitySource.hullOperator.phi
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record)) =
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      compatibilitySource.hullOperator.logVolume
+        (compatibilitySource.hullOperator.phi
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record)) =
+        compatibilitySource.determinantSource.determinantLogVolume :=
+  compatibilitySource.endpoint
 
 set_option linter.style.longLine false in
 /--
