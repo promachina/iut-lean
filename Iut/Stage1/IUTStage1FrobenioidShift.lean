@@ -36030,6 +36030,27 @@ structure CalibratedSynchronizationT11IPLConstructionPossibleImageSideConditione
       part audited hodgeSynchronization iplConstructionSource hullSource).iplTransport.iplDatum.link.target =
       (calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
         part audited hodgeSynchronization iplConstructionSource hullSource).iplTransport.iplDatum.outputPrimeStrip
+  finiteHodgeTransportedAverage_preserved :
+    let bridge :=
+      calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplConstructionSource hullSource;
+    let transportAudit :=
+      bridge.finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    transportAudit.targetTransportedAverage = transportAudit.sourceAverage
+  iplSourceLogVolume_eq_finiteHodgeAverage :
+    let bridge :=
+      calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplConstructionSource hullSource;
+    let transportAudit :=
+      bridge.finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    bridge.iplTransport.sourceLogVolume = transportAudit.sourceAverage
+  iplTargetLogVolume_eq_finiteHodgeTransportedAverage :
+    let bridge :=
+      calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplConstructionSource hullSource;
+    let transportAudit :=
+      bridge.finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    bridge.iplTransport.targetLogVolume = transportAudit.targetTransportedAverage
   iplLogVolume_preserved :
     (calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
       part audited hodgeSynchronization iplConstructionSource hullSource).iplTransport.targetLogVolume =
@@ -36149,6 +36170,29 @@ theorem toCalibratedSynchronizationT11IPLConstructionPossibleImageSideConditione
       iplDatum_eq_constructed := hconstructed,
       linkSource_eq_input := hlinkSource,
       linkTarget_eq_output := hlinkTarget,
+      finiteHodgeTransportedAverage_preserved :=
+        (calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge
+          part audited hodgeSynchronization iplConstructionSource hullSource).finiteHodgeSHETransport.transportedAverage_preserved'
+      iplSourceLogVolume_eq_finiteHodgeAverage := by
+        dsimp [
+          calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageSideConditionedHullSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndHullDetSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLConstructionAndHullDetSources,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource,
+          IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport,
+          IUTStage1IPLLogVolumeTransportSource.sourceLogVolume]
+      iplTargetLogVolume_eq_finiteHodgeTransportedAverage := by
+        dsimp [
+          calibratedSynchronizationT11IPLConstructionPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndPossibleImageSideConditionedHullSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLConstructionAndHullDetSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLConstructionAndHullDetSources,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource,
+          IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport,
+          IUTStage1IPLLogVolumeTransportSource.targetLogVolume]
       iplLogVolume_preserved := hlog,
       qPilotRegion_eq_choice := hqEq,
       qPilotRegion_subset_union := hqSubset,
@@ -36294,6 +36338,27 @@ structure CalibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObl
       part audited hodgeSynchronization iplLinkSource hullSource).iplTransport.iplDatum.link.target =
       (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
         part audited hodgeSynchronization iplLinkSource hullSource).iplTransport.iplDatum.outputPrimeStrip
+  finiteHodgeTransportedAverage_preserved :
+    let bridge :=
+      calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplLinkSource hullSource;
+    let transportAudit :=
+      bridge.finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    transportAudit.targetTransportedAverage = transportAudit.sourceAverage
+  iplSourceLogVolume_eq_finiteHodgeAverage :
+    let bridge :=
+      calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplLinkSource hullSource;
+    let transportAudit :=
+      bridge.finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    bridge.iplTransport.sourceLogVolume = transportAudit.sourceAverage
+  iplTargetLogVolume_eq_finiteHodgeTransportedAverage :
+    let bridge :=
+      calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+        part audited hodgeSynchronization iplLinkSource hullSource;
+    let transportAudit :=
+      bridge.finiteHodgeSHETransport.synchronization.toStructuredSHESquareWeightTransportAudit.preservationAudit;
+    bridge.iplTransport.targetLogVolume = transportAudit.targetTransportedAverage
   iplLogVolume_preserved :
     (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
       part audited hodgeSynchronization iplLinkSource hullSource).iplTransport.targetLogVolume =
@@ -36414,6 +36479,25 @@ theorem toCalibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObl
       iplDatum_eq_certificate := hbridge.1,
       linkSource_eq_input := hbridge.2.1,
       linkTarget_eq_output := hbridge.2.2.1,
+      finiteHodgeTransportedAverage_preserved :=
+        (calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge
+          part audited hodgeSynchronization iplLinkSource hullSource).finiteHodgeSHETransport.transportedAverage_preserved'
+      iplSourceLogVolume_eq_finiteHodgeAverage := by
+        dsimp [
+          calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndHullDetSources,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+          IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport,
+          IUTStage1IPLLogVolumeTransportSource.sourceLogVolume]
+      iplTargetLogVolume_eq_finiteHodgeTransportedAverage := by
+        dsimp [
+          calibratedSynchronizationT11IPLLinkPossibleImageSideConditionedHullObligationsBackedBridge,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofCalibratedHodgeSynchronizationT11IPLLinkAndPossibleImageSideConditionedHullObligationsBackedSources,
+          IUTStage1SourceDerivedHodgeSHEIPLHullBridge.ofFiniteHodgeSHET11IPLAndHullDetSources,
+          IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkSource,
+          IUTStage1IPLLogVolumeTransportSource.toIPLLogVolumeTransport,
+          IUTStage1IPLLogVolumeTransportSource.targetLogVolume]
       iplLogVolume_preserved := hbridge.2.2.2.2.2.2.2.2.2.2.1,
       qPilotRegion_eq_choice := hbridge.2.2.2.2.2.1,
       qPilotRegion_subset_union := hbridge.2.2.2.2.2.2.1,
