@@ -48648,6 +48648,89 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionChoiceLinkAudit
   sourceData.constructedIPLChoiceLink_endpoint
 
 set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  factoredSHEAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
+  iplTransportSource_eq_constructed :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource =
+      IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
+        (l := l) (X := X) (C := C)
+        (finiteTransport :=
+          sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport)
+        sourceData.iplConstructionSource
+  directLogVolumeTransportEndpoint :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toIPLLogVolumeTransport.targetTheater.side
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit
+      sourceData :=
+  { factoredSHEAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
+    iplTransportSource_eq_constructed :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource_eq_constructed,
+    directLogVolumeTransportEndpoint :=
+      sourceData.constructedIPLLogVolumeTransportSource_endpoint }
+
+set_option linter.style.longLine false in
+structure CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    Prop where
+  logVolumeTransportAudit :
+    CanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit
+      sourceData
+  directFiniteTransportLogVolumeEndpoint :
+    let audit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.synchronization.toStructuredSHESquareWeightTransportAudit
+        |>.preservationAudit;
+    sourceData.toIPLLogVolumeTransport.sourceLogVolume = audit.sourceAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume =
+        audit.sourceAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        audit.targetTransportedAverage ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource.sourceLogVolume
+
+theorem toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit
+    (sourceData :
+      IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
+        (β := β) part audited record X C holomorphicF holomorphicD product) :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit
+      sourceData :=
+  { logVolumeTransportAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit,
+    directFiniteTransportLogVolumeEndpoint :=
+      sourceData.constructedIPLFiniteTransportLogVolume_endpoint }
+
+set_option linter.style.longLine false in
 structure CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
     (sourceData :
       IUTStage1CanonicalOneHodgeArakelovSHEIPLConstructionPossibleImageConstructorBuiltFiniteDivisorVerticalIQSource
@@ -48655,6 +48738,12 @@ structure CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
     Prop where
   factoredSHEAudit :
     CanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit sourceData
+  logVolumeTransportAudit :
+    CanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit
+      sourceData
+  finiteTransportLogVolumeAudit :
+    CanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit
+      sourceData
   iplTransportSource_eq_constructed :
     sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource =
       IUTStage1IPLLogVolumeTransportSource.ofTheorem311IPLLinkConstructionSource
@@ -48717,6 +48806,10 @@ theorem toCanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit
     CanonicalOneConstructorBuiltIPLConstructionConstructedIPLAudit sourceData :=
   { factoredSHEAudit :=
       sourceData.toCanonicalOneConstructorBuiltIPLConstructionFactoredSHEAudit,
+    logVolumeTransportAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionLogVolumeTransportAudit,
+    finiteTransportLogVolumeAudit :=
+      sourceData.toCanonicalOneConstructorBuiltIPLConstructionFiniteTransportLogVolumeAudit,
     iplTransportSource_eq_constructed :=
       sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransportSource_eq_constructed,
     directLogVolumeTransportEndpoint :=
