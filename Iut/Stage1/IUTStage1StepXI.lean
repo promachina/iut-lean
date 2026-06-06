@@ -13660,6 +13660,95 @@ theorem toRecordBoundedFamilyHullDetLogVolumeSource_endpoint
     · exact
         familyHullSource.tensorPower_normalizedLogVolume_eq_familyHullLogVolume
 
+set_option linter.style.longLine false in
+theorem ofAdjustedDeterminantSource_endpoint
+    {γ : Type w} [Fintype γ]
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (familyHullLogVolume_eq_normalized :
+      hullOperator.logVolume
+          (hullOperator.phi (recordThetaPossibleImageUnion record)) =
+        ob3ob4Source.normalizedDeterminantLogVolume) :
+    let compatibilitySource :=
+      ofAdjustedDeterminantSource (record := record)
+        hullOperator ob3ob4Source familyHullLogVolume_eq_normalized;
+    compatibilitySource.determinantSource =
+        ob3ob4Source.toWeightedDeterminantSource ∧
+      ((∀ index : β,
+        ob3ob4Source.adjustedRawLogVolume index =
+          ob3ob4Source.localizationBundleLogVolume index -
+            ob3ob4Source.structureSheafLogVolume index) ∧
+        (∀ index : β,
+          ob3ob4Source.weightedAdjustedLogVolume index =
+            ((ob3ob4Source.localization index).weight : Real) *
+              ob3ob4Source.adjustedRawLogVolume index) ∧
+        ob3ob4Source.determinantLogVolume =
+          (Finset.univ.sum fun index =>
+            ob3ob4Source.weightedAdjustedLogVolume index) ∧
+        ob3ob4Source.tensorPowerLogVolume =
+          (ob3ob4Source.positiveTensorPower : Real) *
+            ob3ob4Source.determinantLogVolume ∧
+        ob3ob4Source.normalizedDeterminantLogVolume =
+          ob3ob4Source.determinantLogVolume ∧
+        ob3ob4Source.toDeterminantLogVolume.normalizedLogVolume =
+          ob3ob4Source.determinantLogVolume) ∧
+      compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) =
+        ob3ob4Source.normalizedDeterminantLogVolume ∧
+      compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) =
+        ob3ob4Source.determinantLogVolume ∧
+      (compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) =
+          compatibilitySource.determinantSource.normalizedLogVolume ∧
+        compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) =
+          compatibilitySource.determinantSource.determinantLogVolume) ∧
+      (let familyHullSource :=
+        compatibilitySource.toRecordBoundedFamilyHullDetLogVolumeSource;
+      familyHullSource.familyUnion = recordThetaPossibleImageUnion record ∧
+        familyHullSource.familyHull =
+          compatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record) ∧
+        familyHullSource.familyHullLogVolume =
+          ob3ob4Source.normalizedDeterminantLogVolume ∧
+        familyHullSource.familyHullLogVolume =
+          ob3ob4Source.determinantLogVolume ∧
+        familyHullSource.tensorPower.normalizedLogVolume =
+          familyHullSource.familyHullLogVolume) :=
+  by
+    intro compatibilitySource
+    have hbounded :=
+      compatibilitySource.toRecordBoundedFamilyHullDetLogVolumeSource_endpoint
+    exact
+      ⟨rfl,
+        ob3ob4Source.endpoint,
+        by
+          simpa [compatibilitySource, ofAdjustedDeterminantSource] using
+            familyHullLogVolume_eq_normalized,
+        by
+          simpa [compatibilitySource, ofAdjustedDeterminantSource] using
+            compatibilitySource.familyHullLogVolume_eq_determinant,
+        compatibilitySource.endpoint,
+        by
+          exact
+            ⟨hbounded.1,
+              hbounded.2.1,
+              by
+                simpa [compatibilitySource, ofAdjustedDeterminantSource,
+                  IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.normalizedDeterminantLogVolume]
+                  using hbounded.2.2.1,
+              by
+                rw [hbounded.2.2.2.1]
+                rfl,
+              hbounded.2.2.2.2⟩⟩
+
 end IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
 
 open IUTStage1Theorem311HullDetSourceConstructor in

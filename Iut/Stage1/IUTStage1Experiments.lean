@@ -39974,6 +39974,94 @@ theorem remark395RecordOb3Ob5DeterminantCompatibilitySource_boundedFamilyEndpoin
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface constructor from Ob3/Ob4 adjusted determinant data to the
+record-canonical Ob3/Ob5 compatibility source.
+
+This keeps the source-paper chain visible: adjusted localization summands and
+positive tensor-power normalization feed the record possible-image family hull,
+and the resulting Ob3/Ob5 source projects to the bounded-family Ob5 package.
+-/
+theorem remark395RecordOb3Ob5DeterminantCompatibilitySource_ofAdjustedDeterminantSource_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (familyHullLogVolume_eq_normalized :
+      hullOperator.logVolume
+          (hullOperator.phi
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record)) =
+        ob3ob4Source.normalizedDeterminantLogVolume) :
+    let compatibilitySource :=
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource.ofAdjustedDeterminantSource
+        (record := record)
+        hullOperator ob3ob4Source familyHullLogVolume_eq_normalized;
+    compatibilitySource.determinantSource =
+        ob3ob4Source.toWeightedDeterminantSource ∧
+      ((∀ index : β,
+        ob3ob4Source.adjustedRawLogVolume index =
+          ob3ob4Source.localizationBundleLogVolume index -
+            ob3ob4Source.structureSheafLogVolume index) ∧
+        (∀ index : β,
+          ob3ob4Source.weightedAdjustedLogVolume index =
+            ((ob3ob4Source.localization index).weight : Real) *
+              ob3ob4Source.adjustedRawLogVolume index) ∧
+        ob3ob4Source.determinantLogVolume =
+          (Finset.univ.sum fun index =>
+            ob3ob4Source.weightedAdjustedLogVolume index) ∧
+        ob3ob4Source.tensorPowerLogVolume =
+          (ob3ob4Source.positiveTensorPower : Real) *
+            ob3ob4Source.determinantLogVolume ∧
+        ob3ob4Source.normalizedDeterminantLogVolume =
+          ob3ob4Source.determinantLogVolume ∧
+        ob3ob4Source.toDeterminantLogVolume.normalizedLogVolume =
+          ob3ob4Source.determinantLogVolume) ∧
+      compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record)) =
+        ob3ob4Source.normalizedDeterminantLogVolume ∧
+      compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record)) =
+        ob3ob4Source.determinantLogVolume ∧
+      (compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record)) =
+          compatibilitySource.determinantSource.normalizedLogVolume ∧
+        compatibilitySource.hullOperator.logVolume
+          (compatibilitySource.hullOperator.phi
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record)) =
+          compatibilitySource.determinantSource.determinantLogVolume) ∧
+      (let familyHullSource :=
+        compatibilitySource.toRecordBoundedFamilyHullDetLogVolumeSource;
+      familyHullSource.familyUnion =
+          IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record ∧
+        familyHullSource.familyHull =
+          compatibilitySource.hullOperator.phi
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record) ∧
+        familyHullSource.familyHullLogVolume =
+          ob3ob4Source.normalizedDeterminantLogVolume ∧
+        familyHullSource.familyHullLogVolume =
+          ob3ob4Source.determinantLogVolume ∧
+        familyHullSource.tensorPower.normalizedLogVolume =
+          familyHullSource.familyHullLogVolume) :=
+  IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource.ofAdjustedDeterminantSource_endpoint
+    (record := record)
+    hullOperator ob3ob4Source familyHullLogVolume_eq_normalized
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface record-canonical bridge audit for the Theorem 3.11
 possible-image family used by Step (xi).
 -/

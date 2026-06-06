@@ -2477,6 +2477,24 @@ and
 \texttt{remark395RecordOb3Ob5DeterminantCompatibilitySource\_boundedFamilyEndpoint}
 verify the family union, canonical hull, determinant log-volume equality, and
 normalized tensor-power equality after this projection.
+The record-canonical Ob3/Ob5 source now also has a public constructor endpoint
+from the Ob3/Ob4 adjusted determinant source.  Given the remaining
+source-facing equality
+\[
+  \mu_{\log}(\phi(P_B))
+    =
+  \det_{\mathrm{norm}}(P_B),
+\]
+\Lean{} constructs the record Ob3/Ob5 compatibility object, projects the
+Ob3/Ob4 localization-summand and tensor-power formulas, derives equality with
+the ordinary determinant log-volume, and then projects the resulting object to
+the bounded-family Ob5 hull source.  The experiment surface exposes this as
+\[
+\begin{array}{l}
+\texttt{remark395RecordOb3Ob5DeterminantCompatibilitySource}\\
+\quad\texttt{\_ofAdjustedDeterminantSource\_endpoint}.
+\end{array}
+\]
 The actual log-volume bridge has now been separated as a named source object:
 \[
 \begin{array}{l}
