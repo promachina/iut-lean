@@ -21776,6 +21776,160 @@ theorem endpoint
 end IUTStage1Remark395Ob7LogKummerCompatibilitySource
 
 /--
+Remark 3.9.5(vii), Ob7, coric log-Kummer compatibility source.
+
+This strengthens `IUTStage1Remark395Ob7LogKummerCompatibilitySource` by using
+the coric `F^{⊢×μ}` unit invariant of IUT II, Corollary 4.7(iv), as the source
+of the `F^{×μ}` prime-strip lift.  The ordinary Ob7 source is recovered by
+forgetting the common coric unit character on the valuation set.
+-/
+structure IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+    (α : Type u) (ι : Type v) (β : Type w)
+    (Penv Pgau V : Type x) (μ : Type y)
+    [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V] where
+  bridgeSource : IUTStage1Remark395HullDeterminantBridgeSource α ι β
+  coricInvariant : IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ
+  determinantLogVolume_eq_coricPrimeStripGlobal :
+    bridgeSource.determinantSource.determinantLogVolume =
+      coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume
+
+namespace IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+
+variable {α : Type u} {ι : Type v} {β : Type w}
+variable {Penv Pgau V : Type x} {μ : Type y}
+variable [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V]
+
+def toOb7LogKummerCompatibilitySource
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    IUTStage1Remark395Ob7LogKummerCompatibilitySource
+      α ι β Penv Pgau V μ :=
+  { bridgeSource := source.bridgeSource,
+    primeStripLift := source.coricInvariant.lift,
+    determinantLogVolume_eq_primeStripGlobal :=
+      source.determinantLogVolume_eq_coricPrimeStripGlobal }
+
+def primeStripGlobalLogVolume
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    Real :=
+  source.coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume
+
+theorem toOb7_primeStripGlobalLogVolume
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.toOb7LogKummerCompatibilitySource.primeStripGlobalLogVolume =
+      source.primeStripGlobalLogVolume :=
+  rfl
+
+theorem familyHullLogVolume_eq_primeStripGlobal
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.bridgeSource.familyHullLogVolume =
+      source.primeStripGlobalLogVolume :=
+  source.toOb7LogKummerCompatibilitySource.familyHullLogVolume_eq_primeStripGlobal
+
+theorem determinantNormalizedLogVolume_eq_primeStripGlobal
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.bridgeSource.determinantNormalizedLogVolume =
+      source.primeStripGlobalLogVolume :=
+  source.toOb7LogKummerCompatibilitySource.determinantNormalizedLogVolume_eq_primeStripGlobal
+
+theorem qRegionLogVolume_le_primeStripGlobal
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.bridgeSource.qRegionLogVolume <=
+      source.primeStripGlobalLogVolume :=
+  source.toOb7LogKummerCompatibilitySource.qRegionLogVolume_le_primeStripGlobal
+
+theorem environmentUnitCharacter_eq_coric
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ)
+    (p : Penv) :
+    source.coricInvariant.lift.environmentUnitCharacter p =
+      source.coricInvariant.coricUnitCharacter
+        (source.coricInvariant.lift.base.environmentPrimeToPlace p) :=
+  source.coricInvariant.environment_unit_eq_coric p
+
+theorem gaussianUnitCharacter_at_evaluatedPrime_eq_coric
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ)
+    (p : Penv) :
+    source.coricInvariant.lift.gaussianUnitCharacter
+        (source.coricInvariant.lift.base.primeEvaluation p) =
+      source.coricInvariant.coricUnitCharacter
+        (source.coricInvariant.lift.base.gaussianPrimeToPlace
+          (source.coricInvariant.lift.base.primeEvaluation p)) :=
+  source.coricInvariant.gaussianUnitCharacter_at_evaluatedPrime_eq_coric p
+
+theorem environmentUnitCharacter_eq_gaussianUnitCharacter_at_evaluatedPrime
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ)
+    (p : Penv) :
+    source.coricInvariant.lift.environmentUnitCharacter p =
+      source.coricInvariant.lift.gaussianUnitCharacter
+        (source.coricInvariant.lift.base.primeEvaluation p) :=
+  source.coricInvariant.environmentUnitCharacter_eq_gaussianUnitCharacter_at_evaluatedPrime p
+
+theorem endpoint
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.bridgeSource.qRegion ⊆ source.bridgeSource.familyHull ∧
+      source.bridgeSource.qRegionLogVolume <=
+        source.bridgeSource.determinantNormalizedLogVolume ∧
+      source.bridgeSource.determinantNormalizedLogVolume =
+        source.primeStripGlobalLogVolume ∧
+      source.bridgeSource.familyHullLogVolume =
+        source.primeStripGlobalLogVolume ∧
+      source.bridgeSource.qRegionLogVolume <=
+        source.primeStripGlobalLogVolume ∧
+      (∀ p : Penv,
+        source.coricInvariant.lift.base.gaussianPrimeToPlace
+            (source.coricInvariant.lift.base.primeEvaluation p) =
+          source.coricInvariant.lift.base.environmentPrimeToPlace p ∧
+        (source.coricInvariant.lift.base.localEvaluation.gaussianLocal.localObject
+            (source.coricInvariant.lift.base.gaussianPrimeToPlace
+              (source.coricInvariant.lift.base.primeEvaluation p))).realifiedLogVolume =
+          (source.coricInvariant.lift.base.localEvaluation.environmentLocal.localObject
+            (source.coricInvariant.lift.base.environmentPrimeToPlace p)).realifiedLogVolume ∧
+        source.coricInvariant.lift.environmentUnitCharacter p =
+          source.coricInvariant.coricUnitCharacter
+            (source.coricInvariant.lift.base.environmentPrimeToPlace p) ∧
+        source.coricInvariant.lift.gaussianUnitCharacter
+            (source.coricInvariant.lift.base.primeEvaluation p) =
+          source.coricInvariant.coricUnitCharacter
+            (source.coricInvariant.lift.base.gaussianPrimeToPlace
+              (source.coricInvariant.lift.base.primeEvaluation p)) ∧
+        source.coricInvariant.lift.environmentUnitCharacter p =
+          source.coricInvariant.lift.gaussianUnitCharacter
+            (source.coricInvariant.lift.base.primeEvaluation p)) :=
+  let ob7Source := source.toOb7LogKummerCompatibilitySource
+  ⟨source.bridgeSource.qRegion_subset_familyHull,
+    source.bridgeSource.qRegionLogVolume_le_determinantNormalizedLogVolume,
+    source.determinantNormalizedLogVolume_eq_primeStripGlobal,
+    source.familyHullLogVolume_eq_primeStripGlobal,
+    source.qRegionLogVolume_le_primeStripGlobal,
+    fun p =>
+      ⟨ob7Source.gaussianPlaceOfEvaluation_eq_environmentPlace p,
+        ob7Source.gaussianLocalLogVolume_at_evaluatedPrime_eq_environment p,
+        source.environmentUnitCharacter_eq_coric p,
+        source.gaussianUnitCharacter_at_evaluatedPrime_eq_coric p,
+        source.environmentUnitCharacter_eq_gaussianUnitCharacter_at_evaluatedPrime p⟩⟩
+
+end IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+
+/--
 Finite coric global realified Frobenioid compatibility.
 
 IUT II, Corollary 4.7(v), passes from the coric `D^{⊢}`-link to an

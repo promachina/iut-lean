@@ -315,6 +315,45 @@ theorem coricThetaMuPrimeStripInvariant_endpoint
             (invariant.lift.base.primeEvaluation p) :=
   invariant.endpoint
 
+set_option linter.style.longLine false in
+theorem remark395Ob7CoricLogKummerCompatibilitySource_endpoint
+    {α : Type u} {ι : Type v} {β : Type w}
+    {Penv Pgau V : Type x} {μ : Type y}
+    [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.bridgeSource.qRegion ⊆ source.bridgeSource.familyHull ∧
+      source.bridgeSource.qRegionLogVolume <=
+        source.bridgeSource.determinantNormalizedLogVolume ∧
+      source.bridgeSource.determinantNormalizedLogVolume =
+        source.primeStripGlobalLogVolume ∧
+      source.bridgeSource.familyHullLogVolume =
+        source.primeStripGlobalLogVolume ∧
+      source.bridgeSource.qRegionLogVolume <=
+        source.primeStripGlobalLogVolume ∧
+      (∀ p : Penv,
+        source.coricInvariant.lift.base.gaussianPrimeToPlace
+            (source.coricInvariant.lift.base.primeEvaluation p) =
+          source.coricInvariant.lift.base.environmentPrimeToPlace p ∧
+        (source.coricInvariant.lift.base.localEvaluation.gaussianLocal.localObject
+            (source.coricInvariant.lift.base.gaussianPrimeToPlace
+              (source.coricInvariant.lift.base.primeEvaluation p))).realifiedLogVolume =
+          (source.coricInvariant.lift.base.localEvaluation.environmentLocal.localObject
+            (source.coricInvariant.lift.base.environmentPrimeToPlace p)).realifiedLogVolume ∧
+        source.coricInvariant.lift.environmentUnitCharacter p =
+          source.coricInvariant.coricUnitCharacter
+            (source.coricInvariant.lift.base.environmentPrimeToPlace p) ∧
+        source.coricInvariant.lift.gaussianUnitCharacter
+            (source.coricInvariant.lift.base.primeEvaluation p) =
+          source.coricInvariant.coricUnitCharacter
+            (source.coricInvariant.lift.base.gaussianPrimeToPlace
+              (source.coricInvariant.lift.base.primeEvaluation p)) ∧
+        source.coricInvariant.lift.environmentUnitCharacter p =
+          source.coricInvariant.lift.gaussianUnitCharacter
+            (source.coricInvariant.lift.base.primeEvaluation p)) :=
+  source.endpoint
+
 theorem coricGlobalRealifiedFrobenioidCompatibility_endpoint
     {V : Type u} [Fintype V]
     (compat : IUTStage1CoricGlobalRealifiedFrobenioidCompatibility V) :
@@ -35124,6 +35163,41 @@ noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDete
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob7 audit from a coric Remark 3.9.5 log-Kummer source.
+
+This retains the ordinary Ob7 audit while exposing the common coric
+`F^{⊢×μ}` unit character whose pullbacks give the environment and Gaussian unit
+characters.
+-/
+noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_ob7CoricLogKummerCompatibilityAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricOb7Source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        β Penv Pgau V μ)
+    (coric_bridge_eq_constructorBridge :
+      coricOb7Source.bridgeSource =
+        productHullBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb7CoricLogKummerCompatibilityAudit
+      productHullBackedSource Penv Pgau V μ :=
+  productHullBackedSource.productHullBackedOb7CoricLogKummerCompatibilityAudit
+    coricOb7Source coric_bridge_eq_constructorBridge
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface synchronized Ob5--Ob7 audit for the product-hull-backed
 constructor-built Remark 3.9.5 finite-divisor source.
 
@@ -35295,6 +35369,90 @@ noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDete
   productHullBackedSource.productHullBackedOb5Ob6Ob7SynchronizedAudit_atQChoice_of_qPilotRegion_nonempty_of_ob7Source
     phiFamily xiFamily k qPilotRegion_nonempty
     ob7Source ob7_bridge_eq_constructorBridge
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface synchronized Ob5--Ob7 audit at the constructor-backed
+q-choice, with Ob7 supplied by a coric log-Kummer compatibility source.
+-/
+noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_ob5Ob6Ob7SynchronizedAuditAtQChoiceOfQPilotRegionNonemptyOfCoricOb7Source
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type x} {κ : Type u}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      productHullBackedSource.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricOb7Source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        β Penv Pgau V μ)
+    (coric_bridge_eq_constructorBridge :
+      coricOb7Source.bridgeSource =
+        productHullBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb5Ob6Ob7SynchronizedAudit
+      productHullBackedSource phiFamily xiFamily k
+      productHullBackedSource.constructorBackedSource.qChoice Penv Pgau V μ :=
+  productHullBackedSource.productHullBackedOb5Ob6Ob7SynchronizedAudit_atQChoice_of_qPilotRegion_nonempty_of_coricOb7Source
+    phiFamily xiFamily k qPilotRegion_nonempty
+    coricOb7Source coric_bridge_eq_constructorBridge
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface canonical-scale Ob5--Ob7 audit at the constructor-backed
+q-choice, with Ob7 supplied by a coric log-Kummer compatibility source.
+-/
+noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_ob5Ob6Ob7CanonicalCThetaScaleAuditAtQChoiceOfQPilotRegionNonemptyOfCoricOb7Source
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type x} {κ : Type u}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      productHullBackedSource.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricOb7Source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        β Penv Pgau V μ)
+    (coric_bridge_eq_constructorBridge :
+      coricOb7Source.bridgeSource =
+        productHullBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit
+      productHullBackedSource phiFamily xiFamily k
+      productHullBackedSource.constructorBackedSource.qChoice Penv Pgau V μ :=
+  productHullBackedSource.productHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty_of_coricOb7Source
+    phiFamily xiFamily k qPilotRegion_nonempty
+    coricOb7Source coric_bridge_eq_constructorBridge
 
 set_option linter.style.longLine false in
 /--
@@ -36505,6 +36663,55 @@ noncomputable def remark395PrincipalValuationBallTopologyFiniteExtensionHaarCons
   principalValuationBallBackedSource.principalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty_of_ob7Source
     phiFamily xiFamily k qPilotRegion_nonempty
     ob7Source ob7_bridge_eq_constructorBridge
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface principal valuation-ball topology/Haar Ob5--Ob7 canonical
+audit at the constructor-backed q-choice, with Ob7 supplied by a coric
+log-Kummer compatibility source.
+-/
+noncomputable def remark395PrincipalValuationBallTopologyFiniteExtensionHaarConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_topologyFiniteExtensionHaarOb5Ob6Ob7CanonicalCThetaScaleAuditAtQChoiceOfQPilotRegionNonemptyOfCoricOb7Source
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type (max u v w y z)}
+    {κ : Type u}
+    (principalValuationBallBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      principalValuationBallBackedSource.toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.PhiFamily
+        κ)
+    (xiFamily :
+      principalValuationBallBackedSource.toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.XiFamily
+        κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      principalValuationBallBackedSource.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type (max u v w y z)}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricOb7Source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        β Penv Pgau V μ)
+    (coric_bridge_eq_constructorBridge :
+      coricOb7Source.bridgeSource =
+        principalValuationBallBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit
+      principalValuationBallBackedSource phiFamily xiFamily k
+      principalValuationBallBackedSource.constructorBackedSource.qChoice
+      Penv Pgau V μ :=
+  principalValuationBallBackedSource.principalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty_of_coricOb7Source
+    phiFamily xiFamily k qPilotRegion_nonempty
+    coricOb7Source coric_bridge_eq_constructorBridge
 
 set_option linter.style.longLine false in
 /--
