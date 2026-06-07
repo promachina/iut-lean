@@ -792,6 +792,19 @@ determinant source.  This does not construct the analytic scalar parameters
 from the source papers, but it removes a previous separation between the
 \(\lambda\cdot O\) hull notation and the nonarchimedean local-ring/Haar cover
 used by the determinant route.
+There is now also a product-carrier version of this valuation-ball bridge,
+\[
+\texttt{IUTStage1Remark395DirectProductPrincipalValuationBallProductHullCoverSource}.
+\]
+Its valuation cover lives on an actual dependent product, and its principal
+hull source is the direct-product-backed scalar source above.  The endpoint
+therefore identifies the selected \(\lambda\cdot O\) hull first with the
+coordinate/direct-product hull selected by the projection construction, then
+with the valuation-ball direct-product cell union, and finally carries the same
+adjusted Ob3/Ob5 determinant normalization handoff.  The remaining scalar
+obligation is now just the per-parameter analytic equality between the source
+paper's scalar image \(\lambda\cdot O\) and the corresponding valuation/direct
+product hull.
 This valuation-ball provenance has now been lifted to the finite-divisor
 vertical-\(IQ\) endpoint.  The declaration
 \[
@@ -7617,8 +7630,9 @@ The practical priority order is:
   determinant-normalization payloads.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
-  But the next work is to replace the still-supplied analytic identification
-  of each principal \(\lambda\cdot O\) scalar image with its valuation/direct-product hull,
+  But the next work is to derive, from the local valuation/Haar model, the
+  still-supplied per-parameter analytic identification of each principal
+  \(\lambda\cdot O\) scalar image with its valuation/direct-product hull,
   direct-product localization cover construction, family-local
   finite-cover additivity theorem,
   construction of the compact-open

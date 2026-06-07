@@ -46710,6 +46710,42 @@ theorem remark395PrincipalValuationBallProductHullCoverSource_tensorMeasureAudit
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface product-carrier valuation/principal hull cover endpoint.
+
+This version uses a direct-product-backed principal hull source: the selected
+principal `lambda * O` region is identified with the direct-product hull
+selected by coordinate projections, and the same valuation-ball cover supplies
+the adjusted Ob3/Ob5 determinant handoff.
+-/
+theorem remark395DirectProductPrincipalValuationBallProductHullCoverSource_endpoint
+    {δ : Type u} {A : δ -> Type v} {ι : Type y} {η : Type x} {K : Type z}
+    {β : Type w} {γ : Type max u v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395DirectProductPrincipalValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    data.directProductPrincipalSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      data.valuationCover.hullSystem =
+        data.directProductPrincipalSource.toHolomorphicHullSystem ∧
+      data.valuationCover.hullSystem.phi data.possibleImageUnion =
+        data.selectedPrincipalHull ∧
+      data.selectedPrincipalHull =
+        data.directProductPrincipalSource.directProductSource.productHull
+          data.selectedPrincipalParameter ∧
+      data.selectedPrincipalHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.valuationCover.hullSystem.logVolume data.selectedPrincipalHull =
+        data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+        data.directProductPrincipalSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface cover-additive valuation-ball factor-calibrated Haar
 tensor-packet source.
 
