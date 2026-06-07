@@ -4870,6 +4870,26 @@ calibration, and a matching \(C_\Theta\) dichotomy wrapper.  The final
 dichotomy can therefore be reviewed from a single package whose Step (xi)
 payload is constructor-backed before the exact vertical-\(IQ\) projection and
 the still-external numeric estimate are applied.
+The adjusted Ob3/Ob4 version of this exact route is now explicit as well.  The
+source
+\[
+\begin{array}{l}
+\texttt{IUTStage1TargetChartedHodgeIPLConstructorBacked}\\
+\quad\texttt{MeasureCalibratedAdjustedPossibleImage}\\
+\quad\texttt{FiniteExactVerticalIQRouteSource}
+\end{array}
+\]
+keeps the adjusted-summand Step (xi) equalities
+\[
+  \mathrm{familyHullLogVolume}
+    = \mathrm{adjustedSummandLogVolume}
+    = \mathrm{determinantLogVolume}
+\]
+visible at the same exact vertical-\(IQ\) boundary.  Its public experiment
+wrappers expose the adjusted Gaussian audit, the source-derived corridor
+endpoint, and the corresponding \(C_\Theta\)-dichotomy endpoint; projection to
+the older constructor-backed exact route is used only to reuse the established
+Step (x) vertical-\(IQ\) endpoint.
 This exact boundary now also has an assembled-source variant.  Instead of
 storing the all-in-one constructor-backed route as a field, the package stores
 the target-charted Hodge/\(\IPL\) construction source and the
