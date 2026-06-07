@@ -59371,6 +59371,156 @@ theorem toConstructedFiniteDivisorOb1ToOb5BridgeAudit
       audit.qSigned_le_thetaSigned }
 
 set_option linter.style.longLine false in
+/--
+Finite-divisor Ob1--Ob5 quotient bridge audit.
+
+This is the Ob5-refined version of
+`ConstructedFiniteDivisorOb1ToOb5BridgeAudit`.  The constructed finite-divisor
+source projects to the constructor-built possible-image Step (xi) source, then
+threads the Remark 3.9.5(v)--(vi) bounded-family quotient collapse for the
+selected q-choice and a comparison possible image through the same
+hull/determinant bridge that proves
+`mu_log(qRegion) <= det_norm <= thetaSigned`.
+-/
+structure ConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+    (sourceData :
+      IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record sourceData.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    Prop where
+  finiteDivisorOb1ToOb5BridgeAudit :
+    ConstructedFiniteDivisorOb1ToOb5BridgeAudit sourceData
+  constructorBuiltOb1ToOb5QuotientBridgeAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1ToOb5QuotientBridgeAudit
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+      comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  qChoiceRegion_subset_familyHull :
+    recordThetaPossibleImage record sourceData.qChoice ⊆
+      (sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.familyHull)
+  comparisonRegion_subset_familyHull :
+    recordThetaPossibleImage record comparisonChoice ⊆
+      (sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.familyHull)
+  qChoice_quotientImage_eq_collapsed :
+    (sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          recordThetaPossibleImage record sourceData.qChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  comparison_quotientImage_eq_collapsed :
+    (sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          recordThetaPossibleImage record comparisonChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  quotientImages_eq :
+    (sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          recordThetaPossibleImage record sourceData.qChoice =
+      (sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource
+        |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+          recordThetaPossibleImage record comparisonChoice
+  quotientCollapse_iff :
+    ((sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource
+          |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+            recordThetaPossibleImage record sourceData.qChoice =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+        (sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource
+          |>.toBoundedFamilyHullDetLogVolumeSource).quotientMap ''
+            recordThetaPossibleImage record comparisonChoice =
+          {IUTStage1UpperSemiSetQuotient.collapsed} ↔
+      recordThetaPossibleImage record sourceData.qChoice ⊆
+          (sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource
+            |>.familyHull) ∧
+        recordThetaPossibleImage record comparisonChoice ⊆
+          (sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource
+            |>.familyHull))
+  qRegionLogVolume_le_determinantNormalized :
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.hullData.logVolume
+        sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion <=
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.determinantSource.normalizedLogVolume
+  determinantNormalized_le_thetaSigned :
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.determinantSource.normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
+  qRegionLogVolume_le_thetaSigned :
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.hullData.logVolume
+        sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion <=
+      packageN.preLedger.thetaSigned
+  thetaSigned_le_canonicalCTheta_absLogQ :
+    packageN.preLedger.thetaSigned <=
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.canonicalCThetaScale *
+        (-packageN.preLedger.qSigned)
+  sourceBridge_to_canonicalScale_chain :
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.hullData.logVolume
+        sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion <=
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.canonicalCThetaScale *
+        (-packageN.preLedger.qSigned)
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+    (sourceData :
+      IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record sourceData.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    ConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+      sourceData comparisonChoice qChoice_nonempty comparisonChoice_nonempty :=
+  let constructorBuilt :=
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+  let audit :=
+    constructorBuilt.toConstructorBuiltOb1ToOb5QuotientBridgeAudit
+      comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  { finiteDivisorOb1ToOb5BridgeAudit :=
+      sourceData.toConstructedFiniteDivisorOb1ToOb5BridgeAudit,
+    constructorBuiltOb1ToOb5QuotientBridgeAudit := audit,
+    qChoiceRegion_subset_familyHull :=
+      audit.qChoiceRegion_subset_familyHull,
+    comparisonRegion_subset_familyHull :=
+      audit.comparisonRegion_subset_familyHull,
+    qChoice_quotientImage_eq_collapsed :=
+      audit.ob5QuotientIndependenceAudit.qChoice_quotientImage_eq_collapsed,
+    comparison_quotientImage_eq_collapsed :=
+      audit.ob5QuotientIndependenceAudit.comparison_quotientImage_eq_collapsed,
+    quotientImages_eq :=
+      audit.quotientImages_eq,
+    quotientCollapse_iff :=
+      audit.ob5QuotientIndependenceAudit.quotientCollapse_iff,
+    qRegionLogVolume_le_determinantNormalized :=
+      audit.qRegionLogVolume_le_determinantNormalized,
+    determinantNormalized_le_thetaSigned :=
+      audit.determinantNormalized_le_thetaSigned,
+    qRegionLogVolume_le_thetaSigned :=
+      audit.qRegionLogVolume_le_thetaSigned,
+    thetaSigned_le_canonicalCTheta_absLogQ :=
+      audit.thetaSigned_le_canonicalCTheta_absLogQ,
+    sourceBridge_to_canonicalScale_chain :=
+      audit.sourceBridge_to_canonicalScale_chain,
+    qSigned_le_thetaSigned :=
+      audit.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
 theorem tensorPower_bound
     (sourceData :
       IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource

@@ -34629,6 +34629,42 @@ theorem remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource_ob1ToOb
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob1--Ob5 quotient bridge audit for the constructed
+finite-divisor Remark 3.9.5 source.
+
+This is the Ob5-refined review target for the same finite source: two nonempty
+Theorem 3.11 possible images collapse to the same bounded-family upper-semi
+quotient image, and the collapse is carried next to the source-derived bridge
+`mu_log(qRegion) <= det_norm <= thetaSigned`.
+-/
+theorem remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource_ob1ToOb5QuotientBridgeAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    (sourceData :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource.ConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+      sourceData comparisonChoice qChoice_nonempty comparisonChoice_nonempty :=
+  sourceData.toConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+    comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy through the constructed Remark 3.9.5
 Ob3/Ob5-adjusted hull/determinant source.
 
