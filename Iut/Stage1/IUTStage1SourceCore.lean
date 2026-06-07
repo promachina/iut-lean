@@ -3245,6 +3245,193 @@ theorem endpoint
 end IUTStage1Remark395ProductHullSystemSource
 
 /--
+Remark 3.9.5(i) principal product-hull source.
+
+In the source text, the relatively compact holomorphic hull is the smallest
+product region of the form `lambda * O`, where `O` is the local integer/direct
+product region and every component of `lambda` is nonzero.  This record keeps
+that scalar-multiple presentation explicit and derives the existing
+`ProductHullSystemSource` from it.
+-/
+structure IUTStage1Remark395PrincipalProductHullSystemSource
+    (α : Type u) (Λ : Type v) where
+  localIntegerRegion : Set α
+  scalarMultiple : Λ -> α -> α
+  parameter_nonzero : Λ -> Prop
+  all_parameters_nonzero : ∀ parameter : Λ, parameter_nonzero parameter
+  intersectionParameter : Set α -> Λ
+  principalHull_intersection_eq :
+    ∀ region : Set α,
+      { point : α |
+        ∃ base : α,
+          base ∈ localIntegerRegion ∧
+            scalarMultiple (intersectionParameter region) base = point } =
+        { point : α |
+          ∀ parameter : Λ,
+            region ⊆
+              { candidate : α |
+                ∃ base : α,
+                  base ∈ localIntegerRegion ∧
+                    scalarMultiple parameter base = candidate } ->
+              point ∈
+                { candidate : α |
+                  ∃ base : α,
+                    base ∈ localIntegerRegion ∧
+                      scalarMultiple parameter base = candidate } }
+  logVolume : Set α -> Real
+  principalHullLogVolume : Λ -> Real
+  logVolume_principalHull_eq :
+    ∀ parameter : Λ,
+      logVolume
+          { point : α |
+            ∃ base : α,
+              base ∈ localIntegerRegion ∧ scalarMultiple parameter base = point } =
+        principalHullLogVolume parameter
+  logVolume_mono :
+    ∀ {region₁ region₂ : Set α},
+      region₁ ⊆ region₂ -> logVolume region₁ <= logVolume region₂
+
+namespace IUTStage1Remark395PrincipalProductHullSystemSource
+
+variable {α : Type u} {Λ : Type v}
+
+def principalHull
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    (parameter : Λ) :
+    Set α :=
+  { point : α |
+    ∃ base : α,
+      base ∈ data.localIntegerRegion ∧
+        data.scalarMultiple parameter base = point }
+
+theorem parameter_nonzero_source
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    (parameter : Λ) :
+    data.parameter_nonzero parameter :=
+  data.all_parameters_nonzero parameter
+
+theorem mem_principalHull_iff
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    (parameter : Λ) (point : α) :
+    point ∈ data.principalHull parameter ↔
+      ∃ base : α,
+        base ∈ data.localIntegerRegion ∧
+          data.scalarMultiple parameter base = point :=
+  Iff.rfl
+
+theorem principalHull_eq_scalarMultiple_image
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    (parameter : Λ) :
+    data.principalHull parameter =
+      data.scalarMultiple parameter '' data.localIntegerRegion := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases hpoint with ⟨base, hbase, hscale⟩
+    exact ⟨base, hbase, hscale⟩
+  · intro hpoint
+    rcases hpoint with ⟨base, hbase, hscale⟩
+    exact ⟨base, hbase, hscale⟩
+
+theorem principalHull_intersection_eq_source
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    (region : Set α) :
+    data.principalHull (data.intersectionParameter region) =
+      { point : α |
+        ∀ parameter : Λ,
+          region ⊆ data.principalHull parameter ->
+            point ∈ data.principalHull parameter } :=
+  data.principalHull_intersection_eq region
+
+theorem logVolume_principalHull_eq_source
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    (parameter : Λ) :
+    data.logVolume (data.principalHull parameter) =
+      data.principalHullLogVolume parameter :=
+  data.logVolume_principalHull_eq parameter
+
+def toProductHullSystemSource
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ) :
+    IUTStage1Remark395ProductHullSystemSource α Λ :=
+  { productHull := data.principalHull,
+    productHullLogVolume := data.principalHullLogVolume,
+    intersectionParameter := data.intersectionParameter,
+    productHull_intersection_eq :=
+      data.principalHull_intersection_eq_source,
+    logVolume := data.logVolume,
+    logVolume_productHull_eq :=
+      data.logVolume_principalHull_eq_source,
+    logVolume_mono := fun hsubset => data.logVolume_mono hsubset }
+
+def toHolomorphicHullSystem
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ) :
+    IUTStage1Remark395HolomorphicHullSystem α :=
+  data.toProductHullSystemSource.toHolomorphicHullSystem
+
+theorem phi_eq_principalHull_intersectionParameter
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    (region : Set α) :
+    data.toHolomorphicHullSystem.phi region =
+      data.principalHull (data.intersectionParameter region) :=
+  data.toProductHullSystemSource.phi_eq_productHull_intersectionParameter
+    region
+
+theorem region_subset_principalHull_intersection
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    (region : Set α) :
+    region ⊆ data.principalHull (data.intersectionParameter region) :=
+  data.toProductHullSystemSource.region_subset_productHull_intersection region
+
+theorem principalHull_intersection_minimal
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    {region : Set α} {parameter : Λ}
+    (hsubset : region ⊆ data.principalHull parameter) :
+    data.principalHull (data.intersectionParameter region) ⊆
+      data.principalHull parameter :=
+  data.toProductHullSystemSource.productHull_intersection_minimal hsubset
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource α Λ)
+    (region : Set α) :
+    let productSource := data.toProductHullSystemSource
+    let hullSystem := data.toHolomorphicHullSystem
+    (∀ parameter : Λ, data.parameter_nonzero parameter) ∧
+      (∀ parameter : Λ,
+        data.principalHull parameter =
+          data.scalarMultiple parameter '' data.localIntegerRegion) ∧
+      hullSystem.phi region =
+        data.principalHull (data.intersectionParameter region) ∧
+      region ⊆ data.principalHull (data.intersectionParameter region) ∧
+      (∀ parameter : Λ,
+        region ⊆ data.principalHull parameter ->
+          data.principalHull (data.intersectionParameter region) ⊆
+            data.principalHull parameter) ∧
+      data.logVolume
+          (data.principalHull (data.intersectionParameter region)) =
+        data.principalHullLogVolume (data.intersectionParameter region) ∧
+      productSource.logVolume
+          (productSource.productHull
+            (productSource.intersectionParameter region)) =
+        productSource.productHullLogVolume
+          (productSource.intersectionParameter region) :=
+  by
+    intro productSource hullSystem
+    exact
+      ⟨data.parameter_nonzero_source,
+        data.principalHull_eq_scalarMultiple_image,
+        data.phi_eq_principalHull_intersectionParameter region,
+        data.region_subset_principalHull_intersection region,
+        fun parameter hsubset =>
+          data.principalHull_intersection_minimal hsubset,
+        data.logVolume_principalHull_eq_source
+          (data.intersectionParameter region),
+        data.toProductHullSystemSource.logVolume_intersectionProductHull_eq
+          region⟩
+
+end IUTStage1Remark395PrincipalProductHullSystemSource
+
+/--
 Remark 3.9.5 holomorphic-hull shadow.
 
 The paper characterizes hull formation by the three closure properties P1--P3:

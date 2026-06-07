@@ -743,6 +743,17 @@ hulls containing that region.  From this data \Lean{} constructs the ordinary
 that \(\phi(P)\) is exactly this selected product hull, contains \(P\), is
 minimal among product hulls containing \(P\), and has the stated product-hull
 log-volume.
+This product-hull source now has a principal scalar-multiple refinement,
+\[
+\texttt{IUTStage1Remark395PrincipalProductHullSystemSource}.
+\]
+It records the local integer/direct-product region \(O\), scalar maps
+\(\lambda\cdot(-)\), nonzero-parameter witnesses, and principal hulls of the
+source-paper form \(\lambda\cdot O\).  It then derives the previous
+\texttt{IUTStage1Remark395ProductHullSystemSource}.  Thus the hull boundary
+can distinguish a genuinely Remark~3.9.5(i)-shaped product hull from an
+arbitrary family of subsets before the analytic construction of the scalars is
+completed.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -6457,6 +6468,36 @@ returns this product-hull audit together with the finite-divisor vertical-\(IQ\)
 \(C_\Theta\) dichotomy.  Thus the current finite-divisor milestone no longer
 forgets the source-paper ``smallest product hull'' formulation when it enters
 the downstream Corollary~3.12 corridor.
+The same finite-divisor surface now has a principal-product-hull refinement.
+The source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395PrincipalProductHullBackedConstructorBacked}\\
+\quad\texttt{ConstructedHullDeterminantFiniteDivisorVerticalIQSource}
+\end{array}
+\]
+uses a principal \(\lambda\cdot O\) hull system instead of a bare product-hull
+system, then forgets to the existing product-hull-backed source.  Its audit
+records that the selected hull is the scalar image
+\[
+  \lambda_{\mathrm{sel}}\cdot O,
+\]
+that \(\lambda_{\mathrm{sel}}\) satisfies the nonzero-parameter predicate,
+that the Theorem~3.11 possible-image union and q-pilot region lie in this
+selected principal product hull, and that this selected hull is minimal among
+principal product hulls containing the possible-image union.  The public
+finite-divisor endpoint
+\[
+\begin{array}{l}
+\texttt{remark395PrincipalProductHullBackedConstructorBackedConstructed}\\
+\quad\texttt{Ob3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_cThetaDichotomyWithPrincipalProductHullAudit}
+\end{array}
+\]
+returns this principal-hull audit together with the usual conditional
+\(C_\Theta\) dichotomy.  This pushes the product-hull boundary one step closer
+to the source-paper formula of Remark~3.9.5(i), where hulls are smallest
+regions of the form \(\lambda\cdot O\).
 The product-hull-backed source also exposes an Ob5 quotient/determinant audit,
 \[
 \begin{array}{l}
