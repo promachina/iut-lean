@@ -46797,6 +46797,51 @@ theorem remark395DirectProductPrincipalValuationBallProductHullCoverSource_endpo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface scalar-image valuation/principal hull cover endpoint.
+
+This version feeds the valuation-ball cover through the scalar-image
+direct-product hull source, so the selected `lambda * O` hull reaches the
+valuation-ball direct-product cell union through the two directional image laws
+instead of a supplied set equality.
+-/
+theorem remark395ScalarImageValuationBallProductHullCoverSource_endpoint
+    {δ : Type u} {A : δ -> Type v} {ι : Type y} {η : Type x} {K : Type z}
+    {β : Type w} {γ : Type max u v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ScalarImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    data.scalarImageSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.scalarImageSource.parameter_nonzero parameter) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.scalarImageSource.principalHull parameter ⊆
+          data.scalarImageSource.directProductSource.productHull parameter) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.scalarImageSource.directProductSource.productHull parameter ⊆
+          data.scalarImageSource.principalHull parameter) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.scalarImageSource.principalHull parameter =
+          data.scalarImageSource.directProductSource.productHull parameter) ∧
+      data.valuationCover.hullSystem =
+        data.scalarImageSource.toDirectProductPrincipalHullSystemSource.toHolomorphicHullSystem ∧
+      data.selectedScalarImageHull =
+        data.scalarImageSource.directProductSource.productHull
+          data.selectedParameter ∧
+      data.selectedScalarImageHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.valuationCover.hullSystem.logVolume data.selectedScalarImageHull =
+        data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+        data.scalarImageSource.toDirectProductPrincipalHullSystemSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface cover-additive valuation-ball factor-calibrated Haar
 tensor-packet source.
 

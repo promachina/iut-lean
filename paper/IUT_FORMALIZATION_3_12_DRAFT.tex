@@ -817,6 +817,17 @@ adjusted Ob3/Ob5 determinant normalization handoff.  The remaining scalar
 obligation is now just the per-parameter analytic equality between the source
 paper's scalar image \(\lambda\cdot O\) and the corresponding valuation/direct
 product hull.
+This valuation-ball bridge has also been lowered to the scalar-image source:
+\[
+\texttt{IUTStage1Remark395ScalarImageValuationBallProductHullCoverSource}.
+\]
+It consumes the two directional scalar-image laws, constructs the
+direct-product principal hull source internally, and then projects through the
+same valuation-ball determinant route.  Its endpoint therefore keeps the
+valuation cover, calibrated cell-sum log-volume, and adjusted Ob3/Ob5 handoff,
+but the scalar trust boundary exposed at this product-carrier level is no
+longer a subset equality.  It is precisely the landing and preimage pair that
+the next finite-extension valuation/local-ring construction must prove.
 This valuation-ball provenance has now been lifted to the finite-divisor
 vertical-\(IQ\) endpoint.  The declaration
 \[
