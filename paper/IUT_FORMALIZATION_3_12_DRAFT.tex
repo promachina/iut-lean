@@ -6936,6 +6936,45 @@ therefore replace the raw final numeric hypothesis by the sharper remaining
 source obligation ``global \(C_\Theta\) dominates the constructed local
 Remark~3.9.5 scale''.  This is still an obligation, but it is now the correct
 one to attack from the source-paper global estimate.
+The paper-side \(C_\Theta\) expression from \IUT{} IV is now connected to this
+same boundary.  The experiment-surface audit
+\[
+\begin{array}{l}
+\texttt{Remark395ConstructedIUTIVCThetaHandoffAudit}
+\end{array}
+\]
+takes a constructed Remark~3.9.5 Step~(xi) source and an
+\texttt{IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}.  The latter supplies
+the displayed \IUT{} IV expression
+\[
+  C_\Theta
+    =
+  \mathrm{arithmeticUpperTerm}
+    -
+  \mathrm{mainLogTerm}
+    -
+  1
+\]
+together with the existing \IUT{} IV handoff endpoint.  The only new comparison
+input is again
+\[
+  C_{\Theta,\mathrm{can}}\leq C_\Theta .
+\]
+The compact endpoint
+\[
+\begin{array}{l}
+\texttt{remark395ConstructedHolomorphicHullDeterminantSource}\\
+\quad\texttt{\_iutIVCThetaHandoffChain}
+\end{array}
+\]
+then records, in one proposition, the \IUT{} IV expression for \(C_\Theta\), the
+constructed Step~(xi) chain
+\(\mu_{\log}(q\mathrm{Region})\leq\det_{\mathrm{norm}}
+\leq\theta_{\mathrm{signed}}\), the derived paper-side bound
+\(\theta_{\mathrm{signed}}\leq C_\Theta(-q_{\mathrm{signed}})\), and the final
+Corollary~3.12 dichotomy.  Thus the remaining global comparison is no longer
+split between the Step~(xi) local scale audit and the separate \IUT{} IV
+constant shadow.
 
 The practical priority order is:
 \begin{enumerate}

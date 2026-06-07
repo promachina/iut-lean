@@ -45701,6 +45701,124 @@ theorem remark395ConstructedHolomorphicHullDeterminantSource_globalCThetaScaleCh
 
 set_option linter.style.longLine false in
 /--
+Combined Remark 3.9.5/IUT IV \(C_\Theta\) handoff audit.
+
+The Step (xi) source supplies the constructed local scale
+`C_{Theta,can}`.  The IUT IV estimate object supplies the paper-side
+`C_Theta` expression.  This audit records the remaining comparison as the single
+domination hypothesis `C_{Theta,can} <= C_Theta`, then exposes both the IUT IV
+handoff endpoint and the constructed-source Corollary 3.12 dichotomy at that
+paper-side constant.
+-/
+structure Remark395ConstructedIUTIVCThetaHandoffAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) :
+    Prop where
+  iutIVHandoffEndpoint :
+    0 < estimate.absoluteLogQ ∧
+      estimate.cTheta + 1 =
+        estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+        0 <= estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+          estimate.mainLogTerm <= estimate.arithmeticUpperTerm ∧
+            estimate.oneSixthLogQ <= estimate.theorem110RightHandSide
+  iutIVCThetaExpression :
+    estimate.cTheta =
+      estimate.arithmeticUpperTerm - estimate.mainLogTerm - 1
+  canonicalCThetaScale_le_iutIVCTheta :
+    sourceData.canonicalCThetaScale <= estimate.cTheta
+  globalScaleComparisonAudit :
+    IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedGlobalCThetaScaleComparisonAudit
+      sourceData estimate.cTheta
+  thetaSigned_le_iutIVCTheta_absLogQ :
+    package.preLedger.thetaSigned <=
+      estimate.cTheta * (-package.preLedger.qSigned)
+  sourceBridge_to_iutIVCTheta_chain :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      estimate.cTheta * (-package.preLedger.qSigned)
+  dichotomy :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < estimate.cTheta
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface handoff from the constructed Remark 3.9.5 source scale to
+the IUT IV paper-side \(C_\Theta\) expression.
+-/
+theorem remark395ConstructedHolomorphicHullDeterminantSource_iutIVCThetaHandoffAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (canonicalCThetaScale_le_iutIVCTheta :
+      sourceData.canonicalCThetaScale <= estimate.cTheta) :
+    Remark395ConstructedIUTIVCThetaHandoffAudit sourceData estimate :=
+  let audit :=
+    sourceData.constructedGlobalCThetaScaleComparisonAudit
+      estimate.cTheta canonicalCThetaScale_le_iutIVCTheta
+  { iutIVHandoffEndpoint :=
+      estimate.corollary312_handoff_endpoint,
+    iutIVCThetaExpression :=
+      estimate.cTheta_expression,
+    canonicalCThetaScale_le_iutIVCTheta :=
+      canonicalCThetaScale_le_iutIVCTheta,
+    globalScaleComparisonAudit := audit,
+    thetaSigned_le_iutIVCTheta_absLogQ :=
+      audit.thetaSigned_le_globalCTheta_absLogQ,
+    sourceBridge_to_iutIVCTheta_chain :=
+      audit.sourceBridge_to_globalCTheta_chain,
+    dichotomy := audit.dichotomy }
+
+set_option linter.style.longLine false in
+/--
+Compact chain extracted from the combined Remark 3.9.5/IUT IV handoff audit.
+-/
+theorem remark395ConstructedHolomorphicHullDeterminantSource_iutIVCThetaHandoffChain
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (canonicalCThetaScale_le_iutIVCTheta :
+      sourceData.canonicalCThetaScale <= estimate.cTheta) :
+    estimate.cTheta =
+        estimate.arithmeticUpperTerm - estimate.mainLogTerm - 1 ∧
+      sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.determinantSource.normalizedLogVolume ∧
+      sourceData.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.thetaSigned <=
+        estimate.cTheta * (-package.preLedger.qSigned) ∧
+      sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        estimate.cTheta * (-package.preLedger.qSigned) ∧
+      ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < estimate.cTheta) :=
+  let audit :=
+    remark395ConstructedHolomorphicHullDeterminantSource_iutIVCThetaHandoffAudit
+      sourceData estimate canonicalCThetaScale_le_iutIVCTheta
+  ⟨audit.iutIVCThetaExpression,
+    audit.globalScaleComparisonAudit.constructedCanonicalCThetaScaleAudit.constructedRecordBridgeAudit.normalizedBridge_from_bridge.1,
+    audit.globalScaleComparisonAudit.constructedCanonicalCThetaScaleAudit.constructedRecordBridgeAudit.normalizedBridge_from_bridge.2,
+    audit.thetaSigned_le_iutIVCTheta_absLogQ,
+    audit.sourceBridge_to_iutIVCTheta_chain,
+    audit.dichotomy⟩
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface possible-image q-choice constructor for the milestone-facing
 constructed Remark 3.9.5 Step (xi) source.
 
