@@ -12975,6 +12975,159 @@ theorem endpoint
 end IUTStage1PadicFiniteExtensionDilationHaarNormalizationSource
 
 /--
+Finite-extension-over-`ℚ_[p]` Haar source with a uniform base-prime dilation
+mass law.
+
+This strengthens `IUTStage1PadicFiniteExtensionDilationHaarNormalizationSource`:
+instead of supplying the Haar-mass formula only for the selected compact-open
+valuation ball, it carries the source-facing modulus statement for the
+base-prime dilation on arbitrary local subsets.  The selected compact-open
+mass-scaling law used by the existing finite-extension Haar endpoint is then a
+specialization of this uniform statement.
+-/
+structure IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  integerSource : IUTStage1ValuedFieldIntegerUnitBallSource K
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  basePrimeDilation : K ≃ₜ K
+  basePrimeDilation_apply :
+    ∀ point : K,
+      basePrimeDilation point = algebraMap ℚ_[p] K (p : ℚ_[p]) * point
+  valuationUnitBall_measure_one :
+    (haarMeasure integerSource.ringOfIntegers).toReal = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal
+  basePrimeDilation_measure_toReal_eq :
+    ∀ subset : Set K,
+      (haarMeasure (basePrimeDilation '' subset)).toReal =
+        (haarMeasure subset).toReal /
+          (p : Real) ^ Module.finrank ℚ_[p] K
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] K : Real)
+
+namespace IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+theorem finiteExtensionDegree_pos
+    (_data :
+      IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    0 < Module.finrank ℚ_[p] K :=
+  Module.finrank_pos
+
+theorem basePrimeDilation_compactOpenBall_measure_toReal_eq
+    (data :
+      IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    (data.haarMeasure
+        (data.basePrimeDilation ''
+          data.integerSource.valuationTopology.valuationBall
+            data.compactOpenRadius)).toReal =
+      (data.haarMeasure
+        (data.integerSource.valuationTopology.valuationBall
+          data.compactOpenRadius)).toReal /
+        (p : Real) ^ Module.finrank ℚ_[p] K :=
+  data.basePrimeDilation_measure_toReal_eq
+    (data.integerSource.valuationTopology.valuationBall data.compactOpenRadius)
+
+noncomputable def toPadicFiniteExtensionDilationHaarNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    IUTStage1PadicFiniteExtensionDilationHaarNormalizationSource
+      α p K hullSystem :=
+  { integerSource := data.integerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    basePrimeDilation := data.basePrimeDilation,
+    basePrimeDilation_apply := data.basePrimeDilation_apply,
+    valuationUnitBall_measure_one := data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    basePrimeDilation_compactOpenBall_measure_toReal_eq :=
+      data.basePrimeDilation_compactOpenBall_measure_toReal_eq,
+    hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+noncomputable def toPadicFiniteExtensionProperUltrametricHaarNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+      α p K hullSystem :=
+  data.toPadicFiniteExtensionDilationHaarNormalizationSource
+    |>.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource
+
+noncomputable def toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
+      α K hullSystem :=
+  data.toPadicFiniteExtensionDilationHaarNormalizationSource
+    |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    data.toPadicFiniteExtensionDilationHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.residuePrime =
+        p ∧
+      data.toPadicFiniteExtensionDilationHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.finiteExtensionDegree =
+        Module.finrank ℚ_[p] K ∧
+      data.toPadicFiniteExtensionDilationHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.uniformizerScalePoint =
+        (fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ∧
+      (∀ subset : Set K,
+        (data.haarMeasure (data.basePrimeDilation '' subset)).toReal =
+          (data.haarMeasure subset).toReal /
+            (p : Real) ^ Module.finrank ℚ_[p] K) ∧
+      (data.haarMeasure
+          (data.basePrimeDilation ''
+            data.integerSource.valuationTopology.valuationBall
+              data.compactOpenRadius)).toReal =
+        (data.haarMeasure
+          (data.integerSource.valuationTopology.valuationBall
+            data.compactOpenRadius)).toReal /
+          (p : Real) ^ Module.finrank ℚ_[p] K ∧
+      data.basePrimeDilation ''
+          data.integerSource.valuationTopology.valuationBall data.compactOpenRadius =
+        (fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+          data.integerSource.valuationTopology.valuationBall data.compactOpenRadius :=
+  ⟨rfl,
+    rfl,
+    rfl,
+    data.basePrimeDilation_measure_toReal_eq,
+    data.basePrimeDilation_compactOpenBall_measure_toReal_eq,
+    data.toPadicFiniteExtensionDilationHaarNormalizationSource
+      |>.basePrimeDilation_image_eq_basePrimeScale_image
+        (data.integerSource.valuationTopology.valuationBall
+          data.compactOpenRadius)⟩
+
+end IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource
+
+/--
 `p`-adic proper-ultrametric additive Haar normalization source.
 
 This is the base local-field specialization of the valued-field integer Haar
