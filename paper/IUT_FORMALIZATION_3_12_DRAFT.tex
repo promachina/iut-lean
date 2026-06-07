@@ -1351,6 +1351,28 @@ from the source equality \(\texttt{coordinatePlace}=e\).  Thus the remaining
 coordinate-index work is no longer an arbitrary target-boundary compatibility;
 it is the construction of this equivalence from the actual local valuation
 indexing.
+The local coordinate itself has now been lowered to a Haar log-volume source.
+The new local source
+\[
+  \texttt{IUTStage1Remark395LocalFactorHaarLogCoordinateSource}
+\]
+assigns to a local factor \(x_v\) a local compact-open region \(U_{v,x_v}\) and
+defines
+\[
+  \ell_v(x_v)=\mu_{\log,v}(U_{v,x_v})
+\]
+using the normalized finite-extension Haar log-volume source already present in
+the valuation/Haar branch.  The corresponding finite-sum source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{HaarLogCoordinateFiniteSumTargetPointSource}
+\end{array}
+\]
+therefore projects to the coordinate-place finite-sum route with
+\(\ell_v\) no longer a bare function.  Lean proves that the \(O_v\) and
+\(\lambda_vO_v\) coordinate regions are images under normalized Haar
+log-volume of the assigned local regions.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -8580,13 +8602,16 @@ The practical priority order is:
   internally.  The exact-theta Step~(xi) source now constructs both the
   finite-sum target-point source and this coordinate-place finite-sum source
   from point-level transport of \(O\) and \(\lambda O\), rather than from
-  supplied finite-sum real-line equalities.
+  supplied finite-sum real-line equalities.  A Haar-log-coordinate finite-sum
+  endpoint lowers the local maps themselves: each \(\ell_v(x_v)\) is the
+  normalized Haar log-volume of the compact-open local region attached to
+  \(x_v\), and the Step~(xi) constructor can build this Haar-backed source.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar/Kummer model,
-  the actual maps \(\ell_v\), the coordinate-place equivalence, and the
-  point-level target transport identifying \(O\) and \(\lambda O\) with the
-  principal finite-divisor target regions.  Below that, the
+  the concrete compact-open local regions \(U_{v,x_v}\), the coordinate-place
+  equivalence, and the point-level target transport identifying \(O\) and
+  \(\lambda O\) with the principal finite-divisor target regions.  Below that, the
   local directional scalar-image laws for each local factor
   \(\lambda_v\cdot O_v\) still have to be derived from the valuation/Kummer
   model: landing in the valuation/direct-product factor \(H_v(\lambda)\),
