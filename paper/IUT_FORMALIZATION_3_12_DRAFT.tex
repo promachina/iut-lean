@@ -1042,6 +1042,27 @@ The experiment endpoint
 \]
 therefore reaches the same canonical-scale vertical-\(IQ\) dichotomy with one
 fewer transported equality at the trust boundary.
+The carrier side of the same route has also been separated into a charted
+source.  Instead of supplying an arbitrary equivalence from the local product
+carrier to the target real-line copy, the new
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{TargetCarrierChartSource}
+\end{array}
+\]
+records a product-to-real coordinate, a real-to-product realization, and the
+two inverse laws.  \Lean{} derives the carrier equivalence
+\[
+  ((d:\delta)\to A_d)\simeq \texttt{Point target}
+\]
+from this chart, and the charted finite-divisor synchronization endpoint then
+forwards to the reduced transport-synchronization route.  Thus the current
+trust boundary has moved from an unstructured carrier equivalence to the
+construction of the product real-coordinate chart itself.  The remaining
+source-facing task is to build that chart from the actual Frobenioid/Kummer
+local valuation data, together with the coordinate-to-place selector and
+nonzero scalar preimage laws.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -7824,6 +7845,10 @@ The practical priority order is:
   valuation-cover equality from the selected-scalar/product-cover theorem, so
   this boundary no longer lists the local-integer, selected-scalar, and
   valuation-cover transport equalities as three independent hypotheses.
+  A charted synchronization-source endpoint now removes the bare product
+  carrier equivalence as well, replacing it by an explicit real-coordinate
+  chart whose inverse laws generate the equivalence to the target real-line
+  copy.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar model, the

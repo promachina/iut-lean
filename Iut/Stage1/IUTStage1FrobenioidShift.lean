@@ -62965,6 +62965,64 @@ end
 
 set_option linter.style.longLine false in
 /--
+Real-coordinate chart for a local product carrier landing in a target
+real-line copy.
+
+Since `Point target` is a wrapper around a real coordinate, a source-facing
+carrier comparison should be given by a coordinate chart on the product carrier:
+a map to the target real coordinate together with an inverse coordinate
+realization.  The actual equivalence to `Point target` is then derived from the
+chart, rather than supplied as an unrelated equivalence.
+-/
+structure IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetCarrierChartSource
+    {δ : Type u} (A : δ -> Type v) (target : Copy) where
+  toTargetCoord : ((d : δ) -> A d) -> Real
+  fromTargetCoord : Real -> ((d : δ) -> A d)
+  from_toTargetCoord :
+    ∀ x : ((d : δ) -> A d), fromTargetCoord (toTargetCoord x) = x
+  to_fromTargetCoord :
+    ∀ r : Real, toTargetCoord (fromTargetCoord r) = r
+
+namespace
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetCarrierChartSource
+
+variable {δ : Type u} {A : δ -> Type v} {target : Copy}
+
+def toTargetCarrierEquiv
+    (chart :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetCarrierChartSource
+        A target) :
+    ((d : δ) -> A d) ≃ Point target :=
+  { toFun := fun x => { coord := chart.toTargetCoord x },
+    invFun := fun p => chart.fromTargetCoord p.coord,
+    left_inv := chart.from_toTargetCoord,
+    right_inv := by
+      intro p
+      cases p
+      simp [chart.to_fromTargetCoord] }
+
+theorem toTargetCarrierEquiv_coord
+    (chart :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetCarrierChartSource
+        A target)
+    (x : (d : δ) -> A d) :
+    (chart.toTargetCarrierEquiv x).coord = chart.toTargetCoord x :=
+  rfl
+
+theorem toTargetCarrierEquiv_symm_coord
+    (chart :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetCarrierChartSource
+        A target)
+    (r : Real) :
+    chart.toTargetCarrierEquiv.symm { coord := r } =
+      chart.fromTargetCoord r :=
+  rfl
+
+end
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetCarrierChartSource
+
+set_option linter.style.longLine false in
+/--
 Transport synchronization source for the valuation-unit-ball/nonzero-scalar
 finite-divisor route.
 
@@ -63036,6 +63094,101 @@ theorem transportedValuationCoverHull_eq_principalHull
 
 end
   IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteDivisorTransportSynchronizationSource
+
+set_option linter.style.longLine false in
+/--
+Chart-derived transport synchronization source for the
+valuation-unit-ball/nonzero-scalar finite-divisor route.
+
+This is the next carrier-audit refinement of
+`IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteDivisorTransportSynchronizationSource`.
+Instead of supplying an arbitrary equivalence from the local product carrier to
+`Point target`, it supplies a real-coordinate chart on the product carrier.  The
+carrier equivalence used by the finite-divisor endpoint is constructed from
+that chart.
+-/
+structure IUTStage1Remark395ValuationUnitBallNonzeroScalarChartedFiniteDivisorTransportSynchronizationSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {δ : Type u} (A : δ -> Type v)
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {γlocal : Type (max u v y z)} [Fintype γlocal]
+    (Λ : Type (max u v w y z)) where
+  principalValuationBallBackedSource :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (η := η) (K := K) (β := β) (γ := γ) record Λ
+  valuationUnitBallNonzeroScalarSource :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      δ A
+      (IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+      η K β γlocal
+  targetCarrierChart :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetCarrierChartSource
+      A target
+  transportedLocalIntegerRegion_eq_principal :
+    targetCarrierChart.toTargetCarrierEquiv ''
+        valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerRegion =
+      principalValuationBallBackedSource.principalValuationBallSource.principalHullSource.localIntegerRegion
+  transportedSelectedScalarImage_eq_principalHull :
+    targetCarrierChart.toTargetCarrierEquiv ''
+        valuationUnitBallNonzeroScalarSource.selectedScalarImageHull =
+      principalValuationBallBackedSource.principalValuationBallSource.selectedPrincipalHull
+
+namespace
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarChartedFiniteDivisorTransportSynchronizationSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {δ : Type u} {A : δ -> Type v}
+variable [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+variable {η : Type y} {K : Type z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+variable {γlocal : Type (max u v y z)} [Fintype γlocal]
+variable {Λ : Type (max u v w y z)}
+
+set_option linter.style.longLine false in
+def toTransportSynchronizationSource
+    (sync :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarChartedFiniteDivisorTransportSynchronizationSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteDivisorTransportSynchronizationSource
+      (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+      (γlocal := γlocal) record A Λ :=
+  { principalValuationBallBackedSource :=
+      sync.principalValuationBallBackedSource,
+    valuationUnitBallNonzeroScalarSource :=
+      sync.valuationUnitBallNonzeroScalarSource,
+    carrierEquiv :=
+      sync.targetCarrierChart.toTargetCarrierEquiv,
+    transportedLocalIntegerRegion_eq_principal :=
+      sync.transportedLocalIntegerRegion_eq_principal,
+    transportedSelectedScalarImage_eq_principalHull :=
+      sync.transportedSelectedScalarImage_eq_principalHull }
+
+theorem transportedValuationCoverHull_eq_principalHull
+    (sync :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarChartedFiniteDivisorTransportSynchronizationSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    sync.targetCarrierChart.toTargetCarrierEquiv ''
+        sync.valuationUnitBallNonzeroScalarSource.valuationCover.directProductCellUnion =
+      sync.principalValuationBallBackedSource.principalValuationBallSource.selectedPrincipalHull :=
+  sync.toTransportSynchronizationSource.transportedValuationCoverHull_eq_principalHull
+
+end
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarChartedFiniteDivisorTransportSynchronizationSource
 
 set_option linter.style.longLine false in
 /--
@@ -64304,6 +64457,112 @@ theorem boundarySignedEqualityOrStrictCTheta_from_remark395ValuationUnitBallNonz
           syncSource.principalValuationBallBackedSource.canonicalCThetaScale) :=
   part.boundarySignedEqualityOrStrictCTheta_from_remark395ValuationUnitBallNonzeroScalarBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithTransportAudit
     syncSource.toValuationUnitBallNonzeroScalarBackedSource
+    profile audited transportSource iplConstructionSource
+    sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource
+
+set_option linter.style.longLine false in
+/--
+Canonical-scale valuation-unit-ball/nonzero-scalar finite-divisor route from a
+charted transport synchronization source.
+
+This endpoint removes the bare carrier-equivalence datum from the public
+finite-divisor boundary.  The source supplies a real-coordinate chart on the
+local product carrier; Lean constructs the equivalence to `Point target` and
+then derives the transported valuation-cover equality through the reduced
+transport synchronization endpoint.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_remark395ValuationUnitBallNonzeroScalarChartedTransportSynchronizedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithTransportAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {δ : Type u} {A : δ -> Type v}
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {γlocal : Type (max u v y z)} [Fintype γlocal]
+    {Λ : Type (max u v w y z)}
+    (syncSource :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarChartedFiniteDivisorTransportSynchronizationSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        syncSource.principalValuationBallBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ValuationUnitBallNonzeroScalarTransportAudit
+        syncSource.toTransportSynchronizationSource.toValuationUnitBallNonzeroScalarBackedSource ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) <
+          syncSource.principalValuationBallBackedSource.canonicalCThetaScale) :=
+  part.boundarySignedEqualityOrStrictCTheta_from_remark395ValuationUnitBallNonzeroScalarTransportSynchronizedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithTransportAudit
+    syncSource.toTransportSynchronizationSource
     profile audited transportSource iplConstructionSource
     sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
     divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
