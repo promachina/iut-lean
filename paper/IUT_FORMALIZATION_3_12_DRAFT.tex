@@ -1438,6 +1438,32 @@ The finite product source
 threads these valued-field integer local coordinates through the same target
 finite sum and exposes the corresponding experiment route and Step~(xi)
 constructor.
+The same boundary has now been specialized to the concrete base local field
+\(\mathbb Q_p\).  The local declaration
+\[
+  \texttt{IUTStage1Remark395LocalFactorPadicCenteredValuationBallHaarLogCoordinateSource}
+\]
+starts from the \(p\)-adic proper-ultrametric Haar source: the integer ring is
+identified with \(\mathbb Z_p\), the residue prime is \(p\), the normalization
+degree is \(1\), and the uniformizer action is multiplication by \(p\).  It
+projects to the valued-field integer centered-ball source without adding a new
+abstract local-ring field.  The finite-product declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{PadicCenteredValuationBallHaarLogCoordinate}\\
+\quad\texttt{FiniteSumTargetPointSource}
+\end{array}
+\]
+uses valuation places as the product coordinates and assigns to each place
+\(v\) an actual local carrier \(\mathbb Q_{p_v}\).  Its target coordinate is
+definitionally
+\[
+  (x_v)_v\longmapsto
+    \sum_v \mu_{\log}\bigl(\overline B(x_v,r_v)\bigr),
+\]
+and the experiment surface now reaches the same topology/Haar Ob5--Ob7
+canonical-scale finite-divisor route through this \(p\)-adic source.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -8682,13 +8708,20 @@ The practical priority order is:
   now been lowered further to a valued-field integer local source: each proper
   ultrametric centered-ball Haar source is constructed from a
   valued-field-integer Haar normalization object whose local ring is
-  \(\mathcal O_K\).
+  \(\mathcal O_K\).  The newest \(p\)-adic refinement specializes this once more
+  to the base local field \(\mathbb Q_{p_v}\) at each valuation place: Lean
+  identifies the integer ring with \(\mathbb Z_{p_v}\), records residue prime
+  \(p_v\), degree \(1\), and uniformizer action \(x\mapsto p_vx\), and threads
+  the resulting centered-ball Haar coordinates through the finite-sum target
+  map.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
-  But the next work is to derive, from the actual finite-extension
-  valuation/Haar/Kummer model, the valued-field integer Haar normalization
-  object, its positive valuation-ball radius, the coordinate-place equivalence,
-  and the point-level target transport identifying \(O\) and
+  But the next work is to extend this base \(\mathbb Q_p\) boundary to the
+  actual finite-extension completions used by the source papers and derive,
+  from the valuation/Haar/Kummer model, the finite-extension valued-field
+  integer Haar normalization object, its positive valuation-ball radius, the
+  coordinate-place equivalence, and the point-level target transport identifying
+  \(O\) and
   \(\lambda O\) with the principal finite-divisor target regions.  Below that, the
   local directional scalar-image laws for each local factor
   \(\lambda_v\cdot O_v\) still have to be derived from the valuation/Kummer
@@ -8697,9 +8730,8 @@ The practical priority order is:
   direct-product localization cover construction, family-local
   finite-cover additivity theorem,
   construction of the compact-open
-  valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), extension
-  of the current base \(\mathbb{Q}_p\) integer/unit-ball specialization to the
-  actual finite-extension completions, derivation of the proper ultrametric
+  valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), derivation
+  of the proper ultrametric
   local topology from the actual finite-extension valuation,
   normalized
   Haar measure choice, and uniformizer-scaling theorem,
