@@ -1063,6 +1063,28 @@ construction of the product real-coordinate chart itself.  The remaining
 source-facing task is to build that chart from the actual Frobenioid/Kummer
 local valuation data, together with the coordinate-to-place selector and
 nonzero scalar preimage laws.
+For the finite-divisor endpoint itself, this carrier requirement has now been
+weakened once more to the actual data used by the comparison: a forward
+transport into the target real-line copy.  The source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{TargetPointTransportSource}
+\end{array}
+\]
+keeps the same valuation-unit-ball/nonzero-scalar product source and principal
+valuation-ball source, but replaces the equivalence or inverse chart by a map
+\[
+  ((d:\delta)\to A_d)\longrightarrow \texttt{Point target}.
+\]
+The transported valuation-cover equality is again derived from the selected
+scalar-image/product-cover theorem, and the public endpoint reaches the same
+canonical-scale vertical-\(IQ\) dichotomy while returning a
+\texttt{TargetPointTransportAudit}.  Thus inverse reconstruction of the local
+product carrier is no longer part of the finite-divisor trust boundary.  The
+remaining source-facing construction is the forward target log-coordinate map
+itself, with proofs that it sends the local integer region and selected
+nonzero scalar image to the corresponding principal \(\lambda_vO_v\) regions.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -7849,6 +7871,9 @@ The practical priority order is:
   carrier equivalence as well, replacing it by an explicit real-coordinate
   chart whose inverse laws generate the equivalence to the target real-line
   copy.
+  A forward target-point transport endpoint now lowers the finite-divisor
+  boundary further: it uses only a map from the product carrier to the target
+  real-line copy and audited image equalities, not inverse chart laws.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar model, the
