@@ -8719,12 +8719,19 @@ The practical priority order is:
   \(\operatorname{finrank}_{\mathbb Q_{p_v}}K_v\), the distinguished scale is
   multiplication by the image of \(p_v\) in \(K_v\), and the local
   centered-ball Haar coordinates are threaded through the same Step~(xi)
-  constructor and \(C_\Theta\)-dichotomy endpoint.
+  constructor and \(C_\Theta\)-dichotomy endpoint.  The newest dilation
+  refinement lowers one of the finite-extension topology assumptions: instead of
+  separately supplying open and compact preservation for \(x\mapsto p_vx\), each
+  local factor carries a homeomorphism realizing this base-prime dilation, and
+  Lean derives the open/compact image laws used by the finite-extension Haar
+  source.  The finite-product and experiment-surface route now expose this
+  homeomorphism-backed provenance before projecting to the same
+  \(C_\Theta\)-dichotomy endpoint.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   The next work is now below the finite-extension boundary: derive, from the
   source-paper valuation/Haar/Kummer model, the currently supplied
-  finite-extension integer Haar normalization laws, the positive valuation-ball
+  finite-extension integer Haar mass-scaling laws, the positive valuation-ball
   radius, the coordinate-place equivalence, and the point-level target transport
   identifying \(O\) and \(\lambda O\) with the principal finite-divisor target
   regions.  Below that, the local directional scalar-image laws for each local factor
