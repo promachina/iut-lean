@@ -6703,10 +6703,18 @@ The practical priority order is:
   valuation-ball branch: it assumes only the direct-product cover equality
   \(\mu_{\log}(\bigcup_\beta H_\beta)=\sum_\beta \mu_{\log}(H_\beta)\), derives
   the calibrated cell sum, and then projects through the same localized cover
-  and adjusted Ob3/Ob5 determinant source.  But
+  and adjusted Ob3/Ob5 determinant source.  The valuation-ball route now has a
+  further finite-cover-additive source form: instead of carrying this equality
+  as a raw field, it carries a family-local finite-cover additivity certificate
+  for the selected cells \(H_\beta\); \Lean{} derives pairwise disjointness from
+  local valuation-ball factor separation and then obtains
+  \(\mu_{\log}(\bigcup_\beta H_\beta)=\sum_\beta \mu_{\log}(H_\beta)\) before
+  projecting to the adjusted Ob3/Ob5 determinant source.  This keeps the
+  trust boundary below global finite additivity while removing the bare cover
+  equality from the public valuation-ball determinant route.  But
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  remaining cover-additivity theorem, construction of the compact-open
+  family-local finite-cover additivity theorem, construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), proof that
   the valuation unit ball is the ring of integers, valuation-ball openness and
   compactness, normalized Haar measure choice, and uniformizer-scaling theorem,

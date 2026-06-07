@@ -6884,6 +6884,59 @@ theorem finite_iUnion_eq_sum
 end IUTStage1FiniteAdditiveHullLogVolumeSource
 
 /--
+Family-local finite cover additivity for the Remark 3.9.5 hull log-volume.
+
+This is narrower than `IUTStage1FiniteAdditiveHullLogVolumeSource`: it does not
+postulate finite additivity for arbitrary finite families, only for the single
+cover family currently under construction, and only after Lean has proved the
+required pairwise-disjointness hypothesis.
+-/
+structure IUTStage1FiniteCoverAdditiveHullLogVolumeSource
+    {α : Type u} {β : Type v}
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    [Fintype β]
+    (region : β -> Set α) where
+  finite_iUnion_logVolume_eq_sum_of_disjoint :
+    IUTStage1PairwiseDisjointRegionFamily region ->
+      hullSystem.logVolume (⋃ index, region index) =
+        Finset.univ.sum fun index =>
+          hullSystem.logVolume (region index)
+
+namespace IUTStage1FiniteCoverAdditiveHullLogVolumeSource
+
+variable {α : Type u} {β : Type v}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable [Fintype β]
+variable {region : β -> Set α}
+
+theorem finite_iUnion_eq_sum
+    (data :
+      IUTStage1FiniteCoverAdditiveHullLogVolumeSource
+        hullSystem region)
+    (hdisjoint : IUTStage1PairwiseDisjointRegionFamily region) :
+    hullSystem.logVolume (⋃ index, region index) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume (region index) :=
+  data.finite_iUnion_logVolume_eq_sum_of_disjoint hdisjoint
+
+def ofFiniteAdditive
+    (data : IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β)
+    (region : β -> Set α) :
+    IUTStage1FiniteCoverAdditiveHullLogVolumeSource hullSystem region :=
+  { finite_iUnion_logVolume_eq_sum_of_disjoint := fun hdisjoint =>
+      data.finite_iUnion_eq_sum region hdisjoint }
+
+theorem ofFiniteAdditive_endpoint
+    (data : IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β)
+    (region : β -> Set α)
+    (hdisjoint : IUTStage1PairwiseDisjointRegionFamily region) :
+    (ofFiniteAdditive data region).finite_iUnion_eq_sum hdisjoint =
+      data.finite_iUnion_eq_sum region hdisjoint :=
+  rfl
+
+end IUTStage1FiniteCoverAdditiveHullLogVolumeSource
+
+/--
 Calibrated localized hull-cover source with finite-additive log-volume.
 
 This refines the calibrated cover source by replacing the supplied cover
@@ -13974,6 +14027,206 @@ theorem endpoint
       adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_determinant⟩
 
 end IUTStage1Remark395ValuationBallCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+
+/--
+Finite-cover-additive valuation-ball factor-calibrated Haar tensor-packet
+source.
+
+This lowers the previous cover-additive valuation-ball route by replacing the
+raw equality
+`mu_log(⋃ H_beta) = sum_beta mu_log(H_beta)` with a family-local finite-cover
+additivity certificate.  Lean derives pairwise disjointness from local
+valuation-ball factor separation, applies the cover-local additivity law, and
+then projects to the adjusted Ob3/Ob5 determinant source.
+-/
+structure IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    (α : Type u) (ι : Type v) (η : Type y) (K : Type z)
+    (β : Type w) (γ : Type x)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  factorValuationCalibration :
+    ∀ index : β, ∀ place : γ,
+      IUTStage1ValuationBallVectorBundleFactorCalibrationSource
+        α η K γ hullSystem (localizedCalibration index) place
+  localizedRegion_eq_valuationBallDirectProductCell :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α |
+          ∀ place : γ, point ∈ (factorValuationCalibration index place).region }
+  localFactor_separates_index :
+    ∀ ⦃index₁ index₂ : β⦄,
+      index₁ ≠ index₂ ->
+        ∃ place : γ,
+          Disjoint ((factorValuationCalibration index₁ place).region)
+            ((factorValuationCalibration index₂ place).region)
+  familyHull_eq_valuationBallDirectProductCellUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index,
+        { point : α |
+          ∀ place : γ, point ∈ (factorValuationCalibration index place).region }
+  cellValuationBallTensor :
+    β -> IUTStage1ValuationBallTensorProductDirectSumSource
+      α η K γ hullSystem
+  cellValuationBall_factor_eq_calibration :
+    ∀ index : β, ∀ place : γ,
+      (cellValuationBallTensor index).valuationBallFactor place =
+        (factorValuationCalibration index place).valuationBallFactor
+  coverAdditive :
+    IUTStage1FiniteCoverAdditiveHullLogVolumeSource hullSystem
+      (fun index : β =>
+        { point : α |
+          ∀ place : γ, point ∈ (factorValuationCalibration index place).region })
+
+namespace IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+
+variable {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+variable {β : Type w} {γ : Type x}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable [Fintype β] [Fintype γ]
+
+def localFactorRegion
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ)
+    (index : β) (place : γ) :
+    Set α :=
+  (data.factorValuationCalibration index place).region
+
+def directProductCell
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ)
+    (index : β) :
+    Set α :=
+  { point : α | ∀ place : γ, point ∈ data.localFactorRegion index place }
+
+def directProductCellUnion
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    Set α :=
+  ⋃ index, data.directProductCell index
+
+def calibratedCellLogVolumeSum
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.hullSystem.logVolume (data.directProductCell index)
+
+theorem directProductCells_disjoint
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell := by
+  intro index₁ index₂ hne
+  rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+  exact Set.disjoint_left.mpr fun point hleft hright =>
+    Set.disjoint_left.mp hdisjoint (hleft place) (hright place)
+
+theorem directProductCoverLogVolume_eq_calibratedCellSum
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    data.hullSystem.logVolume data.directProductCellUnion =
+      data.calibratedCellLogVolumeSum := by
+  simpa [directProductCellUnion, directProductCell, localFactorRegion,
+    calibratedCellLogVolumeSum] using
+    data.coverAdditive.finite_iUnion_eq_sum
+      (by
+        intro index₁ index₂ hne
+        rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+        exact Set.disjoint_left.mpr fun point hleft hright =>
+          Set.disjoint_left.mp hdisjoint (hleft place) (hright place))
+
+set_option linter.style.longLine false in
+noncomputable def toCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    IUTStage1Remark395ValuationBallCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+      α ι η K β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    factorValuationCalibration := data.factorValuationCalibration,
+    localizedRegion_eq_valuationBallDirectProductCell :=
+      data.localizedRegion_eq_valuationBallDirectProductCell,
+    localFactor_separates_index :=
+      data.localFactor_separates_index,
+    familyHull_eq_valuationBallDirectProductCellUnion :=
+      data.familyHull_eq_valuationBallDirectProductCellUnion,
+    cellValuationBallTensor := data.cellValuationBallTensor,
+    cellValuationBall_factor_eq_calibration :=
+      data.cellValuationBall_factor_eq_calibration,
+    directProductCoverLogVolume_eq_sum := by
+      simpa [directProductCellUnion, directProductCell, localFactorRegion,
+        IUTStage1Remark395ValuationBallCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource.directProductCell,
+        IUTStage1Remark395ValuationBallCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource.directProductCellUnion,
+        IUTStage1Remark395ValuationBallCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource.calibratedCellLogVolumeSum] using
+        data.directProductCoverLogVolume_eq_calibratedCellSum }
+
+set_option linter.style.longLine false in
+noncomputable def toOb3Ob5AdjustedDeterminantLogVolumeSource
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+      α ι β γ :=
+  data.toCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    |>.toOb3Ob5AdjustedDeterminantLogVolumeSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    let coverSource :=
+      data.toCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    let directProductSource :=
+      coverSource.toDirectProductAdditiveLocalizedHullCoverVectorBundleSource
+    let adjustedSource :=
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      coverSource.hullSystem.logVolume coverSource.directProductCellUnion =
+        coverSource.calibratedCellLogVolumeSum ∧
+      directProductSource.familyHullLogVolume =
+        directProductSource.localizedAdjustedSum ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.adjustedSummandLogVolume ∧
+      adjustedSource.adjustedSummandLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume := by
+  intro coverSource directProductSource adjustedSource
+  exact
+    ⟨data.directProductCells_disjoint,
+      data.directProductCoverLogVolume_eq_calibratedCellSum,
+      coverSource.directProductCoverLogVolume_eq_calibratedCellSum,
+      directProductSource.familyHullLogVolume_eq_localizedAdjustedSum,
+      adjustedSource.familyHullLogVolume_eq_adjustedSummandLogVolume,
+      adjustedSource.adjustedSummandLogVolume_eq_determinantLogVolume,
+      adjustedSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_determinant⟩
+
+end IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
 
 set_option linter.style.longLine true
 

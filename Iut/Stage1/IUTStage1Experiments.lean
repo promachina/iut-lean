@@ -43382,6 +43382,47 @@ theorem remark395ValuationBallCoverAdditiveFactorCalibratedHaarTensorPacketHullC
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface finite-cover-additive valuation-ball factor-calibrated Haar
+tensor-packet source.
+
+This endpoint derives the direct-product cover log-volume equality from
+valuation-ball factor separation plus a family-local finite-cover additivity
+certificate, then projects through the same adjusted Ob3/Ob5 determinant route.
+-/
+theorem remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    let coverSource :=
+      data.toCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    let directProductSource :=
+      coverSource.toDirectProductAdditiveLocalizedHullCoverVectorBundleSource
+    let adjustedSource :=
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      coverSource.hullSystem.logVolume coverSource.directProductCellUnion =
+        coverSource.calibratedCellLogVolumeSum ∧
+      directProductSource.familyHullLogVolume =
+        directProductSource.localizedAdjustedSum ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.adjustedSummandLogVolume ∧
+      adjustedSource.adjustedSummandLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
