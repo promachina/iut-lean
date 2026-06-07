@@ -2733,6 +2733,24 @@ takes as primitive data an index function on the subtype of points of
 index fiber.  \Lean{} defines the ambient owner map to be this index on
 \(\phi(P_B)\) and \(\texttt{none}\) off \(\phi(P_B)\), then derives owner-totality,
 fiber containment in \(\phi(P_B)\), and the owner-total cover source.
+The indexing source has now been pushed down to a direct-product localization
+source.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395DirectProduct}\\
+\quad\texttt{LocalizedHullCoverVectorBundleSource}
+\end{array}
+\]
+represents \(H_\beta\) as the finite direct-product cell cut out by all local
+factor regions at the localization places.  Its separation hypothesis is local:
+two distinct indices are separated by at least one disjoint local factor.  From
+this \Lean{} proves pairwise disjointness of the direct-product cells, uses the
+cover equality
+\[
+  \phi(P_B)=\bigcup_\beta H_\beta
+\]
+to choose the unique cell containing a hull point, and then constructs the
+family-hull indexed source rather than taking the index map as primitive.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5913,7 +5931,7 @@ The practical priority order is:
   localized-vector-bundle source pushes the Ob3/Ob4 determinant payload below
   the adjusted-localization interface, but
   the next work is to replace the
-  still-supplied hull system, family-hull indexing construction,
+  still-supplied hull system, direct-product localization cover construction,
   finite-additive log-volume law, local region/vector-bundle log-volume
   calibration, measure calibration, record-canonical synchronization, and chart
   synchronization witnesses by source-paper constructions;

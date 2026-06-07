@@ -41662,6 +41662,47 @@ theorem remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVect
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface direct-product localized hull-cover source.
+
+This endpoint constructs the family-hull index from finite direct-product
+localization cells.  Local factor separation proves disjointness of the cells;
+the family-hull cover equality supplies the containing cell for each hull point.
+-/
+theorem remark395DirectProductLocalizedHullCoverVectorBundleSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    let familyIndexedSource :=
+      data.toFamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    let ownerTotalSource :=
+      familyIndexedSource.toOwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    let finiteSource :=
+      ownerTotalSource.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        |>.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.localizedRegion index = data.directProductCell index) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.familyHull = data.directProductCellUnion ∧
+      (∀ point : { point : α // point ∈ data.familyHull },
+        point.val ∈ data.directProductCell (data.familyHullIndex point)) ∧
+      (∀ index : β,
+        data.directProductCell index =
+          { point : α |
+            ∃ hpoint : point ∈ data.familyHull,
+              data.familyHullIndex ⟨point, hpoint⟩ = index }) ∧
+      (∀ index : β,
+        familyIndexedSource.localizedRegion index =
+          { point : α |
+            ∃ hpoint : point ∈ familyIndexedSource.familyHull,
+              familyIndexedSource.familyHullIndex ⟨point, hpoint⟩ = index }) ∧
+      ownerTotalSource.familyHull = ownerTotalSource.localizedRegionUnion ∧
+      finiteSource.familyHullLogVolume = finiteSource.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the

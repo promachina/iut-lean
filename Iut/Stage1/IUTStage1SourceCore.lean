@@ -7285,6 +7285,256 @@ theorem endpoint
 
 end IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
 
+/--
+Direct-product localized hull cover.
+
+This is a lower source form for the family-hull indexed cover.  Each localized
+hull-region is constructed as a finite direct-product cell: a point belongs to
+the cell for `index` precisely when it belongs to every local factor region for
+that index.  Distinct indices are separated by at least one disjoint local
+factor, which proves disjointness of the resulting direct-product cells.  The
+family-hull cover equality then constructs the previous family-hull index by
+choosing the unique direct-product cell containing a hull point.
+-/
+structure IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+    (α : Type u) (ι : Type v) (η : Type y) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  additiveLogVolume :
+    IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β
+  localFactorRegion : β -> γ -> Set α
+  localizedRegion_eq_directProductCell :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α | ∀ place : γ, point ∈ localFactorRegion index place }
+  localFactor_separates_index :
+    ∀ ⦃index₁ index₂ : β⦄,
+      index₁ ≠ index₂ ->
+        ∃ place : γ,
+          Disjoint (localFactorRegion index₁ place)
+            (localFactorRegion index₂ place)
+  familyHull_eq_directProductCellUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index,
+        { point : α | ∀ place : γ, point ∈ localFactorRegion index place }
+
+namespace IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+
+variable {α : Type u} {ι : Type v} {η : Type y}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def familyUnion
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ i, data.possibleRegion i
+
+def familyHull
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  data.hullSystem.phi data.familyUnion
+
+def directProductCell
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    Set α :=
+  { point : α | ∀ place : γ, point ∈ data.localFactorRegion index place }
+
+def directProductCellUnion
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ index, data.directProductCell index
+
+def localizedRegion
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    Set α :=
+  (data.localizedCalibration index).localizedRegion
+
+theorem localizedRegion_eq_directProductCell_source
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    data.localizedRegion index = data.directProductCell index := by
+  simpa [localizedRegion, directProductCell] using
+    data.localizedRegion_eq_directProductCell index
+
+theorem directProductCells_disjoint
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell := by
+  intro index₁ index₂ hne
+  rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+  exact Set.disjoint_left.mpr fun point hleft hright =>
+    Set.disjoint_left.mp hdisjoint (hleft place) (hright place)
+
+theorem familyHull_eq_directProductCellUnion_source
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHull = data.directProductCellUnion := by
+  simpa [familyHull, familyUnion, directProductCellUnion, directProductCell] using
+    data.familyHull_eq_directProductCellUnion
+
+noncomputable def familyHullIndex
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (point : { point : α // point ∈ data.familyHull }) :
+    β := by
+  classical
+  have hunion : point.val ∈ data.directProductCellUnion := by
+    rw [← data.familyHull_eq_directProductCellUnion_source]
+    exact point.property
+  exact
+    Classical.choose
+      (Set.mem_iUnion.mp hunion)
+
+theorem familyHullIndex_mem_directProductCell
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (point : { point : α // point ∈ data.familyHull }) :
+    point.val ∈ data.directProductCell (data.familyHullIndex point) := by
+  classical
+  have hunion : point.val ∈ data.directProductCellUnion := by
+    rw [← data.familyHull_eq_directProductCellUnion_source]
+    exact point.property
+  unfold familyHullIndex
+  exact
+    Classical.choose_spec
+      (Set.mem_iUnion.mp hunion)
+
+theorem directProductCell_eq_familyHullIndexFiber
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    data.directProductCell index =
+      { point : α |
+        ∃ hpoint : point ∈ data.familyHull,
+          data.familyHullIndex ⟨point, hpoint⟩ = index } := by
+  classical
+  ext point
+  constructor
+  · intro hcell
+    have hpoint : point ∈ data.familyHull := by
+      rw [data.familyHull_eq_directProductCellUnion_source]
+      exact Set.mem_iUnion.mpr ⟨index, hcell⟩
+    have hchosen :
+        point ∈ data.directProductCell
+          (data.familyHullIndex ⟨point, hpoint⟩) :=
+      data.familyHullIndex_mem_directProductCell ⟨point, hpoint⟩
+    have hindex :
+        data.familyHullIndex ⟨point, hpoint⟩ = index := by
+      by_contra hne
+      exact
+        Set.disjoint_left.mp (data.directProductCells_disjoint hne)
+          hchosen hcell
+    exact ⟨hpoint, hindex⟩
+  · rintro ⟨hpoint, hindex⟩
+    have hchosen :
+        point ∈ data.directProductCell
+          (data.familyHullIndex ⟨point, hpoint⟩) :=
+      data.familyHullIndex_mem_directProductCell ⟨point, hpoint⟩
+    simpa [hindex] using hchosen
+
+set_option linter.style.longLine false in
+noncomputable def toFamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+      α ι η β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    additiveLogVolume := data.additiveLogVolume,
+    familyHullIndex := data.familyHullIndex,
+    localizedRegion_eq_familyHullIndexFiber := by
+      intro index
+      calc
+        (data.localizedCalibration index).localizedRegion =
+            data.directProductCell index := by
+          simpa [localizedRegion] using
+            data.localizedRegion_eq_directProductCell_source index
+        _ =
+            { point : α |
+              ∃ hpoint : point ∈ data.hullSystem.phi (⋃ i, data.possibleRegion i),
+                data.familyHullIndex ⟨point, hpoint⟩ = index } := by
+          simpa [familyHull, familyUnion] using
+            data.directProductCell_eq_familyHullIndexFiber index }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    let familyIndexedSource :=
+      data.toFamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    let ownerTotalSource :=
+      familyIndexedSource.toOwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    let finiteSource :=
+      ownerTotalSource.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        |>.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.localizedRegion index = data.directProductCell index) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.familyHull = data.directProductCellUnion ∧
+      (∀ point : { point : α // point ∈ data.familyHull },
+        point.val ∈ data.directProductCell (data.familyHullIndex point)) ∧
+      (∀ index : β,
+        data.directProductCell index =
+          { point : α |
+            ∃ hpoint : point ∈ data.familyHull,
+              data.familyHullIndex ⟨point, hpoint⟩ = index }) ∧
+      (∀ index : β,
+        familyIndexedSource.localizedRegion index =
+          { point : α |
+            ∃ hpoint : point ∈ familyIndexedSource.familyHull,
+              familyIndexedSource.familyHullIndex ⟨point, hpoint⟩ = index }) ∧
+      ownerTotalSource.familyHull = ownerTotalSource.localizedRegionUnion ∧
+      finiteSource.familyHullLogVolume = finiteSource.localizedAdjustedSum :=
+  ⟨data.localizedRegion_eq_directProductCell_source,
+    data.directProductCells_disjoint,
+    data.familyHull_eq_directProductCellUnion_source,
+    data.familyHullIndex_mem_directProductCell,
+    data.directProductCell_eq_familyHullIndexFiber,
+    (data.toFamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.localizedRegion_eq_familyHullIndexFiber_source,
+    (data.toFamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+      |>.toOwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.familyHull_eq_localizedRegionUnion,
+    ((data.toFamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+      |>.toOwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+      |>.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.familyHullLogVolume_eq_localizedAdjustedSum⟩
+
+end IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
+
 set_option linter.style.longLine true
 
 /--
