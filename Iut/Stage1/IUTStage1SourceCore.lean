@@ -23895,6 +23895,116 @@ theorem endpoint
 end IUTStage1CoricThetaMuPrimeStripInvariant
 
 /--
+Finite determinant/product-formula source for Remark 3.9.5(Ob7).
+
+The Ob7 boundary compares the determinant-normalized Step (xi) object with the
+global realified Frobenioid object carried by the `F^{×μ}` prime-strip.  This
+source removes the bare global equality as a primitive: each determinant summand
+is calibrated against a converted local Gaussian Frobenioid log-volume, and the
+global equality follows from the finite product-formula sum.
+-/
+structure IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+    (β : Type u) (Penv Pgau V : Type w) (μ : Type x)
+    [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V] where
+  determinantSource : IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β
+  primeStripLift : IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ
+  summandPlace : β -> V
+  conversionRatio : β -> Real
+  summand_adjustedLogVolume_eq_convertedGaussianLocal :
+    ∀ index : β,
+      (determinantSource.summand index).adjustedLogVolume =
+        conversionRatio index *
+          (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+            (summandPlace index)).realifiedLogVolume
+  product_formula_eq_primeStripGlobal :
+    (Finset.univ.sum fun index : β =>
+      conversionRatio index *
+        (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+          (summandPlace index)).realifiedLogVolume) =
+      primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume
+
+namespace IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+
+variable {β : Type u} {Penv Pgau V : Type w} {μ : Type x}
+variable [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V]
+
+def convertedLocalGaussianLogVolume
+    (source :
+      IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+        β Penv Pgau V μ)
+    (index : β) :
+    Real :=
+  source.conversionRatio index *
+    (source.primeStripLift.base.localEvaluation.gaussianLocal.localObject
+      (source.summandPlace index)).realifiedLogVolume
+
+theorem determinantLogVolume_eq_convertedLocalSum
+    (source :
+      IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+        β Penv Pgau V μ) :
+    source.determinantSource.determinantLogVolume =
+      Finset.univ.sum source.convertedLocalGaussianLogVolume := by
+  calc
+    source.determinantSource.determinantLogVolume =
+        Finset.univ.sum fun index =>
+          (source.determinantSource.summand index).adjustedLogVolume :=
+      source.determinantSource.determinantLogVolume_eq_sum
+    _ = Finset.univ.sum source.convertedLocalGaussianLogVolume :=
+      Finset.sum_congr rfl fun index _ => by
+        exact source.summand_adjustedLogVolume_eq_convertedGaussianLocal index
+
+set_option linter.style.longLine false in
+theorem determinantLogVolume_eq_primeStripGlobal
+    (source :
+      IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+        β Penv Pgau V μ) :
+    source.determinantSource.determinantLogVolume =
+      source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+  calc
+    source.determinantSource.determinantLogVolume =
+        Finset.univ.sum source.convertedLocalGaussianLogVolume :=
+      source.determinantLogVolume_eq_convertedLocalSum
+    _ =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+      simpa [convertedLocalGaussianLogVolume] using
+        source.product_formula_eq_primeStripGlobal
+
+theorem normalizedLogVolume_eq_primeStripGlobal
+    (source :
+      IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+        β Penv Pgau V μ) :
+    source.determinantSource.normalizedLogVolume =
+      source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+  rw [source.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+  exact source.determinantLogVolume_eq_primeStripGlobal
+
+theorem endpoint
+    (source :
+      IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+        β Penv Pgau V μ) :
+    (∀ index : β,
+      (source.determinantSource.summand index).adjustedLogVolume =
+        source.convertedLocalGaussianLogVolume index) ∧
+      source.determinantSource.determinantLogVolume =
+        Finset.univ.sum source.convertedLocalGaussianLogVolume ∧
+      Finset.univ.sum source.convertedLocalGaussianLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      source.determinantSource.determinantLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      source.determinantSource.normalizedLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume :=
+  ⟨fun index =>
+      source.summand_adjustedLogVolume_eq_convertedGaussianLocal index,
+    source.determinantLogVolume_eq_convertedLocalSum,
+    by
+      simpa [convertedLocalGaussianLogVolume] using
+        source.product_formula_eq_primeStripGlobal,
+    source.determinantLogVolume_eq_primeStripGlobal,
+    source.normalizedLogVolume_eq_primeStripGlobal⟩
+
+end IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+
+/--
 Remark 3.9.5(vii), Ob7, finite log-Kummer compatibility source.
 
 Ob7 explains why the Corollary 3.12 comparison cannot be made at the level of

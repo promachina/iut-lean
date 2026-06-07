@@ -35538,6 +35538,100 @@ theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFin
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface product-hull coric Ob7 construction source from finite
+product-formula determinant data.
+
+This lowers the previous construction boundary: the determinant/global
+log-volume equality is derived from pointwise Ob3 summand calibration and the
+finite product-formula sum carried by
+`IUTStage1WeightedDeterminantPrimeStripProductFormulaSource`.
+-/
+noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_coricThetaMuProductFormulaOb7ConstructionSource
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (determinantProductFormulaSource :
+      IUTStage1WeightedDeterminantPrimeStripProductFormulaSource β Penv Pgau V μ)
+    (determinantProductFormula_determinantSource_eq :
+      determinantProductFormulaSource.determinantSource =
+        productHullBackedSource.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source.toWeightedDeterminantSource)
+    (coricUnitCharacter : V -> μ)
+    (environment_unit_eq_coric :
+      ∀ p : Penv,
+        determinantProductFormulaSource.primeStripLift.environmentUnitCharacter p =
+          coricUnitCharacter
+            (determinantProductFormulaSource.primeStripLift.base.environmentPrimeToPlace p)) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+      productHullBackedSource Penv Pgau V μ :=
+  { determinantProductFormulaSource := determinantProductFormulaSource,
+    determinantProductFormula_determinantSource_eq :=
+      determinantProductFormula_determinantSource_eq,
+    coricUnitCharacter := coricUnitCharacter,
+    environment_unit_eq_coric := environment_unit_eq_coric }
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface endpoint for the product-formula-backed coric Ob7
+construction source.
+-/
+theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_coricThetaMuProductFormulaOb7ConstructionSourceEndpoint
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    {productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ}
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (constructionSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+        productHullBackedSource Penv Pgau V μ) :
+    (let coricConstructionSource := constructionSource.toCoricThetaMuConstructionSource;
+    let constructedSource := coricConstructionSource.toConstructedCoricOb7Source;
+    let coricSource := constructedSource.toCoricLogKummerCompatibilitySource;
+    (∀ index : β,
+      (constructionSource.determinantProductFormulaSource.determinantSource.summand index).adjustedLogVolume =
+        constructionSource.determinantProductFormulaSource.convertedLocalGaussianLogVolume index) ∧
+      constructionSource.determinantProductFormulaSource.determinantSource.determinantLogVolume =
+        Finset.univ.sum
+          constructionSource.determinantProductFormulaSource.convertedLocalGaussianLogVolume ∧
+      constructionSource.determinantProductFormulaSource.determinantSource.determinantLogVolume =
+        constructionSource.determinantProductFormulaSource.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      coricSource.bridgeSource =
+        productHullBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge ∧
+      coricSource.bridgeSource.determinantSource.determinantLogVolume =
+        coricSource.primeStripGlobalLogVolume ∧
+      (∀ p : Penv,
+        coricSource.coricInvariant.lift.environmentUnitCharacter p =
+            constructionSource.coricUnitCharacter
+              (coricSource.coricInvariant.lift.base.environmentPrimeToPlace p) ∧
+          coricSource.coricInvariant.lift.gaussianUnitCharacter
+              (coricSource.coricInvariant.lift.base.primeEvaluation p) =
+            constructionSource.coricUnitCharacter
+              (coricSource.coricInvariant.lift.base.gaussianPrimeToPlace
+                (coricSource.coricInvariant.lift.base.primeEvaluation p)) ∧
+          coricSource.coricInvariant.lift.environmentUnitCharacter p =
+            coricSource.coricInvariant.lift.gaussianUnitCharacter
+              (coricSource.coricInvariant.lift.base.primeEvaluation p)) ∧
+      coricSource.bridgeSource.qRegionLogVolume <=
+        coricSource.primeStripGlobalLogVolume) :=
+  constructionSource.productFormulaConstructionSource_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Ob7 coric audit from a product-hull-synchronized coric
 source.
 -/
@@ -35586,6 +35680,32 @@ noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDete
     IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb7CoricLogKummerCompatibilityAudit
       productHullBackedSource Penv Pgau V μ :=
   productHullBackedSource.productHullBackedOb7CoricLogKummerCompatibilityAudit_of_coricThetaMuConstructionSource
+    constructionSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface Ob7 coric audit from finite product-formula determinant data
+and Corollary 4.7(iv) unit-character construction data.
+-/
+noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_ob7CoricLogKummerCompatibilityAuditOfCoricThetaMuProductFormulaConstructionSource
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (constructionSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+        productHullBackedSource Penv Pgau V μ) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb7CoricLogKummerCompatibilityAudit
+      productHullBackedSource Penv Pgau V μ :=
+  productHullBackedSource.productHullBackedOb7CoricLogKummerCompatibilityAudit_of_coricThetaMuProductFormulaConstructionSource
     constructionSource
 
 set_option linter.style.longLine false in
@@ -35916,6 +36036,43 @@ noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDete
       productHullBackedSource phiFamily xiFamily k
       productHullBackedSource.constructorBackedSource.qChoice Penv Pgau V μ :=
   productHullBackedSource.productHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty_of_coricThetaMuConstructionSource
+    phiFamily xiFamily k qPilotRegion_nonempty
+    constructionSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface product-hull Ob5--Ob6--Ob7 canonical-scale audit at the
+constructor-backed q-choice from finite product-formula determinant data and
+Corollary 4.7(iv) coric unit-character construction data.
+-/
+noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_ob5Ob6Ob7CanonicalCThetaScaleAuditAtQChoiceOfQPilotRegionNonemptyOfCoricThetaMuProductFormulaConstructionSource
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type x} {κ : Type u}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      productHullBackedSource.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (constructionSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+        productHullBackedSource Penv Pgau V μ) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit
+      productHullBackedSource phiFamily xiFamily k
+      productHullBackedSource.constructorBackedSource.qChoice Penv Pgau V μ :=
+  productHullBackedSource.productHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty_of_coricThetaMuProductFormulaConstructionSource
     phiFamily xiFamily k qPilotRegion_nonempty
     constructionSource
 
@@ -39703,6 +39860,120 @@ noncomputable def remark395ProductHullBackedConstructorBackedConstructedOb3Ob5Ad
   IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.boundarySignedEqualityOrStrictCTheta_from_remark395ProductHullBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithOb5Ob6Ob7SynchronizedAuditAtQChoiceOfQPilotRegionNonemptyOfConstructedCoricOb7Source
     productHullBackedSource phiFamily xiFamily k qPilotRegion_nonempty
     constructedCoricOb7Source
+    part profile audited transportSource iplConstructionSource
+    sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface canonical-scale product-hull route with synchronized
+Ob5--Ob7 audit at the constructor-backed q-choice, with Ob7 supplied by finite
+product-formula determinant data and Corollary 4.7(iv) coric unit-character
+construction data.
+
+This is the product-formula-backed finite-divisor endpoint: the Ob7
+determinant/global comparison is no longer an endpoint hypothesis, but is
+derived before entering the strongest constructed-coric dichotomy route.
+-/
+noncomputable def remark395ProductHullBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleDichotomyWithOb5Ob6Ob7SynchronizedAuditAtQChoiceOfQPilotRegionNonemptyOfCoricThetaMuProductFormulaConstructionSource
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    {κ : Type u}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      productHullBackedSource.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (constructionSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+        productHullBackedSource Penv Pgau V μ)
+    {endpoint :
+      package.PlaceAuditedMultiradialThetaHullEndpoint
+        productHullBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit
+        productHullBackedSource phiFamily xiFamily k
+        productHullBackedSource.constructorBackedSource.qChoice Penv Pgau V μ ×'
+      ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < productHullBackedSource.canonicalCThetaScale) :=
+  remark395ProductHullBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleDichotomyWithOb5Ob6Ob7SynchronizedAuditAtQChoiceOfQPilotRegionNonemptyOfConstructedCoricOb7Source
+    productHullBackedSource phiFamily xiFamily k qPilotRegion_nonempty
+    constructionSource.toCoricThetaMuConstructionSource.toConstructedCoricOb7Source
     part profile audited transportSource iplConstructionSource
     sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
     divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility

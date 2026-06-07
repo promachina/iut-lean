@@ -61643,6 +61643,148 @@ end ProductHullBackedCoricThetaMuOb7ConstructionSource
 
 set_option linter.style.longLine false in
 /--
+Product-hull coric Ob7 construction with determinant/global equality derived
+from a finite product-formula source.
+
+This lowers the previous coric theta-mu construction boundary by replacing the
+single determinant/global log-volume equality with the local Ob3 summand
+calibration and product-formula data of
+`IUTStage1WeightedDeterminantPrimeStripProductFormulaSource`.
+-/
+structure ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (Penv Pgau V μ : Type x)
+    [Fintype Penv] [Fintype Pgau] [Fintype V] :
+    Type (max u v x) where
+  determinantProductFormulaSource :
+    IUTStage1WeightedDeterminantPrimeStripProductFormulaSource β Penv Pgau V μ
+  determinantProductFormula_determinantSource_eq :
+    determinantProductFormulaSource.determinantSource =
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source.toWeightedDeterminantSource
+  coricUnitCharacter : V -> μ
+  environment_unit_eq_coric :
+    ∀ p : Penv,
+      determinantProductFormulaSource.primeStripLift.environmentUnitCharacter p =
+        coricUnitCharacter
+          (determinantProductFormulaSource.primeStripLift.base.environmentPrimeToPlace p)
+
+namespace ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+
+variable
+  {sourceData :
+    IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (β := β) (γ := γ) record Λ}
+variable {Penv Pgau V μ : Type x}
+variable [Fintype Penv] [Fintype Pgau] [Fintype V]
+
+set_option linter.style.longLine false in
+theorem determinantLogVolume_eq_primeStripGlobal
+    (source :
+      ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+        sourceData Penv Pgau V μ) :
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantSource.determinantLogVolume =
+      source.determinantProductFormulaSource.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+  calc
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantSource.determinantLogVolume =
+        sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.determinantSource.determinantLogVolume :=
+      rfl
+    _ =
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source.toWeightedDeterminantSource.determinantLogVolume := by
+      rw [sourceData.constructorBackedSource.constructorBackedRecordBridgeAudit.bridgeEndpoint.1]
+    _ =
+        source.determinantProductFormulaSource.determinantSource.determinantLogVolume := by
+      rw [source.determinantProductFormula_determinantSource_eq]
+    _ =
+        source.determinantProductFormulaSource.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume :=
+      source.determinantProductFormulaSource.determinantLogVolume_eq_primeStripGlobal
+
+set_option linter.style.longLine false in
+noncomputable def toCoricThetaMuConstructionSource
+    (source :
+      ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+        sourceData Penv Pgau V μ) :
+    ProductHullBackedCoricThetaMuOb7ConstructionSource
+      sourceData Penv Pgau V μ :=
+  { primeStripLift := source.determinantProductFormulaSource.primeStripLift,
+    coricUnitCharacter := source.coricUnitCharacter,
+    environment_unit_eq_coric := source.environment_unit_eq_coric,
+    determinantLogVolume_eq_primeStripGlobal :=
+      source.determinantLogVolume_eq_primeStripGlobal }
+
+set_option linter.style.longLine false in
+theorem productFormulaConstructionSource_endpoint
+    (source :
+      ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+        sourceData Penv Pgau V μ) :
+    let constructionSource := source.toCoricThetaMuConstructionSource;
+    let constructedSource := constructionSource.toConstructedCoricOb7Source;
+    let coricSource := constructedSource.toCoricLogKummerCompatibilitySource;
+    (∀ index : β,
+      (source.determinantProductFormulaSource.determinantSource.summand index).adjustedLogVolume =
+        source.determinantProductFormulaSource.convertedLocalGaussianLogVolume index) ∧
+      source.determinantProductFormulaSource.determinantSource.determinantLogVolume =
+        Finset.univ.sum
+          source.determinantProductFormulaSource.convertedLocalGaussianLogVolume ∧
+      source.determinantProductFormulaSource.determinantSource.determinantLogVolume =
+        source.determinantProductFormulaSource.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      coricSource.bridgeSource =
+        sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge ∧
+      coricSource.bridgeSource.determinantSource.determinantLogVolume =
+        coricSource.primeStripGlobalLogVolume ∧
+      (∀ p : Penv,
+        coricSource.coricInvariant.lift.environmentUnitCharacter p =
+            source.coricUnitCharacter
+              (coricSource.coricInvariant.lift.base.environmentPrimeToPlace p) ∧
+          coricSource.coricInvariant.lift.gaussianUnitCharacter
+              (coricSource.coricInvariant.lift.base.primeEvaluation p) =
+            source.coricUnitCharacter
+              (coricSource.coricInvariant.lift.base.gaussianPrimeToPlace
+                (coricSource.coricInvariant.lift.base.primeEvaluation p)) ∧
+          coricSource.coricInvariant.lift.environmentUnitCharacter p =
+            coricSource.coricInvariant.lift.gaussianUnitCharacter
+              (coricSource.coricInvariant.lift.base.primeEvaluation p)) ∧
+      coricSource.bridgeSource.qRegionLogVolume <=
+        coricSource.primeStripGlobalLogVolume :=
+  let constructionSource := source.toCoricThetaMuConstructionSource
+  let constructedSource := constructionSource.toConstructedCoricOb7Source
+  let coricSource := constructedSource.toCoricLogKummerCompatibilitySource
+  let productFormulaEndpoint := source.determinantProductFormulaSource.endpoint
+  ⟨productFormulaEndpoint.1,
+    productFormulaEndpoint.2.1,
+    productFormulaEndpoint.2.2.2.1,
+    rfl,
+    source.determinantLogVolume_eq_primeStripGlobal,
+    (constructionSource.constructedCoricOb7Source_endpoint).2.1,
+    coricSource.qRegionLogVolume_le_primeStripGlobal⟩
+
+end ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+
+set_option linter.style.longLine false in
+/--
+Product-hull-backed Ob7 coric audit from finite product-formula determinant
+data plus Corollary 4.7(iv) unit-character construction data.
+-/
+noncomputable def productHullBackedOb7CoricLogKummerCompatibilityAudit_of_coricThetaMuProductFormulaConstructionSource
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (constructionSource :
+      ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+        sourceData Penv Pgau V μ) :
+    ProductHullBackedOb7CoricLogKummerCompatibilityAudit
+      sourceData Penv Pgau V μ :=
+  let constructedSource :=
+    constructionSource.toCoricThetaMuConstructionSource.toConstructedCoricOb7Source
+  sourceData.productHullBackedOb7CoricLogKummerCompatibilityAudit
+    constructedSource.toCoricLogKummerCompatibilitySource
+    constructedSource.bridgeSource_eq_constructorBridge
+
+set_option linter.style.longLine false in
+/--
 Product-hull-backed Ob7 coric audit from finite Corollary 4.7(iv)
 construction data.
 
@@ -62489,6 +62631,34 @@ noncomputable def productHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_
   sourceData.productHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty_of_constructedCoricOb7Source
     phiFamily xiFamily k qPilotRegion_nonempty
     constructionSource.toConstructedCoricOb7Source
+
+set_option linter.style.longLine false in
+/--
+Canonical-scale product-hull Ob5--Ob7 audit at the constructor-backed q-choice
+from finite product-formula determinant data and Corollary 4.7(iv) coric
+unit-character construction data.
+-/
+noncomputable def productHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty_of_coricThetaMuProductFormulaConstructionSource
+    {κ : Type u}
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily : sourceData.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily : sourceData.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      sourceData.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (constructionSource :
+      ProductHullBackedCoricThetaMuProductFormulaOb7ConstructionSource
+        sourceData Penv Pgau V μ) :
+    ProductHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit
+      sourceData phiFamily xiFamily k
+      sourceData.constructorBackedSource.qChoice Penv Pgau V μ :=
+  sourceData.productHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty_of_coricThetaMuConstructionSource
+    phiFamily xiFamily k qPilotRegion_nonempty
+    constructionSource.toCoricThetaMuConstructionSource
 
 end
   IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
