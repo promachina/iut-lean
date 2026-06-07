@@ -2846,6 +2846,24 @@ then builds the previous charted direct-product source from these per-factor
 calibrations, together with the remaining cell factorization and cover
 additivity laws.  This separates the local-ring/direct-summand calibration
 obligation from the finite direct-product geometry obligation.
+The cover additivity law has now been separated from the calibrated charted
+source as well.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395FiniteAdditiveCalibrated}\\
+\quad\texttt{LocalRingChartedVectorBundleHullCoverSource}
+\end{array}
+\]
+keeps the same per-factor calibrations and cell-factorization law, but replaces
+the charted cover log-volume equality by a finite-additive hull log-volume
+source.  Distinct direct-product cells are proved disjoint from the local-factor
+separation condition, and \Lean{} applies finite additivity to derive
+\[
+  \mu_{\log}\!\left(\bigcup_\beta H_\beta\right)
+    =\sum_\beta \mu_{\log}(H_\beta).
+\]
+Thus the cover equality consumed by the charted vector-bundle route is no
+longer an independent field of that route.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -6028,9 +6046,10 @@ The practical priority order is:
   vector-bundle local-factor interface, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  charted cell cover law, per-factor chart/direct-summand calibration
-  construction, local region/vector-bundle log-volume calibration, measure
-  calibration, record-canonical synchronization, and chart
+  finite-additive hull log-volume source, cell-factorization law, per-factor
+  chart/direct-summand calibration construction, local region/vector-bundle
+  log-volume calibration, measure calibration, record-canonical
+  synchronization, and chart
   synchronization witnesses by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source
   content to bear on the Mochizuki--Scholze--Stix disagreement.

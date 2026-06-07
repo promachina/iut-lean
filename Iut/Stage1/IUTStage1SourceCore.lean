@@ -9171,6 +9171,182 @@ theorem endpoint
 
 end IUTStage1Remark395CalibratedLocalRingChartedVectorBundleHullCoverSource
 
+/--
+Finite-additive calibrated local-ring charted vector-bundle cover source.
+
+This refines the calibrated charted source by deriving the cover log-volume
+equality from finite additivity of the holomorphic-hull log-volume on the
+pairwise-disjoint direct-product cells.  The disjointness of cells is still
+derived from separation by a local factor; the cover additivity itself no longer
+appears as an independent field of the calibrated charted source.
+-/
+structure IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (α : Type u) (ι : Type v) (η : Type y) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  factorCalibration :
+    ∀ index : β, ∀ place : γ,
+      IUTStage1LocalRingVectorBundleFactorCalibrationSource
+        hullSystem (localizedCalibration index) place
+  localizedRegion_eq_calibratedDirectProductCell :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α |
+          ∀ place : γ, point ∈ (factorCalibration index place).region }
+  localFactor_separates_index :
+    ∀ ⦃index₁ index₂ : β⦄,
+      index₁ ≠ index₂ ->
+        ∃ place : γ,
+          Disjoint ((factorCalibration index₁ place).region)
+            ((factorCalibration index₂ place).region)
+  familyHull_eq_calibratedDirectProductCellUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index,
+        { point : α |
+          ∀ place : γ, point ∈ (factorCalibration index place).region }
+  directProductCell_logVolume_eq_calibratedFactorSum :
+    ∀ index : β,
+      hullSystem.logVolume
+          { point : α |
+            ∀ place : γ, point ∈ (factorCalibration index place).region } =
+        Finset.univ.sum fun place =>
+          hullSystem.logVolume ((factorCalibration index place).region)
+  finiteAdditive :
+    IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β
+
+namespace IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+
+variable {α : Type u} {ι : Type v} {η : Type y}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def localFactorChart
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ)
+    (index : β) (place : γ) :
+    IUTStage1LocalRingVectorBundleFactorRegionChart α η :=
+  (data.factorCalibration index place).chart
+
+def localFactorRegion
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ)
+    (index : β) (place : γ) :
+    Set α :=
+  (data.factorCalibration index place).region
+
+def directProductCell
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ)
+    (index : β) :
+    Set α :=
+  { point : α | ∀ place : γ, point ∈ data.localFactorRegion index place }
+
+def directProductCellUnion
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ index, data.directProductCell index
+
+def calibratedCellLogVolumeSum
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.hullSystem.logVolume (data.directProductCell index)
+
+def bundleLogVolumeSum
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume
+
+theorem directProductCells_disjoint
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell := by
+  intro index₁ index₂ hne
+  rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+  exact Set.disjoint_left.mpr fun point hleft hright =>
+    Set.disjoint_left.mp hdisjoint (hleft place) (hright place)
+
+theorem directProductCoverLogVolume_eq_calibratedCellSum
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    data.hullSystem.logVolume data.directProductCellUnion =
+      data.calibratedCellLogVolumeSum := by
+  simpa [directProductCellUnion, calibratedCellLogVolumeSum] using
+    data.finiteAdditive.finite_iUnion_eq_sum
+      data.directProductCell data.directProductCells_disjoint
+
+set_option linter.style.longLine false in
+def toCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    IUTStage1Remark395CalibratedLocalRingChartedVectorBundleHullCoverSource
+      α ι η β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    factorCalibration := data.factorCalibration,
+    localizedRegion_eq_calibratedDirectProductCell :=
+      data.localizedRegion_eq_calibratedDirectProductCell,
+    localFactor_separates_index :=
+      data.localFactor_separates_index,
+    familyHull_eq_calibratedDirectProductCellUnion :=
+      data.familyHull_eq_calibratedDirectProductCellUnion,
+    directProductCell_logVolume_eq_calibratedFactorSum :=
+      data.directProductCell_logVolume_eq_calibratedFactorSum,
+    directProductCoverLogVolume_eq_calibratedCellSum := by
+      simpa [
+        IUTStage1Remark395CalibratedLocalRingChartedVectorBundleHullCoverSource.directProductCell,
+        IUTStage1Remark395CalibratedLocalRingChartedVectorBundleHullCoverSource.directProductCellUnion,
+        IUTStage1LocalRingVectorBundleFactorCalibrationSource.region,
+        localFactorRegion] using
+        data.directProductCoverLogVolume_eq_calibratedCellSum }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    let calibratedSource :=
+      data.toCalibratedLocalRingChartedVectorBundleHullCoverSource
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
+        calibratedSource.calibratedCellLogVolumeSum ∧
+      calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
+        calibratedSource.bundleLogVolumeSum :=
+  ⟨data.directProductCells_disjoint,
+    data.directProductCoverLogVolume_eq_calibratedCellSum,
+    (data.toCalibratedLocalRingChartedVectorBundleHullCoverSource)
+      |>.directProductCoverLogVolume_eq_calibratedCellSum_source,
+    (data.toCalibratedLocalRingChartedVectorBundleHullCoverSource)
+      |>.directProductCoverLogVolume_eq_bundleLogVolumeSum⟩
+
+end IUTStage1Remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+
 set_option linter.style.longLine true
 
 /--
