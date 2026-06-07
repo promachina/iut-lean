@@ -35087,6 +35087,43 @@ noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDete
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob7 log-Kummer compatibility audit from the typed
+Remark 3.9.5(Ob7) source object.
+
+This exposes the sharper source boundary: the route consumes the finite
+`F^{×μ}` prime-strip/log-Kummer compatibility source itself, plus the single
+bridge synchronization identifying it with the constructed product-hull
+Step (xi) bridge.
+-/
+noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_ob7LogKummerCompatibilityAuditOfSource
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        β Penv Pgau V μ)
+    (ob7_bridge_eq_constructorBridge :
+      ob7Source.bridgeSource =
+        productHullBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb7LogKummerCompatibilityAudit
+      productHullBackedSource Penv Pgau V μ :=
+  productHullBackedSource.productHullBackedOb7LogKummerCompatibilityAudit_of_source
+    ob7Source ob7_bridge_eq_constructorBridge
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface synchronized Ob5--Ob7 audit for the product-hull-backed
 constructor-built Remark 3.9.5 finite-divisor source.
 
@@ -35216,6 +35253,48 @@ noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDete
   productHullBackedSource.productHullBackedOb5Ob6Ob7SynchronizedAudit_atQChoice_of_qPilotRegion_nonempty
     phiFamily xiFamily k qPilotRegion_nonempty
     primeStripLift determinantLogVolume_eq_primeStripGlobal
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface synchronized Ob5--Ob7 audit at the constructor-backed
+q-choice, with Ob7 supplied as a typed log-Kummer compatibility source.
+-/
+noncomputable def remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_ob5Ob6Ob7SynchronizedAuditAtQChoiceOfQPilotRegionNonemptyOfOb7Source
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type x} {κ : Type u}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      productHullBackedSource.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        β Penv Pgau V μ)
+    (ob7_bridge_eq_constructorBridge :
+      ob7Source.bridgeSource =
+        productHullBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb5Ob6Ob7SynchronizedAudit
+      productHullBackedSource phiFamily xiFamily k
+      productHullBackedSource.constructorBackedSource.qChoice Penv Pgau V μ :=
+  productHullBackedSource.productHullBackedOb5Ob6Ob7SynchronizedAudit_atQChoice_of_qPilotRegion_nonempty_of_ob7Source
+    phiFamily xiFamily k qPilotRegion_nonempty
+    ob7Source ob7_bridge_eq_constructorBridge
 
 set_option linter.style.longLine false in
 /--
@@ -36372,6 +36451,60 @@ noncomputable def remark395PrincipalValuationBallTopologyFiniteExtensionHaarCons
     holomorphic_structure_forgotten packetLocalObject_eq_entrySource
     packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
     targetSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface principal valuation-ball topology/Haar Ob5--Ob7 canonical
+audit at the constructor-backed q-choice, with Ob7 supplied as a typed
+log-Kummer compatibility source.
+
+This is the source-object audit surface for Remark 3.9.5(Ob7): the
+prime-strip/log-Kummer compatibility is passed as one source object, and the
+route records only the synchronization equality with the constructed
+hull/determinant bridge.
+-/
+noncomputable def remark395PrincipalValuationBallTopologyFiniteExtensionHaarConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_topologyFiniteExtensionHaarOb5Ob6Ob7CanonicalCThetaScaleAuditAtQChoiceOfQPilotRegionNonemptyOfOb7Source
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type (max u v w y z)}
+    {κ : Type u}
+    (principalValuationBallBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      principalValuationBallBackedSource.toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.PhiFamily
+        κ)
+    (xiFamily :
+      principalValuationBallBackedSource.toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.XiFamily
+        κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      principalValuationBallBackedSource.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type (max u v w y z)}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        β Penv Pgau V μ)
+    (ob7_bridge_eq_constructorBridge :
+      ob7Source.bridgeSource =
+        principalValuationBallBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit
+      principalValuationBallBackedSource phiFamily xiFamily k
+      principalValuationBallBackedSource.constructorBackedSource.qChoice
+      Penv Pgau V μ :=
+  principalValuationBallBackedSource.principalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty_of_ob7Source
+    phiFamily xiFamily k qPilotRegion_nonempty
+    ob7Source ob7_bridge_eq_constructorBridge
 
 set_option linter.style.longLine false in
 /--
