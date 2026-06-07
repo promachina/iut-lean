@@ -69096,6 +69096,120 @@ end
 
 set_option linter.style.longLine false in
 /--
+Finite-extension-over-`ℚ_[p]` centered valuation-ball local Haar-log-coordinate
+source whose Haar-character scalar is derived from valuation-unit-ball mass.
+
+The local source carries `mu(O_v)=1` and the base-prime unit-ball image mass
+`mu(p_v O_v)=p_v^{-[K_v:\mathbb Q_{p_v}]}`.  The core source derives the
+additive Haar-character scalar from these two facts, and then recovers the
+all-subset Haar-modulus law used downstream.
+-/
+structure IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+    (p : Nat) [Fact p.Prime] (K : Type u)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K] where
+  localHullSystem : IUTStage1Remark395HolomorphicHullSystem K
+  finiteExtensionUnitBallHaarCharacterSource :
+    IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+      K p K localHullSystem
+
+namespace
+  IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+
+variable {p : Nat} [Fact p.Prime] {K : Type u}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+variable [IsTopologicalAddGroup K]
+variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+
+noncomputable def toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+    (sourceData :
+      IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+        p K) :
+    IUTStage1Remark395LocalFactorPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+      p K :=
+  { localHullSystem := sourceData.localHullSystem,
+    finiteExtensionConstructedDilationHaarCharacterSource :=
+      sourceData.finiteExtensionUnitBallHaarCharacterSource
+        |>.toConstructedDilationHaarCharacterNormalizationSource }
+
+noncomputable def toPadicFiniteExtensionConstructedDilationHaarModulusCenteredValuationBallHaarLogCoordinateSource
+    (sourceData :
+      IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+        p K) :
+    IUTStage1Remark395LocalFactorPadicFiniteExtensionConstructedDilationHaarModulusCenteredValuationBallHaarLogCoordinateSource
+      p K :=
+  sourceData.toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+    |>.toPadicFiniteExtensionConstructedDilationHaarModulusCenteredValuationBallHaarLogCoordinateSource
+
+noncomputable def toPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource
+    (sourceData :
+      IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+        p K) :
+    IUTStage1Remark395LocalFactorPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource
+      p K :=
+  sourceData.toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+    |>.toPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource
+
+noncomputable def toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource
+    (sourceData :
+      IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+        p K) :
+    IUTStage1Remark395LocalFactorValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource
+      K :=
+  sourceData.toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+    |>.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource
+
+noncomputable def localLogCoordinate
+    (sourceData :
+      IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+        p K)
+    (factor : K) :
+    Real :=
+  sourceData.toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+    |>.localLogCoordinate factor
+
+set_option linter.style.longLine false in
+theorem padicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateEndpoint
+    (sourceData :
+      IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+        p K) :
+    sourceData.finiteExtensionUnitBallHaarCharacterSource.haarMeasure
+        sourceData.finiteExtensionUnitBallHaarCharacterSource.integerSource.ringOfIntegers =
+        1 ∧
+      sourceData.finiteExtensionUnitBallHaarCharacterSource.haarMeasure
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            sourceData.finiteExtensionUnitBallHaarCharacterSource.integerSource.ringOfIntegers) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (MeasureTheory.addEquivAddHaarChar
+          sourceData.finiteExtensionUnitBallHaarCharacterSource.basePrimeContinuousAddEquiv :
+        ENNReal) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (∀ subset : Set K,
+        sourceData.toPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource.finiteExtensionConstructedDilationMassHaarSource.haarMeasure
+            (sourceData.toPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource.finiteExtensionConstructedDilationMassHaarSource.basePrimeDilation ''
+              subset) =
+          ENNReal.ofReal
+              (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+            sourceData.finiteExtensionUnitBallHaarCharacterSource.haarMeasure subset) ∧
+      (∀ factor : K,
+        sourceData.localLogCoordinate factor =
+          sourceData.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource.toLocalFactorCenteredValuationBallHaarLogCoordinateSource.toCompactOpenHaarSource.normalizedHaarLogVolume
+            (Metric.closedBall factor
+              sourceData.finiteExtensionUnitBallHaarCharacterSource.compactOpenRadius)) :=
+  ⟨sourceData.finiteExtensionUnitBallHaarCharacterSource.valuationUnitBall_measure_eq_one,
+    sourceData.finiteExtensionUnitBallHaarCharacterSource.basePrimeUnitBall_measure_eq,
+    sourceData.finiteExtensionUnitBallHaarCharacterSource.basePrimeHaarChar_eq,
+    sourceData.finiteExtensionUnitBallHaarCharacterSource.toConstructedDilationHaarModulusNormalizationSource.basePrimeDilation_measure_eq,
+    fun _factor => rfl⟩
+
+end
+  IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+
+set_option linter.style.longLine false in
+/--
 Haar-log-coordinate finite-sum target-point source.
 
 This source lowers the coordinate-place finite-sum boundary by replacing the
@@ -71261,6 +71375,241 @@ theorem padicFiniteExtensionConstructedDilationHaarCharacterFiniteSumTargetPoint
 
 end
   IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+
+set_option linter.style.longLine false in
+/--
+Finite-extension-over-`ℚ_[p]` centered valuation-ball Haar-log-coordinate
+finite-sum target-point source whose local Haar-character scalars are derived
+from valuation-unit-ball mass computations.
+
+This product source lowers the Haar-character interface place-by-place: each
+local source supplies `mu_v(O_v)=1` and `mu_v(p_vO_v)=p_v^{-dim_v}`, from which
+Lean derives the additive Haar-character scalar and then the all-subset
+Haar-modulus law.
+-/
+structure IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {γlocal : Type u} [Fintype γlocal]
+    (localPrime : γlocal -> Nat)
+    [∀ place : γlocal, Fact (localPrime place).Prime]
+    (localField : γlocal -> Type u)
+    [∀ place : γlocal, NontriviallyNormedField (localField place)]
+    [∀ place : γlocal, ProperSpace (localField place)]
+    [∀ place : γlocal, IsUltrametricDist (localField place)]
+    [∀ place : γlocal, MeasurableSpace (localField place)]
+    [∀ place : γlocal, BorelSpace (localField place)]
+    [∀ place : γlocal, LocallyCompactSpace (localField place)]
+    [∀ place : γlocal, IsTopologicalAddGroup (localField place)]
+    [∀ place : γlocal, Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : γlocal, FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {η : Type u} {K : Type u}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type u} [Fintype β] {γ : Type w} [Fintype γ]
+    (Λ : Type (max u w)) where
+  principalValuationBallBackedSource :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (η := η) (K := K) (β := β) (γ := γ) record Λ
+  valuationUnitBallNonzeroScalarSource :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      γlocal localField
+      (IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+      η K β γlocal
+  coordinatePlace_eq_self :
+    ∀ place : γlocal,
+      valuationUnitBallNonzeroScalarSource.coordinatePlace place = place
+  localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource :
+    ∀ place : γlocal,
+      IUTStage1Remark395LocalFactorPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource
+        (localPrime place) (localField place)
+  transportedLocalIntegerTargetPoint_eq_principal :
+    (fun point : ((place : γlocal) -> localField place) =>
+        ({ coord :=
+            Finset.univ.sum fun place : γlocal =>
+              (localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+                (point place) } :
+          Point target)) ''
+        valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerRegion =
+      principalValuationBallBackedSource.principalValuationBallSource.principalHullSource.localIntegerRegion
+  transportedSelectedScalarTargetPoint_eq_principalHull :
+    (fun point : ((place : γlocal) -> localField place) =>
+        ({ coord :=
+            Finset.univ.sum fun place : γlocal =>
+              (localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+                (point place) } :
+          Point target)) ''
+        valuationUnitBallNonzeroScalarSource.selectedScalarImageHull =
+      principalValuationBallBackedSource.principalValuationBallSource.selectedPrincipalHull
+
+namespace
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {γlocal : Type u} [Fintype γlocal]
+variable {localPrime : γlocal -> Nat}
+variable [∀ place : γlocal, Fact (localPrime place).Prime]
+variable {localField : γlocal -> Type u}
+variable [∀ place : γlocal, NontriviallyNormedField (localField place)]
+variable [∀ place : γlocal, ProperSpace (localField place)]
+variable [∀ place : γlocal, IsUltrametricDist (localField place)]
+variable [∀ place : γlocal, MeasurableSpace (localField place)]
+variable [∀ place : γlocal, BorelSpace (localField place)]
+variable [∀ place : γlocal, LocallyCompactSpace (localField place)]
+variable [∀ place : γlocal, IsTopologicalAddGroup (localField place)]
+variable [∀ place : γlocal, Algebra ℚ_[localPrime place] (localField place)]
+variable [∀ place : γlocal, FiniteDimensional ℚ_[localPrime place] (localField place)]
+variable {η : Type u} {K : Type u}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {β : Type u} [Fintype β] {γ : Type w} [Fintype γ]
+variable {Λ : Type (max u w)}
+
+noncomputable def localValuationLogCoord
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (η := η) (K := K) (β := β) (γ := γ)
+        record localPrime localField Λ)
+    (place : γlocal) :
+    localField place -> Real :=
+  (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+
+set_option linter.style.longLine false in
+noncomputable def toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (η := η) (K := K) (β := β) (γ := γ)
+        record localPrime localField Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+      (η := η) (K := K) (β := β) (γ := γ)
+      record localPrime localField Λ :=
+  { principalValuationBallBackedSource :=
+      sourceData.principalValuationBallBackedSource,
+    valuationUnitBallNonzeroScalarSource :=
+      sourceData.valuationUnitBallNonzeroScalarSource,
+    coordinatePlace_eq_self :=
+      sourceData.coordinatePlace_eq_self,
+    localPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateSource :=
+      fun place =>
+        (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place)
+          |>.toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateSource,
+    transportedLocalIntegerTargetPoint_eq_principal :=
+      sourceData.transportedLocalIntegerTargetPoint_eq_principal,
+    transportedSelectedScalarTargetPoint_eq_principalHull :=
+      sourceData.transportedSelectedScalarTargetPoint_eq_principalHull }
+
+set_option linter.style.longLine false in
+noncomputable def toPadicFiniteExtensionConstructedDilationHaarModulusCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (η := η) (K := K) (β := β) (γ := γ)
+        record localPrime localField Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationHaarModulusCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+      (η := η) (K := K) (β := β) (γ := γ)
+      record localPrime localField Λ :=
+  sourceData.toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    |>.toPadicFiniteExtensionConstructedDilationHaarModulusCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+
+noncomputable def toPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (η := η) (K := K) (β := β) (γ := γ)
+        record localPrime localField Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+      (η := η) (K := K) (β := β) (γ := γ)
+      record localPrime localField Λ :=
+  sourceData.toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    |>.toPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+
+noncomputable def toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (η := η) (K := K) (β := β) (γ := γ)
+        record localPrime localField Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarValuedFieldIntegerCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+      (δ := γlocal) (η := η) (K := K) (β := β) (γ := γ)
+      (γlocal := γlocal) record localField Λ :=
+  sourceData.toPadicFiniteExtensionConstructedDilationHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    |>.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+
+theorem targetPointTransportAudit
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (η := η) (K := K) (β := β) (γ := γ)
+        record localPrime localField Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetPointTransportSource.TargetPointTransportAudit
+      sourceData.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource.toCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource.toCompactOpenHaarLogCoordinateFiniteSumTargetPointSource.toHaarLogCoordinateFiniteSumTargetPointSource.toCoordinatePlaceValuationLogFiniteSumTargetPointSource.toValuationLogFiniteSumTargetPointSource.toValuationLogImageProjectedFactorwiseTargetTransportSource.toLocalLogCoordinateProjectedFactorwiseTargetTransportSource.toLocalLogCoordinateFactorwiseTargetTransportSource.toLocalLogCoordinatePlacewisePreimageTargetTransportSource.toLocalLogCoordinatePreimageTargetTransportSource.toLocalLogCoordinateProductImageTargetTransportSource.toFiniteLocalLogCoordinateTargetTransportSource.toValuationAnchorCoordinateTargetTransportSource.toSelectedImageCoordinateTargetTransportSource.toCoordinateTargetTransportSource.toTargetPointTransportSource :=
+  sourceData.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    |>.targetPointTransportAudit
+
+set_option linter.style.longLine false in
+theorem padicFiniteExtensionUnitBallHaarCharacterFiniteSumTargetPointEndpoint
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (η := η) (K := K) (β := β) (γ := γ)
+        record localPrime localField Λ) :
+    sourceData.toPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource.toPadicFiniteExtensionDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource.toPadicFiniteExtensionDilationCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource.toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource.coordinateIndexEquiv =
+        Equiv.refl γlocal ∧
+      (∀ place : γlocal,
+        (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallHaarCharacterSource.haarMeasure
+          (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallHaarCharacterSource.integerSource.ringOfIntegers =
+          1) ∧
+      (∀ place : γlocal,
+        (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallHaarCharacterSource.haarMeasure
+            ((fun point : localField place =>
+              algebraMap ℚ_[localPrime place] (localField place)
+                (localPrime place : ℚ_[localPrime place]) * point) ''
+              (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallHaarCharacterSource.integerSource.ringOfIntegers) =
+          ENNReal.ofReal
+            (((localPrime place : Real) ^
+              Module.finrank ℚ_[localPrime place] (localField place))⁻¹)) ∧
+      (∀ place : γlocal,
+        (MeasureTheory.addEquivAddHaarChar
+            (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallHaarCharacterSource.basePrimeContinuousAddEquiv :
+          ENNReal) =
+          ENNReal.ofReal
+            (((localPrime place : Real) ^
+              Module.finrank ℚ_[localPrime place] (localField place))⁻¹)) ∧
+      (∀ place : γlocal, ∀ subset : Set (localField place),
+        ((sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).toPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource.finiteExtensionConstructedDilationMassHaarSource.haarMeasure
+          ((sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).toPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource.finiteExtensionConstructedDilationMassHaarSource.basePrimeDilation ''
+            subset)) =
+          ENNReal.ofReal
+              (((localPrime place : Real) ^
+                Module.finrank ℚ_[localPrime place] (localField place))⁻¹) *
+            (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallHaarCharacterSource.haarMeasure
+              subset) ∧
+      (∀ place : γlocal,
+        sourceData.localValuationLogCoord place =
+          (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate) :=
+  ⟨rfl,
+    fun place =>
+      (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place)
+        |>.finiteExtensionUnitBallHaarCharacterSource
+        |>.valuationUnitBall_measure_eq_one,
+    fun place =>
+      (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place)
+        |>.finiteExtensionUnitBallHaarCharacterSource
+        |>.basePrimeUnitBall_measure_eq,
+    fun place =>
+      (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place)
+        |>.finiteExtensionUnitBallHaarCharacterSource
+        |>.basePrimeHaarChar_eq,
+    fun place =>
+      (sourceData.localPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource place)
+        |>.finiteExtensionUnitBallHaarCharacterSource
+        |>.toConstructedDilationHaarModulusNormalizationSource
+        |>.basePrimeDilation_measure_eq,
+    fun _place => rfl⟩
+
+end
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
 
 set_option linter.style.longLine false in
 /--

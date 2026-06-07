@@ -13642,6 +13642,192 @@ theorem endpoint
 end IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
 
 /--
+Finite-extension-over-`ℚ_[p]` Haar source whose base-prime Haar character is
+computed from the normalized valuation unit ball.
+
+This lowers the previous Haar-character source: instead of carrying the
+Haar-character value directly, it carries the source-paper local Haar
+normalization data on the valuation ring,
+`mu(O_v) = 1` and `mu(p_v O_v) = p_v^{-[K_v:ℚ_p]}`.  Applying Mathlib's
+additive Haar-character theorem to the image of `O_v` under multiplication by
+`p_v` derives the Haar-character value, and the previous all-subset measure law
+then follows by projection.
+-/
+structure IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  integerSource : IUTStage1ValuedFieldIntegerUnitBallSource K
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  haar_regular : haarMeasure.Regular
+  valuationUnitBall_measure_eq_one :
+    haarMeasure integerSource.ringOfIntegers = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal
+  basePrimeUnitBall_measure_eq :
+    haarMeasure
+        ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+          integerSource.ringOfIntegers) =
+      ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹)
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] K : Real)
+
+namespace IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+variable [IsTopologicalAddGroup K]
+variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def basePrimeContinuousAddEquiv
+    (_data :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    K ≃ₜ+ K :=
+  IUTStage1PadicFiniteExtensionBasePrimeContinuousAddEquiv
+    p K
+
+theorem basePrimeContinuousAddEquiv_apply
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem)
+    (point : K) :
+    data.basePrimeContinuousAddEquiv point =
+      algebraMap ℚ_[p] K (p : ℚ_[p]) * point :=
+  rfl
+
+theorem valuationUnitBall_measure_one
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    (data.haarMeasure data.integerSource.ringOfIntegers).toReal = 1 := by
+  rw [data.valuationUnitBall_measure_eq_one]
+  simp
+
+theorem basePrimeHaarChar_eq
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    (MeasureTheory.addEquivAddHaarChar data.basePrimeContinuousAddEquiv :
+        ENNReal) =
+      ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) := by
+  letI : MeasureTheory.Measure.IsAddHaarMeasure data.haarMeasure :=
+    data.haar_isAddHaar
+  letI : data.haarMeasure.Regular :=
+    data.haar_regular
+  have hpre :=
+    MeasureTheory.addEquivAddHaarChar_smul_preimage
+      (μ := data.haarMeasure)
+      (X := data.basePrimeContinuousAddEquiv ''
+        data.integerSource.ringOfIntegers)
+      data.basePrimeContinuousAddEquiv
+  have hpreimage :
+      data.basePrimeContinuousAddEquiv ⁻¹'
+          (data.basePrimeContinuousAddEquiv ''
+            data.integerSource.ringOfIntegers) =
+        data.integerSource.ringOfIntegers := by
+    exact Set.preimage_image_eq data.integerSource.ringOfIntegers
+      data.basePrimeContinuousAddEquiv.injective
+  rw [hpreimage] at hpre
+  have hchar_eq_image :
+      (MeasureTheory.addEquivAddHaarChar data.basePrimeContinuousAddEquiv :
+          ENNReal) =
+        data.haarMeasure
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            data.integerSource.ringOfIntegers) := by
+    change
+      (MeasureTheory.addEquivAddHaarChar data.basePrimeContinuousAddEquiv :
+          ENNReal) *
+          data.haarMeasure data.integerSource.ringOfIntegers =
+        data.haarMeasure (data.basePrimeContinuousAddEquiv ''
+          data.integerSource.ringOfIntegers) at hpre
+    rw [data.valuationUnitBall_measure_eq_one] at hpre
+    simp only [mul_one] at hpre
+    simpa [basePrimeContinuousAddEquiv,
+      IUTStage1PadicFiniteExtensionBasePrimeContinuousAddEquiv] using hpre
+  rw [hchar_eq_image, data.basePrimeUnitBall_measure_eq]
+
+noncomputable def toConstructedDilationHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+      α p K hullSystem :=
+  { integerSource := data.integerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    haar_regular := data.haar_regular,
+    valuationUnitBall_measure_one := data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    basePrimeHaarChar_eq := data.basePrimeHaarChar_eq,
+    hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+noncomputable def toConstructedDilationHaarModulusNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+      α p K hullSystem :=
+  data.toConstructedDilationHaarCharacterNormalizationSource
+    |>.toConstructedDilationHaarModulusNormalizationSource
+
+noncomputable def toConstructedDilationMassHaarNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+      α p K hullSystem :=
+  data.toConstructedDilationHaarCharacterNormalizationSource
+    |>.toConstructedDilationMassHaarNormalizationSource
+
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    data.haarMeasure data.integerSource.ringOfIntegers = 1 ∧
+      data.haarMeasure
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            data.integerSource.ringOfIntegers) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (MeasureTheory.addEquivAddHaarChar data.basePrimeContinuousAddEquiv :
+          ENNReal) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (∀ subset : Set K,
+        data.haarMeasure
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              subset) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+            data.haarMeasure subset) :=
+  ⟨data.valuationUnitBall_measure_eq_one,
+    data.basePrimeUnitBall_measure_eq,
+    data.basePrimeHaarChar_eq,
+    data.toConstructedDilationHaarCharacterNormalizationSource.basePrimeScale_measure_eq⟩
+
+end IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+
+/--
 `p`-adic proper-ultrametric additive Haar normalization source.
 
 This is the base local-field specialization of the valued-field integer Haar
