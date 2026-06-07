@@ -7116,10 +7116,30 @@ The practical priority order is:
   projects through the same adjusted Ob3/Ob5 determinant endpoint.  Thus the
   public valuation-ball determinant route no longer takes even the cover-local
   hull additivity certificate as primitive; it is produced from a named
-  measure/log-volume layer.  But
+  measure/log-volume layer.  A tensor-measure-backed refinement now constructs
+  this measure/log-volume layer from the valuation-ball tensor packet cells
+  themselves.  The source object
+  \[
+  \begin{array}{l}
+  \texttt{IUTStage1Remark395ValuationBallTensorMeasureBacked}\\
+  \quad\texttt{FactorCalibratedHaarTensorPacketHullCoverSource}
+  \end{array}
+  \]
+  replaces the supplied measure model by the Step~(xi)-shaped assertion
+  \[
+    \mu_{\log}\Bigl(\bigcup_\beta H_\beta\Bigr)
+      =
+    \sum_\beta \mu_{\log}^{\mathrm{tensor}}(H_\beta),
+  \]
+  where each tensor-normalized cell value is identified in \Lean{} with the
+  hull log-volume of the corresponding valuation-ball direct-product cell.  It
+  then constructs the previous measure-backed valuation-ball source and projects
+  to the same adjusted Ob3/Ob5 determinant endpoint.  Thus the remaining cover
+  input is no longer an arbitrary finite-cover measure model; it is localized to
+  the tensor-packet log-volume sum for the selected valuation-ball cells.  But
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  measure-model finite-cover additivity theorem, construction of the compact-open
+  tensor-cell cover log-volume theorem, construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), extension
   of the current base \(\mathbb{Q}_p\) integer/unit-ball specialization to the
   actual finite-extension completions, derivation of the proper ultrametric
