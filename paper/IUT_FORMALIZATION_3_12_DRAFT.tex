@@ -2751,6 +2751,25 @@ cover equality
 \]
 to choose the unique cell containing a hull point, and then constructs the
 family-hull indexed source rather than taking the index map as primitive.
+The finite-additivity boundary has also been localized to this same
+direct-product cover.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395DirectProductAdditive}\\
+\quad\texttt{LocalizedHullCoverVectorBundleSource}
+\end{array}
+\]
+does not assume a universal finite-additive law for arbitrary region families.
+Instead it records the cover-specific Step~(xi) equality
+\[
+  \mu_{\log}\!\left(\bigcup_\beta H_\beta\right)
+    = \sum_\beta \mu_{\log}(H_\beta)
+\]
+for the direct-product localization cells.  \Lean{} transports this equality
+across the identification of \(H_\beta\) with the calibrated localized regions,
+derives the calibrated cover source, and proves
+\(\mu_{\log}(\phi(P_B))\) equals the sum of the adjusted Ob3/Ob4 localization
+summands.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5932,7 +5951,7 @@ The practical priority order is:
   the adjusted-localization interface, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  finite-additive log-volume law, local region/vector-bundle log-volume
+  cover-specific direct-product log-volume law, local region/vector-bundle log-volume
   calibration, measure calibration, record-canonical synchronization, and chart
   synchronization witnesses by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source

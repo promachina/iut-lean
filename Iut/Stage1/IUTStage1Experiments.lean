@@ -41703,6 +41703,39 @@ theorem remark395DirectProductLocalizedHullCoverVectorBundleSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface direct-product cover-additivity source.
+
+This endpoint replaces the universal finite-additive log-volume source by the
+single cover-specific direct-product equality needed for the localized
+Remark 3.9.5(vii) Step (xi) route.
+-/
+theorem remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    let calibratedSource :=
+      data.toCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.localizedRegion index = data.directProductCell index) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.familyHull = data.directProductCellUnion ∧
+      data.localizedRegionUnion = data.directProductCellUnion ∧
+      data.familyHull = data.localizedRegionUnion ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.directProductLogVolumeSum ∧
+      data.localizedLogVolumeSum = data.directProductLogVolumeSum ∧
+      data.hullSystem.logVolume data.localizedRegionUnion =
+        data.localizedLogVolumeSum ∧
+      data.familyHullLogVolume = data.localizedLogVolumeSum ∧
+      data.localizedLogVolumeSum = data.localizedAdjustedSum ∧
+      data.familyHullLogVolume = data.localizedAdjustedSum ∧
+      calibratedSource.familyHullLogVolume = calibratedSource.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the

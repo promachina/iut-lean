@@ -7535,6 +7535,331 @@ theorem endpoint
 
 end IUTStage1Remark395DirectProductLocalizedHullCoverVectorBundleSource
 
+/--
+Direct-product localized hull cover with cover-specific log-volume additivity.
+
+The previous direct-product source still carried a universal finite-additivity
+law for arbitrary finite region families.  Step (xi) only needs additivity for
+the direct-product localization cover under discussion.  This source therefore
+records the cover-specific equality
+`mu_log(⋃ H_beta) = sum_beta mu_log(H_beta)` for the direct-product cells, then
+derives the calibrated localized hull-cover source directly.
+-/
+structure IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+    (α : Type u) (ι : Type v) (η : Type y) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  localFactorRegion : β -> γ -> Set α
+  localizedRegion_eq_directProductCell :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α | ∀ place : γ, point ∈ localFactorRegion index place }
+  localFactor_separates_index :
+    ∀ ⦃index₁ index₂ : β⦄,
+      index₁ ≠ index₂ ->
+        ∃ place : γ,
+          Disjoint (localFactorRegion index₁ place)
+            (localFactorRegion index₂ place)
+  familyHull_eq_directProductCellUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index,
+        { point : α | ∀ place : γ, point ∈ localFactorRegion index place }
+  directProductCoverLogVolume_eq_sum :
+    hullSystem.logVolume
+        (⋃ index,
+          { point : α | ∀ place : γ, point ∈ localFactorRegion index place }) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume
+          { point : α | ∀ place : γ, point ∈ localFactorRegion index place }
+
+namespace IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+
+variable {α : Type u} {ι : Type v} {η : Type y}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def familyUnion
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ i, data.possibleRegion i
+
+def familyHull
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  data.hullSystem.phi data.familyUnion
+
+def directProductCell
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    Set α :=
+  { point : α | ∀ place : γ, point ∈ data.localFactorRegion index place }
+
+def directProductCellUnion
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ index, data.directProductCell index
+
+def localizedRegion
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    Set α :=
+  (data.localizedCalibration index).localizedRegion
+
+def localizedRegionUnion
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ index, data.localizedRegion index
+
+def localizedLogVolumeSum
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.hullSystem.logVolume (data.localizedRegion index)
+
+def directProductLogVolumeSum
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.hullSystem.logVolume (data.directProductCell index)
+
+def familyHullLogVolume
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  data.hullSystem.logVolume data.familyHull
+
+def localizedSource
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+      η β γ :=
+  { localization := fun index =>
+      (data.localizedCalibration index).localizedVectorBundle,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos }
+
+def localizedAdjustedSum
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.localizedSource.weightedAdjustedLogVolume index
+
+theorem localizedRegion_eq_directProductCell_source
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    data.localizedRegion index = data.directProductCell index := by
+  simpa [localizedRegion, directProductCell] using
+    data.localizedRegion_eq_directProductCell index
+
+theorem directProductCells_disjoint
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell := by
+  intro index₁ index₂ hne
+  rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+  exact Set.disjoint_left.mpr fun point hleft hright =>
+    Set.disjoint_left.mp hdisjoint (hleft place) (hright place)
+
+theorem familyHull_eq_directProductCellUnion_source
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHull = data.directProductCellUnion := by
+  simpa [familyHull, familyUnion, directProductCellUnion, directProductCell] using
+    data.familyHull_eq_directProductCellUnion
+
+theorem localizedRegionUnion_eq_directProductCellUnion
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.localizedRegionUnion = data.directProductCellUnion := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases Set.mem_iUnion.mp hpoint with ⟨index, hlocalized⟩
+    exact Set.mem_iUnion.mpr
+      ⟨index, by
+        simpa [data.localizedRegion_eq_directProductCell_source index] using
+          hlocalized⟩
+  · intro hpoint
+    rcases Set.mem_iUnion.mp hpoint with ⟨index, hcell⟩
+    exact Set.mem_iUnion.mpr
+      ⟨index, by
+        simpa [data.localizedRegion_eq_directProductCell_source index] using
+          hcell⟩
+
+theorem familyHull_eq_localizedRegionUnion
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHull = data.localizedRegionUnion :=
+  data.familyHull_eq_directProductCellUnion_source.trans
+    data.localizedRegionUnion_eq_directProductCellUnion.symm
+
+theorem directProductCoverLogVolume_eq_directProductSum
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.hullSystem.logVolume data.directProductCellUnion =
+      data.directProductLogVolumeSum := by
+  simpa [directProductCellUnion, directProductCell, directProductLogVolumeSum] using
+    data.directProductCoverLogVolume_eq_sum
+
+theorem localizedLogVolumeSum_eq_directProductLogVolumeSum
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.localizedLogVolumeSum = data.directProductLogVolumeSum := by
+  dsimp [localizedLogVolumeSum, directProductLogVolumeSum]
+  exact Finset.sum_congr rfl
+    (fun index _ => by
+      rw [data.localizedRegion_eq_directProductCell_source index])
+
+theorem localizedCoverLogVolume_eq_sum
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.hullSystem.logVolume data.localizedRegionUnion =
+      data.localizedLogVolumeSum := by
+  calc
+    data.hullSystem.logVolume data.localizedRegionUnion =
+        data.hullSystem.logVolume data.directProductCellUnion := by
+      rw [data.localizedRegionUnion_eq_directProductCellUnion]
+    _ = data.directProductLogVolumeSum :=
+      data.directProductCoverLogVolume_eq_directProductSum
+    _ = data.localizedLogVolumeSum :=
+      data.localizedLogVolumeSum_eq_directProductLogVolumeSum.symm
+
+theorem familyHullLogVolume_eq_localizedLogVolumeSum
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHullLogVolume = data.localizedLogVolumeSum := by
+  calc
+    data.familyHullLogVolume =
+        data.hullSystem.logVolume data.localizedRegionUnion := by
+      rw [familyHullLogVolume, data.familyHull_eq_localizedRegionUnion]
+    _ = data.localizedLogVolumeSum :=
+      data.localizedCoverLogVolume_eq_sum
+
+theorem localizedRegion_logVolume_eq_adjusted
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    data.hullSystem.logVolume (data.localizedRegion index) =
+      data.localizedSource.weightedAdjustedLogVolume index := by
+  simpa [localizedRegion, localizedSource,
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.weightedAdjustedLogVolume]
+    using
+      (data.localizedCalibration index).region_logVolume_eq_weightedAdjustedLogVolume
+
+theorem localizedLogVolumeSum_eq_localizedAdjustedSum
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.localizedLogVolumeSum = data.localizedAdjustedSum := by
+  dsimp [localizedLogVolumeSum, localizedAdjustedSum]
+  exact Finset.sum_congr rfl
+    (fun index _ => data.localizedRegion_logVolume_eq_adjusted index)
+
+theorem familyHullLogVolume_eq_localizedAdjustedSum
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHullLogVolume = data.localizedAdjustedSum :=
+  data.familyHullLogVolume_eq_localizedLogVolumeSum.trans
+    data.localizedLogVolumeSum_eq_localizedAdjustedSum
+
+set_option linter.style.longLine false in
+noncomputable def toCalibratedLocalizedHullCoverVectorBundleSource
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1Remark395CalibratedLocalizedHullCoverVectorBundleSource
+      α ι η β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    familyHull_eq_localizedRegionUnion := by
+      simpa [familyHull, familyUnion, localizedRegionUnion, localizedRegion] using
+        data.familyHull_eq_localizedRegionUnion,
+    localizedCoverLogVolume_eq_sum := by
+      simpa [localizedRegionUnion, localizedRegion, localizedLogVolumeSum] using
+        data.localizedCoverLogVolume_eq_sum }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    let calibratedSource :=
+      data.toCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.localizedRegion index = data.directProductCell index) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.familyHull = data.directProductCellUnion ∧
+      data.localizedRegionUnion = data.directProductCellUnion ∧
+      data.familyHull = data.localizedRegionUnion ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.directProductLogVolumeSum ∧
+      data.localizedLogVolumeSum = data.directProductLogVolumeSum ∧
+      data.hullSystem.logVolume data.localizedRegionUnion =
+        data.localizedLogVolumeSum ∧
+      data.familyHullLogVolume = data.localizedLogVolumeSum ∧
+      data.localizedLogVolumeSum = data.localizedAdjustedSum ∧
+      data.familyHullLogVolume = data.localizedAdjustedSum ∧
+      calibratedSource.familyHullLogVolume = calibratedSource.localizedAdjustedSum :=
+  ⟨data.localizedRegion_eq_directProductCell_source,
+    data.directProductCells_disjoint,
+    data.familyHull_eq_directProductCellUnion_source,
+    data.localizedRegionUnion_eq_directProductCellUnion,
+    data.familyHull_eq_localizedRegionUnion,
+    data.directProductCoverLogVolume_eq_directProductSum,
+    data.localizedLogVolumeSum_eq_directProductLogVolumeSum,
+    data.localizedCoverLogVolume_eq_sum,
+    data.familyHullLogVolume_eq_localizedLogVolumeSum,
+    data.localizedLogVolumeSum_eq_localizedAdjustedSum,
+    data.familyHullLogVolume_eq_localizedAdjustedSum,
+    (data.toCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.familyHullLogVolume_eq_localizedAdjustedSum⟩
+
+end IUTStage1Remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource
+
 set_option linter.style.longLine true
 
 /--
