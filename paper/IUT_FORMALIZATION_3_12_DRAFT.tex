@@ -3115,6 +3115,29 @@ projection.  Thus the current IUT~IV local-volume corridor now proceeds from
 valuation balls to additive Haar normalization, then to compact-open topology,
 finite-extension Haar log-volume, tensor/direct-sum summation, and finally the
 charted Step~(xi) cover route.
+The local chart calibration in this valuation-ball route has now been pushed
+down another level.  The per-factor declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1ValuationBallVectorBundleFactorCalibrationSource}
+\end{array}
+\]
+constructs the local-ring chart from a valuation-ball Haar factor itself: the
+chart local ring is the valuation-ball factor's local ring, and the chart region
+is the realized selected valuation ball.  Its source law identifies the
+localized vector-bundle direct summand with the normalized Haar log-volume of
+that valuation ball, after which \Lean{} derives the ordinary chart/direct-summand
+calibration source.  The packet-level declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacket}\\
+\quad\texttt{FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource}
+\end{array}
+\]
+uses these per-factor valuation-ball calibrations to build the previous
+valuation-ball charted-cover source.  Thus the factor chart is no longer a
+separate object merely matched to valuation-ball data; at this boundary it is
+constructed from the valuation-ball compact-open region.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[

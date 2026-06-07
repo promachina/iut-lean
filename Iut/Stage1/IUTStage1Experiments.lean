@@ -42398,6 +42398,95 @@ theorem remark395ValuationBallHaarTensorPacketFiniteAdditiveCalibratedLocalRingC
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface valuation-ball/vector-bundle factor calibration source.
+
+This endpoint exposes the construction of a local-ring chart directly from a
+valuation-ball Haar factor, together with the direct-summand log-volume
+calibration used by the Step (xi-d) localized vector-bundle cover.
+-/
+theorem valuationBallVectorBundleFactorCalibrationSource_endpoint
+    {α : Type u} {η : Type v} {K : Type z} {γ : Type w}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype γ]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    {localizedCalibration :
+      IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+        hullSystem η γ}
+    {place : γ}
+    (data :
+      IUTStage1ValuationBallVectorBundleFactorCalibrationSource
+        α η K γ hullSystem localizedCalibration place) :
+    data.chart.localRing =
+        localizedCalibration.localizedVectorBundle.bundle.localRing ∧
+      data.chart.region =
+        data.valuationBallFactor.realizedRegion
+          data.valuationBallFactor.compactOpenSubset ∧
+      data.valuationBallFactor.ringOfIntegers =
+        data.valuationBallFactor.valuationBall 1 ∧
+      data.valuationBallFactor.compactOpenSubset =
+        data.valuationBallFactor.valuationBall
+          data.valuationBallFactor.compactOpenRadius ∧
+      data.valuationBallFactor.isCompactOpen
+        data.valuationBallFactor.compactOpenSubset ∧
+      hullSystem.logVolume data.region =
+        ((data.valuationBallFactor.toAdditiveHaarCompactOpenNormalizationSource)
+          |>.normalizedHaarLogVolume
+            data.valuationBallFactor.compactOpenSubset) ∧
+      hullSystem.logVolume data.region =
+        localizedCalibration.localizedVectorBundle.bundle.directSummandLogVolume
+          place ∧
+      data.toLocalRingVectorBundleFactorCalibrationSource.region =
+        data.region :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface valuation-ball factor-calibrated Haar tensor-packet cover.
+
+This endpoint removes the separate chart-calibration fields from the
+valuation-ball charted-cover boundary: each chart and chart region is projected
+from a valuation-ball factor calibration.
+-/
+theorem remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    let valuationPacket :=
+      data.toValuationBallHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let compactOpenSource :=
+      valuationPacket.toCompactOpenTopologyHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (∀ index : β, ∀ place : γ,
+      (data.factorCalibration index place).chart =
+        data.localFactorChart index place ∧
+      (data.factorCalibration index place).region =
+        data.localFactorRegion index place ∧
+      (data.valuationBallFactor index place).realizedRegion
+          (data.valuationBallFactor index place).compactOpenSubset =
+        data.localFactorRegion index place ∧
+      (data.valuationBallFactor index place).localRing =
+        (data.localFactorChart index place).localRing ∧
+      data.hullSystem.logVolume (data.localFactorRegion index place) =
+        (data.localizedCalibration index).localizedVectorBundle.bundle.directSummandLogVolume
+          place) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          Finset.univ.sum fun place =>
+            data.hullSystem.logVolume (data.localFactorRegion index place)) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      valuationPacket.hullSystem.logVolume valuationPacket.directProductCellUnion =
+        valuationPacket.calibratedCellLogVolumeSum ∧
+      compactOpenSource.hullSystem.logVolume compactOpenSource.directProductCellUnion =
+        compactOpenSource.calibratedCellLogVolumeSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
