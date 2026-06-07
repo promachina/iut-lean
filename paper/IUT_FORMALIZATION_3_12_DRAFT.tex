@@ -1211,6 +1211,33 @@ valuation-anchor finite-divisor endpoint.  The remaining source-facing problem
 is now the local product-coordinate theorem for
 \((\ell_v)_v(O)\) and \((\ell_v)_v(\lambda O)\), rather than an unstructured
 image theorem for the scalar sum.
+That product-coordinate theorem has now been split into its two source-facing
+halves.  The lemma
+\[
+  \texttt{localLogCoordinateVector\_image\_eq\_product\_of\_landing\_and\_preimage}
+\]
+proves the vector-valued product image equality from coordinatewise landing
+\[
+  x\in S\Rightarrow \ell_v(x)\in R_v\quad\text{for all }v
+\]
+and simultaneous realization
+\[
+  (r_v)_v\in\prod_vR_v\Rightarrow
+  \exists x\in S,\ \ell_v(x)=r_v\quad\text{for all }v.
+\]
+The corresponding
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{LocalLogCoordinatePreimageTargetTransportSource}
+\end{array}
+\]
+now supplies these landing and simultaneous-preimage laws for \(O\) and
+\(\lambda O\); \Lean{} derives the product-image source, then the finite-sum
+source, and finally the valuation-anchor endpoint.  Thus the remaining
+mathematical construction is the actual local analytic/Kummer realizer for
+compatible tuples of valuation-place log coordinates, not a supplied
+vector-valued image equality.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -8018,16 +8045,20 @@ The practical priority order is:
   A product-image local log-coordinate endpoint now derives those finite-sum
   image laws from the vector-valued image laws for
   \(x\mapsto(v\mapsto\ell_v(x))\) and the local coordinate product regions.
+  A preimage-form local log-coordinate endpoint now derives those
+  vector-valued product-image laws from coordinatewise landing and simultaneous
+  realization of compatible local log-coordinate tuples on both \(O\) and
+  \(\lambda O\).
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar model, the
-  still-supplied vector-valued local log-coordinate product image laws for the
-  explicit source regions \(O=\prod_vO_v\) and \(\lambda O\).  Below that, the local
-  directional scalar-image laws for each local factor \(\lambda_v\cdot O_v\)
-  still have to be derived from the valuation/Kummer model: landing in the
-  valuation/direct-product factor \(H_v(\lambda)\) and existence of local
-  scalar preimages for all
-  points of \(H_v(\lambda)\),
+  still-supplied coordinatewise landing and simultaneous local log-coordinate
+  preimage laws for the explicit source regions \(O=\prod_vO_v\) and
+  \(\lambda O\).  Below that, the local directional scalar-image laws for each
+  local factor \(\lambda_v\cdot O_v\) still have to be derived from the
+  valuation/Kummer model: landing in the valuation/direct-product factor
+  \(H_v(\lambda)\) and existence of local scalar preimages for all points of
+  \(H_v(\lambda)\),
   direct-product localization cover construction, family-local
   finite-cover additivity theorem,
   construction of the compact-open
