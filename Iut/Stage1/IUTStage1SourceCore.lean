@@ -23828,6 +23828,28 @@ namespace IUTStage1CoricThetaMuPrimeStripInvariant
 variable {Penv Pgau V : Type u} {μ : Type v}
 variable [Fintype Penv] [Fintype Pgau] [Fintype V]
 
+set_option linter.style.longLine false in
+/--
+Construct the finite coric `F^{⊢×μ}` invariant from an `F^{×μ}` lift and a
+valuation-indexed unit character.
+
+This is the source-facing finite version of the Corollary 4.7(iv) passage: the
+environment unit character is assumed to be the pullback of a common coric
+character on `V`; the Gaussian pullback and environment/Gaussian unit equality
+are then theorems of the resulting invariant, not independent fields.
+-/
+def ofLiftAndCoricUnitCharacter
+    (lift : IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (coricUnitCharacter : V -> μ)
+    (environment_unit_eq_coric :
+      ∀ p : Penv,
+        lift.environmentUnitCharacter p =
+          coricUnitCharacter (lift.base.environmentPrimeToPlace p)) :
+    IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ :=
+  { lift := lift,
+    coricUnitCharacter := coricUnitCharacter,
+    environment_unit_eq_coric := environment_unit_eq_coric }
+
 theorem gaussianUnitCharacter_at_evaluatedPrime_eq_coric
     (invariant :
       IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)

@@ -7547,6 +7547,28 @@ equalities.  The q-choice Ob5--Ob7 synchronized and canonical-scale audits now
 also have \texttt{OfCoricOb7Source} forms, so the unit part of Ob7 is no longer
 represented only by a transported equality between two prime-strip unit
 characters.
+This coric boundary has now been lowered one more step toward the source-paper
+Corollary~4.7(iv) construction.  The declaration
+\[
+\begin{array}{l}
+\texttt{ProductHullBackedCoricThetaMuOb7ConstructionSource}
+\end{array}
+\]
+does not take a completed \(F^{\vdash\times\mu}\) invariant as input.  It takes
+an \(F^{\times\mu}\)-prime-strip lift, a common coric unit character on \(V\),
+the environment pullback equality, and the determinant/global log-volume
+identification.  Lean constructs the coric invariant by
+\[
+\begin{array}{l}
+\texttt{IUTStage1CoricThetaMuPrimeStripInvariant.}\\
+\quad\texttt{ofLiftAndCoricUnitCharacter},
+\end{array}
+\]
+then derives the Gaussian coric pullback equality from the prime-strip
+evaluation square.  The product-hull and principal topology/Haar audit surfaces
+now have \texttt{OfCoricThetaMuConstructionSource} forms, so this finite
+Corollary~4.7(iv) construction is visible at the same Ob5--Ob7 boundary as the
+Remark~3.9.5 hull and determinant data.
 The product-hull final dichotomy now has the corresponding
 \texttt{OfCoricOb7Source} endpoint: the canonical-scale \(C_\Theta\) dichotomy
 is returned together with the synchronized Ob5--Ob7 audit while consuming the
