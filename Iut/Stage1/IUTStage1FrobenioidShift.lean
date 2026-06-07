@@ -22508,6 +22508,151 @@ theorem toPossibleImageFamilyHullExactThetaHullDetObligationsBackedSource_endpoi
         hsource.2.2.2.2.2.2.2.2.2.1,
         hsource.2.2.2.2.2.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Measured arbitrary-q exact-theta constructed Step (xi) source.
+
+This is the measure-calibrated analogue of
+`toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations`.
+The package measure equality is projected from the measured adjusted-summand
+source, while the Ob4 tensor-power bound is still derived from the exact
+theta/family-hull equality.
+-/
+noncomputable def toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations
+    (sourceData :
+      IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion : qPilotRegion ⊆ recordThetaPossibleImageUnion record)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume)
+    (obligations : IUTStage1SourceHullDetObligations package)
+    (obligationsHullDetData_eq_recordCanonical :
+      obligations.hullDetData.bridgeData =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          sourceData.measuredFamilyHullSource.familyHullSource.hullData
+          qPilotRegion q_subset_recordUnion
+          sourceData.measuredFamilyHullSource.familyHullSource.determinantSource
+          sourceData.measuredFamilyHullSource.familyHullSource.compatibility
+          sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measuredFamilyHullSource.familyHullSource
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume)) :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+      (β := β) record :=
+  sourceData.adjustedSource
+    |>.toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations
+      operation hullOperation determinantOperation qPilotRegion
+      q_subset_recordUnion sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume
+      thetaSigned_eq_familyHullLogVolume obligations
+      obligationsHullDetData_eq_recordCanonical
+
+set_option linter.style.longLine false in
+theorem toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations_endpoint
+    (sourceData :
+      IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion : qPilotRegion ⊆ recordThetaPossibleImageUnion record)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume)
+    (obligations : IUTStage1SourceHullDetObligations package)
+    (obligationsHullDetData_eq_recordCanonical :
+      obligations.hullDetData.bridgeData =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          sourceData.measuredFamilyHullSource.familyHullSource.hullData
+          qPilotRegion q_subset_recordUnion
+          sourceData.measuredFamilyHullSource.familyHullSource.determinantSource
+          sourceData.measuredFamilyHullSource.familyHullSource.compatibility
+          sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measuredFamilyHullSource.familyHullSource
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume)) :
+    let constructedSource :=
+      sourceData.toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations
+        operation hullOperation determinantOperation qPilotRegion
+        q_subset_recordUnion thetaSigned_eq_familyHullLogVolume obligations
+        obligationsHullDetData_eq_recordCanonical;
+    package.preLedger.measure =
+        sourceData.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      constructedSource.qPilotRegion = qPilotRegion ∧
+      constructedSource.determinantSource =
+        sourceData.adjustedSource.ob3ob4Source.toWeightedDeterminantSource ∧
+      package.preLedger.thetaSigned =
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        obligations.hullDetData.bridgeData ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          sourceData.measuredFamilyHullSource.familyHullSource.hullData
+          qPilotRegion q_subset_recordUnion
+          sourceData.measuredFamilyHullSource.familyHullSource.determinantSource
+          sourceData.measuredFamilyHullSource.familyHullSource.compatibility
+          sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measuredFamilyHullSource.familyHullSource
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume) ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          constructedSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      0 < -package.preLedger.qSigned ∧
+      package.preLedger.normalization ∧
+      sourceData.adjustedSource.familyHullLogVolume =
+        sourceData.adjustedSource.adjustedSummandLogVolume ∧
+      sourceData.adjustedSource.adjustedSummandLogVolume =
+        sourceData.adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      sourceData.adjustedSource.familyHullLogVolume =
+        sourceData.adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        constructedSource.determinantSource.normalizedLogVolume ∧
+      constructedSource.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        constructedSource.determinantSource.determinantLogVolume ∧
+      constructedSource.determinantSource.determinantLogVolume <=
+        package.preLedger.thetaSigned ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  by
+    intro constructedSource
+    exact
+      ⟨sourceData.measure_eq_hullLogVolume,
+        rfl,
+        rfl,
+        thetaSigned_eq_familyHullLogVolume,
+        obligations.hullDetData.hullDetBridge_eq_bridgeData,
+        obligations.hullDetData.hullDetBridge_eq_bridgeData.trans
+          obligationsHullDetData_eq_recordCanonical,
+        constructedSource.tensorPower_bound,
+        obligations.qPilotPositive,
+        obligations.normalization,
+        sourceData.adjustedSource.familyHullLogVolume_eq_adjustedSummandLogVolume,
+        sourceData.adjustedSource.adjustedSummandLogVolume_eq_determinantLogVolume,
+        sourceData.adjustedSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+        constructedSource.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_determinantNormalizedLogVolume,
+        constructedSource.toRecordHullDeterminantBridgeSource.determinantNormalizedLogVolume_le_thetaSigned,
+        constructedSource.qRegionLogVolume_le_determinantLogVolume,
+        constructedSource.determinantLogVolume_le_thetaSigned,
+        constructedSource.qRegionLogVolume_le_thetaSigned,
+        constructedSource.qSigned_le_thetaSigned⟩
+
 end
   IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
 
