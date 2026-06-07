@@ -13583,6 +13583,63 @@ noncomputable def toValuationBallHaarTensorPacketFiniteAdditiveCalibratedLocalRi
     finiteAdditive := data.finiteAdditive }
 
 set_option linter.style.longLine false in
+noncomputable def toCalibratedLocalizedHullCoverVectorBundleSource
+    (data :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    IUTStage1Remark395CalibratedLocalizedHullCoverVectorBundleSource
+      α ι η β γ :=
+  data.toValuationBallHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    |>.toCompactOpenTopologyHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    |>.toFiniteExtensionHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    |>.toNonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    |>.toCompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    |>.toTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    |>.toFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    |>.toCalibratedLocalRingChartedVectorBundleHullCoverSource
+    |>.toLocalRingChartedVectorBundleDirectProductHullCoverSource
+    |>.toVectorBundleLocalFactorDirectProductLocalizedHullCoverSource
+    |>.toLocalFactorVolumeDirectProductLocalizedHullCoverVectorBundleSource
+    |>.toDirectProductAdditiveLocalizedHullCoverVectorBundleSource
+    |>.toCalibratedLocalizedHullCoverVectorBundleSource
+
+set_option linter.style.longLine false in
+noncomputable def toOb3Ob5AdjustedDeterminantLogVolumeSource
+    (data :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+      α ι β γ :=
+  data.toCalibratedLocalizedHullCoverVectorBundleSource
+    |>.toLocalizedHullCoverVectorBundleSource
+    |>.toLocalizedHullVectorBundleDecompositionSource
+    |>.toOb3Ob5AdjustedDeterminantLogVolumeSource
+
+set_option linter.style.longLine false in
+theorem toOb3Ob5AdjustedDeterminantLogVolumeSource_endpoint
+    (data :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    let adjustedSource :=
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource;
+    adjustedSource.familyHullLogVolume =
+        adjustedSource.adjustedSummandLogVolume ∧
+      adjustedSource.adjustedSummandLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.normalizedLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume := by
+  intro adjustedSource
+  exact adjustedSource.endpoint
+
+set_option linter.style.longLine false in
 theorem endpoint
     (data :
       IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
@@ -13614,7 +13671,12 @@ theorem endpoint
       valuationPacket.hullSystem.logVolume valuationPacket.directProductCellUnion =
         valuationPacket.calibratedCellLogVolumeSum ∧
       compactOpenSource.hullSystem.logVolume compactOpenSource.directProductCellUnion =
-        compactOpenSource.calibratedCellLogVolumeSum :=
+        compactOpenSource.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          data.toOb3Ob5AdjustedDeterminantLogVolumeSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
   ⟨by
       intro index place
       exact
@@ -13630,7 +13692,9 @@ theorem endpoint
       |>.directProductCoverLogVolume_eq_calibratedCellSum,
     ((data.toValuationBallHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource)
       |>.toCompactOpenTopologyHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource)
-      |>.directProductCoverLogVolume_eq_calibratedCellSum⟩
+      |>.directProductCoverLogVolume_eq_calibratedCellSum,
+    data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+    data.toOb3Ob5AdjustedDeterminantLogVolumeSource.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_determinant⟩
 
 end IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
 

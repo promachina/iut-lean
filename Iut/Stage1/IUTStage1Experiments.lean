@@ -43288,8 +43288,48 @@ theorem remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCali
       valuationPacket.hullSystem.logVolume valuationPacket.directProductCellUnion =
         valuationPacket.calibratedCellLogVolumeSum ∧
       compactOpenSource.hullSystem.logVolume compactOpenSource.directProductCellUnion =
-        compactOpenSource.calibratedCellLogVolumeSum :=
+        compactOpenSource.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          data.toOb3Ob5AdjustedDeterminantLogVolumeSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
   data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface adjusted Ob3/Ob5 determinant projection from the
+valuation-ball factor-calibrated local-ring tensor-packet cover.
+
+The projection composes the valuation-ball Haar tensor route through the
+local-ring charted cover, direct-product localized cover, calibrated localized
+cover, and finally the Ob3/Ob5 adjusted determinant log-volume source.
+-/
+theorem remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_adjustedDeterminantEndpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    let adjustedSource :=
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource;
+    adjustedSource.familyHullLogVolume =
+        adjustedSource.adjustedSummandLogVolume ∧
+      adjustedSource.adjustedSummandLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.normalizedLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  data.toOb3Ob5AdjustedDeterminantLogVolumeSource_endpoint
 
 set_option linter.style.longLine false in
 /--

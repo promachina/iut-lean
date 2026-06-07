@@ -6680,7 +6680,24 @@ The practical priority order is:
   compact-open topology source from a mathlib additive Haar measure together with
   Haar mass-one and uniformizer-scaling laws, and the valuation-ball variant now
   defines the local ring of integers and selected compact-open subset as
-  valuation balls before constructing the additive Haar source, but
+  valuation balls before constructing the additive Haar source.  The
+  valuation-ball factor-calibrated route now also projects through the
+  local-ring charted cover, direct-product localized cover, calibrated localized
+  cover, and localized hull decomposition to the adjusted Ob3/Ob5 determinant
+  source.  The experiment endpoint
+  \[
+  \begin{array}{l}
+  \texttt{remark395ValuationBallFactorCalibratedHaarTensorPacket}\\
+  \quad\texttt{FiniteAdditiveCalibratedLocalRingChartedVectorBundle}\\
+  \quad\texttt{HullCoverSource\_adjustedDeterminantEndpoint}
+  \end{array}
+  \]
+  exposes the resulting identities
+  \(\mu_{\log}(\phi(P_B))=\sum_\beta \operatorname{AdjLoc}_\beta
+  =\det_{\log}=\det_{\log}^{\mathrm{norm}}\) and the induced Ob3/Ob5
+  determinant compatibility.  Thus the lowest current valuation-ball/Haar
+  local-ring route is now connected directly to the determinant payload used by
+  the Step~(xi) bridge, not only to its own cover-log-volume endpoint.  But
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
   finite-additive hull log-volume source, construction of the compact-open
