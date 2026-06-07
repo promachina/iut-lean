@@ -8740,6 +8740,19 @@ The practical priority order is:
   valuation ball, projects to the existing finite-extension Haar source, and
   exposes the per-place all-subset mass-scaling theorem at the
   experiment-surface \(C_\Theta\) route.
+  This boundary has now been lowered once more from a real-valued
+  \(\texttt{toReal}\) statement to the measure codomain itself.  The
+  Haar-modulus source carries the identity in \(\mathbb R_{\geq 0}\cup\{\infty\}\),
+  \[
+      \mu_v(p_v S)=
+      \operatorname{ofReal}\!\left(p_v^{-[K_v:\mathbb Q_{p_v}]}\right)
+      \cdot \mu_v(S),
+  \]
+  and Lean derives the older real-valued division formula only after applying
+  \(\texttt{ENNReal.toReal}\).  Thus the finite-extension route now separates
+  three layers: construction of the dilation homeomorphism, the genuine
+  measure-level Haar modulus law, and the real log-volume normalization used by
+  the determinant corridor.
   The dilation homeomorphism itself is now also lowered out of the source data.
   Since \(p_v\neq 0\) in \(\mathbb Q_{p_v}\), Lean proves that its image in the
   finite-extension field \(K_v\) is nonzero and constructs the homeomorphism
