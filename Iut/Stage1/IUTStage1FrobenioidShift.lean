@@ -19776,6 +19776,126 @@ theorem toSynchronizedPossibleImageSummandConstructorBuiltReductionAudit
     qSigned_le_thetaSigned :=
       sourceData.source_endpoint.2.2.2.2.2.2.2.2.2 }
 
+set_option linter.style.longLine false in
+/--
+Product-hull-backed reduction audit for the synchronized target-charted
+possible-image summand/family-hull Step (xi) source.
+
+The synchronized source already derives the constructor-built possible-image
+boundary from Hodge--Arakelov charting, finite adjusted-summand calibration,
+exact theta/family-hull comparison, and one hull/determinant obligations object.
+This audit adds the Remark 3.9.5 product-hull provenance at the same boundary:
+if the record family-hull shadow is induced by a product-hull system, then the
+constructor-built Step (xi) hull is the selected smallest product hull
+containing the Theorem 3.11 possible-image union.
+-/
+structure SynchronizedPossibleImageSummandProductHullConstructorBuiltAudit
+    (sourceData :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ) :
+    Prop where
+  synchronizedReductionAudit :
+    SynchronizedPossibleImageSummandConstructorBuiltReductionAudit sourceData
+  productHullBackedConstructorBuiltAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ProductHullBackedConstructorBuiltAudit
+      (sourceData
+        |>.toPossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+        |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource)
+      productHullSource
+  hullData_eq_productHullOperator :
+    sourceData.familyHullSource.hullData =
+      IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+        productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+  qPilotRegion_eq_possibleImage :
+    sourceData.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.qChoice
+  theta_monoid_degree_eq_summand_sum :
+    hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (sourceData.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  thetaSigned_eq_familyHullLogVolume :
+    packageN.preLedger.thetaSigned =
+      sourceData.familyHullSource.familyHullLogVolume
+  possibleImageUnion_subset_selectedProductHull :
+    IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion record ⊆
+      productHullSource.productHull
+        (productHullSource.intersectionParameter
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion record))
+  qPilotRegion_subset_selectedProductHull :
+    sourceData.qPilotRegion ⊆
+      productHullSource.productHull
+        (productHullSource.intersectionParameter
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion record))
+  selectedProductHull_minimal :
+    ∀ parameter : Λ,
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion record ⊆
+        productHullSource.productHull parameter ->
+        productHullSource.productHull
+            (productHullSource.intersectionParameter
+              (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion record)) ⊆
+          productHullSource.productHull parameter
+  selectedProductHull_logVolume_eq :
+    productHullSource.toHolomorphicHullSystem.logVolume
+        (productHullSource.productHull
+          (productHullSource.intersectionParameter
+            (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion record))) =
+      productHullSource.productHullLogVolume
+        (productHullSource.intersectionParameter
+          (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion record))
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toSynchronizedPossibleImageSummandProductHullConstructorBuiltAudit
+    (sourceData :
+      IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) part audited record hodgeSynchronization)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (hullData_eq_productHullOperator :
+      sourceData.familyHullSource.hullData =
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    SynchronizedPossibleImageSummandProductHullConstructorBuiltAudit
+      sourceData productHullSource :=
+  let constructorBuiltSource :=
+    sourceData
+      |>.toPossibleImageChartedHodgeCalibratedFamilyHullExactThetaHullDetObligationsBackedSource
+      |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+  let productHullAudit :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ProductHullBackedConstructorBuiltAudit
+        constructorBuiltSource productHullSource :=
+    constructorBuiltSource.productHullBackedConstructorBuiltAudit
+      productHullSource hullData_eq_productHullOperator
+  { synchronizedReductionAudit :=
+      sourceData.toSynchronizedPossibleImageSummandConstructorBuiltReductionAudit,
+    productHullBackedConstructorBuiltAudit :=
+      productHullAudit,
+    hullData_eq_productHullOperator := hullData_eq_productHullOperator,
+    qPilotRegion_eq_possibleImage := rfl,
+    theta_monoid_degree_eq_summand_sum :=
+      sourceData.targetChartedSummandCalibration
+        |>.thetaMonoidDegree_eq_summandSum,
+    thetaSigned_eq_familyHullLogVolume :=
+      sourceData.targetChartedSummandCalibration
+        |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+        |>.thetaSigned_eq_familyHullLogVolume,
+    possibleImageUnion_subset_selectedProductHull :=
+      productHullAudit.possibleImageUnion_subset_selectedProductHull,
+    qPilotRegion_subset_selectedProductHull :=
+      productHullAudit.qPilotRegion_subset_selectedProductHull,
+    selectedProductHull_minimal :=
+      productHullAudit.selectedProductHull_minimal,
+    selectedProductHull_logVolume_eq :=
+      productHullAudit.selectedProductHull_logVolume_eq,
+    qSigned_le_thetaSigned :=
+      productHullAudit.qSigned_le_thetaSigned }
+
 end IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
 
 set_option linter.style.longLine false

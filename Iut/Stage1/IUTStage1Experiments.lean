@@ -22954,6 +22954,50 @@ theorem synchronizedTargetChartedPossibleImageSummandHodgeFamilyHull_constructor
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface product-hull reduction audit from the synchronized
+target-charted possible-image summand Step (xi) source.
+
+This keeps the Hodge/summand-calibrated exact-theta route while adding the
+Remark 3.9.5 product-hull provenance of the constructor-built possible-image
+hull boundary.
+-/
+theorem synchronizedTargetChartedPossibleImageSummandHodgeFamilyHull_productHullConstructorBuiltAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {hodgeSynchronization :
+      part.IUTStage1ThetaSourceCalibratedHodgeArakelovSynchronization
+        audited X C}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      part.IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource
+        (β := β) audited record hodgeSynchronization)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (hullData_eq_productHullOperator :
+      sourceData.familyHullSource.hullData =
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1SynchronizedTargetChartedPossibleImageSummandHodgeFamilyHullExactThetaHullDetObligationsBackedSource.SynchronizedPossibleImageSummandProductHullConstructorBuiltAudit
+      sourceData productHullSource :=
+  sourceData.toSynchronizedPossibleImageSummandProductHullConstructorBuiltAudit
+    productHullSource hullData_eq_productHullOperator
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface raw Step (xi) comparison from the synchronized target-charted
 possible-image summand/family-hull route.
 
@@ -47265,6 +47309,36 @@ theorem possibleImageConstructorBuiltHullSource_ofRemark395ProductHullSystemOb3O
     operation hullOperation determinantOperation productHullSource qChoice
     ob3ob4Source compatibility measure_eq_hullLogVolume tensorPower_bound
     hullDetBridge_eq q_pilot_positive normalization
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface product-hull provenance audit for an already constructed
+possible-image Step (xi) hull/determinant source.
+
+If the constructor-built source's hull/log-volume shadow is induced by a
+Remark 3.9.5 product-hull system, this audit identifies the selected hull with
+the smallest product hull containing the Theorem 3.11 possible-image union and
+keeps the existing bridge-inequality audit attached.
+-/
+theorem possibleImageConstructorBuiltHullSource_productHullBackedConstructorBuiltAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (hullData_eq_productHullOperator :
+      sourceData.hullData =
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ProductHullBackedConstructorBuiltAudit
+      sourceData productHullSource :=
+  sourceData.productHullBackedConstructorBuiltAudit
+    productHullSource hullData_eq_productHullOperator
 
 set_option linter.style.longLine false in
 /--

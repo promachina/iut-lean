@@ -2263,7 +2263,10 @@ The project currently proves the following source-facing results in \Lean{}:
   records the fixed Theorem 3.11 possible-image q-region, target chart/source
   theta-monoid equality, finite adjusted-summand equality, theta/family-hull
   equality, obligations bridge equality, q-positivity, normalization, and the raw
-  \(q_{\mathrm{signed}}\leq \theta_{\mathrm{signed}}\) comparison.
+  \(q_{\mathrm{signed}}\leq \theta_{\mathrm{signed}}\) comparison.  A
+  product-hull companion audit now carries the Remark~3.9.5 smallest-product-hull
+  provenance through this same synchronized source whenever its family-hull
+  shadow is induced by a product-hull system.
 \item The target-charted Hodge/\(\IPL\) side now has a packaged construction
   source.  It binds the target-charted Hodge--Arakelov synchronization to the
   constructed Theorem 3.11 input-prime-strip link, projects the finite
@@ -5951,6 +5954,33 @@ constructor-built Ob3/Ob4 determinant audit, bridge-inequality audit, and raw
 signed comparison.  Thus the corridor now reaches the source-paper
 ``smallest product hull'' formulation before projecting to the older
 holomorphic-hull shadow.
+This product-hull provenance is now also available for any already constructed
+possible-image Step~(xi) source whose hull/log-volume shadow is induced by a
+product-hull system:
+\[
+\begin{array}{l}
+\texttt{possibleImageConstructorBuiltHullSource}\\
+\quad\texttt{\_productHullBackedConstructorBuiltAudit}.
+\end{array}
+\]
+The audit identifies the source's canonical hull of
+\(\bigcup_i P_i\) with the selected smallest product hull, proves containment
+of both \(\bigcup_i P_i\) and the q-pilot possible image in that hull, records
+minimality and product-hull log-volume, and keeps the record-canonical
+Step~(xi) and bridge-inequality audits attached.  The synchronized
+target-charted possible-image summand/family-hull source has a corresponding
+wrapper,
+\[
+\begin{array}{l}
+\texttt{synchronizedTargetChartedPossibleImageSummand}\\
+\quad\texttt{HodgeFamilyHull\_productHullConstructorBuiltAudit},
+\end{array}
+\]
+which threads this product-hull audit through the Hodge--Arakelov chart,
+finite summand equality, exact theta/family-hull equality, and obligations-backed
+constructor reduction.  Thus the strongest Hodge/summand Step~(xi) source can
+now be reviewed together with the Remark~3.9.5 product-hull boundary, instead
+of reserving product-hull provenance only for the later finite-divisor wrapper.
 
 The same constructor-built source now exposes the Step (xi) bridge inequality
 as a named audit
@@ -6458,7 +6488,9 @@ The practical priority order is:
   constructor-built remaining-payload ledger to the Ob5 quotient boundary, and
   the source-derived bridge constructor can consume the constructor-built
   possible-image Step (xi) source directly and expose its remaining-payload
-  ledger at the bridge boundary, so
+  ledger at the bridge boundary; product-hull provenance is now also threaded
+  through the synchronized target-charted possible-image summand source when
+  its family-hull shadow is product-hull-induced, so
   the lower-level record-hull finite-divisor endpoint can also consume this
   constructor-built possible-image source directly, and the adjusted Ob3/Ob5
   finite-divisor endpoint now constructs that source from the record-canonical

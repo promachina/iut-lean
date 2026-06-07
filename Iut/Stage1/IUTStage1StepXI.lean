@@ -12942,6 +12942,120 @@ theorem ofRemark395ProductHullSystemOb3Ob4AdjustedDeterminantSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Product-hull provenance audit for a constructor-built possible-image Step (xi)
+source.
+
+This audit is deliberately phrased for an already constructed source object:
+if its hull/log-volume shadow is induced by a Remark 3.9.5 product-hull system,
+then the selected Step (xi) hull is the smallest product hull containing the
+Theorem 3.11 possible-image union.  Thus product-hull provenance may be
+threaded through source-derived Hodge/summand routes that construct the generic
+possible-image source before entering the later finite-divisor wrappers.
+-/
+structure ProductHullBackedConstructorBuiltAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ) :
+    Prop where
+  sourceEndpoint :
+    SourceEndpoint sourceData
+  recordCanonicalStepXIAudit :
+    RecordCanonicalStepXIAudit sourceData
+  bridgeInequalityAudit :
+    ConstructorBuiltStepXIBridgeInequalityAudit sourceData
+  hullData_eq_productHullOperator :
+    sourceData.hullData =
+      IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+        productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+  selectedProductHull_eq_hullRegion :
+    productHullSource.productHull
+        (productHullSource.intersectionParameter
+          (recordThetaPossibleImageUnion record)) =
+      sourceData.hullData.hullRegion
+        (recordThetaPossibleImageUnion record)
+  hullRegion_eq_selectedProductHull :
+    sourceData.hullData.hullRegion
+        (recordThetaPossibleImageUnion record) =
+      productHullSource.productHull
+        (productHullSource.intersectionParameter
+          (recordThetaPossibleImageUnion record))
+  possibleImageUnion_subset_selectedProductHull :
+    recordThetaPossibleImageUnion record ⊆
+      productHullSource.productHull
+        (productHullSource.intersectionParameter
+          (recordThetaPossibleImageUnion record))
+  qPilotRegion_subset_selectedProductHull :
+    sourceData.qPilotRegion ⊆
+      productHullSource.productHull
+        (productHullSource.intersectionParameter
+          (recordThetaPossibleImageUnion record))
+  selectedProductHull_minimal :
+    ∀ parameter : Λ,
+      recordThetaPossibleImageUnion record ⊆
+        productHullSource.productHull parameter ->
+        productHullSource.productHull
+            (productHullSource.intersectionParameter
+              (recordThetaPossibleImageUnion record)) ⊆
+          productHullSource.productHull parameter
+  selectedProductHull_logVolume_eq :
+    productHullSource.toHolomorphicHullSystem.logVolume
+        (productHullSource.productHull
+          (productHullSource.intersectionParameter
+            (recordThetaPossibleImageUnion record))) =
+      productHullSource.productHullLogVolume
+        (productHullSource.intersectionParameter
+          (recordThetaPossibleImageUnion record))
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem productHullBackedConstructorBuiltAudit
+    (sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (hullData_eq_productHullOperator :
+      sourceData.hullData =
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    ProductHullBackedConstructorBuiltAudit sourceData productHullSource :=
+  let region := recordThetaPossibleImageUnion record
+  let hullRegion_eq_selected :
+      sourceData.hullData.hullRegion region =
+        productHullSource.productHull
+          (productHullSource.intersectionParameter region) := by
+    rw [hullData_eq_productHullOperator]
+    simpa [IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator,
+      IUTStage1HolomorphicHullLogVolumeShadow.hullRegion,
+      IUTStage1Remark395HolomorphicHullSystem.toHolomorphicHullOperator]
+      using
+        productHullSource.phi_eq_productHull_intersectionParameter region
+  { sourceEndpoint := sourceData.source_endpoint,
+    recordCanonicalStepXIAudit := sourceData.recordCanonicalStepXIAudit,
+    bridgeInequalityAudit := sourceData.toConstructorBuiltStepXIBridgeInequalityAudit,
+    hullData_eq_productHullOperator := hullData_eq_productHullOperator,
+    selectedProductHull_eq_hullRegion := hullRegion_eq_selected.symm,
+    hullRegion_eq_selectedProductHull := hullRegion_eq_selected,
+    possibleImageUnion_subset_selectedProductHull :=
+      productHullSource.region_subset_productHull_intersection region,
+    qPilotRegion_subset_selectedProductHull :=
+      sourceData.q_subset_recordUnion.trans
+        (productHullSource.region_subset_productHull_intersection region),
+    selectedProductHull_minimal :=
+      fun parameter hsubset =>
+        productHullSource.productHull_intersection_minimal hsubset,
+    selectedProductHull_logVolume_eq :=
+      productHullSource.logVolume_intersectionProductHull_eq region,
+    qSigned_le_thetaSigned :=
+      sourceData.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Endpoint for the Ob3/Ob4-adjusted constructor-built possible-image Step (xi)
 source.
 
