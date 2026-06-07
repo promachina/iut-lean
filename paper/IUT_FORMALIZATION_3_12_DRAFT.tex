@@ -2807,6 +2807,25 @@ local-factor sum agrees with the weighted adjusted Ob3/Ob4 summand already
 used by the determinant package.  Thus the local-factor layer is no longer an
 independent real-valued family; it is read from the localized vector-bundle
 summands.
+The factor regions themselves have now been pushed down one more source layer.
+The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395LocalRingChartedVectorBundle}\\
+\quad\texttt{DirectProductHullCoverSource}
+\end{array}
+\]
+introduces a local-ring chart for each factor of each direct-product
+localization cell.  The chart records the local-ring label and the region that
+represents the corresponding local factor.  Its source laws identify the chart
+local ring with the local-ring label of the localized arithmetic vector bundle,
+identify each chart log-volume with the associated direct-summand log-volume,
+compute each \(H_\beta\) as the sum of these chart-factor log-volumes, and
+compute the cover as the finite sum of charted cell log-volumes.  \Lean{} then
+derives the vector-bundle local-factor source.  Thus the regions entering the
+direct-product cover are no longer an arbitrary family parallel to the bundle
+data; they are read from local-ring localization charts tied to the same
+localized vector bundles.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5984,12 +6003,14 @@ The practical priority order is:
   constructor-built possible-image source directly, and the adjusted Ob3/Ob5
   finite-divisor endpoint now constructs that source from the record-canonical
   adjusted determinant log-volume data plus obligations; the newest
-  localized-vector-bundle source pushes the Ob3/Ob4 determinant payload below
-  the adjusted-localization interface, but
+  local-ring charted vector-bundle source pushes the factor regions and
+  direct-summand volumes below the previous vector-bundle local-factor
+  interface, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  vector-bundle local-factor cover law, local region/vector-bundle log-volume
-  calibration, measure calibration, record-canonical synchronization, and chart
+  charted cell cover law, chart-factor log-volume/direct-summand
+  calibration, local region/vector-bundle log-volume calibration, measure
+  calibration, record-canonical synchronization, and chart
   synchronization witnesses by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source
   content to bear on the Mochizuki--Scholze--Stix disagreement.

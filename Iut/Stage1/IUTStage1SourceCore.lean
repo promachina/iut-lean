@@ -8352,6 +8352,368 @@ theorem endpoint
 
 end IUTStage1Remark395VectorBundleLocalFactorDirectProductLocalizedHullCoverSource
 
+/--
+Local-ring chart for one factor of a localized vector-bundle product cell.
+
+In Step (xi-d), the holomorphic-hull output is read in terms of localizations of
+arithmetic vector bundles over local rings in the `1,◦` holomorphic structure.
+This chart records the local-ring label and the region that represents one
+local factor of such a localization cell.  The log-volume laws are supplied by
+the charted source below, where the chart is tied to the direct summand of the
+localized arithmetic vector bundle.
+-/
+structure IUTStage1LocalRingVectorBundleFactorRegionChart
+    (α : Type u) (η : Type v) where
+  localRing : η
+  region : Set α
+
+namespace IUTStage1LocalRingVectorBundleFactorRegionChart
+
+variable {α : Type u} {η : Type v}
+
+def logVolume
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (chart : IUTStage1LocalRingVectorBundleFactorRegionChart α η) :
+    Real :=
+  hullSystem.logVolume chart.region
+
+theorem logVolume_eq
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (chart : IUTStage1LocalRingVectorBundleFactorRegionChart α η) :
+    chart.logVolume hullSystem = hullSystem.logVolume chart.region :=
+  rfl
+
+end IUTStage1LocalRingVectorBundleFactorRegionChart
+
+/--
+Local-ring charted vector-bundle direct-product cover source.
+
+This refines the vector-bundle local-factor source by constructing the factor
+regions from local-ring charts.  Each chart is tied to the local-ring label of
+the localized arithmetic vector bundle, and each chart log-volume is identified
+with the corresponding direct-summand log-volume.  The direct-product cell and
+cover log-volume laws are stated at the chart level; Lean derives the previous
+bundle-summand cover source from these charted laws.
+-/
+structure IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+    (α : Type u) (ι : Type v) (η : Type y) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  localFactorChart :
+    β -> γ -> IUTStage1LocalRingVectorBundleFactorRegionChart α η
+  localFactorChart_ring_eq_bundle :
+    ∀ index : β, ∀ place : γ,
+      (localFactorChart index place).localRing =
+        (localizedCalibration index).localizedVectorBundle.bundle.localRing
+  localizedRegion_eq_chartedDirectProductCell :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α |
+          ∀ place : γ, point ∈ (localFactorChart index place).region }
+  chartFactor_logVolume_eq_directSummand :
+    ∀ index : β, ∀ place : γ,
+      hullSystem.logVolume ((localFactorChart index place).region) =
+        (localizedCalibration index).localizedVectorBundle.bundle.directSummandLogVolume
+          place
+  localFactor_separates_index :
+    ∀ ⦃index₁ index₂ : β⦄,
+      index₁ ≠ index₂ ->
+        ∃ place : γ,
+          Disjoint ((localFactorChart index₁ place).region)
+            ((localFactorChart index₂ place).region)
+  familyHull_eq_chartedDirectProductCellUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index,
+        { point : α |
+          ∀ place : γ, point ∈ (localFactorChart index place).region }
+  directProductCell_logVolume_eq_chartFactorSum :
+    ∀ index : β,
+      hullSystem.logVolume
+          { point : α |
+            ∀ place : γ, point ∈ (localFactorChart index place).region } =
+        Finset.univ.sum fun place =>
+          hullSystem.logVolume ((localFactorChart index place).region)
+  directProductCoverLogVolume_eq_chartedCellSum :
+    hullSystem.logVolume
+        (⋃ index,
+          { point : α |
+            ∀ place : γ, point ∈ (localFactorChart index place).region }) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume
+          { point : α |
+            ∀ place : γ, point ∈ (localFactorChart index place).region }
+
+namespace IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+
+variable {α : Type u} {ι : Type v} {η : Type y}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def localFactorRegion
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) (place : γ) :
+    Set α :=
+  (data.localFactorChart index place).region
+
+def directProductCell
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) :
+    Set α :=
+  { point : α | ∀ place : γ, point ∈ data.localFactorRegion index place }
+
+def directProductCellUnion
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ index, data.directProductCell index
+
+def chartFactorLogVolume
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) (place : γ) :
+    Real :=
+  data.hullSystem.logVolume (data.localFactorRegion index place)
+
+def directSummandLogVolume
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) (place : γ) :
+    Real :=
+  (data.localizedCalibration index).localizedVectorBundle.bundle.directSummandLogVolume
+    place
+
+def chartFactorLogVolumeSum
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) :
+    Real :=
+  Finset.univ.sum fun place =>
+    data.chartFactorLogVolume index place
+
+def directSummandLogVolumeSum
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) :
+    Real :=
+  Finset.univ.sum fun place =>
+    data.directSummandLogVolume index place
+
+def chartedCellLogVolumeSum
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.hullSystem.logVolume (data.directProductCell index)
+
+def bundleLogVolumeSum
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume
+
+theorem localFactorChart_ring_eq_bundle_source
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) (place : γ) :
+    (data.localFactorChart index place).localRing =
+      (data.localizedCalibration index).localizedVectorBundle.bundle.localRing :=
+  data.localFactorChart_ring_eq_bundle index place
+
+theorem chartFactorLogVolume_eq_directSummand
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) (place : γ) :
+    data.chartFactorLogVolume index place =
+      data.directSummandLogVolume index place := by
+  simpa [chartFactorLogVolume, directSummandLogVolume, localFactorRegion] using
+    data.chartFactor_logVolume_eq_directSummand index place
+
+theorem chartFactorLogVolumeSum_eq_directSummandLogVolumeSum
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) :
+    data.chartFactorLogVolumeSum index =
+      data.directSummandLogVolumeSum index := by
+  dsimp [chartFactorLogVolumeSum, directSummandLogVolumeSum]
+  exact Finset.sum_congr rfl
+    (fun place _ => data.chartFactorLogVolume_eq_directSummand index place)
+
+theorem directSummandLogVolumeSum_eq_bundleLogVolume
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) :
+    data.directSummandLogVolumeSum index =
+      (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume :=
+  rfl
+
+theorem chartFactorLogVolumeSum_eq_bundleLogVolume
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) :
+    data.chartFactorLogVolumeSum index =
+      (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume :=
+  (data.chartFactorLogVolumeSum_eq_directSummandLogVolumeSum index).trans
+    (data.directSummandLogVolumeSum_eq_bundleLogVolume index)
+
+theorem directProductCell_logVolume_eq_chartFactorSum_source
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) :
+    data.hullSystem.logVolume (data.directProductCell index) =
+      data.chartFactorLogVolumeSum index := by
+  simpa [directProductCell, localFactorRegion, chartFactorLogVolumeSum,
+    chartFactorLogVolume] using
+    data.directProductCell_logVolume_eq_chartFactorSum index
+
+theorem directProductCell_logVolume_eq_bundleLogVolume
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ)
+    (index : β) :
+    data.hullSystem.logVolume (data.directProductCell index) =
+      (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume :=
+  (data.directProductCell_logVolume_eq_chartFactorSum_source index).trans
+    (data.chartFactorLogVolumeSum_eq_bundleLogVolume index)
+
+theorem directProductCoverLogVolume_eq_chartedCellSum_source
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ) :
+    data.hullSystem.logVolume data.directProductCellUnion =
+      data.chartedCellLogVolumeSum := by
+  simpa [directProductCellUnion, directProductCell, localFactorRegion,
+    chartedCellLogVolumeSum] using
+    data.directProductCoverLogVolume_eq_chartedCellSum
+
+theorem chartedCellLogVolumeSum_eq_bundleLogVolumeSum
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ) :
+    data.chartedCellLogVolumeSum =
+      data.bundleLogVolumeSum := by
+  dsimp [chartedCellLogVolumeSum, bundleLogVolumeSum]
+  exact Finset.sum_congr rfl
+    (fun index _ => data.directProductCell_logVolume_eq_bundleLogVolume index)
+
+theorem directProductCoverLogVolume_eq_bundleLogVolumeSum
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ) :
+    data.hullSystem.logVolume data.directProductCellUnion =
+      data.bundleLogVolumeSum :=
+  data.directProductCoverLogVolume_eq_chartedCellSum_source.trans
+    data.chartedCellLogVolumeSum_eq_bundleLogVolumeSum
+
+set_option linter.style.longLine false in
+def toVectorBundleLocalFactorDirectProductLocalizedHullCoverSource
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ) :
+    IUTStage1Remark395VectorBundleLocalFactorDirectProductLocalizedHullCoverSource
+      α ι η β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    localFactorRegion := data.localFactorRegion,
+    localizedRegion_eq_directProductCell := by
+      intro index
+      simpa [localFactorRegion] using
+        data.localizedRegion_eq_chartedDirectProductCell index,
+    localFactor_separates_index := by
+      intro index₁ index₂ hne
+      rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+      exact ⟨place, by
+        simpa [localFactorRegion] using hdisjoint⟩,
+    familyHull_eq_directProductCellUnion := by
+      simpa [localFactorRegion] using
+        data.familyHull_eq_chartedDirectProductCellUnion,
+    directProductCell_logVolume_eq_bundleLogVolume := by
+      intro index
+      simpa [
+        IUTStage1Remark395VectorBundleLocalFactorDirectProductLocalizedHullCoverSource.directProductCell,
+        localFactorRegion] using
+        data.directProductCell_logVolume_eq_bundleLogVolume index,
+    directProductCoverLogVolume_eq_bundleDoubleSum := by
+      simpa [
+        IUTStage1Remark395VectorBundleLocalFactorDirectProductLocalizedHullCoverSource.directProductCell,
+        IUTStage1Remark395VectorBundleLocalFactorDirectProductLocalizedHullCoverSource.directProductCellUnion,
+        localFactorRegion, bundleLogVolumeSum] using
+        data.directProductCoverLogVolume_eq_bundleLogVolumeSum }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+        α ι η β γ) :
+    let vectorSource :=
+      data.toVectorBundleLocalFactorDirectProductLocalizedHullCoverSource
+    (∀ index : β, ∀ place : γ,
+      (data.localFactorChart index place).localRing =
+        (data.localizedCalibration index).localizedVectorBundle.bundle.localRing) ∧
+      (∀ index : β, ∀ place : γ,
+        data.chartFactorLogVolume index place =
+          data.directSummandLogVolume index place) ∧
+      (∀ index : β,
+        data.chartFactorLogVolumeSum index =
+          data.directSummandLogVolumeSum index) ∧
+      (∀ index : β,
+        data.directSummandLogVolumeSum index =
+          (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          data.chartFactorLogVolumeSum index) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume) ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.chartedCellLogVolumeSum ∧
+      data.chartedCellLogVolumeSum = data.bundleLogVolumeSum ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.bundleLogVolumeSum ∧
+      vectorSource.hullSystem.logVolume vectorSource.directProductCellUnion =
+        vectorSource.localFactorDoubleLogVolumeSum :=
+  ⟨data.localFactorChart_ring_eq_bundle_source,
+    data.chartFactorLogVolume_eq_directSummand,
+    data.chartFactorLogVolumeSum_eq_directSummandLogVolumeSum,
+    data.directSummandLogVolumeSum_eq_bundleLogVolume,
+    data.directProductCell_logVolume_eq_chartFactorSum_source,
+    data.directProductCell_logVolume_eq_bundleLogVolume,
+    data.directProductCoverLogVolume_eq_chartedCellSum_source,
+    data.chartedCellLogVolumeSum_eq_bundleLogVolumeSum,
+    data.directProductCoverLogVolume_eq_bundleLogVolumeSum,
+    (data.toVectorBundleLocalFactorDirectProductLocalizedHullCoverSource)
+      |>.directProductCoverLogVolume_eq_localFactorDoubleSum⟩
+
+end IUTStage1Remark395LocalRingChartedVectorBundleDirectProductHullCoverSource
+
 set_option linter.style.longLine true
 
 /--
