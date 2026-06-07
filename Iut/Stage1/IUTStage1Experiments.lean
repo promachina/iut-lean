@@ -44739,6 +44739,41 @@ theorem remark395CoordinateScalarImageDirectProductHullSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface scalar-parameter direct-product hull construction.
+
+This is the stricter source-facing local scalar-image boundary: each coordinate
+parameter is an actual scalar parameter with a region
+`H_v(lambda_v) = lambda_v • O_v`, and Lean derives the product landing,
+preimage, and principal-hull equality for the product scalar parameter.
+-/
+theorem remark395ScalarParameterDirectProductHullSource_endpoint
+    {δ : Type u} {A : δ -> Type v} {S : δ -> Type w}
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    (∀ d : δ, data.parameter_nonzero_coordinate d (parameter d)) ∧
+      (∀ d : δ,
+        data.coordinateParameterRegion d (parameter d) =
+          data.scalarMultipleCoordinate d (parameter d) ''
+            data.localIntegerFactorRegion d) ∧
+      (∀ base : (d : δ) -> A d,
+        base ∈ data.localIntegerRegion ->
+          data.scalarMultiple parameter base ∈
+            data.directProductSource.productHull
+              (data.parameterRegion parameter)) ∧
+      (∀ point : (d : δ) -> A d,
+        point ∈ data.directProductSource.productHull
+            (data.parameterRegion parameter) ->
+          ∃ base : (d : δ) -> A d,
+            base ∈ data.localIntegerRegion ∧
+              data.scalarMultiple parameter base = point) ∧
+      data.principalHull parameter =
+        data.directProductSource.productHull
+          (data.parameterRegion parameter) :=
+  data.endpoint parameter
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the source-facing Remark 3.9.5 possible-image
 family package.
 

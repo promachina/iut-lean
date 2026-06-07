@@ -4057,6 +4057,172 @@ theorem endpoint
 end IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
 
 /--
+Scalar-parameter direct-product hull source.
+
+This is the source-facing version of the coordinate scalar-image boundary.
+Instead of asking for image/preimage laws for arbitrary coordinate subsets, it
+uses actual local scalar parameters.  Each local factor carries a region
+`H_v(lambda_v)` together with the source law
+`H_v(lambda_v) = lambda_v • O_v`.  Lean then proves the global product
+landing/preimage laws for the product parameter.
+-/
+structure IUTStage1Remark395ScalarParameterDirectProductHullSource
+    (δ : Type u) (A : δ -> Type v) (S : δ -> Type w) where
+  directProductSource :
+    IUTStage1Remark395DirectProductHullSystemSource δ A
+  localIntegerFactorRegion : (d : δ) -> Set (A d)
+  coordinateParameterRegion :
+    (d : δ) -> S d -> Set (A d)
+  scalarMultipleCoordinate :
+    (d : δ) -> S d -> A d -> A d
+  parameter_nonzero_coordinate :
+    (d : δ) -> S d -> Prop
+  all_parameters_nonzero_coordinate :
+    ∀ (d : δ) (parameter : S d),
+      parameter_nonzero_coordinate d parameter
+  coordinateParameterRegion_eq_scalarImage :
+    ∀ (d : δ) (parameter : S d),
+      coordinateParameterRegion d parameter =
+        scalarMultipleCoordinate d parameter ''
+          localIntegerFactorRegion d
+
+namespace IUTStage1Remark395ScalarParameterDirectProductHullSource
+
+variable {δ : Type u} {A : δ -> Type v} {S : δ -> Type w}
+
+def localIntegerRegion
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S) :
+    Set ((d : δ) -> A d) :=
+  { base | ∀ d : δ, base d ∈ data.localIntegerFactorRegion d }
+
+def parameterRegion
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    (d : δ) -> Set (A d) :=
+  fun d => data.coordinateParameterRegion d (parameter d)
+
+def scalarMultiple
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d)
+    (base : (d : δ) -> A d) :
+    (d : δ) -> A d :=
+  fun d => data.scalarMultipleCoordinate d (parameter d) (base d)
+
+def principalHull
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    Set ((d : δ) -> A d) :=
+  { point |
+    ∃ base : (d : δ) -> A d,
+      base ∈ data.localIntegerRegion ∧
+        data.scalarMultiple parameter base = point }
+
+theorem parameter_nonzero
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    ∀ d : δ, data.parameter_nonzero_coordinate d (parameter d) :=
+  fun d => data.all_parameters_nonzero_coordinate d (parameter d)
+
+theorem scalarMultiple_mem_productHull
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d)
+    (base : (d : δ) -> A d)
+    (hbase : base ∈ data.localIntegerRegion) :
+    data.scalarMultiple parameter base ∈
+      data.directProductSource.productHull
+        (data.parameterRegion parameter) := by
+  intro d
+  change data.scalarMultipleCoordinate d (parameter d) (base d) ∈
+    data.coordinateParameterRegion d (parameter d)
+  rw [data.coordinateParameterRegion_eq_scalarImage d (parameter d)]
+  exact ⟨base d, hbase d, rfl⟩
+
+theorem productHull_has_scalarPreimage
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d)
+    (point : (d : δ) -> A d)
+    (hpoint :
+      point ∈ data.directProductSource.productHull
+        (data.parameterRegion parameter)) :
+    ∃ base : (d : δ) -> A d,
+      base ∈ data.localIntegerRegion ∧
+        data.scalarMultiple parameter base = point := by
+  classical
+  have hcoordinate :
+      ∀ d : δ,
+        ∃ base : A d,
+          base ∈ data.localIntegerFactorRegion d ∧
+            data.scalarMultipleCoordinate d (parameter d) base =
+              point d := by
+    intro d
+    have hmem : point d ∈
+        data.coordinateParameterRegion d (parameter d) :=
+      hpoint d
+    rw [data.coordinateParameterRegion_eq_scalarImage d (parameter d)] at hmem
+    exact hmem
+  choose base hbase hscale using hcoordinate
+  refine ⟨base, ?_, ?_⟩
+  · intro d
+    exact hbase d
+  · funext d
+    exact hscale d
+
+theorem principalHull_eq_productHull
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    data.principalHull parameter =
+      data.directProductSource.productHull
+        (data.parameterRegion parameter) := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases hpoint with ⟨base, hbase, hscale⟩
+    rw [← hscale]
+    exact data.scalarMultiple_mem_productHull parameter base hbase
+  · intro hpoint
+    exact data.productHull_has_scalarPreimage parameter point hpoint
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    (∀ d : δ, data.parameter_nonzero_coordinate d (parameter d)) ∧
+      (∀ d : δ,
+        data.coordinateParameterRegion d (parameter d) =
+          data.scalarMultipleCoordinate d (parameter d) ''
+            data.localIntegerFactorRegion d) ∧
+      (∀ base : (d : δ) -> A d,
+        base ∈ data.localIntegerRegion ->
+          data.scalarMultiple parameter base ∈
+            data.directProductSource.productHull
+              (data.parameterRegion parameter)) ∧
+      (∀ point : (d : δ) -> A d,
+        point ∈ data.directProductSource.productHull
+            (data.parameterRegion parameter) ->
+          ∃ base : (d : δ) -> A d,
+            base ∈ data.localIntegerRegion ∧
+              data.scalarMultiple parameter base = point) ∧
+      data.principalHull parameter =
+        data.directProductSource.productHull
+          (data.parameterRegion parameter) :=
+  ⟨data.parameter_nonzero parameter,
+    fun d => data.coordinateParameterRegion_eq_scalarImage d (parameter d),
+    data.scalarMultiple_mem_productHull parameter,
+    data.productHull_has_scalarPreimage parameter,
+    data.principalHull_eq_productHull parameter⟩
+
+end IUTStage1Remark395ScalarParameterDirectProductHullSource
+
+/--
 Remark 3.9.5 holomorphic-hull shadow.
 
 The paper characterizes hull formation by the three closure properties P1--P3:

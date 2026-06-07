@@ -802,6 +802,21 @@ witnesses by dependent choice to prove the global scalar-image landing and
 preimage laws, then constructs the scalar-image direct-product hull source.
 Thus the next finite-extension valuation step can work one local factor at a
 time.
+There is now a stricter scalar-parameter version of this coordinate boundary:
+\[
+\texttt{IUTStage1Remark395ScalarParameterDirectProductHullSource}.
+\]
+This source no longer asks for local image/preimage laws for arbitrary subsets.
+Instead each coordinate has an actual scalar-parameter type and a named local
+region \(H_v(\lambda_v)\) satisfying the source-shaped equality
+\[
+H_v(\lambda_v)=\lambda_v\cdot O_v .
+\]
+\Lean{} derives the product landing law, product preimage law, and equality
+between the principal scalar-image hull and the direct-product hull for the
+product scalar parameter.  This is the current lowest scalar-image boundary
+before the finite-extension valuation model supplies the concrete local
+parameters and proves the equality \(H_v(\lambda_v)=\lambda_v O_v\).
 The principal hull presentation is now tied to the valuation-ball local-ring
 cover.  The declaration
 \[
