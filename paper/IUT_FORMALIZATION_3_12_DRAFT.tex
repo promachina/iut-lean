@@ -1127,6 +1127,27 @@ therefore asks for the target coordinate image of this explicit
 source-core equality and then applies the coordinate-derived endpoint.  The
 remaining selected-hull transport payload is now the real-coordinate image law
 for an explicit nonzero-scalar multiplication image.
+The local-integer half has now been pushed down in the same way.  The
+valuation-unit-ball product source already proves
+\[
+  \texttt{localIntegerRegion}=
+  \texttt{valuationCover.directProductCell valuationCover.anchor},
+\]
+i.e., the local integer product is the anchor product of valuation unit balls
+\(O=\prod_v O_v\).  The new
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{ValuationAnchorCoordinateTargetTransportSource}
+\end{array}
+\]
+therefore states the local-integer coordinate image for this explicit anchor
+valuation-cell product and states the selected-hull coordinate image for the
+explicit \(\lambda\cdot O\) image.  \Lean{} derives the previous selected-image
+coordinate transport source by rewriting through these two source equalities.
+Thus both coordinate-image transport obligations are now attached to concrete
+Remark~3.9.5(i) regions \(O\) and \(\lambda O\), rather than to packaged
+endpoint regions.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -7924,12 +7945,19 @@ The practical priority order is:
   \(\texttt{selectedScalarImageHull}=\lambda\cdot O\), so this half of the
   transport boundary is stated for the explicit selected nonzero-scalar
   multiplication image of the local integer product region.
+  A valuation-anchor coordinate transport endpoint now rewrites the
+  local-integer coordinate image through the source theorem
+  \(O=\prod_vO_v\), so both coordinate-image obligations are stated for the
+  explicit source regions \(O\) and \(\lambda O\).
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar model, the
-  still-supplied coordinate directional scalar-image laws for each local
-  factor \(\lambda_v\cdot O_v\): landing in the valuation/direct-product
-  factor \(H_v(\lambda)\) and existence of local scalar preimages for all
+  still-supplied target real-coordinate image laws for the explicit source
+  regions \(O=\prod_vO_v\) and \(\lambda O\).  Below that, the local
+  directional scalar-image laws for each local factor \(\lambda_v\cdot O_v\)
+  still have to be derived from the valuation/Kummer model: landing in the
+  valuation/direct-product factor \(H_v(\lambda)\) and existence of local
+  scalar preimages for all
   points of \(H_v(\lambda)\),
   direct-product localization cover construction, family-local
   finite-cover additivity theorem,
