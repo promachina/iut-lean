@@ -60583,6 +60583,147 @@ theorem principalValuationBallFiniteCoverHaarBridgeAudit
     qSigned_le_thetaSigned :=
       sourceData.toPrincipalProductHullBackedSource.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
 
+set_option linter.style.longLine false in
+/--
+Principal valuation-ball finite-extension/Haar bridge audit.
+
+This exposes the finite-extension compact-open Haar normalization data behind
+each local valuation-ball factor at the current principal `lambda * O`
+finite-divisor boundary.  The fields are projected from the lower additive Haar
+source: raw Haar log-volume is the logarithm of the Haar measure, normalized
+log-volume is divided by the finite-extension degree, the valuation unit ball has
+normalized log-volume zero, and uniformizer scaling gives the expected
+`-log(p)` shift after degree normalization.
+-/
+structure PrincipalValuationBallFiniteExtensionHaarBridgeAudit
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    Prop where
+  finiteCoverHaarBridgeAudit :
+    PrincipalValuationBallFiniteCoverHaarBridgeAudit sourceData
+  factorFiniteExtensionDegree_pos :
+    ∀ index : β, ∀ place : γ,
+      0 <
+        (sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).finiteExtensionDegree
+  factorRawHaarLogVolume_eq_measure_log :
+    ∀ index : β, ∀ place : γ,
+      ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).rawHaarLogVolume
+          ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).compactOpenSubset) =
+        Real.log
+          (((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).rawHaarMeasure
+            ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).compactOpenSubset))
+  factorNormalizedHaarLogVolume_eq_degree :
+    ∀ index : β, ∀ place : γ,
+      ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).normalizedHaarLogVolume
+          ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).compactOpenSubset) =
+        ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).rawHaarLogVolume
+            ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).compactOpenSubset) /
+          ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).finiteExtensionDegree : Real)
+  factorRingOfIntegers_rawMeasure_one :
+    ∀ index : β, ∀ place : γ,
+      ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).rawHaarMeasure
+          ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).ringOfIntegers) =
+        1
+  factorCompactOpenSubset_rawMeasure_pos :
+    ∀ index : β, ∀ place : γ,
+      0 <
+        ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).rawHaarMeasure
+          ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).compactOpenSubset)
+  factorUniformizerScaled_rawHaarLogVolume_eq :
+    ∀ index : β, ∀ place : γ,
+      ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).rawHaarLogVolume
+          (((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).uniformizerScaledSubset) =
+        ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).rawHaarLogVolume
+            ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).compactOpenSubset) -
+          ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).finiteExtensionDegree : Real) *
+            Real.log (((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).residuePrime) : Real)
+  factorNormalizedRingOfIntegers_zero :
+    ∀ index : β, ∀ place : γ,
+      ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).normalizedHaarLogVolume
+          ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).ringOfIntegers) =
+        0
+  factorNormalizedUniformizerShift :
+    ∀ index : β, ∀ place : γ,
+      ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).normalizedHaarLogVolume
+          (((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).uniformizerScaledSubset) =
+        ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource).normalizedHaarLogVolume
+            ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).compactOpenSubset) -
+          Real.log (((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).residuePrime) : Real)
+  factorFiniteExtension_compactOpenRegion_eq :
+    ∀ index : β, ∀ place : γ,
+      (((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).toAdditiveHaarCompactOpenNormalizationSource)
+        |>.toCompactOpenTopologyHaarNormalizationSource
+        |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+        |>.toNonarchimedeanLocalCompactOpenLogVolumeSource
+        |>.compactOpenRegion) =
+        (sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).realizedRegion
+          ((sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place).compactOpenSubset)
+  selectedPrincipalHull_logVolume_eq_tensorCellSum :
+    sourceData.principalValuationBallSource.valuationCover.hullSystem.logVolume
+        sourceData.principalValuationBallSource.selectedPrincipalHull =
+      Finset.univ.sum fun index =>
+        (sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.cellValuationBallTensor index).tensorProductNormalizedLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem principalValuationBallFiniteExtensionHaarBridgeAudit
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    PrincipalValuationBallFiniteExtensionHaarBridgeAudit sourceData :=
+  { finiteCoverHaarBridgeAudit :=
+      sourceData.principalValuationBallFiniteCoverHaarBridgeAudit,
+    factorFiniteExtensionDegree_pos := by
+      intro index place
+      exact
+        (sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place)
+          |>.finite_extension_degree_pos,
+    factorRawHaarLogVolume_eq_measure_log := by
+      intro index place
+      rfl,
+    factorNormalizedHaarLogVolume_eq_degree := by
+      intro index place
+      rfl,
+    factorRingOfIntegers_rawMeasure_one := by
+      intro index place
+      exact
+        (sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place)
+          |>.toAdditiveHaarCompactOpenNormalizationSource
+          |>.ringOfIntegers_measure_one,
+    factorCompactOpenSubset_rawMeasure_pos := by
+      intro index place
+      exact
+        (sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place)
+          |>.toAdditiveHaarCompactOpenNormalizationSource
+          |>.compactOpenSubset_measure_pos,
+    factorUniformizerScaled_rawHaarLogVolume_eq := by
+      intro index place
+      exact
+        (sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place)
+          |>.toAdditiveHaarCompactOpenNormalizationSource
+          |>.uniformizerScaled_rawHaarLogVolume_eq,
+    factorNormalizedRingOfIntegers_zero := by
+      intro index place
+      exact
+        (sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place)
+          |>.toAdditiveHaarCompactOpenNormalizationSource
+          |>.ringOfIntegers_normalizedHaarLogVolume_zero,
+    factorNormalizedUniformizerShift := by
+      intro index place
+      exact
+        (sourceData.principalValuationBallSource.valuationCover.valuationBallFactor index place)
+          |>.toAdditiveHaarCompactOpenNormalizationSource
+          |>.uniformizerScaled_normalizedHaarLogVolume_eq,
+    factorFiniteExtension_compactOpenRegion_eq := by
+      intro index place
+      rfl,
+    selectedPrincipalHull_logVolume_eq_tensorCellSum :=
+      sourceData.principalValuationBallSource.selectedPrincipalHull_logVolume_eq_tensorCellSum,
+    qSigned_le_thetaSigned :=
+      sourceData.toPrincipalProductHullBackedSource.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
+
 noncomputable def canonicalCThetaScale
     (_sourceData :
       IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
@@ -61754,6 +61895,112 @@ theorem boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBal
       packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
       targetSource
   ⟨principalValuationBallBackedSource.principalValuationBallFiniteCoverHaarBridgeAudit,
+    endpoint.2.1, endpoint.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Canonical-scale principal valuation-ball finite-divisor route with the
+finite-extension/Haar audit attached.
+
+This strengthens the finite-cover/Haar endpoint by retaining, at the public
+finite-divisor boundary, the lower finite-extension compact-open Haar facts for
+each valuation-ball factor: raw Haar measure/log-volume, degree normalization,
+ring-of-integers normalization, and normalized uniformizer scaling.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallFiniteExtensionHaarConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithFiniteExtensionHaarAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type (max u v w y z)}
+    (principalValuationBallBackedSource :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        principalValuationBallBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallFiniteExtensionHaarBridgeAudit
+        principalValuationBallBackedSource ∧
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallBackedCanonicalCThetaScaleAudit
+        principalValuationBallBackedSource ∧
+        ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+            packageN.preLedger.thetaSigned < 0) ∨
+          (-1 : Real) <
+            principalValuationBallBackedSource.canonicalCThetaScale) :=
+  let endpoint :=
+    part.boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallFiniteCoverHaarConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithFiniteCoverHaarAudit
+      principalValuationBallBackedSource
+      profile audited transportSource iplConstructionSource
+      sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+      divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+      targetSource
+  ⟨principalValuationBallBackedSource.principalValuationBallFiniteExtensionHaarBridgeAudit,
     endpoint.2.1, endpoint.2.2⟩
 
 set_option linter.style.longLine false in
