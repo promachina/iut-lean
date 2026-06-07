@@ -2790,6 +2790,23 @@ cell.  Its source laws compute
 congruence and projects to the cover-specific additive source.  Thus the
 previous cover-additivity assumption is now reduced to the local-factor
 log-volume computation for the localized arithmetic-vector-bundle cells.
+The local-factor volumes are now also tied to the Ob3 vector-bundle data.  The
+declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395VectorBundleLocalFactor}\\
+\quad\texttt{DirectProductLocalizedHullCoverSource}
+\end{array}
+\]
+defines the local factor \(\mu_{\beta,v}\) to be the direct-summand
+log-volume of the localized arithmetic vector bundle attached to \(\beta\) at
+the place \(v\).  Its source laws compute each \(H_\beta\) from the associated
+bundle log-volume and compute the cover from the resulting finite bundle sum.
+\Lean{} then derives the previous local-factor source and proves that the
+local-factor sum agrees with the weighted adjusted Ob3/Ob4 summand already
+used by the determinant package.  Thus the local-factor layer is no longer an
+independent real-valued family; it is read from the localized vector-bundle
+summands.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5971,7 +5988,7 @@ The practical priority order is:
   the adjusted-localization interface, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  local-factor direct-product log-volume law, local region/vector-bundle log-volume
+  vector-bundle local-factor cover law, local region/vector-bundle log-volume
   calibration, measure calibration, record-canonical synchronization, and chart
   synchronization witnesses by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source

@@ -41769,6 +41769,51 @@ theorem remark395LocalFactorVolumeDirectProductLocalizedHullCoverVectorBundleSou
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface vector-bundle local-factor source.
+
+This endpoint identifies direct-product local-factor volumes with the direct
+summand log-volumes of the localized arithmetic vector bundles, then derives the
+local-factor cover-volume source.
+-/
+theorem remark395VectorBundleLocalFactorDirectProductLocalizedHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395VectorBundleLocalFactorDirectProductLocalizedHullCoverSource
+        α ι η β γ) :
+    let localFactorSource :=
+      data.toLocalFactorVolumeDirectProductLocalizedHullCoverVectorBundleSource
+    let additiveSource :=
+      localFactorSource.toDirectProductAdditiveLocalizedHullCoverVectorBundleSource
+    let calibratedSource :=
+      additiveSource.toCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.localFactorLogVolumeSum index =
+        (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume) ∧
+      (data.localFactorDoubleLogVolumeSum =
+        Finset.univ.sum fun index =>
+          (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          data.localFactorLogVolumeSum index) ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.localFactorDoubleLogVolumeSum ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          data.localizedSource.weightedAdjustedLogVolume index) ∧
+      (∀ index : β,
+        data.localFactorLogVolumeSum index =
+          data.localizedSource.weightedAdjustedLogVolume index) ∧
+      data.localFactorDoubleLogVolumeSum =
+        data.localizedAdjustedSum ∧
+      localFactorSource.hullSystem.logVolume localFactorSource.directProductCellUnion =
+        localFactorSource.directProductLogVolumeSum ∧
+      calibratedSource.familyHullLogVolume =
+        calibratedSource.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
