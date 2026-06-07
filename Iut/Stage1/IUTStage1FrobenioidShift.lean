@@ -64371,6 +64371,330 @@ noncomputable def principalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAud
 end
   IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
 
+namespace
+  IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {hodgeSynchronization :
+  IUTStage1TargetChartedHodgeArakelovSynchronization
+    part audited X C}
+variable {β : Type w} [Fintype β]
+variable {γ : Type x} [Fintype γ]
+
+set_option linter.style.longLine false in
+/--
+Project an exact-theta adjusted-summand Step (xi) source into the
+product-hull-backed finite-divisor route.
+
+The constructor-backed finite-divisor source is first derived from the Hodge
+theta-monoid/adjusted-summand exact-theta chain.  The only additional datum is
+the source-paper Ob5 product-hull identification of that already constructed
+hull operator with a Remark 3.9.5 product-hull system.
+-/
+noncomputable def toProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {Λ : Type y}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (hullOperator_eq_productHull :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.hullOperator =
+        productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (β := β) (γ := γ) record Λ :=
+  { constructorBackedSource :=
+      sourceData.toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource,
+    productHullSource := productHullSource,
+    hullOperator_eq_productHull := by
+      simpa [
+        toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource]
+        using hullOperator_eq_productHull }
+
+set_option linter.style.longLine false in
+structure ProductHullBackedExactThetaFiniteDivisorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {Λ : Type y}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (hullOperator_eq_productHull :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.hullOperator =
+        productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    Prop where
+  exactThetaFiniteDivisorAudit :
+    ConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit sourceData
+  productHullBackedAudit :
+    IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedRecordBridgeAudit
+      (sourceData.toProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        productHullSource hullOperator_eq_productHull)
+  productHullContainmentAudit :
+    IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedPossibleImageContainmentAudit
+      (sourceData.toProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        productHullSource hullOperator_eq_productHull)
+  thetaMonoidDegree_eq_adjustedSummandSum :
+    hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  qPilotRegion_subset_selectedProductHull :
+    (sourceData.toProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        productHullSource hullOperator_eq_productHull).constructorBackedSource.qPilotRegion ⊆
+      (sourceData.toProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        productHullSource hullOperator_eq_productHull).selectedProductHull
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toProductHullBackedExactThetaFiniteDivisorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {Λ : Type y}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (hullOperator_eq_productHull :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.hullOperator =
+        productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    ProductHullBackedExactThetaFiniteDivisorAudit
+      sourceData productHullSource hullOperator_eq_productHull := by
+  let productSource :=
+    sourceData.toProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      productHullSource hullOperator_eq_productHull
+  have hexact :=
+    sourceData.toConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit
+  have hproduct := productSource.productHullBackedRecordBridgeAudit
+  have hcontain := productSource.productHullBackedPossibleImageContainmentAudit
+  exact
+    { exactThetaFiniteDivisorAudit := hexact,
+      productHullBackedAudit := hproduct,
+      productHullContainmentAudit := hcontain,
+      thetaMonoidDegree_eq_adjustedSummandSum :=
+        hexact.thetaMonoidDegree_eq_adjustedSummandSum,
+      qPilotRegion_subset_selectedProductHull :=
+        hproduct.qPilotRegion_subset_selectedProductHull,
+      qSigned_le_thetaSigned :=
+        hproduct.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
+Project an exact-theta adjusted-summand Step (xi) source into the principal
+product-hull-backed finite-divisor route.
+
+This is the source-paper `lambda * O` refinement of the preceding product-hull
+projection.
+-/
+noncomputable def toPrincipalProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {Λ : Type y}
+    (principalProductHullSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource (Point target) Λ)
+    (hullOperator_eq_principalProductHull :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.hullOperator =
+        principalProductHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    IUTStage1Remark395PrincipalProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (β := β) (γ := γ) record Λ :=
+  { constructorBackedSource :=
+      sourceData.toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource,
+    principalProductHullSource := principalProductHullSource,
+    hullOperator_eq_principalProductHull := by
+      simpa [
+        toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource]
+        using hullOperator_eq_principalProductHull }
+
+set_option linter.style.longLine false in
+structure PrincipalProductHullBackedExactThetaFiniteDivisorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {Λ : Type y}
+    (principalProductHullSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource (Point target) Λ)
+    (hullOperator_eq_principalProductHull :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.hullOperator =
+        principalProductHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    Prop where
+  exactThetaFiniteDivisorAudit :
+    ConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit sourceData
+  principalProductHullAudit :
+    IUTStage1Remark395PrincipalProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalProductHullBackedRecordBridgeAudit
+      (sourceData.toPrincipalProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        principalProductHullSource hullOperator_eq_principalProductHull)
+  selectedPrincipalProductHull_eq_scalarMultiple_image :
+    (sourceData.toPrincipalProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        principalProductHullSource hullOperator_eq_principalProductHull).selectedPrincipalProductHull =
+      principalProductHullSource.scalarMultiple
+          (principalProductHullSource.intersectionParameter
+            (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion record)) ''
+        principalProductHullSource.localIntegerRegion
+  thetaMonoidDegree_eq_adjustedSummandSum :
+    hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toPrincipalProductHullBackedExactThetaFiniteDivisorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {Λ : Type y}
+    (principalProductHullSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource (Point target) Λ)
+    (hullOperator_eq_principalProductHull :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.hullOperator =
+        principalProductHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    PrincipalProductHullBackedExactThetaFiniteDivisorAudit
+      sourceData principalProductHullSource hullOperator_eq_principalProductHull := by
+  let principalSource :=
+    sourceData.toPrincipalProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      principalProductHullSource hullOperator_eq_principalProductHull
+  have hexact :=
+    sourceData.toConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit
+  have hprincipal := principalSource.principalProductHullBackedRecordBridgeAudit
+  exact
+    { exactThetaFiniteDivisorAudit := hexact,
+      principalProductHullAudit := hprincipal,
+      selectedPrincipalProductHull_eq_scalarMultiple_image :=
+        hprincipal.selectedPrincipalProductHull_eq_scalarMultiple_image,
+      thetaMonoidDegree_eq_adjustedSummandSum :=
+        hexact.thetaMonoidDegree_eq_adjustedSummandSum,
+      qSigned_le_thetaSigned :=
+        hprincipal.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
+Project an exact-theta adjusted-summand Step (xi) source into the principal
+valuation-ball-backed finite-divisor route.
+
+This ties the exact-theta constructor-backed source to the valuation-ball
+direct-product cover before forgetting to the principal `lambda * O` hull.
+-/
+noncomputable def toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {Λ : Type (max u w x y z)}
+    (principalValuationBallSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γ Λ)
+    (adjustedSource_eq_valuationBall :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.toSourceCoreAdjustedLogVolumeSource =
+        principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource) :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (η := η) (K := K) (β := β) (γ := γ) record Λ :=
+  { constructorBackedSource :=
+      sourceData.toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource,
+    principalValuationBallSource := principalValuationBallSource,
+    adjustedSource_eq_valuationBall := by
+      simpa [
+        toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource]
+        using adjustedSource_eq_valuationBall }
+
+set_option linter.style.longLine false in
+structure PrincipalValuationBallBackedExactThetaFiniteDivisorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {Λ : Type (max u w x y z)}
+    (principalValuationBallSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γ Λ)
+    (adjustedSource_eq_valuationBall :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.toSourceCoreAdjustedLogVolumeSource =
+        principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource) :
+    Prop where
+  exactThetaFiniteDivisorAudit :
+    ConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit sourceData
+  principalValuationBallAudit :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallBackedRecordBridgeAudit
+      (sourceData.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        principalValuationBallSource adjustedSource_eq_valuationBall)
+  selectedPrincipalHull_eq_valuationBallDirectProductCellUnion :
+    principalValuationBallSource.selectedPrincipalHull =
+      principalValuationBallSource.valuationCover.directProductCellUnion
+  selectedPrincipalHull_logVolume_eq_calibratedCellSum :
+    principalValuationBallSource.valuationCover.hullSystem.logVolume
+        principalValuationBallSource.selectedPrincipalHull =
+      principalValuationBallSource.valuationCover.calibratedCellLogVolumeSum
+  adjustedFamilyHullLogVolume_eq_normalizedDeterminant :
+    principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+      principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume
+  thetaMonoidDegree_eq_adjustedSummandSum :
+    hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toPrincipalValuationBallBackedExactThetaFiniteDivisorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {Λ : Type (max u w x y z)}
+    (principalValuationBallSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γ Λ)
+    (adjustedSource_eq_valuationBall :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.toSourceCoreAdjustedLogVolumeSource =
+        principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource) :
+    PrincipalValuationBallBackedExactThetaFiniteDivisorAudit
+      sourceData principalValuationBallSource adjustedSource_eq_valuationBall := by
+  let valuationSource :=
+    sourceData.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      principalValuationBallSource adjustedSource_eq_valuationBall
+  have hexact :=
+    sourceData.toConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit
+  have hvaluation := valuationSource.principalValuationBallBackedRecordBridgeAudit
+  exact
+    { exactThetaFiniteDivisorAudit := hexact,
+      principalValuationBallAudit := hvaluation,
+      selectedPrincipalHull_eq_valuationBallDirectProductCellUnion :=
+        principalValuationBallSource.selectedPrincipalHull_eq_valuationBallDirectProductCellUnion,
+      selectedPrincipalHull_logVolume_eq_calibratedCellSum :=
+        principalValuationBallSource.selectedPrincipalHull_coverLogVolume_eq_calibratedCellSum,
+      adjustedFamilyHullLogVolume_eq_normalizedDeterminant :=
+        hvaluation.adjustedFamilyHullLogVolume_eq_normalizedDeterminant,
+      thetaMonoidDegree_eq_adjustedSummandSum :=
+        hexact.thetaMonoidDegree_eq_adjustedSummandSum,
+      qSigned_le_thetaSigned :=
+        hvaluation.qSigned_le_thetaSigned }
+
+end
+  IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+
 set_option linter.style.longLine false in
 /--
 Real-coordinate chart for a local product carrier landing in a target

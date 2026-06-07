@@ -26662,6 +26662,144 @@ theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImag
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface product-hull projection from the constructor-backed
+target-charted exact-theta Step (xi) source.
+
+This is the first upward propagation of the exact-theta finite-divisor source:
+the finite adjusted-summand/Hodge theta route is used to build the
+constructor-backed source, then the supplied Remark 3.9.5 product-hull system
+identifies its hull operator with the Ob5 product hull.
+-/
+theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_productHullBackedExactThetaFiniteDivisorAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (hullOperator_eq_productHull :
+      stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.hullOperator =
+        productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource.ProductHullBackedExactThetaFiniteDivisorAudit
+      stepXISource productHullSource hullOperator_eq_productHull :=
+  stepXISource.toProductHullBackedExactThetaFiniteDivisorAudit
+    productHullSource hullOperator_eq_productHull
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface principal-product-hull projection from the constructor-backed
+target-charted exact-theta Step (xi) source.
+
+This specializes the product-hull propagation to the source-paper
+`lambda * O` principal hull presentation.
+-/
+theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_principalProductHullBackedExactThetaFiniteDivisorAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization)
+    {Λ : Type x}
+    (principalProductHullSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource (Point target) Λ)
+    (hullOperator_eq_principalProductHull :
+      stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.hullOperator =
+        principalProductHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator) :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource.PrincipalProductHullBackedExactThetaFiniteDivisorAudit
+      stepXISource principalProductHullSource hullOperator_eq_principalProductHull :=
+  stepXISource.toPrincipalProductHullBackedExactThetaFiniteDivisorAudit
+    principalProductHullSource hullOperator_eq_principalProductHull
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface principal valuation-ball projection from the
+constructor-backed target-charted exact-theta Step (xi) source.
+
+This ties the exact-theta finite-divisor source to the valuation-ball
+direct-product cover before passing through the principal `lambda * O` hull
+interface.
+-/
+theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_principalValuationBallBackedExactThetaFiniteDivisorAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization)
+    {η : Type x} {K : Type y}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {Λ : Type (max u v w x y)}
+    (principalValuationBallSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γ Λ)
+    (adjustedSource_eq_valuationBall :
+      stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.toSourceCoreAdjustedLogVolumeSource =
+        principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource) :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource.PrincipalValuationBallBackedExactThetaFiniteDivisorAudit
+      stepXISource principalValuationBallSource adjustedSource_eq_valuationBall :=
+  stepXISource.toPrincipalValuationBallBackedExactThetaFiniteDivisorAudit
+    principalValuationBallSource adjustedSource_eq_valuationBall
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface source endpoint for the all-in-one constructor-backed
 adjusted-summand Gaussian-to-Step (xi) route.
 
