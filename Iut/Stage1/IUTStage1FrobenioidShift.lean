@@ -62175,6 +62175,88 @@ noncomputable def principalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAud
     dichotomy :=
       sourceData.principalValuationBallBackedCanonicalCThetaScaleAudit.dichotomy }
 
+set_option linter.style.longLine false in
+/--
+Principal valuation-ball Ob5--Ob7 canonical-scale audit at the constructor-backed
+q-choice.
+
+This is the q-choice specialization of
+`principalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit`: the Ob5
+comparison possible image is the same q-choice used by the constructor-backed
+Step (xi) source, so the single q-pilot nonemptiness witness supplies both
+quotient-collapse nonemptiness witnesses after projection to the product-hull
+route.
+-/
+noncomputable def principalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty
+    {κ : Type u}
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      sourceData.toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.PhiFamily
+        κ)
+    (xiFamily :
+      sourceData.toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.XiFamily
+        κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      sourceData.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type (max u v w y z)}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (determinantLogVolume_eq_primeStripGlobal :
+      sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantSource.determinantLogVolume =
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    PrincipalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit
+      sourceData phiFamily xiFamily k
+      sourceData.constructorBackedSource.qChoice Penv Pgau V μ :=
+  let productSource :=
+    sourceData.toPrincipalProductHullBackedSource.toProductHullBackedSource
+  let productAudit :=
+    productSource.productHullBackedOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty
+      phiFamily xiFamily k qPilotRegion_nonempty
+      primeStripLift determinantLogVolume_eq_primeStripGlobal
+  let hselected :
+      productSource.selectedProductHull =
+        sourceData.principalValuationBallSource.selectedPrincipalHull := by
+    calc
+      productSource.selectedProductHull =
+          sourceData.toPrincipalProductHullBackedSource.selectedPrincipalProductHull :=
+            sourceData.toPrincipalProductHullBackedSource.selectedProductHull_eq_selectedPrincipalProductHull
+      _ = sourceData.principalValuationBallSource.selectedPrincipalHull :=
+            sourceData.selectedPrincipalProductHull_eq_valuationBallSelected
+  { topologyFiniteExtensionHaarAudit :=
+      sourceData.principalValuationBallTopologyFiniteExtensionHaarBridgeAudit,
+    valuationBallCanonicalCThetaScaleAudit :=
+      sourceData.principalValuationBallBackedCanonicalCThetaScaleAudit,
+    productOb5Ob6Ob7CanonicalCThetaScaleAudit := productAudit,
+    productSelectedHull_eq_selectedPrincipalHull := hselected,
+    HPhi_eq_selectedPrincipalHull := by
+      calc
+        productSource.toPossibleImageFamilySource.HPhi phiFamily =
+            productSource.selectedProductHull :=
+              productAudit.synchronizedAudit.HPhi_eq_selectedProductHull
+        _ = sourceData.principalValuationBallSource.selectedPrincipalHull :=
+              hselected,
+    HXi_eq_selectedPrincipalHull := by
+      calc
+        productSource.toPossibleImageFamilySource.HXi xiFamily =
+            productSource.selectedProductHull :=
+              productAudit.synchronizedAudit.HXi_eq_selectedProductHull
+        _ = sourceData.principalValuationBallSource.selectedPrincipalHull :=
+              hselected,
+    principalCanonicalCThetaScale_eq_productCanonicalCThetaScale := by
+      rfl,
+    qPilotLogVolume_le_primeStripGlobal :=
+      productAudit.qPilotLogVolume_le_primeStripGlobal,
+    determinantNormalized_eq_primeStripGlobal :=
+      productAudit.determinantNormalized_eq_primeStripGlobal,
+    familyHullLogVolume_eq_primeStripGlobal :=
+      productAudit.familyHullLogVolume_eq_primeStripGlobal,
+    dichotomy :=
+      sourceData.principalValuationBallBackedCanonicalCThetaScaleAudit.dichotomy }
+
 end
   IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
 
@@ -63596,6 +63678,132 @@ noncomputable def boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalVa
   ⟨principalValuationBallBackedSource.principalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit
       phiFamily xiFamily k comparisonChoice
       qPilotRegion_nonempty comparisonChoice_nonempty
+      primeStripLift determinantLogVolume_eq_primeStripGlobal,
+    routeEndpoint.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Canonical-scale principal valuation-ball finite-divisor route with topology,
+finite-extension/Haar, and synchronized Ob5--Ob7 audits at the constructor-backed
+q-choice.
+
+This removes the arbitrary comparison-choice nonemptiness premise from the
+strongest principal valuation-ball Ob5--Ob7 route: after specializing the
+comparison image to the constructor-backed q-choice, the q-pilot nonemptiness
+witness supplies the Ob5 quotient-collapse nonemptiness on both sides.
+-/
+noncomputable def boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallTopologyFiniteExtensionHaarConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithTopologyFiniteExtensionHaarOb5Ob6Ob7AuditAtQChoiceOfQPilotRegionNonempty
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type (max u v w y z)}
+    {κ : Type u}
+    (principalValuationBallBackedSource :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      principalValuationBallBackedSource.toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.PhiFamily
+        κ)
+    (xiFamily :
+      principalValuationBallBackedSource.toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.XiFamily
+        κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      principalValuationBallBackedSource.constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type (max u v w y z)}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (determinantLogVolume_eq_primeStripGlobal :
+      principalValuationBallBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantSource.determinantLogVolume =
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        principalValuationBallBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit
+        principalValuationBallBackedSource phiFamily xiFamily k
+        principalValuationBallBackedSource.constructorBackedSource.qChoice
+        Penv Pgau V μ ×'
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) <
+          principalValuationBallBackedSource.canonicalCThetaScale) :=
+  let routeEndpoint :=
+    part.boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallTopologyFiniteExtensionHaarConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithTopologyFiniteExtensionHaarAudit
+      principalValuationBallBackedSource
+      profile audited transportSource iplConstructionSource
+      sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+      divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+      targetSource
+  ⟨principalValuationBallBackedSource.principalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit_atQChoice_of_qPilotRegion_nonempty
+      phiFamily xiFamily k qPilotRegion_nonempty
       primeStripLift determinantLogVolume_eq_primeStripGlobal,
     routeEndpoint.2.2⟩
 
