@@ -3750,6 +3750,147 @@ theorem endpoint
 end IUTStage1Remark395DirectProductPrincipalHullSystemSource
 
 /--
+Scalar-image direct-product hull source.
+
+This lowers the direct-product principal source by replacing the whole-set
+equality `lambda * O = productHull` with the two directional laws that the
+local valuation construction should eventually prove: every scalar image of a
+local-integer point lies in the corresponding direct-product hull, and every
+direct-product hull point has a scalar preimage in the local-integer region.
+-/
+structure IUTStage1Remark395ScalarImageDirectProductHullSource
+    (δ : Type u) (A : δ -> Type v) where
+  directProductSource :
+    IUTStage1Remark395DirectProductHullSystemSource δ A
+  localIntegerRegion : Set ((d : δ) -> A d)
+  scalarMultiple :
+    ((d : δ) -> Set (A d)) -> ((d : δ) -> A d) -> ((d : δ) -> A d)
+  parameter_nonzero : ((d : δ) -> Set (A d)) -> Prop
+  all_parameters_nonzero :
+    ∀ parameter : (d : δ) -> Set (A d), parameter_nonzero parameter
+  scalarMultiple_mem_productHull :
+    ∀ (parameter : (d : δ) -> Set (A d)) (base : (d : δ) -> A d),
+      base ∈ localIntegerRegion ->
+        scalarMultiple parameter base ∈
+          directProductSource.productHull parameter
+  productHull_has_scalarPreimage :
+    ∀ (parameter : (d : δ) -> Set (A d)) (point : (d : δ) -> A d),
+      point ∈ directProductSource.productHull parameter ->
+        ∃ base : (d : δ) -> A d,
+          base ∈ localIntegerRegion ∧ scalarMultiple parameter base = point
+
+namespace IUTStage1Remark395ScalarImageDirectProductHullSource
+
+variable {δ : Type u} {A : δ -> Type v}
+
+def principalHull
+    (data : IUTStage1Remark395ScalarImageDirectProductHullSource δ A)
+    (parameter : (d : δ) -> Set (A d)) :
+    Set ((d : δ) -> A d) :=
+  { point |
+    ∃ base : (d : δ) -> A d,
+      base ∈ data.localIntegerRegion ∧
+        data.scalarMultiple parameter base = point }
+
+theorem scalarImage_subset_productHull
+    (data : IUTStage1Remark395ScalarImageDirectProductHullSource δ A)
+    (parameter : (d : δ) -> Set (A d)) :
+    data.principalHull parameter ⊆
+      data.directProductSource.productHull parameter := by
+  intro point hpoint
+  rcases hpoint with ⟨base, hbase, hscale⟩
+  rw [← hscale]
+  exact data.scalarMultiple_mem_productHull parameter base hbase
+
+theorem productHull_subset_scalarImage
+    (data : IUTStage1Remark395ScalarImageDirectProductHullSource δ A)
+    (parameter : (d : δ) -> Set (A d)) :
+    data.directProductSource.productHull parameter ⊆
+      data.principalHull parameter := by
+  intro point hpoint
+  exact data.productHull_has_scalarPreimage parameter point hpoint
+
+theorem principalHull_eq_productHull
+    (data : IUTStage1Remark395ScalarImageDirectProductHullSource δ A)
+    (parameter : (d : δ) -> Set (A d)) :
+    data.principalHull parameter =
+      data.directProductSource.productHull parameter := by
+  ext point
+  constructor
+  · intro hpoint
+    exact data.scalarImage_subset_productHull parameter hpoint
+  · intro hpoint
+    exact data.productHull_subset_scalarImage parameter hpoint
+
+def toDirectProductPrincipalHullSystemSource
+    (data : IUTStage1Remark395ScalarImageDirectProductHullSource δ A) :
+    IUTStage1Remark395DirectProductPrincipalHullSystemSource δ A :=
+  { directProductSource := data.directProductSource,
+    localIntegerRegion := data.localIntegerRegion,
+    scalarMultiple := data.scalarMultiple,
+    parameter_nonzero := data.parameter_nonzero,
+    all_parameters_nonzero := data.all_parameters_nonzero,
+    principalHull_eq_productHull := data.principalHull_eq_productHull }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data : IUTStage1Remark395ScalarImageDirectProductHullSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    let directProductPrincipalSource :=
+      data.toDirectProductPrincipalHullSystemSource
+    (∀ parameter : (d : δ) -> Set (A d),
+        data.parameter_nonzero parameter) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.principalHull parameter ⊆
+          data.directProductSource.productHull parameter) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.directProductSource.productHull parameter ⊆
+          data.principalHull parameter) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.principalHull parameter =
+          data.directProductSource.productHull parameter) ∧
+      directProductPrincipalSource.principalHull
+          (data.directProductSource.intersectionParameter region) =
+        { point : (d : δ) -> A d |
+          ∀ parameter : (d : δ) -> Set (A d),
+            region ⊆ directProductPrincipalSource.principalHull parameter ->
+              point ∈ directProductPrincipalSource.principalHull parameter } ∧
+      directProductPrincipalSource.toHolomorphicHullSystem.phi region =
+        directProductPrincipalSource.toPrincipalProductHullSystemSource.principalHull
+          (directProductPrincipalSource.toPrincipalProductHullSystemSource.intersectionParameter region) ∧
+      region ⊆
+        directProductPrincipalSource.toPrincipalProductHullSystemSource.principalHull
+          (directProductPrincipalSource.toPrincipalProductHullSystemSource.intersectionParameter region) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        region ⊆
+          directProductPrincipalSource.toPrincipalProductHullSystemSource.principalHull parameter ->
+          directProductPrincipalSource.toPrincipalProductHullSystemSource.principalHull
+              (directProductPrincipalSource.toPrincipalProductHullSystemSource.intersectionParameter region) ⊆
+            directProductPrincipalSource.toPrincipalProductHullSystemSource.principalHull parameter) ∧
+      directProductPrincipalSource.toProductHullSystemSource.logVolume
+          (directProductPrincipalSource.toProductHullSystemSource.productHull
+            (directProductPrincipalSource.toProductHullSystemSource.intersectionParameter region)) =
+        directProductPrincipalSource.toProductHullSystemSource.productHullLogVolume
+          (directProductPrincipalSource.toProductHullSystemSource.intersectionParameter region) :=
+  by
+    intro directProductPrincipalSource
+    have hendpoint := directProductPrincipalSource.endpoint region
+    rcases hendpoint with
+      ⟨_, _, hintersection, hphi, hregion, hminimal, hlog⟩
+    exact
+      ⟨data.all_parameters_nonzero,
+        data.scalarImage_subset_productHull,
+        data.productHull_subset_scalarImage,
+        data.principalHull_eq_productHull,
+        hintersection,
+        hphi,
+        hregion,
+        hminimal,
+        hlog⟩
+
+end IUTStage1Remark395ScalarImageDirectProductHullSource
+
+/--
 Remark 3.9.5 holomorphic-hull shadow.
 
 The paper characterizes hull formation by the three closure properties P1--P3:
