@@ -2770,6 +2770,26 @@ across the identification of \(H_\beta\) with the calibrated localized regions,
 derives the calibrated cover source, and proves
 \(\mu_{\log}(\phi(P_B))\) equals the sum of the adjusted Ob3/Ob4 localization
 summands.
+This cover-specific equality has now been derived from a lower finite
+local-factor volume source.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395LocalFactorVolume}\\
+\quad\texttt{DirectProductLocalizedHullCoverVectorBundleSource}
+\end{array}
+\]
+assigns a log-volume contribution to each local factor of each direct-product
+cell.  Its source laws compute
+\[
+  \mu_{\log}(H_\beta)=\sum_v \mu_{\beta,v},
+  \qquad
+  \mu_{\log}\!\left(\bigcup_\beta H_\beta\right)
+    =\sum_\beta\sum_v \mu_{\beta,v}.
+\]
+\Lean{} then derives the direct-product cover additivity by finite-sum
+congruence and projects to the cover-specific additive source.  Thus the
+previous cover-additivity assumption is now reduced to the local-factor
+log-volume computation for the localized arithmetic-vector-bundle cells.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5951,7 +5971,7 @@ The practical priority order is:
   the adjusted-localization interface, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  cover-specific direct-product log-volume law, local region/vector-bundle log-volume
+  local-factor direct-product log-volume law, local region/vector-bundle log-volume
   calibration, measure calibration, record-canonical synchronization, and chart
   synchronization witnesses by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source

@@ -41736,6 +41736,39 @@ theorem remark395DirectProductAdditiveLocalizedHullCoverVectorBundleSource_endpo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface local-factor direct-product log-volume source.
+
+This endpoint derives the direct-product cover additivity from the finite
+local-factor cell-volume computation: each cell volume is the sum over local
+factors, and the whole cover volume is the double sum over indices and factors.
+-/
+theorem remark395LocalFactorVolumeDirectProductLocalizedHullCoverVectorBundleSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395LocalFactorVolumeDirectProductLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    let additiveSource :=
+      data.toDirectProductAdditiveLocalizedHullCoverVectorBundleSource
+    let calibratedSource :=
+      additiveSource.toCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.directProductCellLogVolume index =
+        data.localFactorLogVolumeSum index) ∧
+      data.directProductLogVolumeSum =
+        data.localFactorDoubleLogVolumeSum ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.localFactorDoubleLogVolumeSum ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.directProductLogVolumeSum ∧
+      additiveSource.hullSystem.logVolume additiveSource.directProductCellUnion =
+        additiveSource.directProductLogVolumeSum ∧
+      calibratedSource.familyHullLogVolume =
+        calibratedSource.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
