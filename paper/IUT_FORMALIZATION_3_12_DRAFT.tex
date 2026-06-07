@@ -1277,6 +1277,25 @@ theorem.  The new
 uses this landing lemma together with the placewise-preimage assembly theorem,
 so the public route now derives both sides of the vector-valued product-image
 equality from factorwise local data.
+The projected factorwise refinement further removes the abstract
+point-to-factor and assembly maps from this boundary.  A valuation-place/product
+index equivalence \(e:\gamma_{\mathrm{loc}}\simeq\delta\) identifies each local
+place with an actual coordinate of the dependent product \(\prod_{d:\delta}A_d\).
+The source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{LocalLogCoordinateProjectedFactorwiseTargetTransportSource}
+\end{array}
+\]
+sets the local factor carrier at \(v\) to \(A_{e(v)}\), takes projection to be
+evaluation at \(e(v)\), and takes assembly to be the standard dependent-product
+reindexing equivalence \(\texttt{Equiv.piCongrLeft}\).  The corresponding public
+endpoint therefore routes to Corollary 3.12 after proving the factorwise
+transport laws from product evaluation and reindexing.  The remaining local-log
+payload at this boundary is the source-facing image description of the coordinate
+regions \(O_v\) and \(\lambda_vO_v\) under the chosen local logarithmic
+coordinate, together with the valuation-place/product-index identification.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
