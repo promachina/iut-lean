@@ -2914,6 +2914,39 @@ The aggregate
 assigns such a tensor/direct-sum source to each charted localization cell, derives
 the cell log-volume equalities, proves the same pairwise-disjoint cover
 additivity, and projects to the finite-additive calibrated charted cover source.
+The tensor-cell source has now been lowered to compact-open local factor data.
+The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1LocalCompactOpenTensorFactorSource}
+\end{array}
+\]
+records the local ring label, compact-open local factor region, and normalized
+local log-volume for one nonarchimedean tensor factor.  A second declaration,
+\[
+\begin{array}{l}
+\texttt{IUTStage1CompactOpenTensorRegionDirectSumSource}
+\end{array}
+\]
+records the tensor-product region obtained from a finite family of these
+compact-open factors, identifies it with the simultaneous local-factor cell, and
+proves the finite direct-sum log-volume formula.  Lean then constructs
+\(\texttt{IUTStage1FiniteTensorDirectSumLogVolumeSource}\) from this
+compact-open direct-sum datum, including the chart-region transport needed when
+the compact-open factor regions are identified with the already charted local
+factor regions.
+At the packet level,
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395CompactOpenTensorPacketFiniteAdditive}\\
+\quad\texttt{CalibratedLocalRingChartedVectorBundleHullCoverSource}
+\end{array}
+\]
+requires one such compact-open tensor direct-sum construction for each charted
+localization cell, proves that the compact-open factor regions and local-ring
+labels match the charted local factors, constructs the tensor-packet source, and
+then derives the same finite-additive cover equality and bundle-log-volume
+projection.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -6093,15 +6126,18 @@ The practical priority order is:
   adjusted determinant log-volume data plus obligations; the newest
   calibrated local-ring charted vector-bundle source pushes the factor regions,
   local-ring matching, and direct-summand volumes below the previous
-  vector-bundle local-factor interface, and the product-log-volume variant now
+  vector-bundle local-factor interface, the product-log-volume variant now
   factors the per-cell direct-product equality through a reusable
-  single-cell tensor/product log-volume source; the tensor-packet variant now
+  single-cell tensor/product log-volume source, the tensor-packet variant now
   derives that single-cell law from a finite tensor-region/direct-sum
-  log-volume datum for each actual charted localization cell, but
+  log-volume datum for each actual charted localization cell, and the
+  compact-open tensor-packet variant now constructs that finite tensor datum
+  from compact-open local factors plus a direct-sum tensor-region source, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  finite-additive hull log-volume source, construction of the tensor-region and
-  local compact-open/direct-sum decomposition data, per-factor
+  finite-additive hull log-volume source, construction of the compact-open
+  local factors and their normalized log-volume from actual local
+  fields/rings, per-factor
   chart/direct-summand calibration construction, local region/vector-bundle
   log-volume calibration, measure calibration, record-canonical
   synchronization, and chart

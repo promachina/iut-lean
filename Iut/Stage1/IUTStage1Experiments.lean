@@ -41996,6 +41996,45 @@ theorem remark395TensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundl
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface compact-open tensor-packet finite-additive charted cover
+source.
+
+This endpoint derives the previous tensor-packet source from compact-open local
+tensor factors and a direct-sum construction for each charted localization cell.
+-/
+theorem remark395CompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395CompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    let tensorSource :=
+      data.toTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let finiteSource :=
+      tensorSource.toFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let calibratedSource :=
+      finiteSource.toCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (∀ index : β, ∀ place : γ,
+      (data.compactOpenFactor index place).compactOpenRegion =
+        data.localFactorRegion index place) ∧
+      (∀ index : β, ∀ place : γ,
+        (data.compactOpenFactor index place).localRing =
+          (data.localFactorChart index place).localRing) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          Finset.univ.sum fun place =>
+            data.hullSystem.logVolume (data.localFactorRegion index place)) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      tensorSource.hullSystem.logVolume tensorSource.directProductCellUnion =
+        tensorSource.calibratedCellLogVolumeSum ∧
+      calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
+        calibratedSource.bundleLogVolumeSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
