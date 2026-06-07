@@ -17082,6 +17082,217 @@ theorem endpoint
 end IUTStage1Remark395CoordinateScalarImageValuationBallProductHullCoverSource
 
 /--
+Selected scalar-parameter valuation-ball product-hull cover source.
+
+This attaches the stricter scalar-parameter local source to the valuation-ball
+determinant handoff.  It does not claim that every coordinate-projection hull
+parameter is a scalar parameter.  Instead it records the selected product
+scalar parameter whose local regions are exactly the coordinate projections of
+the current possible-image union, and Lean proves that its principal scalar
+image is the valuation-ball direct-product family hull used by Ob3/Ob5.
+-/
+structure IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+    (δ : Type u) (A : δ -> Type v) (S : δ -> Type x)
+    (ι : Type y) (η : Type x) (K : Type z)
+    (β : Type w) (γ : Type max u v w x y z)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ] where
+  valuationCover :
+    IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      ((d : δ) -> A d) ι η K β γ
+  scalarParameterSource :
+    IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S
+  selectedScalarParameter : (d : δ) -> S d
+  hullSystem_eq_scalarParameterProduct :
+    valuationCover.hullSystem =
+      scalarParameterSource.directProductSource.toHolomorphicHullSystem
+  localIntegerRegion_eq_anchorCell :
+    scalarParameterSource.localIntegerRegion =
+      valuationCover.directProductCell valuationCover.anchor
+  selectedParameterRegion_eq_intersection :
+    scalarParameterSource.parameterRegion selectedScalarParameter =
+      scalarParameterSource.directProductSource.intersectionParameter
+        (⋃ i, valuationCover.possibleRegion i)
+
+namespace IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+
+variable {δ : Type u} {A : δ -> Type v} {S : δ -> Type x}
+variable {ι : Type y} {η : Type x} {K : Type z}
+variable {β : Type w} {γ : Type max u v w x y z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable [Fintype β] [Fintype γ]
+
+def possibleImageUnion
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    Set ((d : δ) -> A d) :=
+  ⋃ i, data.valuationCover.possibleRegion i
+
+def selectedParameterRegion
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    (d : δ) -> Set (A d) :=
+  data.scalarParameterSource.parameterRegion data.selectedScalarParameter
+
+def selectedScalarParameterHull
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    Set ((d : δ) -> A d) :=
+  data.scalarParameterSource.principalHull data.selectedScalarParameter
+
+theorem selectedParameterRegion_eq_coordinateProjectionParameter
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.selectedParameterRegion =
+      data.scalarParameterSource.directProductSource.intersectionParameter
+        data.possibleImageUnion := by
+  simpa [selectedParameterRegion, possibleImageUnion] using
+    data.selectedParameterRegion_eq_intersection
+
+theorem selectedScalarParameterHull_eq_directProductHull
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.selectedScalarParameterHull =
+      data.scalarParameterSource.directProductSource.productHull
+        data.selectedParameterRegion :=
+  data.scalarParameterSource.principalHull_eq_productHull
+    data.selectedScalarParameter
+
+theorem familyHull_eq_selectedScalarParameterHull
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.valuationCover.hullSystem.phi data.possibleImageUnion =
+      data.selectedScalarParameterHull := by
+  calc
+    data.valuationCover.hullSystem.phi data.possibleImageUnion =
+        data.scalarParameterSource.directProductSource.toHolomorphicHullSystem.phi
+          data.possibleImageUnion := by
+          rw [data.hullSystem_eq_scalarParameterProduct]
+    _ = data.scalarParameterSource.directProductSource.productHull
+        (data.scalarParameterSource.directProductSource.intersectionParameter
+          data.possibleImageUnion) := by
+          exact
+            data.scalarParameterSource.directProductSource
+              |>.phi_eq_coordinateProjectionProduct data.possibleImageUnion
+    _ = data.scalarParameterSource.directProductSource.productHull
+        data.selectedParameterRegion := by
+          rw [data.selectedParameterRegion_eq_coordinateProjectionParameter]
+    _ = data.selectedScalarParameterHull := by
+          exact data.selectedScalarParameterHull_eq_directProductHull.symm
+
+theorem selectedScalarParameterHull_eq_valuationBallDirectProductCellUnion
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.selectedScalarParameterHull =
+      data.valuationCover.directProductCellUnion := by
+  calc
+    data.selectedScalarParameterHull =
+        data.valuationCover.hullSystem.phi data.possibleImageUnion := by
+          exact data.familyHull_eq_selectedScalarParameterHull.symm
+    _ = data.valuationCover.directProductCellUnion := by
+          simpa [possibleImageUnion,
+            IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.directProductCellUnion,
+            IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.directProductCell,
+            IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.localFactorRegion] using
+            data.valuationCover.familyHull_eq_valuationBallDirectProductCellUnion
+
+noncomputable def toOb3Ob5AdjustedDeterminantLogVolumeSource
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+      ((d : δ) -> A d) ι β γ :=
+  data.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource
+
+theorem adjustedHullOperator_eq_scalarParameterProduct
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+      data.scalarParameterSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator := by
+  change data.valuationCover.hullSystem.toHolomorphicHullOperator =
+    data.scalarParameterSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+  rw [data.hullSystem_eq_scalarParameterProduct]
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.scalarParameterSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      (∀ d : δ,
+        data.scalarParameterSource.parameter_nonzero_coordinate d
+          (data.selectedScalarParameter d)) ∧
+      (∀ d : δ,
+        data.scalarParameterSource.coordinateParameterRegion d
+            (data.selectedScalarParameter d) =
+          data.scalarParameterSource.scalarMultipleCoordinate d
+              (data.selectedScalarParameter d) ''
+            data.scalarParameterSource.localIntegerFactorRegion d) ∧
+      (∀ base : (d : δ) -> A d,
+        base ∈ data.scalarParameterSource.localIntegerRegion ->
+          data.scalarParameterSource.scalarMultiple
+              data.selectedScalarParameter base ∈
+            data.scalarParameterSource.directProductSource.productHull
+              data.selectedParameterRegion) ∧
+      (∀ point : (d : δ) -> A d,
+        point ∈ data.scalarParameterSource.directProductSource.productHull
+            data.selectedParameterRegion ->
+          ∃ base : (d : δ) -> A d,
+            base ∈ data.scalarParameterSource.localIntegerRegion ∧
+              data.scalarParameterSource.scalarMultiple
+                data.selectedScalarParameter base = point) ∧
+      data.selectedParameterRegion =
+        data.scalarParameterSource.directProductSource.intersectionParameter
+          data.possibleImageUnion ∧
+      data.selectedScalarParameterHull =
+        data.scalarParameterSource.directProductSource.productHull
+          data.selectedParameterRegion ∧
+      data.valuationCover.hullSystem.phi data.possibleImageUnion =
+        data.selectedScalarParameterHull ∧
+      data.selectedScalarParameterHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.valuationCover.hullSystem.logVolume
+          data.selectedScalarParameterHull =
+        data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+        data.scalarParameterSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  by
+    exact
+      ⟨data.localIntegerRegion_eq_anchorCell,
+        data.scalarParameterSource.parameter_nonzero
+          data.selectedScalarParameter,
+        fun d =>
+          data.scalarParameterSource.coordinateParameterRegion_eq_scalarImage
+            d (data.selectedScalarParameter d),
+        data.scalarParameterSource.scalarMultiple_mem_productHull
+          data.selectedScalarParameter,
+        data.scalarParameterSource.productHull_has_scalarPreimage
+          data.selectedScalarParameter,
+        data.selectedParameterRegion_eq_coordinateProjectionParameter,
+        data.selectedScalarParameterHull_eq_directProductHull,
+        data.familyHull_eq_selectedScalarParameterHull,
+        data.selectedScalarParameterHull_eq_valuationBallDirectProductCellUnion,
+        by
+          rw [data.selectedScalarParameterHull_eq_valuationBallDirectProductCellUnion]
+          exact data.valuationCover.directProductCoverLogVolume_eq_calibratedCellSum,
+        data.adjustedHullOperator_eq_scalarParameterProduct,
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource
+          |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
+
+end IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+
+/--
 Cover-additive valuation-ball factor-calibrated Haar tensor-packet source.
 
 This variant lowers the valuation-ball factor-calibrated determinant route

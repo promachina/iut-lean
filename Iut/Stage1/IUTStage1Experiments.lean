@@ -46973,6 +46973,68 @@ theorem remark395CoordinateScalarImageValuationBallProductHullCoverSource_endpoi
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface selected scalar-parameter valuation/principal hull cover.
+
+This exposes the stricter selected-parameter boundary: the chosen local scalar
+parameters have regions `H_v(lambda_v) = lambda_v O_v`, their product region is
+the coordinate-projection parameter of the current possible-image union, and
+the resulting selected `lambda O` hull is the valuation-ball family hull used by
+the adjusted Ob3/Ob5 determinant handoff.
+-/
+theorem remark395SelectedScalarParameterValuationBallProductHullCoverSource_endpoint
+    {δ : Type u} {A : δ -> Type v} {S : δ -> Type x}
+    {ι : Type y} {η : Type x} {K : Type z}
+    {β : Type w} {γ : Type max u v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.scalarParameterSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      (∀ d : δ,
+        data.scalarParameterSource.parameter_nonzero_coordinate d
+          (data.selectedScalarParameter d)) ∧
+      (∀ d : δ,
+        data.scalarParameterSource.coordinateParameterRegion d
+            (data.selectedScalarParameter d) =
+          data.scalarParameterSource.scalarMultipleCoordinate d
+              (data.selectedScalarParameter d) ''
+            data.scalarParameterSource.localIntegerFactorRegion d) ∧
+      (∀ base : (d : δ) -> A d,
+        base ∈ data.scalarParameterSource.localIntegerRegion ->
+          data.scalarParameterSource.scalarMultiple
+              data.selectedScalarParameter base ∈
+            data.scalarParameterSource.directProductSource.productHull
+              data.selectedParameterRegion) ∧
+      (∀ point : (d : δ) -> A d,
+        point ∈ data.scalarParameterSource.directProductSource.productHull
+            data.selectedParameterRegion ->
+          ∃ base : (d : δ) -> A d,
+            base ∈ data.scalarParameterSource.localIntegerRegion ∧
+              data.scalarParameterSource.scalarMultiple
+                data.selectedScalarParameter base = point) ∧
+      data.selectedParameterRegion =
+        data.scalarParameterSource.directProductSource.intersectionParameter
+          data.possibleImageUnion ∧
+      data.selectedScalarParameterHull =
+        data.scalarParameterSource.directProductSource.productHull
+          data.selectedParameterRegion ∧
+      data.valuationCover.hullSystem.phi data.possibleImageUnion =
+        data.selectedScalarParameterHull ∧
+      data.selectedScalarParameterHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.valuationCover.hullSystem.logVolume
+          data.selectedScalarParameterHull =
+        data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+        data.scalarParameterSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface cover-additive valuation-ball factor-calibrated Haar
 tensor-packet source.
 

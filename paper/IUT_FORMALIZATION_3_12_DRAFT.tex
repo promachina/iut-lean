@@ -868,6 +868,21 @@ union.  Consequently the adjusted Ob3/Ob5 determinant handoff can now be
 reviewed at a boundary whose remaining scalar hypotheses are one-place
 statements for the local factors \(O_v\) and \(H_v(\lambda)\), rather than
 global statements about \(\lambda\cdot O\).
+The selected scalar-parameter version of this valuation bridge is now exposed
+as
+\[
+\texttt{IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource}.
+\]
+It combines the scalar-parameter source with the valuation-ball cover by
+choosing the product scalar parameter \((\lambda_v)_v\) whose local regions
+\(H_v(\lambda_v)\) are exactly the coordinate projections of the current
+possible-image union.  \Lean{} then proves that the selected scalar image
+\(\lambda\cdot O\) is the direct-product hull selected by the holomorphic hull
+operator and hence the valuation-ball direct-product cell union used by the
+adjusted Ob3/Ob5 determinant source.  This leaves the next finite-extension
+valuation task in its sharpest current form: construct the actual local
+parameters \(\lambda_v\) and prove \(H_v(\lambda_v)=\lambda_v O_v\) from the
+local IUT source data.
 This valuation-ball provenance has now been lifted to the finite-divisor
 vertical-\(IQ\) endpoint.  The declaration
 \[
