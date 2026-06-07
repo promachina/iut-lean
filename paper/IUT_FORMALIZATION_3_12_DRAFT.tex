@@ -1009,6 +1009,39 @@ with the product-carrier/unit-ball transport provenance.  The remaining
 source-facing gap has moved to constructing this carrier equivalence, the
 coordinate-to-place selector, and the nonzero scalars from the actual
 Frobenioid/Kummer local data.
+This transport boundary has now been sharpened once more.  The reduced source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{FiniteDivisorTransportSynchronizationSource}
+\end{array}
+\]
+does not ask separately for the transported valuation-cover equality.  It only
+records the carrier equivalence, the transport of the local-integer region,
+and the transport of the selected nonzero scalar image to the principal hull.
+\Lean{} then derives
+\[
+  e\bigl(\text{valuation unit-ball direct-product cover}\bigr)
+  =\text{principal }\lambda_vO_v\text{ hull}
+\]
+from the product-cover theorem
+\[
+\begin{array}{l}
+\texttt{selectedScalarImageHull\_eq}\\
+\quad\texttt{\_valuationBallDirectProductCellUnion}.
+\end{array}
+\]
+The experiment endpoint
+\[
+\begin{array}{l}
+\texttt{remark395ValuationUnitBallNonzeroScalarTransportSynchronized}\\
+\quad\texttt{ConstructorBackedConstructedOb3Ob5AdjustedHullDeterminant}\\
+\quad\texttt{FiniteDivisorVerticalIQ\_canonicalCThetaScaleDichotomy}\\
+\quad\texttt{WithTransportAudit}
+\end{array}
+\]
+therefore reaches the same canonical-scale vertical-\(IQ\) dichotomy with one
+fewer transported equality at the trust boundary.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -7787,6 +7820,10 @@ The practical priority order is:
   product scalar hull and valuation-unit-ball direct-product cover with the
   principal valuation-ball hull before applying the canonical-scale
   vertical-\(IQ\) dichotomy.
+  A reduced synchronization-source endpoint now derives the transported
+  valuation-cover equality from the selected-scalar/product-cover theorem, so
+  this boundary no longer lists the local-integer, selected-scalar, and
+  valuation-cover transport equalities as three independent hypotheses.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar model, the
