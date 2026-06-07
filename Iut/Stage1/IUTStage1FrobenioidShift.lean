@@ -23002,6 +23002,18 @@ structure AdjustedExactThetaStepXIAudit
     (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
         sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource).normalizedLogVolume <=
       packageN.preLedger.thetaSigned
+  canonicalCThetaBridgeAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemark395CanonicalCThetaBridgeAudit
+      (sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource
+        |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations
+          sourceData.operation sourceData.hullOperation
+          sourceData.determinantOperation sourceData.qChoice
+          sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration
+            |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+            |>.thetaSigned_eq_familyHullLogVolume)
+          sourceData.obligations
+          sourceData.obligationsHullDetData_eq_recordCanonical)
   hullDetBridge_eq_obligations :
     packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
       sourceData.obligations.hullDetData.bridgeData
@@ -23021,6 +23033,17 @@ theorem toAdjustedExactThetaStepXIAudit
   have hsource := sourceData.source_endpoint
   have hdet :=
     sourceData.measureCalibratedAdjustedHodgeSource.source_endpoint
+  have hcanonical :=
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource
+      |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations_canonicalCThetaBridgeAudit
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.qChoice
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        (sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration
+          |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+          |>.thetaSigned_eq_familyHullLogVolume)
+        sourceData.obligations
+        sourceData.obligationsHullDetData_eq_recordCanonical
   exact
     { qPilotRegion_eq_choice := hsource.1,
       qPilotRegion_subset_recordUnion :=
@@ -23041,6 +23064,7 @@ theorem toAdjustedExactThetaStepXIAudit
       thetaSigned_eq_familyHullLogVolume := hsource.2.2.2.2.2.2.2.2.2.1,
       tensorPower_bound :=
         sourceData.measureCalibratedAdjustedHodgeSource.tensorPower_bound,
+      canonicalCThetaBridgeAudit := hcanonical.1,
       hullDetBridge_eq_obligations := hsource.2.2.2.2.2.2.2.2.2.2.1,
       q_pilot_positive := sourceData.obligations.qPilotPositive,
       normalization := sourceData.obligations.normalization,
@@ -23639,6 +23663,18 @@ structure ConstructorBackedAdjustedExactThetaStepXIAudit
         sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.compatibility
         sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.measure_eq_hullLogVolume
         sourceData.measureCalibratedAdjustedHodgeSource.tensorPower_bound
+  canonicalCThetaBridgeAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemark395CanonicalCThetaBridgeAudit
+      (sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource
+        |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
+          sourceData.operation sourceData.hullOperation
+          sourceData.determinantOperation sourceData.qChoice
+          sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration
+            |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+            |>.thetaSigned_eq_familyHullLogVolume)
+          sourceData.hullDetBridge_eq_recordCanonical
+          sourceData.q_pilot_positive sourceData.normalization)
   q_pilot_positive :
     0 < -packageN.preLedger.qSigned
   normalization :
@@ -23655,6 +23691,17 @@ theorem toConstructorBackedAdjustedExactThetaStepXIAudit
   have hsource := sourceData.source_endpoint
   have hdet :=
     sourceData.measureCalibratedAdjustedHodgeSource.source_endpoint
+  have hcanonical :=
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource
+      |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume_canonicalCThetaBridgeAudit
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.qChoice
+        sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+        (sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration
+          |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+          |>.thetaSigned_eq_familyHullLogVolume)
+        sourceData.hullDetBridge_eq_recordCanonical
+        sourceData.q_pilot_positive sourceData.normalization
   exact
     { constructorBackedAdjustedAudit :=
         sourceData.toConstructorBackedAdjustedStepXIAudit,
@@ -23681,6 +23728,7 @@ theorem toConstructorBackedAdjustedExactThetaStepXIAudit
       constructorObligations_hullDetData_eq := hsource.2.2.2.2.1,
       hullDetBridge_eq_constructor := hsource.2.2.2.2.2.1,
       hullDetBridge_eq_recordCanonical := hsource.2.2.2.2.2.2.1,
+      canonicalCThetaBridgeAudit := hcanonical.1,
       q_pilot_positive := hsource.2.2.2.2.2.2.2.1,
       normalization := hsource.2.2.2.2.2.2.2.2.1,
       qSigned_le_thetaSigned := hsource.2.2.2.2.2.2.2.2.2 }

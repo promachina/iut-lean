@@ -26279,6 +26279,55 @@ theorem targetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligatio
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface canonical-scale bridge audit for the obligations-backed,
+target-charted, measure-calibrated adjusted-summand Step (xi) source.
+
+This projects the local canonical `C_Theta` bridge through the strongest
+obligations-backed adjusted exact-theta audit.
+-/
+theorem targetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligationsBackedSource_canonicalCThetaBridgeAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (sourceData :
+      part.IUTStage1TargetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligationsBackedSource
+        (β := β) (γ := γ) audited record hodgeSynchronization) :
+    let constructorBuiltSource :=
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource
+        |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations
+          sourceData.operation sourceData.hullOperation
+          sourceData.determinantOperation sourceData.qChoice
+          sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration
+            |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+            |>.thetaSigned_eq_familyHullLogVolume)
+          sourceData.obligations
+          sourceData.obligationsHullDetData_eq_recordCanonical;
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemark395CanonicalCThetaBridgeAudit
+      constructorBuiltSource :=
+  by
+    intro constructorBuiltSource
+    exact sourceData.toAdjustedExactThetaStepXIAudit.canonicalCThetaBridgeAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface constructor-backed Gaussian-to-Step (xi) audit.
 
 This is the current stricter Step (xi) all-in-one route audit: the
@@ -26414,6 +26463,55 @@ theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImag
     IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource.ConstructorBackedAdjustedExactThetaStepXIAudit
       stepXISource :=
   stepXISource.toConstructorBackedAdjustedExactThetaStepXIAudit
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface canonical-scale bridge audit for the constructor-backed,
+target-charted, measure-calibrated adjusted-summand Step (xi) source.
+
+This is the constructor-backed companion of
+`targetChartedHodgeMeasureCalibratedAdjustedPossibleImageHullDetObligationsBackedSource_canonicalCThetaBridgeAudit`.
+-/
+theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_canonicalCThetaBridgeAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization) :
+    let constructorBuiltSource :=
+      stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource
+        |>.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
+          stepXISource.operation stepXISource.hullOperation
+          stepXISource.determinantOperation stepXISource.qChoice
+          stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (stepXISource.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration
+            |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+            |>.thetaSigned_eq_familyHullLogVolume)
+          stepXISource.hullDetBridge_eq_recordCanonical
+          stepXISource.q_pilot_positive stepXISource.normalization;
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltRemark395CanonicalCThetaBridgeAudit
+      constructorBuiltSource :=
+  by
+    intro constructorBuiltSource
+    exact stepXISource.toConstructorBackedAdjustedExactThetaStepXIAudit.canonicalCThetaBridgeAudit
 
 set_option linter.style.longLine false in
 /--
