@@ -3020,6 +3020,38 @@ the nonarchimedean local tensor-region direct-sum source.  At the packet level,
 assigns such a finite-extension Haar tensor decomposition to each charted
 localization cell and then constructs the nonarchimedean local tensor-packet
 source used by the Step~(xi) cover route.
+The finite-extension Haar source has now been lowered to compact-open topology
+provenance.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1FiniteExtensionCompactOpenTopologyHaarNormalizationSource}
+\end{array}
+\]
+records the compact-open predicate on the local carrier, closure of
+compact-opens under finite intersections, the ring-of-integers compact-open, the
+chosen compact-open subset, a uniformizer action preserving compact-opens, the
+raw Haar measure, and the raw and degree-normalized Haar log-volume functions.
+Its endpoint verifies compact-open provenance for
+\(\mathcal{O}_K\), \(U\), and \(p\cdot U\), checks
+\(\log(\mu_{\mathrm{Haar}}(U))\) at the raw level, and constructs
+\(\texttt{IUTStage1FiniteExtensionHaarCompactOpenLogVolumeSource}\).
+The tensor layer
+\[
+\begin{array}{l}
+\texttt{IUTStage1CompactOpenTopologyTensorProductDirectSumSource}
+\end{array}
+\]
+constructs the finite-extension tensor-product direct-sum source from these
+compact-open topology factors.  Finally,
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395CompactOpenTopologyHaarTensorPacketFiniteAdditive}\\
+\quad\texttt{CalibratedLocalRingChartedVectorBundleHullCoverSource}
+\end{array}
+\]
+feeds compact-open topology/Haar normalization data for each charted cell into
+the finite-extension Haar tensor-packet source and hence into the same
+finite-additive Step~(xi) cover route.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -6211,12 +6243,15 @@ The practical priority order is:
   degree-normalization, and uniformizer-shift laws, and the finite-extension Haar
   tensor-packet variant now constructs those local sources from raw
   finite-extension Haar log-volume functions plus the tensor-product direct-sum
-  decomposition law, but
+  decomposition law, and the compact-open topology/Haar tensor-packet variant
+  now constructs the finite-extension Haar source from compact-open provenance,
+  raw Haar measure, raw log-volume, degree normalization, and uniformizer
+  compact-open preservation, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  finite-additive hull log-volume source, construction of the local compact-open
-  topology and Haar log-volume function itself from actual finite extensions of
-  \(\mathbb{Q}_p\), per-factor
+  finite-additive hull log-volume source, construction of the compact-open
+  predicate, Haar measure, and Haar uniqueness/existence theorem itself from
+  actual finite extensions of \(\mathbb{Q}_p\), per-factor
   chart/direct-summand calibration construction, local region/vector-bundle
   log-volume calibration, measure calibration, record-canonical
   synchronization, and chart

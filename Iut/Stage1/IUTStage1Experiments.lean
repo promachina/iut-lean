@@ -42143,6 +42143,54 @@ theorem remark395FiniteExtensionHaarTensorPacketFiniteAdditiveCalibratedLocalRin
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface compact-open topology/Haar tensor-packet finite-additive
+charted cover source.
+
+This endpoint derives the finite-extension Haar tensor-packet source from
+compact-open topology provenance, Haar measure/log-volume normalization, and the
+tensor-product direct-sum cell formula.
+-/
+theorem remark395CompactOpenTopologyHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395CompactOpenTopologyHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    let finiteExtensionSource :=
+      data.toFiniteExtensionHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let calibratedSource :=
+      finiteExtensionSource
+        |>.toNonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toCompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (∀ index : β, ∀ place : γ,
+      (data.compactOpenTopologyFactor index place).isCompactOpen
+        (data.compactOpenTopologyFactor index place).compactOpenSubset) ∧
+      (∀ index : β, ∀ place : γ,
+        (data.compactOpenTopologyFactor index place).realizedRegion
+            (data.compactOpenTopologyFactor index place).compactOpenSubset =
+          data.localFactorRegion index place) ∧
+      (∀ index : β, ∀ place : γ,
+        (data.compactOpenTopologyFactor index place).localRing =
+          (data.localFactorChart index place).localRing) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          Finset.univ.sum fun place =>
+            data.hullSystem.logVolume (data.localFactorRegion index place)) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      finiteExtensionSource.hullSystem.logVolume finiteExtensionSource.directProductCellUnion =
+        finiteExtensionSource.calibratedCellLogVolumeSum ∧
+      calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
+        calibratedSource.bundleLogVolumeSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
