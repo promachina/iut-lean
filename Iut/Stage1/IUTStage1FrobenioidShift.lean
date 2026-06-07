@@ -59518,6 +59518,102 @@ theorem principalValuationBallBackedRecordBridgeAudit
     qSigned_le_thetaSigned :=
       sourceData.toPrincipalProductHullBackedSource.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
 
+noncomputable def canonicalCThetaScale
+    (_sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    Real :=
+  packageN.preLedger.thetaSigned / (-packageN.preLedger.qSigned)
+
+theorem thetaSigned_le_canonicalCThetaScale_absLogQ
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    packageN.preLedger.thetaSigned <=
+      sourceData.canonicalCThetaScale * (-packageN.preLedger.qSigned) := by
+  have hne : (-packageN.preLedger.qSigned) ≠ 0 :=
+    ne_of_gt sourceData.constructorBackedSource.q_pilot_positive
+  have heq :
+      sourceData.canonicalCThetaScale * (-packageN.preLedger.qSigned) =
+        packageN.preLedger.thetaSigned := by
+    simpa [canonicalCThetaScale] using
+      div_mul_cancel₀ packageN.preLedger.thetaSigned hne
+  rw [heq]
+
+set_option linter.style.longLine false in
+structure PrincipalValuationBallBackedCanonicalCThetaScaleAudit
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    Prop where
+  valuationBallRecordBridgeAudit :
+    PrincipalValuationBallBackedRecordBridgeAudit sourceData
+  constructorBackedRecordBridgeAudit :
+    IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ConstructorBackedRecordBridgeAudit
+      sourceData.constructorBackedSource
+  canonicalCThetaScale_eq :
+    sourceData.canonicalCThetaScale =
+      packageN.preLedger.thetaSigned / (-packageN.preLedger.qSigned)
+  q_pilot_positive :
+    0 < -packageN.preLedger.qSigned
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+  thetaSigned_le_canonicalCTheta_absLogQ :
+    packageN.preLedger.thetaSigned <=
+      sourceData.canonicalCThetaScale * (-packageN.preLedger.qSigned)
+  qPilotLogVolume_le_thetaSigned :
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.qRegionLogVolume <=
+      packageN.preLedger.thetaSigned
+  sourceBridge_to_canonicalScale_chain :
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.qRegionLogVolume <=
+      sourceData.canonicalCThetaScale * (-packageN.preLedger.qSigned)
+  dichotomy :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < sourceData.canonicalCThetaScale
+
+set_option linter.style.longLine false in
+theorem principalValuationBallBackedCanonicalCThetaScaleAudit
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    PrincipalValuationBallBackedCanonicalCThetaScaleAudit sourceData := by
+  let hvaluation := sourceData.principalValuationBallBackedRecordBridgeAudit
+  let hrecord := sourceData.constructorBackedSource.constructorBackedRecordBridgeAudit
+  have htheta :
+      packageN.preLedger.thetaSigned <=
+        sourceData.canonicalCThetaScale * (-packageN.preLedger.qSigned) :=
+    sourceData.thetaSigned_le_canonicalCThetaScale_absLogQ
+  let hbound : IUTStage1Corollary312SignedCThetaBound :=
+    { comparison :=
+        { thetaSigned := packageN.preLedger.thetaSigned,
+          qSigned := packageN.preLedger.qSigned,
+          q_positive := sourceData.constructorBackedSource.q_pilot_positive,
+          qSigned_le_thetaSigned := hvaluation.qSigned_le_thetaSigned },
+      cTheta := sourceData.canonicalCThetaScale,
+      thetaSigned_le_cTheta_absLogQ := htheta }
+  have hdichotomy :
+      (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < sourceData.canonicalCThetaScale := by
+    rcases hbound.cTheta_eq_neg_one_or_gt_neg_one with hC | hstrict
+    · exact Or.inl
+        ⟨hbound.qSigned_eq_thetaSigned_of_cTheta_eq_neg_one hC,
+          hbound.thetaSigned_neg_of_cTheta_eq_neg_one hC⟩
+    · exact Or.inr hstrict
+  exact
+    { valuationBallRecordBridgeAudit := hvaluation,
+      constructorBackedRecordBridgeAudit := hrecord,
+      canonicalCThetaScale_eq := rfl,
+      q_pilot_positive := sourceData.constructorBackedSource.q_pilot_positive,
+      qSigned_le_thetaSigned := hvaluation.qSigned_le_thetaSigned,
+      thetaSigned_le_canonicalCTheta_absLogQ := htheta,
+      qPilotLogVolume_le_thetaSigned :=
+        hrecord.qPilotLogVolume_le_thetaSigned,
+      sourceBridge_to_canonicalScale_chain :=
+        hrecord.qPilotLogVolume_le_thetaSigned.trans htheta,
+      dichotomy := hdichotomy }
+
 end
   IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
 
@@ -60271,6 +60367,113 @@ theorem boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBal
       holomorphic_structure_forgotten packetLocalObject_eq_entrySource
       packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
       targetSource cTheta thetaSigned_le_cTheta_absLogQ |>.2⟩
+
+set_option linter.style.longLine false in
+/--
+Canonical-scale audited principal valuation-ball-backed finite-divisor route.
+
+This is the no-external-bound version of the principal valuation-ball route:
+the `C_Theta` value is the local canonical scale
+`thetaSigned / (-qSigned)` attached to the same constructor-backed
+Remark 3.9.5 Step (xi) source.  The numeric theta/log-q bound passed to the
+ordered-real endpoint is derived from q-pilot positivity, while the returned
+audit keeps the valuation-ball provenance and the constructor-backed
+hull/determinant log-volume bridge visible.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithPrincipalValuationBallAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type (max u v w y z)}
+    (principalValuationBallBackedSource :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        principalValuationBallBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallBackedCanonicalCThetaScaleAudit
+        principalValuationBallBackedSource ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) <
+          principalValuationBallBackedSource.canonicalCThetaScale) :=
+  let canonicalAudit :=
+    principalValuationBallBackedSource.principalValuationBallBackedCanonicalCThetaScaleAudit
+  ⟨canonicalAudit,
+    (part.boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_withPrincipalValuationBallAudit
+      principalValuationBallBackedSource
+      profile audited transportSource iplConstructionSource
+      sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+      divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+      targetSource principalValuationBallBackedSource.canonicalCThetaScale
+      canonicalAudit.thetaSigned_le_canonicalCTheta_absLogQ).2⟩
 
 set_option linter.style.longLine false in
 /--
