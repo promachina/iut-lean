@@ -2341,7 +2341,11 @@ The project currently proves the following source-facing results in \Lean{}:
   possible image and comparison possible image have the same collapsed
   upper-semi quotient image modulo the selected product hull, and the selected
   hull log-volume is identified with the normalized determinant, determinant
-  log-volume, and normalized tensor-power value.
+  log-volume, and normalized tensor-power value.  Finally, the product-hull
+  wrapper now projects to the source-facing possible-image family package: the
+  Theorem~3.11 family \(P_B\), its canonical \(\Phi(P_B)\) approximant, and any
+  supplied exact \(\Xi(P_B)\) family are audited at the same boundary, with
+  \(H_{\Xi(P_B)}\) identified with the selected product hull.
 \item The milestone-facing endpoint has a Hodge--Arakelov source form as well:
   it consumes source and target Hodge--Arakelov theta-evaluation sources,
   canonical one-label degree preservation, and a typed allowed-forgetting
@@ -6246,6 +6250,29 @@ selected product hull and the raw
 first finite-divisor product-hull surface where the source-paper
 ``smallest product hull'' formulation and the Remark~3.9.5(Ob5)
 quotient-compatible determinant formalism are visible in one audit object.
+The same source now also has a \(\Phi/\Xi\)-approximant audit,
+\[
+\begin{array}{l}
+\texttt{remark395ProductHullBackedConstructorBackedConstructed}\\
+\quad\texttt{HullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_phiXiApproximantAudit}.
+\end{array}
+\]
+It constructs the source-facing possible-image family
+\(P_B=\{P_\beta\}_{\beta\in B}\) directly from the product-hull system and the
+Theorem~3.11 possible-image regions.  \Lean{} proves that the family union is
+\(P_{\mathrm{rec}}\), that the canonical hull \(\phi(P_B)\) is the selected
+smallest product hull, and that the canonical \(\Phi(P_B)\) approximant is this
+same hull.  If an exact \(\Xi(P_B)\) family is supplied, the audit proves
+\[
+  H_{\Xi(P_B)}=\phi(P_B)
+\]
+at the selected product-hull boundary, records the exact \(\Xi\)-member
+log-volume equality, and proves that \(H_{\Xi(P_B)}\) has the same collapsed
+upper-semi quotient image as any nonempty comparison possible image.  This
+threads the paper's \(\Phi(P)\), \(\Xi(P)\), and \(H_{\Xi(P)}\) formalism into
+the strongest current finite-divisor product-hull route instead of leaving it
+only at the generic source-core endpoint.
 The constructor-built source-level canonical-scale bridge is now exposed
 directly as
 \[

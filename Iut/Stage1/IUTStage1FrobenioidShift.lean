@@ -57680,6 +57680,52 @@ def selectedProductHull
     (sourceData.productHullSource.intersectionParameter
       (recordThetaPossibleImageUnion record))
 
+def toPossibleImageFamilySource
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    IUTStage1Remark395PossibleImageFamilySource
+      (Point target)
+      (IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) :=
+  { hullOperator :=
+      IUTStage1Remark395HolomorphicHullSystem.toHolomorphicHullOperator
+        sourceData.productHullSource.toHolomorphicHullSystem,
+    possibleRegion := recordThetaPossibleImage record }
+
+theorem possibleImageFamily_familyUnion_eq_recordUnion
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    sourceData.toPossibleImageFamilySource.familyUnion =
+      recordThetaPossibleImageUnion record :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem possibleImageFamily_canonicalHull_eq_selectedProductHull
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    sourceData.toPossibleImageFamilySource.canonicalHull =
+      sourceData.selectedProductHull := by
+  simpa [toPossibleImageFamilySource,
+    IUTStage1Remark395PossibleImageFamilySource.canonicalHull,
+    IUTStage1Remark395PossibleImageFamilySource.familyUnion,
+    IUTStage1Remark395HolomorphicHullSystem.toHolomorphicHullOperator,
+    selectedProductHull] using
+    sourceData.productHullSource.phi_eq_productHull_intersectionParameter
+      (recordThetaPossibleImageUnion record)
+
+set_option linter.style.longLine false in
+theorem possibleImageFamily_canonicalPhi_eq_selectedProductHull
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    sourceData.toPossibleImageFamilySource.canonicalPhi.approximant =
+      sourceData.selectedProductHull := by
+  rw [sourceData.toPossibleImageFamilySource.canonicalPhi_approximant_eq_phi]
+  exact sourceData.possibleImageFamily_canonicalHull_eq_selectedProductHull
+
 set_option linter.style.longLine false in
 theorem hullOperator_phi_eq_selectedProductHull
     (sourceData :
@@ -57992,6 +58038,137 @@ theorem productHullBackedOb5QuotientDeterminantAudit
         sourceData.qPilotRegion_subset_selectedProductHull,
     qSigned_le_thetaSigned :=
       sourceData.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+structure ProductHullBackedPhiXiApproximantAudit
+    {κ : Type u}
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (xiFamily : sourceData.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) :
+    Prop where
+  ob5QuotientDeterminantAudit :
+    ProductHullBackedOb5QuotientDeterminantAudit
+      sourceData comparisonChoice
+  possibleImageFamily_familyUnion_eq_recordUnion :
+    sourceData.toPossibleImageFamilySource.familyUnion =
+      recordThetaPossibleImageUnion record
+  possibleImageFamily_canonicalHull_eq_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.canonicalHull =
+      sourceData.selectedProductHull
+  canonicalPhi_approximant_eq_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.canonicalPhi.approximant =
+      sourceData.selectedProductHull
+  familyUnion_subset_selectedProductHull :
+    recordThetaPossibleImageUnion record ⊆ sourceData.selectedProductHull
+  comparisonRegion_subset_selectedProductHull :
+    recordThetaPossibleImage record comparisonChoice ⊆
+      sourceData.selectedProductHull
+  HXi_eq_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.HXi xiFamily =
+      sourceData.selectedProductHull
+  HXi_subset_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.HXi xiFamily ⊆
+      sourceData.selectedProductHull
+  selectedProductHull_subset_HXi :
+    sourceData.selectedProductHull ⊆
+      sourceData.toPossibleImageFamilySource.HXi xiFamily
+  exactXi_logVolume_eq_familyUnion :
+    sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        ((xiFamily.exactApproximant k).approximant).approximant =
+      sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        sourceData.toPossibleImageFamilySource.familyUnion
+  HXi_quotientImage_eq_collapsed :
+    IUTStage1UpperSemiSetQuotient.quotientMap sourceData.selectedProductHull ''
+        sourceData.toPossibleImageFamilySource.HXi xiFamily =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  HXi_quotientImage_eq_comparisonRegion :
+    IUTStage1UpperSemiSetQuotient.quotientMap sourceData.selectedProductHull ''
+        sourceData.toPossibleImageFamilySource.HXi xiFamily =
+      IUTStage1UpperSemiSetQuotient.quotientMap sourceData.selectedProductHull ''
+        recordThetaPossibleImage record comparisonChoice
+  selectedProductHull_logVolume_eq_normalizedDeterminant :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem productHullBackedPhiXiApproximantAudit
+    {κ : Type u}
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (xiFamily : sourceData.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record
+        sourceData.constructorBackedSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    ProductHullBackedPhiXiApproximantAudit
+      sourceData xiFamily k comparisonChoice :=
+  let ob5Audit :=
+    sourceData.productHullBackedOb5QuotientDeterminantAudit
+      comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  let familySource := sourceData.toPossibleImageFamilySource
+  let hHXi_eq_selected :
+      familySource.HXi xiFamily = sourceData.selectedProductHull := by
+    rw [familySource.HXi_eq_phi xiFamily]
+    exact sourceData.possibleImageFamily_canonicalHull_eq_selectedProductHull
+  let hHXi_subset_selected :
+      familySource.HXi xiFamily ⊆ sourceData.selectedProductHull := by
+    rw [hHXi_eq_selected]
+  let hselected_subset_HXi :
+      sourceData.selectedProductHull ⊆ familySource.HXi xiFamily := by
+    rw [hHXi_eq_selected]
+  let hHXi_nonempty :
+      (familySource.HXi xiFamily).Nonempty :=
+    familySource.HXi_nonempty_of_possibleRegion_nonempty
+      xiFamily comparisonChoice_nonempty
+  { ob5QuotientDeterminantAudit := ob5Audit,
+    possibleImageFamily_familyUnion_eq_recordUnion :=
+      sourceData.possibleImageFamily_familyUnion_eq_recordUnion,
+    possibleImageFamily_canonicalHull_eq_selectedProductHull :=
+      sourceData.possibleImageFamily_canonicalHull_eq_selectedProductHull,
+    canonicalPhi_approximant_eq_selectedProductHull :=
+      sourceData.possibleImageFamily_canonicalPhi_eq_selectedProductHull,
+    familyUnion_subset_selectedProductHull := by
+      rw [← sourceData.possibleImageFamily_familyUnion_eq_recordUnion]
+      exact
+        (familySource.familyUnion_subset_phi).trans
+          (by
+            rw [sourceData.possibleImageFamily_canonicalHull_eq_selectedProductHull]),
+    comparisonRegion_subset_selectedProductHull :=
+      ob5Audit.comparisonRegion_subset_selectedProductHull,
+    HXi_eq_selectedProductHull := hHXi_eq_selected,
+    HXi_subset_selectedProductHull := hHXi_subset_selected,
+    selectedProductHull_subset_HXi := hselected_subset_HXi,
+    exactXi_logVolume_eq_familyUnion := by
+      simpa [familySource] using
+        familySource.XiFamily_ob5_endpoint
+          xiFamily k comparisonChoice comparisonChoice_nonempty |>.2.2.2.1,
+    HXi_quotientImage_eq_collapsed :=
+      IUTStage1UpperSemiSetQuotient.quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+        hHXi_nonempty hHXi_subset_selected,
+    HXi_quotientImage_eq_comparisonRegion :=
+      IUTStage1UpperSemiSetQuotient.quotientMap_images_eq_of_nonempty_subsets
+        hHXi_nonempty hHXi_subset_selected
+        comparisonChoice_nonempty
+        ob5Audit.comparisonRegion_subset_selectedProductHull,
+    selectedProductHull_logVolume_eq_normalizedDeterminant :=
+      ob5Audit.selectedProductHull_logVolume_eq_normalizedDeterminant,
+    qSigned_le_thetaSigned := ob5Audit.qSigned_le_thetaSigned }
 
 end
   IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource

@@ -34142,6 +34142,45 @@ theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFin
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface `Phi`/`Xi` approximant audit for the product-hull-backed
+constructor-built Remark 3.9.5 finite-divisor source.
+
+This identifies the selected smallest product hull with the canonical
+`Phi(P_B)` approximant of the Theorem 3.11 possible-image family and, for a
+supplied exact `Xi(P_B)` family, identifies `H_Xi(P_B)` with the same selected
+product hull.  The audit also keeps the Ob5 quotient/determinant compatibility
+from the product-hull boundary.
+-/
+theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_phiXiApproximantAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type x} {κ : Type u}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (xiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record
+        productHullBackedSource.constructorBackedSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedPhiXiApproximantAudit
+      productHullBackedSource xiFamily k comparisonChoice :=
+  productHullBackedSource.productHullBackedPhiXiApproximantAudit
+    xiFamily k comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy through the product-hull-backed
 constructor-built Remark 3.9.5 finite-divisor source.
 -/
