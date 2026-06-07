@@ -743,6 +743,16 @@ hulls containing that region.  From this data \Lean{} constructs the ordinary
 that \(\phi(P)\) is exactly this selected product hull, contains \(P\), is
 minimal among product hulls containing \(P\), and has the stated product-hull
 log-volume.
+There is now a direct-product constructor for this boundary,
+\[
+\texttt{IUTStage1Remark395DirectProductHullSystemSource}.
+\]
+Here a product hull is a literal coordinate product and the selected
+intersection parameter is the family of coordinate projections of \(P\).
+\Lean{} proves that this coordinate-projection product is the intersection of
+all product hulls containing \(P\), then projects to
+\texttt{IUTStage1Remark395ProductHullSystemSource}.  Thus this layer no
+longer supplies the product-hull intersection law as an independent field.
 This product-hull source now has a principal scalar-multiple refinement,
 \[
 \texttt{IUTStage1Remark395PrincipalProductHullSystemSource}.
@@ -2681,6 +2691,11 @@ the canonical hull is precisely the system's \(\phi(\bigcup_\beta P_\beta)\),
 which is a hull by the intersection-closure input.  Thus the Ob5 quotient
 collapse for possible images is already downstream of the minimal-hull
 construction, not merely of a supplied \(\phi\)-operator.
+The product-hull source now has a direct-product constructor as well:
+\texttt{IUTStage1Remark395DirectProductHullSystemSource} defines product hulls
+as coordinate products, defines the selected hull parameter by coordinate
+projections of the region, and proves the ``smallest product hull'' equality
+before projecting to the existing product-hull and holomorphic-hull systems.
 The determinant side now has a source-facing Ob3/Ob4 package as well:
 \[
 \begin{array}{l}
@@ -7565,8 +7580,8 @@ The practical priority order is:
   determinant-normalization payloads.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
-  But the next work is to replace the still-supplied hull
-  system, direct-product localization cover construction, family-local
+  But the next work is to replace the still-supplied principal
+  \(\lambda\cdot O\) scalar construction, direct-product localization cover construction, family-local
   finite-cover additivity theorem,
   construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), extension

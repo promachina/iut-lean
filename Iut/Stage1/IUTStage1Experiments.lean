@@ -44559,6 +44559,44 @@ theorem remark395ProductHullSystemSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface direct-product construction for Remark 3.9.5(i)--(ii).
+
+This removes the supplied product-hull intersection law at this boundary:
+product hulls are literal coordinate products, the selected intersection
+parameter is the coordinate-projection family of the region, and Lean proves
+that this product is the smallest product hull containing the region before
+projecting to the existing `ProductHullSystemSource`.
+-/
+theorem remark395DirectProductHullSystemSource_endpoint
+    {δ : Type u} {A : δ -> Type v}
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    let productSource := data.toProductHullSystemSource
+    let hullSystem := data.toHolomorphicHullSystem
+    data.productHull (data.intersectionParameter region) =
+        { point : (d : δ) -> A d |
+          ∀ parameter : (d : δ) -> Set (A d),
+            region ⊆ data.productHull parameter ->
+              point ∈ data.productHull parameter } ∧
+      region ⊆ data.productHull (data.intersectionParameter region) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        region ⊆ data.productHull parameter ->
+          data.productHull (data.intersectionParameter region) ⊆
+            data.productHull parameter) ∧
+      data.logVolume
+          (data.productHull (data.intersectionParameter region)) =
+        data.productHullLogVolume (data.intersectionParameter region) ∧
+      hullSystem.phi region =
+        data.productHull (data.intersectionParameter region) ∧
+      productSource.logVolume
+          (productSource.productHull
+            (productSource.intersectionParameter region)) =
+        productSource.productHullLogVolume
+          (productSource.intersectionParameter region) :=
+  data.endpoint region
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the source-facing Remark 3.9.5 possible-image
 family package.
 

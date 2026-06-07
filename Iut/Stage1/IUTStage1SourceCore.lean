@@ -3245,6 +3245,170 @@ theorem endpoint
 end IUTStage1Remark395ProductHullSystemSource
 
 /--
+Remark 3.9.5(i)--(ii) direct-product hull source.
+
+This is a constructor layer for `IUTStage1Remark395ProductHullSystemSource`.
+Product hulls are literal coordinate products.  For a region `P`, the selected
+intersection parameter is the family of coordinate projections of `P`; Lean
+then proves that this product is the intersection of all product hulls
+containing `P`.  Thus the smallest-product-hull law is no longer supplied at
+this boundary.
+-/
+structure IUTStage1Remark395DirectProductHullSystemSource
+    (δ : Type u) (A : δ -> Type v) where
+  logVolume : Set ((d : δ) -> A d) -> Real
+  productHullLogVolume : ((d : δ) -> Set (A d)) -> Real
+  logVolume_productHull_eq :
+    ∀ parameter : (d : δ) -> Set (A d),
+      logVolume { point : (d : δ) -> A d |
+        ∀ d : δ, point d ∈ parameter d } =
+        productHullLogVolume parameter
+  logVolume_mono :
+    ∀ {region₁ region₂ : Set ((d : δ) -> A d)},
+      region₁ ⊆ region₂ -> logVolume region₁ <= logVolume region₂
+
+namespace IUTStage1Remark395DirectProductHullSystemSource
+
+variable {δ : Type u} {A : δ -> Type v}
+
+def productHull
+    (_data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (parameter : (d : δ) -> Set (A d)) :
+    Set ((d : δ) -> A d) :=
+  { point | ∀ d : δ, point d ∈ parameter d }
+
+def coordinateProjection
+    (_data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (region : Set ((d : δ) -> A d))
+    (d : δ) :
+    Set (A d) :=
+  { value | ∃ point : (d : δ) -> A d, point ∈ region ∧ point d = value }
+
+def intersectionParameter
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    (d : δ) -> Set (A d) :=
+  fun d => data.coordinateProjection region d
+
+theorem mem_productHull_iff
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (parameter : (d : δ) -> Set (A d))
+    (point : (d : δ) -> A d) :
+    point ∈ data.productHull parameter ↔
+      ∀ d : δ, point d ∈ parameter d :=
+  Iff.rfl
+
+theorem region_subset_productHull_intersection
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    region ⊆ data.productHull (data.intersectionParameter region) := by
+  intro point hpoint d
+  exact ⟨point, hpoint, rfl⟩
+
+set_option linter.style.longLine false in
+theorem productHull_intersection_eq
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    data.productHull (data.intersectionParameter region) =
+      { point : (d : δ) -> A d |
+        ∀ parameter : (d : δ) -> Set (A d),
+          region ⊆ data.productHull parameter ->
+            point ∈ data.productHull parameter } := by
+  ext point
+  constructor
+  · intro hpoint parameter hsubset d
+    rcases hpoint d with ⟨sourcePoint, hsourcePoint, hcoordinate⟩
+    simpa [hcoordinate] using hsubset hsourcePoint d
+  · intro hpoint d
+    exact
+      hpoint (data.intersectionParameter region)
+        (data.region_subset_productHull_intersection region) d
+
+theorem productHull_intersection_minimal
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    {region : Set ((d : δ) -> A d)}
+    {parameter : (d : δ) -> Set (A d)}
+    (hsubset : region ⊆ data.productHull parameter) :
+    data.productHull (data.intersectionParameter region) ⊆
+      data.productHull parameter := by
+  rw [data.productHull_intersection_eq region]
+  intro point hpoint
+  exact hpoint parameter hsubset
+
+theorem logVolume_productHull_eq_source
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (parameter : (d : δ) -> Set (A d)) :
+    data.logVolume (data.productHull parameter) =
+      data.productHullLogVolume parameter :=
+  data.logVolume_productHull_eq parameter
+
+def toProductHullSystemSource
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A) :
+    IUTStage1Remark395ProductHullSystemSource
+      ((d : δ) -> A d) ((d : δ) -> Set (A d)) :=
+  { productHull := data.productHull,
+    productHullLogVolume := data.productHullLogVolume,
+    intersectionParameter := data.intersectionParameter,
+    productHull_intersection_eq := data.productHull_intersection_eq,
+    logVolume := data.logVolume,
+    logVolume_productHull_eq := data.logVolume_productHull_eq_source,
+    logVolume_mono := fun hsubset => data.logVolume_mono hsubset }
+
+def toHolomorphicHullSystem
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A) :
+    IUTStage1Remark395HolomorphicHullSystem ((d : δ) -> A d) :=
+  data.toProductHullSystemSource.toHolomorphicHullSystem
+
+theorem phi_eq_coordinateProjectionProduct
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    data.toHolomorphicHullSystem.phi region =
+      data.productHull (data.intersectionParameter region) :=
+  data.toProductHullSystemSource.phi_eq_productHull_intersectionParameter
+    region
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data : IUTStage1Remark395DirectProductHullSystemSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    let productSource := data.toProductHullSystemSource
+    let hullSystem := data.toHolomorphicHullSystem
+    data.productHull (data.intersectionParameter region) =
+        { point : (d : δ) -> A d |
+          ∀ parameter : (d : δ) -> Set (A d),
+            region ⊆ data.productHull parameter ->
+              point ∈ data.productHull parameter } ∧
+      region ⊆ data.productHull (data.intersectionParameter region) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        region ⊆ data.productHull parameter ->
+          data.productHull (data.intersectionParameter region) ⊆
+            data.productHull parameter) ∧
+      data.logVolume
+          (data.productHull (data.intersectionParameter region)) =
+        data.productHullLogVolume (data.intersectionParameter region) ∧
+      hullSystem.phi region =
+        data.productHull (data.intersectionParameter region) ∧
+      productSource.logVolume
+          (productSource.productHull
+            (productSource.intersectionParameter region)) =
+        productSource.productHullLogVolume
+          (productSource.intersectionParameter region) :=
+  by
+    intro productSource hullSystem
+    exact
+      ⟨data.productHull_intersection_eq region,
+        data.region_subset_productHull_intersection region,
+        fun parameter hsubset =>
+          data.productHull_intersection_minimal hsubset,
+        data.logVolume_productHull_eq_source
+          (data.intersectionParameter region),
+        data.phi_eq_coordinateProjectionProduct region,
+        data.toProductHullSystemSource.logVolume_intersectionProductHull_eq
+          region⟩
+
+end IUTStage1Remark395DirectProductHullSystemSource
+
+/--
 Remark 3.9.5(i) principal product-hull source.
 
 In the source text, the relatively compact holomorphic hull is the smallest
