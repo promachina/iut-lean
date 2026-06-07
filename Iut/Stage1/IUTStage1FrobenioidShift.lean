@@ -59980,6 +59980,151 @@ theorem constructorBackedRecordBridgeAudit
 
 end IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
 
+namespace
+  IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {obligations : IUTStage1SourceHullDetObligations packageN}
+variable {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+variable {audit : endpoint.LogVolumeChartAudit}
+variable {l : PrimeGeFive}
+variable {part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {hodgeSynchronization :
+  IUTStage1TargetChartedHodgeArakelovSynchronization
+    part audited X C}
+variable {β : Type w} [Fintype β]
+variable {γ : Type x} [Fintype γ]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+set_option linter.style.longLine false in
+/--
+Project the target-charted exact-theta adjusted-summand Step (xi) source into
+the current constructor-backed finite-divisor Remark 3.9.5 milestone source.
+
+The only theta/family-hull input required by the milestone source is filled by
+the target-charted Hodge calibration: canonical-one degree, theta-monoid
+degree, and the finite adjusted determinant summand sum.  Thus this route
+connects the exact-theta Ob3/Ob5 source to the finite-divisor endpoint without
+reintroducing a bare `thetaSigned = familyHullLogVolume` hypothesis at this
+boundary.
+-/
+noncomputable def toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization) :
+    IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (β := β) (γ := γ) record :=
+  { measuredSource :=
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource,
+    operation := sourceData.operation,
+    hullOperation := sourceData.hullOperation,
+    determinantOperation := sourceData.determinantOperation,
+    qChoice := sourceData.qChoice,
+    thetaSigned_eq_familyHullLogVolume :=
+      sourceData.measureCalibratedAdjustedHodgeSource.targetChartedSummandCalibration
+        |>.toSummandChartedHodgeFamilyHullLogVolumeCalibration
+        |>.thetaSigned_eq_familyHullLogVolume,
+    hullDetBridge_eq_recordCanonical := by
+      simpa [
+        IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource.qPilotRegion,
+        IUTStage1TargetChartedHodgeMeasureCalibratedAdjustedSummandFamilyHullSource.tensorPower_bound]
+        using sourceData.hullDetBridge_eq_recordCanonical,
+    q_pilot_positive := sourceData.q_pilot_positive,
+    normalization := sourceData.normalization }
+
+set_option linter.style.longLine false in
+/--
+Audit for the projection from target-charted exact-theta adjusted summands to
+the constructor-backed finite-divisor milestone source.
+
+This audit keeps the hard mathematical chain explicit at the projection point:
+the Hodge theta-monoid equality with the finite adjusted determinant summand
+sum, the induced theta/family-hull equality, the adjusted
+summand-to-determinant identities, and the record-canonical hull/determinant
+bridge used to produce `qSigned <= thetaSigned`.
+-/
+structure ConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization) :
+    Prop where
+  exactThetaAudit :
+    ConstructorBackedAdjustedExactThetaStepXIAudit sourceData
+  constructedRecordBridgeAudit :
+    IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ConstructorBackedRecordBridgeAudit
+      sourceData.toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+  targetChartedTheta_eq_canonicalOneDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      hodgeSynchronization.targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))
+  targetChartedTheta_eq_thetaMonoidDegree :
+    (Transport.map packageN.preLedger.chartedContainer.chart.thetaToTarget
+      packageN.preLedger.thetaBound.thetaPoint).coord =
+      hodgeSynchronization.valueSource.thetaMonoidDegree
+  thetaMonoidDegree_eq_adjustedSummandSum :
+    hodgeSynchronization.valueSource.thetaMonoidDegree =
+      (Finset.univ.sum fun index =>
+        (sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.determinantSource.summand index).adjustedLogVolume)
+  thetaSigned_eq_familyHullLogVolume :
+    packageN.preLedger.thetaSigned =
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.measuredFamilyHullSource.familyHullSource.familyHullLogVolume
+  projectedThetaSigned_eq_familyHullLogVolume :
+    packageN.preLedger.thetaSigned =
+      (sourceData.toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.measuredSource.adjustedSource.toRecordOb3Ob5DeterminantCompatibilitySource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume
+  familyHullLogVolume_eq_adjustedSummand :
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.familyHullLogVolume =
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume
+  adjustedSummand_eq_determinant :
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.adjustedSummandLogVolume =
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.ob3ob4Source.determinantLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization) :
+    ConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit sourceData := by
+  have hexact := sourceData.toConstructorBackedAdjustedExactThetaStepXIAudit
+  have hprojected :=
+    sourceData.toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      |>.constructorBackedRecordBridgeAudit
+  exact
+    { exactThetaAudit := hexact,
+      constructedRecordBridgeAudit := hprojected,
+      targetChartedTheta_eq_canonicalOneDegree :=
+        hexact.targetChartedTheta_eq_canonicalOneDegree,
+      targetChartedTheta_eq_thetaMonoidDegree :=
+        hexact.targetChartedTheta_eq_thetaMonoidDegree,
+      thetaMonoidDegree_eq_adjustedSummandSum :=
+        hexact.thetaMonoidDegree_eq_adjustedSummandSum,
+      thetaSigned_eq_familyHullLogVolume :=
+        hexact.thetaSigned_eq_familyHullLogVolume,
+      projectedThetaSigned_eq_familyHullLogVolume :=
+        sourceData.toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+          |>.thetaSigned_eq_familyHullLogVolume,
+      familyHullLogVolume_eq_adjustedSummand :=
+        hexact.familyHullLogVolume_eq_adjustedSummand,
+      adjustedSummand_eq_determinant :=
+        hexact.adjustedSummand_eq_determinant,
+      qSigned_le_thetaSigned :=
+        hprojected.qSigned_le_thetaSigned }
+
+end
+  IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+
 set_option linter.style.longLine false in
 /--
 Product-hull-backed constructor-built Remark 3.9.5 finite-divisor source.

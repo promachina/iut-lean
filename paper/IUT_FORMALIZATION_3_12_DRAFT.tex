@@ -7249,6 +7249,38 @@ constructor-backed review surface no longer loses the source of the
 exact-theta equality when it records the constructed bridge, q-positivity,
 normalization, and raw signed comparison.
 
+The same constructor-backed exact-theta source now projects directly into the
+current finite-divisor milestone source:
+\[
+\begin{array}{l}
+\texttt{targetChartedHodgeConstructorBackedMeasureCalibrated}\\
+\quad\texttt{AdjustedPossibleImageHullDetSource}\\
+\quad\texttt{\_toRemark395ConstructorBackedConstructed}\\
+\quad\texttt{HullDeterminantFiniteDivisorVerticalIQSource}.
+\end{array}
+\]
+The projection fills the finite-divisor source's
+\(\theta_{\mathrm{signed}}
+  =\mu_{\log}(\phi(\bigcup_iP_i))\)
+field from the already audited Hodge theta-monoid and finite adjusted
+determinant summand chain, rather than accepting this equality again as a
+bare boundary input.  Its companion audit
+\[
+\begin{array}{l}
+\texttt{targetChartedHodgeConstructorBackedMeasureCalibrated}\\
+\quad\texttt{AdjustedPossibleImageHullDetSource}\\
+\quad\texttt{\_toRemark395ConstructorBackedConstructedExactTheta}\\
+\quad\texttt{FiniteDivisorAudit}
+\end{array}
+\]
+keeps, in one object, the target-charted theta equality, the theta-monoid
+degree equality with the adjusted summand sum, the Ob3/Ob5
+summand-to-determinant identities, and the constructed finite-divisor
+record-bridge audit proving the raw
+\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison.  This is the
+current Lean bridge from the exact-theta Ob3/Ob5 implementation into the
+strongest constructor-backed finite-divisor corridor.
+
 The milestone-facing constructed source now also factors its log-volume
 comparison through the generic record-canonical Remark 3.9.5 bridge source.
 The projection \texttt{toRecordHullDeterminantBridgeSource} packages the same

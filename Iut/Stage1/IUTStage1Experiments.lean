@@ -26587,6 +26587,81 @@ theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImag
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface projection from the constructor-backed target-charted
+exact-theta adjusted-summand Step (xi) source to the current finite-divisor
+Remark 3.9.5 milestone source.
+
+The projected source fills the milestone source's theta/family-hull field from
+the target-charted Hodge theta-monoid and finite adjusted determinant summand
+chain, rather than accepting that equality as a fresh input at the
+finite-divisor boundary.
+-/
+noncomputable def targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (β := β) (γ := γ) record :=
+  stepXISource.toRemark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface audit for the projection from exact-theta adjusted summands
+to the constructor-backed finite-divisor Remark 3.9.5 milestone source.
+
+This wrapper exposes the Hodge theta-monoid/adjusted-summand provenance and
+the constructed finite-divisor record bridge in one public declaration.
+-/
+theorem targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_toRemark395ConstructorBackedConstructedExactThetaFiniteDivisorAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        part audited X C)
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (stepXISource :
+      part.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization) :
+    IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource.ConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit
+      stepXISource :=
+  stepXISource.toConstructorBackedAdjustedExactThetaToRemark395FiniteDivisorAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface source endpoint for the all-in-one constructor-backed
 adjusted-summand Gaussian-to-Step (xi) route.
 
