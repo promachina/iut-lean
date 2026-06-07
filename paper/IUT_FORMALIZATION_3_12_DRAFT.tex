@@ -1148,6 +1148,36 @@ coordinate transport source by rewriting through these two source equalities.
 Thus both coordinate-image transport obligations are now attached to concrete
 Remark~3.9.5(i) regions \(O\) and \(\lambda O\), rather than to packaged
 endpoint regions.
+The target coordinate map itself has now been restricted one step further.  The
+new
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{FiniteLocalLogCoordinateTargetTransportSource}
+\end{array}
+\]
+does not accept an arbitrary real-valued coordinate functional on the source
+product carrier.  It carries local readings
+\[
+  \ell_v:((d:\delta)\to A_d)\longrightarrow \mathbb{R}
+\]
+for the finite valuation-place set and defines the target coordinate by
+\[
+  x\longmapsto \sum_v \ell_v(x).
+\]
+\Lean{} then projects this finite local log-coordinate source to the
+valuation-anchor coordinate transport source.  The remaining image laws are
+therefore the two explicit statements
+\[
+  \Big(\sum_v\ell_v\Big)(O)=R_O,\qquad
+  \Big(\sum_v\ell_v\Big)(\lambda O)=R_{\lambda O},
+\]
+where \(R_O\) and \(R_{\lambda O}\) are the real-coordinate descriptions of the
+principal local-integer region and selected principal hull on the target
+real-line copy.  Thus the arbitrary target-coordinate-map freedom has been
+removed from this boundary; the next mathematical task is to construct the
+local log-coordinate readings from the valuation/Kummer model and prove these
+two image equalities.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -7949,11 +7979,14 @@ The practical priority order is:
   local-integer coordinate image through the source theorem
   \(O=\prod_vO_v\), so both coordinate-image obligations are stated for the
   explicit source regions \(O\) and \(\lambda O\).
+  A finite local log-coordinate endpoint now replaces the arbitrary target
+  real-coordinate map at this boundary by the assembled finite sum
+  \(x\mapsto\sum_v\ell_v(x)\) of local log-coordinate readings.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar model, the
-  still-supplied target real-coordinate image laws for the explicit source
-  regions \(O=\prod_vO_v\) and \(\lambda O\).  Below that, the local
+  still-supplied finite-sum local log-coordinate image laws for the explicit
+  source regions \(O=\prod_vO_v\) and \(\lambda O\).  Below that, the local
   directional scalar-image laws for each local factor \(\lambda_v\cdot O_v\)
   still have to be derived from the valuation/Kummer model: landing in the
   valuation/direct-product factor \(H_v(\lambda)\) and existence of local

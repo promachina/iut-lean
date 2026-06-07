@@ -63845,6 +63845,165 @@ end
 
 set_option linter.style.longLine false in
 /--
+Finite local log-coordinate target transport source for the
+valuation-unit-ball/nonzero-scalar finite-divisor route.
+
+This is the next reduction of the target-coordinate boundary.  The real
+coordinate on the target line is no longer an arbitrary map out of the source
+product carrier.  It is the finite sum of local log-coordinate readings over
+the valuation places of the finite product.  The two remaining image laws are
+therefore image laws for the source-paper regions \(O=\prod_v O_v\) and
+\(\lambda O\) under this assembled log-coordinate functional.
+-/
+structure IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {δ : Type u} (A : δ -> Type v)
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {γlocal : Type (max u v y z)} [Fintype γlocal]
+    (Λ : Type (max u v w y z)) where
+  principalValuationBallBackedSource :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (η := η) (K := K) (β := β) (γ := γ) record Λ
+  valuationUnitBallNonzeroScalarSource :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      δ A
+      (IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+      η K β γlocal
+  localTargetLogCoord : γlocal -> ((d : δ) -> A d) -> Real
+  principalLocalIntegerCoordRegion : Set Real
+  principalSelectedHullCoordRegion : Set Real
+  principalLocalIntegerRegion_eq_coordRegion :
+    principalValuationBallBackedSource.principalValuationBallSource.principalHullSource.localIntegerRegion =
+      { point : Point target | point.coord ∈ principalLocalIntegerCoordRegion }
+  principalSelectedHull_eq_coordRegion :
+    principalValuationBallBackedSource.principalValuationBallSource.selectedPrincipalHull =
+      { point : Point target | point.coord ∈ principalSelectedHullCoordRegion }
+  transportedValuationAnchorLocalLogCoord_eq_principal :
+    (fun point : ((d : δ) -> A d) =>
+        Finset.univ.sum fun place : γlocal =>
+          localTargetLogCoord place point) ''
+        valuationUnitBallNonzeroScalarSource.valuationCover.directProductCell
+          valuationUnitBallNonzeroScalarSource.valuationCover.anchor =
+      principalLocalIntegerCoordRegion
+  transportedSelectedNonzeroScalarLocalLogCoord_eq_principalHull :
+    (fun point : ((d : δ) -> A d) =>
+        Finset.univ.sum fun place : γlocal =>
+          localTargetLogCoord place point) ''
+        (valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.scalarMultiple
+            valuationUnitBallNonzeroScalarSource.selectedNonzeroScalar ''
+          valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerRegion) =
+      principalSelectedHullCoordRegion
+
+namespace
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {δ : Type u} {A : δ -> Type v}
+variable [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+variable {η : Type y} {K : Type z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+variable {γlocal : Type (max u v y z)} [Fintype γlocal]
+variable {Λ : Type (max u v w y z)}
+
+noncomputable def toTargetCoord
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (point : (d : δ) -> A d) :
+    Real :=
+  Finset.univ.sum fun place : γlocal =>
+    sourceData.localTargetLogCoord place point
+
+theorem toTargetCoord_eq_localLogCoordinateSum
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (point : (d : δ) -> A d) :
+    sourceData.toTargetCoord point =
+      Finset.univ.sum fun place : γlocal =>
+        sourceData.localTargetLogCoord place point :=
+  rfl
+
+set_option linter.style.longLine false in
+noncomputable def toValuationAnchorCoordinateTargetTransportSource
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarValuationAnchorCoordinateTargetTransportSource
+      (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+      (γlocal := γlocal) record A Λ :=
+  { principalValuationBallBackedSource :=
+      sourceData.principalValuationBallBackedSource,
+    valuationUnitBallNonzeroScalarSource :=
+      sourceData.valuationUnitBallNonzeroScalarSource,
+    toTargetCoord :=
+      sourceData.toTargetCoord,
+    principalLocalIntegerCoordRegion :=
+      sourceData.principalLocalIntegerCoordRegion,
+    principalSelectedHullCoordRegion :=
+      sourceData.principalSelectedHullCoordRegion,
+    principalLocalIntegerRegion_eq_coordRegion :=
+      sourceData.principalLocalIntegerRegion_eq_coordRegion,
+    principalSelectedHull_eq_coordRegion :=
+      sourceData.principalSelectedHull_eq_coordRegion,
+    transportedValuationAnchorCoord_eq_principal :=
+      sourceData.transportedValuationAnchorLocalLogCoord_eq_principal,
+    transportedSelectedNonzeroScalarCoord_eq_principalHull :=
+      sourceData.transportedSelectedNonzeroScalarLocalLogCoord_eq_principalHull }
+
+theorem transportedValuationAnchorCoord_eq_principal
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    sourceData.toTargetCoord ''
+        sourceData.valuationUnitBallNonzeroScalarSource.valuationCover.directProductCell
+          sourceData.valuationUnitBallNonzeroScalarSource.valuationCover.anchor =
+      sourceData.principalLocalIntegerCoordRegion :=
+  sourceData.toValuationAnchorCoordinateTargetTransportSource.transportedValuationAnchorCoord_eq_principal
+
+theorem transportedSelectedNonzeroScalarCoord_eq_principalHull
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    sourceData.toTargetCoord ''
+        (sourceData.valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.scalarMultiple
+            sourceData.valuationUnitBallNonzeroScalarSource.selectedNonzeroScalar ''
+          sourceData.valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerRegion) =
+      sourceData.principalSelectedHullCoordRegion :=
+  sourceData.toValuationAnchorCoordinateTargetTransportSource.transportedSelectedNonzeroScalarCoord_eq_principalHull
+
+theorem targetPointTransportAudit
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetPointTransportSource.TargetPointTransportAudit
+      sourceData.toValuationAnchorCoordinateTargetTransportSource.toSelectedImageCoordinateTargetTransportSource.toCoordinateTargetTransportSource.toTargetPointTransportSource :=
+  sourceData.toValuationAnchorCoordinateTargetTransportSource.targetPointTransportAudit
+
+end
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+
+set_option linter.style.longLine false in
+/--
 Valuation-unit-ball/nonzero-scalar backed constructor-built Remark 3.9.5
 finite-divisor source.
 
@@ -65646,6 +65805,112 @@ theorem boundarySignedEqualityOrStrictCTheta_from_remark395ValuationUnitBallNonz
           sourceData.principalValuationBallBackedSource.canonicalCThetaScale) :=
   part.boundarySignedEqualityOrStrictCTheta_from_remark395ValuationUnitBallNonzeroScalarSelectedImageCoordinateTargetTransportConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithTransportAudit
     sourceData.toSelectedImageCoordinateTargetTransportSource
+    profile audited transport iplConstructionSource
+    sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource
+
+set_option linter.style.longLine false in
+/--
+Canonical-scale valuation-unit-ball/nonzero-scalar finite-divisor route from a
+finite local log-coordinate target transport source.
+
+The target coordinate map used by the valuation-anchor route is constructed as
+the finite sum of local log-coordinate readings.  Thus the public endpoint no
+longer accepts an arbitrary source-product-to-real coordinate map at this
+boundary; the remaining coordinate-image laws are attached to the assembled
+local log-coordinate functional.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithTransportAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {δ : Type u} {A : δ -> Type v}
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {γlocal : Type (max u v y z)} [Fintype γlocal]
+    {Λ : Type (max u v w y z)}
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarFiniteLocalLogCoordinateTargetTransportSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        sourceData.principalValuationBallBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transport :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transport.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetPointTransportSource.TargetPointTransportAudit
+        sourceData.toValuationAnchorCoordinateTargetTransportSource.toSelectedImageCoordinateTargetTransportSource.toCoordinateTargetTransportSource.toTargetPointTransportSource ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) <
+          sourceData.principalValuationBallBackedSource.canonicalCThetaScale) :=
+  part.boundarySignedEqualityOrStrictCTheta_from_remark395ValuationUnitBallNonzeroScalarValuationAnchorCoordinateTargetTransportConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithTransportAudit
+    sourceData.toValuationAnchorCoordinateTargetTransportSource
     profile audited transport iplConstructionSource
     sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
     divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
