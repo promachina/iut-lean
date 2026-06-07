@@ -8800,11 +8800,22 @@ The practical priority order is:
   scalar.  Thus the local, product, and experiment surfaces now expose
   valuation-unit-ball mass provenance before projecting to the Haar-character
   and all-subset Haar-modulus routes.
+  A further core bridge now derives the second displayed mass equality from
+  the all-subset Haar-modulus identity itself: specializing
+  \[
+      \mu_v(p_v S)=p_v^{-[K_v:\mathbb Q_{p_v}]}\mu_v(S)
+  \]
+  at \(S=\mathcal O_v\), and using the normalized equality
+  \(\mu_v(\mathcal O_v)=1\), Lean proves
+  \(\mu_v(p_v\mathcal O_v)=p_v^{-[K_v:\mathbb Q_{p_v}]}\).  The constructed
+  Haar-modulus source therefore projects to the unit-ball Haar-character source
+  without taking the \(p_v\mathcal O_v\) mass as an independent assumption.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   The next work is now below the finite-extension boundary: derive, from the
   source-paper valuation/Haar/Kummer model, the normalized finite-extension
-  valuation-unit-ball mass and base-prime unit-ball image mass, the positive valuation-ball radius, the
+  valuation-unit-ball mass and the all-subset base-prime Haar-modulus identity,
+  the positive valuation-ball radius, the
   coordinate-place equivalence, and the point-level target transport
   identifying \(O\) and \(\lambda O\) with the principal finite-divisor target
   regions.  Below that, the local directional scalar-image laws for each local factor

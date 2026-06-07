@@ -13827,6 +13827,128 @@ theorem endpoint
 
 end IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
 
+namespace IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K]
+variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+/--
+Recover the normalized valuation-unit-ball mass in `ENNReal` from the older
+real-valued normalization.  This removes a small but important coercion shadow:
+the unit-ball Haar-character route needs the actual measure equality
+`mu(O_v)=1`, not merely its `toReal` image.
+-/
+theorem valuationUnitBall_measure_eq_one
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+        α p K hullSystem) :
+    data.haarMeasure data.integerSource.ringOfIntegers = 1 := by
+  have hne_top :
+      data.haarMeasure data.integerSource.ringOfIntegers ≠ ⊤ := by
+    intro htop
+    have hzero :
+        (data.haarMeasure data.integerSource.ringOfIntegers).toReal = 0 := by
+      rw [htop]
+      simp
+    rw [data.valuationUnitBall_measure_one] at hzero
+    norm_num at hzero
+  calc
+    data.haarMeasure data.integerSource.ringOfIntegers =
+        ENNReal.ofReal
+          ((data.haarMeasure data.integerSource.ringOfIntegers).toReal) :=
+      (ENNReal.ofReal_toReal hne_top).symm
+    _ = ENNReal.ofReal 1 := by
+      rw [data.valuationUnitBall_measure_one]
+    _ = 1 := by
+      simp
+
+/--
+Specialize the all-subset base-prime Haar-modulus identity to the valuation
+ring.  Together with `mu(O_v)=1`, this derives the source-paper unit-ball image
+mass `mu(p_v O_v)=p_v^{-[K_v:Q_p]}` instead of taking it as a separate field.
+-/
+theorem basePrimeUnitBall_measure_eq
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+        α p K hullSystem) :
+    data.haarMeasure
+        ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+          data.integerSource.ringOfIntegers) =
+      ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) := by
+  calc
+    data.haarMeasure
+        ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+          data.integerSource.ringOfIntegers) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+          data.haarMeasure data.integerSource.ringOfIntegers :=
+      data.basePrimeScale_measure_eq data.integerSource.ringOfIntegers
+    _ = ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) := by
+      rw [data.valuationUnitBall_measure_eq_one, mul_one]
+
+variable [BorelSpace K] [LocallyCompactSpace K] [IsTopologicalAddGroup K]
+
+/--
+Project the constructed all-subset Haar-modulus source to the unit-ball
+Haar-character source.  The base-prime unit-ball image mass is no longer a
+field: it is derived by specializing the all-subset modulus law at `O_v`.
+-/
+noncomputable def toUnitBallHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+        α p K hullSystem)
+    (haar_regular : data.haarMeasure.Regular) :
+    IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+      α p K hullSystem :=
+  { integerSource := data.integerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    haar_regular := haar_regular,
+    valuationUnitBall_measure_eq_one :=
+      data.valuationUnitBall_measure_eq_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    basePrimeUnitBall_measure_eq :=
+      data.basePrimeUnitBall_measure_eq,
+    hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+/--
+Endpoint for the derived unit-ball route from an all-subset Haar-modulus
+source: normalized `O_v` mass, derived `p_vO_v` mass, derived Haar character,
+and the recovered all-subset modulus law.
+-/
+theorem unitBallHaarCharacterEndpoint
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+        α p K hullSystem)
+    (haar_regular : data.haarMeasure.Regular) :
+    data.haarMeasure data.integerSource.ringOfIntegers = 1 ∧
+      data.haarMeasure
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            data.integerSource.ringOfIntegers) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (MeasureTheory.addEquivAddHaarChar
+          (IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource.basePrimeContinuousAddEquiv
+            (data.toUnitBallHaarCharacterNormalizationSource haar_regular)) :
+        ENNReal) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (∀ subset : Set K,
+        data.haarMeasure
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              subset) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+            data.haarMeasure subset) :=
+  IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource.endpoint
+    (data.toUnitBallHaarCharacterNormalizationSource haar_regular)
+
+end IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+
 /--
 `p`-adic proper-ultrametric additive Haar normalization source.
 
