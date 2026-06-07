@@ -57968,6 +57968,110 @@ theorem selectedProductHull_logVolume_eq
       (recordThetaPossibleImageUnion record)
 
 set_option linter.style.longLine false in
+theorem possibleImageUnion_subset_selectedProductHull
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    recordThetaPossibleImageUnion record ⊆ sourceData.selectedProductHull := by
+  intro point hpoint
+  exact
+    sourceData.productHullSource.region_subset_productHull_intersection
+      (recordThetaPossibleImageUnion record) hpoint
+
+set_option linter.style.longLine false in
+theorem possibleImage_subset_selectedProductHull
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) :
+    recordThetaPossibleImage record choice ⊆ sourceData.selectedProductHull := by
+  intro point hpoint
+  exact
+    sourceData.possibleImageUnion_subset_selectedProductHull
+      (Set.mem_iUnion.mpr ⟨choice, hpoint⟩)
+
+set_option linter.style.longLine false in
+theorem qPilotRegion_subset_recordUnion
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    sourceData.constructorBackedSource.qPilotRegion ⊆
+      recordThetaPossibleImageUnion record :=
+  qPilotRegion_subset_recordUnion_of_choice
+    (record := record) sourceData.constructorBackedSource.qChoice
+    sourceData.constructorBackedSource.qPilotRegion
+    sourceData.constructorBackedSource.q_subset_choice
+
+set_option linter.style.longLine false in
+structure ProductHullBackedPossibleImageContainmentAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    Prop where
+  possibleImageFamily_familyUnion_eq_recordUnion :
+    sourceData.toPossibleImageFamilySource.familyUnion =
+      recordThetaPossibleImageUnion record
+  possibleImageFamily_canonicalHull_eq_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.canonicalHull =
+      sourceData.selectedProductHull
+  canonicalPhi_approximant_eq_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.canonicalPhi.approximant =
+      sourceData.selectedProductHull
+  recordUnion_subset_selectedProductHull :
+    recordThetaPossibleImageUnion record ⊆ sourceData.selectedProductHull
+  possibleImage_subset_selectedProductHull :
+    ∀ choice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean,
+      recordThetaPossibleImage record choice ⊆ sourceData.selectedProductHull
+  qPilotRegion_subset_recordUnion :
+    sourceData.constructorBackedSource.qPilotRegion ⊆
+      recordThetaPossibleImageUnion record
+  qPilotRegion_subset_selectedProductHull :
+    sourceData.constructorBackedSource.qPilotRegion ⊆
+      sourceData.selectedProductHull
+  selectedProductHull_minimal :
+    ∀ parameter : Λ,
+      recordThetaPossibleImageUnion record ⊆
+        sourceData.productHullSource.productHull parameter ->
+        sourceData.selectedProductHull ⊆
+          sourceData.productHullSource.productHull parameter
+  selectedProductHull_logVolume_eq :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+      sourceData.selectedProductHull =
+    sourceData.productHullSource.productHullLogVolume
+        (sourceData.productHullSource.intersectionParameter
+          (recordThetaPossibleImageUnion record))
+
+set_option linter.style.longLine false in
+theorem productHullBackedPossibleImageContainmentAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    ProductHullBackedPossibleImageContainmentAudit sourceData :=
+  { possibleImageFamily_familyUnion_eq_recordUnion :=
+      sourceData.possibleImageFamily_familyUnion_eq_recordUnion,
+    possibleImageFamily_canonicalHull_eq_selectedProductHull :=
+      sourceData.possibleImageFamily_canonicalHull_eq_selectedProductHull,
+    canonicalPhi_approximant_eq_selectedProductHull :=
+      sourceData.possibleImageFamily_canonicalPhi_eq_selectedProductHull,
+    recordUnion_subset_selectedProductHull :=
+      sourceData.possibleImageUnion_subset_selectedProductHull,
+    possibleImage_subset_selectedProductHull :=
+      fun choice => sourceData.possibleImage_subset_selectedProductHull choice,
+    qPilotRegion_subset_recordUnion :=
+      sourceData.qPilotRegion_subset_recordUnion,
+    qPilotRegion_subset_selectedProductHull :=
+      sourceData.qPilotRegion_subset_selectedProductHull,
+    selectedProductHull_minimal :=
+      fun parameter hsubset =>
+        sourceData.selectedProductHull_minimal parameter hsubset,
+    selectedProductHull_logVolume_eq :=
+      sourceData.selectedProductHull_logVolume_eq }
+
+set_option linter.style.longLine false in
 structure ProductHullBackedRecordBridgeAudit
     (sourceData :
       IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
