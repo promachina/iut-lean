@@ -1390,6 +1390,29 @@ product declaration
 \]
 threads this compact-open provenance through the same target-point finite-sum
 endpoint and exposes the compact-open Haar route at the experiment surface.
+This has now been lowered one more step to centered valuation balls.  The local
+declaration
+\[
+  \texttt{IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource}
+\]
+takes a proper ultrametric local factor together with the valuation-ball Haar
+normalization source, defines
+\[
+  U_{v,x_v}:=\overline B(x_v,r_v),
+\]
+where \(r_v\) is the compact-open radius of the valuation-ball Haar source, and
+proves that this closed ball is open by the ultrametric inequality and compact
+by properness.  Thus the compact-open predicate is no longer supplied at this
+boundary; it is constructed from the valuation-ball topology.  The finite product
+source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{CenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource}
+\end{array}
+\]
+threads these centered balls through the same finite-sum target map and projects
+to the compact-open Haar route at the experiment surface.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -8626,14 +8649,18 @@ The practical priority order is:
   A compact-open Haar refinement now carries the finite-extension
   compact-open topology/Haar normalization source at each place and proves that
   every assigned \(U_{v,x_v}\) is compact-open before projecting to the Haar
-  finite-sum endpoint.
+  finite-sum endpoint.  The newest centered valuation-ball refinement removes
+  this compact-open proof as external data: it sets
+  \(U_{v,x_v}=\overline B(x_v,r_v)\) inside a proper ultrametric local factor,
+  proves openness by the ultrametric inequality, proves compactness by
+  properness, and then projects through the compact-open Haar source.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
-  But the next work is to derive, from the local valuation/Haar/Kummer model,
-  the concrete assignment \(x_v\mapsto U_{v,x_v}\) from the actual local
-  valuation/Kummer object, the coordinate-place equivalence, and the point-level
-  target transport identifying \(O\) and \(\lambda O\) with the principal
-  finite-divisor target regions.  Below that, the
+  But the next work is to derive, from the actual finite-extension
+  valuation/Haar/Kummer model, the proper ultrametric local factor, its Haar
+  normalization and positive valuation-ball radius, the coordinate-place
+  equivalence, and the point-level target transport identifying \(O\) and
+  \(\lambda O\) with the principal finite-divisor target regions.  Below that, the
   local directional scalar-image laws for each local factor
   \(\lambda_v\cdot O_v\) still have to be derived from the valuation/Kummer
   model: landing in the valuation/direct-product factor \(H_v(\lambda)\),

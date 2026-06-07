@@ -68098,6 +68098,149 @@ end IUTStage1Remark395LocalFactorCompactOpenHaarLogCoordinateSource
 
 set_option linter.style.longLine false in
 /--
+Centered valuation-ball local Haar log-coordinate source.
+
+This lowers the compact-open local region assignment one step further.  The
+region attached to a local factor `x` is no longer an arbitrary compact-open
+set; it is the closed valuation ball centered at `x` with the compact-open
+radius of a proper ultrametric valuation-ball Haar normalization source.  The
+ultrametric inequality proves openness of this closed ball, while properness
+gives compactness.  The source then projects to the compact-open Haar
+log-coordinate source.
+-/
+structure IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource
+    (A : Type u) [PseudoMetricSpace A] [ProperSpace A] [MeasurableSpace A]
+    [AddGroup A] [T2Space A] where
+  localHullSystem : IUTStage1Remark395HolomorphicHullSystem A
+  valuationBallHaarSource :
+    IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource
+      A Unit A localHullSystem
+
+namespace IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource
+
+variable {A : Type u}
+variable [PseudoMetricSpace A] [ProperSpace A] [MeasurableSpace A]
+variable [AddGroup A] [T2Space A]
+
+def localRegionOfFactor
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A)
+    (factor : A) :
+    Set A :=
+  Metric.closedBall factor sourceData.valuationBallHaarSource.compactOpenRadius
+
+theorem localRegionOfFactor_eq_centeredClosedBall
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A)
+    (factor : A) :
+    sourceData.localRegionOfFactor factor =
+      Metric.closedBall factor sourceData.valuationBallHaarSource.compactOpenRadius :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem centeredClosedBall_open
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A)
+    (factor : A) :
+    IsOpen (sourceData.localRegionOfFactor factor) := by
+  rw [Metric.isOpen_iff]
+  intro point hpoint
+  refine ⟨sourceData.valuationBallHaarSource.compactOpenRadius,
+    sourceData.valuationBallHaarSource.compactOpenRadius_pos, ?_⟩
+  intro nearby hnearby
+  have hnearby_le :
+      dist nearby point <= sourceData.valuationBallHaarSource.compactOpenRadius :=
+    le_of_lt hnearby
+  have hdist :
+      dist nearby factor <= max (dist nearby point) (dist point factor) :=
+    sourceData.valuationBallHaarSource.valuationTopology.ultrametric_dist
+      nearby point factor
+  exact le_trans hdist (max_le hnearby_le hpoint)
+
+theorem centeredClosedBall_compact
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A)
+    (factor : A) :
+    IsCompact (sourceData.localRegionOfFactor factor) := by
+  simpa [localRegionOfFactor] using
+    (isCompact_closedBall factor sourceData.valuationBallHaarSource.compactOpenRadius)
+
+noncomputable def toCompactOpenHaarSource
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A) :
+    IUTStage1FiniteExtensionCompactOpenTopologyHaarNormalizationSource
+      A Unit A sourceData.localHullSystem :=
+  sourceData.valuationBallHaarSource
+    |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+    |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+    |>.toValuationBallAdditiveHaarNormalizationSource
+    |>.toAdditiveHaarCompactOpenNormalizationSource
+    |>.toCompactOpenTopologyHaarNormalizationSource
+
+set_option linter.style.longLine false in
+theorem localRegionOfFactor_compactOpen
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A)
+    (factor : A) :
+    sourceData.toCompactOpenHaarSource.isCompactOpen
+      (sourceData.localRegionOfFactor factor) :=
+  ⟨sourceData.centeredClosedBall_open factor,
+    sourceData.centeredClosedBall_compact factor⟩
+
+noncomputable def toLocalFactorCompactOpenHaarLogCoordinateSource
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A) :
+    IUTStage1Remark395LocalFactorCompactOpenHaarLogCoordinateSource A :=
+  { localHullSystem := sourceData.localHullSystem,
+    compactOpenHaarSource := sourceData.toCompactOpenHaarSource,
+    localRegionOfFactor := sourceData.localRegionOfFactor,
+    localRegionOfFactor_compactOpen :=
+      sourceData.localRegionOfFactor_compactOpen }
+
+noncomputable def localLogCoordinate
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A)
+    (factor : A) :
+    Real :=
+  sourceData.toLocalFactorCompactOpenHaarLogCoordinateSource.localLogCoordinate
+    factor
+
+theorem localLogCoordinate_eq_centeredValuationBallHaarLogVolume
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A)
+    (factor : A) :
+    sourceData.localLogCoordinate factor =
+      sourceData.toCompactOpenHaarSource.normalizedHaarLogVolume
+        (Metric.closedBall factor sourceData.valuationBallHaarSource.compactOpenRadius) :=
+  rfl
+
+theorem localCenteredValuationBallHaarLogCoordinateEndpoint
+    (sourceData :
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource A) :
+    (∀ factor : A,
+      sourceData.localRegionOfFactor factor =
+        Metric.closedBall factor sourceData.valuationBallHaarSource.compactOpenRadius) ∧
+      (∀ factor : A,
+        IsOpen (sourceData.localRegionOfFactor factor)) ∧
+      (∀ factor : A,
+        IsCompact (sourceData.localRegionOfFactor factor)) ∧
+      (∀ factor : A,
+        sourceData.toCompactOpenHaarSource.isCompactOpen
+          (sourceData.localRegionOfFactor factor)) ∧
+      (∀ factor : A,
+        sourceData.localLogCoordinate factor =
+          sourceData.toCompactOpenHaarSource.normalizedHaarLogVolume
+            (Metric.closedBall factor sourceData.valuationBallHaarSource.compactOpenRadius)) :=
+  ⟨sourceData.localRegionOfFactor_eq_centeredClosedBall,
+    sourceData.centeredClosedBall_open,
+    sourceData.centeredClosedBall_compact,
+    sourceData.localRegionOfFactor_compactOpen,
+    sourceData.localLogCoordinate_eq_centeredValuationBallHaarLogVolume⟩
+
+end IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource
+
+set_option linter.style.longLine false in
+/--
 Haar-log-coordinate finite-sum target-point source.
 
 This source lowers the coordinate-place finite-sum boundary by replacing the
@@ -68172,7 +68315,7 @@ variable {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
 variable {γlocal : Type (max u v y z)} [Fintype γlocal]
 variable {Λ : Type (max u v w y z)}
 
-def localValuationLogCoord
+noncomputable def localValuationLogCoord
     (sourceData :
       IUTStage1Remark395ValuationUnitBallNonzeroScalarHaarLogCoordinateFiniteSumTargetPointSource
         (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
@@ -68252,7 +68395,7 @@ theorem principalSelectedFactorCoordRegion_eq_haarLogVolumeImage
   rfl
 
 set_option linter.style.longLine false in
-def toCoordinatePlaceValuationLogFiniteSumTargetPointSource
+noncomputable def toCoordinatePlaceValuationLogFiniteSumTargetPointSource
     (sourceData :
       IUTStage1Remark395ValuationUnitBallNonzeroScalarHaarLogCoordinateFiniteSumTargetPointSource
         (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
@@ -68366,7 +68509,7 @@ variable {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
 variable {γlocal : Type (max u v y z)} [Fintype γlocal]
 variable {Λ : Type (max u v w y z)}
 
-def localValuationLogCoord
+noncomputable def localValuationLogCoord
     (sourceData :
       IUTStage1Remark395ValuationUnitBallNonzeroScalarCompactOpenHaarLogCoordinateFiniteSumTargetPointSource
         (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
@@ -68492,6 +68635,231 @@ theorem targetPointTransportAudit
 
 end
   IUTStage1Remark395ValuationUnitBallNonzeroScalarCompactOpenHaarLogCoordinateFiniteSumTargetPointSource
+
+set_option linter.style.longLine false in
+/--
+Centered valuation-ball Haar-log-coordinate finite-sum target-point source.
+
+This lowers the compact-open Haar finite-sum source by constructing each local
+region \(U_{v,x_v}\) as the centered closed valuation ball around \(x_v\).
+The compact-open proof is inherited from the proper ultrametric valuation-ball
+Haar source at the corresponding place, then projected through the existing
+compact-open Haar finite-sum endpoint.
+-/
+structure IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {δ : Type u} (A : δ -> Type v)
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    [∀ d : δ, PseudoMetricSpace (A d)] [∀ d : δ, ProperSpace (A d)]
+    [∀ d : δ, MeasurableSpace (A d)] [∀ d : δ, AddGroup (A d)]
+    [∀ d : δ, T2Space (A d)]
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {γlocal : Type (max u v y z)} [Fintype γlocal]
+    (Λ : Type (max u v w y z)) where
+  principalValuationBallBackedSource :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (η := η) (K := K) (β := β) (γ := γ) record Λ
+  valuationUnitBallNonzeroScalarSource :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      δ A
+      (IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+      η K β γlocal
+  coordinateIndexEquiv : δ ≃ γlocal
+  coordinatePlace_eq_coordinateIndexEquiv :
+    ∀ d : δ,
+      valuationUnitBallNonzeroScalarSource.coordinatePlace d =
+        coordinateIndexEquiv d
+  localCenteredValuationBallHaarLogCoordinateSource :
+    ∀ place : γlocal,
+      IUTStage1Remark395LocalFactorCenteredValuationBallHaarLogCoordinateSource
+        (A (coordinateIndexEquiv.symm place))
+  transportedLocalIntegerTargetPoint_eq_principal :
+    (fun point : ((d : δ) -> A d) =>
+        ({ coord :=
+            Finset.univ.sum fun place : γlocal =>
+              (localCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+                (point (coordinateIndexEquiv.symm place)) } :
+          Point target)) ''
+        valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerRegion =
+      principalValuationBallBackedSource.principalValuationBallSource.principalHullSource.localIntegerRegion
+  transportedSelectedScalarTargetPoint_eq_principalHull :
+    (fun point : ((d : δ) -> A d) =>
+        ({ coord :=
+            Finset.univ.sum fun place : γlocal =>
+              (localCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+                (point (coordinateIndexEquiv.symm place)) } :
+          Point target)) ''
+        valuationUnitBallNonzeroScalarSource.selectedScalarImageHull =
+      principalValuationBallBackedSource.principalValuationBallSource.selectedPrincipalHull
+
+namespace
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {δ : Type u} {A : δ -> Type v}
+variable [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+variable [∀ d : δ, PseudoMetricSpace (A d)] [∀ d : δ, ProperSpace (A d)]
+variable [∀ d : δ, MeasurableSpace (A d)] [∀ d : δ, AddGroup (A d)]
+variable [∀ d : δ, T2Space (A d)]
+variable {η : Type y} {K : Type z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+variable {γlocal : Type (max u v y z)} [Fintype γlocal]
+variable {Λ : Type (max u v w y z)}
+
+noncomputable def localValuationLogCoord
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (place : γlocal) :
+    A (sourceData.coordinateIndexEquiv.symm place) -> Real :=
+  (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+
+theorem localValuationLogCoord_eq_centeredValuationBallHaarLogVolume
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (place : γlocal)
+    (factor : A (sourceData.coordinateIndexEquiv.symm place)) :
+    sourceData.localValuationLogCoord place factor =
+      (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).toCompactOpenHaarSource.normalizedHaarLogVolume
+        (Metric.closedBall factor
+          (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).valuationBallHaarSource.compactOpenRadius) :=
+  rfl
+
+theorem localRegionOfFactor_eq_centeredClosedBall
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (place : γlocal)
+    (factor : A (sourceData.coordinateIndexEquiv.symm place)) :
+    (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).localRegionOfFactor factor =
+      Metric.closedBall factor
+        (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).valuationBallHaarSource.compactOpenRadius :=
+  rfl
+
+theorem localRegionOfFactor_compactOpen
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (place : γlocal)
+    (factor : A (sourceData.coordinateIndexEquiv.symm place)) :
+    (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).toCompactOpenHaarSource.isCompactOpen
+      ((sourceData.localCenteredValuationBallHaarLogCoordinateSource place).localRegionOfFactor factor) :=
+  (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).localRegionOfFactor_compactOpen
+    factor
+
+set_option linter.style.longLine false in
+def principalLocalFactorCoordRegion
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (place : γlocal) :
+    Set Real :=
+  sourceData.localValuationLogCoord place ''
+    sourceData.valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerFactorRegion
+      (sourceData.coordinateIndexEquiv.symm place)
+
+set_option linter.style.longLine false in
+def principalSelectedFactorCoordRegion
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (place : γlocal) :
+    Set Real :=
+  sourceData.localValuationLogCoord place ''
+    sourceData.valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.coordinateScalarImage
+      (sourceData.coordinateIndexEquiv.symm place)
+      (sourceData.valuationUnitBallNonzeroScalarSource.selectedNonzeroScalar
+        (sourceData.coordinateIndexEquiv.symm place))
+
+set_option linter.style.longLine false in
+theorem principalLocalFactorCoordRegion_eq_centeredValuationBallHaarImage
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (place : γlocal) :
+    sourceData.principalLocalFactorCoordRegion place =
+      (fun factor : A (sourceData.coordinateIndexEquiv.symm place) =>
+        (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).toCompactOpenHaarSource.normalizedHaarLogVolume
+          (Metric.closedBall factor
+            (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).valuationBallHaarSource.compactOpenRadius)) ''
+        sourceData.valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerFactorRegion
+          (sourceData.coordinateIndexEquiv.symm place) :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem principalSelectedFactorCoordRegion_eq_centeredValuationBallHaarImage
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (place : γlocal) :
+    sourceData.principalSelectedFactorCoordRegion place =
+      (fun factor : A (sourceData.coordinateIndexEquiv.symm place) =>
+        (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).toCompactOpenHaarSource.normalizedHaarLogVolume
+          (Metric.closedBall factor
+            (sourceData.localCenteredValuationBallHaarLogCoordinateSource place).valuationBallHaarSource.compactOpenRadius)) ''
+        sourceData.valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.coordinateScalarImage
+          (sourceData.coordinateIndexEquiv.symm place)
+          (sourceData.valuationUnitBallNonzeroScalarSource.selectedNonzeroScalar
+            (sourceData.coordinateIndexEquiv.symm place)) :=
+  rfl
+
+set_option linter.style.longLine false in
+noncomputable def toCompactOpenHaarLogCoordinateFiniteSumTargetPointSource
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarCompactOpenHaarLogCoordinateFiniteSumTargetPointSource
+      (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+      (γlocal := γlocal) record A Λ :=
+  { principalValuationBallBackedSource :=
+      sourceData.principalValuationBallBackedSource,
+    valuationUnitBallNonzeroScalarSource :=
+      sourceData.valuationUnitBallNonzeroScalarSource,
+    coordinateIndexEquiv := sourceData.coordinateIndexEquiv,
+    coordinatePlace_eq_coordinateIndexEquiv :=
+      sourceData.coordinatePlace_eq_coordinateIndexEquiv,
+    localCompactOpenHaarLogCoordinateSource :=
+      fun place =>
+        (sourceData.localCenteredValuationBallHaarLogCoordinateSource place)
+          |>.toLocalFactorCompactOpenHaarLogCoordinateSource,
+    transportedLocalIntegerTargetPoint_eq_principal :=
+      sourceData.transportedLocalIntegerTargetPoint_eq_principal,
+    transportedSelectedScalarTargetPoint_eq_principalHull :=
+      sourceData.transportedSelectedScalarTargetPoint_eq_principalHull }
+
+theorem targetPointTransportAudit
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetPointTransportSource.TargetPointTransportAudit
+      sourceData.toCompactOpenHaarLogCoordinateFiniteSumTargetPointSource.toHaarLogCoordinateFiniteSumTargetPointSource.toCoordinatePlaceValuationLogFiniteSumTargetPointSource.toValuationLogFiniteSumTargetPointSource.toValuationLogImageProjectedFactorwiseTargetTransportSource.toLocalLogCoordinateProjectedFactorwiseTargetTransportSource.toLocalLogCoordinateFactorwiseTargetTransportSource.toLocalLogCoordinatePlacewisePreimageTargetTransportSource.toLocalLogCoordinatePreimageTargetTransportSource.toLocalLogCoordinateProductImageTargetTransportSource.toFiniteLocalLogCoordinateTargetTransportSource.toValuationAnchorCoordinateTargetTransportSource.toSelectedImageCoordinateTargetTransportSource.toCoordinateTargetTransportSource.toTargetPointTransportSource :=
+  sourceData.toCompactOpenHaarLogCoordinateFiniteSumTargetPointSource.targetPointTransportAudit
+
+end
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
 
 set_option linter.style.longLine false in
 /--
