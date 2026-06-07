@@ -42143,6 +42143,80 @@ theorem remark395FiniteExtensionHaarTensorPacketFiniteAdditiveCalibratedLocalRin
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface additive Haar compact-open normalization source.
+
+This endpoint exposes the local Haar-measure-backed construction of the
+compact-open topology normalization source.
+-/
+theorem remark395AdditiveHaarCompactOpenNormalizationSource_endpoint
+    {α : Type u} {η : Type v} {K : Type w}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormalizationSource
+        α η K hullSystem) :
+    IsOpen data.ringOfIntegers ∧
+      IsCompact data.ringOfIntegers ∧
+      IsOpen data.compactOpenSubset ∧
+      IsCompact data.compactOpenSubset ∧
+      data.isCompactOpen data.uniformizerScaledSubset ∧
+      data.rawHaarMeasure data.ringOfIntegers = 1 ∧
+      0 < data.rawHaarMeasure data.compactOpenSubset ∧
+      data.rawHaarLogVolume data.uniformizerScaledSubset =
+        data.rawHaarLogVolume data.compactOpenSubset -
+          (data.finiteExtensionDegree : Real) *
+            Real.log (data.residuePrime : Real) ∧
+      data.normalizedHaarLogVolume data.ringOfIntegers = 0 ∧
+      data.normalizedHaarLogVolume data.uniformizerScaledSubset =
+        data.normalizedHaarLogVolume data.compactOpenSubset -
+          Real.log (data.residuePrime : Real) ∧
+      ((data.toCompactOpenTopologyHaarNormalizationSource)
+        |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+        |>.toNonarchimedeanLocalCompactOpenLogVolumeSource).compactOpenRegion =
+        data.realizedRegion data.compactOpenSubset :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface additive Haar tensor-product direct-sum source.
+
+This endpoint exposes the tensor/direct-sum log-volume calculation after each
+local factor has been built from additive Haar normalization.
+-/
+theorem remark395AdditiveHaarTensorProductDirectSumSource_endpoint
+    {α : Type u} {η : Type v} {K : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    [Fintype γ]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    (data :
+      IUTStage1AdditiveHaarTensorProductDirectSumSource
+        α η K γ hullSystem) :
+    data.tensorProductRegion =
+        { point : α | ∀ place : γ,
+          point ∈ data.factorRegion place } ∧
+      (∀ place : γ,
+        IsOpen (data.additiveHaarFactor place).compactOpenSubset ∧
+          IsCompact (data.additiveHaarFactor place).compactOpenSubset ∧
+          0 <
+            (data.additiveHaarFactor place).rawHaarMeasure
+              (data.additiveHaarFactor place).compactOpenSubset) ∧
+      data.tensorProductNormalizedLogVolume =
+        (Finset.univ.sum fun place =>
+          (data.additiveHaarFactor place).normalizedHaarLogVolume
+            (data.additiveHaarFactor place).compactOpenSubset) ∧
+      hullSystem.logVolume
+          { point : α | ∀ place : γ,
+            point ∈ data.factorRegion place } =
+        (Finset.univ.sum fun place =>
+          hullSystem.logVolume (data.factorRegion place)) ∧
+      ((data.toCompactOpenTopologyTensorProductDirectSumSource)
+        |>.toFiniteExtensionTensorProductDirectSumDecompositionSource
+        |>.toNonarchimedeanLocalTensorRegionDirectSumSource).tensorProductRegion =
+        data.tensorProductRegion :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface compact-open topology/Haar tensor-packet finite-additive
 charted cover source.
 

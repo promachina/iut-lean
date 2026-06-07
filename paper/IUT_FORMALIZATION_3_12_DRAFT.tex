@@ -3052,6 +3052,29 @@ compact-open topology factors.  Finally,
 feeds compact-open topology/Haar normalization data for each charted cell into
 the finite-extension Haar tensor-packet source and hence into the same
 finite-additive Step~(xi) cover route.
+The local compact-open topology source has also been lowered one step further to
+a Haar-measure-backed source.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarCompactOpenNormalizationSource}
+\end{array}
+\]
+uses mathlib's additive Haar-measure class on the local additive carrier,
+records openness and compactness for the ring of integers and selected
+compact-open subset, normalizes the ring of integers to Haar mass \(1\), and
+records the finite-extension uniformizer scaling law for real Haar mass.  Lean
+then derives the raw logarithmic shift by
+\(-[K:\mathbb{Q}_p]\log(p)\), divides by the finite-extension degree, and
+obtains the normalized IUT~IV shift \(\mu_{\log}(pU)=\mu_{\log}(U)-\log(p)\).
+The companion declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarTensorProductDirectSumSource}
+\end{array}
+\]
+feeds these Haar-backed local factors into the compact-open tensor/direct-sum
+source, so the tensor summation layer now has a route whose local inputs are
+actual additive Haar measures rather than arbitrary real-valued Haar functions.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -6246,12 +6269,15 @@ The practical priority order is:
   decomposition law, and the compact-open topology/Haar tensor-packet variant
   now constructs the finite-extension Haar source from compact-open provenance,
   raw Haar measure, raw log-volume, degree normalization, and uniformizer
-  compact-open preservation, but
+  compact-open preservation, and the additive Haar variant now constructs the
+  compact-open topology source from a mathlib additive Haar measure together with
+  Haar mass-one and uniformizer-scaling laws, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
   finite-additive hull log-volume source, construction of the compact-open
-  predicate, Haar measure, and Haar uniqueness/existence theorem itself from
-  actual finite extensions of \(\mathbb{Q}_p\), per-factor
+  predicate, ring-of-integers compact-open proof, normalized Haar measure choice,
+  and uniformizer-scaling theorem itself from actual finite extensions of
+  \(\mathbb{Q}_p\), per-factor
   chart/direct-summand calibration construction, local region/vector-bundle
   log-volume calibration, measure calibration, record-canonical
   synchronization, and chart
