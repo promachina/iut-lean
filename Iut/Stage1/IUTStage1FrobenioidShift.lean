@@ -21745,6 +21745,159 @@ theorem toTargetChartedFullRouteAudit
     calibratedPossibleImageSourceAudit := sourceData.calibratedPossibleImageSource_endpoint,
     sourceRawComparisonAudit := sourceData.sourceRawComparison_endpoint }
 
+set_option linter.style.longLine false in
+/--
+Route-level Step (xi) comparison chain.
+
+The all-in-one target-charted route already carries the Gaussian/Hodge/SHE/IPL
+chain and the determinant possible-image source.  This audit extracts the
+ordered log-volume chain used by the signed comparison:
+the selected q-pilot region lies in the Theorem 3.11 possible-image union,
+its log-volume is bounded by the family-union log-volume, the family union is
+bounded by the canonical hull, and the canonical hull is identified with both
+the normalized determinant and the weighted determinant log-volume, which is
+then identified with `thetaSigned`.
+-/
+structure StepXIComparisonChainAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) : Prop where
+  gaussianToStepXIAudit :
+    GaussianToStepXIAudit sourceData
+  determinantSourceBoundaryAudit :
+    IUTStage1TargetChartedHodgeDeterminantSummandFamilyHullSource.DeterminantSourceBoundaryAudit
+      sourceData.possibleImageSource.hodgeDeterminantSource
+  qPilotRegion_eq_choice :
+    sourceData.possibleImageSource.qPilotRegion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record sourceData.possibleImageSource.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.possibleImageSource.qPilotRegion ⊆
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  familyUnion_eq_recordUnion :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyUnion =
+      IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record
+  qPilotRegion_subset_familyUnion :
+    sourceData.possibleImageSource.qPilotRegion ⊆
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyUnion
+  qPilotLogVolume_le_familyUnionLogVolume :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.logVolume
+        sourceData.possibleImageSource.qPilotRegion <=
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyUnionLogVolume
+  familyUnionLogVolume_le_familyHullLogVolume :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyUnionLogVolume <=
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume
+  familyHullLogVolume_eq_normalizedDeterminant :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.normalizedLogVolume
+  familyHullLogVolume_eq_determinant :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume =
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume
+  determinantNormalized_eq_determinant :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.normalizedLogVolume =
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume
+  thetaSigned_eq_familyHull :
+    packageN.preLedger.thetaSigned =
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume
+  determinantLogVolume_le_thetaSigned :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume <=
+      packageN.preLedger.thetaSigned
+  determinantNormalizedLogVolume_le_thetaSigned :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
+  qPilotLogVolume_le_familyHullLogVolume :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.logVolume
+        sourceData.possibleImageSource.qPilotRegion <=
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume
+  qPilotLogVolume_le_determinantNormalized :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.logVolume
+        sourceData.possibleImageSource.qPilotRegion <=
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.normalizedLogVolume
+  qPilotLogVolume_le_determinant :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.logVolume
+        sourceData.possibleImageSource.qPilotRegion <=
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume
+  qPilotLogVolume_le_thetaSigned :
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.logVolume
+        sourceData.possibleImageSource.qPilotRegion <=
+      packageN.preLedger.thetaSigned
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toStepXIComparisonChainAudit
+    (sourceData :
+      IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) part audited record X C) :
+    StepXIComparisonChainAudit sourceData := by
+  let familySource :=
+    sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource
+  have hgauss := sourceData.toGaussianToStepXIAudit
+  have hdet := sourceData.determinantSourceBoundaryAudit_endpoint
+  have hsubset :
+      sourceData.possibleImageSource.qPilotRegion ⊆
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyUnion := by
+    intro x hx
+    rw [hdet.familyUnion_eq_record]
+    exact hgauss.qPilotRegion_subset_union hx
+  have hq_union :
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.logVolume
+          sourceData.possibleImageSource.qPilotRegion <=
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyUnionLogVolume := by
+    simpa [IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.familyUnionLogVolume]
+      using
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.logVolume_mono
+          hsubset
+  have hq_hull :
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.hullData.logVolume
+          sourceData.possibleImageSource.qPilotRegion <=
+        sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.familyHullLogVolume :=
+    hq_union.trans hdet.familyUnionLogVolume_le_familyHullLogVolume
+  have hdet_le_theta :
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.determinantLogVolume <=
+        packageN.preLedger.thetaSigned :=
+    le_of_eq
+      (by
+        rw [← hdet.familyHullLogVolume_eq_determinant,
+          ← hgauss.thetaSigned_eq_familyHull])
+  have hnormalized_le_theta :
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.normalizedLogVolume <=
+        packageN.preLedger.thetaSigned :=
+    (le_of_eq
+      sourceData.possibleImageSource.hodgeDeterminantSource.familyHullSource.determinantSource.normalizedLogVolume_eq_determinantLogVolume).trans
+        hdet_le_theta
+  exact
+    { gaussianToStepXIAudit := hgauss,
+      determinantSourceBoundaryAudit := hdet,
+      qPilotRegion_eq_choice := hgauss.qPilotRegion_eq_choice,
+      qPilotRegion_subset_recordUnion := hgauss.qPilotRegion_subset_union,
+      familyUnion_eq_recordUnion := hdet.familyUnion_eq_record,
+      qPilotRegion_subset_familyUnion := hsubset,
+      qPilotLogVolume_le_familyUnionLogVolume := hq_union,
+      familyUnionLogVolume_le_familyHullLogVolume :=
+        hdet.familyUnionLogVolume_le_familyHullLogVolume,
+      familyHullLogVolume_eq_normalizedDeterminant :=
+        familySource.familyHullLogVolume_eq_normalized,
+      familyHullLogVolume_eq_determinant :=
+        hdet.familyHullLogVolume_eq_determinant,
+      determinantNormalized_eq_determinant :=
+        familySource.determinantSource.normalizedLogVolume_eq_determinantLogVolume,
+      thetaSigned_eq_familyHull := hgauss.thetaSigned_eq_familyHull,
+      determinantLogVolume_le_thetaSigned := hdet_le_theta,
+      determinantNormalizedLogVolume_le_thetaSigned := hnormalized_le_theta,
+      qPilotLogVolume_le_familyHullLogVolume := hq_hull,
+      qPilotLogVolume_le_determinantNormalized :=
+        hq_hull.trans
+          (le_of_eq familySource.familyHullLogVolume_eq_normalized),
+      qPilotLogVolume_le_determinant :=
+        hq_hull.trans
+          (le_of_eq hdet.familyHullLogVolume_eq_determinant),
+      qPilotLogVolume_le_thetaSigned := hq_hull.trans
+        (le_of_eq hgauss.thetaSigned_eq_familyHull.symm),
+      qSigned_le_thetaSigned := hgauss.qSigned_le_thetaSigned }
+
 end IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
 
 set_option linter.style.longLine false in

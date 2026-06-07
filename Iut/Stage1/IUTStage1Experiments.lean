@@ -9587,6 +9587,39 @@ theorem targetChartedHodgeIPLDeterminantPossibleImageRoutePacketLocalVerticalIQ_
     entrySource_eq_monoAnalyticProduct packetLocalObjectFinite_eq_ind3Source
     targetSource
 
+set_option linter.style.longLine false in
+/--
+Experiment-surface Step (xi) comparison-chain audit for the all-in-one
+target-charted Hodge/\(\IPL\) determinant possible-image route.
+
+This exposes the route-level log-volume chain
+`qPilot <= P_B <= phi(P_B) = det_norm = det <= thetaSigned` together with
+the resulting raw signed comparison.
+-/
+theorem targetChartedHodgeIPLDeterminantPossibleImageRoute_stepXIComparisonChainAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    {β : Type v} [Fintype β]
+    (routeSource :
+      part.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource
+        (β := β) audited record X C) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1TargetChartedHodgeIPLDeterminantPossibleImageRouteSource.StepXIComparisonChainAudit
+      routeSource :=
+  routeSource.toStepXIComparisonChainAudit
+
 theorem theorem311MultiradialSourceRecord_endpoint
     {source target : Copy} {index : Type u}
     {package : IUTStage1SourcePackage source target index}

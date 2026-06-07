@@ -1628,6 +1628,22 @@ The project currently proves the following source-facing results in \Lean{}:
   \(\mu_{\log}(\bigcup_\beta P_\beta)\le\det_{\log}\).
 \item The Corollary 3.12 possible-image approximant source now exposes the
   same possible-image-union-to-determinant estimate directly.
+\item The all-in-one target-charted Hodge/\(\IPL\) determinant possible-image
+  route now has a named Step (xi) comparison-chain audit,
+  \texttt{targetChartedHodgeIPLDeterminantPossibleImageRoute\_stepXIComparisonChainAudit}.
+  This audit derives, at the route boundary, the chain
+  \[
+    \mu_{\log}(q_{\mathrm{pilot}})
+      \le \mu_{\log}(P_B)
+      \le \mu_{\log}(\phi(P_B))
+      = \det_{\mathrm{norm}}
+      = \det_{\log}
+      \le \theta_{\mathrm{signed}},
+  \]
+  together with \(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\).  Thus the
+  public route no longer exposes only the final signed comparison; it also
+  records the possible-image containment and determinant-normalization chain
+  that produces it.
 \item The package-level hull/determinant bridge can now be built from the
   Ob4-normalized tensor-power bound associated to a weighted determinant
   source.  The conversion to the determinant bound is a Lean theorem, not a
