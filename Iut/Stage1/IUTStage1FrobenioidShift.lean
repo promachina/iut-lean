@@ -58505,6 +58505,160 @@ theorem productHullBackedPhiXiApproximantAudit
 
 set_option linter.style.longLine false in
 /--
+Product-hull-backed Ob6 hull-approximant log-volume audit.
+
+Remark 3.9.5(vii), Ob6, says that the comparison must be made with
+`μ_log(HΦ(P_B))` or `μ_log(HΞ(P_B))`, not with the raw possible-image family
+alone.  At the current product-hull boundary this audit pins both
+approximant-unions to the selected product hull, records the raw-to-hull
+log-volume inequalities, and keeps the determinant normalization and signed
+comparison next to the same payload.
+-/
+structure ProductHullBackedOb6HullApproximantLogVolumeAudit
+    {κ : Type u}
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily : sourceData.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily : sourceData.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) :
+    Prop where
+  phiXiApproximantAudit :
+    ProductHullBackedPhiXiApproximantAudit
+      sourceData xiFamily k comparisonChoice
+  HPhi_eq_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.HPhi phiFamily =
+      sourceData.selectedProductHull
+  HPhi_subset_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.HPhi phiFamily ⊆
+      sourceData.selectedProductHull
+  selectedProductHull_subset_HPhi :
+    sourceData.selectedProductHull ⊆
+      sourceData.toPossibleImageFamilySource.HPhi phiFamily
+  familyUnionLogVolume_le_HPhiLogVolume :
+    sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        sourceData.toPossibleImageFamilySource.familyUnion <=
+      sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        (sourceData.toPossibleImageFamilySource.HPhi phiFamily)
+  comparisonRegionLogVolume_le_HPhiLogVolume :
+    sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        (recordThetaPossibleImage record comparisonChoice) <=
+      sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        (sourceData.toPossibleImageFamilySource.HPhi phiFamily)
+  HPhiLogVolume_eq_selectedProductHullLogVolume :
+    sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        (sourceData.toPossibleImageFamilySource.HPhi phiFamily) =
+      sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        sourceData.selectedProductHull
+  HXi_eq_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.HXi xiFamily =
+      sourceData.selectedProductHull
+  familyUnionLogVolume_le_HXiLogVolume :
+    sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        sourceData.toPossibleImageFamilySource.familyUnion <=
+      sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        (sourceData.toPossibleImageFamilySource.HXi xiFamily)
+  comparisonRegionLogVolume_le_HXiLogVolume :
+    sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        (recordThetaPossibleImage record comparisonChoice) <=
+      sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        (sourceData.toPossibleImageFamilySource.HXi xiFamily)
+  qPilotLogVolume_le_HXiLogVolume :
+    sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        sourceData.constructorBackedSource.qPilotRegion <=
+      sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        (sourceData.toPossibleImageFamilySource.HXi xiFamily)
+  HXiLogVolume_eq_selectedProductHullLogVolume :
+    sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        (sourceData.toPossibleImageFamilySource.HXi xiFamily) =
+      sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        sourceData.selectedProductHull
+  exactXi_logVolume_eq_familyUnion :
+    sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        ((xiFamily.exactApproximant k).approximant).approximant =
+      sourceData.toPossibleImageFamilySource.hullOperator.logVolume
+        sourceData.toPossibleImageFamilySource.familyUnion
+  selectedProductHull_measuredLogVolume_eq_normalizedDeterminant :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem productHullBackedOb6HullApproximantLogVolumeAudit
+    {κ : Type u}
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily : sourceData.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily : sourceData.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record
+        sourceData.constructorBackedSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    ProductHullBackedOb6HullApproximantLogVolumeAudit
+      sourceData phiFamily xiFamily k comparisonChoice :=
+  let phiXiAudit :=
+    sourceData.productHullBackedPhiXiApproximantAudit
+      xiFamily k comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  let familySource := sourceData.toPossibleImageFamilySource
+  let hHPhi_eq_selected :
+      familySource.HPhi phiFamily = sourceData.selectedProductHull := by
+    rw [familySource.HPhi_eq_phi phiFamily]
+    exact sourceData.possibleImageFamily_canonicalHull_eq_selectedProductHull
+  let hHPhi_subset_selected :
+      familySource.HPhi phiFamily ⊆ sourceData.selectedProductHull := by
+    rw [hHPhi_eq_selected]
+  let hselected_subset_HPhi :
+      sourceData.selectedProductHull ⊆ familySource.HPhi phiFamily := by
+    rw [hHPhi_eq_selected]
+  let hqPilot_subset_HXi :
+      sourceData.constructorBackedSource.qPilotRegion ⊆
+        familySource.HXi xiFamily :=
+    sourceData.qPilotRegion_subset_selectedProductHull.trans
+      phiXiAudit.selectedProductHull_subset_HXi
+  { phiXiApproximantAudit := phiXiAudit,
+    HPhi_eq_selectedProductHull := hHPhi_eq_selected,
+    HPhi_subset_selectedProductHull := hHPhi_subset_selected,
+    selectedProductHull_subset_HPhi := hselected_subset_HPhi,
+    familyUnionLogVolume_le_HPhiLogVolume :=
+      familySource.familyUnion_logVolume_le_HPhi phiFamily,
+    comparisonRegionLogVolume_le_HPhiLogVolume :=
+      familySource.possibleRegion_logVolume_le_HPhi
+        phiFamily comparisonChoice,
+    HPhiLogVolume_eq_selectedProductHullLogVolume := by
+      rw [hHPhi_eq_selected],
+    HXi_eq_selectedProductHull :=
+      phiXiAudit.HXi_eq_selectedProductHull,
+    familyUnionLogVolume_le_HXiLogVolume :=
+      familySource.familyUnion_logVolume_le_HXi xiFamily,
+    comparisonRegionLogVolume_le_HXiLogVolume :=
+      familySource.possibleRegion_logVolume_le_HXi
+        xiFamily comparisonChoice,
+    qPilotLogVolume_le_HXiLogVolume :=
+      familySource.hullOperator.logVolume_mono hqPilot_subset_HXi,
+    HXiLogVolume_eq_selectedProductHullLogVolume := by
+      rw [phiXiAudit.HXi_eq_selectedProductHull],
+    exactXi_logVolume_eq_familyUnion :=
+      phiXiAudit.exactXi_logVolume_eq_familyUnion,
+    selectedProductHull_measuredLogVolume_eq_normalizedDeterminant :=
+      phiXiAudit.selectedProductHull_logVolume_eq_normalizedDeterminant,
+    qSigned_le_thetaSigned :=
+      phiXiAudit.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+/--
 Product-hull-backed exact-theta bridge audit.
 
 This audit exposes the determinant estimate at the strongest current

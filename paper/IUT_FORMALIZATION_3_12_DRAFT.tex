@@ -787,6 +787,21 @@ available and one possible image is nonempty, \Lean{} proves
 \]
 and proves that the quotient image of \(H_{\Xi(P_B)}\) is the same collapsed
 point as the quotient image of that nonempty possible image.
+The same source-facing family now has an explicit Ob6 log-volume endpoint:
+for a \(\Phi(P_B)\)-family and a supplied exact \(\Xi(P_B)\)-family, \Lean{}
+proves
+\[
+  H_{\Phi(P_B)}=\phi(P_B)=H_{\Xi(P_B)}
+\]
+and records the inequalities
+\[
+  \mu_{\log}(P_B)\leq\mu_{\log}(H_{\Phi(P_B)}),\qquad
+  \mu_{\log}(P_B)\leq\mu_{\log}(H_{\Xi(P_B)}),
+\]
+together with the corresponding inequalities for each selected possible image
+\(P_\beta\).  Thus Remark~3.9.5(Ob6)'s warning that estimates must pass through
+hull-approximant unions, rather than through the raw possible-image region
+alone, is now a named checked source endpoint.
 The canonical hull \(\phi(P)\) is itself an approximant, and every approximant
 is fixed by hull formation.  This is the compactness guard emphasized in the
 paper: the indeterminacy in choosing a hull approximant remains inside
@@ -2368,7 +2383,12 @@ The project currently proves the following source-facing results in \Lean{}:
   wrapper now projects to the source-facing possible-image family package: the
   Theorem~3.11 family \(P_B\), its canonical \(\Phi(P_B)\) approximant, and any
   supplied exact \(\Xi(P_B)\) family are audited at the same boundary, with
-  \(H_{\Xi(P_B)}\) identified with the selected product hull.  The same
+  \(H_{\Xi(P_B)}\) identified with the selected product hull.  The Ob6
+  hull-approximant log-volume audit is also exposed at this boundary:
+  \(H_{\Phi(P_B)}\) and \(H_{\Xi(P_B)}\) are both identified with the selected
+  product hull, while the raw family union, comparison possible image, and
+  q-pilot region are estimated by the corresponding hull-approximant
+  log-volumes before the normalized determinant equality is invoked.  The same
   boundary now carries an exact-theta bridge audit: the package value
   \(\theta_{\mathrm{signed}}\) is identified with the Remark~3.9.5 family-hull
   log-volume, the normalized tensor-power/determinant upper bound is derived
@@ -6345,6 +6365,26 @@ upper-semi quotient image as any nonempty comparison possible image.  This
 threads the paper's \(\Phi(P)\), \(\Xi(P)\), and \(H_{\Xi(P)}\) formalism into
 the strongest current finite-divisor product-hull route instead of leaving it
 only at the generic source-core endpoint.
+The same product-hull source now exposes the Ob6 log-volume version of this
+audit,
+\[
+\begin{array}{l}
+\texttt{remark395ProductHullBackedConstructorBackedConstructed}\\
+\quad\texttt{HullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_ob6HullApproximantLogVolumeAudit}.
+\end{array}
+\]
+This audit identifies both \(H_{\Phi(P_B)}\) and \(H_{\Xi(P_B)}\) with the
+selected product hull, proves
+\[
+  \mu_{\log}(P_B)\leq\mu_{\log}(H_{\Phi(P_B)}),\qquad
+  \mu_{\log}(P_B)\leq\mu_{\log}(H_{\Xi(P_B)}),
+\]
+and records the corresponding comparison-region and q-pilot inequalities into
+the \(H_{\Xi(P_B)}\) log-volume.  The normalized determinant equality and the
+raw \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison remain in
+the same audit object, so the Ob6 passage is now visible directly on the
+finite-divisor product-hull route.
 The product-hull boundary also exposes an exact-theta bridge audit,
 \[
 \begin{array}{l}

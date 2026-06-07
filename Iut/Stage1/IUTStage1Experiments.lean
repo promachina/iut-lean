@@ -34277,6 +34277,46 @@ theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFin
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob6 hull-approximant log-volume audit for the
+product-hull-backed constructor-built Remark 3.9.5 finite-divisor source.
+
+This pins `H_Phi(P_B)` and `H_Xi(P_B)` to the selected product hull and records
+the source-paper Ob6 inequalities from the raw possible-image family and chosen
+comparison region into these hull-approximant unions.
+-/
+theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_ob6HullApproximantLogVolumeAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type x} {κ : Type u}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record
+        productHullBackedSource.constructorBackedSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb6HullApproximantLogVolumeAudit
+      productHullBackedSource phiFamily xiFamily k comparisonChoice :=
+  productHullBackedSource.productHullBackedOb6HullApproximantLogVolumeAudit
+    phiFamily xiFamily k comparisonChoice
+    qChoice_nonempty comparisonChoice_nonempty
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface exact-theta determinant bridge audit for the
 product-hull-backed constructor-built Remark 3.9.5 finite-divisor source.
 
@@ -41585,6 +41625,45 @@ theorem remark395PossibleImageFamilySource_XiFamilyOb5Endpoint
       data.quotientMap '' data.HXi family =
         data.quotientMap '' data.possibleRegion i :=
   data.XiFamily_ob5_endpoint family k i hne
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface Ob6 log-volume audit for the source-facing Remark 3.9.5
+possible-image family package.
+
+This records that the raw possible-image family and each selected possible
+region are estimated through `H_Phi(P_B)` and, when an exact family is supplied,
+through `H_Xi(P_B)`.
+-/
+theorem remark395PossibleImageFamilySource_PhiXiOb6LogVolumeEndpoint
+    {α : Type u} {ι : Type v} {κ : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (phiFamily : data.PhiFamily κ)
+    (xiFamily : data.XiFamily κ)
+    (k : κ)
+    (i : ι) :
+    data.HPhi phiFamily = data.canonicalHull ∧
+      data.HPhi phiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HPhi phiFamily ∧
+      data.hullOperator.logVolume data.familyUnion <=
+        data.hullOperator.logVolume (data.HPhi phiFamily) ∧
+      data.hullOperator.logVolume (data.HPhi phiFamily) =
+        data.hullOperator.logVolume data.canonicalHull ∧
+      data.hullOperator.logVolume (data.possibleRegion i) <=
+        data.hullOperator.logVolume (data.HPhi phiFamily) ∧
+      data.HXi xiFamily = data.canonicalHull ∧
+      data.HXi xiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HXi xiFamily ∧
+      data.hullOperator.logVolume data.familyUnion <=
+        data.hullOperator.logVolume (data.HXi xiFamily) ∧
+      data.hullOperator.logVolume (data.HXi xiFamily) =
+        data.hullOperator.logVolume data.canonicalHull ∧
+      data.hullOperator.logVolume (data.possibleRegion i) <=
+        data.hullOperator.logVolume (data.HXi xiFamily) ∧
+      data.hullOperator.logVolume
+          ((xiFamily.exactApproximant k).approximant).approximant =
+        data.hullOperator.logVolume data.familyUnion :=
+  data.PhiXi_ob6_logVolume_endpoint phiFamily xiFamily k i
 
 set_option linter.style.longLine false in
 /--

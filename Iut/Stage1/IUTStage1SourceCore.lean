@@ -4503,6 +4503,18 @@ theorem HPhi_eq_phi
   rw [HPhi, family.familyUnion_eq_hull]
   rfl
 
+theorem HPhi_subset_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.PhiFamily κ) :
+    data.HPhi family ⊆ data.canonicalHull := by
+  rw [data.HPhi_eq_phi family]
+
+theorem phi_subset_HPhi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.PhiFamily κ) :
+    data.canonicalHull ⊆ data.HPhi family := by
+  rw [data.HPhi_eq_phi family]
+
 theorem HXi_eq_phi
     (data : IUTStage1Remark395PossibleImageFamilySource α ι)
     (family : data.XiFamily κ) :
@@ -4521,6 +4533,58 @@ theorem phi_subset_HXi
     (family : data.XiFamily κ) :
     data.canonicalHull ⊆ data.HXi family := by
   rw [data.HXi_eq_phi family]
+
+theorem HPhi_logVolume_eq_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.PhiFamily κ) :
+    data.hullOperator.logVolume (data.HPhi family) =
+      data.hullOperator.logVolume data.canonicalHull := by
+  rw [data.HPhi_eq_phi family]
+
+theorem HXi_logVolume_eq_phi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ) :
+    data.hullOperator.logVolume (data.HXi family) =
+      data.hullOperator.logVolume data.canonicalHull := by
+  rw [data.HXi_eq_phi family]
+
+theorem familyUnion_logVolume_le_HPhi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.PhiFamily κ) :
+    data.hullOperator.logVolume data.familyUnion <=
+      data.hullOperator.logVolume (data.HPhi family) := by
+  rw [data.HPhi_eq_phi family]
+  exact data.hullOperator.logVolume_le_hullLogVolume data.familyUnion
+
+theorem familyUnion_logVolume_le_HXi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ) :
+    data.hullOperator.logVolume data.familyUnion <=
+      data.hullOperator.logVolume (data.HXi family) := by
+  rw [data.HXi_eq_phi family]
+  exact data.hullOperator.logVolume_le_hullLogVolume data.familyUnion
+
+theorem possibleRegion_logVolume_le_HPhi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.PhiFamily κ)
+    (i : ι) :
+    data.hullOperator.logVolume (data.possibleRegion i) <=
+      data.hullOperator.logVolume (data.HPhi family) :=
+  le_trans
+    (data.hullOperator.logVolume_mono
+      (data.possibleRegion_subset_familyUnion i))
+    (data.familyUnion_logVolume_le_HPhi family)
+
+theorem possibleRegion_logVolume_le_HXi
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (family : data.XiFamily κ)
+    (i : ι) :
+    data.hullOperator.logVolume (data.possibleRegion i) <=
+      data.hullOperator.logVolume (data.HXi family) :=
+  le_trans
+    (data.hullOperator.logVolume_mono
+      (data.possibleRegion_subset_familyUnion i))
+    (data.familyUnion_logVolume_le_HXi family)
 
 theorem HXi_nonempty_of_possibleRegion_nonempty
     (data : IUTStage1Remark395PossibleImageFamilySource α ι)
@@ -4605,6 +4669,60 @@ theorem XiFamily_ob5_endpoint
         using family.exactApproximant_logVolume_eq_region k,
     data.quotientMap_image_HXi_eq_collapsed family hne,
     data.quotientMap_image_HXi_eq_possibleRegion family hne⟩
+
+set_option linter.style.longLine false in
+/--
+Remark 3.9.5(vii), Ob6, at the possible-image-family boundary.
+
+The source-paper point is that the estimate attached to a possible-image
+family must pass through the hull-approximant unions `HΦ(P_B)` and, when an
+exact family is available, `HΞ(P_B)`, rather than through the raw region
+`P_B` alone.  In the present finite family model both unions are pinned to the
+canonical hull `φ(P_B)`, so Lean records the log-volume inequalities and
+identifications explicitly.
+-/
+theorem PhiXi_ob6_logVolume_endpoint
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι)
+    (phiFamily : data.PhiFamily κ)
+    (xiFamily : data.XiFamily κ)
+    (k : κ)
+    (i : ι) :
+    data.HPhi phiFamily = data.canonicalHull ∧
+      data.HPhi phiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HPhi phiFamily ∧
+      data.hullOperator.logVolume data.familyUnion <=
+        data.hullOperator.logVolume (data.HPhi phiFamily) ∧
+      data.hullOperator.logVolume (data.HPhi phiFamily) =
+        data.hullOperator.logVolume data.canonicalHull ∧
+      data.hullOperator.logVolume (data.possibleRegion i) <=
+        data.hullOperator.logVolume (data.HPhi phiFamily) ∧
+      data.HXi xiFamily = data.canonicalHull ∧
+      data.HXi xiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HXi xiFamily ∧
+      data.hullOperator.logVolume data.familyUnion <=
+        data.hullOperator.logVolume (data.HXi xiFamily) ∧
+      data.hullOperator.logVolume (data.HXi xiFamily) =
+        data.hullOperator.logVolume data.canonicalHull ∧
+      data.hullOperator.logVolume (data.possibleRegion i) <=
+        data.hullOperator.logVolume (data.HXi xiFamily) ∧
+      data.hullOperator.logVolume
+          ((xiFamily.exactApproximant k).approximant).approximant =
+        data.hullOperator.logVolume data.familyUnion :=
+  ⟨data.HPhi_eq_phi phiFamily,
+    data.HPhi_subset_phi phiFamily,
+    data.phi_subset_HPhi phiFamily,
+    data.familyUnion_logVolume_le_HPhi phiFamily,
+    data.HPhi_logVolume_eq_phi phiFamily,
+    data.possibleRegion_logVolume_le_HPhi phiFamily i,
+    data.HXi_eq_phi xiFamily,
+    data.HXi_subset_phi xiFamily,
+    data.phi_subset_HXi xiFamily,
+    data.familyUnion_logVolume_le_HXi xiFamily,
+    data.HXi_logVolume_eq_phi xiFamily,
+    data.possibleRegion_logVolume_le_HXi xiFamily i,
+    by
+      simpa [hullData, IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator]
+        using xiFamily.exactApproximant_logVolume_eq_region k⟩
 
 theorem quotientMap_images_eq
     (data : IUTStage1Remark395PossibleImageFamilySource α ι)
