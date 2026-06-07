@@ -8759,14 +8759,35 @@ The practical priority order is:
   \(x\mapsto p_vx\) by \texttt{Homeomorph.smulOfNeZero}.  The constructed
   source records the pointwise formula for this homeomorphism, specializes the
   uniform Haar-mass law through it, and then projects to the previous
-  dilation-mass route.  Thus the remaining analytic Haar input at this boundary
-  is the uniform local modulus theorem itself, not the invertibility or
-  topological automorphism of base-prime multiplication.
+  dilation-mass route.  At that stage the analytic Haar input was the uniform
+  local modulus theorem itself, not the invertibility or topological automorphism
+  of base-prime multiplication.
+  This boundary has now been lowered below the all-subset modulus theorem.  Lean
+  constructs the continuous additive equivalence \(x\mapsto p_vx\) on the
+  finite-extension local field and applies mathlib's additive Haar-character
+  theorem:
+  \[
+      \operatorname{addEquivAddHaarChar}(x\mapsto p_vx)\cdot
+      \mu_v((x\mapsto p_vx)^{-1}X)=\mu_v(X).
+  \]
+  Injectivity of the constructed equivalence converts this preimage statement
+  into the image law for \(p_vS\).  The source input has therefore moved from
+  the uniform measure identity itself to the local arithmetic Haar-character
+  evaluation
+  \[
+      \operatorname{addEquivAddHaarChar}(x\mapsto p_vx)
+      =p_v^{-[K_v:\mathbb Q_{p_v}]},
+  \]
+  recorded in Lean by the new finite-extension Haar-character normalization
+  source.
+  The local, finite-product, and experiment-surface Remark~3.9.5 routes now
+  expose this Haar-character scalar before projecting to the previous
+  measure-level Haar-modulus endpoint.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   The next work is now below the finite-extension boundary: derive, from the
-  source-paper valuation/Haar/Kummer model, the uniform finite-extension Haar
-  dilation-modulus theorem itself, the positive valuation-ball radius, the
+  source-paper valuation/Haar/Kummer model, the finite-extension
+  base-prime Haar-character evaluation itself, the positive valuation-ball radius, the
   coordinate-place equivalence, and the point-level target transport
   identifying \(O\) and \(\lambda O\) with the principal finite-divisor target
   regions.  Below that, the local directional scalar-image laws for each local factor

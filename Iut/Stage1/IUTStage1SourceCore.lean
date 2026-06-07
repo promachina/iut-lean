@@ -7,6 +7,7 @@ import Iut.Foundations.InitialThetaData
 import Iut.Stage1.IUTStage1Data
 import Mathlib.Data.ZMod.ValMinAbs
 import Mathlib.MeasureTheory.Measure.Haar.Basic
+import Mathlib.MeasureTheory.Measure.Haar.MulEquivHaarChar
 import Mathlib.NumberTheory.Padics.ProperSpace
 import Mathlib.Topology.Algebra.Valued.LocallyCompact
 
@@ -13448,6 +13449,197 @@ theorem endpoint
     data.toConstructedDilationMassHaarNormalizationSource.basePrimeDilation_measure_toReal_eq⟩
 
 end IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+
+/--
+Continuous additive automorphism of a finite `ℚ_[p]`-extension given by
+multiplication by the base prime.
+
+This is the structural map whose additive Haar character supplies the
+measure-level dilation modulus below.
+-/
+noncomputable def IUTStage1PadicFiniteExtensionBasePrimeContinuousAddEquiv
+    (p : Nat) [Fact p.Prime] (K : Type w)
+    [NontriviallyNormedField K] [Algebra ℚ_[p] K] [ContinuousMul K] :
+    K ≃ₜ+ K where
+  toFun point := algebraMap ℚ_[p] K (p : ℚ_[p]) * point
+  invFun point := (algebraMap ℚ_[p] K (p : ℚ_[p]))⁻¹ * point
+  left_inv point := by
+    change (algebraMap ℚ_[p] K (p : ℚ_[p]))⁻¹ *
+        (algebraMap ℚ_[p] K (p : ℚ_[p]) * point) = point
+    rw [← mul_assoc,
+      inv_mul_cancel₀
+        IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.basePrime_ne_zero,
+      one_mul]
+  right_inv point := by
+    change algebraMap ℚ_[p] K (p : ℚ_[p]) *
+        ((algebraMap ℚ_[p] K (p : ℚ_[p]))⁻¹ * point) = point
+    rw [← mul_assoc,
+      mul_inv_cancel₀
+        IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.basePrime_ne_zero,
+      one_mul]
+  map_add' x y := by
+    rw [mul_add]
+  continuous_toFun := by fun_prop
+  continuous_invFun := by fun_prop
+
+/--
+Finite-extension-over-`ℚ_[p]` Haar source whose base-prime modulus is obtained
+from the additive Haar character of the multiplication automorphism.
+
+This lowers the measure-level modulus source by replacing the all-subset
+measure identity with a structural Haar-character calculation.  Lean constructs
+the continuous additive equivalence `x ↦ p_v x`, applies Mathlib's Haar
+character theorem to get the image-measure law for arbitrary subsets, and uses
+the single arithmetic input that this Haar character is
+`p_v^{-[K_v:\mathbb Q_{p_v}]}`.
+-/
+structure IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  integerSource : IUTStage1ValuedFieldIntegerUnitBallSource K
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  haar_regular : haarMeasure.Regular
+  valuationUnitBall_measure_one :
+    (haarMeasure integerSource.ringOfIntegers).toReal = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal
+  basePrimeHaarChar_eq :
+    (MeasureTheory.addEquivAddHaarChar
+        (IUTStage1PadicFiniteExtensionBasePrimeContinuousAddEquiv
+          p K) : ENNReal) =
+      ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹)
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] K : Real)
+
+namespace IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+variable [IsTopologicalAddGroup K]
+variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def basePrimeContinuousAddEquiv
+    (_data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    K ≃ₜ+ K :=
+  IUTStage1PadicFiniteExtensionBasePrimeContinuousAddEquiv
+    p K
+
+theorem basePrimeContinuousAddEquiv_apply
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem)
+    (point : K) :
+    data.basePrimeContinuousAddEquiv point =
+      algebraMap ℚ_[p] K (p : ℚ_[p]) * point :=
+  rfl
+
+theorem basePrimeHaarChar_eq'
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    (MeasureTheory.addEquivAddHaarChar data.basePrimeContinuousAddEquiv :
+        ENNReal) =
+      ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) :=
+  data.basePrimeHaarChar_eq
+
+theorem basePrimeScale_measure_eq
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem)
+    (subset : Set K) :
+    data.haarMeasure
+        ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+          subset) =
+      ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+        data.haarMeasure subset := by
+  letI : MeasureTheory.Measure.IsAddHaarMeasure data.haarMeasure :=
+    data.haar_isAddHaar
+  letI : data.haarMeasure.Regular :=
+    data.haar_regular
+  have hpre :=
+    MeasureTheory.addEquivAddHaarChar_smul_preimage
+      (μ := data.haarMeasure)
+      (X := data.basePrimeContinuousAddEquiv '' subset)
+      data.basePrimeContinuousAddEquiv
+  have hpreimage :
+      data.basePrimeContinuousAddEquiv ⁻¹'
+          (data.basePrimeContinuousAddEquiv '' subset) = subset := by
+    exact Set.preimage_image_eq subset data.basePrimeContinuousAddEquiv.injective
+  rw [hpreimage] at hpre
+  change data.haarMeasure (data.basePrimeContinuousAddEquiv '' subset) =
+    ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+      data.haarMeasure subset
+  rw [← hpre]
+  simp only [MeasureTheory.Measure.nnreal_smul_coe_apply]
+  rw [data.basePrimeHaarChar_eq']
+
+noncomputable def toConstructedDilationHaarModulusNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+      α p K hullSystem :=
+  { integerSource := data.integerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    valuationUnitBall_measure_one := data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    basePrimeScale_measure_eq := data.basePrimeScale_measure_eq,
+    hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+noncomputable def toConstructedDilationMassHaarNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+      α p K hullSystem :=
+  data.toConstructedDilationHaarModulusNormalizationSource
+    |>.toConstructedDilationMassHaarNormalizationSource
+
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    algebraMap ℚ_[p] K (p : ℚ_[p]) ≠ 0 ∧
+      (MeasureTheory.addEquivAddHaarChar data.basePrimeContinuousAddEquiv :
+          ENNReal) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (∀ subset : Set K,
+        data.haarMeasure
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              subset) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+            data.haarMeasure subset) :=
+  ⟨IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.basePrime_ne_zero,
+    data.basePrimeHaarChar_eq',
+    data.basePrimeScale_measure_eq⟩
+
+end IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
 
 /--
 `p`-adic proper-ultrametric additive Haar normalization source.
