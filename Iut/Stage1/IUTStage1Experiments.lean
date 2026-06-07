@@ -46889,6 +46889,55 @@ theorem remark395ScalarImageValuationBallProductHullCoverSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface coordinate scalar-image valuation/principal hull cover.
+
+This version pushes the valuation-ball principal hull route through the
+coordinatewise scalar-image source, so the remaining scalar work is visible as
+one-place landing and preimage laws before the valuation-ball determinant
+handoff.
+-/
+theorem remark395CoordinateScalarImageValuationBallProductHullCoverSource_endpoint
+    {δ : Type u} {A : δ -> Type v} {ι : Type y} {η : Type x} {K : Type z}
+    {β : Type w} {γ : Type max u v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    data.coordinateSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.coordinateSource.parameter_nonzero parameter) ∧
+      (∀ (parameter : (d : δ) -> Set (A d)) (base : (d : δ) -> A d),
+        base ∈ data.coordinateSource.localIntegerRegion ->
+          data.coordinateSource.scalarMultiple parameter base ∈
+            data.coordinateSource.directProductSource.productHull parameter) ∧
+      (∀ (parameter : (d : δ) -> Set (A d)) (point : (d : δ) -> A d),
+        point ∈ data.coordinateSource.directProductSource.productHull parameter ->
+          ∃ base : (d : δ) -> A d,
+            base ∈ data.coordinateSource.localIntegerRegion ∧
+              data.coordinateSource.scalarMultiple parameter base = point) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.coordinateSource.principalHull parameter =
+          data.coordinateSource.directProductSource.productHull parameter) ∧
+      data.valuationCover.hullSystem =
+        data.coordinateSource.toScalarImageDirectProductHullSource.toDirectProductPrincipalHullSystemSource.toHolomorphicHullSystem ∧
+      data.selectedCoordinateScalarImageHull =
+        data.coordinateSource.directProductSource.productHull
+          data.selectedParameter ∧
+      data.selectedCoordinateScalarImageHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.valuationCover.hullSystem.logVolume
+          data.selectedCoordinateScalarImageHull =
+        data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+        data.coordinateSource.toScalarImageDirectProductHullSource.toDirectProductPrincipalHullSystemSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface cover-additive valuation-ball factor-calibrated Haar
 tensor-packet source.
 
