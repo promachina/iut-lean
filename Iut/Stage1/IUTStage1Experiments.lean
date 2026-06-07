@@ -44803,6 +44803,75 @@ theorem remark395PossibleImageFamilySource_PhiXiOb6LogVolumeEndpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface exact-`Xi(P_B)` constructor audit.
+
+Instead of taking an arbitrary exact approximant family as input, this endpoint
+starts from the source calibration
+`mu_log(phi(P_B)) = mu_log(P_B)`, constructs the canonical one-point
+`Xi(P_B)` family, and then runs the Ob5 quotient-collapse endpoint.
+-/
+theorem remark395PossibleImageExactXiFamilySource_toXiFamilyOb5Endpoint
+    {α : Type u} {ι : Type v}
+    {data : IUTStage1Remark395PossibleImageFamilySource α ι}
+    (source :
+      IUTStage1Remark395PossibleImageExactXiFamilySource data)
+    (i : ι)
+    (hne : (data.possibleRegion i).Nonempty) :
+    let xiFamily := source.toXiFamily;
+    data.HXi xiFamily = data.canonicalHull ∧
+      data.HXi xiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HXi xiFamily ∧
+      data.hullOperator.logVolume
+          ((xiFamily.exactApproximant PUnit.unit).approximant).approximant =
+        data.hullOperator.logVolume data.familyUnion ∧
+      data.quotientMap '' data.HXi xiFamily =
+        {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+      data.quotientMap '' data.HXi xiFamily =
+        data.quotientMap '' data.possibleRegion i :=
+  source.toXiFamily_ob5_endpoint i hne
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface Ob6 audit with constructed exact `Xi(P_B)`.
+
+For any chosen `Phi(P_B)` family and canonical index, the exact-Xi source
+replicates the canonical exact approximant over the same index type and proves
+the existing Ob6 log-volume comparisons without a supplied `Xi(P_B)` family.
+-/
+theorem remark395PossibleImageExactXiFamilySource_toXiFamilyPhiXiOb6LogVolumeEndpoint
+    {α : Type u} {ι : Type v} {κ : Type w}
+    {data : IUTStage1Remark395PossibleImageFamilySource α ι}
+    (source :
+      IUTStage1Remark395PossibleImageExactXiFamilySource data)
+    (phiFamily : data.PhiFamily κ)
+    (canonicalIndex : κ)
+    (i : ι) :
+    let xiFamily := source.toXiFamilyWithIndex canonicalIndex;
+    data.HPhi phiFamily = data.canonicalHull ∧
+      data.HPhi phiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HPhi phiFamily ∧
+      data.hullOperator.logVolume data.familyUnion <=
+        data.hullOperator.logVolume (data.HPhi phiFamily) ∧
+      data.hullOperator.logVolume (data.HPhi phiFamily) =
+        data.hullOperator.logVolume data.canonicalHull ∧
+      data.hullOperator.logVolume (data.possibleRegion i) <=
+        data.hullOperator.logVolume (data.HPhi phiFamily) ∧
+      data.HXi xiFamily = data.canonicalHull ∧
+      data.HXi xiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HXi xiFamily ∧
+      data.hullOperator.logVolume data.familyUnion <=
+        data.hullOperator.logVolume (data.HXi xiFamily) ∧
+      data.hullOperator.logVolume (data.HXi xiFamily) =
+        data.hullOperator.logVolume data.canonicalHull ∧
+      data.hullOperator.logVolume (data.possibleRegion i) <=
+        data.hullOperator.logVolume (data.HXi xiFamily) ∧
+      data.hullOperator.logVolume
+          ((xiFamily.exactApproximant canonicalIndex).approximant).approximant =
+        data.hullOperator.logVolume data.familyUnion :=
+  source.toXiFamily_ob6_logVolume_endpoint phiFamily canonicalIndex i
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface possible-image family from the minimal hull system of
 Remark 3.9.5(ii).
 

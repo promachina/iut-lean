@@ -5174,6 +5174,113 @@ theorem ofHullSystem_endpoint
 end IUTStage1Remark395PossibleImageFamilySource
 
 /--
+Source-facing exact `Xi(P_B)` constructor for Remark 3.9.5(iv)--(vi).
+
+The general possible-image family cannot manufacture an exact `Xi(P_B)` member
+from hull monotonicity alone: the canonical hull `phi(P_B)` has the correct
+carrier, but exactness asks for its log-volume to equal the log-volume of the
+raw family union `P_B`.  This record isolates precisely that source
+calibration and derives the one-point exact approximant family from it.
+-/
+structure IUTStage1Remark395PossibleImageExactXiFamilySource
+    {α : Type u} {ι : Type v}
+    (data : IUTStage1Remark395PossibleImageFamilySource α ι) where
+  familyHullLogVolume_eq_familyUnion :
+    data.hullOperator.logVolume data.canonicalHull =
+      data.hullOperator.logVolume data.familyUnion
+
+namespace IUTStage1Remark395PossibleImageExactXiFamilySource
+
+variable {α : Type u} {ι : Type v} {κ : Type w}
+variable {data : IUTStage1Remark395PossibleImageFamilySource α ι}
+
+noncomputable def exactApproximant
+    (source :
+      IUTStage1Remark395PossibleImageExactXiFamilySource data) :
+    data.Xi :=
+  { approximant := data.canonicalPhi,
+    exact_logVolume := by
+      rw [data.canonicalPhi_approximant_eq_phi]
+      simpa [IUTStage1Remark395PossibleImageFamilySource.hullData,
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator] using
+        source.familyHullLogVolume_eq_familyUnion }
+
+noncomputable def toXiFamily
+    (source :
+      IUTStage1Remark395PossibleImageExactXiFamilySource data) :
+    data.XiFamily PUnit :=
+  { exactApproximant := fun _ => source.exactApproximant,
+    canonicalIndex := PUnit.unit,
+    canonical_approximant_eq_hull := by
+      exact data.canonicalPhi_approximant_eq_phi }
+
+noncomputable def toXiFamilyWithIndex
+    (source :
+      IUTStage1Remark395PossibleImageExactXiFamilySource data)
+    (canonicalIndex : κ) :
+    data.XiFamily κ :=
+  { exactApproximant := fun _ => source.exactApproximant,
+    canonicalIndex := canonicalIndex,
+    canonical_approximant_eq_hull := by
+      exact data.canonicalPhi_approximant_eq_phi }
+
+set_option linter.style.longLine false in
+theorem toXiFamily_ob5_endpoint
+    (source :
+      IUTStage1Remark395PossibleImageExactXiFamilySource data)
+    (i : ι)
+    (hne : (data.possibleRegion i).Nonempty) :
+    let xiFamily := source.toXiFamily;
+    data.HXi xiFamily = data.canonicalHull ∧
+      data.HXi xiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HXi xiFamily ∧
+      data.hullOperator.logVolume
+          ((xiFamily.exactApproximant PUnit.unit).approximant).approximant =
+        data.hullOperator.logVolume data.familyUnion ∧
+      data.quotientMap '' data.HXi xiFamily =
+        {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+      data.quotientMap '' data.HXi xiFamily =
+        data.quotientMap '' data.possibleRegion i :=
+  by
+    intro xiFamily
+    exact data.XiFamily_ob5_endpoint xiFamily PUnit.unit i hne
+
+set_option linter.style.longLine false in
+theorem toXiFamily_ob6_logVolume_endpoint
+    (source :
+      IUTStage1Remark395PossibleImageExactXiFamilySource data)
+    (phiFamily : data.PhiFamily κ)
+    (canonicalIndex : κ)
+    (i : ι) :
+    let xiFamily := source.toXiFamilyWithIndex canonicalIndex;
+    data.HPhi phiFamily = data.canonicalHull ∧
+      data.HPhi phiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HPhi phiFamily ∧
+      data.hullOperator.logVolume data.familyUnion <=
+        data.hullOperator.logVolume (data.HPhi phiFamily) ∧
+      data.hullOperator.logVolume (data.HPhi phiFamily) =
+        data.hullOperator.logVolume data.canonicalHull ∧
+      data.hullOperator.logVolume (data.possibleRegion i) <=
+        data.hullOperator.logVolume (data.HPhi phiFamily) ∧
+      data.HXi xiFamily = data.canonicalHull ∧
+      data.HXi xiFamily ⊆ data.canonicalHull ∧
+      data.canonicalHull ⊆ data.HXi xiFamily ∧
+      data.hullOperator.logVolume data.familyUnion <=
+        data.hullOperator.logVolume (data.HXi xiFamily) ∧
+      data.hullOperator.logVolume (data.HXi xiFamily) =
+        data.hullOperator.logVolume data.canonicalHull ∧
+      data.hullOperator.logVolume (data.possibleRegion i) <=
+        data.hullOperator.logVolume (data.HXi xiFamily) ∧
+      data.hullOperator.logVolume
+          ((xiFamily.exactApproximant canonicalIndex).approximant).approximant =
+        data.hullOperator.logVolume data.familyUnion :=
+  by
+    intro xiFamily
+    exact data.PhiXi_ob6_logVolume_endpoint phiFamily xiFamily canonicalIndex i
+
+end IUTStage1Remark395PossibleImageExactXiFamilySource
+
+/--
 Finite log-volume shadow of the Step (xi-d) determinant passage.
 
 The paper passes from localizations of arithmetic vector bundles of rank `> 1` to
