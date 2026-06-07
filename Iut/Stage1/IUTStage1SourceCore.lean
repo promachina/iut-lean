@@ -16529,6 +16529,78 @@ theorem toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource_end
 
 end IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
 
+set_option linter.style.longLine false
+
+namespace IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+
+variable {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+variable {β : Type w} {γ : Type x}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+noncomputable def toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    (data :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+      α ι η K β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    factorValuationCalibration := data.factorValuationCalibration,
+    localizedRegion_eq_valuationBallDirectProductCell :=
+      data.localizedRegion_eq_valuationBallDirectProductCell,
+    localFactor_separates_index :=
+      data.localFactor_separates_index,
+    familyHull_eq_valuationBallDirectProductCellUnion :=
+      data.familyHull_eq_valuationBallDirectProductCellUnion,
+    cellValuationBallTensor := data.cellValuationBallTensor,
+    cellValuationBall_factor_eq_calibration :=
+      data.cellValuationBall_factor_eq_calibration,
+    coverAdditive :=
+      IUTStage1FiniteCoverAdditiveHullLogVolumeSource.ofFiniteAdditive
+        data.finiteAdditive _ }
+
+set_option linter.style.longLine false in
+theorem toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource_endpoint
+    (data :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    let finiteCoverSource :=
+      data.toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    let tensorSource :=
+      finiteCoverSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+    let adjustedSource :=
+      finiteCoverSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+    (∀ index : β,
+      finiteCoverSource.directProductCell index = data.directProductCell index) ∧
+      finiteCoverSource.hullSystem.logVolume finiteCoverSource.directProductCellUnion =
+        finiteCoverSource.calibratedCellLogVolumeSum ∧
+      finiteCoverSource.hullSystem.logVolume finiteCoverSource.directProductCellUnion =
+        (Finset.univ.sum fun index =>
+          (finiteCoverSource.cellValuationBallTensor index).tensorProductNormalizedLogVolume) ∧
+      tensorSource.hullSystem.logVolume tensorSource.directProductCellUnion =
+        tensorSource.calibratedCellLogVolumeSum ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume := by
+  intro finiteCoverSource tensorSource adjustedSource
+  exact
+    ⟨fun _ => rfl,
+      finiteCoverSource.directProductCoverLogVolume_eq_calibratedCellSum,
+      finiteCoverSource.directProductCoverLogVolume_eq_tensorCellSum,
+      tensorSource.directProductCoverLogVolume_eq_calibratedCellSum,
+      adjustedSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_determinant⟩
+
+end IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+
 set_option linter.style.longLine true
 
 /--

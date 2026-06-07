@@ -44288,6 +44288,45 @@ theorem remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCali
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface projection from the valuation-ball Haar factor-calibrated
+finite-additive source to the finite-cover-additive and tensor-measure-backed
+valuation-ball corridor.
+
+The old global finite-additivity input is narrowed to the selected cover family
+before the tensor-cell cover sum and adjusted determinant equalities are read.
+-/
+theorem remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_toFiniteCoverTensorMeasureBacked_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    let finiteCoverSource :=
+      data.toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    let tensorSource :=
+      finiteCoverSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+    let adjustedSource :=
+      finiteCoverSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+    (∀ index : β,
+      finiteCoverSource.directProductCell index = data.directProductCell index) ∧
+      finiteCoverSource.hullSystem.logVolume finiteCoverSource.directProductCellUnion =
+        finiteCoverSource.calibratedCellLogVolumeSum ∧
+      finiteCoverSource.hullSystem.logVolume finiteCoverSource.directProductCellUnion =
+        (Finset.univ.sum fun index =>
+          (finiteCoverSource.cellValuationBallTensor index).tensorProductNormalizedLogVolume) ∧
+      tensorSource.hullSystem.logVolume tensorSource.directProductCellUnion =
+        tensorSource.calibratedCellLogVolumeSum ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  data.toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface principal valuation-ball product-hull cover endpoint.
 
 This exposes the source bridge from the Remark 3.9.5(i) principal hull

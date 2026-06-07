@@ -3428,7 +3428,21 @@ calibration source.  The packet-level declaration
 uses these per-factor valuation-ball calibrations to build the previous
 valuation-ball charted-cover source.  Thus the factor chart is no longer a
 separate object merely matched to valuation-ball data; at this boundary it is
-constructed from the valuation-ball compact-open region.
+constructed from the valuation-ball compact-open region.  This same
+factor-calibrated valuation-ball source now also projects into the newer
+finite-cover-additive/tensor-measure-backed cover corridor.  The projection
+uses the broad finite-additive law only to construct the selected
+family-local finite-cover certificate, then \Lean{} derives the tensor-cell
+cover sum
+\[
+  \mu_{\log}\Bigl(\bigcup_\beta H_\beta\Bigr)
+    =
+  \sum_\beta \mu_{\log}^{\mathrm{tensor}}(H_\beta)
+\]
+and reads the adjusted Ob3/Ob5 determinant equalities from that constructed
+finite-cover source.  This connects the valuation-ball Haar factor route to the
+current narrower cover-audit path without treating the tensor-cover theorem as
+an independent payload.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -7143,9 +7157,12 @@ The practical priority order is:
   \(\mu_{\log}(H_\beta)=\mu_{\log}^{\mathrm{tensor}}(H_\beta)\), and then
   constructs the tensor-measure-backed source.  Thus the public audit path can
   view the tensor-cover theorem as a derived consequence of the finite-cover
-  valuation-ball source whenever that source has been supplied.  But the next
-  work is to replace the still-supplied hull system, direct-product localization
-  cover construction, family-local finite-cover additivity theorem,
+  valuation-ball source whenever that source has been supplied; the older
+  global finite-additive valuation-ball/Haar factor route now first narrows to
+  this finite-cover source and then enters the same tensor-measure-backed
+  determinant corridor.  But the next work is to replace the still-supplied hull
+  system, direct-product localization cover construction, family-local
+  finite-cover additivity theorem,
   construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), extension
   of the current base \(\mathbb{Q}_p\) integer/unit-ball specialization to the
