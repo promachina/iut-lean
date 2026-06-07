@@ -1259,6 +1259,24 @@ uses this lemma for both the anchor region \(O\) and the selected scalar image
 existential statement over the product carrier; it is the placewise local
 scalar-image/preimage theorem together with the direct-product assembly law
 that identifies the assembled point with the prescribed log-coordinate tuple.
+The coordinatewise landing half has also been lowered to local factor data.
+The lemma
+\[
+  \texttt{localLogCoordinate\_lands\_of\_placewise\_factor\_landing}
+\]
+proves landing in \(\prod_vR_v\) from a point-to-factor projection, membership
+of that factor in the appropriate local source region, agreement of the source
+local coordinate with the factor coordinate, and the local factor landing
+theorem.  The new
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{LocalLogCoordinateFactorwiseTargetTransportSource}
+\end{array}
+\]
+uses this landing lemma together with the placewise-preimage assembly theorem,
+so the public route now derives both sides of the vector-valued product-image
+equality from factorwise local data.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -8073,16 +8091,19 @@ The practical priority order is:
   A placewise-preimage endpoint now derives the simultaneous realization laws
   from local factor preimages plus a direct-product assembly map whose
   assembled point has the prescribed local log-coordinate tuple.
+  A factorwise local log-coordinate endpoint now derives coordinatewise
+  landing from point-to-factor projections, local factor membership, coordinate
+  agreement, and local factor landing.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar model, the
-  still-supplied coordinatewise landing laws, placewise local scalar-preimage
-  laws, and direct-product assembly laws for the explicit source regions
-  \(O=\prod_vO_v\) and \(\lambda O\).  Below that, the local directional
-  scalar-image laws for each local factor \(\lambda_v\cdot O_v\) still have to
-  be derived from the valuation/Kummer model: landing in the
-  valuation/direct-product factor \(H_v(\lambda)\) and existence of local
-  scalar preimages for all points of \(H_v(\lambda)\),
+  still-supplied point-to-factor projection membership and coordinate-agreement
+  laws, placewise local scalar-preimage laws, and direct-product assembly laws
+  for the explicit source regions \(O=\prod_vO_v\) and \(\lambda O\).  Below
+  that, the local directional scalar-image laws for each local factor
+  \(\lambda_v\cdot O_v\) still have to be derived from the valuation/Kummer
+  model: landing in the valuation/direct-product factor \(H_v(\lambda)\) and
+  existence of local scalar preimages for all points of \(H_v(\lambda)\),
   direct-product localization cover construction, family-local
   finite-cover additivity theorem,
   construction of the compact-open
