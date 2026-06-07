@@ -44619,6 +44619,28 @@ theorem remark395ValuationBallTensorMeasureBackedFactorCalibratedHaarTensorPacke
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit for the measure model constructed by the
+tensor-measure-backed valuation-ball source.
+
+This exposes the fact that the reusable finite-cover measure model is built from
+the hull log-volume itself, with each valuation-ball tensor cell contributing its
+tensor-normalized log-volume, before the measure-backed and adjusted Ob3/Ob5
+routes are formed.
+-/
+theorem remark395ValuationBallTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource_measureModelAudit
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ValuationBallTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    IUTStage1Remark395ValuationBallTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.TensorMeasureBackedMeasureModelAudit
+      data :=
+  data.tensorMeasureBackedMeasureModelAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the

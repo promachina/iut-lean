@@ -16473,6 +16473,74 @@ theorem endpoint
       adjustedSource.adjustedSummandLogVolume_eq_determinantLogVolume,
       adjustedSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
 
+set_option linter.style.longLine false in
+structure TensorMeasureBackedMeasureModelAudit
+    (data :
+      IUTStage1Remark395ValuationBallTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    Prop where
+  measureModel_measureLogVolume_eq_hullLogVolume :
+    ∀ region : Set α,
+      data.toFiniteCoverLogVolumeMeasureModelSource.measureLogVolume region =
+        data.hullSystem.logVolume region
+  directProductCell_eq_tensorProductRegion :
+    ∀ index : β,
+      data.directProductCell index =
+        (data.cellValuationBallTensor index).tensorProductRegion
+  directProductCell_logVolume_eq_tensorNormalized :
+    ∀ index : β,
+      data.toFiniteCoverLogVolumeMeasureModelSource.measureLogVolume
+          (data.directProductCell index) =
+        (data.cellValuationBallTensor index).tensorProductNormalizedLogVolume
+  directProductCells_disjoint :
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell
+  measureModel_coverLogVolume_eq_tensorCellSum :
+    data.toFiniteCoverLogVolumeMeasureModelSource.measureLogVolume
+        data.directProductCellUnion =
+      Finset.univ.sum fun index =>
+        (data.cellValuationBallTensor index).tensorProductNormalizedLogVolume
+  finiteCoverAdditive_coverLogVolume_eq_sum :
+    data.hullSystem.logVolume (⋃ index, data.directProductCell index) =
+      Finset.univ.sum fun index =>
+        data.hullSystem.logVolume (data.directProductCell index)
+  measureBacked_measureModel_eq_constructed :
+    data.toMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.measureModel =
+      data.toFiniteCoverLogVolumeMeasureModelSource
+  measureBacked_coverLogVolume_eq_calibratedCellSum :
+    data.toMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.hullSystem.logVolume
+        data.toMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.directProductCellUnion =
+      data.toMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.calibratedCellLogVolumeSum
+  adjusted_familyHull_eq_normalizedDeterminant :
+    data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume
+
+set_option linter.style.longLine false in
+theorem tensorMeasureBackedMeasureModelAudit
+    (data :
+      IUTStage1Remark395ValuationBallTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    TensorMeasureBackedMeasureModelAudit data :=
+  { measureModel_measureLogVolume_eq_hullLogVolume := fun _ => rfl,
+    directProductCell_eq_tensorProductRegion :=
+      data.directProductCell_eq_tensorProductRegion,
+    directProductCell_logVolume_eq_tensorNormalized := fun index =>
+      data.directProductCell_logVolume_eq_tensorNormalized index,
+    directProductCells_disjoint :=
+      data.directProductCells_disjoint,
+    measureModel_coverLogVolume_eq_tensorCellSum := by
+      simpa using data.directProductCoverLogVolume_eq_tensorCellSum,
+    finiteCoverAdditive_coverLogVolume_eq_sum :=
+      data.toFiniteCoverLogVolumeMeasureModelSource
+        |>.toFiniteCoverAdditiveHullLogVolumeSource
+        |>.finite_iUnion_eq_sum data.directProductCells_disjoint,
+    measureBacked_measureModel_eq_constructed := rfl,
+    measureBacked_coverLogVolume_eq_calibratedCellSum :=
+      data.toMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        |>.measureModel_directProductCoverLogVolume_eq_calibratedCellSum,
+    adjusted_familyHull_eq_normalizedDeterminant :=
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource
+        |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume }
+
 end IUTStage1Remark395ValuationBallTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
 
 namespace IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
