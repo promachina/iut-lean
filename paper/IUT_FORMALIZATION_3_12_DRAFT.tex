@@ -7186,6 +7186,22 @@ The practical priority order is:
   the finite-cover additive equality is derived from this model and the
   pairwise-disjoint valuation-ball cover, and that the resulting measure-backed
   source is the one used by the adjusted Ob3/Ob5 determinant handoff.  In
+  the principal valuation-ball branch this tensor-measure audit is now lifted
+  to the Remark~3.9.5(i) \(\lambda\cdot O\) surface as
+  \[
+  \begin{array}{l}
+  \texttt{remark395PrincipalValuationBallProductHullCoverSource}\\
+  \quad\texttt{\_tensorMeasureAudit}.
+  \end{array}
+  \]
+  This audit records that the selected principal hull is the same
+  valuation-ball direct-product cover used by the tensor-measure-backed source,
+  that its log-volume is the sum of the tensor-normalized valuation-ball cell
+  log-volumes, that the cover hull system is the principal product-hull system,
+  and that the adjusted Ob3/Ob5 determinant handoff retains the principal
+  holomorphic-hull operator.  Thus the finite-cover measure model is now visible
+  at the principal \(\lambda\cdot O\) hull boundary, not only at the generic
+  valuation-ball cover boundary.  In
   the finite-cover-additive branch this tensor-cell cover sum is no longer a
   separate primitive: \Lean{} derives it from the family-local finite-cover
   additivity certificate together with the per-cell identification

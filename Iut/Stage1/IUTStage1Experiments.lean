@@ -44395,6 +44395,28 @@ theorem remark395PrincipalValuationBallProductHullCoverSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface principal valuation-ball tensor-measure audit.
+
+This exposes that the principal `lambda * O` hull cover uses the same
+constructed tensor-measure-backed finite-cover model as the valuation-ball
+route: the selected principal hull is the valuation-ball direct-product cover,
+its log-volume is the tensor-normalized cell sum, and the adjusted Ob3/Ob5
+determinant source keeps the principal hull operator.
+-/
+theorem remark395PrincipalValuationBallProductHullCoverSource_tensorMeasureAudit
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x} {Λ : Type max u v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource.PrincipalValuationBallTensorMeasureAudit
+      data :=
+  data.principalValuationBallTensorMeasureAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface cover-additive valuation-ball factor-calibrated Haar
 tensor-packet source.
 

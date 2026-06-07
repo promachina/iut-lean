@@ -15464,7 +15464,7 @@ theorem adjustedHullOperator_eq_principal
     data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
       data.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator := by
   have hvaluation :
-      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+    data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
         data.valuationCover.hullSystem.toHolomorphicHullOperator := by
     rfl
   rw [hvaluation, data.hullSystem_eq_principal]
@@ -16668,6 +16668,135 @@ theorem toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource_end
       adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_determinant⟩
 
 end IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+
+namespace IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+
+variable {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+variable {β : Type w} {γ : Type x} {Λ : Type max u v w x y z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+noncomputable def toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    IUTStage1Remark395ValuationBallTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+      α ι η K β γ :=
+  data.valuationCover
+    |>.toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    |>.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+
+theorem tensorMeasureBacked_hullSystem_eq_principal
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.hullSystem =
+      data.principalHullSource.toHolomorphicHullSystem := by
+  simpa [toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource] using
+    data.hullSystem_eq_principal
+
+theorem tensorMeasureBacked_directProductCell_eq_valuationCover
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ)
+    (index : β) :
+    data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.directProductCell index =
+      data.valuationCover.directProductCell index :=
+  rfl
+
+theorem tensorMeasureBacked_directProductCellUnion_eq_valuationCover
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.directProductCellUnion =
+      data.valuationCover.directProductCellUnion :=
+  rfl
+
+theorem selectedPrincipalHull_eq_tensorMeasureBackedDirectProductCellUnion
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    data.selectedPrincipalHull =
+      data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.directProductCellUnion := by
+  rw [data.selectedPrincipalHull_eq_valuationBallDirectProductCellUnion,
+    data.tensorMeasureBacked_directProductCellUnion_eq_valuationCover]
+
+theorem selectedPrincipalHull_logVolume_eq_tensorCellSum
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    data.valuationCover.hullSystem.logVolume data.selectedPrincipalHull =
+      Finset.univ.sum fun index =>
+        (data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.cellValuationBallTensor index).tensorProductNormalizedLogVolume := by
+  rw [data.selectedPrincipalHull_eq_tensorMeasureBackedDirectProductCellUnion]
+  simpa [toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource] using
+    data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+      |>.directProductCoverLogVolume_eq_tensorCellSum
+
+set_option linter.style.longLine false in
+structure PrincipalValuationBallTensorMeasureAudit
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    Prop where
+  tensorMeasureAudit :
+    IUTStage1Remark395ValuationBallTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.TensorMeasureBackedMeasureModelAudit
+      data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+  hullSystem_eq_principal :
+    data.valuationCover.hullSystem =
+      data.principalHullSource.toHolomorphicHullSystem
+  tensorMeasureBacked_hullSystem_eq_principal :
+    data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.hullSystem =
+      data.principalHullSource.toHolomorphicHullSystem
+  localIntegerRegion_eq_anchorDirectProductCell :
+    data.principalHullSource.localIntegerRegion =
+      data.valuationCover.directProductCell data.valuationCover.anchor
+  selectedPrincipalHull_eq_tensorMeasureBackedDirectProductCellUnion :
+    data.selectedPrincipalHull =
+      data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.directProductCellUnion
+  selectedPrincipalHull_logVolume_eq_tensorCellSum :
+    data.valuationCover.hullSystem.logVolume data.selectedPrincipalHull =
+      Finset.univ.sum fun index =>
+        (data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.cellValuationBallTensor index).tensorProductNormalizedLogVolume
+  selectedPrincipalHull_logVolume_eq_calibratedCellSum :
+    data.valuationCover.hullSystem.logVolume data.selectedPrincipalHull =
+      data.valuationCover.calibratedCellLogVolumeSum
+  adjustedHullOperator_eq_principal :
+    data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+      data.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+  adjustedFamilyHullLogVolume_eq_normalizedDeterminant :
+    data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume
+
+set_option linter.style.longLine false in
+theorem principalValuationBallTensorMeasureAudit
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    PrincipalValuationBallTensorMeasureAudit data :=
+  { tensorMeasureAudit :=
+      data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        |>.tensorMeasureBackedMeasureModelAudit,
+    hullSystem_eq_principal :=
+      data.hullSystem_eq_principal,
+    tensorMeasureBacked_hullSystem_eq_principal :=
+      data.tensorMeasureBacked_hullSystem_eq_principal,
+    localIntegerRegion_eq_anchorDirectProductCell :=
+      data.localIntegerRegion_eq_anchorDirectProductCell,
+    selectedPrincipalHull_eq_tensorMeasureBackedDirectProductCellUnion :=
+      data.selectedPrincipalHull_eq_tensorMeasureBackedDirectProductCellUnion,
+    selectedPrincipalHull_logVolume_eq_tensorCellSum :=
+      data.selectedPrincipalHull_logVolume_eq_tensorCellSum,
+    selectedPrincipalHull_logVolume_eq_calibratedCellSum :=
+      data.selectedPrincipalHull_coverLogVolume_eq_calibratedCellSum,
+    adjustedHullOperator_eq_principal :=
+      data.adjustedHullOperator_eq_principal,
+    adjustedFamilyHullLogVolume_eq_normalizedDeterminant :=
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource
+        |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume }
+
+end IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
 
 set_option linter.style.longLine true
 
