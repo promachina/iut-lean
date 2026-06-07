@@ -2345,7 +2345,12 @@ The project currently proves the following source-facing results in \Lean{}:
   wrapper now projects to the source-facing possible-image family package: the
   Theorem~3.11 family \(P_B\), its canonical \(\Phi(P_B)\) approximant, and any
   supplied exact \(\Xi(P_B)\) family are audited at the same boundary, with
-  \(H_{\Xi(P_B)}\) identified with the selected product hull.
+  \(H_{\Xi(P_B)}\) identified with the selected product hull.  The same
+  boundary now carries an exact-theta bridge audit: the package value
+  \(\theta_{\mathrm{signed}}\) is identified with the Remark~3.9.5 family-hull
+  log-volume, the normalized tensor-power/determinant upper bound is derived
+  from this equality, and the q-pilot log-volume comparison is threaded through
+  the selected product hull into \(\theta_{\mathrm{signed}}\).
 \item The milestone-facing endpoint has a Hodge--Arakelov source form as well:
   it consumes source and target Hodge--Arakelov theta-evaluation sources,
   canonical one-label degree preservation, and a typed allowed-forgetting
@@ -6273,6 +6278,32 @@ upper-semi quotient image as any nonempty comparison possible image.  This
 threads the paper's \(\Phi(P)\), \(\Xi(P)\), and \(H_{\Xi(P)}\) formalism into
 the strongest current finite-divisor product-hull route instead of leaving it
 only at the generic source-core endpoint.
+The product-hull boundary also exposes an exact-theta bridge audit,
+\[
+\begin{array}{l}
+\texttt{remark395ProductHullBackedConstructorBackedConstructed}\\
+\quad\texttt{HullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_exactThetaBridgeAudit}.
+\end{array}
+\]
+This audit does not add a new comparison possible image.  It packages the
+source-facing identities already needed by the determinant route:
+\[
+  \theta_{\mathrm{signed}}=\mu_{\log}(\phi(P_B)),
+  \qquad
+  \mu_{\log}(\phi(P_B))=\det_{\mathrm{norm}}=\det,
+\]
+with \(\phi(P_B)\) the selected smallest product hull.  From the exact
+theta/family-hull equality, \Lean{} derives the normalized tensor-power upper
+bound into \(\theta_{\mathrm{signed}}\), and the audit records the chain
+\[
+  \mu_{\log}(q)\leq \mu_{\log}(\phi(P_B))
+  = \det_{\mathrm{norm}}\leq\theta_{\mathrm{signed}}.
+\]
+Thus the strongest current product-hull surface separates the remaining open
+source task--constructing the actual IUT product-hull/determinant data--from the
+ordered-real and determinant-log-volume consequences already checked by the
+kernel.
 The constructor-built source-level canonical-scale bridge is now exposed
 directly as
 \[

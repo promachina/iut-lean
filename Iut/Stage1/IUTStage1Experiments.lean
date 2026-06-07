@@ -34181,6 +34181,30 @@ theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFin
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface exact-theta determinant bridge audit for the
+product-hull-backed constructor-built Remark 3.9.5 finite-divisor source.
+
+This exposes the product-hull boundary at which the selected smallest product
+hull is the canonical possible-image-family hull and the determinant/tensor
+upper bound is derived from the exact theta/family-hull log-volume equality.
+-/
+theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_exactThetaBridgeAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedExactThetaBridgeAudit
+      productHullBackedSource :=
+  productHullBackedSource.productHullBackedExactThetaBridgeAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy through the product-hull-backed
 constructor-built Remark 3.9.5 finite-divisor source.
 -/

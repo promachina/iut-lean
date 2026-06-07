@@ -58170,6 +58170,155 @@ theorem productHullBackedPhiXiApproximantAudit
       ob5Audit.selectedProductHull_logVolume_eq_normalizedDeterminant,
     qSigned_le_thetaSigned := ob5Audit.qSigned_le_thetaSigned }
 
+set_option linter.style.longLine false in
+/--
+Product-hull-backed exact-theta bridge audit.
+
+This audit exposes the determinant estimate at the strongest current
+product-hull finite-divisor boundary without requiring an auxiliary comparison
+choice.  The selected product hull is identified with the canonical
+possible-image-family hull, the package theta value is identified with the
+Remark 3.9.5 family-hull log-volume, and the normalized determinant/tensor
+bound is read from that exact theta/family-hull equality.
+-/
+structure ProductHullBackedExactThetaBridgeAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    Prop where
+  productHullAudit :
+    ProductHullBackedRecordBridgeAudit sourceData
+  constructorBackedRecordBridgeAudit :
+    IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ConstructorBackedRecordBridgeAudit
+      sourceData.constructorBackedSource
+  possibleImageFamily_familyUnion_eq_recordUnion :
+    sourceData.toPossibleImageFamilySource.familyUnion =
+      recordThetaPossibleImageUnion record
+  possibleImageFamily_canonicalHull_eq_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.canonicalHull =
+      sourceData.selectedProductHull
+  canonicalPhi_approximant_eq_selectedProductHull :
+    sourceData.toPossibleImageFamilySource.canonicalPhi.approximant =
+      sourceData.selectedProductHull
+  thetaSigned_eq_familyHullLogVolume :
+    packageN.preLedger.thetaSigned =
+      (sourceData.constructorBackedSource.measuredSource.adjustedSource.toRecordOb3Ob5DeterminantCompatibilitySource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume
+  tensorPower_bound_from_exactTheta :
+    (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+      packageN.preLedger.thetaSigned
+  selectedProductHull_logVolume_eq_normalizedDeterminant :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  selectedProductHull_logVolume_eq_determinant :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  qPilotLogVolume_le_selectedProductHullLogVolume :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.constructorBackedSource.qPilotRegion <=
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull
+  qPilotLogVolume_le_determinantNormalized :
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.qRegionLogVolume <=
+      sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantNormalizedLogVolume
+  determinantNormalized_le_thetaSigned_from_exactTheta :
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantNormalizedLogVolume <=
+      packageN.preLedger.thetaSigned
+  qPilotLogVolume_le_thetaSigned :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.constructorBackedSource.qPilotRegion <=
+      packageN.preLedger.thetaSigned
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem productHullBackedExactThetaBridgeAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    ProductHullBackedExactThetaBridgeAudit sourceData :=
+  let recordAudit :=
+    sourceData.constructorBackedSource.constructorBackedRecordBridgeAudit
+  let selected_logVolume_eq_normalized :
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+          sourceData.selectedProductHull =
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+          (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+            sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source) := by
+    calc
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+          sourceData.selectedProductHull =
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.familyHullLogVolume := by
+          rw [← sourceData.hullOperator_phi_eq_selectedProductHull]
+          rfl
+      _ =
+        IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.normalizedDeterminantLogVolume
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source :=
+          IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume
+              sourceData.constructorBackedSource.measuredSource.adjustedSource
+      _ =
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+          (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+            sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source) := rfl
+  let selected_logVolume_eq_determinant :
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+          sourceData.selectedProductHull =
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+          (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+            sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source) := by
+    calc
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+          sourceData.selectedProductHull =
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.familyHullLogVolume := by
+          rw [← sourceData.hullOperator_phi_eq_selectedProductHull]
+          rfl
+      _ =
+        IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.determinantLogVolume
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source :=
+          IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume_eq_determinantLogVolume
+              sourceData.constructorBackedSource.measuredSource.adjustedSource
+      _ =
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+          (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+            sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source) := rfl
+  { productHullAudit :=
+      sourceData.productHullBackedRecordBridgeAudit,
+    constructorBackedRecordBridgeAudit :=
+      recordAudit,
+    possibleImageFamily_familyUnion_eq_recordUnion :=
+      sourceData.possibleImageFamily_familyUnion_eq_recordUnion,
+    possibleImageFamily_canonicalHull_eq_selectedProductHull :=
+      sourceData.possibleImageFamily_canonicalHull_eq_selectedProductHull,
+    canonicalPhi_approximant_eq_selectedProductHull :=
+      sourceData.possibleImageFamily_canonicalPhi_eq_selectedProductHull,
+    thetaSigned_eq_familyHullLogVolume :=
+      sourceData.constructorBackedSource.thetaSigned_eq_familyHullLogVolume,
+    tensorPower_bound_from_exactTheta :=
+      sourceData.constructorBackedSource.tensorPower_bound,
+    selectedProductHull_logVolume_eq_normalizedDeterminant :=
+      selected_logVolume_eq_normalized,
+    selectedProductHull_logVolume_eq_determinant :=
+      selected_logVolume_eq_determinant,
+    qPilotLogVolume_le_selectedProductHullLogVolume :=
+      IUTStage1Remark395HolomorphicHullOperator.logVolume_mono
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator
+        sourceData.qPilotRegion_subset_selectedProductHull,
+    qPilotLogVolume_le_determinantNormalized :=
+      recordAudit.qPilotLogVolume_le_determinantNormalized,
+    determinantNormalized_le_thetaSigned_from_exactTheta :=
+      recordAudit.determinantNormalized_le_thetaSigned,
+    qPilotLogVolume_le_thetaSigned :=
+      recordAudit.qPilotLogVolume_le_thetaSigned,
+    qSigned_le_thetaSigned :=
+      recordAudit.qSigned_le_thetaSigned }
+
 end
   IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
 
