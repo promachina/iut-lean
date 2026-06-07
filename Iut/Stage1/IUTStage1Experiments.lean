@@ -44404,6 +44404,9 @@ theorem remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacke
     IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
       data.hullSystem.logVolume data.directProductCellUnion =
         data.calibratedCellLogVolumeSum ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        (Finset.univ.sum fun index =>
+          (data.cellValuationBallTensor index).tensorProductNormalizedLogVolume) ∧
       coverSource.hullSystem.logVolume coverSource.directProductCellUnion =
         coverSource.calibratedCellLogVolumeSum ∧
       directProductSource.familyHullLogVolume =
@@ -44418,6 +44421,31 @@ theorem remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacke
           adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
         adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
   data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface projection from the finite-cover-additive valuation-ball
+source to the tensor-measure-backed source.
+
+The tensor-cell cover sum is derived from finite cover additivity plus the
+per-cell valuation-ball tensor normalization, rather than supplied directly.
+-/
+theorem remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource_toTensorMeasureBacked_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    let tensorSource :=
+      data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+    tensorSource.hullSystem = data.hullSystem ∧
+      (∀ index : β,
+        tensorSource.directProductCell index = data.directProductCell index) ∧
+      tensorSource.hullSystem.logVolume tensorSource.directProductCellUnion =
+        tensorSource.calibratedCellLogVolumeSum :=
+  data.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource_endpoint
 
 set_option linter.style.longLine false in
 /--

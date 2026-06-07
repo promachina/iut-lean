@@ -7136,10 +7136,17 @@ The practical priority order is:
   then constructs the previous measure-backed valuation-ball source and projects
   to the same adjusted Ob3/Ob5 determinant endpoint.  Thus the remaining cover
   input is no longer an arbitrary finite-cover measure model; it is localized to
-  the tensor-packet log-volume sum for the selected valuation-ball cells.  But
-  the next work is to replace the
-  still-supplied hull system, direct-product localization cover construction,
-  tensor-cell cover log-volume theorem, construction of the compact-open
+  the tensor-packet log-volume sum for the selected valuation-ball cells.  In
+  the finite-cover-additive branch this tensor-cell cover sum is no longer a
+  separate primitive: \Lean{} derives it from the family-local finite-cover
+  additivity certificate together with the per-cell identification
+  \(\mu_{\log}(H_\beta)=\mu_{\log}^{\mathrm{tensor}}(H_\beta)\), and then
+  constructs the tensor-measure-backed source.  Thus the public audit path can
+  view the tensor-cover theorem as a derived consequence of the finite-cover
+  valuation-ball source whenever that source has been supplied.  But the next
+  work is to replace the still-supplied hull system, direct-product localization
+  cover construction, family-local finite-cover additivity theorem,
+  construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), extension
   of the current base \(\mathbb{Q}_p\) integer/unit-ball specialization to the
   actual finite-extension completions, derivation of the proper ultrametric
