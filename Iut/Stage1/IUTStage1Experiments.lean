@@ -41858,6 +41858,57 @@ theorem remark395LocalRingChartedVectorBundleDirectProductHullCoverSource_endpoi
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface calibrated local-ring charted vector-bundle cover source.
+
+This endpoint derives the charted direct-product cover source from per-factor
+local-ring/vector-bundle calibration objects.  Thus local-ring matching and
+chart-factor log-volume/direct-summand matching are projected from the factor
+calibrations before the cover is passed to the vector-bundle local-factor route.
+-/
+theorem remark395CalibratedLocalRingChartedVectorBundleHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395CalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    let chartedSource :=
+      data.toLocalRingChartedVectorBundleDirectProductHullCoverSource
+    let vectorSource :=
+      chartedSource.toVectorBundleLocalFactorDirectProductLocalizedHullCoverSource
+    (∀ index : β, ∀ place : γ,
+      (data.localFactorChart index place).localRing =
+        (data.localizedCalibration index).localizedVectorBundle.bundle.localRing) ∧
+      (∀ index : β, ∀ place : γ,
+        data.calibratedFactorLogVolume index place =
+          data.directSummandLogVolume index place) ∧
+      (∀ index : β, ∀ place : γ,
+        data.hullSystem.logVolume (data.localFactorRegion index place) =
+          data.directSummandLogVolume index place) ∧
+      (∀ index : β,
+        data.calibratedFactorLogVolumeSum index =
+          data.directSummandLogVolumeSum index) ∧
+      (∀ index : β,
+        data.calibratedFactorLogVolumeSum index =
+          (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          data.calibratedFactorLogVolumeSum index) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          (data.localizedCalibration index).localizedVectorBundle.bundle.bundleLogVolume) ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      data.calibratedCellLogVolumeSum = data.bundleLogVolumeSum ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.bundleLogVolumeSum ∧
+      chartedSource.hullSystem.logVolume chartedSource.directProductCellUnion =
+        chartedSource.bundleLogVolumeSum ∧
+      vectorSource.hullSystem.logVolume vectorSource.directProductCellUnion =
+        vectorSource.localFactorDoubleLogVolumeSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
