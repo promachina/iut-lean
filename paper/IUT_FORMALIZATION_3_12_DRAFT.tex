@@ -1413,6 +1413,31 @@ source
 \]
 threads these centered balls through the same finite-sum target map and projects
 to the compact-open Haar route at the experiment surface.
+This local boundary has now been lowered to the valued-field integer source.
+The declaration
+\[
+  \texttt{IUTStage1Remark395LocalFactorValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource}
+\]
+starts from a valued-field integer proper-ultrametric Haar normalization source:
+the local ring is the actual valued-field integer subring \(\mathcal O_K\), the
+valuation topology is the valued-field ultrametric topology, and the centered
+coordinate is still
+\[
+  x_v\longmapsto \mu_{\log}(\overline B(x_v,r_v)).
+\]
+Lean constructs the proper-ultrametric valuation-ball Haar source used by the
+centered-ball layer and then constructs the centered local coordinate source.
+The finite product source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{ValuedFieldIntegerCenteredValuationBallHaarLogCoordinate}\\
+\quad\texttt{FiniteSumTargetPointSource}
+\end{array}
+\]
+threads these valued-field integer local coordinates through the same target
+finite sum and exposes the corresponding experiment route and Step~(xi)
+constructor.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -8653,13 +8678,17 @@ The practical priority order is:
   this compact-open proof as external data: it sets
   \(U_{v,x_v}=\overline B(x_v,r_v)\) inside a proper ultrametric local factor,
   proves openness by the ultrametric inequality, proves compactness by
-  properness, and then projects through the compact-open Haar source.
+  properness, and then projects through the compact-open Haar source.  This has
+  now been lowered further to a valued-field integer local source: each proper
+  ultrametric centered-ball Haar source is constructed from a
+  valued-field-integer Haar normalization object whose local ring is
+  \(\mathcal O_K\).
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the actual finite-extension
-  valuation/Haar/Kummer model, the proper ultrametric local factor, its Haar
-  normalization and positive valuation-ball radius, the coordinate-place
-  equivalence, and the point-level target transport identifying \(O\) and
+  valuation/Haar/Kummer model, the valued-field integer Haar normalization
+  object, its positive valuation-ball radius, the coordinate-place equivalence,
+  and the point-level target transport identifying \(O\) and
   \(\lambda O\) with the principal finite-divisor target regions.  Below that, the
   local directional scalar-image laws for each local factor
   \(\lambda_v\cdot O_v\) still have to be derived from the valuation/Kummer
