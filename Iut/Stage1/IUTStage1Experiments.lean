@@ -41625,10 +41625,88 @@ theorem multiradialThetaImages_remark395IndeterminacyOb5Endpoint
       familySource.possibleRegion choice₂ ⊆ familySource.canonicalHull ∧
       familySource.canonicalPhi.approximant = familySource.canonicalHull ∧
       familySource.hullOperator.isClosed familySource.canonicalHull ∧
-      familySource.quotientMap '' familySource.possibleRegion choice₁ =
-        familySource.quotientMap '' familySource.possibleRegion choice₂ :=
+      familySource.quotientMap '' (familySource.possibleRegion choice₁) =
+        familySource.quotientMap '' (familySource.possibleRegion choice₂) :=
   images.remark395Ob5QuotientEndpoint_of_related
     hullOperator hrel hne₁ hne₂
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface bridge from typed Theorem 3.11 indeterminacies through the
+Remark 3.9.5 Ob5--Ob7 chain.
+
+This strengthens the Ob5 endpoint by threading the same possible-image family
+through Ob6 hull-approximant log-volume estimates and the retained Ob7
+`F^{×μ}` prime-strip/log-Kummer compatibility.
+-/
+theorem multiradialThetaImages_remark395IndeterminacyOb5Ob6Ob7Endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {κ : Type w} {β Penv Pgau V μ : Type x}
+    [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (images : IUTStage1MultiradialThetaImages package)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (phiFamily :
+      (images.toRemark395PossibleImageFamilySource hullOperator).PhiFamily κ)
+    (xiFamily :
+      (images.toRemark395PossibleImageFamilySource hullOperator).XiFamily κ)
+    (k : κ)
+    {choice₁ choice₂ : index}
+    (hrel : images.quotient.relation choice₁ choice₂)
+    (hne₁ :
+      (images.possibleImages.possibleImageSet choice₁).Nonempty)
+    (hne₂ :
+      (images.possibleImages.possibleImageSet choice₂).Nonempty)
+    (ob7Source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        (Point target) index β Penv Pgau V μ)
+    (ob7_possibleRegion_eq :
+      ob7Source.bridgeSource.possibleRegion =
+        (images.toRemark395PossibleImageFamilySource
+          hullOperator).possibleRegion)
+    (ob7_hullOperator_eq :
+      ob7Source.bridgeSource.hullOperator = hullOperator) :
+    let familySource :=
+      images.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.possibleRegion choice₁ =
+        familySource.possibleRegion choice₂ ∧
+      familySource.familyUnion ⊆ familySource.canonicalHull ∧
+      familySource.possibleRegion choice₁ ⊆ familySource.canonicalHull ∧
+      familySource.possibleRegion choice₂ ⊆ familySource.canonicalHull ∧
+      familySource.quotientMap '' (familySource.possibleRegion choice₁) =
+        familySource.quotientMap '' (familySource.possibleRegion choice₂) ∧
+      familySource.HPhi phiFamily = familySource.canonicalHull ∧
+      familySource.hullOperator.logVolume familySource.familyUnion <=
+        familySource.hullOperator.logVolume (familySource.HPhi phiFamily) ∧
+      familySource.hullOperator.logVolume (familySource.possibleRegion choice₁) <=
+        familySource.hullOperator.logVolume (familySource.HPhi phiFamily) ∧
+      familySource.HXi xiFamily = familySource.canonicalHull ∧
+      familySource.hullOperator.logVolume familySource.familyUnion <=
+        familySource.hullOperator.logVolume (familySource.HXi xiFamily) ∧
+      familySource.hullOperator.logVolume (familySource.possibleRegion choice₁) <=
+        familySource.hullOperator.logVolume (familySource.HXi xiFamily) ∧
+      familySource.hullOperator.logVolume
+          ((xiFamily.exactApproximant k).approximant).approximant =
+        familySource.hullOperator.logVolume familySource.familyUnion ∧
+      ob7Source.bridgeSource.qRegion ⊆ familySource.canonicalHull ∧
+      ob7Source.bridgeSource.qRegionLogVolume <=
+        ob7Source.primeStripGlobalLogVolume ∧
+      (∀ p : Penv,
+        ob7Source.primeStripLift.base.gaussianPrimeToPlace
+            (ob7Source.primeStripLift.base.primeEvaluation p) =
+          ob7Source.primeStripLift.base.environmentPrimeToPlace p ∧
+        (ob7Source.primeStripLift.base.localEvaluation.gaussianLocal.localObject
+            (ob7Source.primeStripLift.base.gaussianPrimeToPlace
+              (ob7Source.primeStripLift.base.primeEvaluation p))).realifiedLogVolume =
+          (ob7Source.primeStripLift.base.localEvaluation.environmentLocal.localObject
+            (ob7Source.primeStripLift.base.environmentPrimeToPlace p)).realifiedLogVolume ∧
+        ob7Source.primeStripLift.gaussianUnitCharacter
+            (ob7Source.primeStripLift.base.primeEvaluation p) =
+          ob7Source.primeStripLift.environmentUnitCharacter p) :=
+  images.remark395Ob5Ob6Ob7Endpoint_of_related
+    hullOperator phiFamily xiFamily k hrel hne₁ hne₂ ob7Source
+    ob7_possibleRegion_eq ob7_hullOperator_eq
 
 set_option linter.style.longLine false in
 /--

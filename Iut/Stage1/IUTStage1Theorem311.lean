@@ -3354,8 +3354,8 @@ theorem remark395Ob5QuotientEndpoint_of_related
       familySource.possibleRegion choice₂ ⊆ familySource.canonicalHull ∧
       familySource.canonicalPhi.approximant = familySource.canonicalHull ∧
       familySource.hullOperator.isClosed familySource.canonicalHull ∧
-      familySource.quotientMap '' familySource.possibleRegion choice₁ =
-        familySource.quotientMap '' familySource.possibleRegion choice₂ :=
+      familySource.quotientMap '' (familySource.possibleRegion choice₁) =
+        familySource.quotientMap '' (familySource.possibleRegion choice₂) :=
   by
     intro familySource
     have hregion :
@@ -3370,6 +3370,130 @@ theorem remark395Ob5QuotientEndpoint_of_related
         familySource.canonicalPhi_approximant_eq_phi,
         familySource.phi_closed,
         familySource.quotientMap_images_eq choice₁ choice₂ hne₁ hne₂⟩
+
+set_option linter.style.longLine false in
+/--
+Theorem 3.11 indeterminacy bridge through Remark 3.9.5 Ob5--Ob7.
+
+This is the source-facing audit that keeps the three pieces reviewed together:
+the `(Ind1),(Ind2),(Ind3)` quotient identifies related possible images as in
+Ob5; the `Phi`/`Xi` hull-approximant passage supplies the Ob6 log-volume
+inequalities; and the retained `F^{×μ}` prime-strip lift supplies the Ob7
+log-Kummer/Frobenioid compatibility.  The extra equalities tie the supplied Ob7
+hull/determinant bridge to the Theorem 3.11 possible-image family rather than
+allowing it to float as an unrelated real-line comparison.
+-/
+theorem remark395Ob5Ob6Ob7Endpoint_of_related
+    {κ : Type w} {β Penv Pgau V μ : Type x}
+    [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (images : IUTStage1MultiradialThetaImages package)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (phiFamily :
+      (images.toRemark395PossibleImageFamilySource hullOperator).PhiFamily κ)
+    (xiFamily :
+      (images.toRemark395PossibleImageFamilySource hullOperator).XiFamily κ)
+    (k : κ)
+    {choice₁ choice₂ : index}
+    (hrel : images.quotient.relation choice₁ choice₂)
+    (hne₁ :
+      (images.possibleImages.possibleImageSet choice₁).Nonempty)
+    (hne₂ :
+      (images.possibleImages.possibleImageSet choice₂).Nonempty)
+    (ob7Source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        (Point target) index β Penv Pgau V μ)
+    (ob7_possibleRegion_eq :
+      ob7Source.bridgeSource.possibleRegion =
+        (images.toRemark395PossibleImageFamilySource
+          hullOperator).possibleRegion)
+    (ob7_hullOperator_eq :
+      ob7Source.bridgeSource.hullOperator = hullOperator) :
+    let familySource :=
+      images.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.possibleRegion choice₁ =
+        familySource.possibleRegion choice₂ ∧
+      familySource.familyUnion ⊆ familySource.canonicalHull ∧
+      familySource.possibleRegion choice₁ ⊆ familySource.canonicalHull ∧
+      familySource.possibleRegion choice₂ ⊆ familySource.canonicalHull ∧
+      familySource.quotientMap '' (familySource.possibleRegion choice₁) =
+        familySource.quotientMap '' (familySource.possibleRegion choice₂) ∧
+      familySource.HPhi phiFamily = familySource.canonicalHull ∧
+      familySource.hullOperator.logVolume familySource.familyUnion <=
+        familySource.hullOperator.logVolume (familySource.HPhi phiFamily) ∧
+      familySource.hullOperator.logVolume (familySource.possibleRegion choice₁) <=
+        familySource.hullOperator.logVolume (familySource.HPhi phiFamily) ∧
+      familySource.HXi xiFamily = familySource.canonicalHull ∧
+      familySource.hullOperator.logVolume familySource.familyUnion <=
+        familySource.hullOperator.logVolume (familySource.HXi xiFamily) ∧
+      familySource.hullOperator.logVolume (familySource.possibleRegion choice₁) <=
+        familySource.hullOperator.logVolume (familySource.HXi xiFamily) ∧
+      familySource.hullOperator.logVolume
+          ((xiFamily.exactApproximant k).approximant).approximant =
+        familySource.hullOperator.logVolume familySource.familyUnion ∧
+      ob7Source.bridgeSource.qRegion ⊆ familySource.canonicalHull ∧
+      ob7Source.bridgeSource.qRegionLogVolume <=
+        ob7Source.primeStripGlobalLogVolume ∧
+      (∀ p : Penv,
+        ob7Source.primeStripLift.base.gaussianPrimeToPlace
+            (ob7Source.primeStripLift.base.primeEvaluation p) =
+          ob7Source.primeStripLift.base.environmentPrimeToPlace p ∧
+        (ob7Source.primeStripLift.base.localEvaluation.gaussianLocal.localObject
+            (ob7Source.primeStripLift.base.gaussianPrimeToPlace
+              (ob7Source.primeStripLift.base.primeEvaluation p))).realifiedLogVolume =
+          (ob7Source.primeStripLift.base.localEvaluation.environmentLocal.localObject
+            (ob7Source.primeStripLift.base.environmentPrimeToPlace p)).realifiedLogVolume ∧
+        ob7Source.primeStripLift.gaussianUnitCharacter
+            (ob7Source.primeStripLift.base.primeEvaluation p) =
+          ob7Source.primeStripLift.environmentUnitCharacter p) :=
+  by
+    intro familySource
+    have hob5 :=
+      images.remark395Ob5QuotientEndpoint_of_related
+        hullOperator hrel hne₁ hne₂
+    have hob6 :=
+      familySource.PhiXi_ob6_logVolume_endpoint
+        phiFamily xiFamily k choice₁
+    rcases hob5 with
+      ⟨hregion, hfamily_subset, hchoice₁_subset, hchoice₂_subset,
+        _hcanonicalPhi, _hphi_closed, hquotient⟩
+    rcases hob6 with
+      ⟨hHPhi_eq, _hHPhi_subset, _hphi_subset_HPhi, hfamily_le_HPhi,
+        _hHPhi_log, hchoice₁_le_HPhi, hHXi_eq, _hHXi_subset,
+        _hphi_subset_HXi, hfamily_le_HXi, _hHXi_log, hchoice₁_le_HXi,
+        hxi_exact_log⟩
+    have hbridgeHull :
+        ob7Source.bridgeSource.familyHull = familySource.canonicalHull := by
+      dsimp [IUTStage1Remark395HullDeterminantBridgeSource.familyHull,
+        IUTStage1Remark395PossibleImageFamilySource.canonicalHull,
+        IUTStage1Remark395HullDeterminantBridgeSource.familyUnion,
+        IUTStage1Remark395PossibleImageFamilySource.familyUnion,
+        familySource]
+      rw [ob7_hullOperator_eq, ob7_possibleRegion_eq]
+      simp [IUTStage1MultiradialThetaImages.toRemark395PossibleImageFamilySource]
+    have hq_subset_family :
+        ob7Source.bridgeSource.qRegion ⊆ familySource.canonicalHull := by
+      intro x hx
+      exact hbridgeHull ▸ ob7Source.bridgeSource.qRegion_subset_familyHull hx
+    exact
+      ⟨hregion,
+        hfamily_subset,
+        hchoice₁_subset,
+        hchoice₂_subset,
+        hquotient,
+        hHPhi_eq,
+        hfamily_le_HPhi,
+        hchoice₁_le_HPhi,
+        hHXi_eq,
+        hfamily_le_HXi,
+        hchoice₁_le_HXi,
+        hxi_exact_log,
+        hq_subset_family,
+        ob7Source.qRegionLogVolume_le_primeStripGlobal,
+        fun p =>
+          ⟨ob7Source.gaussianPlaceOfEvaluation_eq_environmentPlace p,
+            ob7Source.gaussianLocalLogVolume_at_evaluatedPrime_eq_environment p,
+            ob7Source.gaussianUnitCharacter_at_evaluatedPrime p⟩⟩
 
 end IUTStage1MultiradialThetaImages
 
