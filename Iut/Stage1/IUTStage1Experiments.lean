@@ -42335,6 +42335,64 @@ theorem remark395CompactOpenTopologyHaarTensorPacketFiniteAdditiveCalibratedLoca
       finiteExtensionSource.hullSystem.logVolume finiteExtensionSource.directProductCellUnion =
         finiteExtensionSource.calibratedCellLogVolumeSum ∧
       calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
+          calibratedSource.bundleLogVolumeSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface valuation-ball Haar tensor-packet finite-additive charted
+cover source.
+
+This endpoint exposes the lower source route in which each local charted factor
+is first realized as a valuation ball with additive Haar normalization before
+projecting to the compact-open topology/Haar tensor-packet cover.
+-/
+theorem remark395ValuationBallHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ValuationBallHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    let compactOpenSource :=
+      data.toCompactOpenTopologyHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let finiteExtensionSource :=
+      compactOpenSource.toFiniteExtensionHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let calibratedSource :=
+      finiteExtensionSource
+        |>.toNonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toCompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (∀ index : β, ∀ place : γ,
+      (data.valuationBallFactor index place).ringOfIntegers =
+        (data.valuationBallFactor index place).valuationBall 1 ∧
+      (data.valuationBallFactor index place).compactOpenSubset =
+        (data.valuationBallFactor index place).valuationBall
+          (data.valuationBallFactor index place).compactOpenRadius ∧
+      (data.valuationBallFactor index place).isCompactOpen
+        (data.valuationBallFactor index place).compactOpenSubset) ∧
+      (∀ index : β, ∀ place : γ,
+        (data.valuationBallFactor index place).realizedRegion
+            (data.valuationBallFactor index place).compactOpenSubset =
+          data.localFactorRegion index place) ∧
+      (∀ index : β, ∀ place : γ,
+        (data.valuationBallFactor index place).localRing =
+          (data.localFactorChart index place).localRing) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          Finset.univ.sum fun place =>
+            data.hullSystem.logVolume (data.localFactorRegion index place)) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      compactOpenSource.hullSystem.logVolume compactOpenSource.directProductCellUnion =
+        compactOpenSource.calibratedCellLogVolumeSum ∧
+      finiteExtensionSource.hullSystem.logVolume finiteExtensionSource.directProductCellUnion =
+        finiteExtensionSource.calibratedCellLogVolumeSum ∧
+      calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
         calibratedSource.bundleLogVolumeSum :=
   data.endpoint
 
