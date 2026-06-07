@@ -15357,6 +15357,106 @@ theorem endpoint
     sourceData.toRecordOb3Ob5DeterminantCompatibilitySource.endpoint.2⟩
 
 set_option linter.style.longLine false in
+/--
+Record-canonical constructor from the valuation-ball/Haar tensor-packet cover.
+
+The lower source constructs the Ob3/Ob5 adjusted determinant equality from
+valuation-ball local factors, Haar-normalized compact-open regions, local-ring
+charted vector-bundle summands, and the finite-additive cover computation.  This
+constructor only synchronizes its possible-image family with the Theorem 3.11
+record family; the hull/determinant compatibility is then inherited from the
+valuation-ball source, not supplied separately.
+-/
+noncomputable def ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    {η : Type x} {K : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (valuationSource :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        (Point target) index η K β γ)
+    (possibleRegion_eq_recordThetaPossibleImage :
+      valuationSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        recordThetaPossibleImage record) :
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+      (β := β) (γ := γ) record :=
+  let adjustedSource :=
+    valuationSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+  { hullOperator := adjustedSource.hullOperator,
+    ob3ob4Source := adjustedSource.ob3ob4Source,
+    familyHullLogVolume_eq_adjustedSum := by
+      have hfamily :
+          (⋃ i, adjustedSource.possibleRegion i) =
+            recordThetaPossibleImageUnion record := by
+        simpa [recordThetaPossibleImageUnion] using
+          congrArg (fun possibleRegion : index -> Set (Point target) =>
+            (⋃ i, possibleRegion i))
+            possibleRegion_eq_recordThetaPossibleImage
+      rw [← hfamily]
+      exact adjustedSource.familyHullLogVolume_eq_adjustedSum }
+
+set_option linter.style.longLine false in
+theorem ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_endpoint
+    {η : Type x} {K : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (valuationSource :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        (Point target) index η K β γ)
+    (possibleRegion_eq_recordThetaPossibleImage :
+      valuationSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        recordThetaPossibleImage record) :
+    let recordSource :=
+      ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        (record := record) valuationSource
+        possibleRegion_eq_recordThetaPossibleImage;
+    let adjustedSource :=
+      valuationSource.toOb3Ob5AdjustedDeterminantLogVolumeSource;
+    recordSource.hullOperator = adjustedSource.hullOperator ∧
+      recordSource.ob3ob4Source = adjustedSource.ob3ob4Source ∧
+      adjustedSource.possibleRegion = recordThetaPossibleImage record ∧
+      recordSource.familyHullLogVolume =
+        adjustedSource.familyHullLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.adjustedSummandLogVolume ∧
+      adjustedSource.adjustedSummandLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      recordSource.familyHullLogVolume =
+        recordSource.adjustedSummandLogVolume ∧
+      recordSource.adjustedSummandLogVolume =
+        recordSource.ob3ob4Source.determinantLogVolume ∧
+      recordSource.familyHullLogVolume =
+        recordSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      recordSource.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          (recordSource.toRecordOb3Ob5DeterminantCompatibilitySource.hullOperator.phi
+            (recordThetaPossibleImageUnion record)) =
+        recordSource.toRecordOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  by
+    intro recordSource adjustedSource
+    have hfamily :
+        (⋃ i, adjustedSource.possibleRegion i) =
+          recordThetaPossibleImageUnion record := by
+      simpa [recordThetaPossibleImageUnion] using
+        congrArg (fun possibleRegion : index -> Set (Point target) =>
+          (⋃ i, possibleRegion i))
+          possibleRegion_eq_recordThetaPossibleImage
+    have hrecord_family_eq_adjusted :
+        recordSource.familyHullLogVolume =
+          adjustedSource.familyHullLogVolume := by
+      simpa [recordSource, adjustedSource, familyHullLogVolume,
+        IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume]
+        using congrArg adjustedSource.hullOperator.logVolume
+          (congrArg adjustedSource.hullOperator.phi hfamily.symm)
+    exact
+      ⟨rfl,
+        rfl,
+        possibleRegion_eq_recordThetaPossibleImage,
+        hrecord_family_eq_adjusted,
+        adjustedSource.familyHullLogVolume_eq_adjustedSummandLogVolume,
+        adjustedSource.adjustedSummandLogVolume_eq_determinantLogVolume,
+        recordSource.familyHullLogVolume_eq_adjustedSummandLogVolume,
+        recordSource.adjustedSummandLogVolume_eq_determinantLogVolume,
+        recordSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+        recordSource.toRecordOb3Ob5DeterminantCompatibilitySource.endpoint.2⟩
+
+set_option linter.style.longLine false in
 noncomputable def toConstructedHolomorphicHullDeterminantSource
     (sourceData :
       IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
