@@ -67837,6 +67837,129 @@ end
 
 set_option linter.style.longLine false in
 /--
+Coordinate-place valuation-log finite-sum target-point source.
+
+This source lowers the finite-sum target-point boundary by making the local
+place/index synchronization source-facing.  Instead of supplying an arbitrary
+`localIndexEquiv : gamma_local ~= delta` together with the proof that the
+valuation cover's `coordinatePlace` sends each indexed coordinate back to its
+place, it records the valuation-cover coordinate map as an equivalence
+`delta ~= gamma_local`.  The previous compatibility is then derived by applying
+the inverse equivalence.
+-/
+structure IUTStage1Remark395ValuationUnitBallNonzeroScalarCoordinatePlaceValuationLogFiniteSumTargetPointSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {δ : Type u} (A : δ -> Type v)
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {γlocal : Type (max u v y z)} [Fintype γlocal]
+    (Λ : Type (max u v w y z)) where
+  principalValuationBallBackedSource :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (η := η) (K := K) (β := β) (γ := γ) record Λ
+  valuationUnitBallNonzeroScalarSource :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      δ A
+      (IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+      η K β γlocal
+  coordinateIndexEquiv : δ ≃ γlocal
+  coordinatePlace_eq_coordinateIndexEquiv :
+    ∀ d : δ,
+      valuationUnitBallNonzeroScalarSource.coordinatePlace d =
+        coordinateIndexEquiv d
+  localValuationLogCoord :
+    ∀ place : γlocal, A (coordinateIndexEquiv.symm place) -> Real
+  transportedLocalIntegerTargetPoint_eq_principal :
+    (fun point : ((d : δ) -> A d) =>
+        ({ coord :=
+            Finset.univ.sum fun place : γlocal =>
+              localValuationLogCoord place (point (coordinateIndexEquiv.symm place)) } :
+          Point target)) ''
+        valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerRegion =
+      principalValuationBallBackedSource.principalValuationBallSource.principalHullSource.localIntegerRegion
+  transportedSelectedScalarTargetPoint_eq_principalHull :
+    (fun point : ((d : δ) -> A d) =>
+        ({ coord :=
+            Finset.univ.sum fun place : γlocal =>
+              localValuationLogCoord place (point (coordinateIndexEquiv.symm place)) } :
+          Point target)) ''
+        valuationUnitBallNonzeroScalarSource.selectedScalarImageHull =
+      principalValuationBallBackedSource.principalValuationBallSource.selectedPrincipalHull
+
+namespace
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarCoordinatePlaceValuationLogFiniteSumTargetPointSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {δ : Type u} {A : δ -> Type v}
+variable [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+variable {η : Type y} {K : Type z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+variable {γlocal : Type (max u v y z)} [Fintype γlocal]
+variable {Λ : Type (max u v w y z)}
+
+theorem coordinatePlace_localIndexEquiv
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCoordinatePlaceValuationLogFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ)
+    (place : γlocal) :
+    sourceData.valuationUnitBallNonzeroScalarSource.coordinatePlace
+        (sourceData.coordinateIndexEquiv.symm place) =
+      place := by
+  have hcoordinate :=
+    sourceData.coordinatePlace_eq_coordinateIndexEquiv
+      (sourceData.coordinateIndexEquiv.symm place)
+  simpa using hcoordinate
+
+set_option linter.style.longLine false in
+def toValuationLogFiniteSumTargetPointSource
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCoordinatePlaceValuationLogFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarValuationLogFiniteSumTargetPointSource
+      (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+      (γlocal := γlocal) record A Λ :=
+  { principalValuationBallBackedSource :=
+      sourceData.principalValuationBallBackedSource,
+    valuationUnitBallNonzeroScalarSource :=
+      sourceData.valuationUnitBallNonzeroScalarSource,
+    localIndexEquiv := sourceData.coordinateIndexEquiv.symm,
+    coordinatePlace_localIndexEquiv :=
+      sourceData.coordinatePlace_localIndexEquiv,
+    localValuationLogCoord :=
+      sourceData.localValuationLogCoord,
+    transportedLocalIntegerTargetPoint_eq_principal :=
+      sourceData.transportedLocalIntegerTargetPoint_eq_principal,
+    transportedSelectedScalarTargetPoint_eq_principalHull :=
+      sourceData.transportedSelectedScalarTargetPoint_eq_principalHull }
+
+theorem targetPointTransportAudit
+    (sourceData :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarCoordinatePlaceValuationLogFiniteSumTargetPointSource
+        (δ := δ) (η := η) (K := K) (β := β) (γ := γ)
+        (γlocal := γlocal) record A Λ) :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetPointTransportSource.TargetPointTransportAudit
+      sourceData.toValuationLogFiniteSumTargetPointSource.toValuationLogImageProjectedFactorwiseTargetTransportSource.toLocalLogCoordinateProjectedFactorwiseTargetTransportSource.toLocalLogCoordinateFactorwiseTargetTransportSource.toLocalLogCoordinatePlacewisePreimageTargetTransportSource.toLocalLogCoordinatePreimageTargetTransportSource.toLocalLogCoordinateProductImageTargetTransportSource.toFiniteLocalLogCoordinateTargetTransportSource.toValuationAnchorCoordinateTargetTransportSource.toSelectedImageCoordinateTargetTransportSource.toCoordinateTargetTransportSource.toTargetPointTransportSource :=
+  sourceData.toValuationLogFiniteSumTargetPointSource.targetPointTransportAudit
+
+end
+  IUTStage1Remark395ValuationUnitBallNonzeroScalarCoordinatePlaceValuationLogFiniteSumTargetPointSource
+
+set_option linter.style.longLine false in
+/--
 Valuation-unit-ball/nonzero-scalar backed constructor-built Remark 3.9.5
 finite-divisor source.
 

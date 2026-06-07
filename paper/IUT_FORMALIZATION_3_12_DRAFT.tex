@@ -1334,6 +1334,23 @@ synchronization at this lower boundary is point-level transport of these two
 source regions to the principal finite-divisor target regions; the real-line
 finite-sum equalities are no longer independent fields of the exact-theta
 constructor.
+This boundary has now been lowered again by
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{CoordinatePlaceValuationLogFiniteSumTargetPointSource}.
+\end{array}
+\]
+Here the valuation-cover coordinate-place map is represented source-side by an
+equivalence \(\delta\simeq\gamma_{\mathrm{local}}\).  Lean derives the previous
+finite-sum synchronization law
+\[
+  \texttt{coordinatePlace}(e^{-1}(v))=v
+\]
+from the source equality \(\texttt{coordinatePlace}=e\).  Thus the remaining
+coordinate-index work is no longer an arbitrary target-boundary compatibility;
+it is the construction of this equivalence from the actual local valuation
+indexing.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -8556,13 +8573,18 @@ The practical priority order is:
   definitionally \(x\mapsto\{\mathrm{coord}=\sum_v\ell_v(x_v)\}\), the
   coordinate-place map is required to agree with the valuation-place/product
   equivalence, and \Lean{} proves the finite-sum real-line laws from the
-  dependent-product source.  The exact-theta Step~(xi) source now constructs
-  this finite-sum target-point source from point-level transport of \(O\) and
-  \(\lambda O\), rather than from supplied finite-sum real-line equalities.
+  dependent-product source.  A coordinate-place finite-sum endpoint lowers
+  this further: the valuation-cover coordinate-place map is carried as the
+  source equivalence \(e:\delta\simeq\gamma_{\mathrm{local}}\), and the old
+  compatibility \(\texttt{coordinatePlace}(e^{-1}(v))=v\) is derived
+  internally.  The exact-theta Step~(xi) source now constructs both the
+  finite-sum target-point source and this coordinate-place finite-sum source
+  from point-level transport of \(O\) and \(\lambda O\), rather than from
+  supplied finite-sum real-line equalities.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar/Kummer model,
-  the actual maps \(\ell_v\), the coordinate-place compatibility, and the
+  the actual maps \(\ell_v\), the coordinate-place equivalence, and the
   point-level target transport identifying \(O\) and \(\lambda O\) with the
   principal finite-divisor target regions.  Below that, the
   local directional scalar-image laws for each local factor
