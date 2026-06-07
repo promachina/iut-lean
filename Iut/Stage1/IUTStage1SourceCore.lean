@@ -11988,6 +11988,128 @@ theorem endpoint
         data.compactOpenBall_measure_pos,
     rfl⟩
 
+set_option linter.style.longLine false in
+structure ValuationBallAdditiveHaarNormalizationAudit
+    (data :
+      IUTStage1ValuationBallAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    Prop where
+  ringOfIntegers_eq_valuationBall_one :
+    data.ringOfIntegers = data.valuationBall 1
+  compactOpenSubset_eq_valuationBall_radius :
+    data.compactOpenSubset =
+      data.valuationBall data.compactOpenRadius
+  compactOpenRadius_pos :
+    0 < data.compactOpenRadius
+  ringOfIntegers_compactOpen :
+    data.isCompactOpen data.ringOfIntegers
+  compactOpenSubset_compactOpen :
+    data.isCompactOpen data.compactOpenSubset
+  uniformizerScaledSubset_compactOpen :
+    data.isCompactOpen
+      (data.uniformizerScale data.compactOpenSubset)
+  additiveSource_ringOfIntegers_eq :
+    data.toAdditiveHaarCompactOpenNormalizationSource.ringOfIntegers =
+      data.ringOfIntegers
+  additiveSource_compactOpenSubset_eq :
+    data.toAdditiveHaarCompactOpenNormalizationSource.compactOpenSubset =
+      data.compactOpenSubset
+  additive_rawUniformizerShift :
+    data.toAdditiveHaarCompactOpenNormalizationSource.rawHaarLogVolume
+        data.toAdditiveHaarCompactOpenNormalizationSource.uniformizerScaledSubset =
+      data.toAdditiveHaarCompactOpenNormalizationSource.rawHaarLogVolume
+          data.toAdditiveHaarCompactOpenNormalizationSource.compactOpenSubset -
+        (data.finiteExtensionDegree : Real) *
+          Real.log (data.residuePrime : Real)
+  additive_normalizedRingOfIntegers_zero :
+    data.toAdditiveHaarCompactOpenNormalizationSource.normalizedHaarLogVolume
+        data.toAdditiveHaarCompactOpenNormalizationSource.ringOfIntegers = 0
+  additive_normalizedUniformizerShift :
+    data.toAdditiveHaarCompactOpenNormalizationSource.normalizedHaarLogVolume
+        data.toAdditiveHaarCompactOpenNormalizationSource.uniformizerScaledSubset =
+      data.toAdditiveHaarCompactOpenNormalizationSource.normalizedHaarLogVolume
+          data.toAdditiveHaarCompactOpenNormalizationSource.compactOpenSubset -
+        Real.log (data.residuePrime : Real)
+  compactOpenTopology_compactOpenSubset_eq :
+    (data.toAdditiveHaarCompactOpenNormalizationSource
+      |>.toCompactOpenTopologyHaarNormalizationSource
+      |>.compactOpenSubset) =
+        data.compactOpenSubset
+  finiteExtension_compactOpenSubset_eq :
+    (data.toAdditiveHaarCompactOpenNormalizationSource
+      |>.toCompactOpenTopologyHaarNormalizationSource
+      |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+      |>.compactOpenSubset) =
+        data.compactOpenSubset
+  nonarchimedean_compactOpenRegion_eq :
+    (data.toAdditiveHaarCompactOpenNormalizationSource
+      |>.toCompactOpenTopologyHaarNormalizationSource
+      |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+      |>.toNonarchimedeanLocalCompactOpenLogVolumeSource
+      |>.compactOpenRegion) =
+        data.realizedRegion data.compactOpenSubset
+  nonarchimedean_integralLogVolume_zero :
+    hullSystem.logVolume
+        (data.toAdditiveHaarCompactOpenNormalizationSource
+          |>.toCompactOpenTopologyHaarNormalizationSource
+          |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+          |>.toNonarchimedeanLocalCompactOpenLogVolumeSource
+          |>.integralRegion) = 0
+  nonarchimedean_uniformizerScaledLogVolume_eq :
+    hullSystem.logVolume
+        (data.toAdditiveHaarCompactOpenNormalizationSource
+          |>.toCompactOpenTopologyHaarNormalizationSource
+          |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+          |>.toNonarchimedeanLocalCompactOpenLogVolumeSource
+          |>.uniformizerScaledRegion) =
+      (data.toAdditiveHaarCompactOpenNormalizationSource
+        |>.toCompactOpenTopologyHaarNormalizationSource
+        |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+        |>.toNonarchimedeanLocalCompactOpenLogVolumeSource
+        |>.normalizedLogVolume) -
+        Real.log (data.residuePrime : Real)
+
+set_option linter.style.longLine false in
+theorem valuationBallAdditiveHaarNormalizationAudit
+    (data :
+      IUTStage1ValuationBallAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    ValuationBallAdditiveHaarNormalizationAudit data :=
+  { ringOfIntegers_eq_valuationBall_one := rfl,
+    compactOpenSubset_eq_valuationBall_radius := rfl,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    ringOfIntegers_compactOpen := data.ringOfIntegers_compactOpen,
+    compactOpenSubset_compactOpen := data.compactOpenSubset_compactOpen,
+    uniformizerScaledSubset_compactOpen :=
+      data.uniformizerScale_preserves_compactOpen
+        data.compactOpenSubset data.compactOpenSubset_compactOpen,
+    additiveSource_ringOfIntegers_eq := rfl,
+    additiveSource_compactOpenSubset_eq := rfl,
+    additive_rawUniformizerShift :=
+      data.toAdditiveHaarCompactOpenNormalizationSource
+        |>.uniformizerScaled_rawHaarLogVolume_eq,
+    additive_normalizedRingOfIntegers_zero :=
+      data.toAdditiveHaarCompactOpenNormalizationSource
+        |>.ringOfIntegers_normalizedHaarLogVolume_zero,
+    additive_normalizedUniformizerShift :=
+      data.toAdditiveHaarCompactOpenNormalizationSource
+        |>.uniformizerScaled_normalizedHaarLogVolume_eq,
+    compactOpenTopology_compactOpenSubset_eq := rfl,
+    finiteExtension_compactOpenSubset_eq := rfl,
+    nonarchimedean_compactOpenRegion_eq := rfl,
+    nonarchimedean_integralLogVolume_zero :=
+      data.toAdditiveHaarCompactOpenNormalizationSource
+        |>.toCompactOpenTopologyHaarNormalizationSource
+        |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+        |>.toNonarchimedeanLocalCompactOpenLogVolumeSource
+        |>.integral_logVolume_zero,
+    nonarchimedean_uniformizerScaledLogVolume_eq :=
+      data.toAdditiveHaarCompactOpenNormalizationSource
+        |>.toCompactOpenTopologyHaarNormalizationSource
+        |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+        |>.toNonarchimedeanLocalCompactOpenLogVolumeSource
+        |>.uniformizerScaled_logVolume_eq }
+
 end IUTStage1ValuationBallAdditiveHaarNormalizationSource
 
 namespace IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
@@ -14652,6 +14774,61 @@ theorem endpoint
     data.region_logVolume_eq_normalizedHaarLogVolume,
     data.region_logVolume_eq_directSummand,
     rfl⟩
+
+set_option linter.style.longLine false in
+structure ValuationBallVectorBundleHaarCalibrationAudit
+    (data :
+      IUTStage1ValuationBallVectorBundleFactorCalibrationSource
+        α η K γ hullSystem localizedCalibration place) :
+    Prop where
+  valuationBallHaarAudit :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource.ValuationBallAdditiveHaarNormalizationAudit
+      data.valuationBallFactor
+  chart_localRing_eq_bundle :
+    data.chart.localRing =
+      localizedCalibration.localizedVectorBundle.bundle.localRing
+  chart_region_eq_valuationBallCompactOpen :
+    data.chart.region =
+      data.valuationBallFactor.realizedRegion
+        data.valuationBallFactor.compactOpenSubset
+  region_eq_valuationBallCompactOpen :
+    data.region =
+      data.valuationBallFactor.realizedRegion
+        data.valuationBallFactor.compactOpenSubset
+  region_logVolume_eq_additiveNormalized :
+    hullSystem.logVolume data.region =
+      ((data.valuationBallFactor.toAdditiveHaarCompactOpenNormalizationSource)
+        |>.normalizedHaarLogVolume
+          data.valuationBallFactor.compactOpenSubset)
+  region_logVolume_eq_directSummand :
+    hullSystem.logVolume data.region =
+      localizedCalibration.localizedVectorBundle.bundle.directSummandLogVolume
+        place
+  localRingFactorCalibration_region_eq :
+    data.toLocalRingVectorBundleFactorCalibrationSource.region =
+      data.region
+  localRingFactorCalibration_chart_eq :
+    data.toLocalRingVectorBundleFactorCalibrationSource.chart =
+      data.chart
+
+set_option linter.style.longLine false in
+theorem valuationBallVectorBundleHaarCalibrationAudit
+    (data :
+      IUTStage1ValuationBallVectorBundleFactorCalibrationSource
+        α η K γ hullSystem localizedCalibration place) :
+    ValuationBallVectorBundleHaarCalibrationAudit data :=
+  { valuationBallHaarAudit :=
+      data.valuationBallFactor.valuationBallAdditiveHaarNormalizationAudit,
+    chart_localRing_eq_bundle := by
+      simpa [chart] using data.valuationBall_ring_eq_bundle,
+    chart_region_eq_valuationBallCompactOpen := rfl,
+    region_eq_valuationBallCompactOpen := rfl,
+    region_logVolume_eq_additiveNormalized :=
+      data.region_logVolume_eq_normalizedHaarLogVolume,
+    region_logVolume_eq_directSummand :=
+      data.region_logVolume_eq_directSummand,
+    localRingFactorCalibration_region_eq := rfl,
+    localRingFactorCalibration_chart_eq := rfl }
 
 end IUTStage1ValuationBallVectorBundleFactorCalibrationSource
 

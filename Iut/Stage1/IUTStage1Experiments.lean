@@ -44035,6 +44035,26 @@ theorem remark395ValuationBallAdditiveHaarNormalizationSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface valuation-ball additive Haar normalization audit.
+
+This packages the valuation-ball unit/compact-open construction together with
+the derived additive Haar raw log-volume shift, normalized ring-of-integers
+zero, normalized uniformizer shift, and the downstream nonarchimedean
+compact-open log-volume projection.
+-/
+theorem remark395ValuationBallAdditiveHaarNormalizationSource_normalizationAudit
+    {α : Type u} {η : Type v} {K : Type w}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    (data :
+      IUTStage1ValuationBallAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource.ValuationBallAdditiveHaarNormalizationAudit
+      data :=
+  data.valuationBallAdditiveHaarNormalizationAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface valuation-ball tensor-product direct-sum source.
 
 This endpoint exposes the tensor/direct-sum summation route whose local factors
@@ -44224,6 +44244,30 @@ theorem valuationBallVectorBundleFactorCalibrationSource_endpoint
       data.toLocalRingVectorBundleFactorCalibrationSource.region =
         data.region :=
   data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface valuation-ball/vector-bundle Haar calibration audit.
+
+This keeps the valuation-ball Haar normalization audit attached to the local
+vector-bundle factor chart whose region supplies the direct-summand
+log-volume.
+-/
+theorem valuationBallVectorBundleFactorCalibrationSource_haarCalibrationAudit
+    {α : Type u} {η : Type v} {K : Type z} {γ : Type w}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype γ]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    {localizedCalibration :
+      IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+        hullSystem η γ}
+    {place : γ}
+    (data :
+      IUTStage1ValuationBallVectorBundleFactorCalibrationSource
+        α η K γ hullSystem localizedCalibration place) :
+    IUTStage1ValuationBallVectorBundleFactorCalibrationSource.ValuationBallVectorBundleHaarCalibrationAudit
+      data :=
+  data.valuationBallVectorBundleHaarCalibrationAudit
 
 set_option linter.style.longLine false in
 /--

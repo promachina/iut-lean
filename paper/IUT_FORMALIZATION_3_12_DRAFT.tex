@@ -7211,7 +7211,28 @@ The practical priority order is:
   valuation-ball source whenever that source has been supplied; the older
   global finite-additive valuation-ball/Haar factor route now first narrows to
   this finite-cover source and then enters the same tensor-measure-backed
-  determinant corridor.  But the next work is to replace the still-supplied hull
+  determinant corridor.  The valuation-ball Haar layer itself now has a named
+  normalization audit,
+  \[
+  \begin{array}{l}
+  \texttt{remark395ValuationBallAdditiveHaarNormalizationSource}\\
+  \quad\texttt{\_normalizationAudit},
+  \end{array}
+  \]
+  which records the unit-ball and selected positive-radius valuation-ball
+  definitions, compact-openness, the raw Haar log-volume shift under
+  uniformizer scaling, the normalized \(\mu_{\log}(\mathcal{O})=0\) law, the
+  normalized \(\mu_{\log}(\varpi U)=\mu_{\log}(U)-\log(q)\) law, and the
+  projected nonarchimedean compact-open log-volume source.  The per-factor
+  vector-bundle calibration surface now carries this same local Haar audit as
+  \[
+  \texttt{valuationBallVectorBundleFactorCalibrationSource\_haarCalibrationAudit},
+  \]
+  together with the chart/local-ring equality, region equality, additive
+  normalized log-volume equality, and direct-summand calibration.  Thus the
+  local Step~(xi-d) vector-bundle factor no longer exposes only the final
+  log-volume equality; it retains the valuation-ball Haar normalization chain
+  that produced it.  But the next work is to replace the still-supplied hull
   system, direct-product localization cover construction, family-local
   finite-cover additivity theorem,
   construction of the compact-open
