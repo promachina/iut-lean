@@ -5909,6 +5909,27 @@ and then returns the same Ob3/Ob4 determinant audit, bridge-inequality audit,
 and raw signed comparison.  Thus this constructor form no longer treats the
 holomorphic-hull shadow as a supplied Step~(xi) payload.
 
+The constructor-built possible-image route has now been refined one step
+further to the product-hull formulation of Remark~3.9.5(i)--(ii).  The new
+source constructor
+\[
+\begin{array}{l}
+\texttt{ofRemark395ProductHullSystem}\\
+\quad\texttt{Ob3Ob4AdjustedDeterminantSource}
+\end{array}
+\]
+starts from an \texttt{IUTStage1Remark395ProductHullSystemSource}: a family of
+product hulls, a parameter selecting the intersection of all product hulls
+containing a region, and the corresponding log-volume calibration.  The
+endpoint proves that the Step~(xi) hull attached to
+\(\bigcup_i P_i\) is exactly the product hull selected by this intersection
+parameter, that the chosen q-region is contained in it, and that it is minimal
+among product hulls containing \(\bigcup_i P_i\).  It then returns the same
+constructor-built Ob3/Ob4 determinant audit, bridge-inequality audit, and raw
+signed comparison.  Thus the corridor now reaches the source-paper
+``smallest product hull'' formulation before projecting to the older
+holomorphic-hull shadow.
+
 The same constructor-built source now exposes the Step (xi) bridge inequality
 as a named audit
 \texttt{ConstructorBuiltStepXIBridgeInequalityAudit}.  This audit records the

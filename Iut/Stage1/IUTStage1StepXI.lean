@@ -12674,6 +12674,66 @@ noncomputable def ofRemark395HullSystemOb3Ob4AdjustedDeterminantSource
 
 set_option linter.style.longLine false in
 /--
+Build the constructor-built possible-image Step (xi) source from the
+product-hull form of Remark 3.9.5(i)--(ii).
+
+The source input is a family of product hulls together with the parameter that
+realizes the intersection of all product hulls containing a region.  The older
+minimal-hull system is derived internally from this product-hull source before
+entering the existing Ob3/Ob4 adjusted-determinant constructor.
+-/
+noncomputable def ofRemark395ProductHullSystemOb3Ob4AdjustedDeterminantSource
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (qChoice : index)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (recordThetaPossibleImageUnion record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (recordThetaPossibleImage record qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice (recordThetaPossibleImage record qChoice)
+            (fun _ hx => hx))
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization) :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+      (β := β) record :=
+  ofRemark395HullSystemOb3Ob4AdjustedDeterminantSource (record := record)
+    operation hullOperation determinantOperation
+    productHullSource.toHolomorphicHullSystem qChoice
+    ob3ob4Source compatibility measure_eq_hullLogVolume
+    tensorPower_bound hullDetBridge_eq q_pilot_positive normalization
+
+set_option linter.style.longLine false in
+/--
 Endpoint for the minimal-hull-system constructor.
 
 The endpoint identifies the constructed source's hull with
@@ -12755,6 +12815,130 @@ theorem ofRemark395HullSystemOb3Ob4AdjustedDeterminantSource_endpoint
         sourceData.toConstructorBuiltOb3Ob4DeterminantAudit,
         sourceData.toConstructorBuiltStepXIBridgeInequalityAudit,
         sourceData.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
+Endpoint for the product-hull constructor.
+
+This strengthens the minimal-hull endpoint by identifying the constructed
+Step (xi) hull with the selected product hull for the Theorem 3.11
+possible-image union, proving q-region containment in that product hull, and
+recording its minimality among all product hulls containing the union.
+-/
+theorem ofRemark395ProductHullSystemOb3Ob4AdjustedDeterminantSource_endpoint
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (qChoice : index)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (recordThetaPossibleImageUnion record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (recordThetaPossibleImage record qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice (recordThetaPossibleImage record qChoice)
+            (fun _ hx => hx))
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization) :
+    let region := recordThetaPossibleImageUnion record;
+    let sourceData :=
+      ofRemark395ProductHullSystemOb3Ob4AdjustedDeterminantSource
+        (record := record)
+        operation hullOperation determinantOperation productHullSource qChoice
+        ob3ob4Source compatibility measure_eq_hullLogVolume tensorPower_bound
+        hullDetBridge_eq q_pilot_positive normalization;
+    SourceEndpoint sourceData ∧
+      sourceData.hullData =
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
+      sourceData.hullData.hullRegion region =
+        productHullSource.productHull
+          (productHullSource.intersectionParameter region) ∧
+      productHullSource.toHolomorphicHullSystem.isHull
+        (sourceData.hullData.hullRegion region) ∧
+      sourceData.qPilotRegion ⊆
+        productHullSource.productHull
+          (productHullSource.intersectionParameter region) ∧
+      (∀ parameter : Λ,
+        region ⊆ productHullSource.productHull parameter ->
+          productHullSource.productHull
+              (productHullSource.intersectionParameter region) ⊆
+            productHullSource.productHull parameter) ∧
+      productHullSource.toHolomorphicHullSystem.logVolume
+          (sourceData.hullData.hullRegion region) =
+        productHullSource.productHullLogVolume
+          (productHullSource.intersectionParameter region) ∧
+      ConstructorBuiltOb3Ob4DeterminantAudit sourceData ∧
+      ConstructorBuiltStepXIBridgeInequalityAudit sourceData ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  by
+    intro region sourceData
+    have hHullSystem :=
+      ofRemark395HullSystemOb3Ob4AdjustedDeterminantSource_endpoint
+        (record := record)
+        operation hullOperation determinantOperation
+        productHullSource.toHolomorphicHullSystem qChoice
+        ob3ob4Source compatibility measure_eq_hullLogVolume tensorPower_bound
+        hullDetBridge_eq q_pilot_positive normalization
+    have hphi :
+        productHullSource.toHolomorphicHullSystem.phi region =
+          productHullSource.productHull
+            (productHullSource.intersectionParameter region) :=
+      productHullSource.phi_eq_productHull_intersectionParameter region
+    have hhull_eq :
+        sourceData.hullData.hullRegion region =
+          productHullSource.productHull
+            (productHullSource.intersectionParameter region) :=
+      hHullSystem.2.2.1.trans hphi
+    have hq_subset :
+        sourceData.qPilotRegion ⊆
+          productHullSource.productHull
+            (productHullSource.intersectionParameter region) := by
+      rw [← hphi]
+      exact hHullSystem.2.2.2.2.1
+    exact
+      ⟨hHullSystem.1,
+        hHullSystem.2.1,
+        hhull_eq,
+        by
+          rw [hhull_eq]
+          exact productHullSource.productHull_intersection_isHull region,
+        hq_subset,
+        fun parameter hsubset =>
+          productHullSource.productHull_intersection_minimal hsubset,
+        by
+          rw [hhull_eq]
+          exact productHullSource.logVolume_intersectionProductHull_eq region,
+        hHullSystem.2.2.2.2.2.1,
+        hHullSystem.2.2.2.2.2.2.1,
+        hHullSystem.2.2.2.2.2.2.2⟩
 
 set_option linter.style.longLine false in
 /--

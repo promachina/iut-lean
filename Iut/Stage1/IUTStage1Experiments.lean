@@ -46851,6 +46851,109 @@ theorem possibleImageConstructorBuiltHullSource_ofRemark395HullSystemOb3Ob4Adjus
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface endpoint for constructing the constructor-built
+possible-image Step (xi) source from the product-hull form of Remark 3.9.5.
+
+This variant starts from a source-facing family of product hulls and the
+intersection parameter selecting the smallest product hull containing the
+Theorem 3.11 possible-image union.  The endpoint exposes the selected product
+hull, q-region containment, product-hull minimality, and the existing Ob3/Ob4
+and bridge-inequality audits.
+-/
+theorem possibleImageConstructorBuiltHullSource_ofRemark395ProductHullSystemOb3Ob4AdjustedDeterminantSource_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    {Λ : Type x}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ)
+    (qChoice : index)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record qChoice)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+              record qChoice)
+            (fun _ hx => hx))
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization) :
+    let region :=
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+        record;
+    let sourceData :=
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ofRemark395ProductHullSystemOb3Ob4AdjustedDeterminantSource
+        (record := record)
+        operation hullOperation determinantOperation productHullSource qChoice
+        ob3ob4Source compatibility measure_eq_hullLogVolume tensorPower_bound
+        hullDetBridge_eq q_pilot_positive normalization;
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.SourceEndpoint
+        sourceData ∧
+      sourceData.hullData =
+        IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
+      sourceData.hullData.hullRegion region =
+        productHullSource.productHull
+          (productHullSource.intersectionParameter region) ∧
+      productHullSource.toHolomorphicHullSystem.isHull
+        (sourceData.hullData.hullRegion region) ∧
+      sourceData.qPilotRegion ⊆
+        productHullSource.productHull
+          (productHullSource.intersectionParameter region) ∧
+      (∀ parameter : Λ,
+        region ⊆ productHullSource.productHull parameter ->
+          productHullSource.productHull
+              (productHullSource.intersectionParameter region) ⊆
+            productHullSource.productHull parameter) ∧
+      productHullSource.toHolomorphicHullSystem.logVolume
+          (sourceData.hullData.hullRegion region) =
+        productHullSource.productHullLogVolume
+          (productHullSource.intersectionParameter region) ∧
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb3Ob4DeterminantAudit
+        sourceData ∧
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltStepXIBridgeInequalityAudit
+        sourceData ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ofRemark395ProductHullSystemOb3Ob4AdjustedDeterminantSource_endpoint
+    (record := record)
+    operation hullOperation determinantOperation productHullSource qChoice
+    ob3ob4Source compatibility measure_eq_hullLogVolume tensorPower_bound
+    hullDetBridge_eq q_pilot_positive normalization
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface Ob3/Ob5 determinant-compatibility chain for the
 constructor-built possible-image Step (xi) hull/determinant source.
 
