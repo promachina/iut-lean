@@ -41934,6 +41934,37 @@ theorem remark395FiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface product-log-volume finite-additive charted cover source.
+
+This endpoint derives the per-cell direct-product log-volume equality from the
+single-cell product/tensor log-volume source, then derives the cover equality by
+finite additivity before projecting to the older calibrated charted route.
+-/
+theorem remark395ProductLogVolumeFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ProductLogVolumeFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η β γ) :
+    let finiteSource :=
+      data.toFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let calibratedSource :=
+      finiteSource.toCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (∀ index : β,
+      data.hullSystem.logVolume (data.directProductCell index) =
+        Finset.univ.sum fun place =>
+          data.hullSystem.logVolume (data.localFactorRegion index place)) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      finiteSource.hullSystem.logVolume finiteSource.directProductCellUnion =
+        finiteSource.calibratedCellLogVolumeSum ∧
+      calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
+        calibratedSource.bundleLogVolumeSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the
