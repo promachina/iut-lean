@@ -788,6 +788,20 @@ a scalar preimage in \(O\).  \Lean{} proves the set equality from these two
 laws and then constructs the direct-product principal hull source above.  Thus
 the next valuation/local-ring layer can target concrete image and preimage
 statements rather than a monolithic equality of subsets.
+The product-level image/preimage laws have now been pushed down to coordinate
+factors by
+\[
+\texttt{IUTStage1Remark395CoordinateScalarImageDirectProductHullSource}.
+\]
+Here \(O\) is the literal product of local integer factors \(O_v\), and
+\(\lambda\cdot(-)\) is assembled coordinatewise from local scalar maps
+\(\lambda_v\cdot(-)\).  The source only supplies the one-place assertions
+\(\lambda_v O_v\subseteq H_v(\lambda)\) and the corresponding local preimage
+statement for points of \(H_v(\lambda)\).  \Lean{} combines these coordinate
+witnesses by dependent choice to prove the global scalar-image landing and
+preimage laws, then constructs the scalar-image direct-product hull source.
+Thus the next finite-extension valuation step can work one local factor at a
+time.
 The principal hull presentation is now tied to the valuation-ball local-ring
 cover.  The declaration
 \[
@@ -7654,9 +7668,10 @@ The practical priority order is:
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar model, the
-  two still-supplied directional scalar-image laws for each principal
-  \(\lambda\cdot O\): landing in the valuation/direct-product hull and
-  existence of scalar preimages for all valuation/direct-product hull points,
+  still-supplied coordinate directional scalar-image laws for each local
+  factor \(\lambda_v\cdot O_v\): landing in the valuation/direct-product
+  factor \(H_v(\lambda)\) and existence of local scalar preimages for all
+  points of \(H_v(\lambda)\),
   direct-product localization cover construction, family-local
   finite-cover additivity theorem,
   construction of the compact-open

@@ -44692,6 +44692,53 @@ theorem remark395ScalarImageDirectProductHullSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface coordinatewise scalar-image direct-product hull construction.
+
+This lowers the product-level scalar-image laws to coordinate factors: local
+scalar images land in the local parameter factors, and local parameter-factor
+points have scalar preimages in the local integer factors.
+-/
+theorem remark395CoordinateScalarImageDirectProductHullSource_endpoint
+    {δ : Type u} {A : δ -> Type v}
+    (data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    let scalarImageSource := data.toScalarImageDirectProductHullSource
+    (∀ parameter : (d : δ) -> Set (A d),
+        data.parameter_nonzero parameter) ∧
+      (∀ (parameter : (d : δ) -> Set (A d)) (base : (d : δ) -> A d),
+        base ∈ data.localIntegerRegion ->
+          data.scalarMultiple parameter base ∈
+            data.directProductSource.productHull parameter) ∧
+      (∀ (parameter : (d : δ) -> Set (A d)) (point : (d : δ) -> A d),
+        point ∈ data.directProductSource.productHull parameter ->
+          ∃ base : (d : δ) -> A d,
+            base ∈ data.localIntegerRegion ∧
+              data.scalarMultiple parameter base = point) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.principalHull parameter =
+          data.directProductSource.productHull parameter) ∧
+      scalarImageSource.toDirectProductPrincipalHullSystemSource.principalHull
+          (data.directProductSource.intersectionParameter region) =
+        { point : (d : δ) -> A d |
+          ∀ parameter : (d : δ) -> Set (A d),
+            region ⊆ scalarImageSource.toDirectProductPrincipalHullSystemSource.principalHull parameter ->
+              point ∈ scalarImageSource.toDirectProductPrincipalHullSystemSource.principalHull parameter } ∧
+      scalarImageSource.toDirectProductPrincipalHullSystemSource.toHolomorphicHullSystem.phi region =
+        scalarImageSource.toDirectProductPrincipalHullSystemSource.toPrincipalProductHullSystemSource.principalHull
+          (scalarImageSource.toDirectProductPrincipalHullSystemSource.toPrincipalProductHullSystemSource.intersectionParameter region) ∧
+      region ⊆
+        scalarImageSource.toDirectProductPrincipalHullSystemSource.toPrincipalProductHullSystemSource.principalHull
+          (scalarImageSource.toDirectProductPrincipalHullSystemSource.toPrincipalProductHullSystemSource.intersectionParameter region) ∧
+      scalarImageSource.toDirectProductPrincipalHullSystemSource.toProductHullSystemSource.logVolume
+          (scalarImageSource.toDirectProductPrincipalHullSystemSource.toProductHullSystemSource.productHull
+            (scalarImageSource.toDirectProductPrincipalHullSystemSource.toProductHullSystemSource.intersectionParameter region)) =
+        scalarImageSource.toDirectProductPrincipalHullSystemSource.toProductHullSystemSource.productHullLogVolume
+          (scalarImageSource.toDirectProductPrincipalHullSystemSource.toProductHullSystemSource.intersectionParameter region) :=
+  data.endpoint region
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the source-facing Remark 3.9.5 possible-image
 family package.
 
