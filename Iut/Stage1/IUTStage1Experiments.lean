@@ -41627,6 +41627,41 @@ theorem remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundl
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface family-hull indexed localized cover source.
+
+This endpoint constructs the owner map from an index function on the family-hull
+subtype, derives owner-totality and owner-fiber containment, and then projects to
+the owner-total finite-additive cover route.
+-/
+theorem remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    let ownerTotalSource :=
+      data.toOwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    let finiteSource :=
+      ownerTotalSource.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        |>.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.localizedRegion index =
+        { point : α |
+          ∃ hpoint : point ∈ data.familyHull,
+            data.familyHullIndex ⟨point, hpoint⟩ = index }) ∧
+      (∀ index : β,
+        data.localizedRegion index =
+          { point : α | data.owner point = some index }) ∧
+      (∀ index : β,
+        { point : α | data.owner point = some index } ⊆ data.familyHull) ∧
+      (∀ point : α,
+        point ∈ data.familyHull -> ∃ index : β, data.owner point = some index) ∧
+      ownerTotalSource.familyHull = ownerTotalSource.localizedRegionUnion ∧
+      finiteSource.familyHullLogVolume = finiteSource.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the

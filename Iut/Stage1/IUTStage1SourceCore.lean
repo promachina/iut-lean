@@ -7079,6 +7079,214 @@ theorem endpoint
 
 end IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
 
+set_option linter.style.longLine false
+
+/--
+Family-hull indexed localized cover.
+
+This is a lower source form for the owner-total cover.  Instead of supplying an
+owner map on the ambient region and proving that it is total on the family hull,
+the primitive datum is an index function on the subtype of points of the family
+hull.  The ambient owner map is then constructed by sending hull points to their
+index and all points outside the hull to `none`.
+-/
+structure IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (α : Type u) (ι : Type v) (η : Type y) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  additiveLogVolume :
+    IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β
+  familyHullIndex :
+    { point : α // point ∈ hullSystem.phi (⋃ i, possibleRegion i) } -> β
+  localizedRegion_eq_familyHullIndexFiber :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α |
+          ∃ hpoint : point ∈ hullSystem.phi (⋃ i, possibleRegion i),
+            familyHullIndex ⟨point, hpoint⟩ = index }
+
+namespace IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+
+variable {α : Type u} {ι : Type v} {η : Type y}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def familyUnion
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ i, data.possibleRegion i
+
+def familyHull
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  data.hullSystem.phi data.familyUnion
+
+def localizedRegion
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    Set α :=
+  (data.localizedCalibration index).localizedRegion
+
+def localizedRegionUnion
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ index, data.localizedRegion index
+
+noncomputable def owner
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (point : α) :
+    Option β := by
+  classical
+  exact
+    if hpoint : point ∈ data.familyHull then
+      some (data.familyHullIndex ⟨point, hpoint⟩)
+    else
+      none
+
+theorem localizedRegion_eq_familyHullIndexFiber_source
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    data.localizedRegion index =
+      { point : α |
+        ∃ hpoint : point ∈ data.familyHull,
+          data.familyHullIndex ⟨point, hpoint⟩ = index } := by
+  simpa [localizedRegion, familyHull, familyUnion] using
+    data.localizedRegion_eq_familyHullIndexFiber index
+
+theorem localizedRegion_eq_ownerFiber
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    data.localizedRegion index =
+      { point : α | data.owner point = some index } := by
+  classical
+  ext point
+  constructor
+  · intro hlocalized
+    have hfiber :
+        ∃ hpoint : point ∈ data.familyHull,
+          data.familyHullIndex ⟨point, hpoint⟩ = index := by
+      simpa [data.localizedRegion_eq_familyHullIndexFiber_source index] using
+        hlocalized
+    rcases hfiber with ⟨hpoint, hindex⟩
+    simp [owner, hpoint, hindex]
+  · intro howner
+    by_cases hpoint : point ∈ data.familyHull
+    · have hindex : data.familyHullIndex ⟨point, hpoint⟩ = index := by
+        simpa [owner, hpoint] using howner
+      exact
+        (by
+          rw [data.localizedRegion_eq_familyHullIndexFiber_source index]
+          exact ⟨hpoint, hindex⟩)
+    · simp [owner, hpoint] at howner
+
+theorem ownerFiber_subset_familyHull
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    { point : α | data.owner point = some index } ⊆ data.familyHull := by
+  classical
+  intro point howner
+  by_cases hpoint : point ∈ data.familyHull
+  · exact hpoint
+  · simp [owner, hpoint] at howner
+
+theorem familyHull_owner_total
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (point : α)
+    (hpoint : point ∈ data.familyHull) :
+    ∃ index : β, data.owner point = some index := by
+  classical
+  exact ⟨data.familyHullIndex ⟨point, hpoint⟩, by simp [owner, hpoint]⟩
+
+set_option linter.style.longLine false in
+noncomputable def toOwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+      α ι η β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    additiveLogVolume := data.additiveLogVolume,
+    owner := data.owner,
+    localizedRegion_eq_ownerFiber :=
+      data.localizedRegion_eq_ownerFiber,
+    ownerFiber_subset_familyHull := by
+      intro index
+      simpa [familyHull, familyUnion] using
+        data.ownerFiber_subset_familyHull index,
+    familyHull_owner_total := by
+      intro point hpoint
+      exact data.familyHull_owner_total point (by
+        simpa [familyHull, familyUnion] using hpoint) }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    let ownerTotalSource :=
+      data.toOwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    let finiteSource :=
+      ownerTotalSource.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        |>.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.localizedRegion index =
+        { point : α |
+          ∃ hpoint : point ∈ data.familyHull,
+            data.familyHullIndex ⟨point, hpoint⟩ = index }) ∧
+      (∀ index : β,
+        data.localizedRegion index =
+          { point : α | data.owner point = some index }) ∧
+      (∀ index : β,
+        { point : α | data.owner point = some index } ⊆ data.familyHull) ∧
+      (∀ point : α,
+        point ∈ data.familyHull -> ∃ index : β, data.owner point = some index) ∧
+      ownerTotalSource.familyHull = ownerTotalSource.localizedRegionUnion ∧
+      finiteSource.familyHullLogVolume = finiteSource.localizedAdjustedSum :=
+  ⟨data.localizedRegion_eq_familyHullIndexFiber_source,
+    data.localizedRegion_eq_ownerFiber,
+    data.ownerFiber_subset_familyHull,
+    data.familyHull_owner_total,
+    (data.toOwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.familyHull_eq_localizedRegionUnion,
+    ((data.toOwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+      |>.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.familyHullLogVolume_eq_localizedAdjustedSum⟩
+
+end IUTStage1Remark395FamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+
+set_option linter.style.longLine true
+
 /--
 Finite log-volume skeleton of Remark 3.9.5(vii), (Ob4).
 
