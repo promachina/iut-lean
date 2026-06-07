@@ -1296,6 +1296,24 @@ transport laws from product evaluation and reindexing.  The remaining local-log
 payload at this boundary is the source-facing image description of the coordinate
 regions \(O_v\) and \(\lambda_vO_v\) under the chosen local logarithmic
 coordinate, together with the valuation-place/product-index identification.
+This image-description boundary has now been lowered once more.  The source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{ValuationLogImageProjectedFactorwiseTargetTransportSource}
+\end{array}
+\]
+defines the local real regions themselves as
+\[
+  \ell_v(O_v),\qquad \ell_v(\lambda_vO_v),
+\]
+where \(\ell_v\) is the selected local valuation/log-coordinate map.  The
+previous projected-factorwise source is obtained by projection, and the image
+equalities for \(O_v\) and \(\lambda_vO_v\) are now definitional theorems.
+Thus this boundary no longer asks for separate local coordinate-image laws;
+the remaining inputs are the actual construction of the local maps
+\(\ell_v\) from the valuation/Kummer model and the global finite-sum
+identifications of the target real-line principal regions.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -7359,6 +7377,29 @@ provenance, explicit product-index/valuation-place transport, local
 \(\lambda_vO_v\) scalar-image regions, valuation-unit-ball provenance, and
 finite product-formula Ob7 provenance.
 
+The same exact-theta final route now has a valuation-log-image form.  The
+constructor
+\[
+\begin{array}{l}
+\texttt{\_toValuationUnitBallNonzeroScalarValuationLogImage}\\
+\quad\texttt{ProjectedFactorwiseTargetTransportSource}
+\end{array}
+\]
+builds the projected-factorwise source from the target-charted Step~(xi)
+source while defining the local coordinate regions as \(\ell_v(O_v)\) and
+\(\ell_v(\lambda_vO_v)\).  The corresponding final wrapper with suffix
+\[
+\begin{array}{l}
+\texttt{\_valuationUnitBallNonzeroScalarValuationLogImage}\\
+\quad\texttt{ProjectedFactorwiseCanonicalCThetaScaleDichotomy}\\
+\quad\texttt{WithTopologyFiniteExtensionHaarOb5Ob6Ob7AuditAtQChoice}\\
+\quad\texttt{OfCoricThetaMuProductFormulaConstructionSource}
+\end{array}
+\]
+returns the same target-point transport audit, principal topology/Haar
+Ob5--Ob7 audit, and canonical-scale dichotomy, but no longer accepts separate
+per-place image-equality hypotheses for the local coordinate regions.
+
 The milestone-facing constructed source now also factors its log-volume
 comparison through the generic record-canonical Remark 3.9.5 bridge source.
 The projection \texttt{toRecordHullDeterminantBridgeSource} packages the same
@@ -8487,16 +8528,21 @@ The practical priority order is:
   topology/Haar Ob5--Ob7 finite product-formula endpoint, and the
   target-charted exact-theta Step~(xi) source constructs this projected
   endpoint internally.
+  A valuation-log-image projected endpoint now defines the local coordinate
+  regions as the images \(\ell_v(O_v)\) and \(\ell_v(\lambda_vO_v)\), then
+  projects to the same final Ob5--Ob7 route.  The exact-theta Step~(xi) source
+  also constructs this valuation-log-image endpoint internally.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
-  But the next work is to derive, from the local valuation/Haar model, the
-  still-supplied local coordinate-image laws for the explicit source regions
-  \(O=\prod_vO_v\) and \(\lambda O\).  Below that, the local directional
-  scalar-image laws for each local factor \(\lambda_v\cdot O_v\) still have to
-  be derived from the valuation/Kummer model: landing in the
-  valuation/direct-product factor \(H_v(\lambda)\), existence of local scalar
-  preimages for all points of \(H_v(\lambda)\), direct-product localization
-  cover construction, family-local
+  But the next work is to derive, from the local valuation/Haar/Kummer model,
+  the actual maps \(\ell_v\) and the still-supplied global finite-sum
+  identifications between the target real-line principal regions and the
+  finite sums of \(\ell_v(O_v)\), \(\ell_v(\lambda_vO_v)\).  Below that, the
+  local directional scalar-image laws for each local factor
+  \(\lambda_v\cdot O_v\) still have to be derived from the valuation/Kummer
+  model: landing in the valuation/direct-product factor \(H_v(\lambda)\),
+  existence of local scalar preimages for all points of \(H_v(\lambda)\),
+  direct-product localization cover construction, family-local
   finite-cover additivity theorem,
   construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), extension
