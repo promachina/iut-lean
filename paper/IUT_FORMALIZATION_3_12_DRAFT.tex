@@ -8215,6 +8215,26 @@ The practical priority order is:
   produced from the coric Ob7 source plus the bridge synchronization with the
   constructed hull/determinant source, not from separate prime-strip and
   determinant-normalization payloads.
+  At the product-hull boundary, the coric Ob7 synchronization has been lowered
+  one step further.  The source
+  \[
+  \begin{array}{l}
+  \texttt{ProductHullBackedConstructedCoricOb7Source}
+  \end{array}
+  \]
+  stores the coric \(F^{\vdash\times\mu}\) invariant and the determinant/global
+  log-volume equality while fixing its Ob7 \texttt{bridgeSource} to the
+  constructed product-hull Step~(xi) bridge by definition.  Consequently the
+  experiment endpoint with suffix
+  \[
+  \begin{array}{l}
+  \texttt{OfConstructedCoricOb7Source}
+  \end{array}
+  \]
+  reaches the same canonical-scale product-hull Ob5--Ob7 finite-divisor
+  dichotomy without a separate coric bridge-equality argument; the remaining
+  Ob7 payload is now the coric invariant plus the determinant/global
+  log-volume identification.
   The valuation-unit-ball/nonzero-scalar product-cover route is now threaded
   to this finite-divisor boundary as well: Lean exposes a transport-backed
   source whose explicit carrier equivalence identifies the literal local
