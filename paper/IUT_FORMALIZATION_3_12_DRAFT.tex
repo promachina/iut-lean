@@ -883,6 +883,33 @@ adjusted Ob3/Ob5 determinant source.  This leaves the next finite-extension
 valuation task in its sharpest current form: construct the actual local
 parameters \(\lambda_v\) and prove \(H_v(\lambda_v)=\lambda_v O_v\) from the
 local IUT source data.
+This scalar-parameter source has now been lowered once more to actual local
+multiplication by nonzero elements:
+\[
+\texttt{IUTStage1Remark395NonzeroScalarMultiplicationDirectProductHullSource}.
+\]
+Here the parameter type at a place \(v\) is the subtype of nonzero local
+scalars, the scalar action is the local multiplication map
+\(x\mapsto \lambda_v x\), and the region \(H_v(\lambda_v)\) is defined as the
+image of \(O_v\) under this map.  Consequently the equality
+\[
+H_v(\lambda_v)=\lambda_v O_v
+\]
+is no longer a supplied field at this boundary; it is the defining
+construction from which \Lean{} derives the product landing, product preimage,
+and principal-hull/direct-product equality.
+The valuation-ball determinant handoff has the corresponding nonzero-scalar
+form
+\[
+\texttt{IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource}.
+\]
+Its endpoint verifies that the selected nonzero scalar image is still the
+holomorphic family hull and the valuation-ball direct-product cell union used
+by the adjusted Ob3/Ob5 determinant source.  The remaining local-field task is
+therefore more specific: identify the source-paper scalar parameters as
+nonzero elements of the local factors and connect the local integer factors
+\(O_v\) to the valuation-ring/unit-ball construction already present in the
+Haar normalization branch.
 This valuation-ball provenance has now been lifted to the finite-divisor
 vertical-\(IQ\) endpoint.  The declaration
 \[

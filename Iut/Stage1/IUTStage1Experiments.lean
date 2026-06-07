@@ -44774,6 +44774,43 @@ theorem remark395ScalarParameterDirectProductHullSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface nonzero scalar-multiplication direct-product hull
+construction.
+
+This lowers the scalar-parameter law to actual local multiplication: a local
+parameter is a nonzero scalar, and its region `H_v(lambda_v)` is definitionally
+the image of the local integer factor under multiplication by that scalar.
+-/
+theorem remark395NonzeroScalarMultiplicationDirectProductHullSource_endpoint
+    {δ : Type u} {A : δ -> Type v}
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationDirectProductHullSource
+        δ A)
+    (parameter : (d : δ) -> data.nonzeroScalar d) :
+    (∀ d : δ, (parameter d).1 ≠ 0) ∧
+      (∀ d : δ,
+        data.coordinateScalarImage d (parameter d) =
+          (fun base : A d => (parameter d).1 * base) ''
+            data.localIntegerFactorRegion d) ∧
+      (∀ base : (d : δ) -> A d,
+        base ∈ data.localIntegerRegion ->
+          data.scalarMultiple parameter base ∈
+            data.directProductSource.productHull
+              (data.parameterRegion parameter)) ∧
+      (∀ point : (d : δ) -> A d,
+        point ∈ data.directProductSource.productHull
+            (data.parameterRegion parameter) ->
+          ∃ base : (d : δ) -> A d,
+            base ∈ data.localIntegerRegion ∧
+              data.scalarMultiple parameter base = point) ∧
+      data.toScalarParameterDirectProductHullSource.principalHull parameter =
+        data.directProductSource.productHull
+          (data.parameterRegion parameter) :=
+  data.endpoint parameter
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the source-facing Remark 3.9.5 possible-image
 family package.
 
@@ -47029,6 +47066,65 @@ theorem remark395SelectedScalarParameterValuationBallProductHullCoverSource_endp
         data.valuationCover.calibratedCellLogVolumeSum ∧
       data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
         data.scalarParameterSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface nonzero scalar-multiplication valuation/principal hull
+cover.
+
+This is the current strongest local scalar-image boundary: selected local
+parameters are actual nonzero scalars, the regions `H_v(lambda_v)` are
+multiplication images of `O_v`, and the selected product scalar image is the
+valuation-ball family hull used by the adjusted Ob3/Ob5 determinant handoff.
+-/
+theorem remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource_endpoint
+    {δ : Type u} {A : δ -> Type v}
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    {ι : Type y} {η : Type x} {K : Type z}
+    {β : Type w} {γ : Type max u v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    data.nonzeroScalarSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      (∀ d : δ, (data.selectedNonzeroScalar d).1 ≠ 0) ∧
+      (∀ d : δ,
+        data.nonzeroScalarSource.coordinateScalarImage d
+            (data.selectedNonzeroScalar d) =
+          (fun base : A d => (data.selectedNonzeroScalar d).1 * base) ''
+            data.nonzeroScalarSource.localIntegerFactorRegion d) ∧
+      (∀ base : (d : δ) -> A d,
+        base ∈ data.nonzeroScalarSource.localIntegerRegion ->
+          data.nonzeroScalarSource.scalarMultiple
+              data.selectedNonzeroScalar base ∈
+            data.nonzeroScalarSource.directProductSource.productHull
+              data.selectedParameterRegion) ∧
+      (∀ point : (d : δ) -> A d,
+        point ∈ data.nonzeroScalarSource.directProductSource.productHull
+            data.selectedParameterRegion ->
+          ∃ base : (d : δ) -> A d,
+            base ∈ data.nonzeroScalarSource.localIntegerRegion ∧
+              data.nonzeroScalarSource.scalarMultiple
+                data.selectedNonzeroScalar base = point) ∧
+      data.selectedParameterRegion =
+        data.nonzeroScalarSource.directProductSource.intersectionParameter
+          data.possibleImageUnion ∧
+      data.selectedScalarImageHull =
+        data.nonzeroScalarSource.directProductSource.productHull
+          data.selectedParameterRegion ∧
+      data.valuationCover.hullSystem.phi data.possibleImageUnion =
+        data.selectedScalarImageHull ∧
+      data.selectedScalarImageHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.valuationCover.hullSystem.logVolume data.selectedScalarImageHull =
+        data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+        data.nonzeroScalarSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
       data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
         data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
   data.endpoint
