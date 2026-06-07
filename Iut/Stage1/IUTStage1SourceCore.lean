@@ -6924,6 +6924,162 @@ theorem endpoint
 end IUTStage1Remark395OwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
 
 /--
+Owner-total finite-additive localized hull cover.
+
+This refines the owner-fiber cover by deriving the cover identity
+`phi(P_B) = ⋃ H_beta`.  The source data says that the owner map is total on the
+canonical family hull, and that every owner fiber lies inside that hull.  Together
+with the fiber description of the localized regions, these two facts prove that
+the localized regions cover exactly the family hull.
+-/
+structure IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (α : Type u) (ι : Type v) (η : Type y) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  additiveLogVolume :
+    IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β
+  owner : α -> Option β
+  localizedRegion_eq_ownerFiber :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α | owner point = some index }
+  ownerFiber_subset_familyHull :
+    ∀ index : β,
+      { point : α | owner point = some index } ⊆
+        hullSystem.phi (⋃ i, possibleRegion i)
+  familyHull_owner_total :
+    ∀ point : α,
+      point ∈ hullSystem.phi (⋃ i, possibleRegion i) ->
+        ∃ index : β, owner point = some index
+
+namespace IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+
+variable {α : Type u} {ι : Type v} {η : Type y}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def localizedRegion
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    Set α :=
+  (data.localizedCalibration index).localizedRegion
+
+def localizedRegionUnion
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ index, data.localizedRegion index
+
+def familyUnion
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  ⋃ i, data.possibleRegion i
+
+def familyHull
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    Set α :=
+  data.hullSystem.phi data.familyUnion
+
+theorem localizedRegion_eq_ownerFiber_source
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ)
+    (index : β) :
+    data.localizedRegion index =
+      { point : α | data.owner point = some index } :=
+  data.localizedRegion_eq_ownerFiber index
+
+theorem familyHull_eq_localizedRegionUnion
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    data.familyHull = data.localizedRegionUnion := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases data.familyHull_owner_total point hpoint with ⟨index, howner⟩
+    exact Set.mem_iUnion.mpr
+      ⟨index, by
+        simpa [localizedRegion, data.localizedRegion_eq_ownerFiber index] using howner⟩
+  · intro hpoint
+    rcases Set.mem_iUnion.mp hpoint with ⟨index, hlocalized⟩
+    have howner : data.owner point = some index := by
+      simpa [localizedRegion, data.localizedRegion_eq_ownerFiber index] using hlocalized
+    exact data.ownerFiber_subset_familyHull index howner
+
+noncomputable def toLocalizedHullRegionOwnershipSource
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1LocalizedHullRegionOwnershipSource data.localizedCalibration :=
+  { owner := data.owner,
+    localizedRegion_eq_ownerFiber :=
+      data.localizedRegion_eq_ownerFiber }
+
+set_option linter.style.longLine false in
+noncomputable def toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    IUTStage1Remark395OwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+      α ι η β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    additiveLogVolume := data.additiveLogVolume,
+    ownership := data.toLocalizedHullRegionOwnershipSource,
+    familyHull_eq_localizedRegionUnion := by
+      simpa [familyHull, familyUnion, localizedRegionUnion, localizedRegion] using
+        data.familyHull_eq_localizedRegionUnion }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    let ownedSource :=
+      data.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    let finiteSource :=
+      ownedSource.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.localizedRegion index =
+        { point : α | data.owner point = some index }) ∧
+      data.familyHull = data.localizedRegionUnion ∧
+      IUTStage1PairwiseDisjointRegionFamily data.localizedRegion ∧
+      finiteSource.familyHull = finiteSource.localizedRegionUnion ∧
+      finiteSource.familyHullLogVolume = finiteSource.localizedAdjustedSum :=
+  ⟨data.localizedRegion_eq_ownerFiber,
+    data.familyHull_eq_localizedRegionUnion,
+    by
+      simpa [localizedRegion] using
+        data.toLocalizedHullRegionOwnershipSource.pairwiseDisjoint,
+    (data.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+      |>.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.familyHull_eq_localizedRegionUnion_source,
+    (data.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+      |>.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource)
+      |>.familyHullLogVolume_eq_localizedAdjustedSum⟩
+
+end IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+
+/--
 Finite log-volume skeleton of Remark 3.9.5(vii), (Ob4).
 
 The passage from an object to its `M`-th tensor-power Frobenioid copy is modeled

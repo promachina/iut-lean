@@ -41600,6 +41600,33 @@ theorem remark395OwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSour
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface owner-total localized hull-cover source.
+
+This endpoint derives the cover identity `phi(P_B) = ⋃ H_beta` from an owner map
+that is total on the family hull and whose fibers remain inside the family hull,
+then projects to the owner-fiber finite-additive cover route.
+-/
+theorem remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395OwnerTotalFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    let ownedSource :=
+      data.toOwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    let finiteSource :=
+      ownedSource.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+    (∀ index : β,
+      data.localizedRegion index =
+        { point : α | data.owner point = some index }) ∧
+      data.familyHull = data.localizedRegionUnion ∧
+      IUTStage1PairwiseDisjointRegionFamily data.localizedRegion ∧
+      finiteSource.familyHull = finiteSource.localizedRegionUnion ∧
+      finiteSource.familyHullLogVolume = finiteSource.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the

@@ -2707,6 +2707,19 @@ regions.  The aggregate declaration
 \]
 therefore constructs the finite-additive calibrated cover source without taking
 localized-region disjointness as a bare field.
+The cover identity itself has now been factored through the same owner map.  The
+declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395OwnerTotalFiniteAdditive}\\
+\quad\texttt{CalibratedLocalizedHullCoverVectorBundleSource}
+\end{array}
+\]
+assumes that every point of the family hull \(\phi(P_B)\) has a localized owner
+and that each owner fiber remains inside \(\phi(P_B)\).  Together with the fiber
+description of \(H_\beta\), \Lean{} derives
+\(\phi(P_B)=\bigcup_\beta H_\beta\) and then projects to the owner-fiber
+finite-additive cover route.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5887,7 +5900,7 @@ The practical priority order is:
   localized-vector-bundle source pushes the Ob3/Ob4 determinant payload below
   the adjusted-localization interface, but
   the next work is to replace the
-  still-supplied hull system, owner-fiber localized cover construction,
+  still-supplied hull system, owner-total localized cover construction,
   finite-additive log-volume law, local region/vector-bundle log-volume
   calibration, measure calibration, record-canonical synchronization, and chart
   synchronization witnesses by source-paper constructions;
