@@ -7009,6 +7009,22 @@ therefore replace the raw final numeric hypothesis by the sharper remaining
 source obligation ``global \(C_\Theta\) dominates the constructed local
 Remark~3.9.5 scale''.  This is still an obligation, but it is now the correct
 one to attack from the source-paper global estimate.
+This source-level comparison has now been threaded through the compact
+finite-divisor vertical-\(IQ\) boundary as
+\[
+\begin{array}{l}
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_remark395}\\
+\quad\texttt{ConstructedHullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_globalCThetaScaleWithGlobalScaleAudit}.
+\end{array}
+\]
+The endpoint assumes \(C_{\Theta,\mathrm{can}}\leq C_\Theta\), constructs the
+global-scale Remark~3.9.5 audit, derives the numeric
+\(\theta_{\mathrm{signed}}\leq C_\Theta(-q_{\mathrm{signed}})\) estimate
+internally, and then returns the finite-divisor dichotomy.  Thus the
+finite Step~(x) boundary no longer needs to expose the raw final numeric
+hypothesis when the intended local-to-global \(C_\Theta\) comparison is the
+available source obligation.
 The paper-side \(C_\Theta\) expression from \IUT{} IV is now connected to this
 same boundary.  The experiment-surface audit
 \[
