@@ -50174,6 +50174,80 @@ theorem remark395MeasureCalibratedRecordOb3Ob5AdjustedDeterminantLogVolumeSource
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface measured possible-image exact-theta constructed Step (xi)
+source.
+
+This is the selected-possible-image specialization of the measured arbitrary-q
+constructor: the q-region is `recordThetaPossibleImage record qChoice`, and its
+containment in the Theorem 3.11 possible-image union is derived internally.
+-/
+theorem remark395MeasureCalibratedRecordOb3Ob5AdjustedDeterminantLogVolumeSource_toPossibleImageConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations_endpoint
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    {γ : Type w} [Fintype γ]
+    (sourceData :
+      IUTStage1MeasureCalibratedRemark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qChoice : index)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume)
+    (obligations : IUTStage1SourceHullDetObligations package)
+    (obligationsHullDetData_eq_recordCanonical :
+      obligations.hullDetData.bridgeData =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          sourceData.measuredFamilyHullSource.familyHullSource.hullData
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record qChoice)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) qChoice
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+              record qChoice)
+            (fun _ hx => hx))
+          sourceData.measuredFamilyHullSource.familyHullSource.determinantSource
+          sourceData.measuredFamilyHullSource.familyHullSource.compatibility
+          sourceData.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measuredFamilyHullSource.familyHullSource
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume)) :
+    let constructedSource :=
+      sourceData.toPossibleImageConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations
+        operation hullOperation determinantOperation qChoice
+        thetaSigned_eq_familyHullLogVolume obligations
+        obligationsHullDetData_eq_recordCanonical;
+    package.preLedger.measure =
+        sourceData.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      constructedSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record qChoice ∧
+      constructedSource.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      constructedSource.determinantSource =
+        sourceData.adjustedSource.ob3ob4Source.toWeightedDeterminantSource ∧
+      package.preLedger.thetaSigned =
+        sourceData.measuredFamilyHullSource.familyHullSource.familyHullLogVolume ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          constructedSource.determinantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.toPossibleImageConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations_endpoint
+    operation hullOperation determinantOperation qChoice
+    thetaSigned_eq_familyHullLogVolume obligations
+    obligationsHullDetData_eq_recordCanonical
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface record-canonical bridge audit for the Theorem 3.11
 possible-image family used by Step (xi).
 -/
