@@ -41574,6 +41574,32 @@ theorem remark395FiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource_en
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface owner-fiber localized hull-cover source.
+
+This endpoint derives pairwise disjointness of the localized regions from the
+source owner map, then projects to the finite-additive calibrated cover route.
+-/
+theorem remark395OwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395OwnedFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource
+        α ι η β γ) :
+    (∀ index : β,
+      data.localizedRegion index =
+        { point : α | data.ownership.owner point = some index }) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.localizedRegion ∧
+      data.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource.hullSystem.logVolume
+          data.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource.localizedRegionUnion =
+        data.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource.localizedLogVolumeSum ∧
+      data.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource.familyHull =
+        data.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource.localizedRegionUnion ∧
+      data.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource.familyHullLogVolume =
+        data.toFiniteAdditiveCalibratedLocalizedHullCoverVectorBundleSource.localizedAdjustedSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the

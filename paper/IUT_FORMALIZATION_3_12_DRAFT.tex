@@ -2690,6 +2690,23 @@ The refined aggregate source
 assumes pairwise disjointness of the localized regions and this finite
 additivity law, then derives the exact cover-sum equality consumed by the
 calibrated cover source.
+The pairwise-disjointness input has now been pushed one level lower as well.
+The source declaration
+\[
+\texttt{IUTStage1LocalizedHullRegionOwnershipSource}
+\]
+records a single owner map from hull points to optional localized indices and
+states that each localized hull-region is the corresponding owner fiber.  From
+this fiber description \Lean{} proves pairwise disjointness of distinct localized
+regions.  The aggregate declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395OwnedFiniteAdditive}\\
+\quad\texttt{CalibratedLocalizedHullCoverVectorBundleSource}
+\end{array}
+\]
+therefore constructs the finite-additive calibrated cover source without taking
+localized-region disjointness as a bare field.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -5870,7 +5887,7 @@ The practical priority order is:
   localized-vector-bundle source pushes the Ob3/Ob4 determinant payload below
   the adjusted-localization interface, but
   the next work is to replace the
-  still-supplied hull system, pairwise-disjoint localized cover construction,
+  still-supplied hull system, owner-fiber localized cover construction,
   finite-additive log-volume law, local region/vector-bundle log-volume
   calibration, measure calibration, record-canonical synchronization, and chart
   synchronization witnesses by source-paper constructions;
