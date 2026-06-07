@@ -57877,6 +57877,17 @@ theorem qPilotRegion_subset_selectedProductHull
         sourceData.constructorBackedSource.qPilotRegion
         sourceData.constructorBackedSource.q_subset_choice hpoint)
 
+theorem qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (qPilotRegion_nonempty :
+      sourceData.constructorBackedSource.qPilotRegion.Nonempty) :
+    (recordThetaPossibleImage record
+      sourceData.constructorBackedSource.qChoice).Nonempty := by
+  rcases qPilotRegion_nonempty with ⟨point, hpoint⟩
+  exact ⟨point, sourceData.constructorBackedSource.q_subset_choice hpoint⟩
+
 set_option linter.style.longLine false in
 theorem selectedProductHull_minimal
     (sourceData :
@@ -58158,6 +58169,26 @@ theorem productHullBackedOb5QuotientDeterminantAudit
         sourceData.qPilotRegion_subset_selectedProductHull,
     qSigned_le_thetaSigned :=
       sourceData.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+theorem productHullBackedOb5QuotientDeterminantAudit_of_qPilotRegion_nonempty
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qPilotRegion_nonempty :
+      sourceData.constructorBackedSource.qPilotRegion.Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    ProductHullBackedOb5QuotientDeterminantAudit
+      sourceData comparisonChoice :=
+  sourceData.productHullBackedOb5QuotientDeterminantAudit
+    comparisonChoice
+    (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+      qPilotRegion_nonempty)
+    comparisonChoice_nonempty
 
 set_option linter.style.longLine false in
 /--
@@ -58658,6 +58689,30 @@ theorem productHullBackedOb6HullApproximantLogVolumeAudit
       phiXiAudit.qSigned_le_thetaSigned }
 
 set_option linter.style.longLine false in
+theorem productHullBackedOb6HullApproximantLogVolumeAudit_of_qPilotRegion_nonempty
+    {κ : Type u}
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily : sourceData.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily : sourceData.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qPilotRegion_nonempty :
+      sourceData.constructorBackedSource.qPilotRegion.Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    ProductHullBackedOb6HullApproximantLogVolumeAudit
+      sourceData phiFamily xiFamily k comparisonChoice :=
+  sourceData.productHullBackedOb6HullApproximantLogVolumeAudit
+    phiFamily xiFamily k comparisonChoice
+    (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+      qPilotRegion_nonempty)
+    comparisonChoice_nonempty
+
+set_option linter.style.longLine false in
 /--
 Product-hull-backed exact-theta bridge audit.
 
@@ -59037,6 +59092,38 @@ noncomputable def productHullBackedOb5Ob6Ob7SynchronizedAudit
       ob7Audit.primeStrip_place_local_unit_compatibility,
     qSigned_le_thetaSigned :=
       ob6Audit.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+noncomputable def productHullBackedOb5Ob6Ob7SynchronizedAudit_of_qPilotRegion_nonempty
+    {κ : Type u}
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily : sourceData.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily : sourceData.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qPilotRegion_nonempty :
+      sourceData.constructorBackedSource.qPilotRegion.Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (determinantLogVolume_eq_primeStripGlobal :
+      sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantSource.determinantLogVolume =
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    ProductHullBackedOb5Ob6Ob7SynchronizedAudit
+      sourceData phiFamily xiFamily k comparisonChoice Penv Pgau V μ :=
+  sourceData.productHullBackedOb5Ob6Ob7SynchronizedAudit
+    phiFamily xiFamily k comparisonChoice
+    (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+      qPilotRegion_nonempty)
+    comparisonChoice_nonempty
+    primeStripLift determinantLogVolume_eq_primeStripGlobal
 
 end
   IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
@@ -59711,6 +59798,132 @@ noncomputable def boundarySignedEqualityOrStrictCTheta_from_remark395ProductHull
       holomorphic_structure_forgotten packetLocalObject_eq_entrySource
       packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
       targetSource cTheta thetaSigned_le_cTheta_absLogQ⟩
+
+set_option linter.style.longLine false in
+/--
+Product-hull-backed finite-divisor route with synchronized Ob5--Ob7 audit,
+deriving q-choice nonemptiness from the q-pilot region.
+
+The Ob5 quotient-collapse side needs nonemptiness of the selected q-choice
+possible image.  This variant replaces that direct premise by nonemptiness of
+the q-pilot region, then uses the constructor-backed `q_subset_choice`
+inclusion to produce the selected possible-image witness.
+-/
+noncomputable def boundarySignedEqualityOrStrictCTheta_from_remark395ProductHullBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_withOb5Ob6Ob7SynchronizedAuditOfQPilotRegionNonempty
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    {κ : Type u}
+    (productHullBackedSource :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (phiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.PhiFamily κ)
+    (xiFamily :
+      productHullBackedSource.toPossibleImageFamilySource.XiFamily κ)
+    (k : κ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qPilotRegion_nonempty :
+      productHullBackedSource.constructorBackedSource.qPilotRegion.Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (determinantLogVolume_eq_primeStripGlobal :
+      productHullBackedSource.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantSource.determinantLogVolume =
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        productHullBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb5Ob6Ob7SynchronizedAudit
+        productHullBackedSource phiFamily xiFamily k comparisonChoice Penv Pgau V μ ×'
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  boundarySignedEqualityOrStrictCTheta_from_remark395ProductHullBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_withOb5Ob6Ob7SynchronizedAudit
+    productHullBackedSource phiFamily xiFamily k comparisonChoice
+    (productHullBackedSource.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+      qPilotRegion_nonempty)
+    comparisonChoice_nonempty
+    primeStripLift determinantLogVolume_eq_primeStripGlobal
+    part profile audited transportSource iplConstructionSource
+    sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource cTheta thetaSigned_le_cTheta_absLogQ
 
 /--
 Source-derived finite-divisor vertical-`IQ` route with Hodge--Arakelov

@@ -6477,6 +6477,18 @@ selected product hull and the raw
 first finite-divisor product-hull surface where the source-paper
 ``smallest product hull'' formulation and the Remark~3.9.5(Ob5)
 quotient-compatible determinant formalism are visible in one audit object.
+The same Ob5 boundary now has a q-pilot-derived variant:
+\[
+\begin{array}{l}
+\texttt{productHullBackedOb5QuotientDeterminantAudit}\\
+\quad\texttt{\_of\_qPilotRegion\_nonempty}.
+\end{array}
+\]
+Here \Lean{} derives nonemptiness of the selected q-choice possible image from
+nonemptiness of the q-pilot region and the constructor-backed inclusion
+\(q\subseteq P_{q\text{-choice}}\).  Thus the q-side quotient collapse no
+longer needs a separate selected-possible-image nonemptiness premise at this
+product-hull boundary.
 The same source now also has a \(\Phi/\Xi\)-approximant audit,
 \[
 \begin{array}{l}
@@ -6596,6 +6608,18 @@ returns the synchronized Ob5--Ob7 audit together with the usual conditional
 finite-divisor route no longer reviews the final ordered-real conclusion after
 forgetting the Ob5 quotient, Ob6 hull-approximant, and Ob7 log-Kummer
 provenance attached to the same Remark~3.9.5 hull.
+This route now also has
+\[
+\begin{array}{l}
+\texttt{\_cThetaDichotomyWithOb5Ob6Ob7SynchronizedAudit}\\
+\quad\texttt{OfQPilotRegionNonempty},
+\end{array}
+\]
+which replaces the direct q-choice possible-image nonemptiness hypothesis by a
+nonempty q-pilot region.  The synchronized audit then obtains the selected
+possible-image witness internally from \(q\subseteq P_{q\text{-choice}}\), so
+the public finite-divisor review target is closer to the source-paper
+q-pilot-object formulation.
 The constructor-built source-level canonical-scale bridge is now exposed
 directly as
 \[
