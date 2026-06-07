@@ -57797,6 +57797,202 @@ theorem productHullBackedRecordBridgeAudit
     qSigned_le_thetaSigned :=
       sourceData.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
 
+set_option linter.style.longLine false in
+structure ProductHullBackedOb5QuotientDeterminantAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) :
+    Prop where
+  productHullAudit :
+    ProductHullBackedRecordBridgeAudit sourceData
+  qChoiceRegion_subset_selectedProductHull :
+    recordThetaPossibleImage record sourceData.constructorBackedSource.qChoice ⊆
+      sourceData.selectedProductHull
+  comparisonRegion_subset_selectedProductHull :
+    recordThetaPossibleImage record comparisonChoice ⊆
+      sourceData.selectedProductHull
+  qChoice_quotientImage_eq_collapsed :
+    IUTStage1UpperSemiSetQuotient.quotientMap sourceData.selectedProductHull ''
+        recordThetaPossibleImage record sourceData.constructorBackedSource.qChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  comparison_quotientImage_eq_collapsed :
+    IUTStage1UpperSemiSetQuotient.quotientMap sourceData.selectedProductHull ''
+        recordThetaPossibleImage record comparisonChoice =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  quotientImages_eq :
+    IUTStage1UpperSemiSetQuotient.quotientMap sourceData.selectedProductHull ''
+        recordThetaPossibleImage record sourceData.constructorBackedSource.qChoice =
+      IUTStage1UpperSemiSetQuotient.quotientMap sourceData.selectedProductHull ''
+        recordThetaPossibleImage record comparisonChoice
+  quotientCollapse_iff :
+    (IUTStage1UpperSemiSetQuotient.quotientMap sourceData.selectedProductHull ''
+          recordThetaPossibleImage record sourceData.constructorBackedSource.qChoice =
+        {IUTStage1UpperSemiSetQuotient.collapsed} ∧
+      IUTStage1UpperSemiSetQuotient.quotientMap sourceData.selectedProductHull ''
+          recordThetaPossibleImage record comparisonChoice =
+        {IUTStage1UpperSemiSetQuotient.collapsed}) ↔
+      recordThetaPossibleImage record sourceData.constructorBackedSource.qChoice ⊆
+          sourceData.selectedProductHull ∧
+        recordThetaPossibleImage record comparisonChoice ⊆
+          sourceData.selectedProductHull
+  selectedProductHull_logVolume_eq_productHullLogVolume :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      sourceData.productHullSource.productHullLogVolume
+        (sourceData.productHullSource.intersectionParameter
+          (recordThetaPossibleImageUnion record))
+  selectedProductHull_logVolume_eq_normalizedDeterminant :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  selectedProductHull_logVolume_eq_determinant :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  tensorPower_normalizedLogVolume_eq_selectedProductHullLogVolume :
+    IUTStage1NaiveFrobeniusTensorPowerLogVolume.normalizedLogVolume
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)) =
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull
+  qPilotLogVolume_le_selectedProductHullLogVolume :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.constructorBackedSource.qPilotRegion <=
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem productHullBackedOb5QuotientDeterminantAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record
+        sourceData.constructorBackedSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    ProductHullBackedOb5QuotientDeterminantAudit
+      sourceData comparisonChoice :=
+  let qChoice_subset :
+      recordThetaPossibleImage record sourceData.constructorBackedSource.qChoice ⊆
+        sourceData.selectedProductHull := by
+    intro point hpoint
+    exact
+      sourceData.productHullSource.region_subset_productHull_intersection
+        (recordThetaPossibleImageUnion record)
+        (Set.mem_iUnion.mpr
+          ⟨sourceData.constructorBackedSource.qChoice, hpoint⟩)
+  let comparison_subset :
+      recordThetaPossibleImage record comparisonChoice ⊆
+        sourceData.selectedProductHull := by
+    intro point hpoint
+    exact
+      sourceData.productHullSource.region_subset_productHull_intersection
+        (recordThetaPossibleImageUnion record)
+        (Set.mem_iUnion.mpr ⟨comparisonChoice, hpoint⟩)
+  let selected_logVolume_eq_normalized :
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+          sourceData.selectedProductHull =
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+          (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+            sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source) := by
+    calc
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+          sourceData.selectedProductHull =
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.familyHullLogVolume := by
+          rw [← sourceData.hullOperator_phi_eq_selectedProductHull]
+          rfl
+      _ =
+        IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.normalizedDeterminantLogVolume
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source :=
+          IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume
+              sourceData.constructorBackedSource.measuredSource.adjustedSource
+      _ =
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+          (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+            sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source) := rfl
+  let selected_logVolume_eq_determinant :
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+          sourceData.selectedProductHull =
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+          (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+            sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source) := by
+    calc
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+          sourceData.selectedProductHull =
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.familyHullLogVolume := by
+          rw [← sourceData.hullOperator_phi_eq_selectedProductHull]
+          rfl
+      _ =
+        IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.determinantLogVolume
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source :=
+          IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume_eq_determinantLogVolume
+              sourceData.constructorBackedSource.measuredSource.adjustedSource
+      _ =
+        IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+          (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+            sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source) := rfl
+  { productHullAudit :=
+      sourceData.productHullBackedRecordBridgeAudit,
+    qChoiceRegion_subset_selectedProductHull :=
+      qChoice_subset,
+    comparisonRegion_subset_selectedProductHull :=
+      comparison_subset,
+    qChoice_quotientImage_eq_collapsed :=
+      IUTStage1UpperSemiSetQuotient.quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+          qChoice_nonempty qChoice_subset,
+    comparison_quotientImage_eq_collapsed :=
+      IUTStage1UpperSemiSetQuotient.quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+          comparisonChoice_nonempty comparison_subset,
+    quotientImages_eq :=
+      IUTStage1UpperSemiSetQuotient.quotientMap_images_eq_of_nonempty_subsets
+          qChoice_nonempty qChoice_subset
+          comparisonChoice_nonempty comparison_subset,
+    quotientCollapse_iff :=
+      IUTStage1UpperSemiSetQuotient.quotientMap_two_images_collapse_iff
+        qChoice_nonempty comparisonChoice_nonempty,
+    selectedProductHull_logVolume_eq_productHullLogVolume :=
+      sourceData.selectedProductHull_logVolume_eq,
+    selectedProductHull_logVolume_eq_normalizedDeterminant :=
+      selected_logVolume_eq_normalized,
+    selectedProductHull_logVolume_eq_determinant :=
+      selected_logVolume_eq_determinant,
+    tensorPower_normalizedLogVolume_eq_selectedProductHullLogVolume := by
+      calc
+        IUTStage1NaiveFrobeniusTensorPowerLogVolume.normalizedLogVolume
+          (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+            (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+              sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)) =
+          IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+            (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+              sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source) :=
+            IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant_normalizedLogVolume_eq
+              (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+                sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+        _ =
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull :=
+            selected_logVolume_eq_determinant.symm,
+    qPilotLogVolume_le_selectedProductHullLogVolume :=
+      IUTStage1Remark395HolomorphicHullOperator.logVolume_mono
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator
+        sourceData.qPilotRegion_subset_selectedProductHull,
+    qSigned_le_thetaSigned :=
+      sourceData.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
+
 end
   IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
 

@@ -2335,7 +2335,13 @@ The project currently proves the following source-facing results in \Lean{}:
   audit proves selected-product-hull equality, q-pilot containment, minimality
   among product hulls containing \(P_{\mathrm{rec}}\), product-hull log-volume
   equality, and the same raw \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\)
-  comparison before returning the downstream \(C_\Theta\) dichotomy.
+  comparison before returning the downstream \(C_\Theta\) dichotomy.  The same
+  wrapper now also exposes the Ob5 quotient/determinant compatibility at this
+  product-hull boundary: for any nonempty comparison possible image, the q-choice
+  possible image and comparison possible image have the same collapsed
+  upper-semi quotient image modulo the selected product hull, and the selected
+  hull log-volume is identified with the normalized determinant, determinant
+  log-volume, and normalized tensor-power value.
 \item The milestone-facing endpoint has a Hodge--Arakelov source form as well:
   it consumes source and target Hodge--Arakelov theta-evaluation sources,
   canonical one-label degree preservation, and a typed allowed-forgetting
@@ -6220,6 +6226,26 @@ returns this product-hull audit together with the finite-divisor vertical-\(IQ\)
 \(C_\Theta\) dichotomy.  Thus the current finite-divisor milestone no longer
 forgets the source-paper ``smallest product hull'' formulation when it enters
 the downstream Corollary~3.12 corridor.
+The product-hull-backed source also exposes an Ob5 quotient/determinant audit,
+\[
+\begin{array}{l}
+\texttt{remark395ProductHullBackedConstructorBackedConstructed}\\
+\quad\texttt{HullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_ob5QuotientDeterminantAudit}.
+\end{array}
+\]
+Given a nonempty q-choice possible image and a nonempty comparison possible
+image, this audit proves that both images collapse to the distinguished
+upper-semi quotient point modulo the selected product hull and hence have the
+same quotient image.  It also identifies
+\(\mu_{\log}(\phi(P_{\mathrm{rec}}))\) with the product-hull log-volume, the
+normalized determinant, the determinant log-volume, and the normalized
+tensor-power log-volume, while retaining the q-pilot log-volume bound into the
+selected product hull and the raw
+\(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\) comparison.  This is the
+first finite-divisor product-hull surface where the source-paper
+``smallest product hull'' formulation and the Remark~3.9.5(Ob5)
+quotient-compatible determinant formalism are visible in one audit object.
 The constructor-built source-level canonical-scale bridge is now exposed
 directly as
 \[

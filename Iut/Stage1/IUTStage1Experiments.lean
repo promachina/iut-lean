@@ -34108,6 +34108,40 @@ theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFin
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob5 quotient/determinant audit for the product-hull-backed
+constructor-built Remark 3.9.5 finite-divisor source.
+
+This records that the q-choice possible image and any nonempty comparison
+possible image both collapse to the distinguished upper-semi quotient point
+modulo the selected product hull, while the selected hull log-volume is the
+normalized determinant/tensor-power value used by the Corollary 3.12 corridor.
+-/
+theorem remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQ_ob5QuotientDeterminantAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    (productHullBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record
+        productHullBackedSource.constructorBackedSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedOb5QuotientDeterminantAudit
+      productHullBackedSource comparisonChoice :=
+  productHullBackedSource.productHullBackedOb5QuotientDeterminantAudit
+    comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy through the product-hull-backed
 constructor-built Remark 3.9.5 finite-divisor source.
 -/
