@@ -44421,6 +44421,69 @@ theorem remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacke
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface finite-cover log-volume measure model endpoint.
+
+This is the reusable source-facing bridge from a real-valued finite cover
+log-volume measure model to the family-local hull additivity certificate used
+by the Remark 3.9.5 determinant route.
+-/
+theorem finiteCoverLogVolumeMeasureModelSource_endpoint
+    {α : Type u} {β : Type v}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    [Fintype β]
+    {region : β -> Set α}
+    (data :
+      IUTStage1FiniteCoverLogVolumeMeasureModelSource
+        hullSystem region)
+    (hdisjoint : IUTStage1PairwiseDisjointRegionFamily region) :
+    (hullSystem.logVolume (⋃ index, region index) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume (region index)) ∧
+      data.toFiniteCoverAdditiveHullLogVolumeSource.finite_iUnion_eq_sum
+        hdisjoint =
+        data.finite_iUnion_hullLogVolume_eq_sum hdisjoint :=
+  data.endpoint hdisjoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface measure-backed valuation-ball factor-calibrated Haar
+tensor-packet source.
+
+This endpoint replaces the previous raw family-local cover-additivity field by
+a real-valued log-volume measure model for the selected valuation-ball
+direct-product cells, then projects through the existing adjusted Ob3/Ob5
+determinant route.
+-/
+theorem remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    let finiteCoverSource :=
+      data.toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    let adjustedSource :=
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      finiteCoverSource.hullSystem.logVolume finiteCoverSource.directProductCellUnion =
+        finiteCoverSource.calibratedCellLogVolumeSum ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.adjustedSummandLogVolume ∧
+      adjustedSource.adjustedSummandLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface bridge audit for Remark 3.9.5.
 
 This is the source-core Step (xi) log-volume chain: q-pilot containment in the

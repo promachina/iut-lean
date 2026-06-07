@@ -7092,10 +7092,34 @@ The practical priority order is:
   \(\mu_{\log}(\bigcup_\beta H_\beta)=\sum_\beta \mu_{\log}(H_\beta)\) before
   projecting to the adjusted Ob3/Ob5 determinant source.  This keeps the
   trust boundary below global finite additivity while removing the bare cover
-  equality from the public valuation-ball determinant route.  But
+  equality from the public valuation-ball determinant route.  The newest
+  measure-backed variant now lowers this boundary one more level.  The source
+  object
+  \[
+  \begin{array}{l}
+  \texttt{IUTStage1FiniteCoverLogVolumeMeasureModelSource}
+  \end{array}
+  \]
+  records a real-valued log-volume measure model for the selected finite cover,
+  proves that the hull log-volume agrees with this model, and proves finite
+  additivity for the measure model on pairwise-disjoint cover families.  \Lean{}
+  then constructs the family-local
+  \texttt{IUTStage1FiniteCoverAdditiveHullLogVolumeSource}.  The valuation-ball
+  specialization
+  \[
+  \begin{array}{l}
+  \texttt{IUTStage1Remark395ValuationBallMeasureBacked}\\
+  \quad\texttt{FactorCalibratedHaarTensorPacketHullCoverSource}
+  \end{array}
+  \]
+  uses this measure model for the valuation-ball direct-product cells and
+  projects through the same adjusted Ob3/Ob5 determinant endpoint.  Thus the
+  public valuation-ball determinant route no longer takes even the cover-local
+  hull additivity certificate as primitive; it is produced from a named
+  measure/log-volume layer.  But
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  family-local finite-cover additivity theorem, construction of the compact-open
+  measure-model finite-cover additivity theorem, construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), extension
   of the current base \(\mathbb{Q}_p\) integer/unit-ball specialization to the
   actual finite-extension completions, derivation of the proper ultrametric

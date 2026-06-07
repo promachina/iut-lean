@@ -7128,6 +7128,83 @@ theorem ofFiniteAdditive_endpoint
 end IUTStage1FiniteCoverAdditiveHullLogVolumeSource
 
 /--
+Measure-model source for a family-local finite cover log-volume.
+
+This is the next source-facing layer below
+`IUTStage1FiniteCoverAdditiveHullLogVolumeSource`: instead of postulating the
+finite cover additivity law directly for the hull log-volume, it records an
+underlying real-valued log-volume measure model and proves that the hull
+log-volume agrees with this model on the regions under discussion.  Lean then
+derives the cover-local hull additivity certificate used by the Remark 3.9.5
+determinant route.
+-/
+structure IUTStage1FiniteCoverLogVolumeMeasureModelSource
+    {α : Type u} {β : Type v}
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    [Fintype β]
+    (region : β -> Set α) where
+  measureLogVolume : Set α -> Real
+  hullLogVolume_eq_measureLogVolume :
+    ∀ region : Set α,
+      hullSystem.logVolume region = measureLogVolume region
+  finite_iUnion_measureLogVolume_eq_sum_of_disjoint :
+    IUTStage1PairwiseDisjointRegionFamily region ->
+      measureLogVolume (⋃ index, region index) =
+        Finset.univ.sum fun index =>
+          measureLogVolume (region index)
+
+namespace IUTStage1FiniteCoverLogVolumeMeasureModelSource
+
+variable {α : Type u} {β : Type v}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable [Fintype β]
+variable {region : β -> Set α}
+
+theorem finite_iUnion_hullLogVolume_eq_sum
+    (data :
+      IUTStage1FiniteCoverLogVolumeMeasureModelSource
+        hullSystem region)
+    (hdisjoint : IUTStage1PairwiseDisjointRegionFamily region) :
+    hullSystem.logVolume (⋃ index, region index) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume (region index) := by
+  calc
+    hullSystem.logVolume (⋃ index, region index)
+        = data.measureLogVolume (⋃ index, region index) :=
+          data.hullLogVolume_eq_measureLogVolume _
+    _ = Finset.univ.sum fun index =>
+          data.measureLogVolume (region index) :=
+          data.finite_iUnion_measureLogVolume_eq_sum_of_disjoint hdisjoint
+    _ = Finset.univ.sum fun index =>
+          hullSystem.logVolume (region index) := by
+          exact Finset.sum_congr rfl
+            (fun index _ =>
+              (data.hullLogVolume_eq_measureLogVolume (region index)).symm)
+
+def toFiniteCoverAdditiveHullLogVolumeSource
+    (data :
+      IUTStage1FiniteCoverLogVolumeMeasureModelSource
+        hullSystem region) :
+    IUTStage1FiniteCoverAdditiveHullLogVolumeSource hullSystem region :=
+  { finite_iUnion_logVolume_eq_sum_of_disjoint :=
+      data.finite_iUnion_hullLogVolume_eq_sum }
+
+theorem endpoint
+    (data :
+      IUTStage1FiniteCoverLogVolumeMeasureModelSource
+        hullSystem region)
+    (hdisjoint : IUTStage1PairwiseDisjointRegionFamily region) :
+    (hullSystem.logVolume (⋃ index, region index) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume (region index)) ∧
+      data.toFiniteCoverAdditiveHullLogVolumeSource.finite_iUnion_eq_sum
+        hdisjoint =
+        data.finite_iUnion_hullLogVolume_eq_sum hdisjoint :=
+  ⟨data.finite_iUnion_hullLogVolume_eq_sum hdisjoint, rfl⟩
+
+end IUTStage1FiniteCoverLogVolumeMeasureModelSource
+
+/--
 Calibrated localized hull-cover source with finite-additive log-volume.
 
 This refines the calibrated cover source by replacing the supplied cover
@@ -15915,6 +15992,194 @@ theorem endpoint
       adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_determinant⟩
 
 end IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+
+/--
+Measure-backed valuation-ball factor-calibrated Haar tensor-packet source.
+
+This lowers the finite-cover-additive valuation-ball branch one further step:
+the cover-local finite additivity certificate is no longer a primitive field.
+Instead it is constructed from a real-valued log-volume measure model for the
+selected valuation-ball direct-product cells.
+-/
+structure IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+    (α : Type u) (ι : Type v) (η : Type y) (K : Type z)
+    (β : Type w) (γ : Type x)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  factorValuationCalibration :
+    ∀ index : β, ∀ place : γ,
+      IUTStage1ValuationBallVectorBundleFactorCalibrationSource
+        α η K γ hullSystem (localizedCalibration index) place
+  localizedRegion_eq_valuationBallDirectProductCell :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α |
+          ∀ place : γ, point ∈ (factorValuationCalibration index place).region }
+  localFactor_separates_index :
+    ∀ ⦃index₁ index₂ : β⦄,
+      index₁ ≠ index₂ ->
+        ∃ place : γ,
+          Disjoint ((factorValuationCalibration index₁ place).region)
+            ((factorValuationCalibration index₂ place).region)
+  familyHull_eq_valuationBallDirectProductCellUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index,
+        { point : α |
+          ∀ place : γ, point ∈ (factorValuationCalibration index place).region }
+  cellValuationBallTensor :
+    β -> IUTStage1ValuationBallTensorProductDirectSumSource
+      α η K γ hullSystem
+  cellValuationBall_factor_eq_calibration :
+    ∀ index : β, ∀ place : γ,
+      (cellValuationBallTensor index).valuationBallFactor place =
+        (factorValuationCalibration index place).valuationBallFactor
+  measureModel :
+    IUTStage1FiniteCoverLogVolumeMeasureModelSource hullSystem
+      (fun index : β =>
+        { point : α |
+          ∀ place : γ, point ∈ (factorValuationCalibration index place).region })
+
+namespace IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+
+variable {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+variable {β : Type w} {γ : Type x}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable [Fintype β] [Fintype γ]
+
+def localFactorRegion
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ)
+    (index : β) (place : γ) :
+    Set α :=
+  (data.factorValuationCalibration index place).region
+
+def directProductCell
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ)
+    (index : β) :
+    Set α :=
+  { point : α | ∀ place : γ, point ∈ data.localFactorRegion index place }
+
+def directProductCellUnion
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    Set α :=
+  ⋃ index, data.directProductCell index
+
+def calibratedCellLogVolumeSum
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.hullSystem.logVolume (data.directProductCell index)
+
+theorem directProductCells_disjoint
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell := by
+  intro index₁ index₂ hne
+  rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+  exact Set.disjoint_left.mpr fun point hleft hright =>
+    Set.disjoint_left.mp hdisjoint (hleft place) (hright place)
+
+theorem measureModel_directProductCoverLogVolume_eq_calibratedCellSum
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    data.hullSystem.logVolume data.directProductCellUnion =
+      data.calibratedCellLogVolumeSum := by
+  simpa [directProductCellUnion, directProductCell, localFactorRegion,
+    calibratedCellLogVolumeSum] using
+    data.measureModel.finite_iUnion_hullLogVolume_eq_sum
+      (by
+        intro index₁ index₂ hne
+        rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+        exact Set.disjoint_left.mpr fun point hleft hright =>
+          Set.disjoint_left.mp hdisjoint (hleft place) (hright place))
+
+set_option linter.style.longLine false in
+noncomputable def toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    IUTStage1Remark395ValuationBallFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+      α ι η K β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    factorValuationCalibration := data.factorValuationCalibration,
+    localizedRegion_eq_valuationBallDirectProductCell :=
+      data.localizedRegion_eq_valuationBallDirectProductCell,
+    localFactor_separates_index :=
+      data.localFactor_separates_index,
+    familyHull_eq_valuationBallDirectProductCellUnion :=
+      data.familyHull_eq_valuationBallDirectProductCellUnion,
+    cellValuationBallTensor := data.cellValuationBallTensor,
+    cellValuationBall_factor_eq_calibration :=
+      data.cellValuationBall_factor_eq_calibration,
+    coverAdditive :=
+      data.measureModel.toFiniteCoverAdditiveHullLogVolumeSource }
+
+set_option linter.style.longLine false in
+noncomputable def toOb3Ob5AdjustedDeterminantLogVolumeSource
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+      α ι β γ :=
+  data.toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    |>.toOb3Ob5AdjustedDeterminantLogVolumeSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
+        α ι η K β γ) :
+    let finiteCoverSource :=
+      data.toFiniteCoverAdditiveFactorCalibratedHaarTensorPacketHullCoverSource
+    let adjustedSource :=
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      finiteCoverSource.hullSystem.logVolume finiteCoverSource.directProductCellUnion =
+        finiteCoverSource.calibratedCellLogVolumeSum ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.adjustedSummandLogVolume ∧
+      adjustedSource.adjustedSummandLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume := by
+  intro finiteCoverSource adjustedSource
+  exact
+    ⟨data.directProductCells_disjoint,
+      data.measureModel_directProductCoverLogVolume_eq_calibratedCellSum,
+      finiteCoverSource.directProductCoverLogVolume_eq_calibratedCellSum,
+      adjustedSource.familyHullLogVolume_eq_adjustedSummandLogVolume,
+      adjustedSource.adjustedSummandLogVolume_eq_determinantLogVolume,
+      adjustedSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_determinant⟩
+
+end IUTStage1Remark395ValuationBallMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource
 
 set_option linter.style.longLine true
 
