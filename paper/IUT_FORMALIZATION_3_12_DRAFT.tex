@@ -3188,6 +3188,25 @@ actual additive Haar measures rather than arbitrary real-valued Haar functions.
 There is now a valuation-ball refinement below this Haar source.  The declaration
 \[
 \begin{array}{l}
+\texttt{IUTStage1PositiveRadiusValuationBallTopologySource}
+\end{array}
+\]
+isolates the local-field topological theorem that every positive-radius
+valuation ball \(\{x\mid \|x\|_v\leq r\}\), \(r>0\), is compact-open.  The
+topology-backed declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource}
+\end{array}
+\]
+then derives the unit ball and selected ball compact-open predicates from this
+single positive-radius theorem before projecting to the older additive Haar
+normalization route.  Thus the source boundary has moved from four separate
+open/compact fields for two balls to one uniform valuation-ball compact-open
+theorem.
+The declaration
+\[
+\begin{array}{l}
 \texttt{IUTStage1ValuationBallAdditiveHaarNormalizationSource}
 \end{array}
 \]
@@ -6716,8 +6735,9 @@ The practical priority order is:
   still-supplied hull system, direct-product localization cover construction,
   family-local finite-cover additivity theorem, construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), proof that
-  the valuation unit ball is the ring of integers, valuation-ball openness and
-  compactness, normalized Haar measure choice, and uniformizer-scaling theorem,
+  the valuation unit ball is the ring of integers, derivation of the
+  positive-radius valuation-ball compact-open theorem, normalized Haar measure
+  choice, and uniformizer-scaling theorem,
   per-factor
   chart/direct-summand calibration construction, local region/vector-bundle
   log-volume calibration, measure calibration, record-canonical

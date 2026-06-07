@@ -10294,6 +10294,187 @@ theorem endpoint
 end IUTStage1AdditiveHaarCompactOpenNormalizationSource
 
 /--
+Positive-radius valuation-ball compact-open topology source.
+
+This is the local analytic topological input behind the valuation-ball Haar
+normalization.  Instead of supplying openness and compactness separately for
+the unit ball and for one selected ball, it records the source-paper local-field
+fact that every positive-radius valuation ball is compact-open.
+-/
+structure IUTStage1PositiveRadiusValuationBallTopologySource
+    (K : Type u) [TopologicalSpace K] where
+  valuationNorm : K -> Real
+  positiveRadiusBall_open :
+    ∀ radius : Real, 0 < radius ->
+      IsOpen { point : K | valuationNorm point <= radius }
+  positiveRadiusBall_compact :
+    ∀ radius : Real, 0 < radius ->
+      IsCompact { point : K | valuationNorm point <= radius }
+
+namespace IUTStage1PositiveRadiusValuationBallTopologySource
+
+variable {K : Type u} [TopologicalSpace K]
+
+def valuationBall
+    (data : IUTStage1PositiveRadiusValuationBallTopologySource K)
+    (radius : Real) :
+    Set K :=
+  { point : K | data.valuationNorm point <= radius }
+
+theorem positiveRadiusBall_compactOpen
+    (data : IUTStage1PositiveRadiusValuationBallTopologySource K)
+    {radius : Real}
+    (hradius : 0 < radius) :
+    IsOpen (data.valuationBall radius) ∧
+      IsCompact (data.valuationBall radius) :=
+  ⟨by
+      simpa [valuationBall] using
+        data.positiveRadiusBall_open radius hradius,
+    by
+      simpa [valuationBall] using
+        data.positiveRadiusBall_compact radius hradius⟩
+
+theorem unitBall_compactOpen
+    (data : IUTStage1PositiveRadiusValuationBallTopologySource K) :
+    IsOpen (data.valuationBall 1) ∧
+      IsCompact (data.valuationBall 1) :=
+  data.positiveRadiusBall_compactOpen zero_lt_one
+
+theorem endpoint
+    (data : IUTStage1PositiveRadiusValuationBallTopologySource K)
+    {radius : Real}
+    (hradius : 0 < radius) :
+    data.valuationBall radius =
+        { point : K | data.valuationNorm point <= radius } ∧
+      IsOpen (data.valuationBall radius) ∧
+      IsCompact (data.valuationBall radius) ∧
+      IsOpen (data.valuationBall 1) ∧
+      IsCompact (data.valuationBall 1) :=
+  ⟨rfl,
+    (data.positiveRadiusBall_compactOpen hradius).1,
+    (data.positiveRadiusBall_compactOpen hradius).2,
+    data.unitBall_compactOpen.1,
+    data.unitBall_compactOpen.2⟩
+
+end IUTStage1PositiveRadiusValuationBallTopologySource
+
+/--
+Valuation-ball topology-backed additive Haar normalization source.
+
+This lowers the valuation-ball Haar source by deriving the compact-open
+properties of the unit ball and the selected compact-open ball from a single
+positive-radius valuation-ball topology theorem.  Haar normalization and
+uniformizer scaling remain the local IUT IV measure inputs at this layer.
+-/
+structure IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+    (α : Type u) (η : Type v) (K : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  localRing : η
+  residuePrime : Nat
+  residue_prime : Nat.Prime residuePrime
+  finiteExtensionDegree : Nat
+  finite_extension_degree_pos : 0 < finiteExtensionDegree
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  valuationTopology : IUTStage1PositiveRadiusValuationBallTopologySource K
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  uniformizerScalePoint : K -> K
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  uniformizerScale_preserves_open :
+    ∀ subset : Set K, IsOpen subset ->
+      IsOpen (uniformizerScalePoint '' subset)
+  uniformizerScale_preserves_compact :
+    ∀ subset : Set K, IsCompact subset ->
+      IsCompact (uniformizerScalePoint '' subset)
+  valuationUnitBall_measure_one :
+    (haarMeasure (valuationTopology.valuationBall 1)).toReal = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (valuationTopology.valuationBall compactOpenRadius)).toReal
+  uniformizerScaled_compactOpenBall_measure_toReal_eq :
+    (haarMeasure
+        (uniformizerScalePoint ''
+          valuationTopology.valuationBall compactOpenRadius)).toReal =
+      (haarMeasure
+        (valuationTopology.valuationBall compactOpenRadius)).toReal /
+        (residuePrime : Real) ^ finiteExtensionDegree
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (finiteExtensionDegree : Real)
+
+namespace IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+def valuationNorm
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    K -> Real :=
+  data.valuationTopology.valuationNorm
+
+def valuationBall
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem)
+    (radius : Real) :
+    Set K :=
+  data.valuationTopology.valuationBall radius
+
+def ringOfIntegers
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    Set K :=
+  data.valuationBall 1
+
+def compactOpenSubset
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    Set K :=
+  data.valuationBall data.compactOpenRadius
+
+def uniformizerScale
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem)
+    (subset : Set K) :
+    Set K :=
+  data.uniformizerScalePoint '' subset
+
+theorem ringOfIntegers_compactOpen
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    IsOpen data.ringOfIntegers ∧
+      IsCompact data.ringOfIntegers := by
+  simpa [ringOfIntegers, valuationBall] using
+    data.valuationTopology.unitBall_compactOpen
+
+theorem compactOpenSubset_compactOpen
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    IsOpen data.compactOpenSubset ∧
+      IsCompact data.compactOpenSubset := by
+  simpa [compactOpenSubset, valuationBall] using
+    data.valuationTopology.positiveRadiusBall_compactOpen
+      data.compactOpenRadius_pos
+
+end IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+
+/--
 Valuation-ball additive Haar normalization source.
 
 This lowers the additive Haar source in the direction of the actual
@@ -10524,6 +10705,95 @@ theorem endpoint
     rfl⟩
 
 end IUTStage1ValuationBallAdditiveHaarNormalizationSource
+
+namespace IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def toValuationBallAdditiveHaarNormalizationSource
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource
+      α η K hullSystem :=
+  { localRing := data.localRing,
+    residuePrime := data.residuePrime,
+    residue_prime := data.residue_prime,
+    finiteExtensionDegree := data.finiteExtensionDegree,
+    finite_extension_degree_pos := data.finite_extension_degree_pos,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    valuationNorm := data.valuationNorm,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    uniformizerScalePoint := data.uniformizerScalePoint,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    valuationUnitBall_open := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.ringOfIntegers_compactOpen.1,
+    valuationUnitBall_compact := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.ringOfIntegers_compactOpen.2,
+    compactOpenBall_open := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.compactOpenSubset_compactOpen.1,
+    compactOpenBall_compact := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.compactOpenSubset_compactOpen.2,
+    uniformizerScale_preserves_open :=
+      data.uniformizerScale_preserves_open,
+    uniformizerScale_preserves_compact :=
+      data.uniformizerScale_preserves_compact,
+    valuationUnitBall_measure_one := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.compactOpenBall_measure_pos,
+    uniformizerScaled_compactOpenBall_measure_toReal_eq := by
+      simpa [valuationNorm,
+        IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.uniformizerScaled_compactOpenBall_measure_toReal_eq,
+    hull_logVolume_eq_normalized :=
+      data.hull_logVolume_eq_normalized }
+
+theorem endpoint
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    data.ringOfIntegers = data.valuationBall 1 ∧
+      data.compactOpenSubset =
+        data.valuationBall data.compactOpenRadius ∧
+      0 < data.compactOpenRadius ∧
+      IsOpen data.ringOfIntegers ∧
+      IsCompact data.ringOfIntegers ∧
+      IsOpen data.compactOpenSubset ∧
+      IsCompact data.compactOpenSubset ∧
+      data.toValuationBallAdditiveHaarNormalizationSource.ringOfIntegers =
+        data.ringOfIntegers ∧
+      data.toValuationBallAdditiveHaarNormalizationSource.compactOpenSubset =
+        data.compactOpenSubset ∧
+      data.toValuationBallAdditiveHaarNormalizationSource.isCompactOpen
+        data.toValuationBallAdditiveHaarNormalizationSource.ringOfIntegers ∧
+      data.toValuationBallAdditiveHaarNormalizationSource.isCompactOpen
+        data.toValuationBallAdditiveHaarNormalizationSource.compactOpenSubset :=
+  ⟨rfl,
+    rfl,
+    data.compactOpenRadius_pos,
+    data.ringOfIntegers_compactOpen.1,
+    data.ringOfIntegers_compactOpen.2,
+    data.compactOpenSubset_compactOpen.1,
+    data.compactOpenSubset_compactOpen.2,
+    rfl,
+    rfl,
+    data.toValuationBallAdditiveHaarNormalizationSource.ringOfIntegers_compactOpen,
+    data.toValuationBallAdditiveHaarNormalizationSource.compactOpenSubset_compactOpen⟩
+
+end IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
 
 /--
 Compact-open tensor-region direct-sum source.

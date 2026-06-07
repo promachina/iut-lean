@@ -43023,6 +43023,60 @@ theorem remark395AdditiveHaarTensorProductDirectSumSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface positive-radius valuation-ball topology source.
+
+This endpoint exposes the source-local theorem that every positive-radius
+valuation ball is compact-open, including the unit ball used as the ring of
+integers in the downstream Haar route.
+-/
+theorem positiveRadiusValuationBallTopologySource_endpoint
+    {K : Type u} [TopologicalSpace K]
+    (data : IUTStage1PositiveRadiusValuationBallTopologySource K)
+    {radius : Real}
+    (hradius : 0 < radius) :
+    data.valuationBall radius =
+        { point : K | data.valuationNorm point <= radius } ∧
+      IsOpen (data.valuationBall radius) ∧
+      IsCompact (data.valuationBall radius) ∧
+      IsOpen (data.valuationBall 1) ∧
+      IsCompact (data.valuationBall 1) :=
+  data.endpoint hradius
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface valuation-ball topology-backed additive Haar normalization source.
+
+This endpoint derives the unit and selected valuation balls' compact-open
+properties from the positive-radius valuation-ball topology source before
+projecting to the additive Haar normalization route.
+-/
+theorem remark395ValuationBallTopologyAdditiveHaarNormalizationSource_endpoint
+    {α : Type u} {η : Type v} {K : Type w}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    data.ringOfIntegers = data.valuationBall 1 ∧
+      data.compactOpenSubset =
+        data.valuationBall data.compactOpenRadius ∧
+      0 < data.compactOpenRadius ∧
+      IsOpen data.ringOfIntegers ∧
+      IsCompact data.ringOfIntegers ∧
+      IsOpen data.compactOpenSubset ∧
+      IsCompact data.compactOpenSubset ∧
+      data.toValuationBallAdditiveHaarNormalizationSource.ringOfIntegers =
+        data.ringOfIntegers ∧
+      data.toValuationBallAdditiveHaarNormalizationSource.compactOpenSubset =
+        data.compactOpenSubset ∧
+      data.toValuationBallAdditiveHaarNormalizationSource.isCompactOpen
+        data.toValuationBallAdditiveHaarNormalizationSource.ringOfIntegers ∧
+      data.toValuationBallAdditiveHaarNormalizationSource.isCompactOpen
+        data.toValuationBallAdditiveHaarNormalizationSource.compactOpenSubset :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface valuation-ball additive Haar normalization source.
 
 This endpoint exposes the local construction that defines the ring of integers
