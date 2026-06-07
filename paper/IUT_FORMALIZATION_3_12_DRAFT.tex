@@ -3996,6 +3996,31 @@ identifications, and the chain
 \]
 so the constructed Step~(xi) route no longer receives the canonical
 hull--determinant compatibility as an independent input in this constructor.
+This constructed-source layer now also has an exact-theta refinement,
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource}\\
+\quad\texttt{.toConstructedHolomorphicHullDeterminantSource}\\
+\quad\texttt{OfThetaEqFamilyHullLogVolume}.
+\end{array}
+\]
+For an arbitrary q-region \(q\subseteq P_{\mathrm{rec}}\) contained in the
+record possible-image union, this constructor derives the Ob4 normalized
+tensor-power bound from
+\[
+  \theta_{\mathrm{signed}}
+    =
+  \mu_{\log}(\phi(P_B)),
+\]
+using the bounded-family hull/determinant source projected from the Ob3/Ob5
+compatibility.  Its public endpoint records the exact-theta equality, the
+derived tensor-power inequality, the adjusted-summand-to-determinant
+identifications, the two-step hull/determinant chain, and
+\(q_{\mathrm{signed}}\le\theta_{\mathrm{signed}}\).  Thus the general
+constructed Step~(xi) source has the same no-free-tensor-bound interface that
+was previously only available after choosing a possible-image q-region; the
+package measure calibration and the record-canonical bridge equality remain
+explicit source obligations.
 The same summand source now also feeds the constructor-built possible-image
 Step~(xi) source used by the finite-divisor-facing corridor.  The constructor
 \[
