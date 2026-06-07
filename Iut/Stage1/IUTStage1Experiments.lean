@@ -42217,6 +42217,81 @@ theorem remark395AdditiveHaarTensorProductDirectSumSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface valuation-ball additive Haar normalization source.
+
+This endpoint exposes the local construction that defines the ring of integers
+and selected compact-open subset as valuation balls before projecting to the
+additive Haar source.
+-/
+theorem remark395ValuationBallAdditiveHaarNormalizationSource_endpoint
+    {α : Type u} {η : Type v} {K : Type w}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    (data :
+      IUTStage1ValuationBallAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    data.ringOfIntegers = data.valuationBall 1 ∧
+      data.compactOpenSubset =
+        data.valuationBall data.compactOpenRadius ∧
+      0 < data.compactOpenRadius ∧
+      data.isCompactOpen data.ringOfIntegers ∧
+      data.isCompactOpen data.compactOpenSubset ∧
+      data.isCompactOpen
+        (data.uniformizerScale data.compactOpenSubset) ∧
+      (data.haarMeasure data.ringOfIntegers).toReal = 1 ∧
+      0 < (data.haarMeasure data.compactOpenSubset).toReal ∧
+      ((data.toAdditiveHaarCompactOpenNormalizationSource)
+        |>.toCompactOpenTopologyHaarNormalizationSource
+        |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+        |>.toNonarchimedeanLocalCompactOpenLogVolumeSource).compactOpenRegion =
+        data.realizedRegion data.compactOpenSubset :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface valuation-ball tensor-product direct-sum source.
+
+This endpoint exposes the tensor/direct-sum summation route whose local factors
+are valuation-ball additive Haar normalization sources.
+-/
+theorem remark395ValuationBallTensorProductDirectSumSource_endpoint
+    {α : Type u} {η : Type v} {K : Type w} {γ : Type x}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype γ]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    (data :
+      IUTStage1ValuationBallTensorProductDirectSumSource
+        α η K γ hullSystem) :
+    data.tensorProductRegion =
+        { point : α | ∀ place : γ,
+          point ∈ data.factorRegion place } ∧
+      (∀ place : γ,
+        (data.valuationBallFactor place).ringOfIntegers =
+          (data.valuationBallFactor place).valuationBall 1 ∧
+        (data.valuationBallFactor place).compactOpenSubset =
+          (data.valuationBallFactor place).valuationBall
+            (data.valuationBallFactor place).compactOpenRadius ∧
+        (data.valuationBallFactor place).isCompactOpen
+          (data.valuationBallFactor place).compactOpenSubset) ∧
+      data.tensorProductNormalizedLogVolume =
+        (Finset.univ.sum fun place =>
+          ((data.valuationBallFactor place).toAdditiveHaarCompactOpenNormalizationSource)
+            |>.normalizedHaarLogVolume
+              ((data.valuationBallFactor place).compactOpenSubset)) ∧
+      hullSystem.logVolume
+          { point : α | ∀ place : γ,
+            point ∈ data.factorRegion place } =
+        (Finset.univ.sum fun place =>
+          hullSystem.logVolume (data.factorRegion place)) ∧
+      ((data.toAdditiveHaarTensorProductDirectSumSource)
+        |>.toCompactOpenTopologyTensorProductDirectSumSource
+        |>.toFiniteExtensionTensorProductDirectSumDecompositionSource
+        |>.toNonarchimedeanLocalTensorRegionDirectSumSource).tensorProductRegion =
+        data.tensorProductRegion :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface compact-open topology/Haar tensor-packet finite-additive
 charted cover source.
 

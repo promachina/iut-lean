@@ -3075,6 +3075,30 @@ The companion declaration
 feeds these Haar-backed local factors into the compact-open tensor/direct-sum
 source, so the tensor summation layer now has a route whose local inputs are
 actual additive Haar measures rather than arbitrary real-valued Haar functions.
+There is now a valuation-ball refinement below this Haar source.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1ValuationBallAdditiveHaarNormalizationSource}
+\end{array}
+\]
+records a nonarchimedean valuation-norm function on the local carrier and defines
+the ring of integers as the unit ball \(\{x\mid \|x\|_v\leq 1\}\).  The selected
+local compact-open subset is likewise a valuation ball
+\(\{x\mid \|x\|_v\leq r\}\) for a positive radius \(r\), and the uniformizer
+operation is the image under a pointwise scale map.  Lean derives the compact-open
+predicate as \(\texttt{IsOpen}\wedge\texttt{IsCompact}\), proves closure under
+finite intersections in a \(T_2\) space, and constructs the additive Haar
+normalization source from the valuation-ball data.  The companion tensor source
+\[
+\begin{array}{l}
+\texttt{IUTStage1ValuationBallTensorProductDirectSumSource}
+\end{array}
+\]
+feeds valuation-ball local factors into the additive Haar tensor/direct-sum
+source.  Thus the current IUT~IV local-volume corridor now proceeds from
+valuation balls to additive Haar normalization, then to compact-open topology,
+finite-extension Haar log-volume, tensor/direct-sum summation, and finally the
+charted Step~(xi) cover route.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -6271,13 +6295,16 @@ The practical priority order is:
   raw Haar measure, raw log-volume, degree normalization, and uniformizer
   compact-open preservation, and the additive Haar variant now constructs the
   compact-open topology source from a mathlib additive Haar measure together with
-  Haar mass-one and uniformizer-scaling laws, but
+  Haar mass-one and uniformizer-scaling laws, and the valuation-ball variant now
+  defines the local ring of integers and selected compact-open subset as
+  valuation balls before constructing the additive Haar source, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
   finite-additive hull log-volume source, construction of the compact-open
-  predicate, ring-of-integers compact-open proof, normalized Haar measure choice,
-  and uniformizer-scaling theorem itself from actual finite extensions of
-  \(\mathbb{Q}_p\), per-factor
+  valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), proof that
+  the valuation unit ball is the ring of integers, valuation-ball openness and
+  compactness, normalized Haar measure choice, and uniformizer-scaling theorem,
+  per-factor
   chart/direct-summand calibration construction, local region/vector-bundle
   log-volume calibration, measure calibration, record-canonical
   synchronization, and chart
