@@ -57633,6 +57633,175 @@ end IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVe
 
 set_option linter.style.longLine false in
 /--
+Product-hull-backed constructor-built Remark 3.9.5 finite-divisor source.
+
+This source keeps the existing constructor-backed adjusted Ob3/Ob5 finite-divisor
+payload, but also records that its holomorphic-hull operator is induced by a
+Remark 3.9.5 product-hull system.  Thus the finite-divisor boundary can expose
+the source-paper statement that the hull of the Theorem 3.11 possible-image
+union is the selected smallest product hull.
+-/
+structure IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    (Λ : Type x) where
+  constructorBackedSource :
+    IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (β := β) (γ := γ) record
+  productHullSource :
+    IUTStage1Remark395ProductHullSystemSource (Point target) Λ
+  hullOperator_eq_productHull :
+    constructorBackedSource.measuredSource.adjustedSource.hullOperator =
+      productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+
+namespace
+  IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+variable {Λ : Type x}
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+def selectedProductHull
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    Set (Point target) :=
+  sourceData.productHullSource.productHull
+    (sourceData.productHullSource.intersectionParameter
+      (recordThetaPossibleImageUnion record))
+
+set_option linter.style.longLine false in
+theorem hullOperator_phi_eq_selectedProductHull
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.phi
+        (recordThetaPossibleImageUnion record) =
+      sourceData.selectedProductHull := by
+  rw [sourceData.hullOperator_eq_productHull]
+  simpa
+    [IUTStage1Remark395HolomorphicHullSystem.toHolomorphicHullOperator,
+      selectedProductHull] using
+    sourceData.productHullSource.phi_eq_productHull_intersectionParameter
+      (recordThetaPossibleImageUnion record)
+
+set_option linter.style.longLine false in
+theorem qPilotRegion_subset_selectedProductHull
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    sourceData.constructorBackedSource.qPilotRegion ⊆
+      sourceData.selectedProductHull := by
+  intro point hpoint
+  exact
+    sourceData.productHullSource.region_subset_productHull_intersection
+      (recordThetaPossibleImageUnion record)
+      (qPilotRegion_subset_recordUnion_of_choice
+        (record := record) sourceData.constructorBackedSource.qChoice
+        sourceData.constructorBackedSource.qPilotRegion
+        sourceData.constructorBackedSource.q_subset_choice hpoint)
+
+set_option linter.style.longLine false in
+theorem selectedProductHull_minimal
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (parameter : Λ)
+    (hsubset :
+      recordThetaPossibleImageUnion record ⊆
+        sourceData.productHullSource.productHull parameter) :
+    sourceData.selectedProductHull ⊆
+      sourceData.productHullSource.productHull parameter :=
+  sourceData.productHullSource.productHull_intersection_minimal
+    (region := recordThetaPossibleImageUnion record) hsubset
+
+set_option linter.style.longLine false in
+theorem selectedProductHull_logVolume_eq
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      sourceData.productHullSource.productHullLogVolume
+        (sourceData.productHullSource.intersectionParameter
+          (recordThetaPossibleImageUnion record)) := by
+  rw [sourceData.hullOperator_eq_productHull]
+  simpa
+    [IUTStage1Remark395HolomorphicHullSystem.toHolomorphicHullOperator,
+      selectedProductHull] using
+    sourceData.productHullSource.logVolume_intersectionProductHull_eq
+      (recordThetaPossibleImageUnion record)
+
+set_option linter.style.longLine false in
+structure ProductHullBackedRecordBridgeAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    Prop where
+  constructorBackedRecordBridgeAudit :
+    IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ConstructorBackedRecordBridgeAudit
+      sourceData.constructorBackedSource
+  hullOperator_eq_productHull :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator =
+      sourceData.productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+  hull_phi_eq_selectedProductHull :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.phi
+        (recordThetaPossibleImageUnion record) =
+      sourceData.selectedProductHull
+  qPilotRegion_subset_selectedProductHull :
+    sourceData.constructorBackedSource.qPilotRegion ⊆
+      sourceData.selectedProductHull
+  selectedProductHull_minimal :
+    ∀ parameter : Λ,
+      recordThetaPossibleImageUnion record ⊆
+        sourceData.productHullSource.productHull parameter ->
+        sourceData.selectedProductHull ⊆
+          sourceData.productHullSource.productHull parameter
+  selectedProductHull_logVolume_eq :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+      sourceData.selectedProductHull =
+    sourceData.productHullSource.productHullLogVolume
+        (sourceData.productHullSource.intersectionParameter
+          (recordThetaPossibleImageUnion record))
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem productHullBackedRecordBridgeAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ) :
+    ProductHullBackedRecordBridgeAudit sourceData :=
+  { constructorBackedRecordBridgeAudit :=
+      sourceData.constructorBackedSource.constructorBackedRecordBridgeAudit,
+    hullOperator_eq_productHull := sourceData.hullOperator_eq_productHull,
+    hull_phi_eq_selectedProductHull :=
+      sourceData.hullOperator_phi_eq_selectedProductHull,
+    qPilotRegion_subset_selectedProductHull :=
+      sourceData.qPilotRegion_subset_selectedProductHull,
+    selectedProductHull_minimal :=
+      fun parameter hsubset =>
+        sourceData.selectedProductHull_minimal parameter hsubset,
+    selectedProductHull_logVolume_eq :=
+      sourceData.selectedProductHull_logVolume_eq,
+    qSigned_le_thetaSigned :=
+      sourceData.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
+
+end
+  IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+
+set_option linter.style.longLine false in
+/--
 Adjusted Ob3/Ob5 source-derived finite-divisor route.
 
 This is the next source-facing form of the constructor-built record-hull
@@ -57977,6 +58146,204 @@ theorem boundarySignedEqualityOrStrictCTheta_from_remark395ConstructorBackedCons
     packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
     packetLocalObjectFinite_eq_ind3Source targetSource cTheta
     thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Finite-divisor vertical-`IQ` route through a product-hull-backed
+constructor-backed Remark 3.9.5 adjusted hull/determinant source.
+
+This is the product-hull provenance refinement of
+`boundarySignedEqualityOrStrictCTheta_from_remark395ConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ`:
+the downstream dichotomy is unchanged, but the public Step (xi) source now
+records that the finite-divisor hull is the smallest product hull attached to
+the Theorem 3.11 possible-image union.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_remark395ProductHullBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    (productHullBackedSource :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        productHullBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+        packageN.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta :=
+  part.boundarySignedEqualityOrStrictCTheta_from_remark395ConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ
+    productHullBackedSource.constructorBackedSource
+    profile audited transportSource iplConstructionSource sourceCalibration
+    source_profile_eq thetaRootSource upperSemiEntry divisorPacket
+    monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
+Audited product-hull-backed finite-divisor route.
+
+The returned audit exposes the product-hull provenance of the Step (xi) hull
+next to the downstream finite-divisor vertical-`IQ` `C_Theta` dichotomy.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_remark395ProductHullBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_withProductHullAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ] {Λ : Type x}
+    (productHullBackedSource :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        productHullBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.ProductHullBackedRecordBridgeAudit
+        productHullBackedSource ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  ⟨productHullBackedSource.productHullBackedRecordBridgeAudit,
+    part.boundarySignedEqualityOrStrictCTheta_from_remark395ProductHullBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ
+      productHullBackedSource profile audited transportSource iplConstructionSource
+      sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+      divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+      targetSource cTheta thetaSigned_le_cTheta_absLogQ⟩
 
 /--
 Source-derived finite-divisor vertical-`IQ` route with Hodge--Arakelov

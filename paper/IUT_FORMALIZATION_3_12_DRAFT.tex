@@ -2329,6 +2329,13 @@ The project currently proves the following source-facing results in \Lean{}:
   constructs the \(\IPL\) log-volume transport, the hull/determinant source,
   and the source-derived Hodge/\(\SHE/\IPL\)/hull bridge internally, then
   applies the finite-divisor vertical-\(IQ\) route.
+\item The constructor-backed finite-divisor endpoint now preserves the
+  Remark~3.9.5 product-hull provenance.  A product-hull-backed wrapper records
+  that the measured hull operator is induced by the product-hull system, and the
+  audit proves selected-product-hull equality, q-pilot containment, minimality
+  among product hulls containing \(P_{\mathrm{rec}}\), product-hull log-volume
+  equality, and the same raw \(q_{\mathrm{signed}}\leq\theta_{\mathrm{signed}}\)
+  comparison before returning the downstream \(C_\Theta\) dichotomy.
 \item The milestone-facing endpoint has a Hodge--Arakelov source form as well:
   it consumes source and target Hodge--Arakelov theta-evaluation sources,
   canonical one-label degree preservation, and a typed allowed-forgetting
@@ -6190,6 +6197,29 @@ returns this constructor-backed record bridge audit together with the
 finite-divisor vertical-\(IQ\) \(C_\Theta\) dichotomy.  Thus the public
 milestone surface now carries the normalized Step~(xi) bridge and the
 conditional Corollary~3.12 dichotomy in one theorem.
+The finite-divisor constructor-backed source now also has a product-hull-backed
+form.  This source records that the measured holomorphic-hull operator used by
+the constructed Step~(xi) source is induced by an
+\texttt{IUTStage1Remark395ProductHullSystemSource}.  Its audit identifies
+\[
+  \phi(P_{\mathrm{rec}})
+\]
+with the selected product hull obtained as the intersection of all product
+hulls containing the Theorem~3.11 possible-image union \(P_{\mathrm{rec}}\),
+proves \(q\subseteq\phi(P_{\mathrm{rec}})\), proves minimality among such
+product hulls, and identifies the hull log-volume with the product-hull
+log-volume.  The endpoint
+\[
+\begin{array}{l}
+\texttt{remark395ProductHullBackedConstructorBackedConstructed}\\
+\quad\texttt{Ob3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_cThetaDichotomyWithProductHullAudit}
+\end{array}
+\]
+returns this product-hull audit together with the finite-divisor vertical-\(IQ\)
+\(C_\Theta\) dichotomy.  Thus the current finite-divisor milestone no longer
+forgets the source-paper ``smallest product hull'' formulation when it enters
+the downstream Corollary~3.12 corridor.
 The constructor-built source-level canonical-scale bridge is now exposed
 directly as
 \[
