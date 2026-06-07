@@ -58160,6 +58160,219 @@ theorem productHullBackedOb5QuotientDeterminantAudit
       sourceData.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
 
 set_option linter.style.longLine false in
+/--
+Product-hull-backed Ob5 scalar quotient compatibility.
+
+Remark 3.9.5(Ob5) says that the upper-semi quotient formalism applies
+compatibly not only to the selected family hull, but also to
+`det^{\otimes M}(phi(P_B))` and to `mu_log(phi(P_B))`.  At the present
+finite-divisor boundary these determinant objects are represented by their
+normalized and ordinary log-volume scalars.  This audit proves that the
+normalized determinant scalar, the ordinary determinant scalar, the naive
+Frobenius tensor-power normalized scalar, and the family-hull log-volume all
+collapse to the same point in the upper-semi quotient by the singleton
+`{mu_log(phi(P_B))}`.
+-/
+structure ProductHullBackedOb5ScalarQuotientCompatibilityAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) :
+    Prop where
+  ob5QuotientDeterminantAudit :
+    ProductHullBackedOb5QuotientDeterminantAudit
+      sourceData comparisonChoice
+  familyHullScalar_quotientImage_eq_collapsed :
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  normalizedDeterminantScalar_quotientImage_eq_collapsed :
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+            (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+              sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)} : Set Real) =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  determinantScalar_quotientImage_eq_collapsed :
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+            (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+              sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)} : Set Real) =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  tensorPowerNormalizedScalar_quotientImage_eq_collapsed :
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({IUTStage1NaiveFrobeniusTensorPowerLogVolume.normalizedLogVolume
+            (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+              (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+                sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source))} :
+          Set Real) =
+      {IUTStage1UpperSemiSetQuotient.collapsed}
+  normalizedDeterminantScalar_quotientImage_eq_familyHullScalar :
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+            (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+              sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)} : Set Real) =
+      IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real)
+  determinantScalar_quotientImage_eq_familyHullScalar :
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+            (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+              sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)} : Set Real) =
+      IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real)
+  tensorPowerNormalizedScalar_quotientImage_eq_familyHullScalar :
+    IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({IUTStage1NaiveFrobeniusTensorPowerLogVolume.normalizedLogVolume
+            (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+              (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+                sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source))} :
+          Set Real) =
+      IUTStage1UpperSemiSetQuotient.quotientMap
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real) ''
+        ({sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+            sourceData.selectedProductHull} : Set Real)
+  selectedProductHull_logVolume_eq_normalizedDeterminant :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  selectedProductHull_logVolume_eq_determinant :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull =
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  tensorPower_normalizedLogVolume_eq_selectedProductHullLogVolume :
+    IUTStage1NaiveFrobeniusTensorPowerLogVolume.normalizedLogVolume
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)) =
+      sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.selectedProductHull
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem productHullBackedOb5ScalarQuotientCompatibilityAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qChoice_nonempty :
+      (recordThetaPossibleImage record
+        sourceData.constructorBackedSource.qChoice).Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    ProductHullBackedOb5ScalarQuotientCompatibilityAudit
+      sourceData comparisonChoice :=
+  let ob5Audit :=
+    sourceData.productHullBackedOb5QuotientDeterminantAudit
+      comparisonChoice qChoice_nonempty comparisonChoice_nonempty
+  let familyScalar :
+      Real :=
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+      sourceData.selectedProductHull
+  let normalizedScalar :
+      Real :=
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.normalizedLogVolume
+      (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  let determinantScalar :
+      Real :=
+    IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.determinantLogVolume
+      (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source)
+  let tensorPowerScalar :
+      Real :=
+    IUTStage1NaiveFrobeniusTensorPowerLogVolume.normalizedLogVolume
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+        (IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.toWeightedDeterminantSource
+          sourceData.constructorBackedSource.measuredSource.adjustedSource.ob3ob4Source))
+  let familyCollapsed :
+      IUTStage1UpperSemiSetQuotient.quotientMap
+          ({familyScalar} : Set Real) '' ({familyScalar} : Set Real) =
+        {IUTStage1UpperSemiSetQuotient.collapsed} :=
+    IUTStage1UpperSemiSetQuotient.quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+      (show ({familyScalar} : Set Real).Nonempty from ⟨familyScalar, by simp⟩)
+      (by intro x hx; exact hx)
+  let normalizedCollapsed :
+      IUTStage1UpperSemiSetQuotient.quotientMap
+          ({familyScalar} : Set Real) '' ({normalizedScalar} : Set Real) =
+        {IUTStage1UpperSemiSetQuotient.collapsed} :=
+    IUTStage1UpperSemiSetQuotient.quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+      (show ({normalizedScalar} : Set Real).Nonempty from ⟨normalizedScalar, by simp⟩)
+      (by
+        intro x hx
+        rw [Set.mem_singleton_iff] at hx ⊢
+        exact hx.trans ob5Audit.selectedProductHull_logVolume_eq_normalizedDeterminant.symm)
+  let determinantCollapsed :
+      IUTStage1UpperSemiSetQuotient.quotientMap
+          ({familyScalar} : Set Real) '' ({determinantScalar} : Set Real) =
+        {IUTStage1UpperSemiSetQuotient.collapsed} :=
+    IUTStage1UpperSemiSetQuotient.quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+      (show ({determinantScalar} : Set Real).Nonempty from ⟨determinantScalar, by simp⟩)
+      (by
+        intro x hx
+        rw [Set.mem_singleton_iff] at hx ⊢
+        exact hx.trans ob5Audit.selectedProductHull_logVolume_eq_determinant.symm)
+  let tensorPowerCollapsed :
+      IUTStage1UpperSemiSetQuotient.quotientMap
+          ({familyScalar} : Set Real) '' ({tensorPowerScalar} : Set Real) =
+        {IUTStage1UpperSemiSetQuotient.collapsed} :=
+    IUTStage1UpperSemiSetQuotient.quotientMap_image_eq_singleton_collapsed_of_nonempty_subset
+      (show ({tensorPowerScalar} : Set Real).Nonempty from ⟨tensorPowerScalar, by simp⟩)
+      (by
+        intro x hx
+        rw [Set.mem_singleton_iff] at hx ⊢
+        exact hx.trans ob5Audit.tensorPower_normalizedLogVolume_eq_selectedProductHullLogVolume)
+  { ob5QuotientDeterminantAudit := ob5Audit,
+    familyHullScalar_quotientImage_eq_collapsed := familyCollapsed,
+    normalizedDeterminantScalar_quotientImage_eq_collapsed := normalizedCollapsed,
+    determinantScalar_quotientImage_eq_collapsed := determinantCollapsed,
+    tensorPowerNormalizedScalar_quotientImage_eq_collapsed := tensorPowerCollapsed,
+    normalizedDeterminantScalar_quotientImage_eq_familyHullScalar := by
+      rw [normalizedCollapsed, familyCollapsed],
+    determinantScalar_quotientImage_eq_familyHullScalar := by
+      rw [determinantCollapsed, familyCollapsed],
+    tensorPowerNormalizedScalar_quotientImage_eq_familyHullScalar := by
+      rw [tensorPowerCollapsed, familyCollapsed],
+    selectedProductHull_logVolume_eq_normalizedDeterminant :=
+      ob5Audit.selectedProductHull_logVolume_eq_normalizedDeterminant,
+    selectedProductHull_logVolume_eq_determinant :=
+      ob5Audit.selectedProductHull_logVolume_eq_determinant,
+    tensorPower_normalizedLogVolume_eq_selectedProductHullLogVolume :=
+      ob5Audit.tensorPower_normalizedLogVolume_eq_selectedProductHullLogVolume,
+    qSigned_le_thetaSigned :=
+      ob5Audit.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
 structure ProductHullBackedPhiXiApproximantAudit
     {κ : Type u}
     (sourceData :

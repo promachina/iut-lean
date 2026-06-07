@@ -2344,7 +2344,14 @@ The project currently proves the following source-facing results in \Lean{}:
   possible image and comparison possible image have the same collapsed
   upper-semi quotient image modulo the selected product hull, and the selected
   hull log-volume is identified with the normalized determinant, determinant
-  log-volume, and normalized tensor-power value.  Finally, the product-hull
+  log-volume, and normalized tensor-power value.  The Ob5 scalar companion is
+  now explicit as well: after quotienting the real line by the singleton
+  \(\{\mu_{\log}(\phi(P_B))\}\), the normalized determinant scalar, ordinary
+  determinant scalar, normalized tensor-power scalar, and family-hull
+  log-volume scalar all have the same collapsed image.  This records the
+  Remark~3.9.5(Ob5) assertion that the upper-semi formalism applies compatibly
+  to \(\phi(P_B)\), \(\det^{\otimes M}(\phi(P_B))\), and
+  \(\mu_{\log}(\phi(P_B))\).  Finally, the product-hull
   wrapper now projects to the source-facing possible-image family package: the
   Theorem~3.11 family \(P_B\), its canonical \(\Phi(P_B)\) approximant, and any
   supplied exact \(\Xi(P_B)\) family are audited at the same boundary, with
@@ -5963,6 +5970,23 @@ product-hull system:
 \quad\texttt{\_productHullBackedConstructorBuiltAudit}.
 \end{array}
 \]
+At the product-hull-backed finite-divisor boundary, the Ob5 quotient passage now
+also has a scalar quotient compatibility audit:
+\[
+\begin{array}{l}
+\texttt{remark395ProductHullBackedConstructorBackedConstructed}\\
+\quad\texttt{HullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_ob5ScalarQuotientCompatibilityAudit}.
+\end{array}
+\]
+This theorem applies the same upper-semi quotient formalism to the real scalar
+\(\mu_{\log}(\phi(P_B))\): the singleton images of
+\(\det_{\log}^{\mathrm{norm}}\), \(\det_{\log}\), the normalized
+\(\det^{\otimes M}\) tensor-power scalar, and the family-hull log-volume all
+collapse to the distinguished quotient point, and hence have the same quotient
+image.  Thus the product-hull route now records the compatibility with
+\(\det^{\otimes M}(\phi(P_B))\) and \(\mu_{\log}(\phi(P_B))\) that
+Remark~3.9.5(Ob5) states alongside the bounded-family hull quotient.
 The audit identifies the source's canonical hull of
 \(\bigcup_i P_i\) with the selected smallest product hull, proves containment
 of both \(\bigcup_i P_i\) and the q-pilot possible image in that hull, records
