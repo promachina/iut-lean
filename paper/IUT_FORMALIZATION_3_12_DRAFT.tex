@@ -1644,6 +1644,13 @@ The project currently proves the following source-facing results in \Lean{}:
   public route no longer exposes only the final signed comparison; it also
   records the possible-image containment and determinant-normalization chain
   that produces it.
+\item This comparison-chain audit is now threaded through the finite-divisor
+  vertical-\(IQ\) \(C_{\Theta}\) endpoint as
+  \texttt{targetChartedHodgeIPLDeterminantPossibleImageRouteFiniteDivisorVerticalIQ\_stepXIComparisonChainAuditEndpoint}.
+  The endpoint returns the same Step (xi) log-volume chain next to the
+  conditional Corollary~3.12 dichotomy, so the finite Step (x) boundary can be
+  audited through the constructed possible-image/determinant comparison rather
+  than only through a coarse Gaussian-to-Step (xi) summary.
 \item The package-level hull/determinant bridge can now be built from the
   Ob4-normalized tensor-power bound associated to a weighted determinant
   source.  The conversion to the determinant bound is a Lean theorem, not a
