@@ -34762,6 +34762,110 @@ theorem remark395PrincipalProductHullBackedConstructorBackedConstructedOb3Ob5Adj
 
 set_option linter.style.longLine false in
 /--
+Audited experiment-surface `C_Theta` dichotomy through the principal
+valuation-ball-backed constructor-built Remark 3.9.5 finite-divisor source.
+
+This strengthens the principal product-hull route by exposing that the same
+principal hull is obtained from a valuation-ball direct-product local-ring/Haar
+cover before the finite-divisor vertical-`IQ` dichotomy is applied.
+-/
+theorem remark395PrincipalValuationBallBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_cThetaDichotomyWithPrincipalValuationBallAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type (max u v w y z)}
+    (principalValuationBallBackedSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ)
+    {endpoint :
+      package.PlaceAuditedMultiradialThetaHullEndpoint
+        principalValuationBallBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned)) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallBackedRecordBridgeAudit
+        principalValuationBallBackedSource ∧
+      ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_withPrincipalValuationBallAudit
+    principalValuationBallBackedSource
+    part profile audited transportSource iplConstructionSource
+    sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource cTheta thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface product-hull finite-divisor `C_Theta` route with the
 synchronized Ob5--Ob7 audit.
 
@@ -43897,6 +44001,8 @@ theorem remark395PrincipalValuationBallProductHullCoverSource_endpoint
           data.selectedPrincipalParameter ∧
       data.valuationCover.hullSystem.logVolume data.selectedPrincipalHull =
         data.valuationCover.calibratedCellLogVolumeSum ∧
+      adjustedSource.hullOperator =
+        data.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
       adjustedSource.familyHullLogVolume =
         adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
       adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume

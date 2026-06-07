@@ -20,7 +20,7 @@ namespace Stage1
 open RealLineCopy
 open scoped BigOperators
 
-universe u v w x
+universe u v w x y z
 
 namespace IUTStage1SourcePackage
 
@@ -59318,6 +59318,211 @@ end
 
 set_option linter.style.longLine false in
 /--
+Principal valuation-ball backed constructor-built Remark 3.9.5 finite-divisor
+source.
+
+This is the valuation-ball provenance refinement of the principal product-hull
+source.  The constructor-backed adjusted Ob3/Ob5 source is required to be the
+record-canonical form of the adjusted source projected from a principal
+valuation-ball product-hull cover.  Thus the `lambda * O` hull used by the
+finite-divisor route is tied to the valuation-ball direct-product local-ring
+cover before the route forgets to the principal product-hull interface.
+-/
+structure IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord packageN)
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    (Λ : Type (max u v w y z)) where
+  constructorBackedSource :
+    IUTStage1Remark395ConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (β := β) (γ := γ) record
+  principalValuationBallSource :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+      (Point target)
+      (IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+      η K β γ Λ
+  adjustedSource_eq_valuationBall :
+    constructorBackedSource.measuredSource.adjustedSource.toSourceCoreAdjustedLogVolumeSource =
+      principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+
+namespace
+  IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+
+variable {packageN :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+variable {η : Type y} {K : Type z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+variable {Λ : Type (max u v w y z)}
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+theorem hullOperator_eq_principalProductHull
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator =
+      sourceData.principalValuationBallSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator := by
+  have hadjusted :=
+    congrArg
+      (fun adjusted =>
+        adjusted.hullOperator)
+      sourceData.adjustedSource_eq_valuationBall
+  calc
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator =
+        sourceData.constructorBackedSource.measuredSource.adjustedSource.toSourceCoreAdjustedLogVolumeSource.hullOperator := rfl
+    _ = sourceData.principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator :=
+        hadjusted
+    _ = sourceData.principalValuationBallSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator :=
+        sourceData.principalValuationBallSource.adjustedHullOperator_eq_principal
+
+noncomputable def toPrincipalProductHullBackedSource
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    IUTStage1Remark395PrincipalProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (β := β) (γ := γ) record Λ :=
+  { constructorBackedSource := sourceData.constructorBackedSource,
+    principalProductHullSource :=
+      sourceData.principalValuationBallSource.principalHullSource,
+    hullOperator_eq_principalProductHull :=
+      sourceData.hullOperator_eq_principalProductHull }
+
+theorem possibleImageUnion_eq_recordUnion
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    sourceData.principalValuationBallSource.possibleImageUnion =
+      recordThetaPossibleImageUnion record := by
+  have hpossible :=
+    congrArg
+      (fun adjusted =>
+        adjusted.possibleRegion)
+      sourceData.adjustedSource_eq_valuationBall
+  have hunion :=
+    congrArg
+      (fun possibleRegion :
+        IUTStage1PlaceAuditedDirectSummandPacketChoice
+            coric IUTStage1PlaceKind.nonarchimedean ->
+          Set (Point target) =>
+        ⋃ i, possibleRegion i)
+      hpossible
+  simpa [IUTStage1Remark395PrincipalValuationBallProductHullCoverSource.possibleImageUnion,
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toSourceCoreAdjustedLogVolumeSource,
+    recordThetaPossibleImageUnion] using hunion.symm
+
+theorem selectedPrincipalProductHull_eq_valuationBallSelected
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    sourceData.toPrincipalProductHullBackedSource.selectedPrincipalProductHull =
+      sourceData.principalValuationBallSource.selectedPrincipalHull := by
+  simp [toPrincipalProductHullBackedSource,
+    IUTStage1Remark395PrincipalProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.selectedPrincipalProductHull,
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource.selectedPrincipalHull,
+    sourceData.possibleImageUnion_eq_recordUnion]
+
+theorem selectedPrincipalProductHull_eq_valuationBallDirectProductCellUnion
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    sourceData.toPrincipalProductHullBackedSource.selectedPrincipalProductHull =
+      sourceData.principalValuationBallSource.valuationCover.directProductCellUnion := by
+  rw [sourceData.selectedPrincipalProductHull_eq_valuationBallSelected]
+  exact sourceData.principalValuationBallSource.selectedPrincipalHull_eq_valuationBallDirectProductCellUnion
+
+theorem selectedPrincipalProductHull_logVolume_eq_calibratedCellSum
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.toPrincipalProductHullBackedSource.selectedPrincipalProductHull =
+      sourceData.principalValuationBallSource.valuationCover.calibratedCellLogVolumeSum := by
+  rw [sourceData.hullOperator_eq_principalProductHull,
+    sourceData.selectedPrincipalProductHull_eq_valuationBallSelected,
+    ← sourceData.principalValuationBallSource.hullSystem_eq_principal]
+  exact sourceData.principalValuationBallSource.selectedPrincipalHull_coverLogVolume_eq_calibratedCellSum
+
+set_option linter.style.longLine false in
+structure PrincipalValuationBallBackedRecordBridgeAudit
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    Prop where
+  principalProductHullAudit :
+    IUTStage1Remark395PrincipalProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalProductHullBackedRecordBridgeAudit
+      sourceData.toPrincipalProductHullBackedSource
+  adjustedSource_eq_valuationBall :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.toSourceCoreAdjustedLogVolumeSource =
+      sourceData.principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+  localIntegerRegion_eq_anchorDirectProductCell :
+    sourceData.principalValuationBallSource.principalHullSource.localIntegerRegion =
+      sourceData.principalValuationBallSource.valuationCover.directProductCell
+        sourceData.principalValuationBallSource.valuationCover.anchor
+  possibleImageUnion_eq_recordUnion :
+    sourceData.principalValuationBallSource.possibleImageUnion =
+      recordThetaPossibleImageUnion record
+  selectedPrincipalProductHull_eq_valuationBallSelected :
+    sourceData.toPrincipalProductHullBackedSource.selectedPrincipalProductHull =
+      sourceData.principalValuationBallSource.selectedPrincipalHull
+  selectedPrincipalProductHull_eq_valuationBallDirectProductCellUnion :
+    sourceData.toPrincipalProductHullBackedSource.selectedPrincipalProductHull =
+      sourceData.principalValuationBallSource.valuationCover.directProductCellUnion
+  selectedPrincipalProductHull_logVolume_eq_calibratedCellSum :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator.logVolume
+        sourceData.toPrincipalProductHullBackedSource.selectedPrincipalProductHull =
+      sourceData.principalValuationBallSource.valuationCover.calibratedCellLogVolumeSum
+  adjustedHullOperator_eq_principal :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator =
+      sourceData.principalValuationBallSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+  adjustedFamilyHullLogVolume_eq_normalizedDeterminant :
+    sourceData.principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+      sourceData.principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem principalValuationBallBackedRecordBridgeAudit
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    PrincipalValuationBallBackedRecordBridgeAudit sourceData :=
+  { principalProductHullAudit :=
+      sourceData.toPrincipalProductHullBackedSource.principalProductHullBackedRecordBridgeAudit,
+    adjustedSource_eq_valuationBall :=
+      sourceData.adjustedSource_eq_valuationBall,
+    localIntegerRegion_eq_anchorDirectProductCell :=
+      sourceData.principalValuationBallSource.localIntegerRegion_eq_anchorDirectProductCell,
+    possibleImageUnion_eq_recordUnion :=
+      sourceData.possibleImageUnion_eq_recordUnion,
+    selectedPrincipalProductHull_eq_valuationBallSelected :=
+      sourceData.selectedPrincipalProductHull_eq_valuationBallSelected,
+    selectedPrincipalProductHull_eq_valuationBallDirectProductCellUnion :=
+      sourceData.selectedPrincipalProductHull_eq_valuationBallDirectProductCellUnion,
+    selectedPrincipalProductHull_logVolume_eq_calibratedCellSum :=
+      sourceData.selectedPrincipalProductHull_logVolume_eq_calibratedCellSum,
+    adjustedHullOperator_eq_principal :=
+      sourceData.hullOperator_eq_principalProductHull,
+    adjustedFamilyHullLogVolume_eq_normalizedDeterminant :=
+      sourceData.principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+        |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+    qSigned_le_thetaSigned :=
+      sourceData.toPrincipalProductHullBackedSource.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
+
+end
+  IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+
+set_option linter.style.longLine false in
+/--
 Adjusted Ob3/Ob5 source-derived finite-divisor route.
 
 This is the next source-facing form of the constructor-built record-hull
@@ -59961,6 +60166,111 @@ theorem boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalProductHullB
       holomorphic_structure_forgotten packetLocalObject_eq_entrySource
       packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
       targetSource cTheta thetaSigned_le_cTheta_absLogQ⟩
+
+set_option linter.style.longLine false in
+/--
+Audited principal valuation-ball-backed finite-divisor route.
+
+This refines the principal-product-hull finite-divisor endpoint by requiring
+the principal `lambda * O` hull source to be synchronized with the
+valuation-ball local-ring/Haar tensor-packet cover.  The returned audit exposes
+that valuation-ball provenance next to the downstream vertical-`IQ`
+`C_Theta` dichotomy.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_withPrincipalValuationBallAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type (max u v w y z)}
+    (principalValuationBallBackedSource :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        principalValuationBallBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallBackedRecordBridgeAudit
+        principalValuationBallBackedSource ∧
+      ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+          packageN.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  ⟨principalValuationBallBackedSource.principalValuationBallBackedRecordBridgeAudit,
+    part.boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalProductHullBackedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_withPrincipalProductHullAudit
+      principalValuationBallBackedSource.toPrincipalProductHullBackedSource
+      profile audited transportSource iplConstructionSource
+      sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+      divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+      targetSource cTheta thetaSigned_le_cTheta_absLogQ |>.2⟩
 
 set_option linter.style.longLine false in
 /--

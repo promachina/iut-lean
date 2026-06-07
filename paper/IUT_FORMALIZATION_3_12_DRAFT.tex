@@ -770,6 +770,30 @@ determinant source.  This does not construct the analytic scalar parameters
 from the source papers, but it removes a previous separation between the
 \(\lambda\cdot O\) hull notation and the nonarchimedean local-ring/Haar cover
 used by the determinant route.
+This valuation-ball provenance has now been lifted to the finite-divisor
+vertical-\(IQ\) endpoint.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395PrincipalValuationBallBackedConstructorBacked}\\
+\quad\texttt{ConstructedHullDeterminantFiniteDivisorVerticalIQSource}
+\end{array}
+\]
+requires the constructor-backed adjusted Ob3/Ob5 source to be the
+record-canonical form of the adjusted determinant source projected from the
+principal valuation-ball cover.  From this equality \Lean{} derives the
+principal hull-operator equality, the equality between the valuation-ball
+possible-image union and the Theorem~3.11 possible-image union, and the
+identity between the selected route hull and the valuation-ball direct-product
+cell union.  The public endpoint
+\[
+\begin{array}{l}
+\texttt{remark395PrincipalValuationBallBackedConstructorBackedConstructed}\\
+\quad\texttt{Ob3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_cThetaDichotomyWithPrincipalValuationBallAudit}
+\end{array}
+\]
+then returns this valuation-ball audit next to the same finite-divisor
+vertical-\(IQ\) \(C_\Theta\) dichotomy.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the

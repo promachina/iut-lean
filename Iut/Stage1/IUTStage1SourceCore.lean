@@ -15380,6 +15380,18 @@ theorem selectedPrincipalHull_logVolume_eq_determinant
   data.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource
     |>.toOb3Ob5DeterminantCompatibilitySource.familyHullLogVolume_eq_determinant
 
+theorem adjustedHullOperator_eq_principal
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+      data.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator := by
+  have hvaluation :
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
+        data.valuationCover.hullSystem.toHolomorphicHullOperator := by
+    rfl
+  rw [hvaluation, data.hullSystem_eq_principal]
+
 set_option linter.style.longLine false in
 theorem endpoint
     (data :
@@ -15403,6 +15415,8 @@ theorem endpoint
           data.selectedPrincipalParameter ∧
       data.valuationCover.hullSystem.logVolume data.selectedPrincipalHull =
         data.valuationCover.calibratedCellLogVolumeSum ∧
+      adjustedSource.hullOperator =
+        data.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
       adjustedSource.familyHullLogVolume =
         adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
       adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
@@ -15418,6 +15432,7 @@ theorem endpoint
         data.selectedPrincipalParameter_nonzero,
         data.selectedPrincipalHull_logVolume_eq,
         data.selectedPrincipalHull_coverLogVolume_eq_calibratedCellSum,
+        data.adjustedHullOperator_eq_principal,
         data.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource
           |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
         data.selectedPrincipalHull_logVolume_eq_determinant⟩
