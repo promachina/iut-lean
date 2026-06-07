@@ -34604,6 +34604,31 @@ theorem remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource_possibl
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob1--Ob5 bridge audit for the constructed finite-divisor
+Remark 3.9.5 source.
+
+This projects the constructor-built Step (xi) Ob1/Ob2 hull absorption, Ob3/Ob5
+determinant compatibility, record-canonical bridge equality, and raw comparison
+from the finite-divisor source object.
+-/
+theorem remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource_ob1ToOb5BridgeAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    (sourceData :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource.ConstructedFiniteDivisorOb1ToOb5BridgeAudit
+      sourceData :=
+  sourceData.toConstructedFiniteDivisorOb1ToOb5BridgeAudit
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy through the constructed Remark 3.9.5
 Ob3/Ob5-adjusted hull/determinant source.
 

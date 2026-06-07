@@ -59296,6 +59296,81 @@ theorem toPossibleImageConstructedHolomorphicHullDeterminantSource_endpoint
         constructedSource.qSigned_le_thetaSigned⟩
 
 set_option linter.style.longLine false in
+/--
+Finite-divisor Ob1--Ob5 Step (xi) bridge audit.
+
+The constructed finite-divisor source first projects to the constructor-built
+possible-image Step (xi) source.  This audit keeps the resulting Ob1/Ob2 hull
+absorption, Ob3/Ob5 determinant compatibility, record-canonical bridge
+equality, and raw signed comparison attached to the finite-divisor source object.
+-/
+structure ConstructedFiniteDivisorOb1ToOb5BridgeAudit
+    (sourceData :
+      IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record) :
+    Prop where
+  constructorBuiltOb1ToOb5BridgeAudit :
+    IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltOb1ToOb5BridgeAudit
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+  qPilotRegion_eq_choice :
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion =
+      recordThetaPossibleImage record sourceData.qChoice
+  qPilotRegion_subset_recordUnion :
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion ⊆
+      recordThetaPossibleImageUnion record
+  ob1_ob2_qRegion_absorbed :
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion ⊆
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.hullData.hullRegion
+        (recordThetaPossibleImageUnion record)
+  ob3_ob5_hullLogVolume_eq_determinant :
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.hullData.logVolume
+        (IUTStage1HullLogVolumeApproximant.canonical
+          sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.hullData
+          (recordThetaPossibleImageUnion record)).approximant =
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.determinantSource.determinantLogVolume
+  bridge_eq_recordCanonical :
+    packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation
+        sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.hullData
+        (recordThetaPossibleImage record sourceData.qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (fun _ hx => hx))
+        sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.determinantSource
+        sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.compatibility
+        sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.measure_eq_hullLogVolume
+        sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.tensorPower_bound
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem toConstructedFiniteDivisorOb1ToOb5BridgeAudit
+    (sourceData :
+      IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record) :
+    ConstructedFiniteDivisorOb1ToOb5BridgeAudit sourceData :=
+  let constructorBuilt :=
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+  let audit := constructorBuilt.toConstructorBuiltOb1ToOb5BridgeAudit
+  { constructorBuiltOb1ToOb5BridgeAudit := audit,
+    qPilotRegion_eq_choice :=
+      constructorBuilt.qPilotRegion_eq_possibleImage,
+    qPilotRegion_subset_recordUnion :=
+      constructorBuilt.q_subset_recordUnion,
+    ob1_ob2_qRegion_absorbed :=
+      audit.ob1_ob2_qRegion_absorbed,
+    ob3_ob5_hullLogVolume_eq_determinant :=
+      audit.ob3_ob5_hullLogVolume_eq_determinant,
+    bridge_eq_recordCanonical :=
+      audit.bridge_eq_recordCanonical,
+    qSigned_le_thetaSigned :=
+      audit.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
 theorem tensorPower_bound
     (sourceData :
       IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
