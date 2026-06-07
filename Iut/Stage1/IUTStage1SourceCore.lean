@@ -3084,6 +3084,163 @@ theorem endpoint
 end IUTStage1Remark395HolomorphicHullSystem
 
 /--
+Remark 3.9.5(i)--(ii) product-hull source.
+
+The paper defines the holomorphic hull of a relatively compact region as the
+smallest product hull of the form `lambda * O` containing the region.  This
+record keeps the finite source-facing content of that construction: a family of
+product hulls and, for every region, a parameter whose product hull is the
+intersection of all product hulls containing that region.  The existing
+`IUTStage1Remark395HolomorphicHullSystem` is then derived from this
+intersection law instead of taking the abstract hull-intersection field directly.
+-/
+structure IUTStage1Remark395ProductHullSystemSource
+    (α : Type u) (Λ : Type v) where
+  productHull : Λ -> Set α
+  productHullLogVolume : Λ -> Real
+  intersectionParameter : Set α -> Λ
+  productHull_intersection_eq :
+    ∀ region : Set α,
+      productHull (intersectionParameter region) =
+        { point : α |
+          ∀ parameter : Λ,
+            region ⊆ productHull parameter ->
+              point ∈ productHull parameter }
+  logVolume : Set α -> Real
+  logVolume_productHull_eq :
+    ∀ parameter : Λ,
+      logVolume (productHull parameter) =
+        productHullLogVolume parameter
+  logVolume_mono :
+    ∀ {region₁ region₂ : Set α},
+      region₁ ⊆ region₂ -> logVolume region₁ <= logVolume region₂
+
+namespace IUTStage1Remark395ProductHullSystemSource
+
+variable {α : Type u} {Λ : Type v}
+
+def isProductHull
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    (region : Set α) :
+    Prop :=
+  ∃ parameter : Λ, data.productHull parameter = region
+
+theorem productHull_isProductHull
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    (parameter : Λ) :
+    data.isProductHull (data.productHull parameter) :=
+  ⟨parameter, rfl⟩
+
+theorem intersection_isProductHull
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    (region : Set α) :
+    data.isProductHull
+      { point : α |
+        ∀ hull : Set α,
+          data.isProductHull hull ->
+            region ⊆ hull -> point ∈ hull } := by
+  refine ⟨data.intersectionParameter region, ?_⟩
+  rw [data.productHull_intersection_eq region]
+  ext point
+  constructor
+  · intro hpoint hull hHull hsubset
+    rcases hHull with ⟨parameter, hparameter⟩
+    exact hparameter ▸ hpoint parameter (by simpa [hparameter] using hsubset)
+  · intro hpoint parameter hsubset
+    exact hpoint (data.productHull parameter)
+      (data.productHull_isProductHull parameter) hsubset
+
+def toHolomorphicHullSystem
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ) :
+    IUTStage1Remark395HolomorphicHullSystem α :=
+  { isHull := data.isProductHull,
+    iInter_hulls_containing_isHull := data.intersection_isProductHull,
+    logVolume := data.logVolume,
+    logVolume_mono := fun hsubset => data.logVolume_mono hsubset }
+
+theorem phi_eq_productHull_intersectionParameter
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    (region : Set α) :
+    data.toHolomorphicHullSystem.phi region =
+      data.productHull (data.intersectionParameter region) := by
+  ext point
+  constructor
+  · intro hpoint
+    rw [data.productHull_intersection_eq region]
+    intro parameter hsubset
+    exact hpoint (data.productHull parameter)
+      (data.productHull_isProductHull parameter) hsubset
+  · intro hpoint hull hHull hsubset
+    rcases hHull with ⟨parameter, hparameter⟩
+    rw [data.productHull_intersection_eq region] at hpoint
+    exact hparameter ▸ hpoint parameter (by simpa [hparameter] using hsubset)
+
+theorem region_subset_productHull_intersection
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    (region : Set α) :
+    region ⊆ data.productHull (data.intersectionParameter region) := by
+  rw [← data.phi_eq_productHull_intersectionParameter region]
+  exact data.toHolomorphicHullSystem.region_subset_phi region
+
+theorem productHull_intersection_minimal
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    {region : Set α} {parameter : Λ}
+    (hsubset : region ⊆ data.productHull parameter) :
+    data.productHull (data.intersectionParameter region) ⊆
+      data.productHull parameter := by
+  rw [data.productHull_intersection_eq region]
+  intro point hpoint
+  exact hpoint parameter hsubset
+
+theorem productHull_intersection_isHull
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    (region : Set α) :
+    data.toHolomorphicHullSystem.isHull
+      (data.productHull (data.intersectionParameter region)) :=
+  data.productHull_isProductHull (data.intersectionParameter region)
+
+theorem logVolume_intersectionProductHull_eq
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    (region : Set α) :
+    data.logVolume (data.productHull (data.intersectionParameter region)) =
+      data.productHullLogVolume (data.intersectionParameter region) :=
+  data.logVolume_productHull_eq (data.intersectionParameter region)
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    (region : Set α) :
+    let hullSystem := data.toHolomorphicHullSystem;
+    hullSystem.phi region =
+        data.productHull (data.intersectionParameter region) ∧
+      hullSystem.isHull (hullSystem.phi region) ∧
+      region ⊆ data.productHull (data.intersectionParameter region) ∧
+      (∀ parameter : Λ,
+        region ⊆ data.productHull parameter ->
+          data.productHull (data.intersectionParameter region) ⊆
+            data.productHull parameter) ∧
+      hullSystem.logVolume
+          (data.productHull (data.intersectionParameter region)) =
+        data.productHullLogVolume (data.intersectionParameter region) ∧
+      hullSystem.logVolume region <=
+        hullSystem.logVolume
+          (data.productHull (data.intersectionParameter region)) :=
+  by
+    intro hullSystem
+    exact
+      ⟨data.phi_eq_productHull_intersectionParameter region,
+        by
+          rw [data.phi_eq_productHull_intersectionParameter region]
+          exact data.productHull_intersection_isHull region,
+        data.region_subset_productHull_intersection region,
+        fun parameter hsubset =>
+          data.productHull_intersection_minimal hsubset,
+        data.logVolume_intersectionProductHull_eq region,
+        data.logVolume_mono (data.region_subset_productHull_intersection region)⟩
+
+end IUTStage1Remark395ProductHullSystemSource
+
+/--
 Remark 3.9.5 holomorphic-hull shadow.
 
 The paper characterizes hull formation by the three closure properties P1--P3:

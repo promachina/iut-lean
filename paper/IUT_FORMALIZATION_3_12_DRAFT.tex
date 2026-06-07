@@ -730,6 +730,19 @@ from the finite divisor packet product and the exact vertical-\(IQ\) target
 before applying the Hodge/\(\SHE/\IPL\)/hull endpoint.  The packet-local source
 alignment is now recovered inside that source object, not passed as a separate
 route input.
+The Remark~3.9.5 hull boundary has also been lowered from an abstract
+intersection-closed predicate to a product-hull source that matches the
+paper's \(\lambda\cdot O\) description.  The declaration
+\[
+\texttt{IUTStage1Remark395ProductHullSystemSource}
+\]
+carries a family of product hulls, their log-volumes, and for each region a
+distinguished parameter whose product hull is the intersection of all product
+hulls containing that region.  From this data \Lean{} constructs the ordinary
+\texttt{IUTStage1Remark395HolomorphicHullSystem}; the experiment endpoint proves
+that \(\phi(P)\) is exactly this selected product hull, contains \(P\), is
+minimal among product hulls containing \(P\), and has the stated product-hull
+log-volume.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the

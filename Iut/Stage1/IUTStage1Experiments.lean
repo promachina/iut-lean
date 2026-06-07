@@ -41058,6 +41058,37 @@ theorem sourceDerivedHodgeSHEIPLHullFiniteDivisorVerticalIQSource_canonicalOneCo
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface product-hull construction for Remark 3.9.5(i)--(ii).
+
+This lowers the holomorphic-hull source boundary from an abstract
+intersection-closed hull predicate to the paper-style family of product hulls
+`lambda * O`: for every region, the selected intersection parameter gives the
+smallest product hull containing that region, and the ordinary
+`HolomorphicHullSystem` is constructed from this product-hull data.
+-/
+theorem remark395ProductHullSystemSource_endpoint
+    {α : Type u} {Λ : Type v}
+    (data : IUTStage1Remark395ProductHullSystemSource α Λ)
+    (region : Set α) :
+    let hullSystem := data.toHolomorphicHullSystem;
+    hullSystem.phi region =
+        data.productHull (data.intersectionParameter region) ∧
+      hullSystem.isHull (hullSystem.phi region) ∧
+      region ⊆ data.productHull (data.intersectionParameter region) ∧
+      (∀ parameter : Λ,
+        region ⊆ data.productHull parameter ->
+          data.productHull (data.intersectionParameter region) ⊆
+            data.productHull parameter) ∧
+      hullSystem.logVolume
+          (data.productHull (data.intersectionParameter region)) =
+        data.productHullLogVolume (data.intersectionParameter region) ∧
+      hullSystem.logVolume region <=
+        hullSystem.logVolume
+          (data.productHull (data.intersectionParameter region)) :=
+  data.endpoint region
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the source-facing Remark 3.9.5 possible-image
 family package.
 
