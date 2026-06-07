@@ -2981,6 +2981,45 @@ uses one such local tensor source for each charted localization cell, verifies
 the local compact-open regions and local-ring labels against the charted factors,
 constructs the compact-open tensor-packet source, and inherits the finite-additive
 cover and bundle-log-volume conclusions.
+The local nonarchimedean source has now been lowered once more to the
+finite-extension Haar normalization boundary of IUT~IV, Proposition~1.4.  The
+declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1FiniteExtensionHaarCompactOpenLogVolumeSource}
+\end{array}
+\]
+records the raw Haar/log-volume function on local compact-open subsets of a
+finite extension of \(\mathbb{Q}_p\), its degree-normalized version, the
+realization of local subsets as real-line regions, the integral structure
+\(\mathcal{O}_K\), and the uniformizer-scaled compact-open subset.  Its endpoint
+checks the source-paper normalizations
+\[
+  \mu_{\log}(\mathcal{O}_K)=0,\qquad
+  \mu_{\log}(p\cdot U)=\mu_{\log}(U)-\log(p),
+\]
+and constructs
+\(\texttt{IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource}\).
+The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1FiniteExtensionTensorProductDirectSumDecompositionSource}
+\end{array}
+\]
+records the IUT~IV direct-sum decomposition step for finite tensor products over
+\(\mathbb{Z}_p\): the tensor-product region is identified with the simultaneous
+local compact-open cell, and its normalized log-volume is the finite sum of the
+degree-normalized Haar log-volumes of the direct summands.  This source constructs
+the nonarchimedean local tensor-region direct-sum source.  At the packet level,
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395FiniteExtensionHaarTensorPacketFiniteAdditive}\\
+\quad\texttt{CalibratedLocalRingChartedVectorBundleHullCoverSource}
+\end{array}
+\]
+assigns such a finite-extension Haar tensor decomposition to each charted
+localization cell and then constructs the nonarchimedean local tensor-packet
+source used by the Step~(xi) cover route.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -6169,12 +6208,15 @@ The practical priority order is:
   from compact-open local factors plus a direct-sum tensor-region source, and
   the nonarchimedean local tensor-packet variant now constructs the compact-open
   factors from local compact-open log-volume data with integral-structure,
-  degree-normalization, and uniformizer-shift laws, but
+  degree-normalization, and uniformizer-shift laws, and the finite-extension Haar
+  tensor-packet variant now constructs those local sources from raw
+  finite-extension Haar log-volume functions plus the tensor-product direct-sum
+  decomposition law, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  finite-additive hull log-volume source, construction of the local carrier
-  topology/Haar-measure compact-open subsets and tensor-product direct-sum
-  decomposition from actual finite extensions of \(\mathbb{Q}_p\), per-factor
+  finite-additive hull log-volume source, construction of the local compact-open
+  topology and Haar log-volume function itself from actual finite extensions of
+  \(\mathbb{Q}_p\), per-factor
   chart/direct-summand calibration construction, local region/vector-bundle
   log-volume calibration, measure calibration, record-canonical
   synchronization, and chart
