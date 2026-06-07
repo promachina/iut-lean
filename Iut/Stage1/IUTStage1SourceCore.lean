@@ -22,7 +22,7 @@ namespace Stage1
 open RealLineCopy
 open scoped BigOperators
 
-universe u v w x y
+universe u v w x y z
 
 /-- A prime `l ≥ 5` is nonzero, so `ZMod l.value` has its finite model. -/
 instance primeGeFiveValueNeZero (l : PrimeGeFive) : NeZero l.value :=
@@ -9337,6 +9337,112 @@ theorem endpoint
 end IUTStage1LocalCompactOpenTensorFactorSource
 
 /--
+Nonarchimedean local compact-open normalized log-volume source.
+
+This is the source-facing local-field layer below a compact-open tensor factor.
+It records a local carrier `K`, the integral structure and compact-open subset
+there, their realization as regions in the current real-line copy, the residue
+prime and finite-extension degree used for normalization, and the two
+normalization laws from IUT IV, Proposition 1.4: integral structures have
+normalized log-volume zero, and uniformizer multiplication shifts log-volume by
+`-log(p)`.
+-/
+structure IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource
+    (α : Type u) (η : Type v) (K : Type w)
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  localRing : η
+  residuePrime : Nat
+  residue_prime : Nat.Prime residuePrime
+  localDegree : Nat
+  local_degree_pos : 0 < localDegree
+  realization : K -> α
+  integralStructure : Set K
+  compactOpenSubset : Set K
+  uniformizerScaledSubset : Set K
+  integralRegion : Set α
+  compactOpenRegion : Set α
+  uniformizerScaledRegion : Set α
+  integralRegion_eq_image :
+    integralRegion = realization '' integralStructure
+  compactOpenRegion_eq_image :
+    compactOpenRegion = realization '' compactOpenSubset
+  uniformizerScaledRegion_eq_image :
+    uniformizerScaledRegion = realization '' uniformizerScaledSubset
+  rawLogVolume : Real
+  normalizedLogVolume : Real
+  normalized_eq_degree :
+    normalizedLogVolume = rawLogVolume / (localDegree : Real)
+  integral_logVolume_zero :
+    hullSystem.logVolume integralRegion = 0
+  compactOpen_logVolume_eq_normalized :
+    hullSystem.logVolume compactOpenRegion = normalizedLogVolume
+  uniformizerScaled_logVolume_eq :
+    hullSystem.logVolume uniformizerScaledRegion =
+      normalizedLogVolume - Real.log (residuePrime : Real)
+
+namespace IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+theorem localDegree_ne_zero
+    (data :
+      IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource
+        α η K hullSystem) :
+    (data.localDegree : Real) ≠ 0 := by
+  exact_mod_cast Nat.ne_of_gt data.local_degree_pos
+
+theorem normalizedLogVolume_eq_region
+    (data :
+      IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource
+        α η K hullSystem) :
+    data.normalizedLogVolume =
+      hullSystem.logVolume data.compactOpenRegion :=
+  data.compactOpen_logVolume_eq_normalized.symm
+
+def toLocalCompactOpenTensorFactorSource
+    (data :
+      IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource
+        α η K hullSystem) :
+    IUTStage1LocalCompactOpenTensorFactorSource α η hullSystem :=
+  { localRing := data.localRing,
+    compactOpenRegion := data.compactOpenRegion,
+    normalizedLogVolume := data.normalizedLogVolume,
+    region_logVolume_eq_normalized :=
+      data.compactOpen_logVolume_eq_normalized }
+
+theorem endpoint
+    (data :
+      IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource
+        α η K hullSystem) :
+    data.integralRegion = data.realization '' data.integralStructure ∧
+      data.compactOpenRegion = data.realization '' data.compactOpenSubset ∧
+      data.uniformizerScaledRegion =
+        data.realization '' data.uniformizerScaledSubset ∧
+      data.normalizedLogVolume =
+        data.rawLogVolume / (data.localDegree : Real) ∧
+      hullSystem.logVolume data.integralRegion = 0 ∧
+      hullSystem.logVolume data.compactOpenRegion =
+        data.normalizedLogVolume ∧
+      hullSystem.logVolume data.uniformizerScaledRegion =
+        data.normalizedLogVolume - Real.log (data.residuePrime : Real) ∧
+      (data.toLocalCompactOpenTensorFactorSource).compactOpenRegion =
+        data.compactOpenRegion ∧
+      (data.toLocalCompactOpenTensorFactorSource).normalizedLogVolume =
+        data.normalizedLogVolume :=
+  ⟨data.integralRegion_eq_image,
+    data.compactOpenRegion_eq_image,
+    data.uniformizerScaledRegion_eq_image,
+    data.normalized_eq_degree,
+    data.integral_logVolume_zero,
+    data.compactOpen_logVolume_eq_normalized,
+    data.uniformizerScaled_logVolume_eq,
+    rfl,
+    rfl⟩
+
+end IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource
+
+/--
 Compact-open tensor-region direct-sum source.
 
 This source constructs the one-cell finite tensor/direct-sum log-volume datum
@@ -9491,6 +9597,142 @@ theorem endpoint
     rfl⟩
 
 end IUTStage1CompactOpenTensorRegionDirectSumSource
+
+/--
+Nonarchimedean local tensor-region direct-sum source.
+
+This lowers a compact-open tensor-region source one step further: each local
+factor is now a nonarchimedean compact-open normalized log-volume source with
+an integral structure, residue prime, extension degree, and uniformizer
+normalization law.  The direct-sum tensor region then constructs the compact-open
+tensor-region source consumed by the charted packet layer.
+-/
+structure IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource
+    (α : Type u) (η : Type v) (K : Type w) (γ : Type x)
+    [Fintype γ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  localFactor :
+    γ -> IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource
+      α η K hullSystem
+  tensorProductRegion : Set α
+  tensorProductRegion_eq_factorIntersection :
+    tensorProductRegion =
+      { point : α | ∀ place : γ,
+          point ∈ (localFactor place).compactOpenRegion }
+  tensorProductLogVolume : Real
+  tensorProductLogVolume_eq_region :
+    tensorProductLogVolume = hullSystem.logVolume tensorProductRegion
+  tensorProductLogVolume_eq_directSum :
+    tensorProductLogVolume =
+      Finset.univ.sum fun place =>
+        (localFactor place).normalizedLogVolume
+
+namespace IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource
+
+variable {α : Type u} {η : Type v} {K : Type w} {γ : Type x}
+variable [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+def compactOpenFactor
+    (data :
+      IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource
+        α η K γ hullSystem)
+    (place : γ) :
+    IUTStage1LocalCompactOpenTensorFactorSource α η hullSystem :=
+  (data.localFactor place).toLocalCompactOpenTensorFactorSource
+
+def factorRegion
+    (data :
+      IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource
+        α η K γ hullSystem)
+    (place : γ) :
+    Set α :=
+  (data.localFactor place).compactOpenRegion
+
+theorem tensorProduct_logVolume_eq_localFactorSum
+    (data :
+      IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource
+        α η K γ hullSystem) :
+    hullSystem.logVolume
+        { point : α | ∀ place : γ,
+          point ∈ data.factorRegion place } =
+      Finset.univ.sum fun place =>
+        hullSystem.logVolume (data.factorRegion place) := by
+  calc
+    hullSystem.logVolume
+        { point : α | ∀ place : γ,
+          point ∈ data.factorRegion place } =
+        hullSystem.logVolume data.tensorProductRegion := by
+      rw [data.tensorProductRegion_eq_factorIntersection]
+      rfl
+    _ = data.tensorProductLogVolume :=
+      data.tensorProductLogVolume_eq_region.symm
+    _ = Finset.univ.sum fun place =>
+          (data.localFactor place).normalizedLogVolume :=
+      data.tensorProductLogVolume_eq_directSum
+    _ = Finset.univ.sum fun place =>
+          hullSystem.logVolume (data.factorRegion place) := by
+      exact Finset.sum_congr rfl
+        (fun place _ =>
+          (data.localFactor place).normalizedLogVolume_eq_region)
+
+def toCompactOpenTensorRegionDirectSumSource
+    (data :
+      IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource
+        α η K γ hullSystem) :
+    IUTStage1CompactOpenTensorRegionDirectSumSource
+      α η γ hullSystem :=
+  { factor := data.compactOpenFactor,
+    tensorProductRegion := data.tensorProductRegion,
+    tensorProductRegion_eq_factorIntersection := by
+      simpa [compactOpenFactor,
+        IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource.toLocalCompactOpenTensorFactorSource] using
+        data.tensorProductRegion_eq_factorIntersection,
+    tensorProductLogVolume := data.tensorProductLogVolume,
+    tensorProductLogVolume_eq_region :=
+      data.tensorProductLogVolume_eq_region,
+    tensorProductLogVolume_eq_directSum := by
+      simpa [compactOpenFactor,
+        IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource.toLocalCompactOpenTensorFactorSource] using
+        data.tensorProductLogVolume_eq_directSum }
+
+theorem endpoint
+    (data :
+      IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource
+        α η K γ hullSystem) :
+    data.tensorProductRegion =
+        { point : α | ∀ place : γ,
+          point ∈ data.factorRegion place } ∧
+      (∀ place : γ,
+        (data.compactOpenFactor place).compactOpenRegion =
+          (data.localFactor place).compactOpenRegion) ∧
+      (∀ place : γ,
+        (data.compactOpenFactor place).normalizedLogVolume =
+          (data.localFactor place).normalizedLogVolume) ∧
+      data.tensorProductLogVolume =
+        (Finset.univ.sum fun place =>
+          (data.localFactor place).normalizedLogVolume) ∧
+      hullSystem.logVolume
+          { point : α | ∀ place : γ,
+            point ∈ data.factorRegion place } =
+        (Finset.univ.sum fun place =>
+          hullSystem.logVolume (data.factorRegion place)) ∧
+      (data.toCompactOpenTensorRegionDirectSumSource).tensorProductRegion =
+        data.tensorProductRegion :=
+  ⟨by
+      simpa [factorRegion] using
+        data.tensorProductRegion_eq_factorIntersection,
+    by
+      intro place
+      rfl,
+    by
+      intro place
+      rfl,
+    data.tensorProductLogVolume_eq_directSum,
+    data.tensorProduct_logVolume_eq_localFactorSum,
+    rfl⟩
+
+end IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource
 
 /--
 Finite-additive calibrated local-ring charted vector-bundle cover source.
@@ -10249,6 +10491,262 @@ theorem endpoint
       |>.directProductCoverLogVolume_eq_bundleLogVolumeSum⟩
 
 end IUTStage1Remark395CompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+
+/--
+Nonarchimedean local tensor-packet finite-additive calibrated local-ring
+charted cover source.
+
+This lowers the compact-open tensor-packet layer to local nonarchimedean
+compact-open log-volume data.  Each charted localization cell supplies a finite
+direct-sum tensor-region source whose factors carry the local integral
+structure, residue-prime normalization, finite-degree normalization, and
+uniformizer-shift law.  The compact-open tensor-packet source is then
+constructed from these local sources.
+-/
+structure IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (α : Type u) (ι : Type v) (η : Type y) (K : Type z)
+    (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  factorCalibration :
+    ∀ index : β, ∀ place : γ,
+      IUTStage1LocalRingVectorBundleFactorCalibrationSource
+        hullSystem (localizedCalibration index) place
+  localizedRegion_eq_calibratedDirectProductCell :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α |
+          ∀ place : γ, point ∈ (factorCalibration index place).region }
+  localFactor_separates_index :
+    ∀ ⦃index₁ index₂ : β⦄,
+      index₁ ≠ index₂ ->
+        ∃ place : γ,
+          Disjoint ((factorCalibration index₁ place).region)
+            ((factorCalibration index₂ place).region)
+  familyHull_eq_calibratedDirectProductCellUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index,
+        { point : α |
+          ∀ place : γ, point ∈ (factorCalibration index place).region }
+  cellNonarchimedeanTensor :
+    β -> IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource
+      α η K γ hullSystem
+  cellLocal_region_eq_chart :
+    ∀ index : β, ∀ place : γ,
+      ((cellNonarchimedeanTensor index).localFactor place).compactOpenRegion =
+        (factorCalibration index place).region
+  cellLocal_ring_eq_chart :
+    ∀ index : β, ∀ place : γ,
+      ((cellNonarchimedeanTensor index).localFactor place).localRing =
+        (factorCalibration index place).chart.localRing
+  finiteAdditive :
+    IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β
+
+namespace IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+
+variable {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def localFactorChart
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ)
+    (index : β) (place : γ) :
+    IUTStage1LocalRingVectorBundleFactorRegionChart α η :=
+  (data.factorCalibration index place).chart
+
+def localFactorRegion
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ)
+    (index : β) (place : γ) :
+    Set α :=
+  (data.factorCalibration index place).region
+
+def nonarchimedeanLocalFactor
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ)
+    (index : β) (place : γ) :
+    IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource
+      α η K data.hullSystem :=
+  (data.cellNonarchimedeanTensor index).localFactor place
+
+def directProductCell
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ)
+    (index : β) :
+    Set α :=
+  { point : α | ∀ place : γ, point ∈ data.localFactorRegion index place }
+
+def directProductCellUnion
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    Set α :=
+  ⋃ index, data.directProductCell index
+
+def calibratedCellLogVolumeSum
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    Real :=
+  Finset.univ.sum fun index =>
+    data.hullSystem.logVolume (data.directProductCell index)
+
+def cellCompactOpenTensor
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ)
+    (index : β) :
+    IUTStage1CompactOpenTensorRegionDirectSumSource
+      α η γ data.hullSystem :=
+  (data.cellNonarchimedeanTensor index)
+    |>.toCompactOpenTensorRegionDirectSumSource
+
+theorem directProductCell_logVolume_eq_calibratedFactorSum
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ)
+    (index : β) :
+    data.hullSystem.logVolume (data.directProductCell index) =
+      Finset.univ.sum fun place =>
+        data.hullSystem.logVolume (data.localFactorRegion index place) := by
+  simpa [directProductCell, localFactorRegion] using
+    (data.cellNonarchimedeanTensor index)
+      |>.toCompactOpenTensorRegionDirectSumSource
+      |>.toFiniteTensorDirectSumLogVolumeSourceOfRegionEq
+        (data.cellLocal_region_eq_chart index)
+      |>.directProduct_logVolume_eq_factorSum
+
+theorem directProductCells_disjoint
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    IUTStage1PairwiseDisjointRegionFamily data.directProductCell := by
+  intro index₁ index₂ hne
+  rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+  exact Set.disjoint_left.mpr fun point hleft hright =>
+    Set.disjoint_left.mp hdisjoint (hleft place) (hright place)
+
+theorem directProductCoverLogVolume_eq_calibratedCellSum
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    data.hullSystem.logVolume data.directProductCellUnion =
+      data.calibratedCellLogVolumeSum := by
+  simpa [directProductCellUnion, calibratedCellLogVolumeSum] using
+    data.finiteAdditive.finite_iUnion_eq_sum
+      data.directProductCell data.directProductCells_disjoint
+
+set_option linter.style.longLine false in
+def toCompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    IUTStage1Remark395CompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      α ι η β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    factorCalibration := data.factorCalibration,
+    localizedRegion_eq_calibratedDirectProductCell :=
+      data.localizedRegion_eq_calibratedDirectProductCell,
+    localFactor_separates_index :=
+      data.localFactor_separates_index,
+    familyHull_eq_calibratedDirectProductCellUnion :=
+      data.familyHull_eq_calibratedDirectProductCellUnion,
+    cellCompactOpenTensor := data.cellCompactOpenTensor,
+    cellCompactOpen_region_eq_chart := by
+      intro index place
+      simpa [cellCompactOpenTensor,
+        IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource.toCompactOpenTensorRegionDirectSumSource,
+        IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource.compactOpenFactor,
+        IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource.toLocalCompactOpenTensorFactorSource] using
+        data.cellLocal_region_eq_chart index place,
+    cellCompactOpen_ring_eq_chart := by
+      intro index place
+      simpa [cellCompactOpenTensor,
+        IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource.toCompactOpenTensorRegionDirectSumSource,
+        IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource.compactOpenFactor,
+        IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource.toLocalCompactOpenTensorFactorSource] using
+        data.cellLocal_ring_eq_chart index place,
+    finiteAdditive := data.finiteAdditive }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    let compactOpenSource :=
+      data.toCompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let tensorSource :=
+      compactOpenSource.toTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let calibratedSource :=
+      tensorSource.toFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (∀ index : β, ∀ place : γ,
+      (data.nonarchimedeanLocalFactor index place).compactOpenRegion =
+        data.localFactorRegion index place) ∧
+      (∀ index : β, ∀ place : γ,
+        (data.nonarchimedeanLocalFactor index place).localRing =
+          (data.localFactorChart index place).localRing) ∧
+      (∀ index : β, ∀ place : γ,
+        data.hullSystem.logVolume
+            (data.nonarchimedeanLocalFactor index place).integralRegion = 0) ∧
+      (∀ index : β, ∀ place : γ,
+        data.hullSystem.logVolume
+            (data.nonarchimedeanLocalFactor index place).uniformizerScaledRegion =
+          (data.nonarchimedeanLocalFactor index place).normalizedLogVolume -
+            Real.log
+              ((data.nonarchimedeanLocalFactor index place).residuePrime : Real)) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          Finset.univ.sum fun place =>
+            data.hullSystem.logVolume (data.localFactorRegion index place)) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      compactOpenSource.hullSystem.logVolume compactOpenSource.directProductCellUnion =
+        compactOpenSource.calibratedCellLogVolumeSum ∧
+      calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
+        calibratedSource.bundleLogVolumeSum :=
+  ⟨by
+      intro index place
+      exact data.cellLocal_region_eq_chart index place,
+    by
+      intro index place
+      exact data.cellLocal_ring_eq_chart index place,
+    by
+      intro index place
+      exact (data.nonarchimedeanLocalFactor index place).integral_logVolume_zero,
+    by
+      intro index place
+      exact (data.nonarchimedeanLocalFactor index place).uniformizerScaled_logVolume_eq,
+    data.directProductCell_logVolume_eq_calibratedFactorSum,
+    data.directProductCells_disjoint,
+    data.directProductCoverLogVolume_eq_calibratedCellSum,
+    (data.toCompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource)
+      |>.directProductCoverLogVolume_eq_calibratedCellSum,
+    ((data.toCompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource)
+      |>.toTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      |>.toFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      |>.toCalibratedLocalRingChartedVectorBundleHullCoverSource)
+      |>.directProductCoverLogVolume_eq_bundleLogVolumeSum⟩
+
+end IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
 
 set_option linter.style.longLine true
 

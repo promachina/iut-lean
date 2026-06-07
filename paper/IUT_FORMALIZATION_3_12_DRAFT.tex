@@ -2947,6 +2947,40 @@ localization cell, proves that the compact-open factor regions and local-ring
 labels match the charted local factors, constructs the tensor-packet source, and
 then derives the same finite-additive cover equality and bundle-log-volume
 projection.
+The compact-open tensor factor source has now been lowered to a
+nonarchimedean local normalized log-volume datum.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource}
+\end{array}
+\]
+records a local carrier, local-ring label, residue prime, finite-extension
+degree, integral structure, compact-open subset, uniformizer-scaled subset, and
+their realization as regions in the current real-line copy.  It includes the
+IUT~IV Proposition~1.4 normalization laws needed in the present corridor:
+the integral structure has normalized log-volume zero, the normalized
+log-volume is the degree-normalized raw log-volume, and multiplication by a
+uniformizer shifts the normalized log-volume by \(-\log(p)\).  Lean constructs
+\(\texttt{IUTStage1LocalCompactOpenTensorFactorSource}\) from this datum.
+The finite direct-sum layer
+\[
+\begin{array}{l}
+\texttt{IUTStage1NonarchimedeanLocalTensorRegionDirectSumSource}
+\end{array}
+\]
+then constructs the compact-open tensor-region source from a finite family of
+these local nonarchimedean sources and the direct-sum tensor-region formula.
+Finally,
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditive}\\
+\quad\texttt{CalibratedLocalRingChartedVectorBundleHullCoverSource}
+\end{array}
+\]
+uses one such local tensor source for each charted localization cell, verifies
+the local compact-open regions and local-ring labels against the charted factors,
+constructs the compact-open tensor-packet source, and inherits the finite-additive
+cover and bundle-log-volume conclusions.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -6132,12 +6166,15 @@ The practical priority order is:
   derives that single-cell law from a finite tensor-region/direct-sum
   log-volume datum for each actual charted localization cell, and the
   compact-open tensor-packet variant now constructs that finite tensor datum
-  from compact-open local factors plus a direct-sum tensor-region source, but
+  from compact-open local factors plus a direct-sum tensor-region source, and
+  the nonarchimedean local tensor-packet variant now constructs the compact-open
+  factors from local compact-open log-volume data with integral-structure,
+  degree-normalization, and uniformizer-shift laws, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  finite-additive hull log-volume source, construction of the compact-open
-  local factors and their normalized log-volume from actual local
-  fields/rings, per-factor
+  finite-additive hull log-volume source, construction of the local carrier
+  topology/Haar-measure compact-open subsets and tensor-product direct-sum
+  decomposition from actual finite extensions of \(\mathbb{Q}_p\), per-factor
   chart/direct-summand calibration construction, local region/vector-bundle
   log-volume calibration, measure calibration, record-canonical
   synchronization, and chart

@@ -31,6 +31,8 @@ open IUTStage1StructuredSHEFactoredSquareFullLabelObligations
 open IUTStage1HullDetPilotUpperRayLogVolume
 open IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
 
+universe u v w x y z
+
 /-- First pass: no real-line/log-volume alignment has been supplied. -/
 def ind3MissingRealAlignmentReport :
     IUTStage1Ind3AlignmentExperimentReport :=
@@ -42029,6 +42031,57 @@ theorem remark395CompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingCharted
         data.calibratedCellLogVolumeSum ∧
       tensorSource.hullSystem.logVolume tensorSource.directProductCellUnion =
         tensorSource.calibratedCellLogVolumeSum ∧
+      calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
+        calibratedSource.bundleLogVolumeSum :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface nonarchimedean local tensor-packet finite-additive charted
+cover source.
+
+This endpoint derives the compact-open tensor-packet source from local
+nonarchimedean compact-open log-volume data with integral-structure
+normalization, finite-degree normalization, and the uniformizer `-log(p)` shift.
+-/
+theorem remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x}
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395NonarchimedeanLocalTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι η K β γ) :
+    let compactOpenSource :=
+      data.toCompactOpenTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let tensorSource :=
+      compactOpenSource.toTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    let calibratedSource :=
+      tensorSource.toFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        |>.toCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (∀ index : β, ∀ place : γ,
+      (data.nonarchimedeanLocalFactor index place).compactOpenRegion =
+        data.localFactorRegion index place) ∧
+      (∀ index : β, ∀ place : γ,
+        (data.nonarchimedeanLocalFactor index place).localRing =
+          (data.localFactorChart index place).localRing) ∧
+      (∀ index : β, ∀ place : γ,
+        data.hullSystem.logVolume
+            (data.nonarchimedeanLocalFactor index place).integralRegion = 0) ∧
+      (∀ index : β, ∀ place : γ,
+        data.hullSystem.logVolume
+            (data.nonarchimedeanLocalFactor index place).uniformizerScaledRegion =
+          (data.nonarchimedeanLocalFactor index place).normalizedLogVolume -
+            Real.log
+              ((data.nonarchimedeanLocalFactor index place).residuePrime : Real)) ∧
+      (∀ index : β,
+        data.hullSystem.logVolume (data.directProductCell index) =
+          Finset.univ.sum fun place =>
+            data.hullSystem.logVolume (data.localFactorRegion index place)) ∧
+      IUTStage1PairwiseDisjointRegionFamily data.directProductCell ∧
+      data.hullSystem.logVolume data.directProductCellUnion =
+        data.calibratedCellLogVolumeSum ∧
+      compactOpenSource.hullSystem.logVolume compactOpenSource.directProductCellUnion =
+        compactOpenSource.calibratedCellLogVolumeSum ∧
       calibratedSource.hullSystem.logVolume calibratedSource.directProductCellUnion =
         calibratedSource.bundleLogVolumeSum :=
   data.endpoint
