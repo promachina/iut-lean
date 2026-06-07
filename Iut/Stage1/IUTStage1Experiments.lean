@@ -47131,6 +47131,52 @@ theorem remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource_
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface valuation-unit-ball nonzero scalar-multiplication product
+hull cover.
+
+This exposes the source that derives the global `O = prod_v O_v` anchor-cell
+equality from factorwise valuation-unit-ball data before applying the
+nonzero-scalar `lambda_v O_v` hull and the adjusted Ob3/Ob5 determinant handoff.
+-/
+theorem remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource_endpoint
+    {δ : Type u} {A : δ -> Type v}
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    {ι : Type y} {η : Type x} {K : Type z}
+    {β : Type w} {γ : Type max u v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    (∀ place : γ,
+      (data.anchorValuationBallFactor place).compactOpenSubset =
+        (data.anchorValuationBallFactor place).ringOfIntegers ∧
+      (data.anchorValuationBallFactor place).ringOfIntegers =
+        (data.anchorValuationBallFactor place).valuationBall 1 ∧
+      data.valuationCover.localFactorRegion data.valuationCover.anchor place =
+        (data.anchorValuationBallFactor place).realizedRegion
+          (data.anchorValuationBallFactor place).ringOfIntegers) ∧
+      (∀ d : δ, ∀ base : (d : δ) -> A d,
+        base d ∈ data.nonzeroScalarSource.localIntegerFactorRegion d ↔
+          base ∈ data.valuationCover.localFactorRegion
+            data.valuationCover.anchor (data.coordinatePlace d)) ∧
+      (∀ base : (d : δ) -> A d,
+        base ∈ data.nonzeroScalarSource.localIntegerRegion ↔
+          base ∈ data.valuationCover.directProductCell
+            data.valuationCover.anchor) ∧
+      data.nonzeroScalarSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      (∀ d : δ, (data.selectedNonzeroScalar d).1 ≠ 0) ∧
+      data.selectedScalarImageHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.valuationCover.hullSystem.logVolume data.selectedScalarImageHull =
+        data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface cover-additive valuation-ball factor-calibrated Haar
 tensor-packet source.
 

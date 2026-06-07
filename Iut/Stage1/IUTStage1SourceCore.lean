@@ -17673,6 +17673,230 @@ theorem endpoint
 end IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
 
 /--
+Valuation-unit-ball nonzero scalar-multiplication product-hull cover source.
+
+This lowers the preceding nonzero-scalar valuation cover by deriving the global
+`O = prod_v O_v` anchor-cell equality from factorwise valuation data.  At the
+anchor chart each selected compact-open valuation ball is required to be the
+valuation unit ball, and membership in the local integer factor `O_v` is
+identified with membership in the corresponding anchor valuation factor.  Lean
+then constructs the previous nonzero-scalar valuation cover and its Ob3/Ob5
+determinant handoff.
+-/
+structure IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+    (δ : Type u) (A : δ -> Type v)
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    (ι : Type y) (η : Type x) (K : Type z)
+    (β : Type w) (γ : Type max u v w x y z)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ] where
+  valuationCover :
+    IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      ((d : δ) -> A d) ι η K β γ
+  nonzeroScalarSource :
+    IUTStage1Remark395NonzeroScalarMultiplicationDirectProductHullSource δ A
+  selectedNonzeroScalar :
+    (d : δ) -> nonzeroScalarSource.nonzeroScalar d
+  coordinatePlace : δ -> γ
+  hullSystem_eq_nonzeroScalarProduct :
+    valuationCover.hullSystem =
+      nonzeroScalarSource.directProductSource.toHolomorphicHullSystem
+  anchor_compactOpenSubset_eq_ringOfIntegers :
+    ∀ place : γ,
+      (valuationCover.valuationBallFactor valuationCover.anchor place).compactOpenSubset =
+        (valuationCover.valuationBallFactor valuationCover.anchor place).ringOfIntegers
+  localInteger_mem_anchorLocalFactor :
+    ∀ place : γ, ∀ base : (d : δ) -> A d,
+      base ∈ nonzeroScalarSource.localIntegerRegion ->
+        base ∈ valuationCover.localFactorRegion valuationCover.anchor place
+  coordinate_localIntegerFactor_mem_iff_anchorLocalFactor :
+    ∀ d : δ, ∀ base : (d : δ) -> A d,
+      base d ∈ nonzeroScalarSource.localIntegerFactorRegion d ↔
+        base ∈ valuationCover.localFactorRegion valuationCover.anchor
+          (coordinatePlace d)
+  selectedParameterRegion_eq_intersection :
+    nonzeroScalarSource.parameterRegion selectedNonzeroScalar =
+      nonzeroScalarSource.directProductSource.intersectionParameter
+        (⋃ i, valuationCover.possibleRegion i)
+
+namespace IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+
+variable {δ : Type u} {A : δ -> Type v}
+variable [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+variable {ι : Type y} {η : Type x} {K : Type z} {β : Type w}
+variable {γ : Type max u v w x y z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable [Fintype β] [Fintype γ]
+
+def anchorValuationBallFactor
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ)
+    (place : γ) :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource
+      ((d : δ) -> A d) η K data.valuationCover.hullSystem :=
+  data.valuationCover.valuationBallFactor data.valuationCover.anchor place
+
+theorem anchorCompactOpenSubset_eq_ringOfIntegers
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ)
+    (place : γ) :
+    (data.anchorValuationBallFactor place).compactOpenSubset =
+      (data.anchorValuationBallFactor place).ringOfIntegers :=
+  data.anchor_compactOpenSubset_eq_ringOfIntegers place
+
+theorem anchorRingOfIntegers_eq_valuationBall_one
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ)
+    (place : γ) :
+    (data.anchorValuationBallFactor place).ringOfIntegers =
+      (data.anchorValuationBallFactor place).valuationBall 1 :=
+  rfl
+
+theorem anchorLocalFactorRegion_eq_realizedRingOfIntegers
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ)
+    (place : γ) :
+    data.valuationCover.localFactorRegion data.valuationCover.anchor place =
+      (data.anchorValuationBallFactor place).realizedRegion
+        (data.anchorValuationBallFactor place).ringOfIntegers := by
+  have hregion :=
+    data.valuationCover.valuationBallFactor_region_eq_localFactorRegion
+      data.valuationCover.anchor place
+  rw [← hregion]
+  simpa [anchorValuationBallFactor] using
+    congrArg
+      ((data.anchorValuationBallFactor place).realizedRegion)
+      (data.anchorCompactOpenSubset_eq_ringOfIntegers place)
+
+theorem localIntegerRegion_mem_iff_anchorCell_mem
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ)
+    (base : (d : δ) -> A d) :
+    base ∈ data.nonzeroScalarSource.localIntegerRegion ↔
+      base ∈ data.valuationCover.directProductCell data.valuationCover.anchor := by
+  constructor
+  · intro hbase place
+    exact data.localInteger_mem_anchorLocalFactor place base hbase
+  · intro hbase d
+    exact
+      (data.coordinate_localIntegerFactor_mem_iff_anchorLocalFactor d base).mpr
+        (hbase (data.coordinatePlace d))
+
+theorem localIntegerRegion_eq_anchorCell
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    data.nonzeroScalarSource.localIntegerRegion =
+      data.valuationCover.directProductCell data.valuationCover.anchor := by
+  ext base
+  exact data.localIntegerRegion_mem_iff_anchorCell_mem base
+
+noncomputable def toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+      δ A ι η K β γ :=
+  { valuationCover := data.valuationCover,
+    nonzeroScalarSource := data.nonzeroScalarSource,
+    selectedNonzeroScalar := data.selectedNonzeroScalar,
+    hullSystem_eq_nonzeroScalarProduct :=
+      data.hullSystem_eq_nonzeroScalarProduct,
+    localIntegerRegion_eq_anchorCell :=
+      data.localIntegerRegion_eq_anchorCell,
+    selectedParameterRegion_eq_intersection :=
+      data.selectedParameterRegion_eq_intersection }
+
+def possibleImageUnion
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    Set ((d : δ) -> A d) :=
+  data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
+    |>.possibleImageUnion
+
+def selectedScalarImageHull
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    Set ((d : δ) -> A d) :=
+  data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
+    |>.selectedScalarImageHull
+
+noncomputable def toOb3Ob5AdjustedDeterminantLogVolumeSource
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    IUTStage1Remark395Ob3Ob5DeterminantCompatibilitySource.IUTStage1Remark395Ob3Ob5AdjustedDeterminantLogVolumeSource
+      ((d : δ) -> A d) ι β γ :=
+  data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
+    |>.toOb3Ob5AdjustedDeterminantLogVolumeSource
+
+theorem selectedScalarImageHull_eq_valuationBallDirectProductCellUnion
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    data.selectedScalarImageHull =
+      data.valuationCover.directProductCellUnion :=
+  data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
+    |>.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    (∀ place : γ,
+      (data.anchorValuationBallFactor place).compactOpenSubset =
+        (data.anchorValuationBallFactor place).ringOfIntegers ∧
+      (data.anchorValuationBallFactor place).ringOfIntegers =
+        (data.anchorValuationBallFactor place).valuationBall 1 ∧
+      data.valuationCover.localFactorRegion data.valuationCover.anchor place =
+        (data.anchorValuationBallFactor place).realizedRegion
+          (data.anchorValuationBallFactor place).ringOfIntegers) ∧
+      (∀ d : δ, ∀ base : (d : δ) -> A d,
+        base d ∈ data.nonzeroScalarSource.localIntegerFactorRegion d ↔
+          base ∈ data.valuationCover.localFactorRegion
+            data.valuationCover.anchor (data.coordinatePlace d)) ∧
+      (∀ base : (d : δ) -> A d,
+        base ∈ data.nonzeroScalarSource.localIntegerRegion ↔
+          base ∈ data.valuationCover.directProductCell
+            data.valuationCover.anchor) ∧
+      data.nonzeroScalarSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      (∀ d : δ, (data.selectedNonzeroScalar d).1 ≠ 0) ∧
+      data.selectedScalarImageHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.valuationCover.hullSystem.logVolume data.selectedScalarImageHull =
+        data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  by
+    exact
+      ⟨fun place =>
+          ⟨data.anchorCompactOpenSubset_eq_ringOfIntegers place,
+            data.anchorRingOfIntegers_eq_valuationBall_one place,
+            data.anchorLocalFactorRegion_eq_realizedRingOfIntegers place⟩,
+        data.coordinate_localIntegerFactor_mem_iff_anchorLocalFactor,
+        data.localIntegerRegion_mem_iff_anchorCell_mem,
+        data.localIntegerRegion_eq_anchorCell,
+        data.nonzeroScalarSource.selectedScalarParameter_nonzero
+          data.selectedNonzeroScalar,
+        data.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion,
+        by
+          rw [data.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion]
+          exact data.valuationCover.directProductCoverLogVolume_eq_calibratedCellSum,
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource
+          |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
+
+end IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+
+/--
 Cover-additive valuation-ball factor-calibrated Haar tensor-packet source.
 
 This variant lowers the valuation-ball factor-calibrated determinant route

@@ -909,7 +909,28 @@ by the adjusted Ob3/Ob5 determinant source.  The remaining local-field task is
 therefore more specific: identify the source-paper scalar parameters as
 nonzero elements of the local factors and connect the local integer factors
 \(O_v\) to the valuation-ring/unit-ball construction already present in the
-Haar normalization branch.
+Haar normalization branch.  This second connection has now been formalized at
+the product-cover boundary by
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplication}\\
+\quad\texttt{ProductHullCoverSource}.
+\end{array}
+\]
+This source keeps the valuation-cover place index explicit and records a
+coordinate-to-place selector.  At the anchor chart it requires each selected
+compact-open valuation ball to be the unit ball \(\mathcal{O}_v=\{x\mid
+\|x\|_v\leq 1\}\), proves that the anchor local factor is the realized ring of
+integers, derives the global equality
+\[
+  O=\prod_v O_v=\text{anchor valuation direct-product cell},
+\]
+and then constructs the previous nonzero-scalar valuation cover.  Thus the
+\(\lambda_v O_v\) hull now enters the adjusted Ob3/Ob5 determinant route
+through valuation-unit-ball provenance, not through a separately supplied
+global anchor-cell equality.  What remains is to construct the
+coordinate-to-place selector and the nonzero scalars from the source-paper
+Frobenioid/Kummer local data rather than pass them as source fields.
 This valuation-ball provenance has now been lifted to the finite-divisor
 vertical-\(IQ\) endpoint.  The declaration
 \[
