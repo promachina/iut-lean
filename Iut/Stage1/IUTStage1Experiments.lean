@@ -34542,6 +34542,68 @@ theorem recordOb3Ob5AdjustedPossibleImageFiniteDivisorVerticalIQ_cThetaDichotomy
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface audit that the constructed finite-divisor Remark 3.9.5 source
+projects the actual constructed holomorphic-hull/determinant Step (xi) object.
+
+This keeps the selected possible image and the normalized determinant comparison
+visible before the finite-divisor vertical-`IQ` route consumes the source.
+-/
+theorem remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource_possibleImageConstructedStepXIAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    (sourceData :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record) :
+    let constructedSource :=
+      sourceData.toPossibleImageConstructedHolomorphicHullDeterminantSource;
+    package.preLedger.measure =
+        sourceData.measuredSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      constructedSource.qPilotRegion =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+          record sourceData.qChoice ∧
+      constructedSource.qPilotRegion ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record ∧
+      constructedSource.determinantSource =
+        sourceData.measuredSource.adjustedSource.ob3ob4Source.toWeightedDeterminantSource ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        obligations.hullDetData.bridgeData ∧
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          sourceData.operation sourceData.hullOperation
+          sourceData.determinantOperation
+          sourceData.measuredSource.measuredFamilyHullSource.familyHullSource.hullData
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.qChoice)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+            (record := record) sourceData.qChoice
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+              record sourceData.qChoice)
+            (fun _ hx => hx))
+          sourceData.measuredSource.measuredFamilyHullSource.familyHullSource.determinantSource
+          sourceData.measuredSource.measuredFamilyHullSource.familyHullSource.compatibility
+          sourceData.measuredSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measuredSource.measuredFamilyHullSource.familyHullSource
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                sourceData.thetaSigned_eq_familyHullLogVolume) ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        constructedSource.determinantSource.normalizedLogVolume ∧
+      constructedSource.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  sourceData.toPossibleImageConstructedHolomorphicHullDeterminantSource_endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy through the constructed Remark 3.9.5
 Ob3/Ob5-adjusted hull/determinant source.
 

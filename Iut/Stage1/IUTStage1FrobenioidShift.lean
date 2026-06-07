@@ -59217,6 +59217,85 @@ noncomputable def toPossibleImageConstructorBuiltHolomorphicHullDeterminantSourc
       sourceData.obligationsHullDetData_eq_recordCanonical
 
 set_option linter.style.longLine false in
+/--
+Constructed Remark 3.9.5 Step (xi) source projected from the milestone
+finite-divisor source.
+
+This keeps the actual holomorphic-hull/determinant source object visible at the
+finite-divisor boundary: the q-pilot region is the selected Theorem 3.11
+possible image, its containment in the record union is derived from the choice,
+and the package measure calibration is projected from the measured Ob3/Ob5
+source.
+-/
+noncomputable def toPossibleImageConstructedHolomorphicHullDeterminantSource
+    (sourceData :
+      IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record) :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+      (β := β) record :=
+  sourceData.measuredSource
+    |>.toPossibleImageConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolumeFromObligations
+      sourceData.operation sourceData.hullOperation
+      sourceData.determinantOperation sourceData.qChoice
+      sourceData.thetaSigned_eq_familyHullLogVolume obligations
+      sourceData.obligationsHullDetData_eq_recordCanonical
+
+set_option linter.style.longLine false in
+theorem toPossibleImageConstructedHolomorphicHullDeterminantSource_endpoint
+    (sourceData :
+      IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record) :
+    let constructedSource :=
+      sourceData.toPossibleImageConstructedHolomorphicHullDeterminantSource;
+    packageN.preLedger.measure =
+        sourceData.measuredSource.measuredFamilyHullSource.familyHullSource.hullData.toRegionMeasure ∧
+      constructedSource.qPilotRegion =
+        recordThetaPossibleImage record sourceData.qChoice ∧
+      constructedSource.qPilotRegion ⊆ recordThetaPossibleImageUnion record ∧
+      constructedSource.determinantSource =
+        sourceData.measuredSource.adjustedSource.ob3ob4Source.toWeightedDeterminantSource ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        obligations.hullDetData.bridgeData ∧
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          sourceData.operation sourceData.hullOperation
+          sourceData.determinantOperation
+          sourceData.measuredSource.measuredFamilyHullSource.familyHullSource.hullData
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) sourceData.qChoice
+            (recordThetaPossibleImage record sourceData.qChoice)
+            (fun _ hx => hx))
+          sourceData.measuredSource.measuredFamilyHullSource.familyHullSource.determinantSource
+          sourceData.measuredSource.measuredFamilyHullSource.familyHullSource.compatibility
+          sourceData.measuredSource.measuredFamilyHullSource.measure_eq_hullLogVolume
+          (sourceData.measuredSource.measuredFamilyHullSource.familyHullSource
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                sourceData.thetaSigned_eq_familyHullLogVolume) ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        constructedSource.determinantSource.normalizedLogVolume ∧
+      constructedSource.determinantSource.normalizedLogVolume <=
+        packageN.preLedger.thetaSigned ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        packageN.preLedger.thetaSigned ∧
+      packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned :=
+  by
+    intro constructedSource
+    exact
+      ⟨sourceData.measuredSource.measure_eq_hullLogVolume,
+        rfl,
+        constructedSource.q_subset_recordUnion,
+        rfl,
+        obligations.hullDetData.hullDetBridge_eq_bridgeData,
+        obligations.hullDetData.hullDetBridge_eq_bridgeData.trans
+          sourceData.obligationsHullDetData_eq_recordCanonical,
+        constructedSource.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_determinantNormalizedLogVolume,
+        constructedSource.toRecordHullDeterminantBridgeSource.determinantNormalizedLogVolume_le_thetaSigned,
+        constructedSource.qRegionLogVolume_le_thetaSigned,
+        constructedSource.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
 theorem tensorPower_bound
     (sourceData :
       IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource

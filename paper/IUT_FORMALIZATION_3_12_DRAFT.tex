@@ -5560,6 +5560,25 @@ and experiment wrapper
 \]
 therefore remove the separate public measure-calibration and bridge
 synchronization arguments from this adjusted Ob3/Ob5 route.
+The constructed finite-divisor source now also projects the actual constructed
+Remark~3.9.5 Step~(xi) object, rather than only the downstream
+constructor-built possible-image wrapper.  The projection
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ConstructedHullDeterminantFiniteDivisor}\\
+\quad\texttt{VerticalIQSource.toPossibleImageConstructedHolomorphicHull}\\
+\quad\texttt{DeterminantSource}
+\end{array}
+\]
+fixes the q-region to the selected Theorem~3.11 possible image, derives its
+containment in the record possible-image union, exposes the package
+hull/determinant bridge equality, and records the two-step comparison
+\[
+  \mu_{\log}(qRegion)\le \det_{\mathrm{norm}}\le\theta_{\mathrm{signed}}.
+\]
+The experiment theorem
+\texttt{remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource\_possibleImageConstructedStepXIAudit}
+is the review-facing form of this Step~(xi) projection.
 The same route now has a constructor-backed source form.  The source
 \[
 \begin{array}{l}
