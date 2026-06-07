@@ -900,7 +900,7 @@ Direct summand data indexed by the same finite type as a typed capsule family.
 
 The shared index type is intentional: it records the current formalization
 invariant that local tensor direct summands and capsule entries are counted
-together, while avoiding an unsafe identification of independently supplied
+together, while avoiding an invalid identification of independently supplied
 finite sets.
 -/
 structure IUTStage1TensorDirectSummandFamily

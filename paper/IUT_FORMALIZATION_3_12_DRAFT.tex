@@ -6697,10 +6697,16 @@ The practical priority order is:
   =\det_{\log}=\det_{\log}^{\mathrm{norm}}\) and the induced Ob3/Ob5
   determinant compatibility.  Thus the lowest current valuation-ball/Haar
   local-ring route is now connected directly to the determinant payload used by
-  the Step~(xi) bridge, not only to its own cover-log-volume endpoint.  But
+  the Step~(xi) bridge, not only to its own cover-log-volume endpoint.  A
+  narrower cover-additive variant now removes the global
+  \texttt{IUTStage1FiniteAdditiveHullLogVolumeSource} obligation from this
+  valuation-ball branch: it assumes only the direct-product cover equality
+  \(\mu_{\log}(\bigcup_\beta H_\beta)=\sum_\beta \mu_{\log}(H_\beta)\), derives
+  the calibrated cell sum, and then projects through the same localized cover
+  and adjusted Ob3/Ob5 determinant source.  But
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  finite-additive hull log-volume source, construction of the compact-open
+  remaining cover-additivity theorem, construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), proof that
   the valuation unit ball is the ring of integers, valuation-ball openness and
   compactness, normalized Haar measure choice, and uniformizer-scaling theorem,
