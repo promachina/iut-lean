@@ -7,6 +7,7 @@ import Iut.Foundations.InitialThetaData
 import Iut.Stage1.IUTStage1Data
 import Mathlib.Data.ZMod.ValMinAbs
 import Mathlib.MeasureTheory.Measure.Haar.Basic
+import Mathlib.Topology.Algebra.Valued.LocallyCompact
 
 /-!
 First non-toy source-facing package for the Stage 1 IUT scaffold.
@@ -22,6 +23,8 @@ namespace Stage1
 
 open RealLineCopy
 open scoped BigOperators
+open scoped NormedField
+open scoped Valued
 
 universe u v w x y z
 
@@ -10562,6 +10565,92 @@ theorem endpoint
 end IUTStage1ProperUltrametricValuationBallTopologySource
 
 /--
+Valued-field ring-of-integers unit-ball source.
+
+This replaces the abstract Stage 1 ``ring of integers is the valuation unit
+ball'' field by the mathlib valued-field integer subring.  For a
+nontrivially normed ultrametric field, `𝒪[K]` is exactly `{x | ‖x‖ <= 1}`,
+and the norm unit ball agrees with the radius-one ball in the proper
+ultrametric valuation-ball topology.
+-/
+structure IUTStage1ValuedFieldIntegerUnitBallSource
+    (K : Type u) [NontriviallyNormedField K] [ProperSpace K]
+    [IsUltrametricDist K] where
+  sourceTag : Unit := ()
+
+namespace IUTStage1ValuedFieldIntegerUnitBallSource
+
+variable {K : Type u} [NontriviallyNormedField K] [ProperSpace K]
+variable [IsUltrametricDist K]
+
+noncomputable def integerSubring
+    (_data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    Subring K :=
+  𝒪[K]
+
+def ringOfIntegers
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    Set K :=
+  data.integerSubring
+
+def valuationNorm
+    (_data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    K -> Real :=
+  fun point => ‖point‖
+
+def unitBall
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    Set K :=
+  { point : K | data.valuationNorm point <= 1 }
+
+def valuationTopology
+    (_data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    IUTStage1ProperUltrametricValuationBallTopologySource K :=
+  { ultrametric_dist := by
+      intro x y z
+      exact IsUltrametricDist.dist_triangle_max x y z }
+
+theorem ringOfIntegers_eq_unitBall
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    data.ringOfIntegers = data.unitBall := by
+  ext point
+  simp [ringOfIntegers, unitBall, valuationNorm, integerSubring,
+    Valued.integer.mem_iff]
+
+theorem ringOfIntegers_eq_metric_closedBall
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    data.ringOfIntegers = Metric.closedBall (0 : K) 1 := by
+  ext point
+  simp [ringOfIntegers, integerSubring, Valued.integer.mem_iff,
+    Metric.closedBall, dist_eq_norm]
+
+theorem valuationTopology_valuationBall_one_eq_ringOfIntegers
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    data.valuationTopology.valuationBall 1 = data.ringOfIntegers := by
+  ext point
+  simp [IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall,
+    IUTStage1ProperUltrametricValuationBallTopologySource.valuationNorm,
+    ringOfIntegers, integerSubring, Valued.integer.mem_iff, dist_eq_norm]
+
+theorem endpoint
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    data.integerSubring = 𝒪[K] ∧
+      data.ringOfIntegers = data.unitBall ∧
+      data.ringOfIntegers = Metric.closedBall (0 : K) 1 ∧
+      data.valuationTopology.valuationBall 1 =
+        data.ringOfIntegers ∧
+      IsOpen (data.valuationTopology.valuationBall 1) ∧
+      IsCompact (data.valuationTopology.valuationBall 1) :=
+  ⟨rfl,
+    data.ringOfIntegers_eq_unitBall,
+    data.ringOfIntegers_eq_metric_closedBall,
+    data.valuationTopology_valuationBall_one_eq_ringOfIntegers,
+    data.valuationTopology.unitBall_compactOpen.1,
+    data.valuationTopology.unitBall_compactOpen.2⟩
+
+end IUTStage1ValuedFieldIntegerUnitBallSource
+
+/--
 Valuation-ball topology-backed additive Haar normalization source.
 
 This lowers the valuation-ball Haar source by deriving the compact-open
@@ -11041,6 +11130,140 @@ theorem endpoint
     rfl⟩
 
 end IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource
+
+/--
+Valued-field integer proper-ultrametric additive Haar normalization source.
+
+This specializes the proper-ultrametric valuation-ball Haar route to the
+mathlib valued-field integer subring `𝒪[K]`.  The local ring label is no longer
+an arbitrary parameter: it is the actual valued-field integer subring, and the
+Haar unit normalization is stated on that subring before being transported to
+the radius-one valuation ball.
+-/
+structure IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
+    (α : Type u) (K : Type w)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  integerSource : IUTStage1ValuedFieldIntegerUnitBallSource K
+  residuePrime : Nat
+  residue_prime : Nat.Prime residuePrime
+  finiteExtensionDegree : Nat
+  finite_extension_degree_pos : 0 < finiteExtensionDegree
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  uniformizerScalePoint : K -> K
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  uniformizerScale_preserves_open :
+    ∀ subset : Set K, IsOpen subset ->
+      IsOpen (uniformizerScalePoint '' subset)
+  uniformizerScale_preserves_compact :
+    ∀ subset : Set K, IsCompact subset ->
+      IsCompact (uniformizerScalePoint '' subset)
+  valuationUnitBall_measure_one :
+    (haarMeasure integerSource.ringOfIntegers).toReal = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal
+  uniformizerScaled_compactOpenBall_measure_toReal_eq :
+    (haarMeasure
+        (uniformizerScalePoint ''
+          integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal =
+      (haarMeasure
+        (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal /
+        (residuePrime : Real) ^ finiteExtensionDegree
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (finiteExtensionDegree : Real)
+
+namespace IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
+
+variable {α : Type u} {K : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+    (data :
+      IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
+        α K hullSystem) :
+    IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource
+      α (Subring K) K hullSystem :=
+  { localRing := data.integerSource.integerSubring,
+    residuePrime := data.residuePrime,
+    residue_prime := data.residue_prime,
+    finiteExtensionDegree := data.finiteExtensionDegree,
+    finite_extension_degree_pos := data.finite_extension_degree_pos,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    valuationTopology := data.integerSource.valuationTopology,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    uniformizerScalePoint := data.uniformizerScalePoint,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    uniformizerScale_preserves_open :=
+      data.uniformizerScale_preserves_open,
+    uniformizerScale_preserves_compact :=
+      data.uniformizerScale_preserves_compact,
+    valuationUnitBall_measure_one := by
+      rw [data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers]
+      exact data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    uniformizerScaled_compactOpenBall_measure_toReal_eq :=
+      data.uniformizerScaled_compactOpenBall_measure_toReal_eq,
+    hull_logVolume_eq_normalized :=
+      data.hull_logVolume_eq_normalized }
+
+theorem endpoint
+    (data :
+      IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
+        α K hullSystem) :
+    data.integerSource.ringOfIntegers =
+        data.integerSource.unitBall ∧
+      data.integerSource.valuationTopology.valuationBall 1 =
+        data.integerSource.ringOfIntegers ∧
+      data.toProperUltrametricValuationBallAdditiveHaarNormalizationSource.localRing =
+        data.integerSource.integerSubring ∧
+      data.toProperUltrametricValuationBallAdditiveHaarNormalizationSource.ringOfIntegers =
+        data.integerSource.ringOfIntegers ∧
+      data.toProperUltrametricValuationBallAdditiveHaarNormalizationSource.compactOpenSubset =
+        data.integerSource.valuationTopology.valuationBall
+          data.compactOpenRadius ∧
+      (data.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.ringOfIntegers) =
+        data.integerSource.ringOfIntegers :=
+  ⟨data.integerSource.ringOfIntegers_eq_unitBall,
+    data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers,
+    rfl,
+    by
+      simpa [
+        toProperUltrametricValuationBallAdditiveHaarNormalizationSource,
+        IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.ringOfIntegers,
+        IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.valuationBall] using
+        data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers,
+    rfl,
+    by
+      simpa [
+        toProperUltrametricValuationBallAdditiveHaarNormalizationSource,
+        IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.toUltrametricValuationBallAdditiveHaarNormalizationSource,
+        IUTStage1UltrametricValuationBallAdditiveHaarNormalizationSource.ringOfIntegers,
+        IUTStage1UltrametricValuationBallAdditiveHaarNormalizationSource.valuationBall,
+        IUTStage1ProperUltrametricValuationBallTopologySource.toUltrametricValuationBallTopologySource,
+        IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall] using
+        data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers⟩
+
+end IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
 
 /--
 Valuation-ball additive Haar normalization source.

@@ -3203,6 +3203,30 @@ open/compact fields.  The companion declaration
 \end{array}
 \]
 feeds this proper-ultrametric source into the ultrametric Haar route.
+The local ring input has also been sharpened from an abstract unit-ball label
+to the valued-field integer subring supplied by \texttt{mathlib}.  The
+declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1ValuedFieldIntegerUnitBallSource}
+\end{array}
+\]
+works over a nontrivially normed ultrametric field and uses
+\texttt{Valued.integer.mem\_iff} to prove
+\[
+  \mathcal{O}_K=\{x\mid \|x\|\leq 1\}=\overline{B}(0,1).
+\]
+It then identifies this valued-field integer subring with the radius-one ball
+in the proper-ultrametric valuation-ball topology.  The companion declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1ValuedFieldIntegerProperUltrametric}\\
+\quad\texttt{HaarNormalizationSource}
+\end{array}
+\]
+uses \(\mathcal{O}_K\) itself as the local-ring label and transports the Haar
+mass-one normalization from \(\mathcal{O}_K\) to the radius-one valuation ball
+before projecting into the proper-ultrametric Haar normalization route.
 The declaration
 \[
 \begin{array}{l}
@@ -6773,9 +6797,10 @@ The practical priority order is:
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
   family-local finite-cover additivity theorem, construction of the compact-open
-  valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), proof that
-  the valuation unit ball is the ring of integers, derivation of the proper
-  ultrametric local topology from the actual finite-extension valuation,
+  valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), specialization
+  of the valued-field integer/unit-ball theorem to the actual finite-extension
+  completions, derivation of the proper ultrametric local topology from the
+  actual finite-extension valuation,
   normalized
   Haar measure choice, and uniformizer-scaling theorem,
   per-factor

@@ -30,6 +30,8 @@ open IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction
 open IUTStage1StructuredSHEFactoredSquareFullLabelObligations
 open IUTStage1HullDetPilotUpperRayLogVolume
 open IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
+open scoped NormedField
+open scoped Valued
 
 universe u v w x y z
 
@@ -43043,6 +43045,59 @@ theorem properUltrametricValuationBallTopologySource_endpoint
       data.toUltrametricValuationBallTopologySource.valuationBall radius =
         data.valuationBall radius :=
   data.endpoint hradius
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface valued-field integer unit-ball source.
+
+This endpoint exposes the mathlib valued-field identification
+`𝒪[K] = {x | ‖x‖ <= 1}` and its compatibility with the proper-ultrametric
+radius-one valuation ball.
+-/
+theorem valuedFieldIntegerUnitBallSource_endpoint
+    {K : Type u} [NontriviallyNormedField K] [ProperSpace K]
+    [IsUltrametricDist K]
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    data.integerSubring = 𝒪[K] ∧
+      data.ringOfIntegers = data.unitBall ∧
+      data.ringOfIntegers = Metric.closedBall (0 : K) 1 ∧
+      data.valuationTopology.valuationBall 1 =
+        data.ringOfIntegers ∧
+      IsOpen (data.valuationTopology.valuationBall 1) ∧
+      IsCompact (data.valuationTopology.valuationBall 1) :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface valued-field integer proper-ultrametric Haar source.
+
+This endpoint feeds the concrete valued-field integer subring `𝒪[K]` into the
+proper-ultrametric valuation-ball Haar normalization route.
+-/
+theorem remark395ValuedFieldIntegerProperUltrametricHaarNormalizationSource_endpoint
+    {α : Type u} {K : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    (data :
+      IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
+        α K hullSystem) :
+    data.integerSource.ringOfIntegers =
+        data.integerSource.unitBall ∧
+      data.integerSource.valuationTopology.valuationBall 1 =
+        data.integerSource.ringOfIntegers ∧
+      data.toProperUltrametricValuationBallAdditiveHaarNormalizationSource.localRing =
+        data.integerSource.integerSubring ∧
+      data.toProperUltrametricValuationBallAdditiveHaarNormalizationSource.ringOfIntegers =
+        data.integerSource.ringOfIntegers ∧
+      data.toProperUltrametricValuationBallAdditiveHaarNormalizationSource.compactOpenSubset =
+        data.integerSource.valuationTopology.valuationBall
+          data.compactOpenRadius ∧
+      (data.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.ringOfIntegers) =
+        data.integerSource.ringOfIntegers :=
+  data.endpoint
 
 set_option linter.style.longLine false in
 /--
