@@ -64613,6 +64613,81 @@ noncomputable def toPrincipalValuationBallBackedConstructorBackedConstructedHull
         using adjustedSource_eq_valuationBall }
 
 set_option linter.style.longLine false in
+theorem adjustedSource_eq_valuationBall_ofValuationBallRecordSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {Λ : Type (max u w x y z)}
+    (principalValuationBallSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γ Λ)
+    (possibleRegion_eq_recordThetaPossibleImage :
+      principalValuationBallSource.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage record)
+    (adjustedSource_eq_recordValuationBall :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource =
+        IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+          (record := record) principalValuationBallSource.valuationCover
+          possibleRegion_eq_recordThetaPossibleImage) :
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.toSourceCoreAdjustedLogVolumeSource =
+      principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource := by
+  calc
+    sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource.toSourceCoreAdjustedLogVolumeSource =
+        (IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+          (record := record) principalValuationBallSource.valuationCover
+          possibleRegion_eq_recordThetaPossibleImage).toSourceCoreAdjustedLogVolumeSource := by
+          simpa using
+            congrArg
+              IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toSourceCoreAdjustedLogVolumeSource
+              adjustedSource_eq_recordValuationBall
+    _ = principalValuationBallSource.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource :=
+        IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_toSourceCoreAdjustedLogVolumeSource_eq
+          (record := record) principalValuationBallSource.valuationCover
+          possibleRegion_eq_recordThetaPossibleImage
+    _ = principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource := by
+        rfl
+
+set_option linter.style.longLine false in
+/--
+Project an exact-theta adjusted-summand Step (xi) source into the principal
+valuation-ball-backed finite-divisor route, deriving the valuation-ball
+source-core synchronization from the record-canonical valuation-ball constructor.
+-/
+noncomputable def toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {Λ : Type (max u w x y z)}
+    (principalValuationBallSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γ Λ)
+    (possibleRegion_eq_recordThetaPossibleImage :
+      principalValuationBallSource.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage record)
+    (adjustedSource_eq_recordValuationBall :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource =
+        IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+          (record := record) principalValuationBallSource.valuationCover
+          possibleRegion_eq_recordThetaPossibleImage) :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+      (η := η) (K := K) (β := β) (γ := γ) record Λ :=
+  sourceData.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+    principalValuationBallSource
+    (sourceData.adjustedSource_eq_valuationBall_ofValuationBallRecordSource
+      principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+      adjustedSource_eq_recordValuationBall)
+
+set_option linter.style.longLine false in
 structure PrincipalValuationBallBackedExactThetaFiniteDivisorAudit
     (sourceData :
       IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
@@ -64691,6 +64766,39 @@ theorem toPrincipalValuationBallBackedExactThetaFiniteDivisorAudit
         hexact.thetaMonoidDegree_eq_adjustedSummandSum,
       qSigned_le_thetaSigned :=
         hvaluation.qSigned_le_thetaSigned }
+
+set_option linter.style.longLine false in
+theorem toPrincipalValuationBallBackedExactThetaFiniteDivisorAuditOfValuationBallRecordSource
+    (sourceData :
+      IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) part audited record hodgeSynchronization)
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {Λ : Type (max u w x y z)}
+    (principalValuationBallSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γ Λ)
+    (possibleRegion_eq_recordThetaPossibleImage :
+      principalValuationBallSource.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage record)
+    (adjustedSource_eq_recordValuationBall :
+      sourceData.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource =
+        IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+          (record := record) principalValuationBallSource.valuationCover
+          possibleRegion_eq_recordThetaPossibleImage) :
+    PrincipalValuationBallBackedExactThetaFiniteDivisorAudit
+      sourceData principalValuationBallSource
+        (sourceData.adjustedSource_eq_valuationBall_ofValuationBallRecordSource
+          principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+          adjustedSource_eq_recordValuationBall) :=
+  sourceData.toPrincipalValuationBallBackedExactThetaFiniteDivisorAudit
+    principalValuationBallSource
+    (sourceData.adjustedSource_eq_valuationBall_ofValuationBallRecordSource
+      principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+      adjustedSource_eq_recordValuationBall)
 
 end
   IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource

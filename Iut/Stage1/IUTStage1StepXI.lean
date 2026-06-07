@@ -21,7 +21,7 @@ namespace Stage1
 open RealLineCopy
 open scoped BigOperators
 
-universe u v w x
+universe u v w x y z
 
 /--
 Source-facing split hull+det evidence for a Stage 1 source package.
@@ -15368,7 +15368,7 @@ record family; the hull/determinant compatibility is then inherited from the
 valuation-ball source, not supplied separately.
 -/
 noncomputable def ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
-    {η : Type x} {K : Type x}
+    {η : Type y} {K : Type z}
     [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
     (valuationSource :
       IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
@@ -15395,7 +15395,7 @@ noncomputable def ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveC
 
 set_option linter.style.longLine false in
 theorem ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_endpoint
-    {η : Type x} {K : Type x}
+    {η : Type y} {K : Type z}
     [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
     (valuationSource :
       IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
@@ -15458,7 +15458,7 @@ theorem ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedL
 
 set_option linter.style.longLine false in
 theorem ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_toSourceCoreAdjustedLogVolumeSource_eq
-    {η : Type x} {K : Type x}
+    {η : Type y} {K : Type z}
     [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
     (valuationSource :
       IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
