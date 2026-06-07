@@ -2889,6 +2889,31 @@ derives the equality for each \(H_\beta\) from the single-cell product
 log-volume source, proves disjointness from local-factor separation, applies
 finite additivity to the direct-product cover, and then projects to the previous
 finite-additive charted source.
+This source has now been lowered once more to a tensor/direct-sum datum for the
+actual charted cells.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1FiniteTensorDirectSumLogVolumeSource}
+\end{array}
+\]
+records a finite tensor-product region, its identification with the corresponding
+direct-product cell, the local factor log-volumes, and the finite direct-sum
+formula for the tensor-product log-volume.  From these data, \Lean{} derives the
+single-cell law
+\[
+  \mu_{\log}(H_\beta)
+    =\sum_v \mu_{\log}(H_{\beta,v}).
+\]
+The aggregate
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395TensorPacketFiniteAdditive}\\
+\quad\texttt{CalibratedLocalRingChartedVectorBundleHullCoverSource}
+\end{array}
+\]
+assigns such a tensor/direct-sum source to each charted localization cell, derives
+the cell log-volume equalities, proves the same pairwise-disjoint cover
+additivity, and projects to the finite-additive calibrated charted cover source.
 This summand-calibrated source now feeds the milestone-facing constructed
 Step~(xi) source directly.  The new constructor
 \[
@@ -6070,13 +6095,15 @@ The practical priority order is:
   local-ring matching, and direct-summand volumes below the previous
   vector-bundle local-factor interface, and the product-log-volume variant now
   factors the per-cell direct-product equality through a reusable
-  single-cell tensor/product log-volume source, but
+  single-cell tensor/product log-volume source; the tensor-packet variant now
+  derives that single-cell law from a finite tensor-region/direct-sum
+  log-volume datum for each actual charted localization cell, but
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
-  finite-additive hull log-volume source, construction of the direct-product
-  tensor log-volume source, per-factor chart/direct-summand calibration
-  construction, local region/vector-bundle log-volume calibration, measure
-  calibration, record-canonical
+  finite-additive hull log-volume source, construction of the tensor-region and
+  local compact-open/direct-sum decomposition data, per-factor
+  chart/direct-summand calibration construction, local region/vector-bundle
+  log-volume calibration, measure calibration, record-canonical
   synchronization, and chart
   synchronization witnesses by source-paper constructions;
 \item only then evaluate whether the Stage 1 interface has enough source
