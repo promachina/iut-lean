@@ -802,6 +802,15 @@ together with the corresponding inequalities for each selected possible image
 \(P_\beta\).  Thus Remark~3.9.5(Ob6)'s warning that estimates must pass through
 hull-approximant unions, rather than through the raw possible-image region
 alone, is now a named checked source endpoint.
+The next source-facing checkpoint is also present.  The Ob7 log-Kummer
+compatibility source attaches a constructed hull/determinant bridge to a finite
+\(F^{\times\mu}\)-prime-strip lift.  Its endpoint proves that the q-region
+log-volume is bounded by the retained prime-strip global log-volume, while
+also recording the prime/place square, local realified-Frobenioid
+log-volume compatibility, and Frobenius-like unit-character compatibility.
+This keeps the comparison object in the Frobenioid/log-Kummer language
+required by Remark~3.9.5(Ob7), instead of collapsing immediately to a bare
+real number.
 The canonical hull \(\phi(P)\) is itself an approximant, and every approximant
 is fixed by hull formation.  This is the compactness guard emphasized in the
 paper: the indeterminacy in choosing a hull approximant remains inside
@@ -6411,6 +6420,26 @@ Thus the strongest current product-hull surface separates the remaining open
 source task--constructing the actual IUT product-hull/determinant data--from the
 ordered-real and determinant-log-volume consequences already checked by the
 kernel.
+The same surface now has an Ob7 log-Kummer compatibility audit,
+\[
+\begin{array}{l}
+\texttt{remark395ProductHullBackedConstructorBackedConstructed}\\
+\quad\texttt{HullDeterminantFiniteDivisorVerticalIQ}\\
+\quad\texttt{\_ob7LogKummerCompatibilityAudit}.
+\end{array}
+\]
+Given a finite \(F^{\times\mu}\)-prime-strip lift whose global realified
+Frobenioid log-volume agrees with the determinant log-volume, this audit
+identifies the family-hull and normalized determinant log-volumes with that
+prime-strip global value and proves
+\[
+  \mu_{\log}(q)\leq \mu_{\log}(F^{\times\mu}_{\mathrm{global}}).
+\]
+For every environment prime it also returns the corresponding Gaussian
+prime-to-place equality, equality of local realified log-volumes at the
+evaluated prime, and equality of Gaussian and environment unit characters.
+Thus the product-hull route now retains the Ob7 log-Kummer/Frobenioid data at
+the precise boundary where the determinant comparison enters the 3.12 corridor.
 The constructor-built source-level canonical-scale bridge is now exposed
 directly as
 \[
@@ -6571,7 +6600,9 @@ The practical priority order is:
   the lower-level record-hull finite-divisor endpoint can also consume this
   constructor-built possible-image source directly, and the adjusted Ob3/Ob5
   finite-divisor endpoint now constructs that source from the record-canonical
-  adjusted determinant log-volume data plus obligations; the newest
+  adjusted determinant log-volume data plus obligations; the product-hull route
+  now also retains the Ob7 \(F^{\times\mu}\)-prime-strip log-Kummer
+  compatibility at the determinant boundary; the newest
   calibrated local-ring charted vector-bundle source pushes the factor regions,
   local-ring matching, and direct-summand volumes below the previous
   vector-bundle local-factor interface, the product-log-volume variant now

@@ -18297,6 +18297,144 @@ theorem endpoint
 end IUTStage1CoricThetaMuPrimeStripInvariant
 
 /--
+Remark 3.9.5(vii), Ob7, finite log-Kummer compatibility source.
+
+Ob7 explains why the Corollary 3.12 comparison cannot be made at the level of
+bare real log-volumes alone.  The comparison object must retain the
+`F^{×μ}`-prime-strip data used by the log-Kummer correspondence: the
+prime/place square, the local realified Frobenioid readings, and the
+Frobenius-like unit characters.  This record attaches that typed prime-strip
+lift to the already constructed hull/determinant bridge.
+-/
+structure IUTStage1Remark395Ob7LogKummerCompatibilitySource
+    (α : Type u) (ι : Type v) (β : Type w)
+    (Penv Pgau V : Type x) (μ : Type y)
+    [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V] where
+  bridgeSource : IUTStage1Remark395HullDeterminantBridgeSource α ι β
+  primeStripLift :
+    IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ
+  determinantLogVolume_eq_primeStripGlobal :
+    bridgeSource.determinantSource.determinantLogVolume =
+      primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume
+
+namespace IUTStage1Remark395Ob7LogKummerCompatibilitySource
+
+variable {α : Type u} {ι : Type v} {β : Type w}
+variable {Penv Pgau V : Type x} {μ : Type y}
+variable [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V]
+
+def primeStripGlobalLogVolume
+    (source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    Real :=
+  source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume
+
+theorem familyHullLogVolume_eq_primeStripGlobal
+    (source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.bridgeSource.familyHullLogVolume =
+      source.primeStripGlobalLogVolume := by
+  calc
+    source.bridgeSource.familyHullLogVolume =
+        source.bridgeSource.determinantSource.determinantLogVolume :=
+      source.bridgeSource.familyHullLogVolume_eq_determinant
+    _ = source.primeStripGlobalLogVolume :=
+      source.determinantLogVolume_eq_primeStripGlobal
+
+theorem determinantNormalizedLogVolume_eq_primeStripGlobal
+    (source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.bridgeSource.determinantNormalizedLogVolume =
+      source.primeStripGlobalLogVolume := by
+  calc
+    source.bridgeSource.determinantNormalizedLogVolume =
+        source.bridgeSource.determinantSource.determinantLogVolume :=
+      source.bridgeSource.determinantNormalizedLogVolume_eq_determinant
+    _ = source.primeStripGlobalLogVolume :=
+      source.determinantLogVolume_eq_primeStripGlobal
+
+theorem qRegionLogVolume_le_primeStripGlobal
+    (source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.bridgeSource.qRegionLogVolume <=
+      source.primeStripGlobalLogVolume :=
+  source.bridgeSource.qRegionLogVolume_le_determinantLogVolume.trans
+    (le_of_eq source.determinantLogVolume_eq_primeStripGlobal)
+
+theorem gaussianPlaceOfEvaluation_eq_environmentPlace
+    (source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        α ι β Penv Pgau V μ)
+    (p : Penv) :
+    source.primeStripLift.base.gaussianPrimeToPlace
+        (source.primeStripLift.base.primeEvaluation p) =
+      source.primeStripLift.base.environmentPrimeToPlace p :=
+  source.primeStripLift.base.gaussianPlaceOfEvaluation_eq_environmentPlace p
+
+theorem gaussianLocalLogVolume_at_evaluatedPrime_eq_environment
+    (source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        α ι β Penv Pgau V μ)
+    (p : Penv) :
+    (source.primeStripLift.base.localEvaluation.gaussianLocal.localObject
+        (source.primeStripLift.base.gaussianPrimeToPlace
+          (source.primeStripLift.base.primeEvaluation p))).realifiedLogVolume =
+      (source.primeStripLift.base.localEvaluation.environmentLocal.localObject
+        (source.primeStripLift.base.environmentPrimeToPlace p)).realifiedLogVolume :=
+  source.primeStripLift.base.gaussianLocalLogVolume_at_evaluatedPrime_eq_environment p
+
+theorem gaussianUnitCharacter_at_evaluatedPrime
+    (source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        α ι β Penv Pgau V μ)
+    (p : Penv) :
+    source.primeStripLift.gaussianUnitCharacter
+        (source.primeStripLift.base.primeEvaluation p) =
+      source.primeStripLift.environmentUnitCharacter p :=
+  source.primeStripLift.gaussianUnitCharacter_at_evaluatedPrime p
+
+theorem endpoint
+    (source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        α ι β Penv Pgau V μ) :
+    source.bridgeSource.qRegion ⊆ source.bridgeSource.familyHull ∧
+      source.bridgeSource.qRegionLogVolume <=
+        source.bridgeSource.determinantNormalizedLogVolume ∧
+      source.bridgeSource.determinantNormalizedLogVolume =
+        source.primeStripGlobalLogVolume ∧
+      source.bridgeSource.familyHullLogVolume =
+        source.primeStripGlobalLogVolume ∧
+      source.bridgeSource.qRegionLogVolume <=
+        source.primeStripGlobalLogVolume ∧
+      (∀ p : Penv,
+        source.primeStripLift.base.gaussianPrimeToPlace
+            (source.primeStripLift.base.primeEvaluation p) =
+          source.primeStripLift.base.environmentPrimeToPlace p ∧
+        (source.primeStripLift.base.localEvaluation.gaussianLocal.localObject
+            (source.primeStripLift.base.gaussianPrimeToPlace
+              (source.primeStripLift.base.primeEvaluation p))).realifiedLogVolume =
+          (source.primeStripLift.base.localEvaluation.environmentLocal.localObject
+            (source.primeStripLift.base.environmentPrimeToPlace p)).realifiedLogVolume ∧
+        source.primeStripLift.gaussianUnitCharacter
+            (source.primeStripLift.base.primeEvaluation p) =
+          source.primeStripLift.environmentUnitCharacter p) :=
+  ⟨source.bridgeSource.qRegion_subset_familyHull,
+    source.bridgeSource.qRegionLogVolume_le_determinantNormalizedLogVolume,
+    source.determinantNormalizedLogVolume_eq_primeStripGlobal,
+    source.familyHullLogVolume_eq_primeStripGlobal,
+    source.qRegionLogVolume_le_primeStripGlobal,
+    fun p =>
+      ⟨source.gaussianPlaceOfEvaluation_eq_environmentPlace p,
+        source.gaussianLocalLogVolume_at_evaluatedPrime_eq_environment p,
+        source.gaussianUnitCharacter_at_evaluatedPrime p⟩⟩
+
+end IUTStage1Remark395Ob7LogKummerCompatibilitySource
+
+/--
 Finite coric global realified Frobenioid compatibility.
 
 IUT II, Corollary 4.7(v), passes from the coric `D^{⊢}`-link to an

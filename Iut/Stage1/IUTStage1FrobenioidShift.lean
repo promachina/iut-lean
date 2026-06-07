@@ -58806,6 +58806,108 @@ theorem productHullBackedExactThetaBridgeAudit
     qSigned_le_thetaSigned :=
       recordAudit.qSigned_le_thetaSigned }
 
+set_option linter.style.longLine false in
+/--
+Product-hull-backed Ob7 log-Kummer compatibility audit.
+
+This attaches the product-hull hull/determinant bridge to a finite
+`F^{×μ}`-prime-strip lift.  The audit records the source-paper Ob7 data that
+is lost by a bare log-volume-only comparison: the prime/place square, local
+realified Frobenioid log-volume compatibility, and Frobenius-like unit
+character transport.
+-/
+structure ProductHullBackedOb7LogKummerCompatibilityAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    (Penv Pgau V μ : Type x)
+    [Fintype Penv] [Fintype Pgau] [Fintype V] :
+    Type (max u v x) where
+  exactThetaBridgeAudit :
+    ProductHullBackedExactThetaBridgeAudit sourceData
+  ob7CompatibilitySource :
+    IUTStage1Remark395Ob7LogKummerCompatibilitySource
+      (Point target)
+      (IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+      β Penv Pgau V μ
+  ob7_bridge_eq_constructorBridge :
+    ob7CompatibilitySource.bridgeSource =
+      sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge
+  determinantLogVolume_eq_primeStripGlobal :
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantSource.determinantLogVolume =
+      ob7CompatibilitySource.primeStripGlobalLogVolume
+  qPilotLogVolume_le_primeStripGlobal :
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.qRegionLogVolume <=
+      ob7CompatibilitySource.primeStripGlobalLogVolume
+  determinantNormalized_eq_primeStripGlobal :
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantNormalizedLogVolume =
+      ob7CompatibilitySource.primeStripGlobalLogVolume
+  familyHullLogVolume_eq_primeStripGlobal :
+    sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.familyHullLogVolume =
+      ob7CompatibilitySource.primeStripGlobalLogVolume
+  primeStrip_place_local_unit_compatibility :
+    ∀ p : Penv,
+      ob7CompatibilitySource.primeStripLift.base.gaussianPrimeToPlace
+          (ob7CompatibilitySource.primeStripLift.base.primeEvaluation p) =
+        ob7CompatibilitySource.primeStripLift.base.environmentPrimeToPlace p ∧
+      (ob7CompatibilitySource.primeStripLift.base.localEvaluation.gaussianLocal.localObject
+          (ob7CompatibilitySource.primeStripLift.base.gaussianPrimeToPlace
+            (ob7CompatibilitySource.primeStripLift.base.primeEvaluation p))).realifiedLogVolume =
+        (ob7CompatibilitySource.primeStripLift.base.localEvaluation.environmentLocal.localObject
+          (ob7CompatibilitySource.primeStripLift.base.environmentPrimeToPlace p)).realifiedLogVolume ∧
+      ob7CompatibilitySource.primeStripLift.gaussianUnitCharacter
+          (ob7CompatibilitySource.primeStripLift.base.primeEvaluation p) =
+        ob7CompatibilitySource.primeStripLift.environmentUnitCharacter p
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+noncomputable def productHullBackedOb7LogKummerCompatibilityAudit
+    (sourceData :
+      IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) record Λ)
+    {Penv Pgau V μ : Type x}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (determinantLogVolume_eq_primeStripGlobal :
+      sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge.determinantSource.determinantLogVolume =
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    ProductHullBackedOb7LogKummerCompatibilityAudit
+      sourceData Penv Pgau V μ :=
+  let exactThetaAudit := sourceData.productHullBackedExactThetaBridgeAudit
+  let ob7Source :
+      IUTStage1Remark395Ob7LogKummerCompatibilitySource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        β Penv Pgau V μ :=
+    { bridgeSource :=
+        sourceData.constructorBackedSource.toRecordHullDeterminantBridgeSource.toSourceCoreBridge,
+      primeStripLift := primeStripLift,
+      determinantLogVolume_eq_primeStripGlobal :=
+        determinantLogVolume_eq_primeStripGlobal }
+  { exactThetaBridgeAudit := exactThetaAudit,
+    ob7CompatibilitySource := ob7Source,
+    ob7_bridge_eq_constructorBridge := rfl,
+    determinantLogVolume_eq_primeStripGlobal :=
+      determinantLogVolume_eq_primeStripGlobal,
+    qPilotLogVolume_le_primeStripGlobal :=
+      ob7Source.qRegionLogVolume_le_primeStripGlobal,
+    determinantNormalized_eq_primeStripGlobal :=
+      ob7Source.determinantNormalizedLogVolume_eq_primeStripGlobal,
+    familyHullLogVolume_eq_primeStripGlobal :=
+      ob7Source.familyHullLogVolume_eq_primeStripGlobal,
+    primeStrip_place_local_unit_compatibility := by
+      intro p
+      exact
+        ⟨ob7Source.gaussianPlaceOfEvaluation_eq_environmentPlace p,
+          ob7Source.gaussianLocalLogVolume_at_evaluatedPrime_eq_environment p,
+          ob7Source.gaussianUnitCharacter_at_evaluatedPrime p⟩,
+    qSigned_le_thetaSigned :=
+      exactThetaAudit.qSigned_le_thetaSigned }
+
 end
   IUTStage1Remark395ProductHullBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
 
