@@ -754,6 +754,22 @@ source-paper form \(\lambda\cdot O\).  It then derives the previous
 can distinguish a genuinely Remark~3.9.5(i)-shaped product hull from an
 arbitrary family of subsets before the analytic construction of the scalars is
 completed.
+The principal hull presentation is now tied to the valuation-ball local-ring
+cover.  The declaration
+\[
+\texttt{IUTStage1Remark395PrincipalValuationBallProductHullCoverSource}
+\]
+carries a valuation-ball factor-calibrated Haar tensor-packet cover together
+with a principal product-hull source, identifies the valuation cover's hull
+system with the principal hull system, and identifies \(O\) with the anchor
+valuation-ball direct-product cell.  Its endpoint proves that the selected
+principal hull \(\lambda\cdot O\) is the same subset as the valuation-ball
+direct-product cell union, that its log-volume is the calibrated cell sum, and
+that the same valuation cover still projects to the adjusted Ob3/Ob5
+determinant source.  This does not construct the analytic scalar parameters
+from the source papers, but it removes a previous separation between the
+\(\lambda\cdot O\) hull notation and the nonarchimedean local-ring/Haar cover
+used by the determinant route.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the

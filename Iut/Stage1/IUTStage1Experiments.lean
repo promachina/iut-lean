@@ -43865,6 +43865,47 @@ theorem remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCali
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface principal valuation-ball product-hull cover endpoint.
+
+This exposes the source bridge from the Remark 3.9.5(i) principal hull
+presentation `lambda * O` to the valuation-ball direct-product cover and its
+adjusted Ob3/Ob5 determinant projection.
+-/
+theorem remark395PrincipalValuationBallProductHullCoverSource_endpoint
+    {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+    {β : Type w} {γ : Type x} {Λ : Type max u v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (data :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        α ι η K β γ Λ) :
+    let adjustedSource := data.toOb3Ob5AdjustedDeterminantLogVolumeSource;
+    data.principalHullSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      data.valuationCover.hullSystem.phi data.possibleImageUnion =
+        data.selectedPrincipalHull ∧
+      data.selectedPrincipalHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.selectedPrincipalHull =
+        data.principalHullSource.scalarMultiple
+            data.selectedPrincipalParameter ''
+          data.principalHullSource.localIntegerRegion ∧
+      data.principalHullSource.parameter_nonzero
+        data.selectedPrincipalParameter ∧
+      data.valuationCover.hullSystem.logVolume data.selectedPrincipalHull =
+        data.principalHullSource.principalHullLogVolume
+          data.selectedPrincipalParameter ∧
+      data.valuationCover.hullSystem.logVolume data.selectedPrincipalHull =
+        data.valuationCover.calibratedCellLogVolumeSum ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface cover-additive valuation-ball factor-calibrated Haar
 tensor-packet source.
 
