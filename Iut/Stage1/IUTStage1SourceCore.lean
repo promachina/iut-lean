@@ -7,6 +7,7 @@ import Iut.Foundations.InitialThetaData
 import Iut.Stage1.IUTStage1Data
 import Mathlib.Data.ZMod.ValMinAbs
 import Mathlib.MeasureTheory.Measure.Haar.Basic
+import Mathlib.NumberTheory.Padics.ProperSpace
 import Mathlib.Topology.Algebra.Valued.LocallyCompact
 
 /-!
@@ -10651,6 +10652,96 @@ theorem endpoint
 end IUTStage1ValuedFieldIntegerUnitBallSource
 
 /--
+`p`-adic integer unit-ball source.
+
+This specializes the valued-field integer route to the actual mathlib
+`p`-adic field `ℚ_[p]` and its ring of integers `ℤ_[p]`.  The valued-field
+integer subring `𝒪[ℚ_[p]]` is identified with `PadicInt.subring p`, and its
+underlying set is the image of the coercion `ℤ_[p] -> ℚ_[p]`.
+-/
+structure IUTStage1PadicIntegerUnitBallSource
+    (p : Nat) [Fact p.Prime] where
+  sourceTag : Unit := ()
+
+namespace IUTStage1PadicIntegerUnitBallSource
+
+variable {p : Nat} [Fact p.Prime]
+
+def integerSource
+    (_data : IUTStage1PadicIntegerUnitBallSource p) :
+    IUTStage1ValuedFieldIntegerUnitBallSource ℚ_[p] :=
+  {}
+
+noncomputable def padicIntegerSubring
+    (_data : IUTStage1PadicIntegerUnitBallSource p) :
+    Subring ℚ_[p] :=
+  PadicInt.subring p
+
+def padicIntegerSet
+    (_data : IUTStage1PadicIntegerUnitBallSource p) :
+    Set ℚ_[p] :=
+  Set.range (fun integer : ℤ_[p] => (integer : ℚ_[p]))
+
+theorem valuedIntegerSubring_eq_padicIntegerSubring
+    (data : IUTStage1PadicIntegerUnitBallSource p) :
+    data.integerSource.integerSubring = data.padicIntegerSubring := by
+  ext point
+  simp [IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring,
+    padicIntegerSubring, Valued.integer.mem_iff,
+    PadicInt.mem_subring_iff]
+
+theorem padicIntegerSet_eq_norm_unitBall
+    (data : IUTStage1PadicIntegerUnitBallSource p) :
+    data.padicIntegerSet = { point : ℚ_[p] | ‖point‖ <= 1 } := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases hpoint with ⟨integer, rfl⟩
+    exact integer.property
+  · intro hpoint
+    exact ⟨⟨point, hpoint⟩, rfl⟩
+
+theorem valuedRingOfIntegers_eq_padicIntegerSet
+    (data : IUTStage1PadicIntegerUnitBallSource p) :
+    data.integerSource.ringOfIntegers = data.padicIntegerSet := by
+  rw [data.integerSource.ringOfIntegers_eq_unitBall]
+  ext point
+  constructor
+  · intro hpoint
+    exact ⟨⟨point, hpoint⟩, rfl⟩
+  · intro hpoint
+    rcases hpoint with ⟨integer, rfl⟩
+    exact integer.property
+
+theorem valuationTopology_valuationBall_one_eq_padicIntegerSet
+    (data : IUTStage1PadicIntegerUnitBallSource p) :
+    data.integerSource.valuationTopology.valuationBall 1 =
+      data.padicIntegerSet := by
+  rw [
+    data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers,
+    data.valuedRingOfIntegers_eq_padicIntegerSet]
+
+theorem endpoint
+    (data : IUTStage1PadicIntegerUnitBallSource p) :
+    data.integerSource.integerSubring = data.padicIntegerSubring ∧
+      data.integerSource.ringOfIntegers = data.padicIntegerSet ∧
+      data.padicIntegerSet = { point : ℚ_[p] | ‖point‖ <= 1 } ∧
+      data.integerSource.valuationTopology.valuationBall 1 =
+        data.padicIntegerSet ∧
+      IsLocalRing ℤ_[p] ∧
+      IsOpen (data.integerSource.valuationTopology.valuationBall 1) ∧
+      IsCompact (data.integerSource.valuationTopology.valuationBall 1) :=
+  ⟨data.valuedIntegerSubring_eq_padicIntegerSubring,
+    data.valuedRingOfIntegers_eq_padicIntegerSet,
+    data.padicIntegerSet_eq_norm_unitBall,
+    data.valuationTopology_valuationBall_one_eq_padicIntegerSet,
+    inferInstance,
+    data.integerSource.valuationTopology.unitBall_compactOpen.1,
+    data.integerSource.valuationTopology.unitBall_compactOpen.2⟩
+
+end IUTStage1PadicIntegerUnitBallSource
+
+/--
 Valuation-ball topology-backed additive Haar normalization source.
 
 This lowers the valuation-ball Haar source by deriving the compact-open
@@ -11264,6 +11355,144 @@ theorem endpoint
         data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers⟩
 
 end IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
+
+/--
+`p`-adic proper-ultrametric additive Haar normalization source.
+
+This is the base local-field specialization of the valued-field integer Haar
+route.  The local carrier is `ℚ_[p]`, the ring of integers is `ℤ_[p]`, the
+residue prime is the given prime `p`, the finite-extension degree is `1`, and
+the uniformizer scale map is multiplication by `p`.
+-/
+structure IUTStage1PadicProperUltrametricHaarNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] [MeasurableSpace ℚ_[p]]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  padicIntegerSource : IUTStage1PadicIntegerUnitBallSource p
+  realization : ℚ_[p] -> α
+  realizedRegion : Set ℚ_[p] -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set ℚ_[p], realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure ℚ_[p]
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  uniformizerScale_preserves_open :
+    ∀ subset : Set ℚ_[p], IsOpen subset ->
+      IsOpen ((fun point : ℚ_[p] => (p : ℚ_[p]) * point) '' subset)
+  uniformizerScale_preserves_compact :
+    ∀ subset : Set ℚ_[p], IsCompact subset ->
+      IsCompact ((fun point : ℚ_[p] => (p : ℚ_[p]) * point) '' subset)
+  valuationUnitBall_measure_one :
+    (haarMeasure padicIntegerSource.padicIntegerSet).toReal = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (padicIntegerSource.integerSource.valuationTopology.valuationBall
+        compactOpenRadius)).toReal
+  uniformizerScaled_compactOpenBall_measure_toReal_eq :
+    (haarMeasure
+        ((fun point : ℚ_[p] => (p : ℚ_[p]) * point) ''
+          padicIntegerSource.integerSource.valuationTopology.valuationBall
+            compactOpenRadius)).toReal =
+      (haarMeasure
+        (padicIntegerSource.integerSource.valuationTopology.valuationBall
+          compactOpenRadius)).toReal / (p : Real)
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set ℚ_[p],
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal)
+
+namespace IUTStage1PadicProperUltrametricHaarNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime]
+variable [MeasurableSpace ℚ_[p]]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def uniformizerScalePoint
+    (_data :
+      IUTStage1PadicProperUltrametricHaarNormalizationSource
+        α p hullSystem) :
+    ℚ_[p] -> ℚ_[p] :=
+  fun point => (p : ℚ_[p]) * point
+
+noncomputable def toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+    (data :
+      IUTStage1PadicProperUltrametricHaarNormalizationSource
+        α p hullSystem) :
+    IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
+      α ℚ_[p] hullSystem :=
+  { integerSource := data.padicIntegerSource.integerSource,
+    residuePrime := p,
+    residue_prime := Fact.out,
+    finiteExtensionDegree := 1,
+    finite_extension_degree_pos := by norm_num,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    uniformizerScalePoint := data.uniformizerScalePoint,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    uniformizerScale_preserves_open := by
+      simpa [uniformizerScalePoint] using
+        data.uniformizerScale_preserves_open,
+    uniformizerScale_preserves_compact := by
+      simpa [uniformizerScalePoint] using
+        data.uniformizerScale_preserves_compact,
+    valuationUnitBall_measure_one := by
+      rw [data.padicIntegerSource.valuedRingOfIntegers_eq_padicIntegerSet]
+      exact data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos :=
+      data.compactOpenBall_measure_pos,
+    uniformizerScaled_compactOpenBall_measure_toReal_eq := by
+      simpa [uniformizerScalePoint, pow_one] using
+        data.uniformizerScaled_compactOpenBall_measure_toReal_eq,
+    hull_logVolume_eq_normalized := by
+      intro subset
+      simpa using data.hull_logVolume_eq_normalized subset }
+
+theorem endpoint
+    (data :
+      IUTStage1PadicProperUltrametricHaarNormalizationSource
+        α p hullSystem) :
+    data.padicIntegerSource.integerSource.ringOfIntegers =
+        data.padicIntegerSource.padicIntegerSet ∧
+      data.padicIntegerSource.integerSource.integerSubring =
+        data.padicIntegerSource.padicIntegerSubring ∧
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.residuePrime =
+        p ∧
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.finiteExtensionDegree =
+        1 ∧
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.uniformizerScalePoint =
+        (fun point : ℚ_[p] => (p : ℚ_[p]) * point) ∧
+      (data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+          |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.localRing) =
+        data.padicIntegerSource.padicIntegerSubring ∧
+      (data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+          |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.ringOfIntegers) =
+        data.padicIntegerSource.padicIntegerSet :=
+  ⟨data.padicIntegerSource.valuedRingOfIntegers_eq_padicIntegerSet,
+    data.padicIntegerSource.valuedIntegerSubring_eq_padicIntegerSubring,
+    rfl,
+    rfl,
+    rfl,
+    by
+      simpa [
+        toValuedFieldIntegerProperUltrametricHaarNormalizationSource,
+        IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource.toProperUltrametricValuationBallAdditiveHaarNormalizationSource] using
+        data.padicIntegerSource.valuedIntegerSubring_eq_padicIntegerSubring,
+    by
+      simpa [
+        toValuedFieldIntegerProperUltrametricHaarNormalizationSource,
+        IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource.toProperUltrametricValuationBallAdditiveHaarNormalizationSource,
+        IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.ringOfIntegers,
+        IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.valuationBall] using
+        data.padicIntegerSource.valuationTopology_valuationBall_one_eq_padicIntegerSet⟩
+
+end IUTStage1PadicProperUltrametricHaarNormalizationSource
 
 /--
 Valuation-ball additive Haar normalization source.

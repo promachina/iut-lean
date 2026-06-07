@@ -43069,6 +43069,26 @@ theorem valuedFieldIntegerUnitBallSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface `p`-adic integer unit-ball source.
+
+This endpoint identifies the valued-field integer subring of `ℚ_[p]` with
+`PadicInt.subring p` and with the coercion image of `ℤ_[p]`.
+-/
+theorem padicIntegerUnitBallSource_endpoint
+    {p : Nat} [Fact p.Prime]
+    (data : IUTStage1PadicIntegerUnitBallSource p) :
+    data.integerSource.integerSubring = data.padicIntegerSubring ∧
+      data.integerSource.ringOfIntegers = data.padicIntegerSet ∧
+      data.padicIntegerSet = { point : ℚ_[p] | ‖point‖ <= 1 } ∧
+      data.integerSource.valuationTopology.valuationBall 1 =
+        data.padicIntegerSet ∧
+      IsLocalRing ℤ_[p] ∧
+      IsOpen (data.integerSource.valuationTopology.valuationBall 1) ∧
+      IsCompact (data.integerSource.valuationTopology.valuationBall 1) :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface valued-field integer proper-ultrametric Haar source.
 
 This endpoint feeds the concrete valued-field integer subring `𝒪[K]` into the
@@ -43097,6 +43117,39 @@ theorem remark395ValuedFieldIntegerProperUltrametricHaarNormalizationSource_endp
           |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
           |>.ringOfIntegers) =
         data.integerSource.ringOfIntegers :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface `p`-adic proper-ultrametric Haar source.
+
+This endpoint specializes the valued-field integer Haar route to the base local
+field `ℚ_[p]`, residue prime `p`, degree `1`, and uniformizer scale `x ↦ p*x`.
+-/
+theorem remark395PadicProperUltrametricHaarNormalizationSource_endpoint
+    {α : Type u} {p : Nat} [Fact p.Prime] [MeasurableSpace ℚ_[p]]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    (data :
+      IUTStage1PadicProperUltrametricHaarNormalizationSource
+        α p hullSystem) :
+    data.padicIntegerSource.integerSource.ringOfIntegers =
+        data.padicIntegerSource.padicIntegerSet ∧
+      data.padicIntegerSource.integerSource.integerSubring =
+        data.padicIntegerSource.padicIntegerSubring ∧
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.residuePrime =
+        p ∧
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.finiteExtensionDegree =
+        1 ∧
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.uniformizerScalePoint =
+        (fun point : ℚ_[p] => (p : ℚ_[p]) * point) ∧
+      (data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+          |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.localRing) =
+        data.padicIntegerSource.padicIntegerSubring ∧
+      (data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+          |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.ringOfIntegers) =
+        data.padicIntegerSource.padicIntegerSet :=
   data.endpoint
 
 set_option linter.style.longLine false in

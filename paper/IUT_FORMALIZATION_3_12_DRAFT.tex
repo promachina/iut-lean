@@ -3227,6 +3227,29 @@ in the proper-ultrametric valuation-ball topology.  The companion declaration
 uses \(\mathcal{O}_K\) itself as the local-ring label and transports the Haar
 mass-one normalization from \(\mathcal{O}_K\) to the radius-one valuation ball
 before projecting into the proper-ultrametric Haar normalization route.
+There is now a base local-field specialization of this statement.  The
+declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1PadicIntegerUnitBallSource}
+\end{array}
+\]
+works over \(\mathbb{Q}_p\), identifies
+\(\mathcal{O}_{\mathbb{Q}_p}\) with \(\texttt{PadicInt.subring}\ p\), and
+proves that its underlying set is the image of the coercion
+\(\mathbb{Z}_p\hookrightarrow\mathbb{Q}_p\).  This also records the local-ring
+instance on \(\mathbb{Z}_p\), so the ring-of-integers object is no longer only
+the abstract valued-field subring.  The companion declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1PadicProperUltrametricHaarNormalizationSource}
+\end{array}
+\]
+fixes the residue prime to \(p\), the finite-extension degree to \(1\), and the
+uniformizer scale map to \(x\mapsto px\), then projects to the valued-field
+integer Haar route.  The Haar mass-one and \(p\)-scaling law are still carried
+as analytic local-field inputs, but their ambient field, local ring, residue
+prime, degree, and uniformizer map are now the actual \(p\)-adic ones.
 The declaration
 \[
 \begin{array}{l}
@@ -6797,10 +6820,10 @@ The practical priority order is:
   the next work is to replace the
   still-supplied hull system, direct-product localization cover construction,
   family-local finite-cover additivity theorem, construction of the compact-open
-  valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), specialization
-  of the valued-field integer/unit-ball theorem to the actual finite-extension
-  completions, derivation of the proper ultrametric local topology from the
-  actual finite-extension valuation,
+  valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), extension
+  of the current base \(\mathbb{Q}_p\) integer/unit-ball specialization to the
+  actual finite-extension completions, derivation of the proper ultrametric
+  local topology from the actual finite-extension valuation,
   normalized
   Haar measure choice, and uniformizer-scaling theorem,
   per-factor
