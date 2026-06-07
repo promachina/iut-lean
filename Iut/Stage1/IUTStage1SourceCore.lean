@@ -13635,6 +13635,87 @@ theorem endpoint
 end IUTStage1TensorPowerPresentationComparison
 
 /--
+Family form of Remark 3.9.5(vii), (Ob4-3), at the log-volume level.
+
+The source text says that reconstructed non-tensor-power Frobenioid copies over a
+fixed tensor-power Frobenioid may differ by tensor-power twists, but these twists
+do not affect the log-volume estimates used in Corollary 3.12.  In the present
+finite skeleton, a twist is represented by another positive tensor-power
+presentation with the same base log-volume as a reference presentation.
+-/
+structure IUTStage1TensorPowerTwistFamily (τ : Type u) where
+  reference : IUTStage1NaiveFrobeniusTensorPowerLogVolume
+  twistPresentation : τ -> IUTStage1NaiveFrobeniusTensorPowerLogVolume
+  twist_base_eq :
+    ∀ twist : τ, (twistPresentation twist).baseLogVolume =
+      reference.baseLogVolume
+
+namespace IUTStage1TensorPowerTwistFamily
+
+variable {τ : Type u}
+
+def comparison
+    (data : IUTStage1TensorPowerTwistFamily τ)
+    (twist : τ) :
+    IUTStage1TensorPowerPresentationComparison :=
+  { source := data.twistPresentation twist,
+    target := data.reference,
+    base_eq := data.twist_base_eq twist }
+
+theorem normalizedLogVolume_eq_reference
+    (data : IUTStage1TensorPowerTwistFamily τ)
+    (twist : τ) :
+    (data.twistPresentation twist).normalizedLogVolume =
+      data.reference.normalizedLogVolume :=
+  (data.comparison twist).normalizedLogVolume_eq
+
+theorem normalizedLogVolume_eq_of_twists
+    (data : IUTStage1TensorPowerTwistFamily τ)
+    (twist₁ twist₂ : τ) :
+    (data.twistPresentation twist₁).normalizedLogVolume =
+      (data.twistPresentation twist₂).normalizedLogVolume := by
+  rw [data.normalizedLogVolume_eq_reference twist₁,
+    data.normalizedLogVolume_eq_reference twist₂]
+
+theorem normalizedLogVolume_le_iff_reference
+    (data : IUTStage1TensorPowerTwistFamily τ)
+    (twist : τ) (bound : Real) :
+    (data.twistPresentation twist).normalizedLogVolume <= bound ↔
+      data.reference.normalizedLogVolume <= bound := by
+  rw [data.normalizedLogVolume_eq_reference twist]
+
+theorem normalizedLogVolume_le_iff_of_twists
+    (data : IUTStage1TensorPowerTwistFamily τ)
+    (twist₁ twist₂ : τ) (bound : Real) :
+    (data.twistPresentation twist₁).normalizedLogVolume <= bound ↔
+      (data.twistPresentation twist₂).normalizedLogVolume <= bound := by
+  rw [data.normalizedLogVolume_eq_of_twists twist₁ twist₂]
+
+theorem endpoint
+    (data : IUTStage1TensorPowerTwistFamily τ)
+    (twist₁ twist₂ : τ) (bound : Real) :
+    (data.twistPresentation twist₁).baseLogVolume =
+        data.reference.baseLogVolume ∧
+      (data.twistPresentation twist₂).baseLogVolume =
+        data.reference.baseLogVolume ∧
+      (data.twistPresentation twist₁).normalizedLogVolume =
+        data.reference.normalizedLogVolume ∧
+      (data.twistPresentation twist₂).normalizedLogVolume =
+        data.reference.normalizedLogVolume ∧
+      (data.twistPresentation twist₁).normalizedLogVolume =
+        (data.twistPresentation twist₂).normalizedLogVolume ∧
+      ((data.twistPresentation twist₁).normalizedLogVolume <= bound ↔
+        (data.twistPresentation twist₂).normalizedLogVolume <= bound) :=
+  ⟨data.twist_base_eq twist₁,
+    data.twist_base_eq twist₂,
+    data.normalizedLogVolume_eq_reference twist₁,
+    data.normalizedLogVolume_eq_reference twist₂,
+    data.normalizedLogVolume_eq_of_twists twist₁ twist₂,
+    data.normalizedLogVolume_le_iff_of_twists twist₁ twist₂ bound⟩
+
+end IUTStage1TensorPowerTwistFamily
+
+/--
 Remark 3.9.5(vii), (Ob5), at the finite log-volume level.
 
 The source text says that the upper-semi quotient attached to the family hull

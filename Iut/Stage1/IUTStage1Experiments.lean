@@ -1787,6 +1787,24 @@ theorem tensorPowerPresentationComparison_endpoint
         data.target.normalizedLogVolume :=
   data.endpoint
 
+theorem tensorPowerTwistFamily_endpoint
+    {τ : Type u}
+    (data : IUTStage1TensorPowerTwistFamily τ)
+    (twist₁ twist₂ : τ) (bound : Real) :
+    (data.twistPresentation twist₁).baseLogVolume =
+        data.reference.baseLogVolume ∧
+      (data.twistPresentation twist₂).baseLogVolume =
+        data.reference.baseLogVolume ∧
+      (data.twistPresentation twist₁).normalizedLogVolume =
+        data.reference.normalizedLogVolume ∧
+      (data.twistPresentation twist₂).normalizedLogVolume =
+        data.reference.normalizedLogVolume ∧
+      (data.twistPresentation twist₁).normalizedLogVolume =
+        (data.twistPresentation twist₂).normalizedLogVolume ∧
+      ((data.twistPresentation twist₁).normalizedLogVolume <= bound ↔
+        (data.twistPresentation twist₂).normalizedLogVolume <= bound) :=
+  data.endpoint twist₁ twist₂ bound
+
 theorem boundedFamilyHullDetLogVolume_endpoint
     {α : Type u} {ι : Type v} {β : Type w} [Fintype β]
     (data : IUTStage1BoundedFamilyHullDetLogVolumeSource α ι β)

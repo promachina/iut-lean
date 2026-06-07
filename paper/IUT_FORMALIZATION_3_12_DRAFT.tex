@@ -979,7 +979,16 @@ recovers \(L\).  The weighted determinant source projects to this object, so
 the \(M\)-th tensor-power copy does not add a further log-volume ambiguity in
 the current corridor.  A comparison object also proves that two positive
 tensor-power presentations with the same base log-volume have the same
-normalized log-volume, even when the tensor degrees differ.
+normalized log-volume, even when the tensor degrees differ.  This has now been
+upgraded to the Ob4-3 family form:
+\texttt{IUTStage1TensorPowerTwistFamily} records a reference tensor-power
+presentation and an arbitrary family of reconstructed twisted presentations
+over the same base log-volume.  \Lean{} proves that every twist has the
+reference normalized log-volume, that any two twists have equal normalized
+log-volume, and that all normalized log-volume bounds are equivalent across the
+twist family.  This is the finite log-volume reading of the source-paper
+statement that tensor-power-twist indeterminacies have no substantive effect on
+the estimates used in Corollary~3.12.
 The package hull/determinant bridge now has an Ob4-shaped input form: a bound
 on the normalized tensor-power log-volume of the weighted determinant source is
 converted by \Lean{} to the determinant bound used by the canonical hull bridge.
@@ -1484,7 +1493,11 @@ The project currently proves the following source-facing results in \Lean{}:
   \(M\)-th tensor-power formation multiplies by \(M>0\), and normalization
   recovers the base log-volume.  The weighted determinant source projects to
   this tensor-power object, and two tensor-power presentations with the same
-  base log-volume have equal normalized log-volume.
+  base log-volume have equal normalized log-volume.  The new
+  \texttt{IUTStage1TensorPowerTwistFamily} extends this from a pairwise
+  comparison to a family of Ob4-3 tensor-power-twist reconstructions: all twists
+  share the reference normalized log-volume, and normalized log-volume bounds
+  are invariant under replacing one twist by another.
 \item The bounded-family hull/determinant source now proves the direct
   estimate from possible-image union to determinant log-volume:
   \(\mu_{\log}(\bigcup_\beta P_\beta)\le\det_{\log}\).
