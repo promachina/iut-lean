@@ -17547,6 +17547,23 @@ theorem selectedScalarImageHull_eq_directProductHull
   data.nonzeroScalarSource.selectedPrincipalHull_eq_productHull
     data.selectedNonzeroScalar
 
+set_option linter.style.longLine false in
+theorem selectedScalarImageHull_eq_selectedNonzeroScalar_image
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    data.selectedScalarImageHull =
+      data.nonzeroScalarSource.scalarMultiple data.selectedNonzeroScalar ''
+        data.nonzeroScalarSource.localIntegerRegion := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases hpoint with ⟨base, hbase, hscale⟩
+    exact ⟨base, hbase, hscale⟩
+  · intro hpoint
+    rcases hpoint with ⟨base, hbase, hscale⟩
+    exact ⟨base, hbase, hscale⟩
+
 theorem familyHull_eq_selectedScalarImageHull
     (data :
       IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
@@ -17847,6 +17864,17 @@ theorem selectedScalarImageHull_eq_valuationBallDirectProductCellUnion
     |>.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion
 
 set_option linter.style.longLine false in
+theorem selectedScalarImageHull_eq_selectedNonzeroScalar_image
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    data.selectedScalarImageHull =
+      data.nonzeroScalarSource.scalarMultiple data.selectedNonzeroScalar ''
+        data.nonzeroScalarSource.localIntegerRegion :=
+  data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
+    |>.selectedScalarImageHull_eq_selectedNonzeroScalar_image
+
+set_option linter.style.longLine false in
 theorem endpoint
     (data :
       IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
@@ -17871,6 +17899,9 @@ theorem endpoint
         data.valuationCover.directProductCell data.valuationCover.anchor ∧
       (∀ d : δ, (data.selectedNonzeroScalar d).1 ≠ 0) ∧
       data.selectedScalarImageHull =
+        data.nonzeroScalarSource.scalarMultiple data.selectedNonzeroScalar ''
+          data.nonzeroScalarSource.localIntegerRegion ∧
+      data.selectedScalarImageHull =
         data.valuationCover.directProductCellUnion ∧
       data.valuationCover.hullSystem.logVolume data.selectedScalarImageHull =
         data.valuationCover.calibratedCellLogVolumeSum ∧
@@ -17887,6 +17918,7 @@ theorem endpoint
         data.localIntegerRegion_eq_anchorCell,
         data.nonzeroScalarSource.selectedScalarParameter_nonzero
           data.selectedNonzeroScalar,
+        data.selectedScalarImageHull_eq_selectedNonzeroScalar_image,
         data.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion,
         by
           rw [data.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion]

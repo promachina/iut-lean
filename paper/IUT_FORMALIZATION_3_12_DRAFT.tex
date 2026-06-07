@@ -1107,6 +1107,26 @@ real-region image.  The coordinate-derived endpoint then forwards through
 is now stated at the real log-coordinate level: construct the coordinate map
 from the local valuation/Kummer data and prove the two coordinate image
 equalities.
+The selected-hull half of this obligation has now been pushed one layer closer
+to Remark~3.9.5(i).  The source-core theorem
+\[
+\texttt{selectedScalarImageHull\_eq\_selectedNonzeroScalar\_image}
+\]
+proves that the selected product hull is literally the image
+\(\lambda\cdot O\) of the local integer product region under the selected
+coordinatewise nonzero scalar multiplication.  The new
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
+\quad\texttt{SelectedImageCoordinateTargetTransportSource}
+\end{array}
+\]
+therefore asks for the target coordinate image of this explicit
+\(\lambda\cdot O\) region, not for the already-packaged
+\texttt{selectedScalarImageHull} image.  \Lean{} rewrites through the
+source-core equality and then applies the coordinate-derived endpoint.  The
+remaining selected-hull transport payload is now the real-coordinate image law
+for an explicit nonzero-scalar multiplication image.
 The Milestone 2 hull layer now contains a direct formalization of
 Remark 3.9.5(ii)--(iii)'s hull-map skeleton and approximant family.  The hull
 map \(\phi(P)\) is represented by a closure operator; \Lean{} exposes the
@@ -7899,6 +7919,11 @@ The practical priority order is:
   A coordinate-derived target transport endpoint now constructs that point map
   from a real coordinate map and proves the point-image equalities from
   coordinate-region image equalities.
+  A selected-image coordinate transport endpoint now rewrites the selected
+  hull coordinate image through the source theorem
+  \(\texttt{selectedScalarImageHull}=\lambda\cdot O\), so this half of the
+  transport boundary is stated for the explicit selected nonzero-scalar
+  multiplication image of the local integer product region.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   But the next work is to derive, from the local valuation/Haar model, the
