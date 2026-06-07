@@ -3188,6 +3188,24 @@ actual additive Haar measures rather than arbitrary real-valued Haar functions.
 There is now a valuation-ball refinement below this Haar source.  The declaration
 \[
 \begin{array}{l}
+\texttt{IUTStage1ProperUltrametricValuationBallTopologySource}
+\end{array}
+\]
+now starts from a proper ultrametric metric topology on the local additive
+carrier.  The ultrametric inequality proves openness of positive-radius closed
+balls, while properness supplies compactness by the closed-ball compactness
+theorem.  Thus the compact-open valuation-ball theorem is constructed from
+two recognizable local topological hypotheses rather than from separate
+open/compact fields.  The companion declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource}
+\end{array}
+\]
+feeds this proper-ultrametric source into the ultrametric Haar route.
+The declaration
+\[
+\begin{array}{l}
 \texttt{IUTStage1UltrametricValuationBallTopologySource}
 \end{array}
 \]
@@ -6719,9 +6737,8 @@ The practical priority order is:
   Haar mass-one and uniformizer-scaling laws, and the valuation-ball variant now
   defines the local ring of integers and selected compact-open subset as
   valuation balls before constructing the additive Haar source, with the newest
-  ultrametric variant deriving the openness of those balls from the
-  nonarchimedean metric inequality and leaving compactness as the local
-  compactness input.  The
+  proper-ultrametric variant deriving openness from the nonarchimedean metric
+  inequality and compactness from properness of the local metric topology.  The
   valuation-ball factor-calibrated route now also projects through the
   local-ring charted cover, direct-product localized cover, calibrated localized
   cover, and localized hull decomposition to the adjusted Ob3/Ob5 determinant
@@ -6757,8 +6774,9 @@ The practical priority order is:
   still-supplied hull system, direct-product localization cover construction,
   family-local finite-cover additivity theorem, construction of the compact-open
   valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), proof that
-  the valuation unit ball is the ring of integers, derivation of positive-radius
-  valuation-ball compactness from the actual local-field topology, normalized
+  the valuation unit ball is the ring of integers, derivation of the proper
+  ultrametric local topology from the actual finite-extension valuation,
+  normalized
   Haar measure choice, and uniformizer-scaling theorem,
   per-factor
   chart/direct-summand calibration construction, local region/vector-bundle

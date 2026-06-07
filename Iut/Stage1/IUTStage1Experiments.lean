@@ -43023,6 +43023,59 @@ theorem remark395AdditiveHaarTensorProductDirectSumSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface proper ultrametric valuation-ball topology source.
+
+This endpoint derives compactness of closed valuation balls from the proper
+metric-space topology, while deriving openness from ultrametricity.
+-/
+theorem properUltrametricValuationBallTopologySource_endpoint
+    {K : Type u} [PseudoMetricSpace K] [ProperSpace K] [Zero K]
+    (data : IUTStage1ProperUltrametricValuationBallTopologySource K)
+    {radius : Real}
+    (hradius : 0 < radius) :
+    data.valuationNorm = (fun point : K => dist point 0) ∧
+      data.valuationBall radius =
+        { point : K | dist point 0 <= radius } ∧
+      IsOpen (data.valuationBall radius) ∧
+      IsCompact (data.valuationBall radius) ∧
+      IsOpen (data.valuationBall 1) ∧
+      IsCompact (data.valuationBall 1) ∧
+      data.toUltrametricValuationBallTopologySource.valuationBall radius =
+        data.valuationBall radius :=
+  data.endpoint hradius
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface proper ultrametric valuation-ball additive Haar normalization source.
+
+This endpoint feeds the proper-ultrametric compact-open valuation-ball
+construction into the ultrametric Haar route.
+-/
+theorem remark395ProperUltrametricValuationBallAdditiveHaarNormalizationSource_endpoint
+    {α : Type u} {η : Type v} {K : Type w}
+    [PseudoMetricSpace K] [ProperSpace K] [MeasurableSpace K] [AddGroup K]
+    [T2Space K]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+    (data :
+      IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    data.ringOfIntegers = data.valuationBall 1 ∧
+      data.compactOpenSubset =
+        data.valuationBall data.compactOpenRadius ∧
+      data.valuationNorm = (fun point : K => dist point 0) ∧
+      0 < data.compactOpenRadius ∧
+      IsOpen data.ringOfIntegers ∧
+      IsCompact data.ringOfIntegers ∧
+      IsOpen data.compactOpenSubset ∧
+      IsCompact data.compactOpenSubset ∧
+      data.toUltrametricValuationBallAdditiveHaarNormalizationSource.ringOfIntegers =
+        data.ringOfIntegers ∧
+      data.toUltrametricValuationBallAdditiveHaarNormalizationSource.compactOpenSubset =
+        data.compactOpenSubset :=
+  data.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface ultrametric valuation-ball topology source.
 
 This endpoint exposes the local theorem that positive-radius closed valuation
