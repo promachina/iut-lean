@@ -8708,33 +8708,35 @@ The practical priority order is:
   now been lowered further to a valued-field integer local source: each proper
   ultrametric centered-ball Haar source is constructed from a
   valued-field-integer Haar normalization object whose local ring is
-  \(\mathcal O_K\).  The newest \(p\)-adic refinement specializes this once more
+  \(\mathcal O_K\).  A \(p\)-adic refinement specializes this once more
   to the base local field \(\mathbb Q_{p_v}\) at each valuation place: Lean
   identifies the integer ring with \(\mathbb Z_{p_v}\), records residue prime
   \(p_v\), degree \(1\), and uniformizer action \(x\mapsto p_vx\), and threads
   the resulting centered-ball Haar coordinates through the finite-sum target
-  map.
+  map.  The newest finite-extension \(p\)-adic refinement replaces those base
+  factors by actual finite-dimensional local fields
+  \(K_v/\mathbb Q_{p_v}\): the normalization degree is the Lean
+  \(\operatorname{finrank}_{\mathbb Q_{p_v}}K_v\), the distinguished scale is
+  multiplication by the image of \(p_v\) in \(K_v\), and the local
+  centered-ball Haar coordinates are threaded through the same Step~(xi)
+  constructor and \(C_\Theta\)-dichotomy endpoint.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
-  But the next work is to extend this base \(\mathbb Q_p\) boundary to the
-  actual finite-extension completions used by the source papers and derive,
-  from the valuation/Haar/Kummer model, the finite-extension valued-field
-  integer Haar normalization object, its positive valuation-ball radius, the
-  coordinate-place equivalence, and the point-level target transport identifying
-  \(O\) and
-  \(\lambda O\) with the principal finite-divisor target regions.  Below that, the
-  local directional scalar-image laws for each local factor
+  The next work is now below the finite-extension boundary: derive, from the
+  source-paper valuation/Haar/Kummer model, the currently supplied
+  finite-extension integer Haar normalization laws, the positive valuation-ball
+  radius, the coordinate-place equivalence, and the point-level target transport
+  identifying \(O\) and \(\lambda O\) with the principal finite-divisor target
+  regions.  Below that, the local directional scalar-image laws for each local factor
   \(\lambda_v\cdot O_v\) still have to be derived from the valuation/Kummer
   model: landing in the valuation/direct-product factor \(H_v(\lambda)\),
   existence of local scalar preimages for all points of \(H_v(\lambda)\),
   direct-product localization cover construction, family-local
   finite-cover additivity theorem,
-  construction of the compact-open
-  valuation-norm from actual finite extensions of \(\mathbb{Q}_p\), derivation
-  of the proper ultrametric
-  local topology from the actual finite-extension valuation,
-  normalized
-  Haar measure choice, and uniformizer-scaling theorem,
+  construction of the compact-open valuation-norm from actual finite extensions
+  of \(\mathbb{Q}_p\), derivation of the proper ultrametric local topology from
+  the actual finite-extension valuation, normalized Haar measure choice, and
+  uniformizer-scaling theorem,
   per-factor
   chart/direct-summand calibration construction, local region/vector-bundle
   log-volume calibration, measure calibration, record-canonical

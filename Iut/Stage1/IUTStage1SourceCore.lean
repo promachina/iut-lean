@@ -12689,6 +12689,135 @@ theorem endpoint
 end IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
 
 /--
+Finite-extension-over-`ℚ_[p]` valued-field integer Haar source.
+
+This is the finite-extension local-field boundary below the generic
+valued-field integer source.  The local carrier is a finite-dimensional
+`ℚ_[p]`-algebra field `K`; the normalization degree is no longer supplied as an
+arbitrary natural number, but is the mathlib finrank `Module.finrank ℚ_[p] K`.
+The distinguished scaling map is multiplication by the image of the base prime
+`p` in `K`, matching the finite-extension compatibility of IUT IV log-volume
+normalization.  The analytic Haar scaling law itself remains an explicit local
+input at this boundary.
+-/
+structure IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  integerSource : IUTStage1ValuedFieldIntegerUnitBallSource K
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  basePrimeScale_preserves_open :
+    ∀ subset : Set K, IsOpen subset ->
+      IsOpen ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) '' subset)
+  basePrimeScale_preserves_compact :
+    ∀ subset : Set K, IsCompact subset ->
+      IsCompact ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) '' subset)
+  valuationUnitBall_measure_one :
+    (haarMeasure integerSource.ringOfIntegers).toReal = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal
+  basePrimeScaled_compactOpenBall_measure_toReal_eq :
+    (haarMeasure
+        ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+          integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal =
+      (haarMeasure
+        (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal /
+        (p : Real) ^ Module.finrank ℚ_[p] K
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] K : Real)
+
+namespace IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def basePrimeScalePoint
+    (_data :
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+        α p K hullSystem) :
+    K -> K :=
+  fun point => algebraMap ℚ_[p] K (p : ℚ_[p]) * point
+
+theorem finiteExtensionDegree_pos
+    (_data :
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+        α p K hullSystem) :
+    0 < Module.finrank ℚ_[p] K :=
+  Module.finrank_pos
+
+noncomputable def toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+        α p K hullSystem) :
+    IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource
+      α K hullSystem :=
+  { integerSource := data.integerSource,
+    residuePrime := p,
+    residue_prime := Fact.out,
+    finiteExtensionDegree := Module.finrank ℚ_[p] K,
+    finite_extension_degree_pos := data.finiteExtensionDegree_pos,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    uniformizerScalePoint := data.basePrimeScalePoint,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    uniformizerScale_preserves_open := by
+      simpa [basePrimeScalePoint] using
+        data.basePrimeScale_preserves_open,
+    uniformizerScale_preserves_compact := by
+      simpa [basePrimeScalePoint] using
+        data.basePrimeScale_preserves_compact,
+    valuationUnitBall_measure_one :=
+      data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos :=
+      data.compactOpenBall_measure_pos,
+    uniformizerScaled_compactOpenBall_measure_toReal_eq := by
+      simpa [basePrimeScalePoint] using
+        data.basePrimeScaled_compactOpenBall_measure_toReal_eq,
+    hull_logVolume_eq_normalized := by
+      intro subset
+      simpa using data.hull_logVolume_eq_normalized subset }
+
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+        α p K hullSystem) :
+    data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.residuePrime =
+        p ∧
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.finiteExtensionDegree =
+        Module.finrank ℚ_[p] K ∧
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.uniformizerScalePoint =
+        (fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ∧
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.integerSource.ringOfIntegers =
+        data.integerSource.ringOfIntegers ∧
+      (data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+          |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.compactOpenSubset) =
+        data.integerSource.valuationTopology.valuationBall
+          data.compactOpenRadius :=
+  ⟨rfl, rfl, rfl, rfl, rfl⟩
+
+end IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+
+/--
 `p`-adic proper-ultrametric additive Haar normalization source.
 
 This is the base local-field specialization of the valued-field integer Haar
