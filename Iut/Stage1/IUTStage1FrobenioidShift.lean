@@ -60494,6 +60494,95 @@ theorem principalValuationBallHaarNormalizationBridgeAudit
     qSigned_le_thetaSigned :=
       sourceData.toPrincipalProductHullBackedSource.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
 
+set_option linter.style.longLine false in
+/--
+Principal valuation-ball finite-cover/Haar bridge audit.
+
+This strengthens the local Haar-normalization bridge by attaching the
+finite-cover tensor-measure model used by the principal valuation-ball
+`lambda * O` hull.  It records that the selected principal hull is the same
+direct-product cover seen by the tensor-measure-backed source, that the cover
+log-volume is the tensor-normalized cell sum, and that the adjusted Ob3/Ob5
+determinant source keeps the principal hull operator and normalized determinant
+equality.
+-/
+structure PrincipalValuationBallFiniteCoverHaarBridgeAudit
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    Prop where
+  haarNormalizationBridgeAudit :
+    PrincipalValuationBallHaarNormalizationBridgeAudit sourceData
+  principalTensorMeasureAudit :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource.PrincipalValuationBallTensorMeasureAudit
+      sourceData.principalValuationBallSource
+  tensorMeasureBacked_hullSystem_eq_principal :
+    sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.hullSystem =
+      sourceData.principalValuationBallSource.principalHullSource.toHolomorphicHullSystem
+  selectedPrincipalHull_eq_tensorMeasureBackedDirectProductCellUnion :
+    sourceData.principalValuationBallSource.selectedPrincipalHull =
+      sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.directProductCellUnion
+  selectedPrincipalHull_logVolume_eq_tensorCellSum :
+    sourceData.principalValuationBallSource.valuationCover.hullSystem.logVolume
+        sourceData.principalValuationBallSource.selectedPrincipalHull =
+      Finset.univ.sum fun index =>
+        (sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.cellValuationBallTensor index).tensorProductNormalizedLogVolume
+  finiteCoverAdditive_coverLogVolume_eq_sum :
+    sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.hullSystem.logVolume
+        (⋃ index,
+          sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.directProductCell index) =
+      Finset.univ.sum fun index =>
+        sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.hullSystem.logVolume
+          (sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.directProductCell index)
+  tensorMeasureModel_coverLogVolume_eq_tensorCellSum :
+    sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.toFiniteCoverLogVolumeMeasureModelSource.measureLogVolume
+        sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.directProductCellUnion =
+      Finset.univ.sum fun index =>
+        (sourceData.principalValuationBallSource.toTensorMeasureBackedFactorCalibratedHaarTensorPacketHullCoverSource.cellValuationBallTensor index).tensorProductNormalizedLogVolume
+  selectedPrincipalHull_logVolume_eq_calibratedCellSum :
+    sourceData.principalValuationBallSource.valuationCover.hullSystem.logVolume
+        sourceData.principalValuationBallSource.selectedPrincipalHull =
+      sourceData.principalValuationBallSource.valuationCover.calibratedCellLogVolumeSum
+  adjustedHullOperator_eq_principal :
+    sourceData.constructorBackedSource.measuredSource.adjustedSource.hullOperator =
+      sourceData.principalValuationBallSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+  adjustedFamilyHullLogVolume_eq_normalizedDeterminant :
+    sourceData.principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+      sourceData.principalValuationBallSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume
+  qSigned_le_thetaSigned :
+    packageN.preLedger.qSigned <= packageN.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem principalValuationBallFiniteCoverHaarBridgeAudit
+    (sourceData :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ) :
+    PrincipalValuationBallFiniteCoverHaarBridgeAudit sourceData :=
+  let tensorAudit :=
+    sourceData.principalValuationBallSource.principalValuationBallTensorMeasureAudit
+  { haarNormalizationBridgeAudit :=
+      sourceData.principalValuationBallHaarNormalizationBridgeAudit,
+    principalTensorMeasureAudit :=
+      tensorAudit,
+    tensorMeasureBacked_hullSystem_eq_principal :=
+      tensorAudit.tensorMeasureBacked_hullSystem_eq_principal,
+    selectedPrincipalHull_eq_tensorMeasureBackedDirectProductCellUnion :=
+      tensorAudit.selectedPrincipalHull_eq_tensorMeasureBackedDirectProductCellUnion,
+    selectedPrincipalHull_logVolume_eq_tensorCellSum :=
+      tensorAudit.selectedPrincipalHull_logVolume_eq_tensorCellSum,
+    finiteCoverAdditive_coverLogVolume_eq_sum :=
+      tensorAudit.tensorMeasureAudit.finiteCoverAdditive_coverLogVolume_eq_sum,
+    tensorMeasureModel_coverLogVolume_eq_tensorCellSum :=
+      tensorAudit.tensorMeasureAudit.measureModel_coverLogVolume_eq_tensorCellSum,
+    selectedPrincipalHull_logVolume_eq_calibratedCellSum :=
+      tensorAudit.selectedPrincipalHull_logVolume_eq_calibratedCellSum,
+    adjustedHullOperator_eq_principal :=
+      sourceData.hullOperator_eq_principalProductHull,
+    adjustedFamilyHullLogVolume_eq_normalizedDeterminant :=
+      tensorAudit.adjustedFamilyHullLogVolume_eq_normalizedDeterminant,
+    qSigned_le_thetaSigned :=
+      sourceData.toPrincipalProductHullBackedSource.constructorBackedSource.toHullDetSourceConstructor.qSigned_le_thetaSigned }
+
 noncomputable def canonicalCThetaScale
     (_sourceData :
       IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
@@ -61559,6 +61648,113 @@ theorem boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBal
       targetSource
   ⟨principalValuationBallBackedSource.principalValuationBallHaarNormalizationBridgeAudit,
     endpoint.1, endpoint.2⟩
+
+set_option linter.style.longLine false in
+/--
+Canonical-scale principal valuation-ball finite-divisor route with the
+finite-cover/Haar audit attached.
+
+This strengthens the Haar-normalized endpoint by returning the tensor-measure
+finite-cover audit for the principal valuation-ball product hull.  The returned
+audit displays the finite-cover additivity theorem, tensor-cell log-volume sum,
+selected principal hull identification, and adjusted Ob3/Ob5 determinant
+normalization before the finite-divisor vertical-`IQ` dichotomy is applied.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallFiniteCoverHaarConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithFiniteCoverHaarAudit
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {Λ : Type (max u v w y z)}
+    (principalValuationBallBackedSource :
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (η := η) (K := K) (β := β) (γ := γ) record Λ)
+    {endpoint :
+      packageN.PlaceAuditedMultiradialThetaHullEndpoint
+        principalValuationBallBackedSource.constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry) :
+    IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallFiniteCoverHaarBridgeAudit
+        principalValuationBallBackedSource ∧
+      IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallBackedCanonicalCThetaScaleAudit
+        principalValuationBallBackedSource ∧
+        ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+            packageN.preLedger.thetaSigned < 0) ∨
+          (-1 : Real) <
+            principalValuationBallBackedSource.canonicalCThetaScale) :=
+  let endpoint :=
+    part.boundarySignedEqualityOrStrictCTheta_from_remark395PrincipalValuationBallHaarNormalizedConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleWithHaarAudit
+      principalValuationBallBackedSource
+      profile audited transportSource iplConstructionSource
+      sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+      divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+      holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+      targetSource
+  ⟨principalValuationBallBackedSource.principalValuationBallFiniteCoverHaarBridgeAudit,
+    endpoint.2.1, endpoint.2.2⟩
 
 set_option linter.style.longLine false in
 /--
