@@ -44597,6 +44597,50 @@ theorem remark395DirectProductHullSystemSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface direct-product backed principal hull construction.
+
+This keeps the source-paper scalar presentation `lambda * O`, but derives the
+principal minimality law from the direct-product hull theorem after identifying
+each principal scalar image with its coordinate product hull.
+-/
+theorem remark395DirectProductPrincipalHullSystemSource_endpoint
+    {δ : Type u} {A : δ -> Type v}
+    (data : IUTStage1Remark395DirectProductPrincipalHullSystemSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    let principalSource := data.toPrincipalProductHullSystemSource
+    let productSource := data.toProductHullSystemSource
+    let hullSystem := data.toHolomorphicHullSystem
+    (∀ parameter : (d : δ) -> Set (A d),
+        data.parameter_nonzero parameter) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        data.principalHull parameter =
+          data.directProductSource.productHull parameter) ∧
+      data.principalHull
+          (data.directProductSource.intersectionParameter region) =
+        { point : (d : δ) -> A d |
+          ∀ parameter : (d : δ) -> Set (A d),
+            region ⊆ data.principalHull parameter ->
+              point ∈ data.principalHull parameter } ∧
+      hullSystem.phi region =
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      region ⊆
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        region ⊆ principalSource.principalHull parameter ->
+          principalSource.principalHull
+              (principalSource.intersectionParameter region) ⊆
+            principalSource.principalHull parameter) ∧
+      productSource.logVolume
+          (productSource.productHull
+            (productSource.intersectionParameter region)) =
+        productSource.productHullLogVolume
+          (productSource.intersectionParameter region) :=
+  data.endpoint region
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface audit for the source-facing Remark 3.9.5 possible-image
 family package.
 
