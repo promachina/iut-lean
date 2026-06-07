@@ -6903,6 +6903,39 @@ paper constant \(C_\Theta\).  Its purpose is narrower and useful: the
 theta/log-q upper bound is no longer an opaque route hypothesis for this local
 scale, and the remaining mathematical task is now isolated as the comparison
 between this canonical source scale and the \IUT{} constant from the paper.
+This comparison boundary is now a named Lean object rather than prose.  The
+constructed source theorem
+\[
+\begin{array}{l}
+\texttt{IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource}\\
+\quad\texttt{.constructedGlobalCThetaScaleComparisonAudit}
+\end{array}
+\]
+assumes only
+\[
+  C_{\Theta,\mathrm{can}}\leq C_\Theta
+\]
+for the chosen paper/global constant \(C_\Theta\).  From this domination and
+q-pilot positivity, Lean derives
+\[
+  \theta_{\mathrm{signed}}
+    \leq
+  C_\Theta\cdot(-q_{\mathrm{signed}})
+\]
+and then applies the standard Corollary~3.12 ordered-real dichotomy.  The
+experiment-surface endpoints
+\[
+\begin{array}{l}
+\texttt{remark395ConstructedHolomorphicHullDeterminantSource}\\
+\quad\texttt{\_globalCThetaScaleComparisonAudit},\\
+\texttt{remark395ConstructedHolomorphicHullDeterminantSource}\\
+\quad\texttt{\_globalCThetaScaleChain}
+\end{array}
+\]
+therefore replace the raw final numeric hypothesis by the sharper remaining
+source obligation ``global \(C_\Theta\) dominates the constructed local
+Remark~3.9.5 scale''.  This is still an obligation, but it is now the correct
+one to attack from the source-paper global estimate.
 
 The practical priority order is:
 \begin{enumerate}

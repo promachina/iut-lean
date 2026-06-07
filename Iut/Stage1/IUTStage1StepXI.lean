@@ -10977,6 +10977,103 @@ theorem constructedCanonicalCThetaScaleAudit
       sourceBridge_to_canonicalScale_chain := hchain,
       dichotomy := hdichotomy }
 
+theorem thetaSigned_le_globalCTheta_absLogQ_of_canonicalCThetaScale_le
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      sourceData.canonicalCThetaScale <= cTheta) :
+    package.preLedger.thetaSigned <=
+      cTheta * (-package.preLedger.qSigned) :=
+  sourceData.thetaSigned_le_canonicalCThetaScale_absLogQ.trans
+    (mul_le_mul_of_nonneg_right canonicalCThetaScale_le_cTheta
+      (le_of_lt sourceData.q_pilot_positive))
+
+set_option linter.style.longLine false in
+/--
+Global-\(C_\Theta\) comparison audit for the constructed Remark 3.9.5 Step (xi)
+source.
+
+The constructed source proves the local canonical scale
+`C_{Theta,can} = thetaSigned / (-qSigned)` internally.  This audit records the
+remaining source-paper comparison obligation in a sharper form: the paper/global
+constant `cTheta` only has to dominate this local source scale.  Lean then derives
+the final numeric bound
+`thetaSigned <= cTheta * (-qSigned)` and applies the usual Corollary 3.12
+ordered-real dichotomy.
+-/
+structure ConstructedGlobalCThetaScaleComparisonAudit
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (cTheta : Real) :
+    Prop where
+  constructedCanonicalCThetaScaleAudit :
+    ConstructedCanonicalCThetaScaleAudit sourceData
+  canonicalCThetaScale_le_globalCTheta :
+    sourceData.canonicalCThetaScale <= cTheta
+  q_pilot_positive :
+    0 < -package.preLedger.qSigned
+  qSigned_le_thetaSigned :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+  thetaSigned_le_globalCTheta_absLogQ :
+    package.preLedger.thetaSigned <=
+      cTheta * (-package.preLedger.qSigned)
+  sourceBridge_to_globalCTheta_chain :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      cTheta * (-package.preLedger.qSigned)
+  dichotomy :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < cTheta
+
+set_option linter.style.longLine false in
+theorem constructedGlobalCThetaScaleComparisonAudit
+    (sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      sourceData.canonicalCThetaScale <= cTheta) :
+    ConstructedGlobalCThetaScaleComparisonAudit sourceData cTheta := by
+  have htheta :
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned) :=
+    sourceData.thetaSigned_le_globalCTheta_absLogQ_of_canonicalCThetaScale_le
+      cTheta canonicalCThetaScale_le_cTheta
+  let hbound : IUTStage1Corollary312SignedCThetaBound :=
+    { comparison :=
+        { thetaSigned := package.preLedger.thetaSigned,
+          qSigned := package.preLedger.qSigned,
+          q_positive := sourceData.q_pilot_positive,
+          qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned },
+      cTheta := cTheta,
+      thetaSigned_le_cTheta_absLogQ := htheta }
+  have hdichotomy :
+      (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta := by
+    rcases hbound.cTheta_eq_neg_one_or_gt_neg_one with hC | hstrict
+    · exact Or.inl
+        ⟨hbound.qSigned_eq_thetaSigned_of_cTheta_eq_neg_one hC,
+          hbound.thetaSigned_neg_of_cTheta_eq_neg_one hC⟩
+    · exact Or.inr hstrict
+  have hchain :
+      sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        cTheta * (-package.preLedger.qSigned) :=
+    sourceData.qRegionLogVolume_le_thetaSigned.trans htheta
+  exact
+    { constructedCanonicalCThetaScaleAudit :=
+        sourceData.constructedCanonicalCThetaScaleAudit,
+      canonicalCThetaScale_le_globalCTheta :=
+        canonicalCThetaScale_le_cTheta,
+      q_pilot_positive := sourceData.q_pilot_positive,
+      qSigned_le_thetaSigned := sourceData.qSigned_le_thetaSigned,
+      thetaSigned_le_globalCTheta_absLogQ := htheta,
+      sourceBridge_to_globalCTheta_chain := hchain,
+      dichotomy := hdichotomy }
+
 end IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
 
 open IUTStage1Theorem311HullDetSourceConstructor in

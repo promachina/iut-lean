@@ -45640,6 +45640,67 @@ theorem remark395ConstructedHolomorphicHullDeterminantSource_canonicalCThetaScal
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface global-\(C_\Theta\) comparison audit for the constructed
+Remark 3.9.5 Step (xi) source.
+
+This is the sharpened remaining global-constant boundary: if the paper/global
+`cTheta` dominates the constructed local source scale `C_{Theta,can}`, Lean
+derives the usual numeric theta/log-q bound and the Corollary 3.12 dichotomy.
+-/
+theorem remark395ConstructedHolomorphicHullDeterminantSource_globalCThetaScaleComparisonAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      sourceData.canonicalCThetaScale <= cTheta) :
+    IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedGlobalCThetaScaleComparisonAudit
+      sourceData cTheta :=
+  sourceData.constructedGlobalCThetaScaleComparisonAudit
+    cTheta canonicalCThetaScale_le_cTheta
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface global-\(C_\Theta\) chain obtained from local source-scale
+domination.
+-/
+theorem remark395ConstructedHolomorphicHullDeterminantSource_globalCThetaScaleChain
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      sourceData.canonicalCThetaScale <= cTheta) :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.determinantSource.normalizedLogVolume ∧
+      sourceData.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned ∧
+      package.preLedger.thetaSigned <=
+        cTheta * (-package.preLedger.qSigned) ∧
+      sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        cTheta * (-package.preLedger.qSigned) ∧
+      ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+          package.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) :=
+  let audit :=
+    sourceData.constructedGlobalCThetaScaleComparisonAudit
+      cTheta canonicalCThetaScale_le_cTheta
+  ⟨audit.constructedCanonicalCThetaScaleAudit.constructedRecordBridgeAudit.normalizedBridge_from_bridge.1,
+    audit.constructedCanonicalCThetaScaleAudit.constructedRecordBridgeAudit.normalizedBridge_from_bridge.2,
+    audit.thetaSigned_le_globalCTheta_absLogQ,
+    audit.sourceBridge_to_globalCTheta_chain,
+    audit.dichotomy⟩
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface possible-image q-choice constructor for the milestone-facing
 constructed Remark 3.9.5 Step (xi) source.
 
