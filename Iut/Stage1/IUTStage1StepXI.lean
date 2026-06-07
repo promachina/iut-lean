@@ -10780,29 +10780,6 @@ structure ConstructedRecordBridgeAudit
         package.preLedger.thetaSigned ∧
       sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
         package.preLedger.thetaSigned
-  qPilotRegion_subset_phi_from_bridge :
-    sourceData.qPilotRegion ⊆
-      sourceData.hullOperator.phi (recordThetaPossibleImageUnion record)
-  qRegionLogVolume_le_determinant_from_bridge :
-    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
-      sourceData.determinantSource.determinantLogVolume
-  qRegionLogVolume_le_determinantNormalized_from_bridge :
-    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
-      sourceData.determinantSource.normalizedLogVolume
-  determinantNormalizedLogVolume_le_thetaSigned_from_bridge :
-    sourceData.determinantSource.normalizedLogVolume <=
-      package.preLedger.thetaSigned
-  normalizedBridge_from_bridge :
-    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
-        sourceData.determinantSource.normalizedLogVolume ∧
-      sourceData.determinantSource.normalizedLogVolume <=
-        package.preLedger.thetaSigned
-  determinantLogVolume_le_thetaSigned_from_bridge :
-    sourceData.determinantSource.determinantLogVolume <=
-      package.preLedger.thetaSigned
-  qRegionLogVolume_le_thetaSigned_from_bridge :
-    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
-      package.preLedger.thetaSigned
   constructedSourceEndpoint :
     recordThetaPossibleImageUnion record ⊆
         sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) ∧
@@ -10832,6 +10809,93 @@ structure ConstructedRecordBridgeAudit
         package.preLedger.thetaSigned ∧
       package.preLedger.qSigned <= package.preLedger.thetaSigned
 
+namespace ConstructedRecordBridgeAudit
+
+theorem qPilotRegion_eq_from_bridge
+    {sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructedRecordBridgeAudit sourceData) :
+    sourceData.toRecordHullDeterminantBridgeSource.qPilotRegion =
+      sourceData.qPilotRegion :=
+  audit.recordBridgeEndpoint.1
+
+theorem qPilotRegion_subset_phi_from_bridge
+    {sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructedRecordBridgeAudit sourceData) :
+    sourceData.qPilotRegion ⊆
+      sourceData.hullOperator.phi (recordThetaPossibleImageUnion record) :=
+  audit.recordBridgeEndpoint.2.1
+
+theorem qRegionLogVolume_le_determinantNormalized_from_bridge
+    {sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructedRecordBridgeAudit sourceData) :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      sourceData.determinantSource.normalizedLogVolume :=
+  audit.recordBridgeEndpoint.2.2.1
+
+theorem determinantNormalizedLogVolume_le_thetaSigned_from_bridge
+    {sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructedRecordBridgeAudit sourceData) :
+    sourceData.determinantSource.normalizedLogVolume <=
+      package.preLedger.thetaSigned :=
+  audit.recordBridgeEndpoint.2.2.2.1
+
+theorem normalizedBridge_from_bridge
+    {sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructedRecordBridgeAudit sourceData) :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+        sourceData.determinantSource.normalizedLogVolume ∧
+      sourceData.determinantSource.normalizedLogVolume <=
+        package.preLedger.thetaSigned :=
+  ⟨audit.qRegionLogVolume_le_determinantNormalized_from_bridge,
+    audit.determinantNormalizedLogVolume_le_thetaSigned_from_bridge⟩
+
+theorem qRegionLogVolume_le_determinant_from_bridge
+    {sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructedRecordBridgeAudit sourceData) :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      sourceData.determinantSource.determinantLogVolume :=
+  audit.recordBridgeEndpoint.2.2.2.2.1
+
+theorem determinantLogVolume_le_thetaSigned_from_bridge
+    {sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructedRecordBridgeAudit sourceData) :
+    sourceData.determinantSource.determinantLogVolume <=
+      package.preLedger.thetaSigned :=
+  audit.recordBridgeEndpoint.2.2.2.2.2.1
+
+theorem qRegionLogVolume_le_thetaSigned_from_bridge
+    {sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructedRecordBridgeAudit sourceData) :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      package.preLedger.thetaSigned :=
+  audit.recordBridgeEndpoint.2.2.2.2.2.2
+
+theorem qSigned_le_thetaSigned_from_constructed_source
+    {sourceData :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructedRecordBridgeAudit sourceData) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  audit.constructedSourceEndpoint.2.2.2.2.2.2.2.2.2.2.2.2
+
+end ConstructedRecordBridgeAudit
+
 set_option linter.style.longLine false in
 theorem constructedRecordBridgeAudit
     (sourceData :
@@ -10840,20 +10904,6 @@ theorem constructedRecordBridgeAudit
     ConstructedRecordBridgeAudit sourceData :=
   { recordBridgeEndpoint :=
       sourceData.recordHullDeterminantBridgeSource_endpoint,
-    qPilotRegion_subset_phi_from_bridge :=
-      sourceData.toRecordHullDeterminantBridgeSource.qPilotRegion_subset_phi,
-    qRegionLogVolume_le_determinant_from_bridge :=
-      sourceData.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_determinantLogVolume,
-    qRegionLogVolume_le_determinantNormalized_from_bridge :=
-      sourceData.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_determinantNormalizedLogVolume,
-    determinantNormalizedLogVolume_le_thetaSigned_from_bridge :=
-      sourceData.toRecordHullDeterminantBridgeSource.determinantNormalizedLogVolume_le_thetaSigned,
-    normalizedBridge_from_bridge :=
-      sourceData.toRecordHullDeterminantBridgeSource.normalizedBridge,
-    determinantLogVolume_le_thetaSigned_from_bridge :=
-      sourceData.toRecordHullDeterminantBridgeSource.determinantLogVolume_le_thetaSigned,
-    qRegionLogVolume_le_thetaSigned_from_bridge :=
-      sourceData.toRecordHullDeterminantBridgeSource.qRegionLogVolume_le_thetaSigned,
     constructedSourceEndpoint :=
       sourceData.source_endpoint }
 

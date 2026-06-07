@@ -7118,7 +7118,12 @@ the record bridge source.  The new constructed-record bridge audit, exposed on
 the experiment surface, records that the constructed source's
 q-to-determinant-to-theta chain is read from this generic Remark 3.9.5 bridge
 theorem rather than re-proved as an isolated comparison.  This audit now also
-carries the normalized determinant chain directly:
+has a leaner proof shape: it stores the coarse record-bridge endpoint and
+the constructed-source endpoint, while \Lean{} derives the named projection
+theorems for q-hull containment, determinant-log comparison, normalized
+determinant comparison, and the final \(q_{\mathrm{signed}}\leq
+\theta_{\mathrm{signed}}\) comparison.  In particular, the normalized
+determinant chain
 \[
   \mu_{\log}(q\mathrm{Region})
     \leq
@@ -7126,7 +7131,9 @@ carries the normalized determinant chain directly:
     \leq
   \theta_{\mathrm{signed}} .
 \]
-The experiment surface exposes this two-step normalized form as
+is a theorem projected from the record bridge endpoint, not an additional field
+of the audit object.  The experiment surface exposes this two-step normalized
+form as
 \[
 \texttt{remark395ConstructedHolomorphicHullDeterminantSource\_normalizedRecordBridge}.
 \]
