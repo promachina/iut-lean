@@ -34665,6 +34665,70 @@ theorem remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource_ob1ToOb
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface Ob5 quotient bridge where the selected q-choice
+nonemptiness is derived from q-pilot-region nonemptiness.
+-/
+theorem remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource_ob1ToOb5QuotientBridgeAuditOfQPilotRegionNonempty
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    (sourceData :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qPilotRegion_nonempty :
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion.Nonempty)
+    (comparisonChoice_nonempty :
+      (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+        record comparisonChoice).Nonempty) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource.ConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+      sourceData comparisonChoice
+      (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+        qPilotRegion_nonempty)
+      comparisonChoice_nonempty :=
+  sourceData.toConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit_of_qPilotRegion_nonempty
+    comparisonChoice qPilotRegion_nonempty comparisonChoice_nonempty
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface canonical-qChoice Ob5 quotient bridge for the constructed
+finite-divisor source.
+
+The comparison possible image is the selected q-choice itself, so one
+q-pilot-region nonemptiness witness supplies both Ob5 nonemptiness inputs.
+-/
+theorem remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource_ob1ToOb5QuotientBridgeAuditAtQChoiceOfQPilotRegionNonempty
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    (sourceData :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record)
+    (qPilotRegion_nonempty :
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion.Nonempty) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource.ConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+      sourceData sourceData.qChoice
+      (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+        qPilotRegion_nonempty)
+      (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+        qPilotRegion_nonempty) :=
+  sourceData.toConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit_atQChoice_of_qPilotRegion_nonempty
+    qPilotRegion_nonempty
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface `C_Theta` dichotomy through the constructed Remark 3.9.5
 Ob3/Ob5-adjusted hull/determinant source.
 

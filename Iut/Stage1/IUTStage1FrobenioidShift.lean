@@ -59521,6 +59521,70 @@ theorem toConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
       audit.qSigned_le_thetaSigned }
 
 set_option linter.style.longLine false in
+theorem qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+    (sourceData :
+      IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record)
+    (qPilotRegion_nonempty :
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion.Nonempty) :
+    (recordThetaPossibleImage record sourceData.qChoice).Nonempty := by
+  let constructorBuilt :=
+    sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+  rcases qPilotRegion_nonempty with ⟨point, hpoint⟩
+  refine ⟨point, ?_⟩
+  simpa [constructorBuilt.qPilotRegion_eq_possibleImage] using hpoint
+
+set_option linter.style.longLine false in
+theorem toConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit_of_qPilotRegion_nonempty
+    (sourceData :
+      IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record)
+    (comparisonChoice :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    (qPilotRegion_nonempty :
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion.Nonempty)
+    (comparisonChoice_nonempty :
+      (recordThetaPossibleImage record comparisonChoice).Nonempty) :
+    ConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+      sourceData comparisonChoice
+      (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+        qPilotRegion_nonempty)
+      comparisonChoice_nonempty :=
+  sourceData.toConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+    comparisonChoice
+    (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+      qPilotRegion_nonempty)
+    comparisonChoice_nonempty
+
+set_option linter.style.longLine false in
+/--
+Canonical-qChoice finite-divisor Ob5 quotient bridge.
+
+Specializing the comparison possible image to the selected q-choice means that
+a single q-region nonemptiness witness supplies both nonemptiness hypotheses of
+Remark 3.9.5(v)--(vi)'s quotient-collapse audit.
+-/
+theorem toConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit_atQChoice_of_qPilotRegion_nonempty
+    (sourceData :
+      IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
+        (β := β) (γ := γ) obligations record)
+    (qPilotRegion_nonempty :
+      sourceData.toPossibleImageConstructorBuiltHolomorphicHullDeterminantSource.qPilotRegion.Nonempty) :
+    ConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+      sourceData sourceData.qChoice
+      (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+        qPilotRegion_nonempty)
+      (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+        qPilotRegion_nonempty) :=
+  sourceData.toConstructedFiniteDivisorOb1ToOb5QuotientBridgeAudit
+    sourceData.qChoice
+    (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+      qPilotRegion_nonempty)
+    (sourceData.qChoiceRegion_nonempty_of_qPilotRegion_nonempty
+      qPilotRegion_nonempty)
+
+set_option linter.style.longLine false in
 theorem tensorPower_bound
     (sourceData :
       IUTStage1Remark395ConstructedHullDeterminantFiniteDivisorVerticalIQSource
