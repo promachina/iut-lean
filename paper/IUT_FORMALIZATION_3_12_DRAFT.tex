@@ -9395,10 +9395,18 @@ The practical priority order is:
   \(\#\kappa=p_v\) and
   \(\dim_\kappa V=[K_v:\mathbb Q_{p_v}]\), and therefore derives
   \(\#(\mathcal O[K_v]/p_v\mathcal O[K_v])
-    =p_v^{[K_v:\mathbb Q_{p_v}]}\) in Lean.  The remaining local-field
-  obligation at this boundary is now sharper: construct the actual residue
-  field/vector-space object and the equivalence with
-  \(\mathcal O[K_v]/p_v\mathcal O[K_v]\) for genuine finite extensions.
+    =p_v^{[K_v:\mathbb Q_{p_v}]}\) in Lean.  This has been lowered once more to
+  a quotient-native residue module source: the quotient
+  \(\mathcal O[K_v]/p_v\mathcal O[K_v]\) itself carries the finite
+  \(\kappa\)-vector-space structure, so no separate carrier \(V\) nor
+  equivalence \(V\simeq\mathcal O[K_v]/p_v\mathcal O[K_v]\) is needed at this
+  boundary.  Lean again applies \texttt{Module.card\_eq\_pow\_finrank} directly
+  to the quotient and then uses \(\#\kappa=p_v\) and the quotient finrank
+  identity to obtain the required cardinality.  The remaining local-field
+  obligation is now sharper: construct the actual residue field action and
+  finite-dimensional quotient module structure on
+  \(\mathcal O[K_v]/p_v\mathcal O[K_v]\) for genuine finite extensions, together
+  with the quotient finrank identity.
   In the base local field \(\mathbb Q_{p_v}\), this closure input is now also
   constructed: the base-field valued-integer source proves
   \(\|p_v\|=p_v^{-1}\leq 1\), uses the characterization
@@ -9435,9 +9443,9 @@ The practical priority order is:
   audit.
   The next work is now below the finite-extension boundary: instantiate the
   normed valued-integer dilation-quotient source for genuine finite extensions
-  by constructing the finite residue field/vector-space equivalence
-  \(V\simeq\mathcal O[K_v]/p_v\mathcal O[K_v]\) and the dimension/cardinality
-  identifications; derive the all-subset
+  by constructing the residue field action and finite quotient module structure
+  on \(\mathcal O[K_v]/p_v\mathcal O[K_v]\), and proving the quotient finrank
+  identity; derive the all-subset
   base-prime Haar-modulus
   identity from the same local-field model; derive the positive valuation-ball radius, the
   coordinate-place equivalence, and the point-level target transport
