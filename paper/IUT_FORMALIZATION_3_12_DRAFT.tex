@@ -9322,12 +9322,30 @@ The practical priority order is:
   constructed all-subset Haar-modulus source plus Haar regularity, derives the
   unit-ball Haar-character data, and continues to the same \(C_\Theta\)
   dichotomy.
+  The finite-extension unit-ball boundary has now also been lowered in the
+  other direction, from a supplied \(p_v\mathcal O_v\) mass to a residue-coset
+  calculation.  The new coset source carries \(p_v^{[K_v:\mathbb Q_{p_v}]}\)
+  representatives, the cover
+  \[
+      \mathcal O_v=\bigcup_i (a_i+p_v\mathcal O_v),
+  \]
+  pairwise disjointness of the cosets, the finite-additivity equality for this
+  cover, and equality of all translated coset measures with
+  \(\mu_v(p_v\mathcal O_v)\).  Lean then proves
+  \[
+      \mu_v(p_v\mathcal O_v)=p_v^{-[K_v:\mathbb Q_{p_v}]}
+  \]
+  from \(\mu_v(\mathcal O_v)=1\) by finite-sum algebra in
+  \(\mathbb R_{\geq 0}\cup\{\infty\}\).  This coset-derived source now projects
+  to the unit-ball Haar-character source and is threaded through the local
+  centered-ball Haar-log-coordinate and finite-product target-point layers.
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
-  The next work is now below the finite-extension boundary: derive, from the
-  source-paper valuation/Haar/Kummer model, the normalized finite-extension
-  valuation-unit-ball mass and the all-subset base-prime Haar-modulus identity,
-  the positive valuation-ball radius, the
+  The next work is now below the finite-extension boundary: construct the
+  residue representatives, coset cover, disjointness, and equal-translate
+  finite-additivity certificate from the actual finite-extension residue
+  quotient and Haar invariance; derive the all-subset base-prime Haar-modulus
+  identity from the same local-field model; derive the positive valuation-ball radius, the
   coordinate-place equivalence, and the point-level target transport
   identifying \(O\) and \(\lambda O\) with the principal finite-divisor target
   regions.  Below that, the local directional scalar-image laws for each local factor

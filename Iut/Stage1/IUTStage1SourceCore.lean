@@ -13827,6 +13827,262 @@ theorem endpoint
 
 end IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
 
+/--
+Finite-extension-over-`ℚ_[p]` Haar source whose base-prime unit-ball mass is
+computed from the residue-coset decomposition of the valuation ring.
+
+This is the source-paper local argument one step below the unit-ball
+Haar-character source.  Instead of taking
+`mu(p_v O_v)=p_v^{-[K_v:Q_p]}` as a field, it carries the finite decomposition
+of `O_v` into `p_v^[K_v:Q_p]` additive translates of `p_v O_v`, together with
+the finite-additivity/equal-translate measure calculation.  The normalized
+base-prime image mass is then proved in Lean.
+-/
+structure IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  integerSource : IUTStage1ValuedFieldIntegerUnitBallSource K
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  haar_regular : haarMeasure.Regular
+  valuationUnitBall_measure_eq_one :
+    haarMeasure integerSource.ringOfIntegers = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal
+  residueCosetRepresentative :
+    Fin (p ^ Module.finrank ℚ_[p] K) -> K
+  residueCosets_cover_unitBall :
+    integerSource.ringOfIntegers =
+      ⋃ index : Fin (p ^ Module.finrank ℚ_[p] K),
+        (fun point : K => residueCosetRepresentative index + point) ''
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            integerSource.ringOfIntegers)
+  residueCosets_pairwiseDisjoint :
+    Pairwise fun index₁ index₂ =>
+      Disjoint
+        ((fun point : K => residueCosetRepresentative index₁ + point) ''
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            integerSource.ringOfIntegers))
+        ((fun point : K => residueCosetRepresentative index₂ + point) ''
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            integerSource.ringOfIntegers))
+  residueCoset_measure_sum_eq :
+    haarMeasure integerSource.ringOfIntegers =
+      ∑ index : Fin (p ^ Module.finrank ℚ_[p] K),
+        haarMeasure
+          ((fun point : K => residueCosetRepresentative index + point) ''
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              integerSource.ringOfIntegers))
+  residueCoset_measure_eq_basePrimeScaledUnitBall :
+    ∀ index : Fin (p ^ Module.finrank ℚ_[p] K),
+      haarMeasure
+          ((fun point : K => residueCosetRepresentative index + point) ''
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              integerSource.ringOfIntegers)) =
+        haarMeasure
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            integerSource.ringOfIntegers)
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] K : Real)
+
+namespace IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+variable [IsTopologicalAddGroup K]
+variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def residueIndexCard
+    (_data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) : Nat :=
+  p ^ Module.finrank ℚ_[p] K
+
+theorem residueIndexCard_pos
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    0 < data.residueIndexCard :=
+  pow_pos (Fact.out : p.Prime).pos _
+
+def basePrimeScaledUnitBall
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) : Set K :=
+  (fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+    data.integerSource.ringOfIntegers
+
+def residueCoset
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem)
+    (index : Fin data.residueIndexCard) : Set K :=
+  (fun point : K => data.residueCosetRepresentative index + point) ''
+    data.basePrimeScaledUnitBall
+
+theorem residueCosets_cover_unitBall'
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    data.integerSource.ringOfIntegers =
+      ⋃ index : Fin data.residueIndexCard, data.residueCoset index := by
+  simpa [residueIndexCard, residueCoset, basePrimeScaledUnitBall] using
+    data.residueCosets_cover_unitBall
+
+theorem residueCosets_pairwiseDisjoint'
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    Pairwise fun index₁ index₂ =>
+      Disjoint (data.residueCoset index₁) (data.residueCoset index₂) := by
+  simpa [residueIndexCard, residueCoset, basePrimeScaledUnitBall] using
+    data.residueCosets_pairwiseDisjoint
+
+theorem residueCoset_measure_sum_eq'
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    data.haarMeasure data.integerSource.ringOfIntegers =
+      ∑ index : Fin data.residueIndexCard,
+        data.haarMeasure (data.residueCoset index) := by
+  simpa [residueIndexCard, residueCoset, basePrimeScaledUnitBall] using
+    data.residueCoset_measure_sum_eq
+
+theorem residueCoset_measure_eq_basePrimeScaledUnitBall'
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem)
+    (index : Fin data.residueIndexCard) :
+    data.haarMeasure (data.residueCoset index) =
+      data.haarMeasure data.basePrimeScaledUnitBall := by
+  simpa [residueIndexCard, residueCoset, basePrimeScaledUnitBall] using
+    data.residueCoset_measure_eq_basePrimeScaledUnitBall index
+
+/--
+Derive the exact `ENNReal` mass of `p_v O_v` from the residue-coset count and
+equal coset measures.
+-/
+theorem basePrimeUnitBall_measure_eq_inv_nat
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    data.haarMeasure data.basePrimeScaledUnitBall =
+      ((data.residueIndexCard : Nat) : ENNReal)⁻¹ := by
+  have hsum_one :
+      1 =
+        ∑ index : Fin data.residueIndexCard,
+          data.haarMeasure (data.residueCoset index) := by
+    rw [← data.residueCoset_measure_sum_eq',
+      data.valuationUnitBall_measure_eq_one]
+  have hsum_const :
+      (∑ index : Fin data.residueIndexCard,
+          data.haarMeasure (data.residueCoset index)) =
+        (data.residueIndexCard : ENNReal) *
+          data.haarMeasure data.basePrimeScaledUnitBall := by
+    simp [data.residueCoset_measure_eq_basePrimeScaledUnitBall']
+  have hmul :
+      data.haarMeasure data.basePrimeScaledUnitBall *
+          (data.residueIndexCard : ENNReal) =
+        1 := by
+    rw [hsum_const] at hsum_one
+    rw [mul_comm]
+    exact hsum_one.symm
+  exact ENNReal.eq_inv_of_mul_eq_one_left hmul
+
+/--
+The source-paper unit-ball image mass in its real-valued normalization form:
+`mu(p_v O_v)=p_v^{-[K_v:Q_p]}`.
+-/
+theorem basePrimeUnitBall_measure_eq
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    data.haarMeasure data.basePrimeScaledUnitBall =
+      ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) := by
+  have hpow_pos : 0 < (p : Real) ^ Module.finrank ℚ_[p] K := by
+    exact pow_pos (by exact_mod_cast (Fact.out : p.Prime).pos) _
+  have hcast :
+      ENNReal.ofReal ((p : Real) ^ Module.finrank ℚ_[p] K) =
+        ((data.residueIndexCard : Nat) : ENNReal) := by
+    rw [residueIndexCard, ← ENNReal.ofReal_natCast
+      (p ^ Module.finrank ℚ_[p] K)]
+    congr
+    norm_num
+  rw [data.basePrimeUnitBall_measure_eq_inv_nat]
+  rw [← hcast]
+  exact (ENNReal.ofReal_inv_of_pos hpow_pos).symm
+
+noncomputable def toUnitBallHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+      α p K hullSystem :=
+  { integerSource := data.integerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    haar_regular := data.haar_regular,
+    valuationUnitBall_measure_eq_one :=
+      data.valuationUnitBall_measure_eq_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    basePrimeUnitBall_measure_eq := by
+      simpa [basePrimeScaledUnitBall] using data.basePrimeUnitBall_measure_eq,
+    hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    data.integerSource.ringOfIntegers =
+        ⋃ index : Fin data.residueIndexCard, data.residueCoset index ∧
+      Pairwise (fun index₁ index₂ =>
+        Disjoint (data.residueCoset index₁) (data.residueCoset index₂)) ∧
+      data.haarMeasure data.integerSource.ringOfIntegers = 1 ∧
+      data.haarMeasure data.basePrimeScaledUnitBall =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (MeasureTheory.addEquivAddHaarChar
+          data.toUnitBallHaarCharacterNormalizationSource.basePrimeContinuousAddEquiv :
+          ENNReal) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (∀ subset : Set K,
+        data.haarMeasure
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              subset) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+            data.haarMeasure subset) :=
+  ⟨data.residueCosets_cover_unitBall',
+    data.residueCosets_pairwiseDisjoint',
+    data.valuationUnitBall_measure_eq_one,
+    data.basePrimeUnitBall_measure_eq,
+    data.toUnitBallHaarCharacterNormalizationSource.basePrimeHaarChar_eq,
+    data.toUnitBallHaarCharacterNormalizationSource
+      |>.toConstructedDilationHaarCharacterNormalizationSource
+      |>.basePrimeScale_measure_eq⟩
+
+end IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+
 namespace IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
 
 variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
