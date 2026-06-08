@@ -9474,11 +9474,14 @@ The practical priority order is:
   \]
   on the submodule quotient by \texttt{Module.card\_eq\_pow\_finrank}, and
   also rederives \(p_v\mathcal O[K_v]\subseteq \mathcal O[K_v]\) from the
-  normed-algebra inequality \(\|p_v\|\leq 1\).  The remaining bridge at this
-  boundary is now precise: construct the quotient linear equivalence between
-  this submodule quotient and the additive quotient used by the coset/Haar
-  partition, then transport the finrank identity through it.  For the base
-  field itself, this residue
+  normed-algebra inequality \(\|p_v\|\leq 1\).  This boundary now includes the
+  quotient transport itself: Lean forms the additive quotient equivalence
+  induced by the equality between the submodule's underlying additive subgroup
+  and \(p_v\mathcal O[K_v]\), transports the \(\kappa\)-module structure across
+  this equivalence, obtains a quotient linear equivalence, transports the
+  finrank identity to the additive quotient used by the coset/Haar partition,
+  and then reaches the full local coset/Haar-character endpoint from the
+  submodule-level source.  For the base field itself, this residue
   quotient is no longer an obligation: Lean now uses
   \(\texttt{PadicInt.toZMod}\), its kernel/maximal-ideal theorem, and the
   additive first isomorphism theorem to construct
@@ -9524,11 +9527,10 @@ The practical priority order is:
   audit.
   The next work is now below the finite-extension boundary: instantiate the
   submodule-level residue source for genuine finite extensions by constructing
-  the residue field action on \(\mathcal O[K_v]\), proving that
-  \(p_v\mathcal O[K_v]\) is a \(\kappa\)-submodule, and building the explicit
-  quotient linear equivalence to the additive quotient used by the coset/Haar
-  partition; then feed the resulting coset/Haar-character endpoint into the
-  determinant and hull comparison source.  In parallel, one still has to derive
+  the residue field action on \(\mathcal O[K_v]\) and proving that
+  \(p_v\mathcal O[K_v]\) is a \(\kappa\)-submodule.  Once supplied, the
+  existing Lean transport now feeds the resulting coset/Haar-character endpoint
+  into the determinant and hull comparison source.  In parallel, one still has to derive
   the positive valuation-ball radius, the
   coordinate-place equivalence, and the point-level target transport
   identifying \(O\) and \(\lambda O\) with the principal finite-divisor target
