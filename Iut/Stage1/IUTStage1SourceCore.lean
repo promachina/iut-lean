@@ -16325,6 +16325,15 @@ theorem representative_spec
   data.toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
     |>.representative_spec index
 
+noncomputable def toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) := by
+  haveI : FiniteDimensional ℚ_[p] K := data.finiteDimensional
+  exact
+    data.toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
+      |>.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+
 theorem endpoint
     (data :
       IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
@@ -16365,6 +16374,80 @@ theorem endpoint
     data.toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
       |>.toNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
       |>.basePrime_mul_mem_ringOfIntegers⟩
+
+/--
+The quotient-native residue-module source reaches the full local
+residue-coset/Haar-character calculation.  Thus the Haar mass formula for
+`p_v O_v`, the additive Haar-character scalar, and the all-subset dilation law
+are consequences of the quotient module cardinality/finrank calculation, not
+independent quotient-equivalence or representative payloads.
+-/
+theorem quotientCosetHaarCharacterEndpoint
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    letI := data.finiteDimensional
+    let valuedIntegerSource :=
+      data.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+    let dilation :=
+      valuedIntegerSource.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource
+    let quotient :=
+      dilation.toUnitBallQuotientCosetHaarCharacterNormalizationSource
+    (letI := data.quotientModule;
+      letI := data.quotientFintype;
+      Fintype.card
+        (data.integerSource.integerAddSubgroup ⧸
+          (data.integerSource.integerAddSubgroup.map
+            (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+          ).addSubgroupOf data.integerSource.integerAddSubgroup) =
+        p ^ Module.finrank ℚ_[p] K) ∧
+      (letI := data.quotientModule;
+        Module.finrank κ
+          (data.integerSource.integerAddSubgroup ⧸
+            (data.integerSource.integerAddSubgroup.map
+              (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+            ).addSubgroupOf data.integerSource.integerAddSubgroup) =
+          Module.finrank ℚ_[p] K) ∧
+      data.integerSource.ringOfIntegers =
+        ⋃ index : Fin (p ^ Module.finrank ℚ_[p] K),
+          quotient.residueCoset index ∧
+      Pairwise (fun index₁ index₂ : Fin (p ^ Module.finrank ℚ_[p] K) =>
+        Disjoint
+          (quotient.residueCoset index₁)
+          (quotient.residueCoset index₂)) ∧
+      (∀ index : Fin (p ^ Module.finrank ℚ_[p] K),
+        MeasurableSet (quotient.residueCoset index)) ∧
+      data.haarMeasure data.integerSource.ringOfIntegers = 1 ∧
+      data.haarMeasure quotient.basePrimeScaledUnitBall =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (MeasureTheory.addEquivAddHaarChar
+          (quotient
+            |>.toUnitBallCosetHaarCharacterNormalizationSource
+            |>.toUnitBallHaarCharacterNormalizationSource
+            |>.basePrimeContinuousAddEquiv) :
+          ENNReal) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (∀ subset : Set K,
+        data.haarMeasure
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              subset) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+        data.haarMeasure subset) := by
+  letI := data.finiteDimensional
+  let valuedIntegerSource :=
+    data.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+  have hresidue := data.endpoint
+  have hvalued := valuedIntegerSource.endpoint
+  exact
+    ⟨hresidue.1,
+      hresidue.2.1,
+      hvalued.2.2.2.2.1,
+      hvalued.2.2.2.2.2.1,
+      hvalued.2.2.2.2.2.2.1,
+      hvalued.2.2.2.2.2.2.2.1,
+      hvalued.2.2.2.2.2.2.2.2.1,
+      hvalued.2.2.2.2.2.2.2.2.2.1,
+      hvalued.2.2.2.2.2.2.2.2.2.2⟩
 
 end IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
 
