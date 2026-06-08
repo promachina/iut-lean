@@ -9329,9 +9329,11 @@ The practical priority order is:
   \[
       \mathcal O_v=\bigcup_i (a_i+p_v\mathcal O_v),
   \]
-  pairwise disjointness of the cosets, the finite-additivity equality for this
-  cover, and equality of all translated coset measures with
-  \(\mu_v(p_v\mathcal O_v)\).  Lean then proves
+  pairwise disjointness of the cosets, and measurability of each coset.  Lean
+  now derives the finite-additivity equality for this cover by applying
+  \texttt{measure\_iUnion}, and derives equality of each translated coset
+  measure with \(\mu_v(p_v\mathcal O_v)\) from additive Haar invariance via
+  \texttt{measure\_preimage\_add}.  Lean then proves
   \[
       \mu_v(p_v\mathcal O_v)=p_v^{-[K_v:\mathbb Q_{p_v}]}
   \]
@@ -9342,8 +9344,8 @@ The practical priority order is:
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   The next work is now below the finite-extension boundary: construct the
-  residue representatives, coset cover, disjointness, and equal-translate
-  finite-additivity certificate from the actual finite-extension residue
+  residue representatives, coset cover, disjointness, and coset measurability
+  certificate from the actual finite-extension residue
   quotient and Haar invariance; derive the all-subset base-prime Haar-modulus
   identity from the same local-field model; derive the positive valuation-ball radius, the
   coordinate-place equivalence, and the point-level target transport

@@ -69477,6 +69477,10 @@ theorem padicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarL
         Disjoint
           (sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.residueCoset index₁)
           (sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.residueCoset index₂)) ∧
+      (∀ index :
+          Fin sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.residueIndexCard,
+        MeasurableSet
+          (sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.residueCoset index)) ∧
       sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.haarMeasure
           sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.integerSource.ringOfIntegers =
         1 ∧
@@ -69501,6 +69505,7 @@ theorem padicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarL
               sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.compactOpenRadius)) :=
   ⟨sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.residueCosets_cover_unitBall',
     sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.residueCosets_pairwiseDisjoint',
+    sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.residueCoset_measurable',
     sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.valuationUnitBall_measure_eq_one,
     sourceData.finiteExtensionUnitBallCosetHaarCharacterSource.basePrimeUnitBall_measure_eq,
     sourceData.toPadicFiniteExtensionUnitBallHaarCharacterCenteredValuationBallHaarLogCoordinateSource.finiteExtensionUnitBallHaarCharacterSource.basePrimeHaarChar_eq,
@@ -72189,6 +72194,11 @@ theorem padicFiniteExtensionUnitBallCosetHaarCharacterFiniteSumTargetPointEndpoi
             ((sourceData.localPadicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallCosetHaarCharacterSource.residueCoset index₁)
             ((sourceData.localPadicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallCosetHaarCharacterSource.residueCoset index₂)) ∧
       (∀ place : γlocal,
+        ∀ index :
+          Fin (sourceData.localPadicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallCosetHaarCharacterSource.residueIndexCard,
+          MeasurableSet
+            ((sourceData.localPadicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallCosetHaarCharacterSource.residueCoset index)) ∧
+      (∀ place : γlocal,
         (sourceData.localPadicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallCosetHaarCharacterSource.haarMeasure
           (sourceData.localPadicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionUnitBallCosetHaarCharacterSource.integerSource.ringOfIntegers =
           1) ∧
@@ -72230,6 +72240,10 @@ theorem padicFiniteExtensionUnitBallCosetHaarCharacterFiniteSumTargetPointEndpoi
       (sourceData.localPadicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarLogCoordinateSource place)
         |>.finiteExtensionUnitBallCosetHaarCharacterSource
         |>.residueCosets_pairwiseDisjoint',
+    fun place =>
+      (sourceData.localPadicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarLogCoordinateSource place)
+        |>.finiteExtensionUnitBallCosetHaarCharacterSource
+        |>.residueCoset_measurable',
     fun place =>
       (sourceData.localPadicFiniteExtensionUnitBallCosetHaarCharacterCenteredValuationBallHaarLogCoordinateSource place)
         |>.finiteExtensionUnitBallCosetHaarCharacterSource

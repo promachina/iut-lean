@@ -13878,22 +13878,12 @@ structure IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSo
         ((fun point : K => residueCosetRepresentative index₂ + point) ''
           ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
             integerSource.ringOfIntegers))
-  residueCoset_measure_sum_eq :
-    haarMeasure integerSource.ringOfIntegers =
-      ∑ index : Fin (p ^ Module.finrank ℚ_[p] K),
-        haarMeasure
-          ((fun point : K => residueCosetRepresentative index + point) ''
-            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
-              integerSource.ringOfIntegers))
-  residueCoset_measure_eq_basePrimeScaledUnitBall :
+  residueCoset_measurable :
     ∀ index : Fin (p ^ Module.finrank ℚ_[p] K),
-      haarMeasure
-          ((fun point : K => residueCosetRepresentative index + point) ''
-            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
-              integerSource.ringOfIntegers)) =
-        haarMeasure
+      MeasurableSet
+        ((fun point : K => residueCosetRepresentative index + point) ''
           ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
-            integerSource.ringOfIntegers)
+            integerSource.ringOfIntegers))
   hull_logVolume_eq_normalized :
     ∀ subset : Set K,
       hullSystem.logVolume (realizedRegion subset) =
@@ -13955,6 +13945,20 @@ theorem residueCosets_pairwiseDisjoint'
   simpa [residueIndexCard, residueCoset, basePrimeScaledUnitBall] using
     data.residueCosets_pairwiseDisjoint
 
+theorem residueCoset_measurable'
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem)
+    (index : Fin data.residueIndexCard) :
+    MeasurableSet (data.residueCoset index) := by
+  simpa [residueIndexCard, residueCoset, basePrimeScaledUnitBall] using
+    data.residueCoset_measurable index
+
+/--
+Finite additivity for the residue-coset cover of the valuation ring.  This is
+now derived from the cover, disjointness, and measurability data rather than
+carried as a measure equality field.
+-/
 theorem residueCoset_measure_sum_eq'
     (data :
       IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
@@ -13962,9 +13966,24 @@ theorem residueCoset_measure_sum_eq'
     data.haarMeasure data.integerSource.ringOfIntegers =
       ∑ index : Fin data.residueIndexCard,
         data.haarMeasure (data.residueCoset index) := by
-  simpa [residueIndexCard, residueCoset, basePrimeScaledUnitBall] using
-    data.residueCoset_measure_sum_eq
+  calc
+    data.haarMeasure data.integerSource.ringOfIntegers =
+        data.haarMeasure (⋃ index : Fin data.residueIndexCard,
+          data.residueCoset index) := by
+          rw [data.residueCosets_cover_unitBall']
+    _ = ∑' index : Fin data.residueIndexCard,
+        data.haarMeasure (data.residueCoset index) := by
+          exact MeasureTheory.measure_iUnion
+            data.residueCosets_pairwiseDisjoint'
+            data.residueCoset_measurable'
+    _ = ∑ index : Fin data.residueIndexCard,
+        data.haarMeasure (data.residueCoset index) := by
+          rw [tsum_fintype]
 
+/--
+All residue cosets have the same Haar mass as `p_v O_v`.  This is the Haar
+translation-invariance part of the local source-paper calculation.
+-/
 theorem residueCoset_measure_eq_basePrimeScaledUnitBall'
     (data :
       IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
@@ -13972,8 +13991,23 @@ theorem residueCoset_measure_eq_basePrimeScaledUnitBall'
     (index : Fin data.residueIndexCard) :
     data.haarMeasure (data.residueCoset index) =
       data.haarMeasure data.basePrimeScaledUnitBall := by
-  simpa [residueIndexCard, residueCoset, basePrimeScaledUnitBall] using
-    data.residueCoset_measure_eq_basePrimeScaledUnitBall index
+  letI : MeasureTheory.Measure.IsAddHaarMeasure data.haarMeasure :=
+    data.haar_isAddHaar
+  have hpre :=
+    MeasureTheory.measure_preimage_add data.haarMeasure
+      (data.residueCosetRepresentative index)
+      ((fun point : K => data.residueCosetRepresentative index + point) ''
+        data.basePrimeScaledUnitBall)
+  have hpreimage :
+      (fun point : K => data.residueCosetRepresentative index + point) ⁻¹'
+          ((fun point : K => data.residueCosetRepresentative index + point) ''
+            data.basePrimeScaledUnitBall) =
+        data.basePrimeScaledUnitBall := by
+    exact Set.preimage_image_eq data.basePrimeScaledUnitBall
+      (fun _point₁ _point₂ h => add_left_cancel h)
+  rw [hpreimage] at hpre
+  rw [residueCoset]
+  exact hpre.symm
 
 /--
 Derive the exact `ENNReal` mass of `p_v O_v` from the residue-coset count and
@@ -14059,6 +14093,8 @@ theorem endpoint
         ⋃ index : Fin data.residueIndexCard, data.residueCoset index ∧
       Pairwise (fun index₁ index₂ =>
         Disjoint (data.residueCoset index₁) (data.residueCoset index₂)) ∧
+      (∀ index : Fin data.residueIndexCard,
+        MeasurableSet (data.residueCoset index)) ∧
       data.haarMeasure data.integerSource.ringOfIntegers = 1 ∧
       data.haarMeasure data.basePrimeScaledUnitBall =
         ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
@@ -14074,6 +14110,7 @@ theorem endpoint
             data.haarMeasure subset) :=
   ⟨data.residueCosets_cover_unitBall',
     data.residueCosets_pairwiseDisjoint',
+    data.residueCoset_measurable',
     data.valuationUnitBall_measure_eq_one,
     data.basePrimeUnitBall_measure_eq,
     data.toUnitBallHaarCharacterNormalizationSource.basePrimeHaarChar_eq,
