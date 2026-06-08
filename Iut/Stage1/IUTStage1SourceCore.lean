@@ -12207,11 +12207,50 @@ theorem quotient_card_eq_p_pow_baseFieldFinrank
   letI := data.quotientFintype
   rw [data.quotient_card_eq_p, data.baseField_finrank_eq_one, pow_one]
 
+noncomputable def finIndexEquivQuotient
+    (data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]) ≃ data.quotient := by
+  letI := data.quotientFintype
+  exact
+    (Fintype.equivFinOfCardEq
+      data.quotient_card_eq_p_pow_baseFieldFinrank).symm
+
+noncomputable def quotientRepresentative
+    (data : IUTStage1PadicIntegerResidueQuotientSource p)
+    (residueClass : data.quotient) :
+    ℤ_[p] :=
+  Quotient.out residueClass
+
+theorem quotientRepresentative_spec
+    (data : IUTStage1PadicIntegerResidueQuotientSource p)
+    (residueClass : data.quotient) :
+    QuotientAddGroup.mk'
+        ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker)
+        (data.quotientRepresentative residueClass) =
+      residueClass :=
+  Quotient.out_eq residueClass
+
+noncomputable def finIndexRepresentative
+    (data : IUTStage1PadicIntegerResidueQuotientSource p)
+    (index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p])) :
+    ℤ_[p] :=
+  data.quotientRepresentative (data.finIndexEquivQuotient index)
+
+theorem finIndexRepresentative_spec
+    (data : IUTStage1PadicIntegerResidueQuotientSource p)
+    (index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p])) :
+    QuotientAddGroup.mk'
+        ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker)
+        (data.finIndexRepresentative index) =
+      data.finIndexEquivQuotient index :=
+  data.quotientRepresentative_spec (data.finIndexEquivQuotient index)
+
 /--
 Endpoint for the base residue quotient calculation.  It packages the actual
 kernel/maximal-ideal bridge, the first-isomorphism-theorem quotient
 identification with `ZMod p`, and the base local-field cardinality and finrank
-statements.
+statements, together with finite-index representatives for the residue
+classes.
 -/
 theorem endpoint
     (data : IUTStage1PadicIntegerResidueQuotientSource p) :
@@ -12223,11 +12262,17 @@ theorem endpoint
       (letI := data.quotientModule;
         Module.finrank (ZMod p) data.quotient =
           Module.finrank ℚ_[p] ℚ_[p]) ∧
-      Fintype.card (ZMod p) = p :=
+      Fintype.card (ZMod p) = p ∧
+      (∀ index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]),
+        QuotientAddGroup.mk'
+            ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker)
+            (data.finIndexRepresentative index) =
+          data.finIndexEquivQuotient index) :=
   ⟨data.residueKernel_eq_maximalIdeal_toAddSubgroup,
     data.quotient_card_eq_p_pow_baseFieldFinrank,
     data.quotient_finrank_eq_baseFieldFinrank,
-    ZMod.card p⟩
+    ZMod.card p,
+    data.finIndexRepresentative_spec⟩
 
 end IUTStage1PadicIntegerResidueQuotientSource
 

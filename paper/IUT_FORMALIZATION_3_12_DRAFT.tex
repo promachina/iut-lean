@@ -4037,8 +4037,16 @@ additive equivalence gives a one-dimensional residue module, and Lean proves
   \#(\mathbb Z_p/\ker(\texttt{toZMod}))
     =p=p^{\operatorname{finrank}_{\mathbb Q_p}\mathbb Q_p}.
 \]
-This closes the base-field residue quotient calculation without a supplied
-finite quotient equivalence.  The companion declaration
+The same source now also constructs
+\[
+  \texttt{Fin}(p^{[\mathbb Q_p:\mathbb Q_p]})
+    \simeq \mathbb Z_p/\ker(\texttt{toZMod})
+\]
+and finite-index representatives whose quotient classes are definitionally
+the indexed residue classes.  This upgrades the base-field residue quotient
+from a cardinality result to the representative data needed by the coset
+partition layer, without a supplied finite quotient equivalence.  The companion
+declaration
 \[
 \begin{array}{l}
 \texttt{IUTStage1PadicProperUltrametricHaarNormalizationSource}
