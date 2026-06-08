@@ -6,6 +6,8 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.InitialThetaData
 import Iut.Stage1.IUTStage1Data
 import Mathlib.Data.ZMod.ValMinAbs
+import Mathlib.GroupTheory.QuotientGroup.Basic
+import Mathlib.MeasureTheory.Group.MeasurableEquiv
 import Mathlib.MeasureTheory.Measure.Haar.Basic
 import Mathlib.MeasureTheory.Measure.Haar.MulEquivHaarChar
 import Mathlib.NumberTheory.Padics.ProperSpace
@@ -13826,6 +13828,177 @@ theorem endpoint
     data.toConstructedDilationHaarCharacterNormalizationSource.basePrimeScale_measure_eq⟩
 
 end IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+
+/--
+Generic finite additive quotient partition source.
+
+This is the algebraic core of the local residue-coset decomposition
+`O_v = ⋃_{a ∈ O_v / p_v O_v} (a + p_v O_v)`.  It is deliberately phrased for
+two additive subgroups of an ambient additive group: once the source-facing
+p-adic construction supplies `O_v`, `p_v O_v`, the quotient equivalence with
+`Fin (p_v ^ [K_v : ℚ_p])`, and representatives, Lean derives the cover,
+disjointness, and measurability of the translated cosets.
+-/
+structure IUTStage1FiniteAdditiveQuotientCosetPartitionSource
+    (G : Type u) [AddCommGroup G] [MeasurableSpace G] [MeasurableAdd G] where
+  unitSubgroup : AddSubgroup G
+  scaledSubgroup : AddSubgroup G
+  scaled_le_unit : scaledSubgroup ≤ unitSubgroup
+  indexCard : Nat
+  indexCard_pos : 0 < indexCard
+  quotientEquiv :
+    Fin indexCard ≃ unitSubgroup ⧸ scaledSubgroup.addSubgroupOf unitSubgroup
+  representative : Fin indexCard -> unitSubgroup
+  representative_spec :
+    ∀ index : Fin indexCard,
+      QuotientAddGroup.mk'
+          (scaledSubgroup.addSubgroupOf unitSubgroup) (representative index) =
+        quotientEquiv index
+  scaled_measurable : MeasurableSet (scaledSubgroup : Set G)
+
+namespace IUTStage1FiniteAdditiveQuotientCosetPartitionSource
+
+variable {G : Type u} [AddCommGroup G] [MeasurableSpace G] [MeasurableAdd G]
+
+def coset
+    (data : IUTStage1FiniteAdditiveQuotientCosetPartitionSource G)
+    (index : Fin data.indexCard) : Set G :=
+  (fun point : G => (data.representative index : G) + point) ''
+    (data.scaledSubgroup : Set G)
+
+/--
+Translated quotient cosets are measurable when the subgroup being translated is
+measurable.  This is the generic measurable-translation ingredient needed for
+the local Haar finite-additivity calculation.
+-/
+theorem coset_measurable
+    (data : IUTStage1FiniteAdditiveQuotientCosetPartitionSource G)
+    (index : Fin data.indexCard) :
+    MeasurableSet (data.coset index) := by
+  simpa [coset] using
+    ((MeasurableEquiv.addLeft
+        (data.representative index : G)).measurableSet_image).2
+      data.scaled_measurable
+
+/--
+The finite quotient representatives cover the upper subgroup by translated
+lower-subgroup cosets.
+-/
+theorem cosets_cover_unit
+    (data : IUTStage1FiniteAdditiveQuotientCosetPartitionSource G) :
+    (data.unitSubgroup : Set G) =
+      ⋃ index : Fin data.indexCard, data.coset index := by
+  ext x
+  constructor
+  · intro hx
+    let xu : data.unitSubgroup := ⟨x, hx⟩
+    let index : Fin data.indexCard :=
+      data.quotientEquiv.symm
+        (QuotientAddGroup.mk'
+          (data.scaledSubgroup.addSubgroupOf data.unitSubgroup) xu)
+    have hrep :
+        QuotientAddGroup.mk'
+            (data.scaledSubgroup.addSubgroupOf data.unitSubgroup)
+            (data.representative index) =
+          QuotientAddGroup.mk'
+            (data.scaledSubgroup.addSubgroupOf data.unitSubgroup) xu := by
+      simpa [index] using data.representative_spec index
+    rcases (QuotientAddGroup.mk'_eq_mk'
+        (data.scaledSubgroup.addSubgroupOf data.unitSubgroup)).mp hrep with
+      ⟨z, hz, hz_eq⟩
+    refine Set.mem_iUnion.mpr ⟨index, ?_⟩
+    refine ⟨((z : data.unitSubgroup) : G), ?_, ?_⟩
+    · change ((z : data.unitSubgroup) : G) ∈ data.scaledSubgroup
+      exact hz
+    · exact congrArg Subtype.val hz_eq
+  · intro hx
+    rcases Set.mem_iUnion.mp hx with ⟨index, y, hy, rfl⟩
+    exact data.unitSubgroup.add_mem (data.representative index).property
+      (data.scaled_le_unit hy)
+
+/--
+Distinct finite quotient representatives give disjoint translated lower-subgroup
+cosets.
+-/
+theorem cosets_pairwiseDisjoint
+    (data : IUTStage1FiniteAdditiveQuotientCosetPartitionSource G) :
+    Pairwise fun index₁ index₂ : Fin data.indexCard =>
+      Disjoint (data.coset index₁) (data.coset index₂) := by
+  intro index₁ index₂ hne
+  rw [Set.disjoint_left]
+  intro x hx₁ hx₂
+  rcases hx₁ with ⟨z₁, hz₁, hz₁_eq⟩
+  rcases hx₂ with ⟨z₂, hz₂, hz₂_eq⟩
+  have hunit₁ :
+      (data.representative index₁ : G) + z₁ ∈ data.unitSubgroup :=
+    data.unitSubgroup.add_mem (data.representative index₁).property
+      (data.scaled_le_unit hz₁)
+  have hunit₂ :
+      (data.representative index₂ : G) + z₂ ∈ data.unitSubgroup :=
+    data.unitSubgroup.add_mem (data.representative index₂).property
+      (data.scaled_le_unit hz₂)
+  have hx_eq :
+      (data.representative index₁ : G) + z₁ =
+        (data.representative index₂ : G) + z₂ := by
+    exact hz₁_eq.trans hz₂_eq.symm
+  let z₁u : data.unitSubgroup := ⟨z₁, data.scaled_le_unit hz₁⟩
+  let z₂u : data.unitSubgroup := ⟨z₂, data.scaled_le_unit hz₂⟩
+  have hz₁u :
+      z₁u ∈ data.scaledSubgroup.addSubgroupOf data.unitSubgroup := by
+    change ((z₁u : data.unitSubgroup) : G) ∈ data.scaledSubgroup
+    exact hz₁
+  have hz₂u :
+      z₂u ∈ data.scaledSubgroup.addSubgroupOf data.unitSubgroup := by
+    change ((z₂u : data.unitSubgroup) : G) ∈ data.scaledSubgroup
+    exact hz₂
+  have hmk₁ :
+      QuotientAddGroup.mk'
+          (data.scaledSubgroup.addSubgroupOf data.unitSubgroup)
+          (data.representative index₁) =
+        QuotientAddGroup.mk'
+          (data.scaledSubgroup.addSubgroupOf data.unitSubgroup)
+          ⟨(data.representative index₁ : G) + z₁, hunit₁⟩ := by
+    refine (QuotientAddGroup.mk'_eq_mk'
+      (data.scaledSubgroup.addSubgroupOf data.unitSubgroup)).mpr ?_
+    exact ⟨z₁u, hz₁u, by ext; simp [z₁u]⟩
+  have hmk₂ :
+      QuotientAddGroup.mk'
+          (data.scaledSubgroup.addSubgroupOf data.unitSubgroup)
+          (data.representative index₂) =
+        QuotientAddGroup.mk'
+          (data.scaledSubgroup.addSubgroupOf data.unitSubgroup)
+          ⟨(data.representative index₂ : G) + z₂, hunit₂⟩ := by
+    refine (QuotientAddGroup.mk'_eq_mk'
+      (data.scaledSubgroup.addSubgroupOf data.unitSubgroup)).mpr ?_
+    exact ⟨z₂u, hz₂u, by ext; simp [z₂u]⟩
+  have hsame_subtype :
+      (⟨(data.representative index₁ : G) + z₁, hunit₁⟩ :
+          data.unitSubgroup) =
+        ⟨(data.representative index₂ : G) + z₂, hunit₂⟩ := by
+    ext
+    exact hx_eq
+  have hquot :
+      data.quotientEquiv index₁ = data.quotientEquiv index₂ := by
+    rw [← data.representative_spec index₁,
+      ← data.representative_spec index₂]
+    rw [hmk₁, hmk₂, hsame_subtype]
+  exact hne (data.quotientEquiv.injective hquot)
+
+/--
+The bundled endpoint for the finite additive quotient partition: a genuine
+finite cover, pairwise disjointness, and translated-coset measurability.
+-/
+theorem endpoint
+    (data : IUTStage1FiniteAdditiveQuotientCosetPartitionSource G) :
+    (data.unitSubgroup : Set G) =
+        ⋃ index : Fin data.indexCard, data.coset index ∧
+      Pairwise (fun index₁ index₂ : Fin data.indexCard =>
+        Disjoint (data.coset index₁) (data.coset index₂)) ∧
+      (∀ index : Fin data.indexCard, MeasurableSet (data.coset index)) :=
+  ⟨data.cosets_cover_unit, data.cosets_pairwiseDisjoint,
+    data.coset_measurable⟩
+
+end IUTStage1FiniteAdditiveQuotientCosetPartitionSource
 
 /--
 Finite-extension-over-`ℚ_[p]` Haar source whose base-prime unit-ball mass is
