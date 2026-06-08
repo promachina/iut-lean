@@ -58331,7 +58331,15 @@ theorem remark395PadicProperUltrametricHaarNormalizationSource_endpoint
       (data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
           |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
           |>.ringOfIntegers) =
-        data.padicIntegerSource.padicIntegerSet :=
+        data.padicIntegerSource.padicIntegerSet ∧
+      data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.residuePrime =
+        p ∧
+      data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.finiteExtensionDegree =
+        Module.finrank ℚ_[p] ℚ_[p] ∧
+      data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.finiteExtensionDegree =
+        1 ∧
+      data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.uniformizerScalePoint =
+        (fun point : ℚ_[p] => (p : ℚ_[p]) * point) :=
   data.endpoint
 
 set_option linter.style.longLine false in

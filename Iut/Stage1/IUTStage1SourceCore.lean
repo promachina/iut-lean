@@ -14045,6 +14045,63 @@ noncomputable def toValuedFieldIntegerProperUltrametricHaarNormalizationSource
       intro subset
       simpa using data.hull_logVolume_eq_normalized subset }
 
+noncomputable def toPadicFiniteExtensionProperUltrametricHaarNormalizationSource
+    (data :
+      IUTStage1PadicProperUltrametricHaarNormalizationSource
+        α p hullSystem) :
+    IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+      α p ℚ_[p] hullSystem :=
+  { integerSource := data.padicIntegerSource.integerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    basePrimeScale_preserves_open := by
+      intro subset hsubset
+      simpa [Algebra.algebraMap_self] using
+        data.uniformizerScale_preserves_open subset hsubset,
+    basePrimeScale_preserves_compact := by
+      intro subset hsubset
+      simpa [Algebra.algebraMap_self] using
+        data.uniformizerScale_preserves_compact subset hsubset,
+    valuationUnitBall_measure_one := by
+      rw [data.padicIntegerSource.valuedRingOfIntegers_eq_padicIntegerSet]
+      exact data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos :=
+      data.compactOpenBall_measure_pos,
+    basePrimeScaled_compactOpenBall_measure_toReal_eq := by
+      simpa [Algebra.algebraMap_self, Module.finrank_self, pow_one] using
+        data.uniformizerScaled_compactOpenBall_measure_toReal_eq,
+    hull_logVolume_eq_normalized := by
+      intro subset
+      simpa [Module.finrank_self] using data.hull_logVolume_eq_normalized subset }
+
+set_option linter.style.longLine false in
+set_option linter.flexible false in
+theorem toPadicFiniteExtension_toValuedFieldIntegerProperUltrametricHaarNormalizationSource_eq
+    (data :
+      IUTStage1PadicProperUltrametricHaarNormalizationSource
+        α p hullSystem) :
+    data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource =
+      data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource := by
+  have hscale :
+      data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.basePrimeScalePoint =
+        data.uniformizerScalePoint := by
+    funext point
+    simp [
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource.basePrimeScalePoint,
+      uniformizerScalePoint,
+      Algebra.algebraMap_self]
+  simp [
+    toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+    IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource,
+    toValuedFieldIntegerProperUltrametricHaarNormalizationSource,
+    Module.finrank_self]
+  exact hscale
+
 theorem endpoint
     (data :
       IUTStage1PadicProperUltrametricHaarNormalizationSource
@@ -14066,7 +14123,15 @@ theorem endpoint
       (data.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
           |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
           |>.ringOfIntegers) =
-        data.padicIntegerSource.padicIntegerSet :=
+        data.padicIntegerSource.padicIntegerSet ∧
+      data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.residuePrime =
+        p ∧
+      data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.finiteExtensionDegree =
+        Module.finrank ℚ_[p] ℚ_[p] ∧
+      data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.finiteExtensionDegree =
+        1 ∧
+      data.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource.uniformizerScalePoint =
+        (fun point : ℚ_[p] => (p : ℚ_[p]) * point) :=
   ⟨data.padicIntegerSource.valuedRingOfIntegers_eq_padicIntegerSet,
     data.padicIntegerSource.valuedIntegerSubring_eq_padicIntegerSubring,
     rfl,
@@ -14083,7 +14148,11 @@ theorem endpoint
         IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource.toProperUltrametricValuationBallAdditiveHaarNormalizationSource,
         IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.ringOfIntegers,
         IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.valuationBall] using
-        data.padicIntegerSource.valuationTopology_valuationBall_one_eq_padicIntegerSet⟩
+        data.padicIntegerSource.valuationTopology_valuationBall_one_eq_padicIntegerSet,
+    rfl,
+    rfl,
+    Module.finrank_self ℚ_[p],
+    rfl⟩
 
 end IUTStage1PadicProperUltrametricHaarNormalizationSource
 

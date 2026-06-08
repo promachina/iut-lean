@@ -1447,7 +1447,11 @@ starts from the \(p\)-adic proper-ultrametric Haar source: the integer ring is
 identified with \(\mathbb Z_p\), the residue prime is \(p\), the normalization
 degree is \(1\), and the uniformizer action is multiplication by \(p\).  It
 projects to the valued-field integer centered-ball source without adding a new
-abstract local-ring field.  The finite-product declaration
+abstract local-ring field.  It now also projects to the finite-extension
+centered-ball source for \(K=\mathbb Q_p\), proving that the same closed-ball
+local region and normalized Haar log-coordinate are obtained after passing
+through the degree-one finite-extension normalization route.  The finite-product
+declaration
 \[
 \begin{array}{l}
 \texttt{IUTStage1Remark395ValuationUnitBallNonzeroScalar}\\
@@ -4023,7 +4027,21 @@ fixes the residue prime to \(p\), the finite-extension degree to \(1\), and the
 uniformizer scale map to \(x\mapsto px\), then projects to the valued-field
 integer Haar route.  The Haar mass-one and \(p\)-scaling law are still carried
 as analytic local-field inputs, but their ambient field, local ring, residue
-prime, degree, and uniformizer map are now the actual \(p\)-adic ones.
+prime, degree, and uniformizer map are now the actual \(p\)-adic ones.  This
+base local-field source now also projects into the finite-extension Haar
+boundary itself by viewing \(\mathbb Q_p/\mathbb Q_p\) as a finite extension.
+Lean constructs
+\[
+\begin{array}{l}
+\texttt{IUTStage1PadicProperUltrametricHaarNormalizationSource.}\\
+\quad\texttt{toPadicFiniteExtensionProperUltrametricHaarNormalizationSource}
+\end{array}
+\]
+and proves that its valued-field integer projection agrees with the direct
+\(\mathbb Q_p\) valued-field Haar source.  Thus the finite-extension degree
+appearing in the normalization is not an independent parameter at the base
+place: it is \(\operatorname{finrank}_{\mathbb Q_p}(\mathbb Q_p)=1\), with the
+same base-prime dilation \(x\mapsto px\).
 The declaration
 \[
 \begin{array}{l}

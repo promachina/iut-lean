@@ -68649,6 +68649,66 @@ theorem padicFiniteExtensionCenteredValuationBallHaarLogCoordinateEndpoint
 end
   IUTStage1Remark395LocalFactorPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource
 
+namespace
+  IUTStage1Remark395LocalFactorPadicCenteredValuationBallHaarLogCoordinateSource
+
+variable {p : Nat} [Fact p.Prime] [MeasurableSpace ℚ_[p]]
+
+noncomputable def toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource
+    (sourceData :
+      IUTStage1Remark395LocalFactorPadicCenteredValuationBallHaarLogCoordinateSource
+        p) :
+    IUTStage1Remark395LocalFactorPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource
+      p ℚ_[p] :=
+  { localHullSystem := sourceData.localHullSystem,
+    finiteExtensionHaarSource :=
+      sourceData.padicHaarSource
+        |>.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource }
+
+set_option linter.style.longLine false in
+theorem padicCenteredValuationBallAsFiniteExtensionHaarLogCoordinateEndpoint
+    (sourceData :
+      IUTStage1Remark395LocalFactorPadicCenteredValuationBallHaarLogCoordinateSource
+        p) :
+    sourceData.toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource.valuedFieldHaarSource.residuePrime =
+        p ∧
+      sourceData.toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource.valuedFieldHaarSource.finiteExtensionDegree =
+        Module.finrank ℚ_[p] ℚ_[p] ∧
+      sourceData.toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource.valuedFieldHaarSource.finiteExtensionDegree =
+        1 ∧
+      sourceData.toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource.valuedFieldHaarSource.uniformizerScalePoint =
+        (fun point : ℚ_[p] => algebraMap ℚ_[p] ℚ_[p] (p : ℚ_[p]) * point) ∧
+      (∀ factor : ℚ_[p],
+        sourceData.toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource.toLocalFactorCenteredValuationBallHaarLogCoordinateSource.localRegionOfFactor factor =
+          Metric.closedBall factor sourceData.padicHaarSource.compactOpenRadius) ∧
+      (∀ factor : ℚ_[p],
+        sourceData.localLogCoordinate factor =
+          sourceData.toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource.toLocalFactorCenteredValuationBallHaarLogCoordinateSource.toCompactOpenHaarSource.normalizedHaarLogVolume
+            (Metric.closedBall factor sourceData.padicHaarSource.compactOpenRadius)) :=
+  ⟨rfl,
+    rfl,
+    Module.finrank_self ℚ_[p],
+    rfl,
+    fun factor =>
+      sourceData.toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource
+        |>.toLocalFactorCenteredValuationBallHaarLogCoordinateSource
+        |>.localRegionOfFactor_eq_centeredClosedBall factor,
+    fun factor => by
+      have hvalued :=
+        sourceData.padicHaarSource
+          |>.toPadicFiniteExtension_toValuedFieldIntegerProperUltrametricHaarNormalizationSource_eq
+      dsimp [
+        toPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource,
+        IUTStage1Remark395LocalFactorPadicFiniteExtensionCenteredValuationBallHaarLogCoordinateSource.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource]
+      rw [hvalued]
+      simpa [
+        toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateSource] using
+        sourceData.localLogCoordinate_eq_padicCenteredValuationBallHaarLogVolume
+          factor⟩
+
+end
+  IUTStage1Remark395LocalFactorPadicCenteredValuationBallHaarLogCoordinateSource
+
 set_option linter.style.longLine false in
 /--
 Finite-extension-over-`ℚ_[p]` centered valuation-ball local Haar log-coordinate
