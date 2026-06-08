@@ -9336,13 +9336,22 @@ The practical priority order is:
   measurability of \(H\) using the measurable equivalence given by additive
   translation.  This is the formal algebraic core of the source-paper
   decomposition \(O_v/p_vO_v\).
-  The p-adic coset source then carries \(p_v^{[K_v:\mathbb Q_{p_v}]}\)
-  representatives and the resulting cover
+  The p-adic quotient-coset source specializes this generic theorem to the
+  finite-extension normalization boundary: it carries additive subgroups
+  representing \(\mathcal O_v\) and \(p_v\mathcal O_v\), identifies their
+  underlying sets with the valued-field unit ball and its base-prime image,
+  supplies the equivalence
+  \[
+      \operatorname{Fin}(p_v^{[K_v:\mathbb Q_{p_v}]})
+        \simeq \mathcal O_v/(p_v\mathcal O_v),
+  \]
+  and then derives the cover
   \[
       \mathcal O_v=\bigcup_i (a_i+p_v\mathcal O_v),
   \]
-  pairwise disjointness of the cosets, and measurability of each coset.  Lean
-  derives the finite-additivity equality for this cover by applying
+  pairwise disjointness of the cosets, and measurability of each coset from the
+  quotient partition theorem.  It projects to the older coset Haar source, so
+  Lean derives the finite-additivity equality for this cover by applying
   \texttt{measure\_iUnion}, and derives equality of each translated coset
   measure with \(\mu_v(p_v\mathcal O_v)\) from additive Haar invariance via
   \texttt{measure\_preimage\_add}.  Lean then proves
@@ -9356,10 +9365,11 @@ The practical priority order is:
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   The next work is now below the finite-extension boundary: instantiate the
-  finite additive quotient partition source with the actual local-field
-  subgroups \(\mathcal O_v\) and \(p_v\mathcal O_v\), prove the quotient
-  cardinality \(p_v^{[K_v:\mathbb Q_{p_v}]}\), and construct the local
-  representatives from the finite residue quotient; derive the all-subset
+  p-adic quotient-coset source by constructing the actual local-field
+  additive subgroups \(\mathcal O_v\) and \(p_v\mathcal O_v\), proving their
+  set identifications with the valuation-theoretic unit ball and scaled unit
+  ball, proving the quotient cardinality \(p_v^{[K_v:\mathbb Q_{p_v}]}\), and
+  constructing representatives from the finite residue quotient; derive the all-subset
   base-prime Haar-modulus
   identity from the same local-field model; derive the positive valuation-ball radius, the
   coordinate-place equivalence, and the point-level target transport
