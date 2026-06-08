@@ -9462,11 +9462,23 @@ The practical priority order is:
   normalized Haar data are present, Lean derives the coset cover, pairwise
   disjointness, coset measurability, \(\mu_v(p_v\mathcal O_v)\), the additive
   Haar-character scalar, and the all-subset base-prime dilation law from the
-  source record.  The remaining genuine local-field obligation is sharper:
-  construct the actual residue field action and finite-dimensional quotient
-  module structure on \(\mathcal O[K_v]/p_v\mathcal O[K_v]\) for finite
-  extensions, together with the quotient finrank identity.  For the base field
-  itself, this residue
+  source record.  The finite-extension residue boundary has now been lowered
+  one step below this quotient-native source.  The new submodule-level source
+  carries the residue-field action on the additive group of \(\mathcal O[K_v]\)
+  before quotienting, together with a \(\kappa\)-submodule whose underlying
+  additive subgroup is \(p_v\mathcal O[K_v]\).  Lean constructs the quotient
+  module from this submodule, computes
+  \[
+      \#(\mathcal O[K_v]/(p_v\mathcal O[K_v]))
+        =p_v^{[K_v:\mathbb Q_{p_v}]}
+  \]
+  on the submodule quotient by \texttt{Module.card\_eq\_pow\_finrank}, and
+  also rederives \(p_v\mathcal O[K_v]\subseteq \mathcal O[K_v]\) from the
+  normed-algebra inequality \(\|p_v\|\leq 1\).  The remaining bridge at this
+  boundary is now precise: construct the quotient linear equivalence between
+  this submodule quotient and the additive quotient used by the coset/Haar
+  partition, then transport the finrank identity through it.  For the base
+  field itself, this residue
   quotient is no longer an obligation: Lean now uses
   \(\texttt{PadicInt.toZMod}\), its kernel/maximal-ideal theorem, and the
   additive first isomorphism theorem to construct
@@ -9511,10 +9523,11 @@ The practical priority order is:
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   The next work is now below the finite-extension boundary: instantiate the
-  quotient-native residue module source for genuine finite extensions by
-  constructing the residue field action and finite quotient module structure on
-  \(\mathcal O[K_v]/p_v\mathcal O[K_v]\), and proving the quotient finrank
-  identity; then feed the resulting coset/Haar-character endpoint into the
+  submodule-level residue source for genuine finite extensions by constructing
+  the residue field action on \(\mathcal O[K_v]\), proving that
+  \(p_v\mathcal O[K_v]\) is a \(\kappa\)-submodule, and building the explicit
+  quotient linear equivalence to the additive quotient used by the coset/Haar
+  partition; then feed the resulting coset/Haar-character endpoint into the
   determinant and hull comparison source.  In parallel, one still has to derive
   the positive valuation-ball radius, the
   coordinate-place equivalence, and the point-level target transport

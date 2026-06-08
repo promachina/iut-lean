@@ -16138,6 +16138,193 @@ end IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCo
 
 /--
 Norm-compatible finite-extension valued-integer quotient source whose residue
+field action is carried before quotienting.
+
+This is the submodule-level residue boundary.  Instead of assuming a
+`κ`-module structure directly on
+`O[K_v] / p_v O[K_v]`, it carries a `κ`-module structure on the additive group
+of `O[K_v]` and a `κ`-submodule whose underlying additive subgroup is the
+base-prime image `p_v O[K_v]`.  Lean then obtains the quotient module from the
+ordinary submodule quotient and transports it to the additive quotient used by
+the coset/Haar layer.
+-/
+structure IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w)
+    (κ : Type v)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [NormedAlgebra ℚ_[p] K]
+    [Field κ] [Fintype κ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  integerSource : IUTStage1ValuedFieldIntegerUnitBallSource K
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  haar_regular : haarMeasure.Regular
+  valuationUnitBall_measure_eq_one :
+    haarMeasure integerSource.ringOfIntegers = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal
+  finiteDimensional : FiniteDimensional ℚ_[p] K
+  integerResidueModule : Module κ integerSource.integerAddSubgroup
+  basePrimeImageSubmodule :
+    letI := integerResidueModule
+    Submodule κ integerSource.integerAddSubgroup
+  basePrimeImageSubmodule_toAddSubgroup :
+    letI := integerResidueModule
+    basePrimeImageSubmodule.toAddSubgroup =
+      (integerSource.integerAddSubgroup.map
+        (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+      ).addSubgroupOf integerSource.integerAddSubgroup
+  quotientFintype :
+    letI := integerResidueModule
+    Fintype (integerSource.integerAddSubgroup ⧸ basePrimeImageSubmodule)
+  residueField_card_eq_p : Fintype.card κ = p
+  quotientFinrank_eq_extensionFinrank :
+    letI := integerResidueModule;
+    Module.finrank κ
+      (integerSource.integerAddSubgroup ⧸ basePrimeImageSubmodule) =
+      Module.finrank ℚ_[p] K
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] K : Real)
+
+namespace IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable {κ : Type v}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+variable [IsTopologicalAddGroup K]
+variable [NormedAlgebra ℚ_[p] K]
+variable [Field κ] [Fintype κ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+@[reducible]
+noncomputable def quotientModule
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    Module κ
+      (data.integerSource.integerAddSubgroup ⧸
+        (data.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf data.integerSource.integerAddSubgroup) := by
+  letI := data.integerResidueModule
+  rw [← data.basePrimeImageSubmodule_toAddSubgroup]
+  change Module κ
+    (data.integerSource.integerAddSubgroup ⧸ data.basePrimeImageSubmodule)
+  infer_instance
+
+@[reducible]
+noncomputable def quotientFintypeTransported
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    Fintype
+      (data.integerSource.integerAddSubgroup ⧸
+        (data.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf data.integerSource.integerAddSubgroup) := by
+  letI := data.integerResidueModule
+  rw [← data.basePrimeImageSubmodule_toAddSubgroup]
+  change Fintype
+    (data.integerSource.integerAddSubgroup ⧸ data.basePrimeImageSubmodule)
+  exact data.quotientFintype
+
+theorem quotient_card_eq
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    letI := data.integerResidueModule;
+    letI := data.quotientFintype;
+    Fintype.card
+      (data.integerSource.integerAddSubgroup ⧸ data.basePrimeImageSubmodule) =
+      p ^ Module.finrank ℚ_[p] K := by
+  letI := data.integerResidueModule
+  letI := data.quotientFintype
+  calc
+    Fintype.card
+        (data.integerSource.integerAddSubgroup ⧸ data.basePrimeImageSubmodule) =
+        Fintype.card κ ^
+          Module.finrank κ
+            (data.integerSource.integerAddSubgroup ⧸ data.basePrimeImageSubmodule) :=
+      Module.card_eq_pow_finrank
+    _ = p ^ Module.finrank ℚ_[p] K := by
+      rw [data.residueField_card_eq_p,
+        data.quotientFinrank_eq_extensionFinrank]
+
+/--
+Endpoint for the submodule-level finite-extension residue source.  This proves
+the residue cardinality and finrank comparison on the actual `κ`-submodule
+quotient of `O_v`; the separate additive quotient used by the coset layer is
+recorded by the underlying-additive-subgroup equality.
+-/
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    (letI := data.integerResidueModule;
+      data.basePrimeImageSubmodule.toAddSubgroup =
+        (data.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf data.integerSource.integerAddSubgroup) ∧
+      (letI := data.integerResidueModule;
+        letI := data.quotientFintype;
+        Fintype.card
+          (data.integerSource.integerAddSubgroup ⧸ data.basePrimeImageSubmodule) =
+          p ^ Module.finrank ℚ_[p] K) ∧
+      (letI := data.integerResidueModule;
+        Module.finrank κ
+          (data.integerSource.integerAddSubgroup ⧸ data.basePrimeImageSubmodule) =
+          Module.finrank ℚ_[p] K) ∧
+      Fintype.card κ = p ∧
+      ‖algebraMap ℚ_[p] K (p : ℚ_[p])‖ <= 1 ∧
+      (∀ point : K,
+        point ∈ data.integerSource.ringOfIntegers ->
+          algebraMap ℚ_[p] K (p : ℚ_[p]) * point ∈
+            data.integerSource.ringOfIntegers) := by
+  refine
+    ⟨data.basePrimeImageSubmodule_toAddSubgroup,
+      data.quotient_card_eq,
+      data.quotientFinrank_eq_extensionFinrank,
+      data.residueField_card_eq_p,
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.basePrime_algebraMap_norm_le_one,
+      ?_⟩
+  intro point hpoint
+  have hpoint_norm : ‖point‖ <= 1 := by
+    simpa [IUTStage1ValuedFieldIntegerUnitBallSource.ringOfIntegers,
+      IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring,
+      Valued.integer.mem_iff] using hpoint
+  have hmul_norm :
+      ‖algebraMap ℚ_[p] K (p : ℚ_[p])‖ * ‖point‖ <= 1 :=
+    mul_le_one₀
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.basePrime_algebraMap_norm_le_one
+      (norm_nonneg point) hpoint_norm
+  have hnorm_mul :
+      ‖algebraMap ℚ_[p] K (p : ℚ_[p]) * point‖ <= 1 := by
+    calc
+      ‖algebraMap ℚ_[p] K (p : ℚ_[p]) * point‖ =
+          ‖algebraMap ℚ_[p] K (p : ℚ_[p])‖ * ‖point‖ := norm_mul _ _
+      _ <= 1 := hmul_norm
+  simpa [IUTStage1ValuedFieldIntegerUnitBallSource.ringOfIntegers,
+    IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring,
+    Valued.integer.mem_iff] using hnorm_mul
+
+end IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+
+/--
+Norm-compatible finite-extension valued-integer quotient source whose residue
 vector-space structure lives directly on `O[K_v] / p_v O[K_v]`.
 
 Compared with
