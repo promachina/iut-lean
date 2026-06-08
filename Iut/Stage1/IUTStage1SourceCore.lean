@@ -6,10 +6,12 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.InitialThetaData
 import Iut.Stage1.IUTStage1Data
 import Mathlib.Data.ZMod.ValMinAbs
+import Mathlib.Algebra.Module.TransferInstance
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.MeasureTheory.Group.MeasurableEquiv
 import Mathlib.MeasureTheory.Measure.Haar.Basic
 import Mathlib.MeasureTheory.Measure.Haar.MulEquivHaarChar
+import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.NumberTheory.Padics.ProperSpace
 import Mathlib.Topology.Algebra.Valued.LocallyCompact
 
@@ -12109,6 +12111,125 @@ theorem endpoint
     data.integerSource.valuationTopology.unitBall_compactOpen.2⟩
 
 end IUTStage1PadicIntegerUnitBallSource
+
+/--
+Base `p`-adic integer residue quotient source.
+
+This is the concrete residue-field calculation for the base local field
+`ℚ_[p]`.  The quotient is not supplied as an external finite type: it is the
+additive quotient of `ℤ_[p]` by the kernel of the reduction map
+`PadicInt.toZMod : ℤ_[p] →+* ZMod p`.  Mathlib identifies this kernel with
+the maximal ideal of `ℤ_[p]` and the first isomorphism theorem identifies the
+quotient with `ZMod p`.
+-/
+structure IUTStage1PadicIntegerResidueQuotientSource
+    (p : Nat) [Fact p.Prime] where
+  sourceTag : Unit := ()
+
+namespace IUTStage1PadicIntegerResidueQuotientSource
+
+variable {p : Nat} [Fact p.Prime]
+
+abbrev quotient
+    (_data : IUTStage1PadicIntegerResidueQuotientSource p) : Type :=
+  ℤ_[p] ⧸
+    ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker)
+
+theorem residueKernel_eq_maximalIdeal_toAddSubgroup
+    (_data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker) =
+      (IsLocalRing.maximalIdeal ℤ_[p]).toAddSubgroup := by
+  ext point
+  change PadicInt.toZMod point = 0 ↔
+    point ∈ IsLocalRing.maximalIdeal ℤ_[p]
+  rw [← RingHom.mem_ker, PadicInt.ker_toZMod]
+
+noncomputable def quotientAddEquivZMod
+    (data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    data.quotient ≃+ ZMod p :=
+  QuotientAddGroup.quotientKerEquivOfSurjective
+    ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom)
+    (ZMod.ringHom_surjective PadicInt.toZMod)
+
+@[reducible]
+noncomputable def quotientFintype
+    (data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    Fintype data.quotient :=
+  Fintype.ofEquiv (ZMod p) data.quotientAddEquivZMod.symm.toEquiv
+
+@[reducible]
+noncomputable def quotientModule
+    (data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    Module (ZMod p) data.quotient :=
+  data.quotientAddEquivZMod.module (ZMod p)
+
+theorem quotient_card_eq_p
+    (data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    letI := data.quotientFintype;
+    Fintype.card data.quotient = p := by
+  letI := data.quotientFintype
+  calc
+    Fintype.card data.quotient = Fintype.card (ZMod p) := by
+      exact Fintype.card_congr data.quotientAddEquivZMod.toEquiv
+    _ = p := ZMod.card p
+
+theorem quotient_finrank_eq_one
+    (data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    letI := data.quotientModule;
+    Module.finrank (ZMod p) data.quotient = 1 := by
+  letI := data.quotientModule
+  calc
+    Module.finrank (ZMod p) data.quotient =
+        Module.finrank (ZMod p) (ZMod p) := by
+      exact
+        LinearEquiv.finrank_eq
+          (data.quotientAddEquivZMod.linearEquiv (ZMod p))
+    _ = 1 := Module.finrank_self (ZMod p)
+
+theorem baseField_finrank_eq_one
+    (_data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    Module.finrank ℚ_[p] ℚ_[p] = 1 :=
+  Module.finrank_self ℚ_[p]
+
+theorem quotient_finrank_eq_baseFieldFinrank
+    (data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    letI := data.quotientModule;
+    Module.finrank (ZMod p) data.quotient =
+      Module.finrank ℚ_[p] ℚ_[p] := by
+  letI := data.quotientModule
+  rw [data.quotient_finrank_eq_one, data.baseField_finrank_eq_one]
+
+theorem quotient_card_eq_p_pow_baseFieldFinrank
+    (data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    letI := data.quotientFintype;
+    Fintype.card data.quotient =
+      p ^ Module.finrank ℚ_[p] ℚ_[p] := by
+  letI := data.quotientFintype
+  rw [data.quotient_card_eq_p, data.baseField_finrank_eq_one, pow_one]
+
+/--
+Endpoint for the base residue quotient calculation.  It packages the actual
+kernel/maximal-ideal bridge, the first-isomorphism-theorem quotient
+identification with `ZMod p`, and the base local-field cardinality and finrank
+statements.
+-/
+theorem endpoint
+    (data : IUTStage1PadicIntegerResidueQuotientSource p) :
+    ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker) =
+        (IsLocalRing.maximalIdeal ℤ_[p]).toAddSubgroup ∧
+      (letI := data.quotientFintype;
+        Fintype.card data.quotient =
+          p ^ Module.finrank ℚ_[p] ℚ_[p]) ∧
+      (letI := data.quotientModule;
+        Module.finrank (ZMod p) data.quotient =
+          Module.finrank ℚ_[p] ℚ_[p]) ∧
+      Fintype.card (ZMod p) = p :=
+  ⟨data.residueKernel_eq_maximalIdeal_toAddSubgroup,
+    data.quotient_card_eq_p_pow_baseFieldFinrank,
+    data.quotient_finrank_eq_baseFieldFinrank,
+    ZMod.card p⟩
+
+end IUTStage1PadicIntegerResidueQuotientSource
 
 /--
 Valuation-ball topology-backed additive Haar normalization source.

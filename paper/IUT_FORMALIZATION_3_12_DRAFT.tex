@@ -4017,7 +4017,28 @@ works over \(\mathbb{Q}_p\), identifies
 proves that its underlying set is the image of the coercion
 \(\mathbb{Z}_p\hookrightarrow\mathbb{Q}_p\).  This also records the local-ring
 instance on \(\mathbb{Z}_p\), so the ring-of-integers object is no longer only
-the abstract valued-field subring.  The companion declaration
+the abstract valued-field subring.  The base residue quotient has now also
+been made concrete.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1PadicIntegerResidueQuotientSource}
+\end{array}
+\]
+uses the mathlib reduction map
+\(\texttt{PadicInt.toZMod}:\mathbb Z_p\to \mathbb Z/p\mathbb Z\),
+proves that its additive kernel is the maximal ideal of \(\mathbb Z_p\), and
+applies the first isomorphism theorem to identify
+\[
+  \mathbb Z_p/\ker(\texttt{toZMod})\simeq_{\rm add}\mathbb Z/p\mathbb Z.
+\]
+Transporting the \(\mathbb Z/p\mathbb Z\)-vector-space structure across this
+additive equivalence gives a one-dimensional residue module, and Lean proves
+\[
+  \#(\mathbb Z_p/\ker(\texttt{toZMod}))
+    =p=p^{\operatorname{finrank}_{\mathbb Q_p}\mathbb Q_p}.
+\]
+This closes the base-field residue quotient calculation without a supplied
+finite quotient equivalence.  The companion declaration
 \[
 \begin{array}{l}
 \texttt{IUTStage1PadicProperUltrametricHaarNormalizationSource}
@@ -9406,7 +9427,16 @@ The practical priority order is:
   obligation is now sharper: construct the actual residue field action and
   finite-dimensional quotient module structure on
   \(\mathcal O[K_v]/p_v\mathcal O[K_v]\) for genuine finite extensions, together
-  with the quotient finrank identity.
+  with the quotient finrank identity.  For the base field itself, this residue
+  quotient is no longer an obligation: Lean now uses
+  \(\texttt{PadicInt.toZMod}\), its kernel/maximal-ideal theorem, and the
+  additive first isomorphism theorem to construct
+  \[
+      \mathbb Z_{p_v}/\ker(\texttt{toZMod})\simeq \mathbb Z/p_v\mathbb Z
+  \]
+  and prove both the cardinality \(p_v\) and the one-dimensional residue
+  vector-space statement matching
+  \(\operatorname{finrank}_{\mathbb Q_{p_v}}\mathbb Q_{p_v}=1\).
   In the base local field \(\mathbb Q_{p_v}\), this closure input is now also
   constructed: the base-field valued-integer source proves
   \(\|p_v\|=p_v^{-1}\leq 1\), uses the characterization
