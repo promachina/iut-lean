@@ -9336,10 +9336,17 @@ The practical priority order is:
   measurability of \(H\) using the measurable equivalence given by additive
   translation.  This is the formal algebraic core of the source-paper
   decomposition \(O_v/p_vO_v\).
-  The p-adic quotient-coset source specializes this generic theorem to the
-  finite-extension normalization boundary: it carries additive subgroups
-  representing \(\mathcal O_v\) and \(p_v\mathcal O_v\), identifies their
-  underlying sets with the valued-field unit ball and its base-prime image,
+  The next refinement constructs the scaled subgroup itself.  Lean defines the
+  additive homomorphism \(x\mapsto p_vx\), proves that the subgroup image of
+  \(\mathcal O_v\) under this homomorphism has underlying set
+  \(p_v\mathcal O_v\), proves \(p_v\mathcal O_v\subseteq\mathcal O_v\) from the
+  valuation-style closure input, and derives measurability of \(p_v\mathcal O_v\)
+  from measurability of \(\mathcal O_v\) via the continuous additive
+  equivalence \(x\mapsto p_vx\).  Thus the stricter dilation-quotient source no
+  longer treats \(p_v\mathcal O_v\) as an arbitrary subgroup.
+  The p-adic quotient-coset source specializes the generic quotient theorem to
+  the finite-extension normalization boundary: it carries the additive subgroup
+  representing \(\mathcal O_v\), constructs \(p_v\mathcal O_v\) as this image,
   supplies the equivalence
   \[
       \operatorname{Fin}(p_v^{[K_v:\mathbb Q_{p_v}]})
@@ -9365,11 +9372,11 @@ The practical priority order is:
   Remark~3.9.5(v)--(vii) quotient, approximant, and log-Kummer comparison
   audit.
   The next work is now below the finite-extension boundary: instantiate the
-  p-adic quotient-coset source by constructing the actual local-field
-  additive subgroups \(\mathcal O_v\) and \(p_v\mathcal O_v\), proving their
-  set identifications with the valuation-theoretic unit ball and scaled unit
-  ball, proving the quotient cardinality \(p_v^{[K_v:\mathbb Q_{p_v}]}\), and
-  constructing representatives from the finite residue quotient; derive the all-subset
+  dilation-quotient source by constructing the actual local-field additive
+  subgroup \(\mathcal O_v\), proving its set identification with the
+  valuation-theoretic unit ball, proving closure under multiplication by
+  \(p_v\), proving the quotient cardinality \(p_v^{[K_v:\mathbb Q_{p_v}]}\),
+  and constructing representatives from the finite residue quotient; derive the all-subset
   base-prime Haar-modulus
   identity from the same local-field model; derive the positive valuation-ball radius, the
   coordinate-place equivalence, and the point-level target transport
