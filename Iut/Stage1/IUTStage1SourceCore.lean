@@ -11924,6 +11924,11 @@ noncomputable def integerSubring
     Subring K :=
   𝒪[K]
 
+noncomputable def integerAddSubgroup
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    AddSubgroup K :=
+  data.integerSubring.toAddSubgroup
+
 def ringOfIntegers
     (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
     Set K :=
@@ -11960,6 +11965,25 @@ theorem ringOfIntegers_eq_metric_closedBall
   simp [ringOfIntegers, integerSubring, Valued.integer.mem_iff,
     Metric.closedBall, dist_eq_norm]
 
+theorem integerAddSubgroup_eq_ringOfIntegers
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
+    (data.integerAddSubgroup : Set K) = data.ringOfIntegers := by
+  rfl
+
+theorem ringOfIntegers_measurable
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K)
+    [MeasurableSpace K] [BorelSpace K] :
+    MeasurableSet data.ringOfIntegers := by
+  rw [data.ringOfIntegers_eq_metric_closedBall]
+  exact Metric.isClosed_closedBall.measurableSet
+
+theorem integerAddSubgroup_measurable
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K)
+    [MeasurableSpace K] [BorelSpace K] :
+    MeasurableSet (data.integerAddSubgroup : Set K) := by
+  rw [data.integerAddSubgroup_eq_ringOfIntegers]
+  exact data.ringOfIntegers_measurable
+
 theorem valuationTopology_valuationBall_one_eq_ringOfIntegers
     (data : IUTStage1ValuedFieldIntegerUnitBallSource K) :
     data.valuationTopology.valuationBall 1 = data.ringOfIntegers := by
@@ -11983,6 +12007,16 @@ theorem endpoint
     data.valuationTopology_valuationBall_one_eq_ringOfIntegers,
     data.valuationTopology.unitBall_compactOpen.1,
     data.valuationTopology.unitBall_compactOpen.2⟩
+
+theorem additiveSubgroupEndpoint
+    (data : IUTStage1ValuedFieldIntegerUnitBallSource K)
+    [MeasurableSpace K] [BorelSpace K] :
+    (data.integerAddSubgroup : Set K) = data.ringOfIntegers ∧
+      MeasurableSet data.ringOfIntegers ∧
+      MeasurableSet (data.integerAddSubgroup : Set K) :=
+  ⟨data.integerAddSubgroup_eq_ringOfIntegers,
+    data.ringOfIntegers_measurable,
+    data.integerAddSubgroup_measurable⟩
 
 end IUTStage1ValuedFieldIntegerUnitBallSource
 
@@ -14773,6 +14807,195 @@ theorem endpoint
       hquot.2.2.2.2.2.2⟩
 
 end IUTStage1PadicFiniteExtensionUnitBallDilationQuotientCosetHaarCharacterNormalizationSource
+
+/--
+Finite-extension-over-`ℚ_[p]` quotient-coset source whose upper subgroup
+`O_v` is the additive subgroup of the mathlib valued-field integer subring
+`𝒪[K]`.
+
+Compared with the previous dilation quotient source, this removes the supplied
+`unitSubgroup`, its set equality with the valuation unit ball, and its
+measurability.  The only local valuation input still kept at this boundary is
+closure of `𝒪[K]` under multiplication by the base prime, together with the
+finite quotient equivalence and representatives.
+-/
+structure IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  integerSource : IUTStage1ValuedFieldIntegerUnitBallSource K
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  haar_regular : haarMeasure.Regular
+  valuationUnitBall_measure_eq_one :
+    haarMeasure integerSource.ringOfIntegers = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal
+  basePrime_mul_mem_ringOfIntegers :
+    ∀ point : K, point ∈ integerSource.ringOfIntegers ->
+      algebraMap ℚ_[p] K (p : ℚ_[p]) * point ∈ integerSource.ringOfIntegers
+  quotientEquiv :
+    Fin (p ^ Module.finrank ℚ_[p] K) ≃
+      integerSource.integerAddSubgroup ⧸
+        (integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf integerSource.integerAddSubgroup
+  representative :
+    Fin (p ^ Module.finrank ℚ_[p] K) -> integerSource.integerAddSubgroup
+  representative_spec :
+    ∀ index : Fin (p ^ Module.finrank ℚ_[p] K),
+      QuotientAddGroup.mk'
+          ((integerSource.integerAddSubgroup.map
+            (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+          ).addSubgroupOf integerSource.integerAddSubgroup)
+          (representative index) =
+        quotientEquiv index
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] K : Real)
+
+namespace IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+variable [IsTopologicalAddGroup K]
+variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def unitSubgroup
+    (data :
+      IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+        α p K hullSystem) : AddSubgroup K :=
+  data.integerSource.integerAddSubgroup
+
+theorem unitSubgroup_eq_ringOfIntegers
+    (data :
+      IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    (data.unitSubgroup : Set K) = data.integerSource.ringOfIntegers :=
+  data.integerSource.integerAddSubgroup_eq_ringOfIntegers
+
+theorem unitSubgroup_measurable
+    (data :
+      IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    MeasurableSet (data.unitSubgroup : Set K) :=
+  data.integerSource.integerAddSubgroup_measurable
+
+theorem basePrime_mul_mem_unit
+    (data :
+      IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    ∀ point : K, point ∈ data.unitSubgroup ->
+      algebraMap ℚ_[p] K (p : ℚ_[p]) * point ∈ data.unitSubgroup := by
+  intro point hpoint
+  change point ∈ data.integerSource.ringOfIntegers at hpoint
+  change algebraMap ℚ_[p] K (p : ℚ_[p]) * point ∈
+    data.integerSource.ringOfIntegers
+  exact data.basePrime_mul_mem_ringOfIntegers point hpoint
+
+noncomputable def toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    IUTStage1PadicFiniteExtensionUnitBallDilationQuotientCosetHaarCharacterNormalizationSource
+      α p K hullSystem :=
+  { integerSource := data.integerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    haar_regular := data.haar_regular,
+    valuationUnitBall_measure_eq_one :=
+      data.valuationUnitBall_measure_eq_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    unitSubgroup := data.unitSubgroup,
+    unitSubgroup_eq_ringOfIntegers :=
+      data.unitSubgroup_eq_ringOfIntegers,
+    unitSubgroup_measurable := data.unitSubgroup_measurable,
+    basePrime_mul_mem_unit := data.basePrime_mul_mem_unit,
+    quotientEquiv := data.quotientEquiv,
+    representative := data.representative,
+    representative_spec := data.representative_spec,
+    hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+/--
+Endpoint for the valued-integer quotient source.  The upper subgroup is now
+literally the additive group of `𝒪[K]`, and Lean derives its unit-ball
+identification and measurability before invoking the dilation quotient endpoint.
+-/
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    let dilation :=
+      data.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource
+    let quotient :=
+      dilation.toUnitBallQuotientCosetHaarCharacterNormalizationSource
+    (data.unitSubgroup : Set K) = data.integerSource.ringOfIntegers ∧
+      MeasurableSet (data.unitSubgroup : Set K) ∧
+      (dilation.basePrimeScaledSubgroup : Set K) =
+        (fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+          data.integerSource.ringOfIntegers ∧
+      dilation.basePrimeScaledSubgroup ≤ data.unitSubgroup ∧
+      data.integerSource.ringOfIntegers =
+        ⋃ index : Fin (p ^ Module.finrank ℚ_[p] K),
+          quotient.residueCoset index ∧
+      Pairwise (fun index₁ index₂ : Fin (p ^ Module.finrank ℚ_[p] K) =>
+        Disjoint
+          (quotient.residueCoset index₁)
+          (quotient.residueCoset index₂)) ∧
+      (∀ index : Fin (p ^ Module.finrank ℚ_[p] K),
+        MeasurableSet (quotient.residueCoset index)) ∧
+      data.haarMeasure data.integerSource.ringOfIntegers = 1 ∧
+      data.haarMeasure quotient.basePrimeScaledUnitBall =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (MeasureTheory.addEquivAddHaarChar
+          (quotient
+            |>.toUnitBallCosetHaarCharacterNormalizationSource
+            |>.toUnitBallHaarCharacterNormalizationSource
+            |>.basePrimeContinuousAddEquiv) :
+          ENNReal) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (∀ subset : Set K,
+        data.haarMeasure
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              subset) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+            data.haarMeasure subset) := by
+  have hdilation :=
+    data.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource.endpoint
+  exact
+    ⟨data.unitSubgroup_eq_ringOfIntegers,
+      data.unitSubgroup_measurable,
+      hdilation.1,
+      hdilation.2.1,
+      hdilation.2.2.1,
+      hdilation.2.2.2.1,
+      hdilation.2.2.2.2.1,
+      hdilation.2.2.2.2.2.1,
+      hdilation.2.2.2.2.2.2.1,
+      hdilation.2.2.2.2.2.2.2.1,
+      hdilation.2.2.2.2.2.2.2.2⟩
+
+end IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
 
 namespace IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
 
