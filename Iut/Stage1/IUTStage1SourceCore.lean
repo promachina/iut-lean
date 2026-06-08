@@ -12110,6 +12110,50 @@ theorem endpoint
     data.integerSource.valuationTopology.unitBall_compactOpen.1,
     data.integerSource.valuationTopology.unitBall_compactOpen.2⟩
 
+noncomputable def padicIntAddEquivIntegerAddSubgroup
+    (data : IUTStage1PadicIntegerUnitBallSource p) :
+    ℤ_[p] ≃+ data.integerSource.integerAddSubgroup where
+  toFun integer := by
+    refine ⟨(integer : ℚ_[p]), ?_⟩
+    change (integer : ℚ_[p]) ∈ data.integerSource.ringOfIntegers
+    rw [data.valuedRingOfIntegers_eq_padicIntegerSet]
+    exact ⟨integer, rfl⟩
+  invFun point := by
+    refine ⟨(point : ℚ_[p]), ?_⟩
+    have hpoint_padic : (point : ℚ_[p]) ∈ data.padicIntegerSet := by
+      rw [← data.valuedRingOfIntegers_eq_padicIntegerSet]
+      rw [← data.integerSource.integerAddSubgroup_eq_ringOfIntegers]
+      exact point.property
+    have hpoint_norm :
+        (point : ℚ_[p]) ∈ { point : ℚ_[p] | ‖point‖ <= 1 } := by
+      rwa [← data.padicIntegerSet_eq_norm_unitBall]
+    exact hpoint_norm
+  left_inv integer := by
+    apply Subtype.ext
+    rfl
+  right_inv point := by
+    apply Subtype.ext
+    rfl
+  map_add' x y := by
+    apply Subtype.ext
+    exact PadicInt.coe_add x y
+
+theorem padicIntAddEquivIntegerAddSubgroup_apply
+    (data : IUTStage1PadicIntegerUnitBallSource p)
+    (integer : ℤ_[p]) :
+    ((data.padicIntAddEquivIntegerAddSubgroup integer :
+        data.integerSource.integerAddSubgroup) : ℚ_[p]) =
+      (integer : ℚ_[p]) :=
+  rfl
+
+theorem padicIntAddEquivIntegerAddSubgroup_symm_apply
+    (data : IUTStage1PadicIntegerUnitBallSource p)
+    (point : data.integerSource.integerAddSubgroup) :
+    (((data.padicIntAddEquivIntegerAddSubgroup).symm point : ℤ_[p]) :
+        ℚ_[p]) =
+      (point : ℚ_[p]) :=
+  rfl
+
 end IUTStage1PadicIntegerUnitBallSource
 
 /--
@@ -16500,6 +16544,303 @@ theorem endpoint
       data.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.endpoint⟩
 
 end IUTStage1PadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+
+/--
+Base-`ℚ_[p]` quotient-coset source whose finite quotient and representatives
+are constructed from the concrete residue map
+`PadicInt.toZMod : ℤ_[p] →+* ZMod p`.
+
+This lowers
+`IUTStage1PadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource`:
+the quotient
+`𝒪[ℚ_p] / p𝒪[ℚ_p]` is no longer supplied.  Lean transports the additive
+equivalence `ℤ_[p] ≃+ 𝒪[ℚ_p]`, identifies the transported kernel of
+`toZMod` with the additive image subgroup `p𝒪[ℚ_p]`, and uses the first
+isomorphism theorem to build the quotient equivalence consumed by the coset
+partition/Haar-character calculation.
+-/
+structure IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] [MeasurableSpace ℚ_[p]]
+    [BorelSpace ℚ_[p]] [LocallyCompactSpace ℚ_[p]]
+    [IsTopologicalAddGroup ℚ_[p]]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  padicIntegerSource : IUTStage1PadicIntegerUnitBallSource p
+  residueQuotientSource : IUTStage1PadicIntegerResidueQuotientSource p
+  realization : ℚ_[p] -> α
+  realizedRegion : Set ℚ_[p] -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set ℚ_[p], realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure ℚ_[p]
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  haar_regular : haarMeasure.Regular
+  valuationUnitBall_measure_eq_one :
+    haarMeasure padicIntegerSource.integerSource.ringOfIntegers = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (padicIntegerSource.integerSource.valuationTopology.valuationBall
+        compactOpenRadius)).toReal
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set ℚ_[p],
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] ℚ_[p] : Real)
+
+namespace IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime]
+variable [MeasurableSpace ℚ_[p]] [BorelSpace ℚ_[p]]
+variable [LocallyCompactSpace ℚ_[p]] [IsTopologicalAddGroup ℚ_[p]]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def basePrimeScaledSubgroup
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    AddSubgroup ℚ_[p] :=
+  data.padicIntegerSource.integerSource.integerAddSubgroup.map
+    (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p ℚ_[p])
+
+theorem padicInt_mem_basePrimeScaledSubgroup_iff_mem_toZModKernel
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem)
+    (integer : ℤ_[p]) :
+    (data.padicIntegerSource.padicIntAddEquivIntegerAddSubgroup integer :
+        data.padicIntegerSource.integerSource.integerAddSubgroup) ∈
+      data.basePrimeScaledSubgroup.addSubgroupOf
+        data.padicIntegerSource.integerSource.integerAddSubgroup ↔
+    integer ∈
+      ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker) := by
+  constructor
+  · intro hin
+    change
+      ((data.padicIntegerSource.padicIntAddEquivIntegerAddSubgroup integer :
+          data.padicIntegerSource.integerSource.integerAddSubgroup) :
+        ℚ_[p]) ∈ data.basePrimeScaledSubgroup at hin
+    simp [basePrimeScaledSubgroup,
+      IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom] at hin
+    rcases hin with ⟨point, hpoint, hpoint_eq⟩
+    let preimage : ℤ_[p] :=
+      (data.padicIntegerSource.padicIntAddEquivIntegerAddSubgroup).symm
+        ⟨point, hpoint⟩
+    have hpreimage_eq : (preimage : ℚ_[p]) = point := rfl
+    have hinteger_eq :
+        (integer : ℚ_[p]) = (p : ℚ_[p]) * (preimage : ℚ_[p]) := by
+      simpa [IUTStage1PadicIntegerUnitBallSource.padicIntAddEquivIntegerAddSubgroup,
+        hpreimage_eq] using hpoint_eq.symm
+    have hspan :
+        integer ∈ (Ideal.span {(p : ℤ_[p])} : Ideal ℤ_[p]) := by
+      rw [Ideal.mem_span_singleton]
+      refine ⟨preimage, ?_⟩
+      apply Subtype.ext
+      simp [hinteger_eq, PadicInt.coe_mul]
+    change PadicInt.toZMod integer = 0
+    have hmax : integer ∈ IsLocalRing.maximalIdeal ℤ_[p] := by
+      simpa [PadicInt.maximalIdeal_eq_span_p] using hspan
+    have hker :
+        integer ∈ RingHom.ker (PadicInt.toZMod : ℤ_[p] →+* ZMod p) := by
+      simpa [PadicInt.ker_toZMod] using hmax
+    simpa [RingHom.mem_ker] using hker
+  · intro hkernel
+    change PadicInt.toZMod integer = 0 at hkernel
+    have hker :
+        integer ∈ RingHom.ker (PadicInt.toZMod : ℤ_[p] →+* ZMod p) := by
+      simpa [RingHom.mem_ker] using hkernel
+    have hmax : integer ∈ IsLocalRing.maximalIdeal ℤ_[p] := by
+      simpa [PadicInt.ker_toZMod] using hker
+    have hspan :
+        integer ∈ (Ideal.span {(p : ℤ_[p])} : Ideal ℤ_[p]) := by
+      simpa [PadicInt.maximalIdeal_eq_span_p] using hmax
+    rw [Ideal.mem_span_singleton] at hspan
+    rcases hspan with ⟨preimage, hpreimage⟩
+    change
+      ((data.padicIntegerSource.padicIntAddEquivIntegerAddSubgroup integer :
+          data.padicIntegerSource.integerSource.integerAddSubgroup) :
+        ℚ_[p]) ∈ data.basePrimeScaledSubgroup
+    simp [basePrimeScaledSubgroup,
+      IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom]
+    refine ⟨(preimage : ℚ_[p]), ?_, ?_⟩
+    · change
+        (preimage : ℚ_[p]) ∈
+          data.padicIntegerSource.integerSource.ringOfIntegers
+      rw [data.padicIntegerSource.valuedRingOfIntegers_eq_padicIntegerSet]
+      exact ⟨preimage, rfl⟩
+    · have hpreimage_q :
+          (integer : ℚ_[p]) =
+            ((p : ℤ_[p]) * preimage : ℤ_[p]) := by
+        rw [hpreimage]
+      simpa [IUTStage1PadicIntegerUnitBallSource.padicIntAddEquivIntegerAddSubgroup,
+        PadicInt.coe_mul] using hpreimage_q.symm
+
+noncomputable def valuedIntegerQuotientMap
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    ℤ_[p] →+
+      data.padicIntegerSource.integerSource.integerAddSubgroup ⧸
+        data.basePrimeScaledSubgroup.addSubgroupOf
+          data.padicIntegerSource.integerSource.integerAddSubgroup :=
+  (QuotientAddGroup.mk'
+      (data.basePrimeScaledSubgroup.addSubgroupOf
+        data.padicIntegerSource.integerSource.integerAddSubgroup)).comp
+    data.padicIntegerSource.padicIntAddEquivIntegerAddSubgroup.toAddMonoidHom
+
+theorem valuedIntegerQuotientMap_surjective
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    Function.Surjective data.valuedIntegerQuotientMap := by
+  intro quotientClass
+  rcases QuotientAddGroup.mk'_surjective
+      (data.basePrimeScaledSubgroup.addSubgroupOf
+        data.padicIntegerSource.integerSource.integerAddSubgroup)
+      quotientClass with
+    ⟨representative, rfl⟩
+  refine
+    ⟨(data.padicIntegerSource.padicIntAddEquivIntegerAddSubgroup).symm
+        representative, ?_⟩
+  simp [valuedIntegerQuotientMap]
+
+theorem valuedIntegerQuotientMap_ker
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    data.valuedIntegerQuotientMap.ker =
+      ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker) := by
+  ext integer
+  change data.valuedIntegerQuotientMap integer = 0 ↔
+    integer ∈
+      ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker)
+  rw [valuedIntegerQuotientMap]
+  change
+    QuotientAddGroup.mk'
+        (data.basePrimeScaledSubgroup.addSubgroupOf
+          data.padicIntegerSource.integerSource.integerAddSubgroup)
+        (data.padicIntegerSource.padicIntAddEquivIntegerAddSubgroup integer) =
+        0 ↔
+      integer ∈
+        ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker)
+  exact
+    (QuotientAddGroup.eq_zero_iff
+      (data.padicIntegerSource.padicIntAddEquivIntegerAddSubgroup integer)).trans
+      (data.padicInt_mem_basePrimeScaledSubgroup_iff_mem_toZModKernel integer)
+
+noncomputable def valuedIntegerQuotientAddEquiv
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    data.residueQuotientSource.quotient ≃+
+      data.padicIntegerSource.integerSource.integerAddSubgroup ⧸
+        data.basePrimeScaledSubgroup.addSubgroupOf
+          data.padicIntegerSource.integerSource.integerAddSubgroup :=
+  (QuotientAddGroup.quotientAddEquivOfEq
+      data.valuedIntegerQuotientMap_ker.symm).trans
+    (QuotientAddGroup.quotientKerEquivOfSurjective
+      data.valuedIntegerQuotientMap
+      data.valuedIntegerQuotientMap_surjective)
+
+noncomputable def quotientEquiv
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]) ≃
+      data.padicIntegerSource.integerSource.integerAddSubgroup ⧸
+        data.basePrimeScaledSubgroup.addSubgroupOf
+          data.padicIntegerSource.integerSource.integerAddSubgroup :=
+  data.residueQuotientSource.finIndexEquivQuotient.trans
+    data.valuedIntegerQuotientAddEquiv.toEquiv
+
+noncomputable def representative
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem)
+    (index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p])) :
+    data.padicIntegerSource.integerSource.integerAddSubgroup :=
+  Classical.choose (Quot.exists_rep (data.quotientEquiv index))
+
+theorem representative_spec
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem)
+    (index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p])) :
+    QuotientAddGroup.mk'
+        (data.basePrimeScaledSubgroup.addSubgroupOf
+          data.padicIntegerSource.integerSource.integerAddSubgroup)
+        (data.representative index) =
+      data.quotientEquiv index :=
+  Classical.choose_spec (Quot.exists_rep (data.quotientEquiv index))
+
+noncomputable def toPadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    IUTStage1PadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+      α p hullSystem :=
+  { padicIntegerSource := data.padicIntegerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    haar_regular := data.haar_regular,
+    valuationUnitBall_measure_eq_one :=
+      data.valuationUnitBall_measure_eq_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    quotientEquiv := data.quotientEquiv,
+    representative := data.representative,
+    representative_spec := data.representative_spec,
+    hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+theorem endpoint
+    (data :
+      IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    data.valuedIntegerQuotientMap.ker =
+        ((PadicInt.toZMod : ℤ_[p] →+* ZMod p).toAddMonoidHom.ker) ∧
+      Function.Surjective data.valuedIntegerQuotientMap ∧
+      (∀ index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]),
+        QuotientAddGroup.mk'
+            (data.basePrimeScaledSubgroup.addSubgroupOf
+              data.padicIntegerSource.integerSource.integerAddSubgroup)
+            (data.representative index) =
+          data.quotientEquiv index) ∧
+      ‖(p : ℚ_[p])‖ <= 1 ∧
+      (let valuedIntegerSource :=
+        data.toPadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+          |>.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+      let dilation :=
+        valuedIntegerSource.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource
+      let quotient :=
+        dilation.toUnitBallQuotientCosetHaarCharacterNormalizationSource
+      data.padicIntegerSource.integerSource.ringOfIntegers =
+        ⋃ index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]),
+          quotient.residueCoset index ∧
+      data.haarMeasure quotient.basePrimeScaledUnitBall =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] ℚ_[p])⁻¹) ∧
+      (∀ subset : Set ℚ_[p],
+        data.haarMeasure
+            ((fun point : ℚ_[p] =>
+                algebraMap ℚ_[p] ℚ_[p] (p : ℚ_[p]) * point) '' subset) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] ℚ_[p])⁻¹) *
+            data.haarMeasure subset)) := by
+  have hbase :=
+    data.toPadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.endpoint
+  let hroute := hbase.2.2
+  exact
+    ⟨data.valuedIntegerQuotientMap_ker,
+      data.valuedIntegerQuotientMap_surjective,
+      data.representative_spec,
+      hbase.1,
+      hroute.2.2.2.2.1,
+      hroute.2.2.2.2.2.2.2.2.1,
+      hroute.2.2.2.2.2.2.2.2.2.2⟩
+
+end IUTStage1PadicBaseFieldResidueQuotientDilationCosetHaarCharacterNormalizationSource
 
 namespace IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
 

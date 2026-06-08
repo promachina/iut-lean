@@ -4045,7 +4045,31 @@ The same source now also constructs
 and finite-index representatives whose quotient classes are definitionally
 the indexed residue classes.  This upgrades the base-field residue quotient
 from a cardinality result to the representative data needed by the coset
-partition layer, without a supplied finite quotient equivalence.  The companion
+partition layer, without a supplied finite quotient equivalence.  This has now
+been threaded into the base local coset/Haar boundary.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1PadicBaseFieldResidueQuotientDilationCoset}\\
+\quad\texttt{HaarCharacterNormalizationSource}
+\end{array}
+\]
+constructs the additive equivalence
+\[
+  \mathbb Z_p \simeq_{\rm add} \mathcal O_{\mathbb Q_p},
+\]
+proves that the transported \(\ker(\texttt{toZMod})\) is exactly the subgroup
+\(p\mathcal O_{\mathbb Q_p}\), applies the first isomorphism theorem to build
+\[
+  \mathcal O_{\mathbb Q_p}/p\mathcal O_{\mathbb Q_p}
+    \simeq_{\rm add}
+  \mathbb Z_p/\ker(\texttt{toZMod}),
+\]
+and then supplies the finite quotient equivalence and representatives consumed
+by the quotient-coset partition/Haar-character source.  Thus the base-field
+coset decomposition used to derive
+\(\mu(p\mathcal O_{\mathbb Q_p})=p^{-1}\) now starts from the concrete
+\(\texttt{PadicInt.toZMod}\) residue quotient rather than from a supplied
+quotient package.  The companion
 declaration
 \[
 \begin{array}{l}
