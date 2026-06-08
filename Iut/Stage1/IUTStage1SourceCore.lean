@@ -14163,6 +14163,132 @@ theorem endpoint
 end IUTStage1FiniteAdditiveQuotientCardinalityCosetPartitionSource
 
 /--
+Generic finite residue vector-space quotient source.
+
+This lowers the quotient-cardinality boundary by one algebraic layer.  Instead
+of carrying the cardinality of `U / S` directly, it carries a finite vector
+space over a finite residue field and an additive equivalence from that residue
+space to the quotient.  Lean computes the quotient cardinality from
+`Module.card_eq_pow_finrank`.
+-/
+structure IUTStage1FiniteResidueVectorSpaceQuotientCardinalitySource
+    (κ : Type u) (G : Type v) (V : Type w)
+    [Field κ] [Fintype κ]
+    [AddCommGroup G] [MeasurableSpace G] [MeasurableAdd G]
+    [AddCommGroup V] [Module κ V] [Fintype V] where
+  unitSubgroup : AddSubgroup G
+  scaledSubgroup : AddSubgroup G
+  scaled_le_unit : scaledSubgroup ≤ unitSubgroup
+  residueQuotientEquiv :
+    V ≃ unitSubgroup ⧸ scaledSubgroup.addSubgroupOf unitSubgroup
+  scaled_measurable : MeasurableSet (scaledSubgroup : Set G)
+
+namespace IUTStage1FiniteResidueVectorSpaceQuotientCardinalitySource
+
+variable {κ : Type u} {G : Type v} {V : Type w}
+variable [Field κ] [Fintype κ]
+variable [AddCommGroup G] [MeasurableSpace G] [MeasurableAdd G]
+variable [AddCommGroup V] [Module κ V] [Fintype V]
+
+@[reducible]
+noncomputable def quotientFintype
+    (data :
+      IUTStage1FiniteResidueVectorSpaceQuotientCardinalitySource κ G V) :
+    Fintype
+      (data.unitSubgroup ⧸
+        data.scaledSubgroup.addSubgroupOf data.unitSubgroup) :=
+  Fintype.ofEquiv V data.residueQuotientEquiv
+
+theorem quotient_card_eq_residueSpace
+    (data :
+      IUTStage1FiniteResidueVectorSpaceQuotientCardinalitySource κ G V) :
+    letI := data.quotientFintype;
+    Fintype.card
+        (data.unitSubgroup ⧸
+          data.scaledSubgroup.addSubgroupOf data.unitSubgroup) =
+      Fintype.card V := by
+  letI := data.quotientFintype
+  exact Fintype.card_congr data.residueQuotientEquiv.symm
+
+theorem residueSpace_card_eq_pow_finrank
+    (_data :
+      IUTStage1FiniteResidueVectorSpaceQuotientCardinalitySource κ G V) :
+    Fintype.card V = Fintype.card κ ^ Module.finrank κ V :=
+  Module.card_eq_pow_finrank
+
+theorem quotient_card_eq_pow_finrank
+    (data :
+      IUTStage1FiniteResidueVectorSpaceQuotientCardinalitySource κ G V) :
+    letI := data.quotientFintype;
+    Fintype.card
+        (data.unitSubgroup ⧸
+          data.scaledSubgroup.addSubgroupOf data.unitSubgroup) =
+      Fintype.card κ ^ Module.finrank κ V := by
+  letI := data.quotientFintype
+  calc
+    Fintype.card
+        (data.unitSubgroup ⧸
+          data.scaledSubgroup.addSubgroupOf data.unitSubgroup) =
+        Fintype.card V :=
+      data.quotient_card_eq_residueSpace
+    _ = Fintype.card κ ^ Module.finrank κ V :=
+      data.residueSpace_card_eq_pow_finrank
+
+noncomputable def toFiniteAdditiveQuotientCardinalityCosetPartitionSource
+    (data :
+      IUTStage1FiniteResidueVectorSpaceQuotientCardinalitySource κ G V) :
+    IUTStage1FiniteAdditiveQuotientCardinalityCosetPartitionSource G :=
+  { unitSubgroup := data.unitSubgroup,
+    scaledSubgroup := data.scaledSubgroup,
+    scaled_le_unit := data.scaled_le_unit,
+    indexCard := Fintype.card κ ^ Module.finrank κ V,
+    indexCard_pos :=
+      pow_pos (Fintype.card_pos_iff.mpr ⟨(0 : κ)⟩) _,
+    quotientFintype := data.quotientFintype,
+    quotient_card_eq := data.quotient_card_eq_pow_finrank,
+    scaled_measurable := data.scaled_measurable }
+
+/--
+Endpoint for the residue-vector-space source: the quotient cardinality is
+derived from the finite residue field and finite residue vector space, then the
+previous quotient-cardinality constructor supplies the finite coset partition.
+-/
+theorem endpoint
+    (data :
+      IUTStage1FiniteResidueVectorSpaceQuotientCardinalitySource κ G V) :
+    (letI := data.quotientFintype;
+      Fintype.card
+          (data.unitSubgroup ⧸
+            data.scaledSubgroup.addSubgroupOf data.unitSubgroup) =
+        Fintype.card κ ^ Module.finrank κ V) ∧
+      (data.unitSubgroup : Set G) =
+        ⋃ index :
+            Fin (Fintype.card κ ^ Module.finrank κ V),
+          data.toFiniteAdditiveQuotientCardinalityCosetPartitionSource.coset
+            index ∧
+      Pairwise
+        (fun index₁ index₂ :
+            Fin (Fintype.card κ ^ Module.finrank κ V) =>
+          Disjoint
+            (data.toFiniteAdditiveQuotientCardinalityCosetPartitionSource.coset
+              index₁)
+            (data.toFiniteAdditiveQuotientCardinalityCosetPartitionSource.coset
+              index₂)) ∧
+      (∀ index : Fin (Fintype.card κ ^ Module.finrank κ V),
+        MeasurableSet
+          (data.toFiniteAdditiveQuotientCardinalityCosetPartitionSource.coset
+            index)) := by
+  have hpartition :=
+    data.toFiniteAdditiveQuotientCardinalityCosetPartitionSource.endpoint
+  exact
+    ⟨data.quotient_card_eq_pow_finrank,
+      hpartition.2.1,
+      hpartition.2.2.1,
+      hpartition.2.2.2⟩
+
+end IUTStage1FiniteResidueVectorSpaceQuotientCardinalitySource
+
+/--
 Finite-extension-over-`ℚ_[p]` Haar source whose base-prime unit-ball mass is
 computed from the residue-coset decomposition of the valuation ring.
 
@@ -15451,6 +15577,227 @@ theorem endpoint
       data.toNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.basePrime_mul_mem_ringOfIntegers⟩
 
 end IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
+
+/--
+Norm-compatible finite-extension valued-integer quotient source whose quotient
+cardinality is derived from a finite residue vector space.
+
+This is the algebraic residue-field version of the local calculation
+`#(O[K_v]/p_vO[K_v]) = p_v^[K_v:Q_p]`.  The source carries a finite residue
+field `κ`, a finite `κ`-vector space `V`, an equivalence from `V` to the
+additive quotient `O[K_v]/p_vO[K_v]`, and the source-facing identifications
+`#κ = p_v` and `dim_κ V = [K_v:Q_p]`.  Lean computes the quotient cardinality
+from `Module.card_eq_pow_finrank` and then projects to the previous
+quotient-cardinality source.
+-/
+structure IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w)
+    (κ : Type v) (V : Type x)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [NormedAlgebra ℚ_[p] K]
+    [Field κ] [Fintype κ]
+    [AddCommGroup V] [Module κ V] [Fintype V]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  integerSource : IUTStage1ValuedFieldIntegerUnitBallSource K
+  realization : K -> α
+  realizedRegion : Set K -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set K, realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure K
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  haar_regular : haarMeasure.Regular
+  valuationUnitBall_measure_eq_one :
+    haarMeasure integerSource.ringOfIntegers = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (integerSource.valuationTopology.valuationBall compactOpenRadius)).toReal
+  finiteDimensional : FiniteDimensional ℚ_[p] K
+  residueQuotientEquiv :
+    V ≃
+      integerSource.integerAddSubgroup ⧸
+        (integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf integerSource.integerAddSubgroup
+  residueField_card_eq_p : Fintype.card κ = p
+  residueFinrank_eq_extensionFinrank :
+    Module.finrank κ V = Module.finrank ℚ_[p] K
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set K,
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] K : Real)
+
+namespace IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable {κ : Type v} {V : Type x}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+variable [IsTopologicalAddGroup K]
+variable [NormedAlgebra ℚ_[p] K]
+variable [Field κ] [Fintype κ]
+variable [AddCommGroup V] [Module κ V] [Fintype V]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+@[reducible]
+noncomputable def quotientFintype
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+        α p K κ V hullSystem) :
+    Fintype
+      (data.integerSource.integerAddSubgroup ⧸
+        (data.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf data.integerSource.integerAddSubgroup) :=
+  Fintype.ofEquiv V data.residueQuotientEquiv
+
+theorem quotient_card_eq_residueSpace
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+        α p K κ V hullSystem) :
+    letI := data.quotientFintype;
+    Fintype.card
+      (data.integerSource.integerAddSubgroup ⧸
+        (data.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf data.integerSource.integerAddSubgroup) =
+      Fintype.card V := by
+  letI := data.quotientFintype
+  exact Fintype.card_congr data.residueQuotientEquiv.symm
+
+theorem residueSpace_card_eq_pow_finrank
+    (_data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+        α p K κ V hullSystem) :
+    Fintype.card V = Fintype.card κ ^ Module.finrank κ V :=
+  Module.card_eq_pow_finrank
+
+theorem quotient_card_eq
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+        α p K κ V hullSystem) :
+    letI := data.quotientFintype;
+    Fintype.card
+      (data.integerSource.integerAddSubgroup ⧸
+        (data.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf data.integerSource.integerAddSubgroup) =
+      p ^ Module.finrank ℚ_[p] K := by
+  letI := data.quotientFintype
+  calc
+    Fintype.card
+      (data.integerSource.integerAddSubgroup ⧸
+        (data.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf data.integerSource.integerAddSubgroup) =
+        Fintype.card V :=
+      data.quotient_card_eq_residueSpace
+    _ = Fintype.card κ ^ Module.finrank κ V :=
+      data.residueSpace_card_eq_pow_finrank
+    _ = p ^ Module.finrank ℚ_[p] K := by
+      rw [data.residueField_card_eq_p,
+        data.residueFinrank_eq_extensionFinrank]
+
+noncomputable def toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+        α p K κ V hullSystem) :
+    IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
+      α p K hullSystem :=
+  { integerSource := data.integerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    haar_regular := data.haar_regular,
+    valuationUnitBall_measure_eq_one :=
+      data.valuationUnitBall_measure_eq_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    finiteDimensional := data.finiteDimensional,
+    quotientFintype := data.quotientFintype,
+    quotient_card_eq := data.quotient_card_eq,
+    hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+noncomputable def quotientEquiv
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+        α p K κ V hullSystem) :
+    Fin (p ^ Module.finrank ℚ_[p] K) ≃
+      data.integerSource.integerAddSubgroup ⧸
+        (data.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf data.integerSource.integerAddSubgroup :=
+  data.toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
+    |>.quotientEquiv
+
+noncomputable def representative
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+        α p K κ V hullSystem)
+    (index : Fin (p ^ Module.finrank ℚ_[p] K)) :
+    data.integerSource.integerAddSubgroup :=
+  data.toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
+    |>.representative index
+
+theorem representative_spec
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+        α p K κ V hullSystem)
+    (index : Fin (p ^ Module.finrank ℚ_[p] K)) :
+    QuotientAddGroup.mk'
+        ((data.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+        ).addSubgroupOf data.integerSource.integerAddSubgroup)
+        (data.representative index) =
+      data.quotientEquiv index :=
+  data.toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
+    |>.representative_spec index
+
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
+        α p K κ V hullSystem) :
+    (letI := data.quotientFintype;
+      Fintype.card
+        (data.integerSource.integerAddSubgroup ⧸
+          (data.integerSource.integerAddSubgroup.map
+            (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+          ).addSubgroupOf data.integerSource.integerAddSubgroup) =
+        p ^ Module.finrank ℚ_[p] K) ∧
+      Fintype.card V = Fintype.card κ ^ Module.finrank κ V ∧
+      Fintype.card κ = p ∧
+      Module.finrank κ V = Module.finrank ℚ_[p] K ∧
+      (∀ index : Fin (p ^ Module.finrank ℚ_[p] K),
+        QuotientAddGroup.mk'
+            ((data.integerSource.integerAddSubgroup.map
+              (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p K)
+            ).addSubgroupOf data.integerSource.integerAddSubgroup)
+            (data.representative index) =
+          data.quotientEquiv index) ∧
+      ‖algebraMap ℚ_[p] K (p : ℚ_[p])‖ <= 1 ∧
+      (∀ point : K,
+        point ∈ data.integerSource.ringOfIntegers ->
+          algebraMap ℚ_[p] K (p : ℚ_[p]) * point ∈
+            data.integerSource.ringOfIntegers) :=
+  ⟨data.quotient_card_eq,
+    data.residueSpace_card_eq_pow_finrank,
+    data.residueField_card_eq_p,
+    data.residueFinrank_eq_extensionFinrank,
+    data.representative_spec,
+    IUTStage1PadicFiniteExtensionNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.basePrime_algebraMap_norm_le_one,
+    data.toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
+      |>.toNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+      |>.basePrime_mul_mem_ringOfIntegers⟩
+
+end IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueVectorSpaceQuotientCosetHaarCharacterNormalizationSource
 
 /--
 Base-`ℚ_[p]` quotient-coset source whose base-prime closure of `𝒪[ℚ_[p]]`
