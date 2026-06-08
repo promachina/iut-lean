@@ -14997,6 +14997,183 @@ theorem endpoint
 
 end IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
 
+/--
+Base-`ℚ_[p]` quotient-coset source whose base-prime closure of `𝒪[ℚ_[p]]`
+is proved from the p-adic norm.
+
+This is the first local-field instance of the valued-integer quotient boundary:
+it removes the closure field `p_v O_v ⊆ O_v` in the base field case by using
+`‖p‖ = p⁻¹ ≤ 1` and the valued-integer characterization `x ∈ 𝒪[ℚ_[p]] ↔
+‖x‖ ≤ 1`.
+-/
+structure IUTStage1PadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+    (α : Type u) (p : Nat) [Fact p.Prime] [MeasurableSpace ℚ_[p]]
+    [BorelSpace ℚ_[p]] [LocallyCompactSpace ℚ_[p]]
+    [IsTopologicalAddGroup ℚ_[p]]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  padicIntegerSource : IUTStage1PadicIntegerUnitBallSource p
+  realization : ℚ_[p] -> α
+  realizedRegion : Set ℚ_[p] -> Set α
+  realizedRegion_eq_image :
+    ∀ subset : Set ℚ_[p], realizedRegion subset = realization '' subset
+  compactOpenRadius : Real
+  compactOpenRadius_pos : 0 < compactOpenRadius
+  haarMeasure : MeasureTheory.Measure ℚ_[p]
+  haar_isAddHaar :
+    MeasureTheory.Measure.IsAddHaarMeasure haarMeasure
+  haar_regular : haarMeasure.Regular
+  valuationUnitBall_measure_eq_one :
+    haarMeasure padicIntegerSource.integerSource.ringOfIntegers = 1
+  compactOpenBall_measure_pos :
+    0 < (haarMeasure
+      (padicIntegerSource.integerSource.valuationTopology.valuationBall
+        compactOpenRadius)).toReal
+  quotientEquiv :
+    Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]) ≃
+      padicIntegerSource.integerSource.integerAddSubgroup ⧸
+        (padicIntegerSource.integerSource.integerAddSubgroup.map
+          (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p ℚ_[p])
+        ).addSubgroupOf padicIntegerSource.integerSource.integerAddSubgroup
+  representative :
+    Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]) ->
+      padicIntegerSource.integerSource.integerAddSubgroup
+  representative_spec :
+    ∀ index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]),
+      QuotientAddGroup.mk'
+          ((padicIntegerSource.integerSource.integerAddSubgroup.map
+            (IUTStage1PadicFiniteExtensionBasePrimeDilationAddMonoidHom p ℚ_[p])
+          ).addSubgroupOf padicIntegerSource.integerSource.integerAddSubgroup)
+          (representative index) =
+        quotientEquiv index
+  hull_logVolume_eq_normalized :
+    ∀ subset : Set ℚ_[p],
+      hullSystem.logVolume (realizedRegion subset) =
+        Real.log ((haarMeasure subset).toReal) /
+          (Module.finrank ℚ_[p] ℚ_[p] : Real)
+
+namespace IUTStage1PadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime]
+variable [MeasurableSpace ℚ_[p]] [BorelSpace ℚ_[p]]
+variable [LocallyCompactSpace ℚ_[p]] [IsTopologicalAddGroup ℚ_[p]]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+omit [MeasurableSpace ℚ_[p]] [BorelSpace ℚ_[p]]
+  [LocallyCompactSpace ℚ_[p]] [IsTopologicalAddGroup ℚ_[p]] in
+theorem basePrime_real_inv_le_one :
+    ((p : Real)⁻¹) <= 1 :=
+  inv_le_one_of_one_le₀
+    (by exact_mod_cast (Fact.out : p.Prime).one_le : (1 : Real) <= p)
+
+omit [MeasurableSpace ℚ_[p]] [BorelSpace ℚ_[p]]
+  [LocallyCompactSpace ℚ_[p]] [IsTopologicalAddGroup ℚ_[p]] in
+theorem basePrime_norm_le_one :
+    ‖(p : ℚ_[p])‖ <= 1 := by
+  rw [Padic.norm_p]
+  exact basePrime_real_inv_le_one
+
+theorem basePrime_mul_mem_ringOfIntegers
+    (data :
+      IUTStage1PadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    ∀ point : ℚ_[p], point ∈ data.padicIntegerSource.integerSource.ringOfIntegers ->
+      algebraMap ℚ_[p] ℚ_[p] (p : ℚ_[p]) * point ∈
+        data.padicIntegerSource.integerSource.ringOfIntegers := by
+  intro point hpoint
+  have hpoint_norm : ‖point‖ <= 1 := by
+    simpa [IUTStage1ValuedFieldIntegerUnitBallSource.ringOfIntegers,
+      IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring,
+      Valued.integer.mem_iff] using hpoint
+  have hmul_norm : (p : Real)⁻¹ * ‖point‖ <= 1 :=
+    mul_le_one₀ basePrime_real_inv_le_one (norm_nonneg point) hpoint_norm
+  simpa [IUTStage1ValuedFieldIntegerUnitBallSource.ringOfIntegers,
+    IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring,
+    Valued.integer.mem_iff] using hmul_norm
+
+noncomputable def toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+      α p ℚ_[p] hullSystem :=
+  { integerSource := data.padicIntegerSource.integerSource,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    haar_regular := data.haar_regular,
+    valuationUnitBall_measure_eq_one :=
+      data.valuationUnitBall_measure_eq_one,
+    compactOpenBall_measure_pos := data.compactOpenBall_measure_pos,
+    basePrime_mul_mem_ringOfIntegers :=
+      data.basePrime_mul_mem_ringOfIntegers,
+    quotientEquiv := data.quotientEquiv,
+    representative := data.representative,
+    representative_spec := data.representative_spec,
+    hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+/--
+Endpoint for the base p-adic local-field quotient source.  It exposes the
+norm proof of `p O_{ℚ_p} ⊆ O_{ℚ_p}` and then inherits the valued-integer
+quotient/coset/Haar-character endpoint.
+-/
+theorem endpoint
+    (data :
+      IUTStage1PadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+        α p hullSystem) :
+    ‖(p : ℚ_[p])‖ <= 1 ∧
+      (∀ point : ℚ_[p],
+        point ∈ data.padicIntegerSource.integerSource.ringOfIntegers ->
+          algebraMap ℚ_[p] ℚ_[p] (p : ℚ_[p]) * point ∈
+            data.padicIntegerSource.integerSource.ringOfIntegers) ∧
+      (let valuedIntegerSource :=
+        data.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+      let dilation :=
+        valuedIntegerSource.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource
+      let quotient :=
+        dilation.toUnitBallQuotientCosetHaarCharacterNormalizationSource
+      (valuedIntegerSource.unitSubgroup : Set ℚ_[p]) =
+          data.padicIntegerSource.integerSource.ringOfIntegers ∧
+        MeasurableSet (valuedIntegerSource.unitSubgroup : Set ℚ_[p]) ∧
+        (dilation.basePrimeScaledSubgroup : Set ℚ_[p]) =
+          (fun point : ℚ_[p] => algebraMap ℚ_[p] ℚ_[p] (p : ℚ_[p]) * point) ''
+            data.padicIntegerSource.integerSource.ringOfIntegers ∧
+        dilation.basePrimeScaledSubgroup ≤ valuedIntegerSource.unitSubgroup ∧
+        data.padicIntegerSource.integerSource.ringOfIntegers =
+          ⋃ index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]),
+            quotient.residueCoset index ∧
+        Pairwise (fun index₁ index₂ : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]) =>
+          Disjoint
+            (quotient.residueCoset index₁)
+            (quotient.residueCoset index₂)) ∧
+        (∀ index : Fin (p ^ Module.finrank ℚ_[p] ℚ_[p]),
+          MeasurableSet (quotient.residueCoset index)) ∧
+        data.haarMeasure data.padicIntegerSource.integerSource.ringOfIntegers = 1 ∧
+        data.haarMeasure quotient.basePrimeScaledUnitBall =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] ℚ_[p])⁻¹) ∧
+        (MeasureTheory.addEquivAddHaarChar
+            (quotient
+              |>.toUnitBallCosetHaarCharacterNormalizationSource
+              |>.toUnitBallHaarCharacterNormalizationSource
+              |>.basePrimeContinuousAddEquiv) :
+            ENNReal) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] ℚ_[p])⁻¹) ∧
+        (∀ subset : Set ℚ_[p],
+          data.haarMeasure
+              ((fun point : ℚ_[p] =>
+                  algebraMap ℚ_[p] ℚ_[p] (p : ℚ_[p]) * point) '' subset) =
+            ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] ℚ_[p])⁻¹) *
+              data.haarMeasure subset)) := by
+  exact
+    ⟨basePrime_norm_le_one,
+      data.basePrime_mul_mem_ringOfIntegers,
+      data.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.endpoint⟩
+
+end IUTStage1PadicBaseFieldValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+
 namespace IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
 
 variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
