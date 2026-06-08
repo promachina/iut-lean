@@ -44201,6 +44201,123 @@ noncomputable def targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPo
 
 set_option linter.style.longLine false in
 /--
+Construct the finite-extension-over-`ℚ_[p]` centered valuation-ball
+Haar-log-coordinate finite-sum target-point source with constructed
+base-prime dilation mass laws from the valuation-ball record-canonical
+Step (xi) source.
+
+This is the first record-canonical local-field source in this corridor that
+carries the real-valued Haar scaling law for every subset under multiplication
+by the image of `p_v`.  The principal hull/determinant source is still obtained
+from the valuation-ball record source; the local data now records the nonzero
+base-prime dilation, its pointwise action, and its normalized mass law.
+-/
+noncomputable def targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_toValuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSourceOfValuationBallRecordSource
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {sourceObligations : IUTStage1SourceHullDetObligations package}
+    {sourceEndpoint :
+      package.PlaceAuditedMultiradialThetaHullEndpoint sourceObligations}
+    {sourceAudit : sourceEndpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (sourcePart :
+      sourceAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type u} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        sourcePart audited X C)
+    {β : Type u} [Fintype β] {γ : Type w} [Fintype γ]
+    (stepXISource :
+      sourcePart.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization)
+    {η : Type u} {K : Type u}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {γlocal : Type u} [Fintype γlocal]
+    {localPrime : γlocal -> Nat}
+    [∀ place : γlocal, Fact (localPrime place).Prime]
+    {localField : γlocal -> Type u}
+    [∀ place : γlocal, NontriviallyNormedField (localField place)]
+    [∀ place : γlocal, ProperSpace (localField place)]
+    [∀ place : γlocal, IsUltrametricDist (localField place)]
+    [∀ place : γlocal, MeasurableSpace (localField place)]
+    [∀ place : γlocal, Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : γlocal, FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {Λ : Type (max u w)}
+    (principalValuationBallSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γ Λ)
+    (possibleRegion_eq_recordThetaPossibleImage :
+      principalValuationBallSource.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        recordThetaPossibleImage record)
+    (adjustedSource_eq_recordValuationBall :
+      stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource =
+        IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+          (record := record) principalValuationBallSource.valuationCover
+          possibleRegion_eq_recordThetaPossibleImage)
+    (valuationUnitBallNonzeroScalarSource :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        γlocal localField
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γlocal)
+    (coordinatePlace_eq_self :
+      ∀ place : γlocal,
+        valuationUnitBallNonzeroScalarSource.coordinatePlace place = place)
+    (localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource :
+      ∀ place : γlocal,
+        IUTStage1Remark395LocalFactorPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource
+          (localPrime place) (localField place))
+    (transportedLocalIntegerTargetPoint_eq_principal :
+      (fun point : ((place : γlocal) -> localField place) =>
+          ({ coord :=
+              Finset.univ.sum fun place : γlocal =>
+                (localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+                  (point place) } :
+            Point target)) ''
+          valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerRegion =
+        (stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+            principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+            adjustedSource_eq_recordValuationBall).principalValuationBallSource.principalHullSource.localIntegerRegion)
+    (transportedSelectedScalarTargetPoint_eq_principalHull :
+      (fun point : ((place : γlocal) -> localField place) =>
+          ({ coord :=
+              Finset.univ.sum fun place : γlocal =>
+                (localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+                  (point place) } :
+            Point target)) ''
+          valuationUnitBallNonzeroScalarSource.selectedScalarImageHull =
+        (stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+            principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+            adjustedSource_eq_recordValuationBall).principalValuationBallSource.selectedPrincipalHull) :
+    IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource
+      (η := η) (K := K) (β := β) (γ := γ)
+      record localPrime localField Λ :=
+  { principalValuationBallBackedSource :=
+      stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+        principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+        adjustedSource_eq_recordValuationBall,
+    valuationUnitBallNonzeroScalarSource :=
+      valuationUnitBallNonzeroScalarSource,
+    coordinatePlace_eq_self := coordinatePlace_eq_self,
+    localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource :=
+      localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource,
+    transportedLocalIntegerTargetPoint_eq_principal :=
+      transportedLocalIntegerTargetPoint_eq_principal,
+    transportedSelectedScalarTargetPoint_eq_principalHull :=
+      transportedSelectedScalarTargetPoint_eq_principalHull }
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface exact-theta Step (xi) route through valuation-log-image
 projected-factorwise local log-coordinate transport into the strongest
 principal valuation-ball topology/Haar Ob5--Ob7 endpoint.
@@ -46548,6 +46665,244 @@ noncomputable def targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPo
       transportedLocalIntegerTargetPoint_eq_principal
       transportedSelectedScalarTargetPoint_eq_principalHull
   remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionDilationCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleDichotomyWithTopologyFiniteExtensionHaarOb5Ob6Ob7AuditAtQChoiceOfQPilotRegionNonemptyOfCoricThetaMuProductFormulaConstructionSource
+    sourceData
+    phiFamily xiFamily k qPilotRegion_nonempty
+    constructionSource
+    part profile audited transportSource iplConstructionSource
+    sourceCalibration source_profile_eq thetaRootSource upperSemiEntry
+    divisorPacket monoAnalyticTheater kummerCompatibility forgettingCompatibility
+    holomorphicF_realization holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified packetLocalObjectFinite_eq_ind3Source
+    targetSource
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface exact-theta Step (xi) route through finite-extension-over-
+`ℚ_[p]` centered valuation-ball Haar-log-coordinate finite-sum target-point
+transport with constructed base-prime dilation mass laws, with the
+valuation-ball source-core synchronization derived from the record-canonical
+valuation-ball constructor.
+
+This is the record-canonical version of the mass-scaling finite-extension
+endpoint: every local place carries the nonzero scalar \(p_v\), the pointwise
+formula for the constructed base-prime dilation, and the real-valued Haar
+scaling law for every subset before the route reaches the constructor-backed
+topology/Haar Ob5--Ob7 audit and the `C_Theta` dichotomy.
+-/
+noncomputable def targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_valuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointCanonicalCThetaScaleDichotomyWithTopologyFiniteExtensionHaarOb5Ob6Ob7AuditAtQChoiceOfQPilotRegionNonemptyOfCoricThetaMuProductFormulaConstructionSourceOfValuationBallRecordSource
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {sourceObligations : IUTStage1SourceHullDetObligations package}
+    {sourceEndpoint :
+      package.PlaceAuditedMultiradialThetaHullEndpoint sourceObligations}
+    {sourceAudit : sourceEndpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (sourcePart :
+      sourceAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type u} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeSynchronization :
+      IUTStage1TargetChartedHodgeArakelovSynchronization
+        sourcePart audited X C)
+    {β : Type u} [Fintype β] {γ : Type w} [Fintype γ]
+    (stepXISource :
+      sourcePart.IUTStage1TargetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource
+        (β := β) (γ := γ) audited record hodgeSynchronization)
+    {η : Type u} {K : Type u}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {γlocal : Type u} [Fintype γlocal]
+    {localPrime : γlocal -> Nat}
+    [∀ place : γlocal, Fact (localPrime place).Prime]
+    {localField : γlocal -> Type u}
+    [∀ place : γlocal, NontriviallyNormedField (localField place)]
+    [∀ place : γlocal, ProperSpace (localField place)]
+    [∀ place : γlocal, IsUltrametricDist (localField place)]
+    [∀ place : γlocal, MeasurableSpace (localField place)]
+    [∀ place : γlocal, Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : γlocal, FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {Λ : Type (max u w)}
+    (principalValuationBallSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γ Λ)
+    (possibleRegion_eq_recordThetaPossibleImage :
+      principalValuationBallSource.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        recordThetaPossibleImage record)
+    (adjustedSource_eq_recordValuationBall :
+      stepXISource.measureCalibratedAdjustedHodgeSource.measuredAdjustedSource.adjustedSource =
+        IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+          (record := record) principalValuationBallSource.valuationCover
+          possibleRegion_eq_recordThetaPossibleImage)
+    (valuationUnitBallNonzeroScalarSource :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        γlocal localField
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+        η K β γlocal)
+    (coordinatePlace_eq_self :
+      ∀ place : γlocal,
+        valuationUnitBallNonzeroScalarSource.coordinatePlace place = place)
+    (localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource :
+      ∀ place : γlocal,
+        IUTStage1Remark395LocalFactorPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource
+          (localPrime place) (localField place))
+    (transportedLocalIntegerTargetPoint_eq_principal :
+      (fun point : ((place : γlocal) -> localField place) =>
+          ({ coord :=
+              Finset.univ.sum fun place : γlocal =>
+                (localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+                  (point place) } :
+            Point target)) ''
+          valuationUnitBallNonzeroScalarSource.nonzeroScalarSource.localIntegerRegion =
+        (stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+            principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+            adjustedSource_eq_recordValuationBall).principalValuationBallSource.principalHullSource.localIntegerRegion)
+    (transportedSelectedScalarTargetPoint_eq_principalHull :
+      (fun point : ((place : γlocal) -> localField place) =>
+          ({ coord :=
+              Finset.univ.sum fun place : γlocal =>
+                (localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource place).localLogCoordinate
+                  (point place) } :
+            Point target)) ''
+          valuationUnitBallNonzeroScalarSource.selectedScalarImageHull =
+        (stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+            principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+            adjustedSource_eq_recordValuationBall).principalValuationBallSource.selectedPrincipalHull)
+    {κ : Type u}
+    (phiFamily :
+      (stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+          principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+          adjustedSource_eq_recordValuationBall).toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.PhiFamily
+        κ)
+    (xiFamily :
+      (stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+          principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+          adjustedSource_eq_recordValuationBall).toPrincipalProductHullBackedSource.toProductHullBackedSource.toPossibleImageFamilySource.XiFamily
+        κ)
+    (k : κ)
+    (qPilotRegion_nonempty :
+      (stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+          principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+          adjustedSource_eq_recordValuationBall).constructorBackedSource.qPilotRegion.Nonempty)
+    {Penv Pgau V μ : Type (max u w)}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (constructionSource :
+      IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallCoricThetaMuProductFormulaOb7ConstructionSource
+        (stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+          principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+          adjustedSource_eq_recordValuationBall) Penv Pgau V μ)
+    {endpoint :
+      package.PlaceAuditedMultiradialThetaHullEndpoint
+        (stepXISource.toPrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSourceOfValuationBallRecordSource
+          principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+          adjustedSource_eq_recordValuationBall).constructorBackedSource.constructorObligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    let sourceData :=
+      targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_toValuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSourceOfValuationBallRecordSource
+        sourcePart audited hodgeSynchronization stepXISource
+        principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+        adjustedSource_eq_recordValuationBall
+        valuationUnitBallNonzeroScalarSource coordinatePlace_eq_self
+        localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource
+        transportedLocalIntegerTargetPoint_eq_principal
+        transportedSelectedScalarTargetPoint_eq_principalHull
+    (∀ place : γlocal,
+        algebraMap ℚ_[localPrime place] (localField place)
+          (localPrime place : ℚ_[localPrime place]) ≠ 0) ×'
+      ((∀ place : γlocal, ∀ point : localField place,
+          (sourceData.localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionConstructedDilationMassHaarSource.basePrimeDilation point =
+            algebraMap ℚ_[localPrime place] (localField place)
+              (localPrime place : ℚ_[localPrime place]) * point) ×'
+        ((∀ place : γlocal, ∀ subset : Set (localField place),
+            ((sourceData.localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionConstructedDilationMassHaarSource.haarMeasure
+              ((sourceData.localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionConstructedDilationMassHaarSource.basePrimeDilation ''
+                subset)).toReal =
+              ((sourceData.localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource place).finiteExtensionConstructedDilationMassHaarSource.haarMeasure
+                subset).toReal /
+                (localPrime place : Real) ^
+                  Module.finrank ℚ_[localPrime place] (localField place)) ×'
+          (IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395ValuationUnitBallNonzeroScalarTargetPointTransportSource.TargetPointTransportAudit
+              sourceData.toValuedFieldIntegerCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource.toCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSource.toCompactOpenHaarLogCoordinateFiniteSumTargetPointSource.toHaarLogCoordinateFiniteSumTargetPointSource.toCoordinatePlaceValuationLogFiniteSumTargetPointSource.toValuationLogFiniteSumTargetPointSource.toValuationLogImageProjectedFactorwiseTargetTransportSource.toLocalLogCoordinateProjectedFactorwiseTargetTransportSource.toLocalLogCoordinateFactorwiseTargetTransportSource.toLocalLogCoordinatePlacewisePreimageTargetTransportSource.toLocalLogCoordinatePreimageTargetTransportSource.toLocalLogCoordinateProductImageTargetTransportSource.toFiniteLocalLogCoordinateTargetTransportSource.toValuationAnchorCoordinateTargetTransportSource.toSelectedImageCoordinateTargetTransportSource.toCoordinateTargetTransportSource.toTargetPointTransportSource ×'
+            (IUTStage1SourcePackage.PlaceAuditedMultiradialThetaHullEndpoint.LogVolumeChartAudit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit.IUTStage1Remark395PrincipalValuationBallBackedConstructorBackedConstructedHullDeterminantFiniteDivisorVerticalIQSource.PrincipalValuationBallTopologyOb5Ob6Ob7CanonicalCThetaScaleAudit
+                sourceData.principalValuationBallBackedSource phiFamily xiFamily k
+                sourceData.principalValuationBallBackedSource.constructorBackedSource.qChoice
+                Penv Pgau V μ ×'
+              ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+                  package.preLedger.thetaSigned < 0) ∨
+                (-1 : Real) <
+                  sourceData.principalValuationBallBackedSource.canonicalCThetaScale))))) :=
+  let sourceData :=
+    targetChartedHodgeConstructorBackedMeasureCalibratedAdjustedPossibleImageHullDetSource_toValuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointSourceOfValuationBallRecordSource
+      sourcePart audited hodgeSynchronization stepXISource
+      principalValuationBallSource possibleRegion_eq_recordThetaPossibleImage
+      adjustedSource_eq_recordValuationBall
+      valuationUnitBallNonzeroScalarSource coordinatePlace_eq_self
+      localPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateSource
+      transportedLocalIntegerTargetPoint_eq_principal
+      transportedSelectedScalarTargetPoint_eq_principalHull
+  remark395ValuationUnitBallNonzeroScalarPadicFiniteExtensionConstructedDilationMassCenteredValuationBallHaarLogCoordinateFiniteSumTargetPointConstructorBackedConstructedOb3Ob5AdjustedHullDeterminantFiniteDivisorVerticalIQ_canonicalCThetaScaleDichotomyWithTopologyFiniteExtensionHaarOb5Ob6Ob7AuditAtQChoiceOfQPilotRegionNonemptyOfCoricThetaMuProductFormulaConstructionSource
     sourceData
     phiFamily xiFamily k qPilotRegion_nonempty
     constructionSource
