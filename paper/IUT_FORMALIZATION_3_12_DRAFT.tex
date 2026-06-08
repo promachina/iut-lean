@@ -7626,6 +7626,40 @@ per-place image-equality hypotheses for the local coordinate regions.  In the
 record-canonical variant it also no longer accepts the valuation-ball
 source-core equality as an independent input.
 
+The finite-sum target-point form now has the same record-canonical strengthening.
+The constructor
+\[
+\begin{array}{l}
+\texttt{\_toValuationUnitBallNonzeroScalarValuationLog}\\
+\quad\texttt{FiniteSumTargetPointSource}\\
+\quad\texttt{OfValuationBallRecordSource}
+\end{array}
+\]
+uses the actual point map
+\[
+  x \longmapsto
+    \left\{\mathrm{coord}=\sum_v \ell_v(x_v)\right\}
+\]
+and asks only for the two transported target-point synchronizations with the
+principal local-integer and selected-hull regions.  The valuation-ball
+source-core equality is derived from the same record-canonical valuation-ball
+source used above.  The corresponding final endpoint
+\[
+\begin{array}{l}
+\texttt{\_valuationUnitBallNonzeroScalarValuationLog}\\
+\quad\texttt{FiniteSumTargetPointCanonicalCThetaScaleDichotomy}\\
+\quad\texttt{WithTopologyFiniteExtensionHaarOb5Ob6Ob7AuditAtQChoice}\\
+\quad\texttt{OfCoricThetaMuProductFormulaConstructionSource}\\
+\quad\texttt{OfValuationBallRecordSource}
+\end{array}
+\]
+returns the target-point transport audit, the principal topology/Haar
+Ob5--Ob7 audit, and the canonical-scale dichotomy at this lower boundary.
+Thus the source-facing route has descended from per-place image regions to the
+finite local valuation/log sum as a point-level transport construction, while
+keeping the Theorem~3.11 possible-image synchronization as the source of the
+principal valuation-ball comparison.
+
 The milestone-facing constructed source now also factors its log-volume
 comparison through the generic record-canonical Remark 3.9.5 bridge source.
 The projection \texttt{toRecordHullDeterminantBridgeSource} packages the same
