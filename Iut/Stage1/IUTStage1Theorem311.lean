@@ -3680,6 +3680,31 @@ def quotientMap (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
     choice -> Quot core.quotient.relation :=
   Quot.mk core.quotient.relation
 
+/--
+Equality-type quotient generated only by `(Ind1)` and `(Ind2)`.
+
+This is the quotient appropriate for possible-image equality.  The `(Ind3)`
+upper-semi relation is deliberately replaced by `False`, since the source
+theorem only gives a one-sided log-volume inequality for `(Ind3)` on the
+critical Corollary 3.12 corridor.
+-/
+def equalityGenerators
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    IUTStage1IndeterminacyGenerators choice :=
+  { ind1_step := core.ind1.step,
+    ind2_step := core.ind2.step,
+    ind3_step := fun _ _ => False }
+
+def equalityQuotient
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    IUTStage1IndeterminacyQuotient choice :=
+  IUTStage1IndeterminacyQuotient.generated core.equalityGenerators
+
+def equalityQuotientMap
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    choice -> Quot core.equalityQuotient.relation :=
+  Quot.mk core.equalityQuotient.relation
+
 theorem ind1_preserves_logVolume
     (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
     {choice₁ choice₂ : choice}
@@ -3703,6 +3728,22 @@ theorem ind3_logVolume_le
     core.logVolume choice₁ <= core.logVolume choice₂ := by
   rw [← core.ind3_logVolume_eq]
   exact core.ind3.logVolume_le hstep
+
+theorem ind1_equalityQuotientMap_eq
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind1.step choice₁ choice₂) :
+    core.equalityQuotientMap choice₁ =
+      core.equalityQuotientMap choice₂ :=
+  Quot.sound (IUTStage1GeneratedIndeterminacyRelation.ind1 hstep)
+
+theorem ind2_equalityQuotientMap_eq
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind2.step choice₁ choice₂) :
+    core.equalityQuotientMap choice₁ =
+      core.equalityQuotientMap choice₂ :=
+  Quot.sound (IUTStage1GeneratedIndeterminacyRelation.ind2 hstep)
 
 /--
 Compatibility between typed indeterminacies and a possible-image family.
@@ -3754,6 +3795,33 @@ theorem ind2_quotientMap_eq
     (hstep : core.ind2.step choice₁ choice₂) :
     core.quotientMap choice₁ = core.quotientMap choice₂ :=
   Quot.sound (IUTStage1GeneratedIndeterminacyRelation.ind2 hstep)
+
+theorem equalityQuotient_image_invariant
+    (compatibility : PossibleImageQuotientCompatibility core images) :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalityQuotient.relation choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂ :=
+  IUTStage1GeneratedIndeterminacyRelation.image_invariant
+    images
+    compatibility.ind1_region_eq
+    compatibility.ind2_region_eq
+    (by intro choice₁ choice₂ hfalse; cases hfalse)
+
+theorem ind1_equalityQuotientMap_eq
+    (_compatibility : PossibleImageQuotientCompatibility core images)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind1.step choice₁ choice₂) :
+    core.equalityQuotientMap choice₁ =
+      core.equalityQuotientMap choice₂ :=
+  core.ind1_equalityQuotientMap_eq hstep
+
+theorem ind2_equalityQuotientMap_eq
+    (_compatibility : PossibleImageQuotientCompatibility core images)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind2.step choice₁ choice₂) :
+    core.equalityQuotientMap choice₁ =
+      core.equalityQuotientMap choice₂ :=
+  core.ind2_equalityQuotientMap_eq hstep
 
 end PossibleImageQuotientCompatibility
 

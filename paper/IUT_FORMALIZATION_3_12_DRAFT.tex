@@ -8801,6 +8801,38 @@ paper-side payload at this layer has been narrowed to two mathematical
 assertions: possible-image invariance along the typed quotient and the actual
 finite procession action on the source choice space.
 
+There is now a source-faithful refinement of this last statement.  The typed
+core exposes an equality quotient
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311TypedIndeterminacyCore.equalityQuotient}
+\end{array}
+\]
+generated only by \((\Ind_1)\) and \((\Ind_2)\); the \((\Ind_3)\) generator is
+not part of the possible-image equality quotient.  From a
+\texttt{PossibleImageQuotientCompatibility} object, Lean proves
+\[
+  i\sim_{\Ind_1,\Ind_2}j
+  \Longrightarrow
+  \Theta\mathrm{Image}_i=\Theta\mathrm{Image}_j
+\]
+as
+\texttt{PossibleImageQuotientCompatibility.equalityQuotient\_image\_invariant},
+while retaining the separate theorem that an \((\Ind_3)\)-step gives only the
+upper-semi log-volume inequality.  The Step~(xi) source
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311OneSidedMultiradialConstructionSource}
+\end{array}
+\]
+is the preferred version of the multiradial source boundary: it constructs the
+\texttt{IUTStage1MultiradialThetaImages} object from this equality quotient,
+uses an \texttt{IUTStage1Theorem311EqualityFLProcessionAction} for the
+\(F_l\)-procession transitions, and returns the selected q-region as a genuine
+Theorem~3.11 possible image.  Its endpoint explicitly reports the one-sided
+\((\Ind_3)\) inequality instead of assuming \((\Ind_3)\)-invariance of
+possible-image regions.
+
 The bridge to the constructed Remark~3.9.5 source is now named as
 \[
 \begin{array}{l}
