@@ -8919,6 +8919,7 @@ one-sided Theorem~3.11 construction directly:
 \texttt{ConstructedTheorem311OneSidedIUTIVTheorem110ArithmeticDivisorStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource},\\
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
@@ -8934,7 +8935,9 @@ one-sided Theorem~3.11 construction directly:
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
+\quad\texttt{Theorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{Theorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
 \end{array}
 \]
 The source records carry an
@@ -9058,19 +9061,44 @@ Step~(vii) exact-to-coarse comparison from \(\log(\pi)\leq2\) and \(l\geq5\).
 These three objects feed
 \texttt{IUTStage1IUTIVTheorem110PropositionLogShellFormulaSource} and then
 \texttt{IUTStage1IUTIVTheorem110PropositionArithmeticDivisorEvaluationSource},
-which now projects to the formula-level Theorem~1.10 route.  The wrapper
-\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource}
-is therefore the preferred local-to-global \(C_\Theta\) boundary at this stage.
-It still treats the actual construction of the Proposition~1.4/1.5 estimate
-objects, the distinguished and archimedean formula-to-gap identifications, and
-the Step~(xi) matching equality as source obligations.
+which now projects to the formula-level Theorem~1.10 route.
+
+The preferred boundary now goes one step lower.  The source
+\texttt{IUTStage1IUTIVProposition14DistinguishedLocalLogShellConstructionSource}
+constructs the distinguished Proposition~1.4 estimate from finite-extension
+Haar normalized log-volume data, the displayed Proposition~1.4(iii) first and
+second container bounds, the Proposition~1.7 weighted-average comparison, and
+the Step~(v) coarse procession-normalized bound.  The source
+\texttt{IUTStage1IUTIVProposition14NondistinguishedLocalLogShellConstructionSource}
+constructs the nondistinguished Proposition~1.4(iv) estimate from the same
+finite-extension Haar normalization, identifying the tensor container with the
+normalized integral container and deriving its zero log-volume.  The source
+\texttt{IUTStage1IUTIVProposition15ArchimedeanMetricConstructionSource}
+records the finite sets \(I,V\), the direct-sum cardinality
+\(2^{|I|-1}|V|^{|I|}\), primitive-automorphism preservation of the integral
+structure, and the vector containment used in Proposition~1.5(iv), then
+projects to the archimedean exact-to-coarse estimate.  These construction
+sources feed
+\texttt{IUTStage1IUTIVTheorem110LocalAnalyticConstructionFormulaSource} and
+\texttt{IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource}.
+The wrapper
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource}
+is therefore the current preferred local-to-global \(C_\Theta\) boundary.  It
+still treats the actual local log-shell inclusions and numerical estimates, the
+distinguished and archimedean formula-to-gap identifications, and the
+Step~(xi) matching equality as source obligations; however, raw
+Proposition~1.4/1.5 estimate records are no longer the public boundary.
 
 The practical priority order is:
 \begin{enumerate}
-\item construct the Proposition~1.4 and Proposition~1.5 estimate objects from
-  actual local fields, valuation balls, log-shells, lattice metrics, and Haar
-  normalizations; then prove the distinguished and archimedean formula-to-gap
-  bounds and the current Step~(xi) matching equality from these constructions;
+\item instantiate the local analytic construction sources from actual local
+  fields, valuation balls, log-shell maps, compact-open Haar normalizations,
+  and archimedean lattice metrics; then prove the remaining Proposition~1.4
+  log-shell inclusions/numerical estimates and Proposition~1.5 metric
+  containments below those source fields;
+\item prove the distinguished and archimedean formula-to-gap bounds and the
+  current Step~(xi) matching equality from the local analytic constructions,
+  rather than carrying them as route payloads;
 \item instantiate the typed \IUT{} IV arithmetic-divisor source from actual
   number-field valuations, the different, q-parameter, and conductor divisors,
   rather than from abstract local degree and finite-sum fields;

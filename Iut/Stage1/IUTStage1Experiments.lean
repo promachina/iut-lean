@@ -63381,6 +63381,174 @@ theorem canonicalCThetaScale_le_iutIVCTheta
 
 end ConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource
 
+set_option linter.style.longLine false in
+/--
+Step (xi)-localized source with local analytic constructions of the
+Proposition 1.4/1.5 estimates.
+
+This refines the Proposition-backed source: the local Proposition 1.4 and
+Proposition 1.5 estimate objects are first constructed from finite-extension
+Haar/log-volume and archimedean direct-sum metric data, then projected to the
+current Proposition arithmetic-divisor route.
+-/
+structure ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (l : PrimeGeFive)
+    (η : Type y) (γ : Type w) [Fintype γ]
+    (localPrime : β -> Nat)
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    (localField : β -> Type x)
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    (αHaar : Type z)
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar)
+    (αLocal : Type z) (ηLocal : Type y)
+    (localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal)
+    (archIndex archSummand : β -> Type z)
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)] where
+  oneSidedMultiradialSource :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l
+  qPilotRegion_eq_selectedQRegion :
+    sourceData.qPilotRegion =
+      oneSidedMultiradialSource.selectedQRegion.toSet
+  localizedStepXISource :
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+      η β γ
+  determinantSource_eq_stepXI :
+    sourceData.determinantSource =
+      localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource
+  canonicalCThetaScale_eq_stepXISum :
+    sourceData.canonicalCThetaScale =
+      ∑ place : β, localizedStepXISource.weightedAdjustedLogVolume place
+  theorem110LocalAnalyticArithmeticDivisorEvaluationSource :
+    IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource
+      β estimate αLocal ηLocal localField localAnalyticHullSystem
+      archIndex archSummand
+  iutIVArithmeticDefectSource :
+    IUTStage1FinitePlaceIUTIVLocalArithmeticDefectSource
+      β localPrime localField αHaar hullSystem
+  localArithmeticUpperContribution_eq_stepXI_iutIVDefect_main :
+    ∀ place : β,
+      (IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+          theorem110LocalAnalyticArithmeticDivisorEvaluationSource).localArithmeticUpperContribution place =
+        localizedStepXISource.weightedAdjustedLogVolume place +
+          iutIVArithmeticDefectSource.localIUTIVArithmeticDefect place +
+            (IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+              theorem110LocalAnalyticArithmeticDivisorEvaluationSource).localMainLogContribution place
+
+set_option linter.style.longLine false
+
+namespace ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+variable {sourceData :
+  IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+    (β := β) record}
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {l : PrimeGeFive}
+variable {η : Type y} {γ : Type w} [Fintype γ]
+variable {localPrime : β -> Nat}
+variable [∀ place : β, Fact (Nat.Prime (localPrime place))]
+variable {localField : β -> Type x}
+variable [(place : β) -> NontriviallyNormedField (localField place)]
+variable [∀ place : β, ProperSpace (localField place)]
+variable [∀ place : β, IsUltrametricDist (localField place)]
+variable [(place : β) -> MeasurableSpace (localField place)]
+variable [∀ place : β, BorelSpace (localField place)]
+variable [∀ place : β, LocallyCompactSpace (localField place)]
+variable [∀ place : β, IsTopologicalAddGroup (localField place)]
+variable [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+variable [∀ place : β,
+  FiniteDimensional ℚ_[localPrime place] (localField place)]
+variable {αHaar : Type z}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+variable {αLocal : Type z} {ηLocal : Type y}
+variable {localAnalyticHullSystem :
+  IUTStage1Remark395HolomorphicHullSystem αLocal}
+variable {archIndex archSummand : β -> Type z}
+variable [∀ place : β, Fintype (archIndex place)]
+variable [∀ place : β, Fintype (archSummand place)]
+
+set_option linter.style.longLine false in
+noncomputable def toConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource
+      sourceData estimate l η γ localPrime localField αHaar hullSystem :=
+  { oneSidedMultiradialSource := source.oneSidedMultiradialSource,
+    qPilotRegion_eq_selectedQRegion :=
+      source.qPilotRegion_eq_selectedQRegion,
+    localizedStepXISource := source.localizedStepXISource,
+    determinantSource_eq_stepXI :=
+      source.determinantSource_eq_stepXI,
+    canonicalCThetaScale_eq_stepXISum :=
+      source.canonicalCThetaScale_eq_stepXISum,
+    theorem110PropositionArithmeticDivisorEvaluationSource :=
+      source.theorem110LocalAnalyticArithmeticDivisorEvaluationSource
+        |>.toPropositionArithmeticDivisorEvaluationSource,
+    iutIVArithmeticDefectSource := source.iutIVArithmeticDefectSource,
+    localArithmeticUpperContribution_eq_stepXI_iutIVDefect_main := by
+      intro place
+      simpa [
+        IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource,
+        IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource.toPropositionArithmeticDivisorEvaluationSource]
+        using source.localArithmeticUpperContribution_eq_stepXI_iutIVDefect_main place }
+
+set_option linter.style.longLine false in
+def Endpoint
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Prop :=
+  source.theorem110LocalAnalyticArithmeticDivisorEvaluationSource.Endpoint ∧
+    ConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource.Endpoint
+      source.toConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Endpoint source :=
+  ⟨source.theorem110LocalAnalyticArithmeticDivisorEvaluationSource.endpoint,
+    source.toConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource.endpoint⟩
+
+theorem canonicalCThetaScale_le_iutIVCTheta
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    sourceData.canonicalCThetaScale <= estimate.cTheta :=
+  source.toConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource
+    |>.canonicalCThetaScale_le_iutIVCTheta
+
+end ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+
 set_option linter.style.longLine true
 
 set_option linter.style.longLine false in
@@ -65349,6 +65517,142 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311OneSidedI
       packetLocalObjectFinite_eq_divisorRealified
       packetLocalObjectFinite_eq_ind3Source targetSource
   ⟨theorem110PropositionArithmeticDivisorStepXISource.endpoint, hclosed.2.1,
+    hclosed.2.2.1, hclosed.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Local-analytic IUT IV Theorem 1.10 source version of the one-sided
+finite-divisor vertical-\(IQ\) endpoint.
+
+This endpoint consumes Proposition 1.4/1.5 construction sources, i.e. local
+finite-extension Haar/log-volume data and archimedean direct-sum metric data,
+before projecting through the Proposition-backed Step (xi) route.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (remark395HullSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    {η : Type y} {γ : Type w} [Fintype γ]
+    (localPrime : β -> Nat)
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    (localField : β -> Type x)
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (theorem110LocalAnalyticArithmeticDivisorStepXISource :
+      ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+        remark395HullSource estimate l η γ localPrime localField αHaar
+        hullSystem αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceEvaluation.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource.Endpoint
+        theorem110LocalAnalyticArithmeticDivisorStepXISource ∧
+      (0 < estimate.absoluteLogQ ∧
+        estimate.cTheta + 1 =
+          estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+          0 <= estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+            estimate.mainLogTerm <= estimate.arithmeticUpperTerm ∧
+              estimate.oneSixthLogQ <= estimate.theorem110RightHandSide) ∧
+        IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedGlobalCThetaScaleComparisonAudit
+          remark395HullSource estimate.cTheta ∧
+        ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+            package.preLedger.thetaSigned < 0) ∨
+          (-1 : Real) < estimate.cTheta) :=
+  let hclosed :=
+    boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ
+      part audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+      iplLinkSource remark395HullSource estimate localPrime localField
+      theorem110LocalAnalyticArithmeticDivisorStepXISource.toConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource
+      sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
+      kummerCompatibility forgettingCompatibility holomorphicF_realization
+      holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified
+      packetLocalObjectFinite_eq_ind3Source targetSource
+  ⟨theorem110LocalAnalyticArithmeticDivisorStepXISource.endpoint, hclosed.2.1,
     hclosed.2.2.1, hclosed.2.2.2⟩
 
 set_option linter.style.longLine false in
