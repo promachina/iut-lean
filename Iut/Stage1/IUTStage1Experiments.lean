@@ -30,6 +30,7 @@ open IUTStage1ZModSquareWeightProfile.LGPSplittingMonoidTensorPacketAction
 open IUTStage1StructuredSHEFactoredSquareFullLabelObligations
 open IUTStage1HullDetPilotUpperRayLogVolume
 open IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
+open scoped BigOperators
 open scoped NormedField
 open scoped Valued
 
@@ -61357,6 +61358,151 @@ end ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
 
 set_option linter.style.longLine false in
 /--
+Finite local-place source for the local-to-global `C_Theta` comparison.
+
+This refines the coarse arithmetic-gap field of
+`ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource`.  Each local place
+contributes a canonical Step (xi) scale, an IUT IV arithmetic upper term, a main
+log term, and a Haar-normalization defect.  The local Step (xi)/Haar inequality
+is summed over the finite place set; the total Haar defect supplies the final
+`+ 1` needed to compare the canonical local scale with the IUT IV
+`arithmeticUpperTerm - mainLogTerm`.
+-/
+structure ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (choice : Type w) (place : Type x) [Fintype place] where
+  typedIndeterminacyCore :
+    IUTStage1Theorem311TypedIndeterminacyCore choice
+  localCanonicalScale : place -> Real
+  localArithmeticUpperContribution : place -> Real
+  localMainLogContribution : place -> Real
+  localHaarNormalizationDefect : place -> Real
+  canonicalCThetaScale_eq_sum :
+    sourceData.canonicalCThetaScale =
+      ∑ place, localCanonicalScale place
+  arithmeticUpperTerm_eq_sum :
+    estimate.arithmeticUpperTerm =
+      ∑ place, localArithmeticUpperContribution place
+  mainLogTerm_eq_sum :
+    estimate.mainLogTerm =
+      ∑ place, localMainLogContribution place
+  local_stepXI_haar_bound :
+    ∀ place,
+      localCanonicalScale place + localHaarNormalizationDefect place <=
+        localArithmeticUpperContribution place - localMainLogContribution place
+  total_haar_defect_ge_one :
+    (1 : Real) <= ∑ place, localHaarNormalizationDefect place
+
+namespace ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+variable {sourceData :
+  IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+    (β := β) record}
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {choice : Type w} {place : Type x} [Fintype place]
+
+theorem summed_stepXI_haar_bound
+    (source :
+      ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+        sourceData estimate choice place) :
+    (∑ place, source.localCanonicalScale place) +
+        ∑ place, source.localHaarNormalizationDefect place <=
+      (∑ place, source.localArithmeticUpperContribution place) -
+        ∑ place, source.localMainLogContribution place := by
+  calc
+    (∑ place, source.localCanonicalScale place) +
+        ∑ place, source.localHaarNormalizationDefect place
+        = ∑ place,
+            (source.localCanonicalScale place +
+              source.localHaarNormalizationDefect place) := by
+          rw [Finset.sum_add_distrib]
+    _ <= ∑ place,
+            (source.localArithmeticUpperContribution place -
+              source.localMainLogContribution place) := by
+          exact Finset.sum_le_sum (fun place _hplace =>
+            source.local_stepXI_haar_bound place)
+    _ =
+      (∑ place, source.localArithmeticUpperContribution place) -
+        ∑ place, source.localMainLogContribution place := by
+          rw [Finset.sum_sub_distrib]
+
+theorem arithmeticGap_dominates_canonicalCThetaScale
+    (source :
+      ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+        sourceData estimate choice place) :
+    sourceData.canonicalCThetaScale + 1 <=
+      estimate.arithmeticUpperTerm - estimate.mainLogTerm := by
+  have hsum := source.summed_stepXI_haar_bound
+  linarith [source.canonicalCThetaScale_eq_sum,
+    source.arithmeticUpperTerm_eq_sum, source.mainLogTerm_eq_sum,
+    source.total_haar_defect_ge_one, hsum]
+
+set_option linter.style.longLine false in
+def toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+    (source :
+      ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+        sourceData estimate choice place) :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+      sourceData estimate choice :=
+  { typedIndeterminacyCore := source.typedIndeterminacyCore,
+    localPlaceLogVolumeAssembly :=
+      sourceData.canonicalCThetaScale =
+          ∑ place, source.localCanonicalScale place,
+    localPlaceLogVolumeAssembly_holds :=
+      source.canonicalCThetaScale_eq_sum,
+    finiteDivisorValuationBallHaarNormalization :=
+      (1 : Real) <= ∑ place, source.localHaarNormalizationDefect place,
+    finiteDivisorValuationBallHaarNormalization_holds :=
+      source.total_haar_defect_ge_one,
+    productSumLocalToGlobalAssembly :=
+      estimate.arithmeticUpperTerm =
+          ∑ place, source.localArithmeticUpperContribution place ∧
+        estimate.mainLogTerm =
+          ∑ place, source.localMainLogContribution place,
+    productSumLocalToGlobalAssembly_holds :=
+      ⟨source.arithmeticUpperTerm_eq_sum, source.mainLogTerm_eq_sum⟩,
+    theorem311IndeterminacyToStepXICompatibility :=
+      ∀ place,
+        source.localCanonicalScale place +
+            source.localHaarNormalizationDefect place <=
+          source.localArithmeticUpperContribution place -
+            source.localMainLogContribution place,
+    theorem311IndeterminacyToStepXICompatibility_holds :=
+      source.local_stepXI_haar_bound,
+    arithmeticGap_dominates_canonicalCThetaScale :=
+      source.arithmeticGap_dominates_canonicalCThetaScale }
+
+theorem canonicalCThetaScale_le_iutIVCTheta
+    (source :
+      ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+        sourceData estimate choice place) :
+    sourceData.canonicalCThetaScale <= estimate.cTheta :=
+  source.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+    |>.canonicalCThetaScale_le_iutIVCTheta
+
+theorem endpoint
+    (source :
+      ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+        sourceData estimate choice place) :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.Endpoint
+      source.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource :=
+  source.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.endpoint
+
+end ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface possible-image q-choice constructor for the milestone-facing
 constructed Remark 3.9.5 Step (xi) source.
 
@@ -62198,6 +62344,117 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311Indetermi
       holomorphic_structure_forgotten packetLocalObject_eq_entrySource
       packetLocalObjectFinite_eq_divisorRealified
       packetLocalObjectFinite_eq_ind3Source targetSource⟩
+
+set_option linter.style.longLine false in
+/--
+Finite-place local-to-global version of the closed \(C_\Theta\) endpoint.
+
+This is the preferred structured source surface for the current milestone: the
+global comparison `C_{Theta,can} <= C_Theta` is obtained by summing local
+Step (xi)/Haar inequalities over a finite place set before entering the
+finite-divisor vertical-\(IQ\) boundary.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311FinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (remark395HullSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    {choice : Type w} {place : Type x} [Fintype place]
+    (localGlobalFiniteSource :
+      ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+        remark395HullSource estimate choice place)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceEvaluation.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.Endpoint
+        localGlobalFiniteSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource ∧
+      (0 < estimate.absoluteLogQ ∧
+        estimate.cTheta + 1 =
+          estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+          0 <= estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+            estimate.mainLogTerm <= estimate.arithmeticUpperTerm ∧
+              estimate.oneSixthLogQ <= estimate.theorem110RightHandSide) ∧
+        IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedGlobalCThetaScaleComparisonAudit
+          remark395HullSource estimate.cTheta ∧
+        ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+            package.preLedger.thetaSigned < 0) ∨
+          (-1 : Real) < estimate.cTheta) :=
+  boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311IndeterminacyLocalGlobalCThetaFiniteDivisorVerticalIQ
+    part audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+    iplLinkSource remark395HullSource estimate
+    localGlobalFiniteSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+    sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
+    kummerCompatibility forgettingCompatibility holomorphicF_realization
+    holomorphicD_realization holomorphicStructureForgotten
+    holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+    packetLocalObjectFinite_eq_divisorRealified
+    packetLocalObjectFinite_eq_ind3Source targetSource
 
 set_option linter.style.longLine false in
 /--

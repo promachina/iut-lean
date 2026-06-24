@@ -8760,6 +8760,61 @@ IV local-to-global source obligation, not an exposed final numeric hypothesis.
 It remains an obligation until the local place assembly, Haar normalization,
 and product/sum comparison are constructed from the corresponding source-paper
 objects rather than recorded as proof-carrying fields.
+The next refinement removes the single opaque arithmetic-gap field from the
+preferred source surface.  The Lean structure
+\[
+\begin{array}{l}
+\texttt{ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource}
+\end{array}
+\]
+introduces a finite set of local places and records four local functions:
+the local canonical Step~(xi) scale, the local \IUT{} IV arithmetic upper
+contribution, the local main-log contribution, and the local Haar-normalization
+defect.  Its load-bearing local assertion is the pointwise inequality
+\[
+  C_{\Theta,\mathrm{can},v}+\delta_v
+    \leq
+  A_v-M_v .
+\]
+Lean proves
+\[
+  C_{\Theta,\mathrm{can}}+1
+    \leq
+  \mathrm{arithmeticUpperTerm}-\mathrm{mainLogTerm}
+\]
+by summing these local inequalities with
+\(\texttt{Finset.sum\_le\_sum}\), using the equalities
+\[
+  C_{\Theta,\mathrm{can}}=\sum_v C_{\Theta,\mathrm{can},v},\qquad
+  \mathrm{arithmeticUpperTerm}=\sum_v A_v,\qquad
+  \mathrm{mainLogTerm}=\sum_v M_v,
+\]
+and the finite-divisor/Haar normalization condition
+\[
+  1\leq\sum_v \delta_v .
+\]
+The resulting conversion theorem
+\[
+\begin{array}{l}
+\texttt{ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource}\\
+\quad\texttt{.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource}
+\end{array}
+\]
+constructs the coarser source object automatically.  The public finite-divisor
+endpoint
+\[
+\begin{array}{l}
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{Theorem311FinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ}
+\end{array}
+\]
+therefore derives the Corollary~3.12 dichotomy from a finite local-place
+assembly source, rather than from a raw numerical bound, a raw
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison, or a single global
+arithmetic-gap hypothesis.  The remaining mathematical work has been pushed
+down to constructing the local terms \(C_{\Theta,\mathrm{can},v}\), \(A_v\),
+\(M_v\), and \(\delta_v\) from the actual Theorem~3.11/Step~(xi)/\IUT{} IV
+objects and proving the pointwise local inequalities.
 
 The practical priority order is:
 \begin{enumerate}
