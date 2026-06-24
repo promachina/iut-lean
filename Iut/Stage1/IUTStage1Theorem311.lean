@@ -4497,6 +4497,60 @@ theorem constructedHodgeSHEIPLThreaded
   rcases audit with ⟨_, _, _, _, _, _, _, _, hthreaded, _⟩
   exact hthreaded
 
+theorem theorem110AdditiveHaarLocalAnalyticConstructed
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.theorem110_additive_haar_local_analytic_construction_constructed := by
+  exact audit.1
+
+theorem additiveHaarLocalArithmeticMatchingConstructed
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_local_arithmetic_matching_constructed := by
+  exact audit.2.1
+
+theorem arithmeticDivisorFormulaSplitConstructed
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.arithmetic_divisor_formula_split_constructed := by
+  exact audit.2.2.1
+
+theorem padicPrimeErrorDefectMainSplitConstructed
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.padic_prime_error_defect_main_split_constructed := by
+  exact audit.2.2.2.1
+
+theorem stepXIArithmeticDegreeCalibrationConstructed
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.stepxi_arithmetic_degree_calibration_constructed := by
+  exact audit.2.2.2.2.1
+
+theorem localizedDeterminantMultiplicityMatchesIUTIVCoefficient
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.localized_determinant_multiplicity_matches_iutiv_coefficient := by
+  exact audit.2.2.2.2.2.1
+
+theorem adjustedRawLogVolumeMatchesDifferentPlusConductor
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.adjusted_raw_log_volume_matches_different_plus_conductor := by
+  exact audit.2.2.2.2.2.2.1
+
+theorem realifiedPacketSourceSuppliesStepXEqualities
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.realified_packet_source_supplies_stepx_equalities := by
+  exact audit.2.2.2.2.2.2.2.1
+
+theorem strongestAdditiveHaarEndpointHasRemainingPayloadAudit
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.strongest_additive_haar_endpoint_has_remaining_payload_audit := by
+  exact audit.2.2.2.2.2.2.2.2.2
+
 end AdditiveHaarArithmeticDegreePadicObligations
 
 /--
