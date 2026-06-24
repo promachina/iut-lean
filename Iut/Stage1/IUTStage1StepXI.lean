@@ -2098,6 +2098,98 @@ theorem components_rebuild_subclaims
 end IUTStage1Theorem311StructuredInputs
 
 /--
+Theorem 3.11 source inputs whose pre-ledger audit is induced by constructed
+qualitative IPL/SHE/APT data.
+
+This is the typed replacement surface for the older structured input record:
+the ordinary `IUTStage1Theorem311StructuredInputs` package is still available,
+but its IPL/SHE/APT fields are now projected from the constructed qualitative
+certificate and its transport audit.
+-/
+structure IUTStage1Theorem311ConstructedQualitativeInputs
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) where
+  qualitativeSource :
+    IUTStage1PreLedgerData.ConstructedQualitativeCertificateData
+      package.preLedger
+  theorem311_subclaims : IUTStage1Theorem311Subclaims package
+
+namespace IUTStage1Theorem311ConstructedQualitativeInputs
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+def preledgerAudit
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    IUTStage1PreLedgerData.Audit package.preLedger :=
+  IUTStage1PreLedgerData.auditOfConstructedQualitativeCertificate
+    package.preLedger inputs.qualitativeSource
+
+def toStructuredInputs
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    IUTStage1Theorem311StructuredInputs package :=
+  { preledger_audit := inputs.preledgerAudit,
+    theorem311_subclaims := inputs.theorem311_subclaims }
+
+theorem qualitativeTransportAudit
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    inputs.qualitativeSource.QualitativeTransportAudit :=
+  inputs.qualitativeSource.qualitativeTransportAudit
+
+theorem hasStructuredIPL
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family :=
+  inputs.qualitativeSource.hasStructuredIPL
+
+theorem hasStructuredSHE
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family :=
+  inputs.qualitativeSource.hasStructuredSHE
+
+theorem hasStructuredAPT
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    QualitativeData.HasStructuredAPT package.preLedger.output.family :=
+  inputs.qualitativeSource.hasStructuredAPT
+
+theorem noAllowedSHEDomainToCodomain
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (mechanism : QualitativeData.TransportMechanismId) :
+    ¬ inputs.qualitativeSource.sheTransportContext.transportSystem.Allows
+      inputs.qualitativeSource.sheTransportContext.baseContext.domainStructure.theater
+      inputs.qualitativeSource.sheTransportContext.baseContext.codomainStructure.theater
+      mechanism :=
+  inputs.qualitativeTransportAudit.2.2.2.1 mechanism
+
+theorem aptTransport_not_forbidden
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    ¬ inputs.qualitativeSource.aptConstruction.transportSystem.forbiddenIdentification
+      inputs.qualitativeSource.aptConstruction.arrow.source
+      inputs.qualitativeSource.aptConstruction.arrow.target :=
+  inputs.qualitativeTransportAudit.2.2.2.2
+
+theorem qSignedLeThetaSigned
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  inputs.preledgerAudit.qSignedLeThetaSigned
+
+theorem toStructuredInputs_hasStructuredIPL
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    inputs.toStructuredInputs.hasStructuredIPL = inputs.hasStructuredIPL :=
+  rfl
+
+theorem toStructuredInputs_hasStructuredSHE
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    inputs.toStructuredInputs.hasStructuredSHE = inputs.hasStructuredSHE :=
+  rfl
+
+theorem toStructuredInputs_hasStructuredAPT
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    inputs.toStructuredInputs.hasStructuredAPT = inputs.hasStructuredAPT :=
+  rfl
+
+end IUTStage1Theorem311ConstructedQualitativeInputs
+
+/--
 Structured Theorem 3.11 inputs equipped with the strengthened SHE context.
 
 This is a conservative extension of `IUTStage1Theorem311StructuredInputs`; it

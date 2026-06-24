@@ -457,6 +457,32 @@ theorem audit (data : IUTStage1PreLedgerData source target index) :
     q_le_target := data.qSigned_le_targetSigned,
     target_le_theta := data.targetSigned_le_thetaSigned }
 
+def auditOfConstructedQualitativeCertificate
+    (data : IUTStage1PreLedgerData source target index)
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    Audit data :=
+  { has_structured_ipl := sourceData.hasStructuredIPL,
+    has_structured_she := sourceData.hasStructuredSHE,
+    has_structured_apt := sourceData.hasStructuredAPT,
+    theta_chart_trivial := data.thetaChartTrivial,
+    q_charted := data.qSigned_eq_chartedQ,
+    theta_charted := data.thetaSigned_eq_chartedTheta,
+    chosen_holds := data.chosenComparisonHoldsQ,
+    q_le_target := data.qSigned_le_targetSigned,
+    target_le_theta := data.targetSigned_le_thetaSigned }
+
+theorem auditOfConstructedQualitativeCertificate_qualitativeTransportAudit
+    {data : IUTStage1PreLedgerData source target index}
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    sourceData.QualitativeTransportAudit :=
+  sourceData.qualitativeTransportAudit
+
+theorem auditOfConstructedQualitativeCertificate_eq_audit
+    (data : IUTStage1PreLedgerData source target index)
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    auditOfConstructedQualitativeCertificate data sourceData = audit data :=
+  Subsingleton.elim _ _
+
 namespace Audit
 
 variable {data : IUTStage1PreLedgerData source target index}
@@ -488,6 +514,12 @@ theorem qSignedLeThetaSigned
   audit.comparisonPayloadInputs.qSignedLeThetaSigned
 
 end Audit
+
+theorem auditOfConstructedQualitativeCertificate_qSignedLeThetaSigned
+    {data : IUTStage1PreLedgerData source target index}
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    data.qSigned <= data.thetaSigned :=
+  (auditOfConstructedQualitativeCertificate data sourceData).qSignedLeThetaSigned
 
 /--
 Optional source-side evidence that the pre-ledger's named hull+det bridge comes

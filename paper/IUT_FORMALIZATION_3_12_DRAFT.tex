@@ -4770,9 +4770,13 @@ arrow, and that a permitted APT arrow is not forbidden.  The Stage~1 wrapper
 certificate to the certificate constructed from these IPL/SHE/APT objects and
 returns a compact qualitative transport audit.
 This is the present typed replacement for the older raw
-\(\texttt{HasStructuredIPL/SHE/APT}\) certificate fields.  The remaining
-implementation task is to make the Theorem~3.11 structured-input record consume
-this constructed qualitative audit directly at every downstream use site.
+\(\texttt{HasStructuredIPL/SHE/APT}\) certificate fields.  The Theorem~3.11
+source layer now exposes
+\(\texttt{IUTStage1Theorem311ConstructedQualitativeInputs}\): its pre-ledger
+audit is induced from the constructed qualitative certificate, it projects back
+to the existing structured-input route, and it exposes the forbidden
+SHE-domain-to-codomain transport guard together with the permitted APT
+non-forbiddenness proof.
 There is now also a certificate-pinned variant of this boundary.  It reads the
 \(\IPL\) datum directly from the pre-ledger certificate and asks only for the
 two endpoint equalities of that certificate link.  Consequently the public
@@ -9165,10 +9169,10 @@ matching equality.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Thread the constructed qualitative certificate into the pre-ledger audit
-  and Theorem~3.11 structured-input surface, so that the downstream
-  \(\IPL/\SHE/\APT\) facts are projections from typed constructions rather
-  than raw certificate fields.
+\item Promote the constructed qualitative Theorem~3.11 input surface to the
+  preferred route boundary, replacing remaining ad hoc uses of raw
+  \(\IPL/\SHE/\APT\) certificate fields by projections from the typed
+  transport constructions.
 \item Replace the certificate-pinned \(\IPL\) endpoint equalities by the actual
   Theorem~3.11 input-prime-strip link construction, and then remove the
   remaining constructed-\(\IPL\) alignment assumptions from the finite-divisor
