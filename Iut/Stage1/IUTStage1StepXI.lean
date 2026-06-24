@@ -9129,6 +9129,46 @@ def selectedQRegion
     Region target :=
   record.thetaPossibleImages.images.region construction.selectedQChoice
 
+def equalityQuotientPossibleImages
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l) :
+    construction.typedIndeterminacyCore.EqualityQuotientPossibleImages
+      record.thetaPossibleImages.images :=
+  IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages.ofCompatibility
+    construction.possibleImageCompatibility
+
+theorem equalityQuotientPossibleImages_pullback
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l)
+    (choice : index) :
+    construction.equalityQuotientPossibleImages.quotientImages.region
+        (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+      record.thetaPossibleImages.images.region choice :=
+  construction.equalityQuotientPossibleImages.pullback_region_eq choice
+
+theorem selectedQRegion_eq_quotientPossibleImage
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l) :
+    construction.selectedQRegion =
+      construction.equalityQuotientPossibleImages.quotientImages.region
+        (construction.typedIndeterminacyCore.equalityQuotientMap
+          construction.selectedQChoice) := by
+  rw [construction.equalityQuotientPossibleImages_pullback]
+  rfl
+
+theorem equalityOrbit_region_eq
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l)
+    {choice₁ choice₂ : index}
+    (hmem : choice₂ ∈ construction.typedIndeterminacyCore.equalityOrbit choice₁) :
+    record.thetaPossibleImages.images.region choice₁ =
+      record.thetaPossibleImages.images.region choice₂ :=
+  construction.equalityQuotientPossibleImages.region_eq_of_equalityOrbit hmem
+
 theorem selectedQRegion_eq_recordThetaPossibleImage
     (construction :
       IUTStage1Theorem311OneSidedMultiradialConstructionSource
@@ -9176,6 +9216,14 @@ theorem endpoint
         construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
           construction.typedIndeterminacyCore.logVolume choice₁ <=
             construction.typedIndeterminacyCore.logVolume choice₂) ∧
+      (∀ choice,
+        construction.equalityQuotientPossibleImages.quotientImages.region
+            (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      construction.selectedQRegion =
+        construction.equalityQuotientPossibleImages.quotientImages.region
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            construction.selectedQChoice) ∧
       construction.selectedQRegion.toSet =
         recordThetaPossibleImage record construction.selectedQChoice ∧
       construction.selectedQRegion.toSet ⊆ recordThetaPossibleImageUnion record :=
@@ -9184,6 +9232,8 @@ theorem endpoint
     construction.flProcessionAction.gluing_card_eq,
     construction.flProcessionAction.equalityQuotientMap_eq,
     construction.ind3_logVolume_upper,
+    construction.equalityQuotientPossibleImages_pullback,
+    construction.selectedQRegion_eq_quotientPossibleImage,
     construction.selectedQRegion_eq_recordThetaPossibleImage,
     construction.selectedQRegion_subset_recordUnion⟩
 
@@ -11770,6 +11820,38 @@ theorem remark395SelectedQRegion_endpoint
       rw [qPilotRegion_eq_selectedQRegion]
       exact construction.selectedQRegion_subset_recordUnion,
     rfl⟩
+
+set_option linter.style.longLine false in
+theorem remark395SelectedQRegion_quotientEndpoint
+    {β : Type v} [Fintype β]
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l)
+    (constructedSource :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (qPilotRegion_eq_selectedQRegion :
+      constructedSource.qPilotRegion = construction.selectedQRegion.toSet) :
+    constructedSource.qPilotRegion =
+        recordThetaPossibleImage record construction.selectedQChoice ∧
+      constructedSource.qPilotRegion ⊆
+        recordThetaPossibleImageUnion record ∧
+      construction.selectedQRegion =
+        construction.equalityQuotientPossibleImages.quotientImages.region
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            construction.selectedQChoice) ∧
+      (∀ choice,
+        construction.equalityQuotientPossibleImages.quotientImages.region
+            (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) :=
+  ⟨by
+      rw [qPilotRegion_eq_selectedQRegion,
+        construction.selectedQRegion_eq_recordThetaPossibleImage],
+    by
+      rw [qPilotRegion_eq_selectedQRegion]
+      exact construction.selectedQRegion_subset_recordUnion,
+    construction.selectedQRegion_eq_quotientPossibleImage,
+    construction.equalityQuotientPossibleImages_pullback⟩
 
 end IUTStage1Theorem311OneSidedMultiradialConstructionSource
 

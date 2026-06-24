@@ -61610,6 +61610,27 @@ theorem ind3_logVolume_upper
       source.oneSidedMultiradialSource.typedIndeterminacyCore.logVolume choice₂ :=
   source.oneSidedMultiradialSource.ind3_logVolume_upper hstep
 
+theorem quotientPossibleImages_pullback
+    (source :
+      ConstructedTheorem311OneSidedLocalGlobalCThetaSource
+        sourceData estimate l)
+    (choice : index) :
+    source.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+        (source.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+          choice) =
+      record.thetaPossibleImages.images.region choice :=
+  source.oneSidedMultiradialSource.equalityQuotientPossibleImages_pullback choice
+
+theorem selectedQRegion_eq_quotientPossibleImage
+    (source :
+      ConstructedTheorem311OneSidedLocalGlobalCThetaSource
+        sourceData estimate l) :
+    source.oneSidedMultiradialSource.selectedQRegion =
+      source.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+        (source.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+          source.oneSidedMultiradialSource.selectedQChoice) :=
+  source.oneSidedMultiradialSource.selectedQRegion_eq_quotientPossibleImage
+
 theorem canonicalCThetaScale_le_iutIVCTheta
     (source :
       ConstructedTheorem311OneSidedLocalGlobalCThetaSource
@@ -61637,6 +61658,15 @@ def OneSidedMultiradialEndpoint
           source.oneSidedMultiradialSource.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
             source.oneSidedMultiradialSource.typedIndeterminacyCore.logVolume choice₁ <=
               source.oneSidedMultiradialSource.typedIndeterminacyCore.logVolume choice₂) ∧
+        (∀ choice,
+          source.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+              (source.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                choice) =
+            record.thetaPossibleImages.images.region choice) ∧
+        source.oneSidedMultiradialSource.selectedQRegion =
+          source.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+            (source.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+              source.oneSidedMultiradialSource.selectedQChoice) ∧
         source.oneSidedMultiradialSource.selectedQRegion.toSet =
           IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
             record source.oneSidedMultiradialSource.selectedQChoice ∧
