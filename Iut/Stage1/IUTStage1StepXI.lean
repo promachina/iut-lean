@@ -5209,6 +5209,326 @@ theorem toConstructedIPLFiniteTransportLogVolumeChainAudit
 
 end IUTStage1FiniteHodgeSHEIPLConstructionSource
 
+set_option linter.style.longLine false in
+/--
+Constructed qualitative finite Hodge/SHE source with a constructed IPL link.
+
+This is the strengthened route-facing handoff from the constructed
+qualitative SHE/APT boundary to the IPL/log-volume bridge.  The finite
+Hodge/SHE source is no longer an independent input: it is the source built from
+the constructed qualitative bundle and Hodge--Arakelov theta synchronization.
+The existing finite Hodge/SHE+\(\IPL\) bridge is then obtained by projection.
+-/
+structure IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (constructedBundle :
+      IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) where
+  constructedTransportSource :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+      record constructedBundle l X C
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+  iplConstructionSource :
+    IUTStage1Theorem311IPLLinkConstructionSource record
+
+namespace IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {constructedBundle :
+  IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package}
+variable {l : PrimeGeFive} {F : Type v} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+variable {sourceEvaluation targetEvaluation :
+  IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+    l X C}
+variable {canonicalOneDegree_preserved :
+  targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+      (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+    sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+      (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))}
+
+noncomputable def ofConstructedTransportSource
+    (constructedTransportSource :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record) :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+      record constructedBundle l X C
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved :=
+  { constructedTransportSource := constructedTransportSource,
+    iplConstructionSource := iplConstructionSource }
+
+set_option linter.style.longLine false in
+noncomputable def ofThetaEvaluationSources
+    (hbundle : record.bundle = constructedBundle.toStructuredInputsWithSHE)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record) :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+      record constructedBundle l X C
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved :=
+  ofConstructedTransportSource
+    (IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource.ofThetaEvaluationSources
+      (record := record)
+      (constructedBundle := constructedBundle)
+      (sourceEvaluation := sourceEvaluation)
+      (targetEvaluation := targetEvaluation)
+      (canonicalOneDegree_preserved := canonicalOneDegree_preserved)
+      hbundle)
+    iplConstructionSource
+
+set_option linter.style.longLine false in
+noncomputable def ofConstructedRecordThetaEvaluationSources
+    (constructedBundle :
+      IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource
+        (IUTStage1Theorem311MultiradialSourceRecord.ofConstructedQualitativeInputsWithSHE
+          constructedBundle)) :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+      (IUTStage1Theorem311MultiradialSourceRecord.ofConstructedQualitativeInputsWithSHE
+        constructedBundle)
+      constructedBundle l X C
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved :=
+  ofConstructedTransportSource
+    (IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource.ofConstructedRecordThetaEvaluationSources
+        (l := l) (X := X) (C := C)
+        constructedBundle sourceEvaluation targetEvaluation
+        canonicalOneDegree_preserved)
+    iplConstructionSource
+
+noncomputable def toFiniteHodgeSHEIPLConstructionSource
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    IUTStage1FiniteHodgeSHEIPLConstructionSource record l X C :=
+  { transportSource := sourceData.constructedTransportSource.sourceData,
+    iplConstructionSource := sourceData.iplConstructionSource }
+
+noncomputable def toIPLLogVolumeTransport
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    IUTStage1IPLLogVolumeTransport record :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport
+
+theorem constructedTransportEndpoint
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    sourceData.constructedTransportSource.sourceData.descentBridge =
+        record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.constructedTransportSource.sourceData.forgetfulTransport.transportAllowed ∧
+      sourceData.constructedTransportSource.sourceData.forgetfulTransport.sourceTheater.side ≠
+        sourceData.constructedTransportSource.sourceData.forgetfulTransport.targetTheater.side ∧
+      (∀ mechanism : QualitativeData.TransportMechanismId,
+        ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+          constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+          constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+          mechanism) ∧
+      ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+        constructedBundle.aptConstruction.arrow.source
+        constructedBundle.aptConstruction.arrow.target :=
+  sourceData.constructedTransportSource.sourceEndpoint
+
+set_option linter.style.longLine false in
+theorem finiteHodgeSHEIPLSourceEndpoint
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.iplDatum =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.constructedDatum ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.sourceTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.sourceTheater ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.targetTheater =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.finiteTransport.targetTheater ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.transportSource.forgetfulTransport.transportAllowed ∧
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.sourceTheater.side ≠
+        sourceData.toFiniteHodgeSHEIPLConstructionSource.toIPLLogVolumeTransport.targetTheater.side :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.source_endpoint
+
+theorem noAllowedSHEDomainToCodomain
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved)
+    (mechanism : QualitativeData.TransportMechanismId) :
+    ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+      constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+      constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+      mechanism :=
+  sourceData.constructedTransportSource.noAllowedSHEDomainToCodomain mechanism
+
+theorem aptTransport_not_forbidden
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+      constructedBundle.aptConstruction.arrow.source
+      constructedBundle.aptConstruction.arrow.target :=
+  sourceData.constructedTransportSource.aptTransport_not_forbidden
+
+theorem targetLogVolume_preserved
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    sourceData.toIPLLogVolumeTransport.targetLogVolume =
+      sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.targetLogVolume_preserved
+
+set_option linter.style.longLine false in
+theorem sourceEndpoint
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    sourceData.constructedTransportSource.sourceData.descentBridge =
+        record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.constructedTransportSource.sourceData.forgetfulTransport.transportAllowed ∧
+      sourceData.constructedTransportSource.sourceData.forgetfulTransport.sourceTheater.side ≠
+        sourceData.constructedTransportSource.sourceData.forgetfulTransport.targetTheater.side ∧
+      (∀ mechanism : QualitativeData.TransportMechanismId,
+        ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+          constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+          constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+          mechanism) ∧
+      ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+        constructedBundle.aptConstruction.arrow.source
+        constructedBundle.aptConstruction.arrow.target :=
+  ⟨sourceData.constructedTransportSource.disciplineAudit.finite_descentBridge_matches_record,
+    rfl,
+    sourceData.toFiniteHodgeSHEIPLConstructionSource.iplDatum_eq_constructedDatum,
+    sourceData.iplConstructionSource.linkSource_eq_input,
+    sourceData.iplConstructionSource.linkTarget_eq_output,
+    sourceData.targetLogVolume_preserved,
+    sourceData.constructedTransportSource.finiteForgetfulTransportAllowed,
+    sourceData.constructedTransportSource.finiteForgetfulHistoriesNotIdentified,
+    sourceData.noAllowedSHEDomainToCodomain,
+    sourceData.aptTransport_not_forbidden⟩
+
+set_option linter.style.longLine false in
+structure ConstructedQualitativeHodgeSHEIPLBridgeAudit
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    Prop where
+  constructedTransportEndpoint :
+    sourceData.constructedTransportSource.sourceData.descentBridge =
+        record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.constructedTransportSource.sourceData.forgetfulTransport.transportAllowed ∧
+      sourceData.constructedTransportSource.sourceData.forgetfulTransport.sourceTheater.side ≠
+        sourceData.constructedTransportSource.sourceData.forgetfulTransport.targetTheater.side ∧
+      (∀ mechanism : QualitativeData.TransportMechanismId,
+        ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+          constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+          constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+          mechanism) ∧
+      ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+        constructedBundle.aptConstruction.arrow.source
+        constructedBundle.aptConstruction.arrow.target
+  finiteHodgeSHEIPLAudit :
+    IUTStage1FiniteHodgeSHEIPLConstructionSource.ConstructedIPLFiniteTransportLogVolumeChainAudit
+      sourceData.toFiniteHodgeSHEIPLConstructionSource
+  sourceEndpoint :
+    sourceData.constructedTransportSource.sourceData.descentBridge =
+        record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        package.preLedger.certificate.ipl ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.source =
+        sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
+        sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
+      sourceData.constructedTransportSource.sourceData.forgetfulTransport.transportAllowed ∧
+      sourceData.constructedTransportSource.sourceData.forgetfulTransport.sourceTheater.side ≠
+        sourceData.constructedTransportSource.sourceData.forgetfulTransport.targetTheater.side ∧
+      (∀ mechanism : QualitativeData.TransportMechanismId,
+        ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+          constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+          constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+          mechanism) ∧
+      ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+        constructedBundle.aptConstruction.arrow.source
+        constructedBundle.aptConstruction.arrow.target
+  noAllowedSHEDomainToCodomain :
+    ∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+        constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+        constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism
+  aptTransport_not_forbidden :
+    ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+      constructedBundle.aptConstruction.arrow.source
+      constructedBundle.aptConstruction.arrow.target
+
+theorem toConstructedQualitativeHodgeSHEIPLBridgeAudit
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    ConstructedQualitativeHodgeSHEIPLBridgeAudit sourceData :=
+  { constructedTransportEndpoint := sourceData.constructedTransportEndpoint,
+    finiteHodgeSHEIPLAudit :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource
+        |>.toConstructedIPLFiniteTransportLogVolumeChainAudit,
+    sourceEndpoint := sourceData.sourceEndpoint,
+    noAllowedSHEDomainToCodomain :=
+      sourceData.noAllowedSHEDomainToCodomain,
+    aptTransport_not_forbidden :=
+      sourceData.aptTransport_not_forbidden }
+
+end IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+
 /--
 Boundary comparing the strengthened SHE/common-container route with the factored
 square/full-label preservation interface.
