@@ -68687,6 +68687,13 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThe
           |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorFormulaMatchedStepXILocalTermCThetaSource
           |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorMatchedStepXILocalTermCThetaSource)
         |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource)
+  oneSidedQuotientAudit :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.OneSidedQuotientAudit
+      ((arithmeticDegreePadicSource.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorPadicFormulaMatchedStepXILocalTermCThetaSource
+          |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorFormulaMatchedStepXILocalTermCThetaSource
+          |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorMatchedStepXILocalTermCThetaSource)
+        |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+        |>.oneSidedMultiradialSource)
   arithmeticDegreePadicEndpoint :
     ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource.Endpoint
       arithmeticDegreePadicSource
@@ -68853,6 +68860,7 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
       packetSource targetSource
   exact
     { baseAudit := hbase,
+      oneSidedQuotientAudit := hbase.oneSidedQuotientAudit,
       arithmeticDegreePadicEndpoint := hclosed.1,
       finitePacketLocalObject_eq_divisorRealified := hclosed.2.1,
       finitePacketLocalObject_eq_ind3Source := hclosed.2.2.1,
