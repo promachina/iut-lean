@@ -61822,6 +61822,55 @@ end ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
 
 set_option linter.style.longLine false in
 /--
+Finite-place Haar-defect lower-bound source.
+
+This isolates the local Haar-normalization contribution used by the
+local-to-global `C_Theta` comparison.  The local defects are nonnegative at
+every finite place, and one normalized valuation-ball place contributes at
+least the global unit.  Summing these two facts gives the `+ 1` term used in
+the IUT IV arithmetic gap.
+-/
+structure IUTStage1FinitePlaceHaarDefectLowerBoundSource
+    (place : Type u) [Fintype place] where
+  localHaarNormalizationDefect : place -> Real
+  normalizedPlace : place
+  localHaarNormalizationDefect_nonneg :
+    ∀ place, 0 <= localHaarNormalizationDefect place
+  normalizedPlace_defect_ge_one :
+    (1 : Real) <= localHaarNormalizationDefect normalizedPlace
+
+namespace IUTStage1FinitePlaceHaarDefectLowerBoundSource
+
+variable {place : Type u} [Fintype place]
+
+theorem total_haar_defect_ge_one
+    (source : IUTStage1FinitePlaceHaarDefectLowerBoundSource place) :
+    (1 : Real) <= ∑ place, source.localHaarNormalizationDefect place :=
+  le_trans source.normalizedPlace_defect_ge_one
+    (Finset.single_le_sum
+      (fun place _hplace =>
+        source.localHaarNormalizationDefect_nonneg place)
+      (Finset.mem_univ source.normalizedPlace))
+
+def Endpoint
+    (source : IUTStage1FinitePlaceHaarDefectLowerBoundSource place) :
+    Prop :=
+  (∀ place, 0 <= source.localHaarNormalizationDefect place) ∧
+    (1 : Real) <=
+      source.localHaarNormalizationDefect source.normalizedPlace ∧
+    (1 : Real) <= ∑ place, source.localHaarNormalizationDefect place
+
+theorem endpoint
+    (source : IUTStage1FinitePlaceHaarDefectLowerBoundSource place) :
+    Endpoint source :=
+  ⟨source.localHaarNormalizationDefect_nonneg,
+    source.normalizedPlace_defect_ge_one,
+    source.total_haar_defect_ge_one⟩
+
+end IUTStage1FinitePlaceHaarDefectLowerBoundSource
+
+set_option linter.style.longLine false in
+/--
 Step (xi)-localized source for the one-sided finite-place local-to-global
 `C_Theta` comparison.
 
@@ -61999,6 +62048,137 @@ theorem canonicalCThetaScale_le_iutIVCTheta
     |>.canonicalCThetaScale_le_iutIVCTheta
 
 end ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+
+set_option linter.style.longLine false in
+/--
+Step (xi)-localized source with constructed finite-place Haar defect.
+
+This refines `ConstructedTheorem311OneSidedStepXILocalTermCThetaSource` by
+deriving the total Haar-defect bound from a finite-place lower-bound source:
+all local Haar-normalization defects are nonnegative, and a distinguished
+normalized valuation-ball place contributes at least one.  Thus the global
+`+ 1` in the IUT IV arithmetic gap is no longer a raw field of the Step (xi)
+constructor.
+-/
+structure ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (l : PrimeGeFive)
+    (η : Type y) (γ : Type w) [Fintype γ] where
+  oneSidedMultiradialSource :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l
+  qPilotRegion_eq_selectedQRegion :
+    sourceData.qPilotRegion =
+      oneSidedMultiradialSource.selectedQRegion.toSet
+  localizedStepXISource :
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+      η β γ
+  determinantSource_eq_stepXI :
+    sourceData.determinantSource =
+      localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource
+  canonicalCThetaScale_eq_stepXISum :
+    sourceData.canonicalCThetaScale =
+      ∑ place : β, localizedStepXISource.weightedAdjustedLogVolume place
+  localMainLogContribution : β -> Real
+  haarDefectSource :
+    IUTStage1FinitePlaceHaarDefectLowerBoundSource β
+  arithmeticUpperTerm_eq_stepXI_haar_main_sum :
+    estimate.arithmeticUpperTerm =
+      ∑ place : β,
+        (localizedStepXISource.weightedAdjustedLogVolume place +
+          haarDefectSource.localHaarNormalizationDefect place +
+            localMainLogContribution place)
+  mainLogTerm_eq_sum :
+    estimate.mainLogTerm =
+      ∑ place : β, localMainLogContribution place
+
+namespace ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+variable {sourceData :
+  IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+    (β := β) record}
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {l : PrimeGeFive}
+variable {η : Type y} {γ : Type w} [Fintype γ]
+
+def localHaarNormalizationDefect
+    (source :
+      ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
+        sourceData estimate l η γ)
+    (place : β) :
+    Real :=
+  source.haarDefectSource.localHaarNormalizationDefect place
+
+theorem total_haar_defect_ge_one
+    (source :
+      ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    (1 : Real) <=
+      ∑ place : β, source.localHaarNormalizationDefect place := by
+  simpa [localHaarNormalizationDefect] using
+    source.haarDefectSource.total_haar_defect_ge_one
+
+set_option linter.style.longLine false in
+def toConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+    (source :
+      ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+      sourceData estimate l η γ :=
+  { oneSidedMultiradialSource := source.oneSidedMultiradialSource,
+    qPilotRegion_eq_selectedQRegion :=
+      source.qPilotRegion_eq_selectedQRegion,
+    localizedStepXISource := source.localizedStepXISource,
+    determinantSource_eq_stepXI :=
+      source.determinantSource_eq_stepXI,
+    canonicalCThetaScale_eq_stepXISum :=
+      source.canonicalCThetaScale_eq_stepXISum,
+    localMainLogContribution := source.localMainLogContribution,
+    localHaarNormalizationDefect :=
+      source.localHaarNormalizationDefect,
+    arithmeticUpperTerm_eq_stepXI_haar_main_sum := by
+      simpa [localHaarNormalizationDefect] using
+        source.arithmeticUpperTerm_eq_stepXI_haar_main_sum,
+    mainLogTerm_eq_sum := source.mainLogTerm_eq_sum,
+    total_haar_defect_ge_one := source.total_haar_defect_ge_one }
+
+def Endpoint
+    (source :
+      ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    Prop :=
+  source.haarDefectSource.Endpoint ∧
+    ConstructedTheorem311OneSidedStepXILocalTermCThetaSource.Endpoint
+      source.toConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+
+theorem endpoint
+    (source :
+      ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    Endpoint source :=
+  ⟨source.haarDefectSource.endpoint,
+    source.toConstructedTheorem311OneSidedStepXILocalTermCThetaSource.endpoint⟩
+
+theorem canonicalCThetaScale_le_iutIVCTheta
+    (source :
+      ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    sourceData.canonicalCThetaScale <= estimate.cTheta :=
+  source.toConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+    |>.canonicalCThetaScale_le_iutIVCTheta
+
+end ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
 
 set_option linter.style.longLine false in
 /--

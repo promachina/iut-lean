@@ -8912,6 +8912,7 @@ one-sided Theorem~3.11 construction directly:
 \texttt{ConstructedTheorem311OneSidedLocalGlobalCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedStepXILocalTermCThetaSource},\\
+\texttt{ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ}.
 \end{array}
@@ -8940,7 +8941,15 @@ pointwise Step~(xi)/Haar inequality and constructs the finite-place
 local-to-global source from these data.  The remaining source obligations at
 this boundary are now explicit: identify \(C_{\Theta,\mathrm{can}}\) with the
 sum of the localized Step~(xi) terms, identify the \IUT{} IV arithmetic and
-main-log terms with their local sums, and prove the total Haar defect bound.
+main-log terms with their local sums, and construct the finite-place Haar
+defect lower-bound source from the local-field normalization layer.
+The latter is no longer consumed as a raw sum inequality:
+\texttt{IUTStage1FinitePlaceHaarDefectLowerBoundSource} records nonnegative
+local Haar defects and a distinguished normalized valuation-ball place whose
+defect is at least one, and Lean proves
+\(\sum_v \delta_v\geq 1\) from those facts.  The stricter constructor
+\texttt{ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource}
+threads this derived bound into the Step~(xi) local-to-global comparison.
 
 The practical priority order is:
 \begin{enumerate}
