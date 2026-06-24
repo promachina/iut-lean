@@ -52,11 +52,12 @@ boundary proves \(C_\Theta\ge -1\) from the supplied signed comparison
 \(-|\log(\Theta)|\le C_\Theta|\log(q)|\).  The newer source-facing boundaries
 derive that comparison from Remark~3.9.5 hull/determinant data together with
 local-to-global \(\IUT{}\,\mathrm{IV}\) \(C_\Theta\) source objects.  The
-latest closed \(C_\Theta\) wrapper also records that its Hodge/\(\SHE\)/\(\IPL\)
-input is the constructed qualitative finite Hodge/SHE plus input-prime-strip
-link source, not a free-standing \(\IPL\) record.  This does not prove
-Corollary 3.12 from Mochizuki's published hypotheses; it identifies the
-remaining mathematical construction problem at a lower, source-facing boundary.
+latest closed \(C_\Theta\) wrappers now thread the constructed qualitative
+Hodge/\(\SHE\)/\(\IPL\) source through the one-sided finite-place route and the
+strongest additive-Haar arithmetic-degree/\(p\)-adic formula route, rather than
+using a free-standing \(\IPL\) record.  This does not prove Corollary 3.12 from
+Mochizuki's published hypotheses; it identifies the remaining mathematical
+construction problem at a lower, source-facing boundary.
 
 After a source audit against \IUT{} I--IV, Mochizuki's 2026 LeanForm report,
 and Scholze--Stix, the status is unchanged in kind but sharper in formulation:
@@ -9158,8 +9159,9 @@ entry point:
 Its audit adds the Theorem~3.11 one-sided quotient record to the finite-place
 payload: \((\Ind_1)\) and \((\Ind_2)\) supply the equality quotient for
 possible images, while \((\Ind_3)\) remains a one-sided upper-semi
-log-volume relation.  The remaining task is to thread this same provenance
-through the deeper additive-Haar preferred wrappers.
+log-volume relation.  The deeper additive-Haar route below now reuses this
+same one-sided audit rather than returning to a free-standing \(\IPL\)-link
+surface.
 
 The newest constructor,
 \texttt{ConstructedTheorem311OneSidedStepXILocalTermCThetaSource}, removes one
@@ -9374,6 +9376,23 @@ Step~(xi)/\IUT{} IV local formula source with the Step~(x) realified
 Frobenioid log-Kummer packet source, so both local arithmetic matching and
 packet equalities appear as typed source objects rather than loose endpoint
 fields.
+This strongest additive-Haar boundary has now also been tied to the constructed
+qualitative Hodge/\(\SHE\)/\(\IPL\) provenance.  The declaration
+\[
+\begin{array}{l}
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{QualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadic}\\
+\quad\texttt{FiniteDivisorVerticalIQ\_ofRealifiedFrobenioidPacketSource}
+\end{array}
+\]
+projects the \(\IPL\) link from the constructed qualitative source, reuses the
+one-sided finite-place local-to-global audit obtained from the matched
+additive-Haar source, and records the arithmetic-degree/\(p\)-adic formula
+endpoint, the realified packet equalities, the \(\IUT{}\,\mathrm{IV}\) handoff,
+the global \(C_\Theta\)-scale audit, and the final dichotomy.  Thus the
+previous gap between the constructed qualitative Theorem~3.11 route and the
+deepest additive-Haar \(C_\Theta\) surface is closed at the current interface
+level.
 
 The Theorem~3.11 qualitative checkpoint is now also present at the
 finite-divisor \(C_\Theta\) boundary.  The new checkpoint-aware
@@ -9402,10 +9421,6 @@ migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Thread the constructed qualitative Hodge/\(\SHE\)/\(\IPL\) provenance
-  through the deepest additive-Haar \(C_\Theta\) endpoints, matching the new
-  one-sided finite-place wrapper rather than the older free-standing
-  \(\IPL\)-link surface.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the
