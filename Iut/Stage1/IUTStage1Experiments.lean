@@ -63255,6 +63255,123 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311OneSidedF
 
 set_option linter.style.longLine false in
 /--
+Normalized-Haar Step (xi) version of the one-sided finite-divisor
+vertical-\(IQ\) endpoint.
+
+This is the preferred public endpoint after the finite-place Haar defect has
+been separated from the raw summation bound: the source proves
+`\sum_v delta_v >= 1` from local nonnegativity plus one normalized
+valuation-ball place, then enters the one-sided finite-place local-to-global
+`C_Theta` endpoint.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (remark395HullSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    {η : Type y} {γ : Type w} [Fintype γ]
+    (normalizedHaarStepXISource :
+      ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource
+        remark395HullSource estimate l η γ)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceEvaluation.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource.Endpoint
+        normalizedHaarStepXISource ∧
+      (0 < estimate.absoluteLogQ ∧
+        estimate.cTheta + 1 =
+          estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+          0 <= estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+            estimate.mainLogTerm <= estimate.arithmeticUpperTerm ∧
+              estimate.oneSixthLogQ <= estimate.theorem110RightHandSide) ∧
+        IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedGlobalCThetaScaleComparisonAudit
+          remark395HullSource estimate.cTheta ∧
+        ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+            package.preLedger.thetaSigned < 0) ∨
+          (-1 : Real) < estimate.cTheta) :=
+  let hclosed :=
+    boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ
+      part audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+      iplLinkSource remark395HullSource estimate
+      (normalizedHaarStepXISource.toConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+        |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource)
+      sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
+      kummerCompatibility forgettingCompatibility holomorphicF_realization
+      holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified
+      packetLocalObjectFinite_eq_ind3Source targetSource
+  ⟨normalizedHaarStepXISource.endpoint, hclosed.2.1, hclosed.2.2.1,
+    hclosed.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface compact constructed-\(\IPL\) milestone endpoint for the
 source-derived finite-divisor vertical-\(IQ\) route.
 
