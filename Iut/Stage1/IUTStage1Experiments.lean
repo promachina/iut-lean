@@ -66431,6 +66431,204 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311FinitePla
 
 set_option linter.style.longLine false in
 /--
+Finite-place audit for the closed \(C_\Theta\) endpoint with constructed
+qualitative Hodge/SHE/IPL provenance.
+
+This keeps the actual finite local-place summation data visible next to the
+constructed qualitative bridge and the final finite-divisor vertical-\(IQ\)
+dichotomy.
+-/
+structure ConstructedQualitativeHodgeSHEIPLFinitePlaceLocalGlobalCThetaAudit
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {constructedBundle :
+      IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package}
+    {l : PrimeGeFive}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (constructedHodgeIPLSource :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved)
+    {β : Type v} [Fintype β]
+    (remark395HullSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    {choice : Type w} {place : Type x} [Fintype place]
+    (localGlobalFiniteSource :
+      ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+        remark395HullSource estimate choice place) : Prop where
+  baseAudit :
+    ConstructedQualitativeHodgeSHEIPLIndeterminacyLocalGlobalCThetaAudit
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+      constructedHodgeIPLSource remark395HullSource estimate
+      localGlobalFiniteSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+  finitePlaceEndpoint :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.Endpoint
+      localGlobalFiniteSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+  canonicalCThetaScale_eq_sum :
+    remark395HullSource.canonicalCThetaScale =
+      ∑ place, localGlobalFiniteSource.localCanonicalScale place
+  arithmeticUpperTerm_eq_sum :
+    estimate.arithmeticUpperTerm =
+      ∑ place, localGlobalFiniteSource.localArithmeticUpperContribution place
+  mainLogTerm_eq_sum :
+    estimate.mainLogTerm =
+      ∑ place, localGlobalFiniteSource.localMainLogContribution place
+  local_stepXI_haar_bound :
+    ∀ place,
+      localGlobalFiniteSource.localCanonicalScale place +
+          localGlobalFiniteSource.localHaarNormalizationDefect place <=
+        localGlobalFiniteSource.localArithmeticUpperContribution place -
+          localGlobalFiniteSource.localMainLogContribution place
+  total_haar_defect_ge_one :
+    (1 : Real) <= ∑ place, localGlobalFiniteSource.localHaarNormalizationDefect place
+  canonicalCThetaScale_le_iutIVCTheta :
+    remark395HullSource.canonicalCThetaScale <= estimate.cTheta
+
+set_option linter.style.longLine false in
+/--
+Finite-place local-to-global \(C_\Theta\) endpoint with constructed qualitative
+Hodge/SHE/IPL provenance.
+
+The endpoint removes the separate `IUTStage1Theorem311IPLLinkSource` argument
+from the finite-place closed route.  It projects the link from the constructed
+Hodge/SHE/IPL source and returns an audit containing the finite place sums,
+Haar lower bound, derived \(C_{\Theta,\mathrm{can}}\le C_\Theta\) comparison,
+and final dichotomy.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHEIPLFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {constructedBundle :
+      IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (constructedHodgeIPLSource :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved)
+    {β : Type v} [Fintype β]
+    (remark395HullSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    {choice : Type w} {place : Type x} [Fintype place]
+    (localGlobalFiniteSource :
+      ConstructedTheorem311FinitePlaceLocalGlobalCThetaSource
+        remark395HullSource estimate choice place)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceEvaluation.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    ConstructedQualitativeHodgeSHEIPLFinitePlaceLocalGlobalCThetaAudit
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+      constructedHodgeIPLSource remark395HullSource estimate
+      localGlobalFiniteSource := by
+  let coarseSource :=
+    localGlobalFiniteSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+  have hbase :
+      ConstructedQualitativeHodgeSHEIPLIndeterminacyLocalGlobalCThetaAudit
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+        constructedHodgeIPLSource remark395HullSource estimate coarseSource :=
+    boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHEIPLIndeterminacyLocalGlobalCThetaFiniteDivisorVerticalIQ
+      part audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+      constructedHodgeIPLSource remark395HullSource estimate coarseSource
+      sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
+      kummerCompatibility forgettingCompatibility holomorphicF_realization
+      holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified
+      packetLocalObjectFinite_eq_ind3Source targetSource
+  exact
+    { baseAudit := hbase,
+      finitePlaceEndpoint := localGlobalFiniteSource.endpoint,
+      canonicalCThetaScale_eq_sum :=
+        localGlobalFiniteSource.canonicalCThetaScale_eq_sum,
+      arithmeticUpperTerm_eq_sum :=
+        localGlobalFiniteSource.arithmeticUpperTerm_eq_sum,
+      mainLogTerm_eq_sum :=
+        localGlobalFiniteSource.mainLogTerm_eq_sum,
+      local_stepXI_haar_bound :=
+        localGlobalFiniteSource.local_stepXI_haar_bound,
+      total_haar_defect_ge_one :=
+        localGlobalFiniteSource.total_haar_defect_ge_one,
+      canonicalCThetaScale_le_iutIVCTheta :=
+        localGlobalFiniteSource.canonicalCThetaScale_le_iutIVCTheta }
+
+set_option linter.style.longLine false in
+/--
 One-sided Theorem 3.11 finite-place local-to-global version of the closed
 \(C_\Theta\) endpoint.
 

@@ -9132,9 +9132,22 @@ and returns
 That audit records the constructed Hodge/\(\SHE\)/\(\IPL\) bridge, the
 local-to-global \(C_\Theta\) endpoint, the \(\IUT{}\,\mathrm{IV}\) handoff, the
 global \(C_\Theta\) comparison audit, and the final dichotomy in one checked
-proposition.  The remaining task is to thread the same constructed qualitative
-provenance through the deeper finite-place and additive-Haar preferred
-wrappers.
+proposition.
+The same constructed qualitative provenance is now also available at the
+finite-place local-to-global boundary:
+\[
+\begin{array}{l}
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{QualitativeHodgeSHEIPLFinitePlaceLocalGlobalCTheta}\\
+\quad\texttt{FiniteDivisorVerticalIQ}
+\end{array}
+\]
+returns an audit recording the finite local-place sums, placewise
+Step~(xi)/Haar inequality, total Haar defect lower bound, derived
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison, constructed
+Hodge/\(\SHE\)/\(\IPL\) bridge, and final dichotomy.  The remaining task is to
+thread this same provenance through the deeper one-sided and additive-Haar
+preferred wrappers.
 
 The newest constructor,
 \texttt{ConstructedTheorem311OneSidedStepXILocalTermCThetaSource}, removes one
@@ -9378,8 +9391,8 @@ migrated or retired.
 The practical priority order is now:
 \begin{enumerate}
 \item Thread the constructed qualitative Hodge/\(\SHE\)/\(\IPL\) provenance
-  through the deepest finite-place and additive-Haar \(C_\Theta\) endpoints,
-  matching the new closed wrapper rather than the older free-standing
+  through the deepest one-sided and additive-Haar \(C_\Theta\) endpoints,
+  matching the new finite-place wrapper rather than the older free-standing
   \(\IPL\)-link surface.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
