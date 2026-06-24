@@ -9179,13 +9179,20 @@ local log-shell inclusions and numerical Proposition~1.4 estimates, the
 distinguished and archimedean formula-to-gap identifications, and the Step~(xi)
 matching equality.
 
+The Theorem~3.11 qualitative checkpoint is now also present at the
+finite-divisor \(C_\Theta\) boundary.  The new checkpoint-aware
+side-conditioned Hodge/\(\SHE\)/\(\IPL\) declaration requires
+\texttt{ConstructedQualitativeTheorem311ToCorollary312Checkpoints} and reports
+the constructed public audit, typed no-\(\SHE\)-domain-to-codomain transport
+guard, \(\APT\) non-forbidden transport guard, and Hodge-history separation
+next to the finite-divisor dichotomy.  Its Lean name has suffix
+\texttt{withConstructedQualitativeCheckpoints}.  This does not remove the
+downstream local-to-global \(C_\Theta\) comparison; it closes the previous gap
+between the constructed qualitative Theorem~3.11 route and the finite Step~(x)
+vertical \(IQ\) surface.
+
 The practical priority order is now:
 \begin{enumerate}
-\item Thread
-  \(\texttt{ConstructedQualitativeTheorem311ToCorollary312Checkpoints}\) into
-  the finite-divisor \(C_\Theta\) surface, so the endpoint consumes the
-  constructed qualitative audit and typed SHE/APT guards rather than exposing a
-  raw \(\texttt{StructuredInputsWithSHE}\) checkpoint.
 \item Replace the certificate-pinned \(\IPL\) endpoint equalities by the actual
   Theorem~3.11 input-prime-strip link construction, and then remove the
   remaining constructed-\(\IPL\) alignment assumptions from the finite-divisor
