@@ -8024,6 +8024,349 @@ theorem publicAuditOfConstructedQualitativeHypotheses_eq_sideConditions
         inputs hypotheses.toSideConditions :=
   rfl
 
+def constructedQualitativePublicAuditStatement
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    Prop :=
+  package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+    (corollary312_from_stage1_comparison
+        (package.promotedProvider
+          (package.obligationsFromConstructedQualitativeInputs
+            inputs sideConditions)).stage1Comparison =
+      corollary312_of_signed_le
+        (package.promotedProvider
+          (package.obligationsFromConstructedQualitativeInputs
+            inputs sideConditions)).ledger.qSigned_le_thetaSigned)
+
+theorem constructedQualitativePublicAuditStatement_proof
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.constructedQualitativePublicAuditStatement
+      inputs sideConditions :=
+  package.publicAuditOfConstructedQualitativeInputs inputs sideConditions
+
+/--
+Constructed-qualitative version of the audited structured-SHE route summary.
+
+The internal route is the existing audited `StructuredInputsWithSHE` route, but
+the exposed input boundary is the constructed qualitative IPL/SHE/APT source
+equipped with the strengthened SHE context. This keeps the typed
+SHE-forbidden-transport and APT-permission audits next to the route summary
+that feeds the Corollary 3.12 public audit.
+-/
+structure ConstructedQualitativeStructuredSHERouteSummary
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) : Prop where
+  structured_route_summary :
+    AuditedStructuredSHERouteSummary
+      package bundle.toStructuredInputsWithSHE sideConditions
+  qualitative_transport_audit :
+    bundle.constructedInputs.qualitativeSource.QualitativeTransportAudit
+  no_she_domain_to_codomain :
+    ∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ bundle.sheTransportContext.transportSystem.Allows
+        bundle.sheTransportContext.baseContext.domainStructure.theater
+        bundle.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism
+  apt_transport_not_forbidden :
+    ¬ bundle.aptConstruction.transportSystem.forbiddenIdentification
+      bundle.aptConstruction.arrow.source
+      bundle.aptConstruction.arrow.target
+  public_audit :
+    package.constructedQualitativePublicAuditStatement
+      bundle.constructedInputs sideConditions
+  public_audit_eq_structured :
+    package.publicAuditOfConstructedQualitativeInputs
+        bundle.constructedInputs sideConditions =
+      package.publicAuditOfStructuredInputs
+        bundle.constructedInputs.toStructuredInputs sideConditions
+  q_signed_le_theta :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+  corollary312 :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned)
+  histories_not_identified :
+    bundle.structured_she.context.domainStructure.theater.side ≠
+      bundle.structured_she.context.codomainStructure.theater.side
+
+namespace ConstructedQualitativeStructuredSHERouteSummary
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package}
+variable {sideConditions : IUTStage1SourceSideConditions package}
+
+theorem ofConstructedQualitativeInputsWithSHE
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    ConstructedQualitativeStructuredSHERouteSummary
+      package bundle sideConditions :=
+  { structured_route_summary :=
+      package.auditedStructuredSHERouteSummary
+        bundle.toStructuredInputsWithSHE sideConditions,
+    qualitative_transport_audit := bundle.qualitativeTransportAudit,
+    no_she_domain_to_codomain := bundle.noAllowedSHEDomainToCodomain,
+    apt_transport_not_forbidden := bundle.aptTransport_not_forbidden,
+    public_audit :=
+      package.publicAuditOfConstructedQualitativeInputs
+        bundle.constructedInputs sideConditions,
+    public_audit_eq_structured :=
+      package.publicAuditOfConstructedQualitativeInputs_eq_structured
+        bundle.constructedInputs sideConditions,
+    q_signed_le_theta :=
+      package.publicAuditOfConstructedQualitativeInputs_qSigned_le_thetaSigned
+        bundle.constructedInputs sideConditions,
+    corollary312 :=
+      package.publicAuditOfConstructedQualitativeInputs_corollary312
+        bundle.constructedInputs sideConditions,
+    histories_not_identified := bundle.domainHistory_ne_codomainHistory }
+
+theorem structuredRouteSummary
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions) :
+    AuditedStructuredSHERouteSummary
+      package bundle.toStructuredInputsWithSHE sideConditions :=
+  summary.structured_route_summary
+
+theorem qualitativeTransportAudit
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions) :
+    bundle.constructedInputs.qualitativeSource.QualitativeTransportAudit :=
+  summary.qualitative_transport_audit
+
+theorem noAllowedSHEDomainToCodomain
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions)
+    (mechanism : QualitativeData.TransportMechanismId) :
+    ¬ bundle.sheTransportContext.transportSystem.Allows
+      bundle.sheTransportContext.baseContext.domainStructure.theater
+      bundle.sheTransportContext.baseContext.codomainStructure.theater
+      mechanism :=
+  summary.no_she_domain_to_codomain mechanism
+
+theorem aptTransport_not_forbidden
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions) :
+    ¬ bundle.aptConstruction.transportSystem.forbiddenIdentification
+      bundle.aptConstruction.arrow.source
+      bundle.aptConstruction.arrow.target :=
+  summary.apt_transport_not_forbidden
+
+theorem publicAudit
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions) :
+    package.constructedQualitativePublicAuditStatement
+      bundle.constructedInputs sideConditions :=
+  summary.public_audit
+
+theorem publicAudit_eq_structured
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions) :
+    package.publicAuditOfConstructedQualitativeInputs
+        bundle.constructedInputs sideConditions =
+      package.publicAuditOfStructuredInputs
+        bundle.constructedInputs.toStructuredInputs sideConditions :=
+  summary.public_audit_eq_structured
+
+theorem qSigned_le_thetaSigned
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  summary.q_signed_le_theta
+
+theorem corollary312Endpoint
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  summary.corollary312
+
+theorem domainHistory_ne_codomainHistory
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions) :
+    bundle.structured_she.context.domainStructure.theater.side ≠
+      bundle.structured_she.context.codomainStructure.theater.side :=
+  summary.histories_not_identified
+
+end ConstructedQualitativeStructuredSHERouteSummary
+
+theorem constructedQualitativeStructuredSHERouteSummary
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    ConstructedQualitativeStructuredSHERouteSummary
+      package bundle sideConditions :=
+  ConstructedQualitativeStructuredSHERouteSummary.ofConstructedQualitativeInputsWithSHE
+    bundle sideConditions
+
+/--
+Constructed-qualitative checkpoint package for the Theorem 3.11 to
+Corollary 3.12 corridor.
+
+This is the route-facing checkpoint object callers should use before the
+finite-divisor `C_\Theta` layer: the structured route checkpoints remain
+available by projection, while the public input boundary records constructed
+qualitative IPL/SHE/APT data and the typed transport guards.
+-/
+structure ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) : Prop where
+  constructed_route_summary :
+    ConstructedQualitativeStructuredSHERouteSummary
+      package bundle sideConditions
+  structured_checkpoints :
+    AuditedTheorem311ToCorollary312Checkpoints
+      package bundle.toStructuredInputsWithSHE sideConditions
+  theorem311_input_label : package.input = package.labels.input
+  corollary312_comparison_label :
+    package.logVolumeComparison = package.labels.logVolumeComparison
+  public_audit :
+    package.constructedQualitativePublicAuditStatement
+      bundle.constructedInputs sideConditions
+  q_signed_le_theta :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned
+  corollary312 :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned)
+  no_she_domain_to_codomain :
+    ∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ bundle.sheTransportContext.transportSystem.Allows
+        bundle.sheTransportContext.baseContext.domainStructure.theater
+        bundle.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism
+  apt_transport_not_forbidden :
+    ¬ bundle.aptConstruction.transportSystem.forbiddenIdentification
+      bundle.aptConstruction.arrow.source
+      bundle.aptConstruction.arrow.target
+  histories_not_identified :
+    bundle.structured_she.context.domainStructure.theater.side ≠
+      bundle.structured_she.context.codomainStructure.theater.side
+
+namespace ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+
+variable {package : IUTStage1SourcePackage source target index}
+variable {bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package}
+variable {sideConditions : IUTStage1SourceSideConditions package}
+
+theorem ofConstructedQualitativeInputsWithSHE
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+      package bundle sideConditions :=
+  let summary :=
+    package.constructedQualitativeStructuredSHERouteSummary
+      bundle sideConditions
+  { constructed_route_summary := summary,
+    structured_checkpoints :=
+      package.auditedTheorem311ToCorollary312Checkpoints
+        bundle.toStructuredInputsWithSHE sideConditions,
+    theorem311_input_label := package.input_matches_labels,
+    corollary312_comparison_label :=
+      package.logVolumeComparison_matches_labels,
+    public_audit := summary.publicAudit,
+    q_signed_le_theta := summary.qSigned_le_thetaSigned,
+    corollary312 := summary.corollary312Endpoint,
+    no_she_domain_to_codomain := summary.noAllowedSHEDomainToCodomain,
+    apt_transport_not_forbidden := summary.aptTransport_not_forbidden,
+    histories_not_identified := summary.domainHistory_ne_codomainHistory }
+
+theorem constructedRouteSummary
+    (checkpoints :
+      ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    ConstructedQualitativeStructuredSHERouteSummary
+      package bundle sideConditions :=
+  checkpoints.constructed_route_summary
+
+theorem structuredCheckpoints
+    (checkpoints :
+      ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    AuditedTheorem311ToCorollary312Checkpoints
+      package bundle.toStructuredInputsWithSHE sideConditions :=
+  checkpoints.structured_checkpoints
+
+theorem publicAudit
+    (checkpoints :
+      ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    package.constructedQualitativePublicAuditStatement
+      bundle.constructedInputs sideConditions :=
+  checkpoints.public_audit
+
+theorem qSigned_le_thetaSigned
+    (checkpoints :
+      ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  checkpoints.q_signed_le_theta
+
+theorem corollary312Endpoint
+    (checkpoints :
+      ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  checkpoints.corollary312
+
+theorem noAllowedSHEDomainToCodomain
+    (checkpoints :
+      ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions)
+    (mechanism : QualitativeData.TransportMechanismId) :
+    ¬ bundle.sheTransportContext.transportSystem.Allows
+      bundle.sheTransportContext.baseContext.domainStructure.theater
+      bundle.sheTransportContext.baseContext.codomainStructure.theater
+      mechanism :=
+  checkpoints.no_she_domain_to_codomain mechanism
+
+theorem aptTransport_not_forbidden
+    (checkpoints :
+      ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    ¬ bundle.aptConstruction.transportSystem.forbiddenIdentification
+      bundle.aptConstruction.arrow.source
+      bundle.aptConstruction.arrow.target :=
+  checkpoints.apt_transport_not_forbidden
+
+theorem domainHistory_ne_codomainHistory
+    (checkpoints :
+      ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    bundle.structured_she.context.domainStructure.theater.side ≠
+      bundle.structured_she.context.codomainStructure.theater.side :=
+  checkpoints.histories_not_identified
+
+end ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+
+theorem constructedQualitativeTheorem311ToCorollary312Checkpoints
+    (package : IUTStage1SourcePackage source target index)
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+      package bundle sideConditions :=
+  ConstructedQualitativeTheorem311ToCorollary312Checkpoints.ofConstructedQualitativeInputsWithSHE
+    bundle sideConditions
+
 theorem stage1Comparison_recovers_corollary312
     (package : IUTStage1SourcePackage source target index)
     (obligations : IUTStage1SourceObligations package) :
