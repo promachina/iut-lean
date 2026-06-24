@@ -8727,6 +8727,122 @@ theorem qPilotRegion_subset_recordUnion_of_choice
     RegionFamily.choice_subset_union
       record.thetaPossibleImages.images choice x (q_subset_choice hx)
 
+set_option linter.style.longLine false in
+/--
+Quotient-aware Theorem 3.11 multiradial source for the Step (xi) corridor.
+
+This is the stronger source object used by the current milestone.  It ties the
+typed `(Ind1)/(Ind2)/(Ind3)` core to the multiradial possible-image quotient,
+records the finite `F_l` label torsor and its procession transitions, and
+selects the q-pilot region as an actual Theorem 3.11 possible image.
+-/
+structure IUTStage1Theorem311QuotientMultiradialSource
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (l : PrimeGeFive) where
+  typedIndeterminacyCore : IUTStage1Theorem311TypedIndeterminacyCore index
+  multiradialImages : IUTStage1MultiradialThetaImages package
+  quotient_eq_typed :
+    multiradialImages.quotient = typedIndeterminacyCore.quotient
+  possibleImages_eq_record :
+    multiradialImages.possibleImages = record.thetaPossibleImages
+  flGluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l
+  fl_card_eq : Fintype.card (ZMod l.value) = l.value
+  processionLabelTransition : ZMod l.value -> index -> index
+  processionLabelTransition_zero :
+    ∀ choice, processionLabelTransition 0 choice = choice
+  processionLabelTransition_add :
+    ∀ t u choice,
+      processionLabelTransition (t + u) choice =
+        processionLabelTransition t (processionLabelTransition u choice)
+  processionLabelTransition_related :
+    ∀ t choice,
+      typedIndeterminacyCore.quotient.relation choice
+        (processionLabelTransition t choice)
+  selectedQChoice : index
+  selectedQRegion : Region target
+  selectedQRegion_eq_possibleImage :
+    selectedQRegion =
+      multiradialImages.possibleImages.images.region selectedQChoice
+
+namespace IUTStage1Theorem311QuotientMultiradialSource
+
+variable {l : PrimeGeFive}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+
+theorem selectedQRegion_eq_recordThetaPossibleImage
+    (source :
+      IUTStage1Theorem311QuotientMultiradialSource
+        (package := package) record l) :
+    source.selectedQRegion.toSet =
+      recordThetaPossibleImage record source.selectedQChoice := by
+  rw [recordThetaPossibleImage, source.selectedQRegion_eq_possibleImage,
+    source.possibleImages_eq_record]
+
+theorem selectedQRegion_subset_recordUnion
+    (source :
+      IUTStage1Theorem311QuotientMultiradialSource
+        (package := package) record l) :
+    source.selectedQRegion.toSet ⊆ recordThetaPossibleImageUnion record :=
+  qPilotRegion_subset_recordUnion_of_choice
+    (record := record) source.selectedQChoice source.selectedQRegion.toSet
+    (by
+      intro x hx
+      simpa [source.selectedQRegion_eq_recordThetaPossibleImage] using hx)
+
+theorem processionLabelTransition_quotientMap_eq
+    (source :
+      IUTStage1Theorem311QuotientMultiradialSource
+        (package := package) record l)
+    (t : ZMod l.value) (choice : index) :
+    source.typedIndeterminacyCore.quotientMap choice =
+      source.typedIndeterminacyCore.quotientMap
+        (source.processionLabelTransition t choice) :=
+  Quot.sound (source.processionLabelTransition_related t choice)
+
+theorem processionLabelTransition_region_eq
+    (source :
+      IUTStage1Theorem311QuotientMultiradialSource
+        (package := package) record l)
+    (t : ZMod l.value) (choice : index) :
+    source.multiradialImages.possibleImages.images.region choice =
+      source.multiradialImages.possibleImages.images.region
+        (source.processionLabelTransition t choice) := by
+  apply source.multiradialImages.region_eq_of_related
+  rw [source.quotient_eq_typed]
+  exact source.processionLabelTransition_related t choice
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      IUTStage1Theorem311QuotientMultiradialSource
+        (package := package) record l) :
+    source.multiradialImages.quotient =
+        source.typedIndeterminacyCore.quotient ∧
+      source.multiradialImages.possibleImages = record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      (∀ choice, source.processionLabelTransition 0 choice = choice) ∧
+      (∀ t u choice,
+        source.processionLabelTransition (t + u) choice =
+          source.processionLabelTransition t
+            (source.processionLabelTransition u choice)) ∧
+      (∀ t choice,
+        source.typedIndeterminacyCore.quotientMap choice =
+          source.typedIndeterminacyCore.quotientMap
+            (source.processionLabelTransition t choice)) ∧
+      source.selectedQRegion.toSet =
+        recordThetaPossibleImage record source.selectedQChoice ∧
+      source.selectedQRegion.toSet ⊆ recordThetaPossibleImageUnion record :=
+  ⟨source.quotient_eq_typed,
+    source.possibleImages_eq_record,
+    source.fl_card_eq,
+    source.processionLabelTransition_zero,
+    source.processionLabelTransition_add,
+    source.processionLabelTransition_quotientMap_eq,
+    source.selectedQRegion_eq_recordThetaPossibleImage,
+    source.selectedQRegion_subset_recordUnion⟩
+
+end IUTStage1Theorem311QuotientMultiradialSource
+
 noncomputable def recordCanonicalHullTensorPowerWeightedDeterminantHullDetData
     {β : Type v} [Fintype β]
     (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
@@ -11125,6 +11241,101 @@ theorem constructedGlobalCThetaScaleComparisonAudit
       dichotomy := hdichotomy }
 
 end IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+
+namespace IUTStage1Theorem311HullDetSourceConstructor
+
+set_option linter.style.longLine false in
+/--
+Compatibility between the quotient-aware Theorem 3.11 multiradial source and
+the constructed Remark 3.9.5 hull/determinant source.
+
+The constructed Step (xi) q-pilot region is required to be the selected
+Theorem 3.11 possible image.  Thus the record-union containment used by the
+constructed Remark 3.9.5 source is no longer an unrelated payload: it is
+recoverable from the selected possible image and the quotient-aware Theorem 3.11
+source.
+-/
+structure IUTStage1Theorem311QuotientMultiradialRemark395Compatibility
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    {l : PrimeGeFive}
+    (theorem311Source :
+      IUTStage1Theorem311QuotientMultiradialSource
+        (package := package) record l)
+    (constructedSource :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record) :
+    Prop where
+  qPilotRegion_eq_selectedQRegion :
+    constructedSource.qPilotRegion = theorem311Source.selectedQRegion.toSet
+  hullOperator_acts_on_selected_theta_family :
+    constructedSource.hullOperator.phi
+        (recordThetaPossibleImageUnion record) =
+      constructedSource.hullOperator.phi
+        theorem311Source.multiradialImages.possibleImages.thetaImageUnionSet
+
+namespace IUTStage1Theorem311QuotientMultiradialRemark395Compatibility
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+variable {l : PrimeGeFive}
+variable
+  {theorem311Source :
+    IUTStage1Theorem311QuotientMultiradialSource
+      (package := package) record l}
+  {constructedSource :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+      (β := β) record}
+
+theorem qPilotRegion_subset_recordUnion
+    (compatibility :
+      IUTStage1Theorem311QuotientMultiradialRemark395Compatibility
+        theorem311Source constructedSource) :
+    constructedSource.qPilotRegion ⊆ recordThetaPossibleImageUnion record := by
+  rw [compatibility.qPilotRegion_eq_selectedQRegion]
+  exact theorem311Source.selectedQRegion_subset_recordUnion
+
+theorem qPilotRegion_eq_selected_possibleImage
+    (compatibility :
+      IUTStage1Theorem311QuotientMultiradialRemark395Compatibility
+        theorem311Source constructedSource) :
+    constructedSource.qPilotRegion =
+      recordThetaPossibleImage record theorem311Source.selectedQChoice := by
+  rw [compatibility.qPilotRegion_eq_selectedQRegion,
+    theorem311Source.selectedQRegion_eq_recordThetaPossibleImage]
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (compatibility :
+      IUTStage1Theorem311QuotientMultiradialRemark395Compatibility
+        theorem311Source constructedSource) :
+    theorem311Source.multiradialImages.quotient =
+        theorem311Source.typedIndeterminacyCore.quotient ∧
+      theorem311Source.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      constructedSource.qPilotRegion =
+        recordThetaPossibleImage record theorem311Source.selectedQChoice ∧
+      constructedSource.qPilotRegion ⊆ recordThetaPossibleImageUnion record ∧
+      constructedSource.hullOperator.phi
+          (recordThetaPossibleImageUnion record) =
+        constructedSource.hullOperator.phi
+          theorem311Source.multiradialImages.possibleImages.thetaImageUnionSet :=
+  let endpoint := theorem311Source.endpoint
+  ⟨endpoint.1,
+    endpoint.2.1,
+    endpoint.2.2.1,
+    compatibility.qPilotRegion_eq_selected_possibleImage,
+    compatibility.qPilotRegion_subset_recordUnion,
+    compatibility.hullOperator_acts_on_selected_theta_family⟩
+
+end IUTStage1Theorem311QuotientMultiradialRemark395Compatibility
+
+end IUTStage1Theorem311HullDetSourceConstructor
 
 open IUTStage1Theorem311HullDetSourceConstructor in
 /--
