@@ -8914,12 +8914,15 @@ one-sided Theorem~3.11 construction directly:
 \texttt{ConstructedTheorem311OneSidedStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaSource},\\
+\texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaSource},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedNormalizedHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
+\quad\texttt{Theorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{Theorem311OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
 \end{array}
 \]
 The source records carry an
@@ -8971,10 +8974,25 @@ The wrapper
 threads this \(p\)-adic Haar-index source into the normalized Step~(xi)
 local-to-global surface, and the corresponding finite-divisor vertical-\(IQ\)
 endpoint projects through the normalized-Haar route to the same Corollary~3.12
-dichotomy.  Thus the preferred public route no longer exposes the raw total
-Haar-defect sum inequality; the remaining source-paper identification is the
-equality between these \(p\)-adic index defects and the exact local
-arithmetic-defect terms appearing in the \IUT{} IV \(C_\Theta\) expression.
+dichotomy.
+The new source
+\texttt{IUTStage1FinitePlaceIUTIVLocalArithmeticDefectSource} names the
+paper-side local arithmetic-defect term in the \IUT{} IV \(C_\Theta\) estimate
+and records its placewise equality with the \(p\)-adic unit-ball Haar index.
+It therefore derives the same nonnegativity, distinguished-place lower bound,
+and total \(\sum_v\delta_v\geq1\) statement for the IUT IV local defects.  The
+corresponding Step~(xi) wrapper
+\texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaSource}
+expresses the arithmetic upper sum using these named IUT IV local defects and
+projects to the p-adic Haar-index route by the recorded equality.  Its
+finite-divisor vertical-\(IQ\) endpoint is now the preferred local-to-global
+\(C_\Theta\) surface for this part of the corridor.  Thus the preferred public
+route no longer exposes the raw total Haar-defect sum inequality or an unnamed
+Haar-defect summand.  The remaining source-paper work is now higher upstream:
+construct the IUT IV Theorem~1.10 arithmetic-divisor/log-volume evaluation that
+produces these local arithmetic defects and the global arithmetic/main-log
+sums, rather than taking those local defect equalities and sum identities as
+source data.
 
 The practical priority order is:
 \begin{enumerate}
