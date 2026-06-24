@@ -4319,6 +4319,51 @@ structure IUTIVCThetaObligations where
   local_to_global_canonicalCThetaScale_le_cTheta_constructed : Prop
 
 /--
+Preferred additive-Haar arithmetic-degree/p-adic formula obligations.
+
+This refines the generic IUT IV `C_Theta` ledger at the currently preferred
+finite-divisor endpoint.  It names the remaining source-paper constructions
+below the strongest checked route: additive-Haar local analytic construction,
+local arithmetic matching, formula splitting, p-adic prime-error splitting, and
+the Step (xi) arithmetic-degree calibration.
+-/
+structure AdditiveHaarArithmeticDegreePadicObligations where
+  theorem110_additive_haar_local_analytic_construction_constructed : Prop
+  additive_haar_local_arithmetic_matching_constructed : Prop
+  arithmetic_divisor_formula_split_constructed : Prop
+  padic_prime_error_defect_main_split_constructed : Prop
+  stepxi_arithmetic_degree_calibration_constructed : Prop
+  localized_determinant_multiplicity_matches_iutiv_coefficient : Prop
+  adjusted_raw_log_volume_matches_different_plus_conductor : Prop
+  realified_packet_source_supplies_stepx_equalities : Prop
+  constructed_hodge_she_ipl_provenance_threaded_to_endpoint : Prop
+  strongest_additive_haar_endpoint_has_remaining_payload_audit : Prop
+
+namespace AdditiveHaarArithmeticDegreePadicObligations
+
+def RemainingPayloadAudit
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations) : Prop :=
+  obligations.theorem110_additive_haar_local_analytic_construction_constructed ∧
+    obligations.additive_haar_local_arithmetic_matching_constructed ∧
+    obligations.arithmetic_divisor_formula_split_constructed ∧
+    obligations.padic_prime_error_defect_main_split_constructed ∧
+    obligations.stepxi_arithmetic_degree_calibration_constructed ∧
+    obligations.localized_determinant_multiplicity_matches_iutiv_coefficient ∧
+    obligations.adjusted_raw_log_volume_matches_different_plus_conductor ∧
+    obligations.realified_packet_source_supplies_stepx_equalities ∧
+    obligations.constructed_hodge_she_ipl_provenance_threaded_to_endpoint ∧
+    obligations.strongest_additive_haar_endpoint_has_remaining_payload_audit
+
+theorem constructedHodgeSHEIPLThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.constructed_hodge_she_ipl_provenance_threaded_to_endpoint := by
+  rcases audit with ⟨_, _, _, _, _, _, _, _, hthreaded, _⟩
+  exact hthreaded
+
+end AdditiveHaarArithmeticDegreePadicObligations
+
+/--
 Assembled paper-trace source obligation map for the Theorem 3.11 to
 Corollary 3.12 corridor.
 
@@ -4339,6 +4384,8 @@ structure Obligations
     StepXIHullDeterminantObligations
   iutIV_cTheta :
     IUTIVCThetaObligations
+  additive_haar_arithmetic_degree_padic :
+    AdditiveHaarArithmeticDegreePadicObligations
   closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis : Prop
   closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis : Prop
 
@@ -4381,6 +4428,7 @@ def RemainingPayloadAudit
     (IUTIVCThetaObligations.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
       obligations.iutIV_cTheta) ∧
     obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed ∧
+    obligations.additive_haar_arithmetic_degree_padic.RemainingPayloadAudit ∧
     obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis ∧
     obligations.closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis
 
