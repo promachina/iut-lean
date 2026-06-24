@@ -838,6 +838,120 @@ theorem corollary312_handoff_endpoint
 
 end IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow
 
+set_option linter.style.longLine false in
+/--
+IUT IV, Definition 1.9 / Theorem 1.10 local arithmetic-divisor evaluation
+source for the theta-pilot estimate.
+
+The paper defines the different, q-parameter, and conductor-support terms as
+normalized degrees of arithmetic divisors and then sums local estimates over the
+relevant places.  This record isolates the part of that construction needed by
+the Corollary 3.12 corridor: local different/conductor degrees, the absorbed
+prime/error contribution, and local main-log contributions whose finite sums
+recover the two real terms in `IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow`.
+-/
+structure IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+    (place : Type u) [Fintype place]
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) where
+  localDifferentDegree : place -> Real
+  localConductorDegree : place -> Real
+  localPrimeErrorContribution : place -> Real
+  localMainLogContribution : place -> Real
+  localDifferentDegree_nonneg :
+    ∀ v : place, 0 <= localDifferentDegree v
+  localConductorDegree_nonneg :
+    ∀ v : place, 0 <= localConductorDegree v
+  localPrimeErrorContribution_nonneg :
+    ∀ v : place, 0 <= localPrimeErrorContribution v
+  logDifferentFtpd_eq_sum :
+    estimate.logDifferentFtpd =
+      ∑ v : place, localDifferentDegree v
+  logConductorFtpd_eq_sum :
+    estimate.logConductorFtpd =
+      ∑ v : place, localConductorDegree v
+  primeErrorContribution_eq_sum :
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ v : place, localPrimeErrorContribution v
+  mainLogTerm_eq_sum :
+    estimate.mainLogTerm =
+      ∑ v : place, localMainLogContribution v
+
+namespace IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+
+noncomputable def arithmeticDegreeCoefficient
+    (_source :
+      IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+        place estimate) :
+    Real :=
+  (((estimate.l.value : Real) + 1) / (4 * estimate.absoluteLogQ)) *
+    (1 + 36 * (estimate.dmod : Real) / (estimate.l.value : Real))
+
+noncomputable def localArithmeticUpperContribution
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+        place estimate)
+    (v : place) :
+    Real :=
+  source.arithmeticDegreeCoefficient *
+      (source.localDifferentDegree v + source.localConductorDegree v) +
+    source.localPrimeErrorContribution v
+
+theorem logDegreeSum_eq_sum
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+        place estimate) :
+    estimate.logDifferentFtpd + estimate.logConductorFtpd =
+      ∑ v : place,
+        (source.localDifferentDegree v + source.localConductorDegree v) := by
+  rw [source.logDifferentFtpd_eq_sum, source.logConductorFtpd_eq_sum]
+  rw [Finset.sum_add_distrib]
+
+set_option linter.style.longLine false in
+theorem arithmeticUpperTerm_eq_sum
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+        place estimate) :
+    estimate.arithmeticUpperTerm =
+      ∑ v : place, source.localArithmeticUpperContribution v := by
+  simp only [IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow.arithmeticUpperTerm,
+    iutIVThetaPilotArithmeticUpperTerm, localArithmeticUpperContribution,
+    arithmeticDegreeCoefficient]
+  rw [source.logDifferentFtpd_eq_sum, source.logConductorFtpd_eq_sum,
+    source.primeErrorContribution_eq_sum]
+  rw [← Finset.sum_add_distrib, Finset.mul_sum, Finset.sum_add_distrib]
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+        place estimate) :
+    Prop :=
+  estimate.logDifferentFtpd =
+      ∑ v : place, source.localDifferentDegree v ∧
+    estimate.logConductorFtpd =
+      ∑ v : place, source.localConductorDegree v ∧
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ v : place, source.localPrimeErrorContribution v ∧
+    estimate.arithmeticUpperTerm =
+      ∑ v : place, source.localArithmeticUpperContribution v ∧
+    estimate.mainLogTerm =
+      ∑ v : place, source.localMainLogContribution v
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+        place estimate) :
+    Endpoint source :=
+  ⟨source.logDifferentFtpd_eq_sum,
+    source.logConductorFtpd_eq_sum,
+    source.primeErrorContribution_eq_sum,
+    source.arithmeticUpperTerm_eq_sum,
+    source.mainLogTerm_eq_sum⟩
+
+end IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+
 /--
 IUT IV, Theorem 1.10 final displayed bound after the tripodal-to-`F` passage.
 

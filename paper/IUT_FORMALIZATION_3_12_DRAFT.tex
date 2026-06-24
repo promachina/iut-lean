@@ -8915,6 +8915,7 @@ one-sided Theorem~3.11 construction directly:
 \texttt{ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaSource},\\
+\texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDivisorEvaluationStepXILocalTermCThetaSource},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
@@ -8922,7 +8923,9 @@ one-sided Theorem~3.11 construction directly:
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
+\quad\texttt{Theorem311OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{Theorem311OneSidedIUTIVArithmeticDivisorEvaluationStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
 \end{array}
 \]
 The source records carry an
@@ -8986,19 +8989,36 @@ corresponding Step~(xi) wrapper
 expresses the arithmetic upper sum using these named IUT IV local defects and
 projects to the p-adic Haar-index route by the recorded equality.  Its
 finite-divisor vertical-\(IQ\) endpoint is now the preferred local-to-global
-\(C_\Theta\) surface for this part of the corridor.  Thus the preferred public
-route no longer exposes the raw total Haar-defect sum inequality or an unnamed
-Haar-defect summand.  The remaining source-paper work is now higher upstream:
-construct the IUT IV Theorem~1.10 arithmetic-divisor/log-volume evaluation that
-produces these local arithmetic defects and the global arithmetic/main-log
-sums, rather than taking those local defect equalities and sum identities as
-source data.
+\(C_\Theta\) surface for this part of the corridor.  The divisor-evaluation
+refinement
+\texttt{IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource} now
+records the local Definition~1.9/Theorem~1.10 arithmetic-divisor degree
+evaluation: local different degrees, conductor degrees, absorbed prime/error
+contributions, local main-log terms, and finite-sum identities recovering
+\(\log\mathrm{Diff}_{F_{\mathrm{tpd}}}\),
+\(\log\mathrm{Cond}_{F_{\mathrm{tpd}}}\), the absorbed
+\(10(e^\ast_{\mathrm{mod}}l+\eta_{\mathrm{prm}})\) term, the global arithmetic
+upper term, and the global main-log term.  The wrapper
+\texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDivisorEvaluationStepXILocalTermCThetaSource}
+threads this source into Step~(xi), leaving the local matching condition that
+the IUT IV arithmetic upper contribution is the Step~(xi) weighted determinant
+contribution plus the local IUT IV defect plus the local main-log contribution.
+Thus the preferred public route no longer exposes the raw total Haar-defect sum
+inequality, an unnamed Haar-defect summand, or the global arithmetic/main-log
+sum identities as separate endpoint hypotheses.  The remaining source-paper
+work is now one level higher upstream: construct the actual arithmetic divisors
+\(d_{\mathrm{ADiv}}\), \(q_{\mathrm{ADiv}}\), and \(f_{\mathrm{ADiv}}\), their support/effectivity
+properties, localized normalized degree maps, and the local estimate gates in
+Theorem~1.10, Steps~(v)--(vii), including the prime-error absorption, rather
+than taking local degree functions and the Step~(xi) matching equality as source
+data.
 
 The practical priority order is:
 \begin{enumerate}
-\item factor the large source module into reviewable finite-label, hull,
-  Frobenioid-shift, and \IUT{} IV algebra modules without changing theorem
-  statements;
+\item construct the IUT IV arithmetic-divisor objects
+  \(d_{\mathrm{ADiv}},q_{\mathrm{ADiv}},f_{\mathrm{ADiv}}\), support/effectivity data, localized
+  normalized degree maps, and Step~(v)--(vii) local estimates below the current
+  divisor-evaluation source;
 \item extend the audited Hodge--Arakelov theta evaluation wrapper beyond the
   finite degree-evaluation, bad-local quotient, and canonical-label shadows
   toward actual Gaussian/Frobenioid material from \IUT{} II;
