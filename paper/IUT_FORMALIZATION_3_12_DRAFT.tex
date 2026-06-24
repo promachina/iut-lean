@@ -8889,6 +8889,29 @@ the quotient-indexed possible-image family.  This closes only the
 interface-level satisfiability check: it prevents the typed indeterminacy layer
 from being vacuous, but it is not yet a construction of Mochizuki's full
 indeterminacy apparatus.
+The witness has also been strengthened from the purely reflexive one-point
+case to a strict two-point audit,
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311TypedIndeterminacyCore.}\\
+\quad\texttt{StrictFiniteToyTypedIndeterminacyNonvacuityAudit}.
+\end{array}
+\]
+Here the choice space is \(\mathrm{Fin}\,2\), \((\Ind_1)\) and \((\Ind_2)\)
+are equality relations, and \((\Ind_3)\) contains the strict step
+\(0\to 1\).  The Lean theorem
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311TypedIndeterminacyCore.}\\
+\quad\texttt{strictFiniteToyTypedIndeterminacyNonvacuityAudit\_}\\
+\quad\texttt{ind3\_strict\_not\_equalized}
+\end{array}
+\]
+proves simultaneously that this \((\Ind_3)\) step is present, that its
+log-volume inequality is strict, and that it is still absent from the equality
+quotient generators.  This is stronger nonvacuity evidence for the asymmetric
+typed interface, while retaining the same limitation: it is a finite audit
+model of the interface, not an \IUT{} source construction.
 The one-sided multiradial source now also exposes this information as the
 structured audit
 \[

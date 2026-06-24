@@ -4087,6 +4087,142 @@ theorem finiteToyTypedIndeterminacyNonvacuityAudit_ind3_is_one_sided
       (finiteToyTypedIndeterminacyNonvacuityAudit target).ind3_step_self,
     (finiteToyTypedIndeterminacyNonvacuityAudit target).equalityQuotient_no_ind3_generator⟩
 
+/--
+Two-point nonvacuity witness for a genuinely one-sided `(Ind3)` step.
+
+The `(Ind1)` and `(Ind2)` relations are equality, while `(Ind3)` permits the
+strict step `0 -> 1`.  The procession-normalized log-volume is `0` at `0` and
+`1` at `1`, so the `(Ind3)` assertion is a strict upper-semi inequality, not a
+hidden equality.
+-/
+def strictFiniteToyLogVolume : Fin 2 -> Real :=
+  fun choice => choice.val
+
+def strictFiniteToyInd3Step (choice₁ choice₂ : Fin 2) : Prop :=
+  choice₁ = choice₂ ∨
+    (choice₁ = (0 : Fin 2) ∧ choice₂ = (1 : Fin 2))
+
+def strictFiniteToyCore : IUTStage1Theorem311TypedIndeterminacyCore (Fin 2) :=
+  { logVolume := strictFiniteToyLogVolume,
+    ind1 :=
+      { step := Eq,
+        logVolume := strictFiniteToyLogVolume,
+        preserves_processionNormalizedLogVolume := by
+          intro choice₁ choice₂ hstep
+          subst hstep
+          rfl },
+    ind2 :=
+      { step := Eq,
+        logVolume := strictFiniteToyLogVolume,
+        preserves_processionNormalizedLogVolume := by
+          intro choice₁ choice₂ hstep
+          subst hstep
+          rfl },
+    ind3 :=
+      { step := strictFiniteToyInd3Step,
+        logVolume := strictFiniteToyLogVolume,
+        upper_semi_logVolume := by
+          intro choice₁ choice₂ hstep
+          rcases hstep with hEq | hStrict
+          · subst hEq
+            exact le_rfl
+          · rcases hStrict with ⟨hzero, hone⟩
+            subst hzero
+            subst hone
+            norm_num [strictFiniteToyLogVolume] },
+    ind1_logVolume_eq := rfl,
+    ind2_logVolume_eq := rfl,
+    ind3_logVolume_eq := rfl }
+
+def strictFiniteToyPossibleImageFamily
+    (target : Copy) : RegionFamily target (Fin 2) :=
+  { region := fun choice => Region.upperRay target choice.val }
+
+def strictFiniteToyPossibleImageCompatibility
+    (target : Copy) :
+    PossibleImageQuotientCompatibility strictFiniteToyCore
+      (strictFiniteToyPossibleImageFamily target) where
+  ind1_region_eq := by
+    intro choice₁ choice₂ hstep
+    subst hstep
+    rfl
+  ind2_region_eq := by
+    intro choice₁ choice₂ hstep
+    subst hstep
+    rfl
+  ind3_logVolume_upper := by
+    intro choice₁ choice₂ hstep
+    exact strictFiniteToyCore.ind3_logVolume_le hstep
+
+def strictFiniteToyEqualityQuotientPossibleImages
+    (target : Copy) :
+    EqualityQuotientPossibleImages strictFiniteToyCore
+      (strictFiniteToyPossibleImageFamily target) :=
+  EqualityQuotientPossibleImages.ofCompatibility
+    (strictFiniteToyPossibleImageCompatibility target)
+
+structure StrictFiniteToyTypedIndeterminacyNonvacuityAudit (target : Copy) where
+  choice_nonempty : Nonempty (Fin 2)
+  ind1_preserves_every_step :
+    ∀ {choice₁ choice₂ : Fin 2},
+      strictFiniteToyCore.ind1.step choice₁ choice₂ ->
+        strictFiniteToyCore.logVolume choice₁ =
+          strictFiniteToyCore.logVolume choice₂
+  ind2_preserves_every_step :
+    ∀ {choice₁ choice₂ : Fin 2},
+      strictFiniteToyCore.ind2.step choice₁ choice₂ ->
+        strictFiniteToyCore.logVolume choice₁ =
+          strictFiniteToyCore.logVolume choice₂
+  ind3_strict_step :
+    strictFiniteToyCore.ind3.step (0 : Fin 2) (1 : Fin 2)
+  ind3_strict_logVolume :
+    strictFiniteToyCore.logVolume (0 : Fin 2) <
+      strictFiniteToyCore.logVolume (1 : Fin 2)
+  ind3_upper_for_strict_step :
+    strictFiniteToyCore.logVolume (0 : Fin 2) <=
+      strictFiniteToyCore.logVolume (1 : Fin 2)
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : Fin 2},
+      strictFiniteToyCore.equalityGenerators.ind3_step choice₁ choice₂ -> False
+  possible_image_compatibility :
+    PossibleImageQuotientCompatibility strictFiniteToyCore
+      (strictFiniteToyPossibleImageFamily target)
+  equality_quotient_images :
+    EqualityQuotientPossibleImages strictFiniteToyCore
+      (strictFiniteToyPossibleImageFamily target)
+
+def strictFiniteToyTypedIndeterminacyNonvacuityAudit
+    (target : Copy) :
+    StrictFiniteToyTypedIndeterminacyNonvacuityAudit target :=
+  { choice_nonempty := ⟨0⟩,
+    ind1_preserves_every_step := by
+      intro choice₁ choice₂ hstep
+      exact strictFiniteToyCore.ind1_preserves_logVolume hstep,
+    ind2_preserves_every_step := by
+      intro choice₁ choice₂ hstep
+      exact strictFiniteToyCore.ind2_preserves_logVolume hstep,
+    ind3_strict_step := Or.inr ⟨rfl, rfl⟩,
+    ind3_strict_logVolume := by
+      norm_num [strictFiniteToyLogVolume, strictFiniteToyCore],
+    ind3_upper_for_strict_step := by
+      exact strictFiniteToyCore.ind3_logVolume_le (Or.inr ⟨rfl, rfl⟩),
+    equalityQuotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact strictFiniteToyCore.equalityGenerators_ind3_false hstep,
+    possible_image_compatibility := strictFiniteToyPossibleImageCompatibility target,
+    equality_quotient_images := strictFiniteToyEqualityQuotientPossibleImages target }
+
+theorem strictFiniteToyTypedIndeterminacyNonvacuityAudit_ind3_strict_not_equalized
+    (target : Copy) :
+    strictFiniteToyCore.ind3.step (0 : Fin 2) (1 : Fin 2) ∧
+      strictFiniteToyCore.logVolume (0 : Fin 2) <
+        strictFiniteToyCore.logVolume (1 : Fin 2) ∧
+      (∀ {choice₁ choice₂ : Fin 2},
+        strictFiniteToyCore.equalityGenerators.ind3_step choice₁ choice₂ -> False) :=
+  ⟨(strictFiniteToyTypedIndeterminacyNonvacuityAudit target).ind3_strict_step,
+    (strictFiniteToyTypedIndeterminacyNonvacuityAudit target).ind3_strict_logVolume,
+    (strictFiniteToyTypedIndeterminacyNonvacuityAudit target).equalityQuotient_no_ind3_generator⟩
+
 end IUTStage1Theorem311TypedIndeterminacyCore
 
 /--
