@@ -64039,6 +64039,51 @@ noncomputable def toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLoca
       source.localMatchingSource.localArithmeticUpperContribution_eq_stepXI_iutIVDefect_main }
 
 set_option linter.style.longLine false in
+noncomputable def toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+      sourceData estimate l β :=
+  { oneSidedMultiradialSource := source.oneSidedMultiradialSource,
+    qPilotRegion_eq_selectedQRegion :=
+      source.qPilotRegion_eq_selectedQRegion,
+    localCanonicalScale :=
+      source.localMatchingSource.localizedStepXISource.weightedAdjustedLogVolume,
+    localArithmeticUpperContribution :=
+      (IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+        source.localMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource).localArithmeticUpperContribution,
+    localMainLogContribution :=
+      (IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+        source.localMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource).localMainLogContribution,
+    localHaarNormalizationDefect :=
+      source.localMatchingSource.iutIVArithmeticDefectSource.localIUTIVArithmeticDefect,
+    canonicalCThetaScale_eq_sum :=
+      source.canonicalCThetaScale_eq_stepXISum,
+    arithmeticUpperTerm_eq_sum :=
+      (IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+        source.localMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource).arithmeticUpperTerm_eq_sum,
+    mainLogTerm_eq_sum :=
+      (IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+        source.localMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource).mainLogTerm_eq_sum,
+    local_stepXI_haar_bound :=
+      source.localMatchingSource.localStepXI_iutIVDefect_le_arithmeticUpper_minus_main,
+    total_haar_defect_ge_one :=
+      source.localMatchingSource.iutIVArithmeticDefectSource.total_iutIV_arithmetic_defect_ge_one }
+
+set_option linter.style.longLine false in
+theorem arithmeticGap_dominates_canonicalCThetaScale
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    sourceData.canonicalCThetaScale + 1 <=
+      estimate.arithmeticUpperTerm - estimate.mainLogTerm :=
+  source.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+    |>.arithmeticGap_dominates_canonicalCThetaScale
+
+set_option linter.style.longLine false in
 def Endpoint
     (source :
       ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorMatchedStepXILocalTermCThetaSource
@@ -64046,8 +64091,11 @@ def Endpoint
         αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
     Prop :=
   source.localMatchingSource.Endpoint ∧
-    ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource.Endpoint
-      source.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+    ConstructedTheorem311OneSidedLocalGlobalCThetaSource.Endpoint
+      (source.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+        |>.toConstructedTheorem311OneSidedLocalGlobalCThetaSource) ∧
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource.Endpoint
+        source.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -64057,6 +64105,7 @@ theorem endpoint
         αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
     Endpoint source :=
   ⟨source.localMatchingSource.endpoint,
+    source.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource.endpoint,
     source.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource.endpoint⟩
 
 theorem canonicalCThetaScale_le_iutIVCTheta
@@ -64065,7 +64114,7 @@ theorem canonicalCThetaScale_le_iutIVCTheta
         sourceData estimate l η γ localPrime localField αHaar hullSystem
         αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
     sourceData.canonicalCThetaScale <= estimate.cTheta :=
-  source.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource
+  source.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
     |>.canonicalCThetaScale_le_iutIVCTheta
 
 end ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorMatchedStepXILocalTermCThetaSource

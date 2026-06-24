@@ -9231,11 +9231,20 @@ endpoint proves the derived local inequalities
   S_v+\delta_v\leq A_v-M_v,\qquad S_v\leq A_v-M_v,
 \]
 using the nonnegativity of the local defect.  The matched additive-Haar wrapper
-then projects to the older additive-Haar source.  The current strongest
-finite-divisor boundary combines this matched Step~(xi)/\IUT{} IV source with
-the realified Frobenioid log-Kummer packet source, so both the local arithmetic
-matching and the Step~(x) packet equalities appear as typed source objects
-rather than loose endpoint fields.
+now also projects directly to
+\texttt{ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource}; the
+summation theorem there derives
+\[
+  C_{\Theta,\mathrm{can}}+1\leq A-M
+\]
+from the local matching source and the global lower bound for the total local
+arithmetic defect.  Thus the theorem
+\texttt{arithmeticGap\_dominates\_canonicalCThetaScale} is no longer reached
+only through a compatibility projection to the older additive-Haar wrapper.
+The current strongest finite-divisor boundary combines this matched
+Step~(xi)/\IUT{} IV source with the realified Frobenioid log-Kummer packet
+source, so both the local arithmetic matching and the Step~(x) packet
+equalities appear as typed source objects rather than loose endpoint fields.
 
 The Theorem~3.11 qualitative checkpoint is now also present at the
 finite-divisor \(C_\Theta\) boundary.  The new checkpoint-aware
