@@ -31,7 +31,7 @@
 
 \title{A Lean Audit of the IUT III Corollary 3.12 Corridor}
 \author{IUT Lean formalization project}
-\date{June 24, 2026}
+\date{June 25, 2026}
 
 \begin{document}
 \maketitle
@@ -46,24 +46,26 @@ Corollary 3.12, tracks the finite \(q^{j^2}\) and label-quotient phenomena
 that enter the public dispute, and records exactly which source-facing
 construction hypotheses are still external.
 
-The current code proves conditional theorems.  If the hull/log-volume
-upper-ray comparison supplies
-\(-|\log(q)|\le -|\log(\Theta)|\), and if the displayed hypothesis
-\(-|\log(\Theta)|\le C_\Theta|\log(q)|\) is supplied with
-\(|\log(q)|>0\), then \Lean{} proves \(C_\Theta\ge -1\).  If the upper-ray
-membership is strict, \Lean{} proves \(C_\Theta>-1\).  In the boundary case
-\(C_\Theta=-1\), \Lean{} proves equality of the \(q\)-pilot reading and the
-\(\Theta\)-hull boundary, and then classifies the local Frobenioid
-\(p_v^N\)-shift behavior under the actual upper-ray quotient.  This does not
-prove Corollary 3.12 from Mochizuki's published hypotheses; it identifies the
-remaining mathematical construction problem.
+The code still has conditional layers, but the preferred finite-divisor
+surfaces are no longer merely the ordered-real implication.  The oldest
+boundary proves \(C_\Theta\ge -1\) from the supplied signed comparison
+\(-|\log(\Theta)|\le C_\Theta|\log(q)|\).  The newer source-facing boundaries
+derive that comparison from Remark~3.9.5 hull/determinant data together with
+local-to-global \(\IUT{}\,\mathrm{IV}\) \(C_\Theta\) source objects.  The
+latest closed \(C_\Theta\) wrapper also records that its Hodge/\(\SHE\)/\(\IPL\)
+input is the constructed qualitative finite Hodge/SHE plus input-prime-strip
+link source, not a free-standing \(\IPL\) record.  This does not prove
+Corollary 3.12 from Mochizuki's published hypotheses; it identifies the
+remaining mathematical construction problem at a lower, source-facing boundary.
 
 After a source audit against \IUT{} I--IV, Mochizuki's 2026 LeanForm report,
 and Scholze--Stix, the status is unchanged in kind but sharper in formulation:
-the final ordered-real implication is formalized, and several collapse-prone
-comparison levels are separated, but the code still assumes the source
-construction of the multiradial/HDD/SHE/IPL data that \IUT{} III assigns to
-Theorem 3.11 and its reorganization.
+the final ordered-real implication is formalized, several collapse-prone
+comparison levels are separated, and the current local-to-global \(C_\Theta\)
+route is proof-carrying.  The code still assumes substantial source
+constructions: the full Hodge-theater/Frobenioid/log-Kummer apparatus,
+genuine holomorphic hulls and determinants, and the deepest \(\IUT{}\,\mathrm{IV}\)
+local analytic estimates.
 \end{abstract}
 
 \section{Aim and Sources}
@@ -9114,6 +9116,25 @@ equalities by a single realified Frobenioid log-Kummer packet source.  Thus the
 currently preferred finite-divisor endpoint exposes the closed local-to-global
 comparison and the source-recovered Step~(x) packet equalities at the same
 boundary.
+The first closed local-to-global \(C_\Theta\) boundary has now also been tied
+to the constructed qualitative Hodge/\(\SHE\)/\(\IPL\) source.  The declaration
+\[
+\begin{array}{l}
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{QualitativeHodgeSHEIPLIndeterminacyLocalGlobalCTheta}\\
+\quad\texttt{FiniteDivisorVerticalIQ}
+\end{array}
+\]
+projects the \(\IPL\) link from
+\texttt{IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource}
+and returns
+\texttt{ConstructedQualitativeHodgeSHEIPLIndeterminacyLocalGlobalCThetaAudit}.
+That audit records the constructed Hodge/\(\SHE\)/\(\IPL\) bridge, the
+local-to-global \(C_\Theta\) endpoint, the \(\IUT{}\,\mathrm{IV}\) handoff, the
+global \(C_\Theta\) comparison audit, and the final dichotomy in one checked
+proposition.  The remaining task is to thread the same constructed qualitative
+provenance through the deeper finite-place and additive-Haar preferred
+wrappers.
 
 The newest constructor,
 \texttt{ConstructedTheorem311OneSidedStepXILocalTermCThetaSource}, removes one
@@ -9356,9 +9377,12 @@ migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Migrate or retire the remaining older certificate-pinned \(\IPL\) review
-  aliases, so the preferred finite-divisor surfaces all enter through the
-  constructed input-prime-strip link source.
+\item Thread the constructed qualitative Hodge/\(\SHE\)/\(\IPL\) provenance
+  through the deepest finite-place and additive-Haar \(C_\Theta\) endpoints,
+  matching the new closed wrapper rather than the older free-standing
+  \(\IPL\)-link surface.
+\item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
+  are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the
   preferred constructed-\(\IPL\) record-hull boundary to any remaining older
   vertical-\(IQ\) review aliases, and construct the deeper
