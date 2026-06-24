@@ -8913,10 +8913,13 @@ one-sided Theorem~3.11 construction directly:
 \texttt{ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource},\\
+\texttt{ConstructedTheorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaSource},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedNormalizedHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
+\quad\texttt{Theorem311OneSidedNormalizedHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{Theorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
 \end{array}
 \]
 The source records carry an
@@ -8943,17 +8946,35 @@ pointwise Step~(xi)/Haar inequality and constructs the finite-place
 local-to-global source from these data.  The remaining source obligations at
 this boundary are now explicit: identify \(C_{\Theta,\mathrm{can}}\) with the
 sum of the localized Step~(xi) terms, identify the \IUT{} IV arithmetic and
-main-log terms with their local sums, and construct the finite-place Haar
-defect lower-bound source from the local-field normalization layer.
-The latter is no longer consumed as a raw sum inequality:
+main-log terms with their local sums, and identify the local Haar-defect terms
+with the precise \IUT{} IV local arithmetic defects.
+The Haar-defect lower-bound input is no longer consumed as a raw sum
+inequality:
 \texttt{IUTStage1FinitePlaceHaarDefectLowerBoundSource} records nonnegative
 local Haar defects and a distinguished normalized valuation-ball place whose
 defect is at least one, and Lean proves
 \(\sum_v \delta_v\geq 1\) from those facts.  The stricter constructor
 \texttt{ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource}
 threads this derived bound into the Step~(xi) local-to-global comparison and
-now has its own finite-divisor vertical-\(IQ\) endpoint, so the preferred
-public route no longer exposes the raw total Haar-defect sum inequality.
+now has its own finite-divisor vertical-\(IQ\) endpoint.
+The next constructor
+\texttt{IUTStage1FinitePlacePadicUnitBallHaarIndexDefectSource} derives this
+finite-place lower-bound source from placewise \(p\)-adic unit-ball Haar
+normalization.  For each place \(v\), the local defect is the dilation index
+\[
+  \delta_v=p_v^{[K_v:\mathbb Q_{p_v}]};
+\]
+Lean proves \(\delta_v\geq0\) and \(\delta_{v_0}\geq1\) for a distinguished
+normalized place from primality of \(p_v\) and the natural finrank exponent.
+The wrapper
+\texttt{ConstructedTheorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaSource}
+threads this \(p\)-adic Haar-index source into the normalized Step~(xi)
+local-to-global surface, and the corresponding finite-divisor vertical-\(IQ\)
+endpoint projects through the normalized-Haar route to the same Corollary~3.12
+dichotomy.  Thus the preferred public route no longer exposes the raw total
+Haar-defect sum inequality; the remaining source-paper identification is the
+equality between these \(p\)-adic index defects and the exact local
+arithmetic-defect terms appearing in the \IUT{} IV \(C_\Theta\) expression.
 
 The practical priority order is:
 \begin{enumerate}
