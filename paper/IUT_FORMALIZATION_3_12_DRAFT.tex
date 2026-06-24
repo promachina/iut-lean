@@ -8917,6 +8917,7 @@ one-sided Theorem~3.11 construction directly:
 \texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDivisorEvaluationStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedIUTIVTheorem110ArithmeticDivisorStepXILocalTermCThetaSource},\\
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaSource},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
@@ -8928,7 +8929,9 @@ one-sided Theorem~3.11 construction directly:
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedIUTIVArithmeticDivisorEvaluationStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVTheorem110ArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
+\quad\texttt{Theorem311OneSidedIUTIVTheorem110ArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{Theorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
 \end{array}
 \]
 The source records carry an
@@ -9022,24 +9025,34 @@ cases of Theorem~1.10, Steps~(v)--(vii): distinguished nonarchimedean,
 nondistinguished nonarchimedean with zero upper bound, and archimedean.  Its
 endpoint proves the local upper-semi bound into the arithmetic-minus-main-log
 gap and supplies the finite-sum identities for the absorbed prime/error and
-main-log terms.  The wrapper
-\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110ArithmeticDivisorStepXILocalTermCThetaSource}
-threads this typed Theorem~1.10 layer into the Step~(xi) route.  Thus the
-preferred public route no longer exposes the raw total Haar-defect sum
+main-log terms.  The preferred local boundary now refines this gate through
+\texttt{IUTStage1IUTIVTheorem110LocalCaseFormulaSource}.  This source defines
+the local procession upper bound by the paper's case split: the distinguished
+nonarchimedean Step~(v) formula, zero for the nondistinguished
+nonarchimedean Step~(vi) branch, and the archimedean Step~(vii) formula.  Lean
+constructs the older gate source from this formula-level source, so the
+Step~(vi) zero contribution is a theorem of the constructor rather than a
+separate payload field.  The wrapper
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaSource}
+threads this stricter typed Theorem~1.10 layer into the Step~(xi) route.  Thus
+the preferred public route no longer exposes the raw total Haar-defect sum
 inequality, an unnamed Haar-defect summand, the global arithmetic/main-log sum
-identities, or bare local degree functions as separate endpoint hypotheses.
+identities, bare local degree functions, or a raw nondistinguished local-zero
+field as separate endpoint hypotheses.
 The remaining source-paper work is now to instantiate these typed finite
 sources from actual number-field valuations, the different ideal, q-parameters,
 the conductor support divisor, and the Proposition~1.4/1.5 local log-shell
-estimates, and to prove the Step~(xi) matching equality from those constructions
-rather than taking it as source data.
+estimates; prove the distinguished and archimedean formula bounds from those
+local log-shell estimates; and prove the Step~(xi) matching equality from those
+constructions rather than taking it as source data.
 
 The practical priority order is:
 \begin{enumerate}
 \item instantiate the typed IUT IV arithmetic-divisor source from actual
   number-field valuations, different/q/conductor divisors, and Proposition~1.4
-  and Proposition~1.5 local log-shell estimates, then derive the current Step~(xi)
-  matching equality from those objects;
+  and Proposition~1.5 local log-shell estimates, then derive the distinguished
+  and archimedean local formula bounds and the current Step~(xi) matching
+  equality from those objects;
 \item extend the audited Hodge--Arakelov theta evaluation wrapper beyond the
   finite degree-evaluation, bad-local quotient, and canonical-label shadows
   toward actual Gaussian/Frobenioid material from \IUT{} II;

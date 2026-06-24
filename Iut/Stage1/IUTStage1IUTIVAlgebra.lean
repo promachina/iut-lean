@@ -1287,6 +1287,182 @@ end IUTStage1IUTIVTheorem110LocalEstimateGateSource
 
 set_option linter.style.longLine false in
 /--
+IUT IV, Theorem 1.10, Steps (v)--(vii), formula-level local source.
+
+The older gate source stores an arbitrary `localProcessionUpperBound` together
+with a proof for each case.  This stricter source defines that upper bound by
+the paper's case split: a distinguished nonarchimedean displayed formula, zero
+for nondistinguished nonarchimedean places, and an archimedean displayed
+formula.  Thus the Step (vi) zero contribution is no longer supplied as a
+separate payload; Lean derives it from the case distinction.
+-/
+structure IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+    (place : Type u) [Fintype place]
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    (divisorSource :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate) where
+  localKind : place -> IUTStage1IUTIVTheorem110LocalEstimateKind
+  localPrimeErrorContribution : place -> Real
+  localMainLogContribution : place -> Real
+  distinguishedProcessionBound : place -> Real
+  archimedeanProcessionBound : place -> Real
+  localPrimeErrorContribution_nonneg :
+    ∀ v : place, 0 <= localPrimeErrorContribution v
+  primeErrorContribution_eq_sum :
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ v : place, localPrimeErrorContribution v
+  mainLogTerm_eq_sum :
+    estimate.mainLogTerm =
+      ∑ v : place, localMainLogContribution v
+  stepV_distinguished_formula_le_gap :
+    ∀ v : place,
+      localKind v =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+        distinguishedProcessionBound v <=
+          divisorSource.localArithmeticUpperContribution
+              localPrimeErrorContribution v -
+            localMainLogContribution v
+  stepVI_nondistinguished_gap_nonneg :
+    ∀ v : place,
+      localKind v =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean ->
+        0 <=
+          divisorSource.localArithmeticUpperContribution
+              localPrimeErrorContribution v -
+            localMainLogContribution v
+  stepVII_archimedean_formula_le_gap :
+    ∀ v : place,
+      localKind v =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+        archimedeanProcessionBound v <=
+          divisorSource.localArithmeticUpperContribution
+              localPrimeErrorContribution v -
+            localMainLogContribution v
+
+namespace IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {divisorSource :
+  IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate}
+
+noncomputable def localProcessionUpperBound
+    (source :
+      IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+        place divisorSource)
+    (v : place) :
+    Real :=
+  match source.localKind v with
+  | IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean =>
+      source.distinguishedProcessionBound v
+  | IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean =>
+      0
+  | IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean =>
+      source.archimedeanProcessionBound v
+
+theorem localProcessionUpperBound_le_gap
+    (source :
+      IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+        place divisorSource)
+    (v : place) :
+    source.localProcessionUpperBound v <=
+      divisorSource.localArithmeticUpperContribution
+          source.localPrimeErrorContribution v -
+        source.localMainLogContribution v := by
+  cases hkind : source.localKind v
+  · simpa [localProcessionUpperBound, hkind] using
+      source.stepV_distinguished_formula_le_gap v hkind
+  · simpa [localProcessionUpperBound, hkind] using
+      source.stepVI_nondistinguished_gap_nonneg v hkind
+  · simpa [localProcessionUpperBound, hkind] using
+      source.stepVII_archimedean_formula_le_gap v hkind
+
+theorem stepVI_nondistinguished_zero
+    (source :
+      IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+        place divisorSource)
+    (v : place)
+    (hkind :
+      source.localKind v =
+        IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) :
+    source.localProcessionUpperBound v = 0 := by
+  simp [localProcessionUpperBound, hkind]
+
+set_option linter.style.longLine false in
+noncomputable def toLocalEstimateGateSource
+    (source :
+      IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+        place divisorSource) :
+    IUTStage1IUTIVTheorem110LocalEstimateGateSource
+      place divisorSource :=
+  { localKind := source.localKind,
+    localPrimeErrorContribution :=
+      source.localPrimeErrorContribution,
+    localMainLogContribution :=
+      source.localMainLogContribution,
+    localProcessionUpperBound :=
+      source.localProcessionUpperBound,
+    localPrimeErrorContribution_nonneg :=
+      source.localPrimeErrorContribution_nonneg,
+    primeErrorContribution_eq_sum :=
+      source.primeErrorContribution_eq_sum,
+    mainLogTerm_eq_sum :=
+      source.mainLogTerm_eq_sum,
+    stepV_distinguished_le_gap := by
+      intro v hkind
+      simpa [localProcessionUpperBound, hkind] using
+        source.stepV_distinguished_formula_le_gap v hkind,
+    stepVI_nondistinguished_zero := by
+      intro v hkind
+      exact source.stepVI_nondistinguished_zero v hkind,
+    stepVI_nondistinguished_le_gap := by
+      intro v hkind
+      simpa [localProcessionUpperBound, hkind] using
+        source.stepVI_nondistinguished_gap_nonneg v hkind,
+    stepVII_archimedean_le_gap := by
+      intro v hkind
+      simpa [localProcessionUpperBound, hkind] using
+        source.stepVII_archimedean_formula_le_gap v hkind }
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+        place divisorSource) :
+    Prop :=
+  (∀ v : place,
+      0 <= source.localPrimeErrorContribution v) ∧
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ v : place, source.localPrimeErrorContribution v ∧
+    estimate.mainLogTerm =
+      ∑ v : place, source.localMainLogContribution v ∧
+    (∀ v : place,
+      source.localProcessionUpperBound v <=
+        divisorSource.localArithmeticUpperContribution
+            source.localPrimeErrorContribution v -
+          source.localMainLogContribution v) ∧
+    (∀ v : place,
+      source.localKind v =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean ->
+        source.localProcessionUpperBound v = 0) ∧
+    IUTStage1IUTIVTheorem110LocalEstimateGateSource.Endpoint
+      source.toLocalEstimateGateSource
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+        place divisorSource) :
+    Endpoint source :=
+  ⟨source.localPrimeErrorContribution_nonneg,
+    source.primeErrorContribution_eq_sum,
+    source.mainLogTerm_eq_sum,
+    source.localProcessionUpperBound_le_gap,
+    source.stepVI_nondistinguished_zero,
+    source.toLocalEstimateGateSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+
+set_option linter.style.longLine false in
+/--
 Constructor layer from IUT IV arithmetic divisors plus Theorem 1.10 local
 estimate gates to the older real-valued local evaluation source.
 -/
@@ -1365,6 +1541,83 @@ theorem localProcessionUpperBound_le_gap
   source.localEstimateGateSource.localProcessionUpperBound_le_gap v
 
 end IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource
+
+set_option linter.style.longLine false in
+/--
+Constructor layer from arithmetic divisors plus the formula-level Step
+(v)--(vii) source.
+
+This is the preferred local Theorem 1.10 source boundary: the local evaluation
+source is obtained from typed arithmetic divisors and a case-defined procession
+upper bound, before projecting to the older gate/evaluation records.
+-/
+structure IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
+    (place : Type u) [Fintype place]
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) where
+  arithmeticDivisorSource :
+    IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate
+  localCaseFormulaSource :
+    IUTStage1IUTIVTheorem110LocalCaseFormulaSource
+      place arithmeticDivisorSource
+
+namespace IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+
+noncomputable def toTheorem110ArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
+        place estimate) :
+    IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource
+      place estimate :=
+  { arithmeticDivisorSource := source.arithmeticDivisorSource,
+    localEstimateGateSource :=
+      source.localCaseFormulaSource.toLocalEstimateGateSource }
+
+noncomputable def toThetaPilotArithmeticDivisorLocalEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
+        place estimate) :
+    IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+      place estimate :=
+  source.toTheorem110ArithmeticDivisorEvaluationSource
+    |>.toThetaPilotArithmeticDivisorLocalEvaluationSource
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
+        place estimate) :
+    Prop :=
+  source.arithmeticDivisorSource.Endpoint ∧
+    source.localCaseFormulaSource.Endpoint ∧
+      IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource.Endpoint
+        source.toTheorem110ArithmeticDivisorEvaluationSource ∧
+        IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource.Endpoint
+          source.toThetaPilotArithmeticDivisorLocalEvaluationSource
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
+        place estimate) :
+    Endpoint source :=
+  ⟨source.arithmeticDivisorSource.endpoint,
+    source.localCaseFormulaSource.endpoint,
+    source.toTheorem110ArithmeticDivisorEvaluationSource.endpoint,
+    source.toThetaPilotArithmeticDivisorLocalEvaluationSource.endpoint⟩
+
+theorem localProcessionUpperBound_le_gap
+    (source :
+      IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
+        place estimate)
+    (v : place) :
+    source.localCaseFormulaSource.localProcessionUpperBound v <=
+      source.arithmeticDivisorSource.localArithmeticUpperContribution
+          source.localCaseFormulaSource.localPrimeErrorContribution v -
+        source.localCaseFormulaSource.localMainLogContribution v :=
+  source.localCaseFormulaSource.localProcessionUpperBound_le_gap v
+
+end IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
 
 /--
 IUT IV, Theorem 1.10 final displayed bound after the tripodal-to-`F` passage.
