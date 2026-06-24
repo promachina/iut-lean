@@ -4794,6 +4794,16 @@ transport system forbids a direct domain-to-codomain identification and the
 \(\APT\) arrow is separately proved non-forbidden.  Thus the finite comparison
 is no longer documented merely by a side inequality; the typed
 allowed/forbidden transport discipline is visible next to it.
+The route-facing constructor
+\[
+\texttt{IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource}
+\]
+now packages this as source data: from the constructed qualitative bundle and
+the Hodge--Arakelov theta evaluation synchronization, it builds the
+history-separated finite Hodge/\(\SHE\) transport source and returns the same
+typed discipline audit.  In particular, the finite forgetful comparison is
+kept separate from the forbidden direct \(\SHE\) identification while the
+permitted \(\APT\) arrow remains part of the constructed qualitative input.
 This is the present typed replacement for the older raw
 \(\texttt{HasStructuredIPL/SHE/APT}\) certificate fields.  The Theorem~3.11
 source layer now exposes

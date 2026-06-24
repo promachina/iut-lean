@@ -4527,6 +4527,171 @@ theorem ofConstructedBundle
 
 end IUTStage1ConstructedQualitativeFiniteHodgeSHETransportDisciplineAudit
 
+set_option linter.style.longLine false in
+/--
+Constructed source for the finite Hodge/SHE transport boundary.
+
+The finite source is built from the Hodge--Arakelov theta evaluations using the
+history-separated forgetful transport, while the same object records the
+constructed qualitative bundle that forbids direct domain-to-codomain SHE
+identification and supplies the permitted APT arrow.  This is the route-facing
+version of the discipline audit above.
+-/
+structure IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (constructedBundle :
+      IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) where
+  record_bundle_eq_constructed_bundle :
+    record.bundle = constructedBundle.toStructuredInputsWithSHE
+  sourceData : IUTStage1FiniteHodgeSHETransportSource record l X C
+  sourceData_eq_historySeparated :
+    sourceData =
+      IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+        (record := record)
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+  disciplineAudit :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHETransportDisciplineAudit
+      record constructedBundle l X C sourceData
+
+namespace IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {constructedBundle :
+  IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package}
+variable {l : PrimeGeFive} {F : Type v} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+variable {sourceEvaluation targetEvaluation :
+  IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+    l X C}
+variable {canonicalOneDegree_preserved :
+  targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+      (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+    sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+      (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))}
+
+set_option linter.style.longLine false in
+noncomputable def ofThetaEvaluationSources
+    (hbundle : record.bundle = constructedBundle.toStructuredInputsWithSHE) :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+      record constructedBundle l X C
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved :=
+  let sourceData :=
+    IUTStage1FiniteHodgeSHETransportSource.ofThetaEvaluationSourcesHistorySeparated
+      (record := record)
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+  { record_bundle_eq_constructed_bundle := hbundle,
+    sourceData := sourceData,
+    sourceData_eq_historySeparated := rfl,
+    disciplineAudit :=
+      IUTStage1ConstructedQualitativeFiniteHodgeSHETransportDisciplineAudit.ofConstructedBundle
+        (transportSource := sourceData) hbundle }
+
+set_option linter.style.longLine false in
+noncomputable def ofConstructedRecordThetaEvaluationSources
+    (constructedBundle :
+      IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))) :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+      (IUTStage1Theorem311MultiradialSourceRecord.ofConstructedQualitativeInputsWithSHE
+        constructedBundle)
+      constructedBundle l X C
+      sourceEvaluation targetEvaluation canonicalOneDegree_preserved :=
+  ofThetaEvaluationSources
+    (record :=
+      IUTStage1Theorem311MultiradialSourceRecord.ofConstructedQualitativeInputsWithSHE
+        constructedBundle)
+    (constructedBundle := constructedBundle)
+    (sourceEvaluation := sourceEvaluation)
+    (targetEvaluation := targetEvaluation)
+    (canonicalOneDegree_preserved := canonicalOneDegree_preserved)
+    rfl
+
+theorem finiteForgetfulTransportAllowed
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    sourceData.sourceData.forgetfulTransport.transportAllowed :=
+  sourceData.disciplineAudit.finite_forgetful_transport_allowed
+
+theorem finiteForgetfulHistoriesNotIdentified
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    sourceData.sourceData.forgetfulTransport.sourceTheater.side ≠
+      sourceData.sourceData.forgetfulTransport.targetTheater.side :=
+  sourceData.disciplineAudit.finite_forgetful_histories_not_identified
+
+theorem noAllowedSHEDomainToCodomain
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved)
+    (mechanism : QualitativeData.TransportMechanismId) :
+    ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+      constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+      constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+      mechanism :=
+  sourceData.disciplineAudit.no_allowed_she_domain_to_codomain mechanism
+
+theorem aptTransport_not_forbidden
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+      constructedBundle.aptConstruction.arrow.source
+      constructedBundle.aptConstruction.arrow.target :=
+  sourceData.disciplineAudit.apt_transport_not_forbidden
+
+theorem sourceEndpoint
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    sourceData.sourceData.descentBridge =
+        record.bundle.hodgeTheaterDescentBridgeData ∧
+      sourceData.sourceData.forgetfulTransport.transportAllowed ∧
+      sourceData.sourceData.forgetfulTransport.sourceTheater.side ≠
+        sourceData.sourceData.forgetfulTransport.targetTheater.side ∧
+      (∀ mechanism : QualitativeData.TransportMechanismId,
+        ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+          constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+          constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+          mechanism) ∧
+      ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+        constructedBundle.aptConstruction.arrow.source
+        constructedBundle.aptConstruction.arrow.target :=
+  ⟨sourceData.disciplineAudit.finite_descentBridge_matches_record,
+    sourceData.finiteForgetfulTransportAllowed,
+    sourceData.finiteForgetfulHistoriesNotIdentified,
+    sourceData.noAllowedSHEDomainToCodomain,
+    sourceData.aptTransport_not_forbidden⟩
+
+end IUTStage1ConstructedQualitativeFiniteHodgeSHETransportSource
+
 /--
 IPL/log-volume source constructed from finite Hodge/SHE transport.
 
