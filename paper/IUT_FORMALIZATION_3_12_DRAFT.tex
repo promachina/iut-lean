@@ -4780,6 +4780,20 @@ arrow, and that a permitted APT arrow is not forbidden.  The Stage~1 wrapper
 \(\texttt{ConstructedQualitativeCertificateData}\) pins the pre-ledger
 certificate to the certificate constructed from these IPL/SHE/APT objects and
 returns a compact qualitative transport audit.
+The finite Hodge/\(\SHE\) transport layer now has the corresponding source
+discipline audit
+\[
+\begin{array}{l}
+\texttt{IUTStage1ConstructedQualitativeFiniteHodge}\\
+\quad\texttt{SHETransportDisciplineAudit}.
+\end{array}
+\]
+It records, in one object, that the finite Hodge/\(\SHE\) comparison uses only
+the history-separated forgetful reading, while the constructed \(\SHE\)
+transport system forbids a direct domain-to-codomain identification and the
+\(\APT\) arrow is separately proved non-forbidden.  Thus the finite comparison
+is no longer documented merely by a side inequality; the typed
+allowed/forbidden transport discipline is visible next to it.
 This is the present typed replacement for the older raw
 \(\texttt{HasStructuredIPL/SHE/APT}\) certificate fields.  The Theorem~3.11
 source layer now exposes

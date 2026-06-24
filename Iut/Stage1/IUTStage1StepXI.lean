@@ -4449,6 +4449,84 @@ theorem ofThetaEvaluationSourcesHistorySeparated_endpoint
 
 end IUTStage1FiniteHodgeSHETransportSource
 
+set_option linter.style.longLine false in
+/--
+Constructed qualitative transport discipline for the finite Hodge/SHE source.
+
+This audit separates two facts that were previously easy to conflate.  The
+finite Hodge/SHE comparison uses a history-separated forgetful reading, while
+the constructed SHE transport system still forbids a direct domain-to-codomain
+identification.  The permitted APT arrow is tracked separately and is proved
+not to be one of the forbidden identifications.
+-/
+structure IUTStage1ConstructedQualitativeFiniteHodgeSHETransportDisciplineAudit
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (constructedBundle :
+      IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (l : PrimeGeFive) {F : Type v} [Field F]
+    (X C : HyperbolicOrbicurveModel F)
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C) : Prop where
+  record_bundle_eq_constructed_bundle :
+    record.bundle = constructedBundle.toStructuredInputsWithSHE
+  finite_descentBridge_matches_record :
+    transportSource.descentBridge =
+      record.bundle.hodgeTheaterDescentBridgeData
+  finite_forgetful_transport_allowed :
+    transportSource.forgetfulTransport.transportAllowed
+  finite_forgetful_histories_not_identified :
+    transportSource.forgetfulTransport.sourceTheater.side ≠
+      transportSource.forgetfulTransport.targetTheater.side
+  she_domain_to_codomain_forbidden :
+    constructedBundle.sheTransportContext.transportSystem.forbiddenIdentification
+      constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+      constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+  no_allowed_she_domain_to_codomain :
+    ∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+        constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+        constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism
+  apt_transport_not_forbidden :
+    ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+      constructedBundle.aptConstruction.arrow.source
+      constructedBundle.aptConstruction.arrow.target
+
+namespace IUTStage1ConstructedQualitativeFiniteHodgeSHETransportDisciplineAudit
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {constructedBundle :
+  IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package}
+variable {l : PrimeGeFive} {F : Type v} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+variable {transportSource :
+  IUTStage1FiniteHodgeSHETransportSource record l X C}
+
+set_option linter.style.longLine false in
+theorem ofConstructedBundle
+    (hbundle : record.bundle = constructedBundle.toStructuredInputsWithSHE) :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHETransportDisciplineAudit
+      record constructedBundle l X C transportSource :=
+  { record_bundle_eq_constructed_bundle := hbundle,
+    finite_descentBridge_matches_record :=
+      transportSource.descentBridge_eq_structuredSHE,
+    finite_forgetful_transport_allowed :=
+      transportSource.allowedForgetfulTransport_holds,
+    finite_forgetful_histories_not_identified :=
+      transportSource.forgetfulTransport.source_history_ne_target_history,
+    she_domain_to_codomain_forbidden :=
+      constructedBundle.sheTransportContext.forbidden_domain_to_codomain,
+    no_allowed_she_domain_to_codomain :=
+      constructedBundle.noAllowedSHEDomainToCodomain,
+    apt_transport_not_forbidden :=
+      constructedBundle.aptTransport_not_forbidden }
+
+end IUTStage1ConstructedQualitativeFiniteHodgeSHETransportDisciplineAudit
+
 /--
 IPL/log-volume source constructed from finite Hodge/SHE transport.
 
