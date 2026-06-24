@@ -10005,6 +10005,92 @@ theorem endpoint
     construction.selectedQRegion_eq_recordThetaPossibleImage,
     construction.selectedQRegion_subset_recordUnion⟩
 
+set_option linter.style.longLine false in
+/--
+Audit object for the one-sided Theorem 3.11 quotient layer.
+
+This records the source-paper asymmetry at the multiradial possible-image
+boundary: `(Ind1)` and `(Ind2)` act through the equality quotient and preserve
+procession-normalized log-volume, while `(Ind3)` is excluded from that quotient
+and remains only as the upper-semi log-volume relation.
+-/
+structure OneSidedQuotientAudit
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l) : Prop where
+  quotient_is_equalityQuotient :
+    construction.multiradialImages.quotient =
+      construction.typedIndeterminacyCore.equalityQuotient
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : index},
+      construction.typedIndeterminacyCore.equalityGenerators.ind3_step
+          choice₁ choice₂ -> False
+  ind1_preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂ : index},
+      construction.typedIndeterminacyCore.ind1.step choice₁ choice₂ ->
+        construction.typedIndeterminacyCore.logVolume choice₁ =
+          construction.typedIndeterminacyCore.logVolume choice₂
+  ind2_preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂ : index},
+      construction.typedIndeterminacyCore.ind2.step choice₁ choice₂ ->
+        construction.typedIndeterminacyCore.logVolume choice₁ =
+          construction.typedIndeterminacyCore.logVolume choice₂
+  ind3_upper_semi_logVolume :
+    ∀ {choice₁ choice₂ : index},
+      construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+        construction.typedIndeterminacyCore.logVolume choice₁ <=
+          construction.typedIndeterminacyCore.logVolume choice₂
+  fl_procession_stays_in_equalityQuotient :
+    ∀ t choice,
+      construction.typedIndeterminacyCore.equalityQuotientMap choice =
+        construction.typedIndeterminacyCore.equalityQuotientMap
+          (construction.flProcessionAction.transition t choice)
+  possibleImages_pullback_from_equalityQuotient :
+    ∀ choice,
+      construction.equalityQuotientPossibleImages.quotientImages.region
+          (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice
+  selectedQRegion_is_quotient_possibleImage :
+    construction.selectedQRegion =
+      construction.equalityQuotientPossibleImages.quotientImages.region
+        (construction.typedIndeterminacyCore.equalityQuotientMap
+          construction.selectedQChoice)
+  selectedQRegion_is_record_possibleImage :
+    construction.selectedQRegion.toSet =
+      recordThetaPossibleImage record construction.selectedQChoice
+  selectedQRegion_subset_recordUnion :
+    construction.selectedQRegion.toSet ⊆ recordThetaPossibleImageUnion record
+
+set_option linter.style.longLine false in
+theorem oneSidedQuotientAudit
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l) :
+    OneSidedQuotientAudit construction :=
+  { quotient_is_equalityQuotient := rfl,
+    equalityQuotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact construction.typedIndeterminacyCore.equalityGenerators_ind3_false hstep,
+    ind1_preserves_processionNormalizedLogVolume := by
+      intro choice₁ choice₂ hstep
+      exact construction.typedIndeterminacyCore.ind1_preserves_logVolume hstep,
+    ind2_preserves_processionNormalizedLogVolume := by
+      intro choice₁ choice₂ hstep
+      exact construction.typedIndeterminacyCore.ind2_preserves_logVolume hstep,
+    ind3_upper_semi_logVolume := by
+      intro choice₁ choice₂ hstep
+      exact construction.ind3_logVolume_upper hstep,
+    fl_procession_stays_in_equalityQuotient :=
+      construction.flProcessionAction.equalityQuotientMap_eq,
+    possibleImages_pullback_from_equalityQuotient :=
+      construction.equalityQuotientPossibleImages_pullback,
+    selectedQRegion_is_quotient_possibleImage :=
+      construction.selectedQRegion_eq_quotientPossibleImage,
+    selectedQRegion_is_record_possibleImage :=
+      construction.selectedQRegion_eq_recordThetaPossibleImage,
+    selectedQRegion_subset_recordUnion :=
+      construction.selectedQRegion_subset_recordUnion }
+
 end IUTStage1Theorem311OneSidedMultiradialConstructionSource
 
 noncomputable def recordCanonicalHullTensorPowerWeightedDeterminantHullDetData

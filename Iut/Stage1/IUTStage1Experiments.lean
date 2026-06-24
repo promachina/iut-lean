@@ -61631,6 +61631,15 @@ theorem selectedQRegion_eq_quotientPossibleImage
           source.oneSidedMultiradialSource.selectedQChoice) :=
   source.oneSidedMultiradialSource.selectedQRegion_eq_quotientPossibleImage
 
+set_option linter.style.longLine false in
+theorem oneSidedQuotientAudit
+    (source :
+      ConstructedTheorem311OneSidedLocalGlobalCThetaSource
+        sourceData estimate l) :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.OneSidedQuotientAudit
+      source.oneSidedMultiradialSource :=
+  source.oneSidedMultiradialSource.oneSidedQuotientAudit
+
 theorem canonicalCThetaScale_le_iutIVCTheta
     (source :
       ConstructedTheorem311OneSidedLocalGlobalCThetaSource
@@ -61849,6 +61858,15 @@ theorem canonicalCThetaScale_le_iutIVCTheta
     sourceData.canonicalCThetaScale <= estimate.cTheta :=
   source.toConstructedTheorem311OneSidedLocalGlobalCThetaSource
     |>.canonicalCThetaScale_le_iutIVCTheta
+
+set_option linter.style.longLine false in
+theorem oneSidedQuotientAudit
+    (source :
+      ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+        sourceData estimate l place) :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.OneSidedQuotientAudit
+      source.oneSidedMultiradialSource :=
+  source.toConstructedTheorem311OneSidedLocalGlobalCThetaSource.oneSidedQuotientAudit
 
 end ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
 
