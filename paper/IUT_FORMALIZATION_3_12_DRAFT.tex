@@ -8699,6 +8699,67 @@ inequalities, the constructed global-scale Remark~3.9.5 audit at
 \(\texttt{estimate.cTheta}\), and the finite-divisor dichotomy.  Thus the
 paper-side \(C_\Theta\) expression is visible at the same boundary as the
 Step~(x) vertical-\(IQ\) data.
+The first source-facing replacement of this last comparison is now in Lean.
+The structures
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311Ind1Action},\quad
+\texttt{IUTStage1Theorem311Ind2Action},\\
+\texttt{IUTStage1Theorem311Ind3UpperSemiRelation},\quad
+\texttt{IUTStage1Theorem311TypedIndeterminacyCore}
+\end{array}
+\]
+replace the earlier name/boolean indeterminacy shadow on the local-to-global
+critical path by typed relations on a Theorem~3.11 choice space.  The formal
+payload matches the source-paper asymmetry needed in the Corollary~3.12
+corridor: \((\Ind_1)\) and \((\Ind_2)\) preserve procession-normalized
+log-volume, while \((\Ind_3)\) supplies only an upper-semi log-volume
+inequality.  The core constructs the generated quotient and quotient map, and
+the possible-image compatibility record states that \((\Ind_1)\) and
+\((\Ind_2)\) identify possible-image regions whereas \((\Ind_3)\) contributes
+the one-sided estimate.  A finite one-point witness
+\(\texttt{finiteToyCore}\) checks joint satisfiability of this typed interface;
+it is deliberately not an \IUT{} model.
+
+The local-to-global comparison itself is now isolated as
+\[
+\begin{array}{l}
+\texttt{ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource}.
+\end{array}
+\]
+This source object ties the typed Theorem~3.11 indeterminacy core to the
+constructed Remark~3.9.5 Step~(xi) source and the \IUT{} IV estimate shadow.  It
+records the remaining paper-mathematical assembly obligations: local place
+log-volume assembly, finite-divisor valuation-ball Haar normalization,
+product/sum local-to-global assembly, and compatibility between the
+Theorem~3.11 indeterminacy construction and the Step~(xi) determinant/hull
+source.  Crucially, it no longer assumes the raw comparison
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\).  Instead Lean derives it from the
+paper-shaped arithmetic gap
+\[
+  C_{\Theta,\mathrm{can}}+1
+    \leq
+  \mathrm{arithmeticUpperTerm}-\mathrm{mainLogTerm}
+\]
+together with the \IUT{} IV identity
+\[
+  C_\Theta =
+  \mathrm{arithmeticUpperTerm}-\mathrm{mainLogTerm}-1.
+\]
+The compact finite-divisor endpoint
+\[
+\begin{array}{l}
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{Theorem311IndeterminacyLocalGlobalCThetaFiniteDivisorVerticalIQ}
+\end{array}
+\]
+therefore consumes this source object and returns both the source-obligation
+endpoint and the Corollary~3.12 dichotomy.  This is progress on the disputed
+corridor because the last scalar comparison is now a typed Theorem~3.11/\IUT{}
+IV local-to-global source obligation, not an exposed final numeric hypothesis.
+It remains an obligation until the local place assembly, Haar normalization,
+and product/sum comparison are constructed from the corresponding source-paper
+objects rather than recorded as proof-carrying fields.
 
 The practical priority order is:
 \begin{enumerate}

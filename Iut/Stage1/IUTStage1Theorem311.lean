@@ -3560,6 +3560,247 @@ theorem union_eq_targetUnion
 end IUTStage1ThetaImagesDependOnlyOnCoric
 
 /--
+Typed `(Ind1)` action on a Theorem 3.11 choice space.
+
+This is the source-facing action layer used by the local-to-global
+`C_\Theta` milestone.  The action is not represented by names or boolean
+flags: it is a relation on choices, together with the paper-side invariant that
+procession-normalized log-volume is unchanged along `(Ind1)`.
+-/
+structure IUTStage1Theorem311Ind1Action (choice : Type u) where
+  step : choice -> choice -> Prop
+  logVolume : choice -> Real
+  preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂ : choice},
+      step choice₁ choice₂ ->
+        logVolume choice₁ = logVolume choice₂
+
+namespace IUTStage1Theorem311Ind1Action
+
+variable {choice : Type u}
+
+theorem logVolume_eq
+    (action : IUTStage1Theorem311Ind1Action choice)
+    {choice₁ choice₂ : choice}
+    (hstep : action.step choice₁ choice₂) :
+    action.logVolume choice₁ = action.logVolume choice₂ :=
+  action.preserves_processionNormalizedLogVolume hstep
+
+end IUTStage1Theorem311Ind1Action
+
+/--
+Typed `(Ind2)` action on a Theorem 3.11 choice space.
+
+The action records the local tensor/aut-Frobenioid ambiguity and the invariant
+required in the proof of Corollary 3.12: procession-normalized log-volume is
+unchanged along `(Ind2)`.
+-/
+structure IUTStage1Theorem311Ind2Action (choice : Type u) where
+  step : choice -> choice -> Prop
+  logVolume : choice -> Real
+  preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂ : choice},
+      step choice₁ choice₂ ->
+        logVolume choice₁ = logVolume choice₂
+
+namespace IUTStage1Theorem311Ind2Action
+
+variable {choice : Type u}
+
+theorem logVolume_eq
+    (action : IUTStage1Theorem311Ind2Action choice)
+    {choice₁ choice₂ : choice}
+    (hstep : action.step choice₁ choice₂) :
+    action.logVolume choice₁ = action.logVolume choice₂ :=
+  action.preserves_processionNormalizedLogVolume hstep
+
+end IUTStage1Theorem311Ind2Action
+
+/--
+Typed `(Ind3)` upper-semi relation on a Theorem 3.11 choice space.
+
+Unlike `(Ind1)` and `(Ind2)`, `(Ind3)` is deliberately one-sided.  A step may
+move to a different representative, but the only log-volume assertion on the
+critical path is the source-paper upper-semi inequality.
+-/
+structure IUTStage1Theorem311Ind3UpperSemiRelation (choice : Type u) where
+  step : choice -> choice -> Prop
+  logVolume : choice -> Real
+  upper_semi_logVolume :
+    ∀ {choice₁ choice₂ : choice},
+      step choice₁ choice₂ ->
+        logVolume choice₁ <= logVolume choice₂
+
+namespace IUTStage1Theorem311Ind3UpperSemiRelation
+
+variable {choice : Type u}
+
+theorem logVolume_le
+    (relation : IUTStage1Theorem311Ind3UpperSemiRelation choice)
+    {choice₁ choice₂ : choice}
+    (hstep : relation.step choice₁ choice₂) :
+    relation.logVolume choice₁ <= relation.logVolume choice₂ :=
+  relation.upper_semi_logVolume hstep
+
+end IUTStage1Theorem311Ind3UpperSemiRelation
+
+/--
+The typed indeterminacy core used by the local-to-global `C_\Theta` milestone.
+
+It bundles the three source-paper indeterminacies around a common
+procession-normalized log-volume.  The compatibility fields assert that the
+three action records are measuring the same log-volume function, so downstream
+audits can state the exact equality/equality/inequality pattern:
+`(Ind1)` preserves, `(Ind2)` preserves, `(Ind3)` upper-bounds.
+-/
+structure IUTStage1Theorem311TypedIndeterminacyCore (choice : Type u) where
+  logVolume : choice -> Real
+  ind1 : IUTStage1Theorem311Ind1Action choice
+  ind2 : IUTStage1Theorem311Ind2Action choice
+  ind3 : IUTStage1Theorem311Ind3UpperSemiRelation choice
+  ind1_logVolume_eq : ind1.logVolume = logVolume
+  ind2_logVolume_eq : ind2.logVolume = logVolume
+  ind3_logVolume_eq : ind3.logVolume = logVolume
+
+namespace IUTStage1Theorem311TypedIndeterminacyCore
+
+variable {choice : Type u}
+
+def generators (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    IUTStage1IndeterminacyGenerators choice :=
+  { ind1_step := core.ind1.step,
+    ind2_step := core.ind2.step,
+    ind3_step := core.ind3.step }
+
+def quotient (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    IUTStage1IndeterminacyQuotient choice :=
+  IUTStage1IndeterminacyQuotient.generated core.generators
+
+def quotientMap (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    choice -> Quot core.quotient.relation :=
+  Quot.mk core.quotient.relation
+
+theorem ind1_preserves_logVolume
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind1.step choice₁ choice₂) :
+    core.logVolume choice₁ = core.logVolume choice₂ := by
+  rw [← core.ind1_logVolume_eq]
+  exact core.ind1.logVolume_eq hstep
+
+theorem ind2_preserves_logVolume
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind2.step choice₁ choice₂) :
+    core.logVolume choice₁ = core.logVolume choice₂ := by
+  rw [← core.ind2_logVolume_eq]
+  exact core.ind2.logVolume_eq hstep
+
+theorem ind3_logVolume_le
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind3.step choice₁ choice₂) :
+    core.logVolume choice₁ <= core.logVolume choice₂ := by
+  rw [← core.ind3_logVolume_eq]
+  exact core.ind3.logVolume_le hstep
+
+/--
+Compatibility between typed indeterminacies and a possible-image family.
+
+This keeps the quotient-map construction honest: `(Ind1)` and `(Ind2)` identify
+possible-image regions, while `(Ind3)` only supplies the log-volume inequality
+needed by the Step (x) corridor.
+-/
+structure PossibleImageQuotientCompatibility
+    {target : Copy}
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily target choice) : Prop where
+  ind1_region_eq :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂
+  ind2_region_eq :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂
+  ind3_logVolume_upper :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂
+
+namespace PossibleImageQuotientCompatibility
+
+variable {target : Copy}
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily target choice}
+
+theorem ind3_upper_from_core
+    (compatibility : PossibleImageQuotientCompatibility core images)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind3.step choice₁ choice₂) :
+    core.logVolume choice₁ <= core.logVolume choice₂ :=
+  compatibility.ind3_logVolume_upper hstep
+
+theorem ind1_quotientMap_eq
+    (_compatibility : PossibleImageQuotientCompatibility core images)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind1.step choice₁ choice₂) :
+    core.quotientMap choice₁ = core.quotientMap choice₂ :=
+  Quot.sound (IUTStage1GeneratedIndeterminacyRelation.ind1 hstep)
+
+theorem ind2_quotientMap_eq
+    (_compatibility : PossibleImageQuotientCompatibility core images)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind2.step choice₁ choice₂) :
+    core.quotientMap choice₁ = core.quotientMap choice₂ :=
+  Quot.sound (IUTStage1GeneratedIndeterminacyRelation.ind2 hstep)
+
+end PossibleImageQuotientCompatibility
+
+/--
+Finite nonvacuity witness for the typed indeterminacy core.
+
+The choice type is `Fin 1`; all three indeterminacy relations are equality and
+the procession-normalized log-volume is constantly `0`.  This is not intended
+as an IUT model, but it verifies that the typed action/quotient interface is
+jointly satisfiable.
+-/
+def finiteToyCore : IUTStage1Theorem311TypedIndeterminacyCore (Fin 1) :=
+  { logVolume := fun _ => 0,
+    ind1 :=
+      { step := Eq,
+        logVolume := fun _ => 0,
+        preserves_processionNormalizedLogVolume := by
+          intro choice₁ choice₂ hstep
+          subst hstep
+          rfl },
+    ind2 :=
+      { step := Eq,
+        logVolume := fun _ => 0,
+        preserves_processionNormalizedLogVolume := by
+          intro choice₁ choice₂ hstep
+          subst hstep
+          rfl },
+    ind3 :=
+      { step := Eq,
+        logVolume := fun _ => 0,
+        upper_semi_logVolume := by
+          intro choice₁ choice₂ hstep
+          subst hstep
+          exact le_rfl },
+    ind1_logVolume_eq := rfl,
+    ind2_logVolume_eq := rfl,
+    ind3_logVolume_eq := rfl }
+
+theorem finiteToyCore_ind3_upper
+    {choice₁ choice₂ : Fin 1}
+    (hstep : finiteToyCore.ind3.step choice₁ choice₂) :
+    finiteToyCore.logVolume choice₁ <= finiteToyCore.logVolume choice₂ :=
+  finiteToyCore.ind3_logVolume_le hstep
+
+end IUTStage1Theorem311TypedIndeterminacyCore
+
+/--
 Source-facing statement of the obligations still needed to promote an IUT Stage
 1 source package to the public Stage 1 endpoint.
 

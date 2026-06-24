@@ -61254,6 +61254,109 @@ theorem remark395ConstructedHolomorphicHullDeterminantSource_iutIVCThetaHandoffC
 
 set_option linter.style.longLine false in
 /--
+Source object for the next local-to-global `C_Theta` milestone.
+
+The object ties the constructed Remark 3.9.5 Step (xi) source to a typed
+Theorem 3.11 indeterminacy core and to the IUT IV paper-side estimate.  The
+remaining scalar comparison is no longer recorded as the raw endpoint
+hypothesis `C_{Theta,can} <= C_Theta`; instead it is derived from the
+paper-shaped arithmetic gap
+`C_{Theta,can} + 1 <= arithmeticUpperTerm - mainLogTerm` together with the
+IUT IV identity `C_Theta = arithmeticUpperTerm - mainLogTerm - 1`.
+-/
+structure ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (choice : Type w) where
+  typedIndeterminacyCore :
+    IUTStage1Theorem311TypedIndeterminacyCore choice
+  localPlaceLogVolumeAssembly : Prop
+  localPlaceLogVolumeAssembly_holds : localPlaceLogVolumeAssembly
+  finiteDivisorValuationBallHaarNormalization : Prop
+  finiteDivisorValuationBallHaarNormalization_holds :
+    finiteDivisorValuationBallHaarNormalization
+  productSumLocalToGlobalAssembly : Prop
+  productSumLocalToGlobalAssembly_holds : productSumLocalToGlobalAssembly
+  theorem311IndeterminacyToStepXICompatibility : Prop
+  theorem311IndeterminacyToStepXICompatibility_holds :
+    theorem311IndeterminacyToStepXICompatibility
+  arithmeticGap_dominates_canonicalCThetaScale :
+    sourceData.canonicalCThetaScale + 1 <=
+      estimate.arithmeticUpperTerm - estimate.mainLogTerm
+
+namespace ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+variable {sourceData :
+  IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+    (β := β) record}
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {choice : Type w}
+
+theorem canonicalCThetaScale_le_iutIVCTheta
+    (source :
+      ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+        sourceData estimate choice) :
+    sourceData.canonicalCThetaScale <= estimate.cTheta := by
+  have hexpr := estimate.cTheta_expression
+  linarith [source.arithmeticGap_dominates_canonicalCThetaScale]
+
+theorem localGlobalHandoffAudit
+    (source :
+      ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+        sourceData estimate choice) :
+    Remark395ConstructedIUTIVCThetaHandoffAudit sourceData estimate :=
+  remark395ConstructedHolomorphicHullDeterminantSource_iutIVCThetaHandoffAudit
+    sourceData estimate source.canonicalCThetaScale_le_iutIVCTheta
+
+set_option linter.style.longLine false in
+def Endpoint
+    (source :
+      ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+        sourceData estimate choice) :
+    Prop :=
+  source.localPlaceLogVolumeAssembly ∧
+    source.finiteDivisorValuationBallHaarNormalization ∧
+    source.productSumLocalToGlobalAssembly ∧
+    source.theorem311IndeterminacyToStepXICompatibility ∧
+    sourceData.canonicalCThetaScale <= estimate.cTheta ∧
+    estimate.cTheta =
+      estimate.arithmeticUpperTerm - estimate.mainLogTerm - 1 ∧
+    package.preLedger.thetaSigned <=
+      estimate.cTheta * (-package.preLedger.qSigned) ∧
+    ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < estimate.cTheta)
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+        sourceData estimate choice) :
+    Endpoint source :=
+  let audit := source.localGlobalHandoffAudit
+  ⟨source.localPlaceLogVolumeAssembly_holds,
+    source.finiteDivisorValuationBallHaarNormalization_holds,
+    source.productSumLocalToGlobalAssembly_holds,
+    source.theorem311IndeterminacyToStepXICompatibility_holds,
+    source.canonicalCThetaScale_le_iutIVCTheta,
+    audit.iutIVCThetaExpression,
+    audit.thetaSigned_le_iutIVCTheta_absLogQ,
+    audit.dichotomy⟩
+
+end ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface possible-image q-choice constructor for the milestone-facing
 constructed Remark 3.9.5 Step (xi) source.
 
@@ -61981,6 +62084,120 @@ theorem boundarySignedEqualityOrStrictCTheta_from_remark395ConstructedHullDeterm
     holomorphicStructureForgotten holomorphic_structure_forgotten
     packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
     packetLocalObjectFinite_eq_ind3Source targetSource
+
+set_option linter.style.longLine false in
+/--
+First closed local-to-global \(C_\Theta\) endpoint for the finite-divisor
+vertical-\(IQ\) corridor.
+
+The endpoint no longer receives either the raw numeric bound
+`thetaSigned <= C_Theta * (-qSigned)` or the raw comparison
+`C_{Theta,can} <= C_Theta`.  Instead it consumes the proof-bearing
+`ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource`, whose arithmetic
+gap field derives the local-to-global comparison internally.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311IndeterminacyLocalGlobalCThetaFiniteDivisorVerticalIQ
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (remark395HullSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    {choice : Type w}
+    (localGlobalSource :
+      ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+        remark395HullSource estimate choice)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceEvaluation.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.Endpoint
+        localGlobalSource ∧
+      (0 < estimate.absoluteLogQ ∧
+        estimate.cTheta + 1 =
+          estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+          0 <= estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+            estimate.mainLogTerm <= estimate.arithmeticUpperTerm ∧
+              estimate.oneSixthLogQ <= estimate.theorem110RightHandSide) ∧
+        IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedGlobalCThetaScaleComparisonAudit
+          remark395HullSource estimate.cTheta ∧
+        ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+            package.preLedger.thetaSigned < 0) ∨
+          (-1 : Real) < estimate.cTheta) :=
+  ⟨localGlobalSource.endpoint,
+    boundarySignedEqualityOrStrictCTheta_from_remark395ConstructedHullDeterminantFiniteDivisorVerticalIQ_iutIVCThetaWithHandoffAudit
+      part audited sourceEvaluation targetEvaluation
+      canonicalOneDegree_preserved iplLinkSource remark395HullSource estimate
+      localGlobalSource.canonicalCThetaScale_le_iutIVCTheta
+      sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
+      kummerCompatibility forgettingCompatibility holomorphicF_realization
+      holomorphicD_realization holomorphicStructureForgotten
+      holomorphic_structure_forgotten packetLocalObject_eq_entrySource
+      packetLocalObjectFinite_eq_divisorRealified
+      packetLocalObjectFinite_eq_ind3Source targetSource⟩
 
 set_option linter.style.longLine false in
 /--
