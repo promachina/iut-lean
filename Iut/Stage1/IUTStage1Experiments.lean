@@ -61822,6 +61822,186 @@ end ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
 
 set_option linter.style.longLine false in
 /--
+Step (xi)-localized source for the one-sided finite-place local-to-global
+`C_Theta` comparison.
+
+This is a stricter constructor for
+`ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource`: the local
+canonical terms are no longer supplied as an arbitrary function.  They are read
+from the weighted adjusted localization terms of the Remark 3.9.5(vii)
+localized vector-bundle determinant source.  The local IUT IV upper term is the
+Step (xi) contribution plus the local Haar defect plus the local main-log term,
+so the pointwise Step (xi)/Haar inequality is definitional.
+-/
+structure ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (l : PrimeGeFive)
+    (η : Type y) (γ : Type w) [Fintype γ] where
+  oneSidedMultiradialSource :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l
+  qPilotRegion_eq_selectedQRegion :
+    sourceData.qPilotRegion =
+      oneSidedMultiradialSource.selectedQRegion.toSet
+  localizedStepXISource :
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+      η β γ
+  determinantSource_eq_stepXI :
+    sourceData.determinantSource =
+      localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource
+  canonicalCThetaScale_eq_stepXISum :
+    sourceData.canonicalCThetaScale =
+      ∑ place : β, localizedStepXISource.weightedAdjustedLogVolume place
+  localMainLogContribution : β -> Real
+  localHaarNormalizationDefect : β -> Real
+  arithmeticUpperTerm_eq_stepXI_haar_main_sum :
+    estimate.arithmeticUpperTerm =
+      ∑ place : β,
+        (localizedStepXISource.weightedAdjustedLogVolume place +
+          localHaarNormalizationDefect place +
+            localMainLogContribution place)
+  mainLogTerm_eq_sum :
+    estimate.mainLogTerm =
+      ∑ place : β, localMainLogContribution place
+  total_haar_defect_ge_one :
+    (1 : Real) <= ∑ place : β, localHaarNormalizationDefect place
+
+namespace ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+variable {sourceData :
+  IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+    (β := β) record}
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {l : PrimeGeFive}
+variable {η : Type y} {γ : Type w} [Fintype γ]
+
+def localCanonicalScale
+    (source :
+      ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+        sourceData estimate l η γ)
+    (place : β) :
+    Real :=
+  source.localizedStepXISource.weightedAdjustedLogVolume place
+
+def localArithmeticUpperContribution
+    (source :
+      ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+        sourceData estimate l η γ)
+    (place : β) :
+    Real :=
+  source.localizedStepXISource.weightedAdjustedLogVolume place +
+    source.localHaarNormalizationDefect place +
+      source.localMainLogContribution place
+
+theorem local_stepXI_haar_bound
+    (source :
+      ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+        sourceData estimate l η γ)
+    (place : β) :
+    source.localCanonicalScale place +
+        source.localHaarNormalizationDefect place <=
+      source.localArithmeticUpperContribution place -
+        source.localMainLogContribution place := by
+  dsimp [localCanonicalScale, localArithmeticUpperContribution]
+  ring_nf
+  exact le_rfl
+
+theorem localizedStepXI_endpoint
+    (source :
+      ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    (∀ place : β,
+      source.localizedStepXISource.toAdjustedDeterminantSource.localizationBundleLogVolume place =
+        (source.localizedStepXISource.localization place).bundle.bundleLogVolume) ∧
+      (∀ place : β,
+        source.localizedStepXISource.toAdjustedDeterminantSource.adjustedRawLogVolume place =
+          (source.localizedStepXISource.localization place).bundle.bundleLogVolume -
+            (source.localizedStepXISource.localization place).structureSheafLogVolume) ∧
+      (∀ place : β,
+        source.localizedStepXISource.toAdjustedDeterminantSource.weightedAdjustedLogVolume place =
+          source.localizedStepXISource.weightedAdjustedLogVolume place) ∧
+      source.localizedStepXISource.determinantLogVolume =
+        (∑ place, source.localizedStepXISource.weightedAdjustedLogVolume place) ∧
+      source.localizedStepXISource.normalizedDeterminantLogVolume =
+        source.localizedStepXISource.determinantLogVolume :=
+  source.localizedStepXISource.endpoint
+
+set_option linter.style.longLine false in
+def toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+    (source :
+      ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+      sourceData estimate l β :=
+  { oneSidedMultiradialSource := source.oneSidedMultiradialSource,
+    qPilotRegion_eq_selectedQRegion :=
+      source.qPilotRegion_eq_selectedQRegion,
+    localCanonicalScale := source.localCanonicalScale,
+    localArithmeticUpperContribution :=
+      source.localArithmeticUpperContribution,
+    localMainLogContribution := source.localMainLogContribution,
+    localHaarNormalizationDefect :=
+      source.localHaarNormalizationDefect,
+    canonicalCThetaScale_eq_sum := by
+      simpa [localCanonicalScale] using
+        source.canonicalCThetaScale_eq_stepXISum,
+    arithmeticUpperTerm_eq_sum := by
+      simpa [localArithmeticUpperContribution] using
+        source.arithmeticUpperTerm_eq_stepXI_haar_main_sum,
+    mainLogTerm_eq_sum := source.mainLogTerm_eq_sum,
+    local_stepXI_haar_bound := source.local_stepXI_haar_bound,
+    total_haar_defect_ge_one := source.total_haar_defect_ge_one }
+
+set_option linter.style.longLine false in
+def Endpoint
+    (source :
+      ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    Prop :=
+  sourceData.determinantSource =
+      source.localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource ∧
+    source.localizedStepXISource.determinantLogVolume =
+      (∑ place, source.localizedStepXISource.weightedAdjustedLogVolume place) ∧
+    sourceData.canonicalCThetaScale =
+      (∑ place, source.localizedStepXISource.weightedAdjustedLogVolume place) ∧
+    ConstructedTheorem311OneSidedLocalGlobalCThetaSource.Endpoint
+      (source.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+        |>.toConstructedTheorem311OneSidedLocalGlobalCThetaSource)
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    Endpoint source :=
+  ⟨source.determinantSource_eq_stepXI,
+    source.localizedStepXISource.determinantLogVolume_eq_sum_weightedAdjusted,
+    source.canonicalCThetaScale_eq_stepXISum,
+    source.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource.endpoint⟩
+
+theorem canonicalCThetaScale_le_iutIVCTheta
+    (source :
+      ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+        sourceData estimate l η γ) :
+    sourceData.canonicalCThetaScale <= estimate.cTheta :=
+  source.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+    |>.canonicalCThetaScale_le_iutIVCTheta
+
+end ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface possible-image q-choice constructor for the milestone-facing
 constructed Remark 3.9.5 Step (xi) source.
 

@@ -8911,6 +8911,7 @@ one-sided Theorem~3.11 construction directly:
 \begin{array}{l}
 \texttt{ConstructedTheorem311OneSidedLocalGlobalCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource},\\
+\texttt{ConstructedTheorem311OneSidedStepXILocalTermCThetaSource},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ}.
 \end{array}
@@ -8927,6 +8928,19 @@ inequality, and the selected q-region containment in the Theorem~3.11
 possible-image union.  Thus the current preferred route no longer exposes the
 raw numeric \(C_\Theta\) comparison and no longer uses a bare typed
 indeterminacy core at the local-to-global boundary.
+
+The newest constructor,
+\texttt{ConstructedTheorem311OneSidedStepXILocalTermCThetaSource}, removes one
+more arbitrary layer from the finite-place comparison.  Its local canonical
+terms are the weighted adjusted localization contributions of an
+\texttt{IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource}; the
+local arithmetic upper contribution is then definitionally this Step~(xi) term
+plus the local Haar defect and local main-log term.  Lean derives the
+pointwise Step~(xi)/Haar inequality and constructs the finite-place
+local-to-global source from these data.  The remaining source obligations at
+this boundary are now explicit: identify \(C_{\Theta,\mathrm{can}}\) with the
+sum of the localized Step~(xi) terms, identify the \IUT{} IV arithmetic and
+main-log terms with their local sums, and prove the total Haar defect bound.
 
 The practical priority order is:
 \begin{enumerate}
