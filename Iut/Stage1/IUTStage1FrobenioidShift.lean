@@ -12800,6 +12800,101 @@ theorem ofPacketLocalAndEntryTargetThetaAlignment_endpoint
 
 end NonarchimedeanRealifiedFrobenioidLogKummerPacketSource
 
+namespace NonarchimedeanFiniteDivisorPacketLocalSource
+
+variable
+  {audited :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean}
+  {thetaAverage : Real}
+  {logKummer : LogKummerCorrespondenceId}
+  {entry : IUTStage1NonarchimedeanInclusionData}
+  {j : Nat}
+  {product :
+    IUTStage1BaseValuationTensorPacketProductLogVolume
+      IUTStage1PlaceKind.nonarchimedean j}
+  {holomorphicF holomorphicD :
+    IUTStage1RealifiedFrobenioidTensorPacketProductSource
+      IUTStage1PlaceKind.nonarchimedean j}
+
+/--
+Recover the finite-divisor packet-local source from a realified Frobenioid
+log-Kummer packet source whose mono-analytic side is the finite divisor
+realization.
+
+This lowers the Step (x) finite packet boundary by deriving the two real
+identifications carried by `NonarchimedeanFiniteDivisorPacketLocalSource` from
+the packet correspondence source: the divisor-realified equality follows from
+the source/product calibration, while the `(Ind3)` source equality follows from
+the Kummer/forgetting-derived packet-local alignment.
+-/
+def ofRealifiedFrobenioidLogKummerPacketSource
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (packetSource :
+      NonarchimedeanRealifiedFrobenioidLogKummerPacketSource
+        audited thetaAverage logKummer entry holomorphicF holomorphicD
+        (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          monoAnalyticTheater)) :
+    NonarchimedeanFiniteDivisorPacketLocalSource
+      audited entry product :=
+  { divisorPacket := divisorPacket,
+    monoAnalyticTheater := monoAnalyticTheater,
+    packetLocalObject_eq_entrySource :=
+      packetSource.sourceCalibration.packetLocalObject_eq_entrySource,
+    packetLocalObjectFinite_eq_divisorRealified := by
+      calc
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+            entry.sourceLogVolume.finiteLogVolume := by
+          rw [packetSource.sourceCalibration.packetLocalObject_eq_entrySource]
+        _ =
+            (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+                IUTStage1TensorPacketRealizationKind.monoAnalyticD
+                monoAnalyticTheater).toRealized.product.productLogVolume :=
+          packetSource.sourceCalibration.entrySource_eq_monoAnalyticProduct
+        _ =
+            (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+                IUTStage1TensorPacketRealizationKind.monoAnalyticD
+                monoAnalyticTheater).frobenioidDegree.realifiedLogVolume :=
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater).toRealized_productLogVolume_eq_realified
+        _ = divisorPacket.divisor.realifiedLogVolume := by
+          rfl,
+    packetLocalObjectFinite_eq_ind3Source :=
+      packetSource.toPacketLocalSourceAlignment.packetLocalObjectFinite_eq_ind3Source }
+
+theorem ofRealifiedFrobenioidLogKummerPacketSource_endpoint
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (packetSource :
+      NonarchimedeanRealifiedFrobenioidLogKummerPacketSource
+        audited thetaAverage logKummer entry holomorphicF holomorphicD
+        (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          monoAnalyticTheater)) :
+    let finiteSource :=
+      ofRealifiedFrobenioidLogKummerPacketSource
+        divisorPacket monoAnalyticTheater packetSource;
+    finiteSource.divisorPacket = divisorPacket ∧
+      finiteSource.toMonoAnalyticD =
+        divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          monoAnalyticTheater ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  by
+    intro finiteSource
+    exact
+      ⟨rfl, rfl,
+        finiteSource.packetLocalObjectFinite_eq_divisorRealified,
+        finiteSource.packetLocalObjectFinite_eq_ind3Source⟩
+
+end NonarchimedeanFiniteDivisorPacketLocalSource
+
 /--
 Realified-Frobenioid Step (x) entry source.
 
