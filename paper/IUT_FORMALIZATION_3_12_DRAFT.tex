@@ -9248,10 +9248,17 @@ uses the local \(p\)-adic Haar-index split
 together with the IUT~IV defect identification \(\delta_v=h_v\) to derive
 \(E_v=\delta_v+M_v\).  The wrapper
 \texttt{IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource}
-therefore leaves only the Step~(xi) arithmetic-degree identification
-\(S_v=a_l(D_v+C_v)\) as the remaining formula-matching input at this layer.
-Its \(p\)-adic formula-matched global wrapper projects to the same
-finite-place local-global \(C_\Theta\) route.
+handled the prime-error side while still exposing the Step~(xi)
+arithmetic-degree identification \(S_v=a_l(D_v+C_v)\).  That last local
+formula has now been factored by
+\texttt{IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource}.
+It derives \(S_v=a_l(D_v+C_v)\) from two source equalities: the localized
+determinant multiplicity is the IUT~IV arithmetic-degree coefficient \(a_l\),
+and the adjusted raw localization log-volume is the local
+different-plus-conductor degree \(D_v+C_v\).  The combined
+arithmetic-degree/\(p\)-adic formula source therefore backs both local formula
+sides before entering the same finite-place local-global \(C_\Theta\) route
+through its stricter global wrapper.
 The matched additive-Haar wrapper
 now also projects directly to
 \texttt{ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource}; the
