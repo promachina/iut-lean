@@ -77616,6 +77616,179 @@ theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHET11IPLLin
 
 set_option linter.style.longLine false in
 /--
+Constructed input-prime-strip version of the checkpoint-aware
+side-conditioned Hodge/SHE/IPL record-hull finite-divisor `C_\Theta` boundary.
+
+Compared with
+`boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHET11IPLLinkRecordHullSideConditionedFiniteDivisorVerticalIQ_withConstructedQualitativeCheckpoints`,
+this theorem no longer receives the certificate-pinned `IPLLinkSource`
+directly.  It receives the Theorem 3.11 input-prime-strip link construction
+source, exposes the choice-wise links from the fixed input prime strip to each
+possible output prime strip, and only then projects the constructed source to
+the certificate-facing `toIPLLinkSource` needed by the older boundary.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHEIPLConstructionRecordHullSideConditionedFiniteDivisorVerticalIQ_withConstructedQualitativeCheckpoints
+    {packageN :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations packageN}
+    {endpoint : packageN.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (profile : IUTStage1ZModSquareWeightProfile l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord packageN}
+    (constructedBundle :
+      IUTStage1Theorem311ConstructedQualitativeInputsWithSHE packageN)
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (transportSource :
+      IUTStage1FiniteHodgeSHETransportSource record l X C)
+    (iplConstructionSource :
+      IUTStage1Theorem311IPLLinkConstructionSource record)
+    {β : Type v} [Fintype β]
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullData : IUTStage1HolomorphicHullLogVolumeShadow (Point target))
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆
+        IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          hullData
+            (IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+              record))
+        determinantSource)
+    (measure_eq_hullLogVolume :
+      packageN.preLedger.measure = hullData.toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          determinantSource).normalizedLogVolume <=
+        packageN.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageN.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation hullData qPilotRegion
+          q_subset_recordUnion determinantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (sideConditions : IUTStage1SourceSideConditions packageN)
+    (constructedCheckpoints :
+      packageN.ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        constructedBundle sideConditions)
+    (record_eq_constructed :
+      record =
+        IUTStage1Theorem311MultiradialSourceRecord.ofConstructedQualitativeInputsWithSHE
+          constructedBundle)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited transportSource.synchronization.sourceHA)
+    (source_profile_eq :
+      profile = IUTStage1ZModSquareWeightProfile.canonicalSquareWeights l)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (thetaRootSource : IUTStage1ThetaRootCuspLabelSourcePackage l X C)
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (kummerCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicF holomorphicD)
+    (forgettingCompatibility :
+      IUTStage1RealifiedFrobenioidKummerCompatibility
+        holomorphicD
+          (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+            monoAnalyticTheater))
+    (holomorphicF_realization :
+      holomorphicF.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicF)
+    (holomorphicD_realization :
+      holomorphicD.toRealized.realization =
+        IUTStage1TensorPacketRealizationKind.holomorphicD)
+    (holomorphicStructureForgotten : Prop)
+    (holomorphic_structure_forgotten : holomorphicStructureForgotten)
+    (packetLocalObject_eq_entrySource :
+      audited.choice.local_tensor_state.packetState.localObject =
+        upperSemiEntry.toEntry.sourceLogVolume)
+    (packetLocalObjectFinite_eq_divisorRealified :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        divisorPacket.divisor.realifiedLogVolume)
+    (packetLocalObjectFinite_eq_ind3Source :
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume)
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        packageN.logKummer upperSemiEntry.toEntry)
+    (cTheta : Real)
+    (thetaSigned_le_cTheta_absLogQ :
+      packageN.preLedger.thetaSigned <=
+        cTheta * (-packageN.preLedger.qSigned)) :
+    (∀ choice :
+        IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean,
+        (iplConstructionSource.choiceLink choice).source =
+            iplConstructionSource.iplDatum.inputPrimeStrip ∧
+          (iplConstructionSource.choiceLink choice).target =
+            iplConstructionSource.iplDatum.choicePrimeStrip choice) ∧
+      iplConstructionSource.iplDatum =
+        iplConstructionSource.constructedDatum ∧
+      iplConstructionSource.toIPLLinkSource.iplDatum =
+        packageN.preLedger.certificate.ipl ∧
+      (record =
+          IUTStage1Theorem311MultiradialSourceRecord.ofConstructedQualitativeInputsWithSHE
+            constructedBundle ∧
+        packageN.constructedQualitativePublicAuditStatement
+          constructedBundle.constructedInputs sideConditions ∧
+        (∀ mechanism : QualitativeData.TransportMechanismId,
+          ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+            constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+            constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+            mechanism) ∧
+        ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+          constructedBundle.aptConstruction.arrow.source
+          constructedBundle.aptConstruction.arrow.target ∧
+        constructedBundle.structured_she.context.domainStructure.theater.side ≠
+          constructedBundle.structured_she.context.codomainStructure.theater.side ∧
+        ((packageN.preLedger.qSigned = packageN.preLedger.thetaSigned ∧
+            packageN.preLedger.thetaSigned < 0) ∨
+          (-1 : Real) < cTheta)) := by
+  have hchoice := iplConstructionSource.construction_choiceLink_endpoint
+  refine ⟨hchoice.1, hchoice.2.1, hchoice.2.2, ?_⟩
+  exact
+    part.boundarySignedEqualityOrStrictCTheta_from_sourceDerivedHodgeSHET11IPLLinkRecordHullSideConditionedFiniteDivisorVerticalIQ_withConstructedQualitativeCheckpoints
+      profile audited constructedBundle transportSource
+      iplConstructionSource.toIPLLinkSource operation hullOperation
+      determinantOperation hullData qPilotRegion q_subset_recordUnion
+      determinantSource compatibility measure_eq_hullLogVolume tensorPower_bound
+      hullDetBridge_eq sideConditions constructedCheckpoints
+      record_eq_constructed sourceCalibration source_profile_eq thetaRootSource
+      upperSemiEntry divisorPacket monoAnalyticTheater kummerCompatibility
+      forgettingCompatibility holomorphicF_realization holomorphicD_realization
+      holomorphicStructureForgotten holomorphic_structure_forgotten
+      packetLocalObject_eq_entrySource packetLocalObjectFinite_eq_divisorRealified
+      packetLocalObjectFinite_eq_ind3Source targetSource cTheta
+      thetaSigned_le_cTheta_absLogQ
+
+set_option linter.style.longLine false in
+/--
 Possible-image record-native Step (xi) route with a certificate-pinned
 Theorem 3.11 IPL link and source-obligation side conditions.
 
