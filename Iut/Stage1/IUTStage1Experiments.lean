@@ -68731,6 +68731,42 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThe
   padicPrimeErrorFormulaMatchingEndpoint :
     IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource.Endpoint
       arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
+  paperTraceRemainingPayloadAudit :
+    IUTStage1Theorem311ToCorollary312PaperTrace.AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit
+      { theorem110_additive_haar_local_analytic_construction_constructed :=
+          arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.primeErrorPadicDefectMainSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.Endpoint,
+        additive_haar_local_arithmetic_matching_constructed :=
+          IUTStage1AdditiveHaarTheorem110StepXILocalArithmeticMatchingSource.Endpoint
+            (arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
+              |>.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource
+              |>.toIUTStage1AdditiveHaarTheorem110StepXILocalArithmeticMatchingSource),
+        arithmetic_divisor_formula_split_constructed :=
+          IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.Endpoint
+            (arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
+              |>.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource),
+        padic_prime_error_defect_main_split_constructed :=
+          IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource.Endpoint
+            arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.primeErrorPadicDefectMainSource,
+        stepxi_arithmetic_degree_calibration_constructed :=
+          IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource.Endpoint
+            arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource,
+        localized_determinant_multiplicity_matches_iutiv_coefficient :=
+          IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource.Endpoint
+            arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource,
+        adjusted_raw_log_volume_matches_different_plus_conductor :=
+          IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource.Endpoint
+            arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource,
+        realified_packet_source_supplies_stepx_equalities :=
+          audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+              divisorPacket.divisor.realifiedLogVolume ∧
+            audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+              audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume,
+        constructed_hodge_she_ipl_provenance_threaded_to_endpoint :=
+          IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource.ConstructedQualitativeHodgeSHEIPLBridgeAudit
+            constructedHodgeIPLSource,
+        strongest_additive_haar_endpoint_has_remaining_payload_audit :=
+          ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource.Endpoint
+            arithmeticDegreePadicSource }
   finitePacketLocalObject_eq_divisorRealified :
     audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
       divisorPacket.divisor.realifiedLogVolume
@@ -68892,6 +68928,55 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
       remark395HullSource estimate localPrime localField arithmeticDegreePadicSource
       sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
       packetSource targetSource
+  have hpaperTrace :
+      IUTStage1Theorem311ToCorollary312PaperTrace.AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit
+        { theorem110_additive_haar_local_analytic_construction_constructed :=
+            arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.primeErrorPadicDefectMainSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.Endpoint,
+          additive_haar_local_arithmetic_matching_constructed :=
+            IUTStage1AdditiveHaarTheorem110StepXILocalArithmeticMatchingSource.Endpoint
+              (arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
+                |>.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource
+                |>.toIUTStage1AdditiveHaarTheorem110StepXILocalArithmeticMatchingSource),
+          arithmetic_divisor_formula_split_constructed :=
+            IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.Endpoint
+              (arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
+                |>.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource),
+          padic_prime_error_defect_main_split_constructed :=
+            IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource.Endpoint
+              arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.primeErrorPadicDefectMainSource,
+          stepxi_arithmetic_degree_calibration_constructed :=
+            IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource.Endpoint
+              arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource,
+          localized_determinant_multiplicity_matches_iutiv_coefficient :=
+            IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource.Endpoint
+              arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource,
+          adjusted_raw_log_volume_matches_different_plus_conductor :=
+            IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource.Endpoint
+              arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource,
+          realified_packet_source_supplies_stepx_equalities :=
+            audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+                divisorPacket.divisor.realifiedLogVolume ∧
+              audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+                audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume,
+          constructed_hodge_she_ipl_provenance_threaded_to_endpoint :=
+            IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource.ConstructedQualitativeHodgeSHEIPLBridgeAudit
+              constructedHodgeIPLSource,
+          strongest_additive_haar_endpoint_has_remaining_payload_audit :=
+            ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource.Endpoint
+              arithmeticDegreePadicSource } := by
+    dsimp [IUTStage1Theorem311ToCorollary312PaperTrace.AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit]
+    exact
+      ⟨arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.primeErrorPadicDefectMainSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.endpoint,
+        arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXILocalArithmeticMatchingSource.endpoint,
+        arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.endpoint,
+        arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.primeErrorPadicDefectMainSource.endpoint,
+        arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.endpoint,
+        arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.endpoint,
+        arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.endpoint,
+        ⟨finiteSource.packetLocalObjectFinite_eq_divisorRealified,
+          finiteSource.packetLocalObjectFinite_eq_ind3Source⟩,
+        constructedHodgeIPLSource.toConstructedQualitativeHodgeSHEIPLBridgeAudit,
+        arithmeticDegreePadicSource.endpoint⟩
   exact
     { baseAudit := hbase,
       oneSidedQuotientAudit := hbase.oneSidedQuotientAudit,
@@ -68914,6 +68999,7 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
         arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.endpoint,
       padicPrimeErrorFormulaMatchingEndpoint :=
         arithmeticDegreePadicSource.arithmeticDegreePadicFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource.endpoint,
+      paperTraceRemainingPayloadAudit := hpaperTrace,
       finitePacketLocalObject_eq_divisorRealified := hclosed.2.1,
       finitePacketLocalObject_eq_ind3Source := hclosed.2.2.1,
       iutIVHandoff := hclosed.2.2.2.1,
