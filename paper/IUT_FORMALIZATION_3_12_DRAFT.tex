@@ -4776,7 +4776,13 @@ source layer now exposes
 audit is induced from the constructed qualitative certificate, it projects back
 to the existing structured-input route, and it exposes the forbidden
 SHE-domain-to-codomain transport guard together with the permitted APT
-non-forbiddenness proof.
+non-forbiddenness proof.  This has now been promoted to the strengthened SHE
+route surface by
+\(\texttt{IUTStage1Theorem311ConstructedQualitativeInputsWithSHE}\), which
+projects to the existing \(\texttt{StructuredInputsWithSHE}\) route, builds the
+current multiradial source record, and exposes public source-obligation and
+Corollary~3.12 audit constructors without asking callers to supply a raw
+pre-ledger audit.
 There is now also a certificate-pinned variant of this boundary.  It reads the
 \(\IPL\) datum directly from the pre-ledger certificate and asks only for the
 two endpoint equalities of that certificate link.  Consequently the public
@@ -9169,10 +9175,11 @@ matching equality.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Promote the constructed qualitative Theorem~3.11 input surface to the
-  preferred route boundary, replacing remaining ad hoc uses of raw
-  \(\IPL/\SHE/\APT\) certificate fields by projections from the typed
-  transport constructions.
+\item Replace the remaining endpoint-level uses of
+  \(\texttt{StructuredInputsWithSHE}\) by the constructed qualitative
+  \(\texttt{WithSHE}\) boundary where possible, so the route continues to carry
+  the typed SHE-forbidden-transport and APT-permission audit all the way to the
+  finite-divisor \(C_\Theta\) surface.
 \item Replace the certificate-pinned \(\IPL\) endpoint equalities by the actual
   Theorem~3.11 input-prime-strip link construction, and then remove the
   remaining constructed-\(\IPL\) alignment assumptions from the finite-divisor

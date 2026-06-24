@@ -2327,6 +2327,120 @@ theorem hodgeTheaterDescentBridgeData_histories_not_identified
 end IUTStage1Theorem311StructuredInputsWithSHE
 
 /--
+Constructed qualitative Theorem 3.11 inputs equipped with the strengthened SHE
+context.
+
+This bundle is the first route-facing replacement for raw structured
+IPL/SHE/APT certificate fields: it keeps the existing strengthened SHE context,
+but obtains the pre-ledger audit from constructed qualitative IPL/SHE/APT source
+data.
+-/
+structure IUTStage1Theorem311ConstructedQualitativeInputsWithSHE
+    {source target : Copy} {index : Type u}
+    (package : IUTStage1SourcePackage source target index) where
+  constructedInputs : IUTStage1Theorem311ConstructedQualitativeInputs package
+  structured_she : IUTStage1Theorem311StructuredSHE package
+
+namespace IUTStage1Theorem311ConstructedQualitativeInputsWithSHE
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+
+def toStructuredInputsWithSHE
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    IUTStage1Theorem311StructuredInputsWithSHE package :=
+  { inputs := bundle.constructedInputs.toStructuredInputs,
+    structured_she := bundle.structured_she }
+
+theorem qualitativeTransportAudit
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    bundle.constructedInputs.qualitativeSource.QualitativeTransportAudit :=
+  bundle.constructedInputs.qualitativeTransportAudit
+
+theorem theorem311StructuredInputs
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    IUTStage1Theorem311StructuredInputs package :=
+  bundle.constructedInputs.toStructuredInputs
+
+theorem hasStructuredIPL
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family :=
+  bundle.constructedInputs.hasStructuredIPL
+
+theorem hasStructuredSHE
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family :=
+  bundle.constructedInputs.hasStructuredSHE
+
+theorem hasStructuredSHE_from_context
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    QualitativeData.HasStructuredSHE package.preLedger.output.family :=
+  bundle.structured_she.hasStructuredSHE
+
+theorem hasStructuredAPT
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    QualitativeData.HasStructuredAPT package.preLedger.output.family :=
+  bundle.constructedInputs.hasStructuredAPT
+
+def sheTransportContext
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    QualitativeData.StructuredSHETransportContext
+      package.preLedger.output.family :=
+  bundle.constructedInputs.qualitativeSource.sheTransportContext
+
+def aptConstruction
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    QualitativeData.AlgorithmicParallelTransportConstruction
+      package.preLedger.output.family :=
+  bundle.constructedInputs.qualitativeSource.aptConstruction
+
+theorem noAllowedSHEDomainToCodomain
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (mechanism : QualitativeData.TransportMechanismId) :
+    ¬ bundle.sheTransportContext.transportSystem.Allows
+      bundle.sheTransportContext.baseContext.domainStructure.theater
+      bundle.sheTransportContext.baseContext.codomainStructure.theater
+      mechanism :=
+  bundle.constructedInputs.noAllowedSHEDomainToCodomain mechanism
+
+theorem aptTransport_not_forbidden
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    ¬ bundle.aptConstruction.transportSystem.forbiddenIdentification
+      bundle.aptConstruction.arrow.source
+      bundle.aptConstruction.arrow.target :=
+  bundle.constructedInputs.aptTransport_not_forbidden
+
+theorem domainHistory_ne_codomainHistory
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    bundle.structured_she.context.domainStructure.theater.side ≠
+      bundle.structured_she.context.codomainStructure.theater.side :=
+  bundle.structured_she.domainHistory_ne_codomainHistory
+
+theorem commonContainerCompatibility
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    IUTStage1Theorem311StructuredSHECommonContainerCompatibility
+      package bundle.structured_she :=
+  IUTStage1Theorem311StructuredSHECommonContainerCompatibility.ofStructuredSHE
+    bundle.structured_she
+
+theorem toStructuredInputsWithSHE_hasStructuredIPL
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    bundle.toStructuredInputsWithSHE.hasStructuredIPL = bundle.hasStructuredIPL :=
+  rfl
+
+theorem toStructuredInputsWithSHE_hasStructuredSHE
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    bundle.toStructuredInputsWithSHE.hasStructuredSHE = bundle.hasStructuredSHE :=
+  rfl
+
+theorem toStructuredInputsWithSHE_hasStructuredAPT
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    bundle.toStructuredInputsWithSHE.hasStructuredAPT = bundle.hasStructuredAPT :=
+  rfl
+
+end IUTStage1Theorem311ConstructedQualitativeInputsWithSHE
+
+/--
 Source-facing Theorem 3.11 multiradial record.
 
 IUT III describes Theorem 3.11 as producing a multiradial representation whose
@@ -2366,6 +2480,22 @@ def ofStructuredInputsWithSHE
     theta_column_eq := rfl,
     q_column_eq := rfl,
     hodgeHistoryGuard := bundle.domainHistory_ne_codomainHistory }
+
+def ofConstructedQualitativeInputsWithSHE
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    IUTStage1Theorem311MultiradialSourceRecord package :=
+  ofStructuredInputsWithSHE bundle.toStructuredInputsWithSHE
+
+theorem ofConstructedQualitativeInputsWithSHE_bundle_eq
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    (ofConstructedQualitativeInputsWithSHE bundle).bundle =
+      bundle.toStructuredInputsWithSHE :=
+  rfl
+
+theorem ofConstructedQualitativeInputsWithSHE_qualitativeTransportAudit
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    bundle.constructedInputs.qualitativeSource.QualitativeTransportAudit :=
+  bundle.qualitativeTransportAudit
 
 theorem hasStructuredIPL
     (record : IUTStage1Theorem311MultiradialSourceRecord package) :
@@ -5784,6 +5914,26 @@ def ofStructuredInputsAndSideConditions
     q_pilot_positive := sideConditions.qPilotPositive,
     normalization := sideConditions.sourceNormalization }
 
+def ofConstructedQualitativeInputsAndSideConditions
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    IUTStage1SourceObligations package :=
+  ofStructuredInputsAndSideConditions inputs.toStructuredInputs sideConditions
+
+theorem ofConstructedQualitativeInputsAndSideConditions_eq_structured
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    ofConstructedQualitativeInputsAndSideConditions inputs sideConditions =
+      ofStructuredInputsAndSideConditions
+        inputs.toStructuredInputs sideConditions :=
+  rfl
+
+theorem ofConstructedQualitativeInputsAndSideConditions_qualitativeTransportAudit
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (_sideConditions : IUTStage1SourceSideConditions package) :
+    inputs.qualitativeSource.QualitativeTransportAudit :=
+  inputs.qualitativeTransportAudit
+
 theorem ofStructuredInputsAndSideConditions_eq_subclaims
     (inputs : IUTStage1Theorem311StructuredInputs package)
     (sideConditions : IUTStage1SourceSideConditions package) :
@@ -5802,6 +5952,29 @@ def ofStructuredInputsAndSideConditionHypotheses
     (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
     IUTStage1SourceObligations package :=
   ofStructuredInputsAndSideConditions inputs hypotheses.toSideConditions
+
+def ofConstructedQualitativeInputsAndSideConditionHypotheses
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    IUTStage1SourceObligations package :=
+  ofConstructedQualitativeInputsAndSideConditions
+    inputs hypotheses.toSideConditions
+
+theorem ofConstructedQualitativeInputsAndSideConditionHypotheses_eq_sideConditions
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    ofConstructedQualitativeInputsAndSideConditionHypotheses inputs hypotheses =
+      ofConstructedQualitativeInputsAndSideConditions
+        inputs hypotheses.toSideConditions :=
+  rfl
+
+theorem ofConstructedQualitativeInputsAndSideConditionHypotheses_eq_structured
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    ofConstructedQualitativeInputsAndSideConditionHypotheses inputs hypotheses =
+      ofStructuredInputsAndSideConditionHypotheses
+        inputs.toStructuredInputs hypotheses :=
+  rfl
 
 theorem ofStructuredInputsAndSideConditionHypotheses_eq_sideConditions
     (inputs : IUTStage1Theorem311StructuredInputs package)
@@ -7451,6 +7624,30 @@ def obligationsFromStructuredInputs
   IUTStage1SourceObligations.ofStructuredInputsAndSideConditions
     inputs sideConditions
 
+def obligationsFromConstructedQualitativeInputs
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    IUTStage1SourceObligations package :=
+  IUTStage1SourceObligations.ofConstructedQualitativeInputsAndSideConditions
+    inputs sideConditions
+
+theorem obligationsFromConstructedQualitativeInputs_eq_structured
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.obligationsFromConstructedQualitativeInputs inputs sideConditions =
+      package.obligationsFromStructuredInputs
+        inputs.toStructuredInputs sideConditions :=
+  rfl
+
+theorem obligationsFromConstructedQualitativeInputs_qualitativeTransportAudit
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (_sideConditions : IUTStage1SourceSideConditions package) :
+    inputs.qualitativeSource.QualitativeTransportAudit :=
+  inputs.qualitativeTransportAudit
+
 theorem obligationsFromStructuredInputs_eq_parts
     (package : IUTStage1SourcePackage source target index)
     (inputs : IUTStage1Theorem311StructuredInputs package)
@@ -7475,6 +7672,32 @@ def obligationsFromStructuredHypotheses
     (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
     IUTStage1SourceObligations package :=
   package.obligationsFromStructuredInputs inputs hypotheses.toSideConditions
+
+def obligationsFromConstructedQualitativeHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    IUTStage1SourceObligations package :=
+  package.obligationsFromConstructedQualitativeInputs
+    inputs hypotheses.toSideConditions
+
+theorem obligationsFromConstructedQualitativeHypotheses_eq_structured
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.obligationsFromConstructedQualitativeHypotheses inputs hypotheses =
+      package.obligationsFromStructuredHypotheses
+        inputs.toStructuredInputs hypotheses :=
+  rfl
+
+theorem obligationsFromConstructedQualitativeHypotheses_eq_sideConditions
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.obligationsFromConstructedQualitativeHypotheses inputs hypotheses =
+      package.obligationsFromConstructedQualitativeInputs
+        inputs hypotheses.toSideConditions :=
+  rfl
 
 theorem obligationsFromStructuredHypotheses_eq_parts
     (package : IUTStage1SourcePackage source target index)
@@ -7638,6 +7861,60 @@ theorem publicAuditOfStructuredInputs_eq_parts
         inputs.theorem311Subclaims sideConditions :=
   rfl
 
+theorem publicAuditOfConstructedQualitativeInputs
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+        (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+      (corollary312_from_stage1_comparison
+          (package.promotedProvider
+            (package.obligationsFromConstructedQualitativeInputs
+              inputs sideConditions)).stage1Comparison =
+        corollary312_of_signed_le
+          (package.promotedProvider
+            (package.obligationsFromConstructedQualitativeInputs
+              inputs sideConditions)).ledger.qSigned_le_thetaSigned) :=
+  package.publicAudit
+    (package.obligationsFromConstructedQualitativeInputs
+      inputs sideConditions)
+
+theorem publicAuditOfConstructedQualitativeInputs_qSigned_le_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  (package.publicAuditOfConstructedQualitativeInputs
+    inputs sideConditions).1
+
+theorem publicAuditOfConstructedQualitativeInputs_corollary312
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  (package.publicAuditOfConstructedQualitativeInputs
+    inputs sideConditions).2.1
+
+theorem publicAuditOfConstructedQualitativeInputs_eq_structured
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (sideConditions : IUTStage1SourceSideConditions package) :
+    package.publicAuditOfConstructedQualitativeInputs inputs sideConditions =
+      package.publicAuditOfStructuredInputs
+        inputs.toStructuredInputs sideConditions :=
+  rfl
+
+theorem publicAuditOfConstructedQualitativeInputs_qualitativeTransportAudit
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (_sideConditions : IUTStage1SourceSideConditions package) :
+    inputs.qualitativeSource.QualitativeTransportAudit :=
+  inputs.qualitativeTransportAudit
+
 theorem publicAuditOfStructuredHypotheses
     (package : IUTStage1SourcePackage source target index)
     (inputs : IUTStage1Theorem311StructuredInputs package)
@@ -7689,6 +7966,62 @@ theorem publicAuditOfStructuredHypotheses_eq_hypotheses
     package.publicAuditOfStructuredHypotheses inputs hypotheses =
       package.publicAuditOfHypotheses
         inputs.theorem311Subclaims hypotheses :=
+  rfl
+
+theorem publicAuditOfConstructedQualitativeHypotheses
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+        (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) ∧
+      (corollary312_from_stage1_comparison
+          (package.promotedProvider
+            (package.obligationsFromConstructedQualitativeHypotheses
+              inputs hypotheses)).stage1Comparison =
+        corollary312_of_signed_le
+          (package.promotedProvider
+            (package.obligationsFromConstructedQualitativeHypotheses
+              inputs hypotheses)).ledger.qSigned_le_thetaSigned) :=
+  package.publicAudit
+    (package.obligationsFromConstructedQualitativeHypotheses
+      inputs hypotheses)
+
+theorem publicAuditOfConstructedQualitativeHypotheses_qSigned_le_thetaSigned
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.preLedger.qSigned <= package.preLedger.thetaSigned :=
+  (package.publicAuditOfConstructedQualitativeHypotheses
+    inputs hypotheses).1
+
+theorem publicAuditOfConstructedQualitativeHypotheses_corollary312
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    Corollary312Inequality
+      (signedPilotLogVolume PilotSide.theta package.preLedger.thetaSigned)
+      (signedPilotLogVolume PilotSide.q package.preLedger.qSigned) :=
+  (package.publicAuditOfConstructedQualitativeHypotheses
+    inputs hypotheses).2.1
+
+theorem publicAuditOfConstructedQualitativeHypotheses_eq_structured
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.publicAuditOfConstructedQualitativeHypotheses inputs hypotheses =
+      package.publicAuditOfStructuredHypotheses
+        inputs.toStructuredInputs hypotheses :=
+  rfl
+
+theorem publicAuditOfConstructedQualitativeHypotheses_eq_sideConditions
+    (package : IUTStage1SourcePackage source target index)
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package)
+    (hypotheses : IUTStage1SourceSideConditionHypotheses package) :
+    package.publicAuditOfConstructedQualitativeHypotheses inputs hypotheses =
+      package.publicAuditOfConstructedQualitativeInputs
+        inputs hypotheses.toSideConditions :=
   rfl
 
 theorem stage1Comparison_recovers_corollary312
