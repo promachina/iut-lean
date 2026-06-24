@@ -68694,6 +68694,25 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThe
           |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorMatchedStepXILocalTermCThetaSource)
         |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
         |>.oneSidedMultiradialSource)
+  constructedQualitativeBridgeAudit :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource.ConstructedQualitativeHodgeSHEIPLBridgeAudit
+      constructedHodgeIPLSource
+  choiceWiseIPLLinkAudit :
+    ∀ choice,
+      (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).source =
+          constructedHodgeIPLSource.iplConstructionSource.iplDatum.inputPrimeStrip ∧
+        (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).target =
+          constructedHodgeIPLSource.iplConstructionSource.iplDatum.choicePrimeStrip choice
+  noAllowedSHEDomainToCodomain :
+    ∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+        constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+        constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism
+  aptTransport_not_forbidden :
+    ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+      constructedBundle.aptConstruction.arrow.source
+      constructedBundle.aptConstruction.arrow.target
   arithmeticDegreePadicEndpoint :
     ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource.Endpoint
       arithmeticDegreePadicSource
@@ -68861,6 +68880,14 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
   exact
     { baseAudit := hbase,
       oneSidedQuotientAudit := hbase.oneSidedQuotientAudit,
+      constructedQualitativeBridgeAudit :=
+        constructedHodgeIPLSource.toConstructedQualitativeHodgeSHEIPLBridgeAudit,
+      choiceWiseIPLLinkAudit :=
+        constructedHodgeIPLSource.iplConstructionSource.construction_choiceLink_endpoint.1,
+      noAllowedSHEDomainToCodomain :=
+        constructedHodgeIPLSource.noAllowedSHEDomainToCodomain,
+      aptTransport_not_forbidden :=
+        constructedHodgeIPLSource.aptTransport_not_forbidden,
       arithmeticDegreePadicEndpoint := hclosed.1,
       finitePacketLocalObject_eq_divisorRealified := hclosed.2.1,
       finitePacketLocalObject_eq_ind3Source := hclosed.2.2.1,
