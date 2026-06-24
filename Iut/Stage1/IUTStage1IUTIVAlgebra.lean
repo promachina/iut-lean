@@ -952,6 +952,420 @@ theorem endpoint
 
 end IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
 
+set_option linter.style.longLine false in
+/--
+IUT IV, Definition 1.9(i), finite arithmetic-divisor source.
+
+The paper defines an arithmetic divisor as a finite formal sum
+`∑ c_v v`, with support `{v | c_v ≠ 0}`, effectivity `0 <= c_v`,
+and normalized degree obtained by weighting nonarchimedean valuations by
+`log(q_v)` and archimedean valuations by `1`, then dividing by `[F : Q]`.
+This finite source keeps precisely the data needed by the Stage 1
+`C_Theta` corridor: coefficients, degree weights, a positive normalizing
+degree, and nonnegativity of the degree weights.
+-/
+structure IUTStage1IUTIVArithmeticDivisorSource
+    (place : Type u) [Fintype place] where
+  coefficient : place -> Real
+  degreeWeight : place -> Real
+  fieldDegree : Real
+  fieldDegree_pos : 0 < fieldDegree
+  degreeWeight_nonneg : ∀ v : place, 0 <= degreeWeight v
+
+namespace IUTStage1IUTIVArithmeticDivisorSource
+
+variable {place : Type u} [Fintype place]
+
+def support
+    (divisor : IUTStage1IUTIVArithmeticDivisorSource place) :
+    Set place :=
+  {v | divisor.coefficient v ≠ 0}
+
+def Effective
+    (divisor : IUTStage1IUTIVArithmeticDivisorSource place) :
+    Prop :=
+  ∀ v : place, 0 <= divisor.coefficient v
+
+noncomputable def localDegree
+    (divisor : IUTStage1IUTIVArithmeticDivisorSource place)
+    (v : place) :
+    Real :=
+  divisor.coefficient v * divisor.degreeWeight v / divisor.fieldDegree
+
+noncomputable def degree
+    (divisor : IUTStage1IUTIVArithmeticDivisorSource place) :
+    Real :=
+  (∑ v : place, divisor.coefficient v * divisor.degreeWeight v) /
+    divisor.fieldDegree
+
+theorem degree_eq_sum_localDegree
+    (divisor : IUTStage1IUTIVArithmeticDivisorSource place) :
+    divisor.degree = ∑ v : place, divisor.localDegree v := by
+  simp [degree, localDegree, Finset.sum_div]
+
+theorem localDegree_nonneg
+    (divisor : IUTStage1IUTIVArithmeticDivisorSource place)
+    (effective : divisor.Effective)
+    (v : place) :
+    0 <= divisor.localDegree v :=
+  div_nonneg
+    (mul_nonneg (effective v) (divisor.degreeWeight_nonneg v))
+    (le_of_lt divisor.fieldDegree_pos)
+
+theorem degree_nonneg
+    (divisor : IUTStage1IUTIVArithmeticDivisorSource place)
+    (effective : divisor.Effective) :
+    0 <= divisor.degree := by
+  rw [divisor.degree_eq_sum_localDegree]
+  exact Finset.sum_nonneg
+    (fun v _hv => divisor.localDegree_nonneg effective v)
+
+theorem mem_support_iff
+    (divisor : IUTStage1IUTIVArithmeticDivisorSource place)
+    (v : place) :
+    v ∈ divisor.support ↔ divisor.coefficient v ≠ 0 :=
+  Iff.rfl
+
+end IUTStage1IUTIVArithmeticDivisorSource
+
+/-- Local cases of IUT IV, Theorem 1.10, Steps (v), (vi), and (vii). -/
+inductive IUTStage1IUTIVTheorem110LocalEstimateKind where
+  | distinguishedNonarchimedean
+  | nondistinguishedNonarchimedean
+  | archimedean
+deriving DecidableEq
+
+set_option linter.style.longLine false in
+/--
+IUT IV, Definition 1.9 / Theorem 1.10 arithmetic-divisor source.
+
+This packages the paper's three arithmetic divisors:
+`d_ADiv` from the different, `q_ADiv` from q-parameters at bad valuations,
+and `f_ADiv` from the conductor support.  It also records the support/effectivity
+content that is used later in Theorem 1.10: `f_ADiv` has the same support as
+`q_ADiv`, and the global `log(d_Ftpd)`, `log(f_Ftpd)` quantities are the
+normalized degrees of the different and conductor divisors.
+-/
+structure IUTStage1IUTIVTheorem110ArithmeticDivisorSource
+    (place : Type u) [Fintype place]
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) where
+  differentDivisor : IUTStage1IUTIVArithmeticDivisorSource place
+  qParameterDivisor : IUTStage1IUTIVArithmeticDivisorSource place
+  conductorDivisor : IUTStage1IUTIVArithmeticDivisorSource place
+  different_effective : differentDivisor.Effective
+  qParameter_effective : qParameterDivisor.Effective
+  conductor_effective : conductorDivisor.Effective
+  conductor_support_iff_q_support :
+    ∀ v : place,
+      v ∈ conductorDivisor.support ↔ v ∈ qParameterDivisor.support
+  conductor_coeff_eq_one_of_q_support :
+    ∀ v : place, v ∈ qParameterDivisor.support ->
+      conductorDivisor.coefficient v = 1
+  conductor_coeff_eq_zero_of_q_not_support :
+    ∀ v : place, v ∉ qParameterDivisor.support ->
+      conductorDivisor.coefficient v = 0
+  logDifferentFtpd_eq_degree :
+    estimate.logDifferentFtpd = differentDivisor.degree
+  logConductorFtpd_eq_degree :
+    estimate.logConductorFtpd = conductorDivisor.degree
+
+namespace IUTStage1IUTIVTheorem110ArithmeticDivisorSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+
+noncomputable def localDifferentDegree
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate)
+    (v : place) :
+    Real :=
+  source.differentDivisor.localDegree v
+
+noncomputable def localConductorDegree
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate)
+    (v : place) :
+    Real :=
+  source.conductorDivisor.localDegree v
+
+noncomputable def arithmeticDegreeCoefficient
+    (_source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate) :
+    Real :=
+  (((estimate.l.value : Real) + 1) / (4 * estimate.absoluteLogQ)) *
+    (1 + 36 * (estimate.dmod : Real) / (estimate.l.value : Real))
+
+noncomputable def localArithmeticUpperContribution
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate)
+    (localPrimeErrorContribution : place -> Real)
+    (v : place) :
+    Real :=
+  source.arithmeticDegreeCoefficient *
+      (source.localDifferentDegree v + source.localConductorDegree v) +
+    localPrimeErrorContribution v
+
+theorem localDifferentDegree_nonneg
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate)
+    (v : place) :
+    0 <= source.localDifferentDegree v :=
+  source.differentDivisor.localDegree_nonneg
+    source.different_effective v
+
+theorem localConductorDegree_nonneg
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate)
+    (v : place) :
+    0 <= source.localConductorDegree v :=
+  source.conductorDivisor.localDegree_nonneg
+    source.conductor_effective v
+
+theorem logDifferentFtpd_eq_sum
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate) :
+    estimate.logDifferentFtpd =
+      ∑ v : place, source.localDifferentDegree v := by
+  rw [source.logDifferentFtpd_eq_degree,
+    source.differentDivisor.degree_eq_sum_localDegree]
+  rfl
+
+theorem logConductorFtpd_eq_sum
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate) :
+    estimate.logConductorFtpd =
+      ∑ v : place, source.localConductorDegree v := by
+  rw [source.logConductorFtpd_eq_degree,
+    source.conductorDivisor.degree_eq_sum_localDegree]
+  rfl
+
+theorem conductor_support_eq_q_support
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate) :
+    source.conductorDivisor.support = source.qParameterDivisor.support := by
+  ext v
+  exact source.conductor_support_iff_q_support v
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate) :
+    Prop :=
+  source.differentDivisor.Effective ∧
+    source.qParameterDivisor.Effective ∧
+      source.conductorDivisor.Effective ∧
+        source.conductorDivisor.support =
+          source.qParameterDivisor.support ∧
+          estimate.logDifferentFtpd =
+            ∑ v : place, source.localDifferentDegree v ∧
+            estimate.logConductorFtpd =
+              ∑ v : place, source.localConductorDegree v
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate) :
+    Endpoint source :=
+  ⟨source.different_effective,
+    source.qParameter_effective,
+    source.conductor_effective,
+    source.conductor_support_eq_q_support,
+    source.logDifferentFtpd_eq_sum,
+    source.logConductorFtpd_eq_sum⟩
+
+end IUTStage1IUTIVTheorem110ArithmeticDivisorSource
+
+set_option linter.style.longLine false in
+/--
+IUT IV, Theorem 1.10 local estimate gates for Steps (v), (vi), and (vii).
+
+The source text separates the local upper-bound computation into distinguished
+nonarchimedean places, nondistinguished nonarchimedean places with zero
+contribution, and archimedean places.  This record keeps that case distinction
+and the resulting local upper-semi inequalities.  It also supplies the finite-sum
+identities for the absorbed prime/error term and the main logarithmic term.
+-/
+structure IUTStage1IUTIVTheorem110LocalEstimateGateSource
+    (place : Type u) [Fintype place]
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    (divisorSource :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate) where
+  localKind : place -> IUTStage1IUTIVTheorem110LocalEstimateKind
+  localPrimeErrorContribution : place -> Real
+  localMainLogContribution : place -> Real
+  localProcessionUpperBound : place -> Real
+  localPrimeErrorContribution_nonneg :
+    ∀ v : place, 0 <= localPrimeErrorContribution v
+  primeErrorContribution_eq_sum :
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ v : place, localPrimeErrorContribution v
+  mainLogTerm_eq_sum :
+    estimate.mainLogTerm =
+      ∑ v : place, localMainLogContribution v
+  stepV_distinguished_le_gap :
+    ∀ v : place,
+      localKind v =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+        localProcessionUpperBound v <=
+          divisorSource.localArithmeticUpperContribution
+              localPrimeErrorContribution v -
+            localMainLogContribution v
+  stepVI_nondistinguished_zero :
+    ∀ v : place,
+      localKind v =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean ->
+        localProcessionUpperBound v = 0
+  stepVI_nondistinguished_le_gap :
+    ∀ v : place,
+      localKind v =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean ->
+        localProcessionUpperBound v <=
+          divisorSource.localArithmeticUpperContribution
+              localPrimeErrorContribution v -
+            localMainLogContribution v
+  stepVII_archimedean_le_gap :
+    ∀ v : place,
+      localKind v =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+        localProcessionUpperBound v <=
+          divisorSource.localArithmeticUpperContribution
+              localPrimeErrorContribution v -
+            localMainLogContribution v
+
+namespace IUTStage1IUTIVTheorem110LocalEstimateGateSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {divisorSource :
+  IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate}
+
+theorem localProcessionUpperBound_le_gap
+    (source :
+      IUTStage1IUTIVTheorem110LocalEstimateGateSource
+        place divisorSource)
+    (v : place) :
+    source.localProcessionUpperBound v <=
+      divisorSource.localArithmeticUpperContribution
+          source.localPrimeErrorContribution v -
+        source.localMainLogContribution v := by
+  cases hkind : source.localKind v
+  · exact source.stepV_distinguished_le_gap v hkind
+  · exact source.stepVI_nondistinguished_le_gap v hkind
+  · exact source.stepVII_archimedean_le_gap v hkind
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110LocalEstimateGateSource
+        place divisorSource) :
+    Prop :=
+  (∀ v : place,
+      0 <= source.localPrimeErrorContribution v) ∧
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ v : place, source.localPrimeErrorContribution v ∧
+    estimate.mainLogTerm =
+      ∑ v : place, source.localMainLogContribution v ∧
+    (∀ v : place,
+      source.localProcessionUpperBound v <=
+        divisorSource.localArithmeticUpperContribution
+            source.localPrimeErrorContribution v -
+          source.localMainLogContribution v) ∧
+    (∀ v : place,
+      source.localKind v =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean ->
+        source.localProcessionUpperBound v = 0)
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110LocalEstimateGateSource
+        place divisorSource) :
+    Endpoint source :=
+  ⟨source.localPrimeErrorContribution_nonneg,
+    source.primeErrorContribution_eq_sum,
+    source.mainLogTerm_eq_sum,
+    source.localProcessionUpperBound_le_gap,
+    source.stepVI_nondistinguished_zero⟩
+
+end IUTStage1IUTIVTheorem110LocalEstimateGateSource
+
+set_option linter.style.longLine false in
+/--
+Constructor layer from IUT IV arithmetic divisors plus Theorem 1.10 local
+estimate gates to the older real-valued local evaluation source.
+-/
+structure IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource
+    (place : Type u) [Fintype place]
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) where
+  arithmeticDivisorSource :
+    IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate
+  localEstimateGateSource :
+    IUTStage1IUTIVTheorem110LocalEstimateGateSource
+      place arithmeticDivisorSource
+
+namespace IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+
+set_option linter.style.longLine false in
+noncomputable def toThetaPilotArithmeticDivisorLocalEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource
+        place estimate) :
+    IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+      place estimate :=
+  { localDifferentDegree :=
+      source.arithmeticDivisorSource.localDifferentDegree,
+    localConductorDegree :=
+      source.arithmeticDivisorSource.localConductorDegree,
+    localPrimeErrorContribution :=
+      source.localEstimateGateSource.localPrimeErrorContribution,
+    localMainLogContribution :=
+      source.localEstimateGateSource.localMainLogContribution,
+    localDifferentDegree_nonneg :=
+      source.arithmeticDivisorSource.localDifferentDegree_nonneg,
+    localConductorDegree_nonneg :=
+      source.arithmeticDivisorSource.localConductorDegree_nonneg,
+    localPrimeErrorContribution_nonneg :=
+      source.localEstimateGateSource.localPrimeErrorContribution_nonneg,
+    logDifferentFtpd_eq_sum :=
+      source.arithmeticDivisorSource.logDifferentFtpd_eq_sum,
+    logConductorFtpd_eq_sum :=
+      source.arithmeticDivisorSource.logConductorFtpd_eq_sum,
+    primeErrorContribution_eq_sum :=
+      source.localEstimateGateSource.primeErrorContribution_eq_sum,
+    mainLogTerm_eq_sum :=
+      source.localEstimateGateSource.mainLogTerm_eq_sum }
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource
+        place estimate) :
+    Prop :=
+  source.arithmeticDivisorSource.Endpoint ∧
+    source.localEstimateGateSource.Endpoint ∧
+      IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource.Endpoint
+        source.toThetaPilotArithmeticDivisorLocalEvaluationSource
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource
+        place estimate) :
+    Endpoint source :=
+  ⟨source.arithmeticDivisorSource.endpoint,
+    source.localEstimateGateSource.endpoint,
+    source.toThetaPilotArithmeticDivisorLocalEvaluationSource.endpoint⟩
+
+theorem localProcessionUpperBound_le_gap
+    (source :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource
+        place estimate)
+    (v : place) :
+    source.localEstimateGateSource.localProcessionUpperBound v <=
+      source.arithmeticDivisorSource.localArithmeticUpperContribution
+          source.localEstimateGateSource.localPrimeErrorContribution v -
+        source.localEstimateGateSource.localMainLogContribution v :=
+  source.localEstimateGateSource.localProcessionUpperBound_le_gap v
+
+end IUTStage1IUTIVTheorem110ArithmeticDivisorEvaluationSource
+
 /--
 IUT IV, Theorem 1.10 final displayed bound after the tripodal-to-`F` passage.
 
