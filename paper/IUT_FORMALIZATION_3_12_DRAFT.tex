@@ -31,7 +31,7 @@
 
 \title{A Lean Audit of the IUT III Corollary 3.12 Corridor}
 \author{IUT Lean formalization project}
-\date{June 1, 2026}
+\date{June 24, 2026}
 
 \begin{document}
 \maketitle
@@ -8906,41 +8906,21 @@ down to constructing the local terms \(C_{\Theta,\mathrm{can},v}\), \(A_v\),
 objects and proving the pointwise local inequalities.
 
 The preferred local-to-global surface has also been tightened to use the
-one-sided Theorem~3.11 construction directly:
+one-sided Theorem~3.11 construction directly.  The route now passes through
+localized Step~(xi) determinant terms, normalized Haar defects, \(p\)-adic
+unit-ball Haar indices, IUT~IV local arithmetic defects, arithmetic-divisor
+evaluation, Theorem~1.10 local case formulas, Proposition~1.4/1.5 construction
+sources, and finally the additive-Haar local analytic construction source.  The
+public theorem
 \[
 \begin{array}{l}
-\texttt{ConstructedTheorem311OneSidedLocalGlobalCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedStepXILocalTermCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedNormalizedHaarStepXILocalTermCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDivisorEvaluationStepXILocalTermCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110ArithmeticDivisorStepXILocalTermCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource},\\
-\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ},\\
-\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedNormalizedHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
-\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedPadicUnitBallHaarStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
-\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
-\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVArithmeticDivisorEvaluationStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
-\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVTheorem110ArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
-\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
-\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
-\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
+\quad\texttt{Theorem311OneSidedIUTIVTheorem110}\\
+\quad\texttt{AdditiveHaarLocalAnalyticArithmeticDivisor}\\
+\quad\texttt{StepXILocalTermCThetaFiniteDivisorVerticalIQ}
 \end{array}
 \]
-The source records carry an
+is the current preferred finite-divisor endpoint.  The source records carry an
 \texttt{IUTStage1Theorem311OneSidedMultiradialConstructionSource}, identify the
 constructed Remark~3.9.5 q-pilot region with its selected possible image, and
 then feed the same finite-place Step~(xi)/Haar summation into the
@@ -9081,19 +9061,36 @@ projects to the archimedean exact-to-coarse estimate.  These construction
 sources feed
 \texttt{IUTStage1IUTIVTheorem110LocalAnalyticConstructionFormulaSource} and
 \texttt{IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource}.
-The wrapper
-\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110LocalAnalyticArithmeticDivisorStepXILocalTermCThetaSource}
-is therefore the current preferred local-to-global \(C_\Theta\) boundary.  It
-still treats the actual local log-shell inclusions and numerical estimates, the
-distinguished and archimedean formula-to-gap identifications, and the
-Step~(xi) matching equality as source obligations; however, raw
-Proposition~1.4/1.5 estimate records are no longer the public boundary.
+This finite-extension construction layer is now an intermediate projection.
+The current preferred local-to-global \(C_\Theta\) boundary is the
+additive-Haar-backed route.  The compact-open declarations
+\texttt{IUTStage1IUTIVProposition14DistinguishedCompactOpenHaarLogShellSource}
+and
+\texttt{IUTStage1IUTIVProposition14NondistinguishedCompactOpenHaarLogShellSource}
+lower Proposition~1.4 to compact-open topology/Haar normalization data; the
+additive declarations
+\texttt{IUTStage1IUTIVProposition14DistinguishedAdditiveHaarLogShellSource}
+and
+\texttt{IUTStage1IUTIVProposition14NondistinguishedAdditiveHaarLogShellSource}
+lower the same estimates to additive Haar normalization on the local additive
+carrier.  These feed
+\texttt{IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticConstructionFormulaSource}
+and
+\texttt{IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource}.
+The corresponding Step~(xi) wrapper therefore exposes the preferred checked
+route.  Its finite-divisor
+vertical-\(IQ\) endpoint returns the additive-Haar source audit, the IUT~IV
+displayed-bound audit, the constructed global \(C_\Theta\)-scale audit, and the
+Corollary~3.12 dichotomy.  The remaining source obligations are the actual
+local log-shell inclusions and numerical Proposition~1.4 estimates, the
+distinguished and archimedean formula-to-gap identifications, and the Step~(xi)
+matching equality.
 
 The practical priority order is:
 \begin{enumerate}
-\item instantiate the local analytic construction sources from actual local
-  fields, valuation balls, log-shell maps, compact-open Haar normalizations,
-  and archimedean lattice metrics; then prove the remaining Proposition~1.4
+\item instantiate the additive-Haar local analytic construction sources from
+  actual local fields, valuation balls, log-shell maps, compact-open Haar
+  normalizations, and archimedean lattice metrics; then prove the remaining Proposition~1.4
   log-shell inclusions/numerical estimates and Proposition~1.5 metric
   containments below those source fields;
 \item prove the distinguished and archimedean formula-to-gap bounds and the
