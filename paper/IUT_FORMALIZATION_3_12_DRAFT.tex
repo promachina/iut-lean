@@ -8905,6 +8905,29 @@ down to constructing the local terms \(C_{\Theta,\mathrm{can},v}\), \(A_v\),
 \(M_v\), and \(\delta_v\) from the actual Theorem~3.11/Step~(xi)/\IUT{} IV
 objects and proving the pointwise local inequalities.
 
+The preferred local-to-global surface has also been tightened to use the
+one-sided Theorem~3.11 construction directly:
+\[
+\begin{array}{l}
+\texttt{ConstructedTheorem311OneSidedLocalGlobalCThetaSource},\\
+\texttt{ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource},\\
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ}.
+\end{array}
+\]
+The source records carry an
+\texttt{IUTStage1Theorem311OneSidedMultiradialConstructionSource}, identify the
+constructed Remark~3.9.5 q-pilot region with its selected possible image, and
+then feed the same finite-place Step~(xi)/Haar summation into the
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison.  The public endpoint
+returns the Corollary~3.12 dichotomy while also reporting the equality quotient
+generated only by
+\((\Ind_1)\) and \((\Ind_2)\), the separate one-sided \((\Ind_3)\) log-volume
+inequality, and the selected q-region containment in the Theorem~3.11
+possible-image union.  Thus the current preferred route no longer exposes the
+raw numeric \(C_\Theta\) comparison and no longer uses a bare typed
+indeterminacy core at the local-to-global boundary.
+
 The practical priority order is:
 \begin{enumerate}
 \item factor the large source module into reviewable finite-label, hull,
