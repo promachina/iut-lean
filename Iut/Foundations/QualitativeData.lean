@@ -6,11 +6,13 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.TransportedRegionFamily
 
 /-!
-Structured but inert qualitative data for algorithmic outputs.
+Structured qualitative data for algorithmic outputs.
 
-These records give more shape to the names IPL, SHE, and APT without assigning
-any mathematical consequences to them. They are bookkeeping objects; bridge
-theorems must still be supplied separately.
+The base records name the IPL, SHE, and APT components carried by an
+algorithmic-output certificate.  The source-shaped constructions below add
+typed input-prime-strip links, Hodge-theater transport permissions, forbidden
+identification guards, and permitted APT transport data that can build those
+base records.
 -/
 
 namespace Iut
@@ -333,11 +335,174 @@ theorem sheDatum_sharedContext
 
 end StructuredSHEContext
 
-/-- Inert record for algorithmic-parallel-transport style data. -/
+structure HodgeTheaterTransportArrow where
+  source : HodgeTheaterId
+  target : HodgeTheaterId
+  mechanism : TransportMechanismId
+
+/--
+Typed transport permissions between Hodge theaters.
+
+`forbiddenIdentification` marks theater identifications that the source data
+rules out.  Any explicitly allowed transport arrow is required to avoid those
+forbidden identifications.
+-/
+structure HodgeTheaterTransportSystem where
+  allowed : HodgeTheaterTransportArrow -> Prop
+  forbiddenIdentification : HodgeTheaterId -> HodgeTheaterId -> Prop
+  allowed_not_forbidden :
+    ∀ {arrow : HodgeTheaterTransportArrow},
+      allowed arrow ->
+        ¬ forbiddenIdentification arrow.source arrow.target
+
+namespace HodgeTheaterTransportSystem
+
+def Allows
+    (system : HodgeTheaterTransportSystem)
+    (source target : HodgeTheaterId)
+    (mechanism : TransportMechanismId) : Prop :=
+  system.allowed
+    { source := source,
+      target := target,
+      mechanism := mechanism }
+
+theorem allowed_not_forbidden_identification
+    (system : HodgeTheaterTransportSystem)
+    {arrow : HodgeTheaterTransportArrow}
+    (hallowed : system.allowed arrow) :
+    ¬ system.forbiddenIdentification arrow.source arrow.target :=
+  system.allowed_not_forbidden hallowed
+
+end HodgeTheaterTransportSystem
+
+structure PermittedHodgeTheaterTransport
+    (system : HodgeTheaterTransportSystem) where
+  arrow : HodgeTheaterTransportArrow
+  permitted : system.allowed arrow
+
+namespace PermittedHodgeTheaterTransport
+
+variable {system : HodgeTheaterTransportSystem}
+
+theorem not_forbidden
+    (transport : PermittedHodgeTheaterTransport system) :
+    ¬ system.forbiddenIdentification transport.arrow.source transport.arrow.target :=
+  system.allowed_not_forbidden transport.permitted
+
+end PermittedHodgeTheaterTransport
+
+/--
+SHE context whose history separation is expressed by the typed transport system.
+
+The older `StructuredSHEContext` is retained as the underlying local expression
+data.  This wrapper adds the source-facing guard that the domain-to-codomain
+identification is forbidden by the transport system, hence no permitted
+transport arrow may identify those two theaters.
+-/
+structure StructuredSHETransportContext
+    (family : TransportedRegionFamily source target index) where
+  baseContext : StructuredSHEContext family
+  transportSystem : HodgeTheaterTransportSystem
+  forbidden_domain_to_codomain :
+    transportSystem.forbiddenIdentification
+      baseContext.domainStructure.theater
+      baseContext.codomainStructure.theater
+
+namespace StructuredSHETransportContext
+
+variable {family : TransportedRegionFamily source target index}
+
+def sheDatum (context : StructuredSHETransportContext family) :
+    SHEDatum family :=
+  context.baseContext.sheDatum
+
+theorem hasStructuredSHE (context : StructuredSHETransportContext family) :
+    HasStructuredSHE family :=
+  ⟨context.sheDatum⟩
+
+theorem noAllowedDomainToCodomain
+    (context : StructuredSHETransportContext family)
+    {arrow : HodgeTheaterTransportArrow}
+    (hsource :
+      arrow.source = context.baseContext.domainStructure.theater)
+    (htarget :
+      arrow.target = context.baseContext.codomainStructure.theater) :
+    ¬ context.transportSystem.allowed arrow := by
+  intro hallowed
+  exact
+    (context.transportSystem.allowed_not_forbidden hallowed)
+      (by
+        simpa [hsource, htarget] using context.forbidden_domain_to_codomain)
+
+theorem noAllowedDomainToCodomainWithMechanism
+    (context : StructuredSHETransportContext family)
+    (mechanism : TransportMechanismId) :
+    ¬ context.transportSystem.Allows
+        context.baseContext.domainStructure.theater
+        context.baseContext.codomainStructure.theater
+        mechanism := by
+  intro hallowed
+  exact
+    (context.transportSystem.allowed_not_forbidden hallowed)
+      context.forbidden_domain_to_codomain
+
+theorem sheDatum_sharedContext
+    (context : StructuredSHETransportContext family) :
+    context.sheDatum.sharedContext = context.baseContext.sharedContext :=
+  rfl
+
+end StructuredSHETransportContext
+
+/-- Base record for algorithmic-parallel-transport style data. -/
 structure APTDatum (family : TransportedRegionFamily source target index) where
   mechanism : TransportMechanismId
   outputFamily : TransportedRegionFamily source target index
   output_eq_family : outputFamily = family
+
+/--
+Source-shaped APT construction from a permitted Hodge-theater transport.
+
+The transported output family is still a field, but the APT datum is now tied to
+a concrete permitted theater-transport arrow, and Lean records that this arrow
+cannot be one of the forbidden identifications.
+-/
+structure AlgorithmicParallelTransportConstruction
+    (family : TransportedRegionFamily source target index) where
+  transportSystem : HodgeTheaterTransportSystem
+  arrow : HodgeTheaterTransportArrow
+  permitted : transportSystem.allowed arrow
+  outputFamily : TransportedRegionFamily source target index
+  output_eq_family : outputFamily = family
+
+namespace AlgorithmicParallelTransportConstruction
+
+variable {family : TransportedRegionFamily source target index}
+
+def permittedTransport
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    PermittedHodgeTheaterTransport construction.transportSystem :=
+  { arrow := construction.arrow,
+    permitted := construction.permitted }
+
+def toAPTDatum
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    APTDatum family :=
+  { mechanism := construction.arrow.mechanism,
+    outputFamily := construction.outputFamily,
+    output_eq_family := construction.output_eq_family }
+
+theorem toAPTDatum_output_eq_family
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    construction.toAPTDatum.outputFamily = family :=
+  construction.output_eq_family
+
+theorem permitted_not_forbidden
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    ¬ construction.transportSystem.forbiddenIdentification
+        construction.arrow.source construction.arrow.target :=
+  construction.permittedTransport.not_forbidden
+
+end AlgorithmicParallelTransportConstruction
 
 def HasStructuredIPL (family : TransportedRegionFamily source target index) : Prop :=
   Nonempty (IPLDatum family)
@@ -366,6 +531,36 @@ theorem hasStructuredSHE (certificate : StructuredCertificate family) :
 theorem hasStructuredAPT (certificate : StructuredCertificate family) :
     HasStructuredAPT family :=
   ⟨certificate.apt⟩
+
+def ofConstructedIPLSHEAPT
+    (iplConstruction : InputPrimeStripLinkConstruction family)
+    (sheContext : StructuredSHETransportContext family)
+    (aptConstruction : AlgorithmicParallelTransportConstruction family) :
+    StructuredCertificate family :=
+  { ipl := iplConstruction.toIPLDatum,
+    she := sheContext.sheDatum,
+    apt := aptConstruction.toAPTDatum }
+
+theorem ofConstructedIPLSHEAPT_hasStructuredIPL
+    (iplConstruction : InputPrimeStripLinkConstruction family)
+    (sheContext : StructuredSHETransportContext family)
+    (aptConstruction : AlgorithmicParallelTransportConstruction family) :
+    HasStructuredIPL family :=
+  (ofConstructedIPLSHEAPT iplConstruction sheContext aptConstruction).hasStructuredIPL
+
+theorem ofConstructedIPLSHEAPT_hasStructuredSHE
+    (iplConstruction : InputPrimeStripLinkConstruction family)
+    (sheContext : StructuredSHETransportContext family)
+    (aptConstruction : AlgorithmicParallelTransportConstruction family) :
+    HasStructuredSHE family :=
+  (ofConstructedIPLSHEAPT iplConstruction sheContext aptConstruction).hasStructuredSHE
+
+theorem ofConstructedIPLSHEAPT_hasStructuredAPT
+    (iplConstruction : InputPrimeStripLinkConstruction family)
+    (sheContext : StructuredSHETransportContext family)
+    (aptConstruction : AlgorithmicParallelTransportConstruction family) :
+    HasStructuredAPT family :=
+  (ofConstructedIPLSHEAPT iplConstruction sheContext aptConstruction).hasStructuredAPT
 
 end StructuredCertificate
 

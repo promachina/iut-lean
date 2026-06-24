@@ -348,6 +348,83 @@ theorem comparisonData_corollary312
 
 end ComparisonPayloadInputs
 
+/--
+Constructed qualitative certificate for the pre-ledger family.
+
+This pins the certificate used by the Stage 1 ledger to explicit source-shaped
+IPL, SHE, and APT constructions: input-prime-strip links, a Hodge-theater
+transport context with a forbidden-identification guard, and a permitted APT
+transport arrow.
+-/
+structure ConstructedQualitativeCertificateData
+    (data : IUTStage1PreLedgerData source target index) where
+  iplConstruction :
+    QualitativeData.InputPrimeStripLinkConstruction data.output.family
+  sheTransportContext :
+    QualitativeData.StructuredSHETransportContext data.output.family
+  aptConstruction :
+    QualitativeData.AlgorithmicParallelTransportConstruction data.output.family
+  certificate_eq :
+    data.certificate =
+      QualitativeData.StructuredCertificate.ofConstructedIPLSHEAPT
+        iplConstruction sheTransportContext aptConstruction
+
+namespace ConstructedQualitativeCertificateData
+
+variable {data : IUTStage1PreLedgerData source target index}
+
+def constructedCertificate
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    QualitativeData.StructuredCertificate data.output.family :=
+  QualitativeData.StructuredCertificate.ofConstructedIPLSHEAPT
+    sourceData.iplConstruction sourceData.sheTransportContext
+    sourceData.aptConstruction
+
+theorem certificate_eq_constructed
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    data.certificate = sourceData.constructedCertificate :=
+  sourceData.certificate_eq
+
+theorem hasStructuredIPL
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    QualitativeData.HasStructuredIPL data.output.family :=
+  sourceData.constructedCertificate.hasStructuredIPL
+
+theorem hasStructuredSHE
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    QualitativeData.HasStructuredSHE data.output.family :=
+  sourceData.constructedCertificate.hasStructuredSHE
+
+theorem hasStructuredAPT
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    QualitativeData.HasStructuredAPT data.output.family :=
+  sourceData.constructedCertificate.hasStructuredAPT
+
+def QualitativeTransportAudit
+    (sourceData : ConstructedQualitativeCertificateData data) : Prop :=
+  QualitativeData.HasStructuredIPL data.output.family ∧
+    QualitativeData.HasStructuredSHE data.output.family ∧
+    QualitativeData.HasStructuredAPT data.output.family ∧
+    (∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ sourceData.sheTransportContext.transportSystem.Allows
+        sourceData.sheTransportContext.baseContext.domainStructure.theater
+        sourceData.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism) ∧
+    ¬ sourceData.aptConstruction.transportSystem.forbiddenIdentification
+      sourceData.aptConstruction.arrow.source
+      sourceData.aptConstruction.arrow.target
+
+theorem qualitativeTransportAudit
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    sourceData.QualitativeTransportAudit :=
+  ⟨sourceData.hasStructuredIPL,
+    sourceData.hasStructuredSHE,
+    sourceData.hasStructuredAPT,
+    sourceData.sheTransportContext.noAllowedDomainToCodomainWithMechanism,
+    sourceData.aptConstruction.permitted_not_forbidden⟩
+
+end ConstructedQualitativeCertificateData
+
 /-- Local audit of pre-ledger data, before the remaining ledger obligations. -/
 structure Audit (data : IUTStage1PreLedgerData source target index) : Prop where
   has_structured_ipl : QualitativeData.HasStructuredIPL data.output.family
