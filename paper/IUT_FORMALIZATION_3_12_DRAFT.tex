@@ -9216,8 +9216,26 @@ vertical-\(IQ\) endpoint returns the additive-Haar source audit, the IUT~IV
 displayed-bound audit, the constructed global \(C_\Theta\)-scale audit, and the
 Corollary~3.12 dichotomy.  The remaining source obligations are the actual
 local log-shell inclusions and numerical Proposition~1.4 estimates, the
-distinguished and archimedean formula-to-gap identifications, and the Step~(xi)
-matching equality.
+distinguished and archimedean formula-to-gap identifications, and the
+construction of the Step~(xi)/\IUT{} IV local arithmetic matching source.
+That last item is now separated in Lean as
+\texttt{IUTStage1AdditiveHaarTheorem110StepXILocalArithmeticMatchingSource}:
+it packages the local equality
+\[
+  A_v = S_v+\delta_v+M_v
+\]
+between the IUT~IV local arithmetic upper term, the Step~(xi) weighted
+determinant term, the local arithmetic defect, and the main-log term.  Its
+endpoint proves the derived local inequalities
+\[
+  S_v+\delta_v\leq A_v-M_v,\qquad S_v\leq A_v-M_v,
+\]
+using the nonnegativity of the local defect.  The matched additive-Haar wrapper
+then projects to the older additive-Haar source.  The current strongest
+finite-divisor boundary combines this matched Step~(xi)/\IUT{} IV source with
+the realified Frobenioid log-Kummer packet source, so both the local arithmetic
+matching and the Step~(x) packet equalities appear as typed source objects
+rather than loose endpoint fields.
 
 The Theorem~3.11 qualitative checkpoint is now also present at the
 finite-divisor \(C_\Theta\) boundary.  The new checkpoint-aware
