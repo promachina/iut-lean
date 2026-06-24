@@ -8761,6 +8761,21 @@ the possible-image compatibility record states that \((\Ind_1)\) and
 the one-sided estimate.  A finite one-point witness
 \(\texttt{finiteToyCore}\) checks joint satisfiability of this typed interface;
 it is deliberately not an \IUT{} model.
+The quotient layer is now explicit.  The declaration
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311TypedIndeterminacyCore.}\\
+\quad\texttt{EqualityQuotientPossibleImages}
+\end{array}
+\]
+indexes possible images by
+\(\mathrm{Quot}(\texttt{equalityQuotient.relation})\) and proves that pulling
+back along \(\texttt{equalityQuotientMap}\) recovers the original choice-indexed
+family.  The direct \((\Ind_1)\) and \((\Ind_2)\) steps are members of this
+equality orbit, while the equality quotient's \((\Ind_3)\) generator is empty;
+\((\Ind_3)\) remains available only through the upper-semi log-volume theorem.
+The finite toy witness has been upgraded accordingly to
+\(\texttt{finiteToyEqualityQuotientPossibleImages}\).
 
 The local-to-global comparison itself is now isolated as
 \[
