@@ -8918,6 +8918,7 @@ one-sided Theorem~3.11 construction directly:
 \texttt{ConstructedTheorem311OneSidedIUTIVArithmeticDivisorEvaluationStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedIUTIVTheorem110ArithmeticDivisorStepXILocalTermCThetaSource},\\
 \texttt{ConstructedTheorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaSource},\\
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedFinitePlaceLocalGlobalCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
@@ -8931,7 +8932,9 @@ one-sided Theorem~3.11 construction directly:
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
 \quad\texttt{Theorem311OneSidedIUTIVTheorem110ArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
 \texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
-\quad\texttt{Theorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
+\quad\texttt{Theorem311OneSidedIUTIVTheorem110FormulaArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ},\\
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_constructed}\\
+\quad\texttt{Theorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaFiniteDivisorVerticalIQ}.
 \end{array}
 \]
 The source records carry an
@@ -9039,20 +9042,38 @@ the preferred public route no longer exposes the raw total Haar-defect sum
 inequality, an unnamed Haar-defect summand, the global arithmetic/main-log sum
 identities, bare local degree functions, or a raw nondistinguished local-zero
 field as separate endpoint hypotheses.
-The remaining source-paper work is now to instantiate these typed finite
-sources from actual number-field valuations, the different ideal, q-parameters,
-the conductor support divisor, and the Proposition~1.4/1.5 local log-shell
-estimates; prove the distinguished and archimedean formula bounds from those
-local log-shell estimates; and prove the Step~(xi) matching equality from those
-constructions rather than taking it as source data.
+The most recent refinement moves one layer further into the local analytic
+estimates of \IUT{} IV.  The Lean source
+\texttt{IUTStage1IUTIVProposition14DistinguishedLocalLogShellEstimate}
+records the Proposition~1.4(iii) chain from the distinguished
+nonarchimedean log-shell container through the Proposition~1.7 weighted average
+to the Step~(v) coarse procession-normalized bound.  The source
+\texttt{IUTStage1IUTIVProposition14NondistinguishedLocalLogShellEstimate}
+records the Proposition~1.4(iv) zero log-volume statement for the
+nondistinguished branch, and Lean derives the corresponding nonnegative local
+arithmetic gap.  The archimedean source
+\texttt{IUTStage1IUTIVProposition15ArchimedeanLocalMetricEstimate} records the
+Proposition~1.5(iii),(iv) metric container estimate and proves the elementary
+Step~(vii) exact-to-coarse comparison from \(\log(\pi)\leq2\) and \(l\geq5\).
+These three objects feed
+\texttt{IUTStage1IUTIVTheorem110PropositionLogShellFormulaSource} and then
+\texttt{IUTStage1IUTIVTheorem110PropositionArithmeticDivisorEvaluationSource},
+which now projects to the formula-level Theorem~1.10 route.  The wrapper
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110PropositionArithmeticDivisorStepXILocalTermCThetaSource}
+is therefore the preferred local-to-global \(C_\Theta\) boundary at this stage.
+It still treats the actual construction of the Proposition~1.4/1.5 estimate
+objects, the distinguished and archimedean formula-to-gap identifications, and
+the Step~(xi) matching equality as source obligations.
 
 The practical priority order is:
 \begin{enumerate}
-\item instantiate the typed IUT IV arithmetic-divisor source from actual
-  number-field valuations, different/q/conductor divisors, and Proposition~1.4
-  and Proposition~1.5 local log-shell estimates, then derive the distinguished
-  and archimedean local formula bounds and the current Step~(xi) matching
-  equality from those objects;
+\item construct the Proposition~1.4 and Proposition~1.5 estimate objects from
+  actual local fields, valuation balls, log-shells, lattice metrics, and Haar
+  normalizations; then prove the distinguished and archimedean formula-to-gap
+  bounds and the current Step~(xi) matching equality from these constructions;
+\item instantiate the typed \IUT{} IV arithmetic-divisor source from actual
+  number-field valuations, the different, q-parameter, and conductor divisors,
+  rather than from abstract local degree and finite-sum fields;
 \item extend the audited Hodge--Arakelov theta evaluation wrapper beyond the
   finite degree-evaluation, bad-local quotient, and canonical-label shadows
   toward actual Gaussian/Frobenioid material from \IUT{} II;
