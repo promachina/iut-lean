@@ -8812,6 +8812,21 @@ equality orbit, while the equality quotient's \((\Ind_3)\) generator is empty;
 \((\Ind_3)\) remains available only through the upper-semi log-volume theorem.
 The finite toy witness has been upgraded accordingly to
 \(\texttt{finiteToyEqualityQuotientPossibleImages}\).
+The current nonvacuity audit is packaged as
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311TypedIndeterminacyCore.}\\
+\quad\texttt{FiniteToyTypedIndeterminacyNonvacuityAudit}.
+\end{array}
+\]
+It records a nonempty choice space, self-steps for the three typed
+indeterminacies, preservation of log-volume for \((\Ind_1)\) and
+\((\Ind_2)\), the one-sided upper-semi estimate for \((\Ind_3)\), absence of an
+\((\Ind_3)\) generator in the equality quotient, and pullback compatibility for
+the quotient-indexed possible-image family.  This closes only the
+interface-level satisfiability check: it prevents the typed indeterminacy layer
+from being vacuous, but it is not yet a construction of Mochizuki's full
+indeterminacy apparatus.
 
 The local-to-global comparison itself is now isolated as
 \[

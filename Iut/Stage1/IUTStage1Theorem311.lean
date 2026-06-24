@@ -4008,6 +4008,85 @@ theorem finiteToyEqualityQuotientPossibleImages_pullback
       (finiteToyPossibleImageFamily target).region choice₀ :=
   (finiteToyEqualityQuotientPossibleImages target).pullback_region_eq choice₀
 
+/--
+Focused nonvacuity audit for the typed `(Ind1)/(Ind2)/(Ind3)` interface.
+
+The witness is intentionally tiny: the choice space is `Fin 1`, all three
+relations are equality, and the procession-normalized log-volume is constantly
+zero.  The audit still checks the critical shape required by the Corollary 3.12
+corridor: `(Ind1)` and `(Ind2)` preserve log-volume, `(Ind3)` only supplies an
+upper-semi inequality, the equality quotient has no `(Ind3)` generator, and the
+quotient-indexed possible-image family pulls back to the original family.
+-/
+structure FiniteToyTypedIndeterminacyNonvacuityAudit (target : Copy) where
+  choice_nonempty : Nonempty (Fin 1)
+  ind1_step_self :
+    finiteToyCore.ind1.step (0 : Fin 1) (0 : Fin 1)
+  ind2_step_self :
+    finiteToyCore.ind2.step (0 : Fin 1) (0 : Fin 1)
+  ind3_step_self :
+    finiteToyCore.ind3.step (0 : Fin 1) (0 : Fin 1)
+  ind1_preserves_every_step :
+    ∀ {choice₁ choice₂ : Fin 1},
+      finiteToyCore.ind1.step choice₁ choice₂ ->
+        finiteToyCore.logVolume choice₁ = finiteToyCore.logVolume choice₂
+  ind2_preserves_every_step :
+    ∀ {choice₁ choice₂ : Fin 1},
+      finiteToyCore.ind2.step choice₁ choice₂ ->
+        finiteToyCore.logVolume choice₁ = finiteToyCore.logVolume choice₂
+  ind3_upper_every_step :
+    ∀ {choice₁ choice₂ : Fin 1},
+      finiteToyCore.ind3.step choice₁ choice₂ ->
+        finiteToyCore.logVolume choice₁ <= finiteToyCore.logVolume choice₂
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : Fin 1},
+      finiteToyCore.equalityGenerators.ind3_step choice₁ choice₂ -> False
+  possible_image_compatibility :
+    PossibleImageQuotientCompatibility finiteToyCore
+      (finiteToyPossibleImageFamily target)
+  equality_quotient_images :
+    EqualityQuotientPossibleImages finiteToyCore
+      (finiteToyPossibleImageFamily target)
+  equality_quotient_pullback :
+    ∀ choice₀ : Fin 1,
+      (finiteToyEqualityQuotientPossibleImages target).quotientImages.region
+          (finiteToyCore.equalityQuotientMap choice₀) =
+        (finiteToyPossibleImageFamily target).region choice₀
+
+def finiteToyTypedIndeterminacyNonvacuityAudit
+    (target : Copy) :
+    FiniteToyTypedIndeterminacyNonvacuityAudit target :=
+  { choice_nonempty := ⟨0⟩,
+    ind1_step_self := rfl,
+    ind2_step_self := rfl,
+    ind3_step_self := rfl,
+    ind1_preserves_every_step := by
+      intro choice₁ choice₂ hstep
+      exact finiteToyCore.ind1_preserves_logVolume hstep,
+    ind2_preserves_every_step := by
+      intro choice₁ choice₂ hstep
+      exact finiteToyCore.ind2_preserves_logVolume hstep,
+    ind3_upper_every_step := by
+      intro choice₁ choice₂ hstep
+      exact finiteToyCore.ind3_logVolume_le hstep,
+    equalityQuotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact finiteToyCore.equalityGenerators_ind3_false hstep,
+    possible_image_compatibility := finiteToyPossibleImageCompatibility target,
+    equality_quotient_images := finiteToyEqualityQuotientPossibleImages target,
+    equality_quotient_pullback :=
+      finiteToyEqualityQuotientPossibleImages_pullback target }
+
+theorem finiteToyTypedIndeterminacyNonvacuityAudit_ind3_is_one_sided
+    (target : Copy) :
+    finiteToyCore.logVolume (0 : Fin 1) <=
+        finiteToyCore.logVolume (0 : Fin 1) ∧
+      (∀ {choice₁ choice₂ : Fin 1},
+        finiteToyCore.equalityGenerators.ind3_step choice₁ choice₂ -> False) :=
+  ⟨(finiteToyTypedIndeterminacyNonvacuityAudit target).ind3_upper_every_step
+      (finiteToyTypedIndeterminacyNonvacuityAudit target).ind3_step_self,
+    (finiteToyTypedIndeterminacyNonvacuityAudit target).equalityQuotient_no_ind3_generator⟩
+
 end IUTStage1Theorem311TypedIndeterminacyCore
 
 /--
