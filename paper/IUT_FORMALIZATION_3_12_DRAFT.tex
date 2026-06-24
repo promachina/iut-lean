@@ -9230,8 +9230,7 @@ endpoint proves the derived local inequalities
 \[
   S_v+\delta_v\leq A_v-M_v,\qquad S_v\leq A_v-M_v,
 \]
-using the nonnegativity of the local defect.  This has now been lowered once
-more by
+using the nonnegativity of the local defect.  This has now been lowered by
 \texttt{IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource}.
 That source uses the IUT~IV arithmetic-divisor formula
 \[
@@ -9239,8 +9238,20 @@ That source uses the IUT~IV arithmetic-divisor formula
 \]
 and derives the displayed Step~(xi) matching equality from two finer
 identifications: \(S_v=a_l(D_v+C_v)\) and
-\(E_v=\delta_v+M_v\).  The corresponding formula-matched wrapper then enters
-the same finite-place local-global \(C_\Theta\) route.
+\(E_v=\delta_v+M_v\).  The prime-error side has then been lowered another
+step by
+\texttt{IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource}: it
+uses the local \(p\)-adic Haar-index split
+\[
+  E_v=h_v+M_v
+\]
+together with the IUT~IV defect identification \(\delta_v=h_v\) to derive
+\(E_v=\delta_v+M_v\).  The wrapper
+\texttt{IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource}
+therefore leaves only the Step~(xi) arithmetic-degree identification
+\(S_v=a_l(D_v+C_v)\) as the remaining formula-matching input at this layer.
+Its \(p\)-adic formula-matched global wrapper projects to the same
+finite-place local-global \(C_\Theta\) route.
 The matched additive-Haar wrapper
 now also projects directly to
 \texttt{ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource}; the
