@@ -3933,5 +3933,245 @@ theorem hodgeTheaterSHEAlignment
   sheAlignment.alignment
 
 end IUTStage1Theorem311SHEAlignment
+
+namespace IUTStage1Theorem311ToCorollary312PaperTrace
+
+/-!
+Lean-facing source map for the Theorem 3.11 to Corollary 3.12 corridor.
+
+The declarations in this namespace are deliberately obligation records, not
+primitive constants.  They name the remaining source-paper constructions that must be
+supplied before the preferred finite-divisor vertical-`IQ` route is a closed
+formalization of the IUT III Corollary 3.12 corridor.
+-/
+
+variable {source target : Copy} {index choice : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {targetCopy : Copy}
+
+/--
+IUT III, Theorem 3.11 source obligations before the Step (x)/(xi) handoff.
+
+This groups the multiradial representation and the three remarks immediately
+following Theorem 3.11.  The fields are intentionally named at the granularity
+used by the paper trace: input-prime-strip construction, theta-pilot possible
+images, and the multiradial representation that survives the typed
+indeterminacy quotient.
+-/
+structure Theorem311AndRemarksObligations
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily targetCopy choice) where
+  theorem311_multiradial_representation_constructed : Prop
+  remark3112_input_prime_strip_link_constructed : Prop
+  remark3113_theta_pilot_possible_images_constructed : Prop
+  remark3114_log_theta_lattice_procession_constructed : Prop
+  possible_images_depend_on_equality_quotient :
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+      core images
+  selected_q_region_is_theorem311_possible_image : Prop
+  fl_cardinality_and_procession_label_transitions_constructed : Prop
+  theorem311_hodge_she_ipl_apt_source_bridge_constructed : Prop
+
+namespace Theorem311AndRemarksObligations
+
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily targetCopy choice}
+
+theorem ind1_ind2_image_invariant
+    (obligations : Theorem311AndRemarksObligations core images) :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalityQuotient.relation choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂ :=
+  obligations.possible_images_depend_on_equality_quotient
+    |>.equalityQuotient_image_invariant
+
+theorem ind3_logVolume_upper
+    (obligations : Theorem311AndRemarksObligations core images)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind3.step choice₁ choice₂) :
+    core.logVolume choice₁ <= core.logVolume choice₂ :=
+  obligations.possible_images_depend_on_equality_quotient
+    |>.ind3_upper_from_core hstep
+
+end Theorem311AndRemarksObligations
+
+/--
+IUT III, Step (x) obligations on the finite-divisor/log-Kummer side.
+
+The critical distinction is recorded in the first three fields: `(Ind1)` and
+`(Ind2)` preserve procession-normalized log-volume, while `(Ind3)` supplies
+only an upper-semi inequality.  The remaining fields name the packet,
+Kummer/forgetting, and vertical-`IQ` constructions that feed the finite
+Corollary 3.12 boundary.
+-/
+structure StepXFiniteDivisorObligations
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) where
+  ind1_procession_normalized_logVolume_preserved :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        core.logVolume choice₁ = core.logVolume choice₂
+  ind2_procession_normalized_logVolume_preserved :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        core.logVolume choice₁ = core.logVolume choice₂
+  ind3_upper_semi_logVolume_inequality :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂
+  finite_divisor_packet_source_constructed : Prop
+  realified_frobenioid_log_kummer_source_constructed : Prop
+  kummer_forgetting_compatibility_constructed : Prop
+  vertical_iq_target_source_constructed : Prop
+  packet_source_target_log_volume_calibration_constructed : Prop
+
+namespace StepXFiniteDivisorObligations
+
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+
+def fromTypedCore
+    (finite_divisor_packet_source_constructed : Prop)
+    (realified_frobenioid_log_kummer_source_constructed : Prop)
+    (kummer_forgetting_compatibility_constructed : Prop)
+    (vertical_iq_target_source_constructed : Prop)
+    (packet_source_target_log_volume_calibration_constructed : Prop) :
+    StepXFiniteDivisorObligations core :=
+  { ind1_procession_normalized_logVolume_preserved := by
+      intro choice₁ choice₂ hstep
+      exact core.ind1_preserves_logVolume hstep,
+    ind2_procession_normalized_logVolume_preserved := by
+      intro choice₁ choice₂ hstep
+      exact core.ind2_preserves_logVolume hstep,
+    ind3_upper_semi_logVolume_inequality := by
+      intro choice₁ choice₂ hstep
+      exact core.ind3_logVolume_le hstep,
+    finite_divisor_packet_source_constructed :=
+      finite_divisor_packet_source_constructed,
+    realified_frobenioid_log_kummer_source_constructed :=
+      realified_frobenioid_log_kummer_source_constructed,
+    kummer_forgetting_compatibility_constructed :=
+      kummer_forgetting_compatibility_constructed,
+    vertical_iq_target_source_constructed :=
+      vertical_iq_target_source_constructed,
+    packet_source_target_log_volume_calibration_constructed :=
+      packet_source_target_log_volume_calibration_constructed }
+
+end StepXFiniteDivisorObligations
+
+/--
+IUT III, Step (xi) and Remark 3.9.5 hull/determinant obligations.
+
+This is the source-paper map underneath the constructed Remark 3.9.5 object
+used by the current finite-divisor endpoint.  It names the remaining
+holomorphic-hull, determinant, Ob3/Ob4, Ob5, Ob7, and q-to-theta log-volume
+chain obligations separately.
+-/
+structure StepXIHullDeterminantObligations where
+  remark395_holomorphic_hull_operator_constructed : Prop
+  theorem311_possible_image_family_matches_hull_source : Prop
+  selected_q_region_contained_in_possible_image_union : Prop
+  ob1_ob2_hull_absorption_constructed : Prop
+  ob3_ob4_adjusted_determinant_normalization_constructed : Prop
+  ob5_quotient_determinant_compatibility_constructed : Prop
+  ob7_prime_strip_log_kummer_compatibility_retained : Prop
+  weighted_determinant_tensor_power_bound_constructed : Prop
+  q_region_logVolume_le_thetaSigned_constructed : Prop
+
+/--
+IUT IV local-to-global `C_Theta` obligations underneath the current
+additive-Haar local analytic source.
+
+The fields name the remaining local analytic constructions from IUT IV,
+Propositions 1.4 and 1.5, Theorem 1.10, and the global summation comparison
+that proves the constructed canonical scale is bounded by `C_Theta`.
+-/
+structure IUTIVCThetaObligations where
+  proposition14_distinguished_log_shell_inclusions_constructed : Prop
+  proposition14_distinguished_numerical_bounds_constructed : Prop
+  proposition14_nondistinguished_zero_log_volume_constructed : Prop
+  proposition15_archimedean_metric_containment_constructed : Prop
+  theorem110_arithmetic_divisor_source_constructed : Prop
+  theorem110_distinguished_formula_to_gap_constructed : Prop
+  theorem110_archimedean_formula_to_gap_constructed : Prop
+  additive_haar_local_normalization_constructed : Prop
+  local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :
+    Prop
+  local_to_global_canonicalCThetaScale_le_cTheta_constructed : Prop
+
+/--
+Assembled paper-trace source obligation map for the Theorem 3.11 to
+Corollary 3.12 corridor.
+
+This is the declaration-level deliverable for the paper trace: every remaining
+source obligation is assigned to Theorem 3.11/Remarks 3.11.2--3.11.4, Step
+(x), Step (xi), or IUT IV.  The last two fields state the endpoint-level goal
+of this milestone: the raw numeric bound and raw canonical-scale comparison
+must disappear from the public endpoint once the obligations are constructed.
+-/
+structure Obligations
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily targetCopy choice) where
+  theorem311_and_remarks :
+    Theorem311AndRemarksObligations core images
+  stepX_finite_divisor :
+    StepXFiniteDivisorObligations core
+  stepXI_hull_determinant :
+    StepXIHullDeterminantObligations
+  iutIV_cTheta :
+    IUTIVCThetaObligations
+  closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis : Prop
+  closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis : Prop
+
+namespace Obligations
+
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily targetCopy choice}
+
+def RemainingPayloadAudit
+    (obligations : Obligations core images) : Prop :=
+  obligations.theorem311_and_remarks.theorem311_multiradial_representation_constructed ∧
+    obligations.theorem311_and_remarks.remark3112_input_prime_strip_link_constructed ∧
+    obligations.theorem311_and_remarks.remark3113_theta_pilot_possible_images_constructed ∧
+    obligations.theorem311_and_remarks.remark3114_log_theta_lattice_procession_constructed ∧
+    obligations.theorem311_and_remarks.selected_q_region_is_theorem311_possible_image ∧
+    obligations.theorem311_and_remarks.fl_cardinality_and_procession_label_transitions_constructed ∧
+    obligations.theorem311_and_remarks.theorem311_hodge_she_ipl_apt_source_bridge_constructed ∧
+    obligations.stepX_finite_divisor.finite_divisor_packet_source_constructed ∧
+    obligations.stepX_finite_divisor.realified_frobenioid_log_kummer_source_constructed ∧
+    obligations.stepX_finite_divisor.kummer_forgetting_compatibility_constructed ∧
+    obligations.stepX_finite_divisor.vertical_iq_target_source_constructed ∧
+    obligations.stepX_finite_divisor.packet_source_target_log_volume_calibration_constructed ∧
+    obligations.stepXI_hull_determinant.remark395_holomorphic_hull_operator_constructed ∧
+    obligations.stepXI_hull_determinant.theorem311_possible_image_family_matches_hull_source ∧
+    obligations.stepXI_hull_determinant.selected_q_region_contained_in_possible_image_union ∧
+    obligations.stepXI_hull_determinant.ob1_ob2_hull_absorption_constructed ∧
+    obligations.stepXI_hull_determinant.ob3_ob4_adjusted_determinant_normalization_constructed ∧
+    obligations.stepXI_hull_determinant.ob5_quotient_determinant_compatibility_constructed ∧
+    obligations.stepXI_hull_determinant.ob7_prime_strip_log_kummer_compatibility_retained ∧
+    obligations.stepXI_hull_determinant.weighted_determinant_tensor_power_bound_constructed ∧
+    obligations.stepXI_hull_determinant.q_region_logVolume_le_thetaSigned_constructed ∧
+    obligations.iutIV_cTheta.proposition14_distinguished_log_shell_inclusions_constructed ∧
+    obligations.iutIV_cTheta.proposition14_distinguished_numerical_bounds_constructed ∧
+    obligations.iutIV_cTheta.proposition14_nondistinguished_zero_log_volume_constructed ∧
+    obligations.iutIV_cTheta.proposition15_archimedean_metric_containment_constructed ∧
+    obligations.iutIV_cTheta.theorem110_arithmetic_divisor_source_constructed ∧
+    obligations.iutIV_cTheta.theorem110_distinguished_formula_to_gap_constructed ∧
+    obligations.iutIV_cTheta.theorem110_archimedean_formula_to_gap_constructed ∧
+    obligations.iutIV_cTheta.additive_haar_local_normalization_constructed ∧
+    (IUTIVCThetaObligations.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
+      obligations.iutIV_cTheta) ∧
+    obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed ∧
+    obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis ∧
+    obligations.closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis
+
+theorem ind3_upper_semi_not_equality_payload
+    (obligations : Obligations core images)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind3.step choice₁ choice₂) :
+    core.logVolume choice₁ <= core.logVolume choice₂ :=
+  obligations.stepX_finite_divisor.ind3_upper_semi_logVolume_inequality hstep
+
+end Obligations
+
+end IUTStage1Theorem311ToCorollary312PaperTrace
 end Stage1
 end Iut

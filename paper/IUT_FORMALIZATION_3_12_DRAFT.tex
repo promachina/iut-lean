@@ -4669,11 +4669,52 @@ source-package audit surface.  Low-risk future refactors are:
 These refactors should be mechanical only: move declarations, preserve names
 where possible, and rebuild after each move.
 
+\section{Paper Trace Audit}
+
+The current source map for the Theorem~3.11 to Corollary~3.12 corridor is now
+recorded directly in Lean, rather than only in prose.  The namespace
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311ToCorollary312PaperTrace}
+\end{array}
+\]
+contains four obligation records and one assembled trace record.  The first
+record covers IUT~III, Theorem~3.11 and Remarks~3.11.2--3.11.4: construction
+of the multiradial representation, input-prime-strip link, theta-pilot possible
+images, log-theta-lattice procession data, \(F_l\)-label transitions, and the
+typed compatibility between possible images and the \((\Ind_1,\Ind_2)\)
+equality quotient.  It explicitly keeps the \((\Ind_3)\) contribution as an
+upper-semi log-volume inequality.
+
+The Step~(x) record names the finite-divisor packet, realified Frobenioid
+log-Kummer source, Kummer/forgetting compatibility, vertical-\(IQ\) target
+source, and packet source-target log-volume calibration.  Its constructor
+from the typed indeterminacy core proves the equality/equality/inequality
+pattern: \((\Ind_1)\) and \((\Ind_2)\) preserve procession-normalized
+log-volume, while \((\Ind_3)\) only gives a one-sided bound.  The Step~(xi)
+record names the remaining Remark~3.9.5 hull/determinant work: holomorphic hull
+operator, possible-image family matching, q-region containment, Ob1/Ob2 hull
+absorption, Ob3/Ob4 determinant normalization, Ob5 quotient compatibility, Ob7
+prime-strip retention, tensor-power bound, and the q-region-to-theta
+log-volume chain.
+
+The IUT~IV record names the local-to-global \(C_\Theta\) obligations below the
+current additive-Haar boundary: Proposition~1.4 log-shell inclusions and
+numerical bounds, the nondistinguished zero log-volume result, Proposition~1.5
+metric containment, the Theorem~1.10 arithmetic-divisor source, distinguished
+and archimedean formula-to-gap comparisons, additive Haar local normalization,
+the Step~(xi)-to-IUT~IV local matching equality, and the global proof of
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\).  The assembled
+\texttt{Obligations} record adds the endpoint-level requirements that the final
+preferred theorem must not expose either the raw
+\(\theta_{\mathrm{signed}}\leq C_\Theta(-q_{\mathrm{signed}})\) input or the
+raw \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison as public hypotheses.
+
 \section{Next Work}
 
-The next mathematical milestone is to construct, rather than assume, more of
-the source-facing \SHE{} and Hodge-descent preservation data.  The immediate
-route is:
+The remaining mathematical work is organized by the trace audit above.  One
+major branch is still to construct, rather than assume, more of the
+source-facing \SHE{} and Hodge-descent preservation data.  The route is:
 \[
 \begin{array}{c}
 q^{j^2}\text{ finite Gaussian endpoint with pivotal restriction}\\
