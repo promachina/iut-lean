@@ -9980,6 +9980,25 @@ It consumes arithmetic-divisor-backed finite local-degree data and
 construction-backed archimedean local-degree components, then derives the
 finite-divisor vertical-\(IQ\) dichotomy through the closed local-to-global
 \(C_\Theta\) source.
+The same wrapper now exposes the local-to-global arithmetic proof at this
+lowest boundary by
+\[
+\begin{array}{l}
+\texttt{ArithmeticDivisorBackedLocalGlobalCThetaAudit},\\
+\texttt{localGlobalCThetaDerivationAudit}.
+\end{array}
+\]
+These declarations project the arithmetic-divisor-backed source to the
+formula-gap/additive-Haar summation source, record the finite-place Step~(xi)
+Haar summation audit, derive
+\[
+  C_{\Theta,\mathrm{can}}+1\le A-M,
+\]
+and then obtain the displayed
+\(C_{\Theta,\mathrm{can}}\le C_\Theta\) handoff from the \IUT{} IV identity
+\(C_\Theta+1=A-M\).  Thus the newest endpoint's \(C_\Theta\) comparison is
+visible as a derived local-to-global chain rather than only as an inherited
+projection through the effective-conductor wrapper.
 The matched boundary now has its own constructed qualitative audit,
 \[
 \begin{array}{l}
