@@ -10088,9 +10088,13 @@ The scaling input \(1\leq a_l\) has also been factored as
 \]
 This source records the explicit size condition
 \(4|\log(q)|\leq l+1\) and Lean derives \(1\leq a_l\) from the displayed
-IUT~IV coefficient formula and \(|\log(q)|>0\).  Thus the matched
-local-degree source no longer carries \(1\leq a_l\) as an anonymous proof
-field; it carries the named paper-side coefficient-window source.  The same
+IUT~IV coefficient formula and \(|\log(q)|>0\).  It now has a separate
+\texttt{CoefficientWindowAudit}: Lean proves the base window factor
+\((l+1)/(4|\log(q)|)\geq 1\), the theta-error factor
+\(1+36d_{\mathrm{mod}}/l\geq 1\), and then multiplies these inequalities to
+obtain \(1\leq a_l\).  Thus the matched local-degree source no longer carries
+\(1\leq a_l\) as an anonymous proof field; it carries the named paper-side
+coefficient-window source.  The same
 matched source now exposes
 \[
 \begin{array}{l}
@@ -10102,7 +10106,8 @@ matched source now exposes
 This audit records that the coefficient-window source's displayed \(a_l\) is
 definitionally the arithmetic-divisor evaluation coefficient used by the local
 formula source, and that the lower bound \(1\leq a_l\) is transported through
-that equality before the local degree-identification formulas are built.
+that equality before the local degree-identification formulas are built; it
+also exposes the nested \texttt{CoefficientWindowAudit}.
 The formula source also now has a named
 \texttt{LocalDegreeFormulaAudit}.  It derives, from the Step~(v) formula
 bound, the Proposition~1.4 tensor equality, and the tensor domination,

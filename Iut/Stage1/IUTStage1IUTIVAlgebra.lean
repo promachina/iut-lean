@@ -869,36 +869,60 @@ noncomputable def arithmeticDegreeCoefficient
   (((estimate.l.value : Real) + 1) / (4 * estimate.absoluteLogQ)) *
     (1 + 36 * (estimate.dmod : Real) / (estimate.l.value : Real))
 
+noncomputable def baseWindowFactor
+    (_source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    Real :=
+  ((estimate.l.value : Real) + 1) / (4 * estimate.absoluteLogQ)
+
+noncomputable def thetaErrorFactor
+    (_source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    Real :=
+  1 + 36 * (estimate.dmod : Real) / (estimate.l.value : Real)
+
+theorem baseWindowFactor_ge_one
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    1 <= source.baseWindowFactor := by
+  have hdenpos : 0 < 4 * estimate.absoluteLogQ := by
+    exact mul_pos (by norm_num) estimate.absoluteLogQ_pos
+  have hdiv :=
+    div_le_div_of_nonneg_right source.absoluteLogQ_degree_window
+      (le_of_lt hdenpos)
+  have hself : (4 * estimate.absoluteLogQ) /
+      (4 * estimate.absoluteLogQ) = (1 : Real) := by
+    exact div_self (ne_of_gt hdenpos)
+  simpa [baseWindowFactor, hself] using hdiv
+
+theorem thetaErrorFactor_ge_one
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    1 <= source.thetaErrorFactor := by
+  have hnonneg :
+      0 <= 36 * (estimate.dmod : Real) /
+          (estimate.l.value : Real) := by
+    positivity
+  dsimp [thetaErrorFactor]
+  linarith
+
 theorem arithmeticDegreeCoefficient_ge_one
     (source :
       IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
         estimate) :
     1 <= source.arithmeticDegreeCoefficient := by
-  have hdenpos : 0 < 4 * estimate.absoluteLogQ := by
-    exact mul_pos (by norm_num) estimate.absoluteLogQ_pos
-  have hfactor1 :
-      1 <= ((estimate.l.value : Real) + 1) /
-          (4 * estimate.absoluteLogQ) := by
-    have hdiv :=
-      div_le_div_of_nonneg_right source.absoluteLogQ_degree_window
-        (le_of_lt hdenpos)
-    have hself : (4 * estimate.absoluteLogQ) /
-        (4 * estimate.absoluteLogQ) = (1 : Real) := by
-      exact div_self (ne_of_gt hdenpos)
-    simpa [hself] using hdiv
-  have hfactor2 :
-      1 <= 1 + 36 * (estimate.dmod : Real) /
-          (estimate.l.value : Real) := by
-    have hnonneg :
-        0 <= 36 * (estimate.dmod : Real) /
-            (estimate.l.value : Real) := by
-      positivity
-    linarith
+  have hfactor1 := source.baseWindowFactor_ge_one
+  have hfactor2 := source.thetaErrorFactor_ge_one
   have hfactor2_nonneg :
       0 <= 1 + 36 * (estimate.dmod : Real) /
           (estimate.l.value : Real) :=
     le_trans (by norm_num) hfactor2
-  dsimp [arithmeticDegreeCoefficient]
+  dsimp [arithmeticDegreeCoefficient, baseWindowFactor,
+    thetaErrorFactor] at hfactor1 hfactor2 hfactor2_nonneg ⊢
   nlinarith
 
 def Endpoint
@@ -918,6 +942,33 @@ theorem endpoint
   ⟨estimate.absoluteLogQ_pos,
     source.absoluteLogQ_degree_window,
     source.arithmeticDegreeCoefficient_ge_one⟩
+
+structure CoefficientWindowAudit
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    Prop where
+  absoluteLogQ_pos : 0 < estimate.absoluteLogQ
+  absoluteLogQ_degree_window :
+    4 * estimate.absoluteLogQ <= (estimate.l.value : Real) + 1
+  baseWindowFactor_ge_one : 1 <= source.baseWindowFactor
+  thetaErrorFactor_ge_one : 1 <= source.thetaErrorFactor
+  arithmeticDegreeCoefficient_ge_one :
+    1 <= source.arithmeticDegreeCoefficient
+  endpoint : source.Endpoint
+
+theorem coefficientWindowAudit
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    CoefficientWindowAudit source :=
+  { absoluteLogQ_pos := estimate.absoluteLogQ_pos,
+    absoluteLogQ_degree_window := source.absoluteLogQ_degree_window,
+    baseWindowFactor_ge_one := source.baseWindowFactor_ge_one,
+    thetaErrorFactor_ge_one := source.thetaErrorFactor_ge_one,
+    arithmeticDegreeCoefficient_ge_one :=
+      source.arithmeticDegreeCoefficient_ge_one,
+    endpoint := source.endpoint }
 
 end IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
 
