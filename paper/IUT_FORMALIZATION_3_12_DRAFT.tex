@@ -10089,7 +10089,18 @@ vertical-\(IQ\) target endpoint, the arithmetic-divisor-backed endpoint, the
 arithmetic-divisor local-degree audit, the
 finite-place local-to-global \(C_\Theta\) derivation audit, the
 \texttt{paperTraceRemainingPayloadAudit}, the closed handoff audit, and the
-derived arithmetic-gap \(C_\Theta\) chain.  In particular, the audit now
+derived arithmetic-gap \(C_\Theta\) chain.  The same endpoint now exposes the
+Step~(xi) normalized bridge directly as
+\texttt{normalizedRecordBridge} and
+\texttt{qRegionLogVolume\_le\_thetaSigned}: the constructed
+Remark~3.9.5 source gives
+\[
+  \mu_{\log}(q\text{-region})\leq \det_{\mathrm{norm}}\leq
+  \theta_{\mathrm{signed}},
+\]
+and hence the q-region log-volume is already bounded by
+\(\theta_{\mathrm{signed}}\) before the later \(\IUT{}\,\mathrm{IV}\)
+\(C_\Theta\) comparison is invoked.  In particular, the audit now
 stores the local-to-global derivation of
 \[
   \theta_{\mathrm{signed}}\leq
