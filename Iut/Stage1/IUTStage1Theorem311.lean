@@ -5438,6 +5438,7 @@ structure AdditiveHaarArithmeticDegreePadicObligations where
   constructed_she_no_domain_to_codomain_transport_threaded : Prop
   constructed_apt_transport_not_forbidden_threaded : Prop
   constructed_apt_transport_audit_threaded : Prop
+  constructed_apt_datum_quotient_endpoint_threaded : Prop
   constructed_ipl_she_apt_transport_law_audit_threaded : Prop
   strongest_additive_haar_endpoint_has_remaining_payload_audit : Prop
 
@@ -5466,6 +5467,7 @@ def CoarsePayloadAudit
     obligations.constructed_she_no_domain_to_codomain_transport_threaded ∧
     obligations.constructed_apt_transport_not_forbidden_threaded ∧
     obligations.constructed_apt_transport_audit_threaded ∧
+    obligations.constructed_apt_datum_quotient_endpoint_threaded ∧
     obligations.constructed_ipl_she_apt_transport_law_audit_threaded ∧
     obligations.strongest_additive_haar_endpoint_has_remaining_payload_audit
 
@@ -5549,6 +5551,13 @@ theorem constructedAPTTransportAuditThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.constructed_apt_transport_audit_threaded := by
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
+
+theorem constructedAPTDatumQuotientEndpointThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.constructed_apt_datum_quotient_endpoint_threaded := by
   dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
   tauto
 
@@ -5986,6 +5995,15 @@ theorem additiveHaarConstructedAPTTransportAuditThreaded
     obligations.additive_haar_arithmetic_degree_padic
       |>.constructed_apt_transport_audit_threaded :=
   AdditiveHaarArithmeticDegreePadicObligations.constructedAPTTransportAuditThreaded
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarConstructedAPTDatumQuotientEndpointThreaded
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.constructed_apt_datum_quotient_endpoint_threaded :=
+  AdditiveHaarArithmeticDegreePadicObligations.constructedAPTDatumQuotientEndpointThreaded
     obligations.additive_haar_arithmetic_degree_padic
     (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
 
