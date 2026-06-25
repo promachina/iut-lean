@@ -10695,6 +10695,11 @@ identified with finite local sums, the summed Step~(xi)/Haar inequality and
 unit Haar defect give the arithmetic gap, and the \(\IUT{}\,\mathrm{IV}\)
 handoff yields both \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) and the signed
 theta bound used by Corollary~3.12.
+The finite-place source also exposes a
+\texttt{coarseAssemblyConcreteAudit}: the four coarse assembly slots of the
+typed local-global source are definitionally identified with the finite
+canonical-scale sum, the total Haar-defect lower bound, the arithmetic-upper and
+main-log finite-sum identities, and the placewise Step~(xi)/Haar inequalities.
 The source-level
 \texttt{theorem311MultiradialFinitePlaceCThetaAudit} now joins this finite
 calculation to the Theorem~3.11 multiradial side: the selected \(q\)-region is
@@ -10715,12 +10720,15 @@ preferred-audit projections
 \texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThetaAudit.}\\
 \quad\texttt{indeterminacyLocalGlobalEndpoint},\\
 \texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThetaAudit.}\\
-\quad\texttt{finitePlaceLocalGlobalCThetaDerivationAudit}.
+\quad\texttt{finitePlaceLocalGlobalCThetaDerivationAudit},\\
+\texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedComponentCThetaAudit.}\\
+\quad\texttt{coarseAssemblyConcreteAudit}.
 \end{array}
 \]
 These expose, from the preferred certificate itself, both the one-sided
-Theorem~3.11 quotient endpoint and the coarse typed-indeterminacy
-local-to-global endpoint.  The last projection packages the finite-place
+Theorem~3.11 quotient endpoint, the coarse typed-indeterminacy
+local-to-global endpoint, and the concrete finite-place meaning of the coarse
+assembly fields.  The finite-place derivation projection packages the
 derivation itself: the summed Step~(xi)/Haar inequality, the Haar-defect
 contribution of the global \(+1\), the \(\IUT{}\,\mathrm{IV}\)
 \(C_\Theta+1=A-M\) handoff identity, the named ordered-real cancellation audit
