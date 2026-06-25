@@ -4560,6 +4560,45 @@ def strictFiniteToyEqualityQuotientPossibleImages
   EqualityQuotientPossibleImages.ofCompatibility
     (strictFiniteToyPossibleImageCompatibility target)
 
+theorem strictFiniteToyEqualityQuotient_relation_eq
+    {choice₁ choice₂ : Fin 2}
+    (hrel : strictFiniteToyCore.equalityQuotient.relation choice₁ choice₂) :
+    choice₁ = choice₂ := by
+  induction hrel with
+  | refl choice =>
+      rfl
+  | ind1 hstep =>
+      exact hstep
+  | ind2 hstep =>
+      exact hstep
+  | ind3 hstep =>
+      exact False.elim hstep
+  | symm _ ih =>
+      exact ih.symm
+  | trans _ _ ih₁₂ ih₂₃ =>
+      exact ih₁₂.trans ih₂₃
+
+def strictFiniteToyEqualityQuotientRepresentative :
+    Quot strictFiniteToyCore.equalityQuotient.relation -> Fin 2 :=
+  Quot.lift id (by
+    intro choice₁ choice₂ hrel
+    exact strictFiniteToyEqualityQuotient_relation_eq hrel)
+
+theorem strictFiniteToyEqualityQuotientMap_ne :
+    strictFiniteToyCore.equalityQuotientMap (0 : Fin 2) ≠
+      strictFiniteToyCore.equalityQuotientMap (1 : Fin 2) := by
+  intro hquot
+  have h01 : (0 : Fin 2) = (1 : Fin 2) :=
+    congrArg strictFiniteToyEqualityQuotientRepresentative hquot
+  norm_num at h01
+
+theorem strictFiniteToyInd3Step_not_in_equalityOrbit :
+    (1 : Fin 2) ∉ strictFiniteToyCore.equalityOrbit (0 : Fin 2) := by
+  intro hmem
+  have h01 : (0 : Fin 2) = (1 : Fin 2) :=
+    strictFiniteToyEqualityQuotient_relation_eq hmem
+  norm_num at h01
+
 structure StrictFiniteToyTypedIndeterminacyNonvacuityAudit (target : Copy) where
   choice_nonempty : Nonempty (Fin 2)
   ind1_preserves_every_step :
@@ -4580,6 +4619,11 @@ structure StrictFiniteToyTypedIndeterminacyNonvacuityAudit (target : Copy) where
   ind3_upper_for_strict_step :
     strictFiniteToyCore.logVolume (0 : Fin 2) <=
       strictFiniteToyCore.logVolume (1 : Fin 2)
+  ind3_strict_not_in_equalityOrbit :
+    (1 : Fin 2) ∉ strictFiniteToyCore.equalityOrbit (0 : Fin 2)
+  ind3_strict_quotientMap_ne :
+    strictFiniteToyCore.equalityQuotientMap (0 : Fin 2) ≠
+      strictFiniteToyCore.equalityQuotientMap (1 : Fin 2)
   equalityQuotient_no_ind3_generator :
     ∀ {choice₁ choice₂ : Fin 2},
       strictFiniteToyCore.equalityGenerators.ind3_step choice₁ choice₂ -> False
@@ -4605,6 +4649,10 @@ def strictFiniteToyTypedIndeterminacyNonvacuityAudit
       norm_num [strictFiniteToyLogVolume, strictFiniteToyCore],
     ind3_upper_for_strict_step := by
       exact strictFiniteToyCore.ind3_logVolume_le (Or.inr ⟨rfl, rfl⟩),
+    ind3_strict_not_in_equalityOrbit :=
+      strictFiniteToyInd3Step_not_in_equalityOrbit,
+    ind3_strict_quotientMap_ne :=
+      strictFiniteToyEqualityQuotientMap_ne,
     equalityQuotient_no_ind3_generator := by
       intro choice₁ choice₂ hstep
       exact strictFiniteToyCore.equalityGenerators_ind3_false hstep,
@@ -4616,10 +4664,15 @@ theorem strictFiniteToyTypedIndeterminacyNonvacuityAudit_ind3_strict_not_equaliz
     strictFiniteToyCore.ind3.step (0 : Fin 2) (1 : Fin 2) ∧
       strictFiniteToyCore.logVolume (0 : Fin 2) <
         strictFiniteToyCore.logVolume (1 : Fin 2) ∧
+      (1 : Fin 2) ∉ strictFiniteToyCore.equalityOrbit (0 : Fin 2) ∧
+      strictFiniteToyCore.equalityQuotientMap (0 : Fin 2) ≠
+        strictFiniteToyCore.equalityQuotientMap (1 : Fin 2) ∧
       (∀ {choice₁ choice₂ : Fin 2},
         strictFiniteToyCore.equalityGenerators.ind3_step choice₁ choice₂ -> False) :=
   ⟨(strictFiniteToyTypedIndeterminacyNonvacuityAudit target).ind3_strict_step,
     (strictFiniteToyTypedIndeterminacyNonvacuityAudit target).ind3_strict_logVolume,
+    (strictFiniteToyTypedIndeterminacyNonvacuityAudit target).ind3_strict_not_in_equalityOrbit,
+    (strictFiniteToyTypedIndeterminacyNonvacuityAudit target).ind3_strict_quotientMap_ne,
     (strictFiniteToyTypedIndeterminacyNonvacuityAudit target).equalityQuotient_no_ind3_generator⟩
 
 end IUTStage1Theorem311TypedIndeterminacyCore

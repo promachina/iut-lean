@@ -8942,10 +8942,16 @@ are equality relations, and \((\Ind_3)\) contains the strict step
 \end{array}
 \]
 proves simultaneously that this \((\Ind_3)\) step is present, that its
-log-volume inequality is strict, and that it is still absent from the equality
-quotient generators.  This is stronger nonvacuity evidence for the asymmetric
-typed interface, while retaining the same limitation: it is a finite audit
-model of the interface, not an \IUT{} source construction.
+log-volume inequality is strict, that the target point is not in the
+\((\Ind_1)/(\Ind_2)\) equality orbit of the source point, that the two points
+have distinct \texttt{equalityQuotientMap} images, and that \((\Ind_3)\) is
+still absent from the equality quotient generators.  The quotient-map
+separation is proved by a finite quotient representative map
+\(\mathrm{Quot}(\texttt{equalityQuotient.relation})\to \mathrm{Fin}\,2\),
+whose well-definedness follows from the fact that the strict toy equality
+quotient relation is exactly equality.  This is stronger nonvacuity evidence
+for the asymmetric typed interface, while retaining the same limitation: it is
+a finite audit model of the interface, not an \IUT{} source construction.
 The one-sided multiradial source now also exposes this information as the
 structured audit
 \[
