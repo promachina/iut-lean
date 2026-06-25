@@ -5066,6 +5066,11 @@ theorem typedIndeterminacyNonvacuityWitnessConstructed
     obligations.typed_indeterminacy_nonvacuity_witness_constructed :=
   audit.1
 
+theorem typedIndeterminacyActionLawAudit
+    (_obligations : Theorem311AndRemarksObligations core images) :
+    core.ActionLawAudit :=
+  core.actionLawAudit
+
 theorem ind1_ind2_image_invariant
     (obligations : Theorem311AndRemarksObligations core images) :
     ∀ {choice₁ choice₂ : choice},
@@ -5081,6 +5086,18 @@ theorem ind3_logVolume_upper
     core.logVolume choice₁ <= core.logVolume choice₂ :=
   obligations.possible_images_depend_on_equality_quotient
     |>.ind3_upper_from_core hstep
+
+theorem ind3_upperSemiRelationAudit
+    (_obligations : Theorem311AndRemarksObligations core images) :
+    core.Ind3UpperSemiRelationAudit :=
+  core.ind3UpperSemiRelationAudit
+
+theorem equalityQuotient_no_ind3_generator
+    (_obligations : Theorem311AndRemarksObligations core images) :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalityGenerators.ind3_step choice₁ choice₂ -> False :=
+  core.ind3UpperSemiRelationAudit
+    |>.equalityQuotient_no_ind3_generator
 
 end Theorem311AndRemarksObligations
 
@@ -5458,6 +5475,31 @@ theorem ind3_upper_semi_not_equality_payload
     (hstep : core.ind3.step choice₁ choice₂) :
     core.logVolume choice₁ <= core.logVolume choice₂ :=
   obligations.stepX_finite_divisor.ind3_upper_semi_logVolume_inequality hstep
+
+theorem theorem311_action_law_audit
+    (_obligations : Obligations core images) :
+    core.ActionLawAudit :=
+  core.actionLawAudit
+
+theorem ind3_upper_semi_relation_audit
+    (obligations : Obligations core images) :
+    core.Ind3UpperSemiRelationAudit :=
+  obligations.stepX_finite_divisor.ind3_upper_semi_relation_audit
+
+theorem ind3_upper_semi_step_audit
+    (obligations : Obligations core images)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind3.step choice₁ choice₂) :
+    core.Ind3UpperSemiStepAudit choice₁ choice₂ :=
+  obligations.ind3_upper_semi_relation_audit
+    |>.upper_semi_step_audit hstep
+
+theorem equalityQuotient_no_ind3_generator
+    (obligations : Obligations core images) :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalityGenerators.ind3_step choice₁ choice₂ -> False :=
+  obligations.ind3_upper_semi_relation_audit
+    |>.equalityQuotient_no_ind3_generator
 
 end Obligations
 
