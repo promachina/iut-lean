@@ -10021,11 +10021,27 @@ It consumes arithmetic-divisor-backed finite local-degree data and
 construction-backed archimedean local-degree components, then derives the
 finite-divisor vertical-\(IQ\) dichotomy through the closed local-to-global
 \(C_\Theta\) source.
+The finite distinguished branch is now audited separately by
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarTheorem110StepXI}\\
+\texttt{MatchedLocalDegreeArithmeticDivisorBackedComponentSource.}\\
+\quad\texttt{ArithmeticDivisorLocalDegreeAudit}.
+\end{array}
+\]
+For every distinguished nonarchimedean place this audit exposes the
+arithmetic-divisor-backed component endpoint, nonnegativity of the local
+different and conductor degrees from divisor effectivity, the identifications
+of those local degrees with the Proposition~1.4 tensor-different and
+tensor-conductor terms, and the projection to the effective
+different/conductor component endpoint.
 The same wrapper now exposes the local-to-global arithmetic proof and the
 Theorem~3.11 quotient input at this lowest boundary by
 \[
 \begin{array}{l}
 \texttt{ArithmeticDivisorBackedLocalGlobalCThetaAudit},\\
+\texttt{ArithmeticDivisorBackedLocalGlobalCThetaAudit.}\\
+\quad\texttt{arithmeticDivisorLocalDegreeAudit},\\
 \texttt{ArithmeticDivisorBackedLocalGlobalCThetaAudit.oneSidedQuotientAudit},\\
 \texttt{ArithmeticDivisorBackedLocalGlobalCThetaAudit.}\\
 \quad\texttt{oneSidedRemark395CompatibilityAudit},\\
@@ -10066,6 +10082,7 @@ Remark~3.9.5 compatibility audit, its typed-core action-law audit, the selected
 q-region quotient endpoint, the realified Frobenioid/log-Kummer packet
 endpoint, the recovered finite-divisor packet-local Step~(x) source, the exact
 vertical-\(IQ\) target endpoint, the arithmetic-divisor-backed endpoint, the
+arithmetic-divisor local-degree audit, the
 finite-place local-to-global \(C_\Theta\) derivation audit, the
 \texttt{paperTraceRemainingPayloadAudit}, the closed handoff audit, and the
 derived \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison.  The paper-trace
