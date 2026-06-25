@@ -9646,8 +9646,8 @@ sources feed
 \texttt{IUTStage1IUTIVTheorem110LocalAnalyticConstructionFormulaSource} and
 \texttt{IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource}.
 This finite-extension construction layer is now an intermediate projection.
-The current preferred local-to-global \(C_\Theta\) boundary is the
-additive-Haar-backed route.  The compact-open declarations
+The additive-Haar-backed route is now an intermediate projection in the
+preferred local-to-global \(C_\Theta\) boundary.  The compact-open declarations
 \texttt{IUTStage1IUTIVProposition14DistinguishedCompactOpenHaarLogShellSource}
 and
 \texttt{IUTStage1IUTIVProposition14NondistinguishedCompactOpenHaarLogShellSource}
@@ -9661,6 +9661,25 @@ carrier.  These feed
 \texttt{IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticConstructionFormulaSource}
 and
 \texttt{IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource}.
+The newest Lean layer lowers this further to valuation-ball additive Haar data.
+The sources
+\[
+\begin{array}{l}
+\texttt{IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource},\\
+\texttt{IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource}
+\end{array}
+\]
+replace the generic additive normalization input by
+\texttt{IUTStage1ValuationBallAdditiveHaarNormalizationSource}, whose audit
+identifies the ring of integers and chosen compact open subset as valuation
+balls, proves compact-openness of the unit ball and selected ball, and records
+the normalized Haar/log-volume uniformizer shift.  These proposition-level
+objects feed
+\texttt{IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource}
+and
+\texttt{IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource},
+which project to the additive-Haar, local-analytic, Proposition-level,
+formula-level, and theta-pilot arithmetic-divisor evaluation records.
 The distinguished and archimedean formula-to-gap comparisons have now been
 split out as named source objects:
 \[

@@ -3389,6 +3389,314 @@ end IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource
 
 set_option linter.style.longLine false in
 /--
+Distinguished Proposition 1.4 log-shell source backed by valuation-ball
+additive Haar normalization.
+
+This is the local nonarchimedean specialization of the additive-Haar source:
+the ring of integers and compact open subset are valuation balls, and the
+uniformizer dilation/Haar scaling data are supplied by
+`IUTStage1ValuationBallAdditiveHaarNormalizationSource`.
+-/
+structure IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+    (α : Type u) (η : Type v) (K : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (l : PrimeGeFive)
+    (distinguishedProcessionBound : Real) where
+  valuationBallHaarSource :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource
+      α η K hullSystem
+  lambda : Real
+  dI : Real
+  exceptionalCard : Nat
+  exceptionalRamificationLogSum : Real
+  shiftedLogUnitsRegion : Set α
+  shiftedTensorRegion : Set α
+  shiftedLogUnitsLogVolume : Real
+  shiftedTensorLogVolume : Real
+  shiftedLogUnits_logVolume_eq :
+    shiftedLogUnitsLogVolume =
+      hullSystem.logVolume shiftedLogUnitsRegion
+  shiftedTensor_logVolume_eq :
+    shiftedTensorLogVolume =
+      hullSystem.logVolume shiftedTensorRegion
+  prop14_logUnits_le_first_bound :
+    shiftedLogUnitsLogVolume <=
+      iutIVProp14DistinguishedLogUnitsFirstBound
+        valuationBallHaarSource.residuePrime lambda dI exceptionalCard
+  prop14_tensor_le_second_bound :
+    shiftedTensorLogVolume <=
+      iutIVProp14DistinguishedTensorBound
+        valuationBallHaarSource.residuePrime lambda dI
+        exceptionalRamificationLogSum
+  prop14_first_bound_le_weighted_average :
+    iutIVProp14DistinguishedLogUnitsFirstBound
+        valuationBallHaarSource.residuePrime lambda dI exceptionalCard <=
+      iutIVProp14DistinguishedTensorBound
+        valuationBallHaarSource.residuePrime lambda dI
+        exceptionalRamificationLogSum
+  exactProcessionNormalizedUpperBound : Real
+  coarseProcessionNormalizedUpperBound : Real
+  proposition17_weighted_average_le_exact_procession :
+    iutIVProp14DistinguishedTensorBound
+        valuationBallHaarSource.residuePrime lambda dI
+        exceptionalRamificationLogSum <=
+      exactProcessionNormalizedUpperBound
+  stepV_exact_procession_le_coarse :
+    exactProcessionNormalizedUpperBound <=
+      coarseProcessionNormalizedUpperBound
+  stepV_coarse_le_formula_bound :
+    coarseProcessionNormalizedUpperBound <= distinguishedProcessionBound
+
+namespace IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {l : PrimeGeFive}
+variable {distinguishedProcessionBound : Real}
+
+noncomputable def toAdditiveHaarLogShellSource
+    (source :
+      IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem l distinguishedProcessionBound) :
+    IUTStage1IUTIVProposition14DistinguishedAdditiveHaarLogShellSource
+      α η K hullSystem l distinguishedProcessionBound :=
+  { additiveHaarSource :=
+      source.valuationBallHaarSource.toAdditiveHaarCompactOpenNormalizationSource,
+    lambda := source.lambda,
+    dI := source.dI,
+    exceptionalCard := source.exceptionalCard,
+    exceptionalRamificationLogSum :=
+      source.exceptionalRamificationLogSum,
+    shiftedLogUnitsRegion := source.shiftedLogUnitsRegion,
+    shiftedTensorRegion := source.shiftedTensorRegion,
+    shiftedLogUnitsLogVolume := source.shiftedLogUnitsLogVolume,
+    shiftedTensorLogVolume := source.shiftedTensorLogVolume,
+    shiftedLogUnits_logVolume_eq :=
+      source.shiftedLogUnits_logVolume_eq,
+    shiftedTensor_logVolume_eq :=
+      source.shiftedTensor_logVolume_eq,
+    prop14_logUnits_le_first_bound :=
+      source.prop14_logUnits_le_first_bound,
+    prop14_tensor_le_second_bound :=
+      source.prop14_tensor_le_second_bound,
+    prop14_first_bound_le_weighted_average :=
+      source.prop14_first_bound_le_weighted_average,
+    exactProcessionNormalizedUpperBound :=
+      source.exactProcessionNormalizedUpperBound,
+    coarseProcessionNormalizedUpperBound :=
+      source.coarseProcessionNormalizedUpperBound,
+    proposition17_weighted_average_le_exact_procession :=
+      source.proposition17_weighted_average_le_exact_procession,
+    stepV_exact_procession_le_coarse :=
+      source.stepV_exact_procession_le_coarse,
+    stepV_coarse_le_formula_bound :=
+      source.stepV_coarse_le_formula_bound }
+
+noncomputable def toCompactOpenHaarLogShellSource
+    (source :
+      IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem l distinguishedProcessionBound) :
+    IUTStage1IUTIVProposition14DistinguishedCompactOpenHaarLogShellSource
+      α η K hullSystem l distinguishedProcessionBound :=
+  source.toAdditiveHaarLogShellSource.toCompactOpenHaarLogShellSource
+
+noncomputable def toDistinguishedLocalLogShellConstructionSource
+    (source :
+      IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem l distinguishedProcessionBound) :
+    IUTStage1IUTIVProposition14DistinguishedLocalLogShellConstructionSource
+      α η K hullSystem l distinguishedProcessionBound :=
+  source.toAdditiveHaarLogShellSource
+    |>.toDistinguishedLocalLogShellConstructionSource
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem l distinguishedProcessionBound) :
+    Prop :=
+  IUTStage1ValuationBallAdditiveHaarNormalizationSource.ValuationBallAdditiveHaarNormalizationAudit
+      source.valuationBallHaarSource ∧
+    source.toAdditiveHaarLogShellSource.Endpoint ∧
+      source.toCompactOpenHaarLogShellSource.Endpoint ∧
+        source.toDistinguishedLocalLogShellConstructionSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem l distinguishedProcessionBound) :
+    Endpoint source :=
+  ⟨IUTStage1ValuationBallAdditiveHaarNormalizationSource.valuationBallAdditiveHaarNormalizationAudit
+      source.valuationBallHaarSource,
+    source.toAdditiveHaarLogShellSource.endpoint,
+    source.toCompactOpenHaarLogShellSource.endpoint,
+    source.toDistinguishedLocalLogShellConstructionSource.endpoint⟩
+
+end IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+
+set_option linter.style.longLine false in
+/--
+Nondistinguished Proposition 1.4 log-shell source backed by valuation-ball
+additive Haar normalization.
+
+The tensor container is identified with the normalized integral valuation ball,
+so Proposition 1.4(iv)'s zero log-volume statement is inherited from the
+valuation-ball Haar normalization audit.
+-/
+structure IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+    (α : Type u) (η : Type v) (K : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (localArithmeticMinusMainGap : Real) where
+  valuationBallHaarSource :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource
+      α η K hullSystem
+  tensorContainerRegion : Set α
+  tensorContainerLogVolume : Real
+  tensorContainerRegion_eq_integralRegion :
+    tensorContainerRegion =
+      valuationBallHaarSource.realizedRegion valuationBallHaarSource.ringOfIntegers
+  tensorContainerLogVolume_eq_hull :
+    tensorContainerLogVolume =
+      hullSystem.logVolume tensorContainerRegion
+  prop14_phi_preserves_tensorContainer : Prop
+  prop14_phi_preserves_tensorContainer_holds :
+    prop14_phi_preserves_tensorContainer
+  prop14_zero_le_gap :
+    0 <= localArithmeticMinusMainGap
+
+namespace IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {localArithmeticMinusMainGap : Real}
+
+noncomputable def toAdditiveHaarLogShellSource
+    (source :
+      IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem localArithmeticMinusMainGap) :
+    IUTStage1IUTIVProposition14NondistinguishedAdditiveHaarLogShellSource
+      α η K hullSystem localArithmeticMinusMainGap :=
+  { additiveHaarSource :=
+      source.valuationBallHaarSource.toAdditiveHaarCompactOpenNormalizationSource,
+    tensorContainerRegion := source.tensorContainerRegion,
+    tensorContainerLogVolume := source.tensorContainerLogVolume,
+    tensorContainerRegion_eq_integralRegion :=
+      source.tensorContainerRegion_eq_integralRegion,
+    tensorContainerLogVolume_eq_hull :=
+      source.tensorContainerLogVolume_eq_hull,
+    prop14_phi_preserves_tensorContainer :=
+      source.prop14_phi_preserves_tensorContainer,
+    prop14_phi_preserves_tensorContainer_holds :=
+      source.prop14_phi_preserves_tensorContainer_holds,
+    prop14_zero_le_gap :=
+      source.prop14_zero_le_gap }
+
+noncomputable def toCompactOpenHaarLogShellSource
+    (source :
+      IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem localArithmeticMinusMainGap) :
+    IUTStage1IUTIVProposition14NondistinguishedCompactOpenHaarLogShellSource
+      α η K hullSystem localArithmeticMinusMainGap :=
+  source.toAdditiveHaarLogShellSource.toCompactOpenHaarLogShellSource
+
+noncomputable def toNondistinguishedLocalLogShellConstructionSource
+    (source :
+      IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem localArithmeticMinusMainGap) :
+    IUTStage1IUTIVProposition14NondistinguishedLocalLogShellConstructionSource
+      α η K hullSystem localArithmeticMinusMainGap :=
+  source.toAdditiveHaarLogShellSource
+    |>.toNondistinguishedLocalLogShellConstructionSource
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem localArithmeticMinusMainGap) :
+    Prop :=
+  IUTStage1ValuationBallAdditiveHaarNormalizationSource.ValuationBallAdditiveHaarNormalizationAudit
+      source.valuationBallHaarSource ∧
+    source.toAdditiveHaarLogShellSource.Endpoint ∧
+      source.toCompactOpenHaarLogShellSource.Endpoint ∧
+        source.toNondistinguishedLocalLogShellConstructionSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+        α η K hullSystem localArithmeticMinusMainGap) :
+    Endpoint source :=
+  ⟨IUTStage1ValuationBallAdditiveHaarNormalizationSource.valuationBallAdditiveHaarNormalizationAudit
+      source.valuationBallHaarSource,
+    source.toAdditiveHaarLogShellSource.endpoint,
+    source.toCompactOpenHaarLogShellSource.endpoint,
+    source.toNondistinguishedLocalLogShellConstructionSource.endpoint⟩
+
+end IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+
+set_option linter.style.longLine false in
+/--
+Valuation-ball additive-Haar local analytic construction source for IUT IV,
+Theorem 1.10.
+
+Finite nonarchimedean places now provide Proposition 1.4 data through actual
+valuation balls and additive Haar normalization before projecting to the
+additive-Haar local analytic construction used by the current corridor.
+-/
+structure IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+    (place : Type u) [Fintype place]
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    (divisorSource :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate)
+    (α : Type v) (η : Type w) (K : place -> Type x)
+    [∀ placeId : place, TopologicalSpace (K placeId)]
+    [∀ placeId : place, MeasurableSpace (K placeId)]
+    [∀ placeId : place, AddGroup (K placeId)]
+    [∀ placeId : place, T2Space (K placeId)]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (archIndex archSummand : place -> Type v)
+    [∀ placeId : place, Fintype (archIndex placeId)]
+    [∀ placeId : place, Fintype (archSummand placeId)] where
+  localKind : place -> IUTStage1IUTIVTheorem110LocalEstimateKind
+  localPrimeErrorContribution : place -> Real
+  localMainLogContribution : place -> Real
+  distinguishedProcessionBound : place -> Real
+  archimedeanProcessionBound : place -> Real
+  localPrimeErrorContribution_nonneg :
+    ∀ placeId : place, 0 <= localPrimeErrorContribution placeId
+  primeErrorContribution_eq_sum :
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ placeId : place, localPrimeErrorContribution placeId
+  mainLogTerm_eq_sum :
+    estimate.mainLogTerm =
+      ∑ placeId : place, localMainLogContribution placeId
+  distinguishedValuationBallAdditiveHaarLogShellConstruction :
+    ∀ placeId : place,
+      localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+        IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+          α η (K placeId) hullSystem estimate.l
+          (distinguishedProcessionBound placeId)
+  nondistinguishedValuationBallAdditiveHaarLogShellConstruction :
+    ∀ placeId : place,
+      localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean ->
+        IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+          α η (K placeId) hullSystem
+          (divisorSource.localArithmeticUpperContribution
+              localPrimeErrorContribution placeId -
+            localMainLogContribution placeId)
+  archimedeanMetricConstruction :
+    ∀ placeId : place,
+      localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+        IUTStage1IUTIVProposition15ArchimedeanMetricConstructionSource
+          (archIndex placeId) (archSummand placeId) estimate.l
+          (archimedeanProcessionBound placeId)
+
+set_option linter.style.longLine false in
+/--
 Additive Haar backed local analytic construction source for IUT IV,
 Theorem 1.10.
 
@@ -3554,6 +3862,127 @@ theorem endpoint
 
 end IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticConstructionFormulaSource
 
+namespace IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {divisorSource :
+  IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate}
+variable {α : Type v} {η : Type w} {K : place -> Type x}
+variable [∀ placeId : place, TopologicalSpace (K placeId)]
+variable [∀ placeId : place, MeasurableSpace (K placeId)]
+variable [∀ placeId : place, AddGroup (K placeId)]
+variable [∀ placeId : place, T2Space (K placeId)]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {archIndex archSummand : place -> Type v}
+variable [∀ placeId : place, Fintype (archIndex placeId)]
+variable [∀ placeId : place, Fintype (archSummand placeId)]
+
+set_option linter.style.longLine false in
+noncomputable def toAdditiveHaarLocalAnalyticConstructionFormulaSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticConstructionFormulaSource
+      place divisorSource α η K hullSystem archIndex archSummand :=
+  { localKind := source.localKind,
+    localPrimeErrorContribution := source.localPrimeErrorContribution,
+    localMainLogContribution := source.localMainLogContribution,
+    distinguishedProcessionBound :=
+      source.distinguishedProcessionBound,
+    archimedeanProcessionBound :=
+      source.archimedeanProcessionBound,
+    localPrimeErrorContribution_nonneg :=
+      source.localPrimeErrorContribution_nonneg,
+    primeErrorContribution_eq_sum :=
+      source.primeErrorContribution_eq_sum,
+    mainLogTerm_eq_sum :=
+      source.mainLogTerm_eq_sum,
+    distinguishedAdditiveHaarLogShellConstruction := by
+      intro placeId hkind
+      exact
+        (source.distinguishedValuationBallAdditiveHaarLogShellConstruction
+          placeId hkind).toAdditiveHaarLogShellSource,
+    nondistinguishedAdditiveHaarLogShellConstruction := by
+      intro placeId hkind
+      exact
+        (source.nondistinguishedValuationBallAdditiveHaarLogShellConstruction
+          placeId hkind).toAdditiveHaarLogShellSource,
+    archimedeanMetricConstruction :=
+      source.archimedeanMetricConstruction }
+
+noncomputable def toLocalAnalyticConstructionFormulaSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110LocalAnalyticConstructionFormulaSource
+      place divisorSource α η K hullSystem archIndex archSummand :=
+  source.toAdditiveHaarLocalAnalyticConstructionFormulaSource
+    |>.toLocalAnalyticConstructionFormulaSource
+
+noncomputable def toPropositionLogShellFormulaSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110PropositionLogShellFormulaSource
+      place divisorSource :=
+  source.toAdditiveHaarLocalAnalyticConstructionFormulaSource
+    |>.toPropositionLogShellFormulaSource
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand) :
+    Prop :=
+  (∀ placeId : place,
+      0 <= source.localPrimeErrorContribution placeId) ∧
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ placeId : place, source.localPrimeErrorContribution placeId ∧
+    estimate.mainLogTerm =
+      ∑ placeId : place, source.localMainLogContribution placeId ∧
+    (∀ placeId : place,
+      (hkind :
+        source.localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+        (source.distinguishedValuationBallAdditiveHaarLogShellConstruction
+          placeId hkind).Endpoint) ∧
+    (∀ placeId : place,
+      (hkind :
+        source.localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) ->
+        (source.nondistinguishedValuationBallAdditiveHaarLogShellConstruction
+          placeId hkind).Endpoint) ∧
+    (∀ placeId : place,
+      (hkind :
+        source.localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
+        (source.archimedeanMetricConstruction placeId hkind).Endpoint) ∧
+    source.toAdditiveHaarLocalAnalyticConstructionFormulaSource.Endpoint ∧
+    source.toLocalAnalyticConstructionFormulaSource.Endpoint ∧
+    source.toPropositionLogShellFormulaSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand) :
+    Endpoint source :=
+  ⟨source.localPrimeErrorContribution_nonneg,
+    source.primeErrorContribution_eq_sum,
+    source.mainLogTerm_eq_sum,
+    (fun placeId hkind =>
+      (source.distinguishedValuationBallAdditiveHaarLogShellConstruction
+        placeId hkind).endpoint),
+    (fun placeId hkind =>
+      (source.nondistinguishedValuationBallAdditiveHaarLogShellConstruction
+        placeId hkind).endpoint),
+    (fun placeId hkind =>
+      (source.archimedeanMetricConstruction placeId hkind).endpoint),
+    source.toAdditiveHaarLocalAnalyticConstructionFormulaSource.endpoint,
+    source.toLocalAnalyticConstructionFormulaSource.endpoint,
+    source.toPropositionLogShellFormulaSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+
 set_option linter.style.longLine false in
 /--
 Arithmetic-divisor evaluation source whose Theorem 1.10 local analytic
@@ -3683,6 +4112,166 @@ theorem endpoint
     source.toThetaPilotArithmeticDivisorLocalEvaluationSource.endpoint⟩
 
 end IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+
+set_option linter.style.longLine false in
+/--
+Arithmetic-divisor evaluation source whose Theorem 1.10 local analytic
+construction is backed at finite places by valuation-ball additive Haar
+normalization.
+
+This is the valuation-ball counterpart of the additive-Haar evaluation source:
+finite Proposition 1.4 inputs come from valuation balls and their Haar
+normalization audit, then project to the current additive-Haar/local-analytic
+Theorem 1.10 route.
+-/
+structure IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    (place : Type u) [Fintype place]
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (α : Type v) (η : Type w) (K : place -> Type x)
+    [∀ placeId : place, TopologicalSpace (K placeId)]
+    [∀ placeId : place, MeasurableSpace (K placeId)]
+    [∀ placeId : place, AddGroup (K placeId)]
+    [∀ placeId : place, T2Space (K placeId)]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (archIndex archSummand : place -> Type v)
+    [∀ placeId : place, Fintype (archIndex placeId)]
+    [∀ placeId : place, Fintype (archSummand placeId)] where
+  arithmeticDivisorSource :
+    IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate
+  valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource :
+    IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+      place arithmeticDivisorSource α η K hullSystem archIndex archSummand
+  distinguished_formula_le_gap :
+    ∀ placeId : place,
+      valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+          placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+        valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound
+            placeId <=
+          arithmeticDivisorSource.localArithmeticUpperContribution
+              valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+                placeId -
+            valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+              placeId
+  archimedean_formula_le_gap :
+    ∀ placeId : place,
+      valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+          placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+        valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound
+            placeId <=
+          arithmeticDivisorSource.localArithmeticUpperContribution
+              valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+                placeId -
+            valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+              placeId
+
+set_option linter.style.longLine false
+namespace IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {α : Type v} {η : Type w} {K : place -> Type x}
+variable [∀ placeId : place, TopologicalSpace (K placeId)]
+variable [∀ placeId : place, MeasurableSpace (K placeId)]
+variable [∀ placeId : place, AddGroup (K placeId)]
+variable [∀ placeId : place, T2Space (K placeId)]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {archIndex archSummand : place -> Type v}
+variable [∀ placeId : place, Fintype (archIndex placeId)]
+variable [∀ placeId : place, Fintype (archSummand placeId)]
+
+set_option linter.style.longLine false in
+noncomputable def toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+      place estimate α η K hullSystem archIndex archSummand :=
+  { arithmeticDivisorSource := source.arithmeticDivisorSource,
+    additiveHaarLocalAnalyticConstructionFormulaSource :=
+      source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        |>.toAdditiveHaarLocalAnalyticConstructionFormulaSource,
+    distinguished_formula_le_gap :=
+      source.distinguished_formula_le_gap,
+    archimedean_formula_le_gap :=
+      source.archimedean_formula_le_gap }
+
+set_option linter.style.longLine false in
+noncomputable def toLocalAnalyticArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource
+      place estimate α η K hullSystem archIndex archSummand :=
+  source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    |>.toLocalAnalyticArithmeticDivisorEvaluationSource
+
+set_option linter.style.longLine false in
+noncomputable def toPropositionArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110PropositionArithmeticDivisorEvaluationSource
+      place estimate :=
+  source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    |>.toPropositionArithmeticDivisorEvaluationSource
+
+set_option linter.style.longLine false in
+noncomputable def toFormulaArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
+      place estimate :=
+  source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    |>.toFormulaArithmeticDivisorEvaluationSource
+
+set_option linter.style.longLine false in
+noncomputable def toThetaPilotArithmeticDivisorLocalEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+      place estimate :=
+  source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    |>.toThetaPilotArithmeticDivisorLocalEvaluationSource
+
+set_option linter.style.longLine false in
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    Prop :=
+  source.arithmeticDivisorSource.Endpoint ∧
+    source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.Endpoint ∧
+      IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.Endpoint
+        source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource ∧
+        IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource.Endpoint
+          source.toLocalAnalyticArithmeticDivisorEvaluationSource ∧
+          IUTStage1IUTIVTheorem110PropositionArithmeticDivisorEvaluationSource.Endpoint
+            source.toPropositionArithmeticDivisorEvaluationSource ∧
+            IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource.Endpoint
+              source.toFormulaArithmeticDivisorEvaluationSource ∧
+              IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource.Endpoint
+                source.toThetaPilotArithmeticDivisorLocalEvaluationSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    Endpoint source :=
+  ⟨source.arithmeticDivisorSource.endpoint,
+    source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.endpoint,
+    source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.endpoint,
+    source.toLocalAnalyticArithmeticDivisorEvaluationSource.endpoint,
+    source.toPropositionArithmeticDivisorEvaluationSource.endpoint,
+    source.toFormulaArithmeticDivisorEvaluationSource.endpoint,
+    source.toThetaPilotArithmeticDivisorLocalEvaluationSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+set_option linter.style.longLine true
 
 set_option linter.style.longLine false in
 /--
