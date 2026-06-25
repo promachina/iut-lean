@@ -3778,6 +3778,74 @@ theorem equalityGenerators_ind3_false
   id
 
 /--
+Named action-law audit for the typed Theorem 3.11 indeterminacy core.
+
+This is the compact kernel-facing certificate that the critical corridor is using
+the source-paper equality/equality/upper-semi pattern: `(Ind1)` and `(Ind2)`
+preserve the procession-normalized log-volume and generate the equality quotient,
+while `(Ind3)` is excluded from that quotient and contributes only a one-sided
+upper-semi log-volume inequality.
+-/
+structure ActionLawAudit
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) : Prop where
+  ind1_logVolume_eq_core :
+    core.ind1.logVolume = core.logVolume
+  ind2_logVolume_eq_core :
+    core.ind2.logVolume = core.logVolume
+  ind3_logVolume_eq_core :
+    core.ind3.logVolume = core.logVolume
+  ind1_preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        core.logVolume choice₁ = core.logVolume choice₂
+  ind2_preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        core.logVolume choice₁ = core.logVolume choice₂
+  ind3_upper_semi_logVolume :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂
+  ind1_equalityQuotientMap_eq :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        core.equalityQuotientMap choice₁ =
+          core.equalityQuotientMap choice₂
+  ind2_equalityQuotientMap_eq :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        core.equalityQuotientMap choice₁ =
+          core.equalityQuotientMap choice₂
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalityGenerators.ind3_step choice₁ choice₂ -> False
+
+theorem actionLawAudit
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    ActionLawAudit core :=
+  { ind1_logVolume_eq_core := core.ind1_logVolume_eq,
+    ind2_logVolume_eq_core := core.ind2_logVolume_eq,
+    ind3_logVolume_eq_core := core.ind3_logVolume_eq,
+    ind1_preserves_processionNormalizedLogVolume := by
+      intro choice₁ choice₂ hstep
+      exact core.ind1_preserves_logVolume hstep,
+    ind2_preserves_processionNormalizedLogVolume := by
+      intro choice₁ choice₂ hstep
+      exact core.ind2_preserves_logVolume hstep,
+    ind3_upper_semi_logVolume := by
+      intro choice₁ choice₂ hstep
+      exact core.ind3_logVolume_le hstep,
+    ind1_equalityQuotientMap_eq := by
+      intro choice₁ choice₂ hstep
+      exact core.ind1_equalityQuotientMap_eq hstep,
+    ind2_equalityQuotientMap_eq := by
+      intro choice₁ choice₂ hstep
+      exact core.ind2_equalityQuotientMap_eq hstep,
+    equalityQuotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact core.equalityGenerators_ind3_false hstep }
+
+/--
 Compatibility between typed indeterminacies and a possible-image family.
 
 This keeps the quotient-map construction honest: `(Ind1)` and `(Ind2)` identify
