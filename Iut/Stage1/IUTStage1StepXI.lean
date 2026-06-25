@@ -13276,6 +13276,92 @@ theorem remark395SelectedQRegion_quotientEndpoint
 
 set_option linter.style.longLine false in
 /--
+One-sided compatibility between the constructed Remark 3.9.5 hull/determinant
+source and the Theorem 3.11 equality-quotient multiradial source.
+
+The q-pilot region of the constructed Step (xi) source is identified with the
+selected Theorem 3.11 possible image, but the image is reached through the
+`(Ind1),(Ind2)` equality quotient.  The audit therefore keeps the typed
+one-sided quotient data next to the Remark 3.9.5 q-region facts: `(Ind1)` and
+`(Ind2)` preserve the quotient/log-volume, while `(Ind3)` remains only the
+upper-semi log-volume relation and is not inserted into the equality quotient.
+-/
+structure OneSidedRemark395CompatibilityAudit
+    {β : Type v} [Fintype β]
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l)
+    (constructedSource :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (qPilotRegion_eq_selectedQRegion :
+      constructedSource.qPilotRegion = construction.selectedQRegion.toSet) :
+    Prop where
+  oneSidedQuotientAudit :
+    OneSidedQuotientAudit construction
+  qPilotRegion_eq_recordThetaPossibleImage :
+    constructedSource.qPilotRegion =
+      recordThetaPossibleImage record construction.selectedQChoice
+  qPilotRegion_subset_recordUnion :
+    constructedSource.qPilotRegion ⊆ recordThetaPossibleImageUnion record
+  selectedQRegion_is_quotient_possibleImage :
+    construction.selectedQRegion =
+      construction.equalityQuotientPossibleImages.quotientImages.region
+        (construction.typedIndeterminacyCore.equalityQuotientMap
+          construction.selectedQChoice)
+  qPilotRegion_eq_quotient_possibleImage :
+    constructedSource.qPilotRegion =
+      (construction.equalityQuotientPossibleImages.quotientImages.region
+        (construction.typedIndeterminacyCore.equalityQuotientMap
+          construction.selectedQChoice)).toSet
+  possibleImages_pullback_from_equalityQuotient :
+    ∀ choice,
+      construction.equalityQuotientPossibleImages.quotientImages.region
+          (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice
+  ind3_upper_semi_logVolume :
+    ∀ {choice₁ choice₂ : index},
+      construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+        construction.typedIndeterminacyCore.logVolume choice₁ <=
+          construction.typedIndeterminacyCore.logVolume choice₂
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : index},
+      construction.typedIndeterminacyCore.equalityGenerators.ind3_step
+          choice₁ choice₂ -> False
+
+set_option linter.style.longLine false in
+theorem oneSidedRemark395CompatibilityAudit
+    {β : Type v} [Fintype β]
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l)
+    (constructedSource :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (qPilotRegion_eq_selectedQRegion :
+      constructedSource.qPilotRegion = construction.selectedQRegion.toSet) :
+    OneSidedRemark395CompatibilityAudit
+      construction constructedSource qPilotRegion_eq_selectedQRegion :=
+  let quotientEndpoint :=
+    construction.remark395SelectedQRegion_quotientEndpoint
+      constructedSource qPilotRegion_eq_selectedQRegion
+  let quotientAudit := construction.oneSidedQuotientAudit
+  { oneSidedQuotientAudit := quotientAudit,
+    qPilotRegion_eq_recordThetaPossibleImage := quotientEndpoint.1,
+    qPilotRegion_subset_recordUnion := quotientEndpoint.2.1,
+    selectedQRegion_is_quotient_possibleImage := quotientEndpoint.2.2.1,
+    qPilotRegion_eq_quotient_possibleImage := by
+      rw [qPilotRegion_eq_selectedQRegion,
+        quotientEndpoint.2.2.1],
+    possibleImages_pullback_from_equalityQuotient :=
+      quotientEndpoint.2.2.2,
+    ind3_upper_semi_logVolume :=
+      quotientAudit.ind3_upper_semi_logVolume,
+    equalityQuotient_no_ind3_generator :=
+      quotientAudit.equalityQuotient_no_ind3_generator }
+
+set_option linter.style.longLine false in
+/--
 `F_l` procession transition through the typed equality quotient and
 Remark 3.9.5 Ob5--Ob6 hull endpoint.
 
