@@ -5018,6 +5018,125 @@ end IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarConstructedTensorDegreeComp
 
 set_option linter.style.longLine false in
 /--
+Constructed distinguished tensor-degree component source backed by the
+effective arithmetic different divisor.
+
+The previous constructed tensor component still needed nonnegativity of the
+paper expression `-\lambda + d_I + Ram` as a direct field.  This source lowers
+that payload to the arithmetic-divisor side of Definition 1.9/Theorem 1.10:
+the local different degree is known nonnegative by effectivity of the different
+divisor, and is identified with the Proposition 1.4 tensor-different term.
+-/
+structure IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource
+    (α : Type u) (η : Type v) (K : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (l : PrimeGeFive)
+    (distinguishedProcessionBound arithmeticDegreeCoefficient
+      arithmeticLocalDifferentDegree : Real) where
+  logShellSource :
+    IUTStage1IUTIVProposition14DistinguishedAdditiveHaarLogShellSource
+      α η K hullSystem l distinguishedProcessionBound
+  formula_bound_eq_coarse_procession :
+    distinguishedProcessionBound =
+      logShellSource.coarseProcessionNormalizedUpperBound
+  arithmeticDegreeCoefficient_ge_one :
+    1 <= arithmeticDegreeCoefficient
+  arithmeticLocalDifferentDegree_nonneg :
+    0 <= arithmeticLocalDifferentDegree
+  arithmeticLocalDifferentDegree_eq_tensorDifferentPart :
+    arithmeticLocalDifferentDegree =
+      -logShellSource.lambda + logShellSource.dI +
+        logShellSource.exceptionalRamificationLogSum
+  coarse_procession_le_tensorFormula :
+    logShellSource.coarseProcessionNormalizedUpperBound <=
+      iutIVProp14DistinguishedTensorBound
+        logShellSource.additiveHaarSource.residuePrime
+        logShellSource.lambda logShellSource.dI
+        logShellSource.exceptionalRamificationLogSum
+
+namespace IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource
+
+set_option linter.style.longLine false
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {l : PrimeGeFive}
+variable {distinguishedProcessionBound arithmeticDegreeCoefficient
+  arithmeticLocalDifferentDegree : Real}
+
+theorem tensorDifferentPart_nonneg
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree) :
+    0 <= -source.logShellSource.lambda + source.logShellSource.dI +
+      source.logShellSource.exceptionalRamificationLogSum := by
+  rw [← source.arithmeticLocalDifferentDegree_eq_tensorDifferentPart]
+  exact source.arithmeticLocalDifferentDegree_nonneg
+
+set_option linter.style.longLine false in
+noncomputable def toConstructedTensorDegreeComponentSource
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree) :
+    IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarConstructedTensorDegreeComponentSource
+      α η K hullSystem l distinguishedProcessionBound
+      arithmeticDegreeCoefficient :=
+  { logShellSource := source.logShellSource,
+    formula_bound_eq_coarse_procession :=
+      source.formula_bound_eq_coarse_procession,
+    arithmeticDegreeCoefficient_ge_one :=
+      source.arithmeticDegreeCoefficient_ge_one,
+    tensorDifferentPart_nonneg :=
+      source.tensorDifferentPart_nonneg,
+    coarse_procession_le_tensorFormula :=
+      source.coarse_procession_le_tensorFormula }
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree) :
+    Prop :=
+  source.logShellSource.Endpoint ∧
+    distinguishedProcessionBound =
+      source.logShellSource.coarseProcessionNormalizedUpperBound ∧
+      1 <= arithmeticDegreeCoefficient ∧
+        0 <= arithmeticLocalDifferentDegree ∧
+          arithmeticLocalDifferentDegree =
+            -source.logShellSource.lambda + source.logShellSource.dI +
+              source.logShellSource.exceptionalRamificationLogSum ∧
+            0 <= -source.logShellSource.lambda + source.logShellSource.dI +
+              source.logShellSource.exceptionalRamificationLogSum ∧
+              source.logShellSource.coarseProcessionNormalizedUpperBound <=
+                iutIVProp14DistinguishedTensorBound
+                  source.logShellSource.additiveHaarSource.residuePrime
+                  source.logShellSource.lambda source.logShellSource.dI
+                  source.logShellSource.exceptionalRamificationLogSum ∧
+                source.toConstructedTensorDegreeComponentSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree) :
+    Endpoint source :=
+  ⟨source.logShellSource.endpoint,
+    source.formula_bound_eq_coarse_procession,
+    source.arithmeticDegreeCoefficient_ge_one,
+    source.arithmeticLocalDifferentDegree_nonneg,
+    source.arithmeticLocalDifferentDegree_eq_tensorDifferentPart,
+    source.tensorDifferentPart_nonneg,
+    source.coarse_procession_le_tensorFormula,
+    source.toConstructedTensorDegreeComponentSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource
+
+set_option linter.style.longLine false in
+/--
 Archimedean unscaled local degree-bound source.
 
 This records the Step (vii) coarse metric bound as an unscaled
