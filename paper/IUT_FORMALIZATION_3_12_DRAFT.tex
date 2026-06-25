@@ -9582,10 +9582,8 @@ the new source derives
 \]
 from the unscaled local degree bound
 \(\mathrm{coarse}_v\leq D_v+C_v\), the coefficient lower bound
-\(1\leq a_l\), and nonnegativity of \(D_v+C_v\).  The remaining open part is
-therefore sharper: construct these unscaled local degree bounds and
-coefficient/nonnegativity inputs from the detailed local inclusions and metric
-estimates themselves.  This unscaled layer is now represented explicitly by
+\(1\leq a_l\), and nonnegativity of \(D_v+C_v\).  This unscaled layer is now
+represented explicitly by
 \[
 \begin{array}{l}
 \texttt{IUTStage1AdditiveHaarTheorem110StepXIUnscaled}\\
@@ -9598,7 +9596,33 @@ tensor expression
 different-plus-conductor bound; at an archimedean place it names the Step~(vii)
 coarse bound as the same unscaled degree bound.  Both project to the derived
 source above, so the direct payload has been narrowed to the paper-side local
-degree identification itself.  The local-to-global surface now also has a
+degree identification itself.
+The local degree-identification payload has now been factored into two lower
+source objects,
+\[
+\begin{array}{l}
+\texttt{IUTStage1IUTIVTheorem110DistinguishedAdditiveHaar}\\
+\texttt{UnscaledDegreeIdentificationSource},\\
+\texttt{IUTStage1IUTIVTheorem110ArchimedeanMetric}\\
+\texttt{UnscaledDegreeIdentificationSource}.
+\end{array}
+\]
+The first identifies the Proposition~1.4 tensor expression with
+\(D_v+C_v\) and records the coarse Step~(v) domination by that tensor
+degree; the second identifies the Step~(vii) archimedean coarse bound with
+\(D_v+C_v\).  Each constructs the older unscaled degree-bound source by
+projection.  At the finite-place formula-gap level this is exposed by
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarTheorem110StepXI}\\
+\texttt{DegreeIdentifiedUnscaledFormulaGapSource}.
+\end{array}
+\]
+Thus the remaining local obligation has moved to the precise theorem boundary:
+instantiate these degree-identification sources from the detailed local
+valuation/log-shell and archimedean metric constructions, rather than carrying
+the unscaled comparison directly at the \(C_\Theta\) endpoint.  The
+local-to-global surface now also has a
 matching unscaled public wrapper
 \[
 \begin{array}{l}
