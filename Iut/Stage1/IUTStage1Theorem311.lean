@@ -5519,6 +5519,29 @@ theorem equalityQuotient_no_ind3_generator
   obligations.ind3_upper_semi_relation_audit
     |>.equalityQuotient_no_ind3_generator
 
+theorem localToGlobalArithmeticChainAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    IUTIVCThetaObligations.LocalToGlobalArithmeticChainAudit
+      obligations.iutIV_cTheta := by
+  dsimp [RemainingPayloadAudit,
+    IUTIVCThetaObligations.LocalToGlobalArithmeticChainAudit] at audit ⊢
+  tauto
+
+theorem closedEndpointRemovesThetaSignedLeCThetaAbsLogQHypothesis
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis := by
+  dsimp [RemainingPayloadAudit] at audit
+  tauto
+
+theorem closedEndpointRemovesRawCanonicalCThetaScaleLeCThetaHypothesis
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis := by
+  dsimp [RemainingPayloadAudit] at audit
+  tauto
+
 end Obligations
 
 end IUTStage1Theorem311ToCorollary312PaperTrace
