@@ -10102,7 +10102,16 @@ remaining-payload ledger with the
 formula-gap-matched Theorem~1.10 arithmetic-divisor evaluation, the local
 arithmetic matching source, the Step~(xi) arithmetic-degree calibration, the
 Step~(x) packet equalities, the constructed Hodge/\(\SHE/\IPL\) bridge, and
-the arithmetic-divisor-backed endpoint itself.
+the arithmetic-divisor-backed endpoint itself.  The same certificate now also
+has a top-level
+\texttt{topLevelPaperTraceRemainingPayloadAudit} field for the assembled
+\texttt{IUTStage1Theorem311ToCorollary312PaperTrace.Obligations} ledger.  This
+outer audit records the Theorem~3.11/Remarks~3.11.2--3.11.4 source, Step~(x),
+Step~(xi), \(\IUT{}\,\mathrm{IV}\), additive-Haar, and closed-endpoint
+obligations together; its last two entries are witnessed by the derived
+\(\theta_{\mathrm{signed}}\leq C_\Theta(-q_{\mathrm{signed}})\) bound and the
+derived \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison, not by raw endpoint
+hypotheses.
 The matched boundary now has its own constructed qualitative audit,
 \[
 \begin{array}{l}
