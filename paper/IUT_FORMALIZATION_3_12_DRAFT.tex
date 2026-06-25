@@ -10679,6 +10679,13 @@ is visible from the preferred certificate as the consequence of the two
 calibration laws already stored there: determinant multiplicity equals the
 \IUT{} IV arithmetic-degree coefficient, and adjusted raw log-volume equals
 the local different-plus-conductor degree.
+The same preferred certificate now also exposes the \(p\)-adic prime-error
+side through its
+\texttt{primeErrorPadicDefectMainEndpoint} and
+\texttt{padicPrimeErrorFormulaMatchingEndpoint} fields.  These record the
+source equality \(E_v=h_v+M_v\), its conversion to
+\(E_v=\delta_v+M_v\) via the IUT~IV local arithmetic-defect source, and the
+wrapper that recombines this with the Step~(xi) arithmetic formula.
 Thus the preferred certificate records how the final
 \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison is obtained, rather than
 only recording that the comparison was available downstream.  Its
