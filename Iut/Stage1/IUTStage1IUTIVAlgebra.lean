@@ -5137,6 +5137,173 @@ end IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstruct
 
 set_option linter.style.longLine false in
 /--
+Constructed distinguished tensor-degree component source backed by effective
+arithmetic different and conductor divisors.
+
+This lowers the finite component one step past the effective-different source:
+the local conductor degree is also supplied from the arithmetic-divisor side and
+identified with the Proposition 1.4 conductor term `4 log(p)`.  Thus the
+finite component no longer exposes a separate conductor-calibration equality to
+the public matched-local-degree source.
+-/
+structure IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConductorConstructedTensorDegreeComponentSource
+    (α : Type u) (η : Type v) (K : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (l : PrimeGeFive)
+    (distinguishedProcessionBound arithmeticDegreeCoefficient
+      arithmeticLocalDifferentDegree arithmeticLocalConductorDegree : Real) where
+  logShellSource :
+    IUTStage1IUTIVProposition14DistinguishedAdditiveHaarLogShellSource
+      α η K hullSystem l distinguishedProcessionBound
+  formula_bound_eq_coarse_procession :
+    distinguishedProcessionBound =
+      logShellSource.coarseProcessionNormalizedUpperBound
+  arithmeticDegreeCoefficient_ge_one :
+    1 <= arithmeticDegreeCoefficient
+  arithmeticLocalDifferentDegree_nonneg :
+    0 <= arithmeticLocalDifferentDegree
+  arithmeticLocalConductorDegree_nonneg :
+    0 <= arithmeticLocalConductorDegree
+  arithmeticLocalDifferentDegree_eq_tensorDifferentPart :
+    arithmeticLocalDifferentDegree =
+      -logShellSource.lambda + logShellSource.dI +
+        logShellSource.exceptionalRamificationLogSum
+  arithmeticLocalConductorDegree_eq_tensorConductorPart :
+    arithmeticLocalConductorDegree =
+      4 * Real.log (logShellSource.additiveHaarSource.residuePrime : Real)
+  coarse_procession_le_tensorFormula :
+    logShellSource.coarseProcessionNormalizedUpperBound <=
+      iutIVProp14DistinguishedTensorBound
+        logShellSource.additiveHaarSource.residuePrime
+        logShellSource.lambda logShellSource.dI
+        logShellSource.exceptionalRamificationLogSum
+
+namespace IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConductorConstructedTensorDegreeComponentSource
+
+set_option linter.style.longLine false
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {l : PrimeGeFive}
+variable {distinguishedProcessionBound arithmeticDegreeCoefficient
+  arithmeticLocalDifferentDegree arithmeticLocalConductorDegree : Real}
+
+set_option linter.style.longLine false in
+noncomputable def toEffectiveDifferentConstructedTensorDegreeComponentSource
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConductorConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree
+        arithmeticLocalConductorDegree) :
+    IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource
+      α η K hullSystem l distinguishedProcessionBound
+      arithmeticDegreeCoefficient arithmeticLocalDifferentDegree :=
+  { logShellSource := source.logShellSource,
+    formula_bound_eq_coarse_procession :=
+      source.formula_bound_eq_coarse_procession,
+    arithmeticDegreeCoefficient_ge_one :=
+      source.arithmeticDegreeCoefficient_ge_one,
+    arithmeticLocalDifferentDegree_nonneg :=
+      source.arithmeticLocalDifferentDegree_nonneg,
+    arithmeticLocalDifferentDegree_eq_tensorDifferentPart :=
+      source.arithmeticLocalDifferentDegree_eq_tensorDifferentPart,
+    coarse_procession_le_tensorFormula :=
+      source.coarse_procession_le_tensorFormula }
+
+set_option linter.style.longLine false in
+noncomputable def toConstructedTensorDegreeComponentSource
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConductorConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree
+        arithmeticLocalConductorDegree) :
+    IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarConstructedTensorDegreeComponentSource
+      α η K hullSystem l distinguishedProcessionBound
+      arithmeticDegreeCoefficient :=
+  source.toEffectiveDifferentConstructedTensorDegreeComponentSource
+    |>.toConstructedTensorDegreeComponentSource
+
+theorem arithmeticLocalDifferentDegree_eq_constructed
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConductorConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree
+        arithmeticLocalConductorDegree) :
+    arithmeticLocalDifferentDegree =
+      source.toConstructedTensorDegreeComponentSource.localDifferentDegree := by
+  simpa [
+    IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarConstructedTensorDegreeComponentSource.localDifferentDegree,
+    toConstructedTensorDegreeComponentSource,
+    toEffectiveDifferentConstructedTensorDegreeComponentSource,
+    IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource.toConstructedTensorDegreeComponentSource]
+    using source.arithmeticLocalDifferentDegree_eq_tensorDifferentPart
+
+theorem arithmeticLocalConductorDegree_eq_constructed
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConductorConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree
+        arithmeticLocalConductorDegree) :
+    arithmeticLocalConductorDegree =
+      source.toConstructedTensorDegreeComponentSource.localConductorDegree := by
+  simpa [
+    IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarConstructedTensorDegreeComponentSource.localConductorDegree,
+    toConstructedTensorDegreeComponentSource,
+    toEffectiveDifferentConstructedTensorDegreeComponentSource,
+    IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConstructedTensorDegreeComponentSource.toConstructedTensorDegreeComponentSource]
+    using source.arithmeticLocalConductorDegree_eq_tensorConductorPart
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConductorConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree
+        arithmeticLocalConductorDegree) :
+    Prop :=
+  source.logShellSource.Endpoint ∧
+    distinguishedProcessionBound =
+      source.logShellSource.coarseProcessionNormalizedUpperBound ∧
+      1 <= arithmeticDegreeCoefficient ∧
+        0 <= arithmeticLocalDifferentDegree ∧
+          0 <= arithmeticLocalConductorDegree ∧
+            arithmeticLocalDifferentDegree =
+              -source.logShellSource.lambda + source.logShellSource.dI +
+                source.logShellSource.exceptionalRamificationLogSum ∧
+              arithmeticLocalConductorDegree =
+                4 * Real.log
+                  (source.logShellSource.additiveHaarSource.residuePrime : Real) ∧
+                source.logShellSource.coarseProcessionNormalizedUpperBound <=
+                  iutIVProp14DistinguishedTensorBound
+                    source.logShellSource.additiveHaarSource.residuePrime
+                    source.logShellSource.lambda source.logShellSource.dI
+                    source.logShellSource.exceptionalRamificationLogSum ∧
+                  source.toEffectiveDifferentConstructedTensorDegreeComponentSource.Endpoint ∧
+                    source.toConstructedTensorDegreeComponentSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConductorConstructedTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient arithmeticLocalDifferentDegree
+        arithmeticLocalConductorDegree) :
+    Endpoint source :=
+  ⟨source.logShellSource.endpoint,
+    source.formula_bound_eq_coarse_procession,
+    source.arithmeticDegreeCoefficient_ge_one,
+    source.arithmeticLocalDifferentDegree_nonneg,
+    source.arithmeticLocalConductorDegree_nonneg,
+    source.arithmeticLocalDifferentDegree_eq_tensorDifferentPart,
+    source.arithmeticLocalConductorDegree_eq_tensorConductorPart,
+    source.coarse_procession_le_tensorFormula,
+    source.toEffectiveDifferentConstructedTensorDegreeComponentSource.endpoint,
+    source.toConstructedTensorDegreeComponentSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarEffectiveDifferentConductorConstructedTensorDegreeComponentSource
+
+set_option linter.style.longLine false in
+/--
 Archimedean unscaled local degree-bound source.
 
 This records the Step (vii) coarse metric bound as an unscaled
