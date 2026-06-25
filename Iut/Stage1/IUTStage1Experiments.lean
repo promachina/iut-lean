@@ -62340,7 +62340,7 @@ theorem localizedStepXI_endpoint
   source.localizedStepXISource.endpoint
 
 set_option linter.style.longLine false in
-def toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+noncomputable def toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
     (source :
       ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
         sourceData estimate l η γ) :
@@ -65290,6 +65290,50 @@ theorem canonicalCThetaScale_le_iutIVCTheta
     sourceData.canonicalCThetaScale <= estimate.cTheta :=
   source.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorPadicFormulaMatchedStepXILocalTermCThetaSource
     |>.canonicalCThetaScale_le_iutIVCTheta
+
+set_option linter.style.longLine false in
+noncomputable def toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+      sourceData estimate l β :=
+  source.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorPadicFormulaMatchedStepXILocalTermCThetaSource
+    |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorFormulaMatchedStepXILocalTermCThetaSource
+    |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorMatchedStepXILocalTermCThetaSource
+    |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+
+set_option linter.style.longLine false in
+noncomputable def toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+      sourceData estimate index :=
+  source.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+    |>.toConstructedTheorem311OneSidedLocalGlobalCThetaSource
+    |>.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+
+set_option linter.style.longLine false in
+theorem closedLocalGlobalEndpoint
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.Endpoint
+      source.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource :=
+  source.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.endpoint
+
+theorem localGlobalHandoffAudit
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Remark395ConstructedIUTIVCThetaHandoffAudit sourceData estimate :=
+  source.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+    |>.localGlobalHandoffAudit
 
 end ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
 
