@@ -9906,9 +9906,31 @@ archimedean degree-identification objects are rebuilt from component data
 before entering the closed \(C_\Theta\) handoff.  The remaining mathematical
 obligation at this boundary is to construct the distinguished component
 equalities from the actual divisor, local valuation, log-shell, and
-ramification definitions, and to connect the archimedean exact metric term and
-coarse remainder to the full Proposition~1.5 integral-structure construction
-rather than only to the present metric construction source.
+ramification definitions.
+The archimedean branch has also gained a constructed form,
+\[
+\begin{array}{l}
+\texttt{IUTStage1IUTIVTheorem110ArchimedeanMetric}\\
+\texttt{ConstructedDegreeComponentSource}.
+\end{array}
+\]
+Here the local different component and local conductor component are defined
+from the Proposition~1.5 metric construction source itself: the former is the
+exact metric term and the latter is the exact-to-coarse remainder.  Lean then
+projects this source to the previous component object and provides a calibrated
+projection for externally named Step~(xi) local \(D_v,C_v\) entries.  The
+matched source
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarTheorem110StepXI}\\
+\texttt{MatchedLocalDegreeConstructedArchimedeanComponentSource}
+\end{array}
+\]
+uses this construction at every archimedean place.  Its remaining archimedean
+payload is no longer the component formula itself, but the calibration that the
+arithmetic-divisor local \(D_v\) and \(C_v\) values used by Step~(xi) are these
+constructed exact and remainder components, together with nonnegativity of the
+exact metric term.
 The matched boundary now has its own constructed qualitative audit,
 \[
 \begin{array}{l}

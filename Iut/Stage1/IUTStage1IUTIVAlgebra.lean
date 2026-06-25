@@ -5123,6 +5123,200 @@ end IUTStage1IUTIVTheorem110ArchimedeanMetricDegreeComponentSource
 
 set_option linter.style.longLine false in
 /--
+Constructed archimedean metric component source.
+
+This is the source-facing form of the Step (vii) component split.  The local
+different component is defined to be the exact metric contribution from the
+Proposition 1.5 construction source, and the local conductor/coarse component is
+defined to be the exact-to-coarse remainder.  Thus the component equalities of
+`IUTStage1IUTIVTheorem110ArchimedeanMetricDegreeComponentSource` are no longer
+supplied as arbitrary fields.
+-/
+structure IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+    (I V : Type u) [Fintype I] [Fintype V]
+    (l : PrimeGeFive)
+    (archimedeanProcessionBound arithmeticDegreeCoefficient : Real) where
+  metricSource :
+    IUTStage1IUTIVProposition15ArchimedeanMetricConstructionSource
+      I V l archimedeanProcessionBound
+  formula_bound_eq_coarse_procession :
+    archimedeanProcessionBound =
+      iutIVThetaPilotStepVIIArchimedeanCoarseBound l
+  arithmeticDegreeCoefficient_ge_one :
+    1 <= arithmeticDegreeCoefficient
+  exactMetricPart_nonneg :
+    0 <= iutIVThetaPilotStepVIIArchimedeanExactBound l metricSource.logPi
+
+namespace IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+
+set_option linter.style.longLine false
+
+variable {I V : Type u} [Fintype I] [Fintype V]
+variable {l : PrimeGeFive}
+variable {archimedeanProcessionBound arithmeticDegreeCoefficient : Real}
+
+noncomputable def localDifferentDegree
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient) :
+    Real :=
+  iutIVThetaPilotStepVIIArchimedeanExactBound l source.metricSource.logPi
+
+noncomputable def localConductorDegree
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient) :
+    Real :=
+  iutIVThetaPilotStepVIIArchimedeanCoarseBound l -
+    iutIVThetaPilotStepVIIArchimedeanExactBound l source.metricSource.logPi
+
+theorem localDifferentDegree_nonneg
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient) :
+    0 <= source.localDifferentDegree := by
+  simpa [localDifferentDegree] using source.exactMetricPart_nonneg
+
+theorem localConductorDegree_nonneg
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient) :
+    0 <= source.localConductorDegree := by
+  dsimp [localConductorDegree]
+  exact sub_nonneg.mpr
+    (iutIVThetaPilotStepVIIArchimedeanExactBound_le_coarse
+      l source.metricSource.logPi_le_two)
+
+set_option linter.style.longLine false in
+noncomputable def toDegreeComponentSource
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient) :
+    IUTStage1IUTIVTheorem110ArchimedeanMetricDegreeComponentSource
+      I V l archimedeanProcessionBound arithmeticDegreeCoefficient
+      source.localDifferentDegree source.localConductorDegree :=
+  { metricSource := source.metricSource,
+    formula_bound_eq_coarse_procession :=
+      source.formula_bound_eq_coarse_procession,
+    arithmeticDegreeCoefficient_ge_one :=
+      source.arithmeticDegreeCoefficient_ge_one,
+    localDifferentDegree_nonneg :=
+      source.localDifferentDegree_nonneg,
+    localDifferentDegree_eq_exactMetricPart := by
+      rfl,
+    localConductorDegree_eq_coarseRemainder := by
+      rfl }
+
+set_option linter.style.longLine false in
+noncomputable def toUnscaledDegreeIdentificationSource
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient) :
+    IUTStage1IUTIVTheorem110ArchimedeanMetricUnscaledDegreeIdentificationSource
+      I V l archimedeanProcessionBound arithmeticDegreeCoefficient
+      source.localDifferentDegree source.localConductorDegree :=
+  source.toDegreeComponentSource.toUnscaledDegreeIdentificationSource
+
+set_option linter.style.longLine false in
+noncomputable def toCalibratedDegreeComponentSource
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient)
+    (localDifferentDegree localConductorDegree : Real)
+    (localDifferentDegree_eq_constructed :
+      localDifferentDegree = source.localDifferentDegree)
+    (localConductorDegree_eq_constructed :
+      localConductorDegree = source.localConductorDegree) :
+    IUTStage1IUTIVTheorem110ArchimedeanMetricDegreeComponentSource
+      I V l archimedeanProcessionBound arithmeticDegreeCoefficient
+      localDifferentDegree localConductorDegree :=
+  { metricSource := source.metricSource,
+    formula_bound_eq_coarse_procession :=
+      source.formula_bound_eq_coarse_procession,
+    arithmeticDegreeCoefficient_ge_one :=
+      source.arithmeticDegreeCoefficient_ge_one,
+    localDifferentDegree_nonneg := by
+      rw [localDifferentDegree_eq_constructed]
+      exact source.localDifferentDegree_nonneg,
+    localDifferentDegree_eq_exactMetricPart := by
+      rw [localDifferentDegree_eq_constructed]
+      rfl,
+    localConductorDegree_eq_coarseRemainder := by
+      rw [localConductorDegree_eq_constructed]
+      rfl }
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient) :
+    Prop :=
+  source.metricSource.Endpoint ∧
+    archimedeanProcessionBound =
+      iutIVThetaPilotStepVIIArchimedeanCoarseBound l ∧
+      1 <= arithmeticDegreeCoefficient ∧
+        0 <= source.localDifferentDegree ∧
+          0 <= source.localConductorDegree ∧
+            source.toDegreeComponentSource.Endpoint ∧
+              source.toUnscaledDegreeIdentificationSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient) :
+    Endpoint source :=
+  ⟨source.metricSource.endpoint,
+    source.formula_bound_eq_coarse_procession,
+    source.arithmeticDegreeCoefficient_ge_one,
+    source.localDifferentDegree_nonneg,
+    source.localConductorDegree_nonneg,
+    source.toDegreeComponentSource.endpoint,
+    source.toUnscaledDegreeIdentificationSource.endpoint⟩
+
+def CalibratedEndpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient)
+    (localDifferentDegree localConductorDegree : Real)
+    (localDifferentDegree_eq_constructed :
+      localDifferentDegree = source.localDifferentDegree)
+    (localConductorDegree_eq_constructed :
+      localConductorDegree = source.localConductorDegree) :
+    Prop :=
+  source.Endpoint ∧
+    0 <= localDifferentDegree ∧
+      0 <= localConductorDegree ∧
+        (source.toCalibratedDegreeComponentSource
+          localDifferentDegree localConductorDegree
+          localDifferentDegree_eq_constructed
+          localConductorDegree_eq_constructed).Endpoint
+
+theorem calibratedEndpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+        I V l archimedeanProcessionBound arithmeticDegreeCoefficient)
+    (localDifferentDegree localConductorDegree : Real)
+    (localDifferentDegree_eq_constructed :
+      localDifferentDegree = source.localDifferentDegree)
+    (localConductorDegree_eq_constructed :
+      localConductorDegree = source.localConductorDegree) :
+    CalibratedEndpoint source localDifferentDegree localConductorDegree
+      localDifferentDegree_eq_constructed
+      localConductorDegree_eq_constructed := by
+  refine ⟨source.endpoint, ?_, ?_, ?_⟩
+  · rw [localDifferentDegree_eq_constructed]
+    exact source.localDifferentDegree_nonneg
+  · rw [localConductorDegree_eq_constructed]
+    exact source.localConductorDegree_nonneg
+  · exact
+      (source.toCalibratedDegreeComponentSource
+        localDifferentDegree localConductorDegree
+        localDifferentDegree_eq_constructed
+        localConductorDegree_eq_constructed).endpoint
+
+end IUTStage1IUTIVTheorem110ArchimedeanMetricConstructedDegreeComponentSource
+
+set_option linter.style.longLine false in
+/--
 Additive-Haar local analytic arithmetic-divisor source with named
 formula-to-gap comparison objects.
 
