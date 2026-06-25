@@ -10689,6 +10689,13 @@ wrapper that recombines this with the Step~(xi) arithmetic formula.
 Thus the preferred certificate records how the final
 \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison is obtained, rather than
 only recording that the comparison was available downstream.  Its
+\texttt{arithmeticDivisorBackedFinitePlaceCThetaChain} field now packages this
+finite-place calculation as a single checked endpoint: the global terms are
+identified with finite local sums, the summed Step~(xi)/Haar inequality and
+unit Haar defect give the arithmetic gap, and the \(\IUT{}\,\mathrm{IV}\)
+handoff yields both \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) and the signed
+theta bound used by Corollary~3.12.
+Its
 \texttt{paperTraceRemainingPayloadAudit} field instantiates the abstract
 \texttt{AdditiveHaarArithmeticDegreePadicObligations} record with these
 concrete endpoints, so the paper-trace ledger now has a checked handoff from
