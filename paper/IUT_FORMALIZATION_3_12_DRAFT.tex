@@ -10389,6 +10389,21 @@ and then obtain the displayed
 \(C_\Theta+1=A-M\).  Thus the newest endpoint's \(C_\Theta\) comparison is
 visible as a derived local-to-global chain rather than only as an inherited
 projection through the effective-conductor wrapper.
+The determinant side of this handoff is now lowered one more source boundary by
+\[
+\begin{array}{l}
+\texttt{RecordOb3Ob5ArithmeticDivisorBackedComponentSource},\\
+\texttt{RecordOb3Ob5StepXIDeterminantHandoffAudit}.
+\end{array}
+\]
+This wrapper no longer stores the Step~(xi) determinant equality directly: it
+derives it from the record-canonical Ob3/Ob5 adjusted determinant source,
+identifies the record Ob3/Ob4 weighted determinant with the localized Step~(xi)
+arithmetic-degree determinant, and exposes the corresponding equality between
+the record adjusted-summand log-volume and the localized weighted Step~(xi)
+sum.  The \(C_{\Theta,\mathrm{can}}\) scale equality remains the separate
+local-to-global calibration input audited by the surrounding arithmetic-divisor
+chain.
 The compact theorem
 \texttt{arithmeticDivisorBackedFinitePlaceCThetaChain} now packages this
 chain as a single source-level review target: finite-place identifications,
