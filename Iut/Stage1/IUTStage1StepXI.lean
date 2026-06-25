@@ -5403,6 +5403,16 @@ theorem noAllowedSHEDomainToCodomain
       mechanism :=
   sourceData.constructedTransportSource.noAllowedSHEDomainToCodomain mechanism
 
+theorem sheForbiddenTransportAudit
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    QualitativeData.StructuredSHETransportContext.DomainCodomainForbiddenTransportAudit
+      constructedBundle.sheTransportContext :=
+  have _ := sourceData.constructedTransportSource
+  constructedBundle.sheTransportContext.domainCodomainForbiddenTransportAudit
+
 theorem aptTransport_not_forbidden
     (sourceData :
       IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
@@ -5519,6 +5529,9 @@ structure ConstructedIPLSHEAPTTransportLawAudit
         constructedBundle.sheTransportContext.baseContext.domainStructure.theater
         constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
         mechanism
+  she_forbidden_transport_audit :
+    QualitativeData.StructuredSHETransportContext.DomainCodomainForbiddenTransportAudit
+      constructedBundle.sheTransportContext
   apt_arrow_permitted :
     constructedBundle.aptConstruction.transportSystem.allowed
       constructedBundle.aptConstruction.arrow
@@ -5542,6 +5555,7 @@ theorem constructedIPLSHEAPTTransportLawAudit
     ipl_datum_matches_certificate := rfl,
     she_domain_to_codomain_forbidden :=
       sourceData.noAllowedSHEDomainToCodomain,
+    she_forbidden_transport_audit := sourceData.sheForbiddenTransportAudit,
     apt_arrow_permitted := constructedBundle.aptConstruction.permitted,
     apt_arrow_not_forbidden := sourceData.aptTransport_not_forbidden,
     apt_endpoint := constructedBundle.aptConstruction.aptEndpoint }

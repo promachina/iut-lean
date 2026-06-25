@@ -451,6 +451,46 @@ theorem sheDatum_sharedContext
     context.sheDatum.sharedContext = context.baseContext.sharedContext :=
   rfl
 
+/--
+Typed audit that the domain and codomain Hodge-theater histories are separated
+by the transport system itself.
+
+This strengthens the pointwise `¬ Allows ...` projection by keeping the
+forbidden theater-pair, the all-arrow exclusion, the all-mechanism exclusion,
+and the underlying side-separation guard in one reusable certificate.
+-/
+structure DomainCodomainForbiddenTransportAudit
+    (context : StructuredSHETransportContext family) : Prop where
+  forbidden_domain_to_codomain :
+    context.transportSystem.forbiddenIdentification
+      context.baseContext.domainStructure.theater
+      context.baseContext.codomainStructure.theater
+  all_allowed_arrows_blocked :
+    ∀ arrow : HodgeTheaterTransportArrow,
+      arrow.source = context.baseContext.domainStructure.theater ->
+        arrow.target = context.baseContext.codomainStructure.theater ->
+          ¬ context.transportSystem.allowed arrow
+  all_mechanisms_blocked :
+    ∀ mechanism : TransportMechanismId,
+      ¬ context.transportSystem.Allows
+        context.baseContext.domainStructure.theater
+        context.baseContext.codomainStructure.theater
+        mechanism
+  history_sides_not_identified :
+    context.baseContext.domainStructure.theater.side ≠
+      context.baseContext.codomainStructure.theater.side
+
+theorem domainCodomainForbiddenTransportAudit
+    (context : StructuredSHETransportContext family) :
+    DomainCodomainForbiddenTransportAudit context :=
+  { forbidden_domain_to_codomain := context.forbidden_domain_to_codomain,
+    all_allowed_arrows_blocked := by
+      intro arrow hsource htarget
+      exact context.noAllowedDomainToCodomain hsource htarget,
+    all_mechanisms_blocked := context.noAllowedDomainToCodomainWithMechanism,
+    history_sides_not_identified :=
+      context.baseContext.domainHistory_ne_codomainHistory }
+
 end StructuredSHETransportContext
 
 /-- Base record for algorithmic-parallel-transport style data. -/
