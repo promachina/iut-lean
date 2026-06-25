@@ -5096,6 +5096,7 @@ structure IUTIVCThetaObligations where
   additive_haar_local_normalization_constructed : Prop
   local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :
     Prop
+  finite_place_arithmetic_gap_constructed : Prop
   local_to_global_canonicalCThetaScale_le_cTheta_constructed : Prop
 
 /--
@@ -5261,6 +5262,7 @@ def RemainingPayloadAudit
     obligations.iutIV_cTheta.additive_haar_local_normalization_constructed ∧
     (IUTIVCThetaObligations.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
       obligations.iutIV_cTheta) ∧
+    obligations.iutIV_cTheta.finite_place_arithmetic_gap_constructed ∧
     obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed ∧
     obligations.additive_haar_arithmetic_degree_padic.RemainingPayloadAudit ∧
     obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis ∧
