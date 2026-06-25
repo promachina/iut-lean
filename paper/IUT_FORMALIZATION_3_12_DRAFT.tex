@@ -9760,6 +9760,20 @@ previous local-degree wrapper with the formula-core equality supplied by
 \texttt{canonicalCThetaScale\_le\_iutIVCTheta},
 \texttt{closedLocalGlobalEndpoint}, and
 \texttt{localGlobalHandoffAudit} theorems.
+The matched boundary now has its own constructed qualitative audit,
+\[
+\begin{array}{l}
+\texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaar}\\
+\texttt{MatchedLocalDegreeFormulaCThetaAudit}.
+\end{array}
+\]
+This audit records the matched local-degree endpoint, the coefficient-window
+endpoint, the projected local degree-formula endpoint, the definitional
+formula-core synchronization, the closed local-to-global endpoint, the
+Remark~3.9.5/\IUT{} IV handoff audit, the derived
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison, and the final dichotomy.
+Thus the paper-trace certificate is attached directly to the current lowest
+matched local-degree source rather than only to its older unscaled projection.
 The prime-error side has then been lowered another
 step by
 \texttt{IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource}: it
