@@ -400,6 +400,12 @@ theorem hasStructuredAPT
     QualitativeData.HasStructuredAPT data.output.family :=
   sourceData.constructedCertificate.hasStructuredAPT
 
+theorem aptDatum_eq_constructed
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    data.certificate.apt = sourceData.aptConstruction.toAPTDatum := by
+  rw [sourceData.certificate_eq_constructed]
+  rfl
+
 def QualitativeTransportAudit
     (sourceData : ConstructedQualitativeCertificateData data) : Prop :=
   QualitativeData.HasStructuredIPL data.output.family ∧
@@ -422,6 +428,33 @@ theorem qualitativeTransportAudit
     sourceData.hasStructuredAPT,
     sourceData.sheTransportContext.noAllowedDomainToCodomainWithMechanism,
     sourceData.aptConstruction.permitted_not_forbidden⟩
+
+def APTTransportAudit
+    (sourceData : ConstructedQualitativeCertificateData data) : Prop :=
+  data.certificate.apt = sourceData.aptConstruction.toAPTDatum ∧
+    data.certificate.apt.mechanism =
+      sourceData.aptConstruction.arrow.mechanism ∧
+    data.certificate.apt.outputFamily =
+      sourceData.aptConstruction.outputFamily ∧
+    data.certificate.apt.outputFamily = data.output.family ∧
+    sourceData.aptConstruction.transportSystem.allowed
+      sourceData.aptConstruction.arrow ∧
+    ¬ sourceData.aptConstruction.transportSystem.forbiddenIdentification
+      sourceData.aptConstruction.arrow.source
+      sourceData.aptConstruction.arrow.target
+
+theorem aptTransportAudit
+    (sourceData : ConstructedQualitativeCertificateData data) :
+    sourceData.APTTransportAudit := by
+  refine ⟨sourceData.aptDatum_eq_constructed, ?_, ?_, ?_, ?_, ?_⟩
+  · rw [sourceData.aptDatum_eq_constructed]
+    exact sourceData.aptConstruction.toAPTDatum_mechanism_eq_arrow
+  · rw [sourceData.aptDatum_eq_constructed]
+    exact sourceData.aptConstruction.toAPTDatum_outputFamily_eq
+  · rw [sourceData.aptDatum_eq_constructed]
+    exact sourceData.aptConstruction.toAPTDatum_output_eq_family
+  · exact sourceData.aptConstruction.permitted
+  · exact sourceData.aptConstruction.permitted_not_forbidden
 
 end ConstructedQualitativeCertificateData
 

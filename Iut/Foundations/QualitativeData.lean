@@ -496,11 +496,44 @@ theorem toAPTDatum_output_eq_family
     construction.toAPTDatum.outputFamily = family :=
   construction.output_eq_family
 
+theorem permittedTransport_arrow
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    construction.permittedTransport.arrow = construction.arrow :=
+  rfl
+
+theorem toAPTDatum_mechanism_eq_arrow
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    construction.toAPTDatum.mechanism = construction.arrow.mechanism :=
+  rfl
+
+theorem toAPTDatum_outputFamily_eq
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    construction.toAPTDatum.outputFamily = construction.outputFamily :=
+  rfl
+
 theorem permitted_not_forbidden
     (construction : AlgorithmicParallelTransportConstruction family) :
     ¬ construction.transportSystem.forbiddenIdentification
         construction.arrow.source construction.arrow.target :=
   construction.permittedTransport.not_forbidden
+
+def APTEndpoint
+    (construction : AlgorithmicParallelTransportConstruction family) : Prop :=
+  construction.toAPTDatum.mechanism = construction.arrow.mechanism ∧
+    construction.toAPTDatum.outputFamily = construction.outputFamily ∧
+    construction.toAPTDatum.outputFamily = family ∧
+    construction.transportSystem.allowed construction.arrow ∧
+    ¬ construction.transportSystem.forbiddenIdentification
+      construction.arrow.source construction.arrow.target
+
+theorem aptEndpoint
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    construction.APTEndpoint :=
+  ⟨construction.toAPTDatum_mechanism_eq_arrow,
+    construction.toAPTDatum_outputFamily_eq,
+    construction.toAPTDatum_output_eq_family,
+    construction.permitted,
+    construction.permitted_not_forbidden⟩
 
 end AlgorithmicParallelTransportConstruction
 

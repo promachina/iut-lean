@@ -2136,6 +2136,11 @@ theorem qualitativeTransportAudit
     inputs.qualitativeSource.QualitativeTransportAudit :=
   inputs.qualitativeSource.qualitativeTransportAudit
 
+theorem aptTransportAudit
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    inputs.qualitativeSource.APTTransportAudit :=
+  inputs.qualitativeSource.aptTransportAudit
+
 theorem hasStructuredIPL
     (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
     QualitativeData.HasStructuredIPL package.preLedger.output.family :=
@@ -2356,6 +2361,11 @@ theorem qualitativeTransportAudit
     (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
     bundle.constructedInputs.qualitativeSource.QualitativeTransportAudit :=
   bundle.constructedInputs.qualitativeTransportAudit
+
+theorem aptTransportAudit
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    bundle.constructedInputs.qualitativeSource.APTTransportAudit :=
+  bundle.constructedInputs.aptTransportAudit
 
 theorem theorem311StructuredInputs
     (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
@@ -8680,6 +8690,8 @@ structure ConstructedQualitativeStructuredSHERouteSummary
     ¬ bundle.aptConstruction.transportSystem.forbiddenIdentification
       bundle.aptConstruction.arrow.source
       bundle.aptConstruction.arrow.target
+  apt_transport_audit :
+    bundle.constructedInputs.qualitativeSource.APTTransportAudit
   public_audit :
     package.constructedQualitativePublicAuditStatement
       bundle.constructedInputs sideConditions
@@ -8715,6 +8727,7 @@ theorem ofConstructedQualitativeInputsWithSHE
     qualitative_transport_audit := bundle.qualitativeTransportAudit,
     no_she_domain_to_codomain := bundle.noAllowedSHEDomainToCodomain,
     apt_transport_not_forbidden := bundle.aptTransport_not_forbidden,
+    apt_transport_audit := bundle.aptTransportAudit,
     public_audit :=
       package.publicAuditOfConstructedQualitativeInputs
         bundle.constructedInputs sideConditions,
@@ -8763,6 +8776,13 @@ theorem aptTransport_not_forbidden
       bundle.aptConstruction.arrow.source
       bundle.aptConstruction.arrow.target :=
   summary.apt_transport_not_forbidden
+
+theorem aptTransportAudit
+    (summary :
+      ConstructedQualitativeStructuredSHERouteSummary
+        package bundle sideConditions) :
+    bundle.constructedInputs.qualitativeSource.APTTransportAudit :=
+  summary.apt_transport_audit
 
 theorem publicAudit
     (summary :
@@ -8858,6 +8878,8 @@ structure ConstructedQualitativeTheorem311ToCorollary312Checkpoints
     ¬ bundle.aptConstruction.transportSystem.forbiddenIdentification
       bundle.aptConstruction.arrow.source
       bundle.aptConstruction.arrow.target
+  apt_transport_audit :
+    bundle.constructedInputs.qualitativeSource.APTTransportAudit
   histories_not_identified :
     bundle.structured_she.context.domainStructure.theater.side ≠
       bundle.structured_she.context.codomainStructure.theater.side
@@ -8888,6 +8910,7 @@ theorem ofConstructedQualitativeInputsWithSHE
     corollary312 := summary.corollary312Endpoint,
     no_she_domain_to_codomain := summary.noAllowedSHEDomainToCodomain,
     apt_transport_not_forbidden := summary.aptTransport_not_forbidden,
+    apt_transport_audit := summary.aptTransportAudit,
     histories_not_identified := summary.domainHistory_ne_codomainHistory }
 
 theorem constructedRouteSummary
@@ -8949,6 +8972,13 @@ theorem aptTransport_not_forbidden
       bundle.aptConstruction.arrow.source
       bundle.aptConstruction.arrow.target :=
   checkpoints.apt_transport_not_forbidden
+
+theorem aptTransportAudit
+    (checkpoints :
+      ConstructedQualitativeTheorem311ToCorollary312Checkpoints
+        package bundle sideConditions) :
+    bundle.constructedInputs.qualitativeSource.APTTransportAudit :=
+  checkpoints.apt_transport_audit
 
 theorem domainHistory_ne_codomainHistory
     (checkpoints :

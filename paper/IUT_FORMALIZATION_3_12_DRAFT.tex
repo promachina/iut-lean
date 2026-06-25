@@ -4834,10 +4834,14 @@ bookkeeping triple.  The declarations
 record permitted Hodge-theater transport arrows, forbidden theater
 identifications, and APT data built from a permitted arrow.  Lean proves that a
 forbidden domain-to-codomain SHE identification admits no allowed transport
-arrow, and that a permitted APT arrow is not forbidden.  The Stage~1 wrapper
+arrow, and that the constructed APT datum has the permitted arrow's mechanism,
+the constructed output family, the output-family equality back to the
+pre-ledger family, the allowedness proof, and the resulting non-forbiddenness
+of the APT arrow.  The Stage~1 wrapper
 \(\texttt{ConstructedQualitativeCertificateData}\) pins the pre-ledger
 certificate to the certificate constructed from these IPL/SHE/APT objects and
-returns a compact qualitative transport audit.
+returns both a compact qualitative transport audit and this stricter APT
+transport audit.
 The finite Hodge/\(\SHE\) transport layer now has the corresponding source
 discipline audit
 \[
@@ -4890,7 +4894,8 @@ Theorem~3.11-to-Corollary~3.12 checkpoint layer:
 \(\texttt{ConstructedQualitativeTheorem311ToCorollary312Checkpoints}\) retain the
 old structured route only as a projection, while the public boundary carries
 the constructed qualitative audit, the forbidden SHE-domain-to-codomain
-transport statement, and the APT non-forbiddenness proof.  The constructed
+transport statement, and the APT transport audit identifying the actual datum
+with the permitted-arrow construction.  The constructed
 finite Hodge/\(\SHE\)+\(\IPL\) bridge audit now also exposes the choice-wise
 \(\IPL\) endpoint
 \(\texttt{choiceWiseIPLEndpoint}\): for every Theorem~3.11 choice the
