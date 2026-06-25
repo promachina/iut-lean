@@ -5117,7 +5117,10 @@ structure AdditiveHaarArithmeticDegreePadicObligations where
   localized_determinant_multiplicity_matches_iutiv_coefficient : Prop
   adjusted_raw_log_volume_matches_different_plus_conductor : Prop
   realified_packet_source_supplies_stepx_equalities : Prop
-  constructed_hodge_she_ipl_provenance_threaded_to_endpoint : Prop
+  constructed_ipl_choice_link_endpoint_threaded : Prop
+  constructed_ipl_datum_certificate_alignment_threaded : Prop
+  constructed_hodge_she_ipl_apt_structures_threaded : Prop
+  constructed_she_apt_transport_guards_threaded : Prop
   strongest_additive_haar_endpoint_has_remaining_payload_audit : Prop
 
 namespace AdditiveHaarArithmeticDegreePadicObligations
@@ -5132,69 +5135,102 @@ def RemainingPayloadAudit
     obligations.localized_determinant_multiplicity_matches_iutiv_coefficient ∧
     obligations.adjusted_raw_log_volume_matches_different_plus_conductor ∧
     obligations.realified_packet_source_supplies_stepx_equalities ∧
-    obligations.constructed_hodge_she_ipl_provenance_threaded_to_endpoint ∧
+    obligations.constructed_ipl_choice_link_endpoint_threaded ∧
+    obligations.constructed_ipl_datum_certificate_alignment_threaded ∧
+    obligations.constructed_hodge_she_ipl_apt_structures_threaded ∧
+    obligations.constructed_she_apt_transport_guards_threaded ∧
     obligations.strongest_additive_haar_endpoint_has_remaining_payload_audit
 
-theorem constructedHodgeSHEIPLThreaded
+theorem constructedIPLChoiceLinkEndpointThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
-    obligations.constructed_hodge_she_ipl_provenance_threaded_to_endpoint := by
-  rcases audit with ⟨_, _, _, _, _, _, _, _, hthreaded, _⟩
+    obligations.constructed_ipl_choice_link_endpoint_threaded := by
+  rcases audit with ⟨_, _, _, _, _, _, _, _, hthreaded, _, _, _, _⟩
+  exact hthreaded
+
+theorem constructedIPLCertificateAlignmentThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.constructed_ipl_datum_certificate_alignment_threaded := by
+  rcases audit with ⟨_, _, _, _, _, _, _, _, _, hthreaded, _, _, _⟩
+  exact hthreaded
+
+theorem constructedHodgeSHEIPLAPTStructuresThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.constructed_hodge_she_ipl_apt_structures_threaded := by
+  rcases audit with ⟨_, _, _, _, _, _, _, _, _, _, hthreaded, _, _⟩
+  exact hthreaded
+
+theorem constructedSHEAPTTransportGuardsThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.constructed_she_apt_transport_guards_threaded := by
+  rcases audit with ⟨_, _, _, _, _, _, _, _, _, _, _, hthreaded, _⟩
   exact hthreaded
 
 theorem theorem110AdditiveHaarLocalAnalyticConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.theorem110_additive_haar_local_analytic_construction_constructed := by
-  exact audit.1
+  rcases audit with ⟨h, _, _, _, _, _, _, _, _, _, _, _, _⟩
+  exact h
 
 theorem additiveHaarLocalArithmeticMatchingConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.additive_haar_local_arithmetic_matching_constructed := by
-  exact audit.2.1
+  rcases audit with ⟨_, h, _, _, _, _, _, _, _, _, _, _, _⟩
+  exact h
 
 theorem arithmeticDivisorFormulaSplitConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.arithmetic_divisor_formula_split_constructed := by
-  exact audit.2.2.1
+  rcases audit with ⟨_, _, h, _, _, _, _, _, _, _, _, _, _⟩
+  exact h
 
 theorem padicPrimeErrorDefectMainSplitConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.padic_prime_error_defect_main_split_constructed := by
-  exact audit.2.2.2.1
+  rcases audit with ⟨_, _, _, h, _, _, _, _, _, _, _, _, _⟩
+  exact h
 
 theorem stepXIArithmeticDegreeCalibrationConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.stepxi_arithmetic_degree_calibration_constructed := by
-  exact audit.2.2.2.2.1
+  rcases audit with ⟨_, _, _, _, h, _, _, _, _, _, _, _, _⟩
+  exact h
 
 theorem localizedDeterminantMultiplicityMatchesIUTIVCoefficient
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.localized_determinant_multiplicity_matches_iutiv_coefficient := by
-  exact audit.2.2.2.2.2.1
+  rcases audit with ⟨_, _, _, _, _, h, _, _, _, _, _, _, _⟩
+  exact h
 
 theorem adjustedRawLogVolumeMatchesDifferentPlusConductor
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.adjusted_raw_log_volume_matches_different_plus_conductor := by
-  exact audit.2.2.2.2.2.2.1
+  rcases audit with ⟨_, _, _, _, _, _, h, _, _, _, _, _, _⟩
+  exact h
 
 theorem realifiedPacketSourceSuppliesStepXEqualities
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.realified_packet_source_supplies_stepx_equalities := by
-  exact audit.2.2.2.2.2.2.2.1
+  rcases audit with ⟨_, _, _, _, _, _, _, h, _, _, _, _, _⟩
+  exact h
 
 theorem strongestAdditiveHaarEndpointHasRemainingPayloadAudit
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.strongest_additive_haar_endpoint_has_remaining_payload_audit := by
-  exact audit.2.2.2.2.2.2.2.2.2
+  rcases audit with ⟨_, _, _, _, _, _, _, _, _, _, _, _, h⟩
+  exact h
 
 end AdditiveHaarArithmeticDegreePadicObligations
 
