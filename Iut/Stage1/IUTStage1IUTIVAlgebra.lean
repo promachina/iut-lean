@@ -4620,6 +4620,162 @@ end IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarUnscaledDegreeIdentificatio
 
 set_option linter.style.longLine false in
 /--
+Distinguished tensor-degree component source for Theorem 1.10, Step (v).
+
+This lowers the distinguished local degree-identification object by splitting
+the equality
+`-\lambda + d_I + 4 log(p) + Ram = D_v + C_v` into its two paper-side
+components: the local different contribution is the non-conductor part
+`-\lambda + d_I + Ram`, while the local conductor contribution is the
+`4 log(p)` term produced by the integral-power rounding in Proposition 1.4.
+-/
+structure IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarTensorDegreeComponentSource
+    (α : Type u) (η : Type v) (K : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (l : PrimeGeFive)
+    (distinguishedProcessionBound arithmeticDegreeCoefficient
+      localDifferentDegree localConductorDegree : Real) where
+  logShellSource :
+    IUTStage1IUTIVProposition14DistinguishedAdditiveHaarLogShellSource
+      α η K hullSystem l distinguishedProcessionBound
+  formula_bound_eq_coarse_procession :
+    distinguishedProcessionBound =
+      logShellSource.coarseProcessionNormalizedUpperBound
+  arithmeticDegreeCoefficient_ge_one :
+    1 <= arithmeticDegreeCoefficient
+  localDifferentDegree_nonneg :
+    0 <= localDifferentDegree
+  localConductorDegree_nonneg :
+    0 <= localConductorDegree
+  localDifferentDegree_eq_tensorDifferentPart :
+    localDifferentDegree =
+      -logShellSource.lambda + logShellSource.dI +
+        logShellSource.exceptionalRamificationLogSum
+  localConductorDegree_eq_tensorConductorPart :
+    localConductorDegree =
+      4 * Real.log (logShellSource.additiveHaarSource.residuePrime : Real)
+  coarse_procession_le_tensorFormula :
+    logShellSource.coarseProcessionNormalizedUpperBound <=
+      iutIVProp14DistinguishedTensorBound
+        logShellSource.additiveHaarSource.residuePrime
+        logShellSource.lambda logShellSource.dI
+        logShellSource.exceptionalRamificationLogSum
+
+namespace IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarTensorDegreeComponentSource
+
+set_option linter.style.longLine false
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {l : PrimeGeFive}
+variable {distinguishedProcessionBound arithmeticDegreeCoefficient
+  localDifferentDegree localConductorDegree : Real}
+
+theorem tensorFormula_eq_different_conductor
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient localDifferentDegree
+        localConductorDegree) :
+    iutIVProp14DistinguishedTensorBound
+        source.logShellSource.additiveHaarSource.residuePrime
+        source.logShellSource.lambda source.logShellSource.dI
+        source.logShellSource.exceptionalRamificationLogSum =
+      localDifferentDegree + localConductorDegree := by
+  calc
+    iutIVProp14DistinguishedTensorBound
+        source.logShellSource.additiveHaarSource.residuePrime
+        source.logShellSource.lambda source.logShellSource.dI
+        source.logShellSource.exceptionalRamificationLogSum =
+      (-source.logShellSource.lambda + source.logShellSource.dI +
+          source.logShellSource.exceptionalRamificationLogSum) +
+        4 * Real.log
+          (source.logShellSource.additiveHaarSource.residuePrime : Real) := by
+      rw [iutIVProp14DistinguishedTensorBound]
+      ring_nf
+    _ = localDifferentDegree + localConductorDegree := by
+      rw [← source.localDifferentDegree_eq_tensorDifferentPart,
+        ← source.localConductorDegree_eq_tensorConductorPart]
+
+set_option linter.style.longLine false in
+noncomputable def toUnscaledDegreeIdentificationSource
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient localDifferentDegree
+        localConductorDegree) :
+    IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarUnscaledDegreeIdentificationSource
+      α η K hullSystem l distinguishedProcessionBound
+      arithmeticDegreeCoefficient localDifferentDegree localConductorDegree :=
+  { logShellSource := source.logShellSource,
+    formula_bound_eq_coarse_procession :=
+      source.formula_bound_eq_coarse_procession,
+    arithmeticDegreeCoefficient_ge_one :=
+      source.arithmeticDegreeCoefficient_ge_one,
+    localDifferentDegree_nonneg :=
+      source.localDifferentDegree_nonneg,
+    localConductorDegree_nonneg :=
+      source.localConductorDegree_nonneg,
+    tensorFormula_eq_different_conductor :=
+      source.tensorFormula_eq_different_conductor,
+    coarse_procession_le_tensorFormula :=
+      source.coarse_procession_le_tensorFormula }
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient localDifferentDegree
+        localConductorDegree) :
+    Prop :=
+  source.logShellSource.Endpoint ∧
+    distinguishedProcessionBound =
+      source.logShellSource.coarseProcessionNormalizedUpperBound ∧
+      1 <= arithmeticDegreeCoefficient ∧
+        0 <= localDifferentDegree ∧
+          0 <= localConductorDegree ∧
+            localDifferentDegree =
+              -source.logShellSource.lambda + source.logShellSource.dI +
+                source.logShellSource.exceptionalRamificationLogSum ∧
+              localConductorDegree =
+                4 * Real.log
+                  (source.logShellSource.additiveHaarSource.residuePrime : Real) ∧
+                iutIVProp14DistinguishedTensorBound
+                    source.logShellSource.additiveHaarSource.residuePrime
+                    source.logShellSource.lambda source.logShellSource.dI
+                    source.logShellSource.exceptionalRamificationLogSum =
+                  localDifferentDegree + localConductorDegree ∧
+                  source.logShellSource.coarseProcessionNormalizedUpperBound <=
+                    iutIVProp14DistinguishedTensorBound
+                      source.logShellSource.additiveHaarSource.residuePrime
+                      source.logShellSource.lambda source.logShellSource.dI
+                      source.logShellSource.exceptionalRamificationLogSum ∧
+                    source.toUnscaledDegreeIdentificationSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarTensorDegreeComponentSource
+        α η K hullSystem l distinguishedProcessionBound
+        arithmeticDegreeCoefficient localDifferentDegree
+        localConductorDegree) :
+    Endpoint source :=
+  ⟨source.logShellSource.endpoint,
+    source.formula_bound_eq_coarse_procession,
+    source.arithmeticDegreeCoefficient_ge_one,
+    source.localDifferentDegree_nonneg,
+    source.localConductorDegree_nonneg,
+    source.localDifferentDegree_eq_tensorDifferentPart,
+    source.localConductorDegree_eq_tensorConductorPart,
+    source.tensorFormula_eq_different_conductor,
+    source.coarse_procession_le_tensorFormula,
+    source.toUnscaledDegreeIdentificationSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarTensorDegreeComponentSource
+
+set_option linter.style.longLine false in
+/--
 Archimedean unscaled local degree-bound source.
 
 This records the Step (vii) coarse metric bound as an unscaled
