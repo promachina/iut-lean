@@ -9872,7 +9872,28 @@ audit, and final preferred dichotomy endpoint.  Thus the current preferred
 finite-divisor endpoint no longer consumes the distinguished local
 degree-identification object as primitive; it consumes the finer local
 different/conductor decomposition and rebuilds that object internally.
-The archimedean branch is now lowered beyond the component interface to the
+The finite distinguished branch is now lowered beyond the tensor-component
+interface to the constructed source
+\[
+\begin{array}{l}
+\texttt{IUTStage1IUTIVTheorem110DistinguishedAdditiveHaar}\\
+\texttt{ConstructedTensorDegreeComponentSource}.
+\end{array}
+\]
+This object reads the Proposition~1.4 additive-Haar log-shell source and defines
+the finite local components
+\[
+D_v=-\lambda+d_I+\operatorname{Ram},\qquad
+C_v=4\log(p_v).
+\]
+Lean proves the conductor nonnegativity from the residue-prime bound and
+projects the source to the older tensor-degree component and calibrated
+unscaled-degree interfaces.  The remaining finite payload at this boundary is
+therefore explicit: the nonnegativity of the tensor different part and the
+calibration equalities identifying the externally named arithmetic-divisor
+\(D_v,C_v\) entries with these constructed log-shell components.
+
+The archimedean branch remains lowered beyond the component interface to the
 constructed source
 \[
 \begin{array}{l}
@@ -9889,25 +9910,36 @@ matched source
 \[
 \begin{array}{l}
 \texttt{IUTStage1AdditiveHaarTheorem110StepXI}\\
-\texttt{MatchedLocalDegreeConstructedArchimedeanComponentSource}
+\texttt{MatchedLocalDegreeConstructedComponentSource}
 \end{array}
 \]
-uses this construction at every archimedean place, and the local-to-global
+uses the finite construction at every distinguished finite place and the metric
+construction at every archimedean place.  The local-to-global
 wrapper
 \[
 \begin{array}{l}
 \texttt{ConstructedTheorem311OneSidedIUTIVTheorem110}\\
-\texttt{AdditiveHaarMatchedLocalDegreeConstructedArchimedeanComponent}\\
+\texttt{AdditiveHaarMatchedLocalDegreeConstructedComponent}\\
 \texttt{StepXILocalTermCThetaSource}
 \end{array}
 \]
-projects it to the existing component-backed \(C_\Theta\) route.  Thus the
-current strongest preferred endpoint consumes the constructed Proposition~1.5
-metric source on the archimedean branch; the remaining degree-boundary payload
-is the calibration of the Step~(xi) local \(D_v,C_v\) values to these
-constructed exact/remainder components and the construction of the
-distinguished finite-place component equalities from divisor, valuation,
-log-shell, and ramification data.
+projects it to the existing constructed-archimedean \(C_\Theta\) route.  The
+current strongest preferred endpoint is
+\[
+\begin{array}{l}
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_preferred}\\
+\texttt{MatchedLocalDegreeConstructedComponentConstructedTheorem311}\\
+\texttt{IndeterminacyLocalGlobalCThetaFiniteDivisorVerticalIQ}\\
+\texttt{\_ofRealifiedFrobenioidPacketSource}.
+\end{array}
+\]
+It consumes construction-backed finite and archimedean local-degree components,
+then derives the finite-divisor vertical-\(IQ\) dichotomy through the closed
+local-to-global \(C_\Theta\) source.  What is still not constructed is now
+narrower and named: the source derivation of the finite tensor-different
+nonnegativity, the local arithmetic-divisor calibration equalities, and the
+deeper divisor/valuation/ramification construction feeding the Proposition~1.4
+log-shell source.
 The matched boundary now has its own constructed qualitative audit,
 \[
 \begin{array}{l}
