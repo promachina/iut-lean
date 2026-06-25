@@ -5146,6 +5146,15 @@ def RemainingPayloadAudit
     obligations.remark3114_log_theta_lattice_procession_constructed ∧
     IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
       core images ∧
+    (∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂) ∧
+    (∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂) ∧
+    (∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂) ∧
     obligations.selected_q_region_is_theorem311_possible_image ∧
     obligations.fl_cardinality_and_procession_label_transitions_constructed ∧
     obligations.theorem311_hodge_she_ipl_apt_source_bridge_constructed
@@ -5168,6 +5177,33 @@ theorem possibleImagesDependOnEqualityQuotient
       core images := by
   rcases audit with ⟨_, _, _, _, _, hcompat, _, _, _⟩
   exact hcompat
+
+theorem possibleImagesInd1RegionEq
+    (obligations : Theorem311AndRemarksObligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂ := by
+  rcases audit with ⟨_, _, _, _, _, _, hind1, _⟩
+  exact hind1
+
+theorem possibleImagesInd2RegionEq
+    (obligations : Theorem311AndRemarksObligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂ := by
+  rcases audit with ⟨_, _, _, _, _, _, _, hind2, _⟩
+  exact hind2
+
+theorem possibleImagesInd3UpperSemiLogVolume
+    (obligations : Theorem311AndRemarksObligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂ := by
+  rcases audit with ⟨_, _, _, _, _, _, _, _, hind3, _⟩
+  exact hind3
 
 theorem ind1_ind2_image_invariant
     (obligations : Theorem311AndRemarksObligations core images) :
@@ -5601,6 +5637,15 @@ def RemainingPayloadAudit
     obligations.theorem311_and_remarks.remark3114_log_theta_lattice_procession_constructed ∧
     IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
       core images ∧
+    (∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂) ∧
+    (∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂) ∧
+    (∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂) ∧
     obligations.theorem311_and_remarks.selected_q_region_is_theorem311_possible_image ∧
     obligations.theorem311_and_remarks.fl_cardinality_and_procession_label_transitions_constructed ∧
     obligations.theorem311_and_remarks.theorem311_hodge_she_ipl_apt_source_bridge_constructed ∧
@@ -5664,6 +5709,36 @@ theorem theorem311PossibleImagesDependOnEqualityQuotient
   dsimp [RemainingPayloadAudit] at audit
   rcases audit with ⟨_, _, _, _, _, hcompat, _⟩
   exact hcompat
+
+theorem theorem311PossibleImagesInd1RegionEq
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂ := by
+  dsimp [RemainingPayloadAudit] at audit
+  rcases audit with ⟨_, _, _, _, _, _, hind1, _⟩
+  exact hind1
+
+theorem theorem311PossibleImagesInd2RegionEq
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂ := by
+  dsimp [RemainingPayloadAudit] at audit
+  rcases audit with ⟨_, _, _, _, _, _, _, hind2, _⟩
+  exact hind2
+
+theorem theorem311PossibleImagesInd3UpperSemiLogVolume
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂ := by
+  dsimp [RemainingPayloadAudit] at audit
+  rcases audit with ⟨_, _, _, _, _, _, _, _, hind3, _⟩
+  exact hind3
 
 theorem theorem311EqualityQuotientImageInvariant
     (obligations : Obligations core images)

@@ -10850,10 +10850,13 @@ quotient maps is equivalent to the generated \((\Ind_1)/(\Ind_2)\) relation,
 while the \((\Ind_3)\) generator of this equality quotient remains empty.
 The top-level paper-trace \texttt{RemainingPayloadAudit} now also requires the
 Theorem~3.11 possible-image quotient compatibility itself.  Its checked
-projections expose both the equality-quotient image invariant and the
-one-sided \((\Ind_3)\) upper-semi inequality from this compatibility, so the
-ledger can no longer satisfy the Theorem~3.11 block while omitting the
-possible-image pullback along the \((\Ind_1)/(\Ind_2)\) quotient.
+projections now expose the \((\Ind_1)\) and \((\Ind_2)\) possible-image region
+equalities separately from the one-sided \((\Ind_3)\) upper-semi log-volume
+inequality, and then derive the equality-quotient image invariant from the
+first two.  Thus the ledger can no longer satisfy the Theorem~3.11 block while
+hiding the distinction between equality-generating indeterminacies and the
+non-equality \((\Ind_3)\) upper-semi relation inside a single compatibility
+payload.
 Its
 \texttt{paperTraceRemainingPayloadAudit} field instantiates the abstract
 \texttt{AdditiveHaarArithmeticDegreePadicObligations} record with these
