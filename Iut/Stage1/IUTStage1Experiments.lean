@@ -64144,6 +64144,23 @@ variable [∀ place : β, Fintype (archIndex place)]
 variable [∀ place : β, Fintype (archSummand place)]
 
 set_option linter.style.longLine false in
+noncomputable def ofPrimeErrorPadicDefectMainSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource
+        β estimate localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    IUTStage1AdditiveHaarTheorem110FormulaGapMatchedPrimeErrorPadicDefectMainSource
+      β estimate localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
+  { theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource :=
+      IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource.ofAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+          source.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource,
+    iutIVArithmeticDefectSource :=
+      source.iutIVArithmeticDefectSource,
+    localPrimeErrorContribution_eq_padicHaarDefect_main :=
+      source.localPrimeErrorContribution_eq_padicHaarDefect_main }
+
+set_option linter.style.longLine false in
 noncomputable def toIUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource
     (source :
       IUTStage1AdditiveHaarTheorem110FormulaGapMatchedPrimeErrorPadicDefectMainSource
@@ -64180,6 +64197,14 @@ theorem endpoint
   ⟨source.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource.endpoint,
     source.iutIVArithmeticDefectSource.endpoint,
     source.toIUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource.endpoint⟩
+
+theorem ofPrimeErrorPadicDefectMainSource_endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource
+        β estimate localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Endpoint (ofPrimeErrorPadicDefectMainSource source) :=
+  (ofPrimeErrorPadicDefectMainSource source).endpoint
 
 end IUTStage1AdditiveHaarTheorem110FormulaGapMatchedPrimeErrorPadicDefectMainSource
 
@@ -64646,6 +64671,21 @@ variable [∀ place : β, Fintype (archIndex place)]
 variable [∀ place : β, Fintype (archSummand place)]
 
 set_option linter.style.longLine false in
+noncomputable def ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+      β estimate η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
+  { formulaGapMatchedPrimeErrorPadicDefectMainSource :=
+      IUTStage1AdditiveHaarTheorem110FormulaGapMatchedPrimeErrorPadicDefectMainSource.ofPrimeErrorPadicDefectMainSource
+        source.primeErrorPadicDefectMainSource,
+    arithmeticDegreeCalibrationSource :=
+      source.arithmeticDegreeCalibrationSource }
+
+set_option linter.style.longLine false in
 noncomputable def toIUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
     (source :
       IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
@@ -64680,6 +64720,15 @@ theorem endpoint
   ⟨source.formulaGapMatchedPrimeErrorPadicDefectMainSource.endpoint,
     source.arithmeticDegreeCalibrationSource.endpoint,
     source.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource.endpoint⟩
+
+theorem ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource_endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Endpoint
+      (ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource source) :=
+  (ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource source).endpoint
 
 end IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
 
@@ -65672,6 +65721,27 @@ variable [∀ place : β, Fintype (archIndex place)]
 variable [∀ place : β, Fintype (archSummand place)]
 
 set_option linter.style.longLine false in
+noncomputable def ofAdditiveHaarLocalAnalyticArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+      sourceData estimate l η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
+  { oneSidedMultiradialSource :=
+      source.oneSidedMultiradialSource,
+    qPilotRegion_eq_selectedQRegion :=
+      source.qPilotRegion_eq_selectedQRegion,
+    formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :=
+      IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+          source.arithmeticDegreePadicFormulaMatchingSource,
+    determinantSource_eq_stepXI :=
+      source.determinantSource_eq_stepXI,
+    canonicalCThetaScale_eq_stepXISum :=
+      source.canonicalCThetaScale_eq_stepXISum }
+
+set_option linter.style.longLine false in
 noncomputable def toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
     (source :
       ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
@@ -65709,6 +65779,17 @@ theorem endpoint
     Endpoint source :=
   ⟨source.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.endpoint,
     source.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource.endpoint⟩
+
+theorem ofAdditiveHaarLocalAnalyticArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource_endpoint
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Endpoint
+      (ofAdditiveHaarLocalAnalyticArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        source) :=
+  (ofAdditiveHaarLocalAnalyticArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+      source).endpoint
 
 theorem arithmeticGap_dominates_canonicalCThetaScale
     (source :
