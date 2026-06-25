@@ -5528,6 +5528,141 @@ theorem localToGlobalArithmeticChainAudit
     IUTIVCThetaObligations.LocalToGlobalArithmeticChainAudit] at audit ⊢
   tauto
 
+theorem additiveHaarArithmeticDegreePadicRemainingPayloadAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit
+      obligations.additive_haar_arithmetic_degree_padic := by
+  dsimp [RemainingPayloadAudit] at audit
+  tauto
+
+theorem additiveHaarTheorem110LocalAnalyticConstructed
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.theorem110_additive_haar_local_analytic_construction_constructed :=
+  AdditiveHaarArithmeticDegreePadicObligations.theorem110AdditiveHaarLocalAnalyticConstructed
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarLocalArithmeticMatchingConstructed
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.additive_haar_local_arithmetic_matching_constructed :=
+  AdditiveHaarArithmeticDegreePadicObligations.additiveHaarLocalArithmeticMatchingConstructed
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarArithmeticDivisorFormulaSplitConstructed
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.arithmetic_divisor_formula_split_constructed :=
+  AdditiveHaarArithmeticDegreePadicObligations.arithmeticDivisorFormulaSplitConstructed
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarPadicPrimeErrorDefectMainSplitConstructed
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.padic_prime_error_defect_main_split_constructed :=
+  AdditiveHaarArithmeticDegreePadicObligations.padicPrimeErrorDefectMainSplitConstructed
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarStepXIArithmeticDegreeCalibrationConstructed
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.stepxi_arithmetic_degree_calibration_constructed :=
+  AdditiveHaarArithmeticDegreePadicObligations.stepXIArithmeticDegreeCalibrationConstructed
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+set_option linter.style.longLine false in
+theorem additiveHaarLocalizedDeterminantMultiplicityMatchesIUTIVCoefficient
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.localized_determinant_multiplicity_matches_iutiv_coefficient :=
+  AdditiveHaarArithmeticDegreePadicObligations.localizedDeterminantMultiplicityMatchesIUTIVCoefficient
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarAdjustedRawLogVolumeMatchesDifferentPlusConductor
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.adjusted_raw_log_volume_matches_different_plus_conductor :=
+  AdditiveHaarArithmeticDegreePadicObligations.adjustedRawLogVolumeMatchesDifferentPlusConductor
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarRealifiedPacketSourceSuppliesStepXEqualities
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.realified_packet_source_supplies_stepx_equalities :=
+  AdditiveHaarArithmeticDegreePadicObligations.realifiedPacketSourceSuppliesStepXEqualities
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarConstructedIPLChoiceLinkEndpointThreaded
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.constructed_ipl_choice_link_endpoint_threaded :=
+  AdditiveHaarArithmeticDegreePadicObligations.constructedIPLChoiceLinkEndpointThreaded
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarConstructedIPLCertificateAlignmentThreaded
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.constructed_ipl_datum_certificate_alignment_threaded :=
+  AdditiveHaarArithmeticDegreePadicObligations.constructedIPLCertificateAlignmentThreaded
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarConstructedHodgeSHEIPLAPTStructuresThreaded
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.constructed_hodge_she_ipl_apt_structures_threaded :=
+  AdditiveHaarArithmeticDegreePadicObligations.constructedHodgeSHEIPLAPTStructuresThreaded
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarConstructedSHEAPTTransportGuardsThreaded
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.constructed_she_apt_transport_guards_threaded :=
+  AdditiveHaarArithmeticDegreePadicObligations.constructedSHEAPTTransportGuardsThreaded
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarConstructedIPLSHEAPTTransportLawAuditThreaded
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.constructed_ipl_she_apt_transport_law_audit_threaded :=
+  AdditiveHaarArithmeticDegreePadicObligations.constructedIPLSHEAPTTransportLawAuditThreaded
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarStrongestEndpointHasRemainingPayloadAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.strongest_additive_haar_endpoint_has_remaining_payload_audit :=
+  AdditiveHaarArithmeticDegreePadicObligations.strongestAdditiveHaarEndpointHasRemainingPayloadAudit
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
 theorem closedEndpointRemovesThetaSignedLeCThetaAbsLogQHypothesis
     (obligations : Obligations core images)
     (audit : RemainingPayloadAudit obligations) :
