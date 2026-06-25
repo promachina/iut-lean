@@ -10729,6 +10729,178 @@ theorem oneSidedQuotientAudit
 
 end IUTStage1Theorem311OneSidedMultiradialConstructionSource
 
+set_option linter.style.longLine false in
+/--
+Strict finite toy `F_l` procession action for the one-sided Theorem 3.11 source.
+
+The action is intentionally identity-valued on the two toy choices.  It is not
+used to collapse the strict `(Ind3)` step: the transition relation is checked
+inside the equality quotient generated only by `(Ind1)` and `(Ind2)`.
+-/
+def strictFiniteToyEqualityFLProcessionAction
+    (l : PrimeGeFive)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l) :
+    IUTStage1Theorem311EqualityFLProcessionAction
+      IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyCore l :=
+  { gluingTorsor := gluingTorsor,
+    transition := fun _ choice => choice,
+    transition_zero := by
+      intro choice
+      rfl,
+    transition_add := by
+      intro t u choice
+      rfl,
+    transition_related := by
+      intro t choice
+      exact
+        IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyCore
+          |>.mem_equalityOrbit_self choice }
+
+set_option linter.style.longLine false in
+theorem strictFiniteToyEqualityFLProcessionAction_endpoint
+    (l : PrimeGeFive)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l) :
+    Fintype.card (ZMod l.value) = l.value ∧
+      (∀ choice : Fin 2,
+        (strictFiniteToyEqualityFLProcessionAction l gluingTorsor).transition
+          0 choice = choice) ∧
+      (∀ t u (choice : Fin 2),
+        (strictFiniteToyEqualityFLProcessionAction l gluingTorsor).transition
+            (t + u) choice =
+          (strictFiniteToyEqualityFLProcessionAction l gluingTorsor).transition
+            t
+            ((strictFiniteToyEqualityFLProcessionAction l gluingTorsor).transition
+              u choice)) ∧
+      (∀ t (choice : Fin 2),
+        IUTStage1Theorem311TypedIndeterminacyCore.equalityQuotientMap
+            IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyCore choice =
+          IUTStage1Theorem311TypedIndeterminacyCore.equalityQuotientMap
+            IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyCore
+              ((strictFiniteToyEqualityFLProcessionAction l gluingTorsor).transition
+                t choice)) ∧
+      (∀ t gluing,
+        IUTStage1ThetaNFBridgeGluingTorsor.gluingTranslate
+            (strictFiniteToyEqualityFLProcessionAction l gluingTorsor).gluingTorsor
+            t gluing =
+          zmodLabelTranslate l t gluing) :=
+  (strictFiniteToyEqualityFLProcessionAction l gluingTorsor).endpoint
+
+set_option linter.style.longLine false in
+/--
+Strict finite toy source for the one-sided Theorem 3.11 multiradial layer.
+
+This is the nonvacuity bridge from the standalone typed `(Ind1)/(Ind2)/(Ind3)`
+toy model into the actual one-sided multiradial construction source used by the
+`C_\Theta` corridor.  The only record-specific premise identifies the record's
+theta possible images with the strict two-point toy family.
+-/
+def strictFiniteToyOneSidedMultiradialConstructionSource
+    {source target : Copy}
+    {package : IUTStage1SourcePackage source target (Fin 2)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (l : PrimeGeFive)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (images_eq_strict :
+      record.thetaPossibleImages.images =
+        IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyPossibleImageFamily
+          target)
+    (selectedQChoice : Fin 2) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  { typedIndeterminacyCore :=
+      IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyCore,
+    possibleImageCompatibility := by
+      rw [images_eq_strict]
+      exact
+        IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyPossibleImageCompatibility
+          target,
+    flProcessionAction :=
+      strictFiniteToyEqualityFLProcessionAction l gluingTorsor,
+    selectedQChoice := selectedQChoice }
+
+set_option linter.style.longLine false in
+theorem strictFiniteToyOneSidedMultiradialConstructionSource_endpoint
+    {source target : Copy}
+    {package : IUTStage1SourcePackage source target (Fin 2)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (l : PrimeGeFive)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (images_eq_strict :
+      record.thetaPossibleImages.images =
+        IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyPossibleImageFamily
+          target)
+    (selectedQChoice : Fin 2) :
+    let construction :
+        IUTStage1Theorem311OneSidedMultiradialConstructionSource
+          (package := package) record l :=
+      strictFiniteToyOneSidedMultiradialConstructionSource
+        record l gluingTorsor images_eq_strict selectedQChoice
+    construction.multiradialImages.quotient =
+        construction.typedIndeterminacyCore.equalityQuotient ∧
+      construction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      (∀ t choice,
+        construction.typedIndeterminacyCore.equalityQuotientMap choice =
+          construction.typedIndeterminacyCore.equalityQuotientMap
+            (construction.flProcessionAction.transition t choice)) ∧
+      (∀ {choice₁ choice₂ : Fin 2},
+        construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+          construction.typedIndeterminacyCore.logVolume choice₁ <=
+            construction.typedIndeterminacyCore.logVolume choice₂) ∧
+      (∀ choice,
+        construction.equalityQuotientPossibleImages.quotientImages.region
+            (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      construction.selectedQRegion =
+        construction.equalityQuotientPossibleImages.quotientImages.region
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            construction.selectedQChoice) ∧
+      construction.selectedQRegion.toSet =
+        recordThetaPossibleImage record construction.selectedQChoice ∧
+      construction.selectedQRegion.toSet ⊆ recordThetaPossibleImageUnion record := by
+  exact
+    (strictFiniteToyOneSidedMultiradialConstructionSource
+      record l gluingTorsor images_eq_strict selectedQChoice).endpoint
+
+set_option linter.style.longLine false in
+theorem strictFiniteToyOneSidedMultiradialConstructionSource_ind3_not_equalized
+    {source target : Copy}
+    {package : IUTStage1SourcePackage source target (Fin 2)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (l : PrimeGeFive)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (images_eq_strict :
+      record.thetaPossibleImages.images =
+        IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyPossibleImageFamily
+          target)
+    (selectedQChoice : Fin 2) :
+    let construction :=
+      strictFiniteToyOneSidedMultiradialConstructionSource
+        record l gluingTorsor images_eq_strict selectedQChoice
+    construction.typedIndeterminacyCore.ind3.step (0 : Fin 2) (1 : Fin 2) ∧
+      construction.typedIndeterminacyCore.logVolume (0 : Fin 2) <
+        construction.typedIndeterminacyCore.logVolume (1 : Fin 2) ∧
+      (1 : Fin 2) ∉ construction.typedIndeterminacyCore.equalityOrbit
+        (0 : Fin 2) ∧
+      construction.typedIndeterminacyCore.equalityQuotientMap (0 : Fin 2) ≠
+        construction.typedIndeterminacyCore.equalityQuotientMap (1 : Fin 2) ∧
+      (∀ {choice₁ choice₂ : Fin 2},
+        construction.typedIndeterminacyCore.equalityGenerators.ind3_step
+          choice₁ choice₂ -> False) :=
+  let construction :=
+    strictFiniteToyOneSidedMultiradialConstructionSource
+      record l gluingTorsor images_eq_strict selectedQChoice
+  ⟨IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
+      target |>.ind3_strict_step,
+    IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
+      target |>.ind3_strict_logVolume,
+    IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
+      target |>.ind3_strict_not_in_equalityOrbit,
+    IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
+      target |>.ind3_strict_quotientMap_ne,
+    construction.oneSidedQuotientAudit.equalityQuotient_no_ind3_generator⟩
+
 noncomputable def recordCanonicalHullTensorPowerWeightedDeterminantHullDetData
     {β : Type v} [Fintype β]
     (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
