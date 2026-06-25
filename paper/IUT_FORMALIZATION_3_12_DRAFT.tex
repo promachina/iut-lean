@@ -10668,6 +10668,17 @@ divisor evaluation, Step~(xi) arithmetic-degree calibration, and the
 local-to-global endpoint and the Remark~3.9.5/IUT~IV handoff audit as named
 fields, so the \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) proof is visible at
 the strongest unscaled boundary itself.
+At the arithmetic-divisor-backed preferred boundary, the same certificate now
+also carries the nested
+\texttt{ArithmeticDegreeCalibrationAudit} directly.  Thus the local Step~(xi)
+formula
+\[
+  S_v=a_l(D_v+C_v)
+\]
+is visible from the preferred certificate as the consequence of the two
+calibration laws already stored there: determinant multiplicity equals the
+\IUT{} IV arithmetic-degree coefficient, and adjusted raw log-volume equals
+the local different-plus-conductor degree.
 Thus the preferred certificate records how the final
 \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison is obtained, rather than
 only recording that the comparison was available downstream.  Its
