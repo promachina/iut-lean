@@ -10412,6 +10412,12 @@ chain as a single source-level review target: finite-place identifications,
 the summed Step~(xi)/Haar bound, the total Haar-defect lower bound, the
 derived arithmetic gap, the \(C_{\Theta,\mathrm{can}}\le C_\Theta\) handoff,
 and the final signed \(C_\Theta\) bound are all returned together.
+The finite-place source now also has the explicit
+\texttt{IUTIVArithmeticGapHandoffAudit}, which records the finite-sum
+identifications, the summed Step~(xi)/Haar inequality, the unit Haar-defect
+input, the \(\IUT{}\,\mathrm{IV}\) identity \(C_\Theta+1=A-M\), and the
+ordered-real cancellation to \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) in one
+checked certificate.
 This source-level audit is now pinned at the constructed qualitative
 Hodge/\(\SHE/\IPL\) finite-divisor boundary by
 \[
@@ -10819,6 +10825,8 @@ preferred-audit projections
 \quad\texttt{indeterminacyLocalGlobalEndpoint},\\
 \texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThetaAudit.}\\
 \quad\texttt{finitePlaceLocalGlobalCThetaDerivationAudit},\\
+\texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedComponentCThetaAudit.}\\
+\quad\texttt{finitePlaceIUTIVArithmeticGapHandoffAudit},\\
 \texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedComponentCThetaAudit.}\\
 \quad\texttt{equalityQuotientSetoidAudit},\\
 \texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedComponentCThetaAudit.}\\
