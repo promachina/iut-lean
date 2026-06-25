@@ -5107,6 +5107,8 @@ structure StepXFiniteDivisorObligations
     ∀ {choice₁ choice₂ : choice},
       core.ind3.step choice₁ choice₂ ->
         core.logVolume choice₁ <= core.logVolume choice₂
+  ind3_upper_semi_relation_audit :
+    core.Ind3UpperSemiRelationAudit
   finite_divisor_packet_source_constructed : Prop
   realified_frobenioid_log_kummer_source_constructed : Prop
   kummer_forgetting_compatibility_constructed : Prop
@@ -5133,6 +5135,8 @@ def fromTypedCore
     ind3_upper_semi_logVolume_inequality := by
       intro choice₁ choice₂ hstep
       exact core.ind3_logVolume_le hstep,
+    ind3_upper_semi_relation_audit :=
+      core.ind3UpperSemiRelationAudit,
     finite_divisor_packet_source_constructed :=
       finite_divisor_packet_source_constructed,
     realified_frobenioid_log_kummer_source_constructed :=
