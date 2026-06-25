@@ -541,9 +541,35 @@ end StructuredSHETransportContext
 
 /-- Base record for algorithmic-parallel-transport style data. -/
 structure APTDatum (family : TransportedRegionFamily source target index) where
+  transportSystem : HodgeTheaterTransportSystem
+  transportQuotient : HodgeTheaterTransportQuotient transportSystem
+  arrow : HodgeTheaterTransportArrow
+  arrow_permitted : transportSystem.allowed arrow
   mechanism : TransportMechanismId
+  mechanism_eq_arrow : mechanism = arrow.mechanism
   outputFamily : TransportedRegionFamily source target index
   output_eq_family : outputFamily = family
+
+namespace APTDatum
+
+variable {family : TransportedRegionFamily source target index}
+
+def TransportQuotientEndpoint (datum : APTDatum family) : Prop :=
+  datum.transportSystem.allowed datum.arrow ∧
+    datum.transportQuotient.classOf datum.arrow.source =
+      datum.transportQuotient.classOf datum.arrow.target ∧
+    datum.mechanism = datum.arrow.mechanism ∧
+    datum.outputFamily = family
+
+theorem transportQuotientEndpoint
+    (datum : APTDatum family) :
+    datum.TransportQuotientEndpoint :=
+  ⟨datum.arrow_permitted,
+    datum.transportQuotient.allowedArrowClassEq datum.arrow_permitted,
+    datum.mechanism_eq_arrow,
+    datum.output_eq_family⟩
+
+end APTDatum
 
 /--
 Source-shaped APT construction from a permitted Hodge-theater transport.
@@ -574,7 +600,12 @@ def permittedTransport
 def toAPTDatum
     (construction : AlgorithmicParallelTransportConstruction family) :
     APTDatum family :=
-  { mechanism := construction.arrow.mechanism,
+  { transportSystem := construction.transportSystem,
+    transportQuotient := construction.transportQuotient,
+    arrow := construction.arrow,
+    arrow_permitted := construction.permitted,
+    mechanism := construction.arrow.mechanism,
+    mechanism_eq_arrow := rfl,
     outputFamily := construction.outputFamily,
     output_eq_family := construction.output_eq_family }
 
@@ -592,6 +623,16 @@ theorem toAPTDatum_mechanism_eq_arrow
     (construction : AlgorithmicParallelTransportConstruction family) :
     construction.toAPTDatum.mechanism = construction.arrow.mechanism :=
   rfl
+
+theorem toAPTDatum_arrow_eq
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    construction.toAPTDatum.arrow = construction.arrow :=
+  rfl
+
+theorem toAPTDatum_transportQuotientEndpoint
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    construction.toAPTDatum.TransportQuotientEndpoint :=
+  construction.toAPTDatum.transportQuotientEndpoint
 
 theorem toAPTDatum_outputFamily_eq
     (construction : AlgorithmicParallelTransportConstruction family) :
@@ -613,20 +654,24 @@ theorem permitted_arrow_quotient_eq
 def APTEndpoint
     (construction : AlgorithmicParallelTransportConstruction family) : Prop :=
   construction.toAPTDatum.mechanism = construction.arrow.mechanism ∧
+    construction.toAPTDatum.arrow = construction.arrow ∧
     construction.toAPTDatum.outputFamily = construction.outputFamily ∧
     construction.toAPTDatum.outputFamily = family ∧
     construction.transportSystem.allowed construction.arrow ∧
     ¬ construction.transportSystem.forbiddenIdentification
-      construction.arrow.source construction.arrow.target
+      construction.arrow.source construction.arrow.target ∧
+    construction.toAPTDatum.TransportQuotientEndpoint
 
 theorem aptEndpoint
     (construction : AlgorithmicParallelTransportConstruction family) :
     construction.APTEndpoint :=
   ⟨construction.toAPTDatum_mechanism_eq_arrow,
+    construction.toAPTDatum_arrow_eq,
     construction.toAPTDatum_outputFamily_eq,
     construction.toAPTDatum_output_eq_family,
     construction.permitted,
-    construction.permitted_not_forbidden⟩
+    construction.permitted_not_forbidden,
+    construction.toAPTDatum_transportQuotientEndpoint⟩
 
 /--
 Typed audit that an APT datum is realized by a permitted arrow in a named

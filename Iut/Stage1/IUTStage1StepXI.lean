@@ -5742,6 +5742,8 @@ structure ConstructedIPLSHEAPTTransportLawAudit
   apt_transport_quotient_audit :
     QualitativeData.AlgorithmicParallelTransportConstruction.APTTransportQuotientAudit
       constructedBundle.aptConstruction
+  apt_certificate_datum_transport_quotient_endpoint :
+    package.preLedger.certificate.apt.TransportQuotientEndpoint
   apt_endpoint :
     constructedBundle.aptConstruction.APTEndpoint
 
@@ -5763,6 +5765,9 @@ theorem constructedIPLSHEAPTTransportLawAudit
     apt_arrow_not_forbidden := sourceData.aptTransport_not_forbidden,
     apt_transport_quotient_audit :=
       constructedBundle.aptConstruction.aptTransportQuotientAudit,
+    apt_certificate_datum_transport_quotient_endpoint := by
+      rw [constructedBundle.constructedInputs.qualitativeSource.aptDatum_eq_constructed]
+      exact constructedBundle.aptConstruction.toAPTDatum_transportQuotientEndpoint,
     apt_endpoint := constructedBundle.aptConstruction.aptEndpoint }
 
 set_option linter.style.longLine false in

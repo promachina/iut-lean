@@ -10778,6 +10778,10 @@ links, constructed/certificate \(\IPL\)-datum alignment, the forbidden direct
 The \(\APT\) endpoint is now quotient-backed: the construction carries a
 \texttt{HodgeTheaterTransportQuotient}, and Lean proves that the permitted
 \(\APT\) arrow's source and target are equal after passing to this quotient.
+The underlying \texttt{APTDatum} has been strengthened accordingly: a structured
+\(\APT\) witness now stores the transport system, the quotient, the arrow, its
+permission proof, and the quotient endpoint equality, not only the mechanism
+and output family.
 The \(\SHE\) guard is now also represented by
 \texttt{DomainCodomainForbiddenTransportAudit}: it stores the forbidden
 domain/codomain theater pair, proves that no allowed arrow with these endpoints

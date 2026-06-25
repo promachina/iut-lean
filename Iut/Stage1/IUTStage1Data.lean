@@ -432,11 +432,14 @@ theorem qualitativeTransportAudit
 def APTTransportAudit
     (sourceData : ConstructedQualitativeCertificateData data) : Prop :=
   data.certificate.apt = sourceData.aptConstruction.toAPTDatum ∧
+    data.certificate.apt.arrow =
+      sourceData.aptConstruction.arrow ∧
     data.certificate.apt.mechanism =
       sourceData.aptConstruction.arrow.mechanism ∧
     data.certificate.apt.outputFamily =
       sourceData.aptConstruction.outputFamily ∧
     data.certificate.apt.outputFamily = data.output.family ∧
+    data.certificate.apt.TransportQuotientEndpoint ∧
     sourceData.aptConstruction.transportSystem.allowed
       sourceData.aptConstruction.arrow ∧
     ¬ sourceData.aptConstruction.transportSystem.forbiddenIdentification
@@ -448,13 +451,17 @@ def APTTransportAudit
 theorem aptTransportAudit
     (sourceData : ConstructedQualitativeCertificateData data) :
     sourceData.APTTransportAudit := by
-  refine ⟨sourceData.aptDatum_eq_constructed, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨sourceData.aptDatum_eq_constructed, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · rw [sourceData.aptDatum_eq_constructed]
+    exact sourceData.aptConstruction.toAPTDatum_arrow_eq
   · rw [sourceData.aptDatum_eq_constructed]
     exact sourceData.aptConstruction.toAPTDatum_mechanism_eq_arrow
   · rw [sourceData.aptDatum_eq_constructed]
     exact sourceData.aptConstruction.toAPTDatum_outputFamily_eq
   · rw [sourceData.aptDatum_eq_constructed]
     exact sourceData.aptConstruction.toAPTDatum_output_eq_family
+  · rw [sourceData.aptDatum_eq_constructed]
+    exact sourceData.aptConstruction.toAPTDatum_transportQuotientEndpoint
   · exact sourceData.aptConstruction.permitted
   · exact sourceData.aptConstruction.permitted_not_forbidden
   · exact sourceData.aptConstruction.aptTransportQuotientAudit
