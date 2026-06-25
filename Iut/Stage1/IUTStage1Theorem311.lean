@@ -5435,6 +5435,9 @@ structure AdditiveHaarArithmeticDegreePadicObligations where
   constructed_ipl_datum_certificate_alignment_threaded : Prop
   constructed_hodge_she_ipl_apt_structures_threaded : Prop
   constructed_she_apt_transport_guards_threaded : Prop
+  constructed_she_no_domain_to_codomain_transport_threaded : Prop
+  constructed_apt_transport_not_forbidden_threaded : Prop
+  constructed_apt_transport_audit_threaded : Prop
   constructed_ipl_she_apt_transport_law_audit_threaded : Prop
   strongest_additive_haar_endpoint_has_remaining_payload_audit : Prop
 
@@ -5460,6 +5463,9 @@ def CoarsePayloadAudit
     obligations.constructed_ipl_datum_certificate_alignment_threaded ∧
     obligations.constructed_hodge_she_ipl_apt_structures_threaded ∧
     obligations.constructed_she_apt_transport_guards_threaded ∧
+    obligations.constructed_she_no_domain_to_codomain_transport_threaded ∧
+    obligations.constructed_apt_transport_not_forbidden_threaded ∧
+    obligations.constructed_apt_transport_audit_threaded ∧
     obligations.constructed_ipl_she_apt_transport_law_audit_threaded ∧
     obligations.strongest_additive_haar_endpoint_has_remaining_payload_audit
 
@@ -5501,99 +5507,120 @@ theorem constructedIPLChoiceLinkEndpointThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.constructed_ipl_choice_link_endpoint_threaded := by
-  rcases audit.1 with ⟨_, _, _, _, _, _, _, _, hthreaded, _, _, _, _, _⟩
-  exact hthreaded
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem constructedIPLCertificateAlignmentThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.constructed_ipl_datum_certificate_alignment_threaded := by
-  rcases audit.1 with ⟨_, _, _, _, _, _, _, _, _, hthreaded, _, _, _, _⟩
-  exact hthreaded
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem constructedHodgeSHEIPLAPTStructuresThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.constructed_hodge_she_ipl_apt_structures_threaded := by
-  rcases audit.1 with ⟨_, _, _, _, _, _, _, _, _, _, hthreaded, _, _, _⟩
-  exact hthreaded
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem constructedSHEAPTTransportGuardsThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.constructed_she_apt_transport_guards_threaded := by
-  rcases audit.1 with ⟨_, _, _, _, _, _, _, _, _, _, _, hthreaded, _, _⟩
-  exact hthreaded
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
+
+theorem constructedSHENoDomainToCodomainTransportThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.constructed_she_no_domain_to_codomain_transport_threaded := by
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
+
+theorem constructedAPTTransportNotForbiddenThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.constructed_apt_transport_not_forbidden_threaded := by
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
+
+theorem constructedAPTTransportAuditThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.constructed_apt_transport_audit_threaded := by
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem constructedIPLSHEAPTTransportLawAuditThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.constructed_ipl_she_apt_transport_law_audit_threaded := by
-  rcases audit.1 with ⟨_, _, _, _, _, _, _, _, _, _, _, _, hthreaded, _⟩
-  exact hthreaded
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem theorem110AdditiveHaarLocalAnalyticConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.theorem110_additive_haar_local_analytic_construction_constructed := by
-  rcases audit.1 with ⟨h, _, _, _, _, _, _, _, _, _, _, _, _, _⟩
-  exact h
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem additiveHaarLocalArithmeticMatchingConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.additive_haar_local_arithmetic_matching_constructed := by
-  rcases audit.1 with ⟨_, h, _, _, _, _, _, _, _, _, _, _, _, _⟩
-  exact h
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem arithmeticDivisorFormulaSplitConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.arithmetic_divisor_formula_split_constructed := by
-  rcases audit.1 with ⟨_, _, h, _, _, _, _, _, _, _, _, _, _, _⟩
-  exact h
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem padicPrimeErrorDefectMainSplitConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.padic_prime_error_defect_main_split_constructed := by
-  rcases audit.1 with ⟨_, _, _, h, _, _, _, _, _, _, _, _, _, _⟩
-  exact h
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem stepXIArithmeticDegreeCalibrationConstructed
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.stepxi_arithmetic_degree_calibration_constructed := by
-  rcases audit.1 with ⟨_, _, _, _, h, _, _, _, _, _, _, _, _, _⟩
-  exact h
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem localizedDeterminantMultiplicityMatchesIUTIVCoefficient
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.localized_determinant_multiplicity_matches_iutiv_coefficient := by
-  rcases audit.1 with ⟨_, _, _, _, _, h, _, _, _, _, _, _, _, _⟩
-  exact h
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem adjustedRawLogVolumeMatchesDifferentPlusConductor
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.adjusted_raw_log_volume_matches_different_plus_conductor := by
-  rcases audit.1 with ⟨_, _, _, _, _, _, h, _, _, _, _, _, _, _⟩
-  exact h
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem realifiedPacketSourceSuppliesStepXEqualities
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.realified_packet_source_supplies_stepx_equalities := by
-  rcases audit.1 with ⟨_, _, _, _, _, _, _, h, _, _, _, _, _, _⟩
-  exact h
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 theorem strongestAdditiveHaarEndpointHasRemainingPayloadAudit
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     obligations.strongest_additive_haar_endpoint_has_remaining_payload_audit := by
-  rcases audit.1 with ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, h⟩
-  exact h
+  dsimp [RemainingPayloadAudit, CoarsePayloadAudit] at audit
+  tauto
 
 end AdditiveHaarArithmeticDegreePadicObligations
 
@@ -5932,6 +5959,33 @@ theorem additiveHaarConstructedSHEAPTTransportGuardsThreaded
     obligations.additive_haar_arithmetic_degree_padic
       |>.constructed_she_apt_transport_guards_threaded :=
   AdditiveHaarArithmeticDegreePadicObligations.constructedSHEAPTTransportGuardsThreaded
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarConstructedSHENoDomainToCodomainTransportThreaded
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.constructed_she_no_domain_to_codomain_transport_threaded :=
+  AdditiveHaarArithmeticDegreePadicObligations.constructedSHENoDomainToCodomainTransportThreaded
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarConstructedAPTTransportNotForbiddenThreaded
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.constructed_apt_transport_not_forbidden_threaded :=
+  AdditiveHaarArithmeticDegreePadicObligations.constructedAPTTransportNotForbiddenThreaded
+    obligations.additive_haar_arithmetic_degree_padic
+    (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
+
+theorem additiveHaarConstructedAPTTransportAuditThreaded
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.additive_haar_arithmetic_degree_padic
+      |>.constructed_apt_transport_audit_threaded :=
+  AdditiveHaarArithmeticDegreePadicObligations.constructedAPTTransportAuditThreaded
     obligations.additive_haar_arithmetic_degree_padic
     (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
 
