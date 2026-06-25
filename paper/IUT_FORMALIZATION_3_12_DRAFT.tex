@@ -9871,11 +9871,44 @@ projects to the object-backed route and exposes the same closed handoff,
 audit, and final preferred dichotomy endpoint.  Thus the current preferred
 finite-divisor endpoint no longer consumes the distinguished local
 degree-identification object as primitive; it consumes the finer local
-different/conductor decomposition and rebuilds that object internally.  The
-remaining mathematical obligation at this boundary is to construct these two
-component equalities from the actual divisor, local valuation, log-shell, and
-ramification definitions, and to perform the analogous lowering on the
-archimedean degree-identification object.
+different/conductor decomposition and rebuilds that object internally.
+The archimedean side has now been lowered in the same fashion by
+\[
+\begin{array}{l}
+\texttt{IUTStage1IUTIVTheorem110ArchimedeanMetric}\\
+\texttt{DegreeComponentSource}.
+\end{array}
+\]
+This source splits the Step~(vii) coarse bound into the exact metric term
+\(\frac{l+5}{4}\log(\pi)\) and the nonnegative coarse remainder
+\[
+  \frac{l+1}{4}\cdot 4-\frac{l+5}{4}\log(\pi).
+\]
+Lean proves the remainder is nonnegative from the existing
+\(\log(\pi)\leq 2\) exact-to-coarse estimate and recombines the two components
+as the old archimedean local degree-identification object.  The matched source
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarTheorem110StepXI}\\
+\texttt{MatchedLocalDegreeComponentSource}
+\end{array}
+\]
+and its local-to-global wrapper
+\[
+\begin{array}{l}
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110}\\
+\texttt{AdditiveHaarMatchedLocalDegreeComponent}\\
+\texttt{StepXILocalTermCThetaSource}
+\end{array}
+\]
+are now the lowest preferred Step~(xi) degree boundary: both distinguished and
+archimedean degree-identification objects are rebuilt from component data
+before entering the closed \(C_\Theta\) handoff.  The remaining mathematical
+obligation at this boundary is to construct the distinguished component
+equalities from the actual divisor, local valuation, log-shell, and
+ramification definitions, and to connect the archimedean exact metric term and
+coarse remainder to the full Proposition~1.5 integral-structure construction
+rather than only to the present metric construction source.
 The matched boundary now has its own constructed qualitative audit,
 \[
 \begin{array}{l}
