@@ -4649,6 +4649,8 @@ theorem strictFiniteToyInd3Step_not_in_equalityOrbit :
 
 structure StrictFiniteToyTypedIndeterminacyNonvacuityAudit (target : Copy) where
   choice_nonempty : Nonempty (Fin 2)
+  actionLawAudit :
+    strictFiniteToyCore.ActionLawAudit
   ind1_preserves_every_step :
     ∀ {choice₁ choice₂ : Fin 2},
       strictFiniteToyCore.ind1.step choice₁ choice₂ ->
@@ -4748,6 +4750,7 @@ def strictFiniteToyTypedIndeterminacyNonvacuityAudit
     (target : Copy) :
     StrictFiniteToyTypedIndeterminacyNonvacuityAudit target :=
   { choice_nonempty := ⟨0⟩,
+    actionLawAudit := strictFiniteToyCore.actionLawAudit,
     ind1_preserves_every_step := by
       intro choice₁ choice₂ hstep
       exact strictFiniteToyCore.ind1_preserves_logVolume hstep,
