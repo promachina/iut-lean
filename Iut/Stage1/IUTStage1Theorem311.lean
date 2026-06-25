@@ -5144,6 +5144,8 @@ def RemainingPayloadAudit
     obligations.remark3112_input_prime_strip_link_constructed ∧
     obligations.remark3113_theta_pilot_possible_images_constructed ∧
     obligations.remark3114_log_theta_lattice_procession_constructed ∧
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+      core images ∧
     obligations.selected_q_region_is_theorem311_possible_image ∧
     obligations.fl_cardinality_and_procession_label_transitions_constructed ∧
     obligations.theorem311_hodge_she_ipl_apt_source_bridge_constructed
@@ -5158,6 +5160,14 @@ theorem typedIndeterminacyActionLawAudit
     (_obligations : Theorem311AndRemarksObligations core images) :
     core.ActionLawAudit :=
   core.actionLawAudit
+
+theorem possibleImagesDependOnEqualityQuotient
+    (obligations : Theorem311AndRemarksObligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+      core images := by
+  rcases audit with ⟨_, _, _, _, _, hcompat, _, _, _⟩
+  exact hcompat
 
 theorem ind1_ind2_image_invariant
     (obligations : Theorem311AndRemarksObligations core images) :
@@ -5581,6 +5591,8 @@ def RemainingPayloadAudit
     obligations.theorem311_and_remarks.remark3112_input_prime_strip_link_constructed ∧
     obligations.theorem311_and_remarks.remark3113_theta_pilot_possible_images_constructed ∧
     obligations.theorem311_and_remarks.remark3114_log_theta_lattice_procession_constructed ∧
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+      core images ∧
     obligations.theorem311_and_remarks.selected_q_region_is_theorem311_possible_image ∧
     obligations.theorem311_and_remarks.fl_cardinality_and_procession_label_transitions_constructed ∧
     obligations.theorem311_and_remarks.theorem311_hodge_she_ipl_apt_source_bridge_constructed ∧
@@ -5634,6 +5646,33 @@ theorem ind3_upper_semi_relation_audit
     (obligations : Obligations core images) :
     core.Ind3UpperSemiRelationAudit :=
   obligations.stepX_finite_divisor.ind3_upper_semi_relation_audit
+
+theorem theorem311PossibleImagesDependOnEqualityQuotient
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+      core images := by
+  dsimp [RemainingPayloadAudit] at audit
+  rcases audit with ⟨_, _, _, _, _, hcompat, _⟩
+  exact hcompat
+
+theorem theorem311EqualityQuotientImageInvariant
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalityQuotient.relation choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂ :=
+  (obligations.theorem311PossibleImagesDependOnEqualityQuotient audit)
+    |>.equalityQuotient_image_invariant
+
+theorem theorem311Ind3UpperFromImageCompatibility
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind3.step choice₁ choice₂) :
+    core.logVolume choice₁ <= core.logVolume choice₂ :=
+  (obligations.theorem311PossibleImagesDependOnEqualityQuotient audit)
+    |>.ind3_upper_from_core hstep
 
 theorem ind3_upper_semi_step_audit
     (obligations : Obligations core images)

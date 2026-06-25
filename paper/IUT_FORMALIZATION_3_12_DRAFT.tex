@@ -10847,6 +10847,12 @@ The equality quotient is now also backed by a
 \texttt{EqualityQuotientSetoidAudit}: Lean proves that equality of the setoid
 quotient maps is equivalent to the generated \((\Ind_1)/(\Ind_2)\) relation,
 while the \((\Ind_3)\) generator of this equality quotient remains empty.
+The top-level paper-trace \texttt{RemainingPayloadAudit} now also requires the
+Theorem~3.11 possible-image quotient compatibility itself.  Its checked
+projections expose both the equality-quotient image invariant and the
+one-sided \((\Ind_3)\) upper-semi inequality from this compatibility, so the
+ledger can no longer satisfy the Theorem~3.11 block while omitting the
+possible-image pullback along the \((\Ind_1)/(\Ind_2)\) quotient.
 Its
 \texttt{paperTraceRemainingPayloadAudit} field instantiates the abstract
 \texttt{AdditiveHaarArithmeticDegreePadicObligations} record with these
