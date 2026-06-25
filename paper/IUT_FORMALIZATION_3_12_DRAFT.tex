@@ -9773,7 +9773,8 @@ boundary.  The strict matched wrapper is
 \]
 It carries the matched local-degree formula source above, projects to the
 previous local-degree wrapper with the formula-core equality supplied by
-\texttt{rfl}, and exposes the same
+\texttt{rfl}, and now exposes
+\texttt{matchedLocalDegreeFormulaAudit} together with the same
 \texttt{arithmeticGap\_dominates\_canonicalCThetaScale},
 \texttt{canonicalCThetaScale\_le\_iutIVCTheta},
 \texttt{closedLocalGlobalEndpoint}, and
@@ -9785,11 +9786,14 @@ The matched boundary now has its own constructed qualitative audit,
 \texttt{MatchedLocalDegreeFormulaCThetaAudit}.
 \end{array}
 \]
-This audit records the matched local-degree endpoint, the coefficient-window
-endpoint, the projected local degree-formula endpoint, the definitional
-formula-core synchronization, the closed local-to-global endpoint, the
-Remark~3.9.5/\IUT{} IV handoff audit, the derived
-\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison, and the final dichotomy.
+This audit records the strict source's
+\texttt{MatchedLocalDegreeFormulaAudit}: the matched local-degree endpoint, the
+coefficient-window endpoint, the projected local degree-formula endpoint, the
+formula-gap matched arithmetic-degree/\(p\)-adic endpoint, the definitional
+formula-core synchronization, and the degree-identified unscaled endpoint.  It
+also records the closed local-to-global endpoint, the Remark~3.9.5/\IUT{} IV
+handoff audit, the derived \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison,
+and the final dichotomy.
 Thus the paper-trace certificate is attached directly to the current lowest
 matched local-degree source rather than only to its older unscaled projection.
 The prime-error side has then been lowered another
@@ -9983,8 +9987,9 @@ the matched local Step~(v)/Step~(vii) formula-identification additive-Haar
 source, and it still does not expose either the raw numerical \(\Theta\)-bound
 or the raw \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison as hypotheses.
 The matched qualitative audit stores the paper-shaped arithmetic gap
-\(C_{\Theta,\mathrm{can}}+1\leq A-M\), the closed handoff audit, and the new
-\texttt{ArithmeticGapCThetaChainAudit}.  Its audit-level
+\(C_{\Theta,\mathrm{can}}+1\leq A-M\), the closed handoff audit, the
+\texttt{ArithmeticGapCThetaChainAudit}, and the strict-source
+\texttt{MatchedLocalDegreeFormulaAudit}.  Its audit-level
 \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) declaration is therefore a derived
 theorem obtained by the exposed \(+1\) cancellation, not a field.  It also now
 exposes the one-sided Theorem~3.11 quotient audit and the selected-q quotient
