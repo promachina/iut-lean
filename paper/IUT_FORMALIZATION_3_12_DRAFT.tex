@@ -9718,7 +9718,19 @@ This source records the explicit size condition
 \(4|\log(q)|\leq l+1\) and Lean derives \(1\leq a_l\) from the displayed
 IUT~IV coefficient formula and \(|\log(q)|>0\).  Thus the matched
 local-degree source no longer carries \(1\leq a_l\) as an anonymous proof
-field; it carries the named paper-side coefficient-window source.
+field; it carries the named paper-side coefficient-window source.  The same
+matched source now exposes
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarTheorem110StepXI}\\
+\texttt{MatchedLocalDegreeIdentificationFormulaSource.}\\
+\texttt{CoefficientWindowSynchronizationAudit}.
+\end{array}
+\]
+This audit records that the coefficient-window source's displayed \(a_l\) is
+definitionally the arithmetic-divisor evaluation coefficient used by the local
+formula source, and that the lower bound \(1\leq a_l\) is transported through
+that equality before the local degree-identification formulas are built.
 Thus the remaining local obligation has moved to the formula-equality
 boundary itself: instantiate these Step~(v)/Step~(vii) local formula
 identifications from the detailed local valuation/log-shell and archimedean
@@ -9788,10 +9800,11 @@ The matched boundary now has its own constructed qualitative audit,
 \]
 This audit records the strict source's
 \texttt{MatchedLocalDegreeFormulaAudit}: the matched local-degree endpoint, the
-coefficient-window endpoint, the projected local degree-formula endpoint, the
-formula-gap matched arithmetic-degree/\(p\)-adic endpoint, the
-\texttt{ArithmeticDegreeCalibrationAudit}, the definitional formula-core
-synchronization, and the degree-identified unscaled endpoint.  The calibration
+coefficient-window endpoint, the nested
+\texttt{CoefficientWindowSynchronizationAudit}, the projected local
+degree-formula endpoint, the formula-gap matched arithmetic-degree/\(p\)-adic
+endpoint, the \texttt{ArithmeticDegreeCalibrationAudit}, the definitional
+formula-core synchronization, and the degree-identified unscaled endpoint.  The calibration
 audit records, place by place, that the localized Step~(xi) determinant weight
 is the IUT~IV arithmetic-degree coefficient and that the adjusted raw
 log-volume is the local different-plus-conductor degree; the displayed
