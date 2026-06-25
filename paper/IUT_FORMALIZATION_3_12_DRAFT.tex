@@ -10748,6 +10748,14 @@ is visible from the preferred certificate as the consequence of the two
 calibration laws already stored there: determinant multiplicity equals the
 \IUT{} IV arithmetic-degree coefficient, and adjusted raw log-volume equals
 the local different-plus-conductor degree.
+The new
+\texttt{StepXIDeterminantCalibrationAudit} records the adjacent global
+calibration: the Remark~3.9.5 determinant source is the weighted determinant
+obtained from this localized Step~(xi) source, and
+\(C_{\Theta,\mathrm{can}}\) is the finite sum of its weighted adjusted
+log-volumes.  This makes the determinant handoff an explicit checked component
+of both the arithmetic-divisor-backed local-global audit and the preferred
+constructed qualitative certificate.
 The same preferred certificate now also exposes the \(p\)-adic prime-error
 side through its
 \texttt{primeErrorPadicDefectMainEndpoint} and
