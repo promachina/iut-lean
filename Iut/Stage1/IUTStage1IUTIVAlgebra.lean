@@ -840,6 +840,89 @@ end IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow
 
 set_option linter.style.longLine false in
 /--
+Paper-side lower-bound source for the arithmetic-degree coefficient
+\(a_l\) in the IUT IV Theorem 1.10 estimate.
+
+The coefficient
+\[
+  a_l=\frac{l+1}{4|\log(q)|}\left(1+\frac{36\,d_{\mathrm{mod}}}{l}\right)
+\]
+is used in the Step (xi) scaling argument only after proving \(1\leq a_l\).
+The current shadow estimate already proves \(|\log(q)|>0\); this source names
+the remaining size condition needed to turn the displayed expression into the
+coefficient lower bound.
+-/
+structure IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow) where
+  absoluteLogQ_degree_window :
+    4 * estimate.absoluteLogQ <= (estimate.l.value : Real) + 1
+
+namespace IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+
+noncomputable def arithmeticDegreeCoefficient
+    (_source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    Real :=
+  (((estimate.l.value : Real) + 1) / (4 * estimate.absoluteLogQ)) *
+    (1 + 36 * (estimate.dmod : Real) / (estimate.l.value : Real))
+
+theorem arithmeticDegreeCoefficient_ge_one
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    1 <= source.arithmeticDegreeCoefficient := by
+  have hdenpos : 0 < 4 * estimate.absoluteLogQ := by
+    exact mul_pos (by norm_num) estimate.absoluteLogQ_pos
+  have hfactor1 :
+      1 <= ((estimate.l.value : Real) + 1) /
+          (4 * estimate.absoluteLogQ) := by
+    have hdiv :=
+      div_le_div_of_nonneg_right source.absoluteLogQ_degree_window
+        (le_of_lt hdenpos)
+    have hself : (4 * estimate.absoluteLogQ) /
+        (4 * estimate.absoluteLogQ) = (1 : Real) := by
+      exact div_self (ne_of_gt hdenpos)
+    simpa [hself] using hdiv
+  have hfactor2 :
+      1 <= 1 + 36 * (estimate.dmod : Real) /
+          (estimate.l.value : Real) := by
+    have hnonneg :
+        0 <= 36 * (estimate.dmod : Real) /
+            (estimate.l.value : Real) := by
+      positivity
+    linarith
+  have hfactor2_nonneg :
+      0 <= 1 + 36 * (estimate.dmod : Real) /
+          (estimate.l.value : Real) :=
+    le_trans (by norm_num) hfactor2
+  dsimp [arithmeticDegreeCoefficient]
+  nlinarith
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    Prop :=
+  0 < estimate.absoluteLogQ ∧
+    4 * estimate.absoluteLogQ <= (estimate.l.value : Real) + 1 ∧
+      1 <= source.arithmeticDegreeCoefficient
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+        estimate) :
+    Endpoint source :=
+  ⟨estimate.absoluteLogQ_pos,
+    source.absoluteLogQ_degree_window,
+    source.arithmeticDegreeCoefficient_ge_one⟩
+
+end IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficientLowerBoundSource
+
+set_option linter.style.longLine false in
+/--
 IUT IV, Definition 1.9 / Theorem 1.10 local arithmetic-divisor evaluation
 source for the theta-pilot estimate.
 

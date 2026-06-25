@@ -9655,6 +9655,18 @@ Consequently
 the endpoint no longer exposes a separate proof that the local-degree formula
 source and the p-adic formula source have the same arithmetic-formula core;
 that synchronization is internal and definitional.
+The scaling input \(1\leq a_l\) has also been factored as
+\[
+\begin{array}{l}
+\texttt{IUTStage1IUTIVThetaPilotArithmeticDegreeCoefficient}\\
+\texttt{LowerBoundSource}.
+\end{array}
+\]
+This source records the explicit size condition
+\(4|\log(q)|\leq l+1\) and Lean derives \(1\leq a_l\) from the displayed
+IUT~IV coefficient formula and \(|\log(q)|>0\).  Thus the matched
+local-degree source no longer carries \(1\leq a_l\) as an anonymous proof
+field; it carries the named paper-side coefficient-window source.
 Thus the remaining local obligation has moved to the formula-equality
 boundary itself: instantiate these Step~(v)/Step~(vii) local formula
 identifications from the detailed local valuation/log-shell and archimedean
@@ -9893,8 +9905,9 @@ the matched local Step~(v)/Step~(vii) formula-identification additive-Haar
 source, and it still does not expose either the raw numerical \(\Theta\)-bound
 or the raw \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison as hypotheses.
 The remaining payload is now concentrated in the local formula equalities
-inside the matched source, not in a separate endpoint synchronization between
-the p-adic/arithmetic formula source and the local-degree source.
+inside the matched source and in the coefficient-window source, not in a
+separate endpoint synchronization between the p-adic/arithmetic formula source
+and the local-degree source.
 
 The Theorem~3.11 qualitative checkpoint is now also present at the
 finite-divisor \(C_\Theta\) boundary.  The new checkpoint-aware
