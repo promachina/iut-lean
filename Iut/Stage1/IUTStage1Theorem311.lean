@@ -3778,6 +3778,72 @@ theorem equalityGenerators_ind3_false
   id
 
 /--
+Step-level certificate for the one-sided `(Ind3)` contribution.
+
+It keeps the actual source and target log-volume coordinates of the typed core,
+the upper-semi inequality, and the fact that this arrow is not available as an
+equality-quotient generator.  This is the local object used when the Corollary
+3.12 corridor must distinguish upper-semi transport from equality transport.
+-/
+structure Ind3UpperSemiStepAudit
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (choice₁ choice₂ : choice) : Prop where
+  ind3_step : core.ind3.step choice₁ choice₂
+  source_logVolume_eq_relation_logVolume :
+    core.logVolume choice₁ = core.ind3.logVolume choice₁
+  target_logVolume_eq_relation_logVolume :
+    core.logVolume choice₂ = core.ind3.logVolume choice₂
+  upper_semi_logVolume :
+    core.logVolume choice₁ <= core.logVolume choice₂
+  excluded_from_equality_quotient :
+    core.equalityGenerators.ind3_step choice₁ choice₂ -> False
+
+theorem ind3UpperSemiStepAudit
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind3.step choice₁ choice₂) :
+    Ind3UpperSemiStepAudit core choice₁ choice₂ :=
+  { ind3_step := hstep,
+    source_logVolume_eq_relation_logVolume := by
+      rw [core.ind3_logVolume_eq],
+    target_logVolume_eq_relation_logVolume := by
+      rw [core.ind3_logVolume_eq],
+    upper_semi_logVolume := core.ind3_logVolume_le hstep,
+    excluded_from_equality_quotient := by
+      intro hfalse
+      exact core.equalityGenerators_ind3_false hfalse }
+
+/--
+Relation-level audit for the typed `(Ind3)` upper-semi law.
+
+The audit is intentionally asymmetric: it certifies all real `(Ind3)` steps as
+one-sided log-volume transports, and separately certifies that the equality
+quotient has no `(Ind3)` generator.
+-/
+structure Ind3UpperSemiRelationAudit
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) : Prop where
+  relation_logVolume_eq_core :
+    core.ind3.logVolume = core.logVolume
+  upper_semi_step_audit :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        Ind3UpperSemiStepAudit core choice₁ choice₂
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalityGenerators.ind3_step choice₁ choice₂ -> False
+
+theorem ind3UpperSemiRelationAudit
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    Ind3UpperSemiRelationAudit core :=
+  { relation_logVolume_eq_core := core.ind3_logVolume_eq,
+    upper_semi_step_audit := by
+      intro choice₁ choice₂ hstep
+      exact core.ind3UpperSemiStepAudit hstep,
+    equalityQuotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact core.equalityGenerators_ind3_false hstep }
+
+/--
 Named action-law audit for the typed Theorem 3.11 indeterminacy core.
 
 This is the compact kernel-facing certificate that the critical corridor is using
@@ -3806,6 +3872,8 @@ structure ActionLawAudit
     ∀ {choice₁ choice₂ : choice},
       core.ind3.step choice₁ choice₂ ->
         core.logVolume choice₁ <= core.logVolume choice₂
+  ind3_upper_semi_relation_audit :
+    Ind3UpperSemiRelationAudit core
   ind1_equalityQuotientMap_eq :
     ∀ {choice₁ choice₂ : choice},
       core.ind1.step choice₁ choice₂ ->
@@ -3835,6 +3903,8 @@ theorem actionLawAudit
     ind3_upper_semi_logVolume := by
       intro choice₁ choice₂ hstep
       exact core.ind3_logVolume_le hstep,
+    ind3_upper_semi_relation_audit :=
+      core.ind3UpperSemiRelationAudit,
     ind1_equalityQuotientMap_eq := by
       intro choice₁ choice₂ hstep
       exact core.ind1_equalityQuotientMap_eq hstep,

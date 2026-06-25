@@ -10753,6 +10753,8 @@ structure OneSidedQuotientAudit
       construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
         construction.typedIndeterminacyCore.logVolume choice₁ <=
           construction.typedIndeterminacyCore.logVolume choice₂
+  ind3_upper_semi_relation_audit :
+    construction.typedIndeterminacyCore.Ind3UpperSemiRelationAudit
   fl_procession_stays_in_equalityQuotient :
     ∀ t choice,
       construction.typedIndeterminacyCore.equalityQuotientMap choice =
@@ -10795,6 +10797,8 @@ theorem oneSidedQuotientAudit
     ind3_upper_semi_logVolume := by
       intro choice₁ choice₂ hstep
       exact construction.ind3_logVolume_upper hstep,
+    ind3_upper_semi_relation_audit :=
+      construction.typedIndeterminacyCore.ind3UpperSemiRelationAudit,
     fl_procession_stays_in_equalityQuotient :=
       construction.flProcessionAction.equalityQuotientMap_eq,
     possibleImages_pullback_from_equalityQuotient :=
