@@ -9789,8 +9789,14 @@ The matched boundary now has its own constructed qualitative audit,
 This audit records the strict source's
 \texttt{MatchedLocalDegreeFormulaAudit}: the matched local-degree endpoint, the
 coefficient-window endpoint, the projected local degree-formula endpoint, the
-formula-gap matched arithmetic-degree/\(p\)-adic endpoint, the definitional
-formula-core synchronization, and the degree-identified unscaled endpoint.  It
+formula-gap matched arithmetic-degree/\(p\)-adic endpoint, the
+\texttt{ArithmeticDegreeCalibrationAudit}, the definitional formula-core
+synchronization, and the degree-identified unscaled endpoint.  The calibration
+audit records, place by place, that the localized Step~(xi) determinant weight
+is the IUT~IV arithmetic-degree coefficient and that the adjusted raw
+log-volume is the local different-plus-conductor degree; the displayed
+\(S_v=a_l(D_v+C_v)\) formula is then the derived local equality exposed by the
+same certificate.  It
 also records the closed local-to-global endpoint, the Remark~3.9.5/\IUT{} IV
 handoff audit, the derived \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison,
 and the final dichotomy.
@@ -9989,7 +9995,8 @@ or the raw \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison as hypotheses.
 The matched qualitative audit stores the paper-shaped arithmetic gap
 \(C_{\Theta,\mathrm{can}}+1\leq A-M\), the closed handoff audit, the
 \texttt{ArithmeticGapCThetaChainAudit}, and the strict-source
-\texttt{MatchedLocalDegreeFormulaAudit}.  Its audit-level
+\texttt{MatchedLocalDegreeFormulaAudit}, including its nested
+\texttt{ArithmeticDegreeCalibrationAudit}.  Its audit-level
 \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) declaration is therefore a derived
 theorem obtained by the exposed \(+1\) cancellation, not a field.  It also now
 exposes the one-sided Theorem~3.11 quotient audit and the selected-q quotient
@@ -10002,7 +10009,8 @@ Theorem~3.11 possible image, that image is read through the
 \((\Ind_1)/(\Ind_2)\) equality quotient, and the pullback of the
 quotient-indexed possible-image family is the original theta-pilot family.
 The remaining payload is concentrated in the local formula equalities inside
-the matched source and in the coefficient-window source, not in a separate
+the matched source, the calibration equalities that identify the local
+arithmetic-degree term with IUT~IV data, and the coefficient-window source, not in a separate
 endpoint synchronization between the p-adic/arithmetic formula source and the
 local-degree source.
 
