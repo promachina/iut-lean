@@ -64137,6 +64137,211 @@ end IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource
 
 set_option linter.style.longLine false in
 /--
+Arithmetic-degree-controlled formula-gap source.
+
+This lowers the Step (xi)-controlled formula-gap source one step further.  The
+new payload is not a direct comparison with the localized determinant term
+`S_v`; it is the IUT IV local arithmetic-degree domination of the
+distinguished Proposition 1.4 and archimedean Proposition 1.5 procession
+bounds by `a_l(D_v + C_v)`.  The existing arithmetic formula matching theorem
+then identifies this arithmetic-degree part with the localized Step (xi)
+determinant contribution.
+-/
+structure IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlledFormulaGapSource
+    (β : Type v) [Fintype β]
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (η : Type y) (γ : Type w) [Fintype γ]
+    (localPrime : β -> Nat)
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    (localField : β -> Type x)
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    (αHaar : Type z)
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar)
+    (αLocal : Type z) (ηLocal : Type y)
+    (localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal)
+    (archIndex archSummand : β -> Type z)
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)] where
+  formulaMatchingSource :
+    IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource
+      β estimate η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand
+  distinguishedProcessionBound_le_arithmeticDegreePart :
+    ∀ place : β,
+      formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+        formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound place <=
+          (let arithmeticSource :=
+            IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+              formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource;
+          arithmeticSource.arithmeticDegreeCoefficient *
+            (arithmeticSource.localDifferentDegree place +
+              arithmeticSource.localConductorDegree place))
+  archimedeanProcessionBound_le_arithmeticDegreePart :
+    ∀ place : β,
+      formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+        formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound place <=
+          (let arithmeticSource :=
+            IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+              formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource;
+          arithmeticSource.arithmeticDegreeCoefficient *
+            (arithmeticSource.localDifferentDegree place +
+              arithmeticSource.localConductorDegree place))
+
+set_option linter.style.longLine false
+
+namespace IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlledFormulaGapSource
+
+variable {β : Type v} [Fintype β]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {η : Type y} {γ : Type w} [Fintype γ]
+variable {localPrime : β -> Nat}
+variable [∀ place : β, Fact (Nat.Prime (localPrime place))]
+variable {localField : β -> Type x}
+variable [(place : β) -> NontriviallyNormedField (localField place)]
+variable [∀ place : β, ProperSpace (localField place)]
+variable [∀ place : β, IsUltrametricDist (localField place)]
+variable [(place : β) -> MeasurableSpace (localField place)]
+variable [∀ place : β, BorelSpace (localField place)]
+variable [∀ place : β, LocallyCompactSpace (localField place)]
+variable [∀ place : β, IsTopologicalAddGroup (localField place)]
+variable [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+variable [∀ place : β,
+  FiniteDimensional ℚ_[localPrime place] (localField place)]
+variable {αHaar : Type z}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+variable {αLocal : Type z} {ηLocal : Type y}
+variable {localAnalyticHullSystem :
+  IUTStage1Remark395HolomorphicHullSystem αLocal}
+variable {archIndex archSummand : β -> Type z}
+variable [∀ place : β, Fintype (archIndex place)]
+variable [∀ place : β, Fintype (archSummand place)]
+
+set_option linter.style.longLine false in
+theorem distinguishedProcessionBound_le_stepXI
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlledFormulaGapSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (place : β)
+    (hkind :
+      source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+        IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) :
+    source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound place <=
+      source.formulaMatchingSource.localizedStepXISource.weightedAdjustedLogVolume place := by
+  have hbound :=
+    source.distinguishedProcessionBound_le_arithmeticDegreePart place hkind
+  have hstep :=
+    source.formulaMatchingSource.localStepXI_eq_arithmeticDegreePart place
+  rw [hstep]
+  exact hbound
+
+set_option linter.style.longLine false in
+theorem archimedeanProcessionBound_le_stepXI
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlledFormulaGapSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (place : β)
+    (hkind :
+      source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+        IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) :
+    source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound place <=
+      source.formulaMatchingSource.localizedStepXISource.weightedAdjustedLogVolume place := by
+  have hbound :=
+    source.archimedeanProcessionBound_le_arithmeticDegreePart place hkind
+  have hstep :=
+    source.formulaMatchingSource.localStepXI_eq_arithmeticDegreePart place
+  rw [hstep]
+  exact hbound
+
+set_option linter.style.longLine false in
+def toStepXIFormulaGapControlledLocalArithmeticSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlledFormulaGapSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    IUTStage1AdditiveHaarTheorem110StepXIFormulaGapControlledLocalArithmeticSource
+      β estimate η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
+  { localMatchingSource :=
+      source.formulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXILocalArithmeticMatchingSource,
+    distinguishedProcessionBound_le_stepXI :=
+      source.distinguishedProcessionBound_le_stepXI,
+    archimedeanProcessionBound_le_stepXI :=
+      source.archimedeanProcessionBound_le_stepXI }
+
+set_option linter.style.longLine false in
+noncomputable def toFormulaGapMatchedArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlledFormulaGapSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+      β estimate αLocal ηLocal localField localAnalyticHullSystem
+      archIndex archSummand :=
+  source.toStepXIFormulaGapControlledLocalArithmeticSource
+    |>.toFormulaGapMatchedArithmeticDivisorEvaluationSource
+
+def Endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlledFormulaGapSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Prop :=
+  source.formulaMatchingSource.Endpoint ∧
+    (∀ place : β,
+      (hkind :
+        source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+        source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound place <=
+          (let arithmeticSource :=
+            IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+              source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource;
+          arithmeticSource.arithmeticDegreeCoefficient *
+            (arithmeticSource.localDifferentDegree place +
+              arithmeticSource.localConductorDegree place))) ∧
+      (∀ place : β,
+        (hkind :
+          source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
+          source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound place <=
+            (let arithmeticSource :=
+              IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+                source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource;
+            arithmeticSource.arithmeticDegreeCoefficient *
+              (arithmeticSource.localDifferentDegree place +
+                arithmeticSource.localConductorDegree place))) ∧
+        source.toStepXIFormulaGapControlledLocalArithmeticSource.Endpoint ∧
+          source.toFormulaGapMatchedArithmeticDivisorEvaluationSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlledFormulaGapSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Endpoint source :=
+  ⟨source.formulaMatchingSource.endpoint,
+    source.distinguishedProcessionBound_le_arithmeticDegreePart,
+    source.archimedeanProcessionBound_le_arithmeticDegreePart,
+    source.toStepXIFormulaGapControlledLocalArithmeticSource.endpoint,
+    source.toFormulaGapMatchedArithmeticDivisorEvaluationSource.endpoint⟩
+
+end IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlledFormulaGapSource
+
+set_option linter.style.longLine false in
+/--
 Prime-error split source for the local IUT IV arithmetic defect.
 
 This lowers the formula-matching equality `E_v = delta_v + M_v` one step

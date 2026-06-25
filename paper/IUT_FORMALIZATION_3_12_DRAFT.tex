@@ -9512,9 +9512,9 @@ bounded by the localized Step~(xi) determinant term \(S_v\), Lean derives the
 distinguished and archimedean formula-to-gap inequalities from the local
 matching theorem \(S_v\le A_v-M_v\).  This is a genuine reduction of the
 formula-gap payload: the remaining local question is now the paper-native
-domination of the Prop.~1.4/1.5 formula bounds by the localized Step~(xi)
-determinant contribution, together with the construction of the underlying
-local log-shell and metric estimates.
+domination of the Prop.~1.4/1.5 formula bounds by the IUT~IV local
+arithmetic-degree term, together with the construction of the underlying local
+log-shell and metric estimates.
 The local arithmetic equality itself has also been lowered by
 \texttt{IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource}.
 That source uses the IUT~IV arithmetic-divisor formula
@@ -9523,7 +9523,17 @@ That source uses the IUT~IV arithmetic-divisor formula
 \]
 and derives the displayed Step~(xi) matching equality from two finer
 identifications: \(S_v=a_l(D_v+C_v)\) and
-\(E_v=\delta_v+M_v\).  The prime-error side has then been lowered another
+\(E_v=\delta_v+M_v\).  The new source
+\texttt{IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeControlled}\\
+\texttt{FormulaGapSource} uses this equality to turn the remaining
+Prop.~1.4/1.5 comparison
+\[
+  \mathrm{formula}_v\leq a_l(D_v+C_v)
+\]
+into the Step~(xi)-controlled comparison
+\(\mathrm{formula}_v\leq S_v\), and then projects to the formula-gap-matched
+arithmetic-divisor evaluation source.
+The prime-error side has then been lowered another
 step by
 \texttt{IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource}: it
 uses the local \(p\)-adic Haar-index split
