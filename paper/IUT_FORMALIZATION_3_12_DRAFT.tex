@@ -10085,8 +10085,16 @@ vertical-\(IQ\) target endpoint, the arithmetic-divisor-backed endpoint, the
 arithmetic-divisor local-degree audit, the
 finite-place local-to-global \(C_\Theta\) derivation audit, the
 \texttt{paperTraceRemainingPayloadAudit}, the closed handoff audit, and the
-derived \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison.  The paper-trace
-field instantiates the abstract remaining-payload ledger with the
+derived arithmetic-gap \(C_\Theta\) chain.  In particular, the audit now
+stores the local-to-global derivation of
+\[
+  \theta_{\mathrm{signed}}\leq
+  C_\Theta\cdot(-q_{\mathrm{signed}})
+\]
+and the corresponding source-bridge-to-\(\IUT{}\,\mathrm{IV}\)
+\(C_\Theta\) inequality, rather than requiring this signed bound as a public
+endpoint hypothesis.  The paper-trace field instantiates the abstract
+remaining-payload ledger with the
 formula-gap-matched Theorem~1.10 arithmetic-divisor evaluation, the local
 arithmetic matching source, the Step~(xi) arithmetic-degree calibration, the
 Step~(x) packet equalities, the constructed Hodge/\(\SHE/\IPL\) bridge, and
