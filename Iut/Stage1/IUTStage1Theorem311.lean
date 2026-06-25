@@ -5248,6 +5248,24 @@ theorem orderedRealPlusOneCancellationConstructed
     obligations.ordered_real_plus_one_cancellation_constructed :=
   audit.2.2.2.1
 
+theorem localStepXITermMatchesIUTIVArithmeticUpperMinusMainConstructed
+    (obligations : IUTIVCThetaObligations)
+    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    obligations.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :=
+  audit.2.2.2.2.1
+
+theorem finitePlaceArithmeticGapConstructed
+    (obligations : IUTIVCThetaObligations)
+    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    obligations.finite_place_arithmetic_gap_constructed :=
+  audit.2.2.2.2.2.1
+
+theorem localToGlobalCanonicalCThetaScaleLeCThetaConstructed
+    (obligations : IUTIVCThetaObligations)
+    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    obligations.local_to_global_canonicalCThetaScale_le_cTheta_constructed :=
+  audit.2.2.2.2.2.2
+
 end IUTIVCThetaObligations
 
 /--
