@@ -2594,6 +2594,102 @@ theorem sourceRecord_endpoint
     record.columnLogShellTreatments_distinct,
     record.hodgeHistories_not_identified⟩
 
+set_option linter.style.longLine false in
+/--
+Constructed transport guard attached to a Theorem 3.11 multiradial source
+record.
+
+The source record itself still exposes the older structured-SHE history guard.
+This audit records the extra constructed qualitative data that travels with the
+preferred route: the record is the one built from the constructed bundle, the
+constructed SHE transport system forbids direct domain-to-codomain
+identification, every such SHE mechanism is blocked, and the APT arrow remains
+outside the forbidden identifications.
+-/
+structure ConstructedQualitativeTransportGuardAudit
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    Prop where
+  record_bundle_eq_constructed_bundle :
+    record.bundle = bundle.toStructuredInputsWithSHE
+  sourceRecordEndpoint :
+    QualitativeData.HasStructuredIPL package.preLedger.output.family ∧
+      QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
+      QualitativeData.HasStructuredAPT package.preLedger.output.family ∧
+      record.coricData.multiradialOutput = package.multiradialOutput ∧
+      record.thetaPossibleImages.union =
+        package.preLedger.output.comparisons.targetUnion ∧
+      record.thetaColumn.hasPilotMultiradiality = true ∧
+      record.qColumn.hasPilotMultiradiality = false ∧
+      record.thetaColumn.logShellTreatment ≠ record.qColumn.logShellTreatment ∧
+      record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+        record.bundle.structuredSHE.context.codomainStructure.theater.side
+  record_hodge_history_guard :
+    record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+      record.bundle.structuredSHE.context.codomainStructure.theater.side
+  constructed_bundle_hodge_history_guard :
+    bundle.structured_she.context.domainStructure.theater.side ≠
+      bundle.structured_she.context.codomainStructure.theater.side
+  she_forbidden_transport_audit :
+    QualitativeData.StructuredSHETransportContext.DomainCodomainForbiddenTransportAudit
+      bundle.sheTransportContext
+  she_domain_to_codomain_forbidden :
+    bundle.sheTransportContext.transportSystem.forbiddenIdentification
+      bundle.sheTransportContext.baseContext.domainStructure.theater
+      bundle.sheTransportContext.baseContext.codomainStructure.theater
+  she_all_allowed_arrows_blocked :
+    ∀ arrow : QualitativeData.HodgeTheaterTransportArrow,
+      arrow.source = bundle.sheTransportContext.baseContext.domainStructure.theater ->
+        arrow.target = bundle.sheTransportContext.baseContext.codomainStructure.theater ->
+          ¬ bundle.sheTransportContext.transportSystem.allowed arrow
+  no_allowed_she_domain_to_codomain :
+    ∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ bundle.sheTransportContext.transportSystem.Allows
+        bundle.sheTransportContext.baseContext.domainStructure.theater
+        bundle.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism
+  she_transport_history_sides_not_identified :
+    bundle.sheTransportContext.baseContext.domainStructure.theater.side ≠
+      bundle.sheTransportContext.baseContext.codomainStructure.theater.side
+  apt_transport_not_forbidden :
+    ¬ bundle.aptConstruction.transportSystem.forbiddenIdentification
+      bundle.aptConstruction.arrow.source
+      bundle.aptConstruction.arrow.target
+  apt_transport_audit :
+    bundle.constructedInputs.qualitativeSource.APTTransportAudit
+
+theorem constructedQualitativeTransportGuardAudit
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (hbundle : record.bundle = bundle.toStructuredInputsWithSHE) :
+    ConstructedQualitativeTransportGuardAudit record bundle :=
+  { record_bundle_eq_constructed_bundle := hbundle,
+    sourceRecordEndpoint := record.sourceRecord_endpoint,
+    record_hodge_history_guard := record.hodgeHistories_not_identified,
+    constructed_bundle_hodge_history_guard :=
+      bundle.domainHistory_ne_codomainHistory,
+    she_forbidden_transport_audit :=
+      bundle.sheTransportContext.domainCodomainForbiddenTransportAudit,
+    she_domain_to_codomain_forbidden :=
+      bundle.sheTransportContext.forbidden_domain_to_codomain,
+    she_all_allowed_arrows_blocked :=
+      bundle.sheTransportContext.domainCodomainForbiddenTransportAudit
+        |>.all_allowed_arrows_blocked,
+    no_allowed_she_domain_to_codomain :=
+      bundle.noAllowedSHEDomainToCodomain,
+    she_transport_history_sides_not_identified :=
+      bundle.sheTransportContext.domainCodomainForbiddenTransportAudit
+        |>.history_sides_not_identified,
+    apt_transport_not_forbidden := bundle.aptTransport_not_forbidden,
+    apt_transport_audit := bundle.aptTransportAudit }
+
+theorem ofConstructedQualitativeInputsWithSHE_transportGuardAudit
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    ConstructedQualitativeTransportGuardAudit
+      (ofConstructedQualitativeInputsWithSHE bundle) bundle :=
+  constructedQualitativeTransportGuardAudit
+    (ofConstructedQualitativeInputsWithSHE bundle) bundle rfl
+
 end IUTStage1Theorem311MultiradialSourceRecord
 
 /--
@@ -5633,6 +5729,9 @@ structure ConstructedQualitativeHodgeSHEIPLBridgeAudit
     ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
       constructedBundle.aptConstruction.arrow.source
       constructedBundle.aptConstruction.arrow.target
+  sourceRecordConstructedTransportGuardAudit :
+    IUTStage1Theorem311MultiradialSourceRecord.ConstructedQualitativeTransportGuardAudit
+      record constructedBundle
   transportLawAudit :
     ConstructedIPLSHEAPTTransportLawAudit sourceData
 
@@ -5652,6 +5751,10 @@ theorem toConstructedQualitativeHodgeSHEIPLBridgeAudit
       sourceData.noAllowedSHEDomainToCodomain,
     aptTransport_not_forbidden :=
       sourceData.aptTransport_not_forbidden,
+    sourceRecordConstructedTransportGuardAudit :=
+      IUTStage1Theorem311MultiradialSourceRecord.constructedQualitativeTransportGuardAudit
+        record constructedBundle
+        sourceData.constructedTransportSource.record_bundle_eq_constructed_bundle,
     transportLawAudit :=
       sourceData.constructedIPLSHEAPTTransportLawAudit }
 
