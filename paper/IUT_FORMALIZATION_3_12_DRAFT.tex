@@ -4707,6 +4707,13 @@ proves pullback to the original choice-indexed images, proves equality-orbit
 invariance for the resulting hull log-volumes under \((\Ind_1)\) and
 \((\Ind_2)\), and keeps the \((\Ind_3)\) statement as the typed core's
 upper-semi log-volume inequality rather than turning it into a hull equality.
+The strict two-point nonvacuity model now instantiates this object as
+\texttt{strictFiniteToyEqualityQuotientHullLogVolumeCompatibility}; its audit
+endpoint verifies pullback, \((\Ind_1)\)/\((\Ind_2)\) hull-log-volume
+invariance, the one-sided \((\Ind_3)\) core inequality, and the fact that the
+strict \((\Ind_3)\) step is not collapsed by the equality quotient.  This is a
+test of the interface geometry, not a claim that the finite model is a source
+model of IUT.
 
 The Step~(x) record names the finite-divisor packet, realified Frobenioid
 log-Kummer source, Kummer/forgetting compatibility, vertical-\(IQ\) target
@@ -8952,6 +8959,21 @@ whose well-definedness follows from the fact that the strict toy equality
 quotient relation is exactly equality.  This is stronger nonvacuity evidence
 for the asymmetric typed interface, while retaining the same limitation: it is
 a finite audit model of the interface, not an \IUT{} source construction.
+The same strict model now also carries
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311TypedIndeterminacyCore.}\\
+\quad\texttt{StrictFiniteToyEqualityQuotientHullNonvacuityAudit}.
+\end{array}
+\]
+This audit instantiates the quotient-indexed Remark~3.9.5 hull/log-volume
+compatibility layer on the strict two-point model.  Its endpoint proves
+pullback to the original finite possible-image family, hull-log-volume
+invariance along \((\Ind_1)\) and \((\Ind_2)\), the \((\Ind_3)\) upper-semi
+core inequality \(0\leq 1\), and the same strict non-equalization statement for
+the \(0\to1\) \((\Ind_3)\) step.  Thus the finite audit now reaches through the
+same quotient-to-hull interface used by the Step~(xi) corridor, while still
+remaining only a nonvacuity check.
 The one-sided multiradial source now also exposes this information as the
 structured audit
 \[

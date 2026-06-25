@@ -4560,6 +4560,54 @@ def strictFiniteToyEqualityQuotientPossibleImages
   EqualityQuotientPossibleImages.ofCompatibility
     (strictFiniteToyPossibleImageCompatibility target)
 
+def strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+    (target : Copy)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    EqualityQuotientHullLogVolumeCompatibility strictFiniteToyCore
+      (strictFiniteToyPossibleImageFamily target) hullOperator :=
+  EqualityQuotientHullLogVolumeCompatibility.ofCompatibility
+    (strictFiniteToyPossibleImageCompatibility target) hullOperator
+
+set_option linter.style.longLine false in
+theorem strictFiniteToyEqualityQuotientHullLogVolumeCompatibility_endpoint
+    (target : Copy)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    (∀ choice₀,
+      (strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+          target hullOperator).familySource.possibleRegion
+          (strictFiniteToyCore.equalityQuotientMap choice₀) =
+        ((strictFiniteToyPossibleImageFamily target).region choice₀).toSet) ∧
+      (∀ {choice₁ choice₂ : Fin 2},
+        choice₂ ∈ strictFiniteToyCore.equalityOrbit choice₁ ->
+          (strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+              target hullOperator).familySource.possibleRegion
+              (strictFiniteToyCore.equalityQuotientMap choice₁) =
+            (strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+              target hullOperator).familySource.possibleRegion
+              (strictFiniteToyCore.equalityQuotientMap choice₂)) ∧
+      (∀ {choice₁ choice₂ : Fin 2},
+        choice₂ ∈ strictFiniteToyCore.equalityOrbit choice₁ ->
+          hullOperator.logVolume
+              ((strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+                target hullOperator).familySource.possibleRegion
+                (strictFiniteToyCore.equalityQuotientMap choice₁)) =
+            hullOperator.logVolume
+              ((strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+                target hullOperator).familySource.possibleRegion
+                (strictFiniteToyCore.equalityQuotientMap choice₂))) ∧
+      (∀ {choice₁ choice₂ : Fin 2},
+        strictFiniteToyCore.ind3.step choice₁ choice₂ ->
+          strictFiniteToyCore.logVolume choice₁ <=
+            strictFiniteToyCore.logVolume choice₂) ∧
+      (strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+        target hullOperator).familySource.familyUnion ⊆
+        (strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+          target hullOperator).familySource.canonicalHull :=
+  (strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+    target hullOperator).endpoint
+
 theorem strictFiniteToyEqualityQuotient_relation_eq
     {choice₁ choice₂ : Fin 2}
     (hrel : strictFiniteToyCore.equalityQuotient.relation choice₁ choice₂) :
@@ -4634,6 +4682,68 @@ structure StrictFiniteToyTypedIndeterminacyNonvacuityAudit (target : Copy) where
     EqualityQuotientPossibleImages strictFiniteToyCore
       (strictFiniteToyPossibleImageFamily target)
 
+structure StrictFiniteToyEqualityQuotientHullNonvacuityAudit
+    (target : Copy)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) where
+  typed_nonvacuity :
+    StrictFiniteToyTypedIndeterminacyNonvacuityAudit target
+  hull_logVolume_compatibility :
+    EqualityQuotientHullLogVolumeCompatibility strictFiniteToyCore
+      (strictFiniteToyPossibleImageFamily target) hullOperator
+  pullback_endpoint :
+    ∀ choice₀,
+      hull_logVolume_compatibility.familySource.possibleRegion
+          (strictFiniteToyCore.equalityQuotientMap choice₀) =
+        ((strictFiniteToyPossibleImageFamily target).region choice₀).toSet
+  self_hull_endpoint :
+    hull_logVolume_compatibility.familySource.possibleRegion
+        (strictFiniteToyCore.equalityQuotientMap (0 : Fin 2)) =
+        hull_logVolume_compatibility.familySource.possibleRegion
+          (strictFiniteToyCore.equalityQuotientMap (0 : Fin 2)) ∧
+      hull_logVolume_compatibility.familySource.familyUnion ⊆
+        hull_logVolume_compatibility.familySource.canonicalHull ∧
+      hull_logVolume_compatibility.familySource.possibleRegion
+          (strictFiniteToyCore.equalityQuotientMap (0 : Fin 2)) ⊆
+        hull_logVolume_compatibility.familySource.canonicalHull ∧
+      hull_logVolume_compatibility.familySource.possibleRegion
+          (strictFiniteToyCore.equalityQuotientMap (0 : Fin 2)) ⊆
+        hull_logVolume_compatibility.familySource.canonicalHull ∧
+      hullOperator.logVolume
+          (hull_logVolume_compatibility.familySource.possibleRegion
+            (strictFiniteToyCore.equalityQuotientMap (0 : Fin 2))) =
+        hullOperator.logVolume
+          (hull_logVolume_compatibility.familySource.possibleRegion
+            (strictFiniteToyCore.equalityQuotientMap (0 : Fin 2)))
+  ind1_hull_logVolume_eq :
+    ∀ {choice₁ choice₂ : Fin 2},
+      strictFiniteToyCore.ind1.step choice₁ choice₂ ->
+        hullOperator.logVolume
+            (hull_logVolume_compatibility.familySource.possibleRegion
+              (strictFiniteToyCore.equalityQuotientMap choice₁)) =
+          hullOperator.logVolume
+            (hull_logVolume_compatibility.familySource.possibleRegion
+              (strictFiniteToyCore.equalityQuotientMap choice₂))
+  ind2_hull_logVolume_eq :
+    ∀ {choice₁ choice₂ : Fin 2},
+      strictFiniteToyCore.ind2.step choice₁ choice₂ ->
+        hullOperator.logVolume
+            (hull_logVolume_compatibility.familySource.possibleRegion
+              (strictFiniteToyCore.equalityQuotientMap choice₁)) =
+          hullOperator.logVolume
+            (hull_logVolume_compatibility.familySource.possibleRegion
+              (strictFiniteToyCore.equalityQuotientMap choice₂))
+  ind3_upper_semi_core_logVolume :
+    strictFiniteToyCore.logVolume (0 : Fin 2) <=
+      strictFiniteToyCore.logVolume (1 : Fin 2)
+  ind3_strict_not_equalized :
+    strictFiniteToyCore.ind3.step (0 : Fin 2) (1 : Fin 2) ∧
+      strictFiniteToyCore.logVolume (0 : Fin 2) <
+        strictFiniteToyCore.logVolume (1 : Fin 2) ∧
+      (1 : Fin 2) ∉ strictFiniteToyCore.equalityOrbit (0 : Fin 2) ∧
+      strictFiniteToyCore.equalityQuotientMap (0 : Fin 2) ≠
+        strictFiniteToyCore.equalityQuotientMap (1 : Fin 2)
+
 def strictFiniteToyTypedIndeterminacyNonvacuityAudit
     (target : Copy) :
     StrictFiniteToyTypedIndeterminacyNonvacuityAudit target :=
@@ -4659,6 +4769,37 @@ def strictFiniteToyTypedIndeterminacyNonvacuityAudit
     possible_image_compatibility := strictFiniteToyPossibleImageCompatibility target,
     equality_quotient_images := strictFiniteToyEqualityQuotientPossibleImages target }
 
+def strictFiniteToyEqualityQuotientHullNonvacuityAudit
+    (target : Copy)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    StrictFiniteToyEqualityQuotientHullNonvacuityAudit
+      target hullOperator :=
+  let compatibility :=
+    strictFiniteToyEqualityQuotientHullLogVolumeCompatibility
+      target hullOperator
+  { typed_nonvacuity :=
+      strictFiniteToyTypedIndeterminacyNonvacuityAudit target,
+    hull_logVolume_compatibility := compatibility,
+    pullback_endpoint := compatibility.possibleRegion_pullback_eq,
+    self_hull_endpoint :=
+      compatibility.hull_endpoint_of_equalityOrbit
+        (strictFiniteToyCore.mem_equalityOrbit_self (0 : Fin 2)),
+    ind1_hull_logVolume_eq := by
+      intro choice₁ choice₂ hstep
+      exact compatibility.ind1_logVolume_eq hstep,
+    ind2_hull_logVolume_eq := by
+      intro choice₁ choice₂ hstep
+      exact compatibility.ind2_logVolume_eq hstep,
+    ind3_upper_semi_core_logVolume := by
+      exact strictFiniteToyCore.ind3_logVolume_le (Or.inr ⟨rfl, rfl⟩),
+    ind3_strict_not_equalized :=
+      ⟨Or.inr ⟨rfl, rfl⟩,
+        by
+          norm_num [strictFiniteToyLogVolume, strictFiniteToyCore],
+        strictFiniteToyInd3Step_not_in_equalityOrbit,
+        strictFiniteToyEqualityQuotientMap_ne⟩ }
+
 theorem strictFiniteToyTypedIndeterminacyNonvacuityAudit_ind3_strict_not_equalized
     (target : Copy) :
     strictFiniteToyCore.ind3.step (0 : Fin 2) (1 : Fin 2) ∧
@@ -4674,6 +4815,54 @@ theorem strictFiniteToyTypedIndeterminacyNonvacuityAudit_ind3_strict_not_equaliz
     (strictFiniteToyTypedIndeterminacyNonvacuityAudit target).ind3_strict_not_in_equalityOrbit,
     (strictFiniteToyTypedIndeterminacyNonvacuityAudit target).ind3_strict_quotientMap_ne,
     (strictFiniteToyTypedIndeterminacyNonvacuityAudit target).equalityQuotient_no_ind3_generator⟩
+
+theorem strictFiniteToyEqualityQuotientHullNonvacuityAudit_endpoint
+    (target : Copy)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    (∀ choice₀,
+      (strictFiniteToyEqualityQuotientHullNonvacuityAudit
+        target hullOperator).hull_logVolume_compatibility.familySource.possibleRegion
+          (strictFiniteToyCore.equalityQuotientMap choice₀) =
+        ((strictFiniteToyPossibleImageFamily target).region choice₀).toSet) ∧
+      (∀ {choice₁ choice₂ : Fin 2},
+        strictFiniteToyCore.ind1.step choice₁ choice₂ ->
+          hullOperator.logVolume
+              ((strictFiniteToyEqualityQuotientHullNonvacuityAudit
+                target hullOperator).hull_logVolume_compatibility.familySource.possibleRegion
+                (strictFiniteToyCore.equalityQuotientMap choice₁)) =
+            hullOperator.logVolume
+              ((strictFiniteToyEqualityQuotientHullNonvacuityAudit
+                target hullOperator).hull_logVolume_compatibility.familySource.possibleRegion
+                (strictFiniteToyCore.equalityQuotientMap choice₂))) ∧
+      (∀ {choice₁ choice₂ : Fin 2},
+        strictFiniteToyCore.ind2.step choice₁ choice₂ ->
+          hullOperator.logVolume
+              ((strictFiniteToyEqualityQuotientHullNonvacuityAudit
+                target hullOperator).hull_logVolume_compatibility.familySource.possibleRegion
+                (strictFiniteToyCore.equalityQuotientMap choice₁)) =
+            hullOperator.logVolume
+              ((strictFiniteToyEqualityQuotientHullNonvacuityAudit
+                target hullOperator).hull_logVolume_compatibility.familySource.possibleRegion
+                (strictFiniteToyCore.equalityQuotientMap choice₂))) ∧
+      strictFiniteToyCore.logVolume (0 : Fin 2) <=
+        strictFiniteToyCore.logVolume (1 : Fin 2) ∧
+      strictFiniteToyCore.ind3.step (0 : Fin 2) (1 : Fin 2) ∧
+      strictFiniteToyCore.logVolume (0 : Fin 2) <
+        strictFiniteToyCore.logVolume (1 : Fin 2) ∧
+      (1 : Fin 2) ∉ strictFiniteToyCore.equalityOrbit (0 : Fin 2) ∧
+      strictFiniteToyCore.equalityQuotientMap (0 : Fin 2) ≠
+        strictFiniteToyCore.equalityQuotientMap (1 : Fin 2) :=
+  let audit :=
+    strictFiniteToyEqualityQuotientHullNonvacuityAudit target hullOperator
+  ⟨audit.pullback_endpoint,
+    audit.ind1_hull_logVolume_eq,
+    audit.ind2_hull_logVolume_eq,
+    audit.ind3_upper_semi_core_logVolume,
+    audit.ind3_strict_not_equalized.1,
+    audit.ind3_strict_not_equalized.2.1,
+    audit.ind3_strict_not_equalized.2.2.1,
+    audit.ind3_strict_not_equalized.2.2.2⟩
 
 end IUTStage1Theorem311TypedIndeterminacyCore
 
