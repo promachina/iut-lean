@@ -9634,6 +9634,27 @@ Step~(vii) coarse-bound identification, and the archimedean
 coarse \(D_v+C_v\) equality.  Lean derives the nonnegativity of \(D_v\) and
 \(C_v\) from the arithmetic-divisor evaluation source and constructs
 \texttt{DegreeIdentifiedUnscaledFormulaGapSource} by projection.
+The p-adic/arithmetic formula-matched branch now has a matched version of this
+local source,
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarTheorem110StepXI}\\
+\texttt{MatchedLocalDegreeIdentificationFormulaSource}.
+\end{array}
+\]
+Here the local degree-identification formulas are written directly over the
+arithmetic formula core projected from
+the source
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatched}\\
+\texttt{ArithmeticDegreePadicPrimeErrorFormulaMatchingSource}.
+\end{array}
+\]
+Consequently
+the endpoint no longer exposes a separate proof that the local-degree formula
+source and the p-adic formula source have the same arithmetic-formula core;
+that synchronization is internal and definitional.
 Thus the remaining local obligation has moved to the formula-equality
 boundary itself: instantiate these Step~(v)/Step~(vii) local formula
 identifications from the detailed local valuation/log-shell and archimedean
@@ -9678,7 +9699,21 @@ boundary.  The matching lower wrapper is
 It carries \texttt{LocalDegreeIdentificationFormulaSource}, projects to the
 degree-identified wrapper internally, and exposes the same closed
 local-to-global \(C_\Theta\) handoff theorems at the formula-equality
-boundary.
+boundary.  The strict matched wrapper is
+\[
+\begin{array}{l}
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110}\\
+\texttt{AdditiveHaarMatchedLocalDegreeFormula}\\
+\texttt{StepXILocalTermCThetaSource}.
+\end{array}
+\]
+It carries the matched local-degree formula source above, projects to the
+previous local-degree wrapper with the formula-core equality supplied by
+\texttt{rfl}, and exposes the same
+\texttt{arithmeticGap\_dominates\_canonicalCThetaScale},
+\texttt{canonicalCThetaScale\_le\_iutIVCTheta},
+\texttt{closedLocalGlobalEndpoint}, and
+\texttt{localGlobalHandoffAudit} theorems.
 The prime-error side has then been lowered another
 step by
 \texttt{IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource}: it
@@ -9843,15 +9878,23 @@ The formula-level preferred projection is
 \texttt{\_ofRealifiedFrobenioidPacketSource}.
 \end{array}
 \]
-This is now the lowest public local-to-global \(C_\Theta\) theorem in this
-branch of the corridor: it consumes the constructed qualitative
-Hodge/\(\SHE\)/\(\IPL\) source and the local Step~(v)/Step~(vii)
-formula-identification additive-Haar source, and it still does not expose
-either the raw numerical \(\Theta\)-bound or the raw
-\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison as hypotheses.
-Thus the previous gap between the constructed qualitative Theorem~3.11 route
-and the deepest additive-Haar \(C_\Theta\) surface is closed at the current
-interface level.
+The matched formula-level preferred projection is now the lowest public
+local-to-global \(C_\Theta\) theorem in this branch:
+\[
+\begin{array}{l}
+\texttt{boundarySignedEqualityOrStrictCTheta\_from\_preferred}\\
+\texttt{MatchedLocalDegreeFormulaConstructedTheorem311}\\
+\texttt{IndeterminacyLocalGlobalCThetaFiniteDivisorVerticalIQ}\\
+\texttt{\_ofRealifiedFrobenioidPacketSource}.
+\end{array}
+\]
+It consumes the constructed qualitative Hodge/\(\SHE\)/\(\IPL\) source and
+the matched local Step~(v)/Step~(vii) formula-identification additive-Haar
+source, and it still does not expose either the raw numerical \(\Theta\)-bound
+or the raw \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison as hypotheses.
+The remaining payload is now concentrated in the local formula equalities
+inside the matched source, not in a separate endpoint synchronization between
+the p-adic/arithmetic formula source and the local-degree source.
 
 The Theorem~3.11 qualitative checkpoint is now also present at the
 finite-divisor \(C_\Theta\) boundary.  The new checkpoint-aware
