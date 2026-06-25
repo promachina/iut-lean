@@ -4962,6 +4962,7 @@ indeterminacy quotient.
 structure Theorem311AndRemarksObligations
     (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
     (images : RegionFamily targetCopy choice) where
+  typed_indeterminacy_nonvacuity_witness_constructed : Prop
   theorem311_multiradial_representation_constructed : Prop
   remark3112_input_prime_strip_link_constructed : Prop
   remark3113_theta_pilot_possible_images_constructed : Prop
@@ -4977,6 +4978,23 @@ namespace Theorem311AndRemarksObligations
 
 variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
 variable {images : RegionFamily targetCopy choice}
+
+def RemainingPayloadAudit
+    (obligations : Theorem311AndRemarksObligations core images) : Prop :=
+  obligations.typed_indeterminacy_nonvacuity_witness_constructed ∧
+    obligations.theorem311_multiradial_representation_constructed ∧
+    obligations.remark3112_input_prime_strip_link_constructed ∧
+    obligations.remark3113_theta_pilot_possible_images_constructed ∧
+    obligations.remark3114_log_theta_lattice_procession_constructed ∧
+    obligations.selected_q_region_is_theorem311_possible_image ∧
+    obligations.fl_cardinality_and_procession_label_transitions_constructed ∧
+    obligations.theorem311_hodge_she_ipl_apt_source_bridge_constructed
+
+theorem typedIndeterminacyNonvacuityWitnessConstructed
+    (obligations : Theorem311AndRemarksObligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.typed_indeterminacy_nonvacuity_witness_constructed :=
+  audit.1
 
 theorem ind1_ind2_image_invariant
     (obligations : Theorem311AndRemarksObligations core images) :
@@ -5276,7 +5294,8 @@ variable {images : RegionFamily targetCopy choice}
 
 def RemainingPayloadAudit
     (obligations : Obligations core images) : Prop :=
-  obligations.theorem311_and_remarks.theorem311_multiradial_representation_constructed ∧
+  obligations.theorem311_and_remarks.typed_indeterminacy_nonvacuity_witness_constructed ∧
+    obligations.theorem311_and_remarks.theorem311_multiradial_representation_constructed ∧
     obligations.theorem311_and_remarks.remark3112_input_prime_strip_link_constructed ∧
     obligations.theorem311_and_remarks.remark3113_theta_pilot_possible_images_constructed ∧
     obligations.theorem311_and_remarks.remark3114_log_theta_lattice_procession_constructed ∧
