@@ -5373,6 +5373,9 @@ structure AdditiveHaarArithmeticDegreePadicObligations where
   stepxi_arithmetic_degree_calibration_constructed : Prop
   localized_determinant_multiplicity_matches_iutiv_coefficient : Prop
   adjusted_raw_log_volume_matches_different_plus_conductor : Prop
+  formula_gap_local_estimate_audit_threaded : Prop
+  arithmetic_degree_calibration_audit_threaded : Prop
+  padic_prime_error_formula_matching_endpoint_threaded : Prop
   realified_packet_source_supplies_stepx_equalities : Prop
   constructed_ipl_choice_link_endpoint_threaded : Prop
   constructed_ipl_datum_certificate_alignment_threaded : Prop
@@ -5399,6 +5402,30 @@ def RemainingPayloadAudit
     obligations.constructed_she_apt_transport_guards_threaded ∧
     obligations.constructed_ipl_she_apt_transport_law_audit_threaded ∧
     obligations.strongest_additive_haar_endpoint_has_remaining_payload_audit
+
+def FineLocalPayloadAudit
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations) : Prop :=
+  obligations.formula_gap_local_estimate_audit_threaded ∧
+    obligations.arithmetic_degree_calibration_audit_threaded ∧
+    obligations.padic_prime_error_formula_matching_endpoint_threaded
+
+theorem formulaGapLocalEstimateAuditThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : FineLocalPayloadAudit obligations) :
+    obligations.formula_gap_local_estimate_audit_threaded :=
+  audit.1
+
+theorem arithmeticDegreeCalibrationAuditThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : FineLocalPayloadAudit obligations) :
+    obligations.arithmetic_degree_calibration_audit_threaded :=
+  audit.2.1
+
+theorem padicPrimeErrorFormulaMatchingEndpointThreaded
+    (obligations : AdditiveHaarArithmeticDegreePadicObligations)
+    (audit : FineLocalPayloadAudit obligations) :
+    obligations.padic_prime_error_formula_matching_endpoint_threaded :=
+  audit.2.2
 
 theorem constructedIPLChoiceLinkEndpointThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)

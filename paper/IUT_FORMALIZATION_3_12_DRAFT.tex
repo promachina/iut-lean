@@ -10851,7 +10851,16 @@ Its
 \texttt{paperTraceRemainingPayloadAudit} field instantiates the abstract
 \texttt{AdditiveHaarArithmeticDegreePadicObligations} record with these
 concrete endpoints, so the paper-trace ledger now has a checked handoff from
-the strongest constructed source object.  The same strict source now has direct
+the strongest constructed source object.  The same obligation record now
+separates a finer local payload audit,
+\texttt{FineLocalPayloadAudit}.  This new audit names three local witnesses
+which were previously visible only by inspecting the surrounding certificate:
+the Theorem~1.10 formula-gap local estimate audit, the Step~(xi)
+arithmetic-degree calibration audit, and the \(p\)-adic prime-error formula
+matching endpoint.  All current paper-trace instantiations of
+\texttt{AdditiveHaarArithmeticDegreePadicObligations} now supply these slots
+from the corresponding constructed source objects.
+The same strict source now has direct
 preferred-audit projections
 \[
 \begin{array}{l}
