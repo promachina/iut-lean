@@ -4725,7 +4725,10 @@ record names the remaining Remark~3.9.5 hull/determinant work: holomorphic hull
 operator, possible-image family matching, q-region containment, Ob1/Ob2 hull
 absorption, Ob3/Ob4 determinant normalization, Ob5 quotient compatibility, Ob7
 prime-strip retention, tensor-power bound, and the q-region-to-theta
-log-volume chain.
+log-volume chain.  In the current top-level audit, the tensor-power slot is the
+constructed normalized determinant bound, while the q-region slot is the
+separate inequality obtained by composing q-to-determinant and determinant-to-
+theta in the constructed record bridge.
 
 The IUT~IV record names the local-to-global \(C_\Theta\) obligations below the
 current additive-Haar boundary: Proposition~1.4 distinguished log-shell
@@ -10148,9 +10151,11 @@ obligations together; its last two entries are witnessed by the derived
 \(\theta_{\mathrm{signed}}\leq C_\Theta(-q_{\mathrm{signed}})\) bound and the
 finite-place-derived \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison, not
 by raw endpoint hypotheses.  The trace also takes the normalized Step~(xi)
-bridge from the local-to-global \(C_\Theta\) audit itself, so the top-level
-paper ledger is now wired to the constructed finite-place summation layer
-rather than to the older global projection wrappers.  The assembled
+bridge directly from the constructed Remark~3.9.5 record bridge: the weighted
+determinant/tensor-power slot is witnessed by
+\(\det_{\mathrm{norm}}\leq\theta_{\mathrm{signed}}\), and the q-region
+log-volume slot by
+\(\mu_{\log}(q_{\mathrm{region}})\leq\theta_{\mathrm{signed}}\).  The assembled
 \(\IUT{}\,\mathrm{IV}\) obligation list now has a separate
 \texttt{finite\_place\_arithmetic\_gap\_constructed} entry, witnessed here by
 \texttt{finitePlaceDerivedArithmeticGap}.  Its distinguished Proposition~1.4
