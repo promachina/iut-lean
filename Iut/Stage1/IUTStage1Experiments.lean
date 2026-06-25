@@ -72394,6 +72394,50 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarUnscaledDegreeBoundArithm
   unscaledFormulaGapEndpoint :
     IUTStage1AdditiveHaarTheorem110StepXIUnscaledDegreeBoundFormulaGapSource.Endpoint
       unscaledSource.unscaledDegreeBoundFormulaGapSource
+  oneSidedQuotientAudit :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.OneSidedQuotientAudit
+      unscaledSource.oneSidedMultiradialSource
+  constructedQualitativeBridgeAudit :
+    IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource.ConstructedQualitativeHodgeSHEIPLBridgeAudit
+      constructedHodgeIPLSource
+  choiceWiseIPLLinkAudit :
+    ∀ choice,
+      (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).source =
+          constructedHodgeIPLSource.iplConstructionSource.iplDatum.inputPrimeStrip ∧
+        (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).target =
+          constructedHodgeIPLSource.iplConstructionSource.iplDatum.choicePrimeStrip choice
+  noAllowedSHEDomainToCodomain :
+    ∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+        constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+        constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism
+  aptTransport_not_forbidden :
+    ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+      constructedBundle.aptConstruction.arrow.source
+      constructedBundle.aptConstruction.arrow.target
+  arithmeticGap_dominates_canonicalCThetaScale :
+    remark395HullSource.canonicalCThetaScale + 1 <=
+      estimate.arithmeticUpperTerm - estimate.mainLogTerm
+  formulaGapMatchedFormulaMatchingEndpoint :
+    IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.Endpoint
+      unscaledSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+  primeErrorPadicDefectMainEndpoint :
+    IUTStage1AdditiveHaarTheorem110FormulaGapMatchedPrimeErrorPadicDefectMainSource.Endpoint
+      unscaledSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.formulaGapMatchedPrimeErrorPadicDefectMainSource
+  arithmeticDegreeCalibrationEndpoint :
+    IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource.Endpoint
+      unscaledSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource
+  padicPrimeErrorFormulaMatchingEndpoint :
+    IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource.Endpoint
+      (unscaledSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+        |>.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        |>.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource)
+  closedLocalGlobalEndpoint :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.Endpoint
+      unscaledSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+  localGlobalHandoffAudit :
+    Remark395ConstructedIUTIVCThetaHandoffAudit remark395HullSource estimate
   finitePacketLocalObject_eq_divisorRealified :
     audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
       divisorPacket.divisor.realifiedLogVolume
@@ -72543,6 +72587,26 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
       unscaledEndpoint := hstrict.1,
       unscaledFormulaGapEndpoint :=
         unscaledSource.unscaledDegreeBoundFormulaGapSource.endpoint,
+      oneSidedQuotientAudit := hbase.baseAudit.oneSidedQuotientAudit,
+      constructedQualitativeBridgeAudit :=
+        hbase.baseAudit.constructedQualitativeBridgeAudit,
+      choiceWiseIPLLinkAudit := hbase.baseAudit.choiceWiseIPLLinkAudit,
+      noAllowedSHEDomainToCodomain :=
+        hbase.baseAudit.noAllowedSHEDomainToCodomain,
+      aptTransport_not_forbidden :=
+        hbase.baseAudit.aptTransport_not_forbidden,
+      arithmeticGap_dominates_canonicalCThetaScale :=
+        unscaledSource.arithmeticGap_dominates_canonicalCThetaScale,
+      formulaGapMatchedFormulaMatchingEndpoint :=
+        unscaledSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.endpoint,
+      primeErrorPadicDefectMainEndpoint :=
+        unscaledSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.formulaGapMatchedPrimeErrorPadicDefectMainSource.endpoint,
+      arithmeticDegreeCalibrationEndpoint :=
+        unscaledSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.endpoint,
+      padicPrimeErrorFormulaMatchingEndpoint :=
+        unscaledSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource.endpoint,
+      closedLocalGlobalEndpoint := unscaledSource.closedLocalGlobalEndpoint,
+      localGlobalHandoffAudit := unscaledSource.localGlobalHandoffAudit,
       finitePacketLocalObject_eq_divisorRealified := hstrict.2.1,
       finitePacketLocalObject_eq_ind3Source := hstrict.2.2.1,
       iutIVHandoff := hstrict.2.2.2.1,
