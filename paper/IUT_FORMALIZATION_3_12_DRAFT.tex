@@ -9872,42 +9872,8 @@ audit, and final preferred dichotomy endpoint.  Thus the current preferred
 finite-divisor endpoint no longer consumes the distinguished local
 degree-identification object as primitive; it consumes the finer local
 different/conductor decomposition and rebuilds that object internally.
-The archimedean side has now been lowered in the same fashion by
-\[
-\begin{array}{l}
-\texttt{IUTStage1IUTIVTheorem110ArchimedeanMetric}\\
-\texttt{DegreeComponentSource}.
-\end{array}
-\]
-This source splits the Step~(vii) coarse bound into the exact metric term
-\(\frac{l+5}{4}\log(\pi)\) and the nonnegative coarse remainder
-\[
-  \frac{l+1}{4}\cdot 4-\frac{l+5}{4}\log(\pi).
-\]
-Lean proves the remainder is nonnegative from the existing
-\(\log(\pi)\leq 2\) exact-to-coarse estimate and recombines the two components
-as the old archimedean local degree-identification object.  The matched source
-\[
-\begin{array}{l}
-\texttt{IUTStage1AdditiveHaarTheorem110StepXI}\\
-\texttt{MatchedLocalDegreeComponentSource}
-\end{array}
-\]
-and its local-to-global wrapper
-\[
-\begin{array}{l}
-\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110}\\
-\texttt{AdditiveHaarMatchedLocalDegreeComponent}\\
-\texttt{StepXILocalTermCThetaSource}
-\end{array}
-\]
-are now the lowest preferred Step~(xi) degree boundary: both distinguished and
-archimedean degree-identification objects are rebuilt from component data
-before entering the closed \(C_\Theta\) handoff.  The remaining mathematical
-obligation at this boundary is to construct the distinguished component
-equalities from the actual divisor, local valuation, log-shell, and
-ramification definitions.
-The archimedean branch has also gained a constructed form,
+The archimedean branch is now lowered beyond the component interface to the
+constructed source
 \[
 \begin{array}{l}
 \texttt{IUTStage1IUTIVTheorem110ArchimedeanMetric}\\
@@ -9926,11 +9892,22 @@ matched source
 \texttt{MatchedLocalDegreeConstructedArchimedeanComponentSource}
 \end{array}
 \]
-uses this construction at every archimedean place.  Its remaining archimedean
-payload is no longer the component formula itself, but the calibration that the
-arithmetic-divisor local \(D_v\) and \(C_v\) values used by Step~(xi) are these
-constructed exact and remainder components, together with nonnegativity of the
-exact metric term.
+uses this construction at every archimedean place, and the local-to-global
+wrapper
+\[
+\begin{array}{l}
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110}\\
+\texttt{AdditiveHaarMatchedLocalDegreeConstructedArchimedeanComponent}\\
+\texttt{StepXILocalTermCThetaSource}
+\end{array}
+\]
+projects it to the existing component-backed \(C_\Theta\) route.  Thus the
+current strongest preferred endpoint consumes the constructed Proposition~1.5
+metric source on the archimedean branch; the remaining degree-boundary payload
+is the calibration of the Step~(xi) local \(D_v,C_v\) values to these
+constructed exact/remainder components and the construction of the
+distinguished finite-place component equalities from divisor, valuation,
+log-shell, and ramification data.
 The matched boundary now has its own constructed qualitative audit,
 \[
 \begin{array}{l}
