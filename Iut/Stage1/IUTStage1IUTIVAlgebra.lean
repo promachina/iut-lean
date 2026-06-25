@@ -3850,6 +3850,163 @@ end IUTStage1IUTIVTheorem110ArchimedeanMetricArithmeticDegreeComparisonSource
 
 set_option linter.style.longLine false in
 /--
+Distinguished arithmetic-degree comparison with calibrated procession bound.
+
+The previous arithmetic-degree comparison source records the final inequality
+from the distinguished Step (v) procession formula bound to the local
+arithmetic-degree part.  This calibrated version splits that payload into the
+two paper-facing assertions: the procession formula bound is the coarse
+Step (v) bound produced by the Proposition 1.4/1.7 chain, and that coarse
+bound is dominated by \(a_l(D_v+C_v)\).
+-/
+structure IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarCalibratedArithmeticDegreeComparisonSource
+    (α : Type u) (η : Type v) (K : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (l : PrimeGeFive)
+    (distinguishedProcessionBound localArithmeticDegreePart : Real) where
+  logShellSource :
+    IUTStage1IUTIVProposition14DistinguishedAdditiveHaarLogShellSource
+      α η K hullSystem l distinguishedProcessionBound
+  formula_bound_eq_coarse_procession :
+    distinguishedProcessionBound =
+      logShellSource.coarseProcessionNormalizedUpperBound
+  coarse_procession_le_arithmeticDegreePart :
+    logShellSource.coarseProcessionNormalizedUpperBound <=
+      localArithmeticDegreePart
+
+namespace
+  IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarCalibratedArithmeticDegreeComparisonSource
+
+set_option linter.style.longLine false
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {l : PrimeGeFive}
+variable {distinguishedProcessionBound localArithmeticDegreePart : Real}
+
+theorem formula_bound_le_arithmeticDegreePart
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarCalibratedArithmeticDegreeComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticDegreePart) :
+    distinguishedProcessionBound <= localArithmeticDegreePart := by
+  rw [source.formula_bound_eq_coarse_procession]
+  exact source.coarse_procession_le_arithmeticDegreePart
+
+set_option linter.style.longLine false in
+def toArithmeticDegreeComparisonSource
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarCalibratedArithmeticDegreeComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticDegreePart) :
+    IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarArithmeticDegreeComparisonSource
+      α η K hullSystem l distinguishedProcessionBound
+      localArithmeticDegreePart :=
+  { logShellSource := source.logShellSource,
+    formula_bound_le_arithmeticDegreePart :=
+      source.formula_bound_le_arithmeticDegreePart }
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarCalibratedArithmeticDegreeComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticDegreePart) :
+    Prop :=
+  source.logShellSource.Endpoint ∧
+    distinguishedProcessionBound =
+      source.logShellSource.coarseProcessionNormalizedUpperBound ∧
+      source.logShellSource.coarseProcessionNormalizedUpperBound <=
+        localArithmeticDegreePart ∧
+        source.toArithmeticDegreeComparisonSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarCalibratedArithmeticDegreeComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticDegreePart) :
+    Endpoint source :=
+  ⟨source.logShellSource.endpoint,
+    source.formula_bound_eq_coarse_procession,
+    source.coarse_procession_le_arithmeticDegreePart,
+    source.toArithmeticDegreeComparisonSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarCalibratedArithmeticDegreeComparisonSource
+
+set_option linter.style.longLine false in
+/--
+Archimedean arithmetic-degree comparison with calibrated procession bound.
+
+This is the Step (vii) analogue of the distinguished calibrated comparison:
+the archimedean procession formula bound is identified with Lean's coarse
+Step (vii) bound, and this coarse bound is compared directly with the local
+arithmetic-degree part.
+-/
+structure IUTStage1IUTIVTheorem110ArchimedeanMetricCalibratedArithmeticDegreeComparisonSource
+    (I V : Type u) [Fintype I] [Fintype V]
+    (l : PrimeGeFive)
+    (archimedeanProcessionBound localArithmeticDegreePart : Real) where
+  metricSource :
+    IUTStage1IUTIVProposition15ArchimedeanMetricConstructionSource
+      I V l archimedeanProcessionBound
+  formula_bound_eq_coarse_procession :
+    archimedeanProcessionBound =
+      iutIVThetaPilotStepVIIArchimedeanCoarseBound l
+  coarse_procession_le_arithmeticDegreePart :
+    iutIVThetaPilotStepVIIArchimedeanCoarseBound l <=
+      localArithmeticDegreePart
+
+namespace IUTStage1IUTIVTheorem110ArchimedeanMetricCalibratedArithmeticDegreeComparisonSource
+
+variable {I V : Type u} [Fintype I] [Fintype V]
+variable {l : PrimeGeFive}
+variable {archimedeanProcessionBound localArithmeticDegreePart : Real}
+
+theorem formula_bound_le_arithmeticDegreePart
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricCalibratedArithmeticDegreeComparisonSource
+        I V l archimedeanProcessionBound localArithmeticDegreePart) :
+    archimedeanProcessionBound <= localArithmeticDegreePart := by
+  rw [source.formula_bound_eq_coarse_procession]
+  exact source.coarse_procession_le_arithmeticDegreePart
+
+def toArithmeticDegreeComparisonSource
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricCalibratedArithmeticDegreeComparisonSource
+        I V l archimedeanProcessionBound localArithmeticDegreePart) :
+    IUTStage1IUTIVTheorem110ArchimedeanMetricArithmeticDegreeComparisonSource
+      I V l archimedeanProcessionBound localArithmeticDegreePart :=
+  { metricSource := source.metricSource,
+    formula_bound_le_arithmeticDegreePart :=
+      source.formula_bound_le_arithmeticDegreePart }
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricCalibratedArithmeticDegreeComparisonSource
+        I V l archimedeanProcessionBound localArithmeticDegreePart) :
+    Prop :=
+  source.metricSource.Endpoint ∧
+    archimedeanProcessionBound =
+      iutIVThetaPilotStepVIIArchimedeanCoarseBound l ∧
+      iutIVThetaPilotStepVIIArchimedeanCoarseBound l <=
+        localArithmeticDegreePart ∧
+        source.toArithmeticDegreeComparisonSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricCalibratedArithmeticDegreeComparisonSource
+        I V l archimedeanProcessionBound localArithmeticDegreePart) :
+    Endpoint source :=
+  ⟨source.metricSource.endpoint,
+    source.formula_bound_eq_coarse_procession,
+    source.coarse_procession_le_arithmeticDegreePart,
+    source.toArithmeticDegreeComparisonSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110ArchimedeanMetricCalibratedArithmeticDegreeComparisonSource
+
+set_option linter.style.longLine false in
+/--
 Additive-Haar local analytic arithmetic-divisor source with named
 formula-to-gap comparison objects.
 
