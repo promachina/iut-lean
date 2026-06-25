@@ -13362,6 +13362,180 @@ theorem oneSidedRemark395CompatibilityAudit
 
 set_option linter.style.longLine false in
 /--
+Selected q-region audit for the equality-quotient Remark 3.9.5 hull layer.
+
+This is the compact Step (xi) boundary used after the one-sided Theorem 3.11
+construction has selected the q-pilot image.  The q-pilot region is identified
+with the equality-quotient possible region, hence lies in the quotient-indexed
+Remark 3.9.5 canonical hull.  The same record keeps the source-paper
+indeterminacy asymmetry in view: `(Ind1)` and `(Ind2)` give hull-log-volume
+equalities on the equality quotient, while `(Ind3)` remains the typed core's
+upper-semi log-volume inequality.
+-/
+structure OneSidedSelectedQHullLogVolumeAudit
+    {β : Type v} [Fintype β]
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l)
+    (constructedSource :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (hullCompatibility :
+      construction.typedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        record.thetaPossibleImages.images constructedSource.hullOperator)
+    (qPilotRegion_eq_selectedQRegion :
+      constructedSource.qPilotRegion = construction.selectedQRegion.toSet) :
+    Prop where
+  remark395CompatibilityAudit :
+    OneSidedRemark395CompatibilityAudit
+      construction constructedSource qPilotRegion_eq_selectedQRegion
+  quotientHullEndpoint :
+    (∀ choice₀,
+      hullCompatibility.familySource.possibleRegion
+          (construction.typedIndeterminacyCore.equalityQuotientMap choice₀) =
+        (record.thetaPossibleImages.images.region choice₀).toSet) ∧
+      (∀ {choice₁ choice₂ : index},
+        choice₂ ∈ construction.typedIndeterminacyCore.equalityOrbit choice₁ ->
+          hullCompatibility.familySource.possibleRegion
+              (construction.typedIndeterminacyCore.equalityQuotientMap choice₁) =
+            hullCompatibility.familySource.possibleRegion
+              (construction.typedIndeterminacyCore.equalityQuotientMap choice₂)) ∧
+      (∀ {choice₁ choice₂ : index},
+        choice₂ ∈ construction.typedIndeterminacyCore.equalityOrbit choice₁ ->
+          constructedSource.hullOperator.logVolume
+              (hullCompatibility.familySource.possibleRegion
+                (construction.typedIndeterminacyCore.equalityQuotientMap choice₁)) =
+            constructedSource.hullOperator.logVolume
+              (hullCompatibility.familySource.possibleRegion
+                (construction.typedIndeterminacyCore.equalityQuotientMap choice₂))) ∧
+      (∀ {choice₁ choice₂ : index},
+        construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+          construction.typedIndeterminacyCore.logVolume choice₁ <=
+            construction.typedIndeterminacyCore.logVolume choice₂) ∧
+      hullCompatibility.familySource.familyUnion ⊆
+        hullCompatibility.familySource.canonicalHull
+  selectedQRegion_eq_quotient_possibleRegion :
+    construction.selectedQRegion.toSet =
+      hullCompatibility.familySource.possibleRegion
+        (construction.typedIndeterminacyCore.equalityQuotientMap
+          construction.selectedQChoice)
+  qPilotRegion_eq_quotient_possibleRegion :
+    constructedSource.qPilotRegion =
+      hullCompatibility.familySource.possibleRegion
+        (construction.typedIndeterminacyCore.equalityQuotientMap
+          construction.selectedQChoice)
+  qPilotRegion_subset_quotientCanonicalHull :
+    constructedSource.qPilotRegion ⊆
+      hullCompatibility.familySource.canonicalHull
+  qPilotRegion_logVolume_le_thetaSigned :
+    constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+      package.preLedger.thetaSigned
+  ind1_hull_logVolume_eq :
+    ∀ {choice₁ choice₂ : index},
+      construction.typedIndeterminacyCore.ind1.step choice₁ choice₂ ->
+        constructedSource.hullOperator.logVolume
+            (hullCompatibility.familySource.possibleRegion
+              (construction.typedIndeterminacyCore.equalityQuotientMap choice₁)) =
+          constructedSource.hullOperator.logVolume
+            (hullCompatibility.familySource.possibleRegion
+              (construction.typedIndeterminacyCore.equalityQuotientMap choice₂))
+  ind2_hull_logVolume_eq :
+    ∀ {choice₁ choice₂ : index},
+      construction.typedIndeterminacyCore.ind2.step choice₁ choice₂ ->
+        constructedSource.hullOperator.logVolume
+            (hullCompatibility.familySource.possibleRegion
+              (construction.typedIndeterminacyCore.equalityQuotientMap choice₁)) =
+          constructedSource.hullOperator.logVolume
+            (hullCompatibility.familySource.possibleRegion
+              (construction.typedIndeterminacyCore.equalityQuotientMap choice₂))
+  ind3_upper_semi_core_logVolume :
+    ∀ {choice₁ choice₂ : index},
+      construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+        construction.typedIndeterminacyCore.logVolume choice₁ <=
+          construction.typedIndeterminacyCore.logVolume choice₂
+
+set_option linter.style.longLine false in
+theorem oneSidedSelectedQHullLogVolumeAudit
+    {β : Type v} [Fintype β]
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l)
+    (constructedSource :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (hullCompatibility :
+      construction.typedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        record.thetaPossibleImages.images constructedSource.hullOperator)
+    (qPilotRegion_eq_selectedQRegion :
+      constructedSource.qPilotRegion = construction.selectedQRegion.toSet) :
+    OneSidedSelectedQHullLogVolumeAudit
+      construction constructedSource hullCompatibility
+        qPilotRegion_eq_selectedQRegion :=
+  let remarkAudit :=
+    construction.oneSidedRemark395CompatibilityAudit
+      constructedSource qPilotRegion_eq_selectedQRegion
+  let selected_eq :
+      construction.selectedQRegion.toSet =
+        hullCompatibility.familySource.possibleRegion
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            construction.selectedQChoice) := by
+    calc
+      construction.selectedQRegion.toSet =
+          recordThetaPossibleImage record construction.selectedQChoice :=
+        construction.selectedQRegion_eq_recordThetaPossibleImage
+      _ =
+          (record.thetaPossibleImages.images.region
+            construction.selectedQChoice).toSet :=
+        rfl
+      _ =
+          hullCompatibility.familySource.possibleRegion
+            (construction.typedIndeterminacyCore.equalityQuotientMap
+              construction.selectedQChoice) :=
+        (hullCompatibility.possibleRegion_pullback_eq
+          construction.selectedQChoice).symm
+  let q_eq :
+      constructedSource.qPilotRegion =
+        hullCompatibility.familySource.possibleRegion
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            construction.selectedQChoice) := by
+    calc
+      constructedSource.qPilotRegion =
+          construction.selectedQRegion.toSet :=
+        qPilotRegion_eq_selectedQRegion
+      _ =
+          hullCompatibility.familySource.possibleRegion
+            (construction.typedIndeterminacyCore.equalityQuotientMap
+              construction.selectedQChoice) :=
+        selected_eq
+  { remark395CompatibilityAudit := remarkAudit,
+    quotientHullEndpoint := hullCompatibility.endpoint,
+    selectedQRegion_eq_quotient_possibleRegion := selected_eq,
+    qPilotRegion_eq_quotient_possibleRegion := q_eq,
+    qPilotRegion_subset_quotientCanonicalHull := by
+      intro x hx
+      have hx_possible :
+          x ∈ hullCompatibility.familySource.possibleRegion
+            (construction.typedIndeterminacyCore.equalityQuotientMap
+              construction.selectedQChoice) := by
+        simpa [q_eq] using hx
+      exact
+        hullCompatibility.familySource.possibleRegion_subset_phi
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            construction.selectedQChoice) hx_possible,
+    qPilotRegion_logVolume_le_thetaSigned :=
+      constructedSource.qRegionLogVolume_le_thetaSigned,
+    ind1_hull_logVolume_eq := by
+      intro choice₁ choice₂ hstep
+      exact hullCompatibility.ind1_logVolume_eq hstep,
+    ind2_hull_logVolume_eq := by
+      intro choice₁ choice₂ hstep
+      exact hullCompatibility.ind2_logVolume_eq hstep,
+    ind3_upper_semi_core_logVolume := by
+      intro choice₁ choice₂ hstep
+      exact hullCompatibility.ind3_upper_semi_logVolume hstep }
+
+set_option linter.style.longLine false in
+/--
 `F_l` procession transition through the typed equality quotient and
 Remark 3.9.5 Ob5--Ob6 hull endpoint.
 

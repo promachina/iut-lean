@@ -9027,6 +9027,20 @@ quotient maps respect their preserving steps, and that \((\Ind_3)\) is excluded
 from the equality quotient.  The local-global \(C_\Theta\) source and its
 finite-place version now project this audit directly, so the closed boundary can
 cite the one-sided quotient facts without unpacking the Step~(xi) constructor.
+The selected q-region now also has a quotient-hull audit,
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311OneSidedMultiradialConstructionSource.}\\
+\quad\texttt{OneSidedSelectedQHullLogVolumeAudit}.
+\end{array}
+\]
+This audit consumes the equality-quotient
+\texttt{EqualityQuotientHullLogVolumeCompatibility} and the constructed
+Remark~3.9.5 hull/determinant source.  It proves that the selected q-pilot
+region is the quotient-indexed possible region, lies in the quotient canonical
+hull, and satisfies the constructed source's q-region log-volume bound by
+\(\theta\), while retaining \((\Ind_1)/(\Ind_2)\) hull-log-volume equalities
+and the separate \((\Ind_3)\) upper-semi core inequality.
 
 The local-to-global comparison itself is now isolated as
 \[
