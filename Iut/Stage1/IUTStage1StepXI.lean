@@ -2172,6 +2172,42 @@ theorem aptTransport_not_forbidden
       inputs.qualitativeSource.aptConstruction.arrow.target :=
   inputs.qualitativeTransportAudit.2.2.2.2
 
+set_option linter.style.longLine false in
+def transportBaseStructuredSHE
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    IUTStage1Theorem311StructuredSHE package :=
+  { context := inputs.qualitativeSource.sheTransportContext.baseContext,
+    she_datum_matches_certificate := by
+      have hcertificate :
+          package.preLedger.certificate.she =
+            inputs.qualitativeSource.sheTransportContext.baseContext.sheDatum := by
+        simpa [
+          IUTStage1PreLedgerData.ConstructedQualitativeCertificateData.constructedCertificate,
+          QualitativeData.StructuredCertificate.ofConstructedIPLSHEAPT,
+          QualitativeData.StructuredSHETransportContext.sheDatum
+        ] using
+          congrArg (fun certificate => certificate.she)
+            inputs.qualitativeSource.certificate_eq_constructed
+      exact hcertificate.symm,
+    she_arrow_matches_context := by
+      have hcertificate :
+          package.preLedger.certificate.she =
+            inputs.qualitativeSource.sheTransportContext.baseContext.sheDatum := by
+        simpa [
+          IUTStage1PreLedgerData.ConstructedQualitativeCertificateData.constructedCertificate,
+          QualitativeData.StructuredCertificate.ofConstructedIPLSHEAPT,
+          QualitativeData.StructuredSHETransportContext.sheDatum
+        ] using
+          congrArg (fun certificate => certificate.she)
+            inputs.qualitativeSource.certificate_eq_constructed
+      exact inputs.theorem311_subclaims.hodgeTheaterSHEAlignment.trans hcertificate }
+
+theorem transportBaseStructuredSHE_context_eq_transport_base
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    inputs.transportBaseStructuredSHE.context =
+      inputs.qualitativeSource.sheTransportContext.baseContext :=
+  rfl
+
 theorem qSignedLeThetaSigned
     (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
     package.preLedger.qSigned <= package.preLedger.thetaSigned :=
@@ -2448,6 +2484,18 @@ theorem toStructuredInputsWithSHE_hasStructuredAPT
     bundle.toStructuredInputsWithSHE.hasStructuredAPT = bundle.hasStructuredAPT :=
   rfl
 
+def ofTransportBaseStructuredSHE
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package :=
+  { constructedInputs := inputs,
+    structured_she := inputs.transportBaseStructuredSHE }
+
+theorem ofTransportBaseStructuredSHE_context_eq_transport_base
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    (ofTransportBaseStructuredSHE inputs).structured_she.context =
+      (ofTransportBaseStructuredSHE inputs).sheTransportContext.baseContext :=
+  rfl
+
 end IUTStage1Theorem311ConstructedQualitativeInputsWithSHE
 
 /--
@@ -2689,6 +2737,62 @@ theorem ofConstructedQualitativeInputsWithSHE_transportGuardAudit
       (ofConstructedQualitativeInputsWithSHE bundle) bundle :=
   constructedQualitativeTransportGuardAudit
     (ofConstructedQualitativeInputsWithSHE bundle) bundle rfl
+
+set_option linter.style.longLine false in
+/--
+Synchronized constructed transport guard.
+
+This is the stronger form used when the structured-SHE context in the
+Theorem 3.11 record is definitionally the base context of the typed
+SHE-transport system.  In that case the record's Hodge-history guard is not
+merely stored next to the transport audit: it is obtained by rewriting the
+transport audit's history-side separation across the record/bundle and
+structured-SHE/base-context equalities.
+-/
+structure SynchronizedConstructedQualitativeTransportGuardAudit
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
+    Prop where
+  transport_guard_audit :
+    ConstructedQualitativeTransportGuardAudit record bundle
+  she_context_eq_transport_base :
+    bundle.structured_she.context =
+      bundle.sheTransportContext.baseContext
+  record_history_guard_from_transport_audit :
+    record.bundle.structuredSHE.context.domainStructure.theater.side ≠
+      record.bundle.structuredSHE.context.codomainStructure.theater.side
+
+theorem synchronizedConstructedQualitativeTransportGuardAudit
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package)
+    (hbundle : record.bundle = bundle.toStructuredInputsWithSHE)
+    (hsync :
+      bundle.structured_she.context =
+        bundle.sheTransportContext.baseContext) :
+    SynchronizedConstructedQualitativeTransportGuardAudit record bundle :=
+  { transport_guard_audit :=
+      constructedQualitativeTransportGuardAudit record bundle hbundle,
+    she_context_eq_transport_base := hsync,
+    record_history_guard_from_transport_audit := by
+      rw [hbundle]
+      change bundle.structured_she.context.domainStructure.theater.side ≠
+        bundle.structured_she.context.codomainStructure.theater.side
+      rw [hsync]
+      exact
+        bundle.sheTransportContext.domainCodomainForbiddenTransportAudit
+          |>.history_sides_not_identified }
+
+theorem ofTransportBaseConstructedQualitativeInputsWithSHE_synchronizedTransportGuardAudit
+    (inputs : IUTStage1Theorem311ConstructedQualitativeInputs package) :
+    let bundle :=
+      IUTStage1Theorem311ConstructedQualitativeInputsWithSHE.ofTransportBaseStructuredSHE
+        inputs
+    SynchronizedConstructedQualitativeTransportGuardAudit
+      (ofConstructedQualitativeInputsWithSHE bundle) bundle := by
+  intro bundle
+  exact
+    synchronizedConstructedQualitativeTransportGuardAudit
+      (ofConstructedQualitativeInputsWithSHE bundle) bundle rfl rfl
 
 end IUTStage1Theorem311MultiradialSourceRecord
 

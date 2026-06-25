@@ -10437,6 +10437,21 @@ source-paper Hodge-theater reconstruction theorem, but it removes the earlier
 boundary where the Theorem~3.11 source record exposed only a side-inequality
 history guard while the constructed \(\SHE/\APT\) transport discipline lived
 only in a later bridge.
+Lean now also exposes the synchronized constructor
+\[
+\begin{array}{l}
+\texttt{ofTransportBaseConstructedQualitativeInputsWithSHE\_}\\
+\texttt{synchronizedTransportGuardAudit}.
+\end{array}
+\]
+It builds the structured-\(\SHE\) input from the base context of the
+constructed \(\SHE\)-transport system itself, proves the definitional equality
+between those contexts, and derives the record's Hodge-history guard by
+rewriting the transport audit's
+\texttt{history\_sides\_not\_identified} field.  This is the cleaner boundary
+for later endpoint lowering: arbitrary constructed bundles still carry the
+ordinary guard audit, while transport-base bundles make the source-record
+history separation a consequence of the typed transport system.
 The same endpoint also exposes the
 Step~(xi) normalized bridge directly as
 \texttt{normalizedRecordBridge} and
