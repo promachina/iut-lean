@@ -3842,9 +3842,33 @@ theorem archimedean_formula_le_gap
       source.arithmeticDivisorSource.localArithmeticUpperContribution
           source.additiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
             placeId -
-        source.additiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+          source.additiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
           placeId :=
   (source.archimedeanGapComparison placeId hkind).formula_bound_le_gap
+
+noncomputable def ofAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+      place estimate α η K hullSystem archIndex archSummand :=
+  { arithmeticDivisorSource := source.arithmeticDivisorSource,
+    additiveHaarLocalAnalyticConstructionFormulaSource :=
+      source.additiveHaarLocalAnalyticConstructionFormulaSource,
+    distinguishedGapComparison := fun placeId hkind =>
+      { logShellSource :=
+          source.additiveHaarLocalAnalyticConstructionFormulaSource
+            |>.distinguishedAdditiveHaarLogShellConstruction placeId hkind,
+        formula_bound_le_gap :=
+          source.distinguished_formula_le_gap placeId hkind },
+    distinguishedGapComparison_eq_construction := fun _ _ => rfl,
+    archimedeanGapComparison := fun placeId hkind =>
+      { metricSource :=
+          source.additiveHaarLocalAnalyticConstructionFormulaSource
+            |>.archimedeanMetricConstruction placeId hkind,
+        formula_bound_le_gap :=
+          source.archimedean_formula_le_gap placeId hkind },
+    archimedeanGapComparison_eq_construction := fun _ _ => rfl }
 
 noncomputable def toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
     (source :
@@ -3897,6 +3921,14 @@ theorem endpoint
       ⟨(source.archimedeanGapComparison placeId hkind).endpoint,
         source.archimedeanGapComparison_eq_construction placeId hkind⟩),
     source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.endpoint⟩
+
+theorem ofAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource_endpoint
+    (source :
+      IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    Endpoint
+      (ofAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource source) :=
+  (ofAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource source).endpoint
 
 end IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
 
