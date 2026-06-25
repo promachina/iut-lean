@@ -3932,6 +3932,149 @@ theorem ind3_logVolume_le
     core.logVolume choice₁ <= core.logVolume choice₂ :=
   core.ind3_logVolume_le hstep
 
+/--
+Quotient-indexed Remark 3.9.5 possible-image family attached to the typed
+Theorem 3.11 equality quotient.
+
+The index is `Quot core.equalityQuotient.relation`, not the original choice
+space.  Thus `(Ind1)` and `(Ind2)` have already been collapsed at the source
+of the hull construction, while `(Ind3)` remains outside this equality quotient
+and contributes only the upper-semi log-volume theorem above.
+-/
+def toRemark395PossibleImageFamilySource
+    (quotientImages : EqualityQuotientPossibleImages core images)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    IUTStage1Remark395PossibleImageFamilySource
+      (Point target) (Quot core.equalityQuotient.relation) :=
+  { hullOperator := hullOperator,
+    possibleRegion := fun quotientChoice =>
+      (quotientImages.quotientImages.region quotientChoice).toSet }
+
+theorem remark395PossibleRegion_pullback_eq
+    (quotientImages : EqualityQuotientPossibleImages core images)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (choice₀ : choice) :
+    (quotientImages.toRemark395PossibleImageFamilySource hullOperator).possibleRegion
+        (core.equalityQuotientMap choice₀) =
+      (images.region choice₀).toSet := by
+  exact congrArg Region.toSet (quotientImages.pullback_region_eq choice₀)
+
+set_option linter.style.longLine false in
+/--
+Typed equality quotient to Remark 3.9.5 Ob5 endpoint.
+
+For choices in the `(Ind1)/(Ind2)` equality orbit, the quotient-indexed
+Remark 3.9.5 possible-image regions are equal and both are contained in the
+canonical family hull.  This is the hull-side counterpart of
+`region_eq_of_equalityOrbit`, with `(Ind3)` still excluded from the equality
+quotient.
+-/
+theorem remark395Ob5EqualityQuotientEndpoint_of_equalityOrbit
+    (quotientImages : EqualityQuotientPossibleImages core images)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {choice₁ choice₂ : choice}
+    (hmem : choice₂ ∈ core.equalityOrbit choice₁) :
+    let familySource :=
+      quotientImages.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.possibleRegion (core.equalityQuotientMap choice₁) =
+        familySource.possibleRegion (core.equalityQuotientMap choice₂) ∧
+      familySource.familyUnion ⊆ familySource.canonicalHull ∧
+      familySource.possibleRegion (core.equalityQuotientMap choice₁) ⊆
+        familySource.canonicalHull ∧
+      familySource.possibleRegion (core.equalityQuotientMap choice₂) ⊆
+        familySource.canonicalHull ∧
+      familySource.canonicalPhi.approximant = familySource.canonicalHull ∧
+      familySource.hullOperator.isClosed familySource.canonicalHull :=
+  by
+    intro familySource
+    have hquot :
+        core.equalityQuotientMap choice₁ =
+          core.equalityQuotientMap choice₂ :=
+      Quot.sound hmem
+    exact
+      ⟨congrArg familySource.possibleRegion hquot,
+        familySource.familyUnion_subset_phi,
+        familySource.possibleRegion_subset_phi (core.equalityQuotientMap choice₁),
+        familySource.possibleRegion_subset_phi (core.equalityQuotientMap choice₂),
+        familySource.canonicalPhi_approximant_eq_phi,
+        familySource.phi_closed⟩
+
+set_option linter.style.longLine false in
+/--
+Typed equality quotient through Remark 3.9.5 Ob5--Ob6.
+
+This extends the Ob5 collapse by adding the `Phi`/`Xi` hull-approximant
+log-volume inequalities used on the Step (xi) side of the Corollary 3.12
+corridor.
+-/
+theorem remark395Ob5Ob6EqualityQuotientEndpoint_of_equalityOrbit
+    {κ : Type w}
+    (quotientImages : EqualityQuotientPossibleImages core images)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (phiFamily :
+      (quotientImages.toRemark395PossibleImageFamilySource hullOperator).PhiFamily κ)
+    (xiFamily :
+      (quotientImages.toRemark395PossibleImageFamilySource hullOperator).XiFamily κ)
+    (k : κ)
+    {choice₁ choice₂ : choice}
+    (hmem : choice₂ ∈ core.equalityOrbit choice₁) :
+    let familySource :=
+      quotientImages.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.possibleRegion (core.equalityQuotientMap choice₁) =
+        familySource.possibleRegion (core.equalityQuotientMap choice₂) ∧
+      familySource.familyUnion ⊆ familySource.canonicalHull ∧
+      familySource.possibleRegion (core.equalityQuotientMap choice₁) ⊆
+        familySource.canonicalHull ∧
+      familySource.possibleRegion (core.equalityQuotientMap choice₂) ⊆
+        familySource.canonicalHull ∧
+      familySource.HPhi phiFamily = familySource.canonicalHull ∧
+      familySource.hullOperator.logVolume familySource.familyUnion <=
+        familySource.hullOperator.logVolume (familySource.HPhi phiFamily) ∧
+      familySource.hullOperator.logVolume
+          (familySource.possibleRegion (core.equalityQuotientMap choice₁)) <=
+        familySource.hullOperator.logVolume (familySource.HPhi phiFamily) ∧
+      familySource.HXi xiFamily = familySource.canonicalHull ∧
+      familySource.hullOperator.logVolume familySource.familyUnion <=
+        familySource.hullOperator.logVolume (familySource.HXi xiFamily) ∧
+      familySource.hullOperator.logVolume
+          (familySource.possibleRegion (core.equalityQuotientMap choice₁)) <=
+        familySource.hullOperator.logVolume (familySource.HXi xiFamily) ∧
+      familySource.hullOperator.logVolume
+          ((xiFamily.exactApproximant k).approximant).approximant =
+        familySource.hullOperator.logVolume familySource.familyUnion :=
+  by
+    intro familySource
+    have hob5 :=
+      quotientImages.remark395Ob5EqualityQuotientEndpoint_of_equalityOrbit
+        hullOperator hmem
+    rcases hob5 with
+      ⟨hregion, hfamily_subset, hchoice₁_subset, hchoice₂_subset,
+        _hcanonicalPhi, _hphi_closed⟩
+    have hob6 :=
+      familySource.PhiXi_ob6_logVolume_endpoint
+        phiFamily xiFamily k (core.equalityQuotientMap choice₁)
+    rcases hob6 with
+      ⟨hHPhi_eq, _hHPhi_subset, _hphi_subset_HPhi, hfamily_le_HPhi,
+        _hHPhi_log, hchoice₁_le_HPhi, hHXi_eq, _hHXi_subset,
+        _hphi_subset_HXi, hfamily_le_HXi, _hHXi_log, hchoice₁_le_HXi,
+        hxi_exact_log⟩
+    exact
+      ⟨hregion,
+        hfamily_subset,
+        hchoice₁_subset,
+        hchoice₂_subset,
+        hHPhi_eq,
+        hfamily_le_HPhi,
+        hchoice₁_le_HPhi,
+        hHXi_eq,
+        hfamily_le_HXi,
+        hchoice₁_le_HXi,
+        hxi_exact_log⟩
+
 end EqualityQuotientPossibleImages
 
 /--

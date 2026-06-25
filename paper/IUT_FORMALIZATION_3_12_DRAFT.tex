@@ -8878,6 +8878,26 @@ back along \(\texttt{equalityQuotientMap}\) recovers the original choice-indexed
 family.  The direct \((\Ind_1)\) and \((\Ind_2)\) steps are members of this
 equality orbit, while the equality quotient's \((\Ind_3)\) generator is empty;
 \((\Ind_3)\) remains available only through the upper-semi log-volume theorem.
+This quotient now feeds the Step~(xi) hull side directly: the constructor
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311TypedIndeterminacyCore.}\\
+\quad\texttt{EqualityQuotientPossibleImages.}\\
+\quad\texttt{toRemark395PossibleImageFamilySource}
+\end{array}
+\]
+builds a Remark~3.9.5 possible-image family indexed by
+\(\mathrm{Quot}(\texttt{equalityQuotient.relation})\).  The checked endpoints
+\[
+\begin{array}{l}
+\texttt{remark395Ob5EqualityQuotientEndpoint\_of\_equalityOrbit},\\
+\texttt{remark395Ob5Ob6EqualityQuotientEndpoint\_of\_equalityOrbit}
+\end{array}
+\]
+prove the Ob5 collapse and Ob6 \(\Phi/\Xi\) hull-log-volume inequalities for
+\((\Ind_1)/(\Ind_2)\)-orbit choices.  They do not identify \((\Ind_3)\)
+choices; the \((\Ind_3)\) contribution is still precisely the separate
+one-sided log-volume inequality.
 The finite toy witness has been upgraded accordingly to
 \(\texttt{finiteToyEqualityQuotientPossibleImages}\).
 The current nonvacuity audit is packaged as
