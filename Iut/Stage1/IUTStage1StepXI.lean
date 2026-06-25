@@ -5486,6 +5486,67 @@ theorem sourceEndpoint
     sourceData.aptTransport_not_forbidden⟩
 
 set_option linter.style.longLine false in
+/--
+Typed transport-law audit for the constructed \(\IPL/\SHE/\APT\) source.
+
+The certificate keeps the three qualitative transport laws together:
+choice-wise input-prime-strip links are constructed from the fixed input strip,
+the \(\SHE\) transport system forbids domain-to-codomain history
+identification, and the \(\APT\) arrow is a permitted transport whose endpoints
+are therefore not a forbidden identification.
+-/
+structure ConstructedIPLSHEAPTTransportLawAudit
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    Prop where
+  ipl_choice_links :
+    ∀ choice : index,
+      (sourceData.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice
+  ipl_datum_constructed :
+    sourceData.toIPLLogVolumeTransport.iplDatum =
+      sourceData.iplConstructionSource.constructedDatum
+  ipl_datum_matches_certificate :
+    sourceData.iplConstructionSource.toIPLLinkSource.iplDatum =
+      package.preLedger.certificate.ipl
+  she_domain_to_codomain_forbidden :
+    ∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+        constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+        constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism
+  apt_arrow_permitted :
+    constructedBundle.aptConstruction.transportSystem.allowed
+      constructedBundle.aptConstruction.arrow
+  apt_arrow_not_forbidden :
+    ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+      constructedBundle.aptConstruction.arrow.source
+      constructedBundle.aptConstruction.arrow.target
+  apt_endpoint :
+    constructedBundle.aptConstruction.APTEndpoint
+
+set_option linter.style.longLine false in
+theorem constructedIPLSHEAPTTransportLawAudit
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    ConstructedIPLSHEAPTTransportLawAudit sourceData :=
+  { ipl_choice_links := sourceData.choiceWiseIPLEndpoint.1,
+    ipl_datum_constructed :=
+      sourceData.toFiniteHodgeSHEIPLConstructionSource.iplDatum_eq_constructedDatum,
+    ipl_datum_matches_certificate := rfl,
+    she_domain_to_codomain_forbidden :=
+      sourceData.noAllowedSHEDomainToCodomain,
+    apt_arrow_permitted := constructedBundle.aptConstruction.permitted,
+    apt_arrow_not_forbidden := sourceData.aptTransport_not_forbidden,
+    apt_endpoint := constructedBundle.aptConstruction.aptEndpoint }
+
+set_option linter.style.longLine false in
 structure ConstructedQualitativeHodgeSHEIPLBridgeAudit
     (sourceData :
       IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
@@ -5558,6 +5619,8 @@ structure ConstructedQualitativeHodgeSHEIPLBridgeAudit
     ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
       constructedBundle.aptConstruction.arrow.source
       constructedBundle.aptConstruction.arrow.target
+  transportLawAudit :
+    ConstructedIPLSHEAPTTransportLawAudit sourceData
 
 theorem toConstructedQualitativeHodgeSHEIPLBridgeAudit
     (sourceData :
@@ -5574,7 +5637,9 @@ theorem toConstructedQualitativeHodgeSHEIPLBridgeAudit
     noAllowedSHEDomainToCodomain :=
       sourceData.noAllowedSHEDomainToCodomain,
     aptTransport_not_forbidden :=
-      sourceData.aptTransport_not_forbidden }
+      sourceData.aptTransport_not_forbidden,
+    transportLawAudit :=
+      sourceData.constructedIPLSHEAPTTransportLawAudit }
 
 end IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
 
