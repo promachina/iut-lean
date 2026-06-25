@@ -4699,6 +4699,14 @@ images, log-theta-lattice procession data, \(F_l\)-label transitions, and the
 typed compatibility between possible images and the \((\Ind_1,\Ind_2)\)
 equality quotient.  It explicitly keeps the \((\Ind_3)\) contribution as an
 upper-semi log-volume inequality.
+The typed quotient layer now also has a first-class hull/log-volume
+compatibility object,
+\texttt{EqualityQuotientHullLogVolumeCompatibility}.  It packages the
+quotient-indexed possible-image family with a Remark~3.9.5 hull operator,
+proves pullback to the original choice-indexed images, proves equality-orbit
+invariance for the resulting hull log-volumes under \((\Ind_1)\) and
+\((\Ind_2)\), and keeps the \((\Ind_3)\) statement as the typed core's
+upper-semi log-volume inequality rather than turning it into a hull equality.
 
 The Step~(x) record names the finite-divisor packet, realified Frobenioid
 log-Kummer source, Kummer/forgetting compatibility, vertical-\(IQ\) target

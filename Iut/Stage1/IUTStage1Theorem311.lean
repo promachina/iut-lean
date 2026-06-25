@@ -4077,6 +4077,194 @@ theorem remark395Ob5Ob6EqualityQuotientEndpoint_of_equalityOrbit
 
 end EqualityQuotientPossibleImages
 
+set_option linter.style.longLine false in
+/--
+Hull/log-volume compatibility for possible images factored through the typed
+Theorem 3.11 equality quotient.
+
+This is the first-class version of the quotient-to-Remark 3.9.5 bridge used by
+the Step (xi) corridor.  The possible-image family is indexed by the
+`(Ind1)/(Ind2)` equality quotient; pullback recovers the original choice-indexed
+family; and the hull/log-volume maps are applied only after this quotient
+factorization.  The `(Ind3)` component is retained separately as the
+upper-semi log-volume relation of the typed core.
+-/
+structure EqualityQuotientHullLogVolumeCompatibility
+    {target : Copy}
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily target choice)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) where
+  quotientImages : EqualityQuotientPossibleImages core images
+
+namespace EqualityQuotientHullLogVolumeCompatibility
+
+variable {target : Copy}
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily target choice}
+variable {hullOperator :
+  IUTStage1Remark395HolomorphicHullOperator (Point target)}
+
+def ofCompatibility
+    (compatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+        core images)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    EqualityQuotientHullLogVolumeCompatibility core images hullOperator :=
+  { quotientImages :=
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages.ofCompatibility
+        compatibility }
+
+def familySource
+    (compatibility :
+      EqualityQuotientHullLogVolumeCompatibility core images hullOperator) :
+    IUTStage1Remark395PossibleImageFamilySource
+      (Point target) (Quot core.equalityQuotient.relation) :=
+  compatibility.quotientImages.toRemark395PossibleImageFamilySource hullOperator
+
+theorem possibleRegion_pullback_eq
+    (compatibility :
+      EqualityQuotientHullLogVolumeCompatibility core images hullOperator)
+    (choice₀ : choice) :
+    compatibility.familySource.possibleRegion
+        (core.equalityQuotientMap choice₀) =
+      (images.region choice₀).toSet :=
+  compatibility.quotientImages.remark395PossibleRegion_pullback_eq
+    hullOperator choice₀
+
+theorem possibleRegion_eq_of_equalityOrbit
+    (compatibility :
+      EqualityQuotientHullLogVolumeCompatibility core images hullOperator)
+    {choice₁ choice₂ : choice}
+    (hmem : choice₂ ∈ core.equalityOrbit choice₁) :
+    compatibility.familySource.possibleRegion
+        (core.equalityQuotientMap choice₁) =
+      compatibility.familySource.possibleRegion
+        (core.equalityQuotientMap choice₂) := by
+  have hquot :
+      core.equalityQuotientMap choice₁ =
+        core.equalityQuotientMap choice₂ :=
+    Quot.sound hmem
+  exact congrArg compatibility.familySource.possibleRegion hquot
+
+theorem logVolume_eq_of_equalityOrbit
+    (compatibility :
+      EqualityQuotientHullLogVolumeCompatibility core images hullOperator)
+    {choice₁ choice₂ : choice}
+    (hmem : choice₂ ∈ core.equalityOrbit choice₁) :
+    hullOperator.logVolume
+        (compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₁)) =
+      hullOperator.logVolume
+        (compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₂)) := by
+  exact congrArg hullOperator.logVolume
+    (compatibility.possibleRegion_eq_of_equalityOrbit hmem)
+
+theorem ind1_logVolume_eq
+    (compatibility :
+      EqualityQuotientHullLogVolumeCompatibility core images hullOperator)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind1.step choice₁ choice₂) :
+    hullOperator.logVolume
+        (compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₁)) =
+      hullOperator.logVolume
+        (compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₂)) :=
+  compatibility.logVolume_eq_of_equalityOrbit
+    (core.ind1_mem_equalityOrbit hstep)
+
+theorem ind2_logVolume_eq
+    (compatibility :
+      EqualityQuotientHullLogVolumeCompatibility core images hullOperator)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind2.step choice₁ choice₂) :
+    hullOperator.logVolume
+        (compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₁)) =
+      hullOperator.logVolume
+        (compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₂)) :=
+  compatibility.logVolume_eq_of_equalityOrbit
+    (core.ind2_mem_equalityOrbit hstep)
+
+theorem ind3_upper_semi_logVolume
+    (_compatibility :
+      EqualityQuotientHullLogVolumeCompatibility core images hullOperator)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind3.step choice₁ choice₂) :
+    core.logVolume choice₁ <= core.logVolume choice₂ :=
+  core.ind3_logVolume_le hstep
+
+set_option linter.style.longLine false in
+theorem hull_endpoint_of_equalityOrbit
+    (compatibility :
+      EqualityQuotientHullLogVolumeCompatibility core images hullOperator)
+    {choice₁ choice₂ : choice}
+    (hmem : choice₂ ∈ core.equalityOrbit choice₁) :
+    compatibility.familySource.possibleRegion
+        (core.equalityQuotientMap choice₁) =
+        compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₂) ∧
+      compatibility.familySource.familyUnion ⊆
+        compatibility.familySource.canonicalHull ∧
+      compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₁) ⊆
+        compatibility.familySource.canonicalHull ∧
+      compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₂) ⊆
+        compatibility.familySource.canonicalHull ∧
+      hullOperator.logVolume
+          (compatibility.familySource.possibleRegion
+            (core.equalityQuotientMap choice₁)) =
+        hullOperator.logVolume
+          (compatibility.familySource.possibleRegion
+            (core.equalityQuotientMap choice₂)) :=
+  ⟨compatibility.possibleRegion_eq_of_equalityOrbit hmem,
+    compatibility.familySource.familyUnion_subset_phi,
+    compatibility.familySource.possibleRegion_subset_phi
+      (core.equalityQuotientMap choice₁),
+    compatibility.familySource.possibleRegion_subset_phi
+      (core.equalityQuotientMap choice₂),
+    compatibility.logVolume_eq_of_equalityOrbit hmem⟩
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (compatibility :
+      EqualityQuotientHullLogVolumeCompatibility core images hullOperator) :
+    (∀ choice₀,
+      compatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₀) =
+        (images.region choice₀).toSet) ∧
+      (∀ {choice₁ choice₂ : choice},
+        choice₂ ∈ core.equalityOrbit choice₁ ->
+          compatibility.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁) =
+            compatibility.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂)) ∧
+      (∀ {choice₁ choice₂ : choice},
+        choice₂ ∈ core.equalityOrbit choice₁ ->
+          hullOperator.logVolume
+              (compatibility.familySource.possibleRegion
+                (core.equalityQuotientMap choice₁)) =
+            hullOperator.logVolume
+              (compatibility.familySource.possibleRegion
+                (core.equalityQuotientMap choice₂))) ∧
+      (∀ {choice₁ choice₂ : choice},
+        core.ind3.step choice₁ choice₂ ->
+          core.logVolume choice₁ <= core.logVolume choice₂) ∧
+      compatibility.familySource.familyUnion ⊆
+        compatibility.familySource.canonicalHull :=
+  ⟨compatibility.possibleRegion_pullback_eq,
+    fun hmem => compatibility.possibleRegion_eq_of_equalityOrbit hmem,
+    fun hmem => compatibility.logVolume_eq_of_equalityOrbit hmem,
+    fun hstep => compatibility.ind3_upper_semi_logVolume hstep,
+    compatibility.familySource.familyUnion_subset_phi⟩
+
+end EqualityQuotientHullLogVolumeCompatibility
+
 /--
 Finite nonvacuity witness for the typed indeterminacy core.
 
