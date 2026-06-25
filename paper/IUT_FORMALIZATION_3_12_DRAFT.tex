@@ -10861,9 +10861,14 @@ to \(C_{\Theta,\mathrm{can}}\leq C_\Theta\), the constructed global
 \(C_\Theta\)-scale audit, and the final dichotomy.  The underlying strict
 source also projects directly
 to \texttt{ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource}, and its
-\texttt{closedLocalGlobalEndpoint} and \texttt{localGlobalHandoffAudit}
-theorems expose the named closed \(C_\Theta\) route without passing through an
-older wrapper in the public audit surface.
+\texttt{closedLocalGlobalEndpoint}, \texttt{closedNoRawComparisonAudit}, and
+\texttt{localGlobalHandoffAudit} theorems expose the named closed
+\(C_\Theta\) route without passing through an older wrapper in the public audit
+surface.  The final preferred arithmetic-divisor-backed certificate now carries
+the same \texttt{closedNoRawComparisonAudit} field, so the absence of raw
+\(\theta_{\mathrm{signed}}\leq C_\Theta(-q_{\mathrm{signed}})\) and raw
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) endpoint hypotheses can be checked
+directly at the strongest current boundary.
 The compact preferred theorem is
 \[
 \begin{array}{l}
