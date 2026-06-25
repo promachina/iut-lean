@@ -5112,10 +5112,52 @@ structure IUTIVCThetaObligations where
   theorem110_distinguished_formula_to_gap_constructed : Prop
   theorem110_archimedean_formula_to_gap_constructed : Prop
   additive_haar_local_normalization_constructed : Prop
+  finite_place_summed_stepxi_haar_bound_constructed : Prop
+  finite_place_total_haar_defect_ge_one_constructed : Prop
+  iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed : Prop
+  ordered_real_plus_one_cancellation_constructed : Prop
   local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :
     Prop
   finite_place_arithmetic_gap_constructed : Prop
   local_to_global_canonicalCThetaScale_le_cTheta_constructed : Prop
+
+namespace IUTIVCThetaObligations
+
+def LocalToGlobalArithmeticChainAudit
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.finite_place_summed_stepxi_haar_bound_constructed ∧
+    obligations.finite_place_total_haar_defect_ge_one_constructed ∧
+    obligations.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed ∧
+    obligations.ordered_real_plus_one_cancellation_constructed ∧
+    obligations.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed ∧
+    obligations.finite_place_arithmetic_gap_constructed ∧
+    obligations.local_to_global_canonicalCThetaScale_le_cTheta_constructed
+
+theorem finitePlaceSummedStepXIHaarBoundConstructed
+    (obligations : IUTIVCThetaObligations)
+    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    obligations.finite_place_summed_stepxi_haar_bound_constructed :=
+  audit.1
+
+theorem finitePlaceTotalHaarDefectGeOneConstructed
+    (obligations : IUTIVCThetaObligations)
+    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    obligations.finite_place_total_haar_defect_ge_one_constructed :=
+  audit.2.1
+
+theorem iutIVCThetaPlusOneEqArithmeticGapConstructed
+    (obligations : IUTIVCThetaObligations)
+    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    obligations.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed :=
+  audit.2.2.1
+
+theorem orderedRealPlusOneCancellationConstructed
+    (obligations : IUTIVCThetaObligations)
+    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    obligations.ordered_real_plus_one_cancellation_constructed :=
+  audit.2.2.2.1
+
+end IUTIVCThetaObligations
 
 /--
 Preferred additive-Haar arithmetic-degree/p-adic formula obligations.
@@ -5324,6 +5366,10 @@ def RemainingPayloadAudit
     obligations.iutIV_cTheta.theorem110_distinguished_formula_to_gap_constructed ∧
     obligations.iutIV_cTheta.theorem110_archimedean_formula_to_gap_constructed ∧
     obligations.iutIV_cTheta.additive_haar_local_normalization_constructed ∧
+    obligations.iutIV_cTheta.finite_place_summed_stepxi_haar_bound_constructed ∧
+    obligations.iutIV_cTheta.finite_place_total_haar_defect_ge_one_constructed ∧
+    obligations.iutIV_cTheta.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed ∧
+    obligations.iutIV_cTheta.ordered_real_plus_one_cancellation_constructed ∧
     (IUTIVCThetaObligations.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
       obligations.iutIV_cTheta) ∧
     obligations.iutIV_cTheta.finite_place_arithmetic_gap_constructed ∧

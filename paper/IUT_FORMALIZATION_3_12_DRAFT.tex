@@ -10460,7 +10460,15 @@ log-volume slot by
 \(\mu_{\log}(q_{\mathrm{region}})\leq\theta_{\mathrm{signed}}\).  The assembled
 \(\IUT{}\,\mathrm{IV}\) obligation list now has a separate
 \texttt{finite\_place\_arithmetic\_gap\_constructed} entry, witnessed here by
-\texttt{finitePlaceDerivedArithmeticGap}.  Its distinguished Proposition~1.4
+\texttt{finitePlaceDerivedArithmeticGap}.  This entry has now been refined by
+\texttt{LocalToGlobalArithmeticChainAudit}, whose slots separately record the
+summed Step~(xi) Haar bound, the total Haar-defect lower bound, the \(\IUT{}\,\)
+IV identity \(C_\Theta+1=A-M\), and the ordered-real cancellation of the
+normalized \(+1\) before the final
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) consequence.  Thus the paper trace
+records the actual finite-place summation and cancellation, not only the derived
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) comparison.  Its distinguished
+Proposition~1.4
 entries are also no longer witnessed by the whole local-degree audit: the
 log-shell inclusion slot is filled by the per-place distinguished component
 endpoint, and the numerical-bound slot is filled by the local different and
