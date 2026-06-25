@@ -9350,6 +9350,26 @@ carrier.  These feed
 \texttt{IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticConstructionFormulaSource}
 and
 \texttt{IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource}.
+The distinguished and archimedean formula-to-gap comparisons have now been
+split out as named source objects:
+\[
+\begin{array}{l}
+\texttt{IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarFormulaGapComparisonSource},\\
+\texttt{IUTStage1IUTIVTheorem110ArchimedeanMetricFormulaGapComparisonSource}.
+\end{array}
+\]
+The first carries the local Proposition~1.4 additive-Haar log-shell source and
+derives the container-to-arithmetic-gap comparison; the second carries the
+Proposition~1.5 metric source and derives the corresponding archimedean
+container-to-gap comparison.  They assemble into
+\[
+\texttt{IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource},
+\]
+which projects to the existing additive-Haar arithmetic-divisor evaluation
+source.  Thus these two gap inequalities are no longer only anonymous fields at
+the local analytic boundary, although the stricter gap-matched source still has
+to be threaded into the deepest arithmetic-degree/\(p\)-adic finite-divisor
+endpoint.
 The corresponding Step~(xi) wrapper therefore exposes the preferred checked
 route.  Its finite-divisor
 vertical-\(IQ\) endpoint returns the additive-Haar source audit, the IUT~IV
@@ -9370,9 +9390,11 @@ the Corollary~3.12 dichotomy.  Neither the raw
 \(\theta_{\mathrm{signed}}\le C_\Theta|\log q|\) bound nor the raw
 \(C_{\Theta,\mathrm{can}}\le C_\Theta\) comparison is a hypothesis of this
 preferred endpoint.  The remaining source obligations are the actual local
-log-shell inclusions and numerical Proposition~1.4 estimates, the distinguished
-and archimedean formula-to-gap identifications, and the construction of the
-Step~(xi)/\IUT{} IV local arithmetic matching source.
+log-shell inclusions and numerical Proposition~1.4 estimates, construction of
+the named distinguished/archimedean gap-comparison witnesses from the paper
+arithmetic divisors, threading that stricter source into the preferred
+finite-divisor endpoint, and the construction of the Step~(xi)/\IUT{} IV local
+arithmetic matching source.
 That last item is now separated in Lean as
 \texttt{IUTStage1AdditiveHaarTheorem110StepXILocalArithmeticMatchingSource}:
 it packages the local equality

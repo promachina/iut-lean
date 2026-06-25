@@ -3601,6 +3601,305 @@ theorem endpoint
 
 end IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
 
+set_option linter.style.longLine false in
+/--
+Distinguished nonarchimedean formula-to-gap comparison source.
+
+This is the remaining Step (v)/Step (xi) arithmetic comparison at a single
+distinguished place.  It ties the local Proposition 1.4 additive-Haar
+log-shell construction to the arithmetic-minus-main-log gap used by
+Theorem 1.10, rather than passing only the final inequality as an anonymous
+field.
+-/
+structure IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarFormulaGapComparisonSource
+    (α : Type u) (η : Type v) (K : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (l : PrimeGeFive)
+    (distinguishedProcessionBound localArithmeticMinusMainGap : Real) where
+  logShellSource :
+    IUTStage1IUTIVProposition14DistinguishedAdditiveHaarLogShellSource
+      α η K hullSystem l distinguishedProcessionBound
+  formula_bound_le_gap :
+    distinguishedProcessionBound <= localArithmeticMinusMainGap
+
+namespace IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarFormulaGapComparisonSource
+
+set_option linter.style.longLine false
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {l : PrimeGeFive}
+variable {distinguishedProcessionBound localArithmeticMinusMainGap : Real}
+
+theorem prop14Container_le_gap
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarFormulaGapComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticMinusMainGap) :
+    ((source.logShellSource.toDistinguishedLocalLogShellConstructionSource).toDistinguishedLocalLogShellEstimate).prop14ContainerUpperBound <=
+      localArithmeticMinusMainGap := by
+  exact
+    le_trans
+      (IUTStage1IUTIVProposition14DistinguishedLocalLogShellEstimate.prop14_container_le_formula_bound
+        (source.logShellSource.toDistinguishedLocalLogShellConstructionSource.toDistinguishedLocalLogShellEstimate))
+      source.formula_bound_le_gap
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarFormulaGapComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticMinusMainGap) :
+    Prop :=
+  source.logShellSource.Endpoint ∧
+    distinguishedProcessionBound <= localArithmeticMinusMainGap ∧
+      ((source.logShellSource.toDistinguishedLocalLogShellConstructionSource).toDistinguishedLocalLogShellEstimate).prop14ContainerUpperBound <=
+        localArithmeticMinusMainGap
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarFormulaGapComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticMinusMainGap) :
+    Endpoint source :=
+  ⟨source.logShellSource.endpoint, source.formula_bound_le_gap,
+    source.prop14Container_le_gap⟩
+
+end IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarFormulaGapComparisonSource
+
+set_option linter.style.longLine false in
+/--
+Archimedean formula-to-gap comparison source.
+
+This is the Step (vii)/Step (xi) arithmetic comparison at a single archimedean
+place.  It keeps the Proposition 1.5 metric construction attached to the final
+arithmetic-minus-main-log gap comparison.
+-/
+structure IUTStage1IUTIVTheorem110ArchimedeanMetricFormulaGapComparisonSource
+    (I V : Type u) [Fintype I] [Fintype V]
+    (l : PrimeGeFive)
+    (archimedeanProcessionBound localArithmeticMinusMainGap : Real) where
+  metricSource :
+    IUTStage1IUTIVProposition15ArchimedeanMetricConstructionSource
+      I V l archimedeanProcessionBound
+  formula_bound_le_gap :
+    archimedeanProcessionBound <= localArithmeticMinusMainGap
+
+namespace IUTStage1IUTIVTheorem110ArchimedeanMetricFormulaGapComparisonSource
+
+variable {I V : Type u} [Fintype I] [Fintype V]
+variable {l : PrimeGeFive}
+variable {archimedeanProcessionBound localArithmeticMinusMainGap : Real}
+
+theorem metricContainer_le_gap
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricFormulaGapComparisonSource
+        I V l archimedeanProcessionBound localArithmeticMinusMainGap) :
+    source.metricSource.metricContainerLogVolume <=
+      localArithmeticMinusMainGap := by
+  exact
+    le_trans
+      (IUTStage1IUTIVProposition15ArchimedeanLocalMetricEstimate.metric_container_le_formula_bound
+        source.metricSource.toArchimedeanLocalMetricEstimate)
+      source.formula_bound_le_gap
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricFormulaGapComparisonSource
+        I V l archimedeanProcessionBound localArithmeticMinusMainGap) :
+    Prop :=
+  source.metricSource.Endpoint ∧
+    archimedeanProcessionBound <= localArithmeticMinusMainGap ∧
+      source.metricSource.metricContainerLogVolume <=
+        localArithmeticMinusMainGap
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricFormulaGapComparisonSource
+        I V l archimedeanProcessionBound localArithmeticMinusMainGap) :
+    Endpoint source :=
+  ⟨source.metricSource.endpoint, source.formula_bound_le_gap,
+    source.metricContainer_le_gap⟩
+
+end IUTStage1IUTIVTheorem110ArchimedeanMetricFormulaGapComparisonSource
+
+set_option linter.style.longLine false in
+/--
+Additive-Haar local analytic arithmetic-divisor source with named
+formula-to-gap comparison objects.
+
+This strengthens
+`IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource`:
+the distinguished and archimedean gap inequalities are no longer anonymous
+families.  They are obtained from per-place comparison records that retain the
+Proposition 1.4 additive-Haar log-shell source and Proposition 1.5 metric
+source, respectively.
+-/
+structure IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+    (place : Type u) [Fintype place]
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (α : Type v) (η : Type w) (K : place -> Type x)
+    [∀ placeId : place, TopologicalSpace (K placeId)]
+    [∀ placeId : place, MeasurableSpace (K placeId)]
+    [∀ placeId : place, AddGroup (K placeId)]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (archIndex archSummand : place -> Type v)
+    [∀ placeId : place, Fintype (archIndex placeId)]
+    [∀ placeId : place, Fintype (archSummand placeId)] where
+  arithmeticDivisorSource :
+    IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate
+  additiveHaarLocalAnalyticConstructionFormulaSource :
+    IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticConstructionFormulaSource
+      place arithmeticDivisorSource α η K hullSystem archIndex archSummand
+  distinguishedGapComparison :
+    ∀ placeId : place,
+      (hkind :
+        additiveHaarLocalAnalyticConstructionFormulaSource.localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+        IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarFormulaGapComparisonSource
+          α η (K placeId) hullSystem estimate.l
+          (additiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound
+            placeId)
+          (arithmeticDivisorSource.localArithmeticUpperContribution
+              additiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+                placeId -
+            additiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+              placeId)
+  distinguishedGapComparison_eq_construction :
+    ∀ placeId : place,
+      (hkind :
+        additiveHaarLocalAnalyticConstructionFormulaSource.localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+        (distinguishedGapComparison placeId hkind).logShellSource =
+          (additiveHaarLocalAnalyticConstructionFormulaSource).distinguishedAdditiveHaarLogShellConstruction
+            placeId hkind
+  archimedeanGapComparison :
+    ∀ placeId : place,
+      (hkind :
+        additiveHaarLocalAnalyticConstructionFormulaSource.localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
+        IUTStage1IUTIVTheorem110ArchimedeanMetricFormulaGapComparisonSource
+          (archIndex placeId) (archSummand placeId) estimate.l
+          (additiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound
+            placeId)
+          (arithmeticDivisorSource.localArithmeticUpperContribution
+              additiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+                placeId -
+            additiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+              placeId)
+  archimedeanGapComparison_eq_construction :
+    ∀ placeId : place,
+      (hkind :
+        additiveHaarLocalAnalyticConstructionFormulaSource.localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
+        (archimedeanGapComparison placeId hkind).metricSource =
+          (additiveHaarLocalAnalyticConstructionFormulaSource).archimedeanMetricConstruction
+            placeId hkind
+
+namespace IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+
+set_option linter.style.longLine false
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {α : Type v} {η : Type w} {K : place -> Type x}
+variable [∀ placeId : place, TopologicalSpace (K placeId)]
+variable [∀ placeId : place, MeasurableSpace (K placeId)]
+variable [∀ placeId : place, AddGroup (K placeId)]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {archIndex archSummand : place -> Type v}
+variable [∀ placeId : place, Fintype (archIndex placeId)]
+variable [∀ placeId : place, Fintype (archSummand placeId)]
+
+theorem distinguished_formula_le_gap
+    (source :
+      IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand)
+    (placeId : place)
+    (hkind :
+      source.additiveHaarLocalAnalyticConstructionFormulaSource.localKind placeId =
+        IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) :
+    source.additiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound
+        placeId <=
+      source.arithmeticDivisorSource.localArithmeticUpperContribution
+          source.additiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+            placeId -
+        source.additiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+          placeId :=
+  (source.distinguishedGapComparison placeId hkind).formula_bound_le_gap
+
+theorem archimedean_formula_le_gap
+    (source :
+      IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand)
+    (placeId : place)
+    (hkind :
+      source.additiveHaarLocalAnalyticConstructionFormulaSource.localKind placeId =
+        IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) :
+    source.additiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound
+        placeId <=
+      source.arithmeticDivisorSource.localArithmeticUpperContribution
+          source.additiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+            placeId -
+        source.additiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+          placeId :=
+  (source.archimedeanGapComparison placeId hkind).formula_bound_le_gap
+
+noncomputable def toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+      place estimate α η K hullSystem archIndex archSummand :=
+  { arithmeticDivisorSource := source.arithmeticDivisorSource,
+    additiveHaarLocalAnalyticConstructionFormulaSource :=
+      source.additiveHaarLocalAnalyticConstructionFormulaSource,
+    distinguished_formula_le_gap :=
+      source.distinguished_formula_le_gap,
+    archimedean_formula_le_gap :=
+      source.archimedean_formula_le_gap }
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    Prop :=
+  source.additiveHaarLocalAnalyticConstructionFormulaSource.Endpoint ∧
+    (∀ placeId : place,
+      (hkind :
+        source.additiveHaarLocalAnalyticConstructionFormulaSource.localKind placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+        (source.distinguishedGapComparison placeId hkind).Endpoint ∧
+          (source.distinguishedGapComparison placeId hkind).logShellSource =
+            (source.additiveHaarLocalAnalyticConstructionFormulaSource).distinguishedAdditiveHaarLogShellConstruction
+              placeId hkind) ∧
+      (∀ placeId : place,
+        (hkind :
+          source.additiveHaarLocalAnalyticConstructionFormulaSource.localKind placeId =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
+          (source.archimedeanGapComparison placeId hkind).Endpoint ∧
+            (source.archimedeanGapComparison placeId hkind).metricSource =
+              (source.additiveHaarLocalAnalyticConstructionFormulaSource).archimedeanMetricConstruction
+                placeId hkind) ∧
+        source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    Endpoint source :=
+  ⟨source.additiveHaarLocalAnalyticConstructionFormulaSource.endpoint,
+    (fun placeId hkind =>
+      ⟨(source.distinguishedGapComparison placeId hkind).endpoint,
+        source.distinguishedGapComparison_eq_construction placeId hkind⟩),
+    (fun placeId hkind =>
+      ⟨(source.archimedeanGapComparison placeId hkind).endpoint,
+        source.archimedeanGapComparison_eq_construction placeId hkind⟩),
+    source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+
 /--
 IUT IV, Theorem 1.10 final displayed bound after the tripodal-to-`F` passage.
 
