@@ -9533,6 +9533,20 @@ Prop.~1.4/1.5 comparison
 into the Step~(xi)-controlled comparison
 \(\mathrm{formula}_v\leq S_v\), and then projects to the formula-gap-matched
 arithmetic-divisor evaluation source.
+This comparison is now backed by named Proposition~1.4/1.5 construction
+records.  The algebra layer adds single-place distinguished and archimedean
+arithmetic-degree comparison sources; the experiment layer combines them as
+\[
+\begin{array}{l}
+\texttt{IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegree}\\
+\texttt{ComparisonFormulaGapSource}.
+\end{array}
+\]
+Thus the remaining comparison with \(a_l(D_v+C_v)\) is no longer an anonymous
+inequality: it is attached to the same additive-Haar log-shell and
+archimedean metric construction witnesses used by the formula-gap source.  The
+still-open part is to construct those arithmetic-degree comparisons from the
+detailed local inclusions and metric estimates themselves.
 The prime-error side has then been lowered another
 step by
 \texttt{IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource}: it

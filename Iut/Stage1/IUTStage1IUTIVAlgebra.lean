@@ -3726,6 +3726,130 @@ end IUTStage1IUTIVTheorem110ArchimedeanMetricFormulaGapComparisonSource
 
 set_option linter.style.longLine false in
 /--
+Distinguished nonarchimedean formula-to-arithmetic-degree comparison source.
+
+This is the sharper Step (v) comparison needed by the Step (xi) corridor: the
+Proposition 1.4 additive-Haar log-shell construction is compared directly with
+the local arithmetic-degree part \(a_l(D_v+C_v)\), before any prime-error or
+main-log terms enter the Theorem 1.10 arithmetic gap.
+-/
+structure IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarArithmeticDegreeComparisonSource
+    (α : Type u) (η : Type v) (K : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (l : PrimeGeFive)
+    (distinguishedProcessionBound localArithmeticDegreePart : Real) where
+  logShellSource :
+    IUTStage1IUTIVProposition14DistinguishedAdditiveHaarLogShellSource
+      α η K hullSystem l distinguishedProcessionBound
+  formula_bound_le_arithmeticDegreePart :
+    distinguishedProcessionBound <= localArithmeticDegreePart
+
+namespace IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarArithmeticDegreeComparisonSource
+
+set_option linter.style.longLine false
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {l : PrimeGeFive}
+variable {distinguishedProcessionBound localArithmeticDegreePart : Real}
+
+theorem prop14Container_le_arithmeticDegreePart
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarArithmeticDegreeComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticDegreePart) :
+    ((source.logShellSource.toDistinguishedLocalLogShellConstructionSource).toDistinguishedLocalLogShellEstimate).prop14ContainerUpperBound <=
+      localArithmeticDegreePart := by
+  exact
+    le_trans
+      (IUTStage1IUTIVProposition14DistinguishedLocalLogShellEstimate.prop14_container_le_formula_bound
+        (source.logShellSource.toDistinguishedLocalLogShellConstructionSource.toDistinguishedLocalLogShellEstimate))
+      source.formula_bound_le_arithmeticDegreePart
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarArithmeticDegreeComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticDegreePart) :
+    Prop :=
+  source.logShellSource.Endpoint ∧
+    distinguishedProcessionBound <= localArithmeticDegreePart ∧
+      ((source.logShellSource.toDistinguishedLocalLogShellConstructionSource).toDistinguishedLocalLogShellEstimate).prop14ContainerUpperBound <=
+        localArithmeticDegreePart
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarArithmeticDegreeComparisonSource
+        α η K hullSystem l distinguishedProcessionBound
+        localArithmeticDegreePart) :
+    Endpoint source :=
+  ⟨source.logShellSource.endpoint,
+    source.formula_bound_le_arithmeticDegreePart,
+    source.prop14Container_le_arithmeticDegreePart⟩
+
+end IUTStage1IUTIVTheorem110DistinguishedAdditiveHaarArithmeticDegreeComparisonSource
+
+set_option linter.style.longLine false in
+/--
+Archimedean formula-to-arithmetic-degree comparison source.
+
+This is the Step (vii) analogue of the distinguished comparison above: the
+Proposition 1.5 metric construction is attached to a direct comparison with
+the local arithmetic-degree part \(a_l(D_v+C_v)\).
+-/
+structure IUTStage1IUTIVTheorem110ArchimedeanMetricArithmeticDegreeComparisonSource
+    (I V : Type u) [Fintype I] [Fintype V]
+    (l : PrimeGeFive)
+    (archimedeanProcessionBound localArithmeticDegreePart : Real) where
+  metricSource :
+    IUTStage1IUTIVProposition15ArchimedeanMetricConstructionSource
+      I V l archimedeanProcessionBound
+  formula_bound_le_arithmeticDegreePart :
+    archimedeanProcessionBound <= localArithmeticDegreePart
+
+namespace IUTStage1IUTIVTheorem110ArchimedeanMetricArithmeticDegreeComparisonSource
+
+variable {I V : Type u} [Fintype I] [Fintype V]
+variable {l : PrimeGeFive}
+variable {archimedeanProcessionBound localArithmeticDegreePart : Real}
+
+theorem metricContainer_le_arithmeticDegreePart
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricArithmeticDegreeComparisonSource
+        I V l archimedeanProcessionBound localArithmeticDegreePart) :
+    source.metricSource.metricContainerLogVolume <=
+      localArithmeticDegreePart := by
+  exact
+    le_trans
+      (IUTStage1IUTIVProposition15ArchimedeanLocalMetricEstimate.metric_container_le_formula_bound
+        source.metricSource.toArchimedeanLocalMetricEstimate)
+      source.formula_bound_le_arithmeticDegreePart
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricArithmeticDegreeComparisonSource
+        I V l archimedeanProcessionBound localArithmeticDegreePart) :
+    Prop :=
+  source.metricSource.Endpoint ∧
+    archimedeanProcessionBound <= localArithmeticDegreePart ∧
+      source.metricSource.metricContainerLogVolume <=
+        localArithmeticDegreePart
+
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110ArchimedeanMetricArithmeticDegreeComparisonSource
+        I V l archimedeanProcessionBound localArithmeticDegreePart) :
+    Endpoint source :=
+  ⟨source.metricSource.endpoint,
+    source.formula_bound_le_arithmeticDegreePart,
+    source.metricContainer_le_arithmeticDegreePart⟩
+
+end IUTStage1IUTIVTheorem110ArchimedeanMetricArithmeticDegreeComparisonSource
+
+set_option linter.style.longLine false in
+/--
 Additive-Haar local analytic arithmetic-divisor source with named
 formula-to-gap comparison objects.
 
