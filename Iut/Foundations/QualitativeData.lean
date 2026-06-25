@@ -392,6 +392,52 @@ theorem not_forbidden
 end PermittedHodgeTheaterTransport
 
 /--
+Quotient object attached to a Hodge-theater transport system.
+
+The setoid is supplied as source data: it records which theater histories are
+identified by the permitted transport discipline.  Every allowed arrow must
+become an equality in this quotient.
+-/
+structure HodgeTheaterTransportQuotient
+    (system : HodgeTheaterTransportSystem) where
+  quotientSetoid : Setoid HodgeTheaterId
+  allowed_arrow_related :
+    ∀ {arrow : HodgeTheaterTransportArrow},
+      system.allowed arrow ->
+        quotientSetoid.r arrow.source arrow.target
+
+namespace HodgeTheaterTransportQuotient
+
+variable {system : HodgeTheaterTransportSystem}
+
+def quotient
+    (transportQuotient : HodgeTheaterTransportQuotient system) : Type :=
+  Quotient transportQuotient.quotientSetoid
+
+def classOf
+    (transportQuotient : HodgeTheaterTransportQuotient system)
+    (theater : HodgeTheaterId) :
+    transportQuotient.quotient :=
+  Quotient.mk transportQuotient.quotientSetoid theater
+
+theorem allowedArrowClassEq
+    (transportQuotient : HodgeTheaterTransportQuotient system)
+    {arrow : HodgeTheaterTransportArrow}
+    (hallowed : system.allowed arrow) :
+    transportQuotient.classOf arrow.source =
+      transportQuotient.classOf arrow.target :=
+  Quotient.sound (transportQuotient.allowed_arrow_related hallowed)
+
+theorem permittedTransportClassEq
+    (transportQuotient : HodgeTheaterTransportQuotient system)
+    (transport : PermittedHodgeTheaterTransport system) :
+    transportQuotient.classOf transport.arrow.source =
+      transportQuotient.classOf transport.arrow.target :=
+  transportQuotient.allowedArrowClassEq transport.permitted
+
+end HodgeTheaterTransportQuotient
+
+/--
 SHE context whose history separation is expressed by the typed transport system.
 
 The older `StructuredSHEContext` is retained as the underlying local expression
@@ -509,6 +555,7 @@ cannot be one of the forbidden identifications.
 structure AlgorithmicParallelTransportConstruction
     (family : TransportedRegionFamily source target index) where
   transportSystem : HodgeTheaterTransportSystem
+  transportQuotient : HodgeTheaterTransportQuotient transportSystem
   arrow : HodgeTheaterTransportArrow
   permitted : transportSystem.allowed arrow
   outputFamily : TransportedRegionFamily source target index
@@ -557,6 +604,12 @@ theorem permitted_not_forbidden
         construction.arrow.source construction.arrow.target :=
   construction.permittedTransport.not_forbidden
 
+theorem permitted_arrow_quotient_eq
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    construction.transportQuotient.classOf construction.arrow.source =
+      construction.transportQuotient.classOf construction.arrow.target :=
+  construction.transportQuotient.allowedArrowClassEq construction.permitted
+
 def APTEndpoint
     (construction : AlgorithmicParallelTransportConstruction family) : Prop :=
   construction.toAPTDatum.mechanism = construction.arrow.mechanism ∧
@@ -574,6 +627,39 @@ theorem aptEndpoint
     construction.toAPTDatum_output_eq_family,
     construction.permitted,
     construction.permitted_not_forbidden⟩
+
+/--
+Typed audit that an APT datum is realized by a permitted arrow in a named
+transport quotient.
+
+This is the quotient-facing strengthening of `APTEndpoint`: the permitted
+arrow is not merely allowed and non-forbidden; its endpoints are equal in the
+transport quotient carried by the APT construction.
+-/
+structure APTTransportQuotientAudit
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    Prop where
+  apt_arrow_permitted :
+    construction.transportSystem.allowed construction.arrow
+  allowed_arrow_related :
+    construction.transportQuotient.quotientSetoid.r
+      construction.arrow.source construction.arrow.target
+  permitted_arrow_quotient_eq :
+    construction.transportQuotient.classOf construction.arrow.source =
+      construction.transportQuotient.classOf construction.arrow.target
+  apt_endpoint :
+    construction.APTEndpoint
+
+theorem aptTransportQuotientAudit
+    (construction : AlgorithmicParallelTransportConstruction family) :
+    APTTransportQuotientAudit construction :=
+  { apt_arrow_permitted := construction.permitted,
+    allowed_arrow_related :=
+      construction.transportQuotient.allowed_arrow_related
+        construction.permitted,
+    permitted_arrow_quotient_eq :=
+      construction.permitted_arrow_quotient_eq,
+    apt_endpoint := construction.aptEndpoint }
 
 end AlgorithmicParallelTransportConstruction
 

@@ -5739,6 +5739,9 @@ structure ConstructedIPLSHEAPTTransportLawAudit
     ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
       constructedBundle.aptConstruction.arrow.source
       constructedBundle.aptConstruction.arrow.target
+  apt_transport_quotient_audit :
+    QualitativeData.AlgorithmicParallelTransportConstruction.APTTransportQuotientAudit
+      constructedBundle.aptConstruction
   apt_endpoint :
     constructedBundle.aptConstruction.APTEndpoint
 
@@ -5758,6 +5761,8 @@ theorem constructedIPLSHEAPTTransportLawAudit
     she_forbidden_transport_audit := sourceData.sheForbiddenTransportAudit,
     apt_arrow_permitted := constructedBundle.aptConstruction.permitted,
     apt_arrow_not_forbidden := sourceData.aptTransport_not_forbidden,
+    apt_transport_quotient_audit :=
+      constructedBundle.aptConstruction.aptTransportQuotientAudit,
     apt_endpoint := constructedBundle.aptConstruction.aptEndpoint }
 
 set_option linter.style.longLine false in
