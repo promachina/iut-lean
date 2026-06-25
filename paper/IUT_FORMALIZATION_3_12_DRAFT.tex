@@ -4794,6 +4794,23 @@ At this layer the local defect is named as the IUT IV arithmetic-defect term,
 with a placewise proof that it equals the \(p\)-adic unit-ball Haar index.  The
 same audit therefore carries the total defect lower bound and the strict
 \((\Ind_3)\) non-collapse in the paper-side \(C_\Theta\) vocabulary.
+The same strict witness has now been lowered to the IUT IV arithmetic-divisor
+evaluation surface:
+\[
+\begin{array}{l}
+\texttt{strictFiniteToyOneSidedIUTIVArithmeticDivisorEvaluation}\\
+\quad\texttt{StepXILocalTermCThetaSource},\\
+\texttt{StrictFiniteToyOneSidedIUTIVArithmeticDivisorEvaluation}\\
+\quad\texttt{StepXILocalTermCThetaAudit}.
+\end{array}
+\]
+Here the arithmetic upper term and main-log term are no longer supplied as
+separate global equalities.  They are read from
+\texttt{IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource}, whose
+endpoint gives the local different/conductor sums, prime-error sum,
+arithmetic-upper sum, and main-log sum.  The remaining handoff is the pointwise
+identity matching each local arithmetic upper contribution with the Step~(xi)
+canonical term, the IUT IV local defect, and the local main-log contribution.
 
 The Step~(x) record names the finite-divisor packet, realified Frobenioid
 log-Kummer source, Kummer/forgetting compatibility, vertical-\(IQ\) target
