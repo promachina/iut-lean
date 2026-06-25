@@ -5413,6 +5413,23 @@ theorem targetLogVolume_preserved
   sourceData.toFiniteHodgeSHEIPLConstructionSource.targetLogVolume_preserved
 
 set_option linter.style.longLine false in
+theorem choiceWiseIPLEndpoint
+    (sourceData :
+      IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+        record constructedBundle l X C
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved) :
+    (∀ choice : index,
+      (sourceData.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume :=
+  sourceData.toFiniteHodgeSHEIPLConstructionSource.constructedIPLChoiceLink_endpoint
+
+set_option linter.style.longLine false in
 theorem sourceEndpoint
     (sourceData :
       IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
@@ -5428,6 +5445,11 @@ theorem sourceEndpoint
         sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
       sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
         sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      (∀ choice : index,
+        (sourceData.iplConstructionSource.choiceLink choice).source =
+            sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+          (sourceData.iplConstructionSource.choiceLink choice).target =
+            sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
       sourceData.toIPLLogVolumeTransport.targetLogVolume =
         sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
       sourceData.constructedTransportSource.sourceData.forgetfulTransport.transportAllowed ∧
@@ -5446,6 +5468,7 @@ theorem sourceEndpoint
     sourceData.toFiniteHodgeSHEIPLConstructionSource.iplDatum_eq_constructedDatum,
     sourceData.iplConstructionSource.linkSource_eq_input,
     sourceData.iplConstructionSource.linkTarget_eq_output,
+    sourceData.choiceWiseIPLEndpoint.1,
     sourceData.targetLogVolume_preserved,
     sourceData.constructedTransportSource.finiteForgetfulTransportAllowed,
     sourceData.constructedTransportSource.finiteForgetfulHistoriesNotIdentified,
@@ -5487,6 +5510,11 @@ structure ConstructedQualitativeHodgeSHEIPLBridgeAudit
         sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
       sourceData.toIPLLogVolumeTransport.iplDatum.link.target =
         sourceData.toIPLLogVolumeTransport.iplDatum.outputPrimeStrip ∧
+      (∀ choice : index,
+        (sourceData.iplConstructionSource.choiceLink choice).source =
+            sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+          (sourceData.iplConstructionSource.choiceLink choice).target =
+            sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
       sourceData.toIPLLogVolumeTransport.targetLogVolume =
         sourceData.toIPLLogVolumeTransport.sourceLogVolume ∧
       sourceData.constructedTransportSource.sourceData.forgetfulTransport.transportAllowed ∧
@@ -5500,6 +5528,16 @@ structure ConstructedQualitativeHodgeSHEIPLBridgeAudit
       ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
         constructedBundle.aptConstruction.arrow.source
         constructedBundle.aptConstruction.arrow.target
+  choiceWiseIPLEndpoint :
+    (∀ choice : index,
+      (sourceData.iplConstructionSource.choiceLink choice).source =
+          sourceData.toIPLLogVolumeTransport.iplDatum.inputPrimeStrip ∧
+        (sourceData.iplConstructionSource.choiceLink choice).target =
+          sourceData.toIPLLogVolumeTransport.iplDatum.choicePrimeStrip choice) ∧
+      sourceData.toIPLLogVolumeTransport.iplDatum =
+        sourceData.iplConstructionSource.constructedDatum ∧
+      sourceData.toIPLLogVolumeTransport.targetLogVolume =
+        sourceData.toIPLLogVolumeTransport.sourceLogVolume
   noAllowedSHEDomainToCodomain :
     ∀ mechanism : QualitativeData.TransportMechanismId,
       ¬ constructedBundle.sheTransportContext.transportSystem.Allows
@@ -5522,6 +5560,7 @@ theorem toConstructedQualitativeHodgeSHEIPLBridgeAudit
       sourceData.toFiniteHodgeSHEIPLConstructionSource
         |>.toConstructedIPLFiniteTransportLogVolumeChainAudit,
     sourceEndpoint := sourceData.sourceEndpoint,
+    choiceWiseIPLEndpoint := sourceData.choiceWiseIPLEndpoint,
     noAllowedSHEDomainToCodomain :=
       sourceData.noAllowedSHEDomainToCodomain,
     aptTransport_not_forbidden :=
