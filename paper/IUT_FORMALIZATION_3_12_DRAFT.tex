@@ -9731,6 +9731,20 @@ This audit records that the coefficient-window source's displayed \(a_l\) is
 definitionally the arithmetic-divisor evaluation coefficient used by the local
 formula source, and that the lower bound \(1\leq a_l\) is transported through
 that equality before the local degree-identification formulas are built.
+The formula source also now has a named
+\texttt{LocalDegreeFormulaAudit}.  It derives, from the Step~(v) formula
+bound, the Proposition~1.4 tensor equality, and the tensor domination,
+\[
+  \mathrm{bound}^{(v)}_v \leq D_v+C_v,
+\]
+and it derives from the Step~(vii) formula equality the archimedean identity
+\[
+  \mathrm{bound}^{(vii)}_v = D_v+C_v
+\]
+together with its inequality form.  These are the local unscaled consequences
+used to construct the degree-identification records; they are no longer only
+recoverable by inspecting the projection to
+\texttt{DegreeIdentifiedUnscaledFormulaGapSource}.
 Thus the remaining local obligation has moved to the formula-equality
 boundary itself: instantiate these Step~(v)/Step~(vii) local formula
 identifications from the detailed local valuation/log-shell and archimedean
@@ -9802,9 +9816,10 @@ This audit records the strict source's
 \texttt{MatchedLocalDegreeFormulaAudit}: the matched local-degree endpoint, the
 coefficient-window endpoint, the nested
 \texttt{CoefficientWindowSynchronizationAudit}, the projected local
-degree-formula endpoint, the formula-gap matched arithmetic-degree/\(p\)-adic
-endpoint, the \texttt{ArithmeticDegreeCalibrationAudit}, the definitional
-formula-core synchronization, and the degree-identified unscaled endpoint.  The calibration
+degree-formula endpoint, the nested \texttt{LocalDegreeFormulaAudit}, the
+formula-gap matched arithmetic-degree/\(p\)-adic endpoint, the
+\texttt{ArithmeticDegreeCalibrationAudit}, the definitional formula-core
+synchronization, and the degree-identified unscaled endpoint.  The calibration
 audit records, place by place, that the localized Step~(xi) determinant weight
 is the IUT~IV arithmetic-degree coefficient and that the adjusted raw
 log-volume is the local different-plus-conductor degree; the displayed
