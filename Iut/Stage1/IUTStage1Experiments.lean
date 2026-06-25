@@ -68834,6 +68834,113 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThe
         package.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < estimate.cTheta
 
+namespace ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThetaAudit
+
+set_option linter.style.longLine false
+
+variable {source target : Copy} {coric : Type u}
+variable {package :
+  IUTStage1SourcePackage source target
+    (IUTStage1PlaceAuditedDirectSummandPacketChoice
+      coric IUTStage1PlaceKind.nonarchimedean)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {constructedBundle :
+  IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package}
+variable {l : PrimeGeFive}
+variable {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {sourceEvaluation targetEvaluation :
+  IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+    l X C}
+variable {canonicalOneDegree_preserved :
+  targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+      (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+    sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+      (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value))}
+variable {constructedHodgeIPLSource :
+  IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource
+    record constructedBundle l X C
+    sourceEvaluation targetEvaluation canonicalOneDegree_preserved}
+variable {β : Type v} [Fintype β]
+variable {remark395HullSource :
+  IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+    (β := β) record}
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {η : Type y} {γ : Type w} [Fintype γ]
+variable {localPrime : β -> Nat}
+variable [∀ place : β, Fact (Nat.Prime (localPrime place))]
+variable {localField : β -> Type x}
+variable [(place : β) -> NontriviallyNormedField (localField place)]
+variable [∀ place : β, ProperSpace (localField place)]
+variable [∀ place : β, IsUltrametricDist (localField place)]
+variable [(place : β) -> MeasurableSpace (localField place)]
+variable [∀ place : β, BorelSpace (localField place)]
+variable [∀ place : β, LocallyCompactSpace (localField place)]
+variable [∀ place : β, IsTopologicalAddGroup (localField place)]
+variable [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+variable [∀ place : β,
+  FiniteDimensional ℚ_[localPrime place] (localField place)]
+variable {αHaar : Type z}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+variable {αLocal : Type z} {ηLocal : Type y}
+variable {localAnalyticHullSystem :
+  IUTStage1Remark395HolomorphicHullSystem αLocal}
+variable {archIndex archSummand : β -> Type z}
+variable [∀ place : β, Fintype (archIndex place)]
+variable [∀ place : β, Fintype (archSummand place)]
+variable {arithmeticDegreePadicSource :
+  ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+    remark395HullSource estimate l η γ localPrime localField αHaar
+    hullSystem αLocal ηLocal localAnalyticHullSystem archIndex archSummand}
+variable {j : Nat}
+variable {product :
+  IUTStage1BaseValuationTensorPacketProductLogVolume
+    IUTStage1PlaceKind.nonarchimedean j}
+variable {audited :
+  IUTStage1PlaceAuditedDirectSummandPacketChoice
+    coric IUTStage1PlaceKind.nonarchimedean}
+variable {divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product}
+
+set_option linter.style.longLine false in
+/--
+Projection of the preferred additive-Haar certificate to the one-sided
+Theorem 3.11 local-to-global endpoint.
+
+This is the audit fact that the preferred certificate really carries the
+typed equality-quotient/one-sided-\((Ind3)\) multiradial source, not just the
+final ordered-real dichotomy.
+-/
+theorem oneSidedLocalGlobalEndpoint
+    (audit :
+      ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThetaAudit
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+        constructedHodgeIPLSource remark395HullSource estimate
+        arithmeticDegreePadicSource audited divisorPacket) :
+    ConstructedTheorem311OneSidedLocalGlobalCThetaSource.Endpoint
+      (arithmeticDegreePadicSource.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+        |>.toConstructedTheorem311OneSidedLocalGlobalCThetaSource) :=
+  audit.baseAudit.oneSidedEndpoint
+
+set_option linter.style.longLine false in
+/--
+Projection of the preferred additive-Haar certificate to the coarse
+typed-indeterminacy local-to-global endpoint.
+
+This is the endpoint whose source object contains the typed
+`IUTStage1Theorem311TypedIndeterminacyCore` and derives
+`canonicalCThetaScale <= estimate.cTheta` from the arithmetic gap.
+-/
+theorem indeterminacyLocalGlobalEndpoint
+    (audit :
+      ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThetaAudit
+        sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+        constructedHodgeIPLSource remark395HullSource estimate
+        arithmeticDegreePadicSource audited divisorPacket) :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.Endpoint
+      arithmeticDegreePadicSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource :=
+  audit.baseAudit.baseAudit.localGlobalEndpoint
+
+end ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThetaAudit
+
 set_option linter.style.longLine false in
 /--
 Constructed qualitative Hodge/SHE/IPL version of the strongest current

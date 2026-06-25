@@ -9468,9 +9468,20 @@ only recording that the comparison was available downstream.  Its
 \texttt{paperTraceRemainingPayloadAudit} field instantiates the abstract
 \texttt{AdditiveHaarArithmeticDegreePadicObligations} record with these
 concrete endpoints, so the paper-trace ledger now has a checked handoff from
-the strongest constructed source object.  The same strict source now projects
-directly to
-\texttt{ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource}, and its
+the strongest constructed source object.  The same strict source now has direct
+preferred-audit projections
+\[
+\begin{array}{l}
+\texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThetaAudit.}\\
+\quad\texttt{oneSidedLocalGlobalEndpoint},\\
+\texttt{ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDegreePadicCThetaAudit.}\\
+\quad\texttt{indeterminacyLocalGlobalEndpoint}.
+\end{array}
+\]
+These expose, from the preferred certificate itself, both the one-sided
+Theorem~3.11 quotient endpoint and the coarse typed-indeterminacy
+local-to-global endpoint.  The underlying strict source also projects directly
+to \texttt{ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource}, and its
 \texttt{closedLocalGlobalEndpoint} and \texttt{localGlobalHandoffAudit}
 theorems expose the named closed \(C_\Theta\) route without passing through an
 older wrapper in the public audit surface.
