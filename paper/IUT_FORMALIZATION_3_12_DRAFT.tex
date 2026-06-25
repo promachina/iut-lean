@@ -10107,11 +10107,15 @@ local-to-global arithmetic step directly through
 \texttt{finitePlaceTotalHaarDefect\_ge\_one}: the local canonical scale,
 arithmetic upper term, and main-log term are identified with their finite sums,
 the Step~(xi) local bounds are summed, and the Haar-normalization defect
-contributes the global \(+1\) used to prove
+contributes the global \(+1\).  The derived consequences are now separate
+fields, \texttt{finitePlaceDerivedArithmeticGap} and
+\texttt{finitePlaceDerivedCanonicalCThetaScale\_le\_iutIVCTheta}, proving
 \[
   C_{\Theta,\mathrm{can}}+1\leq
-  A_{\mathrm{upper}}-M_{\log}.
+  A_{\mathrm{upper}}-M_{\log}
 \]
+and then \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) via the \(\IUT{}\,\mathrm{IV}\)
+identity \(C_\Theta+1=A_{\mathrm{upper}}-M_{\log}\).
 In particular, the audit now
 stores the local-to-global derivation of
 \[
