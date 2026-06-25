@@ -67459,6 +67459,209 @@ theorem localGlobalHandoffAudit
 
 end ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarDerivedFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
 
+set_option linter.style.longLine false in
+/--
+Unscaled-degree-bound formula-gap matched version of the strongest
+additive-Haar arithmetic-degree and p-adic source.
+
+This is the public source form one layer below the derived source.  The local
+Proposition 1.4/1.5 comparison records name the paper-side unscaled
+different-plus-conductor degree bounds before Lean derives the coarse
+`D_v+C_v` comparison and then the calibrated arithmetic-degree comparison.
+-/
+structure ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (l : PrimeGeFive)
+    (η : Type y) (γ : Type w) [Fintype γ]
+    (localPrime : β -> Nat)
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    (localField : β -> Type x)
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    (αHaar : Type z)
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar)
+    (αLocal : Type z) (ηLocal : Type y)
+    (localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal)
+    (archIndex archSummand : β -> Type z)
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)] where
+  oneSidedMultiradialSource :
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l
+  qPilotRegion_eq_selectedQRegion :
+    sourceData.qPilotRegion =
+      oneSidedMultiradialSource.selectedQRegion.toSet
+  formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :
+    IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+      β estimate η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand
+  unscaledDegreeBoundFormulaGapSource :
+    IUTStage1AdditiveHaarTheorem110StepXIUnscaledDegreeBoundFormulaGapSource
+      β estimate η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand
+  unscaledFormulaMatching_eq_padicFormulaMatching :
+    unscaledDegreeBoundFormulaGapSource.formulaMatchingSource =
+      (formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+        |>.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        |>.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
+        |>.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource)
+  determinantSource_eq_stepXI :
+    sourceData.determinantSource =
+      formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource
+  canonicalCThetaScale_eq_stepXISum :
+    sourceData.canonicalCThetaScale =
+      ∑ place : β,
+        formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place
+
+set_option linter.style.longLine false
+
+namespace ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+variable {sourceData :
+  IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+    (β := β) record}
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {l : PrimeGeFive}
+variable {η : Type y} {γ : Type w} [Fintype γ]
+variable {localPrime : β -> Nat}
+variable [∀ place : β, Fact (Nat.Prime (localPrime place))]
+variable {localField : β -> Type x}
+variable [(place : β) -> NontriviallyNormedField (localField place)]
+variable [∀ place : β, ProperSpace (localField place)]
+variable [∀ place : β, IsUltrametricDist (localField place)]
+variable [(place : β) -> MeasurableSpace (localField place)]
+variable [∀ place : β, BorelSpace (localField place)]
+variable [∀ place : β, LocallyCompactSpace (localField place)]
+variable [∀ place : β, IsTopologicalAddGroup (localField place)]
+variable [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+variable [∀ place : β,
+  FiniteDimensional ℚ_[localPrime place] (localField place)]
+variable {αHaar : Type z}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+variable {αLocal : Type z} {ηLocal : Type y}
+variable {localAnalyticHullSystem :
+  IUTStage1Remark395HolomorphicHullSystem αLocal}
+variable {archIndex archSummand : β -> Type z}
+variable [∀ place : β, Fintype (archIndex place)]
+variable [∀ place : β, Fintype (archSummand place)]
+
+set_option linter.style.longLine false in
+noncomputable def toDerivedFormulaGapMatchedSource
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarDerivedFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+      sourceData estimate l η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
+  { oneSidedMultiradialSource := source.oneSidedMultiradialSource,
+    qPilotRegion_eq_selectedQRegion :=
+      source.qPilotRegion_eq_selectedQRegion,
+    formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :=
+      source.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource,
+    derivedArithmeticDegreeComparisonFormulaGapSource :=
+      source.unscaledDegreeBoundFormulaGapSource
+        |>.toDerivedArithmeticDegreeComparisonFormulaGapSource,
+    derivedFormulaMatching_eq_padicFormulaMatching :=
+      source.unscaledFormulaMatching_eq_padicFormulaMatching,
+    determinantSource_eq_stepXI :=
+      source.determinantSource_eq_stepXI,
+    canonicalCThetaScale_eq_stepXISum :=
+      source.canonicalCThetaScale_eq_stepXISum }
+
+def Endpoint
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Prop :=
+  source.unscaledDegreeBoundFormulaGapSource.Endpoint ∧
+    source.unscaledDegreeBoundFormulaGapSource.formulaMatchingSource =
+      (source.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+        |>.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        |>.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
+        |>.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource) ∧
+      source.toDerivedFormulaGapMatchedSource.Endpoint
+
+theorem endpoint
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Endpoint source :=
+  ⟨source.unscaledDegreeBoundFormulaGapSource.endpoint,
+    source.unscaledFormulaMatching_eq_padicFormulaMatching,
+    source.toDerivedFormulaGapMatchedSource.endpoint⟩
+
+theorem arithmeticGap_dominates_canonicalCThetaScale
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    sourceData.canonicalCThetaScale + 1 <=
+      estimate.arithmeticUpperTerm - estimate.mainLogTerm :=
+  source.toDerivedFormulaGapMatchedSource.arithmeticGap_dominates_canonicalCThetaScale
+
+theorem canonicalCThetaScale_le_iutIVCTheta
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    sourceData.canonicalCThetaScale <= estimate.cTheta :=
+  source.toDerivedFormulaGapMatchedSource.canonicalCThetaScale_le_iutIVCTheta
+
+set_option linter.style.longLine false in
+noncomputable def toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+      sourceData estimate index :=
+  source.toDerivedFormulaGapMatchedSource
+    |>.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+
+set_option linter.style.longLine false in
+theorem closedLocalGlobalEndpoint
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.Endpoint
+      source.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource :=
+  source.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.endpoint
+
+theorem localGlobalHandoffAudit
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Remark395ConstructedIUTIVCThetaHandoffAudit sourceData estimate :=
+  source.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+    |>.localGlobalHandoffAudit
+
+end ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+
 set_option linter.style.longLine true
 
 set_option linter.style.longLine false in
@@ -71123,6 +71326,124 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311OneSidedI
       sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
       packetSource targetSource
   exact ⟨derivedFormulaGapMatchedSource.endpoint, hclosed.2.1,
+    hclosed.2.2.1, hclosed.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Unscaled-degree-bound formula-gap-matched and realified-packet-source version
+of the preferred additive-Haar finite-divisor vertical-\(IQ\) endpoint.
+
+This endpoint exposes the paper-side unscaled local degree-bound layer
+publicly.  The unscaled source names the distinguished Proposition 1.4
+different-plus-conductor degree bound and the archimedean Step (vii) degree
+bound; Lean derives the derived/calibrated formula-gap route internally.
+-/
+theorem boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaFiniteDivisorVerticalIQ_ofRealifiedFrobenioidPacketSource
+    {source target : Copy} {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    {obligations : IUTStage1SourceHullDetObligations package}
+    {endpoint : package.PlaceAuditedMultiradialThetaHullEndpoint obligations}
+    {audit : endpoint.LogVolumeChartAudit}
+    {l : PrimeGeFive}
+    (part : audit.FLZModCuspLabelThetaHodgeDescentPacketTransportAudit l)
+    (audited :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean)
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {F : Type v} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceEvaluation targetEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    (canonicalOneDegree_preserved :
+      targetEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)) =
+        sourceEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          (IUTStage1ZModCuspFullLabel.fromCoordinate l (1 : ZMod l.value)))
+    (iplLinkSource : IUTStage1Theorem311IPLLinkSource record)
+    {β : Type v} [Fintype β]
+    (remark395HullSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    {η : Type y} {γ : Type w} [Fintype γ]
+    (localPrime : β -> Nat)
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    (localField : β -> Type x)
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (unscaledFormulaGapMatchedSource :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+        remark395HullSource estimate l η γ localPrime localField αHaar
+        hullSystem αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (sourceCalibration :
+      IUTStage1SourceThetaHodgeLogVolumeCalibration
+        part audited sourceEvaluation.valueSource)
+    {j : Nat}
+    {holomorphicF holomorphicD :
+      IUTStage1RealifiedFrobenioidTensorPacketProductSource
+        IUTStage1PlaceKind.nonarchimedean j}
+    {product :
+      IUTStage1BaseValuationTensorPacketProductLogVolume
+        IUTStage1PlaceKind.nonarchimedean j}
+    (upperSemiEntry :
+      NonarchimedeanPacketNormalizedUpperSemiEntrySource audited)
+    (divisorPacket : IUTStage1FiniteDivisorTensorPacketProductSource product)
+    (monoAnalyticTheater : QualitativeData.HodgeTheaterId)
+    (packetSource :
+      NonarchimedeanRealifiedFrobenioidLogKummerPacketSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry holomorphicF holomorphicD
+        (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+          monoAnalyticTheater))
+    (targetSource :
+      NonarchimedeanLogKummerVerticalIQTargetSource
+        audited (part.insulated_route.theta_source.thetaSourceAverage audited)
+        package.logKummer upperSemiEntry.toEntry) :
+    ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarUnscaledDegreeBoundFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource.Endpoint
+        unscaledFormulaGapMatchedSource ∧
+      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          divisorPacket.divisor.realifiedLogVolume ∧
+        audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+          audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+        ((0 < estimate.absoluteLogQ ∧
+          estimate.cTheta + 1 =
+            estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+            0 <= estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+              estimate.mainLogTerm <= estimate.arithmeticUpperTerm ∧
+                estimate.oneSixthLogQ <= estimate.theorem110RightHandSide) ∧
+          IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedGlobalCThetaScaleComparisonAudit
+            remark395HullSource estimate.cTheta ∧
+          ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+              package.preLedger.thetaSigned < 0) ∨
+            (-1 : Real) < estimate.cTheta)) := by
+  have hclosed :=
+    boundarySignedEqualityOrStrictCTheta_from_constructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarDerivedFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaFiniteDivisorVerticalIQ_ofRealifiedFrobenioidPacketSource
+      part audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+      iplLinkSource remark395HullSource estimate localPrime localField
+      unscaledFormulaGapMatchedSource.toDerivedFormulaGapMatchedSource
+      sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
+      packetSource targetSource
+  exact ⟨unscaledFormulaGapMatchedSource.endpoint, hclosed.2.1,
     hclosed.2.2.1, hclosed.2.2.2⟩
 
 set_option linter.style.longLine false in
