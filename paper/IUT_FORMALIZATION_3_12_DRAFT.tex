@@ -4751,13 +4751,19 @@ It now also reaches the finite-place local-to-global \(C_\Theta\) source through
 \[
 \begin{array}{l}
 \texttt{strictFiniteToyOneSidedFinitePlaceLocalGlobalCThetaSource},\\
-\texttt{StrictFiniteToyOneSidedFinitePlaceLocalGlobalCThetaAudit}.
+\texttt{StrictFiniteToyOneSidedFinitePlaceLocalGlobalCThetaAudit},\\
+\texttt{StrictFiniteToyOneSidedIUTIVArithmeticGapHandoffAudit}.
 \end{array}
 \]
 This constructor takes the strict finite multiradial source together with the
 finite Step~(xi)/Haar summation data, derives the usual arithmetic-gap and
 \(C_\Theta\) comparison audit, and keeps the strict \((\Ind_3)\) non-collapse
-visible inside the same local-to-global source object.
+visible inside the same local-to-global source object.  The last audit pins the
+new explicit \(\IUT{}\,\mathrm{IV}\) arithmetic-gap handoff to this same
+nonvacuity witness: finite-sum identifications, the summed Step~(xi)/Haar
+inequality, \(C_\Theta+1=A-M\), cancellation to
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\), and the strict \((\Ind_3)\)
+non-equality all live in one checked object.
 The bridge has also been lowered to the normalized-Haar Step~(xi) local-term
 source:
 \[
