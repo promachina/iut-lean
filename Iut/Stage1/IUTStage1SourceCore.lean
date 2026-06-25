@@ -521,6 +521,32 @@ theorem trans (quotient : IUTStage1IndeterminacyQuotient index)
     quotient.relation choice₁ choice₃ :=
   quotient.is_equivalence.trans h₁₂ h₂₃
 
+/--
+Setoid form of an indeterminacy quotient.
+
+The older corridor API uses `Quot quotient.relation`, which is enough for
+forward `Quot.sound` projections.  This setoid view records the equivalence
+proof already stored in the quotient and gives the reverse direction
+`quotient-map equality -> relation` through `Quotient.eq`.
+-/
+def setoid (quotient : IUTStage1IndeterminacyQuotient index) :
+    Setoid index where
+  r := quotient.relation
+  iseqv := quotient.is_equivalence
+
+def setoidQuotientMap
+    (quotient : IUTStage1IndeterminacyQuotient index) :
+    index -> Quotient quotient.setoid :=
+  Quotient.mk quotient.setoid
+
+theorem setoidQuotientMap_eq_iff
+    (quotient : IUTStage1IndeterminacyQuotient index)
+    {choice₁ choice₂ : index} :
+    quotient.setoidQuotientMap choice₁ =
+        quotient.setoidQuotientMap choice₂ ↔
+      quotient.relation choice₁ choice₂ :=
+  Quotient.eq
+
 /-- The discrete quotient is the no-extra-identification baseline. -/
 def discrete (index : Type u) : IUTStage1IndeterminacyQuotient index :=
   { ind1 := theorem311Ind1,

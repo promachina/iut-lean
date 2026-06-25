@@ -3705,6 +3705,24 @@ def equalityQuotientMap
     choice -> Quot core.equalityQuotient.relation :=
   Quot.mk core.equalityQuotient.relation
 
+def equalitySetoid
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    Setoid choice :=
+  core.equalityQuotient.setoid
+
+def equalitySetoidQuotientMap
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    choice -> Quotient core.equalitySetoid :=
+  core.equalityQuotient.setoidQuotientMap
+
+theorem equalitySetoidQuotientMap_eq_iff
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    {choice₁ choice₂ : choice} :
+    core.equalitySetoidQuotientMap choice₁ =
+        core.equalitySetoidQuotientMap choice₂ ↔
+      core.equalityQuotient.relation choice₁ choice₂ :=
+  core.equalityQuotient.setoidQuotientMap_eq_iff
+
 theorem ind1_preserves_logVolume
     (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
     {choice₁ choice₂ : choice}
@@ -3776,6 +3794,76 @@ theorem equalityGenerators_ind3_false
     {choice₁ choice₂ : choice} :
     core.equalityGenerators.ind3_step choice₁ choice₂ -> False :=
   id
+
+theorem ind1_equalitySetoidQuotientMap_eq
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind1.step choice₁ choice₂) :
+    core.equalitySetoidQuotientMap choice₁ =
+      core.equalitySetoidQuotientMap choice₂ :=
+  (core.equalitySetoidQuotientMap_eq_iff).2
+    (IUTStage1GeneratedIndeterminacyRelation.ind1 hstep)
+
+theorem ind2_equalitySetoidQuotientMap_eq
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    {choice₁ choice₂ : choice}
+    (hstep : core.ind2.step choice₁ choice₂) :
+    core.equalitySetoidQuotientMap choice₁ =
+      core.equalitySetoidQuotientMap choice₂ :=
+  (core.equalitySetoidQuotientMap_eq_iff).2
+    (IUTStage1GeneratedIndeterminacyRelation.ind2 hstep)
+
+/--
+Exact setoid audit for the Theorem 3.11 equality quotient.
+
+Unlike the legacy `Quot` map, this quotient is backed by the equivalence proof
+stored in `IUTStage1IndeterminacyQuotient`; hence equality in the quotient is
+definitionally equivalent to the generated `(Ind1)/(Ind2)` relation.  The
+`(Ind3)` generator of this equality quotient is still false.
+-/
+structure EqualityQuotientSetoidAudit
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) : Prop where
+  equality_relation_is_equivalence :
+    Equivalence core.equalityQuotient.relation
+  equalitySetoid_relation :
+    core.equalitySetoid.r = core.equalityQuotient.relation
+  equalitySetoidQuotientMap_eq_iff :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalitySetoidQuotientMap choice₁ =
+          core.equalitySetoidQuotientMap choice₂ ↔
+        core.equalityQuotient.relation choice₁ choice₂
+  ind1_equalitySetoidQuotientMap_eq :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        core.equalitySetoidQuotientMap choice₁ =
+          core.equalitySetoidQuotientMap choice₂
+  ind2_equalitySetoidQuotientMap_eq :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        core.equalitySetoidQuotientMap choice₁ =
+          core.equalitySetoidQuotientMap choice₂
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalityGenerators.ind3_step choice₁ choice₂ -> False
+
+theorem equalityQuotientSetoidAudit
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
+    EqualityQuotientSetoidAudit core :=
+  { equality_relation_is_equivalence :=
+      core.equalityQuotient.is_equivalence,
+    equalitySetoid_relation := rfl,
+    equalitySetoidQuotientMap_eq_iff := by
+      intro choice₁ choice₂
+      exact core.equalitySetoidQuotientMap_eq_iff,
+    ind1_equalitySetoidQuotientMap_eq := by
+      intro choice₁ choice₂ hstep
+      exact core.ind1_equalitySetoidQuotientMap_eq hstep,
+    ind2_equalitySetoidQuotientMap_eq := by
+      intro choice₁ choice₂ hstep
+      exact core.ind2_equalitySetoidQuotientMap_eq hstep,
+    equalityQuotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact core.equalityGenerators_ind3_false hstep }
 
 /--
 Step-level certificate for the one-sided `(Ind3)` contribution.

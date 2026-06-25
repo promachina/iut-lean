@@ -10731,6 +10731,8 @@ structure OneSidedQuotientAudit
         (package := package) record l) : Prop where
   typedCoreActionLawAudit :
     construction.typedIndeterminacyCore.ActionLawAudit
+  equalityQuotientSetoidAudit :
+    construction.typedIndeterminacyCore.EqualityQuotientSetoidAudit
   quotient_is_equalityQuotient :
     construction.multiradialImages.quotient =
       construction.typedIndeterminacyCore.equalityQuotient
@@ -10784,6 +10786,8 @@ theorem oneSidedQuotientAudit
     OneSidedQuotientAudit construction :=
   { typedCoreActionLawAudit :=
       construction.typedIndeterminacyCore.actionLawAudit,
+    equalityQuotientSetoidAudit :=
+      construction.typedIndeterminacyCore.equalityQuotientSetoidAudit,
     quotient_is_equalityQuotient := rfl,
     equalityQuotient_no_ind3_generator := by
       intro choice₁ choice₂ hstep
