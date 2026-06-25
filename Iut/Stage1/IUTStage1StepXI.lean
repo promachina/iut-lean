@@ -15829,6 +15829,35 @@ structure ConstructorBuiltRemainingPayloadAudit
       package.preLedger.thetaSigned
   measure_eq_hullLogVolume :
     package.preLedger.measure = sourceData.hullData.toRegionMeasure
+  hullDetBridge_eq_constructor :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      sourceData.toHullDetSourceConstructor.hullDetData.bridgeData
+  constructorBridge_eq_recordCanonical :
+    sourceData.toHullDetSourceConstructor.hullDetData.bridgeData =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.hullData
+        (recordThetaPossibleImage record sourceData.qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (fun _ hx => hx))
+        sourceData.determinantSource sourceData.compatibility
+        sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound
+  recordCanonicalBridge_eq_from_constructor :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.hullData
+        (recordThetaPossibleImage record sourceData.qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (fun _ hx => hx))
+        sourceData.determinantSource sourceData.compatibility
+        sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound
   recordCanonicalBridge_eq :
     package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
       recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
@@ -15891,14 +15920,97 @@ theorem toConstructorBuiltRemainingPayloadAudit
       sourceData.tensorPower_bound,
     measure_eq_hullLogVolume :=
       sourceData.measure_eq_hullLogVolume,
+    hullDetBridge_eq_constructor :=
+      sourceData.toConstructorSourcedHolomorphicHullDeterminantSource
+        |>.hullDetBridge_eq_constructor,
+    constructorBridge_eq_recordCanonical :=
+      sourceData.constructorHullDetData_eq_recordCanonical,
+    recordCanonicalBridge_eq_from_constructor := by
+      calc
+        package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+          sourceData.toHullDetSourceConstructor.hullDetData.bridgeData :=
+            sourceData.toConstructorSourcedHolomorphicHullDeterminantSource
+              |>.hullDetBridge_eq_constructor
+        _ =
+          recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+            (record := record)
+            sourceData.operation sourceData.hullOperation
+            sourceData.determinantOperation sourceData.hullData
+            (recordThetaPossibleImage record sourceData.qChoice)
+            (qPilotRegion_subset_recordUnion_of_choice
+              (record := record) sourceData.qChoice
+              (recordThetaPossibleImage record sourceData.qChoice)
+              (fun _ hx => hx))
+            sourceData.determinantSource sourceData.compatibility
+            sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound :=
+              sourceData.constructorHullDetData_eq_recordCanonical,
     recordCanonicalBridge_eq :=
-      sourceData.hullDetBridge_eq,
+      by
+        calc
+          package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+            sourceData.toHullDetSourceConstructor.hullDetData.bridgeData :=
+              sourceData.toConstructorSourcedHolomorphicHullDeterminantSource
+                |>.hullDetBridge_eq_constructor
+          _ =
+            recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+              (record := record)
+              sourceData.operation sourceData.hullOperation
+              sourceData.determinantOperation sourceData.hullData
+              (recordThetaPossibleImage record sourceData.qChoice)
+              (qPilotRegion_subset_recordUnion_of_choice
+                (record := record) sourceData.qChoice
+                (recordThetaPossibleImage record sourceData.qChoice)
+                (fun _ hx => hx))
+              sourceData.determinantSource sourceData.compatibility
+              sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound :=
+                sourceData.constructorHullDetData_eq_recordCanonical,
     q_pilot_positive :=
       sourceData.q_pilot_positive,
     normalization :=
       sourceData.normalization,
     qSigned_le_thetaSigned :=
       sourceData.qSigned_le_thetaSigned }
+
+theorem ConstructorBuiltRemainingPayloadAudit.recordCanonicalBridgeFromConstructorSplit
+    {sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructorBuiltRemainingPayloadAudit sourceData) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+      recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+        (record := record)
+        sourceData.operation sourceData.hullOperation
+        sourceData.determinantOperation sourceData.hullData
+        (recordThetaPossibleImage record sourceData.qChoice)
+        (qPilotRegion_subset_recordUnion_of_choice
+          (record := record) sourceData.qChoice
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (fun _ hx => hx))
+        sourceData.determinantSource sourceData.compatibility
+        sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound :=
+  audit.recordCanonicalBridge_eq_from_constructor
+
+theorem ConstructorBuiltRemainingPayloadAudit.bridgeSplitEndpoints
+    {sourceData :
+      IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (audit : ConstructorBuiltRemainingPayloadAudit sourceData) :
+    package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        sourceData.toHullDetSourceConstructor.hullDetData.bridgeData ∧
+      sourceData.toHullDetSourceConstructor.hullDetData.bridgeData =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          sourceData.operation sourceData.hullOperation
+          sourceData.determinantOperation sourceData.hullData
+          (recordThetaPossibleImage record sourceData.qChoice)
+          (qPilotRegion_subset_recordUnion_of_choice
+            (record := record) sourceData.qChoice
+            (recordThetaPossibleImage record sourceData.qChoice)
+            (fun _ hx => hx))
+          sourceData.determinantSource sourceData.compatibility
+          sourceData.measure_eq_hullLogVolume sourceData.tensorPower_bound :=
+  ⟨audit.hullDetBridge_eq_constructor,
+    audit.constructorBridge_eq_recordCanonical⟩
 
 set_option linter.style.longLine false in
 /--
