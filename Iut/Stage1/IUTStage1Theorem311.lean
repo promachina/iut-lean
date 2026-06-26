@@ -2750,6 +2750,134 @@ theorem toInd2ActionPacketSymmetry
 
 end ArchimedeanOrderTwoActionEntryTransportedPacketLabelStep
 
+set_option linter.style.longLine false in
+/--
+Nonarchimedean action-entry step whose source and target packet labels and
+target symmetry-kind transport are all derived from one label-transport source.
+-/
+structure NonarchimedeanIsmActionEntryLabelTransportStep
+    (audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) where
+  action_step : NonarchimedeanIsmActionEntryStep audited₁ audited₂
+  label_transport :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource
+      audited₁.choice.local_tensor_state
+      audited₂.choice.local_tensor_state
+
+set_option linter.style.longLine false in
+/--
+Archimedean action-entry step whose source and target packet labels and target
+symmetry-kind transport are all derived from one label-transport source.
+-/
+structure ArchimedeanOrderTwoActionEntryLabelTransportStep
+    (audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean) where
+  action_step : ArchimedeanOrderTwoActionEntryStep audited₁ audited₂
+  label_transport :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource
+      audited₁.choice.local_tensor_state
+      audited₂.choice.local_tensor_state
+
+namespace NonarchimedeanIsmActionEntryLabelTransportStep
+
+set_option linter.style.longLine false in
+def toTransportedPacketLabelStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) :
+    NonarchimedeanIsmActionEntryTransportedPacketLabelStep audited₁ audited₂ :=
+  { action_step := hstep.action_step,
+    source_label := hstep.label_transport.sourceLabelSource,
+    target_label := hstep.label_transport.targetLabelSource,
+    target_kind_transport := hstep.label_transport.symmetryKindTransport }
+
+set_option linter.style.longLine false in
+def toPacketLabelStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) :
+    NonarchimedeanIsmActionEntryPacketLabelStep audited₁ audited₂ :=
+  hstep.toTransportedPacketLabelStep.toPacketLabelStep
+
+set_option linter.style.longLine false in
+def toActionEntrySymmetryStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) :
+    NonarchimedeanIsmActionEntrySymmetryStep audited₁ audited₂ :=
+  hstep.toTransportedPacketLabelStep.toActionEntrySymmetryStep
+
+set_option linter.style.longLine false in
+theorem toInd2ActionPacketSymmetry
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState :=
+  hstep.toTransportedPacketLabelStep.toInd2ActionPacketSymmetry
+
+end NonarchimedeanIsmActionEntryLabelTransportStep
+
+namespace ArchimedeanOrderTwoActionEntryLabelTransportStep
+
+set_option linter.style.longLine false in
+def toTransportedPacketLabelStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) :
+    ArchimedeanOrderTwoActionEntryTransportedPacketLabelStep audited₁ audited₂ :=
+  { action_step := hstep.action_step,
+    source_label := hstep.label_transport.sourceLabelSource,
+    target_label := hstep.label_transport.targetLabelSource,
+    target_kind_transport := hstep.label_transport.symmetryKindTransport }
+
+set_option linter.style.longLine false in
+def toPacketLabelStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) :
+    ArchimedeanOrderTwoActionEntryPacketLabelStep audited₁ audited₂ :=
+  hstep.toTransportedPacketLabelStep.toPacketLabelStep
+
+set_option linter.style.longLine false in
+def toActionEntrySymmetryStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) :
+    ArchimedeanOrderTwoActionEntrySymmetryStep audited₁ audited₂ :=
+  hstep.toTransportedPacketLabelStep.toActionEntrySymmetryStep
+
+set_option linter.style.longLine false in
+theorem toInd2ActionPacketSymmetry
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState :=
+  hstep.toTransportedPacketLabelStep.toInd2ActionPacketSymmetry
+
+end ArchimedeanOrderTwoActionEntryLabelTransportStep
+
 def nonarchimedeanEntrySymmetry_toNonarchimedeanEntryStep
     {audited₁ audited₂ :
       IUTStage1PlaceAuditedDirectSummandPacketChoice
@@ -3283,6 +3411,21 @@ theorem region_eq_of_nonarchimedeanEntryTransportedPacketLabel_step
   data.region_eq_of_nonarchimedeanEntryPacketLabel_step
     hstep.toPacketLabelStep
 
+set_option linter.style.longLine false in
+theorem region_eq_of_nonarchimedeanEntryLabelTransport_step
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.nonarchimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂ :=
+  data.region_eq_of_nonarchimedeanEntryTransportedPacketLabel_step
+    hstep.toTransportedPacketLabelStep
+
 theorem region_eq_and_fiber_mem_of_nonarchimedeanEntry_step
     (data :
       IUTStage1PlaceAuditedMultiradialImages
@@ -3354,6 +3497,25 @@ theorem region_eq_and_fiber_mem_of_nonarchimedeanEntryTransportedPacketLabel_ste
     data.possibleImages.region audited₁ = data.possibleImages.region audited₂ ∧
       hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
   ⟨data.region_eq_of_nonarchimedeanEntryTransportedPacketLabel_step hstep,
+    fiberPackage.entry_place_mem_fiber hstep.action_step⟩
+
+set_option linter.style.longLine false in
+theorem region_eq_and_fiber_mem_of_nonarchimedeanEntryLabelTransport_step
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.nonarchimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂ ∧
+      hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
+  ⟨data.region_eq_of_nonarchimedeanEntryLabelTransport_step hstep,
     fiberPackage.entry_place_mem_fiber hstep.action_step⟩
 
 theorem region_eq_of_archimedeanOrderTwo_step
@@ -3428,6 +3590,21 @@ theorem region_eq_of_archimedeanEntryTransportedPacketLabel_step
   data.region_eq_of_archimedeanEntryPacketLabel_step
     hstep.toPacketLabelStep
 
+set_option linter.style.longLine false in
+theorem region_eq_of_archimedeanEntryLabelTransport_step
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.archimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂ :=
+  data.region_eq_of_archimedeanEntryTransportedPacketLabel_step
+    hstep.toTransportedPacketLabelStep
+
 theorem region_eq_and_fiber_mem_of_archimedeanEntry_step
     (data :
       IUTStage1PlaceAuditedMultiradialImages
@@ -3499,6 +3676,25 @@ theorem region_eq_and_fiber_mem_of_archimedeanEntryTransportedPacketLabel_step
     data.possibleImages.region audited₁ = data.possibleImages.region audited₂ ∧
       hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
   ⟨data.region_eq_of_archimedeanEntryTransportedPacketLabel_step hstep,
+    fiberPackage.entry_place_mem_fiber hstep.action_step⟩
+
+set_option linter.style.longLine false in
+theorem region_eq_and_fiber_mem_of_archimedeanEntryLabelTransport_step
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.archimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂ ∧
+      hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
+  ⟨data.region_eq_of_archimedeanEntryLabelTransport_step hstep,
     fiberPackage.entry_place_mem_fiber hstep.action_step⟩
 
 /--
@@ -3704,6 +3900,24 @@ theorem region_eq_of_nonarchimedeanEntryTransportedPacketLabel_step
     data.auditedImages.region_eq_of_nonarchimedeanEntryTransportedPacketLabel_step
       hstep
 
+set_option linter.style.longLine false in
+theorem region_eq_of_nonarchimedeanEntryLabelTransport_step
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+      data.possibleImages.images.region audited₂ :=
+  data.region_eq_of_nonarchimedeanEntryTransportedPacketLabel_step
+    hstep.toTransportedPacketLabelStep
+
 theorem region_eq_and_fiber_mem_of_nonarchimedeanEntry_step
     {package :
       IUTStage1SourcePackage source target
@@ -3787,6 +4001,28 @@ theorem region_eq_and_fiber_mem_of_nonarchimedeanEntryTransportedPacketLabel_ste
         data.possibleImages.images.region audited₂ ∧
       hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
   ⟨data.region_eq_of_nonarchimedeanEntryTransportedPacketLabel_step hstep,
+    fiberPackage.entry_place_mem_fiber hstep.action_step⟩
+
+set_option linter.style.longLine false in
+theorem region_eq_and_fiber_mem_of_nonarchimedeanEntryLabelTransport_step
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+        data.possibleImages.images.region audited₂ ∧
+      hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
+  ⟨data.region_eq_of_nonarchimedeanEntryLabelTransport_step hstep,
     fiberPackage.entry_place_mem_fiber hstep.action_step⟩
 
 theorem region_eq_of_archimedeanOrderTwo_step
@@ -3877,6 +4113,24 @@ theorem region_eq_of_archimedeanEntryTransportedPacketLabel_step
     data.auditedImages.region_eq_of_archimedeanEntryTransportedPacketLabel_step
       hstep
 
+set_option linter.style.longLine false in
+theorem region_eq_of_archimedeanEntryLabelTransport_step
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.archimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+      data.possibleImages.images.region audited₂ :=
+  data.region_eq_of_archimedeanEntryTransportedPacketLabel_step
+    hstep.toTransportedPacketLabelStep
+
 theorem region_eq_and_fiber_mem_of_archimedeanEntry_step
     {package :
       IUTStage1SourcePackage source target
@@ -3960,6 +4214,28 @@ theorem region_eq_and_fiber_mem_of_archimedeanEntryTransportedPacketLabel_step
         data.possibleImages.images.region audited₂ ∧
       hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
   ⟨data.region_eq_of_archimedeanEntryTransportedPacketLabel_step hstep,
+    fiberPackage.entry_place_mem_fiber hstep.action_step⟩
+
+set_option linter.style.longLine false in
+theorem region_eq_and_fiber_mem_of_archimedeanEntryLabelTransport_step
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.archimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    data.possibleImages.images.region audited₁ =
+        data.possibleImages.images.region audited₂ ∧
+      hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
+  ⟨data.region_eq_of_archimedeanEntryLabelTransport_step hstep,
     fiberPackage.entry_place_mem_fiber hstep.action_step⟩
 
 /--

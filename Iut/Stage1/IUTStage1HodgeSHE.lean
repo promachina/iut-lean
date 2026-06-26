@@ -3989,6 +3989,74 @@ theorem SymmetryLabelSource.toArchimedeanOrderTwoSymmetrySource
   { symmetry_eq := by
       rw [source.symmetry_eq, symmetry_kind_eq] }
 
+set_option linter.style.longLine false in
+/--
+Source-side transport package for the tensor symmetry label and the typed
+direct-summand symmetry kind.
+
+This lowers the previous boundary that carried two independent packet-label
+certificates plus a separate target-kind transport.  It records a single
+source-kind comparison: the source tensor label and target tensor label are
+both read against the source packet's summand symmetry kind, and the target
+summand symmetry kind is transported from the source.
+-/
+structure SymmetryLabelTransportSource
+    (state₁ state₂ : IUTStage1LocalTensorDirectSummandPacketState kind) :
+    Prop where
+  source_symmetry_eq_sourceKind :
+    state₁.packetState.tensorState.symmetry =
+      state₁.summandFamily.symmetryKind.toLocalTensorSymmetryId
+  target_symmetry_eq_sourceKind :
+    state₂.packetState.tensorState.symmetry =
+      state₁.summandFamily.symmetryKind.toLocalTensorSymmetryId
+  target_symmetryKind_eq_source :
+    state₂.summandFamily.symmetryKind = state₁.summandFamily.symmetryKind
+
+namespace SymmetryLabelTransportSource
+
+variable
+  {state₁ state₂ : IUTStage1LocalTensorDirectSummandPacketState kind}
+
+set_option linter.style.longLine false in
+theorem target_symmetry_eq_targetKind
+    (source : SymmetryLabelTransportSource state₁ state₂) :
+    state₂.packetState.tensorState.symmetry =
+      state₂.summandFamily.symmetryKind.toLocalTensorSymmetryId :=
+  source.target_symmetry_eq_sourceKind.trans
+    ((congrArg IUTStage1TensorSummandSymmetryKind.toLocalTensorSymmetryId
+      source.target_symmetryKind_eq_source).symm)
+
+def sourceLabelSource
+    (source : SymmetryLabelTransportSource state₁ state₂) :
+    SymmetryLabelSource state₁ :=
+  { symmetry_eq := source.source_symmetry_eq_sourceKind }
+
+def targetLabelSource
+    (source : SymmetryLabelTransportSource state₁ state₂) :
+    SymmetryLabelSource state₂ :=
+  { symmetry_eq := source.target_symmetry_eq_targetKind }
+
+def symmetryKindTransport
+    (source : SymmetryLabelTransportSource state₁ state₂) :
+    SymmetryKindTransport state₁ state₂ :=
+  { target_symmetryKind_eq_source := source.target_symmetryKind_eq_source }
+
+set_option linter.style.longLine false in
+theorem source_symmetry_eq
+    (source : SymmetryLabelTransportSource state₁ state₂) :
+    source.sourceLabelSource.symmetry_eq =
+      source.source_symmetry_eq_sourceKind :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem target_symmetry_eq
+    (source : SymmetryLabelTransportSource state₁ state₂) :
+    source.targetLabelSource.symmetry_eq =
+      source.target_symmetry_eq_targetKind :=
+  rfl
+
+end SymmetryLabelTransportSource
+
 end IUTStage1LocalTensorDirectSummandPacketState
 
 /--

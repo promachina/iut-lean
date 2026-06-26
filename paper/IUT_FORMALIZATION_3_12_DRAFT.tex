@@ -9672,9 +9672,12 @@ symmetry-kind transport law between the source and target packets, rather than
 asserted as an independent target-side certificate.  These source-labelled
 action-entry steps feed the place-audited possible-image quotient directly, so
 region invariance and fiber membership can be proved at this stricter
-\((\Ind_2)\) boundary.  The remaining source payload is now sharper: construct
-the packet-label compatibilities, the symmetry-kind transport, and the
-procession and upper-semi transports from the underlying Hodge-theater and
+\((\Ind_2)\) boundary.  The packet-label and target-kind data have now been
+combined into one \texttt{SymmetryLabelTransportSource}: both tensor labels are
+read against the source packet's typed summand kind, and the target summand
+kind is transported from the source.  The remaining source payload is therefore
+sharper: construct this single label-transport source, together with the
+procession and upper-semi transports, from the underlying Hodge-theater and
 log-theta-lattice data.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
