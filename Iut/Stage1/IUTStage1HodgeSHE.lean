@@ -3923,6 +3923,48 @@ theorem summandCapsuleLogVolume_eq
       (state.packetState.capsuleFamily.capsule i).logVolume :=
   state.summandFamily.summandCapsuleLogVolume_eq i
 
+set_option linter.style.longLine false in
+/--
+Source certificate tying a direct-summand packet's local tensor label to the
+typed summand symmetry kind carried by its direct-summand family.
+
+This is the local bridge from the paper-side `(Ind2)` action kind to the
+previously untyped tensor-state symmetry coordinate.
+-/
+structure SymmetryLabelSource
+    (state : IUTStage1LocalTensorDirectSummandPacketState kind) : Prop where
+  symmetry_eq :
+    state.packetState.tensorState.symmetry =
+      state.summandFamily.symmetryKind.toLocalTensorSymmetryId
+
+set_option linter.style.longLine false in
+theorem SymmetryLabelSource.toNonarchimedeanIsmSymmetrySource
+    {state :
+      IUTStage1LocalTensorDirectSummandPacketState
+        IUTStage1PlaceKind.nonarchimedean}
+    (source : SymmetryLabelSource state)
+    (symmetry_kind_eq :
+      state.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm) :
+    IUTStage1LocalTensorState.NonarchimedeanIsmSymmetrySource
+      state.packetState.tensorState :=
+  { symmetry_eq := by
+      rw [source.symmetry_eq, symmetry_kind_eq] }
+
+set_option linter.style.longLine false in
+theorem SymmetryLabelSource.toArchimedeanOrderTwoSymmetrySource
+    {state :
+      IUTStage1LocalTensorDirectSummandPacketState
+        IUTStage1PlaceKind.archimedean}
+    (source : SymmetryLabelSource state)
+    (symmetry_kind_eq :
+      state.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo) :
+    IUTStage1LocalTensorState.ArchimedeanOrderTwoSymmetrySource
+      state.packetState.tensorState :=
+  { symmetry_eq := by
+      rw [source.symmetry_eq, symmetry_kind_eq] }
+
 end IUTStage1LocalTensorDirectSummandPacketState
 
 /--
