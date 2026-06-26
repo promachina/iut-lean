@@ -3925,6 +3925,30 @@ theorem summandCapsuleLogVolume_eq
 
 set_option linter.style.longLine false in
 /--
+Transport of the typed direct-summand symmetry kind between two local tensor
+packets.
+
+This isolates the `(Ind2)` assertion that the target packet inherits the
+source packet's local tensor-factor symmetry kind.
+-/
+structure SymmetryKindTransport
+    (state₁ state₂ : IUTStage1LocalTensorDirectSummandPacketState kind) :
+    Prop where
+  target_symmetryKind_eq_source :
+    state₂.summandFamily.symmetryKind = state₁.summandFamily.symmetryKind
+
+set_option linter.style.longLine false in
+theorem SymmetryKindTransport.target_symmetryKind_eq
+    {state₁ state₂ : IUTStage1LocalTensorDirectSummandPacketState kind}
+    (transport : SymmetryKindTransport state₁ state₂)
+    {symmetryKind : IUTStage1TensorSummandSymmetryKind}
+    (source_symmetryKind_eq :
+      state₁.summandFamily.symmetryKind = symmetryKind) :
+    state₂.summandFamily.symmetryKind = symmetryKind :=
+  transport.target_symmetryKind_eq_source.trans source_symmetryKind_eq
+
+set_option linter.style.longLine false in
+/--
 Source certificate tying a direct-summand packet's local tensor label to the
 typed summand symmetry kind carried by its direct-summand family.
 
