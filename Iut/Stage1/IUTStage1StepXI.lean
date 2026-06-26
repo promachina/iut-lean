@@ -11627,6 +11627,166 @@ end ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource
 
 set_option linter.style.longLine false in
 /--
+Class-level theta-pilot possible-image formula.
+
+This packages the formula before it is pulled back to concrete choices.  The
+choice-indexed family used by Theorem 3.11 is obtained by forgetting a concrete
+choice to its theta-pilot class and then evaluating this class formula.
+-/
+structure ConcreteHodgeTheaterLogThetaThetaPilotClassFormula
+    (coric : Type u) (l : PrimeGeFive) (target : Copy) where
+  thetaRegion :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Region target
+
+namespace ConcreteHodgeTheaterLogThetaThetaPilotClassFormula
+
+variable {coric : Type u}
+
+set_option linter.style.longLine false in
+/-- Pull back a theta-pilot class formula to the concrete choice space. -/
+def toChoiceImages
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassFormula coric l target) :
+    RegionFamily target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :=
+  { region := fun choice =>
+      formula.thetaRegion
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice) }
+
+set_option linter.style.longLine false in
+@[simp]
+theorem toChoiceImages_region
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassFormula coric l target)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    formula.toChoiceImages.region choice =
+      formula.thetaRegion
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice) :=
+  rfl
+
+end ConcreteHodgeTheaterLogThetaThetaPilotClassFormula
+
+set_option linter.style.longLine false in
+/--
+Record-level class-formula source for theta-pilot possible images.
+
+Unlike `ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource`, this object
+does not assume the pullback law pointwise.  It identifies the entire
+Theorem 3.11 possible-image family with the pullback of a class formula; Lean
+then derives the pointwise class-region source consumed by the quotient
+construction.
+-/
+structure ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) where
+  representativeData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassRepresentativeData
+      coric l
+  formula :
+    ConcreteHodgeTheaterLogThetaThetaPilotClassFormula coric l target
+  thetaPossibleImages_eq :
+    record.thetaPossibleImages.images = formula.toChoiceImages
+
+namespace ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource
+
+variable {coric : Type u}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable
+  {indData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+
+set_option linter.style.longLine false in
+/--
+Forget the record-level family equality to the older pointwise class-region
+source.
+-/
+def toClassRegionSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource
+        record indData) :
+    ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource
+      record indData :=
+  { representativeData := sourceData.representativeData,
+    thetaRegion := sourceData.formula.thetaRegion,
+    record_region_eq := by
+      intro choice
+      have h :=
+        congrArg
+          (fun images : RegionFamily target
+              (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) =>
+            images.region choice)
+          sourceData.thetaPossibleImages_eq
+      simpa
+        [ConcreteHodgeTheaterLogThetaThetaPilotClassFormula.toChoiceImages]
+        using h }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource
+        record indData) :
+    record.thetaPossibleImages.images = sourceData.formula.toChoiceImages ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            (sourceData.representativeData.representative thetaClass) =
+          thetaClass) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.formula.thetaRegion
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind1.step choice₁ choice₂ ->
+          sourceData.toClassRegionSource.toClassImageLawSource.toFactorization.thetaClass
+              choice₁ =
+            sourceData.toClassRegionSource.toClassImageLawSource.toFactorization.thetaClass
+              choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind2.step choice₁ choice₂ ->
+          sourceData.toClassRegionSource.toClassImageLawSource.toFactorization.thetaClass
+              choice₁ =
+            sourceData.toClassRegionSource.toClassImageLawSource.toFactorization.thetaClass
+              choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) :=
+  let regionEndpoint := sourceData.toClassRegionSource.endpoint
+  ⟨sourceData.thetaPossibleImages_eq,
+    regionEndpoint.1,
+    regionEndpoint.2.1,
+    regionEndpoint.2.2.1,
+    regionEndpoint.2.2.2.2.1,
+    regionEndpoint.2.2.2.2.2.1,
+    regionEndpoint.2.2.2.2.2.2⟩
+
+end ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource
+
+set_option linter.style.longLine false in
+/--
 Construct the one-sided Theorem 3.11 multiradial source from concrete
 Hodge-theater/log-theta-lattice indeterminacy data.
 
@@ -11873,6 +12033,103 @@ theorem ofConcreteHodgeTheaterLogThetaThetaPilotClassRegion_endpoint
     ⟨sourceEndpoint.1,
       sourceEndpoint.2.1,
       sourceEndpoint.2.2.1,
+      constructionEndpoint.2.1,
+      constructionEndpoint.2.2.1,
+      constructionEndpoint.2.2.2.1,
+      constructionEndpoint.2.2.2.2.1,
+      constructionEndpoint.2.2.2.2.2.2.2.1,
+      constructionEndpoint.2.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Construct the one-sided Theorem 3.11 multiradial source from a record-level
+theta-pilot class formula.
+
+This is one level lower than the pointwise class-region boundary: the source
+identifies the whole Theorem 3.11 possible-image family with the pullback of a
+class formula, and Lean derives the pointwise pullback law internally.
+-/
+def ofConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecord
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  ofConcreteHodgeTheaterLogThetaThetaPilotClassRegion
+    record indData sourceData.toClassRegionSource gluingTorsor
+    selectedQChoice
+
+set_option linter.style.longLine false in
+theorem ofConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecord_endpoint
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let construction :=
+      ofConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecord
+        record indData sourceData gluingTorsor selectedQChoice;
+    record.thetaPossibleImages.images = sourceData.formula.toChoiceImages ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            (sourceData.representativeData.representative thetaClass) =
+          thetaClass) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.formula.thetaRegion
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) ∧
+      construction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      (∀ t choice,
+        construction.typedIndeterminacyCore.equalityQuotientMap choice =
+          construction.typedIndeterminacyCore.equalityQuotientMap
+            (construction.flProcessionAction.transition t choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+          construction.typedIndeterminacyCore.logVolume choice₁ <=
+            construction.typedIndeterminacyCore.logVolume choice₂) ∧
+      construction.selectedQRegion.toSet =
+        recordThetaPossibleImage record construction.selectedQChoice ∧
+      construction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record := by
+  intro construction
+  let sourceEndpoint := sourceData.endpoint
+  let constructionEndpoint := construction.endpoint
+  exact
+    ⟨sourceEndpoint.1,
+      sourceEndpoint.2.1,
+      sourceEndpoint.2.2.1,
+      sourceEndpoint.2.2.2.1,
       constructionEndpoint.2.1,
       constructionEndpoint.2.2.1,
       constructionEndpoint.2.2.2.1,
