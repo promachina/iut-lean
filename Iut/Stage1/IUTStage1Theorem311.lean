@@ -483,6 +483,42 @@ theorem flProcessionTranslate_flLabel
   rfl
 
 /--
+Theta-pilot class of a concrete Hodge-theater/log-theta choice.
+
+This is the source-side class that remains after forgetting the finite
+`F_l`-procession label and the local tensor representative.  It keeps the
+Hodge-theater history, the `n,m` log-theta lattice position, the
+log-theta-column, and the coric datum.  Thus `(Ind1)` label/procession changes
+and `(Ind2)` local tensor changes preserve the class, while `(Ind3)` row changes
+are deliberately not quotient data.
+-/
+structure ThetaPilotClass where
+  hodgeTheater : QualitativeData.HodgeTheaterId
+  historyLabel : String
+  column : Int
+  row : Int
+  logThetaColumn : LogThetaColumnId
+  coric : coric
+
+/-- Forget the `F_l` label and local tensor representative of a concrete choice. -/
+def thetaPilotClass
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ThetaPilotClass (coric := coric) :=
+  { hodgeTheater := choice.hodgeTheater,
+    historyLabel := choice.historyLabel,
+    column := choice.coordinate.column,
+    row := choice.coordinate.row,
+    logThetaColumn := choice.coordinate.logThetaColumn,
+    coric := choice.coric }
+
+theorem thetaPilotClass_flProcessionTranslate
+    (t : ZMod l.value)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    thetaPilotClass (flProcessionTranslate t choice) =
+      thetaPilotClass choice := by
+  rfl
+
+/--
 Concrete `(Ind1)` step induced by an automorphism of the procession of
 D-prime-strips.
 
@@ -522,6 +558,15 @@ theorem flProcessionTranslate_ind1Step
         local_tensor_eq := rfl,
         upper_semi_eq := rfl } }
 
+theorem ind1_thetaPilotClass_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind1ProcessionStep choice₁ choice₂) :
+    thetaPilotClass choice₁ = thetaPilotClass choice₂ := by
+  have hcoric : choice₁.coric = choice₂.coric := by
+    simpa [toStructuredChoice] using hstep.structured_step.coric_eq
+  simp [thetaPilotClass, hstep.hodgeTheater_eq, hstep.historyLabel_eq,
+    hstep.column_eq, hstep.row_eq, hstep.logThetaColumn_eq, hcoric]
+
 /--
 Concrete `(Ind2)` step induced by the local tensor/direct-summand symmetry.
 
@@ -537,6 +582,15 @@ structure Ind2LocalTensorStep
   structured_step :
     IUTStage1StructuredTheorem311Choice.LocalTensorSymmetryStep
       choice₁.toStructuredChoice choice₂.toStructuredChoice
+
+theorem ind2_thetaPilotClass_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind2LocalTensorStep choice₁ choice₂) :
+    thetaPilotClass choice₁ = thetaPilotClass choice₂ := by
+  have hcoric : choice₁.coric = choice₂.coric := by
+    simpa [toStructuredChoice] using hstep.structured_step.coric_eq
+  simp [thetaPilotClass, hstep.hodgeTheater_eq, hstep.historyLabel_eq,
+    hstep.coordinate_eq, hcoric]
 
 /--
 Concrete `(Ind3)` upper-semi step as the row `m` varies in a fixed column.

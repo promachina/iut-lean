@@ -9447,20 +9447,38 @@ source internally by
 \texttt{ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.}\\
 \texttt{ofImageFactorization}, then enters the existing valuation-ball
 formula-gap/local-to-global \(C_\Theta\) route.  Thus the public endpoint no
-longer asks for a prebuilt quotient theta-pilot source at this boundary; the
-remaining source-paper payload is the actual construction of the theta-class
-map and its \((\Ind_1,\Ind_2)\)-invariance.
-This has now been refined once more by
+longer asks for a prebuilt quotient theta-pilot source at this boundary.
+This has now been refined once more: the theta-class map itself is no longer an
+arbitrary field.  The concrete class
 \[
 \begin{array}{l}
-\texttt{ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource}.
+\texttt{IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass}
 \end{array}
 \]
-Here a concrete choice is first read through a theta-pilot class, representing
-the mono-analytic/coric container of possible images.  The source laws required
-at this boundary are that \((\Ind_1)\) and \((\Ind_2)\) preserve this class.
-Lean then derives the possible-image equalities and constructs the quotient
-theta-pilot source via
+keeps the Hodge-theater history, the log-theta lattice column and row, the
+log-theta-column, and the coric datum, but forgets the finite \(F_l\) label and
+the local tensor representative.  Lean proves
+\texttt{ind1\_thetaPilotClass\_eq} and
+\texttt{ind2\_thetaPilotClass\_eq} from the concrete source steps.  Thus the
+new constructor
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource.}\\
+\quad\texttt{ofThetaPilotClass}
+\end{array}
+\]
+only requires a family of possible images on this concrete class and a pullback
+identification with the record's choice-indexed possible images.  The direct
+one-sided constructor
+\[
+\begin{array}{l}
+\texttt{ofConcreteHodgeTheaterLogThetaThetaPilotClassImages}
+\end{array}
+\]
+then constructs the factorization, derives the \((\Ind_1,\Ind_2)\)
+possible-image equalities, builds the \(F_l\)-procession action, and fixes the
+selected q-region as the chosen Theorem~3.11 possible image.  It still produces
+the quotient theta-pilot source via
 \[
 \begin{array}{l}
 \texttt{ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.}\\
@@ -9469,7 +9487,9 @@ theta-pilot source via
 \]
 No \((\Ind_3)\) class equality is part of this constructor; the endpoint
 explicitly keeps \((\Ind_3)\) out of the equality quotient and uses only the
-typed upper-semi log-volume inequality.
+typed upper-semi log-volume inequality.  The remaining source-paper payload at
+this boundary is now the dependence of the theta-pilot possible-image family on
+this concrete class.
 The same concrete quotient source now feeds the constructed
 Remark~3.9.5 hull/determinant source directly.  The constructor
 \[
