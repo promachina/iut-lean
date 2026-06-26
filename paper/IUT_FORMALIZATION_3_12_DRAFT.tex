@@ -9539,96 +9539,40 @@ which starts from the Hodge-theater/history/label-forgotten-lattice/coric
 same-key image law.  The quotient possible-image family is therefore obtained
 after reconstructing the lattice formula from representatives, rather than by
 first exposing an independent class-region formula.
-This has been lowered again by the typed fiber-transport source
-\[
-\begin{array}{l}
-\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource}.
-\end{array}
-\]
-The transport relation records equality of Hodge theater, history label,
-label-forgotten log-theta lattice coordinate, and coric datum; Lean proves that
-such a transport preserves the theta-pilot class and derives the older
-same-key image law from image invariance under these transports.  The direct
-quotient constructor
-\texttt{ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.}
-\texttt{ofFiberTransportSource} then enters the same selected-q and
-Remark~3.9.5 route.
-The boundary has now been sharpened once more by
-\[
-\begin{array}{l}
-\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberEqualityQuotientSource}.
-\end{array}
-\]
-This source no longer assumes region equality for a fiber transport.  It
-requires the fiber transport to lie in the \((\Ind_1,\Ind_2)\) equality orbit
-and carries the quotient-indexed possible-image family; Lean derives the
-fiber-region equality from the quotient pullback theorem.  Thus the remaining
-payload is the source-paper construction of that equality-orbit membership
-from the concrete multiradial/Ind data, not an additional possible-image
-equality assumption.
-This boundary has now been tightened by
-\[
-\begin{array}{l}
-\texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource}.
-\end{array}
-\]
-It packages the class formula itself and identifies the entire Theorem~3.11
-possible-image family with its pullback to the concrete choice space.  Lean
-derives the pointwise class-region source from this record-level equality, and
-then derives the same-class image law, the class-indexed possible-image family,
-the quotient factorization, and the direct constructor
-\[
-\begin{array}{l}
-\texttt{ofConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecord}.
-\end{array}
-\]
-The newest lowering factors this class formula through the actual
-Hodge-theater/log-theta-lattice coordinates.  Lean now has a label-forgotten
-coordinate
-\[
-\texttt{IUTStage1Theorem311ThetaPilotLatticeCoordinate},
-\]
-obtained from \texttt{IUTStage1Theorem311LogThetaLatticeCoordinate} by
-forgetting the \(F_l\)-procession label.  The theorem
-\texttt{thetaPilotLatticeCoordinate\_flProcessionTranslate} proves that this
-coordinate is unchanged by the \(F_l\)-procession action.  The source object
-\[
-\begin{array}{l}
-\texttt{ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource}
-\end{array}
-\]
-therefore defines possible images from the Hodge-theater id, history label,
-label-forgotten log-theta lattice coordinate, and coric datum, and only then
-pulls the formula back to concrete choices.  Its constructor
-\[
-\begin{array}{l}
-\texttt{ofConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecord}
-\end{array}
-\]
-projects through the class-formula source and enters the same one-sided
-multiradial construction.  The boundary has been lowered one step further by
-\[
-\begin{array}{l}
+The current descent from class formula to quotient source is now organized as a
+chain of progressively more concrete boundaries.  At the top,
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource}
+identifies the Theorem~3.11 record family with a theta-pilot class formula.
+The lattice-formula boundary then factors the class through the
+Hodge-theater id, history label, coric datum, and the label-forgotten
+\texttt{IUTStage1Theorem311ThetaPilotLatticeCoordinate}; the theorem
+\texttt{thetaPilotLatticeCoordinate\_flProcessionTranslate} records that the
+\(F_l\)-procession label is invisible to this theta-pilot coordinate.
+
+Below the formula boundaries,
 \texttt{ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource}
+uses representatives and a same-lattice-key image law to reconstruct the
+lattice formula internally.  The typed fiber-transport source replaces this
+same-key law by a transport relation preserving the Hodge theater, history
+label, label-forgotten lattice coordinate, and coric datum.  The
+equality-quotient source lowers the assumption further: it no longer assumes
+fiber-region equality, but derives it from membership in the
+\((\Ind_1,\Ind_2)\) equality orbit and the quotient pullback theorem.
+
+The newest boundary is
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberInd12ChainSource}.
 \end{array}
 \]
-which no longer supplies either a class-indexed formula or a record-level
-family identity.  It supplies representatives for theta-pilot classes and a
-same-lattice-key image law: two concrete choices with the same Hodge theater,
-history label, label-forgotten log-theta lattice coordinate, and coric datum
-have the same possible-image region.  Lean then constructs the lattice formula
-by evaluating the Theorem~3.11 record at representatives and derives the
-record-level pullback identity.  The remaining source-paper payload is
-therefore not an additional bookkeeping equality.  The class-to-lattice bridge
-now proves that the same-key law follows from the older theta-pilot class image
-law: \texttt{thetaPilotClass\_eq\_of\_latticeKey\_eq} identifies equality of
-theta-pilot classes with equality of the Hodge theater, history label,
-label-forgotten lattice coordinate, and coric datum, and
-\texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource.}
-\texttt{toLatticeImageLawSource} transports class invariance across this
-identification.  The remaining source-paper payload is the proof of the
-typed fiber-transport image invariance itself from the theta-pilot and
-\((\Ind_1),(\Ind_2)\) apparatus.
+It does not supply equality-orbit membership directly.  For each typed
+theta-pilot fiber transport it supplies an explicit chain generated by concrete
+\((\Ind_1)\) procession steps, concrete \((\Ind_2)\) local tensor steps,
+symmetry, and composition.  Lean converts this chain into equality-orbit
+membership, then into equality of quotient maps and equality of possible-image
+regions.  The remaining paper payload is therefore the construction of these
+chains from the actual multiradial procession and local tensor data, rather
+than another possible-image equality assumption.
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
 \begin{array}{l}
