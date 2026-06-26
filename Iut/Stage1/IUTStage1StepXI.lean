@@ -13407,6 +13407,107 @@ theorem ofClassRegionSource_endpoint
       quotientEndpoint.2.2.2.2.2.2.2,
       sourceEndpoint.2.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Concrete quotient theta-pilot source from the lattice-key image law.
+
+This is the lower source-facing quotient constructor: the possible-image
+formula is not supplied on theta-pilot classes.  It is reconstructed by
+evaluating the record at representatives of Hodge-theater/history/
+label-forgotten-log-theta-lattice/coric keys, and the record pullback is proved
+from the same-key image law.
+-/
+def ofLatticeImageLawSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData :=
+  ofClassRegionSource
+    (record := record) (indData := indData)
+    sourceData.toLatticeFormulaRecordSource.toClassFormulaRecordSource.toClassRegionSource
+    gluingTorsor selectedQChoice
+
+set_option linter.style.longLine false in
+theorem ofLatticeImageLawSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let quotientSource :=
+      ofLatticeImageLawSource
+        (record := record) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    (∀ hodgeTheater historyLabel
+        (lattice : IUTStage1Theorem311ThetaPilotLatticeCoordinate)
+        (c : coric),
+      sourceData.latticeFormula.thetaRegion hodgeTheater historyLabel
+          lattice c =
+        record.thetaPossibleImages.images.region
+          (sourceData.representativeAt hodgeTheater historyLabel lattice c)) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.latticeFormula.thetaRegion choice.hodgeTheater
+            choice.historyLabel
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+              choice)
+            choice.coric) ∧
+      record.thetaPossibleImages.images =
+        sourceData.latticeFormula.toChoiceImages ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        choice₁.hodgeTheater = choice₂.hodgeTheater ->
+          choice₁.historyLabel = choice₂.historyLabel ->
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+                choice₁ =
+              IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+                choice₂ ->
+              choice₁.coric = choice₂.coric ->
+                record.thetaPossibleImages.images.region choice₁ =
+                  record.thetaPossibleImages.images.region choice₂) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        quotientSource.quotientImages.region
+            ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                indData).equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      quotientSource.toConstruction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      quotientSource.toConstruction.selectedQRegion =
+        quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice) ∧
+      quotientSource.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) := by
+  intro quotientSource
+  let sourceEndpoint := sourceData.endpoint
+  let quotientEndpoint := quotientSource.endpoint
+  exact
+    ⟨sourceEndpoint.1,
+      sourceEndpoint.2.1,
+      sourceEndpoint.2.2.1,
+      sourceEndpoint.2.2.2.2.1,
+      quotientSource.pullback_region_eq,
+      quotientEndpoint.2.1,
+      quotientEndpoint.2.2.1,
+      quotientSource.selectedQRegion_eq_suppliedQuotientImage,
+      quotientEndpoint.2.2.2.2.2.2.2,
+      by
+        intro choice₁ choice₂ hstep
+        exact
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators_ind3_false hstep⟩
+
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
 set_option linter.style.longLine false in
