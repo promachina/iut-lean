@@ -3364,6 +3364,97 @@ theorem DirectSummandSymmetry.directSummandCount_eq
     _ = state₂.directSummandCount :=
       Fintype.card_fin state₂.directSummandCount
 
+set_option linter.style.longLine false in
+/--
+Packet-level direct-summand symmetry.
+
+This is lower than `DirectSummandSymmetry`: the equivalence is supplied on the
+capsule/direct-summand packet index sets, while the two local tensor states are
+identified with the tensor states carried by those packets.  The packet records
+then convert capsule-count equivalence into direct-summand-count equivalence.
+-/
+def DirectSummandPacketSymmetry
+    (state₁ state₂ : IUTStage1LocalTensorState) : Prop :=
+  ∃ (kind : IUTStage1PlaceKind)
+    (sourcePacket : IUTStage1LocalTensorPacketLogVolumeState kind)
+    (targetPacket : IUTStage1LocalTensorPacketLogVolumeState kind),
+    sourcePacket.tensorState = state₁ ∧
+      targetPacket.tensorState = state₂ ∧
+      state₁.symmetry = state₂.symmetry ∧
+      Nonempty
+        (Fin sourcePacket.capsuleFamily.capsuleCount ≃
+          Fin targetPacket.capsuleFamily.capsuleCount)
+
+set_option linter.style.longLine false in
+theorem DirectSummandPacketSymmetry.directSummandCount_eq
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (packetSymmetry : DirectSummandPacketSymmetry state₁ state₂) :
+    state₁.directSummandCount = state₂.directSummandCount := by
+  rcases packetSymmetry with
+    ⟨kind, sourcePacket, targetPacket, hsourceTensor, htargetTensor,
+      _hsymmetry, hcapsuleEquiv⟩
+  rcases hcapsuleEquiv with ⟨capsuleEquiv⟩
+  have hsource :
+      state₁.directSummandCount = sourcePacket.capsuleFamily.capsuleCount := by
+    calc
+      state₁.directSummandCount = sourcePacket.tensorState.directSummandCount :=
+        (congrArg IUTStage1LocalTensorState.directSummandCount
+          hsourceTensor).symm
+      _ = sourcePacket.capsuleFamily.capsuleCount :=
+        sourcePacket.direct_summand_count_eq_capsuleCount
+  have htarget :
+      state₂.directSummandCount = targetPacket.capsuleFamily.capsuleCount := by
+    calc
+      state₂.directSummandCount = targetPacket.tensorState.directSummandCount :=
+        (congrArg IUTStage1LocalTensorState.directSummandCount
+          htargetTensor).symm
+      _ = targetPacket.capsuleFamily.capsuleCount :=
+        targetPacket.direct_summand_count_eq_capsuleCount
+  calc
+    state₁.directSummandCount = sourcePacket.capsuleFamily.capsuleCount :=
+      hsource
+    _ = Fintype.card (Fin sourcePacket.capsuleFamily.capsuleCount) :=
+      (Fintype.card_fin sourcePacket.capsuleFamily.capsuleCount).symm
+    _ = Fintype.card (Fin targetPacket.capsuleFamily.capsuleCount) :=
+      Fintype.card_congr capsuleEquiv
+    _ = targetPacket.capsuleFamily.capsuleCount :=
+      Fintype.card_fin targetPacket.capsuleFamily.capsuleCount
+    _ = state₂.directSummandCount :=
+      htarget.symm
+
+set_option linter.style.longLine false in
+theorem DirectSummandPacketSymmetry.toDirectSummandSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (packetSymmetry : DirectSummandPacketSymmetry state₁ state₂) :
+    DirectSummandSymmetry state₁ state₂ := by
+  rcases packetSymmetry with
+    ⟨kind, sourcePacket, targetPacket, hsourceTensor, htargetTensor,
+      hsymmetry, hcapsuleEquiv⟩
+  rcases hcapsuleEquiv with ⟨capsuleEquiv⟩
+  refine
+    { symmetry_eq := hsymmetry,
+      summandEquiv_nonempty := ?_ }
+  have hsource :
+      state₁.directSummandCount = sourcePacket.capsuleFamily.capsuleCount := by
+    calc
+      state₁.directSummandCount = sourcePacket.tensorState.directSummandCount :=
+        (congrArg IUTStage1LocalTensorState.directSummandCount
+          hsourceTensor).symm
+      _ = sourcePacket.capsuleFamily.capsuleCount :=
+        sourcePacket.direct_summand_count_eq_capsuleCount
+  have htarget :
+      state₂.directSummandCount = targetPacket.capsuleFamily.capsuleCount := by
+    calc
+      state₂.directSummandCount = targetPacket.tensorState.directSummandCount :=
+        (congrArg IUTStage1LocalTensorState.directSummandCount
+          htargetTensor).symm
+      _ = targetPacket.capsuleFamily.capsuleCount :=
+        targetPacket.direct_summand_count_eq_capsuleCount
+  exact
+    ⟨(Equiv.cast (congrArg Fin hsource)).trans
+      (capsuleEquiv.trans
+        (Equiv.cast (congrArg Fin htarget.symm)))⟩
+
 end IUTStage1LocalTensorState
 
 namespace IUTStage1LocalTensorPacketLogVolumeState

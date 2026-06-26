@@ -9591,7 +9591,7 @@ preferred boundary has moved from ``construct an arbitrary equality chain'' to
 ``construct the local tensor symmetry after the canonical procession-label
 shift''.
 
-This boundary has now been lowered in four stages.  First,
+This boundary has now been lowered in five stages.  First,
 \[
 \begin{array}{l}
 \texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource}.
@@ -9627,10 +9627,22 @@ procession-state equality.  Fourth,
 replaces the upper-semi-state equality by a typed upper-semi transport.  This
 transport preserves the non-column upper-semi compatibility data; the missing
 log-theta-column equality is derived from the shifted coordinate and the two
-upper-semi-column laws.  Lean then reconstructs the full upper-semi state.  The
-remaining source payload is now construction of the finite summand equivalence,
-procession transport, and upper-semi transport from the actual local tensor,
-procession, and upper-semi symmetries.
+upper-semi-column laws.  Lean then reconstructs the full upper-semi state.
+Fifth,
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberDirectSummandPacketSource}.
+\end{array}
+\]
+It replaces the direct finite summand equivalence by packet-level data: source
+and target local tensor packets, identification of their tensor states with the
+two choices under comparison, and an equivalence of the corresponding capsule
+index sets.  Since each packet records that its direct-summand count is its
+capsule count, Lean reconstructs the direct-summand symmetry consumed by the
+\((\Ind_2)\) local tensor step.  The remaining source payload is therefore the
+construction of the capsule-index equivalence, procession transport, and
+upper-semi transport from the actual local tensor, procession, and upper-semi
+symmetries.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
