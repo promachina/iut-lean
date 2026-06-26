@@ -11266,7 +11266,8 @@ The same concrete route now also reaches the Proposition~1.4/1.5-backed source
 \quad\texttt{CThetaSource}.
 \end{array}
 \]
-It now also has lower local-analytic and additive-Haar versions
+It now also has lower local-analytic, additive-Haar, and valuation-ball
+additive-Haar versions
 \[
 \begin{array}{l}
 \texttt{concreteHodgeTheaterLogThetaQuotientThetaPilotSource\_to}\\
@@ -11274,6 +11275,10 @@ It now also has lower local-analytic and additive-Haar versions
 \quad\texttt{XILocalTermCThetaSource},\\
 \texttt{concreteHodgeTheaterLogThetaQuotientThetaPilotSource\_to}\\
 \quad\texttt{OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisor}\\
+\quad\texttt{StepXILocalTermCThetaSource},\\
+\texttt{concreteHodgeTheaterLogThetaQuotientThetaPilotSource\_to}\\
+\quad\texttt{OneSidedIUTIVTheorem110ValuationBallAdditiveHaarLocalAnalytic}\\
+\quad\texttt{ArithmeticDivisor}\\
 \quad\texttt{StepXILocalTermCThetaSource}.
 \end{array}
 \]
@@ -11281,13 +11286,18 @@ The endpoint exposes the local analytic construction witnesses themselves:
 the distinguished and nondistinguished Proposition~1.4 log-shell construction
 sources and the Proposition~1.5 archimedean metric construction source.  The
 additive-Haar endpoint further exposes the compact-open Haar normalization
-endpoints underlying the finite Proposition~1.4 branches.  After projection,
-both routes recover the proposition, formula, finite local-to-global
-\(C_\Theta\), and Corollary~3.12 outputs.  Thus the concrete Hodge/log-theta
-route no longer stops at a proposition-level estimate package; the remaining
-payload at this boundary is the localized Step~(xi) matching identity and the
-construction of the still lower valuation-ball/local analytic sources from
-paper-native objects, not a raw global
+endpoints underlying the finite Proposition~1.4 branches.  The valuation-ball
+endpoint keeps this finite-place provenance visible: the distinguished and
+nondistinguished additive-Haar log-shell branches are required to arise from
+valuation-ball Haar normalization audits before the source forgets to the
+additive-Haar route.  After projection, all three routes recover the
+proposition, formula, finite local-to-global \(C_\Theta\), and
+Corollary~3.12 outputs.  Thus the concrete Hodge/log-theta route no longer
+stops at a proposition-level estimate package, nor at an abstract
+additive-Haar normalization.  The remaining payload at this boundary is the
+localized Step~(xi) matching identity and the construction of the
+valuation-ball local analytic data from paper-native local fields, log-shells,
+and divisor terms, not a raw global
 \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) hypothesis or a raw total Haar-defect
 inequality.
 The preferred certificate now also carries the IUT~IV local formula audit
@@ -11367,11 +11377,11 @@ The practical priority order is now:
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
   possible-image quotient comparison, Ob5/Ob7 compatibility, and the
   \(\theta_{\mathrm{signed}}\) log-volume identification.
-\item Instantiate the additive-Haar local analytic construction from actual
-  local fields, valuation balls, log-shell maps, compact-open Haar
-  normalizations, and archimedean lattice metrics, proving the remaining
-  Proposition~1.4 log-shell estimates and Proposition~1.5 metric containments
-  below those objects.
+\item Instantiate the valuation-ball local analytic construction from actual
+  local fields, log-shell maps, compact-open Haar normalizations, and
+  archimedean lattice metrics, proving the remaining Proposition~1.4
+  log-shell estimates and Proposition~1.5 metric containments below those
+  objects.
 \item Complete the finite-extension residue/Haar layer below the current
   boundary: construct the residue field action on \(\mathcal O[K_v]\), prove
   that \(p_v\mathcal O[K_v]\) is a residue submodule, and derive the
