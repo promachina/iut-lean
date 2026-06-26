@@ -9591,7 +9591,7 @@ preferred boundary has moved from ``construct an arbitrary equality chain'' to
 ``construct the local tensor symmetry after the canonical procession-label
 shift''.
 
-This boundary has now been lowered in three stages.  First,
+This boundary has now been lowered in four stages.  First,
 \[
 \begin{array}{l}
 \texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource}.
@@ -9618,10 +9618,19 @@ replaces the procession-state equality by a typed procession transport: equality
 of the D-prime-strip procession identifier and equality of the chosen
 representative.  The missing column equality is derived from the shifted
 coordinate and the two procession-column laws, so Lean reconstructs the full
-procession-state equality.  The remaining source payload is now the
-upper-semi-state equality, together with construction of the finite summand
-equivalence and procession transport from the actual local tensor and
-procession symmetries.
+procession-state equality.  Fourth,
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource}
+\end{array}
+\]
+replaces the upper-semi-state equality by a typed upper-semi transport.  This
+transport preserves the non-column upper-semi compatibility data; the missing
+log-theta-column equality is derived from the shifted coordinate and the two
+upper-semi-column laws.  Lean then reconstructs the full upper-semi state.  The
+remaining source payload is now construction of the finite summand equivalence,
+procession transport, and upper-semi transport from the actual local tensor,
+procession, and upper-semi symmetries.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[

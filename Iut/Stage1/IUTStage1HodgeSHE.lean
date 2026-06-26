@@ -3808,6 +3808,32 @@ end IUTStage1PacketNormalizedContainerEstimate
 
 namespace IUTStage1UpperSemiCompatibilityState
 
+set_option linter.style.longLine false in
+/--
+Concrete upper-semi transport between upper-semi compatibility states.
+
+The theta-pilot fiber transport fixes the log-theta column after the canonical
+`F_l` shift.  This transport records the remaining upper-semi data: the
+compatibility identifier, place-family inclusion/surjection data, log-volume
+compatibility datum, boolean guards, and the proposition being witnessed by the
+compatibility proof.
+-/
+structure UpperSemiTransport
+    (state₁ state₂ : IUTStage1UpperSemiCompatibilityState) : Prop where
+  compatibility_eq : state₁.compatibility = state₂.compatibility
+  nonarchimedeanInclusions_eq :
+    state₁.nonarchimedeanInclusions = state₂.nonarchimedeanInclusions
+  archimedeanSurjections_eq :
+    state₁.archimedeanSurjections = state₂.archimedeanSurjections
+  logVolumeCompatibility_eq :
+    state₁.logVolumeCompatibility = state₂.logVolumeCompatibility
+  hasNonarchimedeanInclusions_eq :
+    state₁.hasNonarchimedeanInclusions = state₂.hasNonarchimedeanInclusions
+  hasArchimedeanSurjections_eq :
+    state₁.hasArchimedeanSurjections = state₂.hasArchimedeanSurjections
+  logVolumeCompatible_eq :
+    state₁.logVolumeCompatible = state₂.logVolumeCompatible
+
 theorem logVolumeCompatibleProof
     (state : IUTStage1UpperSemiCompatibilityState) :
     state.logVolumeCompatible :=
@@ -3826,6 +3852,32 @@ theorem same_compatibility_of_eq
     state₁.compatibility = state₂.compatibility := by
   cases h
   rfl
+
+theorem UpperSemiTransport.eq_of_logThetaColumn_eq
+    {state₁ state₂ : IUTStage1UpperSemiCompatibilityState}
+    (transport : UpperSemiTransport state₁ state₂)
+    (logThetaColumn_eq :
+      state₁.logThetaColumn = state₂.logThetaColumn) :
+    state₁ = state₂ := by
+  cases state₁ with
+  | mk logThetaColumn₁ compatibility₁ nonarch₁ arch₁ logVolume₁
+      hasNonarch₁ hasArch₁ compatible₁ proof₁ =>
+  cases state₂ with
+  | mk logThetaColumn₂ compatibility₂ nonarch₂ arch₂ logVolume₂
+      hasNonarch₂ hasArch₂ compatible₂ proof₂ =>
+  cases logThetaColumn_eq
+  cases transport.compatibility_eq
+  cases transport.nonarchimedeanInclusions_eq
+  cases transport.archimedeanSurjections_eq
+  cases transport.logVolumeCompatibility_eq
+  cases transport.hasNonarchimedeanInclusions_eq
+  cases transport.hasArchimedeanSurjections_eq
+  cases transport.logVolumeCompatible_eq
+  exact congrArg
+    (fun proof =>
+      IUTStage1UpperSemiCompatibilityState.mk logThetaColumn₁ compatibility₁
+        nonarch₁ arch₁ logVolume₁ hasNonarch₁ hasArch₁ compatible₁ proof)
+    (Subsingleton.elim proof₁ proof₂)
 
 theorem logVolumeUpperBound
     (state : IUTStage1UpperSemiCompatibilityState) :

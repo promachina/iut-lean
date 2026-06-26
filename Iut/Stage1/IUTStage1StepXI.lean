@@ -13375,6 +13375,235 @@ theorem endpoint
 
 end ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTransportSource
 
+set_option linter.style.longLine false in
+/--
+Local tensor source whose upper-semi equality is reconstructed from upper-semi
+transport.
+
+This lowers `ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTransportSource`:
+the source no longer supplies the full upper-semi compatibility-state equality.
+It supplies preservation of all non-column upper-semi data; Lean derives the
+log-theta-column equality from the shifted coordinate and the two
+upper-semi-column laws, then reconstructs the full state equality.
+-/
+structure ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) where
+  representativeData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassRepresentativeData
+      coric l
+  quotientImages :
+    (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  fiberTransport_upperSemiTransport :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+        IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).upper_semi_state
+          choice₂.upper_semi_state
+  fiberTransport_processionTransport :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+        IUTStage1ProcessionState.ProcessionTransport
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).procession_state
+          choice₂.procession_state
+  fiberTransport_directSummandSymmetry :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+        IUTStage1LocalTensorState.DirectSummandSymmetry
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).local_tensor_state
+          choice₂.local_tensor_state
+
+namespace ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
+
+variable {coric : Type u}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable
+  {indData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+
+set_option linter.style.longLine false in
+theorem fiberTransport_upperSemi_logThetaColumn_eq
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+      (l := l) choice₁ choice₂).upper_semi_state.logThetaColumn =
+      choice₂.upper_semi_state.logThetaColumn := by
+  calc
+    (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+      (l := l) choice₁ choice₂).upper_semi_state.logThetaColumn =
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).coordinate.logThetaColumn :=
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).upper_semi_logThetaColumn_eq
+    _ = choice₂.coordinate.logThetaColumn := by
+      exact
+        congrArg
+          IUTStage1Theorem311LogThetaLatticeCoordinate.logThetaColumn
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource.fiberTransport_processionShifted_coordinate_eq
+            (l := l) transport)
+    _ = choice₂.upper_semi_state.logThetaColumn :=
+      choice₂.upper_semi_logThetaColumn_eq.symm
+
+set_option linter.style.longLine false in
+theorem fiberTransport_upperSemi_eq
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
+        record indData)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+      (l := l) choice₁ choice₂).upper_semi_state =
+      choice₂.upper_semi_state :=
+  IUTStage1UpperSemiCompatibilityState.UpperSemiTransport.eq_of_logThetaColumn_eq
+    (sourceData.fiberTransport_upperSemiTransport transport)
+    (fiberTransport_upperSemi_logThetaColumn_eq (l := l) transport)
+
+set_option linter.style.longLine false in
+/-- Forget upper-semi transport data to the procession-transport source. -/
+def toFiberProcessionTransportSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
+        record indData) :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTransportSource
+      record indData :=
+  { representativeData := sourceData.representativeData,
+    quotientImages := sourceData.quotientImages,
+    fiberTransport_processionTransport :=
+      sourceData.fiberTransport_processionTransport,
+    fiberTransport_directSummandSymmetry :=
+      sourceData.fiberTransport_directSummandSymmetry,
+    fiberTransport_upperSemi_eq :=
+      sourceData.fiberTransport_upperSemi_eq }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
+        record indData) :
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      sourceData.quotientImages.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂).upper_semi_state
+            choice₂.upper_semi_state) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).upper_semi_state.logThetaColumn =
+            choice₂.upper_semi_state.logThetaColumn) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).upper_semi_state =
+            choice₂.upper_semi_state) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1ProcessionState.ProcessionTransport
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂).procession_state
+            choice₂.procession_state) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).procession_state.column =
+            choice₂.procession_state.column) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).procession_state =
+            choice₂.procession_state) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1LocalTensorState.DirectSummandSymmetry
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂).local_tensor_state
+            choice₂.local_tensor_state) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).local_tensor_state.directSummandCount =
+            choice₂.local_tensor_state.directSummandCount) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂) choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          ConcreteHodgeTheaterLogThetaThetaPilotFiberInd12Chain
+            (l := l) choice₁ choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) :=
+  let processionEndpoint := sourceData.toFiberProcessionTransportSource.endpoint
+  ⟨sourceData.quotientImages.pullback_region_eq,
+    sourceData.fiberTransport_upperSemiTransport,
+    fiberTransport_upperSemi_logThetaColumn_eq,
+    sourceData.fiberTransport_upperSemi_eq,
+    sourceData.fiberTransport_processionTransport,
+    processionEndpoint.2.2.1,
+    processionEndpoint.2.2.2.1,
+    sourceData.fiberTransport_directSummandSymmetry,
+    processionEndpoint.2.2.2.2.2.1,
+    processionEndpoint.2.2.2.2.2.2.1,
+    processionEndpoint.2.2.2.2.2.2.2.1,
+    processionEndpoint.2.2.2.2.2.2.2.2⟩
+
+end ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
+
 namespace ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
 
 variable {coric : Type u}
@@ -14874,6 +15103,27 @@ def ofFiberProcessionTransportSource
     sourceData.toFiberDirectSummandSymmetrySource gluingTorsor selectedQChoice
 
 set_option linter.style.longLine false in
+/--
+Concrete quotient theta-pilot source from upper-semi transport data.
+
+This is stricter than `ofFiberProcessionTransportSource`: the source supplies
+upper-semi transport preserving the non-column compatibility data, while Lean
+derives the upper-semi state equality from the shifted log-theta column.
+-/
+def ofFiberUpperSemiTransportSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData :=
+  ofFiberProcessionTransportSource
+    (record := record) (indData := indData)
+    sourceData.toFiberProcessionTransportSource gluingTorsor selectedQChoice
+
+set_option linter.style.longLine false in
 theorem ofFiberTransportSource_endpoint
     (sourceData :
       ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
@@ -15444,6 +15694,68 @@ theorem ofFiberProcessionTransportSource_endpoint
       sourceEndpoint.2.2.2.2.2.2.1,
       sourceEndpoint.2.2.2.2.2.2.2.1,
       sourceEndpoint.2.2.2.2.2.2.2.2,
+      quotientSource.pullback_region_eq,
+      quotientSource.selectedQRegion_eq_suppliedQuotientImage,
+      quotientSource.toConstruction.selectedQRegion_subset_recordUnion,
+      by
+        intro choice₁ choice₂ hstep
+        exact
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators_ind3_false hstep⟩
+
+set_option linter.style.longLine false in
+theorem ofFiberUpperSemiTransportSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let quotientSource :=
+      ofFiberUpperSemiTransportSource
+        (record := record) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      sourceData.quotientImages.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂).upper_semi_state
+            choice₂.upper_semi_state) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).upper_semi_state =
+            choice₂.upper_semi_state) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        quotientSource.quotientImages.region
+            ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                indData).equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      quotientSource.toConstruction.selectedQRegion =
+        quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice) ∧
+      quotientSource.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) := by
+  intro quotientSource
+  exact
+    ⟨sourceData.quotientImages.pullback_region_eq,
+      sourceData.fiberTransport_upperSemiTransport,
+      sourceData.fiberTransport_upperSemi_eq,
       quotientSource.pullback_region_eq,
       quotientSource.selectedQRegion_eq_suppliedQuotientImage,
       quotientSource.toConstruction.selectedQRegion_subset_recordUnion,
