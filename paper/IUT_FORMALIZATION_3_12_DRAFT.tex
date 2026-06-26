@@ -9591,7 +9591,7 @@ preferred boundary has moved from ``construct an arbitrary equality chain'' to
 ``construct the local tensor symmetry after the canonical procession-label
 shift''.
 
-This boundary has now been lowered in five stages.  First,
+This boundary has now been lowered in six stages.  First,
 \[
 \begin{array}{l}
 \texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource}.
@@ -9639,10 +9639,20 @@ and target local tensor packets, identification of their tensor states with the
 two choices under comparison, and an equivalence of the corresponding capsule
 index sets.  Since each packet records that its direct-summand count is its
 capsule count, Lean reconstructs the direct-summand symmetry consumed by the
-\((\Ind_2)\) local tensor step.  The remaining source payload is therefore the
-construction of the capsule-index equivalence, procession transport, and
-upper-semi transport from the actual local tensor, procession, and upper-semi
-symmetries.
+\((\Ind_2)\) local tensor step.  Sixth,
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberDirectSummandActionPacketSource}
+\end{array}
+\]
+replaces the capsule-index equivalence itself by a direct-summand packet action:
+the source supplies direct-summand packet states and an action on the source
+summand family whose induced capsule family is the target packet.  The induced
+capsule action has the same finite index type as the source family, so Lean
+derives the capsule-index equivalence and then the direct-summand symmetry.  The
+remaining source payload is therefore construction of the direct-summand action,
+procession transport, and upper-semi transport from the actual local tensor,
+procession, and upper-semi symmetries.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[

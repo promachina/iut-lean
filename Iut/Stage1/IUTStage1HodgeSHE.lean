@@ -3455,6 +3455,62 @@ theorem DirectSummandPacketSymmetry.toDirectSummandSymmetry
       (capsuleEquiv.trans
         (Equiv.cast (congrArg Fin htarget.symm)))⟩
 
+set_option linter.style.longLine false in
+/--
+Direct-summand-action packet symmetry.
+
+This is lower than `DirectSummandPacketSymmetry`: instead of supplying a raw
+equivalence of capsule index sets, the source supplies direct-summand packet
+states and an action on the source summand family whose induced capsule-family
+action is the target capsule family.  Since a direct-summand-family action keeps
+the source finite index type, Lean derives the capsule-index equivalence.
+-/
+def DirectSummandActionPacketSymmetry
+    (state₁ state₂ : IUTStage1LocalTensorState) : Prop :=
+  ∃ (kind : IUTStage1PlaceKind)
+    (sourcePacket : IUTStage1LocalTensorDirectSummandPacketState kind)
+    (targetPacket : IUTStage1LocalTensorDirectSummandPacketState kind),
+    sourcePacket.packetState.tensorState = state₁ ∧
+      targetPacket.packetState.tensorState = state₂ ∧
+      state₁.symmetry = state₂.symmetry ∧
+      ∃ action : IUTStage1TensorDirectSummandFamilyAction
+          sourcePacket.summandFamily,
+        targetPacket.packetState.capsuleFamily =
+          action.toCapsuleAction.transformedFamily
+
+set_option linter.style.longLine false in
+theorem DirectSummandActionPacketSymmetry.toDirectSummandPacketSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (actionSymmetry : DirectSummandActionPacketSymmetry state₁ state₂) :
+    DirectSummandPacketSymmetry state₁ state₂ := by
+  rcases actionSymmetry with
+    ⟨kind, sourcePacket, targetPacket, hsourceTensor, htargetTensor,
+      hsymmetry, action, htargetCapsuleFamily⟩
+  refine
+    ⟨kind, sourcePacket.packetState, targetPacket.packetState,
+      hsourceTensor, htargetTensor, hsymmetry, ?_⟩
+  have htargetCount :
+      targetPacket.packetState.capsuleFamily.capsuleCount =
+        action.toCapsuleAction.transformedFamily.capsuleCount :=
+    congrArg IUTStage1TypedCapsuleFamilyLogVolume.capsuleCount
+      htargetCapsuleFamily
+  have hactionCount :
+      action.toCapsuleAction.transformedFamily.capsuleCount =
+        sourcePacket.packetState.capsuleFamily.capsuleCount :=
+    action.toCapsuleAction.transformedFamily_capsuleCount
+  have hcount :
+      sourcePacket.packetState.capsuleFamily.capsuleCount =
+        targetPacket.packetState.capsuleFamily.capsuleCount :=
+    (htargetCount.trans hactionCount).symm
+  exact ⟨Equiv.cast (congrArg Fin hcount)⟩
+
+set_option linter.style.longLine false in
+theorem DirectSummandActionPacketSymmetry.toDirectSummandSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (actionSymmetry : DirectSummandActionPacketSymmetry state₁ state₂) :
+    DirectSummandSymmetry state₁ state₂ :=
+  actionSymmetry.toDirectSummandPacketSymmetry.toDirectSummandSymmetry
+
 end IUTStage1LocalTensorState
 
 namespace IUTStage1LocalTensorPacketLogVolumeState
