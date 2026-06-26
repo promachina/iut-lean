@@ -10935,16 +10935,92 @@ theorem endpoint
 
 set_option linter.style.longLine false in
 /--
+Canonical `F_l` procession action on concrete Hodge-theater/log-theta choices.
+
+The transition translates the finite label in the log-theta coordinate by
+`zmodLabelTranslate`.  The zero/addition laws are the `ZMod` torsor laws, and
+quotient compatibility is derived from the concrete `(Ind1)` step for finite
+label translation.
+-/
+def concreteHodgeTheaterLogThetaFLProcessionAction
+    {coric : Type u}
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l) :
+    IUTStage1Theorem311EqualityFLProcessionAction
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData) l :=
+  { gluingTorsor := gluingTorsor,
+    transition :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate,
+    transition_zero :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate_zero,
+    transition_add :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate_add,
+    transition_related := by
+      intro t choice
+      exact
+        IUTStage1GeneratedIndeterminacyRelation.ind1
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate_ind1Step
+            t choice) }
+
+theorem concreteHodgeTheaterLogThetaFLProcessionAction_transition_flLabel
+    {coric : Type u}
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (t : ZMod l.value)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ((concreteHodgeTheaterLogThetaFLProcessionAction indData gluingTorsor).transition
+        t choice).coordinate.flLabel =
+      zmodLabelTranslate l t choice.coordinate.flLabel :=
+  IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate_flLabel
+    t choice
+
+set_option linter.style.longLine false in
+theorem concreteHodgeTheaterLogThetaFLProcessionAction_endpoint
+    {coric : Type u}
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l) :
+    let action :=
+      concreteHodgeTheaterLogThetaFLProcessionAction indData gluingTorsor;
+    Fintype.card (ZMod l.value) = l.value ∧
+      (∀ choice, action.transition 0 choice = choice) ∧
+      (∀ t u choice,
+        action.transition (t + u) choice =
+          action.transition t (action.transition u choice)) ∧
+      (∀ t choice,
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap choice =
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap (action.transition t choice)) ∧
+      (∀ t choice,
+        (action.transition t choice).coordinate.flLabel =
+          zmodLabelTranslate l t choice.coordinate.flLabel) :=
+  by
+    intro action
+    let endpoint := action.endpoint
+    exact
+      ⟨endpoint.1,
+        endpoint.2.1,
+        endpoint.2.2.1,
+        endpoint.2.2.2.1,
+        concreteHodgeTheaterLogThetaFLProcessionAction_transition_flLabel
+          indData gluingTorsor⟩
+
+set_option linter.style.longLine false in
+/--
 Construct the one-sided Theorem 3.11 multiradial source from concrete
 Hodge-theater/log-theta-lattice indeterminacy data.
 
 The index type is the concrete choice space carrying a Hodge-theater id, an
 `n,m` log-theta coordinate, an `F_l` label, and the current
 procession/tensor/upper-semi state data.  The typed core is constructed from the
-concrete `(Ind1)/(Ind2)/(Ind3)` laws; the remaining inputs are exactly the two
-source-paper obligations still needed at this boundary: possible-image
-compatibility for the `(Ind1)/(Ind2)` equality quotient and the finite
-`F_l` procession action.
+concrete `(Ind1)/(Ind2)/(Ind3)` laws; the finite `F_l` procession action is the
+canonical `ZMod` label translation.  The remaining source-paper input at this
+boundary is possible-image compatibility for the `(Ind1)/(Ind2)` equality
+quotient.
 -/
 def ofConcreteHodgeTheaterLogTheta
     {coric : Type u}
@@ -10958,10 +11034,7 @@ def ofConcreteHodgeTheaterLogTheta
       (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
           indData).PossibleImageQuotientCompatibility
         record.thetaPossibleImages.images)
-    (flProcessionAction :
-      IUTStage1Theorem311EqualityFLProcessionAction
-        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
-          indData) l)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
     (selectedQChoice :
       IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
     IUTStage1Theorem311OneSidedMultiradialConstructionSource
@@ -10970,7 +11043,8 @@ def ofConcreteHodgeTheaterLogTheta
       IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData,
     possibleImageCompatibility := possibleImageCompatibility,
-    flProcessionAction := flProcessionAction,
+    flProcessionAction :=
+      concreteHodgeTheaterLogThetaFLProcessionAction indData gluingTorsor,
     selectedQChoice := selectedQChoice }
 
 set_option linter.style.longLine false in
@@ -10986,15 +11060,12 @@ theorem ofConcreteHodgeTheaterLogTheta_endpoint
       (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
           indData).PossibleImageQuotientCompatibility
         record.thetaPossibleImages.images)
-    (flProcessionAction :
-      IUTStage1Theorem311EqualityFLProcessionAction
-        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
-          indData) l)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
     (selectedQChoice :
       IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
     let construction :=
       ofConcreteHodgeTheaterLogTheta
-        record indData possibleImageCompatibility flProcessionAction
+        record indData possibleImageCompatibility gluingTorsor
         selectedQChoice;
     construction.multiradialImages.quotient =
         construction.typedIndeterminacyCore.equalityQuotient ∧
@@ -11023,7 +11094,7 @@ theorem ofConcreteHodgeTheaterLogTheta_endpoint
       construction.selectedQRegion.toSet ⊆ recordThetaPossibleImageUnion record := by
   exact
     (ofConcreteHodgeTheaterLogTheta
-      record indData possibleImageCompatibility flProcessionAction
+      record indData possibleImageCompatibility gluingTorsor
       selectedQChoice).endpoint
 
 set_option linter.style.longLine false in

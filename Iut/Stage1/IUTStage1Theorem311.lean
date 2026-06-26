@@ -367,6 +367,36 @@ structure IUTStage1Theorem311LogThetaLatticeCoordinate
   flLabel : ZMod l.value
   logThetaColumn : LogThetaColumnId
 
+namespace IUTStage1Theorem311LogThetaLatticeCoordinate
+
+variable {l : PrimeGeFive}
+
+/-- Translate the finite `F_l` procession label while preserving the lattice node. -/
+def translateFLLabel
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l)
+    (t : ZMod l.value) :
+    IUTStage1Theorem311LogThetaLatticeCoordinate l :=
+  { column := coordinate.column,
+    row := coordinate.row,
+    flLabel := zmodLabelTranslate l t coordinate.flLabel,
+    logThetaColumn := coordinate.logThetaColumn }
+
+theorem translateFLLabel_zero
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l) :
+    coordinate.translateFLLabel 0 = coordinate := by
+  cases coordinate
+  simp [translateFLLabel, zmodLabelTranslate_zero]
+
+theorem translateFLLabel_add
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l)
+    (t u : ZMod l.value) :
+    coordinate.translateFLLabel (t + u) =
+      (coordinate.translateFLLabel u).translateFLLabel t := by
+  cases coordinate
+  simp [translateFLLabel, zmodLabelTranslate_add]
+
+end IUTStage1Theorem311LogThetaLatticeCoordinate
+
 /--
 Concrete Hodge-theater/log-theta choice for Theorem 3.11.
 
@@ -414,22 +444,83 @@ theorem toStructuredChoice_row
     choice.toStructuredChoice.row = choice.coordinate.row :=
   rfl
 
+/-- Translate the concrete choice by the finite `F_l` procession label. -/
+def flProcessionTranslate
+    (t : ZMod l.value)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l :=
+  { hodgeTheater := choice.hodgeTheater,
+    historyLabel := choice.historyLabel,
+    coordinate := choice.coordinate.translateFLLabel t,
+    coric := choice.coric,
+    procession_state := choice.procession_state,
+    local_tensor_state := choice.local_tensor_state,
+    upper_semi_state := choice.upper_semi_state,
+    procession_column_eq := choice.procession_column_eq,
+    upper_semi_logThetaColumn_eq := choice.upper_semi_logThetaColumn_eq }
+
+theorem flProcessionTranslate_zero
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    flProcessionTranslate 0 choice = choice := by
+  cases choice
+  simp [flProcessionTranslate,
+    IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel_zero]
+
+theorem flProcessionTranslate_add
+    (t u : ZMod l.value)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    flProcessionTranslate (t + u) choice =
+      flProcessionTranslate t (flProcessionTranslate u choice) := by
+  cases choice
+  simp [flProcessionTranslate,
+    IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel_add]
+
+theorem flProcessionTranslate_flLabel
+    (t : ZMod l.value)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (flProcessionTranslate t choice).coordinate.flLabel =
+      zmodLabelTranslate l t choice.coordinate.flLabel :=
+  rfl
+
 /--
 Concrete `(Ind1)` step induced by an automorphism of the procession of
 D-prime-strips.
 
-It preserves the Hodge-theater history and log-theta coordinate and descends to
-the existing structured procession-automorphism step.
+It preserves the Hodge-theater history and the log-theta lattice node, but it
+may change the finite `F_l` label.  This matches the label/procession passage of
+Remark 3.11.2 and descends to the existing structured
+procession-automorphism step, which does not see the finite label.
 -/
 structure Ind1ProcessionStep
     (choice₁ choice₂ :
       IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) : Prop where
   hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
   historyLabel_eq : choice₁.historyLabel = choice₂.historyLabel
-  coordinate_eq : choice₁.coordinate = choice₂.coordinate
+  column_eq : choice₁.coordinate.column = choice₂.coordinate.column
+  row_eq : choice₁.coordinate.row = choice₂.coordinate.row
+  logThetaColumn_eq :
+    choice₁.coordinate.logThetaColumn = choice₂.coordinate.logThetaColumn
   structured_step :
     IUTStage1StructuredTheorem311Choice.ProcessionAutomorphismStep
       choice₁.toStructuredChoice choice₂.toStructuredChoice
+
+theorem flProcessionTranslate_ind1Step
+    (t : ZMod l.value)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    Ind1ProcessionStep choice (flProcessionTranslate t choice) :=
+  { hodgeTheater_eq := rfl,
+    historyLabel_eq := rfl,
+    column_eq := rfl,
+    row_eq := rfl,
+    logThetaColumn_eq := rfl,
+    structured_step :=
+      { column_eq := rfl,
+        row_eq := rfl,
+        coric_eq := rfl,
+        procession_eq := rfl,
+        procession_column_eq := rfl,
+        local_tensor_eq := rfl,
+        upper_semi_eq := rfl } }
 
 /--
 Concrete `(Ind2)` step induced by the local tensor/direct-summand symmetry.

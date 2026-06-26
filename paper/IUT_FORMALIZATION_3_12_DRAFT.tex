@@ -9393,10 +9393,12 @@ constructor
 \end{array}
 \]
 builds the one-sided multiradial source from concrete \((\Ind_1)\),
-\((\Ind_2)\), and \((\Ind_3)\) laws on this choice space.  The two remaining
-inputs at this boundary are exactly the next mathematical obligations:
-possible-image compatibility for the \((\Ind_1,\Ind_2)\)-equality quotient and
-the actual \(F_l\)-procession action on the concrete choices.
+\((\Ind_2)\), and \((\Ind_3)\) laws on this choice space.  Lean now constructs
+the finite \(F_l\)-procession action itself: it translates the \(F_l\) label by
+the canonical \(\mathbb Z/l\mathbb Z\) action, proves the zero and addition
+laws, proves \(|F_l|=l\), and derives equality-quotient compatibility from the
+concrete \((\Ind_1)\) step.  The remaining input at this boundary is
+possible-image compatibility for the \((\Ind_1,\Ind_2)\)-equality quotient.
 
 The bridge to the constructed Remark~3.9.5 source is now named as
 \[
