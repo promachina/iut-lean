@@ -9539,6 +9539,20 @@ which starts from the Hodge-theater/history/label-forgotten-lattice/coric
 same-key image law.  The quotient possible-image family is therefore obtained
 after reconstructing the lattice formula from representatives, rather than by
 first exposing an independent class-region formula.
+This has been lowered again by the typed fiber-transport source
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource}.
+\end{array}
+\]
+The transport relation records equality of Hodge theater, history label,
+label-forgotten log-theta lattice coordinate, and coric datum; Lean proves that
+such a transport preserves the theta-pilot class and derives the older
+same-key image law from image invariance under these transports.  The direct
+quotient constructor
+\texttt{ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.}
+\texttt{ofFiberTransportSource} then enters the same selected-q and
+Remark~3.9.5 route.
 This boundary has now been tightened by
 \[
 \begin{array}{l}
@@ -9600,7 +9614,7 @@ label-forgotten lattice coordinate, and coric datum, and
 \texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource.}
 \texttt{toLatticeImageLawSource} transports class invariance across this
 identification.  The remaining source-paper payload is the proof of the
-class/quotient image invariance itself from the theta-pilot and
+typed fiber-transport image invariance itself from the theta-pilot and
 \((\Ind_1),(\Ind_2)\) apparatus.
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
