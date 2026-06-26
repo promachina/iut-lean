@@ -2239,6 +2239,72 @@ structure ArchimedeanOrderTwoActionEntryStep
         audited₂.choice.local_tensor_state.packetState.capsuleFamily =
           action.toDirectSummandAction.toCapsuleAction.transformedFamily
 
+set_option linter.style.longLine false in
+theorem NonarchimedeanIsmActionEntryStep.toInd2ActionPacketSymmetry
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmActionEntryStep audited₁ audited₂)
+    (hsymmetry :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        audited₂.choice.local_tensor_state.packetState.tensorState.symmetry) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState := by
+  rcases hstep.matching_action_exists with
+    ⟨action, _hplace, _hentry, htargetCapsuleFamily⟩
+  exact Or.inl
+    ⟨audited₁.choice.local_tensor_state,
+      audited₂.choice.local_tensor_state,
+      rfl, rfl, hsymmetry, action, htargetCapsuleFamily⟩
+
+set_option linter.style.longLine false in
+theorem ArchimedeanOrderTwoActionEntryStep.toInd2ActionPacketSymmetry
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoActionEntryStep audited₁ audited₂)
+    (hsymmetry :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        audited₂.choice.local_tensor_state.packetState.tensorState.symmetry) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState := by
+  rcases hstep.matching_action_exists with
+    ⟨action, _hplace, _hentry, htargetCapsuleFamily⟩
+  exact Or.inr
+    ⟨audited₁.choice.local_tensor_state,
+      audited₂.choice.local_tensor_state,
+      rfl, rfl, hsymmetry, action, htargetCapsuleFamily⟩
+
+set_option linter.style.longLine false in
+theorem NonarchimedeanIsmActionEntryStep.toDirectSummandActionPacketSymmetry
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep : NonarchimedeanIsmActionEntryStep audited₁ audited₂)
+    (hsymmetry :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        audited₂.choice.local_tensor_state.packetState.tensorState.symmetry) :
+    IUTStage1LocalTensorState.DirectSummandActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState :=
+  (hstep.toInd2ActionPacketSymmetry hsymmetry).toDirectSummandActionPacketSymmetry
+
+set_option linter.style.longLine false in
+theorem ArchimedeanOrderTwoActionEntryStep.toDirectSummandActionPacketSymmetry
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep : ArchimedeanOrderTwoActionEntryStep audited₁ audited₂)
+    (hsymmetry :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        audited₂.choice.local_tensor_state.packetState.tensorState.symmetry) :
+    IUTStage1LocalTensorState.DirectSummandActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState :=
+  (hstep.toInd2ActionPacketSymmetry hsymmetry).toDirectSummandActionPacketSymmetry
+
 def nonarchimedeanEntry_toNonarchimedeanIsmStep
     {audited₁ audited₂ :
       IUTStage1PlaceAuditedDirectSummandPacketChoice
