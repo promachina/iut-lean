@@ -11153,7 +11153,7 @@ q-pilot region is identified with a selected
 Theorem~3.11 possible image, that image is read through the
 \((\Ind_1)/(\Ind_2)\) equality quotient, and the pullback of the
 quotient-indexed possible-image family is the original theta-pilot family.
-The same concrete quotient source now also feeds the finite-place
+The same concrete quotient source now feeds the finite-place
 local-to-global \(C_\Theta\) handoff by
 \[
 \begin{array}{l}
@@ -11161,13 +11161,23 @@ local-to-global \(C_\Theta\) handoff by
 \quad\texttt{OneSidedFinitePlaceLocalGlobalCThetaSource}
 \end{array}
 \]
-and its endpoint theorem.  This constructor builds the Remark~3.9.5
-hull/determinant source internally from the selected quotient q-region, then
-uses the finite local canonical-scale, upper-term, main-log, and Haar-defect
-summation data to derive \(C_{\Theta,\mathrm{can}}\leq C_\Theta\).  The
-remaining global comparison is therefore no longer a raw hypothesis at the
-concrete quotient boundary; it is the finite-place local-to-global source
-payload.
+and, more sharply, through the localized Step~(xi) constructor
+\[
+\begin{array}{l}
+\texttt{concreteHodgeTheaterLogThetaQuotientThetaPilotSource\_to}\\
+\quad\texttt{OneSidedStepXILocalTermCThetaSource}.
+\end{array}
+\]
+Both constructors build the Remark~3.9.5 hull/determinant source internally
+from the selected quotient q-region.  The Step~(xi) refinement removes another
+free local input: the canonical local summands are the weighted adjusted
+log-volumes of the localized vector-bundle determinant source, and the local
+upper contribution is the Step~(xi) term plus the Haar defect and main-log
+term.  Its endpoint exposes the quotient q-region facts, localized determinant
+identities, finite-place \(C_\Theta\) derivation, signed bound, and final
+Corollary~3.12 dichotomy.  The remaining payload is now the localized
+determinant/Haar/main-log matching data, not a raw global
+\(C_{\Theta,\mathrm{can}}\leq C_\Theta\) hypothesis.
 The preferred certificate now also carries the IUT~IV local formula audit
 \[
 \begin{array}{l}
