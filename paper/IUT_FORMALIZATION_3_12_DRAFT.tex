@@ -9498,9 +9498,31 @@ This source supplies a representative concrete choice for each theta-pilot
 class and proves that two choices with the same theta-pilot class have the same
 possible-image region.  Lean then constructs the class-indexed family, proves
 the pullback identity, and feeds the resulting factorization into
-\texttt{ofConcreteHodgeTheaterLogThetaThetaPilotClassImageLaw}.  The remaining
-source-paper payload is sharper: construct these representatives and the
-same-class image-invariance theorem from the actual theta-pilot apparatus.
+\texttt{ofConcreteHodgeTheaterLogThetaThetaPilotClassImageLaw}.  The
+representative part has now been made explicit:
+\texttt{ThetaPilotClassRepresentativeData} chooses the forgotten \(F_l\)-label,
+procession representative, local tensor representative, and upper-semi
+representative for each theta-pilot class, and Lean proves that this choice is
+a section of the theta-pilot forgetting map.  The lower
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource}
+\end{array}
+\]
+then takes a class-level possible-image formula
+\(\Theta_{\mathrm{class}}\mapsto P_{\Theta_{\mathrm{class}}}\) and a pullback theorem
+\[
+P_{\mathrm{record}}(x)=P_{\Theta_{\mathrm{class}}(x)}.
+\]
+From this one formula Lean derives the same-class image law, the class-indexed
+possible-image family, the quotient factorization, and the direct constructor
+\[
+\begin{array}{l}
+\texttt{ofConcreteHodgeTheaterLogThetaThetaPilotClassRegion}.
+\end{array}
+\]
+The remaining source-paper payload at this boundary is now concentrated in
+proving the class-region formula from the theta-pilot objects.
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
 \begin{array}{l}
@@ -9529,8 +9551,9 @@ It consumes \texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource},
 constructs the class-indexed family internally, and exposes the representative
 law, same-class image invariance, selected q-region containment, constructed
 valuation endpoint, local-to-global \(C_\Theta\) handoff, and final dichotomy.
-What remains at this boundary is not a free class-indexed family, but the
-source-paper construction of the representatives and same-class image law.
+The experiment-surface valuation endpoint still consumes the class-image-law
+object directly; replacing that long public signature by the new class-region
+source is a mechanical lowering, not a new mathematical assumption.
 The same concrete quotient source now feeds the constructed
 Remark~3.9.5 hull/determinant source directly.  The constructor
 \[

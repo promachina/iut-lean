@@ -519,6 +519,66 @@ theorem thetaPilotClass_flProcessionTranslate
   rfl
 
 /--
+Source-side representatives for concrete theta-pilot classes.
+
+The theta-pilot class has forgotten the finite `F_l` label, the procession
+representative, the local tensor representative, and the upper-semi
+representative.  This data records a section of that forgetting map, together
+with the two coherence laws needed to rebuild a concrete
+Hodge-theater/log-theta choice.
+-/
+structure ThetaPilotClassRepresentativeData
+    (coric : Type u) (l : PrimeGeFive) where
+  flLabel :
+    ThetaPilotClass (coric := coric) -> ZMod l.value
+  procession_state :
+    ThetaPilotClass (coric := coric) -> IUTStage1ProcessionState
+  local_tensor_state :
+    ThetaPilotClass (coric := coric) -> IUTStage1LocalTensorState
+  upper_semi_state :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1UpperSemiCompatibilityState
+  procession_column_eq :
+    ∀ thetaClass,
+      (procession_state thetaClass).column = thetaClass.column
+  upper_semi_logThetaColumn_eq :
+    ∀ thetaClass,
+      (upper_semi_state thetaClass).logThetaColumn =
+        thetaClass.logThetaColumn
+
+namespace ThetaPilotClassRepresentativeData
+
+variable
+  (data : ThetaPilotClassRepresentativeData coric l)
+
+/-- Rebuild a concrete choice from a theta-pilot class and chosen forgotten data. -/
+def representative
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l :=
+  { hodgeTheater := thetaClass.hodgeTheater,
+    historyLabel := thetaClass.historyLabel,
+    coordinate :=
+      { column := thetaClass.column,
+        row := thetaClass.row,
+        flLabel := data.flLabel thetaClass,
+        logThetaColumn := thetaClass.logThetaColumn },
+    coric := thetaClass.coric,
+    procession_state := data.procession_state thetaClass,
+    local_tensor_state := data.local_tensor_state thetaClass,
+    upper_semi_state := data.upper_semi_state thetaClass,
+    procession_column_eq := data.procession_column_eq thetaClass,
+    upper_semi_logThetaColumn_eq :=
+      data.upper_semi_logThetaColumn_eq thetaClass }
+
+theorem thetaPilotClass_representative
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    thetaPilotClass (data.representative thetaClass) = thetaClass := by
+  cases thetaClass
+  rfl
+
+end ThetaPilotClassRepresentativeData
+
+/--
 Concrete `(Ind1)` step induced by an automorphism of the procession of
 D-prime-strips.
 
