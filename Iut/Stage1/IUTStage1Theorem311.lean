@@ -4443,6 +4443,29 @@ theorem ind3_logVolume_le
   core.ind3_logVolume_le hstep
 
 /--
+Recover the old possible-image compatibility record from an explicitly
+quotient-indexed possible-image family.
+
+This is the direction used by the concrete Theorem 3.11 source layer: the
+mathematical input is a family on the `(Ind1,Ind2)` equality quotient, and Lean
+derives the direct `(Ind1)`/`(Ind2)` image equalities required by the existing
+multiradial corridor.  `(Ind3)` still contributes only the core upper-semi
+log-volume inequality.
+-/
+def toCompatibility
+    (quotientImages : EqualityQuotientPossibleImages core images) :
+    PossibleImageQuotientCompatibility core images :=
+  { ind1_region_eq := by
+      intro choice₁ choice₂ hstep
+      exact quotientImages.ind1_region_eq hstep,
+    ind2_region_eq := by
+      intro choice₁ choice₂ hstep
+      exact quotientImages.ind2_region_eq hstep,
+    ind3_logVolume_upper := by
+      intro choice₁ choice₂ hstep
+      exact quotientImages.ind3_logVolume_le hstep }
+
+/--
 Quotient-indexed Remark 3.9.5 possible-image family attached to the typed
 Theorem 3.11 equality quotient.
 

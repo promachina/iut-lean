@@ -9397,8 +9397,19 @@ builds the one-sided multiradial source from concrete \((\Ind_1)\),
 the finite \(F_l\)-procession action itself: it translates the \(F_l\) label by
 the canonical \(\mathbb Z/l\mathbb Z\) action, proves the zero and addition
 laws, proves \(|F_l|=l\), and derives equality-quotient compatibility from the
-concrete \((\Ind_1)\) step.  The remaining input at this boundary is
-possible-image compatibility for the \((\Ind_1,\Ind_2)\)-equality quotient.
+concrete \((\Ind_1)\) step.  A stricter constructor,
+\[
+\begin{array}{l}
+\texttt{IUTStage1Theorem311OneSidedMultiradialConstructionSource.}\\
+\quad\texttt{ofConcreteHodgeTheaterLogThetaQuotientImages},
+\end{array}
+\]
+now takes the theta-pilot possible images as a family on the
+\((\Ind_1,\Ind_2)\)-equality quotient and a pullback theorem identifying the
+record's choice-indexed images with this quotient family.  Lean derives the
+old possible-image compatibility record from these quotient-indexed data, so
+the remaining input has been narrowed to constructing the quotient image family
+and proving that pullback theorem from the source-paper theta-pilot apparatus.
 
 The bridge to the constructed Remark~3.9.5 source is now named as
 \[
