@@ -11787,6 +11787,193 @@ end ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource
 
 set_option linter.style.longLine false in
 /--
+Hodge-theater/log-theta-lattice formula for theta-pilot possible images.
+
+This is lower than a bare function on `ThetaPilotClass`: the region is indexed
+by the Hodge-theater id, history label, the finite-label-forgotten log-theta
+lattice coordinate, and the coric datum.  Pulling this formula through
+`ThetaPilotClass.latticeCoordinate` gives the class formula used by the current
+Theorem 3.11 source layer.
+-/
+structure ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula
+    (coric : Type u) (l : PrimeGeFive) (target : Copy) where
+  thetaRegion :
+    QualitativeData.HodgeTheaterId -> String ->
+      IUTStage1Theorem311ThetaPilotLatticeCoordinate ->
+        coric -> Region target
+
+namespace ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula
+
+variable {coric : Type u}
+
+set_option linter.style.longLine false in
+/-- View the lattice formula as a theta-pilot class formula. -/
+def toClassFormula
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula coric l target) :
+    ConcreteHodgeTheaterLogThetaThetaPilotClassFormula coric l target :=
+  { thetaRegion := fun thetaClass =>
+      formula.thetaRegion thetaClass.hodgeTheater thetaClass.historyLabel
+        thetaClass.latticeCoordinate thetaClass.coric }
+
+set_option linter.style.longLine false in
+@[simp]
+theorem toClassFormula_thetaRegion
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula coric l target)
+    (thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)) :
+    formula.toClassFormula.thetaRegion thetaClass =
+      formula.thetaRegion thetaClass.hodgeTheater thetaClass.historyLabel
+        thetaClass.latticeCoordinate thetaClass.coric :=
+  rfl
+
+set_option linter.style.longLine false in
+/-- Pull back the lattice formula to the concrete choice space. -/
+def toChoiceImages
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula coric l target) :
+    RegionFamily target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :=
+  formula.toClassFormula.toChoiceImages
+
+set_option linter.style.longLine false in
+theorem toChoiceImages_region
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula coric l target)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    formula.toChoiceImages.region choice =
+      formula.thetaRegion choice.hodgeTheater choice.historyLabel
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+          choice)
+        choice.coric := by
+  rfl
+
+end ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula
+
+set_option linter.style.longLine false in
+/--
+Record-level source whose possible-image family is a concrete
+Hodge-theater/log-theta-lattice formula.
+
+The only remaining equality is now a family-level identification between the
+Theorem 3.11 record and the lattice formula pulled back to concrete choices.
+Lean derives the class-formula record source, pointwise class-region source,
+and quotient multiradial construction from it.
+-/
+structure ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) where
+  representativeData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassRepresentativeData
+      coric l
+  latticeFormula :
+    ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula coric l target
+  thetaPossibleImages_eq :
+    record.thetaPossibleImages.images = latticeFormula.toChoiceImages
+
+namespace ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource
+
+variable {coric : Type u}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable
+  {indData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+
+set_option linter.style.longLine false in
+/-- Project a lattice-formula source to the class-formula source. -/
+def toClassFormulaRecordSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource
+        record indData) :
+    ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource
+      record indData :=
+  { representativeData := sourceData.representativeData,
+    formula := sourceData.latticeFormula.toClassFormula,
+    thetaPossibleImages_eq := by
+      simpa
+        [ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula.toChoiceImages]
+        using sourceData.thetaPossibleImages_eq }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource
+        record indData) :
+    record.thetaPossibleImages.images = sourceData.latticeFormula.toChoiceImages ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            (sourceData.representativeData.representative thetaClass) =
+          thetaClass) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.latticeFormula.thetaRegion choice.hodgeTheater
+            choice.historyLabel
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+              choice)
+            choice.coric) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind1.step choice₁ choice₂ ->
+          sourceData.toClassFormulaRecordSource.toClassRegionSource.toClassImageLawSource.toFactorization.thetaClass
+              choice₁ =
+            sourceData.toClassFormulaRecordSource.toClassRegionSource.toClassImageLawSource.toFactorization.thetaClass
+              choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind2.step choice₁ choice₂ ->
+          sourceData.toClassFormulaRecordSource.toClassRegionSource.toClassImageLawSource.toFactorization.thetaClass
+              choice₁ =
+            sourceData.toClassFormulaRecordSource.toClassRegionSource.toClassImageLawSource.toFactorization.thetaClass
+              choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) := by
+  let classEndpoint := sourceData.toClassFormulaRecordSource.endpoint
+  exact
+    ⟨sourceData.thetaPossibleImages_eq,
+      classEndpoint.2.1,
+      by
+        intro choice
+        simpa
+          [ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula.toChoiceImages]
+          using
+            congrArg
+              (fun images : RegionFamily target
+                  (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) =>
+                images.region choice)
+              sourceData.thetaPossibleImages_eq,
+      classEndpoint.2.2.2.1,
+      classEndpoint.2.2.2.2.1,
+      classEndpoint.2.2.2.2.2.1,
+      classEndpoint.2.2.2.2.2.2⟩
+
+end ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource
+
+set_option linter.style.longLine false in
+/--
 Construct the one-sided Theorem 3.11 multiradial source from concrete
 Hodge-theater/log-theta-lattice indeterminacy data.
 
@@ -12099,6 +12286,106 @@ theorem ofConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecord_endpoint
           sourceData.formula.thetaRegion
             (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
               choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) ∧
+      construction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      (∀ t choice,
+        construction.typedIndeterminacyCore.equalityQuotientMap choice =
+          construction.typedIndeterminacyCore.equalityQuotientMap
+            (construction.flProcessionAction.transition t choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+          construction.typedIndeterminacyCore.logVolume choice₁ <=
+            construction.typedIndeterminacyCore.logVolume choice₂) ∧
+      construction.selectedQRegion.toSet =
+        recordThetaPossibleImage record construction.selectedQChoice ∧
+      construction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record := by
+  intro construction
+  let sourceEndpoint := sourceData.endpoint
+  let constructionEndpoint := construction.endpoint
+  exact
+    ⟨sourceEndpoint.1,
+      sourceEndpoint.2.1,
+      sourceEndpoint.2.2.1,
+      sourceEndpoint.2.2.2.1,
+      constructionEndpoint.2.1,
+      constructionEndpoint.2.2.1,
+      constructionEndpoint.2.2.2.1,
+      constructionEndpoint.2.2.2.2.1,
+      constructionEndpoint.2.2.2.2.2.2.2.1,
+      constructionEndpoint.2.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Construct the one-sided Theorem 3.11 multiradial source from a concrete
+Hodge-theater/log-theta-lattice formula.
+
+This is the current lowest source-facing constructor for theta-pilot possible
+images: the possible-image family is generated from Hodge-theater history,
+label-forgotten log-theta lattice coordinate, and coric data before being
+pulled back to concrete choices.
+-/
+def ofConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecord
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  ofConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecord
+    record indData sourceData.toClassFormulaRecordSource gluingTorsor
+    selectedQChoice
+
+set_option linter.style.longLine false in
+theorem ofConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecord_endpoint
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let construction :=
+      ofConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecord
+        record indData sourceData gluingTorsor selectedQChoice;
+    record.thetaPossibleImages.images = sourceData.latticeFormula.toChoiceImages ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            (sourceData.representativeData.representative thetaClass) =
+          thetaClass) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.latticeFormula.thetaRegion choice.hodgeTheater
+            choice.historyLabel
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+              choice)
+            choice.coric) ∧
       (∀ {choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =

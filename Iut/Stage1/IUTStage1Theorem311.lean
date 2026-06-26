@@ -367,6 +367,19 @@ structure IUTStage1Theorem311LogThetaLatticeCoordinate
   flLabel : ZMod l.value
   logThetaColumn : LogThetaColumnId
 
+/--
+Theta-pilot log-theta lattice coordinate after forgetting the finite
+`F_l`-procession label.
+
+This is the lattice part of the theta-pilot class: the column, row, and
+log-theta column survive the `(Ind1)` label/procession ambiguity, while the
+finite label is remembered only by a representative section.
+-/
+structure IUTStage1Theorem311ThetaPilotLatticeCoordinate where
+  column : Int
+  row : Int
+  logThetaColumn : LogThetaColumnId
+
 namespace IUTStage1Theorem311LogThetaLatticeCoordinate
 
 variable {l : PrimeGeFive}
@@ -394,6 +407,21 @@ theorem translateFLLabel_add
       (coordinate.translateFLLabel u).translateFLLabel t := by
   cases coordinate
   simp [translateFLLabel, zmodLabelTranslate_add]
+
+/-- Forget the finite `F_l` label, retaining the theta-pilot lattice node. -/
+def toThetaPilotLatticeCoordinate
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l) :
+    IUTStage1Theorem311ThetaPilotLatticeCoordinate :=
+  { column := coordinate.column,
+    row := coordinate.row,
+    logThetaColumn := coordinate.logThetaColumn }
+
+theorem toThetaPilotLatticeCoordinate_translateFLLabel
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l)
+    (t : ZMod l.value) :
+    (coordinate.translateFLLabel t).toThetaPilotLatticeCoordinate =
+      coordinate.toThetaPilotLatticeCoordinate := by
+  rfl
 
 end IUTStage1Theorem311LogThetaLatticeCoordinate
 
@@ -500,6 +528,18 @@ structure ThetaPilotClass where
   logThetaColumn : LogThetaColumnId
   coric : coric
 
+namespace ThetaPilotClass
+
+/-- The log-theta lattice coordinate carried by a theta-pilot class. -/
+def latticeCoordinate
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1Theorem311ThetaPilotLatticeCoordinate :=
+  { column := thetaClass.column,
+    row := thetaClass.row,
+    logThetaColumn := thetaClass.logThetaColumn }
+
+end ThetaPilotClass
+
 /-- Forget the `F_l` label and local tensor representative of a concrete choice. -/
 def thetaPilotClass
     (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
@@ -511,11 +551,30 @@ def thetaPilotClass
     logThetaColumn := choice.coordinate.logThetaColumn,
     coric := choice.coric }
 
+/-- The log-theta lattice part of a concrete choice after forgetting `F_l`. -/
+def thetaPilotLatticeCoordinate
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311ThetaPilotLatticeCoordinate :=
+  choice.coordinate.toThetaPilotLatticeCoordinate
+
+theorem thetaPilotClass_latticeCoordinate
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (thetaPilotClass choice).latticeCoordinate =
+      thetaPilotLatticeCoordinate choice := by
+  rfl
+
 theorem thetaPilotClass_flProcessionTranslate
     (t : ZMod l.value)
     (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
     thetaPilotClass (flProcessionTranslate t choice) =
       thetaPilotClass choice := by
+  rfl
+
+theorem thetaPilotLatticeCoordinate_flProcessionTranslate
+    (t : ZMod l.value)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    thetaPilotLatticeCoordinate (flProcessionTranslate t choice) =
+      thetaPilotLatticeCoordinate choice := by
   rfl
 
 /--

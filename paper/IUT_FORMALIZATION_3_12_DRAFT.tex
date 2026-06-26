@@ -9525,16 +9525,40 @@ It packages the class formula itself and identifies the entire Theorem~3.11
 possible-image family with its pullback to the concrete choice space.  Lean
 derives the pointwise class-region source from this record-level equality, and
 then derives the same-class image law, the class-indexed possible-image family,
-the quotient factorization, and the direct constructors
+the quotient factorization, and the direct constructor
 \[
 \begin{array}{l}
-\texttt{ofConcreteHodgeTheaterLogThetaThetaPilotClassRegion},\\
 \texttt{ofConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecord}.
 \end{array}
 \]
-The remaining source-paper payload at this boundary is correspondingly sharper:
-construct the class formula and prove the record-level pullback identity from
-the theta-pilot objects, rather than supplying pointwise region equalities.
+The newest lowering factors this class formula through the actual
+Hodge-theater/log-theta-lattice coordinates.  Lean now has a label-forgotten
+coordinate
+\[
+\texttt{IUTStage1Theorem311ThetaPilotLatticeCoordinate},
+\]
+obtained from \texttt{IUTStage1Theorem311LogThetaLatticeCoordinate} by
+forgetting the \(F_l\)-procession label.  The theorem
+\texttt{thetaPilotLatticeCoordinate\_flProcessionTranslate} proves that this
+coordinate is unchanged by the \(F_l\)-procession action.  The source object
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource}
+\end{array}
+\]
+therefore defines possible images from the Hodge-theater id, history label,
+label-forgotten log-theta lattice coordinate, and coric datum, and only then
+pulls the formula back to concrete choices.  Its constructor
+\[
+\begin{array}{l}
+\texttt{ofConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecord}
+\end{array}
+\]
+projects through the class-formula source and enters the same one-sided
+multiradial construction.  The remaining source-paper payload is now sharper
+again: construct this lattice formula from the theta-pilot apparatus and prove
+the record-level pullback identity, rather than supplying pointwise region
+equalities or an opaque class-indexed formula.
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
 \begin{array}{l}
@@ -9576,9 +9600,10 @@ It consumes \texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource},
 derives the class-image law internally, and exposes the representative section,
 class-region pullback formula, same-class invariance, selected q-region
 containment, valuation endpoint, local-to-global \(C_\Theta\) handoff, and
-final dichotomy.  Thus the remaining theorem-side payload is precisely the
-source-paper construction of the class formula and its record-level pullback
-identity from the theta-pilot apparatus.
+final dichotomy.  The lower source layer feeding this boundary now factors the
+class formula through the label-forgotten log-theta lattice coordinate, so the
+remaining theorem-side payload is the construction of that lattice formula and
+its record-level pullback identity from the theta-pilot apparatus.
 The same concrete quotient source now feeds the constructed
 Remark~3.9.5 hull/determinant source directly.  The constructor
 \[
