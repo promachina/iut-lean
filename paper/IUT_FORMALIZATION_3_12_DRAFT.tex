@@ -9487,9 +9487,20 @@ the quotient theta-pilot source via
 \]
 No \((\Ind_3)\) class equality is part of this constructor; the endpoint
 explicitly keeps \((\Ind_3)\) out of the equality quotient and uses only the
-typed upper-semi log-volume inequality.  The remaining source-paper payload at
-this boundary is now the dependence of the theta-pilot possible-image family on
-this concrete class.
+typed upper-semi log-volume inequality.  This boundary has now been lowered
+again by
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource}.
+\end{array}
+\]
+This source supplies a representative concrete choice for each theta-pilot
+class and proves that two choices with the same theta-pilot class have the same
+possible-image region.  Lean then constructs the class-indexed family, proves
+the pullback identity, and feeds the resulting factorization into
+\texttt{ofConcreteHodgeTheaterLogThetaThetaPilotClassImageLaw}.  The remaining
+source-paper payload is sharper: construct these representatives and the
+same-class image-invariance theorem from the actual theta-pilot apparatus.
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
 \begin{array}{l}
