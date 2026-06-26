@@ -9591,7 +9591,7 @@ preferred boundary has moved from ``construct an arbitrary equality chain'' to
 ``construct the local tensor symmetry after the canonical procession-label
 shift''.
 
-This boundary has now been lowered in six stages.  First,
+This boundary has now been lowered in seven stages.  First,
 \[
 \begin{array}{l}
 \texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource}.
@@ -9649,10 +9649,22 @@ replaces the capsule-index equivalence itself by a direct-summand packet action:
 the source supplies direct-summand packet states and an action on the source
 summand family whose induced capsule family is the target packet.  The induced
 capsule action has the same finite index type as the source family, so Lean
-derives the capsule-index equivalence and then the direct-summand symmetry.  The
-remaining source payload is therefore construction of the direct-summand action,
-procession transport, and upper-semi transport from the actual local tensor,
-procession, and upper-semi symmetries.
+derives the capsule-index equivalence and then the direct-summand symmetry.
+Seventh,
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource}
+\end{array}
+\]
+replaces this arbitrary direct-summand-family action by the two typed
+Theorem~3.11 local tensor-factor actions: the nonarchimedean \(\mathrm{Ism}\)
+action and the archimedean order-two action.  Lean forgets either typed action
+to the generic packet-action interface, derives the capsule-index equivalence,
+and then reconstructs the direct-summand symmetry required by the \((\Ind_2)\)
+step.  The remaining source payload is now sharper: construct the concrete
+\(\mathrm{Ism}\) and order-two action records, plus the procession and
+upper-semi transports, from the underlying Hodge-theater and log-theta-lattice
+data.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[

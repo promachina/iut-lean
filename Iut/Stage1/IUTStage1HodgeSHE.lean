@@ -3511,6 +3511,81 @@ theorem DirectSummandActionPacketSymmetry.toDirectSummandSymmetry
     DirectSummandSymmetry state₁ state₂ :=
   actionSymmetry.toDirectSummandPacketSymmetry.toDirectSummandSymmetry
 
+set_option linter.style.longLine false in
+/--
+Typed `(Ind2)` direct-summand action packet symmetry.
+
+This is lower than `DirectSummandActionPacketSymmetry`: the action is no longer
+an arbitrary direct-summand-family action.  It must be one of the two typed
+local tensor-factor symmetries singled out in Theorem 3.11, namely the
+nonarchimedean `Ism` action or the archimedean order-two action.
+-/
+def Ind2ActionPacketSymmetry
+    (state₁ state₂ : IUTStage1LocalTensorState) : Prop :=
+  (∃ (sourcePacket :
+        IUTStage1LocalTensorDirectSummandPacketState
+          IUTStage1PlaceKind.nonarchimedean)
+      (targetPacket :
+        IUTStage1LocalTensorDirectSummandPacketState
+          IUTStage1PlaceKind.nonarchimedean),
+      sourcePacket.packetState.tensorState = state₁ ∧
+        targetPacket.packetState.tensorState = state₂ ∧
+        state₁.symmetry = state₂.symmetry ∧
+        ∃ action :
+          IUTStage1NonarchimedeanIsmDirectSummandAction
+            sourcePacket.summandFamily,
+          targetPacket.packetState.capsuleFamily =
+            action.toDirectSummandAction.toCapsuleAction.transformedFamily) ∨
+    (∃ (sourcePacket :
+          IUTStage1LocalTensorDirectSummandPacketState
+            IUTStage1PlaceKind.archimedean)
+        (targetPacket :
+          IUTStage1LocalTensorDirectSummandPacketState
+            IUTStage1PlaceKind.archimedean),
+        sourcePacket.packetState.tensorState = state₁ ∧
+          targetPacket.packetState.tensorState = state₂ ∧
+          state₁.symmetry = state₂.symmetry ∧
+          ∃ action :
+            IUTStage1ArchimedeanOrderTwoDirectSummandAction
+              sourcePacket.summandFamily,
+            targetPacket.packetState.capsuleFamily =
+              action.toDirectSummandAction.toCapsuleAction.transformedFamily)
+
+set_option linter.style.longLine false in
+theorem Ind2ActionPacketSymmetry.toDirectSummandActionPacketSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (ind2Symmetry : Ind2ActionPacketSymmetry state₁ state₂) :
+    DirectSummandActionPacketSymmetry state₁ state₂ := by
+  rcases ind2Symmetry with hnonarch | harch
+  · rcases hnonarch with
+      ⟨sourcePacket, targetPacket, hsourceTensor, htargetTensor,
+        hsymmetry, action, htargetCapsuleFamily⟩
+    exact
+      ⟨IUTStage1PlaceKind.nonarchimedean, sourcePacket, targetPacket,
+        hsourceTensor, htargetTensor, hsymmetry,
+        action.toDirectSummandAction, htargetCapsuleFamily⟩
+  · rcases harch with
+      ⟨sourcePacket, targetPacket, hsourceTensor, htargetTensor,
+        hsymmetry, action, htargetCapsuleFamily⟩
+    exact
+      ⟨IUTStage1PlaceKind.archimedean, sourcePacket, targetPacket,
+        hsourceTensor, htargetTensor, hsymmetry,
+        action.toDirectSummandAction, htargetCapsuleFamily⟩
+
+set_option linter.style.longLine false in
+theorem Ind2ActionPacketSymmetry.toDirectSummandPacketSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (ind2Symmetry : Ind2ActionPacketSymmetry state₁ state₂) :
+    DirectSummandPacketSymmetry state₁ state₂ :=
+  ind2Symmetry.toDirectSummandActionPacketSymmetry.toDirectSummandPacketSymmetry
+
+set_option linter.style.longLine false in
+theorem Ind2ActionPacketSymmetry.toDirectSummandSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (ind2Symmetry : Ind2ActionPacketSymmetry state₁ state₂) :
+    DirectSummandSymmetry state₁ state₂ :=
+  ind2Symmetry.toDirectSummandActionPacketSymmetry.toDirectSummandSymmetry
+
 end IUTStage1LocalTensorState
 
 namespace IUTStage1LocalTensorPacketLogVolumeState
