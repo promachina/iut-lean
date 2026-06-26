@@ -3284,6 +3284,19 @@ end IUTStage1LogVolumeCompatibilityData
 
 namespace IUTStage1ProcessionState
 
+set_option linter.style.longLine false in
+/--
+Concrete procession transport between procession states.
+
+The `F_l`-shifted theta-pilot choice already fixes the log-theta column.  This
+transport records the remaining procession data: the D-prime-strip procession
+identifier and the chosen representative.
+-/
+structure ProcessionTransport
+    (state₁ state₂ : IUTStage1ProcessionState) : Prop where
+  procession_eq : state₁.procession = state₂.procession
+  representative_eq : state₁.representative = state₂.representative
+
 theorem same_procession_of_eq
     {state₁ state₂ : IUTStage1ProcessionState}
     (h : state₁ = state₂) :
@@ -3296,6 +3309,20 @@ theorem same_column_of_eq
     (h : state₁ = state₂) :
     state₁.column = state₂.column := by
   cases h
+  rfl
+
+theorem ProcessionTransport.eq_of_column_eq
+    {state₁ state₂ : IUTStage1ProcessionState}
+    (transport : ProcessionTransport state₁ state₂)
+    (column_eq : state₁.column = state₂.column) :
+    state₁ = state₂ := by
+  cases state₁ with
+  | mk procession₁ column₁ representative₁ =>
+  cases state₂ with
+  | mk procession₂ column₂ representative₂ =>
+  cases transport.procession_eq
+  cases column_eq
+  cases transport.representative_eq
   rfl
 
 end IUTStage1ProcessionState

@@ -9591,7 +9591,7 @@ preferred boundary has moved from ``construct an arbitrary equality chain'' to
 ``construct the local tensor symmetry after the canonical procession-label
 shift''.
 
-This boundary has now been lowered in two stages.  First,
+This boundary has now been lowered in three stages.  First,
 \[
 \begin{array}{l}
 \texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource}.
@@ -9608,9 +9608,20 @@ count, and upper-semi state after the shift.  Second,
 \]
 replaces the direct-summand-count equality by a finite equivalence between the
 two summand index sets.  Lean derives equality of the two cardinalities and then
-reuses the local-tensor source.  The remaining source payload is now the
-procession-state equality, upper-semi-state equality, and construction of the
-summand equivalence from the actual local tensor symmetry.
+reuses the local-tensor source.  Third,
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTransportSource}
+\end{array}
+\]
+replaces the procession-state equality by a typed procession transport: equality
+of the D-prime-strip procession identifier and equality of the chosen
+representative.  The missing column equality is derived from the shifted
+coordinate and the two procession-column laws, so Lean reconstructs the full
+procession-state equality.  The remaining source payload is now the
+upper-semi-state equality, together with construction of the finite summand
+equivalence and procession transport from the actual local tensor and
+procession symmetries.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
