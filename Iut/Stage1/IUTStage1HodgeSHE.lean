@@ -887,6 +887,22 @@ inductive IUTStage1TensorSummandSymmetryKind where
   | archimedeanOrderTwo
 deriving DecidableEq, Repr
 
+namespace IUTStage1TensorSummandSymmetryKind
+
+/--
+Canonical local tensor symmetry label attached to the two typed `(Ind2)`
+local tensor-factor actions.
+
+The label is still an identifier, but this fixes the bridge between the paper
+side action kind (`Ism` or order-two) and the local tensor symmetry coordinate.
+-/
+def toLocalTensorSymmetryId :
+    IUTStage1TensorSummandSymmetryKind -> LocalTensorSymmetryId
+  | nonarchimedeanIsm => { label := "nonarchimedean-Ism" }
+  | archimedeanOrderTwo => { label := "archimedean-order-two" }
+
+end IUTStage1TensorSummandSymmetryKind
+
 /-- A direct summand representative tied to a capsule log-volume object. -/
 structure IUTStage1TensorDirectSummandObject
     (kind : IUTStage1PlaceKind) where
@@ -3328,6 +3344,44 @@ theorem ProcessionTransport.eq_of_column_eq
 end IUTStage1ProcessionState
 
 namespace IUTStage1LocalTensorState
+
+set_option linter.style.longLine false in
+/--
+Source certificate that a local tensor state carries the canonical
+nonarchimedean `Ism` symmetry label.
+-/
+structure NonarchimedeanIsmSymmetrySource
+    (state : IUTStage1LocalTensorState) : Prop where
+  symmetry_eq :
+    state.symmetry =
+      IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId
+
+set_option linter.style.longLine false in
+/--
+Source certificate that a local tensor state carries the canonical archimedean
+order-two symmetry label.
+-/
+structure ArchimedeanOrderTwoSymmetrySource
+    (state : IUTStage1LocalTensorState) : Prop where
+  symmetry_eq :
+    state.symmetry =
+      IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId
+
+set_option linter.style.longLine false in
+theorem NonarchimedeanIsmSymmetrySource.symmetry_eq_of
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source₁ : NonarchimedeanIsmSymmetrySource state₁)
+    (source₂ : NonarchimedeanIsmSymmetrySource state₂) :
+    state₁.symmetry = state₂.symmetry := by
+  rw [source₁.symmetry_eq, source₂.symmetry_eq]
+
+set_option linter.style.longLine false in
+theorem ArchimedeanOrderTwoSymmetrySource.symmetry_eq_of
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source₁ : ArchimedeanOrderTwoSymmetrySource state₁)
+    (source₂ : ArchimedeanOrderTwoSymmetrySource state₂) :
+    state₁.symmetry = state₂.symmetry := by
+  rw [source₁.symmetry_eq, source₂.symmetry_eq]
 
 set_option linter.style.longLine false in
 /--
