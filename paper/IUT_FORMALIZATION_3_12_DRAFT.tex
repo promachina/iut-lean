@@ -11182,7 +11182,13 @@ and its p-adic unit-ball version
 \quad\texttt{OneSidedPadicUnitBallHaarStepXILocalTermCThetaSource}
 \end{array}
 \]
-go lower.
+now sit above the IUT~IV arithmetic-defect version
+\[
+\begin{array}{l}
+\texttt{concreteHodgeTheaterLogThetaQuotientThetaPilotSource\_to}\\
+\quad\texttt{OneSidedIUTIVArithmeticDefectStepXILocalTermCThetaSource}.
+\end{array}
+\]
 These constructors build the Remark~3.9.5 hull/determinant source internally
 from the selected quotient q-region.  The Step~(xi) refinement removes another
 free local input: the canonical local summands are the weighted adjusted
@@ -11193,12 +11199,21 @@ finite-place lower-bound source: placewise nonnegativity plus a distinguished
 normalized valuation-ball place.  The p-adic unit-ball source replaces that
 abstract lower-bound source by the local unit-ball Haar normalization and
 dilation character; the local defect is the index \(p_v^{[K_v:\mathbb Q_p]}\).
-Its endpoint exposes the quotient q-region facts, unit-ball Haar certificates,
-localized determinant identities, finite-place \(C_\Theta\) derivation, signed
-bound, and final Corollary~3.12 dichotomy.  The remaining payload is now the
-localized determinant/main-log matching data and the p-adic unit-ball Haar
-source, not a raw global \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) hypothesis or
-a raw total Haar-defect inequality.
+The new arithmetic-defect source then rewrites the local arithmetic upper sum in
+terms of the IUT~IV defect \(\delta_v^{\mathrm{IUT}}\) itself, together with the
+placewise equality
+\[
+  \delta_v^{\mathrm{IUT}}
+  =
+  \text{the }p_v^{[K_v:\mathbb Q_p]}\text{ unit-ball Haar index}.
+\]
+Its endpoint exposes the quotient q-region facts, the IUT~IV defect endpoint,
+the induced total defect lower bound, localized determinant identities, the
+finite-place \(C_\Theta\) derivation, the signed bound, and the final
+Corollary~3.12 dichotomy.  The remaining payload is now the localized
+determinant/main-log matching data and the IUT~IV local defect source, not a raw
+global \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) hypothesis or a raw total
+Haar-defect inequality.
 The preferred certificate now also carries the IUT~IV local formula audit
 \[
 \begin{array}{l}
