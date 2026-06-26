@@ -9555,10 +9555,21 @@ pulls the formula back to concrete choices.  Its constructor
 \end{array}
 \]
 projects through the class-formula source and enters the same one-sided
-multiradial construction.  The remaining source-paper payload is now sharper
-again: construct this lattice formula from the theta-pilot apparatus and prove
-the record-level pullback identity, rather than supplying pointwise region
-equalities or an opaque class-indexed formula.
+multiradial construction.  The boundary has been lowered one step further by
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource}
+\end{array}
+\]
+which no longer supplies either a class-indexed formula or a record-level
+family identity.  It supplies representatives for theta-pilot classes and a
+same-lattice-key image law: two concrete choices with the same Hodge theater,
+history label, label-forgotten log-theta lattice coordinate, and coric datum
+have the same possible-image region.  Lean then constructs the lattice formula
+by evaluating the Theorem~3.11 record at representatives and derives the
+record-level pullback identity.  The remaining source-paper payload is
+therefore the actual proof of this same-key invariance from the theta-pilot
+apparatus, not an additional bookkeeping equality.
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
 \begin{array}{l}
@@ -9602,8 +9613,8 @@ class-region pullback formula, same-class invariance, selected q-region
 containment, valuation endpoint, local-to-global \(C_\Theta\) handoff, and
 final dichotomy.  The lower source layer feeding this boundary now factors the
 class formula through the label-forgotten log-theta lattice coordinate, so the
-remaining theorem-side payload is the construction of that lattice formula and
-its record-level pullback identity from the theta-pilot apparatus.
+remaining theorem-side payload is the proof that theta-pilot possible images
+are invariant on the corresponding same-key fibers.
 The same concrete quotient source now feeds the constructed
 Remark~3.9.5 hull/determinant source directly.  The constructor
 \[
