@@ -563,6 +563,44 @@ theorem thetaPilotClass_latticeCoordinate
       thetaPilotLatticeCoordinate choice := by
   rfl
 
+theorem thetaPilotClass_eq_of_latticeKey_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hhodge : choice₁.hodgeTheater = choice₂.hodgeTheater)
+    (hhistory : choice₁.historyLabel = choice₂.historyLabel)
+    (hlattice :
+      thetaPilotLatticeCoordinate choice₁ =
+        thetaPilotLatticeCoordinate choice₂)
+    (hcoric : choice₁.coric = choice₂.coric) :
+    thetaPilotClass choice₁ = thetaPilotClass choice₂ := by
+  rcases choice₁ with
+    ⟨hodge1, history1, coordinate1, coric1, procession1, local1, upper1,
+      hprocession1, hupper1⟩
+  rcases choice₂ with
+    ⟨hodge2, history2, coordinate2, coric2, procession2, local2, upper2,
+      hprocession2, hupper2⟩
+  rcases coordinate1 with ⟨column1, row1, flLabel1, logThetaColumn1⟩
+  rcases coordinate2 with ⟨column2, row2, flLabel2, logThetaColumn2⟩
+  have hlatticeFields :
+      column1 = column2 ∧ row1 = row2 ∧
+        logThetaColumn1 = logThetaColumn2 := by
+    simpa [thetaPilotLatticeCoordinate,
+      IUTStage1Theorem311LogThetaLatticeCoordinate.toThetaPilotLatticeCoordinate]
+      using hlattice
+  have hhodgeField : hodge1 = hodge2 := by
+    simpa using hhodge
+  have hhistoryField : history1 = history2 := by
+    simpa using hhistory
+  have hcoricField : coric1 = coric2 := by
+    simpa using hcoric
+  rcases hlatticeFields with ⟨hcolumn, hrow, hlogThetaColumn⟩
+  subst hodge2
+  subst history2
+  subst column2
+  subst row2
+  subst logThetaColumn2
+  subst coric2
+  rfl
+
 theorem thetaPilotClass_flProcessionTranslate
     (t : ZMod l.value)
     (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :

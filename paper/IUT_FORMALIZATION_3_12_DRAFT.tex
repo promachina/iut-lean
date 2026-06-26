@@ -9568,8 +9568,16 @@ history label, label-forgotten log-theta lattice coordinate, and coric datum
 have the same possible-image region.  Lean then constructs the lattice formula
 by evaluating the Theorem~3.11 record at representatives and derives the
 record-level pullback identity.  The remaining source-paper payload is
-therefore the actual proof of this same-key invariance from the theta-pilot
-apparatus, not an additional bookkeeping equality.
+therefore not an additional bookkeeping equality.  The class-to-lattice bridge
+now proves that the same-key law follows from the older theta-pilot class image
+law: \texttt{thetaPilotClass\_eq\_of\_latticeKey\_eq} identifies equality of
+theta-pilot classes with equality of the Hodge theater, history label,
+label-forgotten lattice coordinate, and coric datum, and
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource.}
+\texttt{toLatticeImageLawSource} transports class invariance across this
+identification.  The remaining source-paper payload is the proof of the
+class/quotient image invariance itself from the theta-pilot and
+\((\Ind_1),(\Ind_2)\) apparatus.
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
 \begin{array}{l}

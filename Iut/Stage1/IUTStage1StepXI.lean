@@ -12163,6 +12163,118 @@ theorem endpoint
 
 end ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
 
+namespace ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
+
+variable {coric : Type u}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable
+  {indData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+
+set_option linter.style.longLine false in
+/--
+Representative section data extracted from the concrete class-image law.
+
+The class-image source stores representatives as concrete choices.  This
+forgets them back to the explicit section data used by the lattice-image law.
+-/
+def toRepresentativeData
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
+        record indData) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassRepresentativeData
+      coric l :=
+  { flLabel := fun thetaClass =>
+      (sourceData.representative thetaClass).coordinate.flLabel,
+    procession_state := fun thetaClass =>
+      (sourceData.representative thetaClass).procession_state,
+    local_tensor_state := fun thetaClass =>
+      (sourceData.representative thetaClass).local_tensor_state,
+    upper_semi_state := fun thetaClass =>
+      (sourceData.representative thetaClass).upper_semi_state,
+    procession_column_eq := by
+      intro thetaClass
+      calc
+        (sourceData.representative thetaClass).procession_state.column =
+            (sourceData.representative thetaClass).coordinate.column :=
+          (sourceData.representative thetaClass).procession_column_eq
+        _ = thetaClass.column := by
+          simpa [IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass]
+            using
+              congrArg
+                IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass.column
+                (sourceData.representative_thetaPilotClass thetaClass),
+    upper_semi_logThetaColumn_eq := by
+      intro thetaClass
+      calc
+        (sourceData.representative thetaClass).upper_semi_state.logThetaColumn =
+            (sourceData.representative thetaClass).coordinate.logThetaColumn :=
+          (sourceData.representative thetaClass).upper_semi_logThetaColumn_eq
+        _ = thetaClass.logThetaColumn := by
+          simpa [IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass]
+            using
+              congrArg
+                IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass.logThetaColumn
+                (sourceData.representative_thetaPilotClass thetaClass) }
+
+set_option linter.style.longLine false in
+/--
+Promote class-image invariance to lattice-key image invariance.
+
+The theta-pilot class is exactly the Hodge theater, history label,
+label-forgotten log-theta lattice coordinate, and coric datum.  Hence the
+same-key law required by the lattice-image source is derived from the older
+same-class law.
+-/
+def toLatticeImageLawSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
+        record indData) :
+    ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+      record indData :=
+  { representativeData := sourceData.toRepresentativeData,
+    same_latticeKey_region_eq := by
+      intro choice₁ choice₂ hhodge hhistory hlattice hcoric
+      exact
+        sourceData.same_thetaPilotClass_region_eq
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass_eq_of_latticeKey_eq
+            hhodge hhistory hlattice hcoric) }
+
+set_option linter.style.longLine false in
+theorem toLatticeImageLawSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
+        record indData) :
+    (∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+          (sourceData.toRepresentativeData.representative thetaClass) =
+        thetaClass) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        choice₁.hodgeTheater = choice₂.hodgeTheater ->
+          choice₁.historyLabel = choice₂.historyLabel ->
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+                choice₁ =
+              IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+                choice₂ ->
+              choice₁.coric = choice₂.coric ->
+                record.thetaPossibleImages.images.region choice₁ =
+                  record.thetaPossibleImages.images.region choice₂) ∧
+      record.thetaPossibleImages.images =
+        sourceData.toLatticeImageLawSource.latticeFormula.toChoiceImages :=
+  let latticeEndpoint := sourceData.toLatticeImageLawSource.endpoint
+  ⟨sourceData.toRepresentativeData.thetaPilotClass_representative,
+    latticeEndpoint.2.2.2.2.1,
+    latticeEndpoint.2.2.1⟩
+
+end ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
+
 set_option linter.style.longLine false in
 /--
 Construct the one-sided Theorem 3.11 multiradial source from concrete
