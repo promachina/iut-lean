@@ -354,6 +354,146 @@ theorem generated_preserves_column
 end IUTStage1StructuredTheorem311Choice
 
 /--
+Concrete log-theta-lattice coordinate used by the Theorem 3.11 source layer.
+
+The column and row are the `n,m` coordinates of the LGP-Gaussian
+log-theta-lattice.  The `F_l` label is the finite label retained by the
+procession layer of Remark 3.11.2.
+-/
+structure IUTStage1Theorem311LogThetaLatticeCoordinate
+    (l : PrimeGeFive) where
+  column : Int
+  row : Int
+  flLabel : ZMod l.value
+  logThetaColumn : LogThetaColumnId
+
+/--
+Concrete Hodge-theater/log-theta choice for Theorem 3.11.
+
+This is the first choice space in the corridor whose indices are not anonymous:
+each choice carries a Hodge-theater identifier, an `n,m` log-theta coordinate,
+an `F_l` label, and the current procession/tensor/upper-semi state data.  The
+projection below is the existing structured Theorem 3.11 choice consumed by the
+typed indeterminacy and multiradial layers.
+-/
+structure IUTStage1ConcreteHodgeTheaterLogThetaChoice
+    (coric : Type u) (l : PrimeGeFive) where
+  hodgeTheater : QualitativeData.HodgeTheaterId
+  historyLabel : String
+  coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l
+  coric : coric
+  procession_state : IUTStage1ProcessionState
+  local_tensor_state : IUTStage1LocalTensorState
+  upper_semi_state : IUTStage1UpperSemiCompatibilityState
+  procession_column_eq :
+    procession_state.column = coordinate.column
+  upper_semi_logThetaColumn_eq :
+    upper_semi_state.logThetaColumn = coordinate.logThetaColumn
+
+namespace IUTStage1ConcreteHodgeTheaterLogThetaChoice
+
+variable {coric : Type u} {l : PrimeGeFive}
+
+def toStructuredChoice
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1StructuredTheorem311Choice coric :=
+  { column := choice.coordinate.column,
+    row := choice.coordinate.row,
+    coric := choice.coric,
+    procession_state := choice.procession_state,
+    local_tensor_state := choice.local_tensor_state,
+    upper_semi_state := choice.upper_semi_state }
+
+theorem toStructuredChoice_column
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    choice.toStructuredChoice.column = choice.coordinate.column :=
+  rfl
+
+theorem toStructuredChoice_row
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    choice.toStructuredChoice.row = choice.coordinate.row :=
+  rfl
+
+/--
+Concrete `(Ind1)` step induced by an automorphism of the procession of
+D-prime-strips.
+
+It preserves the Hodge-theater history and log-theta coordinate and descends to
+the existing structured procession-automorphism step.
+-/
+structure Ind1ProcessionStep
+    (choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) : Prop where
+  hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
+  historyLabel_eq : choice₁.historyLabel = choice₂.historyLabel
+  coordinate_eq : choice₁.coordinate = choice₂.coordinate
+  structured_step :
+    IUTStage1StructuredTheorem311Choice.ProcessionAutomorphismStep
+      choice₁.toStructuredChoice choice₂.toStructuredChoice
+
+/--
+Concrete `(Ind2)` step induced by the local tensor/direct-summand symmetry.
+
+It keeps the Hodge-theater history and log-theta coordinate fixed and descends to
+the existing structured local tensor symmetry step.
+-/
+structure Ind2LocalTensorStep
+    (choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) : Prop where
+  hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
+  historyLabel_eq : choice₁.historyLabel = choice₂.historyLabel
+  coordinate_eq : choice₁.coordinate = choice₂.coordinate
+  structured_step :
+    IUTStage1StructuredTheorem311Choice.LocalTensorSymmetryStep
+      choice₁.toStructuredChoice choice₂.toStructuredChoice
+
+/--
+Concrete `(Ind3)` upper-semi step as the row `m` varies in a fixed column.
+
+The step preserves the Hodge-theater identity, column, coric data, procession,
+and local tensor data, but may change the row and upper-semi representative.  It
+descends to the structured upper-semi step; the log-volume conclusion remains
+one-sided and is supplied by the concrete indeterminacy data below.
+-/
+structure Ind3UpperSemiStep
+    (choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) : Prop where
+  hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
+  column_eq : choice₁.coordinate.column = choice₂.coordinate.column
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+  structured_step :
+    IUTStage1StructuredTheorem311Choice.UpperSemiCompatibilityStep
+      choice₁.toStructuredChoice choice₂.toStructuredChoice
+
+/--
+Concrete Theorem 3.11 indeterminacy data on Hodge-theater/log-theta choices.
+
+The preservation/upper-semi fields are the current mathematical obligations
+coming from Theorem 3.11(i),(ii): `(Ind1)` and `(Ind2)` preserve
+procession-normalized log-volume; `(Ind3)` gives only the upper-semi
+inequality.
+-/
+structure IndeterminacyData
+    (coric : Type u) (l : PrimeGeFive) where
+  logVolume : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l -> Real
+  ind1_preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂},
+      Ind1ProcessionStep choice₁ choice₂ ->
+        logVolume choice₁ = logVolume choice₂
+  ind2_preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂},
+      Ind2LocalTensorStep choice₁ choice₂ ->
+        logVolume choice₁ = logVolume choice₂
+  ind3_upper_semi_logVolume :
+    ∀ {choice₁ choice₂},
+      Ind3UpperSemiStep choice₁ choice₂ ->
+        logVolume choice₁ <= logVolume choice₂
+
+end IUTStage1ConcreteHodgeTheaterLogThetaChoice
+
+/--
 Theorem 3.11 choice whose local tensor coordinate already carries typed
 capsule/log-volume data.
 -/
@@ -3665,6 +3805,59 @@ structure IUTStage1Theorem311TypedIndeterminacyCore (choice : Type u) where
 namespace IUTStage1Theorem311TypedIndeterminacyCore
 
 variable {choice : Type u}
+
+namespace ConcreteHodgeTheaterLogTheta
+
+variable {coric : Type u} {l : PrimeGeFive}
+
+abbrev Choice :=
+  IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l
+
+def ind1Action
+    (data :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) :
+    IUTStage1Theorem311Ind1Action (Choice (coric := coric) (l := l)) :=
+  { step := IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionStep,
+    logVolume := data.logVolume,
+    preserves_processionNormalizedLogVolume := by
+      intro choice₁ choice₂ hstep
+      exact data.ind1_preserves_processionNormalizedLogVolume hstep }
+
+def ind2Action
+    (data :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) :
+    IUTStage1Theorem311Ind2Action (Choice (coric := coric) (l := l)) :=
+  { step := IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep,
+    logVolume := data.logVolume,
+    preserves_processionNormalizedLogVolume := by
+      intro choice₁ choice₂ hstep
+      exact data.ind2_preserves_processionNormalizedLogVolume hstep }
+
+def ind3Relation
+    (data :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) :
+    IUTStage1Theorem311Ind3UpperSemiRelation
+      (Choice (coric := coric) (l := l)) :=
+  { step := IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind3UpperSemiStep,
+    logVolume := data.logVolume,
+    upper_semi_logVolume := by
+      intro choice₁ choice₂ hstep
+      exact data.ind3_upper_semi_logVolume hstep }
+
+def typedCore
+    (data :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) :
+    IUTStage1Theorem311TypedIndeterminacyCore
+      (Choice (coric := coric) (l := l)) :=
+  { logVolume := data.logVolume,
+    ind1 := ind1Action data,
+    ind2 := ind2Action data,
+    ind3 := ind3Relation data,
+    ind1_logVolume_eq := rfl,
+    ind2_logVolume_eq := rfl,
+    ind3_logVolume_eq := rfl }
+
+end ConcreteHodgeTheaterLogTheta
 
 def generators (core : IUTStage1Theorem311TypedIndeterminacyCore choice) :
     IUTStage1IndeterminacyGenerators choice :=

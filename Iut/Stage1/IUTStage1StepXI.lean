@@ -10935,6 +10935,99 @@ theorem endpoint
 
 set_option linter.style.longLine false in
 /--
+Construct the one-sided Theorem 3.11 multiradial source from concrete
+Hodge-theater/log-theta-lattice indeterminacy data.
+
+The index type is the concrete choice space carrying a Hodge-theater id, an
+`n,m` log-theta coordinate, an `F_l` label, and the current
+procession/tensor/upper-semi state data.  The typed core is constructed from the
+concrete `(Ind1)/(Ind2)/(Ind3)` laws; the remaining inputs are exactly the two
+source-paper obligations still needed at this boundary: possible-image
+compatibility for the `(Ind1)/(Ind2)` equality quotient and the finite
+`F_l` procession action.
+-/
+def ofConcreteHodgeTheaterLogTheta
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (possibleImageCompatibility :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).PossibleImageQuotientCompatibility
+        record.thetaPossibleImages.images)
+    (flProcessionAction :
+      IUTStage1Theorem311EqualityFLProcessionAction
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData) l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  { typedIndeterminacyCore :=
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData,
+    possibleImageCompatibility := possibleImageCompatibility,
+    flProcessionAction := flProcessionAction,
+    selectedQChoice := selectedQChoice }
+
+set_option linter.style.longLine false in
+theorem ofConcreteHodgeTheaterLogTheta_endpoint
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (possibleImageCompatibility :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).PossibleImageQuotientCompatibility
+        record.thetaPossibleImages.images)
+    (flProcessionAction :
+      IUTStage1Theorem311EqualityFLProcessionAction
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData) l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let construction :=
+      ofConcreteHodgeTheaterLogTheta
+        record indData possibleImageCompatibility flProcessionAction
+        selectedQChoice;
+    construction.multiradialImages.quotient =
+        construction.typedIndeterminacyCore.equalityQuotient ∧
+      construction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      (∀ t choice,
+        construction.typedIndeterminacyCore.equalityQuotientMap choice =
+          construction.typedIndeterminacyCore.equalityQuotientMap
+            (construction.flProcessionAction.transition t choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+          construction.typedIndeterminacyCore.logVolume choice₁ <=
+            construction.typedIndeterminacyCore.logVolume choice₂) ∧
+      (∀ choice,
+        construction.equalityQuotientPossibleImages.quotientImages.region
+            (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      construction.selectedQRegion =
+        construction.equalityQuotientPossibleImages.quotientImages.region
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            construction.selectedQChoice) ∧
+      construction.selectedQRegion.toSet =
+        recordThetaPossibleImage record construction.selectedQChoice ∧
+      construction.selectedQRegion.toSet ⊆ recordThetaPossibleImageUnion record := by
+  exact
+    (ofConcreteHodgeTheaterLogTheta
+      record indData possibleImageCompatibility flProcessionAction
+      selectedQChoice).endpoint
+
+set_option linter.style.longLine false in
+/--
 Audit object for the one-sided Theorem 3.11 quotient layer.
 
 This records the source-paper asymmetry at the multiradial possible-image
