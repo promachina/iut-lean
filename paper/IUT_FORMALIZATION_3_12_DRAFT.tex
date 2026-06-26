@@ -11175,7 +11175,14 @@ The normalized-Haar refinement
 \quad\texttt{OneSidedNormalizedHaarStepXILocalTermCThetaSource}
 \end{array}
 \]
-goes one step lower.
+and its p-adic unit-ball version
+\[
+\begin{array}{l}
+\texttt{concreteHodgeTheaterLogThetaQuotientThetaPilotSource\_to}\\
+\quad\texttt{OneSidedPadicUnitBallHaarStepXILocalTermCThetaSource}
+\end{array}
+\]
+go lower.
 These constructors build the Remark~3.9.5 hull/determinant source internally
 from the selected quotient q-region.  The Step~(xi) refinement removes another
 free local input: the canonical local summands are the weighted adjusted
@@ -11183,13 +11190,15 @@ log-volumes of the localized vector-bundle determinant source, and the local
 upper contribution is the Step~(xi) term plus the Haar defect and main-log
 term.  The normalized-Haar source derives the global Haar \(+1\) from a
 finite-place lower-bound source: placewise nonnegativity plus a distinguished
-normalized valuation-ball place.  Its endpoint exposes the quotient q-region
-facts, the Haar lower-bound certificate, localized determinant identities,
-finite-place \(C_\Theta\) derivation, signed bound, and final
-Corollary~3.12 dichotomy.  The remaining payload is now the localized
-determinant/main-log matching data and the finite-place Haar source, not a raw
-global \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) hypothesis or a raw total
-Haar-defect inequality.
+normalized valuation-ball place.  The p-adic unit-ball source replaces that
+abstract lower-bound source by the local unit-ball Haar normalization and
+dilation character; the local defect is the index \(p_v^{[K_v:\mathbb Q_p]}\).
+Its endpoint exposes the quotient q-region facts, unit-ball Haar certificates,
+localized determinant identities, finite-place \(C_\Theta\) derivation, signed
+bound, and final Corollary~3.12 dichotomy.  The remaining payload is now the
+localized determinant/main-log matching data and the p-adic unit-ball Haar
+source, not a raw global \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) hypothesis or
+a raw total Haar-defect inequality.
 The preferred certificate now also carries the IUT~IV local formula audit
 \[
 \begin{array}{l}
