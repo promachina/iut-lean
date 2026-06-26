@@ -11284,6 +11284,153 @@ theorem ofConcreteHodgeTheaterLogThetaQuotientImages_endpoint
 
 set_option linter.style.longLine false in
 /--
+Concrete quotient theta-pilot possible-image source.
+
+This packages the source-paper input after quotienting by `(Ind1)` and
+`(Ind2)`: a theta-pilot family indexed by the equality quotient, the pullback
+identification with the record's choice-indexed images, the finite gluing
+torsor, and the selected q-choice.  From this data Lean constructs the current
+one-sided multiradial source and the Remark 3.9.5 quotient hull compatibility.
+-/
+structure ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) where
+  quotientImages :
+    RegionFamily target
+      (Quot
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityQuotient.relation)
+  pullback_region_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice
+  gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l
+  selectedQChoice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l
+
+namespace ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
+
+variable {coric : Type u}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable
+  {indData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+
+def toConstruction
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  ofConcreteHodgeTheaterLogThetaQuotientImages
+    record indData sourceData.quotientImages sourceData.pullback_region_eq
+    sourceData.gluingTorsor sourceData.selectedQChoice
+
+def toHullCompatibility
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData).EqualityQuotientHullLogVolumeCompatibility
+      record.thetaPossibleImages.images hullOperator :=
+  { quotientImages :=
+      { quotientImages := sourceData.quotientImages,
+        pullback_region_eq := sourceData.pullback_region_eq } }
+
+set_option linter.style.longLine false in
+theorem suppliedQuotientImages_eq_construction
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData)
+    (quotientChoice :
+      Quot
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityQuotient.relation) :
+    sourceData.quotientImages.region quotientChoice =
+      sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+        quotientChoice := by
+  refine Quot.inductionOn quotientChoice ?_
+  intro choice
+  calc
+    sourceData.quotientImages.region
+        ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice :=
+      sourceData.pullback_region_eq choice
+    _ =
+        sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+          (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            choice) :=
+      (sourceData.toConstruction.equalityQuotientPossibleImages_pullback
+        choice).symm
+
+set_option linter.style.longLine false in
+theorem selectedQRegion_eq_suppliedQuotientImage
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData) :
+    sourceData.toConstruction.selectedQRegion =
+      sourceData.quotientImages.region
+        ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap sourceData.selectedQChoice) := by
+  calc
+    sourceData.toConstruction.selectedQRegion =
+        record.thetaPossibleImages.images.region sourceData.selectedQChoice :=
+      rfl
+    _ =
+        sourceData.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap sourceData.selectedQChoice) :=
+      (sourceData.pullback_region_eq sourceData.selectedQChoice).symm
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData) :
+    sourceData.toConstruction.multiradialImages.quotient =
+        sourceData.toConstruction.typedIndeterminacyCore.equalityQuotient ∧
+      sourceData.toConstruction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      (∀ t choice,
+        sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            choice =
+          sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            (sourceData.toConstruction.flProcessionAction.transition t choice)) ∧
+      (∀ quotientChoice,
+        sourceData.quotientImages.region quotientChoice =
+          sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+            quotientChoice) ∧
+      sourceData.toConstruction.selectedQRegion =
+        sourceData.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap sourceData.selectedQChoice) ∧
+      sourceData.toConstruction.selectedQRegion.toSet =
+        recordThetaPossibleImage record sourceData.selectedQChoice ∧
+      sourceData.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record :=
+  let constructionEndpoint := sourceData.toConstruction.endpoint
+  ⟨constructionEndpoint.1,
+    constructionEndpoint.2.1,
+    constructionEndpoint.2.2.1,
+    constructionEndpoint.2.2.2.1,
+    sourceData.suppliedQuotientImages_eq_construction,
+    sourceData.selectedQRegion_eq_suppliedQuotientImage,
+    constructionEndpoint.2.2.2.2.2.2.2.1,
+    constructionEndpoint.2.2.2.2.2.2.2.2⟩
+
+end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
+
+set_option linter.style.longLine false in
+/--
 Audit object for the one-sided Theorem 3.11 quotient layer.
 
 This records the source-paper asymmetry at the multiradial possible-image
@@ -14427,6 +14574,69 @@ theorem oneSidedSelectedQHullLogVolumeAudit
     ind3_upper_semi_core_logVolume := by
       intro choice₁ choice₂ hstep
       exact hullCompatibility.ind3_upper_semi_logVolume hstep }
+
+namespace ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
+
+variable {coric : Type u}
+variable
+  {packageConcrete :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {recordConcrete : IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+variable
+  {indData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+
+set_option linter.style.longLine false in
+theorem remark395SelectedQHullEndpoint
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
+        recordConcrete indData)
+    (constructedSource :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) recordConcrete)
+    (qPilotRegion_eq_selectedQRegion :
+      constructedSource.qPilotRegion =
+        sourceData.toConstruction.selectedQRegion.toSet) :
+    let hullCompatibility :=
+      sourceData.toHullCompatibility constructedSource.hullOperator;
+    OneSidedSelectedQHullLogVolumeAudit
+        sourceData.toConstruction constructedSource hullCompatibility
+        qPilotRegion_eq_selectedQRegion ∧
+      constructedSource.qPilotRegion =
+        (sourceData.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap sourceData.selectedQChoice)).toSet ∧
+      constructedSource.qPilotRegion ⊆
+        hullCompatibility.familySource.canonicalHull ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        packageConcrete.preLedger.thetaSigned := by
+  intro hullCompatibility
+  let audit :=
+    sourceData.toConstruction.oneSidedSelectedQHullLogVolumeAudit
+      constructedSource hullCompatibility qPilotRegion_eq_selectedQRegion
+  have hq :
+      constructedSource.qPilotRegion =
+        (sourceData.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap sourceData.selectedQChoice)).toSet := by
+    calc
+      constructedSource.qPilotRegion =
+          sourceData.toConstruction.selectedQRegion.toSet :=
+        qPilotRegion_eq_selectedQRegion
+      _ =
+          (sourceData.quotientImages.region
+            ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                indData).equalityQuotientMap sourceData.selectedQChoice)).toSet :=
+        congrArg Region.toSet sourceData.selectedQRegion_eq_suppliedQuotientImage
+  exact
+    ⟨audit,
+      hq,
+      audit.qPilotRegion_subset_quotientCanonicalHull,
+      audit.qPilotRegion_logVolume_le_thetaSigned⟩
+
+end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
 set_option linter.style.longLine false in
 /--

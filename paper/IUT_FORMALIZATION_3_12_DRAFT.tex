@@ -9407,9 +9407,19 @@ concrete \((\Ind_1)\) step.  A stricter constructor,
 now takes the theta-pilot possible images as a family on the
 \((\Ind_1,\Ind_2)\)-equality quotient and a pullback theorem identifying the
 record's choice-indexed images with this quotient family.  Lean derives the
-old possible-image compatibility record from these quotient-indexed data, so
-the remaining input has been narrowed to constructing the quotient image family
-and proving that pullback theorem from the source-paper theta-pilot apparatus.
+old possible-image compatibility record from these quotient-indexed data.  This
+has now been bundled as
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource}.
+\end{array}
+\]
+The source object keeps the supplied quotient family visible, proves that it
+agrees with the internally reconstructed quotient family, selects the q-image,
+and constructs the corresponding Remark~3.9.5 quotient hull compatibility.  The
+remaining mathematical input is therefore sharper: construct this quotient
+theta-pilot family and its pullback theorem from the source-paper theta-pilot
+apparatus, rather than supply direct \((\Ind_1,\Ind_2)\) image equalities.
 
 The bridge to the constructed Remark~3.9.5 source is now named as
 \[
