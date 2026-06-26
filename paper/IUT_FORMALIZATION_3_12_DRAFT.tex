@@ -9430,6 +9430,26 @@ definitionally recovered.  The remaining mathematical input is therefore
 sharper: prove that compatibility theorem from the source-paper theta-pilot
 apparatus, rather than hand-supply a quotient family or direct
 \((\Ind_1,\Ind_2)\) image equalities at the Step~(xi) boundary.
+This has now been refined once more by
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource}.
+\end{array}
+\]
+Here a concrete choice is first read through a theta-pilot class, representing
+the mono-analytic/coric container of possible images.  The source laws required
+at this boundary are that \((\Ind_1)\) and \((\Ind_2)\) preserve this class.
+Lean then derives the possible-image equalities and constructs the quotient
+theta-pilot source via
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.}\\
+\quad\texttt{ofImageFactorization}.
+\end{array}
+\]
+No \((\Ind_3)\) class equality is part of this constructor; the endpoint
+explicitly keeps \((\Ind_3)\) out of the equality quotient and uses only the
+typed upper-semi log-volume inequality.
 
 The bridge to the constructed Remark~3.9.5 source is now named as
 \[

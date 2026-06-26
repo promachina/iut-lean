@@ -11102,6 +11102,135 @@ theorem concreteHodgeTheaterLogThetaPossibleImageCompatibility_endpoint
 
 set_option linter.style.longLine false in
 /--
+Concrete theta-pilot possible-image factorization source.
+
+This is the source-paper-shaped input behind the `(Ind1),(Ind2)` image
+compatibility theorem.  A concrete Hodge-theater/log-theta choice is first read
+through a theta-pilot class, such as a mono-analytic/coric container of possible
+images.  The source laws say that `(Ind1)` and `(Ind2)` preserve this class.
+Lean then derives the possible-image equalities used by the quotient corridor.
+No `(Ind3)` class equality is included; `(Ind3)` remains only the typed
+upper-semi log-volume relation.
+-/
+structure ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource
+    {coric : Type u}
+    {thetaClassIndex : Type v}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) where
+  thetaClass :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l -> thetaClassIndex
+  thetaClassImages : RegionFamily target thetaClassIndex
+  record_region_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      record.thetaPossibleImages.images.region choice =
+        thetaClassImages.region (thetaClass choice)
+  ind1_thetaClass_eq :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).ind1.step choice₁ choice₂ ->
+        thetaClass choice₁ = thetaClass choice₂
+  ind2_thetaClass_eq :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).ind2.step choice₁ choice₂ ->
+        thetaClass choice₁ = thetaClass choice₂
+
+namespace ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource
+
+variable {coric : Type u}
+variable {thetaClassIndex : Type v}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable
+  {indData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+
+def toCompatibility
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource
+        (thetaClassIndex := thetaClassIndex) record indData) :
+    (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData).PossibleImageQuotientCompatibility
+      record.thetaPossibleImages.images :=
+  { ind1_region_eq := by
+      intro choice₁ choice₂ hstep
+      calc
+        record.thetaPossibleImages.images.region choice₁ =
+            sourceData.thetaClassImages.region (sourceData.thetaClass choice₁) :=
+          sourceData.record_region_eq choice₁
+        _ = sourceData.thetaClassImages.region (sourceData.thetaClass choice₂) := by
+          rw [sourceData.ind1_thetaClass_eq hstep]
+        _ = record.thetaPossibleImages.images.region choice₂ :=
+          (sourceData.record_region_eq choice₂).symm,
+    ind2_region_eq := by
+      intro choice₁ choice₂ hstep
+      calc
+        record.thetaPossibleImages.images.region choice₁ =
+            sourceData.thetaClassImages.region (sourceData.thetaClass choice₁) :=
+          sourceData.record_region_eq choice₁
+        _ = sourceData.thetaClassImages.region (sourceData.thetaClass choice₂) := by
+          rw [sourceData.ind2_thetaClass_eq hstep]
+        _ = record.thetaPossibleImages.images.region choice₂ :=
+          (sourceData.record_region_eq choice₂).symm,
+    ind3_logVolume_upper := by
+      intro choice₁ choice₂ hstep
+      exact
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).ind3_logVolume_le hstep }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource
+        (thetaClassIndex := thetaClassIndex) record indData) :
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      record.thetaPossibleImages.images.region choice =
+        sourceData.thetaClassImages.region (sourceData.thetaClass choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind1.step choice₁ choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind2.step choice₁ choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind3.step choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₁ <=
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) :=
+  ⟨sourceData.record_region_eq,
+    sourceData.toCompatibility.ind1_region_eq,
+    sourceData.toCompatibility.ind2_region_eq,
+    sourceData.toCompatibility.ind3_logVolume_upper,
+    by
+      intro choice₁ choice₂ hstep
+      exact
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityGenerators_ind3_false hstep⟩
+
+end ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource
+
+set_option linter.style.longLine false in
+/--
 Construct the one-sided Theorem 3.11 multiradial source from concrete
 Hodge-theater/log-theta-lattice indeterminacy data.
 
@@ -11489,6 +11618,66 @@ theorem ofCompatibility_endpoint
       endpoint.2.2.1,
       sourceData.selectedQRegion_eq_suppliedQuotientImage,
       endpoint.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+def ofImageFactorization
+    {thetaClassIndex : Type v}
+    (factorization :
+      ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource
+        (source := source) (target := target) (l := l)
+        (thetaClassIndex := thetaClassIndex) record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData :=
+  ofCompatibility
+    (record := record) (indData := indData)
+    factorization.toCompatibility gluingTorsor selectedQChoice
+
+set_option linter.style.longLine false in
+theorem ofImageFactorization_endpoint
+    {thetaClassIndex : Type v}
+    (factorization :
+      ConcreteHodgeTheaterLogThetaThetaPilotImageFactorizationSource
+        (source := source) (target := target) (l := l)
+        (thetaClassIndex := thetaClassIndex) record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let sourceData :=
+      ofImageFactorization
+        (record := record) (indData := indData)
+        factorization gluingTorsor selectedQChoice;
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      record.thetaPossibleImages.images.region choice =
+        factorization.thetaClassImages.region
+          (factorization.thetaClass choice)) ∧
+      sourceData.toConstruction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      sourceData.toConstruction.selectedQRegion =
+        sourceData.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice) ∧
+      sourceData.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) := by
+  intro sourceData
+  let sourceEndpoint := sourceData.endpoint
+  exact
+    ⟨factorization.record_region_eq,
+      sourceEndpoint.2.1,
+      sourceEndpoint.2.2.1,
+      sourceData.selectedQRegion_eq_suppliedQuotientImage,
+      sourceEndpoint.2.2.2.2.2.2.2,
+      by
+        intro choice₁ choice₂ hstep
+        exact
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators_ind3_false hstep⟩
 
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
