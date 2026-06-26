@@ -9417,9 +9417,19 @@ has now been bundled as
 The source object keeps the supplied quotient family visible, proves that it
 agrees with the internally reconstructed quotient family, selects the q-image,
 and constructs the corresponding Remark~3.9.5 quotient hull compatibility.  The
-remaining mathematical input is therefore sharper: construct this quotient
-theta-pilot family and its pullback theorem from the source-paper theta-pilot
-apparatus, rather than supply direct \((\Ind_1,\Ind_2)\) image equalities.
+canonical constructor
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.}\\
+\quad\texttt{ofCompatibility}
+\end{array}
+\]
+now builds this quotient family by \texttt{Quot.lift} from the concrete
+\((\Ind_1,\Ind_2)\) possible-image compatibility theorem, with the pullback law
+definitionally recovered.  The remaining mathematical input is therefore
+sharper: prove that compatibility theorem from the source-paper theta-pilot
+apparatus, rather than hand-supply a quotient family or direct
+\((\Ind_1,\Ind_2)\) image equalities at the Step~(xi) boundary.
 
 The bridge to the constructed Remark~3.9.5 source is now named as
 \[

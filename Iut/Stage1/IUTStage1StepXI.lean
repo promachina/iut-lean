@@ -11326,6 +11326,33 @@ variable
   {indData :
     IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
 
+set_option linter.style.longLine false in
+/--
+Canonical quotient theta-pilot source from concrete possible-image compatibility.
+
+Once the source-paper theorem has proved that the concrete theta-pilot possible
+images are invariant under `(Ind1)` and `(Ind2)`, Lean constructs the
+quotient-indexed family by `Quot.lift` and obtains the pullback theorem
+definitionally.  Thus the later Step (xi) corridor no longer needs a manually
+supplied quotient family at this boundary.
+-/
+def ofCompatibility
+    (compatibility :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).PossibleImageQuotientCompatibility
+        record.thetaPossibleImages.images)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData :=
+  let quotientImages :=
+    IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages.ofCompatibility
+      compatibility
+  { quotientImages := quotientImages.quotientImages,
+    pullback_region_eq := quotientImages.pullback_region_eq,
+    gluingTorsor := gluingTorsor,
+    selectedQChoice := selectedQChoice }
+
 def toConstruction
     (sourceData :
       ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData) :
@@ -11426,6 +11453,42 @@ theorem endpoint
     sourceData.selectedQRegion_eq_suppliedQuotientImage,
     constructionEndpoint.2.2.2.2.2.2.2.1,
     constructionEndpoint.2.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+theorem ofCompatibility_endpoint
+    (compatibility :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).PossibleImageQuotientCompatibility
+        record.thetaPossibleImages.images)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let sourceData :=
+      ofCompatibility
+        (record := record) (indData := indData)
+        compatibility gluingTorsor selectedQChoice;
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      sourceData.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice) ∧
+      sourceData.toConstruction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      sourceData.toConstruction.selectedQRegion =
+        sourceData.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice) ∧
+      sourceData.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record := by
+  intro sourceData
+  let endpoint := sourceData.endpoint
+  exact
+    ⟨sourceData.pullback_region_eq,
+      endpoint.2.1,
+      endpoint.2.2.1,
+      sourceData.selectedQRegion_eq_suppliedQuotientImage,
+      endpoint.2.2.2.2.2.2.2⟩
 
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
