@@ -13335,6 +13335,78 @@ theorem ofImageFactorization_endpoint
           (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
             indData).equalityGenerators_ind3_false hstep⟩
 
+set_option linter.style.longLine false in
+/--
+Concrete quotient theta-pilot source from a theta-pilot class-region formula.
+
+This is the direct quotient-possible-image lowering used by the Theorem 3.11
+source layer.  The source supplies representatives of theta-pilot classes and a
+class-indexed region formula; Lean derives the class-image law, the
+`(Ind1)`/`(Ind2)` equality quotient compatibility, and the selected
+q-region facts used by the later Remark 3.9.5 and `C_\Theta` corridor.
+-/
+def ofClassRegionSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData :=
+  ofImageFactorization
+    (record := record) (indData := indData)
+    sourceData.toClassImageLawSource.toFactorization
+    gluingTorsor selectedQChoice
+
+set_option linter.style.longLine false in
+theorem ofClassRegionSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let quotientSource :=
+      ofClassRegionSource
+        (record := record) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      record.thetaPossibleImages.images.region choice =
+        sourceData.thetaRegion
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            choice)) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        quotientSource.quotientImages.region
+            ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                indData).equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      quotientSource.toConstruction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      quotientSource.toConstruction.selectedQRegion =
+        quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice) ∧
+      quotientSource.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) := by
+  intro quotientSource
+  let sourceEndpoint := sourceData.endpoint
+  let quotientEndpoint := quotientSource.endpoint
+  exact
+    ⟨sourceEndpoint.2.1,
+      quotientSource.pullback_region_eq,
+      quotientEndpoint.2.1,
+      quotientEndpoint.2.2.1,
+      quotientSource.selectedQRegion_eq_suppliedQuotientImage,
+      quotientEndpoint.2.2.2.2.2.2.2,
+      sourceEndpoint.2.2.2.2.2.2⟩
+
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
 set_option linter.style.longLine false in
