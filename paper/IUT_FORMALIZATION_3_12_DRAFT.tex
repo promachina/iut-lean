@@ -10552,13 +10552,19 @@ and hence the q-region log-volume is already bounded by
 local-to-global arithmetic step directly through
 \texttt{finitePlaceLocalGlobalIdentifications},
 \texttt{finitePlaceLocalUpperContributionDecomposition},
+\texttt{finitePlaceLocalStepXIHaarIdentity},
 \texttt{finitePlaceSummedStepXIHaarBound}, and
 \texttt{finitePlaceTotalHaarDefect\_ge\_one}: the local canonical scale,
 arithmetic upper term, and main-log term are identified with their finite sums,
 each local arithmetic upper contribution is identified with the Step~(xi)
 weighted determinant contribution plus the \(\IUT{}\,\mathrm{IV}\) arithmetic
-defect plus the local main-log term, the resulting Step~(xi) local bounds are
-summed, and the Haar-normalization defect contributes the global \(+1\).  The
+defect plus the local main-log term, Lean cancels the main-log term to obtain
+the pointwise identity
+\[
+  A_v-M_v=S_v+N_v,
+\]
+and these local Step~(xi)/Haar identities are then summed, while the
+Haar-normalization defect contributes the global \(+1\).  The
 derived consequences are now separate
 fields, \texttt{finitePlaceDerivedArithmeticGap} and
 \texttt{finitePlaceDerivedCanonicalCThetaScale\_le\_iutIVCTheta}, proving
