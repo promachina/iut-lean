@@ -3302,12 +3302,40 @@ end IUTStage1ProcessionState
 
 namespace IUTStage1LocalTensorState
 
+set_option linter.style.longLine false in
+/--
+Concrete direct-summand symmetry between local tensor states.
+
+The paper-side `(Ind2)` symmetry should preserve the number of direct summands.
+At this boundary the preservation is witnessed by an equivalence of the finite
+summand index sets, rather than by an equality of natural numbers.
+-/
+structure DirectSummandSymmetry
+    (state₁ state₂ : IUTStage1LocalTensorState) : Prop where
+  symmetry_eq : state₁.symmetry = state₂.symmetry
+  summandEquiv_nonempty :
+    Nonempty (Fin state₁.directSummandCount ≃ Fin state₂.directSummandCount)
+
 theorem same_summand_count_of_eq
     {state₁ state₂ : IUTStage1LocalTensorState}
     (h : state₁ = state₂) :
     state₁.directSummandCount = state₂.directSummandCount := by
   cases h
   rfl
+
+theorem DirectSummandSymmetry.directSummandCount_eq
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (symmetry : DirectSummandSymmetry state₁ state₂) :
+    state₁.directSummandCount = state₂.directSummandCount := by
+  rcases symmetry.summandEquiv_nonempty with ⟨summandEquiv⟩
+  calc
+    state₁.directSummandCount =
+        Fintype.card (Fin state₁.directSummandCount) :=
+      (Fintype.card_fin state₁.directSummandCount).symm
+    _ = Fintype.card (Fin state₂.directSummandCount) :=
+      Fintype.card_congr summandEquiv
+    _ = state₂.directSummandCount :=
+      Fintype.card_fin state₂.directSummandCount
 
 end IUTStage1LocalTensorState
 
