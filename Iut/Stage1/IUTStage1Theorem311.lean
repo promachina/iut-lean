@@ -3165,6 +3165,185 @@ theorem audit :
 
 end ProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource
 
+set_option linter.style.longLine false in
+/--
+Label-wise direct packet-local-object source.
+
+This lowers
+`LogThetaLabelProcessionVerticalLogKummerClassifiedPacketLocalObjectSource` by
+requiring direct finite-capsule packet-normalization data.  The classified
+packet-normalization compatibility is derived internally from the direct
+normalization record.
+-/
+structure LogThetaLabelProcessionVerticalLogKummerDirectPacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) where
+  labelLogVolume :
+    ThetaPilotClass (coric := coric) -> ZMod l.value -> Real
+  packetState :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l ->
+      IUTStage1LocalTensorPacketLogVolumeState
+        IUTStage1PlaceKind.nonarchimedean
+  packet_tensor_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (packetState choice).tensorState = choice.local_tensor_state
+  direct_packet_normalization :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      IUTStage1DirectPacketNormalizationData (packetState choice)
+  labelAverage_eq_packetLocalObject :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (Finset.univ.sum fun label : ZMod l.value =>
+        labelLogVolume (thetaPilotClass choice) label) / (l.value : Real) =
+        (packetState choice).localObject.finiteLogVolume
+  ind3_source_localObject_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (packetState choice₁).localObject.finiteLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_localObject_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (packetState choice₂).localObject.finiteLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace LogThetaLabelProcessionVerticalLogKummerDirectPacketLocalObjectSource
+
+variable
+  (source :
+    LogThetaLabelProcessionVerticalLogKummerDirectPacketLocalObjectSource
+      coric l)
+
+set_option linter.style.longLine false in
+/-- Promote direct normalization data to the label-wise classified source. -/
+def toClassifiedPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerClassifiedPacketLocalObjectSource
+      coric l :=
+  { labelLogVolume := source.labelLogVolume,
+    packetState := source.packetState,
+    packet_tensor_eq := source.packet_tensor_eq,
+    packet_normalization := by
+      intro choice
+      exact
+        (source.direct_packet_normalization choice).toClassifiedPacketNormalizedCompatibility,
+    labelAverage_eq_packetLocalObject :=
+      source.labelAverage_eq_packetLocalObject,
+    ind3_source_localObject_eq_upperSemiSource :=
+      source.ind3_source_localObject_eq_upperSemiSource,
+    ind3_target_localObject_eq_upperSemiTarget :=
+      source.ind3_target_localObject_eq_upperSemiTarget }
+
+set_option linter.style.longLine false in
+/-- Forget to the label-wise upper-semi source. -/
+def toLogThetaLabelProcessionUpperSemiSource :
+    LogThetaLabelProcessionUpperSemiSource coric l :=
+  source.toClassifiedPacketLocalObjectSource.toLogThetaLabelProcessionUpperSemiSource
+
+set_option linter.style.longLine false in
+/-- Forget to the procession-normalized direct packet-local source. -/
+noncomputable def toProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource :
+    ProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource coric l :=
+  { labelAverage := source.toLogThetaLabelProcessionUpperSemiSource.labelAverage,
+    packetState := source.packetState,
+    packet_tensor_eq := source.packet_tensor_eq,
+    direct_packet_normalization := source.direct_packet_normalization,
+    average_eq_packetLocalObject := by
+      intro choice
+      exact source.labelAverage_eq_packetLocalObject choice,
+    ind3_source_localObject_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_localObject_eq_upperSemiSource hstep,
+    ind3_target_localObject_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_localObject_eq_upperSemiTarget hstep }
+
+set_option linter.style.longLine false in
+/-- Forget to the packet-aligned source consumed by older one-sided constructors. -/
+noncomputable def toProcessionNormalizedVerticalLogKummerPacketAlignmentSource :
+    ProcessionNormalizedVerticalLogKummerPacketAlignmentSource coric l :=
+  source.toClassifiedPacketLocalObjectSource.toProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+
+set_option linter.style.longLine false in
+/-- Forget to the finite averaged source consumed by older wrappers. -/
+noncomputable def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toClassifiedPacketLocalObjectSource.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+theorem average_eq_packetLocalObject
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.toLogThetaLabelProcessionUpperSemiSource.labelAverage
+      (thetaPilotClass choice)).averageLogVolume =
+        (source.packetState choice).localObject.finiteLogVolume :=
+  source.labelAverage_eq_packetLocalObject choice
+
+set_option linter.style.longLine false in
+theorem average_eq_packetNormalized
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.toLogThetaLabelProcessionUpperSemiSource.labelAverage
+      (thetaPilotClass choice)).averageLogVolume =
+        (source.packetState choice).capsuleFamily.normalizedLogVolume :=
+  source.toClassifiedPacketLocalObjectSource.average_eq_packetNormalized choice
+
+set_option linter.style.longLine false in
+theorem localObject_finiteLogVolume_eq_capsuleAverage
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.packetState choice).localObject.finiteLogVolume =
+      (source.packetState choice).capsuleFamily.totalLogVolume /
+        ((source.packetState choice).capsuleFamily.capsuleCount : Real) :=
+  (source.direct_packet_normalization choice).localObject_finiteLogVolume_eq_capsuleAverage
+
+set_option linter.style.longLine false in
+/--
+Audit for deriving the label-wise classified packet-local source from direct
+finite-capsule packet-normalization data.
+-/
+structure Audit : Prop where
+  labelwise_classified_audit :
+    LogThetaLabelProcessionVerticalLogKummerClassifiedPacketLocalObjectSource.Audit
+      source.toClassifiedPacketLocalObjectSource
+  direct_packet_source_audit :
+    ProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource.Audit
+      source.toProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource
+  packet_tensor_alignment :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).tensorState = choice.local_tensor_state
+  localObject_eq_capsuleAverage :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).localObject.finiteLogVolume =
+        (source.packetState choice).capsuleFamily.totalLogVolume /
+          ((source.packetState choice).capsuleFamily.capsuleCount : Real)
+  labelAverage_eq_packet_localObject :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.toLogThetaLabelProcessionUpperSemiSource.labelAverage
+        (thetaPilotClass choice)).averageLogVolume =
+          (source.packetState choice).localObject.finiteLogVolume
+  labelAverage_eq_packet_normalized :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.toLogThetaLabelProcessionUpperSemiSource.labelAverage
+        (thetaPilotClass choice)).averageLogVolume =
+          (source.packetState choice).capsuleFamily.normalizedLogVolume
+
+set_option linter.style.longLine false in
+theorem audit :
+    Audit source :=
+  { labelwise_classified_audit :=
+      source.toClassifiedPacketLocalObjectSource.audit,
+    direct_packet_source_audit :=
+      source.toProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource.audit,
+    packet_tensor_alignment := by
+      intro choice
+      exact source.packet_tensor_eq choice,
+    localObject_eq_capsuleAverage := by
+      intro choice
+      exact source.localObject_finiteLogVolume_eq_capsuleAverage choice,
+    labelAverage_eq_packet_localObject := by
+      intro choice
+      exact source.average_eq_packetLocalObject choice,
+    labelAverage_eq_packet_normalized := by
+      intro choice
+      exact source.average_eq_packetNormalized choice }
+
+end LogThetaLabelProcessionVerticalLogKummerDirectPacketLocalObjectSource
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable
