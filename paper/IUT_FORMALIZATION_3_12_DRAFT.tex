@@ -3437,9 +3437,20 @@ exact source
 that the valuation possible-image union is exactly the finite union of the
 valuation-ball direct-product cells, and \Lean{} derives both hull-fixedness
 and equality with the selected principal hull from the already formalized
-Remark~3.9.5 principal-hull theorem.  The remaining mathematical payload at
-this boundary is the source-paper pointwise valuation-region comparison and
-the nonarchimedean theta proof of this direct-product-cell exactness.
+Remark~3.9.5 principal-hull theorem.  The preferred boundary has now been
+lowered once more by
+\texttt{ConcreteValuationBallDirectProductCellCoverSource}.  Here the formal
+direction
+\[
+  \bigcup P_{\Theta} \subseteq \bigcup_{\beta} H_{\beta}
+\]
+comes from hull containment together with the valuation-cover theorem
+\(\phi(\bigcup P_{\Theta})=\bigcup_{\beta}H_{\beta}\).  The only source-facing
+payload is the reverse local cover statement: every valuation-ball
+direct-product cell \(H_{\beta}\) lies in the theta possible-image union.
+The remaining mathematical payload at this boundary is therefore the
+source-paper pointwise valuation-region comparison and the nonarchimedean
+theta proof of this direct-product-cell cover.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12021,7 +12032,7 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  valuation-region pointwise equality, direct-product valuation-cell exactness,
+  valuation-region pointwise equality, direct-product valuation-cell coverage,
   Ob5/Ob7 compatibility, and the \(\theta_{\mathrm{signed}}\) log-volume
   identification.
 \item Instantiate the valuation-ball local analytic construction from actual
