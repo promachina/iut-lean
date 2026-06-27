@@ -3426,6 +3426,15 @@ procession shift followed by the typed post-procession \((\Ind2)\) local
 tensor transport already present in the Theorem~3.11 source audit.  The
 valuation-indexing payload at this boundary is therefore only the pointwise
 equality between quotient possible regions and theta-class valuation cells.
+That pointwise quotient comparison has now also been factored through concrete
+theta-pilot possible images.  The source
+\texttt{ConcreteValuationBallThetaClassImageBackedFamilyUnionSource} supplies a
+theta-pilot-class possible-image family, identifies the record's
+choice-indexed possible images with the pullback of that class family, and
+identifies each class image with the corresponding valuation-ball region.
+\Lean{} then uses the Theorem~3.11 equality-quotient pullback theorem to derive
+the quotient-region/valuation-region comparison required by the older
+fiber-backed boundary.
 The selected-principal-hull equality has also been lowered:
 \texttt{ConcreteValuationBallSelectedPrincipalHullSource}
 requires the valuation-cover possible-image union to be a hull for its
@@ -3449,8 +3458,9 @@ comes from hull containment together with the valuation-cover theorem
 payload is the reverse local cover statement: every valuation-ball
 direct-product cell \(H_{\beta}\) lies in the theta possible-image union.
 The remaining mathematical payload at this boundary is therefore the
-source-paper pointwise valuation-region comparison and the nonarchimedean
-theta proof of this direct-product-cell cover.
+source-paper construction of the theta-class image law, the identification of
+those class images with valuation-ball regions, and the nonarchimedean theta
+proof of this direct-product-cell cover.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12032,9 +12042,9 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  valuation-region pointwise equality, direct-product valuation-cell coverage,
-  Ob5/Ob7 compatibility, and the \(\theta_{\mathrm{signed}}\) log-volume
-  identification.
+  theta-pilot class image laws, image-to-valuation-region identification,
+  direct-product valuation-cell coverage, Ob5/Ob7 compatibility, and the
+  \(\theta_{\mathrm{signed}}\) log-volume identification.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
