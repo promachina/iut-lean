@@ -22235,6 +22235,242 @@ theorem ofThetaPilotClassPossibleImageSource_toRemark395ConstructedGlobalCThetaS
 
 set_option linter.style.longLine false in
 /--
+Direct selected-q Remark 3.9.5 endpoint from the lattice-key image law.
+
+This is the Hodge-theater/history/log-theta-lattice version of the selected
+q-region hull audit.  The lattice source reconstructs the class-region formula
+from representative concrete choices and the same-lattice-key image law; Lean
+then builds the quotient theta-pilot source internally and returns the
+Remark 3.9.5 selected-q hull/log-volume audit.
+-/
+theorem ofLatticeImageLawSource_toRemark395SelectedQHullLogVolumeAudit_endpoint
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (ofLatticeImageLawSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofLatticeImageLawSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization) :
+    let quotientSource :=
+      ofLatticeImageLawSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let constructedSource :=
+      quotientSource.toRemark395ConstructedHolomorphicHullDeterminantSource
+        operation hullOperation determinantOperation hullOperator
+        ob3ob4Source compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
+    let hullCompatibility := quotientSource.toHullCompatibility hullOperator;
+    (∀ hodgeTheater historyLabel
+        (lattice : IUTStage1Theorem311ThetaPilotLatticeCoordinate)
+        (c : coric),
+      sourceData.latticeFormula.thetaRegion hodgeTheater historyLabel
+          lattice c =
+        recordConcrete.thetaPossibleImages.images.region
+          (sourceData.representativeAt hodgeTheater historyLabel lattice c)) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        recordConcrete.thetaPossibleImages.images.region choice =
+          sourceData.latticeFormula.thetaRegion choice.hodgeTheater
+            choice.historyLabel
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+              choice)
+            choice.coric) ∧
+      recordConcrete.thetaPossibleImages.images =
+        sourceData.latticeFormula.toChoiceImages ∧
+      OneSidedSelectedQHullLogVolumeAudit
+        quotientSource.toConstruction constructedSource hullCompatibility rfl ∧
+      constructedSource.qPilotRegion =
+        (quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice)).toSet ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        packageConcrete.preLedger.thetaSigned ∧
+      packageConcrete.preLedger.qSigned <= packageConcrete.preLedger.thetaSigned := by
+  intro quotientSource constructedSource hullCompatibility
+  let sourceEndpoint := sourceData.endpoint
+  let selectedEndpoint :=
+    quotientSource.toRemark395SelectedQHullLogVolumeAudit_endpoint
+      operation hullOperation determinantOperation hullOperator
+      ob3ob4Source compatibility measure_eq_hullLogVolume
+      tensorPower_bound hullDetBridge_eq q_pilot_positive normalization
+  exact
+    ⟨sourceEndpoint.1,
+      sourceEndpoint.2.1,
+      sourceEndpoint.2.2.1,
+      selectedEndpoint.1,
+      selectedEndpoint.2.1,
+      selectedEndpoint.2.2.2.1,
+      selectedEndpoint.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Direct global \(C_\Theta\) endpoint from the lattice-key image law.
+
+The theorem starts from the concrete Hodge-theater/history/log-theta-lattice
+possible-image invariance, constructs the quotient multiradial family and the
+selected q-region internally, and then follows the constructed Remark 3.9.5
+global-\(C_\Theta\) route to the existing dichotomy.
+-/
+theorem ofLatticeImageLawSource_toRemark395ConstructedGlobalCThetaScaleComparisonAudit_endpoint
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (ofLatticeImageLawSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofLatticeImageLawSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      ((ofLatticeImageLawSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice)
+        |>.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation hullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization).canonicalCThetaScale <= cTheta) :
+    let quotientSource :=
+      ofLatticeImageLawSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let constructedSource :=
+      quotientSource.toRemark395ConstructedHolomorphicHullDeterminantSource
+        operation hullOperation determinantOperation hullOperator
+        ob3ob4Source compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
+    (∀ hodgeTheater historyLabel
+        (lattice : IUTStage1Theorem311ThetaPilotLatticeCoordinate)
+        (c : coric),
+      sourceData.latticeFormula.thetaRegion hodgeTheater historyLabel
+          lattice c =
+        recordConcrete.thetaPossibleImages.images.region
+          (sourceData.representativeAt hodgeTheater historyLabel lattice c)) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        recordConcrete.thetaPossibleImages.images.region choice =
+          sourceData.latticeFormula.thetaRegion choice.hodgeTheater
+            choice.historyLabel
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+              choice)
+            choice.coric) ∧
+      recordConcrete.thetaPossibleImages.images =
+        sourceData.latticeFormula.toChoiceImages ∧
+      constructedSource.qPilotRegion =
+        (quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice)).toSet ∧
+      packageConcrete.preLedger.qSigned <= packageConcrete.preLedger.thetaSigned ∧
+      packageConcrete.preLedger.thetaSigned <=
+        cTheta * (-packageConcrete.preLedger.qSigned) ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        cTheta * (-packageConcrete.preLedger.qSigned) ∧
+      ((packageConcrete.preLedger.qSigned =
+          packageConcrete.preLedger.thetaSigned ∧
+          packageConcrete.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  intro quotientSource constructedSource
+  let sourceEndpoint := sourceData.endpoint
+  let globalEndpoint :=
+    quotientSource.toRemark395ConstructedGlobalCThetaScaleComparisonAudit_endpoint
+      operation hullOperation determinantOperation hullOperator
+      ob3ob4Source compatibility measure_eq_hullLogVolume
+      tensorPower_bound hullDetBridge_eq q_pilot_positive normalization
+      cTheta canonicalCThetaScale_le_cTheta
+  exact
+    ⟨sourceEndpoint.1,
+      sourceEndpoint.2.1,
+      sourceEndpoint.2.2.1,
+      globalEndpoint.2.1,
+      globalEndpoint.2.2.1,
+      globalEndpoint.2.2.2.1,
+      globalEndpoint.2.2.2.2.1,
+      globalEndpoint.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
 Direct selected-q Remark 3.9.5 endpoint from the strict typed `(Ind2)`
 action-packet theta-pilot source.
 
