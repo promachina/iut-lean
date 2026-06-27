@@ -3533,10 +3533,11 @@ been specialized to the valuation-ball normalization itself by
 \]
 Thus the implication
 \(\|x\|_v\le r_\beta\Rightarrow g_\beta(x)\le R_\beta\) is no longer a
-mathematical assumption.  The preferred boundary has now been lowered to
-\texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallExactSource}.
-Instead of assuming the two equalities needed by the valuation-norm gauge
-source, it records the two inclusions
+mathematical assumption.  The equality boundary has also been lowered twice.
+First,
+\texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallExactSource}
+replaces the two equalities needed by the valuation-norm gauge source with the
+two inclusions
 \[
   P_{\Theta,\beta}\subseteq \mathrm{realizedRegion}(B_\beta),
   \qquad
@@ -3545,9 +3546,23 @@ source, it records the two inclusions
 and the analogous two inclusions between a transported theta-class region and
 the valuation-cover possible-image region.  \Lean{} reconstructs both
 equalities by antisymmetry and then enters the same valuation-norm-gauge
-endpoint.  The remaining paper-side payload is therefore no longer an equality
-field but the two local containment statements, plus the corresponding
-class-region containment statements.
+endpoint.  The preferred boundary is now the pointwise source
+\texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallPointwiseSource}.
+It asks instead for the local lifting law
+\[
+  y\in P_{\Theta,\beta}\Longrightarrow
+  \exists x,\ \|x\|_v\le r_\beta\ \wedge\ \mathrm{realization}(x)=y,
+\]
+the reverse realization law
+\[
+  \|x\|_v\le r_\beta\Longrightarrow
+  \mathrm{realization}(x)\in P_{\Theta,\beta},
+\]
+and pointwise membership compatibility with the valuation-cover possible
+regions.  The set containments and equalities are now projections from these
+local transport laws, so the remaining paper-side payload is genuinely
+pointwise Step~(xi) transport and class-region membership, not set equality
+fields.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12129,8 +12144,8 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  the two local containments between transported theta regions and valuation
-  balls, the two class-region containments between transported regions and
+  pointwise local transport between transported theta regions and valuation
+  balls, pointwise class-region membership compatibility with the
   valuation-cover regions, Ob5/Ob7 compatibility, and the
   \(\theta_{\mathrm{signed}}\) log-volume identification.
 \item Instantiate the valuation-ball local analytic construction from actual
