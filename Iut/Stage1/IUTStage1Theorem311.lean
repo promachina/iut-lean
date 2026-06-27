@@ -2244,6 +2244,152 @@ theorem audit :
 
 end ProcessionNormalizedUpperSemiComparisonSource
 
+set_option linter.style.longLine false in
+/--
+Nonarchimedean packet alignment source for the upper-semi finite procession
+comparison.
+
+This lowers the two average-to-upper-semi alignment fields by inserting the
+local tensor packet normalized log-volume.  The source records, for each
+concrete Hodge-theater/log-theta choice, the nonarchimedean packet state whose
+tensor coordinate is the choice's local tensor state.  The average attached to
+the theta-pilot class is identified with the packet normalized log-volume; an
+`(Ind3)` step then aligns the source packet with the upper-semi source
+coordinate and the target packet with the upper-semi target coordinate.
+-/
+structure ProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+    (coric : Type u) (l : PrimeGeFive) where
+  labelAverage :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value)
+  packetState :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l ->
+      IUTStage1LocalTensorPacketLogVolumeState
+        IUTStage1PlaceKind.nonarchimedean
+  packet_tensor_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (packetState choice).tensorState = choice.local_tensor_state
+  average_eq_packetNormalized :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (labelAverage (thetaPilotClass choice)).averageLogVolume =
+        (packetState choice).capsuleFamily.normalizedLogVolume
+  ind3_source_packet_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (packetState choice₁).capsuleFamily.normalizedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_packet_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (packetState choice₂).capsuleFamily.normalizedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace ProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+
+variable
+  (source : ProcessionNormalizedVerticalLogKummerPacketAlignmentSource coric l)
+
+theorem ind3_source_average_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    (source.labelAverage (thetaPilotClass choice₁)).averageLogVolume =
+      choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
+  calc
+    (source.labelAverage (thetaPilotClass choice₁)).averageLogVolume =
+        (source.packetState choice₁).capsuleFamily.normalizedLogVolume :=
+      source.average_eq_packetNormalized choice₁
+    _ = choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+      source.ind3_source_packet_eq_upperSemiSource hstep
+
+theorem ind3_target_average_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    (source.labelAverage (thetaPilotClass choice₂)).averageLogVolume =
+      choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  calc
+    (source.labelAverage (thetaPilotClass choice₂)).averageLogVolume =
+        (source.packetState choice₂).capsuleFamily.normalizedLogVolume :=
+      source.average_eq_packetNormalized choice₂
+    _ = choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+      source.ind3_target_packet_eq_upperSemiTarget hstep
+
+/--
+Forget the packet-alignment source to the upper-semi comparison source used by
+the typed core.
+-/
+def toProcessionNormalizedUpperSemiComparisonSource :
+    ProcessionNormalizedUpperSemiComparisonSource coric l :=
+  { labelAverage := source.labelAverage,
+    ind3_source_average_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_average_eq hstep,
+    ind3_target_average_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_average_eq hstep }
+
+/-- Forget further to the finite averaged source consumed by older wrappers. -/
+def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toProcessionNormalizedUpperSemiComparisonSource.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+/--
+Audit for the packet-aligned upper-semi construction.
+-/
+structure Audit : Prop where
+  upperSemi_source :
+    Nonempty (ProcessionNormalizedUpperSemiComparisonSource coric l)
+  finite_procession_source :
+    Nonempty (ProcessionNormalizedLogVolumeSource coric l)
+  packet_tensor_alignment :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).tensorState = choice.local_tensor_state
+  average_eq_packet_normalized :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.labelAverage (thetaPilotClass choice)).averageLogVolume =
+        (source.packetState choice).capsuleFamily.normalizedLogVolume
+  ind3_source_average_eq :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.labelAverage (thetaPilotClass choice₁)).averageLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_average_eq :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.labelAverage (thetaPilotClass choice₂)).averageLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+  ind3_average_le :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.labelAverage (thetaPilotClass choice₁)).averageLogVolume <=
+          (source.labelAverage (thetaPilotClass choice₂)).averageLogVolume
+
+theorem audit :
+    Audit source :=
+  { upperSemi_source :=
+      ⟨source.toProcessionNormalizedUpperSemiComparisonSource⟩,
+    finite_procession_source :=
+      ⟨source.toProcessionNormalizedLogVolumeSource⟩,
+    packet_tensor_alignment := by
+      intro choice
+      exact source.packet_tensor_eq choice,
+    average_eq_packet_normalized := by
+      intro choice
+      exact source.average_eq_packetNormalized choice,
+    ind3_source_average_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_average_eq hstep,
+    ind3_target_average_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_average_eq hstep,
+    ind3_average_le := by
+      intro choice₁ choice₂ hstep
+      exact
+        source.toProcessionNormalizedUpperSemiComparisonSource.ind3_upper_semi_average
+          hstep }
+
+end ProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable
@@ -8492,6 +8638,93 @@ theorem processionNormalizedUpperSemiComparisonSourceTypedCoreAudit
         (typedCoreOfProcessionNormalizedUpperSemiComparisonSource source).equalityGenerators_ind3_false
           hstep }
 
+set_option linter.style.longLine false in
+/--
+Construct the typed core from nonarchimedean vertical log-Kummer packet
+alignment data.
+-/
+def typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+        coric l) :
+    IUTStage1Theorem311TypedIndeterminacyCore
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :=
+  typedCoreOfProcessionNormalizedUpperSemiComparisonSource
+    source.toProcessionNormalizedUpperSemiComparisonSource
+
+set_option linter.style.longLine false in
+/--
+Typed-core audit for the packet-aligned upper-semi source.
+
+The audit records the lowered source chain
+finite procession average -> packet normalized log-volume -> upper-semi
+source/target coordinates -> one-sided `(Ind3)` inequality.
+-/
+structure ProcessionNormalizedVerticalLogKummerPacketAlignmentSourceTypedCoreAudit
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+        coric l) : Prop where
+  packet_alignment_audit :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ProcessionNormalizedVerticalLogKummerPacketAlignmentSource.Audit
+      source
+  upperSemi_source_audit :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ProcessionNormalizedUpperSemiComparisonSource.Audit
+      source.toProcessionNormalizedUpperSemiComparisonSource
+  typed_core :
+    Nonempty
+      (IUTStage1Theorem311TypedIndeterminacyCore
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l))
+  average_eq_packet_normalized :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.labelAverage
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)).averageLogVolume =
+        (source.packetState choice).capsuleFamily.normalizedLogVolume
+  packet_tensor_alignment :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).tensorState = choice.local_tensor_state
+  ind3_average_le_from_packet_upperSemi :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind3UpperSemiStep
+        choice₁ choice₂) ->
+        (source.labelAverage
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁)).averageLogVolume <=
+          (source.labelAverage
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂)).averageLogVolume
+  equality_quotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+          source).equalityGenerators.ind3_step choice₁ choice₂ ->
+        False
+
+set_option linter.style.longLine false in
+theorem processionNormalizedVerticalLogKummerPacketAlignmentSourceTypedCoreAudit
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+        coric l) :
+    ProcessionNormalizedVerticalLogKummerPacketAlignmentSourceTypedCoreAudit
+      source :=
+  { packet_alignment_audit := source.audit,
+    upperSemi_source_audit :=
+      source.toProcessionNormalizedUpperSemiComparisonSource.audit,
+    typed_core :=
+      ⟨typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource source⟩,
+    average_eq_packet_normalized := by
+      intro choice
+      exact source.average_eq_packetNormalized choice,
+    packet_tensor_alignment := by
+      intro choice
+      exact source.packet_tensor_eq choice,
+    ind3_average_le_from_packet_upperSemi := by
+      intro choice₁ choice₂ hstep
+      exact
+        source.toProcessionNormalizedUpperSemiComparisonSource.ind3_upper_semi_average
+          hstep,
+    equality_quotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact
+        (typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+          source).equalityGenerators_ind3_false hstep }
+
 end ConcreteHodgeTheaterLogTheta
 
 /--
@@ -9834,6 +10067,41 @@ def toEqualityQuotientPossibleImagesOfProcessionNormalizedUpperSemi
 
 set_option linter.style.longLine false in
 /--
+Compatibility from concrete theta-pilot possible images and a vertical
+log-Kummer packet-aligned finite-procession source.
+-/
+def toPossibleImageQuotientCompatibilityOfVerticalLogKummerPacketAlignment
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (volumeSource :
+      ProcessionNormalizedVerticalLogKummerPacketAlignmentSource coric l) :
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+        volumeSource)
+      source.choiceImages :=
+  source.toPossibleImageQuotientCompatibilityOfProcessionNormalizedUpperSemi
+    volumeSource.toProcessionNormalizedUpperSemiComparisonSource
+
+set_option linter.style.longLine false in
+/--
+Construct quotient-indexed possible images directly from theta-pilot class
+images and the vertical log-Kummer packet-aligned finite procession source.
+-/
+def toEqualityQuotientPossibleImagesOfVerticalLogKummerPacketAlignment
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (volumeSource :
+      ProcessionNormalizedVerticalLogKummerPacketAlignmentSource coric l) :
+    IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+        volumeSource)
+      source.choiceImages :=
+  IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages.ofCompatibility
+    (source.toPossibleImageQuotientCompatibilityOfVerticalLogKummerPacketAlignment
+      volumeSource)
+
+set_option linter.style.longLine false in
+/--
 Audit of the concrete theta-pilot possible-image construction.
 
 It records the actual pullback from theta-pilot classes, the induced
@@ -10060,6 +10328,89 @@ theorem processionNormalizedUpperSemiAudit
       intro choice₁ choice₂ hstep
       exact
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedUpperSemiComparisonSource
+          volumeSource).equalityGenerators_ind3_false hstep }
+
+set_option linter.style.longLine false in
+/--
+Audit of the concrete theta-pilot possible-image construction from vertical
+log-Kummer packet-aligned procession data.
+-/
+structure VerticalLogKummerPacketAlignmentAudit
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (volumeSource :
+      ProcessionNormalizedVerticalLogKummerPacketAlignmentSource coric l) : Prop where
+  packet_alignment_audit :
+    ProcessionNormalizedVerticalLogKummerPacketAlignmentSource.Audit volumeSource
+  typed_core_audit :
+    IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.ProcessionNormalizedVerticalLogKummerPacketAlignmentSourceTypedCoreAudit
+      volumeSource
+  equality_quotient_possible_images :
+    Nonempty
+      (IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+          volumeSource)
+        source.choiceImages)
+  choice_region_is_thetaPilot_pullback :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      source.choiceImages.region choice =
+        source.classImages.region (thetaPilotClass choice)
+  ind1_region_eq :
+    ∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      Ind1ProcessionStep choice₁ choice₂ ->
+        source.choiceImages.region choice₁ =
+          source.choiceImages.region choice₂
+  ind2_region_eq :
+    ∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      Ind2LocalTensorStep choice₁ choice₂ ->
+        source.choiceImages.region choice₁ =
+          source.choiceImages.region choice₂
+  ind3_average_le_from_packet_upperSemi :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (volumeSource.labelAverage (thetaPilotClass choice₁)).averageLogVolume <=
+          (volumeSource.labelAverage (thetaPilotClass choice₂)).averageLogVolume
+  equality_quotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+          volumeSource).equalityGenerators.ind3_step choice₁ choice₂ ->
+        False
+
+set_option linter.style.longLine false in
+theorem verticalLogKummerPacketAlignmentAudit
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (volumeSource :
+      ProcessionNormalizedVerticalLogKummerPacketAlignmentSource coric l) :
+    VerticalLogKummerPacketAlignmentAudit source volumeSource :=
+  { packet_alignment_audit := volumeSource.audit,
+    typed_core_audit :=
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.processionNormalizedVerticalLogKummerPacketAlignmentSourceTypedCoreAudit
+        volumeSource,
+    equality_quotient_possible_images :=
+      ⟨source.toEqualityQuotientPossibleImagesOfVerticalLogKummerPacketAlignment
+        volumeSource⟩,
+    choice_region_is_thetaPilot_pullback := by
+      intro choice
+      exact source.choiceImages_region choice,
+    ind1_region_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.ind1_region_eq hstep,
+    ind2_region_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.ind2_region_eq hstep,
+    ind3_average_le_from_packet_upperSemi := by
+      intro choice₁ choice₂ hstep
+      exact
+        volumeSource.toProcessionNormalizedUpperSemiComparisonSource.ind3_upper_semi_average
+          hstep,
+    equality_quotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
           volumeSource).equalityGenerators_ind3_false hstep }
 
 end ThetaPilotClassPossibleImageSource
