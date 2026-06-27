@@ -14548,6 +14548,17 @@ structure PostProcessionTypedCoreTransportAudit
           (l := l) choice₁ choice₂ ->
         IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
           IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂
+  ind3_upper_semi_relation_audit :
+    (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+      indData).Ind3UpperSemiRelationAudit
+  ind3_upper_semi_logVolume :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).ind3.step choice₁ choice₂ ->
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).logVolume choice₁ <=
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₂
   equalityQuotient_no_ind3_generator :
     ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
       (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
@@ -14632,6 +14643,11 @@ theorem postProcessionTypedCoreTransportAudit
         intro choice₁ choice₂ transport
         exact (ind1Audit choice₁ choice₂).2.2.2.trans
           ((ind2Audit transport).2.2.2),
+      ind3_upper_semi_relation_audit :=
+        core.ind3UpperSemiRelationAudit,
+      ind3_upper_semi_logVolume := by
+        intro choice₁ choice₂ hstep
+        exact core.ind3_logVolume_le hstep,
       equalityQuotient_no_ind3_generator := by
         intro choice₁ choice₂ hstep
         exact core.equalityGenerators_ind3_false hstep }
@@ -17415,11 +17431,27 @@ theorem ofFiberInd2ActionPacketSource_typedCoreTransportAudit
               indData).equalityQuotientMap choice₁ =
             (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
               indData).equalityQuotientMap choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂) ∧
       (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
         quotientSource.quotientImages.region
             ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
                 indData).equalityQuotientMap choice) =
           record.thetaPossibleImages.images.region choice) ∧
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).Ind3UpperSemiRelationAudit ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind3.step choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₁ <=
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₂) ∧
       quotientSource.toConstruction.selectedQRegion =
         quotientSource.quotientImages.region
           ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
@@ -17436,7 +17468,10 @@ theorem ofFiberInd2ActionPacketSource_typedCoreTransportAudit
     ⟨typedAudit,
       typedAudit.fiberTransport_logVolume_eq,
       typedAudit.fiberTransport_equalityQuotientMap_eq,
+      typedAudit.fiberTransport_thetaPilotClass_eq,
       quotientSource.pullback_region_eq,
+      typedAudit.ind3_upper_semi_relation_audit,
+      typedAudit.ind3_upper_semi_logVolume,
       quotientSource.selectedQRegion_eq_suppliedQuotientImage,
       quotientSource.toConstruction.selectedQRegion_subset_recordUnion,
       typedAudit.equalityQuotient_no_ind3_generator⟩
