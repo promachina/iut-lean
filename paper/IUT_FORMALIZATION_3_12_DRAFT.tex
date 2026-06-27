@@ -9408,21 +9408,29 @@ translation.  The choice-level source
 \texttt{FLLabelProcessionChoiceSource} then turns every full-label
 representative into a concrete \((\Ind_1)\) step from the base choice; with
 the Theorem~3.11 indeterminacy law, Lean derives preservation of the
-procession-normalized log-volume for every such label.  The one-sided
-constructor now has an explicit full-label entry point,
+procession-normalized log-volume for every such label.  This source is now
+canonical: \texttt{ofCoordinate} builds the full-label family from a
+log-theta coordinate, \texttt{ofChoice} attaches it to a concrete
+Hodge-theater/log-theta choice, and
+\texttt{ConcreteHodgeTheaterLogThetaFullLabelProcessionSource.canonical}
+assembles the choice-wise family for the whole concrete source space.
+
+The one-sided constructor has both an explicit and a canonical full-label entry
+point,
 \[
 \begin{array}{l}
 \texttt{IUTStage1Theorem311OneSidedMultiradialConstructionSource.}\\
-\quad\texttt{ofConcreteHodgeTheaterLogThetaFullLabelSource}.
+\quad\texttt{ofConcreteHodgeTheaterLogThetaFullLabelSource},\\
+\quad\texttt{ofConcreteHodgeTheaterLogThetaCanonicalFullLabelSource}.
 \end{array}
 \]
-It builds the same concrete multiradial source as
-\texttt{ofConcreteHodgeTheaterLogTheta}, but its endpoint also audits that each
+They build the same concrete multiradial source as
+\texttt{ofConcreteHodgeTheaterLogTheta}, but their endpoints also audit that each
 action translate is backed by the all-label source, is represented by an
 \((\Ind_1)\) full-label choice, preserves log-volume, and has the expected
 \(Z/lZ\) label.  Thus the \(F_l\)-procession input consumed by the corridor is
-now tied to the source-level no-omission statement, rather than merely to an
-abstract action law.
+now tied to the source-level no-omission statement constructed from the
+log-theta coordinate itself, rather than merely to an abstract action law.
 
 The quotient-image constructor
 \[

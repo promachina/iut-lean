@@ -538,6 +538,18 @@ namespace IUTStage1FLLabelProcessionSource
 
 variable {l : PrimeGeFive}
 
+/-- The canonical full-label source over a fixed log-theta coordinate. -/
+def ofCoordinate
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l) :
+    IUTStage1FLLabelProcessionSource l :=
+  { baseCoordinate := coordinate }
+
+@[simp]
+theorem ofCoordinate_baseCoordinate
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l) :
+    (ofCoordinate coordinate).baseCoordinate = coordinate :=
+  rfl
+
 /-- The coordinate obtained by choosing a particular full `F_l` label. -/
 def coordinate
     (source : IUTStage1FLLabelProcessionSource l)
@@ -1030,6 +1042,26 @@ structure FLLabelProcessionChoiceSource
   base_coordinate_eq : labelSource.baseCoordinate = choice.coordinate
 
 namespace FLLabelProcessionChoiceSource
+
+set_option linter.style.longLine false in
+/--
+Canonical full-label source attached to a concrete choice.
+
+It uses the choice's own log-theta coordinate as the forgotten theta-pilot
+lattice node, then varies only the finite `F_l` label.
+-/
+def ofChoice
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    FLLabelProcessionChoiceSource choice :=
+  { labelSource :=
+      IUTStage1FLLabelProcessionSource.ofCoordinate choice.coordinate,
+    base_coordinate_eq := rfl }
+
+@[simp]
+theorem ofChoice_baseCoordinate
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (ofChoice choice).labelSource.baseCoordinate = choice.coordinate :=
+  rfl
 
 set_option linter.style.longLine false in
 /-- The concrete choice with its finite `F_l` label replaced by `label`. -/

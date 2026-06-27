@@ -11145,6 +11145,30 @@ theorem actionAudit
       action_transition_label_eq := actionEndpoint.2.2.2.2,
       action_equalityQuotientMap_eq := actionEndpoint.2.2.2.1 }
 
+set_option linter.style.longLine false in
+/--
+Canonical full-label source over the concrete choice space.
+
+No extra mathematical payload is needed: each concrete choice already carries
+the log-theta coordinate over which Remark 3.11.2 forms the full `F_l` family.
+-/
+def canonical
+    {coric : Type u}
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) :
+    ConcreteHodgeTheaterLogThetaFullLabelProcessionSource indData :=
+  { fullLabelSource := fun choice =>
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.FLLabelProcessionChoiceSource.ofChoice
+        choice }
+
+theorem canonical_actionAudit
+    {coric : Type u}
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l) :
+    (canonical indData).ActionAudit gluingTorsor :=
+  (canonical indData).actionAudit gluingTorsor
+
 end ConcreteHodgeTheaterLogThetaFullLabelProcessionSource
 
 set_option linter.style.longLine false in
@@ -15441,6 +15465,90 @@ theorem ofConcreteHodgeTheaterLogThetaFullLabelSource_endpoint
       (ofConcreteHodgeTheaterLogThetaFullLabelSource
         record indData possibleImageCompatibility gluingTorsor
         fullLabelSourceData selectedQChoice).endpoint⟩
+
+set_option linter.style.longLine false in
+/--
+Concrete one-sided constructor with the canonical full-label source.
+
+This removes the full-label source as caller-supplied payload: the all-label
+`F_l` family is constructed from each concrete choice's own log-theta
+coordinate, and the endpoint keeps the same no-omission/action audit.
+-/
+def ofConcreteHodgeTheaterLogThetaCanonicalFullLabelSource
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (possibleImageCompatibility :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).PossibleImageQuotientCompatibility
+        record.thetaPossibleImages.images)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  ofConcreteHodgeTheaterLogThetaFullLabelSource
+    record indData possibleImageCompatibility gluingTorsor
+    (ConcreteHodgeTheaterLogThetaFullLabelProcessionSource.canonical indData)
+    selectedQChoice
+
+set_option linter.style.longLine false in
+theorem ofConcreteHodgeTheaterLogThetaCanonicalFullLabelSource_endpoint
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (possibleImageCompatibility :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).PossibleImageQuotientCompatibility
+        record.thetaPossibleImages.images)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (ConcreteHodgeTheaterLogThetaFullLabelProcessionSource.canonical
+        indData).ActionAudit gluingTorsor ∧
+      let construction :=
+        ofConcreteHodgeTheaterLogThetaCanonicalFullLabelSource
+          record indData possibleImageCompatibility gluingTorsor
+          selectedQChoice;
+      construction.multiradialImages.quotient =
+          construction.typedIndeterminacyCore.equalityQuotient ∧
+        construction.multiradialImages.possibleImages =
+          record.thetaPossibleImages ∧
+        Fintype.card (ZMod l.value) = l.value ∧
+        (∀ t choice,
+          construction.typedIndeterminacyCore.equalityQuotientMap choice =
+            construction.typedIndeterminacyCore.equalityQuotientMap
+              (construction.flProcessionAction.transition t choice)) ∧
+        (∀ {choice₁ choice₂ :
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+          construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+          construction.typedIndeterminacyCore.logVolume choice₁ <=
+            construction.typedIndeterminacyCore.logVolume choice₂) ∧
+        (∀ choice,
+          construction.equalityQuotientPossibleImages.quotientImages.region
+              (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+            record.thetaPossibleImages.images.region choice) ∧
+        construction.selectedQRegion =
+          construction.equalityQuotientPossibleImages.quotientImages.region
+            (construction.typedIndeterminacyCore.equalityQuotientMap
+              construction.selectedQChoice) ∧
+        construction.selectedQRegion.toSet =
+          recordThetaPossibleImage record construction.selectedQChoice ∧
+        construction.selectedQRegion.toSet ⊆
+          recordThetaPossibleImageUnion record := by
+  exact
+    ofConcreteHodgeTheaterLogThetaFullLabelSource_endpoint
+      record indData possibleImageCompatibility gluingTorsor
+      (ConcreteHodgeTheaterLogThetaFullLabelProcessionSource.canonical indData)
+      selectedQChoice
 
 set_option linter.style.longLine false in
 /--
