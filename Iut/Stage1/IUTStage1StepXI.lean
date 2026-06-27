@@ -23885,6 +23885,277 @@ theorem sourceLevelTransportRemark395GlobalCThetaAudit
         globalEndpoint.2.2.2.2.1,
       dichotomy := globalEndpoint.2.2.2.2.2 }
 
+set_option linter.style.longLine false in
+/--
+Strict source-level `F_l` procession audit at the Remark 3.9.5 Ob5--Ob6
+boundary.
+
+This is the concrete Remark 3.11.2/3.9.5 interface: the `F_l` translation is
+the actual log-theta-label translation on concrete Hodge-theater choices, it
+stays inside the `(Ind1)/(Ind2)` equality quotient, and the quotient-indexed
+possible-image family satisfies the Ob5 canonical-hull and Ob6 `Phi`/`Xi`
+log-volume comparisons.  The same audit retains the strict source-level
+transport quotient payload, so `(Ind3)` remains excluded from equality at this
+boundary.
+-/
+structure SourceLevelTransportFLProcessionRemark395Ob5Ob6Audit
+    {κ : Type w}
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice choice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (phiFamily :
+      let quotientSource :=
+        ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice;
+      (quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator).PhiFamily κ)
+    (xiFamily :
+      let quotientSource :=
+        ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice;
+      (quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator).XiFamily κ)
+    (k : κ) (t : ZMod l.value) : Prop where
+  sourceLevelTransportQuotientAudit :
+    SourceLevelTransportQuotientAudit
+      sourceData gluingTorsor selectedQChoice
+  action_label_cardinality :
+    Fintype.card (ZMod l.value) = l.value
+  transition_flLabel_eq :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    (quotientSource.toConstruction.flProcessionAction.transition
+        t choice).coordinate.flLabel =
+      zmodLabelTranslate l t choice.coordinate.flLabel
+  transition_equalityQuotientMap_eq :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let translatedChoice :=
+      quotientSource.toConstruction.flProcessionAction.transition t choice;
+    quotientSource.toConstruction.typedIndeterminacyCore.equalityQuotientMap choice =
+      quotientSource.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+        translatedChoice
+  possibleRegion_eq_translated :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let translatedChoice :=
+      quotientSource.toConstruction.flProcessionAction.transition t choice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.possibleRegion
+        (quotientSource.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+          choice) =
+      familySource.possibleRegion
+        (quotientSource.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+          translatedChoice)
+  familyUnion_subset_canonicalHull :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.familyUnion ⊆ familySource.canonicalHull
+  choice_possibleRegion_subset_canonicalHull :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.possibleRegion
+        (quotientSource.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+          choice) ⊆ familySource.canonicalHull
+  translated_possibleRegion_subset_canonicalHull :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let translatedChoice :=
+      quotientSource.toConstruction.flProcessionAction.transition t choice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.possibleRegion
+        (quotientSource.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+          translatedChoice) ⊆ familySource.canonicalHull
+  HPhi_eq_canonicalHull :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.HPhi phiFamily = familySource.canonicalHull
+  familyUnion_logVolume_le_HPhi :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.hullOperator.logVolume familySource.familyUnion <=
+      familySource.hullOperator.logVolume (familySource.HPhi phiFamily)
+  choice_logVolume_le_HPhi :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.hullOperator.logVolume
+        (familySource.possibleRegion
+          (quotientSource.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            choice)) <=
+      familySource.hullOperator.logVolume (familySource.HPhi phiFamily)
+  HXi_eq_canonicalHull :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.HXi xiFamily = familySource.canonicalHull
+  familyUnion_logVolume_le_HXi :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.hullOperator.logVolume familySource.familyUnion <=
+      familySource.hullOperator.logVolume (familySource.HXi xiFamily)
+  choice_logVolume_le_HXi :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.hullOperator.logVolume
+        (familySource.possibleRegion
+          (quotientSource.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            choice)) <=
+      familySource.hullOperator.logVolume (familySource.HXi xiFamily)
+  xiExact_logVolume_eq_familyUnion :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    familySource.hullOperator.logVolume
+        ((xiFamily.exactApproximant k).approximant).approximant =
+      familySource.hullOperator.logVolume familySource.familyUnion
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityGenerators.ind3_step choice₁ choice₂ -> False
+
+set_option linter.style.longLine false in
+theorem sourceLevelTransportFLProcessionRemark395Ob5Ob6Audit
+    {κ : Type w}
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice choice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (phiFamily :
+      let quotientSource :=
+        ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice;
+      (quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator).PhiFamily κ)
+    (xiFamily :
+      let quotientSource :=
+        ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice;
+      (quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator).XiFamily κ)
+    (k : κ) (t : ZMod l.value) :
+    SourceLevelTransportFLProcessionRemark395Ob5Ob6Audit
+      sourceData gluingTorsor selectedQChoice choice hullOperator
+      phiFamily xiFamily k t := by
+  let quotientSource :=
+    ofFiberInd2ActionPacketTransportSource
+      (record := recordConcrete) (indData := indData)
+      sourceData gluingTorsor selectedQChoice
+  let construction := quotientSource.toConstruction
+  let translatedChoice := construction.flProcessionAction.transition t choice
+  have hmem :
+      translatedChoice ∈
+        construction.typedIndeterminacyCore.equalityOrbit choice :=
+    construction.flProcessionAction.transition_related t choice
+  have hquot :
+      construction.typedIndeterminacyCore.equalityQuotientMap choice =
+        construction.typedIndeterminacyCore.equalityQuotientMap
+          translatedChoice :=
+    construction.flProcessionAction.equalityQuotientMap_eq t choice
+  let ob56 :=
+    construction.equalityQuotientPossibleImages
+      |>.remark395Ob5Ob6EqualityQuotientEndpoint_of_equalityOrbit
+        hullOperator phiFamily xiFamily k hmem
+  rcases ob56 with
+    ⟨hregion, hfamily_subset, hchoice_subset,
+      htranslated_subset, hHPhi_eq, hfamily_le_HPhi, hchoice_le_HPhi,
+      hHXi_eq, hfamily_le_HXi, hchoice_le_HXi, hxi_exact_log⟩
+  exact
+    { sourceLevelTransportQuotientAudit :=
+        sourceLevelTransportQuotientAudit
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice,
+      action_label_cardinality := construction.flProcessionAction.gluing_card_eq,
+      transition_flLabel_eq :=
+        concreteHodgeTheaterLogThetaFLProcessionAction_transition_flLabel
+          indData gluingTorsor t choice,
+      transition_equalityQuotientMap_eq := hquot,
+      possibleRegion_eq_translated := hregion,
+      familyUnion_subset_canonicalHull := hfamily_subset,
+      choice_possibleRegion_subset_canonicalHull := hchoice_subset,
+      translated_possibleRegion_subset_canonicalHull := htranslated_subset,
+      HPhi_eq_canonicalHull := hHPhi_eq,
+      familyUnion_logVolume_le_HPhi := hfamily_le_HPhi,
+      choice_logVolume_le_HPhi := hchoice_le_HPhi,
+      HXi_eq_canonicalHull := hHXi_eq,
+      familyUnion_logVolume_le_HXi := hfamily_le_HXi,
+      choice_logVolume_le_HXi := hchoice_le_HXi,
+      xiExact_logVolume_eq_familyUnion := hxi_exact_log,
+      equalityQuotient_no_ind3_generator :=
+        (sourceLevelTransportQuotientAudit
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice).equalityQuotient_no_ind3_generator }
+
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
 set_option linter.style.longLine false in
