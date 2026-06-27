@@ -724,6 +724,53 @@ theorem ind1_thetaPilotClass_eq
   simp [thetaPilotClass, hstep.hodgeTheater_eq, hstep.historyLabel_eq,
     hstep.column_eq, hstep.row_eq, hstep.logThetaColumn_eq, hcoric]
 
+set_option linter.style.longLine false in
+/--
+Build a concrete `(Ind1)` step from typed procession transport.
+
+This is the source-level finite-procession boundary: the log-theta lattice node
+and the non-procession representatives are fixed by explicit equalities, while
+the D-prime-strip procession identifier/representative data is supplied by the
+typed procession transport.
+-/
+def Ind1ProcessionStep.ofTypedProcessionTransport
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater)
+    (historyLabel_eq : choice₁.historyLabel = choice₂.historyLabel)
+    (column_eq : choice₁.coordinate.column = choice₂.coordinate.column)
+    (row_eq : choice₁.coordinate.row = choice₂.coordinate.row)
+    (logThetaColumn_eq :
+      choice₁.coordinate.logThetaColumn = choice₂.coordinate.logThetaColumn)
+    (coric_eq : choice₁.coric = choice₂.coric)
+    (processionTransport :
+      IUTStage1ProcessionState.ProcessionTransport
+        choice₁.procession_state choice₂.procession_state)
+    (local_tensor_eq :
+      choice₁.local_tensor_state = choice₂.local_tensor_state)
+    (upper_semi_eq :
+      choice₁.upper_semi_state = choice₂.upper_semi_state) :
+    Ind1ProcessionStep choice₁ choice₂ :=
+  { hodgeTheater_eq := hodgeTheater_eq,
+    historyLabel_eq := historyLabel_eq,
+    column_eq := column_eq,
+    row_eq := row_eq,
+    logThetaColumn_eq := logThetaColumn_eq,
+    structured_step :=
+      { column_eq := column_eq,
+        row_eq := row_eq,
+        coric_eq := coric_eq,
+        procession_eq := processionTransport.procession_eq,
+        procession_column_eq := by
+          calc
+            choice₁.procession_state.column = choice₁.coordinate.column :=
+              choice₁.procession_column_eq
+            _ = choice₂.coordinate.column := column_eq
+            _ = choice₂.procession_state.column :=
+              choice₂.procession_column_eq.symm,
+        local_tensor_eq := local_tensor_eq,
+        upper_semi_eq := upper_semi_eq } }
+
 /--
 Concrete `(Ind2)` step induced by the local tensor/direct-summand symmetry.
 
@@ -749,6 +796,68 @@ theorem ind2_thetaPilotClass_eq
   simp [thetaPilotClass, hstep.hodgeTheater_eq, hstep.historyLabel_eq,
     hstep.coordinate_eq, hcoric]
 
+set_option linter.style.longLine false in
+/--
+Build a concrete `(Ind2)` step from typed local transports.
+
+The theta-pilot fiber fixes the concrete log-theta coordinate.  The
+procession-state equality and upper-semi-state equality are reconstructed from
+the typed transports together with the column laws already carried by the two
+concrete choices.  The only local tensor datum still required at this level is
+equality of the direct-summand counts.
+-/
+def Ind2LocalTensorStep.ofTypedLocalTransports
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater)
+    (historyLabel_eq : choice₁.historyLabel = choice₂.historyLabel)
+    (coordinate_eq : choice₁.coordinate = choice₂.coordinate)
+    (processionTransport :
+      IUTStage1ProcessionState.ProcessionTransport
+        choice₁.procession_state choice₂.procession_state)
+    (direct_summand_count_eq :
+      choice₁.local_tensor_state.directSummandCount =
+        choice₂.local_tensor_state.directSummandCount)
+    (upperSemiTransport :
+      IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+        choice₁.upper_semi_state choice₂.upper_semi_state)
+    (coric_eq : choice₁.coric = choice₂.coric) :
+    Ind2LocalTensorStep choice₁ choice₂ :=
+  { hodgeTheater_eq := hodgeTheater_eq,
+    historyLabel_eq := historyLabel_eq,
+    coordinate_eq := coordinate_eq,
+    structured_step :=
+      { column_eq := by
+          simpa [toStructuredChoice] using congrArg
+            IUTStage1Theorem311LogThetaLatticeCoordinate.column coordinate_eq,
+        row_eq := by
+          simpa [toStructuredChoice] using congrArg
+            IUTStage1Theorem311LogThetaLatticeCoordinate.row coordinate_eq,
+        coric_eq := coric_eq,
+        procession_eq :=
+          processionTransport.eq_of_column_eq
+            (by
+              calc
+                choice₁.procession_state.column =
+                    choice₁.coordinate.column :=
+                  choice₁.procession_column_eq
+                _ = choice₂.coordinate.column := by
+                  rw [coordinate_eq]
+                _ = choice₂.procession_state.column :=
+                  choice₂.procession_column_eq.symm),
+        direct_summand_count_eq := direct_summand_count_eq,
+        upper_semi_eq :=
+          upperSemiTransport.eq_of_logThetaColumn_eq
+            (by
+              calc
+                choice₁.upper_semi_state.logThetaColumn =
+                    choice₁.coordinate.logThetaColumn :=
+                  choice₁.upper_semi_logThetaColumn_eq
+                _ = choice₂.coordinate.logThetaColumn := by
+                  rw [coordinate_eq]
+                _ = choice₂.upper_semi_state.logThetaColumn :=
+                  choice₂.upper_semi_logThetaColumn_eq.symm) } }
+
 /--
 Concrete `(Ind3)` upper-semi step as the row `m` varies in a fixed column.
 
@@ -768,6 +877,57 @@ structure Ind3UpperSemiStep
   structured_step :
     IUTStage1StructuredTheorem311Choice.UpperSemiCompatibilityStep
       choice₁.toStructuredChoice choice₂.toStructuredChoice
+
+set_option linter.style.longLine false in
+/--
+Build a concrete `(Ind3)` step from typed upper-semi transport data.
+
+The source-paper role of `(Ind3)` is still one-sided: this constructor only
+builds the step relation.  The log-volume inequality remains the separate
+`ind3_upper_semi_logVolume` field of `IndeterminacyData`.
+-/
+def Ind3UpperSemiStep.ofTypedUpperSemiTransport
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater)
+    (column_eq : choice₁.coordinate.column = choice₂.coordinate.column)
+    (logThetaColumn_eq :
+      choice₁.coordinate.logThetaColumn = choice₂.coordinate.logThetaColumn)
+    (coric_eq : choice₁.coric = choice₂.coric)
+    (procession_eq : choice₁.procession_state = choice₂.procession_state)
+    (local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state)
+    (upperSemiTransport :
+      IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+        choice₁.upper_semi_state choice₂.upper_semi_state) :
+    Ind3UpperSemiStep choice₁ choice₂ :=
+  { hodgeTheater_eq := hodgeTheater_eq,
+    column_eq := column_eq,
+    coric_eq := coric_eq,
+    procession_eq := procession_eq,
+    local_tensor_eq := local_tensor_eq,
+    structured_step :=
+      { column_eq := column_eq,
+        coric_eq := coric_eq,
+        procession_eq := procession_eq,
+        local_tensor_eq := local_tensor_eq,
+        logThetaColumn_eq := by
+          calc
+            choice₁.upper_semi_state.logThetaColumn =
+                choice₁.coordinate.logThetaColumn :=
+              choice₁.upper_semi_logThetaColumn_eq
+            _ = choice₂.coordinate.logThetaColumn := logThetaColumn_eq
+            _ = choice₂.upper_semi_state.logThetaColumn :=
+              choice₂.upper_semi_logThetaColumn_eq.symm,
+        nonarchimedean_inclusions_eq :=
+          upperSemiTransport.nonarchimedeanInclusions_eq,
+        archimedean_surjections_eq :=
+          upperSemiTransport.archimedeanSurjections_eq,
+        log_volume_compatibility_eq :=
+          upperSemiTransport.logVolumeCompatibility_eq,
+        has_nonarchimedean_inclusions_eq :=
+          upperSemiTransport.hasNonarchimedeanInclusions_eq,
+        has_archimedean_surjections_eq :=
+          upperSemiTransport.hasArchimedeanSurjections_eq } }
 
 /--
 Concrete Theorem 3.11 indeterminacy data on Hodge-theater/log-theta choices.
