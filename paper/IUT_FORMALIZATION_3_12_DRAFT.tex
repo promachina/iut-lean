@@ -3486,10 +3486,14 @@ This has now been sharpened by
 valuation cell carries a theta-pilot class, and the local cover proof is the
 containment of that cell in the corresponding theta-class possible region.
 \Lean{} derives the older union-cover interface from these per-cell
-containments.  The remaining mathematical payload at this boundary is therefore
-the source-paper proof identifying the derived theta-pilot fiber-transport
-regions with valuation-ball regions, together with the nonarchimedean theta
-construction of the per-cell theta-class assignment and containment.
+containments.  The preferred boundary is now one step lower:
+\texttt{ConcreteValuationBallThetaClassFiberTransportCellCoverSource} states
+the containment before forgetting to the valuation cover, i.e. each
+\(H_\beta\) lies in the transported theta-class region attached to its
+theta-pilot class, and \Lean{} derives both the valuation-region equality
+interface and the theta-class cell cover.  The remaining mathematical payload
+is the source-paper construction of this transported local cover from the
+nonarchimedean theta and valuation-ball data.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12071,8 +12075,7 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  fiber-transport-region to valuation-region identification,
-  theta-class assignment for valuation cells with per-cell containment,
+  the transported theta-region cover of valuation cells,
   Ob5/Ob7 compatibility, and the
   \(\theta_{\mathrm{signed}}\) log-volume identification.
 \item Instantiate the valuation-ball local analytic construction from actual
