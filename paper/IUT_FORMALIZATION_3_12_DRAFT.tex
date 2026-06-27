@@ -3525,11 +3525,18 @@ for a named local theta gauge and threshold, and the source estimate proves
   \|x\|_v\le r_\beta\quad\Longrightarrow\quad g_\beta(x)\le R_\beta.
 \]
 \Lean{} then reconstructs the local-predicate source definitionally and enters
-the same exact-\(\Xi(P_B)\) and global \(C_\Theta\) corridor.  The remaining
-mathematical payload is therefore the paper-side construction of the gauge
-\(g_\beta\), the proof of the valuation-radius bound into this gauge, and the
-identification of the realized gauge region with the transported theta-class
-region.
+the same exact-\(\Xi(P_B)\) and global \(C_\Theta\) corridor.  The gauge has now
+been specialized to the valuation-ball normalization itself by
+\texttt{ConcreteValuationBallThetaClassFiberTransportValuationNormGaugeSource}:
+\[
+  g_\beta(x)=\|x\|_v,\qquad R_\beta=r_\beta .
+\]
+Thus the implication
+\(\|x\|_v\le r_\beta\Rightarrow g_\beta(x)\le R_\beta\) is no longer a
+mathematical assumption.  The remaining payload is the paper-side
+identification of the transported theta-class region with the realization of
+this valuation ball, together with its compatibility with the valuation-cover
+possible-image region.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12111,7 +12118,7 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  the local theta gauges and valuation-radius inequalities,
+  the transported theta-region/valuation-ball identifications,
   transported-region/valuation-region identification, Ob5/Ob7 compatibility, and the
   \(\theta_{\mathrm{signed}}\) log-volume identification.
 \item Instantiate the valuation-ball local analytic construction from actual
