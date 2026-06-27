@@ -22837,6 +22837,16 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395SelectedQHullLogVolume
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
             indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) ∧
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData).Ind3UpperSemiRelationAudit ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind3.step choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₁ <=
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₂) ∧
       (∀ {choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
@@ -22883,6 +22893,8 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395SelectedQHullLogVolume
       transportAudit.source_level_ind2_action_packet_audit,
       transportAudit.typed_core_transport_audit.fiberTransport_logVolume_eq,
       transportAudit.typed_core_transport_audit.equalityQuotient_no_ind3_generator,
+      transportAudit.typed_core_transport_audit.ind3_upper_semi_relation_audit,
+      transportAudit.typed_core_transport_audit.ind3_upper_semi_logVolume,
       transportAudit.direct_summand_count_eq,
       selectedEndpoint.1,
       selectedEndpoint.2.1,
@@ -22996,6 +23008,16 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395ConstructedGlobalCThet
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
             indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) ∧
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData).Ind3UpperSemiRelationAudit ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind3.step choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₁ <=
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₂) ∧
       (∀ {choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
@@ -23047,6 +23069,8 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395ConstructedGlobalCThet
       transportAudit.source_level_ind2_action_packet_audit,
       transportAudit.typed_core_transport_audit.fiberTransport_logVolume_eq,
       transportAudit.typed_core_transport_audit.equalityQuotient_no_ind3_generator,
+      transportAudit.typed_core_transport_audit.ind3_upper_semi_relation_audit,
+      transportAudit.typed_core_transport_audit.ind3_upper_semi_logVolume,
       transportAudit.direct_summand_count_eq,
       globalEndpoint.2.1,
       by

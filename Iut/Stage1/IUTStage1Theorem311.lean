@@ -1983,6 +1983,72 @@ def toStep
     source.coric_eq source.procession_eq source.local_tensor_eq
     source.upperSemiTransport
 
+set_option linter.style.longLine false in
+/--
+Audit for the concrete `(Ind3)` upper-semi transport source.
+
+Unlike the `(Ind1)` and `(Ind2)` source audits, this audit records only a
+one-sided source transport.  It exposes the common Hodge-theater/column data,
+the fixed procession and local tensor states, the typed upper-semi transport
+fields, and the constructed `(Ind3)` step.  Log-volume comparison is supplied by
+the typed core through `typedInd3UpperSemiTransportSourceAudit`.
+-/
+structure Audit
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind3UpperSemiTransportSource choice₁ choice₂) : Prop where
+  hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
+  column_eq : choice₁.coordinate.column = choice₂.coordinate.column
+  logThetaColumn_eq :
+    choice₁.coordinate.logThetaColumn = choice₂.coordinate.logThetaColumn
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+  upperSemiTransport :
+    IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+      choice₁.upper_semi_state choice₂.upper_semi_state
+  upperSemi_compatibility_eq :
+    choice₁.upper_semi_state.compatibility =
+      choice₂.upper_semi_state.compatibility
+  upperSemi_nonarchimedeanInclusions_eq :
+    choice₁.upper_semi_state.nonarchimedeanInclusions =
+      choice₂.upper_semi_state.nonarchimedeanInclusions
+  upperSemi_archimedeanSurjections_eq :
+    choice₁.upper_semi_state.archimedeanSurjections =
+      choice₂.upper_semi_state.archimedeanSurjections
+  upperSemi_logVolumeCompatibility_eq :
+    choice₁.upper_semi_state.logVolumeCompatibility =
+      choice₂.upper_semi_state.logVolumeCompatibility
+  upperSemi_logVolumeCompatible_eq :
+    choice₁.upper_semi_state.logVolumeCompatible =
+      choice₂.upper_semi_state.logVolumeCompatible
+  ind3_upper_semi_step : Ind3UpperSemiStep choice₁ choice₂
+
+set_option linter.style.longLine false in
+theorem audit
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind3UpperSemiTransportSource choice₁ choice₂) :
+    Audit source :=
+  { hodgeTheater_eq := source.hodgeTheater_eq,
+    column_eq := source.column_eq,
+    logThetaColumn_eq := source.logThetaColumn_eq,
+    coric_eq := source.coric_eq,
+    procession_eq := source.procession_eq,
+    local_tensor_eq := source.local_tensor_eq,
+    upperSemiTransport := source.upperSemiTransport,
+    upperSemi_compatibility_eq :=
+      source.upperSemiTransport.compatibility_eq,
+    upperSemi_nonarchimedeanInclusions_eq :=
+      source.upperSemiTransport.nonarchimedeanInclusions_eq,
+    upperSemi_archimedeanSurjections_eq :=
+      source.upperSemiTransport.archimedeanSurjections_eq,
+    upperSemi_logVolumeCompatibility_eq :=
+      source.upperSemiTransport.logVolumeCompatibility_eq,
+    upperSemi_logVolumeCompatible_eq :=
+      source.upperSemiTransport.logVolumeCompatible_eq,
+    ind3_upper_semi_step := source.toStep }
+
 end Ind3UpperSemiTransportSource
 
 /--
