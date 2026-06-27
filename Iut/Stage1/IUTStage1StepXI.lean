@@ -24959,6 +24959,113 @@ theorem ConcreteClosedFamilyUnionExactXiSource.endpoint
 
 set_option linter.style.longLine false in
 /--
+Product-hull provenance for the closed-family exact-`Xi(P_B)` source.
+
+This is the Remark 3.9.5 product-hull case of the closed-region route: the
+concrete quotient possible-image union is closed because it is already a
+product hull for the product-hull system whose induced holomorphic hull
+operator is the operator used in the Step (xi) corridor.
+-/
+structure ConcreteProductHullFamilyUnionExactXiSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {Λ : Type y}
+    (productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ) :
+    Prop where
+  hullOperator_eq_productHullOperator :
+    hullOperator =
+      productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+  familyUnion_isProductHull :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let productOperator :=
+      productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource productOperator;
+    productHullSource.toHolomorphicHullSystem.isHull familySource.familyUnion
+
+set_option linter.style.longLine false in
+def ConcreteProductHullFamilyUnionExactXiSource.toClosedFamilyUnionExactXiSource
+    {sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)}
+    {Λ : Type y}
+    {productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ}
+    (productSource :
+      ConcreteProductHullFamilyUnionExactXiSource
+        sourceData gluingTorsor selectedQChoice hullOperator
+        productHullSource) :
+    ConcreteClosedFamilyUnionExactXiSource
+      sourceData gluingTorsor selectedQChoice hullOperator := by
+  refine
+    { familyUnion_closed := ?_ }
+  have hclosed := productSource.familyUnion_isProductHull
+  rw [productSource.hullOperator_eq_productHullOperator]
+  exact hclosed
+
+set_option linter.style.longLine false in
+theorem ConcreteProductHullFamilyUnionExactXiSource.endpoint
+    {sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)}
+    {Λ : Type y}
+    {productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ}
+    (productSource :
+      ConcreteProductHullFamilyUnionExactXiSource
+        sourceData gluingTorsor selectedQChoice hullOperator
+        productHullSource) :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let productOperator :=
+      productHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator;
+    let productFamilySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource productOperator;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    productHullSource.toHolomorphicHullSystem.isHull
+        productFamilySource.familyUnion ∧
+      familySource.hullOperator.isClosed familySource.familyUnion ∧
+      familySource.canonicalHull = familySource.familyUnion ∧
+      familySource.hullOperator.logVolume familySource.canonicalHull =
+        familySource.hullOperator.logVolume familySource.familyUnion :=
+  by
+    intro quotientSource productOperator productFamilySource familySource
+    let closedSource := productSource.toClosedFamilyUnionExactXiSource
+    exact
+      ⟨productSource.familyUnion_isProductHull,
+        ConcreteClosedFamilyUnionExactXiSource.endpoint closedSource⟩
+
+set_option linter.style.longLine false in
+/--
 Exact-`Xi` canonical full-label selected-q audit at the global `C_Theta`
 boundary.
 
@@ -25358,6 +25465,96 @@ theorem sourceLevelTransportClosedFamilyExactXiSelectedQRemark395GlobalCThetaAud
     measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
     q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
     closedSource.toCalibrationSource t
+
+set_option linter.style.longLine false in
+/--
+Product-hull exact-`Xi` selected-q global `C_Theta` audit.
+
+This replaces the raw closedness input in the closed-family audit by a
+Remark 3.9.5 product-hull witness for the concrete quotient possible-image
+union.
+-/
+theorem sourceLevelTransportProductHullFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      ((ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice)
+        |>.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation hullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization).canonicalCThetaScale <= cTheta)
+    {Λ : Type x}
+    {productHullSource :
+      IUTStage1Remark395ProductHullSystemSource (Point target) Λ}
+    (productSource :
+      ConcreteProductHullFamilyUnionExactXiSource
+        sourceData gluingTorsor selectedQChoice hullOperator
+        productHullSource)
+    (t : ZMod l.value) :
+    SourceLevelTransportCanonicalExactXiSelectedQRemark395GlobalCThetaAudit
+      sourceData gluingTorsor selectedQChoice operation hullOperation
+      determinantOperation hullOperator ob3ob4Source compatibility
+      measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+      q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+      productSource.toClosedFamilyUnionExactXiSource.toCalibrationSource.toExactXiFamilySource t :=
+  sourceLevelTransportClosedFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+    (recordConcrete := recordConcrete) (indData := indData)
+    sourceData gluingTorsor selectedQChoice operation hullOperation
+    determinantOperation hullOperator ob3ob4Source compatibility
+    measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+    q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+    productSource.toClosedFamilyUnionExactXiSource t
 
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 

@@ -3387,6 +3387,15 @@ quotient possible-image union be closed for the Remark~3.9.5 hull operator;
 \(\mu_{\log}(\phi(P_B))=\mu_{\log}(P_B)\).  Thus the exactness obligation is
 now split into a closed-region route and the remaining non-closed analytic
 calibration route.
+The closed-region route now has product-hull provenance.  The source
+\texttt{ConcreteProductHullFamilyUnionExactXiSource} replaces bare closedness
+by the assertion that the quotient possible-image union is a product hull for
+the Remark~3.9.5 product-hull system whose induced holomorphic hull operator is
+the corridor operator.  From this product-hull witness, \Lean{} constructs the
+closed-family exact-\(\Xi(P_B)\) source and enters the same global
+\(C_\Theta\) audit.  The remaining mathematical payload is therefore the
+construction, from the actual nonarchimedean theta data, of the product-hull
+witness for the quotient possible-image union.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
