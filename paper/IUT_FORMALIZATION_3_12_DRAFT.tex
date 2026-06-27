@@ -3481,10 +3481,15 @@ comes from hull containment together with the valuation-cover theorem
 \(\phi(\bigcup P_{\Theta})=\bigcup_{\beta}H_{\beta}\).  The only source-facing
 payload is the reverse local cover statement: every valuation-ball
 direct-product cell \(H_{\beta}\) lies in the theta possible-image union.
-The remaining mathematical payload at this boundary is therefore the
-source-paper proof identifying the derived theta-pilot fiber-transport regions
-with valuation-ball regions, together with the nonarchimedean theta proof of
-this direct-product-cell cover.
+This has now been sharpened by
+\texttt{ConcreteValuationBallThetaClassDirectProductCellCoverSource}: each
+valuation cell carries a theta-pilot class, and the local cover proof is the
+containment of that cell in the corresponding theta-class possible region.
+\Lean{} derives the older union-cover interface from these per-cell
+containments.  The remaining mathematical payload at this boundary is therefore
+the source-paper proof identifying the derived theta-pilot fiber-transport
+regions with valuation-ball regions, together with the nonarchimedean theta
+construction of the per-cell theta-class assignment and containment.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12067,7 +12072,8 @@ The practical priority order is now:
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
   fiber-transport-region to valuation-region identification,
-  direct-product valuation-cell coverage, Ob5/Ob7 compatibility, and the
+  theta-class assignment for valuation cells with per-cell containment,
+  Ob5/Ob7 compatibility, and the
   \(\theta_{\mathrm{signed}}\) log-volume identification.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
