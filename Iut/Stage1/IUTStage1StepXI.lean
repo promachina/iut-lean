@@ -24156,6 +24156,147 @@ theorem sourceLevelTransportFLProcessionRemark395Ob5Ob6Audit
           (record := recordConcrete) (indData := indData)
           sourceData gluingTorsor selectedQChoice).equalityQuotient_no_ind3_generator }
 
+set_option linter.style.longLine false in
+/--
+Full-label-backed version of the strict `F_l` procession/Remark 3.9.5
+Ob5--Ob6 handoff.
+
+This strengthens `SourceLevelTransportFLProcessionRemark395Ob5Ob6Audit` by
+requiring the concrete no-omission full-label source of Remark 3.11.2 at the
+same boundary.  Thus the translated label used in the Ob5--Ob6 comparison is
+not merely a `ZMod` action: it is exhibited in the full `F_l` label family, is
+connected to the base choice by a concrete `(Ind1)` procession step, and
+preserves the procession-normalized log-volume before the quotient
+possible-image and hull estimates are applied.
+-/
+structure SourceLevelTransportFullLabelFLProcessionRemark395Ob5Ob6Audit
+    {κ : Type w}
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (fullLabelSourceData :
+      ConcreteHodgeTheaterLogThetaFullLabelProcessionSource indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice choice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (phiFamily :
+      let quotientSource :=
+        ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice;
+      (quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator).PhiFamily κ)
+    (xiFamily :
+      let quotientSource :=
+        ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice;
+      (quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator).XiFamily κ)
+    (k : κ) (t : ZMod l.value) : Prop where
+  fullLabelActionAudit :
+    fullLabelSourceData.ActionAudit gluingTorsor
+  transportFLProcessionRemark395Audit :
+    SourceLevelTransportFLProcessionRemark395Ob5Ob6Audit
+      sourceData gluingTorsor selectedQChoice choice hullOperator
+      phiFamily xiFamily k t
+  translated_action_label_present :
+    ∃ coordinate,
+      coordinate =
+          (fullLabelSourceData.fullLabelSource choice).labelSource.coordinate
+            (((fullLabelSourceData.action gluingTorsor).transition
+              t choice).coordinate.flLabel) ∧
+        coordinate.flLabel =
+          ((fullLabelSourceData.action gluingTorsor).transition
+            t choice).coordinate.flLabel ∧
+        coordinate.toThetaPilotLatticeCoordinate =
+          (fullLabelSourceData.fullLabelSource choice).labelSource.baseCoordinate.toThetaPilotLatticeCoordinate
+  translated_full_label_choice_ind1 :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionStep choice
+      ((fullLabelSourceData.fullLabelSource choice).choiceAt
+        (((fullLabelSourceData.action gluingTorsor).transition
+          t choice).coordinate.flLabel))
+  translated_full_label_choice_logVolume_eq :
+    indData.logVolume
+        ((fullLabelSourceData.fullLabelSource choice).choiceAt
+          (((fullLabelSourceData.action gluingTorsor).transition
+            t choice).coordinate.flLabel)) =
+      indData.logVolume choice
+  action_absolute_label_eq :
+    (fullLabelSourceData.fullLabelSource choice).toAbsoluteLabelProcessionSource.absoluteLabel
+        (((fullLabelSourceData.action gluingTorsor).transition
+          t choice).coordinate.flLabel) =
+      (fullLabelSourceData.fullLabelSource choice).toAbsoluteLabelProcessionSource.absoluteLabel
+        (zmodLabelTranslate l t choice.coordinate.flLabel)
+  action_equalityQuotientMap_eq :
+    (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData).equalityQuotientMap choice =
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData).equalityQuotientMap
+          ((fullLabelSourceData.action gluingTorsor).transition t choice)
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityGenerators.ind3_step choice₁ choice₂ -> False
+
+set_option linter.style.longLine false in
+theorem sourceLevelTransportFullLabelFLProcessionRemark395Ob5Ob6Audit
+    {κ : Type w}
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (fullLabelSourceData :
+      ConcreteHodgeTheaterLogThetaFullLabelProcessionSource indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice choice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (phiFamily :
+      let quotientSource :=
+        ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice;
+      (quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator).PhiFamily κ)
+    (xiFamily :
+      let quotientSource :=
+        ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice;
+      (quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator).XiFamily κ)
+    (k : κ) (t : ZMod l.value) :
+    SourceLevelTransportFullLabelFLProcessionRemark395Ob5Ob6Audit
+      sourceData fullLabelSourceData gluingTorsor selectedQChoice choice
+      hullOperator phiFamily xiFamily k t := by
+  let fullLabelAudit := fullLabelSourceData.actionAudit gluingTorsor
+  let flAudit :=
+    sourceLevelTransportFLProcessionRemark395Ob5Ob6Audit
+      (recordConcrete := recordConcrete) (indData := indData)
+      sourceData gluingTorsor selectedQChoice choice hullOperator
+      phiFamily xiFamily k t
+  exact
+    { fullLabelActionAudit := fullLabelAudit,
+      transportFLProcessionRemark395Audit := flAudit,
+      translated_action_label_present :=
+        fullLabelAudit.translated_action_label_present t choice,
+      translated_full_label_choice_ind1 :=
+        fullLabelAudit.translated_full_label_choice_ind1 t choice,
+      translated_full_label_choice_logVolume_eq :=
+        fullLabelAudit.translated_full_label_choice_logVolume_eq t choice,
+      action_absolute_label_eq :=
+        fullLabelAudit.action_absolute_label_eq t choice,
+      action_equalityQuotientMap_eq :=
+        fullLabelAudit.action_equalityQuotientMap_eq t choice,
+      equalityQuotient_no_ind3_generator :=
+        flAudit.equalityQuotient_no_ind3_generator }
+
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
 set_option linter.style.longLine false in
