@@ -14040,6 +14040,52 @@ theorem fiberTransport_directSummandSymmetry
   (sourceData.fiberTransport_ind2ActionPacketSymmetry transport).toDirectSummandSymmetry
 
 set_option linter.style.longLine false in
+/--
+Build the concrete post-procession `(Ind2)` step from the typed `(Ind2)` action
+packet source.
+
+This is the source-facing fiber step used in Theorem 3.11: after the canonical
+`F_l` procession shift aligns the finite label, the local tensor comparison is
+not supplied as an opaque structured step.  It is reconstructed from the typed
+nonarchimedean `Ism`/archimedean order-two packet symmetry, together with the
+procession and upper-semi transports carried by the same theta-pilot fiber.
+-/
+theorem fiberTransport_ind2AfterProcession
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource
+        record indData)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂)
+      choice₂ :=
+  IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep.ofTypedLocalTransports
+    (by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.hodgeTheater_eq)
+    (by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.historyLabel_eq)
+    (ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource.fiberTransport_processionShifted_coordinate_eq
+      (l := l) transport)
+    (sourceData.fiberTransport_processionTransport transport)
+    ((sourceData.fiberTransport_directSummandSymmetry transport).directSummandCount_eq)
+    (sourceData.fiberTransport_upperSemiTransport transport)
+    (by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.coric_eq)
+
+set_option linter.style.longLine false in
 /-- Forget typed `(Ind2)` action data to the direct-summand action source. -/
 def toFiberDirectSummandActionPacketSource
     (sourceData :
