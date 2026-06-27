@@ -22791,6 +22791,25 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395SelectedQHullLogVolume
         tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
     let hullCompatibility := quotientSource.toHullCompatibility hullOperator;
     Nonempty sourceData.PostProcessionInd2ActionPacketTransportSourceAudit ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₁ =
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).local_tensor_state.directSummandCount =
+            choice₂.local_tensor_state.directSummandCount) ∧
       OneSidedSelectedQHullLogVolumeAudit
         quotientSource.toConstruction constructedSource hullCompatibility rfl ∧
       constructedSource.qPilotRegion =
@@ -22826,6 +22845,9 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395SelectedQHullLogVolume
   let transportAudit := sourceData.postProcessionInd2ActionPacketTransportSourceAudit
   exact
     ⟨⟨transportAudit⟩,
+      transportAudit.typed_core_transport_audit.fiberTransport_logVolume_eq,
+      transportAudit.typed_core_transport_audit.equalityQuotient_no_ind3_generator,
+      transportAudit.direct_summand_count_eq,
       selectedEndpoint.1,
       selectedEndpoint.2.1,
       selectedEndpoint.2.2.2.1,
@@ -22914,6 +22936,25 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395ConstructedGlobalCThet
         ob3ob4Source compatibility measure_eq_hullLogVolume
         tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
     Nonempty sourceData.PostProcessionInd2ActionPacketTransportSourceAudit ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₁ =
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).local_tensor_state.directSummandCount =
+            choice₂.local_tensor_state.directSummandCount) ∧
       constructedSource.qPilotRegion =
         (quotientSource.quotientImages.region
           ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
@@ -22954,6 +22995,9 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395ConstructedGlobalCThet
   let transportAudit := sourceData.postProcessionInd2ActionPacketTransportSourceAudit
   exact
     ⟨⟨transportAudit⟩,
+      transportAudit.typed_core_transport_audit.fiberTransport_logVolume_eq,
+      transportAudit.typed_core_transport_audit.equalityQuotient_no_ind3_generator,
+      transportAudit.direct_summand_count_eq,
       globalEndpoint.2.1,
       by
         intro choice₁ choice₂ transport
