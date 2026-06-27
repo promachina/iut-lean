@@ -9555,8 +9555,15 @@ uses representatives and a same-lattice-key image law to reconstruct the
 lattice formula internally.  The typed fiber-transport source replaces this
 same-key law by a transport relation preserving the Hodge theater, history
 label, label-forgotten lattice coordinate, and coric datum.  The
-equality-quotient source lowers the assumption further: it no longer assumes
-fiber-region equality, but derives it from membership in the
+choice-space layer now proves that this transport relation is equivalent to
+equality of the concrete theta-pilot class:
+\texttt{thetaPilotClass\_eq\_iff\_latticeKey\_eq} gives the key-level
+characterization, while
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport.}\\
+\texttt{iff\_thetaPilotClass\_eq} identifies fiber transport with class
+equality.  Thus the same-key and same-class formulations are no longer parallel
+payloads.  The equality-quotient source lowers the assumption further: it no
+longer assumes fiber-region equality, but derives it from membership in the
 \((\Ind_1,\Ind_2)\) equality orbit and the quotient pullback theorem.
 
 The newest boundary is

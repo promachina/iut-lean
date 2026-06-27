@@ -12220,6 +12220,38 @@ def ofLatticeKeyEq
     thetaPilotLatticeCoordinate_eq := hlattice,
     coric_eq := hcoric }
 
+set_option linter.style.longLine false in
+def ofThetaPilotClassEq
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hclass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂) :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport choice₁ choice₂ :=
+  { hodgeTheater_eq :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.hodgeTheater_eq_of_thetaPilotClass_eq
+        hclass,
+    historyLabel_eq :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.historyLabel_eq_of_thetaPilotClass_eq
+        hclass,
+    thetaPilotLatticeCoordinate_eq :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate_eq_of_thetaPilotClass_eq
+        hclass,
+    coric_eq :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.coric_eq_of_thetaPilotClass_eq
+        hclass }
+
+set_option linter.style.longLine false in
+theorem iff_thetaPilotClass_eq
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l} :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ↔
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂ :=
+  ⟨fun transport => transport.thetaPilotClass_eq,
+    fun hclass => ofThetaPilotClassEq (l := l) hclass⟩
+
 end ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
 
 set_option linter.style.longLine false in
@@ -12304,6 +12336,13 @@ theorem endpoint
             record.thetaPossibleImages.images.region choice₂) ∧
       (∀ {choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         choice₁.hodgeTheater = choice₂.hodgeTheater ->
           choice₁.historyLabel = choice₂.historyLabel ->
             IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
@@ -12321,6 +12360,12 @@ theorem endpoint
       intro choice₁ choice₂ transport
       exact transport.thetaPilotClass_eq,
     sourceData.fiberTransport_region_eq,
+    by
+      intro choice₁ choice₂ hclass
+      exact
+        sourceData.fiberTransport_region_eq
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport.ofThetaPilotClassEq
+            (l := l) hclass),
     latticeEndpoint.2.2.2.2.1,
     latticeEndpoint.2.2.1⟩
 
@@ -12459,7 +12504,7 @@ theorem endpoint
     sourceData.fiberTransport_mem_equalityOrbit,
     sourceData.fiberTransport_equalityQuotientMap_eq,
     sourceData.fiberTransport_region_eq,
-    fiberEndpoint.2.2.2.2⟩
+    fiberEndpoint.2.2.2.2.2⟩
 
 end ConcreteHodgeTheaterLogThetaThetaPilotFiberEqualityQuotientSource
 
@@ -16233,8 +16278,8 @@ theorem ofFiberTransportSource_endpoint
   let quotientEndpoint := quotientSource.endpoint
   exact
     ⟨sourceData.fiberTransport_region_eq,
-      sourceEndpoint.2.2.2.1,
-      sourceEndpoint.2.2.2.2,
+      sourceEndpoint.2.2.2.2.1,
+      sourceEndpoint.2.2.2.2.2,
       quotientSource.pullback_region_eq,
       quotientSource.selectedQRegion_eq_suppliedQuotientImage,
       quotientEndpoint.2.2.2.2.2.2.2,

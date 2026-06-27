@@ -653,6 +653,55 @@ theorem thetaPilotClass_eq_of_latticeKey_eq
   subst coric2
   rfl
 
+theorem hodgeTheater_eq_of_thetaPilotClass_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hclass : thetaPilotClass choice₁ = thetaPilotClass choice₂) :
+    choice₁.hodgeTheater = choice₂.hodgeTheater := by
+  simpa [thetaPilotClass] using
+    congrArg ThetaPilotClass.hodgeTheater hclass
+
+theorem historyLabel_eq_of_thetaPilotClass_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hclass : thetaPilotClass choice₁ = thetaPilotClass choice₂) :
+    choice₁.historyLabel = choice₂.historyLabel := by
+  simpa [thetaPilotClass] using
+    congrArg ThetaPilotClass.historyLabel hclass
+
+theorem thetaPilotLatticeCoordinate_eq_of_thetaPilotClass_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hclass : thetaPilotClass choice₁ = thetaPilotClass choice₂) :
+    thetaPilotLatticeCoordinate choice₁ =
+      thetaPilotLatticeCoordinate choice₂ := by
+  simpa [thetaPilotClass_latticeCoordinate] using
+    congrArg ThetaPilotClass.latticeCoordinate hclass
+
+theorem coric_eq_of_thetaPilotClass_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hclass : thetaPilotClass choice₁ = thetaPilotClass choice₂) :
+    choice₁.coric = choice₂.coric := by
+  simpa [thetaPilotClass] using
+    congrArg ThetaPilotClass.coric hclass
+
+theorem thetaPilotClass_eq_iff_latticeKey_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l} :
+    thetaPilotClass choice₁ = thetaPilotClass choice₂ ↔
+      choice₁.hodgeTheater = choice₂.hodgeTheater ∧
+        choice₁.historyLabel = choice₂.historyLabel ∧
+          thetaPilotLatticeCoordinate choice₁ =
+            thetaPilotLatticeCoordinate choice₂ ∧
+            choice₁.coric = choice₂.coric := by
+  constructor
+  · intro hclass
+    exact
+      ⟨hodgeTheater_eq_of_thetaPilotClass_eq hclass,
+        historyLabel_eq_of_thetaPilotClass_eq hclass,
+        thetaPilotLatticeCoordinate_eq_of_thetaPilotClass_eq hclass,
+        coric_eq_of_thetaPilotClass_eq hclass⟩
+  · rintro ⟨hhodge, hhistory, hlattice, hcoric⟩
+    exact
+      thetaPilotClass_eq_of_latticeKey_eq
+        hhodge hhistory hlattice hcoric
+
 theorem thetaPilotClass_flProcessionTranslate
     (t : ZMod l.value)
     (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
