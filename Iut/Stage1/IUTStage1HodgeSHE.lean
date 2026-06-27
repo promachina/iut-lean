@@ -1667,6 +1667,212 @@ theorem audit
 
 end IUTStage1ColumnLogKummerRealifiedLogShellDivisorFamilySource
 
+set_option linter.style.longLine false in
+/--
+Compatible-copy column log-Kummer divisor source.
+
+This lowers `IUTStage1ColumnLogKummerRealifiedLogShellDivisorFamilySource` by
+using the ordinary/theta/log-shell compatible copies of IUT I, Example 3.5 at
+each vertical column.  The source realizes the ordinary divisor copy in the
+column Frobenioid/log-Kummer compatibility and supplies only the object-level
+labelled log-link identity; Lean derives the log-shell realization,
+normalized-Frobenius witnesses, and full local-object identity.
+-/
+structure IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource
+    (π : Type u) [Fintype π] (l : PrimeGeFive) where
+  compatibility : IUTStage1ColumnFrobenioidLogKummerCompatibility
+  columnCopies : Int -> IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π
+  normalization : IUTStage1LogVolumeNormalization
+  baseColumn : Int
+  labelColumnShift : ZMod l.value -> Int
+  ordinary_realizes_compat :
+    ∀ m : Int,
+      (columnCopies m).ordinary.toDegreeObject =
+        compatibility.frobenioidObject m
+  label_logLink_object_eq_base :
+    ∀ label : ZMod l.value,
+      (columnCopies (baseColumn + labelColumnShift label)).logShell.base.object =
+        (columnCopies baseColumn).logShell.base.object
+
+namespace IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource
+
+variable {π : Type u} [Fintype π] {l : PrimeGeFive}
+
+def columnLogShell
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    IUTStage1LogShellRealifiedFrobenioidDivisorSource π :=
+  (source.columnCopies m).logShell
+
+def columnLocalObjectSource
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    IUTStage1RealifiedLogShellLocalObjectSource π :=
+  { logShell := source.columnLogShell m,
+    normalization := source.normalization }
+
+theorem columnLogShell_base_realified_eq_ordinary
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.columnLogShell m).base.realifiedLogVolume =
+      (source.columnCopies m).ordinary.realifiedLogVolume := by
+  rw [columnLogShell, (source.columnCopies m).logShell_base_eq]
+
+set_option linter.style.longLine false in
+theorem column_realizes_compat
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.columnLogShell m).base.toDegreeObject =
+      source.compatibility.frobenioidObject m := by
+  calc
+    (source.columnLogShell m).base.toDegreeObject =
+        (source.columnCopies m).ordinary.toDegreeObject := by
+      rw [columnLogShell, (source.columnCopies m).logShell_base_eq]
+    _ = source.compatibility.frobenioidObject m :=
+      source.ordinary_realizes_compat m
+
+theorem base_normalized
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l) :
+    (source.columnLogShell source.baseColumn).normalizedFrobeniusLogVolume =
+      1 :=
+  (source.columnCopies source.baseColumn).logShell_normalized
+
+theorem label_normalized
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l)
+    (label : ZMod l.value) :
+    (source.columnLogShell
+        (source.baseColumn + source.labelColumnShift label)).normalizedFrobeniusLogVolume =
+      1 :=
+  (source.columnCopies
+    (source.baseColumn + source.labelColumnShift label)).logShell_normalized
+
+set_option linter.style.longLine false in
+theorem label_logShellDivisorLogVolume_eq_base
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l)
+    (label : ZMod l.value) :
+    (source.columnLogShell
+        (source.baseColumn + source.labelColumnShift label)).logShellDivisorLogVolume =
+      (source.columnLogShell source.baseColumn).logShellDivisorLogVolume := by
+  calc
+    (source.columnLogShell
+        (source.baseColumn + source.labelColumnShift label)).logShellDivisorLogVolume =
+        (source.columnCopies
+          (source.baseColumn + source.labelColumnShift label)).ordinary.realifiedLogVolume :=
+      (source.columnCopies
+        (source.baseColumn + source.labelColumnShift label)).logShellLogVolume_eq_ordinary
+    _ =
+        ((source.columnCopies
+          (source.baseColumn + source.labelColumnShift label)).ordinary.toDegreeObject).realifiedLogVolume :=
+      rfl
+    _ =
+        (source.compatibility.frobenioidObject
+          (source.baseColumn + source.labelColumnShift label)).realifiedLogVolume := by
+      rw [source.ordinary_realizes_compat
+        (source.baseColumn + source.labelColumnShift label)]
+    _ = (source.compatibility.frobenioidObject source.baseColumn).realifiedLogVolume := by
+      simpa [add_comm] using
+        source.compatibility.translate_preserves_realifiedLogVolume
+          (source.labelColumnShift label) source.baseColumn
+    _ = ((source.columnCopies source.baseColumn).ordinary.toDegreeObject).realifiedLogVolume := by
+      rw [source.ordinary_realizes_compat source.baseColumn]
+    _ = (source.columnCopies source.baseColumn).ordinary.realifiedLogVolume :=
+      rfl
+    _ = (source.columnLogShell source.baseColumn).logShellDivisorLogVolume :=
+      (source.columnCopies source.baseColumn).logShellLogVolume_eq_ordinary.symm
+
+set_option linter.style.longLine false in
+theorem label_logLink_localObject_eq_base
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l)
+    (label : ZMod l.value) :
+    (source.columnLocalObjectSource
+        (source.baseColumn + source.labelColumnShift label)).toFiniteLocalLogVolumeObject.localObject =
+      (source.columnLocalObjectSource
+        source.baseColumn).toFiniteLocalLogVolumeObject.localObject := by
+  have hobject := source.label_logLink_object_eq_base label
+  have hvolume := source.label_logShellDivisorLogVolume_eq_base label
+  have hvolume' :
+      (source.columnCopies
+          (source.baseColumn + source.labelColumnShift label)).logShell.logShellDivisorLogVolume =
+        (source.columnCopies source.baseColumn).logShell.logShellDivisorLogVolume := by
+    simpa [columnLogShell] using hvolume
+  simp [columnLocalObjectSource, columnLogShell,
+    IUTStage1RealifiedLogShellLocalObjectSource.toFiniteLocalLogVolumeObject,
+    IUTStage1RealifiedLogShellLocalObjectSource.toLocalLogVolumeObject,
+    hobject, hvolume']
+
+set_option linter.style.longLine false in
+def toColumnLogKummerRealifiedLogShellDivisorFamilySource
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1ColumnLogKummerRealifiedLogShellDivisorFamilySource π l :=
+  { compatibility := source.compatibility,
+    columnLogShell := source.columnLogShell,
+    normalization := source.normalization,
+    baseColumn := source.baseColumn,
+    labelColumnShift := source.labelColumnShift,
+    column_realizes_compat := source.column_realizes_compat,
+    base_normalized := source.base_normalized,
+    label_normalized := source.label_normalized,
+    label_logLink_localObject_eq_base :=
+      source.label_logLink_localObject_eq_base }
+
+set_option linter.style.longLine false in
+def toRawColumnRealifiedLogShellDivisorFamilySource
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1RawColumnRealifiedLogShellDivisorFamilySource π l :=
+  source.toColumnLogKummerRealifiedLogShellDivisorFamilySource
+    |>.toRawColumnRealifiedLogShellDivisorFamilySource
+
+set_option linter.style.longLine false in
+/-- Audit endpoint for deriving the column log-Kummer divisor source from compatible copies. -/
+structure Audit
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l) :
+    Prop where
+  column_logKummer_audit :
+    IUTStage1ColumnLogKummerRealifiedLogShellDivisorFamilySource.Audit
+      source.toColumnLogKummerRealifiedLogShellDivisorFamilySource
+  ordinary_realizes_compat :
+    ∀ m : Int,
+      (source.columnCopies m).ordinary.toDegreeObject =
+        source.compatibility.frobenioidObject m
+  column_realizes_compat :
+    ∀ m : Int,
+      (source.columnLogShell m).base.toDegreeObject =
+        source.compatibility.frobenioidObject m
+  base_normalized :
+    (source.columnLogShell source.baseColumn).normalizedFrobeniusLogVolume = 1
+  label_normalized :
+    ∀ label : ZMod l.value,
+      (source.columnLogShell
+          (source.baseColumn + source.labelColumnShift label)).normalizedFrobeniusLogVolume =
+        1
+  label_logShellDivisorLogVolume_eq_base :
+    ∀ label : ZMod l.value,
+      (source.columnLogShell
+          (source.baseColumn + source.labelColumnShift label)).logShellDivisorLogVolume =
+        (source.columnLogShell source.baseColumn).logShellDivisorLogVolume
+  label_logLink_localObject_eq_base :
+    ∀ label : ZMod l.value,
+      (source.columnLocalObjectSource
+          (source.baseColumn + source.labelColumnShift label)).toFiniteLocalLogVolumeObject.localObject =
+        (source.columnLocalObjectSource
+          source.baseColumn).toFiniteLocalLogVolumeObject.localObject
+
+theorem audit
+    (source : IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l) :
+    Audit source :=
+  { column_logKummer_audit :=
+      source.toColumnLogKummerRealifiedLogShellDivisorFamilySource.audit,
+    ordinary_realizes_compat := source.ordinary_realizes_compat,
+    column_realizes_compat := source.column_realizes_compat,
+    base_normalized := source.base_normalized,
+    label_normalized := source.label_normalized,
+    label_logShellDivisorLogVolume_eq_base :=
+      source.label_logShellDivisorLogVolume_eq_base,
+    label_logLink_localObject_eq_base :=
+      source.label_logLink_localObject_eq_base }
+
+end IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource
+
 /--
 Container estimate for one capsule log-volume entry.
 
