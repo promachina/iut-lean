@@ -1030,6 +1030,139 @@ def Ind3UpperSemiStep.ofTypedUpperSemiTransport
         has_archimedean_surjections_eq :=
           upperSemiTransport.hasArchimedeanSurjections_eq } }
 
+set_option linter.style.longLine false in
+/--
+Source package for a concrete `(Ind1)` procession transport.
+
+This bundles the Hodge-theater/history/lattice equalities and the typed
+procession transport that previously appeared as separate arguments at the
+audit boundary.
+-/
+structure Ind1ProcessionTransportSource
+    (choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) : Prop where
+  hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
+  historyLabel_eq : choice₁.historyLabel = choice₂.historyLabel
+  column_eq : choice₁.coordinate.column = choice₂.coordinate.column
+  row_eq : choice₁.coordinate.row = choice₂.coordinate.row
+  logThetaColumn_eq :
+    choice₁.coordinate.logThetaColumn = choice₂.coordinate.logThetaColumn
+  coric_eq : choice₁.coric = choice₂.coric
+  processionTransport :
+    IUTStage1ProcessionState.ProcessionTransport
+      choice₁.procession_state choice₂.procession_state
+  local_tensor_eq :
+    choice₁.local_tensor_state = choice₂.local_tensor_state
+  upper_semi_eq :
+    choice₁.upper_semi_state = choice₂.upper_semi_state
+
+namespace Ind1ProcessionTransportSource
+
+set_option linter.style.longLine false in
+def toStep
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind1ProcessionTransportSource choice₁ choice₂) :
+    Ind1ProcessionStep choice₁ choice₂ :=
+  Ind1ProcessionStep.ofTypedProcessionTransport
+    source.hodgeTheater_eq source.historyLabel_eq source.column_eq
+    source.row_eq source.logThetaColumn_eq source.coric_eq
+    source.processionTransport source.local_tensor_eq source.upper_semi_eq
+
+theorem thetaPilotClass_eq
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind1ProcessionTransportSource choice₁ choice₂) :
+    thetaPilotClass choice₁ = thetaPilotClass choice₂ :=
+  ind1_thetaPilotClass_eq source.toStep
+
+end Ind1ProcessionTransportSource
+
+set_option linter.style.longLine false in
+/--
+Source package for a concrete `(Ind2)` local tensor transport.
+
+The theta-pilot coordinate is fixed, while the procession and upper-semi
+representatives are related by their typed transport records.  The direct
+summand count equality is the local tensor datum used by the existing typed
+`(Ind2)` action.
+-/
+structure Ind2LocalTensorTransportSource
+    (choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) : Prop where
+  hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
+  historyLabel_eq : choice₁.historyLabel = choice₂.historyLabel
+  coordinate_eq : choice₁.coordinate = choice₂.coordinate
+  processionTransport :
+    IUTStage1ProcessionState.ProcessionTransport
+      choice₁.procession_state choice₂.procession_state
+  direct_summand_count_eq :
+    choice₁.local_tensor_state.directSummandCount =
+      choice₂.local_tensor_state.directSummandCount
+  upperSemiTransport :
+    IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+      choice₁.upper_semi_state choice₂.upper_semi_state
+  coric_eq : choice₁.coric = choice₂.coric
+
+namespace Ind2LocalTensorTransportSource
+
+set_option linter.style.longLine false in
+def toStep
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind2LocalTensorTransportSource choice₁ choice₂) :
+    Ind2LocalTensorStep choice₁ choice₂ :=
+  Ind2LocalTensorStep.ofTypedLocalTransports
+    source.hodgeTheater_eq source.historyLabel_eq source.coordinate_eq
+    source.processionTransport source.direct_summand_count_eq
+    source.upperSemiTransport source.coric_eq
+
+theorem thetaPilotClass_eq
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind2LocalTensorTransportSource choice₁ choice₂) :
+    thetaPilotClass choice₁ = thetaPilotClass choice₂ :=
+  ind2_thetaPilotClass_eq source.toStep
+
+end Ind2LocalTensorTransportSource
+
+set_option linter.style.longLine false in
+/--
+Source package for a concrete `(Ind3)` upper-semi transport.
+
+This records the common column/Hodge-theater data and the typed upper-semi
+transport.  It constructs only the `(Ind3)` step; the log-volume statement
+remains the asymmetric upper-semi inequality supplied by `IndeterminacyData`.
+-/
+structure Ind3UpperSemiTransportSource
+    (choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) : Prop where
+  hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
+  column_eq : choice₁.coordinate.column = choice₂.coordinate.column
+  logThetaColumn_eq :
+    choice₁.coordinate.logThetaColumn = choice₂.coordinate.logThetaColumn
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_eq : choice₁.procession_state = choice₂.procession_state
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+  upperSemiTransport :
+    IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+      choice₁.upper_semi_state choice₂.upper_semi_state
+
+namespace Ind3UpperSemiTransportSource
+
+set_option linter.style.longLine false in
+def toStep
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind3UpperSemiTransportSource choice₁ choice₂) :
+    Ind3UpperSemiStep choice₁ choice₂ :=
+  Ind3UpperSemiStep.ofTypedUpperSemiTransport
+    source.hodgeTheater_eq source.column_eq source.logThetaColumn_eq
+    source.coric_eq source.procession_eq source.local_tensor_eq
+    source.upperSemiTransport
+
+end Ind3UpperSemiTransportSource
+
 /--
 Concrete Theorem 3.11 indeterminacy data on Hodge-theater/log-theta choices.
 
@@ -6462,6 +6595,95 @@ theorem typedInd3UpperSemiTransportAudit
       hodgeTheater_eq column_eq logThetaColumn_eq coric_eq
       procession_eq local_tensor_eq upperSemiTransport
   exact core.ind3UpperSemiStepAudit hstep
+
+set_option linter.style.longLine false in
+/--
+Record-based typed-source audit for a concrete `(Ind1)` procession transport.
+
+This is the source-facing form used by the concrete Theorem 3.11 layer: the
+transport source constructs the `(Ind1)` step, and the typed core supplies
+log-volume preservation, equality-quotient compatibility, and theta-pilot class
+invariance.
+-/
+theorem typedInd1ProcessionTransportSourceAudit
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionTransportSource
+        choice₁ choice₂) :
+    let core :=
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData;
+    core.ind1.step choice₁ choice₂ ∧
+      core.logVolume choice₁ = core.logVolume choice₂ ∧
+        core.equalityQuotientMap choice₁ = core.equalityQuotientMap choice₂ ∧
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂ := by
+  intro core
+  let hstep := source.toStep
+  exact
+    ⟨hstep,
+      core.ind1_preserves_logVolume hstep,
+      core.ind1_equalityQuotientMap_eq hstep,
+      source.thetaPilotClass_eq⟩
+
+set_option linter.style.longLine false in
+/--
+Record-based typed-source audit for a concrete `(Ind2)` local tensor transport.
+
+The source record builds the equality-side `(Ind2)` step from the fixed
+theta-pilot coordinate, typed procession/upper-semi transports, and the
+direct-summand count equality.  The typed core then derives the normalized
+log-volume equality and equality-quotient compatibility.
+-/
+theorem typedInd2LocalTensorTransportSourceAudit
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorTransportSource
+        choice₁ choice₂) :
+    let core :=
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData;
+    core.ind2.step choice₁ choice₂ ∧
+      core.logVolume choice₁ = core.logVolume choice₂ ∧
+        core.equalityQuotientMap choice₁ = core.equalityQuotientMap choice₂ ∧
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂ := by
+  intro core
+  let hstep := source.toStep
+  exact
+    ⟨hstep,
+      core.ind2_preserves_logVolume hstep,
+      core.ind2_equalityQuotientMap_eq hstep,
+      source.thetaPilotClass_eq⟩
+
+set_option linter.style.longLine false in
+/--
+Record-based typed-source audit for a concrete `(Ind3)` upper-semi transport.
+
+The source record constructs the `(Ind3)` step.  The resulting audit is
+intentionally asymmetric: it gives the one-sided log-volume inequality and
+certifies that this step is not an equality-quotient generator.
+-/
+theorem typedInd3UpperSemiTransportSourceAudit
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind3UpperSemiTransportSource
+        choice₁ choice₂) :
+    let core :=
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData;
+    Ind3UpperSemiStepAudit core choice₁ choice₂ := by
+  intro core
+  exact core.ind3UpperSemiStepAudit source.toStep
 
 end ConcreteHodgeTheaterLogTheta
 

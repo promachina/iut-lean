@@ -9726,6 +9726,14 @@ Theorem~3.11 core itself:
 generators, normalized-log-volume preservation, and equality-quotient
 identifications, while \texttt{typedInd3UpperSemiTransportAudit} produces only
 the one-sided upper-semi audit and the no-\((\Ind_3)\)-equality guard.  The
+same boundary now has record-based forms
+\texttt{Ind1ProcessionTransportSource},
+\texttt{Ind2LocalTensorTransportSource}, and
+\texttt{Ind3UpperSemiTransportSource}.  Their checked constructors build the
+three concrete indeterminacy steps before the typed core derives the
+equality/equality/upper-semi consequences.  Thus this layer no longer exposes a
+loose list of Hodge-theater, procession, tensor, and upper-semi hypotheses at
+the audit endpoint.  The
 Step~(xi) fiber source now composes these checks as
 \texttt{PostProcessionTypedCoreTransportAudit}: a theta-pilot fiber transport
 is first the canonical \(F_l\)-procession \((\Ind_1)\)-shift and then the
@@ -9737,8 +9745,9 @@ connected by a unique \(F_l\)-translation, and the Step~(xi) source exposes this
 as \texttt{fiberTransport\_existsUnique\_processionShift}.  Thus the whole
 fiber transport preserves typed-core log-volume and equality-quotient class,
 with the same evidence visible at the selected-\(q\) boundary.  The remaining
-source payload is now the construction of the typed procession, upper-semi, and
-\((\Ind_2)\) packet-transport records from the underlying Hodge-theater data.
+source payload is now lower: constructing these transport-source records from
+the underlying Hodge-theater arithmetic, log-theta lattice, and Frobenioid
+packet data.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
