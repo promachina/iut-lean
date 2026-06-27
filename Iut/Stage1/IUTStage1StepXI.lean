@@ -18770,6 +18770,140 @@ theorem oneSidedQuotientAudit
     selectedQRegion_subset_recordUnion :=
       construction.selectedQRegion_subset_recordUnion }
 
+namespace ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
+
+variable {coric : Type u}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable
+  {indData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+
+set_option linter.style.longLine false in
+/--
+Source-level quotient audit for the strict `(Ind2)` packet/action transport
+constructor.
+
+This is the quotient-stage counterpart of the later Remark 3.9.5 handoff
+audits: it keeps the retained procession and upper-semi transport payload next
+to the one-sided Theorem 3.11 quotient audit before any hull/determinant data is
+introduced.
+-/
+structure SourceLevelTransportQuotientAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    Prop where
+  postProcessionTransportAudit :
+    Nonempty sourceData.PostProcessionInd2ActionPacketTransportSourceAudit
+  lowerTransportPayload :
+    sourceData.LowerTransportPayload
+  sourceLevelInd2ActionPacketSource_nonempty :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+        Nonempty
+          (IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂).local_tensor_state
+            choice₂.local_tensor_state)
+  fiberTransport_logVolume_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₁ =
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₂
+  fiberTransport_equalityQuotientMap_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap choice₁ =
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap choice₂
+  oneSidedQuotientAudit :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := record) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    OneSidedQuotientAudit quotientSource.toConstruction
+  pullback_region_eq :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := record) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice
+  selectedQRegion_is_quotient_possibleImage :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := record) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    quotientSource.toConstruction.selectedQRegion =
+      quotientSource.quotientImages.region
+        ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap selectedQChoice)
+  selectedQRegion_subset_recordUnion :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := record) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    quotientSource.toConstruction.selectedQRegion.toSet ⊆
+      recordThetaPossibleImageUnion record
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityGenerators.ind3_step choice₁ choice₂ -> False
+
+set_option linter.style.longLine false in
+theorem sourceLevelTransportQuotientAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    SourceLevelTransportQuotientAudit
+      sourceData gluingTorsor selectedQChoice := by
+  let quotientSource :=
+    ofFiberInd2ActionPacketTransportSource
+      (record := record) (indData := indData)
+      sourceData gluingTorsor selectedQChoice
+  let endpoint :=
+    ofFiberInd2ActionPacketTransportSource_typedCoreTransportAudit
+      (record := record) (indData := indData)
+      sourceData gluingTorsor selectedQChoice
+  exact
+    { postProcessionTransportAudit := endpoint.1,
+      lowerTransportPayload := endpoint.2.1,
+      sourceLevelInd2ActionPacketSource_nonempty := endpoint.2.2.1,
+      fiberTransport_logVolume_eq := endpoint.2.2.2.1,
+      fiberTransport_equalityQuotientMap_eq := endpoint.2.2.2.2.1,
+      oneSidedQuotientAudit := quotientSource.toConstruction.oneSidedQuotientAudit,
+      pullback_region_eq := endpoint.2.2.2.2.2.1,
+      selectedQRegion_is_quotient_possibleImage := endpoint.2.2.2.2.2.2.1,
+      selectedQRegion_subset_recordUnion := endpoint.2.2.2.2.2.2.2.1,
+      equalityQuotient_no_ind3_generator := endpoint.2.2.2.2.2.2.2.2 }
+
+end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
+
 end IUTStage1Theorem311OneSidedMultiradialConstructionSource
 
 set_option linter.style.longLine false in
