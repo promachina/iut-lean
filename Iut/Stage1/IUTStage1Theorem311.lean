@@ -3222,6 +3222,42 @@ theorem toInd2ActionPacketSymmetry
   hstep.toTransportedPacketLabelStep.toInd2ActionPacketSymmetry
 
 set_option linter.style.longLine false in
+theorem nonemptyInd2ActionPacketSymmetrySource
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) :
+    Nonempty
+      (IUTStage1LocalTensorState.NonarchimedeanInd2ActionPacketSymmetrySource
+        audited₁.choice.local_tensor_state.packetState.tensorState
+        audited₂.choice.local_tensor_state.packetState.tensorState) := by
+  rcases hstep.action_step.matching_action_exists with
+    ⟨action, _hplace, _hentry, htargetCapsuleFamily⟩
+  exact ⟨
+    { sourcePacket := audited₁.choice.local_tensor_state,
+      targetPacket := audited₂.choice.local_tensor_state,
+      source_tensor_eq := rfl,
+      target_tensor_eq := rfl,
+      label_transport := hstep.label_transport,
+      action := action,
+      target_capsule_eq := htargetCapsuleFamily }⟩
+
+set_option linter.style.longLine false in
+theorem nonemptyInd2ActionPacketSymmetrySourceSum
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) :
+    Nonempty
+      (IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource
+        audited₁.choice.local_tensor_state.packetState.tensorState
+        audited₂.choice.local_tensor_state.packetState.tensorState) := by
+  rcases hstep.nonemptyInd2ActionPacketSymmetrySource with ⟨source⟩
+  exact ⟨Sum.inl source⟩
+
+set_option linter.style.longLine false in
 /--
 Audit package for the source-derived nonarchimedean `(Ind2)` label transport.
 
@@ -3300,6 +3336,47 @@ def ind2ActionPacketAudit
       direct_summand_symmetry := directSymmetry,
       direct_summand_count_eq := directSymmetry.directSummandCount_eq }
 
+set_option linter.style.longLine false in
+/--
+Audit package retaining the source-level nonarchimedean `(Ind2)` packet/action
+object produced by a label-transport step.
+-/
+structure SourceInd2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) :
+    Prop where
+  source_level_ind2_action_packet_nonempty :
+    Nonempty
+      (IUTStage1LocalTensorState.NonarchimedeanInd2ActionPacketSymmetrySource
+        audited₁.choice.local_tensor_state.packetState.tensorState
+        audited₂.choice.local_tensor_state.packetState.tensorState)
+  projected_ind2_action_packet_symmetry :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  projected_direct_summand_count_eq :
+    audited₁.choice.local_tensor_state.packetState.tensorState.directSummandCount =
+      audited₂.choice.local_tensor_state.packetState.tensorState.directSummandCount
+
+set_option linter.style.longLine false in
+def sourceInd2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) :
+    SourceInd2ActionPacketAudit hstep :=
+  let projectedAudit := hstep.ind2ActionPacketAudit
+  { source_level_ind2_action_packet_nonempty :=
+      hstep.nonemptyInd2ActionPacketSymmetrySource,
+    projected_ind2_action_packet_symmetry :=
+      projectedAudit.ind2_action_packet_symmetry,
+    projected_direct_summand_count_eq :=
+      projectedAudit.direct_summand_count_eq }
+
 end NonarchimedeanIsmActionEntryLabelTransportStep
 
 namespace ArchimedeanOrderTwoActionEntryLabelTransportStep
@@ -3348,6 +3425,42 @@ theorem toInd2ActionPacketSymmetry
       audited₁.choice.local_tensor_state.packetState.tensorState
       audited₂.choice.local_tensor_state.packetState.tensorState :=
   hstep.toTransportedPacketLabelStep.toInd2ActionPacketSymmetry
+
+set_option linter.style.longLine false in
+theorem nonemptyInd2ActionPacketSymmetrySource
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) :
+    Nonempty
+      (IUTStage1LocalTensorState.ArchimedeanInd2ActionPacketSymmetrySource
+        audited₁.choice.local_tensor_state.packetState.tensorState
+        audited₂.choice.local_tensor_state.packetState.tensorState) := by
+  rcases hstep.action_step.matching_action_exists with
+    ⟨action, _hplace, _hentry, htargetCapsuleFamily⟩
+  exact ⟨
+    { sourcePacket := audited₁.choice.local_tensor_state,
+      targetPacket := audited₂.choice.local_tensor_state,
+      source_tensor_eq := rfl,
+      target_tensor_eq := rfl,
+      label_transport := hstep.label_transport,
+      action := action,
+      target_capsule_eq := htargetCapsuleFamily }⟩
+
+set_option linter.style.longLine false in
+theorem nonemptyInd2ActionPacketSymmetrySourceSum
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) :
+    Nonempty
+      (IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource
+        audited₁.choice.local_tensor_state.packetState.tensorState
+        audited₂.choice.local_tensor_state.packetState.tensorState) := by
+  rcases hstep.nonemptyInd2ActionPacketSymmetrySource with ⟨source⟩
+  exact ⟨Sum.inr source⟩
 
 set_option linter.style.longLine false in
 /--
@@ -3428,7 +3541,325 @@ def ind2ActionPacketAudit
       direct_summand_symmetry := directSymmetry,
       direct_summand_count_eq := directSymmetry.directSummandCount_eq }
 
+set_option linter.style.longLine false in
+/--
+Audit package retaining the source-level archimedean `(Ind2)` packet/action
+object produced by a label-transport step.
+-/
+structure SourceInd2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) :
+    Prop where
+  source_level_ind2_action_packet_nonempty :
+    Nonempty
+      (IUTStage1LocalTensorState.ArchimedeanInd2ActionPacketSymmetrySource
+        audited₁.choice.local_tensor_state.packetState.tensorState
+        audited₂.choice.local_tensor_state.packetState.tensorState)
+  projected_ind2_action_packet_symmetry :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  projected_direct_summand_count_eq :
+    audited₁.choice.local_tensor_state.packetState.tensorState.directSummandCount =
+      audited₂.choice.local_tensor_state.packetState.tensorState.directSummandCount
+
+set_option linter.style.longLine false in
+def sourceInd2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) :
+    SourceInd2ActionPacketAudit hstep :=
+  let projectedAudit := hstep.ind2ActionPacketAudit
+  { source_level_ind2_action_packet_nonempty :=
+      hstep.nonemptyInd2ActionPacketSymmetrySource,
+    projected_ind2_action_packet_symmetry :=
+      projectedAudit.ind2_action_packet_symmetry,
+    projected_direct_summand_count_eq :=
+      projectedAudit.direct_summand_count_eq }
+
 end ArchimedeanOrderTwoActionEntryLabelTransportStep
+
+set_option linter.style.longLine false in
+/--
+Nonarchimedean action-entry step with the matching `Ism` action retained as
+data.
+
+This is lower than `NonarchimedeanIsmActionEntryStep`: the latter stores the
+matching action behind a propositional existential, which is enough for projected
+proofs but not enough to construct source-level packet/action data.  This source
+step keeps the action itself and derives the older step by forgetting it.
+-/
+structure NonarchimedeanIsmActionEntrySourceStep
+    (audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) where
+  action_entry : IUTStage1NonarchimedeanIsmActionEntry
+  action_entry_mem :
+    action_entry ∈
+      audited₁.placeFamilyCompatibility.ind2Actions.nonarchimedeanActions
+  source_step : NonarchimedeanIsmInd2Step audited₁ audited₂
+  matching_action :
+    IUTStage1NonarchimedeanIsmDirectSummandAction
+      audited₁.choice.local_tensor_state.summandFamily
+  matching_action_place : matching_action.place = action_entry.place
+  matching_action_transformedFamily_eq_entry :
+    matching_action.toDirectSummandAction.toCapsuleAction.transformedFamily =
+      action_entry.toDirectSummandAction.toCapsuleAction.transformedFamily
+  target_capsule_eq :
+    audited₂.choice.local_tensor_state.packetState.capsuleFamily =
+      matching_action.toDirectSummandAction.toCapsuleAction.transformedFamily
+
+namespace NonarchimedeanIsmActionEntrySourceStep
+
+set_option linter.style.longLine false in
+def toActionEntryStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (source :
+      NonarchimedeanIsmActionEntrySourceStep audited₁ audited₂) :
+    NonarchimedeanIsmActionEntryStep audited₁ audited₂ :=
+  { action_entry := source.action_entry,
+    action_entry_mem := source.action_entry_mem,
+    source_step := source.source_step,
+    matching_action_exists :=
+      ⟨source.matching_action, source.matching_action_place,
+        source.matching_action_transformedFamily_eq_entry,
+        source.target_capsule_eq⟩ }
+
+end NonarchimedeanIsmActionEntrySourceStep
+
+set_option linter.style.longLine false in
+/--
+Archimedean action-entry step with the matching order-two action retained as
+data.
+-/
+structure ArchimedeanOrderTwoActionEntrySourceStep
+    (audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean) where
+  action_entry : IUTStage1ArchimedeanOrderTwoActionEntry
+  action_entry_mem :
+    action_entry ∈
+      audited₁.placeFamilyCompatibility.ind2Actions.archimedeanActions
+  source_step : ArchimedeanOrderTwoInd2Step audited₁ audited₂
+  matching_action :
+    IUTStage1ArchimedeanOrderTwoDirectSummandAction
+      audited₁.choice.local_tensor_state.summandFamily
+  matching_action_place : matching_action.place = action_entry.place
+  matching_action_transformedFamily_eq_entry :
+    matching_action.toDirectSummandAction.toCapsuleAction.transformedFamily =
+      action_entry.toDirectSummandAction.toCapsuleAction.transformedFamily
+  target_capsule_eq :
+    audited₂.choice.local_tensor_state.packetState.capsuleFamily =
+      matching_action.toDirectSummandAction.toCapsuleAction.transformedFamily
+
+namespace ArchimedeanOrderTwoActionEntrySourceStep
+
+set_option linter.style.longLine false in
+def toActionEntryStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (source :
+      ArchimedeanOrderTwoActionEntrySourceStep audited₁ audited₂) :
+    ArchimedeanOrderTwoActionEntryStep audited₁ audited₂ :=
+  { action_entry := source.action_entry,
+    action_entry_mem := source.action_entry_mem,
+    source_step := source.source_step,
+    matching_action_exists :=
+      ⟨source.matching_action, source.matching_action_place,
+        source.matching_action_transformedFamily_eq_entry,
+        source.target_capsule_eq⟩ }
+
+end ArchimedeanOrderTwoActionEntrySourceStep
+
+set_option linter.style.longLine false in
+/--
+Nonarchimedean label-transport step with the matching action retained as data.
+-/
+structure NonarchimedeanIsmActionEntryLabelTransportSourceStep
+    (audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean) where
+  action_source_step :
+    NonarchimedeanIsmActionEntrySourceStep audited₁ audited₂
+  label_transport :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource
+      audited₁.choice.local_tensor_state
+      audited₂.choice.local_tensor_state
+
+namespace NonarchimedeanIsmActionEntryLabelTransportSourceStep
+
+set_option linter.style.longLine false in
+def toLabelTransportStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (source :
+      NonarchimedeanIsmActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂ :=
+  { action_step := source.action_source_step.toActionEntryStep,
+    label_transport := source.label_transport }
+
+set_option linter.style.longLine false in
+def toInd2ActionPacketSymmetrySource
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (source :
+      NonarchimedeanIsmActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    IUTStage1LocalTensorState.NonarchimedeanInd2ActionPacketSymmetrySource
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState :=
+  { sourcePacket := audited₁.choice.local_tensor_state,
+    targetPacket := audited₂.choice.local_tensor_state,
+    source_tensor_eq := rfl,
+    target_tensor_eq := rfl,
+    label_transport := source.label_transport,
+    action := source.action_source_step.matching_action,
+    target_capsule_eq := source.action_source_step.target_capsule_eq }
+
+set_option linter.style.longLine false in
+def toInd2ActionPacketSymmetrySourceSum
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (source :
+      NonarchimedeanIsmActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState :=
+  Sum.inl source.toInd2ActionPacketSymmetrySource
+
+set_option linter.style.longLine false in
+structure SourceInd2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (source :
+      NonarchimedeanIsmActionEntryLabelTransportSourceStep audited₁ audited₂) where
+  source_level_ind2_action_packet :
+    IUTStage1LocalTensorState.NonarchimedeanInd2ActionPacketSymmetrySource
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  source_level_audit :
+    IUTStage1LocalTensorState.NonarchimedeanInd2ActionPacketSymmetrySource.Audit
+      source_level_ind2_action_packet
+  projected_label_transport_audit :
+    source.toLabelTransportStep.SourceInd2ActionPacketAudit
+
+set_option linter.style.longLine false in
+def sourceInd2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (source :
+      NonarchimedeanIsmActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    SourceInd2ActionPacketAudit source :=
+  let sourceLevel := source.toInd2ActionPacketSymmetrySource
+  { source_level_ind2_action_packet := sourceLevel,
+    source_level_audit := sourceLevel.audit,
+    projected_label_transport_audit :=
+      source.toLabelTransportStep.sourceInd2ActionPacketAudit }
+
+end NonarchimedeanIsmActionEntryLabelTransportSourceStep
+
+set_option linter.style.longLine false in
+/--
+Archimedean label-transport step with the matching action retained as data.
+-/
+structure ArchimedeanOrderTwoActionEntryLabelTransportSourceStep
+    (audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean) where
+  action_source_step :
+    ArchimedeanOrderTwoActionEntrySourceStep audited₁ audited₂
+  label_transport :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource
+      audited₁.choice.local_tensor_state
+      audited₂.choice.local_tensor_state
+
+namespace ArchimedeanOrderTwoActionEntryLabelTransportSourceStep
+
+set_option linter.style.longLine false in
+def toLabelTransportStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (source :
+      ArchimedeanOrderTwoActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂ :=
+  { action_step := source.action_source_step.toActionEntryStep,
+    label_transport := source.label_transport }
+
+set_option linter.style.longLine false in
+def toInd2ActionPacketSymmetrySource
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (source :
+      ArchimedeanOrderTwoActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    IUTStage1LocalTensorState.ArchimedeanInd2ActionPacketSymmetrySource
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState :=
+  { sourcePacket := audited₁.choice.local_tensor_state,
+    targetPacket := audited₂.choice.local_tensor_state,
+    source_tensor_eq := rfl,
+    target_tensor_eq := rfl,
+    label_transport := source.label_transport,
+    action := source.action_source_step.matching_action,
+    target_capsule_eq := source.action_source_step.target_capsule_eq }
+
+set_option linter.style.longLine false in
+def toInd2ActionPacketSymmetrySourceSum
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (source :
+      ArchimedeanOrderTwoActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState :=
+  Sum.inr source.toInd2ActionPacketSymmetrySource
+
+set_option linter.style.longLine false in
+structure SourceInd2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (source :
+      ArchimedeanOrderTwoActionEntryLabelTransportSourceStep audited₁ audited₂) where
+  source_level_ind2_action_packet :
+    IUTStage1LocalTensorState.ArchimedeanInd2ActionPacketSymmetrySource
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  source_level_audit :
+    IUTStage1LocalTensorState.ArchimedeanInd2ActionPacketSymmetrySource.Audit
+      source_level_ind2_action_packet
+  projected_label_transport_audit :
+    source.toLabelTransportStep.SourceInd2ActionPacketAudit
+
+set_option linter.style.longLine false in
+def sourceInd2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (source :
+      ArchimedeanOrderTwoActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    SourceInd2ActionPacketAudit source :=
+  let sourceLevel := source.toInd2ActionPacketSymmetrySource
+  { source_level_ind2_action_packet := sourceLevel,
+    source_level_audit := sourceLevel.audit,
+    projected_label_transport_audit :=
+      source.toLabelTransportStep.sourceInd2ActionPacketAudit }
+
+end ArchimedeanOrderTwoActionEntryLabelTransportSourceStep
 
 def nonarchimedeanEntrySymmetry_toNonarchimedeanEntryStep
     {audited₁ audited₂ :

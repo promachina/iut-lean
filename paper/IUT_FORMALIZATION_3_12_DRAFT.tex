@@ -9715,8 +9715,13 @@ target-kind assumptions.  The local tensor layer now retains this same datum in
 packet states, one \texttt{SymmetryLabelTransportSource}, and an \(\mathrm{Ism}\)
 direct-summand action; the archimedean case is the order-two analogue.  Its
 projection derives the old \texttt{Ind2ActionPacketSymmetry}, the generic
-direct-summand action-packet symmetry, and the summand-count equality.  Step~(xi)
-uses this stricter source as
+direct-summand action-packet symmetry, and the summand-count equality.  The
+place-audited action-entry layer now separates proof-only and data-carrying
+forms: the older label-transport step, whose matching action is stored behind a
+propositional existential, proves nonemptiness of this source object, while the
+new nonarchimedean and archimedean label-transport source steps retain the
+matching action as data and construct the source-level packet/action object
+directly.  Step~(xi) uses this stricter source as
 \texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource},
 then forgets it to the previous typed action-packet source before entering the
 selected-\(q\) quotient constructor.  The possible-image layer now packages the next step as a quotient
