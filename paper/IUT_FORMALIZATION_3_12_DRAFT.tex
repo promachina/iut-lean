@@ -3366,6 +3366,20 @@ exact \(\Xi(P_B)\)-family, and then recover the same quotient collapse and
 log-volume comparison.  Thus this part of the corridor now records the
 specific mathematical equality needed to make \(\phi(P_B)\) exact, instead of
 treating the whole \(\Xi(P_B)\)-family as primitive.
+The same boundary has now been lowered to the concrete Hodge-theater/log-theta
+quotient source.  The declaration
+\[
+\begin{array}{l}
+\texttt{concreteHodgeTheaterLogThetaConcreteCalibratedExactXi}\\
+\quad\texttt{SelectedQRemark395GlobalCThetaAudit}
+\end{array}
+\]
+constructs the exact \(\Xi(P_B)\)-source from the typed quotient
+possible-image family and a single source-local calibration
+\(\mu_{\log}(\phi(P_B))=\mu_{\log}(P_B)\).  Hence the remaining analytic
+payload is no longer a primitive exact-\(\Xi\) family; it is precisely the
+paper-side proof of this calibration for the selected quotient possible-image
+union.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
