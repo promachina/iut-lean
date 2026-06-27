@@ -865,10 +865,17 @@ record equality; the source gives the component data--local object, divisor
 degree, and unit log-volume--and \Lean{} reconstructs the realified
 Frobenioid degree-object equality.  At the base-volume level, the \((\Ind3)\)
 comparison is stated at the column compatibility degree object, and \Lean{}
-derives the older ordinary-copy comparison.  The remaining payload is therefore
-sharper: construct these component equalities, the compatible-copy column, the
-labelled log-link object identity, and the \((\Ind3)\) source/target
-comparisons directly from the paper's vertical log-Kummer/log-link geometry.
+derives the older ordinary-copy comparison.  This has now been sharpened by
+\texttt{LocalObjectDegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource}.
+The labelled log-link input is no longer merely the equality of the underlying
+base objects; it is the equality of the finite local log-volume objects after
+the common log-shell normalization.  \Lean{} projects the older object equality
+from this local-object equality and threads the result through the same
+Theorem~3.11 and Step~(xi) constructors.  The remaining payload is therefore
+more specific: construct the component equalities, the compatible-copy column,
+the full labelled local-object log-link equality, and the \((\Ind3)\)
+source/target comparisons directly from the paper's vertical
+log-Kummer/log-link geometry.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
