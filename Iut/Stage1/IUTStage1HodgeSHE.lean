@@ -4341,6 +4341,64 @@ theorem directSummandCount_eq
     state₁.directSummandCount = state₂.directSummandCount :=
   source.toDirectSummandSymmetry.directSummandCount_eq
 
+set_option linter.style.longLine false in
+/--
+Audit for the source-level `(Ind2)` action-packet sum.
+
+The sum keeps the two paper-side cases separate: a nonarchimedean `Ism`
+source or an archimedean order-two source.  The audit records the branch-level
+source audit and the projected consequences consumed by the Step (xi)
+transport corridor.
+-/
+structure Audit
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : Ind2ActionPacketSymmetrySource state₁ state₂) : Prop where
+  branch_audit :
+    (∃ nonarchSource :
+        NonarchimedeanInd2ActionPacketSymmetrySource state₁ state₂,
+      source = Sum.inl nonarchSource ∧
+        NonarchimedeanInd2ActionPacketSymmetrySource.Audit nonarchSource) ∨
+    (∃ archSource :
+        ArchimedeanInd2ActionPacketSymmetrySource state₁ state₂,
+      source = Sum.inr archSource ∧
+        ArchimedeanInd2ActionPacketSymmetrySource.Audit archSource)
+  ind2_action_packet_symmetry : Ind2ActionPacketSymmetry state₁ state₂
+  direct_summand_action_packet_symmetry :
+    DirectSummandActionPacketSymmetry state₁ state₂
+  direct_summand_symmetry : DirectSummandSymmetry state₁ state₂
+  direct_summand_count_eq : state₁.directSummandCount = state₂.directSummandCount
+
+set_option linter.style.longLine false in
+theorem audit
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : Ind2ActionPacketSymmetrySource state₁ state₂) :
+    Audit source := by
+  cases source with
+  | inl nonarchSource =>
+      let branchAudit := nonarchSource.audit
+      exact
+        { branch_audit := Or.inl ⟨nonarchSource, rfl, branchAudit⟩,
+          ind2_action_packet_symmetry :=
+            branchAudit.ind2_action_packet_symmetry,
+          direct_summand_action_packet_symmetry :=
+            branchAudit.direct_summand_action_packet_symmetry,
+          direct_summand_symmetry :=
+            branchAudit.direct_summand_symmetry,
+          direct_summand_count_eq :=
+            branchAudit.direct_summand_count_eq }
+  | inr archSource =>
+      let branchAudit := archSource.audit
+      exact
+        { branch_audit := Or.inr ⟨archSource, rfl, branchAudit⟩,
+          ind2_action_packet_symmetry :=
+            branchAudit.ind2_action_packet_symmetry,
+          direct_summand_action_packet_symmetry :=
+            branchAudit.direct_summand_action_packet_symmetry,
+          direct_summand_symmetry :=
+            branchAudit.direct_summand_symmetry,
+          direct_summand_count_eq :=
+            branchAudit.direct_summand_count_eq }
+
 end Ind2ActionPacketSymmetrySource
 
 end IUTStage1LocalTensorState
