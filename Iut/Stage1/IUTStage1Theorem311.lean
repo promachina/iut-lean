@@ -2390,6 +2390,319 @@ theorem audit :
 
 end ProcessionNormalizedVerticalLogKummerPacketAlignmentSource
 
+set_option linter.style.longLine false in
+/--
+Classified packet-local-object source for the vertical log-Kummer upper-semi
+comparison.
+
+This is one level below `ProcessionNormalizedVerticalLogKummerPacketAlignmentSource`.
+Instead of assuming that the finite procession average is already the packet
+normalized log-volume, it identifies the average with the packet local object's
+finite log-volume and then uses a classified packet-normalization proof to pass
+to the normalized capsule log-volume.  The `(Ind3)` source/target alignments are
+also stated at the local-object finite log-volume level.
+-/
+structure ProcessionNormalizedVerticalLogKummerClassifiedPacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) where
+  labelAverage :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value)
+  packetState :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l ->
+      IUTStage1LocalTensorPacketLogVolumeState
+        IUTStage1PlaceKind.nonarchimedean
+  packet_tensor_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (packetState choice).tensorState = choice.local_tensor_state
+  packet_normalization :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility
+        (packetState choice)
+  average_eq_packetLocalObject :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (labelAverage (thetaPilotClass choice)).averageLogVolume =
+        (packetState choice).localObject.finiteLogVolume
+  ind3_source_localObject_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (packetState choice₁).localObject.finiteLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_localObject_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (packetState choice₂).localObject.finiteLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace ProcessionNormalizedVerticalLogKummerClassifiedPacketLocalObjectSource
+
+variable
+  (source :
+    ProcessionNormalizedVerticalLogKummerClassifiedPacketLocalObjectSource
+      coric l)
+
+set_option linter.style.longLine false in
+theorem average_eq_packetNormalized
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.labelAverage (thetaPilotClass choice)).averageLogVolume =
+      (source.packetState choice).capsuleFamily.normalizedLogVolume := by
+  calc
+    (source.labelAverage (thetaPilotClass choice)).averageLogVolume =
+        (source.packetState choice).localObject.finiteLogVolume :=
+      source.average_eq_packetLocalObject choice
+    _ = (source.packetState choice).capsuleFamily.normalizedLogVolume :=
+      IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.localObject_finiteLogVolume_eq_normalizedLogVolume
+        (source.packet_normalization choice)
+
+set_option linter.style.longLine false in
+theorem ind3_source_packet_eq_upperSemiSource
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    (source.packetState choice₁).capsuleFamily.normalizedLogVolume =
+      choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
+  calc
+    (source.packetState choice₁).capsuleFamily.normalizedLogVolume =
+        (source.packetState choice₁).localObject.finiteLogVolume :=
+      (IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.localObject_finiteLogVolume_eq_normalizedLogVolume
+        (source.packet_normalization choice₁)).symm
+    _ = choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+      source.ind3_source_localObject_eq_upperSemiSource hstep
+
+set_option linter.style.longLine false in
+theorem ind3_target_packet_eq_upperSemiTarget
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    (source.packetState choice₂).capsuleFamily.normalizedLogVolume =
+      choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  calc
+    (source.packetState choice₂).capsuleFamily.normalizedLogVolume =
+        (source.packetState choice₂).localObject.finiteLogVolume :=
+      (IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.localObject_finiteLogVolume_eq_normalizedLogVolume
+        (source.packet_normalization choice₂)).symm
+    _ = choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+      source.ind3_target_localObject_eq_upperSemiTarget hstep
+
+set_option linter.style.longLine false in
+/--
+Promote classified packet-local-object data to the packet-aligned source
+consumed by the typed Theorem 3.11 core.
+-/
+def toProcessionNormalizedVerticalLogKummerPacketAlignmentSource :
+    ProcessionNormalizedVerticalLogKummerPacketAlignmentSource coric l :=
+  { labelAverage := source.labelAverage,
+    packetState := source.packetState,
+    packet_tensor_eq := source.packet_tensor_eq,
+    average_eq_packetNormalized := by
+      intro choice
+      exact source.average_eq_packetNormalized choice,
+    ind3_source_packet_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_packet_eq_upperSemiSource hstep,
+    ind3_target_packet_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_packet_eq_upperSemiTarget hstep }
+
+set_option linter.style.longLine false in
+/-- Forget to the upper-semi comparison source. -/
+def toProcessionNormalizedUpperSemiComparisonSource :
+    ProcessionNormalizedUpperSemiComparisonSource coric l :=
+  source.toProcessionNormalizedVerticalLogKummerPacketAlignmentSource.toProcessionNormalizedUpperSemiComparisonSource
+
+set_option linter.style.longLine false in
+/-- Forget further to the finite averaged source consumed by older wrappers. -/
+def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toProcessionNormalizedVerticalLogKummerPacketAlignmentSource.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+/--
+Audit for the classified packet-local-object source.  The main payload is the
+replacement of the raw packet-normalized equality by the local-object finite
+log-volume equality plus classified packet-normalization compatibility.
+-/
+structure Audit : Prop where
+  packet_alignment_audit :
+    ProcessionNormalizedVerticalLogKummerPacketAlignmentSource.Audit
+      source.toProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+  packet_tensor_alignment :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).tensorState = choice.local_tensor_state
+  packet_normalization_localObject_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).localObject.finiteLogVolume =
+        (source.packetState choice).capsuleFamily.normalizedLogVolume
+  packet_normalization_capsule_average :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).localObject.finiteLogVolume =
+        (source.packetState choice).capsuleFamily.totalLogVolume /
+          ((source.packetState choice).capsuleFamily.capsuleCount : Real)
+  average_eq_packet_localObject :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.labelAverage (thetaPilotClass choice)).averageLogVolume =
+        (source.packetState choice).localObject.finiteLogVolume
+  average_eq_packet_normalized :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.labelAverage (thetaPilotClass choice)).averageLogVolume =
+        (source.packetState choice).capsuleFamily.normalizedLogVolume
+  ind3_source_localObject_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.packetState choice₁).localObject.finiteLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_localObject_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.packetState choice₂).localObject.finiteLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+  ind3_average_le :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.labelAverage (thetaPilotClass choice₁)).averageLogVolume <=
+          (source.labelAverage (thetaPilotClass choice₂)).averageLogVolume
+
+set_option linter.style.longLine false in
+theorem audit :
+    Audit source :=
+  { packet_alignment_audit :=
+      source.toProcessionNormalizedVerticalLogKummerPacketAlignmentSource.audit,
+    packet_tensor_alignment := by
+      intro choice
+      exact source.packet_tensor_eq choice,
+    packet_normalization_localObject_eq := by
+      intro choice
+      exact
+        IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.localObject_finiteLogVolume_eq_normalizedLogVolume
+          (source.packet_normalization choice),
+    packet_normalization_capsule_average := by
+      intro choice
+      exact
+        IUTStage1ClassifiedLocalTensorPacketNormalizedCompatibility.normalizedLogVolume_eq_capsuleAverage
+          (source.packet_normalization choice),
+    average_eq_packet_localObject := by
+      intro choice
+      exact source.average_eq_packetLocalObject choice,
+    average_eq_packet_normalized := by
+      intro choice
+      exact source.average_eq_packetNormalized choice,
+    ind3_source_localObject_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_localObject_eq_upperSemiSource hstep,
+    ind3_target_localObject_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_localObject_eq_upperSemiTarget hstep,
+    ind3_average_le := by
+      intro choice₁ choice₂ hstep
+      exact
+        source.toProcessionNormalizedUpperSemiComparisonSource.ind3_upper_semi_average
+          hstep }
+
+end ProcessionNormalizedVerticalLogKummerClassifiedPacketLocalObjectSource
+
+set_option linter.style.longLine false in
+/--
+Direct packet-local-object source.  This is the concrete finite-capsule-average
+variant of the classified source: for each nonarchimedean packet, it supplies the
+direct packet-normalization datum whose capsule-sum average identifies the local
+object finite log-volume.
+-/
+structure ProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) where
+  labelAverage :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value)
+  packetState :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l ->
+      IUTStage1LocalTensorPacketLogVolumeState
+        IUTStage1PlaceKind.nonarchimedean
+  packet_tensor_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (packetState choice).tensorState = choice.local_tensor_state
+  direct_packet_normalization :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      IUTStage1DirectPacketNormalizationData (packetState choice)
+  average_eq_packetLocalObject :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (labelAverage (thetaPilotClass choice)).averageLogVolume =
+        (packetState choice).localObject.finiteLogVolume
+  ind3_source_localObject_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (packetState choice₁).localObject.finiteLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_localObject_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (packetState choice₂).localObject.finiteLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace ProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource
+
+variable
+  (source :
+    ProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource
+      coric l)
+
+set_option linter.style.longLine false in
+/-- Promote direct finite-capsule packet-normalization data to the classified source. -/
+def toClassifiedPacketLocalObjectSource :
+    ProcessionNormalizedVerticalLogKummerClassifiedPacketLocalObjectSource
+      coric l :=
+  { labelAverage := source.labelAverage,
+    packetState := source.packetState,
+    packet_tensor_eq := source.packet_tensor_eq,
+    packet_normalization := by
+      intro choice
+      exact
+        (source.direct_packet_normalization choice).toClassifiedPacketNormalizedCompatibility,
+    average_eq_packetLocalObject := source.average_eq_packetLocalObject,
+    ind3_source_localObject_eq_upperSemiSource :=
+      source.ind3_source_localObject_eq_upperSemiSource,
+    ind3_target_localObject_eq_upperSemiTarget :=
+      source.ind3_target_localObject_eq_upperSemiTarget }
+
+set_option linter.style.longLine false in
+def toProcessionNormalizedVerticalLogKummerPacketAlignmentSource :
+    ProcessionNormalizedVerticalLogKummerPacketAlignmentSource coric l :=
+  source.toClassifiedPacketLocalObjectSource.toProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+
+def toProcessionNormalizedUpperSemiComparisonSource :
+    ProcessionNormalizedUpperSemiComparisonSource coric l :=
+  source.toClassifiedPacketLocalObjectSource.toProcessionNormalizedUpperSemiComparisonSource
+
+def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toClassifiedPacketLocalObjectSource.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+/-- Audit for the direct finite-capsule packet-local-object source. -/
+structure Audit : Prop where
+  classified_audit :
+    ProcessionNormalizedVerticalLogKummerClassifiedPacketLocalObjectSource.Audit
+      source.toClassifiedPacketLocalObjectSource
+  capsule_average_localObject :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).localObject.finiteLogVolume =
+        (source.packetState choice).capsuleFamily.totalLogVolume /
+          ((source.packetState choice).capsuleFamily.capsuleCount : Real)
+  average_eq_packet_normalized :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.labelAverage (thetaPilotClass choice)).averageLogVolume =
+        (source.packetState choice).capsuleFamily.normalizedLogVolume
+
+theorem audit :
+    Audit source :=
+  { classified_audit := source.toClassifiedPacketLocalObjectSource.audit,
+    capsule_average_localObject := by
+      intro choice
+      exact
+        (source.direct_packet_normalization choice).localObject_finiteLogVolume_eq_capsuleAverage,
+    average_eq_packet_normalized := by
+      intro choice
+      exact
+        source.toClassifiedPacketLocalObjectSource.average_eq_packetNormalized
+          choice }
+
+end ProcessionNormalizedVerticalLogKummerDirectPacketLocalObjectSource
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable
