@@ -399,6 +399,74 @@ theorem toLabelAveraged_averageLogVolume
     data.toLabelAveraged.averageLogVolume = data.normalizedLogVolume :=
   rfl
 
+set_option linter.style.longLine false in
+/--
+Reindex a paper-side `ZMod l` labelled capsule family as the typed finite
+capsule family used by packet-local tensor states.
+
+The finite index type is `Fin (Fintype.card (ZMod l.value))`; the capsules are
+read through `Fintype.equivFin`.  The normalized log-volume is kept unchanged,
+and the total-as-sum law is transported by finite reindexing.
+-/
+noncomputable def toTypedCapsuleFamily
+    (data : IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind) :
+    IUTStage1TypedCapsuleFamilyLogVolume kind :=
+  { localObject := data.localObject,
+    capsuleCount := Fintype.card (ZMod l.value),
+    positive_capsule_count := by
+      rw [ZMod.card]
+      exact Nat.pos_of_ne_zero l.ne_zero,
+    capsule := fun i =>
+      data.capsule ((Fintype.equivFin (ZMod l.value)).symm i),
+    capsule_local_object_eq := by
+      intro i
+      exact data.capsule_local_object_eq
+        ((Fintype.equivFin (ZMod l.value)).symm i),
+    totalLogVolume := data.totalLogVolume,
+    total_eq_sum := by
+      calc
+        data.totalLogVolume =
+            Finset.univ.sum fun j : ZMod l.value => (data.capsule j).logVolume :=
+          data.total_eq_sum
+        _ =
+            Finset.univ.sum fun i : Fin (Fintype.card (ZMod l.value)) =>
+              (data.capsule ((Fintype.equivFin (ZMod l.value)).symm i)).logVolume :=
+          Fintype.sum_equiv
+            (Fintype.equivFin (ZMod l.value))
+            (fun j : ZMod l.value => (data.capsule j).logVolume)
+            (fun i : Fin (Fintype.card (ZMod l.value)) =>
+              (data.capsule ((Fintype.equivFin (ZMod l.value)).symm i)).logVolume)
+            (by
+              intro j
+              simp),
+    normalizedLogVolume := data.normalizedLogVolume,
+    normalized_eq_average := by
+      calc
+        data.normalizedLogVolume =
+            data.totalLogVolume / (l.value : Real) :=
+          data.normalized_eq_average
+        _ =
+            data.totalLogVolume /
+              (Fintype.card (ZMod l.value) : Real) := by
+          rw [ZMod.card] }
+
+theorem toTypedCapsuleFamily_localObject
+    (data : IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind) :
+    data.toTypedCapsuleFamily.localObject = data.localObject :=
+  rfl
+
+theorem toTypedCapsuleFamily_capsuleCount
+    (data : IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind) :
+    data.toTypedCapsuleFamily.capsuleCount =
+      Fintype.card (ZMod l.value) :=
+  rfl
+
+theorem toTypedCapsuleFamily_normalizedLogVolume
+    (data : IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind) :
+    data.toTypedCapsuleFamily.normalizedLogVolume =
+      data.normalizedLogVolume :=
+  rfl
+
 def constantFromLocalObject
     (localObject : IUTStage1FiniteLocalLogVolumeObject kind) :
     IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind :=
@@ -1430,6 +1498,54 @@ structure IUTStage1LocalTensorPacketLogVolumeState
     tensorState.directSummandCount = capsuleFamily.capsuleCount
   capsule_family_localObject_eq :
     capsuleFamily.localObject = localObject
+
+namespace IUTStage1ZModLabelledCapsuleFamilyLogVolume
+
+variable {l : PrimeGeFive} {kind : IUTStage1PlaceKind}
+
+set_option linter.style.longLine false in
+/--
+Construct the packet-local log-volume state whose typed capsule family is the
+finite reindexing of a paper-side `ZMod l` procession family.
+-/
+noncomputable def toLocalTensorPacketLogVolumeState
+    (data : IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind)
+    (tensorState : IUTStage1LocalTensorState)
+    (direct_summand_count_eq_zmodCard :
+      tensorState.directSummandCount = Fintype.card (ZMod l.value)) :
+    IUTStage1LocalTensorPacketLogVolumeState kind :=
+  { tensorState := tensorState,
+    localObject := data.localObject,
+    capsuleFamily := data.toTypedCapsuleFamily,
+    direct_summand_count_eq_capsuleCount := by
+      simpa [toTypedCapsuleFamily] using direct_summand_count_eq_zmodCard,
+    capsule_family_localObject_eq := rfl }
+
+theorem toLocalTensorPacketLogVolumeState_tensorState
+    (data : IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind)
+    (tensorState : IUTStage1LocalTensorState)
+    (hcount : tensorState.directSummandCount = Fintype.card (ZMod l.value)) :
+    (data.toLocalTensorPacketLogVolumeState tensorState hcount).tensorState =
+      tensorState :=
+  rfl
+
+theorem toLocalTensorPacketLogVolumeState_normalizedLogVolume
+    (data : IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind)
+    (tensorState : IUTStage1LocalTensorState)
+    (hcount : tensorState.directSummandCount = Fintype.card (ZMod l.value)) :
+    (data.toLocalTensorPacketLogVolumeState tensorState hcount).capsuleFamily.normalizedLogVolume =
+      data.normalizedLogVolume :=
+  rfl
+
+theorem toLocalTensorPacketLogVolumeState_localObject
+    (data : IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind)
+    (tensorState : IUTStage1LocalTensorState)
+    (hcount : tensorState.directSummandCount = Fintype.card (ZMod l.value)) :
+    (data.toLocalTensorPacketLogVolumeState tensorState hcount).localObject =
+      data.localObject :=
+  rfl
+
+end IUTStage1ZModLabelledCapsuleFamilyLogVolume
 
 /--
 Local tensor-packet state that also carries the direct summand family

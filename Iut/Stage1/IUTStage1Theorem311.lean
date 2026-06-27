@@ -3840,6 +3840,182 @@ theorem audit :
 
 end LogThetaLabelProcessionVerticalLogKummerZModCapsulePacketLocalObjectSource
 
+set_option linter.style.longLine false in
+/--
+Constructed `ZMod l` capsule packet-local source.
+
+This lowers
+`LogThetaLabelProcessionVerticalLogKummerZModCapsulePacketLocalObjectSource`
+by constructing the typed packet state from the `ZMod l` capsule family itself.
+The packet capsule family is the finite reindexing of the `ZMod l` family, so
+the packet local-object and normalized-log-volume alignments are no longer
+source fields.
+-/
+structure LogThetaLabelProcessionVerticalLogKummerConstructedZModCapsulePacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) where
+  zmodCapsuleFamily :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean
+  direct_summand_count_eq_zmodCard :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
+  ind3_source_zmodNormalized_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (zmodCapsuleFamily (thetaPilotClass choice₁)).normalizedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_zmodNormalized_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (zmodCapsuleFamily (thetaPilotClass choice₂)).normalizedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace LogThetaLabelProcessionVerticalLogKummerConstructedZModCapsulePacketLocalObjectSource
+
+variable
+  (source :
+    LogThetaLabelProcessionVerticalLogKummerConstructedZModCapsulePacketLocalObjectSource
+      coric l)
+
+set_option linter.style.longLine false in
+/-- The packet-local state obtained by reindexing the `ZMod l` capsule family. -/
+noncomputable def packetState
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1LocalTensorPacketLogVolumeState
+      IUTStage1PlaceKind.nonarchimedean :=
+  (source.zmodCapsuleFamily (thetaPilotClass choice)).toLocalTensorPacketLogVolumeState
+    choice.local_tensor_state
+    (source.direct_summand_count_eq_zmodCard choice)
+
+theorem packet_tensor_eq
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.packetState choice).tensorState = choice.local_tensor_state :=
+  rfl
+
+theorem zmod_localObject_eq_packetLocalObject
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.zmodCapsuleFamily (thetaPilotClass choice)).localObject =
+      (source.packetState choice).localObject :=
+  rfl
+
+theorem packet_capsuleFamily_eq_zmodReindexing
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.packetState choice).capsuleFamily =
+      (source.zmodCapsuleFamily (thetaPilotClass choice)).toTypedCapsuleFamily :=
+  rfl
+
+theorem packet_normalizedLogVolume_eq_zmodNormalized
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.packetState choice).capsuleFamily.normalizedLogVolume =
+      (source.zmodCapsuleFamily (thetaPilotClass choice)).normalizedLogVolume :=
+  rfl
+
+set_option linter.style.longLine false in
+/-- Promote the constructed packet state to the previous `ZMod l` capsule source. -/
+noncomputable def toZModCapsulePacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerZModCapsulePacketLocalObjectSource
+      coric l :=
+  { zmodCapsuleFamily := source.zmodCapsuleFamily,
+    packetState := source.packetState,
+    packet_tensor_eq := by
+      intro choice
+      exact source.packet_tensor_eq choice,
+    zmod_localObject_eq_packetLocalObject := by
+      intro choice
+      exact source.zmod_localObject_eq_packetLocalObject choice,
+    packet_normalizedLogVolume_eq_zmodNormalized := by
+      intro choice
+      exact source.packet_normalizedLogVolume_eq_zmodNormalized choice,
+    ind3_source_zmodNormalized_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_zmodNormalized_eq_upperSemiSource hstep,
+    ind3_target_zmodNormalized_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_zmodNormalized_eq_upperSemiTarget hstep }
+
+set_option linter.style.longLine false in
+/-- Forget to the label-wise capsule packet source. -/
+noncomputable def toCapsulePacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerCapsulePacketLocalObjectSource
+      coric l :=
+  source.toZModCapsulePacketLocalObjectSource.toCapsulePacketLocalObjectSource
+
+set_option linter.style.longLine false in
+/-- Forget to the finite averaged source consumed by older wrappers. -/
+noncomputable def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toZModCapsulePacketLocalObjectSource.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+/--
+Audit for the constructed packet boundary.  The packet family is definitionally
+the finite reindexing of the source `ZMod l` capsule family.
+-/
+structure Audit : Prop where
+  zmod_packet_source_audit :
+    LogThetaLabelProcessionVerticalLogKummerZModCapsulePacketLocalObjectSource.Audit
+      source.toZModCapsulePacketLocalObjectSource
+  zmod_cardinality : Fintype.card (ZMod l.value) = l.value
+  direct_summand_count_eq_zmodCard :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
+  packet_tensor_alignment :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).tensorState = choice.local_tensor_state
+  packet_capsuleFamily_is_zmod_reindexing :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).capsuleFamily =
+        (source.zmodCapsuleFamily (thetaPilotClass choice)).toTypedCapsuleFamily
+  packet_normalized_defeq_zmod :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).capsuleFamily.normalizedLogVolume =
+        (source.zmodCapsuleFamily (thetaPilotClass choice)).normalizedLogVolume
+  zmod_localObject_defeq_packet :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.zmodCapsuleFamily (thetaPilotClass choice)).localObject =
+        (source.packetState choice).localObject
+  ind3_source_zmodNormalized_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.zmodCapsuleFamily (thetaPilotClass choice₁)).normalizedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_zmodNormalized_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.zmodCapsuleFamily (thetaPilotClass choice₂)).normalizedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+set_option linter.style.longLine false in
+theorem audit :
+    Audit source :=
+  { zmod_packet_source_audit :=
+      source.toZModCapsulePacketLocalObjectSource.audit,
+    zmod_cardinality := ZMod.card l.value,
+    direct_summand_count_eq_zmodCard := by
+      intro choice
+      exact source.direct_summand_count_eq_zmodCard choice,
+    packet_tensor_alignment := by
+      intro choice
+      exact source.packet_tensor_eq choice,
+    packet_capsuleFamily_is_zmod_reindexing := by
+      intro choice
+      exact source.packet_capsuleFamily_eq_zmodReindexing choice,
+    packet_normalized_defeq_zmod := by
+      intro choice
+      exact source.packet_normalizedLogVolume_eq_zmodNormalized choice,
+    zmod_localObject_defeq_packet := by
+      intro choice
+      exact source.zmod_localObject_eq_packetLocalObject choice,
+    ind3_source_zmodNormalized_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_zmodNormalized_eq_upperSemiSource hstep,
+    ind3_target_zmodNormalized_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_zmodNormalized_eq_upperSemiTarget hstep }
+
+end LogThetaLabelProcessionVerticalLogKummerConstructedZModCapsulePacketLocalObjectSource
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable
