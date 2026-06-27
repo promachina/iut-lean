@@ -9663,7 +9663,11 @@ to the generic packet-action interface, derives the capsule-index equivalence,
 and then reconstructs the direct-summand symmetry required by the \((\Ind_2)\)
 step.  It now also reconstructs the post-procession concrete \((\Ind_2)\)
 step itself from the typed packet symmetry, the procession transport, and the
-upper-semi transport.  At the place-audited boundary, the action-entry steps
+upper-semi transport.  This reconstruction is now exposed as
+\texttt{PostProcessionInd2ActionPacketAudit}, and the
+\texttt{ofFiberInd2ActionPacketSource} quotient constructor carries the same
+audit together with the selected quotient q-region and the no-\((\Ind_3)\)
+equality guard.  At the place-audited boundary, the action-entry steps
 now project to this typed packet symmetry through explicit local tensor symmetry-label
 certificates.  The matching action, target capsule family, and equality of the
 two local tensor symmetry labels are no longer separate generic inputs.  The

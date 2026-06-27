@@ -14176,6 +14176,118 @@ theorem fiberTransport_ind2AfterProcession
         using transport.coric_eq)
 
 set_option linter.style.longLine false in
+/--
+Audit for the typed `(Ind2)` action-packet boundary after the canonical
+`F_l` procession shift.
+
+This is the concrete Theorem 3.11 local-tensor step: a theta-pilot fiber
+transport first shifts the source choice by the unique procession label
+difference, then the typed nonarchimedean `Ism`/archimedean order-two packet
+symmetry, procession transport, and upper-semi transport reconstruct the
+post-procession `(Ind2)` local tensor step.  `(Ind3)` remains excluded from the
+equality quotient.
+-/
+structure PostProcessionInd2ActionPacketAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource
+        record indData) : Prop where
+  quotient_pullback :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      sourceData.quotientImages.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice
+  typed_ind2_action_packet_symmetry :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).local_tensor_state
+          choice₂.local_tensor_state
+  direct_summand_action_packet_symmetry :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        IUTStage1LocalTensorState.DirectSummandActionPacketSymmetry
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).local_tensor_state
+          choice₂.local_tensor_state
+  direct_summand_count_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂) ->
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).local_tensor_state.directSummandCount =
+          choice₂.local_tensor_state.directSummandCount
+  procession_transport :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        IUTStage1ProcessionState.ProcessionTransport
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).procession_state
+          choice₂.procession_state
+  upperSemi_transport :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).upper_semi_state
+          choice₂.upper_semi_state
+  post_procession_ind2_step :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂)
+          choice₂
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityGenerators.ind3_step choice₁ choice₂ ->
+        False
+
+set_option linter.style.longLine false in
+theorem postProcessionInd2ActionPacketAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource
+        record indData) :
+    PostProcessionInd2ActionPacketAudit sourceData :=
+  { quotient_pullback :=
+      sourceData.quotientImages.pullback_region_eq,
+    typed_ind2_action_packet_symmetry :=
+      sourceData.fiberTransport_ind2ActionPacketSymmetry,
+    direct_summand_action_packet_symmetry :=
+      sourceData.fiberTransport_directSummandActionPacketSymmetry,
+    direct_summand_count_eq := by
+      intro choice₁ choice₂ transport
+      exact
+        (sourceData.fiberTransport_directSummandSymmetry
+          transport).directSummandCount_eq,
+    procession_transport :=
+      sourceData.fiberTransport_processionTransport,
+    upperSemi_transport :=
+      sourceData.fiberTransport_upperSemiTransport,
+    post_procession_ind2_step :=
+      sourceData.fiberTransport_ind2AfterProcession,
+    equalityQuotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityGenerators_ind3_false hstep }
+
+set_option linter.style.longLine false in
 /-- Forget typed `(Ind2)` action data to the direct-summand action source. -/
 def toFiberDirectSummandActionPacketSource
     (sourceData :
@@ -16700,6 +16812,61 @@ theorem ofFiberInd2ActionPacketSource_endpoint
         exact
           (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
             indData).equalityGenerators_ind3_false hstep⟩
+
+set_option linter.style.longLine false in
+/--
+Constructor endpoint for the typed `(Ind2)` action-packet source with the
+post-procession local tensor audit exposed.
+
+The quotient source is built from the same concrete data as
+`ofFiberInd2ActionPacketSource_endpoint`, but the returned evidence keeps the
+post-procession `(Ind2)` local tensor reconstruction visible next to the
+selected quotient q-region and the no-`(Ind3)` equality guard.
+-/
+theorem ofFiberInd2ActionPacketSource_postProcessionAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let quotientSource :=
+      ofFiberInd2ActionPacketSource
+        (record := record) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    sourceData.PostProcessionInd2ActionPacketAudit ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        quotientSource.quotientImages.region
+            ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                indData).equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂) choice₂) ∧
+      quotientSource.toConstruction.selectedQRegion =
+        quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice) ∧
+      quotientSource.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) := by
+  intro quotientSource
+  let actionAudit := sourceData.postProcessionInd2ActionPacketAudit
+  exact
+    ⟨actionAudit,
+      quotientSource.pullback_region_eq,
+      actionAudit.post_procession_ind2_step,
+      quotientSource.selectedQRegion_eq_suppliedQuotientImage,
+      quotientSource.toConstruction.selectedQRegion_subset_recordUnion,
+      actionAudit.equalityQuotient_no_ind3_generator⟩
 
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
