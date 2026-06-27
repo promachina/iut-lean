@@ -3770,6 +3770,33 @@ namespace IUTStage1DirectPacketNormalizationData
 variable {kind : IUTStage1PlaceKind}
 variable {state : IUTStage1LocalTensorPacketLogVolumeState kind}
 
+set_option linter.style.longLine false in
+/--
+Construct direct packet-normalization from the capsule-family average formula.
+
+This is the Proposition 3.9 packet-normalization handoff used downstream: the
+source proves the local object's finite log-volume is the uniform average of the
+typed capsule-family total, while the packet state already proves that this
+total is the finite sum over capsule log-volumes.
+-/
+def ofLocalObjectFiniteLogVolumeEqCapsuleAverage
+    (haverage :
+      state.localObject.finiteLogVolume =
+        state.capsuleFamily.totalLogVolume /
+          (state.capsuleFamily.capsuleCount : Real)) :
+    IUTStage1DirectPacketNormalizationData state :=
+  { localObject_finiteLogVolume_eq_capsuleSumAverage := by
+      calc
+        state.localObject.finiteLogVolume =
+            state.capsuleFamily.totalLogVolume /
+              (state.capsuleFamily.capsuleCount : Real) :=
+          haverage
+        _ =
+            (Finset.univ.sum fun i =>
+                (state.capsuleFamily.capsule i).logVolume) /
+              (state.capsuleFamily.capsuleCount : Real) := by
+          rw [state.capsule_totalLogVolume_eq_sum] }
+
 theorem localObject_finiteLogVolume_eq_capsuleAverage
     (data : IUTStage1DirectPacketNormalizationData state) :
     state.localObject.finiteLogVolume =
