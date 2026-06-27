@@ -3498,22 +3498,25 @@ For each valuation cell it chooses a theta-pilot class and a local place, and
 requires containment of the corresponding compact-open valuation-ball factor in
 the transported theta-class region.  Since \(H_\beta\) is the direct product of
 these local factors, \Lean{} derives the previous whole-cell containment.  The
-preferred boundary is now the pointwise local estimate source
-\texttt{ConcreteValuationBallThetaClassFiberTransportLocalThetaEstimateSource}.
-For the selected local place it requires a theta estimate on field elements,
+preferred boundary is now the local predicate source
+\texttt{ConcreteValuationBallThetaClassFiberTransportLocalThetaPredicateSource}.
+For the selected local place it identifies the transported theta region with
+the realization of a local predicate \(T_\beta(x)\), and requires the local
+estimate
 \[
   \|x\|_v\le r_\beta
   \quad\Longrightarrow\quad
-  \mathrm{realize}(x)\in P_{\Theta(\beta)} ,
+  T_\beta(x),
 \]
 where \(r_\beta\) is the compact-open radius chosen by the local Haar
-normalization.  \Lean{} uses
-\(\mathrm{realizedRegion}(S)=\mathrm{realization}(S)\) to recover the
-valuation-radius cover, then uses the valuation-ball audit
-\(\mathrm{compactOpenSubset}=\mathrm{valuationBall}(r_\beta)\) to recover the
-local-factor and direct-product cell covers.  Thus the remaining mathematical
-payload is the source-paper proof of this local theta estimate, together with
-the transported-region/valuation-region identification.
+normalization.  \Lean{} realizes this predicate region to recover the pointwise
+theta membership, then uses
+\(\mathrm{realizedRegion}(S)=\mathrm{realization}(S)\) and the valuation-ball
+audit \(\mathrm{compactOpenSubset}=\mathrm{valuationBall}(r_\beta)\) to recover
+the valuation-radius, local-factor, and direct-product cell covers.  Thus the
+remaining mathematical payload is the source-paper construction of the local
+theta predicate, the proof of the displayed valuation inequality, and the
+transported-region/valuation-region identification.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12095,7 +12098,7 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  the pointwise local theta estimates for selected valuation-radius balls,
+  the local theta predicates and valuation-radius inequalities,
   transported-region/valuation-region identification, Ob5/Ob7 compatibility, and the
   \(\theta_{\mathrm{signed}}\) log-volume identification.
 \item Instantiate the valuation-ball local analytic construction from actual
