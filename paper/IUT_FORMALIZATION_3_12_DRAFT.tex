@@ -3417,19 +3417,23 @@ once more to the theta-pilot class itself:
 valuation-cover index to the forgotten Hodge-theater/log-theta-lattice class,
 proves theta-class invariance across the generated \((\Ind1,\Ind2)\) equality
 relation, and derives the choice-indexed valuation source from representative
-choices in each theta class.  The remaining comparison datum is therefore no
-longer an arbitrary reindexing, but the source-paper fiber statement that the
-chosen representative of a theta class lies in the same allowed quotient as any
-choice of that class, plus pointwise equality between quotient possible regions
-and valuation-cover cells.  The selected-principal-hull equality has also been
-lowered: \texttt{ConcreteValuationBallSelectedPrincipalHullSource}
+choices in each theta class.  This has now been lowered to the fiber-backed
+source
+\texttt{ConcreteValuationBallThetaClassFiberBackedFamilyUnionSource}.  Its
+representative fiber relation is no longer supplied: \Lean{} builds the
+representative-to-choice relation as the canonical finite \((\Ind1)\)
+procession shift followed by the typed post-procession \((\Ind2)\) local
+tensor transport already present in the Theorem~3.11 source audit.  The
+valuation-indexing payload at this boundary is therefore only the pointwise
+equality between quotient possible regions and theta-class valuation cells.
+The selected-principal-hull equality has also been lowered:
+\texttt{ConcreteValuationBallSelectedPrincipalHullSource}
 requires the valuation-cover possible-image union to be a hull for its
 Remark~3.9.5 hull system, and \Lean{} combines this fixed-point statement with
 the principal-hull selection theorem to derive equality with the selected
 \(\lambda\cdot O\) hull.  The remaining mathematical payload at this boundary
-is the source-paper construction of the theta-class fiber relation, the
-pointwise valuation-region comparison, and the hull-fixedness statement from
-the nonarchimedean theta data.
+is the source-paper pointwise valuation-region comparison and the
+hull-fixedness statement from the nonarchimedean theta data.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12011,9 +12015,9 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  the source-paper theta-class fiber relation behind valuation indexing,
   valuation-region pointwise equality, valuation-union hull fixedness, Ob5/Ob7
-  compatibility, and the \(\theta_{\mathrm{signed}}\) log-volume identification.
+  compatibility, and the \(\theta_{\mathrm{signed}}\) log-volume
+  identification.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
