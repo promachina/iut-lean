@@ -206,9 +206,14 @@ upper-semi bound.  This has now been lowered once more: a vertical
 log-Kummer packet-alignment source inserts a typed nonarchimedean local tensor
 packet for each concrete choice, proves that the theta-pilot average is the
 packet-normalized log-volume, and then aligns the source and target packets
-with the upper-semi source and target coordinates.  The remaining mathematical
-payload is to construct these packet calibrations from the full vertical
-log-Kummer/log-link data throughout the public endpoint surface.
+with the upper-semi source and target coordinates.  This packet-aligned source
+now feeds the public one-sided Theorem~3.11 multiradial constructor: the typed
+core, quotient possible images, canonical \(F_l\)-procession action, selected
+q-region, and exclusion of \((\Ind3)\) from the equality quotient are all
+exported through the same endpoint used by the Remark~3.9.5 and \(C_\Theta\)
+corridor.  The remaining mathematical payload is to construct the packet
+calibrations themselves from the full vertical log-Kummer/log-link data, rather
+than taking them as boundary fields.
 The \(\IPL\) layer has been separated into a typed log-volume transport datum:
 it carries the source and target Hodge-theater sides, identifies the prime-strip
 link endpoints with the input and output prime strips, records equality of the
@@ -714,7 +719,18 @@ upper-semi target log-volume, and the inequality is then the
 datum.  The preferred source for this boundary is now one step lower: it
 identifies both averages with packet-normalized log-volumes of typed
 nonarchimedean local tensor packets before passing to the upper-semi
-coordinates.
+coordinates.  This is no longer an isolated typed-core source: the record
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaVerticalLogKummer}\\
+\quad\texttt{PacketAlignedSource}
+\end{array}
+\]
+combines the theta-pilot class image source, its pullback equality with the
+Theorem~3.11 record images, the packet-normalized vertical log-Kummer source,
+the \(F_l\)-gluing torsor, and the selected q-choice.  Its constructor enters
+the public one-sided multiradial source directly, so the selected q-region is
+already a quotient possible image at this packet-aligned boundary.
 The target-side packet calibration can now consume this labelled Step (x)
 average directly: the equality
 \(\theta_{\mathrm{avg}}=\mathrm{packetNormalized}\) is derived by composing
@@ -10321,6 +10337,18 @@ image, containment in the Theorem~3.11 possible-image union, the explicit
 absence of \((\Ind_3)\) generators from the equality quotient, and the separate
 \((\Ind_3)\) upper-semi log-volume inequality.  This is the compatibility
 object now exported by the preferred local-to-global \(C_\Theta\) audits.
+The same one-sided constructor now has a packet-normalized concrete entry:
+\[
+\begin{array}{l}
+\texttt{ofConcreteHodgeTheaterLogThetaVertical}\\
+\quad\texttt{LogKummerPacketAlignment}.
+\end{array}
+\]
+It constructs the public Theorem~3.11 source from theta-pilot class images and
+the vertical log-Kummer packet-aligned procession source, and its audit exposes
+the packet-normalized average equality together with the inherited selected
+q-region endpoint.  This is the current preferred bridge from the concrete
+Hodge-theater/log-theta-lattice layer into the Step~(xi) corridor.
 The next refinement removes the single opaque arithmetic-gap field from the
 preferred source surface.  The Lean structure
 \[
@@ -12203,12 +12231,11 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Push the packet-aligned
-  \texttt{ProcessionNormalizedVerticalLogKummerPacketAlignmentSource} through
-  the remaining public Theorem~3.11 endpoint wrappers, and construct its
-  packet-normalized source/target calibrations from the paper's vertical
-  log-Kummer/log-link comparison rather than accepting them as packet-boundary
-  fields.
+\item Construct the packet-normalized source/target calibrations of
+  \texttt{ProcessionNormalizedVerticalLogKummerPacketAlignmentSource} from the
+  paper's vertical log-Kummer/log-link comparison rather than accepting them as
+  packet-boundary fields.  The source already reaches the public one-sided
+  Theorem~3.11 constructor.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the
