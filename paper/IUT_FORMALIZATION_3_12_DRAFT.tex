@@ -3380,6 +3380,13 @@ possible-image family and a single source-local calibration
 payload is no longer a primitive exact-\(\Xi\) family; it is precisely the
 paper-side proof of this calibration for the selected quotient possible-image
 union.
+For the closed-family case this has been lowered once more.  The source
+\texttt{ConcreteClosedFamilyUnionExactXiSource} asks only that the concrete
+quotient possible-image union be closed for the Remark~3.9.5 hull operator;
+\Lean{} then proves \(\phi(P_B)=P_B\) by the hull fixing law and derives
+\(\mu_{\log}(\phi(P_B))=\mu_{\log}(P_B)\).  Thus the exactness obligation is
+now split into a closed-region route and the remaining non-closed analytic
+calibration route.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
