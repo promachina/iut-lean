@@ -3583,6 +3583,263 @@ theorem audit :
 
 end LogThetaLabelProcessionVerticalLogKummerCapsulePacketLocalObjectSource
 
+set_option linter.style.longLine false in
+/--
+`ZMod l`-labelled capsule source for the vertical log-Kummer packet boundary.
+
+This lowers `LogThetaLabelProcessionVerticalLogKummerCapsulePacketLocalObjectSource`
+by making the full `F_l` procession family explicit.  The source no longer
+supplies an arbitrary label-log-volume function or the average-to-local-object
+formula.  Instead it supplies, for each theta-pilot class, a
+`IUTStage1ZModLabelledCapsuleFamilyLogVolume`; Lean reads the label function
+from its capsules and derives the uniform `ZMod l` average, the packet
+local-object equality, and the old capsule-average packet source from the
+normalization and log-link alignments.
+-/
+structure LogThetaLabelProcessionVerticalLogKummerZModCapsulePacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) where
+  zmodCapsuleFamily :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1ZModLabelledCapsuleFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean
+  packetState :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l ->
+      IUTStage1LocalTensorPacketLogVolumeState
+        IUTStage1PlaceKind.nonarchimedean
+  packet_tensor_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (packetState choice).tensorState = choice.local_tensor_state
+  zmod_localObject_eq_packetLocalObject :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (zmodCapsuleFamily (thetaPilotClass choice)).localObject =
+        (packetState choice).localObject
+  packet_normalizedLogVolume_eq_zmodNormalized :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (packetState choice).capsuleFamily.normalizedLogVolume =
+        (zmodCapsuleFamily (thetaPilotClass choice)).normalizedLogVolume
+  ind3_source_zmodNormalized_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (zmodCapsuleFamily (thetaPilotClass choice₁)).normalizedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_zmodNormalized_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (zmodCapsuleFamily (thetaPilotClass choice₂)).normalizedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace LogThetaLabelProcessionVerticalLogKummerZModCapsulePacketLocalObjectSource
+
+variable
+  (source :
+    LogThetaLabelProcessionVerticalLogKummerZModCapsulePacketLocalObjectSource
+      coric l)
+
+/-- The label-wise log-volume read from the concrete `ZMod l` capsule family. -/
+def labelLogVolume
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (label : ZMod l.value) : Real :=
+  (source.zmodCapsuleFamily thetaClass).capsuleLogVolume label
+
+set_option linter.style.longLine false in
+theorem zmod_average_eq_packetLocalObject
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (Finset.univ.sum fun label : ZMod l.value =>
+      source.labelLogVolume (thetaPilotClass choice) label) / (l.value : Real) =
+        (source.packetState choice).localObject.finiteLogVolume := by
+  let zfamily := source.zmodCapsuleFamily (thetaPilotClass choice)
+  calc
+    (Finset.univ.sum fun label : ZMod l.value =>
+      source.labelLogVolume (thetaPilotClass choice) label) / (l.value : Real) =
+        zfamily.normalizedLogVolume := by
+      exact zfamily.normalized_eq_zmod_average.symm
+    _ = zfamily.localObject.finiteLogVolume :=
+      zfamily.normalizedLogVolume_eq_localObjectFinite
+    _ = (source.packetState choice).localObject.finiteLogVolume := by
+      rw [source.zmod_localObject_eq_packetLocalObject choice]
+
+set_option linter.style.longLine false in
+theorem localObject_finiteLogVolume_eq_capsuleAverage
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.packetState choice).localObject.finiteLogVolume =
+      (source.packetState choice).capsuleFamily.totalLogVolume /
+        ((source.packetState choice).capsuleFamily.capsuleCount : Real) := by
+  let zfamily := source.zmodCapsuleFamily (thetaPilotClass choice)
+  calc
+    (source.packetState choice).localObject.finiteLogVolume =
+        zfamily.localObject.finiteLogVolume := by
+      rw [source.zmod_localObject_eq_packetLocalObject choice]
+    _ = zfamily.normalizedLogVolume :=
+      zfamily.normalizedLogVolume_eq_localObjectFinite.symm
+    _ = (source.packetState choice).capsuleFamily.normalizedLogVolume :=
+      (source.packet_normalizedLogVolume_eq_zmodNormalized choice).symm
+    _ =
+        (source.packetState choice).capsuleFamily.totalLogVolume /
+          ((source.packetState choice).capsuleFamily.capsuleCount : Real) :=
+      (source.packetState choice).capsuleFamily.normalized_eq
+
+set_option linter.style.longLine false in
+theorem ind3_source_localObject_eq_upperSemiSource
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    (source.packetState choice₁).localObject.finiteLogVolume =
+      choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
+  let zfamily := source.zmodCapsuleFamily (thetaPilotClass choice₁)
+  calc
+    (source.packetState choice₁).localObject.finiteLogVolume =
+        zfamily.localObject.finiteLogVolume := by
+      rw [source.zmod_localObject_eq_packetLocalObject choice₁]
+    _ = zfamily.normalizedLogVolume :=
+      zfamily.normalizedLogVolume_eq_localObjectFinite.symm
+    _ = choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+      source.ind3_source_zmodNormalized_eq_upperSemiSource hstep
+
+set_option linter.style.longLine false in
+theorem ind3_target_localObject_eq_upperSemiTarget
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    (source.packetState choice₂).localObject.finiteLogVolume =
+      choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  let zfamily := source.zmodCapsuleFamily (thetaPilotClass choice₂)
+  calc
+    (source.packetState choice₂).localObject.finiteLogVolume =
+        zfamily.localObject.finiteLogVolume := by
+      rw [source.zmod_localObject_eq_packetLocalObject choice₂]
+    _ = zfamily.normalizedLogVolume :=
+      zfamily.normalizedLogVolume_eq_localObjectFinite.symm
+    _ = choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+      source.ind3_target_zmodNormalized_eq_upperSemiTarget hstep
+
+set_option linter.style.longLine false in
+/-- Promote the explicit `ZMod l` capsule source to the old capsule packet source. -/
+def toCapsulePacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerCapsulePacketLocalObjectSource
+      coric l :=
+  { labelLogVolume := source.labelLogVolume,
+    packetState := source.packetState,
+    packet_tensor_eq := source.packet_tensor_eq,
+    localObject_finiteLogVolume_eq_capsuleAverage := by
+      intro choice
+      exact source.localObject_finiteLogVolume_eq_capsuleAverage choice,
+    labelAverage_eq_packetLocalObject := by
+      intro choice
+      exact source.zmod_average_eq_packetLocalObject choice,
+    ind3_source_localObject_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_localObject_eq_upperSemiSource hstep,
+    ind3_target_localObject_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_localObject_eq_upperSemiTarget hstep }
+
+set_option linter.style.longLine false in
+/-- Forget to the label-wise upper-semi source. -/
+def toLogThetaLabelProcessionUpperSemiSource :
+    LogThetaLabelProcessionUpperSemiSource coric l :=
+  source.toCapsulePacketLocalObjectSource.toLogThetaLabelProcessionUpperSemiSource
+
+set_option linter.style.longLine false in
+/-- Forget to the finite averaged source consumed by older wrappers. -/
+noncomputable def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toCapsulePacketLocalObjectSource.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+/--
+Audit for deriving the current capsule packet boundary from explicit
+`ZMod l`-labelled procession capsule data.
+-/
+structure Audit : Prop where
+  zmod_cardinality : Fintype.card (ZMod l.value) = l.value
+  capsule_packet_source_audit :
+    LogThetaLabelProcessionVerticalLogKummerCapsulePacketLocalObjectSource.Audit
+      source.toCapsulePacketLocalObjectSource
+  packet_tensor_alignment :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).tensorState = choice.local_tensor_state
+  zmod_total_eq_sum :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.zmodCapsuleFamily thetaClass).totalLogVolume =
+        Finset.univ.sum fun label : ZMod l.value =>
+          ((source.zmodCapsuleFamily thetaClass).capsule label).logVolume
+  zmod_normalized_eq_average :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.zmodCapsuleFamily thetaClass).normalizedLogVolume =
+        (Finset.univ.sum fun label : ZMod l.value =>
+          ((source.zmodCapsuleFamily thetaClass).capsule label).logVolume) /
+          (l.value : Real)
+  zmod_normalized_eq_localObject :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.zmodCapsuleFamily thetaClass).normalizedLogVolume =
+        (source.zmodCapsuleFamily thetaClass).localObject.finiteLogVolume
+  zmod_localObject_alignment :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.zmodCapsuleFamily (thetaPilotClass choice)).localObject =
+        (source.packetState choice).localObject
+  packet_normalized_alignment :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).capsuleFamily.normalizedLogVolume =
+        (source.zmodCapsuleFamily (thetaPilotClass choice)).normalizedLogVolume
+  labelAverage_eq_packetLocalObject :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (Finset.univ.sum fun label : ZMod l.value =>
+        source.labelLogVolume (thetaPilotClass choice) label) / (l.value : Real) =
+          (source.packetState choice).localObject.finiteLogVolume
+  localObject_eq_packetCapsuleAverage :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.packetState choice).localObject.finiteLogVolume =
+        (source.packetState choice).capsuleFamily.totalLogVolume /
+          ((source.packetState choice).capsuleFamily.capsuleCount : Real)
+  ind3_source_zmodNormalized_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.zmodCapsuleFamily (thetaPilotClass choice₁)).normalizedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_zmodNormalized_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.zmodCapsuleFamily (thetaPilotClass choice₂)).normalizedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+set_option linter.style.longLine false in
+theorem audit :
+    Audit source :=
+  { zmod_cardinality := ZMod.card l.value,
+    capsule_packet_source_audit :=
+      source.toCapsulePacketLocalObjectSource.audit,
+    packet_tensor_alignment := by
+      intro choice
+      exact source.packet_tensor_eq choice,
+    zmod_total_eq_sum := by
+      intro thetaClass
+      exact (source.zmodCapsuleFamily thetaClass).total_eq,
+    zmod_normalized_eq_average := by
+      intro thetaClass
+      exact (source.zmodCapsuleFamily thetaClass).normalized_eq_zmod_average,
+    zmod_normalized_eq_localObject := by
+      intro thetaClass
+      exact
+        (source.zmodCapsuleFamily thetaClass).normalizedLogVolume_eq_localObjectFinite,
+    zmod_localObject_alignment := by
+      intro choice
+      exact source.zmod_localObject_eq_packetLocalObject choice,
+    packet_normalized_alignment := by
+      intro choice
+      exact source.packet_normalizedLogVolume_eq_zmodNormalized choice,
+    labelAverage_eq_packetLocalObject := by
+      intro choice
+      exact source.zmod_average_eq_packetLocalObject choice,
+    localObject_eq_packetCapsuleAverage := by
+      intro choice
+      exact source.localObject_finiteLogVolume_eq_capsuleAverage choice,
+    ind3_source_zmodNormalized_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_zmodNormalized_eq_upperSemiSource hstep,
+    ind3_target_zmodNormalized_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_zmodNormalized_eq_upperSemiTarget hstep }
+
+end LogThetaLabelProcessionVerticalLogKummerZModCapsulePacketLocalObjectSource
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable
