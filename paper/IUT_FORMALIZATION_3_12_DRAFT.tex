@@ -9528,7 +9528,20 @@ formula itself: Lean derives the same-class image law, the
 in the Theorem~3.11 possible-image union, and the exclusion of \((\Ind_3)\)
 from equality.  This is the source-level quotient possible-image construction
 used before entering Remark~3.9.5.
-The same quotient source now has a lower direct route,
+The same quotient source now has a direct class-law route,
+\[
+\begin{array}{l}
+\texttt{ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.}\\
+\quad\texttt{ofClassImageLawSource},
+\end{array}
+\]
+which first converts same-class possible-image invariance into typed
+fiber-transport invariance via
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource.}\\
+\texttt{toFiberTransportSource}.  This uses the Lean theorem that fiber
+transport is equivalent to equality of the concrete theta-pilot class, so the
+class-image law now feeds the quotient construction without a separate
+lattice-key payload.  There is also a lower direct route,
 \[
 \begin{array}{l}
 \texttt{ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.}\\

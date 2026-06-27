@@ -14725,6 +14725,26 @@ def toLatticeImageLawSource
             hhodge hhistory hlattice hcoric) }
 
 set_option linter.style.longLine false in
+/--
+Promote class-image invariance to typed fiber-transport invariance.
+
+The fiber transport relation is equivalent to equality of the concrete
+theta-pilot class.  Thus the same-class possible-image law is enough to build
+the fiber-transport source used by the lower quotient constructor; no separate
+lattice-key region law is supplied at this boundary.
+-/
+def toFiberTransportSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
+        record indData) :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
+      record indData :=
+  { representativeData := sourceData.toRepresentativeData,
+    fiberTransport_region_eq := by
+      intro choice₁ choice₂ transport
+      exact sourceData.same_thetaPilotClass_region_eq transport.thetaPilotClass_eq }
+
+set_option linter.style.longLine false in
 theorem toLatticeImageLawSource_endpoint
     (sourceData :
       ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
@@ -14752,6 +14772,39 @@ theorem toLatticeImageLawSource_endpoint
   ⟨sourceData.toRepresentativeData.thetaPilotClass_representative,
     latticeEndpoint.2.2.2.2.1,
     latticeEndpoint.2.2.1⟩
+
+set_option linter.style.longLine false in
+theorem toFiberTransportSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
+        record indData) :
+    (∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+          (sourceData.toRepresentativeData.representative thetaClass) =
+        thetaClass) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ↔
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) ∧
+      record.thetaPossibleImages.images =
+        sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toChoiceImages :=
+  let fiberEndpoint := sourceData.toFiberTransportSource.endpoint
+  ⟨sourceData.toRepresentativeData.thetaPilotClass_representative,
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport.iff_thetaPilotClass_eq
+      (l := l),
+    sourceData.toFiberTransportSource.fiberTransport_region_eq,
+    fiberEndpoint.2.2.2.2.2⟩
 
 end ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
 
@@ -16012,6 +16065,28 @@ def ofFiberTransportSource
 
 set_option linter.style.longLine false in
 /--
+Concrete quotient theta-pilot source from theta-pilot class image invariance.
+
+This constructor uses the class/fiber equivalence proved in the concrete choice
+space: same-class possible-image invariance gives fiber-transport invariance,
+which then reconstructs the lattice formula and equality-quotient possible-image
+family used by the selected q-region.
+-/
+def ofClassImageLawSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData :=
+  ofFiberTransportSource
+    (record := record) (indData := indData)
+    sourceData.toFiberTransportSource gluingTorsor selectedQChoice
+
+set_option linter.style.longLine false in
+/--
 Concrete quotient theta-pilot source from fiber transports factored through
 the `(Ind1),(Ind2)` equality quotient.
 
@@ -16281,6 +16356,73 @@ theorem ofFiberTransportSource_endpoint
       sourceEndpoint.2.2.2.2.1,
       sourceEndpoint.2.2.2.2.2,
       quotientSource.pullback_region_eq,
+      quotientSource.selectedQRegion_eq_suppliedQuotientImage,
+      quotientEndpoint.2.2.2.2.2.2.2,
+      by
+        intro choice₁ choice₂ hstep
+        exact
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators_ind3_false hstep⟩
+
+set_option linter.style.longLine false in
+theorem ofClassImageLawSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
+        (source := source) (target := target) (l := l)
+        record indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let quotientSource :=
+      ofClassImageLawSource
+        (record := record) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    (∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            choice₂ ->
+        record.thetaPossibleImages.images.region choice₁ =
+          record.thetaPossibleImages.images.region choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ↔
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          record.thetaPossibleImages.images.region choice₁ =
+            record.thetaPossibleImages.images.region choice₂) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        quotientSource.quotientImages.region
+            ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                indData).equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      quotientSource.toConstruction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      quotientSource.toConstruction.selectedQRegion =
+        quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice) ∧
+      quotientSource.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) := by
+  intro quotientSource
+  let sourceEndpoint := sourceData.toFiberTransportSource_endpoint
+  let quotientEndpoint := quotientSource.endpoint
+  exact
+    ⟨sourceData.same_thetaPilotClass_region_eq,
+      sourceEndpoint.2.1,
+      sourceEndpoint.2.2.1,
+      quotientSource.pullback_region_eq,
+      quotientEndpoint.2.1,
       quotientSource.selectedQRegion_eq_suppliedQuotientImage,
       quotientEndpoint.2.2.2.2.2.2.2,
       by
