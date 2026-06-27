@@ -3402,14 +3402,24 @@ The sharper source
 quotient-family/valuation-cover union equality as primitive: it requires an
 equivalence between the Theorem~3.11 quotient index and the valuation-cover
 index, plus pointwise equality of the corresponding possible regions, and
-\Lean{} derives the union equality.  The selected-principal-hull equality has
-also been lowered: \texttt{ConcreteValuationBallSelectedPrincipalHullSource}
+\Lean{} derives the union equality.  This comparison has now been lowered one
+more step by
+\texttt{ConcreteValuationBallChoiceIndexedFamilyUnionSource}: instead of
+supplying the quotient-index equivalence, the source data supplies a
+choice-level valuation index map, proves that it is invariant under the
+typed \((\Ind1,\Ind2)\) equality quotient, gives a representative
+Hodge-theater/log-theta choice over each valuation index, and proves pointwise
+equality of the corresponding possible regions.  \Lean{} constructs the
+quotient-index equivalence by \texttt{Quot.lift} and then derives the same
+valuation-cover union equality.  The selected-principal-hull equality has also
+been lowered: \texttt{ConcreteValuationBallSelectedPrincipalHullSource}
 requires the valuation-cover possible-image union to be a hull for its
 Remark~3.9.5 hull system, and \Lean{} combines this fixed-point statement with
 the principal-hull selection theorem to derive equality with the selected
 \(\lambda\cdot O\) hull.  The remaining mathematical payload at this boundary
-is the source-paper construction of the indexed valuation-ball comparison and
-this hull-fixedness statement from the nonarchimedean theta data.
+is the source-paper construction of the choice-level valuation-index map,
+representatives, pointwise valuation-region comparison, and hull-fixedness
+statement from the nonarchimedean theta data.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -11991,9 +12001,10 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  the source-paper data behind the indexed possible-image/valuation-cover
-  comparison and valuation-union hull fixedness, Ob5/Ob7 compatibility, and
-  the \(\theta_{\mathrm{signed}}\) log-volume identification.
+  the source-paper data behind the choice-level valuation-index comparison,
+  valuation-region pointwise equality, valuation-union hull fixedness,
+  Ob5/Ob7 compatibility, and the \(\theta_{\mathrm{signed}}\) log-volume
+  identification.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
