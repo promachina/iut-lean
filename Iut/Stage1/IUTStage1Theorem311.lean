@@ -3828,6 +3828,64 @@ theorem region_eq_and_fiber_mem_of_nonarchimedeanEntryLabelTransport_step
   ⟨data.region_eq_of_nonarchimedeanEntryLabelTransport_step hstep,
     fiberPackage.entry_place_mem_fiber hstep.action_step⟩
 
+set_option linter.style.longLine false in
+/--
+Possible-image quotient audit for a source-labelled nonarchimedean `(Ind2)`
+transport.
+
+This packages the exact point needed in Theorem 3.11: the source label transport
+enters the equality quotient through the typed `(Ind2)` direct-summand action,
+hence the two theta-pilot possible-image regions agree, while the acting place
+is still certified to lie in the relevant nonarchimedean fiber.
+-/
+structure NonarchimedeanEntryLabelTransportPossibleImageAudit
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.nonarchimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep
+        audited₁ audited₂) where
+  ind2_packet_audit :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep.Ind2ActionPacketAudit
+      hstep
+  equality_quotient_relation :
+    data.quotient.relation audited₁ audited₂
+  region_eq :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂
+  fiber_mem :
+    hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places
+
+set_option linter.style.longLine false in
+def nonarchimedeanEntryLabelTransportPossibleImageAudit
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.nonarchimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    NonarchimedeanEntryLabelTransportPossibleImageAudit
+      data fiberPackage hstep :=
+  { ind2_packet_audit := hstep.ind2ActionPacketAudit,
+    equality_quotient_relation := by
+      rw [data.quotient_eq_generated]
+      exact IUTStage1GeneratedIndeterminacyRelation.ind2
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice.nonarchimedeanEntry_toDirectSummandActionStep
+          hstep.action_step),
+    region_eq := data.region_eq_of_nonarchimedeanEntryLabelTransport_step hstep,
+    fiber_mem := fiberPackage.entry_place_mem_fiber hstep.action_step }
+
 theorem region_eq_of_archimedeanOrderTwo_step
     (data :
       IUTStage1PlaceAuditedMultiradialImages
@@ -4006,6 +4064,64 @@ theorem region_eq_and_fiber_mem_of_archimedeanEntryLabelTransport_step
       hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
   ⟨data.region_eq_of_archimedeanEntryLabelTransport_step hstep,
     fiberPackage.entry_place_mem_fiber hstep.action_step⟩
+
+set_option linter.style.longLine false in
+/--
+Possible-image quotient audit for a source-labelled archimedean `(Ind2)`
+transport.
+
+This is the archimedean order-two analogue of the nonarchimedean audit: the
+label transport is converted to the equality-quotient `(Ind2)` generator, hence
+possible-image regions agree, and the acting place remains in the relevant
+archimedean fiber.
+-/
+structure ArchimedeanEntryLabelTransportPossibleImageAudit
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.archimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep
+        audited₁ audited₂) where
+  ind2_packet_audit :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep.Ind2ActionPacketAudit
+      hstep
+  equality_quotient_relation :
+    data.quotient.relation audited₁ audited₂
+  region_eq :
+    data.possibleImages.region audited₁ = data.possibleImages.region audited₂
+  fiber_mem :
+    hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places
+
+set_option linter.style.longLine false in
+def archimedeanEntryLabelTransportPossibleImageAudit
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.archimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    ArchimedeanEntryLabelTransportPossibleImageAudit
+      data fiberPackage hstep :=
+  { ind2_packet_audit := hstep.ind2ActionPacketAudit,
+    equality_quotient_relation := by
+      rw [data.quotient_eq_generated]
+      exact IUTStage1GeneratedIndeterminacyRelation.ind2
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice.archimedeanEntry_toDirectSummandActionStep
+          hstep.action_step),
+    region_eq := data.region_eq_of_archimedeanEntryLabelTransport_step hstep,
+    fiber_mem := fiberPackage.entry_place_mem_fiber hstep.action_step }
 
 /--
 Equality projection for an `(Ind3)` generator when the supplied possible-image
@@ -4335,6 +4451,63 @@ theorem region_eq_and_fiber_mem_of_nonarchimedeanEntryLabelTransport_step
   ⟨data.region_eq_of_nonarchimedeanEntryLabelTransport_step hstep,
     fiberPackage.entry_place_mem_fiber hstep.action_step⟩
 
+set_option linter.style.longLine false in
+/--
+Theta-image quotient audit for a source-labelled nonarchimedean `(Ind2)`
+transport.
+
+This lifts the audited possible-image quotient step from the place-audited
+family to the source package's theta-pilot possible-image family.
+-/
+structure NonarchimedeanEntryLabelTransportThetaPossibleImageAudit
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep
+        audited₁ audited₂) where
+  audited_possible_image_audit :
+    IUTStage1PlaceAuditedMultiradialImages.NonarchimedeanEntryLabelTransportPossibleImageAudit
+      data.auditedImages fiberPackage hstep
+  theta_region_eq :
+    data.possibleImages.images.region audited₁ =
+      data.possibleImages.images.region audited₂
+  fiber_mem :
+    hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places
+
+set_option linter.style.longLine false in
+def nonarchimedeanEntryLabelTransportThetaPossibleImageAudit
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    NonarchimedeanEntryLabelTransportThetaPossibleImageAudit
+      data fiberPackage hstep :=
+  { audited_possible_image_audit :=
+      data.auditedImages.nonarchimedeanEntryLabelTransportPossibleImageAudit
+        fiberPackage hstep,
+    theta_region_eq :=
+      data.region_eq_of_nonarchimedeanEntryLabelTransport_step hstep,
+    fiber_mem := fiberPackage.entry_place_mem_fiber hstep.action_step }
+
 theorem region_eq_of_archimedeanOrderTwo_step
     {package :
       IUTStage1SourcePackage source target
@@ -4547,6 +4720,63 @@ theorem region_eq_and_fiber_mem_of_archimedeanEntryLabelTransport_step
       hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places :=
   ⟨data.region_eq_of_archimedeanEntryLabelTransport_step hstep,
     fiberPackage.entry_place_mem_fiber hstep.action_step⟩
+
+set_option linter.style.longLine false in
+/--
+Theta-image quotient audit for a source-labelled archimedean `(Ind2)`
+transport.
+
+This lifts the audited possible-image quotient step from the place-audited
+family to the source package's theta-pilot possible-image family.
+-/
+structure ArchimedeanEntryLabelTransportThetaPossibleImageAudit
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.archimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep
+        audited₁ audited₂) where
+  audited_possible_image_audit :
+    IUTStage1PlaceAuditedMultiradialImages.ArchimedeanEntryLabelTransportPossibleImageAudit
+      data.auditedImages fiberPackage hstep
+  theta_region_eq :
+    data.possibleImages.images.region audited₁ =
+      data.possibleImages.images.region audited₂
+  fiber_mem :
+    hstep.action_step.action_entry.place ∈ fiberPackage.fiberAudit.fiber.places
+
+set_option linter.style.longLine false in
+def archimedeanEntryLabelTransportThetaPossibleImageAudit
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.archimedean)}
+    (data : IUTStage1PlaceAuditedMultiradialThetaImages package)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanInd2FiberPackage
+        audited₁)
+    (hstep :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep
+        audited₁ audited₂) :
+    ArchimedeanEntryLabelTransportThetaPossibleImageAudit
+      data fiberPackage hstep :=
+  { audited_possible_image_audit :=
+      data.auditedImages.archimedeanEntryLabelTransportPossibleImageAudit
+        fiberPackage hstep,
+    theta_region_eq :=
+      data.region_eq_of_archimedeanEntryLabelTransport_step hstep,
+    fiber_mem := fiberPackage.entry_place_mem_fiber hstep.action_step }
 
 /--
 Equality projection for an `(Ind3)` generator when the supplied audited
