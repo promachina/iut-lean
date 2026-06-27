@@ -2143,6 +2143,23 @@ theorem endpoint
   ⟨source.toDegreeObject_divisorDegree, rfl,
     source.toDegreeObject_realifiedLogVolume_eq⟩
 
+theorem toDegreeObject_eq_of_object_divisorDegree_unitLogVolume
+    (source : IUTStage1FiniteRealifiedFrobenioidDivisorSource π)
+    (object : IUTStage1RealifiedFrobenioidDegreeObject)
+    (hobject : source.object = object.object)
+    (hdegree : source.divisorDegree = object.divisorDegree)
+    (hunit : source.unitLogVolume = object.unitLogVolume) :
+    source.toDegreeObject = object := by
+  cases object with
+  | mk object divisorDegree unitLogVolume realifiedLogVolume realified_logVolume_eq =>
+    dsimp [toDegreeObject,
+      IUTStage1FiniteRealifiedFrobenioidDivisorSource.realifiedLogVolume]
+      at hobject hdegree hunit ⊢
+    subst object
+    subst divisorDegree
+    subst unitLogVolume
+    simp [realified_logVolume_eq]
+
 end IUTStage1FiniteRealifiedFrobenioidDivisorSource
 
 namespace IUTStage1RealifiedFrobenioidDegreeObject

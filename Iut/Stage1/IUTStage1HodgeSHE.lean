@@ -1873,6 +1873,140 @@ theorem audit
 
 end IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource
 
+set_option linter.style.longLine false in
+/--
+Degree-realized compatible-copy column log-Kummer divisor source.
+
+This lowers the ordinary-copy realization field of
+`IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource`.  Instead of
+supplying the equality of the ordinary divisor's projected Frobenioid degree
+object with the column log-Kummer object, the source gives the paper-facing
+components of that realization: the local object, divisor degree, and unit
+log-volume.  Lean reconstructs the degree-object equality and then reuses the
+compatible ordinary/theta/log-shell copy route.
+-/
+structure IUTStage1DegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource
+    (π : Type u) [Fintype π] (l : PrimeGeFive) where
+  compatibility : IUTStage1ColumnFrobenioidLogKummerCompatibility
+  columnCopies : Int -> IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π
+  normalization : IUTStage1LogVolumeNormalization
+  baseColumn : Int
+  labelColumnShift : ZMod l.value -> Int
+  ordinary_object_eq_compat :
+    ∀ m : Int,
+      (columnCopies m).ordinary.object =
+        (compatibility.frobenioidObject m).object
+  ordinary_divisorDegree_eq_compat :
+    ∀ m : Int,
+      (columnCopies m).ordinary.divisorDegree =
+        (compatibility.frobenioidObject m).divisorDegree
+  ordinary_unitLogVolume_eq_compat :
+    ∀ m : Int,
+      (columnCopies m).ordinary.unitLogVolume =
+        (compatibility.frobenioidObject m).unitLogVolume
+  label_logLink_object_eq_base :
+    ∀ label : ZMod l.value,
+      (columnCopies (baseColumn + labelColumnShift label)).logShell.base.object =
+        (columnCopies baseColumn).logShell.base.object
+
+namespace IUTStage1DegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource
+
+variable {π : Type u} [Fintype π] {l : PrimeGeFive}
+
+set_option linter.style.longLine false in
+theorem ordinary_realizes_compat
+    (source :
+      IUTStage1DegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.columnCopies m).ordinary.toDegreeObject =
+      source.compatibility.frobenioidObject m :=
+  IUTStage1FiniteRealifiedFrobenioidDivisorSource.toDegreeObject_eq_of_object_divisorDegree_unitLogVolume
+    (source.columnCopies m).ordinary
+    (source.compatibility.frobenioidObject m)
+    (source.ordinary_object_eq_compat m)
+    (source.ordinary_divisorDegree_eq_compat m)
+    (source.ordinary_unitLogVolume_eq_compat m)
+
+theorem ordinary_realifiedLogVolume_eq_compat
+    (source :
+      IUTStage1DegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.columnCopies m).ordinary.realifiedLogVolume =
+      (source.compatibility.frobenioidObject m).realifiedLogVolume := by
+  have h :=
+    congrArg IUTStage1RealifiedFrobenioidDegreeObject.realifiedLogVolume
+      (source.ordinary_realizes_compat m)
+  simpa [IUTStage1FiniteRealifiedFrobenioidDivisorSource.toDegreeObject] using h
+
+set_option linter.style.longLine false in
+def toCompatibleCopiesColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1DegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource π l :=
+  { compatibility := source.compatibility,
+    columnCopies := source.columnCopies,
+    normalization := source.normalization,
+    baseColumn := source.baseColumn,
+    labelColumnShift := source.labelColumnShift,
+    ordinary_realizes_compat := source.ordinary_realizes_compat,
+    label_logLink_object_eq_base := source.label_logLink_object_eq_base }
+
+set_option linter.style.longLine false in
+def toColumnLogKummerRealifiedLogShellDivisorFamilySource
+    (source :
+      IUTStage1DegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1ColumnLogKummerRealifiedLogShellDivisorFamilySource π l :=
+  source.toCompatibleCopiesColumnLogKummerDivisorFamilySource
+    |>.toColumnLogKummerRealifiedLogShellDivisorFamilySource
+
+set_option linter.style.longLine false in
+/--
+Audit endpoint for deriving the compatible-copy column source from
+component-level Frobenioid degree realization.
+-/
+structure Audit
+    (source :
+      IUTStage1DegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource π l) :
+    Prop where
+  compatible_copies_audit :
+    IUTStage1CompatibleCopiesColumnLogKummerDivisorFamilySource.Audit
+      source.toCompatibleCopiesColumnLogKummerDivisorFamilySource
+  ordinary_object_eq_compat :
+    ∀ m : Int,
+      (source.columnCopies m).ordinary.object =
+        (source.compatibility.frobenioidObject m).object
+  ordinary_divisorDegree_eq_compat :
+    ∀ m : Int,
+      (source.columnCopies m).ordinary.divisorDegree =
+        (source.compatibility.frobenioidObject m).divisorDegree
+  ordinary_unitLogVolume_eq_compat :
+    ∀ m : Int,
+      (source.columnCopies m).ordinary.unitLogVolume =
+        (source.compatibility.frobenioidObject m).unitLogVolume
+  ordinary_realizes_compat :
+    ∀ m : Int,
+      (source.columnCopies m).ordinary.toDegreeObject =
+        source.compatibility.frobenioidObject m
+  ordinary_realifiedLogVolume_eq_compat :
+    ∀ m : Int,
+      (source.columnCopies m).ordinary.realifiedLogVolume =
+        (source.compatibility.frobenioidObject m).realifiedLogVolume
+
+theorem audit
+    (source :
+      IUTStage1DegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource π l) :
+    Audit source :=
+  { compatible_copies_audit :=
+      source.toCompatibleCopiesColumnLogKummerDivisorFamilySource.audit,
+    ordinary_object_eq_compat := source.ordinary_object_eq_compat,
+    ordinary_divisorDegree_eq_compat := source.ordinary_divisorDegree_eq_compat,
+    ordinary_unitLogVolume_eq_compat := source.ordinary_unitLogVolume_eq_compat,
+    ordinary_realizes_compat := source.ordinary_realizes_compat,
+    ordinary_realifiedLogVolume_eq_compat :=
+      source.ordinary_realifiedLogVolume_eq_compat }
+
+end IUTStage1DegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource
+
 /--
 Container estimate for one capsule log-volume entry.
 
