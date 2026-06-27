@@ -27578,6 +27578,176 @@ end ConcreteValuationBallThetaClassFiberTransportLocalThetaPredicateSource
 
 set_option linter.style.longLine false in
 /--
+Local theta inequality source for valuation-radius balls.
+
+This lowers the local-predicate boundary by naming the analytic quantity being
+bounded.  The local predicate is the displayed inequality
+`localThetaGauge x <= localThetaThreshold`; the valuation-radius estimate proves
+this inequality on the selected compact-open valuation ball.
+-/
+structure ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    {η : Type z} {K : Type x}
+    {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric))
+        η K β γ Λ) :
+    Type (max u v w x z) where
+  cellThetaClass :
+    β ->
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)
+  coverPlace : β -> γ
+  localThetaGauge : β -> K -> Real
+  localThetaThreshold : β -> Real
+  valuationRadius_bounds_localThetaGauge :
+    ∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      ∀ localPoint : K,
+        factor.valuationNorm localPoint <= factor.compactOpenRadius ->
+          localThetaGauge index localPoint <= localThetaThreshold index
+  thetaRegion_toSet_eq_realizedLocalThetaInequality :
+    ∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        (cellThetaClass index)).toSet =
+        factor.realizedRegion { localPoint : K |
+          localThetaGauge index localPoint <= localThetaThreshold index }
+  fiberTransportRegion_toSet_eq_valuationRegion :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).toSet =
+        valuationSource.valuationCover.possibleRegion thetaClass
+
+namespace ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+  {selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+  {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+  [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+  {valuationSource :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+      (Point target)
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric))
+      η K β γ Λ}
+
+set_option linter.style.longLine false in
+def toLocalThetaPredicateSource
+    (inequalitySource :
+      ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportLocalThetaPredicateSource
+      sourceData gluingTorsor selectedQChoice valuationSource where
+  cellThetaClass := inequalitySource.cellThetaClass
+  coverPlace := inequalitySource.coverPlace
+  localThetaPredicate :=
+    fun index localPoint =>
+      inequalitySource.localThetaGauge index localPoint <=
+        inequalitySource.localThetaThreshold index
+  valuationRadius_satisfies_localThetaPredicate :=
+    inequalitySource.valuationRadius_bounds_localThetaGauge
+  thetaRegion_toSet_eq_realizedLocalThetaPredicate :=
+    inequalitySource.thetaRegion_toSet_eq_realizedLocalThetaInequality
+  fiberTransportRegion_toSet_eq_valuationRegion :=
+    inequalitySource.fiberTransportRegion_toSet_eq_valuationRegion
+
+set_option linter.style.longLine false in
+def toLocalThetaEstimateSource
+    (inequalitySource :
+      ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportLocalThetaEstimateSource
+      sourceData gluingTorsor selectedQChoice valuationSource :=
+  inequalitySource.toLocalThetaPredicateSource.toLocalThetaEstimateSource
+
+set_option linter.style.longLine false in
+def toValuationRadiusCoverSource
+    (inequalitySource :
+      ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportValuationRadiusCoverSource
+      sourceData gluingTorsor selectedQChoice valuationSource :=
+  inequalitySource.toLocalThetaEstimateSource.toValuationRadiusCoverSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (inequalitySource :
+      ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    (∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (inequalitySource.coverPlace index);
+      ∀ localPoint : K,
+        factor.valuationNorm localPoint <= factor.compactOpenRadius ->
+          inequalitySource.localThetaGauge index localPoint <=
+            inequalitySource.localThetaThreshold index) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (inequalitySource.coverPlace index);
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (inequalitySource.cellThetaClass index)).toSet =
+          factor.realizedRegion { localPoint : K |
+            inequalitySource.localThetaGauge index localPoint <=
+              inequalitySource.localThetaThreshold index }) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (inequalitySource.coverPlace index);
+        ∀ localPoint : K,
+          factor.valuationNorm localPoint <= factor.compactOpenRadius ->
+            factor.realization localPoint ∈
+              (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+                (inequalitySource.cellThetaClass index)).toSet) ∧
+      (let predicateSource := inequalitySource.toLocalThetaPredicateSource;
+      ∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (predicateSource.coverPlace index);
+        factor.realizedRegion
+            (factor.valuationBall factor.compactOpenRadius) ⊆
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            (predicateSource.cellThetaClass index)).toSet) :=
+  ⟨inequalitySource.valuationRadius_bounds_localThetaGauge,
+    inequalitySource.thetaRegion_toSet_eq_realizedLocalThetaInequality,
+    inequalitySource.toLocalThetaPredicateSource.valuationRadius_thetaEstimate,
+    by
+      intro predicateSource
+      exact
+        predicateSource.toLocalThetaEstimateSource
+          |>.valuationBallRadius_subset_fiberTransportRegion⟩
+
+end ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource
+
+set_option linter.style.longLine false in
+/--
 Principal valuation-ball provenance for the product-hull exact-`Xi(P_B)`
 source.
 
@@ -30445,6 +30615,137 @@ theorem sourceLevelTransportPrincipalValuationBallThetaClassFiberTransportLocalT
         measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
         q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
         predicateSource.toLocalThetaEstimateSource
+        hullOperator_eq_principalProductHullOperator t
+
+set_option linter.style.longLine false in
+/--
+Local-theta-inequality principal valuation-ball exact-`Xi` global `C_Theta`
+audit.
+
+This is the lower analytic boundary below the local-predicate source: the
+theta predicate is a concrete inequality for a local theta gauge, and the
+valuation-radius estimate proves that inequality on each selected local ball.
+-/
+theorem sourceLevelTransportPrincipalValuationBallThetaClassFiberTransportLocalThetaInequalityFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      ((ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice)
+        |>.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation hullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization).canonicalCThetaScale <= cTheta)
+    {η : Type z} {K : Type x}
+    {βv : Type v} {γv : Type w} {Λ : Type max u v w x z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype βv] [Fintype γv]
+    {valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric))
+        η K βv γv Λ}
+    (inequalitySource :
+      ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (hullOperator_eq_principalProductHullOperator :
+      hullOperator =
+        valuationSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+    (t : ZMod l.value) :
+    let predicateSource := inequalitySource.toLocalThetaPredicateSource;
+    let estimateSource := predicateSource.toLocalThetaEstimateSource;
+    let radiusSource := estimateSource.toValuationRadiusCoverSource;
+    let localFactorSource := radiusSource.toFiberTransportLocalFactorCoverSource;
+    let cellSource := localFactorSource.toFiberTransportCellCoverSource;
+    SourceLevelTransportCanonicalExactXiSelectedQRemark395GlobalCThetaAudit
+      sourceData gluingTorsor selectedQChoice operation hullOperation
+      determinantOperation hullOperator ob3ob4Source compatibility
+      measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+      q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+      ((let fiberTransportBackedSource :=
+          cellSource.toFiberTransportBackedFamilyUnionSource;
+        let thetaCellCoverSource :=
+          cellSource.toThetaClassDirectProductCellCoverSource;
+        let imageLawBackedSource :=
+          fiberTransportBackedSource.toThetaClassLatticeImageLawBackedFamilyUnionSource;
+        let latticeBackedSource :=
+          imageLawBackedSource.toThetaClassLatticeFormulaBackedFamilyUnionSource;
+        let imageBackedSource :=
+          latticeBackedSource.toThetaClassImageBackedFamilyUnionSource;
+        let fiberBackedSource :=
+          imageBackedSource.toThetaClassFiberBackedFamilyUnionSource;
+        let cellCoverSource :=
+          thetaCellCoverSource.toDirectProductCellCoverSource;
+        let cellExactSource := cellCoverSource.toDirectProductCellUnionExactSource;
+        let selectedSource := cellExactSource.toSelectedPrincipalHullSource;
+        let thetaClassSource := fiberBackedSource.toThetaClassIndexedFamilyUnionSource;
+        let choiceIndexedSource := thetaClassSource.toChoiceIndexedFamilyUnionSource;
+        let indexedSource := choiceIndexedSource.toIndexedFamilyUnionSource;
+        let principalSource :=
+          indexedSource.toPrincipalValuationBallHullFixedFamilyUnionExactXiSource
+            selectedSource hullOperator_eq_principalProductHullOperator;
+        principalSource).toClosedFamilyUnionExactXiSource.toCalibrationSource.toExactXiFamilySource) t :=
+  by
+    intro predicateSource estimateSource radiusSource localFactorSource cellSource
+    exact
+      sourceLevelTransportPrincipalValuationBallThetaClassFiberTransportLocalThetaPredicateFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+        (recordConcrete := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice operation hullOperation
+        determinantOperation hullOperator ob3ob4Source compatibility
+        measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+        q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+        inequalitySource.toLocalThetaPredicateSource
         hullOperator_eq_principalProductHullOperator t
 
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource

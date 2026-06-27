@@ -3513,10 +3513,23 @@ normalization.  \Lean{} realizes this predicate region to recover the pointwise
 theta membership, then uses
 \(\mathrm{realizedRegion}(S)=\mathrm{realization}(S)\) and the valuation-ball
 audit \(\mathrm{compactOpenSubset}=\mathrm{valuationBall}(r_\beta)\) to recover
-the valuation-radius, local-factor, and direct-product cell covers.  Thus the
-remaining mathematical payload is the source-paper construction of the local
-theta predicate, the proof of the displayed valuation inequality, and the
-transported-region/valuation-region identification.
+the valuation-radius, local-factor, and direct-product cell covers.  This has
+now been lowered one step further by
+\texttt{ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource}.
+Here the local predicate is not opaque: it is the inequality
+\[
+  g_\beta(x)\le R_\beta
+\]
+for a named local theta gauge and threshold, and the source estimate proves
+\[
+  \|x\|_v\le r_\beta\quad\Longrightarrow\quad g_\beta(x)\le R_\beta.
+\]
+\Lean{} then reconstructs the local-predicate source definitionally and enters
+the same exact-\(\Xi(P_B)\) and global \(C_\Theta\) corridor.  The remaining
+mathematical payload is therefore the paper-side construction of the gauge
+\(g_\beta\), the proof of the valuation-radius bound into this gauge, and the
+identification of the realized gauge region with the transported theta-class
+region.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12098,7 +12111,7 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  the local theta predicates and valuation-radius inequalities,
+  the local theta gauges and valuation-radius inequalities,
   transported-region/valuation-region identification, Ob5/Ob7 compatibility, and the
   \(\theta_{\mathrm{signed}}\) log-volume identification.
 \item Instantiate the valuation-ball local analytic construction from actual
