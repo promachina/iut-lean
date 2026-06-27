@@ -694,6 +694,107 @@ theorem zmod_labelled_translation_indeterminacy_endpoint
 
 end IUTStage1ZModLabelledCapsuleFamilyLogVolume
 
+set_option linter.style.longLine false in
+/--
+`ZMod l`-labelled local log-shell family underlying the capsule procession.
+
+This is one step below `IUTStage1ZModLabelledCapsuleFamilyLogVolume`: the source
+data are local finite log-volume objects indexed by the paper-side
+`ZMod l.value` labels.  Lean turns each local object into the corresponding
+capsule object by taking its finite log-volume.
+-/
+structure IUTStage1ZModLabelledLogShellFamilyLogVolume
+    (l : PrimeGeFive) (kind : IUTStage1PlaceKind) where
+  localObject : IUTStage1FiniteLocalLogVolumeObject kind
+  labelObject : ZMod l.value -> IUTStage1FiniteLocalLogVolumeObject kind
+  labelObject_eq_localObject :
+    ∀ j : ZMod l.value, labelObject j = localObject
+  totalLogVolume : Real
+  total_eq_sum :
+    totalLogVolume =
+      Finset.univ.sum fun j : ZMod l.value => (labelObject j).finiteLogVolume
+  normalizedLogVolume : Real
+  normalized_eq_average :
+    normalizedLogVolume = totalLogVolume / (l.value : Real)
+
+namespace IUTStage1ZModLabelledLogShellFamilyLogVolume
+
+variable {l : PrimeGeFive} {kind : IUTStage1PlaceKind}
+
+def capsule
+    (data : IUTStage1ZModLabelledLogShellFamilyLogVolume l kind)
+    (j : ZMod l.value) :
+    IUTStage1CapsuleLogVolumeObject kind :=
+  { capsuleLabel := "ZMod log-shell capsule",
+    localObject := data.labelObject j,
+    logVolume := (data.labelObject j).finiteLogVolume,
+    log_volume_eq := rfl }
+
+theorem capsule_localObject_eq
+    (data : IUTStage1ZModLabelledLogShellFamilyLogVolume l kind)
+    (j : ZMod l.value) :
+    (data.capsule j).localObject = data.localObject :=
+  data.labelObject_eq_localObject j
+
+set_option linter.style.longLine false in
+/--
+Promote a `ZMod l`-indexed local log-shell family to the labelled capsule
+family used by the packet-normalized comparison layer.
+-/
+def toZModLabelledCapsuleFamily :
+    (data : IUTStage1ZModLabelledLogShellFamilyLogVolume l kind) ->
+    IUTStage1ZModLabelledCapsuleFamilyLogVolume l kind :=
+  fun data =>
+  { localObject := data.localObject,
+    capsule := data.capsule,
+    capsule_local_object_eq := data.capsule_localObject_eq,
+    totalLogVolume := data.totalLogVolume,
+    total_eq_sum := by
+      exact data.total_eq_sum,
+    normalizedLogVolume := data.normalizedLogVolume,
+    normalized_eq_average := data.normalized_eq_average }
+
+theorem toZModLabelledCapsuleFamily_localObject
+    (data : IUTStage1ZModLabelledLogShellFamilyLogVolume l kind) :
+    data.toZModLabelledCapsuleFamily.localObject = data.localObject :=
+  rfl
+
+theorem toZModLabelledCapsuleFamily_normalizedLogVolume
+    (data : IUTStage1ZModLabelledLogShellFamilyLogVolume l kind) :
+    data.toZModLabelledCapsuleFamily.normalizedLogVolume =
+      data.normalizedLogVolume :=
+  rfl
+
+theorem normalizedLogVolume_eq_localObjectFinite
+    (data : IUTStage1ZModLabelledLogShellFamilyLogVolume l kind) :
+    data.normalizedLogVolume = data.localObject.finiteLogVolume :=
+  data.toZModLabelledCapsuleFamily.normalizedLogVolume_eq_localObjectFinite
+
+def constantFromLocalObject
+    (localObject : IUTStage1FiniteLocalLogVolumeObject kind) :
+    IUTStage1ZModLabelledLogShellFamilyLogVolume l kind :=
+  { localObject := localObject,
+    labelObject := fun _ => localObject,
+    labelObject_eq_localObject := by
+      intro _j
+      rfl,
+    totalLogVolume := localObject.finiteLogVolume * (l.value : Real),
+    total_eq_sum := by
+      simp [ZMod.card, mul_comm],
+    normalizedLogVolume := localObject.finiteLogVolume,
+    normalized_eq_average := by
+      have hl : (l.value : Real) ≠ 0 := by
+        exact_mod_cast l.ne_zero
+      field_simp [hl] }
+
+theorem constantFromLocalObject_normalizedLogVolume
+    (localObject : IUTStage1FiniteLocalLogVolumeObject kind) :
+    (constantFromLocalObject (l := l) localObject).normalizedLogVolume =
+      localObject.finiteLogVolume :=
+  rfl
+
+end IUTStage1ZModLabelledLogShellFamilyLogVolume
+
 /--
 Container estimate for one capsule log-volume entry.
 

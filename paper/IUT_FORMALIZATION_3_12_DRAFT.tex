@@ -813,19 +813,19 @@ formula for its capsule log-volumes, and the paper-side equality saying that
 the packet local object's finite log-volume is the uniform capsule average.
 \Lean{} reconstructs the direct packet-normalization record from these data.
 The preferred boundary is now lower again: the constructed \(ZMod(\ell)\)
-capsule packet source, whose Lean suffix is
-\texttt{ConstructedZModCapsulePacketLocalObjectSource}.
-Here the full \(F_\ell\)-procession is an explicit
-\texttt{ZMod}-labelled capsule family attached to each theta-pilot class, and
-the packet-local capsule state is constructed from that family by reindexing
-through \texttt{Fintype.equivFin}.  Thus the typed packet family, the packet
-local object, and the packet normalized log-volume are no longer separate
-source alignments: \Lean{} derives them from the \(ZMod(\ell)\)-capsule family,
-the local tensor state, and the direct-summand cardinality law
-\(|Z/\ell Z|=\ell\).  The remaining source payload is the paper-native
-construction of these \(ZMod(\ell)\)-labelled capsule/log-shell families and
-the source/target finite log-volume comparison from the log-link/vertical
-log-Kummer correspondence.
+log-shell packet source, whose Lean suffix is
+\texttt{ConstructedZModLogShellPacketLocalObjectSource}.
+Here the full \(F_\ell\)-procession is a \texttt{ZMod}-labelled family of local
+finite log-volume objects attached to each theta-pilot class.  \Lean{} promotes
+each labelled local log-shell object to a capsule log-volume object, then
+constructs the packet-local capsule state by finite reindexing.  Thus the
+capsule family, the typed packet family, the packet local object, and the packet
+normalized log-volume are no longer separate source alignments: they are
+derived from the labelled local log-shell family, the local tensor state, and
+the direct-summand cardinality law \(|Z/\ell Z|=\ell\).  The remaining source
+payload is the paper-native construction of these labelled local log-shell
+families and the source/target finite log-volume comparison from the
+log-link/vertical log-Kummer correspondence.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -10226,11 +10226,11 @@ with the same evidence visible at the selected-\(q\) boundary.  That boundary
 now also exports preservation of the concrete theta-pilot class and the
 one-sided \((\Ind_3)\) upper-semi relation audit; \((\Ind_3)\) is therefore
 visible at the endpoint as upper-semi data, not as an equality-quotient
-transport.  The remaining source payload is now lower and sharper: construct the
-paper-side \(ZMod(\ell)\) capsule/log-shell families, label transports,
-\(\mathrm{Ism}\)/order-two actions, procession transports, and upper-semi
-transports from the underlying Hodge-theater arithmetic, log-theta lattice, and
-Frobenioid packet data.
+transport.  The remaining source payload is now lower and sharper: construct
+the paper-side \(ZMod(\ell)\)-labelled local log-shell families, label
+transports, \(\mathrm{Ism}\)/order-two actions, procession transports, and
+upper-semi transports from the underlying Hodge-theater arithmetic,
+log-theta lattice, and Frobenioid packet data.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[
@@ -12295,18 +12295,16 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Construct the actual \(ZMod(\ell)\)-labelled log-theta capsule/log-shell
-  families from the paper's vertical log-Kummer/log-link geometry.  The finite
-  \(F_\ell\)-average, the label-function extraction, the
-  average-to-local-object equality, the classified bridge, the
-  direct-normalization-to-classified bridge, and the
-  capsule-average-to-direct-normalization bridge are now constructed by
-  \Lean{}.
-\item Construct the remaining packet-state alignment below the new
-  \(ZMod(\ell)\)-capsule packet source: the paper-native local objects, the
-  alignment between the \(ZMod(\ell)\) family normalization and the packet
-  capsule normalization, and the log-Kummer comparison that identifies the
-  source and target finite log-volumes.
+\item Construct the actual \(ZMod(\ell)\)-labelled local log-shell families from
+  the paper's vertical log-Kummer/log-link geometry.  The finite
+  \(F_\ell\)-average, label-function extraction, capsule promotion, packet-state
+  reindexing, average-to-local-object equality, and older classified/direct
+  bridges are now constructed by \Lean{}.
+\item Construct the remaining source comparison below the new log-shell packet
+  source: the paper-native local objects, the label transports that identify the
+  \(ZMod(\ell)\) log-shell normalization with the upper-semi source and target
+  log-volumes, and the log-Kummer comparison behind those finite log-volume
+  equalities.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the

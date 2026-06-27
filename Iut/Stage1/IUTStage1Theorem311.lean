@@ -4016,6 +4016,148 @@ theorem audit :
 
 end LogThetaLabelProcessionVerticalLogKummerConstructedZModCapsulePacketLocalObjectSource
 
+set_option linter.style.longLine false in
+/--
+Constructed `ZMod l` log-shell packet-local source.
+
+This lowers the constructed capsule packet source by taking the paper-side
+input to be a `ZMod l`-indexed local log-shell family.  Lean turns each labelled
+local object into a capsule log-volume object and then constructs the packet
+state by finite reindexing.
+-/
+structure LogThetaLabelProcessionVerticalLogKummerConstructedZModLogShellPacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) where
+  logShellFamily :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1ZModLabelledLogShellFamilyLogVolume
+        l IUTStage1PlaceKind.nonarchimedean
+  direct_summand_count_eq_zmodCard :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
+  ind3_source_logShellNormalized_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (logShellFamily (thetaPilotClass choice₁)).normalizedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_logShellNormalized_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (logShellFamily (thetaPilotClass choice₂)).normalizedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace LogThetaLabelProcessionVerticalLogKummerConstructedZModLogShellPacketLocalObjectSource
+
+variable
+  (source :
+    LogThetaLabelProcessionVerticalLogKummerConstructedZModLogShellPacketLocalObjectSource
+      coric l)
+
+def zmodCapsuleFamily
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1ZModLabelledCapsuleFamilyLogVolume
+      l IUTStage1PlaceKind.nonarchimedean :=
+  (source.logShellFamily thetaClass).toZModLabelledCapsuleFamily
+
+set_option linter.style.longLine false in
+/-- Promote the log-shell source to the constructed `ZMod l` capsule source. -/
+noncomputable def toConstructedZModCapsulePacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerConstructedZModCapsulePacketLocalObjectSource
+      coric l :=
+  { zmodCapsuleFamily := source.zmodCapsuleFamily,
+    direct_summand_count_eq_zmodCard := by
+      intro choice
+      exact source.direct_summand_count_eq_zmodCard choice,
+    ind3_source_zmodNormalized_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_logShellNormalized_eq_upperSemiSource hstep,
+    ind3_target_zmodNormalized_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_logShellNormalized_eq_upperSemiTarget hstep }
+
+set_option linter.style.longLine false in
+/-- Forget directly to the older explicit `ZMod l` capsule source. -/
+noncomputable def toZModCapsulePacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerZModCapsulePacketLocalObjectSource
+      coric l :=
+  source.toConstructedZModCapsulePacketLocalObjectSource
+    |>.toZModCapsulePacketLocalObjectSource
+
+set_option linter.style.longLine false in
+/-- Forget to the finite averaged source consumed by older wrappers. -/
+noncomputable def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toConstructedZModCapsulePacketLocalObjectSource
+    |>.toProcessionNormalizedLogVolumeSource
+
+theorem zmodCapsuleFamily_normalizedLogVolume
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    (source.zmodCapsuleFamily thetaClass).normalizedLogVolume =
+      (source.logShellFamily thetaClass).normalizedLogVolume :=
+  rfl
+
+theorem zmodCapsuleFamily_localObject
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    (source.zmodCapsuleFamily thetaClass).localObject =
+      (source.logShellFamily thetaClass).localObject :=
+  rfl
+
+set_option linter.style.longLine false in
+/--
+Audit for deriving the constructed capsule boundary from labelled local
+log-shell objects.
+-/
+structure Audit : Prop where
+  constructed_zmod_capsule_audit :
+    LogThetaLabelProcessionVerticalLogKummerConstructedZModCapsulePacketLocalObjectSource.Audit
+      source.toConstructedZModCapsulePacketLocalObjectSource
+  zmod_cardinality : Fintype.card (ZMod l.value) = l.value
+  logShell_normalized_eq_localObject :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.logShellFamily thetaClass).normalizedLogVolume =
+        (source.logShellFamily thetaClass).localObject.finiteLogVolume
+  capsuleFamily_from_logShell :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      source.zmodCapsuleFamily thetaClass =
+        (source.logShellFamily thetaClass).toZModLabelledCapsuleFamily
+  direct_summand_count_eq_zmodCard :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
+  ind3_source_logShellNormalized_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.logShellFamily (thetaPilotClass choice₁)).normalizedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_logShellNormalized_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.logShellFamily (thetaPilotClass choice₂)).normalizedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+set_option linter.style.longLine false in
+theorem audit :
+    Audit source :=
+  { constructed_zmod_capsule_audit :=
+      source.toConstructedZModCapsulePacketLocalObjectSource.audit,
+    zmod_cardinality := ZMod.card l.value,
+    logShell_normalized_eq_localObject := by
+      intro thetaClass
+      exact
+        (source.logShellFamily thetaClass).normalizedLogVolume_eq_localObjectFinite,
+    capsuleFamily_from_logShell := by
+      intro thetaClass
+      rfl,
+    direct_summand_count_eq_zmodCard := by
+      intro choice
+      exact source.direct_summand_count_eq_zmodCard choice,
+    ind3_source_logShellNormalized_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_logShellNormalized_eq_upperSemiSource hstep,
+    ind3_target_logShellNormalized_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_logShellNormalized_eq_upperSemiTarget hstep }
+
+end LogThetaLabelProcessionVerticalLogKummerConstructedZModLogShellPacketLocalObjectSource
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable
