@@ -795,6 +795,135 @@ theorem constantFromLocalObject_normalizedLogVolume
 
 end IUTStage1ZModLabelledLogShellFamilyLogVolume
 
+set_option linter.style.longLine false in
+/--
+Label-transport datum for one `F_l`-indexed local log-shell object.
+
+The paper-side role of this object is the finite-label part of the vertically
+coric log-shell comparison: moving to a procession label changes the
+representative, but not the transported local log-shell object seen by the
+current finite log-volume boundary.
+-/
+structure IUTStage1ZModLogShellLabelTransport
+    {l : PrimeGeFive} {kind : IUTStage1PlaceKind}
+    (baseObject : IUTStage1FiniteLocalLogVolumeObject kind)
+    (labelObject : IUTStage1FiniteLocalLogVolumeObject kind) where
+  label : ZMod l.value
+  transported_eq_base : labelObject = baseObject
+
+namespace IUTStage1ZModLogShellLabelTransport
+
+variable {l : PrimeGeFive} {kind : IUTStage1PlaceKind}
+variable {baseObject labelObject : IUTStage1FiniteLocalLogVolumeObject kind}
+
+theorem finiteLogVolume_eq_base
+    (transport :
+      IUTStage1ZModLogShellLabelTransport (l := l) baseObject labelObject) :
+    labelObject.finiteLogVolume = baseObject.finiteLogVolume := by
+  rw [transport.transported_eq_base]
+
+end IUTStage1ZModLogShellLabelTransport
+
+set_option linter.style.longLine false in
+/--
+`ZMod l`-labelled local log-shell family constructed from label transports.
+
+This lowers `IUTStage1ZModLabelledLogShellFamilyLogVolume`: the source supplies
+the base local log-shell object, the labelled representatives, and a transport
+from each representative back to the base object.  Lean constructs the total
+and normalized log-volume fields.
+-/
+structure IUTStage1ZModLabelledLogShellTransportFamily
+    (l : PrimeGeFive) (kind : IUTStage1PlaceKind) where
+  baseObject : IUTStage1FiniteLocalLogVolumeObject kind
+  labelObject : ZMod l.value -> IUTStage1FiniteLocalLogVolumeObject kind
+  labelTransport :
+    ∀ j : ZMod l.value,
+      IUTStage1ZModLogShellLabelTransport (l := l) baseObject (labelObject j)
+
+namespace IUTStage1ZModLabelledLogShellTransportFamily
+
+variable {l : PrimeGeFive} {kind : IUTStage1PlaceKind}
+
+theorem labelObject_eq_base
+    (data : IUTStage1ZModLabelledLogShellTransportFamily l kind)
+    (j : ZMod l.value) :
+    data.labelObject j = data.baseObject :=
+  (data.labelTransport j).transported_eq_base
+
+theorem labelObject_finiteLogVolume_eq_base
+    (data : IUTStage1ZModLabelledLogShellTransportFamily l kind)
+    (j : ZMod l.value) :
+    (data.labelObject j).finiteLogVolume = data.baseObject.finiteLogVolume :=
+  (data.labelTransport j).finiteLogVolume_eq_base
+
+set_option linter.style.longLine false in
+/--
+Promote label-transported local log-shell representatives to the normalized
+`ZMod l` log-shell family consumed by the capsule/packet layer.
+-/
+def toZModLabelledLogShellFamily :
+    (data : IUTStage1ZModLabelledLogShellTransportFamily l kind) ->
+    IUTStage1ZModLabelledLogShellFamilyLogVolume l kind :=
+  fun data =>
+  { localObject := data.baseObject,
+    labelObject := data.labelObject,
+    labelObject_eq_localObject := by
+      intro j
+      exact data.labelObject_eq_base j,
+    totalLogVolume := data.baseObject.finiteLogVolume * (l.value : Real),
+    total_eq_sum := by
+      simp [data.labelObject_finiteLogVolume_eq_base, ZMod.card, mul_comm],
+    normalizedLogVolume := data.baseObject.finiteLogVolume,
+    normalized_eq_average := by
+      have hl : (l.value : Real) ≠ 0 := by
+        exact_mod_cast l.ne_zero
+      field_simp [hl] }
+
+theorem toZModLabelledLogShellFamily_localObject
+    (data : IUTStage1ZModLabelledLogShellTransportFamily l kind) :
+    data.toZModLabelledLogShellFamily.localObject = data.baseObject :=
+  rfl
+
+theorem toZModLabelledLogShellFamily_normalizedLogVolume
+    (data : IUTStage1ZModLabelledLogShellTransportFamily l kind) :
+    data.toZModLabelledLogShellFamily.normalizedLogVolume =
+      data.baseObject.finiteLogVolume :=
+  rfl
+
+theorem toZModLabelledLogShellFamily_labelObject
+    (data : IUTStage1ZModLabelledLogShellTransportFamily l kind)
+    (j : ZMod l.value) :
+    data.toZModLabelledLogShellFamily.labelObject j = data.labelObject j :=
+  rfl
+
+theorem normalizedLogVolume_eq_baseFinite
+    (data : IUTStage1ZModLabelledLogShellTransportFamily l kind) :
+    data.toZModLabelledLogShellFamily.normalizedLogVolume =
+      data.baseObject.finiteLogVolume :=
+  rfl
+
+set_option linter.style.longLine false in
+def constantFromBaseObject
+    (baseObject : IUTStage1FiniteLocalLogVolumeObject kind) :
+    IUTStage1ZModLabelledLogShellTransportFamily l kind :=
+  { baseObject := baseObject,
+    labelObject := fun _ => baseObject,
+    labelTransport := by
+      intro j
+      exact
+        { label := j,
+          transported_eq_base := rfl } }
+
+theorem constantFromBaseObject_toZModLabelledLogShellFamily
+    (baseObject : IUTStage1FiniteLocalLogVolumeObject kind) :
+    (constantFromBaseObject (l := l) baseObject).toZModLabelledLogShellFamily =
+      IUTStage1ZModLabelledLogShellFamilyLogVolume.constantFromLocalObject
+        (l := l) baseObject :=
+  rfl
+
+end IUTStage1ZModLabelledLogShellTransportFamily
+
 /--
 Container estimate for one capsule log-volume entry.
 
