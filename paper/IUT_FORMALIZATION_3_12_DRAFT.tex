@@ -9704,7 +9704,13 @@ read against the source packet's typed summand kind, and the target summand
 kind is transported from the source.  Its checked audit packages the whole
 projection chain from label transport to transported packet labels, typed
 \((\Ind_2)\) packet symmetry, direct-summand symmetry, and summand-count
-equality.  The possible-image layer now packages the next step as a quotient
+equality.  The local Hodge/SHE layer now also exposes the smaller audit
+\texttt{SymmetryLabelTransportSource.TransportAudit}: from the single
+label-transport source it derives the source and target label certificates, the
+target-kind transport, and equality of the two local tensor symmetry labels.
+Thus the place-audited \((\Ind_2)\) packet audit records the label transport as
+one source datum, rather than as separate source-label, target-label, and
+target-kind assumptions.  The possible-image layer now packages the next step as a quotient
 audit: the same source-labelled transport is a generator of the
 \((\Ind_1,\Ind_2)\) equality quotient, so the corresponding theta-pilot
 possible-image regions agree and the acting place remains in its finite fiber.

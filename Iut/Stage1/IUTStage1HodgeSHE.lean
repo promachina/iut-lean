@@ -4062,6 +4062,60 @@ theorem target_symmetry_eq
       source.target_symmetry_eq_targetKind :=
   rfl
 
+set_option linter.style.longLine false in
+theorem tensorState_symmetry_eq
+    (source : SymmetryLabelTransportSource state₁ state₂) :
+    state₁.packetState.tensorState.symmetry =
+      state₂.packetState.tensorState.symmetry := by
+  calc
+    state₁.packetState.tensorState.symmetry =
+        state₁.summandFamily.symmetryKind.toLocalTensorSymmetryId :=
+      source.source_symmetry_eq_sourceKind
+    _ = state₂.packetState.tensorState.symmetry :=
+      source.target_symmetry_eq_sourceKind.symm
+
+set_option linter.style.longLine false in
+/--
+Audit for a source-side direct-summand packet label transport.
+
+The single source object simultaneously supplies the source tensor-label
+certificate, the target tensor-label certificate, transport of the target
+summand symmetry kind, and the equality of the two local tensor symmetry labels.
+This is the local form of the `(Ind2)` label-transport datum used downstream by
+the Theorem 3.11 packet-action boundary.
+-/
+structure TransportAudit
+    (source : SymmetryLabelTransportSource state₁ state₂) : Prop where
+  source_label :
+    SymmetryLabelSource state₁
+  target_label :
+    SymmetryLabelSource state₂
+  symmetryKindTransport :
+    SymmetryKindTransport state₁ state₂
+  source_symmetry_eq_sourceKind :
+    state₁.packetState.tensorState.symmetry =
+      state₁.summandFamily.symmetryKind.toLocalTensorSymmetryId
+  target_symmetry_eq_targetKind :
+    state₂.packetState.tensorState.symmetry =
+      state₂.summandFamily.symmetryKind.toLocalTensorSymmetryId
+  target_symmetryKind_eq_source :
+    state₂.summandFamily.symmetryKind = state₁.summandFamily.symmetryKind
+  tensorState_symmetry_eq :
+    state₁.packetState.tensorState.symmetry =
+      state₂.packetState.tensorState.symmetry
+
+set_option linter.style.longLine false in
+theorem transportAudit
+    (source : SymmetryLabelTransportSource state₁ state₂) :
+    TransportAudit source :=
+  { source_label := source.sourceLabelSource,
+    target_label := source.targetLabelSource,
+    symmetryKindTransport := source.symmetryKindTransport,
+    source_symmetry_eq_sourceKind := source.source_symmetry_eq_sourceKind,
+    target_symmetry_eq_targetKind := source.target_symmetry_eq_targetKind,
+    target_symmetryKind_eq_source := source.target_symmetryKind_eq_source,
+    tensorState_symmetry_eq := source.tensorState_symmetry_eq }
+
 end SymmetryLabelTransportSource
 
 end IUTStage1LocalTensorDirectSummandPacketState

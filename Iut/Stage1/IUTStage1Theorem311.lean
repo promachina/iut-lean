@@ -3102,6 +3102,9 @@ structure Ind2ActionPacketAudit
         coric IUTStage1PlaceKind.nonarchimedean}
     (hstep :
       NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) where
+  label_transport_audit :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource.TransportAudit
+      hstep.label_transport
   transported_step :
     NonarchimedeanIsmActionEntryTransportedPacketLabelStep audited₁ audited₂
   packet_label_step :
@@ -3150,7 +3153,8 @@ def ind2ActionPacketAudit
   let directSymmetry :=
     ind2Symmetry.toDirectSummandSymmetry
   exact
-    { transported_step := hstep.toTransportedPacketLabelStep,
+    { label_transport_audit := hstep.label_transport.transportAudit,
+      transported_step := hstep.toTransportedPacketLabelStep,
       packet_label_step := hstep.toPacketLabelStep,
       action_entry_symmetry_step := hstep.toActionEntrySymmetryStep,
       source_symmetry_kind_eq :=
@@ -3226,6 +3230,9 @@ structure Ind2ActionPacketAudit
         coric IUTStage1PlaceKind.archimedean}
     (hstep :
       ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) where
+  label_transport_audit :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource.TransportAudit
+      hstep.label_transport
   transported_step :
     ArchimedeanOrderTwoActionEntryTransportedPacketLabelStep audited₁ audited₂
   packet_label_step :
@@ -3274,7 +3281,8 @@ def ind2ActionPacketAudit
   let directSymmetry :=
     ind2Symmetry.toDirectSummandSymmetry
   exact
-    { transported_step := hstep.toTransportedPacketLabelStep,
+    { label_transport_audit := hstep.label_transport.transportAudit,
+      transported_step := hstep.toTransportedPacketLabelStep,
       packet_label_step := hstep.toPacketLabelStep,
       action_entry_symmetry_step := hstep.toActionEntrySymmetryStep,
       source_symmetry_kind_eq :=
