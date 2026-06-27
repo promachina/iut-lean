@@ -2318,6 +2318,336 @@ theorem audit
 
 end IUTStage1SplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
 
+set_option linter.style.longLine false in
+/--
+Normalized Example 3.5 column log-Kummer divisor source.
+
+This lowers
+`IUTStage1SplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource`
+one step further.  The source no longer supplies separate theta and log-shell
+divisor columns, nor their base-identification and normalization proofs.
+Instead it supplies the ordinary realified divisor column, the log-shell
+extension degree for each vertical column, and the object-level labelled
+log-link equality.  Lean constructs the theta copy with normalized
+`log(Theta)` generator `1`, constructs the log-shell copy by taking the local
+Frobenius reading to be the extension degree, proves the normalized log-shell
+reading is `1`, and derives the full labelled local-object equality from the
+object equality plus the column log-volume translation.
+-/
+structure IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+    (π : Type u) [Fintype π] (l : PrimeGeFive) where
+  compatibility : IUTStage1ColumnFrobenioidLogKummerCompatibility
+  ordinaryColumn : Int -> IUTStage1FiniteRealifiedFrobenioidDivisorSource π
+  logShellExtensionDegree : Int -> Nat
+  logShellExtensionDegree_pos :
+    ∀ m : Int, 0 < logShellExtensionDegree m
+  normalization : IUTStage1LogVolumeNormalization
+  baseColumn : Int
+  labelColumnShift : ZMod l.value -> Int
+  ordinary_object_eq_compat :
+    ∀ m : Int,
+      (ordinaryColumn m).object =
+        (compatibility.frobenioidObject m).object
+  ordinary_divisorDegree_eq_compat :
+    ∀ m : Int,
+      (ordinaryColumn m).divisorDegree =
+        (compatibility.frobenioidObject m).divisorDegree
+  ordinary_unitLogVolume_eq_compat :
+    ∀ m : Int,
+      (ordinaryColumn m).unitLogVolume =
+        (compatibility.frobenioidObject m).unitLogVolume
+  label_logLink_object_eq_base :
+    ∀ label : ZMod l.value,
+      (ordinaryColumn (baseColumn + labelColumnShift label)).object =
+        (ordinaryColumn baseColumn).object
+
+namespace IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+
+variable {π : Type u} [Fintype π] {l : PrimeGeFive}
+
+def thetaColumn
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    IUTStage1ThetaRealifiedFrobenioidDivisorSource π :=
+  { base := source.ordinaryColumn m,
+    thetaGeneratorLogVolume := 1 }
+
+noncomputable def logShellColumn
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    IUTStage1LogShellRealifiedFrobenioidDivisorSource π :=
+  { base := source.ordinaryColumn m,
+    extensionDegree := source.logShellExtensionDegree m,
+    extensionDegree_pos := source.logShellExtensionDegree_pos m,
+    localFrobeniusLogVolume := (source.logShellExtensionDegree m : Real) }
+
+theorem theta_base_eq_ordinary
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.thetaColumn m).base = source.ordinaryColumn m :=
+  rfl
+
+theorem logShell_base_eq_ordinary
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.logShellColumn m).base = source.ordinaryColumn m :=
+  rfl
+
+theorem theta_normalized
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.thetaColumn m).thetaGeneratorLogVolume = 1 :=
+  rfl
+
+theorem logShell_normalized
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.logShellColumn m).normalizedFrobeniusLogVolume = 1 := by
+  have hne : (source.logShellExtensionDegree m : Real) ≠ 0 := by
+    exact_mod_cast Nat.ne_of_gt (source.logShellExtensionDegree_pos m)
+  simp [logShellColumn,
+    IUTStage1LogShellRealifiedFrobenioidDivisorSource.normalizedFrobeniusLogVolume,
+    hne]
+
+set_option linter.style.longLine false in
+noncomputable def columnCopies
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    IUTStage1CompatibleRealifiedFrobenioidDivisorCopies π :=
+  { ordinary := source.ordinaryColumn m,
+    theta := source.thetaColumn m,
+    logShell := source.logShellColumn m,
+    theta_base_eq := source.theta_base_eq_ordinary m,
+    logShell_base_eq := source.logShell_base_eq_ordinary m,
+    theta_normalized := source.theta_normalized m,
+    logShell_normalized := source.logShell_normalized m }
+
+set_option linter.style.longLine false in
+theorem ordinary_realizes_compat
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.ordinaryColumn m).toDegreeObject =
+      source.compatibility.frobenioidObject m :=
+  IUTStage1FiniteRealifiedFrobenioidDivisorSource.toDegreeObject_eq_of_object_divisorDegree_unitLogVolume
+    (source.ordinaryColumn m)
+    (source.compatibility.frobenioidObject m)
+    (source.ordinary_object_eq_compat m)
+    (source.ordinary_divisorDegree_eq_compat m)
+    (source.ordinary_unitLogVolume_eq_compat m)
+
+theorem ordinary_realifiedLogVolume_eq_compat
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.ordinaryColumn m).realifiedLogVolume =
+      (source.compatibility.frobenioidObject m).realifiedLogVolume := by
+  have h :=
+    congrArg IUTStage1RealifiedFrobenioidDegreeObject.realifiedLogVolume
+      (source.ordinary_realizes_compat m)
+  simpa [IUTStage1FiniteRealifiedFrobenioidDivisorSource.toDegreeObject] using h
+
+set_option linter.style.longLine false in
+theorem logShellLogVolume_eq_ordinary
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.logShellColumn m).logShellDivisorLogVolume =
+      (source.ordinaryColumn m).realifiedLogVolume :=
+  (source.logShellColumn m)
+    |>.logShellDivisorLogVolume_eq_base_realified_of_normalized_one
+      (source.logShell_normalized m)
+
+set_option linter.style.longLine false in
+theorem label_logShellDivisorLogVolume_eq_base
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (label : ZMod l.value) :
+    (source.logShellColumn
+        (source.baseColumn + source.labelColumnShift label)).logShellDivisorLogVolume =
+      (source.logShellColumn source.baseColumn).logShellDivisorLogVolume := by
+  calc
+    (source.logShellColumn
+        (source.baseColumn + source.labelColumnShift label)).logShellDivisorLogVolume =
+        (source.ordinaryColumn
+          (source.baseColumn + source.labelColumnShift label)).realifiedLogVolume :=
+      source.logShellLogVolume_eq_ordinary
+        (source.baseColumn + source.labelColumnShift label)
+    _ =
+        (source.compatibility.frobenioidObject
+          (source.baseColumn + source.labelColumnShift label)).realifiedLogVolume :=
+      source.ordinary_realifiedLogVolume_eq_compat
+        (source.baseColumn + source.labelColumnShift label)
+    _ = (source.compatibility.frobenioidObject source.baseColumn).realifiedLogVolume := by
+      simpa [add_comm] using
+        source.compatibility.translate_preserves_realifiedLogVolume
+          (source.labelColumnShift label) source.baseColumn
+    _ = (source.ordinaryColumn source.baseColumn).realifiedLogVolume :=
+      (source.ordinary_realifiedLogVolume_eq_compat source.baseColumn).symm
+    _ = (source.logShellColumn source.baseColumn).logShellDivisorLogVolume :=
+      (source.logShellLogVolume_eq_ordinary source.baseColumn).symm
+
+set_option linter.style.longLine false in
+theorem label_logLink_localObject_eq_base
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l)
+    (label : ZMod l.value) :
+    ({ logShell := source.logShellColumn (source.baseColumn + source.labelColumnShift label),
+       normalization := source.normalization } :
+      IUTStage1RealifiedLogShellLocalObjectSource π).toFiniteLocalLogVolumeObject.localObject =
+    ({ logShell := source.logShellColumn source.baseColumn,
+       normalization := source.normalization } :
+      IUTStage1RealifiedLogShellLocalObjectSource π).toFiniteLocalLogVolumeObject.localObject := by
+  have hobject := source.label_logLink_object_eq_base label
+  have hvolume := source.label_logShellDivisorLogVolume_eq_base label
+  have hvolume' :
+      ({ base := source.ordinaryColumn (source.baseColumn + source.labelColumnShift label),
+         extensionDegree :=
+          source.logShellExtensionDegree
+            (source.baseColumn + source.labelColumnShift label),
+         extensionDegree_pos :=
+          source.logShellExtensionDegree_pos
+            (source.baseColumn + source.labelColumnShift label),
+         localFrobeniusLogVolume :=
+          (source.logShellExtensionDegree
+            (source.baseColumn + source.labelColumnShift label) : Real) } :
+        IUTStage1LogShellRealifiedFrobenioidDivisorSource π).logShellDivisorLogVolume =
+      ({ base := source.ordinaryColumn source.baseColumn,
+         extensionDegree := source.logShellExtensionDegree source.baseColumn,
+         extensionDegree_pos :=
+          source.logShellExtensionDegree_pos source.baseColumn,
+         localFrobeniusLogVolume :=
+          (source.logShellExtensionDegree source.baseColumn : Real) } :
+        IUTStage1LogShellRealifiedFrobenioidDivisorSource π).logShellDivisorLogVolume := by
+    simpa [logShellColumn] using hvolume
+  change
+    ({ object :=
+          (source.ordinaryColumn
+            (source.baseColumn + source.labelColumnShift label)).object,
+        normalization := source.normalization,
+        logVolume :=
+          ({ base := source.ordinaryColumn (source.baseColumn + source.labelColumnShift label),
+             extensionDegree :=
+              source.logShellExtensionDegree
+                (source.baseColumn + source.labelColumnShift label),
+             extensionDegree_pos :=
+              source.logShellExtensionDegree_pos
+                (source.baseColumn + source.labelColumnShift label),
+             localFrobeniusLogVolume :=
+              (source.logShellExtensionDegree
+                (source.baseColumn + source.labelColumnShift label) : Real) } :
+            IUTStage1LogShellRealifiedFrobenioidDivisorSource π).logShellDivisorLogVolume } :
+      IUTStage1LocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean) =
+    ({ object := (source.ordinaryColumn source.baseColumn).object,
+        normalization := source.normalization,
+        logVolume :=
+          ({ base := source.ordinaryColumn source.baseColumn,
+             extensionDegree := source.logShellExtensionDegree source.baseColumn,
+             extensionDegree_pos :=
+              source.logShellExtensionDegree_pos source.baseColumn,
+             localFrobeniusLogVolume :=
+              (source.logShellExtensionDegree source.baseColumn : Real) } :
+            IUTStage1LogShellRealifiedFrobenioidDivisorSource π).logShellDivisorLogVolume } :
+      IUTStage1LocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean)
+  rw [hobject, hvolume']
+
+set_option linter.style.longLine false in
+noncomputable def toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1SplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l :=
+  { compatibility := source.compatibility,
+    ordinaryColumn := source.ordinaryColumn,
+    thetaColumn := source.thetaColumn,
+    logShellColumn := source.logShellColumn,
+    normalization := source.normalization,
+    baseColumn := source.baseColumn,
+    labelColumnShift := source.labelColumnShift,
+    theta_base_eq_ordinary := source.theta_base_eq_ordinary,
+    logShell_base_eq_ordinary := source.logShell_base_eq_ordinary,
+    theta_normalized := source.theta_normalized,
+    logShell_normalized := source.logShell_normalized,
+    ordinary_object_eq_compat := source.ordinary_object_eq_compat,
+    ordinary_divisorDegree_eq_compat := source.ordinary_divisorDegree_eq_compat,
+    ordinary_unitLogVolume_eq_compat := source.ordinary_unitLogVolume_eq_compat,
+    label_logLink_localObject_eq_base :=
+      source.label_logLink_localObject_eq_base }
+
+set_option linter.style.longLine false in
+noncomputable def toLocalObjectDegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1LocalObjectDegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource π l :=
+  source.toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+    |>.toLocalObjectDegreeRealizedCompatibleCopiesColumnLogKummerDivisorFamilySource
+
+set_option linter.style.longLine false in
+/--
+Audit endpoint for the normalized finite Example 3.5 column construction.
+-/
+structure Audit
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l) :
+    Prop where
+  split_copies_audit :
+    IUTStage1SplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource.Audit
+      source.toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+  theta_base_eq_ordinary :
+    ∀ m : Int,
+      (source.thetaColumn m).base = source.ordinaryColumn m
+  logShell_base_eq_ordinary :
+    ∀ m : Int,
+      (source.logShellColumn m).base = source.ordinaryColumn m
+  theta_normalized :
+    ∀ m : Int,
+      (source.thetaColumn m).thetaGeneratorLogVolume = 1
+  logShell_normalized :
+    ∀ m : Int,
+      (source.logShellColumn m).normalizedFrobeniusLogVolume = 1
+  logShellLogVolume_eq_ordinary :
+    ∀ m : Int,
+      (source.logShellColumn m).logShellDivisorLogVolume =
+        (source.ordinaryColumn m).realifiedLogVolume
+  label_logShellDivisorLogVolume_eq_base :
+    ∀ label : ZMod l.value,
+      (source.logShellColumn
+          (source.baseColumn + source.labelColumnShift label)).logShellDivisorLogVolume =
+        (source.logShellColumn source.baseColumn).logShellDivisorLogVolume
+  label_logLink_localObject_eq_base :
+    ∀ label : ZMod l.value,
+      ({ logShell := source.logShellColumn (source.baseColumn + source.labelColumnShift label),
+         normalization := source.normalization } :
+        IUTStage1RealifiedLogShellLocalObjectSource π).toFiniteLocalLogVolumeObject.localObject =
+      ({ logShell := source.logShellColumn source.baseColumn,
+         normalization := source.normalization } :
+        IUTStage1RealifiedLogShellLocalObjectSource π).toFiniteLocalLogVolumeObject.localObject
+
+theorem audit
+    (source :
+      IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l) :
+    Audit source :=
+  { split_copies_audit :=
+      source.toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource.audit,
+    theta_base_eq_ordinary := source.theta_base_eq_ordinary,
+    logShell_base_eq_ordinary := source.logShell_base_eq_ordinary,
+    theta_normalized := source.theta_normalized,
+    logShell_normalized := source.logShell_normalized,
+    logShellLogVolume_eq_ordinary :=
+      source.logShellLogVolume_eq_ordinary,
+    label_logShellDivisorLogVolume_eq_base :=
+      source.label_logShellDivisorLogVolume_eq_base,
+    label_logLink_localObject_eq_base :=
+      source.label_logLink_localObject_eq_base }
+
+end IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+
 /--
 Container estimate for one capsule log-volume entry.
 
