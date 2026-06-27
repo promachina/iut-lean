@@ -1077,6 +1077,58 @@ def latticeCoordinate
     row := thetaClass.row,
     logThetaColumn := thetaClass.logThetaColumn }
 
+set_option linter.style.longLine false in
+/--
+Canonical zero-label representative of the theta-pilot log-theta lattice node.
+
+The theta-pilot class has forgotten the finite `F_l` label.  This section picks
+the zero label only to generate the full label procession; the subsequent
+average ranges over all labels and is independent of this representative
+choice.
+-/
+def zeroLabelCoordinate
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (l : PrimeGeFive) :
+    IUTStage1Theorem311LogThetaLatticeCoordinate l :=
+  { column := thetaClass.column,
+    row := thetaClass.row,
+    flLabel := 0,
+    logThetaColumn := thetaClass.logThetaColumn }
+
+theorem zeroLabelCoordinate_flLabel
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (l : PrimeGeFive) :
+    (thetaClass.zeroLabelCoordinate l).flLabel = 0 :=
+  rfl
+
+theorem zeroLabelCoordinate_toThetaPilotLatticeCoordinate
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (l : PrimeGeFive) :
+    (thetaClass.zeroLabelCoordinate l).toThetaPilotLatticeCoordinate =
+      thetaClass.latticeCoordinate :=
+  rfl
+
+/-- Full `F_l` label procession over the theta-pilot class's lattice node. -/
+def flLabelProcessionSource
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (l : PrimeGeFive) :
+    IUTStage1FLLabelProcessionSource l :=
+  IUTStage1FLLabelProcessionSource.ofCoordinate
+    (thetaClass.zeroLabelCoordinate l)
+
+theorem flLabelProcessionSource_latticeCoordinate
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (l : PrimeGeFive) :
+    (thetaClass.flLabelProcessionSource l).baseCoordinate.toThetaPilotLatticeCoordinate =
+      thetaClass.latticeCoordinate :=
+  rfl
+
+theorem flLabelProcessionSource_fullLabelAudit
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (l : PrimeGeFive) :
+    (thetaClass.flLabelProcessionSource l).FullLabelProcessionAudit :=
+  (thetaClass.flLabelProcessionSource l).fullLabelProcessionAudit
+
 end ThetaPilotClass
 
 /-- Forget the `F_l` label and local tensor representative of a concrete choice. -/
@@ -2243,6 +2295,198 @@ theorem audit :
       exact source.ind3_upper_semi_average hstep }
 
 end ProcessionNormalizedUpperSemiComparisonSource
+
+set_option linter.style.longLine false in
+/--
+Label-wise log-theta procession source for the procession-normalized upper-semi
+comparison.
+
+This is one level below `ProcessionNormalizedUpperSemiComparisonSource`.  The
+source no longer supplies an averaged label object.  Instead, for each
+theta-pilot class it supplies the normalized log-volume of every concrete
+`F_l = ZMod l.value` label in the full log-theta procession.  Lean constructs
+the finite average and uses the two source/target average alignments to recover
+the upper-semi comparison source.
+-/
+structure LogThetaLabelProcessionUpperSemiSource
+    (coric : Type u) (l : PrimeGeFive) where
+  labelLogVolume :
+    ThetaPilotClass (coric := coric) -> ZMod l.value -> Real
+  ind3_source_labelAverage_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (Finset.univ.sum fun label : ZMod l.value =>
+          labelLogVolume (thetaPilotClass choice₁) label) / (l.value : Real) =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_labelAverage_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (Finset.univ.sum fun label : ZMod l.value =>
+          labelLogVolume (thetaPilotClass choice₂) label) / (l.value : Real) =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace LogThetaLabelProcessionUpperSemiSource
+
+variable
+  (source : LogThetaLabelProcessionUpperSemiSource coric l)
+
+/-- The full finite label procession attached to a theta-pilot class. -/
+def labelProcessionSource
+    (_source : LogThetaLabelProcessionUpperSemiSource coric l)
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1FLLabelProcessionSource l :=
+  thetaClass.flLabelProcessionSource l
+
+set_option linter.style.longLine false in
+/-- The averaged procession log-volume constructed from label-wise data. -/
+noncomputable def labelAverage
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value) :=
+  { normalizedLogVolume := fun label => source.labelLogVolume thetaClass label,
+    averageLogVolume :=
+      (Finset.univ.sum fun label : ZMod l.value =>
+        source.labelLogVolume thetaClass label) / (l.value : Real),
+    average_eq := by
+      rw [ZMod.card] }
+
+@[simp]
+theorem labelAverage_normalizedLogVolume
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (label : ZMod l.value) :
+    (source.labelAverage thetaClass).normalizedLogVolume label =
+      source.labelLogVolume thetaClass label :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem labelAverage_average_eq_fl_sum
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    (source.labelAverage thetaClass).averageLogVolume =
+      (Finset.univ.sum fun label : ZMod l.value =>
+        source.labelLogVolume thetaClass label) / (l.value : Real) :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem ind3_source_average_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    (source.labelAverage (thetaPilotClass choice₁)).averageLogVolume =
+      choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
+  exact source.ind3_source_labelAverage_eq_upperSemiSource hstep
+
+set_option linter.style.longLine false in
+theorem ind3_target_average_eq
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    (source.labelAverage (thetaPilotClass choice₂)).averageLogVolume =
+      choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+  exact source.ind3_target_labelAverage_eq_upperSemiTarget hstep
+
+set_option linter.style.longLine false in
+/--
+Construct the upper-semi comparison source from label-wise log-theta
+procession data.
+-/
+noncomputable def toProcessionNormalizedUpperSemiComparisonSource :
+    ProcessionNormalizedUpperSemiComparisonSource coric l :=
+  { labelAverage := source.labelAverage,
+    ind3_source_average_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_average_eq hstep,
+    ind3_target_average_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_average_eq hstep }
+
+set_option linter.style.longLine false in
+/-- Forget further to the finite averaged source consumed by older wrappers. -/
+noncomputable def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toProcessionNormalizedUpperSemiComparisonSource.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+theorem ind3_upper_semi_average
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    (source.labelAverage (thetaPilotClass choice₁)).averageLogVolume <=
+      (source.labelAverage (thetaPilotClass choice₂)).averageLogVolume :=
+  source.toProcessionNormalizedUpperSemiComparisonSource.ind3_upper_semi_average
+    hstep
+
+set_option linter.style.longLine false in
+/--
+Audit for constructing procession-normalized averages from label-wise
+log-theta procession data.
+-/
+structure Audit : Prop where
+  zmod_label_cardinality :
+    Fintype.card (ZMod l.value) = l.value
+  full_label_procession_audit :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.labelProcessionSource thetaClass).FullLabelProcessionAudit
+  label_procession_lattice :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.labelProcessionSource thetaClass).baseCoordinate.toThetaPilotLatticeCoordinate =
+        thetaClass.latticeCoordinate
+  labelAverage_constructed :
+    ∀ (thetaClass : ThetaPilotClass (coric := coric))
+      (label : ZMod l.value),
+      (source.labelAverage thetaClass).normalizedLogVolume label =
+        source.labelLogVolume thetaClass label
+  labelAverage_formula :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.labelAverage thetaClass).averageLogVolume =
+        (Finset.univ.sum fun label : ZMod l.value =>
+          source.labelLogVolume thetaClass label) / (l.value : Real)
+  upperSemi_source :
+    Nonempty (ProcessionNormalizedUpperSemiComparisonSource coric l)
+  finite_procession_source :
+    Nonempty (ProcessionNormalizedLogVolumeSource coric l)
+  ind3_source_average_alignment :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.labelAverage (thetaPilotClass choice₁)).averageLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_average_alignment :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.labelAverage (thetaPilotClass choice₂)).averageLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+  ind3_average_le :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.labelAverage (thetaPilotClass choice₁)).averageLogVolume <=
+          (source.labelAverage (thetaPilotClass choice₂)).averageLogVolume
+
+set_option linter.style.longLine false in
+theorem audit :
+    Audit source :=
+  { zmod_label_cardinality := ZMod.card l.value,
+    full_label_procession_audit := by
+      intro thetaClass
+      exact thetaClass.flLabelProcessionSource_fullLabelAudit l,
+    label_procession_lattice := by
+      intro thetaClass
+      exact thetaClass.flLabelProcessionSource_latticeCoordinate l,
+    labelAverage_constructed := by
+      intro thetaClass label
+      rfl,
+    labelAverage_formula := by
+      intro thetaClass
+      rfl,
+    upperSemi_source :=
+      ⟨source.toProcessionNormalizedUpperSemiComparisonSource⟩,
+    finite_procession_source :=
+      ⟨source.toProcessionNormalizedLogVolumeSource⟩,
+    ind3_source_average_alignment := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_average_eq hstep,
+    ind3_target_average_alignment := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_average_eq hstep,
+    ind3_average_le := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_upper_semi_average hstep }
+
+end LogThetaLabelProcessionUpperSemiSource
 
 set_option linter.style.longLine false in
 /--
@@ -8949,6 +9193,102 @@ theorem processionNormalizedUpperSemiComparisonSourceTypedCoreAudit
       intro choice₁ choice₂ hstep
       exact
         (typedCoreOfProcessionNormalizedUpperSemiComparisonSource source).equalityGenerators_ind3_false
+          hstep }
+
+set_option linter.style.longLine false in
+/--
+Construct the typed core from label-wise log-theta procession data.
+-/
+noncomputable def typedCoreOfLogThetaLabelProcessionUpperSemiSource
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionUpperSemiSource
+        coric l) :
+    IUTStage1Theorem311TypedIndeterminacyCore
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :=
+  typedCoreOfProcessionNormalizedUpperSemiComparisonSource
+    source.toProcessionNormalizedUpperSemiComparisonSource
+
+set_option linter.style.longLine false in
+/--
+Typed-core audit for the label-wise log-theta procession source.
+
+This is the lower Theorem 3.11 bridge from a concrete `ZMod l` label-wise
+log-volume family to the typed `(Ind1),(Ind2),(Ind3)` source.  It records the
+canonical full-label procession over each theta-pilot lattice node, the average
+formula, and the upper-semi conversion of `(Ind3)`.
+-/
+structure LogThetaLabelProcessionUpperSemiSourceTypedCoreAudit
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionUpperSemiSource
+        coric l) : Prop where
+  labelwise_source_audit :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionUpperSemiSource.Audit
+      source
+  upperSemi_source_audit :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ProcessionNormalizedUpperSemiComparisonSource.Audit
+      source.toProcessionNormalizedUpperSemiComparisonSource
+  finite_label_source_audit :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ProcessionNormalizedLogVolumeSource.Audit
+      source.toProcessionNormalizedLogVolumeSource
+  typed_core :
+    Nonempty
+      (IUTStage1Theorem311TypedIndeterminacyCore
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l))
+  core_logVolume_eq_labelwise_average :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (typedCoreOfLogThetaLabelProcessionUpperSemiSource source).logVolume choice =
+        (Finset.univ.sum fun label : ZMod l.value =>
+          source.labelLogVolume
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)
+            label) /
+          (l.value : Real)
+  ind3_average_le_from_labelwise_upperSemi :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind3UpperSemiStep
+        choice₁ choice₂) ->
+        (source.labelAverage
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁)).averageLogVolume <=
+          (source.labelAverage
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂)).averageLogVolume
+  ind3_core_logVolume_le :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (typedCoreOfLogThetaLabelProcessionUpperSemiSource source).ind3.step choice₁ choice₂ ->
+        (typedCoreOfLogThetaLabelProcessionUpperSemiSource source).logVolume choice₁ <=
+          (typedCoreOfLogThetaLabelProcessionUpperSemiSource source).logVolume choice₂
+  equality_quotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (typedCoreOfLogThetaLabelProcessionUpperSemiSource source).equalityGenerators.ind3_step
+        choice₁ choice₂ ->
+        False
+
+set_option linter.style.longLine false in
+theorem logThetaLabelProcessionUpperSemiSourceTypedCoreAudit
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionUpperSemiSource
+        coric l) :
+    LogThetaLabelProcessionUpperSemiSourceTypedCoreAudit source :=
+  { labelwise_source_audit := source.audit,
+    upperSemi_source_audit :=
+      source.toProcessionNormalizedUpperSemiComparisonSource.audit,
+    finite_label_source_audit :=
+      source.toProcessionNormalizedLogVolumeSource.audit,
+    typed_core :=
+      ⟨typedCoreOfLogThetaLabelProcessionUpperSemiSource source⟩,
+    core_logVolume_eq_labelwise_average := by
+      intro choice
+      exact source.toProcessionNormalizedLogVolumeSource.average_eq_fl_sum choice,
+    ind3_average_le_from_labelwise_upperSemi := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_upper_semi_average hstep,
+    ind3_core_logVolume_le := by
+      intro choice₁ choice₂ hstep
+      exact
+        (typedCoreOfLogThetaLabelProcessionUpperSemiSource source).ind3_logVolume_le
+          hstep,
+    equality_quotient_no_ind3_generator := by
+      intro choice₁ choice₂ hstep
+      exact
+        (typedCoreOfLogThetaLabelProcessionUpperSemiSource source).equalityGenerators_ind3_false
           hstep }
 
 set_option linter.style.longLine false in

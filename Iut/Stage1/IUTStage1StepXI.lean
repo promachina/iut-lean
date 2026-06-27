@@ -17050,6 +17050,111 @@ theorem ofConcreteHodgeTheaterLogThetaProcessionNormalizedThetaPilotLatticeImage
         selectedQChoice⟩
 
 set_option linter.style.longLine false in
+/--
+Construct the one-sided Theorem 3.11 multiradial source from a lattice-key
+image law and label-wise log-theta procession data.
+
+This lowers the procession-normalized lattice-image constructor one step: the
+finite averaged log-volume source is constructed internally from the
+`ZMod l`-label-wise log-volume family attached to each theta-pilot class.
+-/
+noncomputable def ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionThetaPilotLatticeImageLaw
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (labelwiseSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionUpperSemiSource
+        coric l)
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        record labelwiseSource.toProcessionNormalizedLogVolumeSource.toIndeterminacyData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  ofConcreteHodgeTheaterLogThetaProcessionNormalizedThetaPilotLatticeImageLaw
+    record labelwiseSource.toProcessionNormalizedLogVolumeSource sourceData
+    gluingTorsor selectedQChoice
+
+set_option linter.style.longLine false in
+theorem ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionThetaPilotLatticeImageLaw_endpoint
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (labelwiseSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionUpperSemiSource
+        coric l)
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        record labelwiseSource.toProcessionNormalizedLogVolumeSource.toIndeterminacyData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    labelwiseSource.Audit ∧
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.LogThetaLabelProcessionUpperSemiSourceTypedCoreAudit
+        labelwiseSource ∧
+      let construction :=
+        ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionThetaPilotLatticeImageLaw
+          record labelwiseSource sourceData gluingTorsor selectedQChoice;
+      (∀ hodgeTheater historyLabel
+          (lattice : IUTStage1Theorem311ThetaPilotLatticeCoordinate)
+          (c : coric),
+        sourceData.latticeFormula.thetaRegion hodgeTheater historyLabel
+            lattice c =
+          record.thetaPossibleImages.images.region
+            (sourceData.representativeAt hodgeTheater historyLabel lattice c)) ∧
+        (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+          record.thetaPossibleImages.images.region choice =
+            sourceData.latticeFormula.thetaRegion choice.hodgeTheater
+              choice.historyLabel
+              (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+                choice)
+              choice.coric) ∧
+        record.thetaPossibleImages.images =
+          sourceData.latticeFormula.toChoiceImages ∧
+        (∀ {choice₁ choice₂ :
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+          choice₁.hodgeTheater = choice₂.hodgeTheater ->
+            choice₁.historyLabel = choice₂.historyLabel ->
+              IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+                  choice₁ =
+                IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+                  choice₂ ->
+                choice₁.coric = choice₂.coric ->
+                  record.thetaPossibleImages.images.region choice₁ =
+                    record.thetaPossibleImages.images.region choice₂) ∧
+        construction.multiradialImages.possibleImages =
+          record.thetaPossibleImages ∧
+        Fintype.card (ZMod l.value) = l.value ∧
+        (∀ t choice,
+          construction.typedIndeterminacyCore.equalityQuotientMap choice =
+            construction.typedIndeterminacyCore.equalityQuotientMap
+              (construction.flProcessionAction.transition t choice)) ∧
+        (∀ {choice₁ choice₂ :
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+          construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+            construction.typedIndeterminacyCore.logVolume choice₁ <=
+              construction.typedIndeterminacyCore.logVolume choice₂) ∧
+        construction.selectedQRegion.toSet =
+          recordThetaPossibleImage record construction.selectedQChoice ∧
+        construction.selectedQRegion.toSet ⊆
+          recordThetaPossibleImageUnion record := by
+  exact
+    let processionEndpoint :=
+      ofConcreteHodgeTheaterLogThetaProcessionNormalizedThetaPilotLatticeImageLaw_endpoint
+        record labelwiseSource.toProcessionNormalizedLogVolumeSource sourceData
+        gluingTorsor selectedQChoice
+    ⟨labelwiseSource.audit,
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.logThetaLabelProcessionUpperSemiSourceTypedCoreAudit
+        labelwiseSource,
+      processionEndpoint.2.2⟩
+
+set_option linter.style.longLine false in
 theorem ofConcreteHodgeTheaterLogThetaThetaPilotClassImageLaw_endpoint
     {coric : Type u}
     {package :
@@ -17297,6 +17402,114 @@ theorem ofConcreteHodgeTheaterLogThetaProcessionNormalizedThetaPilotClassImages_
       ofConcreteHodgeTheaterLogThetaThetaPilotClassImages_endpoint
         record volumeSource.toIndeterminacyData thetaClassImages
         record_region_eq gluingTorsor selectedQChoice⟩
+
+set_option linter.style.longLine false in
+/--
+Construct the one-sided Theorem 3.11 multiradial source from theta-pilot class
+images and label-wise log-theta procession data.
+
+This is one level below the procession-normalized class-image constructor: Lean
+first builds the finite `F_l` average from the supplied label-wise log-volume
+family, derives the typed indeterminacy core, and then enters the existing
+quotient possible-image construction.
+-/
+noncomputable def ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionThetaPilotClassImages
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (labelwiseSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionUpperSemiSource
+        coric l)
+    (thetaClassImages :
+      RegionFamily target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric)))
+    (record_region_eq :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          thetaClassImages.region
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice))
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  ofConcreteHodgeTheaterLogThetaProcessionNormalizedThetaPilotClassImages
+    record labelwiseSource.toProcessionNormalizedLogVolumeSource thetaClassImages
+    record_region_eq gluingTorsor selectedQChoice
+
+set_option linter.style.longLine false in
+theorem ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionThetaPilotClassImages_endpoint
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (labelwiseSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionUpperSemiSource
+        coric l)
+    (thetaClassImages :
+      RegionFamily target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric)))
+    (record_region_eq :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          thetaClassImages.region
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice))
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    labelwiseSource.Audit ∧
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.LogThetaLabelProcessionUpperSemiSourceTypedCoreAudit
+        labelwiseSource ∧
+      let construction :=
+        ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionThetaPilotClassImages
+          record labelwiseSource thetaClassImages record_region_eq gluingTorsor
+          selectedQChoice;
+      construction.multiradialImages.quotient =
+          construction.typedIndeterminacyCore.equalityQuotient ∧
+        construction.multiradialImages.possibleImages =
+          record.thetaPossibleImages ∧
+        Fintype.card (ZMod l.value) = l.value ∧
+        (∀ t choice,
+          construction.typedIndeterminacyCore.equalityQuotientMap choice =
+            construction.typedIndeterminacyCore.equalityQuotientMap
+              (construction.flProcessionAction.transition t choice)) ∧
+        (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+          record.thetaPossibleImages.images.region choice =
+            thetaClassImages.region
+              (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+                choice)) ∧
+        (∀ {choice₁ choice₂ :
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+          construction.typedIndeterminacyCore.ind1.step choice₁ choice₂ ->
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice₂) ∧
+        (∀ {choice₁ choice₂ :
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+          construction.typedIndeterminacyCore.ind2.step choice₁ choice₂ ->
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice₂) ∧
+        construction.selectedQRegion.toSet =
+          recordThetaPossibleImage record construction.selectedQChoice ∧
+        construction.selectedQRegion.toSet ⊆
+          recordThetaPossibleImageUnion record := by
+  exact
+    let processionEndpoint :=
+      ofConcreteHodgeTheaterLogThetaProcessionNormalizedThetaPilotClassImages_endpoint
+        record labelwiseSource.toProcessionNormalizedLogVolumeSource
+        thetaClassImages record_region_eq gluingTorsor selectedQChoice
+    ⟨labelwiseSource.audit,
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.logThetaLabelProcessionUpperSemiSourceTypedCoreAudit
+        labelwiseSource,
+      processionEndpoint.2.2⟩
 
 set_option linter.style.longLine false in
 /--

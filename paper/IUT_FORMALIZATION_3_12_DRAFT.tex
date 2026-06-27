@@ -806,9 +806,15 @@ procession-normalized entry points: instead of receiving an arbitrary
 typed indeterminacy package, including \((\Ind1)\) and \((\Ind2)\)
 log-volume preservation and the \((\Ind3)\) upper-semi inequality, before
 constructing the quotient possible-image family and the selected \(q\)-region.
-The remaining mathematical payload at this boundary is therefore the source of
-the finite averaged label family and its upper-semi comparison, not an
-unstructured indeterminacy record.
+This boundary has now been lowered one step further by
+\texttt{LogThetaLabelProcessionUpperSemiSource}: for each theta-pilot class it
+supplies label-wise log-theta procession values indexed by \(Z/\ell Z\), and
+\Lean{} constructs the finite average, proves the \(\#(Z/\ell Z)=\ell\)
+normalization, derives the upper-semi comparison source, and enters the same
+one-sided Theorem~3.11 constructors.  Thus the remaining mathematical payload
+is no longer an averaged indeterminacy object; it is the paper-native source of
+the label-wise log-volume family and its source/target average alignments from
+the log-Kummer/log-link geometry.
 The Remark~3.9.5 hull boundary has also been lowered from an abstract
 intersection-closed predicate to a product-hull source that matches the
 paper's \(\lambda\cdot O\) description.  The declaration
@@ -3528,7 +3534,13 @@ this class average, proves the displayed average formula with
 constructs the typed core used by the quotient possible-image machinery.  Thus
 the equality side of the indeterminacy layer is now built from finite
 procession averages; only the \((\Ind3)\) upper-semi comparison remains a
-one-sided source input at this boundary.
+one-sided source input at this boundary.  The next lowering is now also in
+place: \texttt{LogThetaLabelProcessionUpperSemiSource} supplies the
+label-by-label log-theta values over the canonical full \(F_\ell\)-procession
+of a theta-pilot class, and \Lean{} constructs the averaged source internally.
+The open mathematical input below this point is the source-paper construction
+of those label-wise values and the two average equalities with the
+source/target upper-semi log-volume comparison.
 The selected-principal-hull equality has also been lowered:
 \texttt{ConcreteValuationBallSelectedPrincipalHullSource}
 requires the valuation-cover possible-image union to be a hull for its
@@ -12254,10 +12266,11 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Construct the finite averaged label family and upper-semi comparison from
-  the paper's log-theta procession and vertical log-Kummer data, so the
-  procession-normalized theta-pilot constructors no longer depend on supplied
-  average data.
+\item Construct the label-wise log-theta procession values and their
+  source/target average alignments from the paper's vertical
+  log-Kummer/log-link geometry.  The finite \(F_\ell\)-average itself is now
+  constructed by \Lean{}, so the remaining task is the genuine source of the
+  label-wise data.
 \item Construct the local-object source/target equalities consumed by
   \texttt{ProcessionNormalizedVerticalLogKummerClassifiedPacketLocalObjectSource}
   from the paper's vertical log-Kummer/log-link comparison.  The packet-normalized
