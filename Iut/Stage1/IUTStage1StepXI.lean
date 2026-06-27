@@ -14781,6 +14781,10 @@ structure PostProcessionTypedCoreTransportAudit
           (l := l) choice₁ choice₂;
       IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionTransportSource
         choice₁ shifted
+  procession_shift_ind1_transport_source_audit :
+    ∀ choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionTransportSource.Audit
+        (procession_shift_ind1_transport_source choice₁ choice₂)
   post_procession_ind2_transport_source :
     ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
       ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
@@ -14914,6 +14918,11 @@ theorem postProcessionTypedCoreTransportAudit
         exact
           processionShift_ind1TransportSource
             (l := l) choice₁ choice₂,
+      procession_shift_ind1_transport_source_audit := by
+        intro choice₁ choice₂
+        exact
+          (processionShift_ind1TransportSource
+            (l := l) choice₁ choice₂).audit,
       post_procession_ind2_transport_source := by
         intro choice₁ choice₂ transport
         exact
@@ -22804,6 +22813,11 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395SelectedQHullLogVolume
         tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
     let hullCompatibility := quotientSource.toHullCompatibility hullOperator;
     Nonempty sourceData.PostProcessionInd2ActionPacketTransportSourceAudit ∧
+      (∀ choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionTransportSource.Audit
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource.processionShift_ind1TransportSource
+            (l := l) choice₁ choice₂)) ∧
       (∀ {choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
         (transport :
@@ -22865,6 +22879,7 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395SelectedQHullLogVolume
   let transportAudit := sourceData.postProcessionInd2ActionPacketTransportSourceAudit
   exact
     ⟨⟨transportAudit⟩,
+      transportAudit.typed_core_transport_audit.procession_shift_ind1_transport_source_audit,
       transportAudit.source_level_ind2_action_packet_audit,
       transportAudit.typed_core_transport_audit.fiberTransport_logVolume_eq,
       transportAudit.typed_core_transport_audit.equalityQuotient_no_ind3_generator,
@@ -22957,6 +22972,11 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395ConstructedGlobalCThet
         ob3ob4Source compatibility measure_eq_hullLogVolume
         tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
     Nonempty sourceData.PostProcessionInd2ActionPacketTransportSourceAudit ∧
+      (∀ choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionTransportSource.Audit
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource.processionShift_ind1TransportSource
+            (l := l) choice₁ choice₂)) ∧
       (∀ {choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
         (transport :
@@ -23023,6 +23043,7 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395ConstructedGlobalCThet
   let transportAudit := sourceData.postProcessionInd2ActionPacketTransportSourceAudit
   exact
     ⟨⟨transportAudit⟩,
+      transportAudit.typed_core_transport_audit.procession_shift_ind1_transport_source_audit,
       transportAudit.source_level_ind2_action_packet_audit,
       transportAudit.typed_core_transport_audit.fiberTransport_logVolume_eq,
       transportAudit.typed_core_transport_audit.equalityQuotient_no_ind3_generator,

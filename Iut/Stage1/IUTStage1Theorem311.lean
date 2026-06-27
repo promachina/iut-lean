@@ -1843,6 +1843,61 @@ theorem thetaPilotClass_eq
     thetaPilotClass choice₁ = thetaPilotClass choice₂ :=
   ind1_thetaPilotClass_eq source.toStep
 
+set_option linter.style.longLine false in
+/--
+Audit for the concrete `(Ind1)` procession-transport source.
+
+The source is the paper-side finite-procession equality datum: Hodge-theater
+history, row/column/log-theta coordinates, the coric datum, and the non-
+procession states are fixed, while the procession representative is transported
+by the typed procession transport.  The audit records both the constructed
+`(Ind1)` step and the theta-pilot class equality consumed by the quotient
+construction.
+-/
+structure Audit
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind1ProcessionTransportSource choice₁ choice₂) : Prop where
+  hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
+  historyLabel_eq : choice₁.historyLabel = choice₂.historyLabel
+  column_eq : choice₁.coordinate.column = choice₂.coordinate.column
+  row_eq : choice₁.coordinate.row = choice₂.coordinate.row
+  logThetaColumn_eq :
+    choice₁.coordinate.logThetaColumn = choice₂.coordinate.logThetaColumn
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_transport :
+    IUTStage1ProcessionState.ProcessionTransport
+      choice₁.procession_state choice₂.procession_state
+  procession_eq :
+    choice₁.procession_state.procession = choice₂.procession_state.procession
+  procession_representative_eq :
+    choice₁.procession_state.representative =
+      choice₂.procession_state.representative
+  local_tensor_eq : choice₁.local_tensor_state = choice₂.local_tensor_state
+  upper_semi_eq : choice₁.upper_semi_state = choice₂.upper_semi_state
+  ind1_procession_step : Ind1ProcessionStep choice₁ choice₂
+  thetaPilotClass_eq : thetaPilotClass choice₁ = thetaPilotClass choice₂
+
+set_option linter.style.longLine false in
+theorem audit
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind1ProcessionTransportSource choice₁ choice₂) :
+    Audit source :=
+  { hodgeTheater_eq := source.hodgeTheater_eq,
+    historyLabel_eq := source.historyLabel_eq,
+    column_eq := source.column_eq,
+    row_eq := source.row_eq,
+    logThetaColumn_eq := source.logThetaColumn_eq,
+    coric_eq := source.coric_eq,
+    procession_transport := source.processionTransport,
+    procession_eq := source.processionTransport.procession_eq,
+    procession_representative_eq := source.processionTransport.representative_eq,
+    local_tensor_eq := source.local_tensor_eq,
+    upper_semi_eq := source.upper_semi_eq,
+    ind1_procession_step := source.toStep,
+    thetaPilotClass_eq := source.thetaPilotClass_eq }
+
 end Ind1ProcessionTransportSource
 
 set_option linter.style.longLine false in
